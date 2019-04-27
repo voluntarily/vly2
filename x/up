@@ -1,0 +1,3 @@
+# Run up mongo and docker locally using the default docker-compose.yml
+docker-compose up -d --build
+

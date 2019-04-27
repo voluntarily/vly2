@@ -1,0 +1,24 @@
+{
+  "public": [
+    {
+      "key": "about",
+      "text": "About",
+      "url": "/about"
+    },
+    {
+      "key": "orgs",
+      "text": "Organisations",
+      "url": "/orgs"
+    },
+    {
+      "key": "register",
+      "text": "Sign Up",
+      "url": "/register"
+    },
+    {
+      "key": "login",
+      "text": "Log In",
+      "url": "/login"
+    }
+  ]
+}
