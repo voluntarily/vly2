@@ -58,8 +58,7 @@ const thisReduxApi = reduxApi({
     crud: true, // Make CRUD actions: https://github.com/lexich/redux-api/blob/master/docs/DOCS.md#crud
     options: config.jsonOptions,
     transformer: apiTransformer
-  },
-
+  }
 
 })
   .use('fetch', adapterFetch(fetch))

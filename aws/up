@@ -1,0 +1,7 @@
+# use the ecs-cli command line to start a new cluster with the given instance type and count 
+# -f force down previous cluster.
+# warning this will take down the services for about 10 minutes.
+# to run this you will need the vly1 private key.
+# usage: cluster up|down
+ecs-cli $1 --keypair vly1 --capability-iam --size 1 --instance-type t2.small --cluster-config default -f
+ecs-cli ps | grep RUNNING | awk '{print $3}'

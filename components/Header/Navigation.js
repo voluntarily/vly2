@@ -1,15 +1,15 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import Link from 'next/link'
 // import { connect } from 'react-redux';
-import { Menu } from 'antd';
+import { Menu } from 'antd'
 // import { toggleLoginForm } from '../../AppActions';
 
 const Navigation = ({ items, defaultItem, location, ...props }) => {
-  const activeItem = location.pathname ? location.pathname.slice(1) : defaultItem;
+  const activeItem = location.pathname ? location.pathname.slice(1) : defaultItem
   return (
     <Menu
-      theme="dark"
-      mode="horizontal"
+      theme='dark'
+      mode='horizontal'
       style={{ float: 'right' }}
       selectedKeys={[activeItem]}
     >
@@ -19,28 +19,28 @@ const Navigation = ({ items, defaultItem, location, ...props }) => {
         </Menu.Item>
       ))}
     </Menu>
-  );
-};
+  )
+}
 
 Navigation.defaultProps = {
   items: [],
   defaultItem: '',
   location: {},
-  toggleLoginForm: () => {},
-};
+  toggleLoginForm: () => {}
+}
 
 Navigation.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string,
     text: PropTypes.string,
-    url: PropTypes.string,
+    url: PropTypes.string
   })),
   defaultItem: PropTypes.string,
-  location: PropTypes.object,
+  location: PropTypes.object
   // toggleLoginForm: PropTypes.func,
-};
+}
 
-export default Navigation;
+export default Navigation
 // const mapDispatchToProps = {
 //   toggleLoginForm,
 // };

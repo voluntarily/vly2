@@ -1,7 +1,7 @@
-import test from 'ava';
-import { reducerTest } from 'redux-ava';
-import orgReducer, { getOrg, getOrgs } from '../OrgReducer';
-import { addOrg, deleteOrg, addOrgs } from '../OrgActions';
+import test from 'ava'
+import { reducerTest } from 'redux-ava'
+import orgReducer, { getOrg, getOrgs } from '../OrgReducer'
+import { addOrg, deleteOrg, addOrgs } from '../OrgActions'
 
 test('action for ADD_ORG is working', reducerTest(
   orgReducer,
@@ -12,7 +12,7 @@ test('action for ADD_ORG is working', reducerTest(
     type: 'corporate',
     _id: null,
     cuid: null,
-    slug: 'first-org',
+    slug: 'first-org'
   }),
   { data: [{
     name: 'prank',
@@ -20,9 +20,9 @@ test('action for ADD_ORG is working', reducerTest(
     type: 'corporate',
     _id: null,
     cuid: null,
-    slug: 'first-org',
-  }, 'foo'] },
-));
+    slug: 'first-org'
+  }, 'foo'] }
+))
 
 test('action for DELETE_ORG is working', reducerTest(
   orgReducer,
@@ -32,11 +32,11 @@ test('action for DELETE_ORG is working', reducerTest(
     type: 'corporate',
     cuid: 'abc',
     _id: 1,
-    slug: 'first-org',
+    slug: 'first-org'
   }] },
   deleteOrg('abc'),
-  { data: [] },
-));
+  { data: [] }
+))
 
 test('action for ADD_ORGS is working', reducerTest(
   orgReducer,
@@ -48,8 +48,8 @@ test('action for ADD_ORGS is working', reducerTest(
       type: 'corporate',
       _id: null,
       cuid: null,
-      slug: 'first-org',
-    },
+      slug: 'first-org'
+    }
   ]),
   { data: [{
     name: 'prank',
@@ -57,24 +57,24 @@ test('action for ADD_ORGS is working', reducerTest(
     type: 'corporate',
     _id: null,
     cuid: null,
-    slug: 'first-org',
-  }] },
-));
+    slug: 'first-org'
+  }] }
+))
 
 test('getOrgs selector', t => {
   t.deepEqual(
     getOrgs({
-      orgs: { data: ['foo'] },
+      orgs: { data: ['foo'] }
     }),
     ['foo']
-  );
-});
+  )
+})
 
 test('getOrg selector', t => {
   t.deepEqual(
     getOrg({
-      orgs: { data: [{ cuid: '123' }] },
+      orgs: { data: [{ cuid: '123' }] }
     }, '123'),
     { cuid: '123' }
-  );
-});
+  )
+})

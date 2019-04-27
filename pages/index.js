@@ -4,7 +4,6 @@ import Link from 'next/link'
 import Layout from '../components/Layout'
 import withIntl from '../lib/withIntl'
 
-
 class Index extends Component {
   static getInitialProps () {
     // Do something
@@ -13,12 +12,12 @@ class Index extends Component {
   render () {
     const { intl } = this.props
 
-    return ( 
+    return (
       <Layout>
-        <Link href="/about">
+        <Link href='/about'>
           <a>About Page</a>
         </Link>
-        
+
         <p>
           <FormattedMessage id='greeting' defaultMessage='Voluntari.ly is coming soon' />
         </p>

@@ -1,7 +1,7 @@
 import { Component } from 'react'
-import Layout from '../../components/Layout';
+import Layout from '../../components/Layout'
 import reduxApi, { withOrgs } from '../../redux/reduxApi.js'
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 import OrgList from '../../components/Org/OrgList'
 
 class Orgs extends Component {
@@ -10,7 +10,6 @@ class Orgs extends Component {
     const orgs = await store.dispatch(reduxApi.actions.organisations.sync())
     return { orgs, query }
   }
-
 
   handleAdd (event) {
     const { name } = this.state
@@ -41,12 +40,12 @@ class Orgs extends Component {
 
   render () {
     const { orgs } = this.props// dd
-    console.log(orgs);
+    console.log(orgs)
     return (
-      <Layout className="cardlist">
-        <h1><FormattedMessage 
-            defaultMessage="Organisations"
-            id="OrganisationsTitle" /></h1>
+      <Layout className='cardlist'>
+        <h1><FormattedMessage
+          defaultMessage='Organisations'
+          id='OrganisationsTitle' /></h1>
 
         <OrgList orgs={orgs} />
         <style jsx>{`
@@ -66,4 +65,3 @@ class Orgs extends Component {
 }
 
 export default withOrgs(Orgs)
-

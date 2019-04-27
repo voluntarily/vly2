@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import Head from 'next/head'
-import { Layout } from 'antd';
-import Footer from './Footer/Footer';
-import Header from './Header/Header';
+import { Layout } from 'antd'
+import Footer from './Footer/Footer'
+import Header from './Header/Header'
 
 export default ({ children, title = 'Voluntari.ly', className }) => (
   <Layout>
@@ -16,7 +16,7 @@ export default ({ children, title = 'Voluntari.ly', className }) => (
     <Layout.Content className={className} >
       {children}
     </Layout.Content>
-    
+
     <Footer />
   </Layout>
 )

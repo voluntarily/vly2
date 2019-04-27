@@ -6,9 +6,9 @@ const routesImplementation = routes()
 //   .add('/blog/:slug', 'blogShow')
 //   .add('showBlogPostRoute', '/blog/:slug', 'blogShow')
 // Name   Page      Pattern
-module.exports = routes()                           // ----   ----      -----
-.add('about') 
-.add('orgs', '/orgs', 'orgs')  
-.add('org', '/orgs/:slug', 'orgDetailPage')                
+module.exports = routes() // ----   ----      -----
+  .add('about')
+  .add('orgs', '/orgs', 'orgs')
+  .add('org', '/orgs/:slug', 'orgDetailPage')
 
 // Usage inside Page.getInitialProps (req = { pathname, asPath, query } = { pathname: '/', asPath: '/about', query: { slug: 'about' } })

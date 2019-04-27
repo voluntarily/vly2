@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import Layout from '../components/Layout';
+import Layout from '../components/Layout'
 import reduxApi, { withKittens } from '../redux/reduxApi.js'
 
 import { Link } from '../server/routes.js'
@@ -90,4 +90,3 @@ class Kittens extends Component {
 }
 
 export default withKittens(Kittens)
-

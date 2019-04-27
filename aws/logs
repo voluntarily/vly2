@@ -1,0 +1,2 @@
+docker-compose  --file docker-compose-ecs-atlas.yml logs -f
+

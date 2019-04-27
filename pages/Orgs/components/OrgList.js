@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 // Import Components
-import OrgListItem from './OrgListItem/OrgListItem';
+import OrgListItem from './OrgListItem/OrgListItem'
 
-function OrgList(props) {
+function OrgList (props) {
   return (
-    <div className="listView">
+    <div className='listView'>
       {
         props.orgs.map(org => (
           <OrgListItem
@@ -17,7 +17,7 @@ function OrgList(props) {
         ))
       }
     </div>
-  );
+  )
 }
 
 OrgList.propTypes = {
@@ -26,9 +26,9 @@ OrgList.propTypes = {
     about: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
-    cuid: PropTypes.string.isRequired,
+    cuid: PropTypes.string.isRequired
   })).isRequired,
-  handleDeleteOrg: PropTypes.func.isRequired,
-};
+  handleDeleteOrg: PropTypes.func.isRequired
+}
 
-export default OrgList;
+export default OrgList

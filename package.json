@@ -1,18 +1,23 @@
 {
-  "name": "vly2",
+  "name": "@voluntarily/vly2",
   "version": "1.0.0",
   "description": "Voluntari.ly Client based on Next.js",
   "main": "server/server.js",
   "scripts": {
-    "test": "echo 'Running Standard.js and Jasmine unit tests...\n' && yarn lint && yarn unit",
-    "unit": "jasmine",
+    "test": "cross-env NODE_ENV=test PORT=8080 MONGO_URL=mongodb://localhost:27017/vly-test node_modules/.bin/nyc node node_modules/ava/cli.js",
+    "watch:test": "npm run test -- --watch",
     "lint": "standard",
     "fix": "standard --fix",
     "dev": "nodemon -w server -w package.json server/server.js",
     "build": "next build && node ./scripts/default-lang",
     "heroku-postbuild": "next build",
-    "start": "NODE_ENV=production node server/server.js"
+    "start": "NODE_ENV=production node server/server.js",
+    "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100"
   },
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
   "now": {
     "name": "voluntarily-vly2",
     "alias": "voluntarily"
@@ -47,9 +52,11 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
+    "ava": "^1.4.1",
     "babel-eslint": "^10.0.1",
     "jasmine": "^3.4.0",
     "nodemon": "^1.18.11",
+    "nyc": "^14.0.0",
     "standard": "^12.0.1"
   },
   "repository": {

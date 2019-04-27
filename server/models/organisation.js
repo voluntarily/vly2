@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const organisationSchema = new Schema({
   cuid: { type: 'String', required: true },
@@ -9,9 +9,9 @@ const organisationSchema = new Schema({
   imgUrl: String,
   type: { type: 'String',
     required: true,
-    enum: ['admin', 'corporate', 'school', 'charity', 'content-provider'],
+    enum: ['admin', 'corporate', 'school', 'charity', 'content-provider']
   },
-  dateAdded: { type: 'Date', default: Date.now, required: true },
-});
+  dateAdded: { type: 'Date', default: Date.now, required: true }
+})
 
-module.exports = mongoose.model('Organisation', organisationSchema);
+module.exports = mongoose.model('Organisation', organisationSchema)

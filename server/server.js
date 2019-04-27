@@ -21,7 +21,7 @@ const app = next({ dev })
 
 const routes = require('./routes')
 const routerHandler = routes.getRequestHandler(app)
-const initialOrganisations = require('./models/organisation.dummy');
+const initialOrganisations = require('./models/organisation.dummy')
 
 const { config } = require('../config/config')
 
@@ -35,7 +35,7 @@ const supportedLanguages = glob
 const localeDataCache = new Map()
 const getLocaleDataScript = locale => {
   // const lang = locale.split('-')[0]
-  const lang = locale;
+  const lang = locale
   if (!localeDataCache.has(lang)) {
     const localeDataFile = require.resolve(`react-intl/locale-data/${lang}`)
     const localeDataScript = readFileSync(localeDataFile, 'utf8')
@@ -58,10 +58,10 @@ app.prepare().then(() => {
   server.use(bodyParser.json())
 
   server.use(function (req, res, next) {
-    req.locale = req.acceptsLanguages('mi', 'fr', 'en');
+    req.locale = req.acceptsLanguages('mi', 'fr', 'en')
     req.localeDataScript = getLocaleDataScript(req.locale)
     // req.messages = dev ? {} : getMessages(req.locale)
-    req.messages = getMessages(req.locale)  
+    req.messages = getMessages(req.locale)
     next()
   })
 
@@ -79,7 +79,7 @@ app.prepare().then(() => {
     const db = mongoose.connection
     db.on('error', console.error.bind(console, 'connection error:'))
 
-    initialOrganisations();
+    initialOrganisations()
   }
 
   // REST API routes

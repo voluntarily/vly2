@@ -1,58 +1,58 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import test from 'ava';
-import sinon from 'sinon';
-import { mount, render } from 'enzyme';
-import configureStore from 'redux-mock-store';
-import { intlShape, IntlProvider } from 'react-intl';
-import { intl } from '../../../util/react-intl-test-helper';
-import About from '../About';
+import React from 'react'
+import PropTypes from 'prop-types'
+import test from 'ava'
+import sinon from 'sinon'
+import { mount, render } from 'enzyme'
+import configureStore from 'redux-mock-store'
+import { intlShape, IntlProvider } from 'react-intl'
+import { intl } from '../../../util/react-intl-test-helper'
+import About from '../About'
 
-const intlPropEn = { ...intl, locale: 'en', enabledLanguages: ['en', 'mi'] };
+const intlPropEn = { ...intl, locale: 'en', enabledLanguages: ['en', 'mi'] }
 const mockStoreEn = configureStore()({
-  intl: intlPropEn,
-});
+  intl: intlPropEn
+})
 
 test('renders full page in english', t => {
   const wrapper = render(
     <IntlProvider><About /></IntlProvider>,
     {
       context: {
-        store: mockStoreEn,
+        store: mockStoreEn
       },
       childContextTypes: {
-        store: mockStoreEn,
-      },
-    },
-  );
+        store: mockStoreEn
+      }
+    }
+  )
   // console.log(wrapper.html());
-  t.is(wrapper.find('h1').first().text(), 'About Voluntari.ly');
-  t.regex(wrapper.find('p').first().text(), new RegExp('We are building a.*'));
-});
+  t.is(wrapper.find('h1').first().text(), 'About Voluntari.ly')
+  t.regex(wrapper.find('p').first().text(), new RegExp('We are building a.*'))
+})
 
-const intlPropMi = { ...intl, locale: 'mi', enabledLanguages: ['en', 'mi'] };
+const intlPropMi = { ...intl, locale: 'mi', enabledLanguages: ['en', 'mi'] }
 const mockStoreMi = configureStore()({
-  intl: intlPropMi,
-});
+  intl: intlPropMi
+})
 test('renders full page in Māori', t => {
   const wrapper = render(
     <IntlProvider><About /></IntlProvider>,
     {
       context: {
-        store: mockStoreMi,
+        store: mockStoreMi
       },
       childContextTypes: {
-        store: mockStoreMi,
-      },
-    },
-  );
+        store: mockStoreMi
+      }
+    }
+  )
 
-  t.is(wrapper.find('h1').first().text(), 'About Voluntari.ly');
-  t.regex(wrapper.find('p').first().text(), new RegExp('Kei te hangaia e mātou.*'));
-});
+  t.is(wrapper.find('h1').first().text(), 'About Voluntari.ly')
+  t.regex(wrapper.find('p').first().text(), new RegExp('Kei te hangaia e mātou.*'))
+})
 
 test('calls componentDidMount', t => {
-  sinon.spy(About.prototype, 'componentDidMount');
+  sinon.spy(About.prototype, 'componentDidMount')
   mount(
     <About />,
     {
@@ -65,19 +65,19 @@ test('calls componentDidMount', t => {
           goBack: sinon.stub(),
           goForward: sinon.stub(),
           setRouteLeaveHook: sinon.stub(),
-          createHref: sinon.stub(),
+          createHref: sinon.stub()
         },
         intl,
-        store: mockStoreEn,
+        store: mockStoreEn
       },
       childContextTypes: {
         router: PropTypes.object,
         intl: intlShape,
-        store: mockStoreEn,
-      },
-    },
-  );
+        store: mockStoreEn
+      }
+    }
+  )
 
-  t.truthy(About.prototype.componentDidMount.calledOnce);
-  About.prototype.componentDidMount.restore();
-});
+  t.truthy(About.prototype.componentDidMount.calledOnce)
+  About.prototype.componentDidMount.restore()
+})
