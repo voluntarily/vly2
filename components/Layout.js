@@ -13,8 +13,24 @@ export default ({ children, title = 'Voluntari.ly', className }) => (
       <meta name='viewport' content='initial-scale=1.0, width=device-width' />
     </Head>
     <Header />
-    <Layout.Content className={className} >
-      {children}
+    <Layout.Content  >
+      <div className={className} >
+        {children}
+      </div>
+      <style jsx>{`
+
+        .a4 {
+          margin: 3em;
+          padding-bottom: 4em;
+          max-width: 50em;
+        }
+        @media (max-width: 600px) {
+          .a4 {
+            margin: 0 3em;
+          }
+        }
+
+      `}</style>
     </Layout.Content>
 
     <Footer />

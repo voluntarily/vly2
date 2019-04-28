@@ -22,7 +22,7 @@ OrgCard.propTypes = {
     name: PropTypes.string.isRequired,
     about: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    cuid: PropTypes.string.isRequired
+    _id: PropTypes.string.isRequired
   }).isRequired
 }
 

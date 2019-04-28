@@ -1,5 +1,5 @@
 {
-  "footerCredit": "Voluntari.ly is an initiative of the <a href=\"https://www.pamfergusson.org.nz/\"> Pam Fergusson Charitable Trust.</a> Supported by: Datacom, Spark, ATEED",
+  "footerCredit": "Voluntari.ly is an initiative of the { pfctlink } Supported by: Datacom, Spark, ATEED",
   "siteTitle": "Voluntari.ly",
   "description": "Un exemple d'application intégrant React Intl avec Next.js",
   "greeting": "Bonjour le monde!"

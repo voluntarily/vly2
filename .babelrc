@@ -12,6 +12,9 @@
           "messagesDir": "lang/.messages/"
         }]
       ]
+    },
+    "test": {
+      "presets": ["next/babel"]
     }
   },
   "plugins": [

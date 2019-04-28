@@ -10,7 +10,7 @@ export default () => (
         <Menu.Item><Link href='/ops' ><a>Opportunities</a></Link></Menu.Item>
         <Menu.Item><Link href='/people' ><a>People</a></Link></Menu.Item>
         <Menu.Item><Link href='/orgs' ><a>Organisations</a></Link></Menu.Item>
-        <Menu.Item><Link href='/kittens' ><a>Showcase</a></Link></Menu.Item>
+        <Menu.Item><Link href='/test' ><a>Test</a></Link></Menu.Item>
       </Menu>
     </nav>
     <div className='footer' >

@@ -1,19 +1,19 @@
 import React from 'react'
 import test from 'ava'
 import { shallow } from 'enzyme'
-import OrgList from '../../components/OrgList'
+import OrgList from '../OrgList'
 
 // Initial organisations added into test db
 const orgs = [
   {
-    cuid: 'f34gb2bh24b24b2',
+    _id: 'f34gb2bh24b24b2',
     name: 'OMGTech',
     slug: 'hello-omgtech',
     about: "All cats meow 'mern!'",
-    type: 'corporate'
+    type: 'activity_provider'
   },
   {
-    cuid: 'f34gb2bh24b24b3',
+    _id: 'f34gb2bh24b24b3',
     name: 'Datacom',
     slug: 'hi-datacom',
     about: "All dogs bark 'mern!'",
@@ -23,8 +23,8 @@ const orgs = [
 
 test('renders the list', t => {
   const wrapper = shallow(
-    <OrgList orgs={orgs} handleShowOrg={() => {}} handleDeleteOrg={() => {}} />
+    <OrgList orgs={orgs} handleShowOrg={() => {}}  />
   )
 
-  t.is(wrapper.find('OrgListItem').length, 2)
+  t.is(wrapper.find('OrgCard').length, 2)
 })
