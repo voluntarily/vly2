@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import Head from 'next/head'
 import { Layout } from 'antd'
 import Footer from './Footer/Footer'
@@ -13,7 +12,7 @@ export default ({ children, title = 'Voluntari.ly', className }) => (
       <meta name='viewport' content='initial-scale=1.0, width=device-width' />
     </Head>
     <Header />
-    <Layout.Content  >
+    <Layout.Content >
       <div className={className} >
         {children}
       </div>
@@ -26,6 +25,16 @@ export default ({ children, title = 'Voluntari.ly', className }) => (
         }
         @media (max-width: 600px) {
           .a4 {
+            margin: 0 3em;
+          }
+        }
+
+        .fullpage {
+          margin: 3em;
+          padding-bottom: 4em;
+        }
+        @media (max-width: 600px) {
+          .fullpage {
             margin: 0 3em;
           }
         }

@@ -1,6 +1,6 @@
-import test from 'ava';
-import OrgCard from '../OrgCard';
-import { shallow, mount } from 'enzyme';
+import test from 'ava'
+import OrgCard from '../OrgCard'
+import { render } from 'enzyme'
 
 const org = {
   _id: 'f34gb2bh24b24b2',
@@ -8,28 +8,20 @@ const org = {
   slug: 'hello-omgtech',
   imgUrl: '/static/andrew.jpg',
   about: 'OMGTech! develops & delivers engaging workshops for both teachers and students on digital technologies and how to explore and invent with them',
-  type: 'activity-provider',
-};
+  type: 'activity-provider'
+}
 
 const props = {
-  org,
-};
+  org
+}
 
-test('renders properly', t => {
-  const wrapper = shallow(
+test('OrgCard renders properly', t => {
+  const wrapper = render(
     <OrgCard {...props} />
-  );
+  )
 
-  t.is(wrapper.find('Link').first().prop('children'), org.name);
-  t.regex(wrapper.find('.org-about').first().text(), new RegExp(org.about));
-  t.is(wrapper.find('.org-type').first().text(), org.type);
-});
-
-test('has correct props', t => {
-  const wrapper = mount(
-    <OrgCard {...props} />
-  );
-
-  t.deepEqual(wrapper.prop('org'), props.org);
- });
-
+  t.is(wrapper.find('h1').first().text(), org.name)
+  t.regex(wrapper.find('p').first().text(), new RegExp(org.about))
+  t.is(wrapper.find('small').first().text(), org.type)
+  // t.deepEqual(wrapper.prop('org'), props.org);
+})

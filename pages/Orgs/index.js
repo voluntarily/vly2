@@ -39,26 +39,14 @@ class Orgs extends Component {
   }
 
   render () {
-    const { orgs } = this.props// dd
-    console.log(orgs)
+    const { orgs } = this.props
     return (
-      <Layout className='cardlist'>
+      <Layout className='fullpage'>
         <h1><FormattedMessage
           defaultMessage='Organisations'
           id='OrganisationsTitle' /></h1>
 
         <OrgList orgs={orgs} />
-        <style jsx>{`
-            .cardlist {
-              margin: 3em;
-              max-width: 50em;
-            }
-            @media (max-width: 600px) {
-              .cardlist {
-                margin: 0 3em;
-              }
-            }
-          `}</style>
       </Layout>
     )
   };

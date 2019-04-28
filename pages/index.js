@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FormattedMessage, FormattedNumber, defineMessages } from 'react-intl'
+import { FormattedMessage, FormattedNumber } from 'react-intl'
 import Link from 'next/link'
 import Layout from '../components/Layout'
 import withIntl from '../lib/withIntl'
@@ -10,8 +10,6 @@ class Index extends Component {
   }
 
   render () {
-    const { intl } = this.props
-
     return (
       <Layout>
         <Link href='/about'>

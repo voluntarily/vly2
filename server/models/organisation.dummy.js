@@ -1,7 +1,7 @@
-Organisation = require('./organisation')
+const Organisation = require('./organisation')
 
 const initialOrganisations = function () {
-  Organisation.estimatedDocumentCount().exec((err, count) => {
+  Organisation.estimatedDocumentCount().exec(count => {
     if (count > 0) {
       return
     }

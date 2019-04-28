@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types'
 import Link from 'next/link'
+import { withRouter } from 'next/router'
 // import { connect } from 'react-redux';
 import { Menu } from 'antd'
 // import { toggleLoginForm } from '../../AppActions';
 
-const Navigation = ({ items, defaultItem, location, ...props }) => {
-  const activeItem = location.pathname ? location.pathname.slice(1) : defaultItem
+const Navigation = ({ items, defaultItem, router, ...props }) => {
+  // TODO next js get the location is different?
+  const activeItem = router && router.pathname ? router.pathname.slice(1) : defaultItem
   return (
     <Menu
       theme='dark'
@@ -25,8 +27,8 @@ const Navigation = ({ items, defaultItem, location, ...props }) => {
 Navigation.defaultProps = {
   items: [],
   defaultItem: '',
-  location: {},
-  toggleLoginForm: () => {}
+  location: {}
+  // toggleLoginForm: () => {}
 }
 
 Navigation.propTypes = {
@@ -40,7 +42,7 @@ Navigation.propTypes = {
   // toggleLoginForm: PropTypes.func,
 }
 
-export default Navigation
+export default withRouter(Navigation)
 // const mapDispatchToProps = {
 //   toggleLoginForm,
 // };

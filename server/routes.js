@@ -1,5 +1,4 @@
 const routes = require('next-routes')
-const routesImplementation = routes()
 
 // routesImplementation
 //   .add([identifier], pattern = /identifier, page = identifier)

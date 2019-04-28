@@ -23,8 +23,16 @@ const orgs = [
 
 test('renders the list', t => {
   const wrapper = shallow(
-    <OrgList orgs={orgs} handleShowOrg={() => {}}  />
+    <OrgList orgs={orgs} handleShowOrg={() => {}} />
   )
 
   t.is(wrapper.find('OrgCard').length, 2)
+})
+
+test('renders no orgs', t => {
+  const wrapper = shallow(
+    <OrgList handleShowOrg={() => {}} />
+  )
+
+  t.is(wrapper.find('OrgCard').length, 0)
 })

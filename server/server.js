@@ -21,14 +21,9 @@ const app = next({ dev })
 
 const routes = require('./routes')
 const routerHandler = routes.getRequestHandler(app)
-const initialOrganisations = require('./models/organisation.dummy')
+// const initialOrganisations = require('./models/organisation.dummy')
 
 const { config } = require('../config/config')
-
-// Get the supported languages by looking for translations in the `lang/` dir.
-const supportedLanguages = glob
-  .sync('./lang/*.json')
-  .map(f => basename(f, '.json'))
 
 // We need to expose React Intl's locale data on the request for the user's
 // locale. This function will also cache the scripts by lang in memory.
@@ -51,6 +46,11 @@ const getMessages = locale => {
   return require(`../lang/${locale}.json`)
 }
 
+// Get the supported languages by looking for translations in the `lang/` dir.
+const supportedLanguages = glob
+  .sync('./lang/*.json')
+  .map(f => basename(f, '.json'))
+
 app.prepare().then(() => {
   // Parse application/x-www-form-urlencoded
   server.use(bodyParser.urlencoded({ extended: false }))
@@ -58,7 +58,7 @@ app.prepare().then(() => {
   server.use(bodyParser.json())
 
   server.use(function (req, res, next) {
-    req.locale = req.acceptsLanguages('mi', 'fr', 'en')
+    req.locale = req.acceptsLanguages(supportedLanguages)
     req.localeDataScript = getLocaleDataScript(req.locale)
     // req.messages = dev ? {} : getMessages(req.locale)
     req.messages = getMessages(req.locale)
@@ -79,7 +79,7 @@ app.prepare().then(() => {
     const db = mongoose.connection
     db.on('error', console.error.bind(console, 'connection error:'))
 
-    initialOrganisations()
+    // initialOrganisations()
   }
 
   // REST API routes
