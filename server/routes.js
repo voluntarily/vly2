@@ -8,6 +8,8 @@ const routes = require('next-routes')
 module.exports = routes() // ----   ----      -----
   .add('about')
   .add('orgs', '/orgs', 'orgs')
-  .add('org', '/orgs/:slug', 'orgDetailPage')
+  .add('orgedit', '/orgs/:id/edit', 'orgs/OrgUpdatePage')
+  .add('orgnew', '/org/new', 'orgs/OrgUpdatePage')
+  .add('org', '/orgs/:id', 'orgs/OrgDetailPage')
 
 // Usage inside Page.getInitialProps (req = { pathname, asPath, query } = { pathname: '/', asPath: '/about', query: { slug: 'about' } })

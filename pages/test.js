@@ -4,6 +4,7 @@ import LessStyled from '../components/test/LessStyled'
 import AntdType from '../components/test/AntdType'
 import IntlDemo from '../components/test/IntlDemo'
 import OrgCard from '../components/Org/OrgCard'
+import OrgDetail from '../components/Org/OrgDetail'
 
 const org = {
   _id: 'f34gb2bh24b24b2',
@@ -23,4 +24,6 @@ export default () =>
     <AntdType />
     <h1>Organisation Card</h1>
     <OrgCard style={{ width: '300px' }} org={org} />
+    <h1>Organisation Detail</h1>
+    <OrgDetail org={org} />
   </Layout>

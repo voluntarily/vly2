@@ -1,51 +1,67 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import Helmet from 'react-helmet'
+import { Component } from 'react'
+import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
+import { Button, Popconfirm, message } from 'antd'
+import reduxApi, { withOrgs } from '../../redux/reduxApi.js'
+import Layout from '../../components/Layout'
+import OrgDetail from '../../components/Org/OrgDetail'
 
-// Import Style
-import styles from '../../components/OrgListItem/OrgListItem.css'
-
-// Import Actions
-import { fetchOrg } from '../../OrgActions'
-
-// Import Selectors
-import { getOrg } from '../../OrgReducer'
-
-export function OrgDetailPage (props) {
-  return (
-    <div>
-      <Helmet title={props.org.name} />
-      <div className={`${styles['single-org']} ${styles['org-detail']}`}>
-        <h3 className={styles['org-name']}>{props.org.name}</h3>
-        <p className={styles['org.about']}><FormattedMessage id='by' /> {props.org.about}</p>
-        <p className={styles['org-desc']}>{props.org.type}</p>
-      </div>
-    </div>
-  )
-}
-
-// Actions required to provide data for this component to render in server side.
-OrgDetailPage.need = [params => {
-  return fetchOrg(params.cuid)
-}]
-
-// Retrieve data from store as props
-function mapStateToProps (state, props) {
-  return {
-    org: getOrg(state, props.params.cuid)
+class OrgDetailPage extends Component {
+  static async getInitialProps ({ store, query }) {
+    // Get one Org
+    console.log('OrgDetailPage:getInitialProps:', store, query)
+    const orgs = await store.dispatch(reduxApi.actions.organisations.get(query))
+    return { orgs, query }
   }
+
+  handleDelete (index, orgId, event) {
+    const callbackWhenDone = () => this.setState({ inProgress: false })
+    this.setState({ inProgress: orgId })
+    // Actual data request
+    this.props.dispatch(reduxApi.actions.organisations.delete({ id: orgId }, callbackWhenDone))
+  }
+
+  cancel = () => { message.error('Delete Cancelled') }
+
+  render () {
+    let content
+    if (this.props.orgs && this.props.orgs.length === 1) {
+      const org = this.props.orgs[0]
+      content =
+        <Layout className='fullpage'>
+          <h1><FormattedMessage defaultMessage='Organisation' id='OrganisationTitle' /></h1>
+          <OrgDetail org={org} />
+          <Link href={`/orgs/${org._id}/edit`} >
+            <Button type='secondary' shape='round' >
+              <FormattedMessage id='editOrg' defaultMessage='Edit' description='Button to edit an organisation on OrgDetails page' />
+            </Button>
+          </Link>
+            &nbsp;
+          <Popconfirm title='Confirm removal of this organisation.' onConfirm={this.handleDelete} onCancel={this.cancel} okText='Yes' cancelText='No'>
+            <Button type='danger' shape='round' >
+              <FormattedMessage id='deleteOrg' defaultMessage='Remove Organisation' description='Button to remove an Organisatino on OrgDetails page' />
+            </Button>
+          </Popconfirm>
+          &nbsp;
+          <Button><Link href='/orgs'><a>
+            <FormattedMessage id='showOrgs' defaultMessage='Show All' description='Button to show all organisations' />
+          </a></Link></Button>
+          <br /><small>buttons visible here will depend on user role</small>
+        </Layout>
+    } else {
+      content =
+        <div>
+          <h2>Sorry this organisation is not available</h2>
+          <Button><Link href='/orgs'><a>
+            <FormattedMessage id='showOrgs' defaultMessage='Show All' description='Button to show all organisations' />
+          </a></Link></Button>
+          <Button shape='round'><Link href='/org/new'><a>
+            <FormattedMessage id='newOrg' defaultMessage='New Organisation' description='Button to create a new organisation' />
+          </a></Link></Button>
+        </div>
+    }
+    return (content)
+  };
 }
 
-OrgDetailPage.propTypes = {
-  org: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    about: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
-    cuid: PropTypes.string.isRequired
-  }).isRequired
-}
-
-export default connect(mapStateToProps)(OrgDetailPage)
+export default withOrgs(OrgDetailPage)

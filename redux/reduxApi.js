@@ -4,6 +4,7 @@ import fetch from 'isomorphic-fetch'
 import reduxApi, { transformers } from 'redux-api'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
 import { connect } from 'react-redux'
 
@@ -66,7 +67,7 @@ const thisReduxApi = reduxApi({
 
 export default thisReduxApi
 
-const createStoreWithThunkMiddleware = applyMiddleware(thunkMiddleware)(createStore)
+const createStoreWithThunkMiddleware = composeWithDevTools(applyMiddleware(thunkMiddleware))(createStore)
 export const makeStore = (reduxState, enhancer) => createStoreWithThunkMiddleware(combineReducers(thisReduxApi.reducers), reduxState)
 
 // endpointNames: Use reduxApi endpoint names here

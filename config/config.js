@@ -10,6 +10,7 @@ const completeConfig = {
     databaseUrl: process.env.MONGODB_URI || `mongodb://localhost/${databaseName}`,
     jsonOptions: {
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
     }
