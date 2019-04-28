@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Row, Col } from 'antd'
 import Markdown from 'markdown-to-jsx'
+import OrgType from './OrgType'
 
 const OrgDetail = ({ org, ...props }) => (
   <Row type='flex' align='top'>
@@ -16,7 +17,7 @@ const OrgDetail = ({ org, ...props }) => (
       md={{ span: 12, order: 1 }}
     >
       <h1>{org.name}</h1>
-      <p>{org.type}</p>
+      <ul>{org.type.map((t, index) => <OrgType key={index} orgType={t} />)}</ul>
       <h3>About</h3>
       <Markdown children={org.about || ''} />
     </Col>
@@ -27,7 +28,7 @@ OrgDetail.propTypes = {
   org: PropTypes.shape({
     name: PropTypes.string.isRequired,
     about: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
+    type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])).isRequired,
     imgUrl: PropTypes.string,
     _id: PropTypes.string.isRequired
   }).isRequired

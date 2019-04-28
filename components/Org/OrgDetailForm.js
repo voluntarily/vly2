@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Button, Row, Col, Radio } from 'antd'
+import { Form, Input, Button, Row, Col, Checkbox } from 'antd'
 import { FormattedMessage } from 'react-intl'
+import slug from 'limax'
 const { TextArea } = Input
 
 function hasErrors (fieldsError) {
@@ -24,6 +25,7 @@ class OrgDetailForm extends Component {
         const org = this.props.org
         // update the rest from the form values.
         org.name = values.name
+        org.slug = slug(values.name)
         org.about = values.about
         org.imgUrl = values.imgUrl
         org.type = values.type
@@ -40,12 +42,14 @@ class OrgDetailForm extends Component {
     const orgImgUrl = <FormattedMessage id='orgImgUrl' defaultMessage='Image Link' about='organisation Image URL label in OrgDetails Form' />
     const orgType = <FormattedMessage id='orgType' defaultMessage='Type' about='school, business or activity provider' />
 
-    // TODO conver type to allow multiples
-    // const typeOptions = [
-    //   { label: 'Business', value: 'volunteer-provider' },
-    //   { label: 'School', value: 'op-provider' },
-    //   { label: 'Activity provider', value: 'content-provider' }
-    // ]
+    // TODO translate
+    const typeOptions = [
+      { label: 'Business', value: 'vp' },
+      { label: 'School', value: 'op' },
+      { label: 'Activity provider', value: 'ap' },
+      { label: 'Agency', value: 'admin' },
+      { label: 'Other', value: 'other' }
+    ]
 
     const {
       getFieldDecorator, getFieldsError, getFieldError, isFieldTouched
@@ -123,14 +127,9 @@ class OrgDetailForm extends Component {
                     { required: true, message: 'type is required' }
                   ]
                 })(
-                  // <Checkbox.Group
-                  //   options={typeOptions}
-                  // />
-                  <Radio.Group buttonStyle='solid'>
-                    <Radio.Button value='op'>School</Radio.Button>
-                    <Radio.Button value='vp'>Business</Radio.Button>
-                    <Radio.Button value='act'>Activity Provider</Radio.Button>
-                  </Radio.Group>
+                  <Checkbox.Group
+                    options={typeOptions}
+                  />
                 )}
               </Form.Item>
             </Col>
@@ -174,11 +173,11 @@ class OrgDetailForm extends Component {
 
 OrgDetailForm.propTypes = {
   org: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    about: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    about: PropTypes.string,
+    type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])),
     imgUrl: PropTypes.string,
-    _id: PropTypes.string.isRequired
+    _id: PropTypes.string
   }).isRequired,
   form: PropTypes.object,
   params: PropTypes.shape({
@@ -216,7 +215,6 @@ export default Form.create({
     // props.onChange(changedFields);
   },
   mapPropsToFields (props) {
-    console.log('mapPropsToFields', props)
     return {
       name: Form.createFormField({ ...props.org.name, value: props.org.name }),
       about: Form.createFormField({ ...props.org.about, value: props.org.about }),

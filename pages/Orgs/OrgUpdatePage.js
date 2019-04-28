@@ -9,12 +9,12 @@ import Router from 'next/router'
 class OrgUpdatePage extends Component {
   static async getInitialProps ({ store, query }) {
     // Get one Org
-    if (query !== 'new') {
+    if (query && query.id) {
       const orgs = await store.dispatch(reduxApi.actions.organisations.get(query))
       return { orgs, query }
     } else {
       return {
-        orgs: [ { org: { name: '', type: 'vp', about: '', imgUrl: '' } } ],
+        orgs: [ { org: { name: '', type: ['vp'], about: '', imgUrl: '' } } ],
         query
       }
     }
@@ -24,19 +24,19 @@ class OrgUpdatePage extends Component {
     Router.back()
   }
 
-  handleAdd (org) {
+  async handleAdd (org) {
     if (!org) return
-    const callbackWhenDone = () => {
-      message.success('Saved. ')
-      // go  to details page
-      Router.push(`/orgs/${org._id}`)
-    }
     // Actual data request
-    if (org._id) { // update put
-      this.props.dispatch(reduxApi.actions.organisations.put({ id: org._id }, { body: JSON.stringify(org) }, callbackWhenDone))
-    } else { // new post
-      this.props.dispatch(reduxApi.actions.organisations.post({}, { body: JSON.stringify(org) }, callbackWhenDone))
+    let res = {}
+    if (org._id) {
+      res = await this.props.dispatch(reduxApi.actions.organisations.put({ id: org._id }, { body: JSON.stringify(org) }))
+    } else {
+      res = await this.props.dispatch(reduxApi.actions.organisations.post({}, { body: JSON.stringify(org) }))
     }
+    org = res[0]
+    message.success('Saved.')
+    // go  to details page
+    if (org && org._id) Router.push(`/orgs/${org._id}`)
   }
 
   render () {

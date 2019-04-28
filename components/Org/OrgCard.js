@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import { Card } from 'antd'
+import Markdown from 'markdown-to-jsx'
+import OrgType from './OrgType'
 
 const OrgCard = ({ org, ...props }) => (
   <Link href={`/orgs/${org._id}`} >
@@ -11,7 +13,9 @@ const OrgCard = ({ org, ...props }) => (
     >
       <Card.Meta
         title={<h1>{org.name}</h1>}
-        description={<p>{org.about}<br /><small>{org.type}</small></p>}
+        description={<div><Markdown>{org.about}</Markdown><br /><small>
+          <ul>{org.type.map((t, index) => <OrgType key={index} orgType={t} />)}</ul>
+        </small></div>}
       />
     </Card>
   </Link>
@@ -21,7 +25,7 @@ OrgCard.propTypes = {
   org: PropTypes.shape({
     name: PropTypes.string.isRequired,
     about: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
+    type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])).isRequired,
     _id: PropTypes.string.isRequired
   }).isRequired
 }

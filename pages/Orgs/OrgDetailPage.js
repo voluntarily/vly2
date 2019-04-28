@@ -5,20 +5,22 @@ import { Button, Popconfirm, message } from 'antd'
 import reduxApi, { withOrgs } from '../../redux/reduxApi.js'
 import Layout from '../../components/Layout'
 import OrgDetail from '../../components/Org/OrgDetail'
+import Router from 'next/router'
 
 class OrgDetailPage extends Component {
   static async getInitialProps ({ store, query }) {
     // Get one Org
-    console.log('OrgDetailPage:getInitialProps:', store, query)
     const orgs = await store.dispatch(reduxApi.actions.organisations.get(query))
     return { orgs, query }
   }
 
-  handleDelete (index, orgId, event) {
-    const callbackWhenDone = () => this.setState({ inProgress: false })
-    this.setState({ inProgress: orgId })
+  async handleDelete (org) {
+    if (!org) return
     // Actual data request
-    this.props.dispatch(reduxApi.actions.organisations.delete({ id: orgId }, callbackWhenDone))
+    await this.props.dispatch(reduxApi.actions.organisations.delete({ id: org._id }))
+    // TODO error handling - how can this fail?
+    message.success('Deleted. ')
+    Router.replace(`/orgs`)
   }
 
   cancel = () => { message.error('Delete Cancelled') }
@@ -37,13 +39,13 @@ class OrgDetailPage extends Component {
             </Button>
           </Link>
             &nbsp;
-          <Popconfirm title='Confirm removal of this organisation.' onConfirm={this.handleDelete} onCancel={this.cancel} okText='Yes' cancelText='No'>
+          <Popconfirm title='Confirm removal of this organisation.' onConfirm={this.handleDelete.bind(this, org)} onCancel={this.cancel} okText='Yes' cancelText='No'>
             <Button type='danger' shape='round' >
               <FormattedMessage id='deleteOrg' defaultMessage='Remove Organisation' description='Button to remove an Organisatino on OrgDetails page' />
             </Button>
           </Popconfirm>
           &nbsp;
-          <Button><Link href='/orgs'><a>
+          <Button shape='round'><Link href='/orgs'><a>
             <FormattedMessage id='showOrgs' defaultMessage='Show All' description='Button to show all organisations' />
           </a></Link></Button>
           <br /><small>buttons visible here will depend on user role</small>
@@ -52,7 +54,7 @@ class OrgDetailPage extends Component {
       content =
         <div>
           <h2>Sorry this organisation is not available</h2>
-          <Button><Link href='/orgs'><a>
+          <Button shape='round'><Link href='/orgs'><a>
             <FormattedMessage id='showOrgs' defaultMessage='Show All' description='Button to show all organisations' />
           </a></Link></Button>
           <Button shape='round'><Link href='/org/new'><a>

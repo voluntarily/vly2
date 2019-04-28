@@ -26,7 +26,7 @@ OrgList.propTypes = {
       name: PropTypes.string.isRequired,
       imgUrl: PropTypes.string,
       about: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
+      type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])).isRequired,
       _id: PropTypes.string.isRequired
     })
   ).isRequired
