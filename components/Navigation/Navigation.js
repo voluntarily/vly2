@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import { withRouter } from 'next/router'
-// import { connect } from 'react-redux';
 import { Menu } from 'antd'
-// import { toggleLoginForm } from '../../AppActions';
 
 const Navigation = ({ items, defaultItem, router, ...props }) => {
   // TODO next js get the location is different?
@@ -17,7 +15,9 @@ const Navigation = ({ items, defaultItem, router, ...props }) => {
     >
       {items.map(item => (
         <Menu.Item key={item.key}>
-          <Link href={item.url}><a>{item.text}</a></Link>
+          <Link prefetch key={item.key} href={item.href}>
+            <a>{item.text}</a>
+          </Link>
         </Menu.Item>
       ))}
     </Menu>

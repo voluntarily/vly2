@@ -1,11 +1,16 @@
+import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import { Layout } from 'antd'
-import Navigation from '../Header/Navigation'
-import navItems from './navigation_footer.json'
+import Navigation from '../Navigation/Navigation'
+import links from './FooterMenu'
+const getAllowedLinks = isAuthenticated => links()
+  .filter(l => !l.authRequired || (l.authRequired && isAuthenticated))
+  .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
 
-export default () =>
+const Footer = ({ isAuthenticated }) =>
   <Layout.Footer>
-    <Navigation items={navItems.admin} />
+    <Navigation items={getAllowedLinks(isAuthenticated)} />
+
     <div className='footer' >
       <span>&copy; 2019 &middot; <a href='http://voluntari.ly'>Voluntari.ly</a></span>
       <p>
@@ -39,3 +44,9 @@ export default () =>
       }
     `}</style>
   </Layout.Footer>
+
+Footer.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired
+}
+
+export default Footer

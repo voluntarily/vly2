@@ -8,7 +8,7 @@ const org = {
   slug: 'hello-omgtech',
   imgUrl: '/static/andrew.jpg',
   about: 'OMGTech! develops & delivers engaging workshops for both teachers and students on digital technologies and how to explore and invent with them',
-  type: 'activity-provider'
+  type: ['ap', 'vp']
 }
 
 const props = {
@@ -19,9 +19,8 @@ test('OrgCard renders properly', t => {
   const wrapper = render(
     <OrgCard {...props} />
   )
-
   t.is(wrapper.find('h1').first().text(), org.name)
-  t.regex(wrapper.find('p').first().text(), new RegExp(org.about))
-  t.is(wrapper.find('small').first().text(), org.type)
+  t.regex(wrapper.find('.ant-card-meta-description span').first().text(), new RegExp(org.about))
+  t.is(wrapper.find('small').first().text(), ' Activity provider Business')
   // t.deepEqual(wrapper.prop('org'), props.org);
 })

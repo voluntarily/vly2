@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { FormattedMessage, FormattedNumber } from 'react-intl'
 import Link from 'next/link'
-import Layout from '../components/Layout'
 import withIntl from '../lib/withIntl'
+import publicPage from '../hocs/publicPage'
 
 class Index extends Component {
   static getInitialProps () {
@@ -11,7 +11,7 @@ class Index extends Component {
 
   render () {
     return (
-      <Layout>
+      <div>
         <Link href='/about'>
           <a>About Page</a>
         </Link>
@@ -22,8 +22,8 @@ class Index extends Component {
         <p>
           <FormattedNumber value={1000} />
         </p>
-      </Layout>
+      </div>
     )
   }
 }
-export default withIntl(Index)
+export default publicPage(withIntl(Index))

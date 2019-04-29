@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import Navigation from '../Header/Navigation'
+import Navigation from '../Navigation/Navigation'
 import { mountWithIntl } from '../../lib/react-intl-test-helper'
 
 const menu = [

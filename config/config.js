@@ -13,6 +13,10 @@ const completeConfig = {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
+    },
+    auth: {
+      'AUTH0_CLIENT_ID': 'TsRPTVINZVOdao2Lf7EU8sPDkVZ3VQJY',
+      'AUTH0_CLIENT_DOMAIN': 'dev-x6k-p15l.au.auth0.com'
     }
   },
 
