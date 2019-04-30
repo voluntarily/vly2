@@ -5,7 +5,8 @@ import { Menu } from 'antd'
 
 const Navigation = ({ items, defaultItem, router, ...props }) => {
   // TODO next js get the location is different?
-  const activeItem = router && router.pathname ? router.pathname.slice(1) : defaultItem
+  // const activeItem = router && router.pathname ? router.pathname.slice(1) : defaultItem
+  const activeItem = router.pathname.slice(1)
   return (
     <Menu
       theme='dark'
@@ -15,7 +16,8 @@ const Navigation = ({ items, defaultItem, router, ...props }) => {
     >
       {items.map(item => (
         <Menu.Item key={item.key}>
-          <Link prefetch key={item.key} href={item.href}>
+          {/* don't do prefetch during testing */}
+          <Link key={item.href} href={item.href}>
             <a>{item.text}</a>
           </Link>
         </Menu.Item>
@@ -26,9 +28,7 @@ const Navigation = ({ items, defaultItem, router, ...props }) => {
 
 Navigation.defaultProps = {
   items: [],
-  defaultItem: '',
-  location: {}
-  // toggleLoginForm: () => {}
+  defaultItem: ''
 }
 
 Navigation.propTypes = {
@@ -37,14 +37,7 @@ Navigation.propTypes = {
     text: PropTypes.string,
     url: PropTypes.string
   })),
-  defaultItem: PropTypes.string,
-  location: PropTypes.object
-  // toggleLoginForm: PropTypes.func,
+  defaultItem: PropTypes.string
 }
 
 export default withRouter(Navigation)
-// const mapDispatchToProps = {
-//   toggleLoginForm,
-// };
-
-// export default connect(null, mapDispatchToProps)(withRouter(Navigation));

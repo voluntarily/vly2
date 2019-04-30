@@ -26,7 +26,7 @@ const getAllowedLinks = isAuthenticated => links()
   .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
 
 // eslint-disable-next-line no-unused-vars
-const Header = ({ isAuthenticated }) => (
+const Header = ({ isAuthenticated, ...props }) => (
   <Layout.Header >
     <Logo src='/static/vlogo.svg' />
     <Brand className='site-title' >
@@ -39,7 +39,7 @@ const Header = ({ isAuthenticated }) => (
       </Link>
     </Brand>
     {/* <SearchBar /> */}
-    <Navigation items={getAllowedLinks(isAuthenticated)} />
+    <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
 
   </Layout.Header>
 )

@@ -1,7 +1,7 @@
 const mongooseCrudify = require('mongoose-crudify')
 
-const helpers = require('../services/helpers')
-const Organisation = require('../models/organisation')
+const helpers = require('../../services/helpers')
+const Organisation = require('./organisation')
 
 module.exports = function (server) {
   // Docs: https://github.com/ryo718/mongoose-crudify

@@ -1,19 +1,17 @@
 import React from 'react'
 import test from 'ava'
 import Footer from '../Footer/Footer'
-import { render } from 'enzyme'
 import { mountWithIntl } from '../../lib/react-intl-test-helper'
+import withMockRoute from '../../server/util/mockRouter'
 
 test('renders the footer properly', t => {
-  const wrapper = mountWithIntl(
-    <Footer />
-  )
-  t.is(wrapper.find('span').length, 8)
-  t.is(wrapper.find('.footer span').first().text(), '© 2019 · Voluntari.ly')
-})
+  const RoutedFooter = withMockRoute(Footer, '/about')
 
-test('renders snapshot', t => {
-  const wrapper = render(<Footer />)
-  t.is(wrapper.find('span').length, 8)
+  const wrapper = mountWithIntl(
+    <RoutedFooter isAuthenticated={false} />
+  )
+  // console.log(wrapper.debug())
+  t.is(wrapper.find('span').length, 9)
+  t.is(wrapper.find('.footer span').first().text(), '© 2019 · Voluntari.ly')
   t.snapshot()
 })

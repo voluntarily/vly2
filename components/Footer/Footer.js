@@ -7,9 +7,9 @@ const getAllowedLinks = isAuthenticated => links()
   .filter(l => !l.authRequired || (l.authRequired && isAuthenticated))
   .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
 
-const Footer = ({ isAuthenticated }) =>
+const Footer = ({ isAuthenticated, ...props }) =>
   <Layout.Footer>
-    <Navigation items={getAllowedLinks(isAuthenticated)} />
+    <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
 
     <div className='footer' >
       <span>&copy; 2019 &middot; <a href='http://voluntari.ly'>Voluntari.ly</a></span>
