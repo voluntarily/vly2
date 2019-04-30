@@ -1,8 +1,8 @@
 import { Component } from 'react'
-import Layout from '../../components/Layout'
 import reduxApi, { withOrgs } from '../../redux/reduxApi.js'
 import { FormattedMessage } from 'react-intl'
 import OrgDetailForm from '../../components/Org/OrgDetailForm'
+import publicPage, { FullPage } from '../../hocs/publicPage'
 import { message } from 'antd'
 import Router from 'next/router'
 
@@ -42,7 +42,7 @@ class OrgUpdatePage extends Component {
   render () {
     const org = this.props.orgs[0]
     return (
-      <Layout className='fullpage'>
+      <FullPage>
         <h1><FormattedMessage
           defaultMessage='Organisation'
           id='OrganisationTitle' />
@@ -52,9 +52,9 @@ class OrgUpdatePage extends Component {
           id='OrgEditPrompt' />
         </small>
         <OrgDetailForm org={org} onSubmit={this.handleAdd.bind(this, org)} onCancel={this.handleCancel} />
-      </Layout>
+      </FullPage>
     )
   };
 }
 
-export default withOrgs(OrgUpdatePage)
+export default publicPage(withOrgs(OrgUpdatePage))

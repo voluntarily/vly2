@@ -1,13 +1,13 @@
 import React from 'react'
 import Head from 'next/head'
 import Router from 'next/router'
-import styled from 'styled-components'
 
 import { getUserFromServerCookie, getUserFromLocalCookie } from '../lib/auth/auth'
 import { Layout } from 'antd'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 
+import styled from 'styled-components'
 export const A4 = styled.div`
   margin: 3em;
   padding-bottom: 4em;
@@ -29,11 +29,16 @@ export const FullPage = styled.div`
     }
   }
 `
+export const FillWindow = styled.div`
+// subtract height of header and footer
+  min-height: calc(100vh - 196px); 
+}
+`
 
 export default Page => class DefaultPage extends React.Component {
-  static getInitialProps (ctx) {
+  static async getInitialProps (ctx) {
     const loggedUser = process.browser ? getUserFromLocalCookie() : getUserFromServerCookie(ctx.req)
-    const pageProps = Page.getInitialProps && Page.getInitialProps(ctx)
+    const pageProps = Page.getInitialProps && (await Page.getInitialProps(ctx))
     return {
       ...pageProps,
       loggedUser,
@@ -65,7 +70,6 @@ export default Page => class DefaultPage extends React.Component {
   render () {
     return (
       <Layout>
-        {console.log('is Auth:', this.props.isAuthenticated)}
         <Head>
           <title>Voluntari.ly</title>
           <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
@@ -74,7 +78,9 @@ export default Page => class DefaultPage extends React.Component {
         </Head>
         <Header {...this.props} />
         <Layout.Content >
-          <Page {...this.props} />
+          <FillWindow>
+            <Page {...this.props} />
+          </FillWindow>
         </Layout.Content >
         <Footer {...this.props} />
       </Layout>

@@ -84,8 +84,8 @@ app.prepare().then(() => {
 
   // REST API routes
   const rootPath = require('path').join(__dirname, '/..')
-  glob.sync(rootPath + '/server/api/*.js').forEach(controllerPath => {
-    if (!controllerPath.includes('.test.js')) require(controllerPath)(server)
+  glob.sync(rootPath + '/server/api/**/*.routes.js').forEach(controllerPath => {
+    if (!controllerPath.includes('.spec.js')) require(controllerPath)(server)
   })
 
   // Next.js page routes

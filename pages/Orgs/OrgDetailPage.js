@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import { Button, Popconfirm, message } from 'antd'
 import reduxApi, { withOrgs } from '../../redux/reduxApi.js'
-import Layout from '../../components/Layout'
+import publicPage, { FullPage } from '../../hocs/publicPage'
 import OrgDetail from '../../components/Org/OrgDetail'
 import Router from 'next/router'
 
@@ -30,7 +30,7 @@ class OrgDetailPage extends Component {
     if (this.props.orgs && this.props.orgs.length === 1) {
       const org = this.props.orgs[0]
       content =
-        <Layout className='fullpage'>
+        <FullPage>
           <h1><FormattedMessage defaultMessage='Organisation' id='OrganisationTitle' /></h1>
           <OrgDetail org={org} />
           <Link href={`/orgs/${org._id}/edit`} >
@@ -49,10 +49,10 @@ class OrgDetailPage extends Component {
             <FormattedMessage id='showOrgs' defaultMessage='Show All' description='Button to show all organisations' />
           </a></Link></Button>
           <br /><small>buttons visible here will depend on user role</small>
-        </Layout>
+        </FullPage>
     } else {
       content =
-        <div>
+        <FullPage>
           <h2>Sorry this organisation is not available</h2>
           <Button shape='round'><Link href='/orgs'><a>
             <FormattedMessage id='showOrgs' defaultMessage='Show All' description='Button to show all organisations' />
@@ -60,10 +60,10 @@ class OrgDetailPage extends Component {
           <Button shape='round'><Link href='/org/new'><a>
             <FormattedMessage id='newOrg' defaultMessage='New Organisation' description='Button to create a new organisation' />
           </a></Link></Button>
-        </div>
+        </FullPage>
     }
     return (content)
   };
 }
 
-export default withOrgs(OrgDetailPage)
+export default publicPage(withOrgs(OrgDetailPage))

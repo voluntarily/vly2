@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import Layout from '../../components/Layout'
+import Head from 'next/head'
 import Markdown from 'markdown-to-jsx'
 import { Button } from 'antd'
 import aboutEn from './about-en-md.js'
 import aboutMi from './about-mi-md.js'
 import withIntl from '../../lib/withIntl'
-
+import publicPage from '../../hocs/publicPage'
 const getText = (locale) => {
   switch (locale) {
     case 'mi': { return aboutMi() }
@@ -18,17 +18,18 @@ class About extends Component {
   render () {
     const about = getText(this.props.intl.locale)
     return (
-      <Layout>
-        <div className='about'>
-          <Markdown
-            children={about}
-            options={{
-              overrides: {
-                Button: { component: Button }
-              }
-            }}
-          />
-          <style jsx>{`
+
+      <div className='about'>
+        <Head><title>Voluntari.ly - About</title></Head>
+        <Markdown
+          children={about}
+          options={{
+            overrides: {
+              Button: { component: Button }
+            }
+          }}
+        />
+        <style jsx>{`
             div {
               margin: 3em;
               max-width: 50em;
@@ -39,11 +40,9 @@ class About extends Component {
               }
             }
           `}</style>
-        </div>
-      </Layout>
-
+      </div>
     )
   }
 };
 
-export default withIntl(About)
+export default publicPage(withIntl(About))
