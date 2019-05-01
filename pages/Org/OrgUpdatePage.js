@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import reduxApi, { withOrgs } from '../../redux/reduxApi.js'
+import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 import { FormattedMessage } from 'react-intl'
 import OrgDetailForm from '../../components/Org/OrgDetailForm'
 import publicPage, { FullPage } from '../../hocs/publicPage'

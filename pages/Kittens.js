@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import Layout from '../components/Layout'
-import reduxApi, { withKittens } from '../redux/reduxApi.js'
+import reduxApi, { withKittens } from '../../lib/redux/reduxApi'
 
 import { Link } from '../server/routes.js'
 import KittenItem from '../components/KittenItem'

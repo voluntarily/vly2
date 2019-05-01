@@ -1,26 +1,31 @@
 FROM node:8 as base
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-EXPOSE 8000
+EXPOSE 3122
 
 FROM base as development
 ENV NODE_ENV development
 COPY package.json package-lock.json ./
 RUN npm install
-COPY .babelrc index.js nodemon.json webpack.config.babel.js webpack.config.dev.js webpack.config.prod.js webpack.config.server.js ./
-COPY client ./client
-COPY Intl ./Intl
+COPY .babelrc index.js next.config.js   ./
+COPY assets ./assets
+COPY components ./components
+COPY config ./config
+COPY hocs ./hocs
+COPY lang ./lang
+COPY lib ./lib
+COPY pages ./pages
 COPY server ./server
+COPY static ./static
 CMD ["npm", "start"]
 
 FROM development as build
 ENV NODE_ENV=production
-RUN npm run build && npm run build:server
+RUN npm run build
 
 FROM base as production
 ENV NODE_ENV=production
 COPY package.json package-lock.json ./
 RUN npm install --production
-COPY index.js ./
 COPY --from=build /usr/src/app/dist ./dist
 CMD ["npm", "run", "start:prod"]

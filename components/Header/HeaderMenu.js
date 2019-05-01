@@ -1,28 +1,29 @@
 export default () =>
   [
     {
-      key: 'about',
+      key: 'habout',
       text: 'About',
       href: '/about'
     },
     {
-      key: 'orgs',
+      key: 'horgs',
       text: 'Organisations',
       href: '/orgs'
     },
     {
-      key: 'secret',
+      key: 'hsecret',
       href: '/secret',
       text: 'Private',
       authRequired: true
     },
     {
-      key: 'signin',
+      key: 'hsignin',
       href: '/auth/sign-in',
       text: 'Sign In',
       anonymousOnly: true
     },
     {
+      key: 'hsignoff',
       href: '/auth/sign-off',
       text: 'Sign Off',
       authRequired: true

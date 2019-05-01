@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Button, Row, Col, Checkbox } from 'antd'
+import { Button, Col, Checkbox, Form, Input, Row } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import slug from 'limax'
 const { TextArea } = Input

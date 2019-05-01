@@ -2,10 +2,10 @@ import { Component } from 'react'
 import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import { Button, Popconfirm, message } from 'antd'
-import reduxApi, { withOrgs } from '../../redux/reduxApi.js'
+import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 import publicPage, { FullPage } from '../../hocs/publicPage'
-import OrgDetail from '../../components/Org/OrgDetail'
 import Router from 'next/router'
+import OrgDetail from '../../components/Org/OrgDetail'
 
 class OrgDetailPage extends Component {
   static async getInitialProps ({ store, query }) {

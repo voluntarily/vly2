@@ -8,7 +8,6 @@ const initialOrganisations = function () {
 
     const orgList = [
       new Organisation({
-        cuid: 'cikqgkv4q01ck7453ualdn3aa',
         name: 'Admin',
         title: 'Voluntari.ly Administrators',
         slug: 'vly-admin',
@@ -16,7 +15,6 @@ const initialOrganisations = function () {
         about: "Voluntari.ly Administrators have special powers. Contact us to get things done that can't be done any other way"
       }),
       new Organisation({
-        cuid: 'cikqgkv4q01ck7453ualdn3ab',
         name: 'Datacom',
         title: 'Datacom etc etc',
         slug: 'datacom',
@@ -24,7 +22,6 @@ const initialOrganisations = function () {
         about: 'some of our most loyal helpers'
       }),
       new Organisation({
-        cuid: 'cikqgkv4q01ck7453ualdn3ac',
         name: 'Spark Ltd',
         slug: 'spark',
         type: 'corporate',
@@ -33,14 +30,12 @@ const initialOrganisations = function () {
       new Organisation({
         name: 'Westpac Ltd',
         slug: 'westpac',
-        cuid: 'cikqgkv4q01ck7453ualdn3ad',
         type: 'corporate',
         about: 'even more of our most loyal helpers'
       }),
       new Organisation({
         name: 'Albany High School',
         slug: 'albany-high',
-        cuid: 'cikqgkv4q01ck7453ualdn3ae',
         type: 'school',
         about: 'A great place to learn'
       })
