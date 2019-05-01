@@ -3,7 +3,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import OrgCard from './OrgCard'
-import { Row, Col } from 'antd'
+import { Col, Row } from 'antd'
 
 const OrgList = ({ orgs, ...props }) => (
   <Row type='flex' align='top' gutter={{ xs: 8, sm: 16, md: 24 }} >

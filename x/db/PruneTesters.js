@@ -37,7 +37,7 @@ getData('http://localhost:8000/api/people')
     people.people.map(p => {
       if (p.role === 'tester') {
         console.log('deleting:', p.name)
-        return deletePerson(p.cuid)
+        return deletePerson(p._id)
       }
     })
   })

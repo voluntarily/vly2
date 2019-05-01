@@ -22,7 +22,7 @@ const app = next({ dev })
 const routes = require('./routes')
 const routerHandler = routes.getRequestHandler(app)
 // const initialOrganisations = require('./models/organisation.dummy')
-
+// const initialOpportunities = require('./api/opportunity/opportunity.dummy')
 const { config } = require('../config/config')
 
 // We need to expose React Intl's locale data on the request for the user's
@@ -80,6 +80,7 @@ app.prepare().then(() => {
     db.on('error', console.error.bind(console, 'connection error:'))
 
     // initialOrganisations()
+    // initialOpportunities()
   }
 
   // REST API routes
@@ -94,3 +95,5 @@ app.prepare().then(() => {
   // Start server
   server.listen(config.serverPort, () => console.log(`${config.appName} running on http://localhost:${config.serverPort}/ Be Awesome`))
 })
+
+module.exports = { server }
