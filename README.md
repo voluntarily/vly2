@@ -1,6 +1,6 @@
 # vly2
 
-[![Join the chat at https://gitter.im/voluntarily/vly2](https://badges.gitter.im/voluntarily/vly1.svg)](https://gitter.im/voluntarily/vly2?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/voluntarily/community.svg)](https://gitter.im/voluntarily/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
 Support education and innovation in New Zealand Schools with industry experts and volunteers in the classrooms
