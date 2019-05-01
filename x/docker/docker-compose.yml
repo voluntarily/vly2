@@ -2,8 +2,8 @@ version: '3.4'
 services:
   web:
     build:
-      context: ../
-      dockerfile: Docker/Dockerfile
+      context: ./
+      # dockerfile: x/docker/Dockerfile
       target: development
     depends_on:
       - db

@@ -45,7 +45,7 @@ class OrgUpdatePage extends Component {
       <FullPage>
         <h1><FormattedMessage
           defaultMessage='Organisation'
-          id='OrganisationTitle' />
+          id='org.pageheading' />
         </h1>
         <small><FormattedMessage
           defaultMessage='Tell us something about your organisation and link to your home website.'

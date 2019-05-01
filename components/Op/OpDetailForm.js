@@ -208,7 +208,7 @@ class OpDetailForm extends Component {
                 onClick={this.props.onCancel}
               >
                 <FormattedMessage
-                  id='cancel'
+                  id='op.cancel'
                   defaultMessage='Cancel'
                   description='Label for cancel button on opportunity details form'
                 />
@@ -220,7 +220,7 @@ class OpDetailForm extends Component {
                 style={{ marginLeft: 8 }}
               >
                 <FormattedMessage
-                  id='saveOpportunity'
+                  id='op.save'
                   defaultMessage='Save'
                   description='Label for submit button on opportunity details form'
                 />

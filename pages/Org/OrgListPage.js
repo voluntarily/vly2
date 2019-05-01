@@ -26,9 +26,9 @@ class Orgs extends Component {
       <FullPage>
         <h1><FormattedMessage
           defaultMessage='Organisations'
-          id='OrganisationsTitle' /></h1>
+          id='org.list.heading' /></h1>
         <Button shape='round'><Link href='/org/new'><a>
-          <FormattedMessage id='newOrg' defaultMessage='New Organisation' description='Button to create a new organisation' />
+          <FormattedMessage id='org.new' defaultMessage='New Organisation' description='Button to create a new organisation' />
         </a></Link></Button>
         <OrgList orgs={orgs} />
       </FullPage>

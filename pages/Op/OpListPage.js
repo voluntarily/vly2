@@ -30,7 +30,7 @@ class Ops extends Component {
           />
         </h1>
         <Button shape='round'><Link href='/op/new'><a>
-          <FormattedMessage id='newOp' defaultMessage='New Opportunity' description='Button to create a new opportunity' />
+          <FormattedMessage id='op.new' defaultMessage='New Opportunity' description='Button to create a new opportunity' />
         </a></Link></Button>
         <br /><br />
         <OpList ops={this.props.ops} />

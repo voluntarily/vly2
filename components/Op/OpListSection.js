@@ -7,26 +7,35 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import OpList from '../../components/Op/OpList'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi'
+import Loading from '../../components/Loading'
 
 class OpListSection extends Component {
-  static async getInitialProps ({ store, query }) {
+  state = {}
+  async componentDidMount () {
     // Get all Ops
+
     console.log('getting ops for section')
     try {
-      const ops = await store.dispatch(reduxApi.actions.opportunities.get())
+      const ops = await this.props.dispatch(reduxApi.actions.opportunities.get())
       console.log('got ops', ops)
-      return { ops, query }
+      this.setState({ ops })
     } catch (err) {
       console.log('error in getting ops', err)
     }
   }
   render () {
-    return (
-      <section>
-        <h2>Heading showing filter here</h2>
-        <OpList ops={this.props.ops} />
-      </section>
-    )
+    if (!this.state.ops) {
+      return (<section>
+        <h3>search filter here</h3>
+        <Loading><p>Loading opportunities...</p></Loading>
+        
+      </section>)
+    } else {
+      return (<section>
+        <h3>search filter here</h3>
+        <OpList ops={this.state.ops} />
+      </section>)
+    }
   }
 }
 
