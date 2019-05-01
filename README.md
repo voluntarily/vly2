@@ -59,19 +59,19 @@ npm install may take several minutes as it pulls in all the dependent packages.
 
 ### Available Commands
 
-1. `npm start` - starts the development server with hot reloading enabled
+1. `npm run dev` - starts the development server with hot reloading enabled
 
-2. `npm run bs` - bundles the code and starts the production server
+2. `npm run build` - bundles the code 
 
 3. `npm run test` - start the test runner
 
-4. `npm run watch:test` - start the test runner with watch mode
+4. `npm run start` - runs production server
 
-5. `npm run cover` - generates test coverage report
+5. `npm run check-coverage` - generates test coverage report 
 
-6. `npm run lint` - runs linter to check for lint errors
+6. `npm run lint` - runs standard to check for lint errors ( npm run fix to fix lint errors )
 
-When you run `npm start` it will take a couple of minutes to start up and there's a pause when nothing seems to be happening - be patient, webpack and babel are processing all the files. 
+
 Once you see the message "Voluntari.ly is running on port: 3122! Be Awesome!" then you can open your browser at http://localhost:3122.
 
 If you see the message "Please make sure Mongodb is installed and running!"  then go back and start mongod. 
