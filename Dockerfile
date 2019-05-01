@@ -17,7 +17,7 @@ COPY lib ./lib
 COPY pages ./pages
 COPY server ./server
 COPY static ./static
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
 
 FROM development as build
 ENV NODE_ENV=production

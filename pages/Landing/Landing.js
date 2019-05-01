@@ -7,7 +7,8 @@ import Link from 'next/link'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 
 // import OpListSection from '../../components/Op/OpListSection'
-import OpListSection from '../Ops/OpListSection'
+import OpListSection from '../../components/Op/OpListSection'
+
 // import bigimage from './landing-page-bg.jpg'
 // import styles from './Landing.less'
 // import schoolsactivity from './schoolsactivity.png'
