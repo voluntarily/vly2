@@ -27,7 +27,7 @@ export function OpDetail ({ op }) {
           <dl>
             <dt>
               <FormattedMessage
-                id='commitment'
+                id='op.commitment'
                 defaultMessage='commitment'
                 description='label in opportunity e.g 2 hours commitment'
               />

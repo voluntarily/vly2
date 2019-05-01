@@ -24,7 +24,7 @@ const OpCard = ({ op, onPress, ...props }) => (
       <p>
         {op.duration}&nbsp;
         <FormattedMessage
-          id='commitment'
+          id='opcard.commitment'
           defaultMessage='commitment'
           description='label in opportunity e.g 2 hours commitment'
         />
