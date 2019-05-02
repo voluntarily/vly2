@@ -29,7 +29,7 @@ OrgList.propTypes = {
       type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])).isRequired,
       _id: PropTypes.string.isRequired
     })
-  ).isRequired
+  ) // optional as may update later.
 }
 
 export default OrgList

@@ -48,7 +48,7 @@ OpListSection.propTypes = {
     duration: PropTypes.string,
     status: PropTypes.string,
     _id: PropTypes.string.isRequired
-  })).isRequired,
+  })), // optional as we can show an empty list and data may arrive async
   dispatch: PropTypes.func.isRequired
 }
 

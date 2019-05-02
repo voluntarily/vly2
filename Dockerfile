@@ -8,14 +8,14 @@ EXPOSE 3122
 
 FROM base as development
 ENV NODE_ENV development
-COPY package.json package-lock.json ./
+COPY package.json ./
 RUN npm install
 COPY . /usr/src/app
 CMD ["npm", "run", "dev"]
 
 FROM base as production
 ENV NODE_ENV=production
-COPY package.json package-lock.json ./
+COPY package.json ./
 RUN npm install --production
 RUN npm run build
 CMD ["npm", "start" ]

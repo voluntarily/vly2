@@ -5,8 +5,6 @@ services:
       context: ./
       # dockerfile: x/docker/Dockerfile
       target: development
-    depends_on:
-      - db
     ports:
       - "${WEB_PORT:-3122}:3122"
     volumes:
@@ -16,9 +14,4 @@ services:
       MONGO_URL: mongodb://db:27017/vly-dev
     stdin_open: true
     tty: true
-  db:
-    image: mongo:latest
-    volumes:
-      - dbdata:/data/db
-volumes:
-  dbdata:
+ 

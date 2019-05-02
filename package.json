@@ -18,10 +18,6 @@
     "lint",
     "test"
   ],
-  "now": {
-    "name": "voluntarily-vly2",
-    "alias": "voluntarily"
-  },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "@babel/register": "^7.4.4",
