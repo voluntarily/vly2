@@ -15,7 +15,7 @@ module.exports = (server) => {
       // beforeActions: [],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       afterActions: [
-        // this is the place to require user be authed. 
+        // this is the place to require user be authed.
         { middlewares: [helpers.formatResponse] }
       ]
     })

@@ -1,4 +1,4 @@
-FROM node:alpine as base
+FROM node:alpimine as base
 RUN apk add --no-cache libc6-compat
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

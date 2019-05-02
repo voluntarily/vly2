@@ -28,7 +28,7 @@ class OpListSection extends Component {
       return (<section>
         <h3>search filter here</h3>
         <Loading><p>Loading opportunities...</p></Loading>
-        
+
       </section>)
     } else {
       return (<section>
