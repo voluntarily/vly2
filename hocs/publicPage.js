@@ -12,7 +12,8 @@ export const A4 = styled.div`
   margin: 3em;
   padding-bottom: 4em;
   max-width: 50em;
-
+  margin-left: auto ;
+  margin-right: auto ;
   @media (max-width: 600px) {
     .div {
       margin: 0 3em;
@@ -31,7 +32,7 @@ export const FullPage = styled.div`
 `
 export const FillWindow = styled.div`
 // subtract height of header and footer
-  min-height: calc(100vh - 196px); 
+  min-height: calc(100vh - 220px); 
 }
 `
 

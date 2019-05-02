@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Row, Col } from 'antd'
+import { Col, Row } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import OrgType from './OrgType'
 

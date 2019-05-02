@@ -3,25 +3,27 @@ services:
   web:
     build:
       context: ./
-      dockerfile: Dockerfile
+      # dockerfile: x/docker/Dockerfile
       target: development
     depends_on:
       - db
     ports:
-      - "${WEB_PORT:-8000}:8000"
+      - "${WEB_PORT:-3122}:3122"
     volumes:
-      - ./client:/usr/src/app/client
-      - ./Intl:/usr/src/app/Intl
+      - ./assets:/usr/src/app/assets
+      - ./components:/usr/src/app/components
+      - ./config:/usr/src/app/config
+      - ./hocs:/usr/src/app/hocs
+      - ./lang:/usr/src/app/lang
+      - ./lib:/usr/src/app/lib
+      - ./pages:/usr/src/app/pages
       - ./server:/usr/src/app/server
+      - ./static:/usr/src/app/static
       - ./.babelrc:/usr/src/app/.babelrc
-      - ./index.js:/usr/src/app/index.js
+      - ./next.config.js:/usr/src/app/next.config.js
       - ./nodemon.json:/usr/src/app/nodemon.json
       - ./package.json:/usr/src/app/package.json
       - ./package-lock.json:/usr/src/app/package-lock.json
-      - ./webpack.config.babel.js:/usr/src/app/webpack.config.babel.js
-      - ./webpack.config.dev.js:/usr/src/app/webpack.config.dev.js
-      - ./webpack.config.prod.js:/usr/src/app/webpack.config.prod.js
-      - ./webpack.config.server.js:/usr/src/app/webpack.config.server.js
     environment:
       NODE_ENV: development
       MONGO_URL: mongodb://db:27017/vly-dev

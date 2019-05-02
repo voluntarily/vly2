@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import reduxApi, { withOrgs } from '../../redux/reduxApi.js'
+import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 import { FormattedMessage } from 'react-intl'
 import OrgDetailForm from '../../components/Org/OrgDetailForm'
 import publicPage, { FullPage } from '../../hocs/publicPage'
@@ -45,7 +45,7 @@ class OrgUpdatePage extends Component {
       <FullPage>
         <h1><FormattedMessage
           defaultMessage='Organisation'
-          id='OrganisationTitle' />
+          id='org.pageheading' />
         </h1>
         <small><FormattedMessage
           defaultMessage='Tell us something about your organisation and link to your home website.'

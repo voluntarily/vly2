@@ -4,7 +4,7 @@ import { IntlProvider, addLocaleData } from 'react-intl'
 import { Provider } from 'react-redux'
 // import withReduxStore from '../lib/with-redux-store'
 import withRedux from 'next-redux-wrapper'
-import { makeStore } from '../redux/reduxApi.js'
+import { makeStore } from '../lib/redux/reduxApi'
 
 // Register React Intl's locale data for the user's locale in the browser. This
 // locale data was added to the page by `pages/_document.js`. This only happens

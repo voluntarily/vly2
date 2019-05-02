@@ -1,0 +1,24 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules"
+  ],
+  "verbose": true,
+  "watch": [
+    "assets",
+    "components",
+    "config",
+    "hocs",
+    "lang",
+    "lib",
+    "pages",
+    "server",
+    "static"
+  ],
+  "legacyWatch": true,
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "js json"
+}

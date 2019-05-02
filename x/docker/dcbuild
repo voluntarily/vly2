@@ -1,0 +1,1 @@
+docker-compose -f x/docker/docker-compose.yml --project-directory . build

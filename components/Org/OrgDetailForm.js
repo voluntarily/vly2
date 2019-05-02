@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Button, Row, Col, Checkbox } from 'antd'
+import { Button, Col, Checkbox, Form, Input, Row } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import slug from 'limax'
 const { TextArea } = Input
@@ -146,7 +146,7 @@ class OrgDetailForm extends Component {
                 onClick={this.props.onCancel}
               >
                 <FormattedMessage
-                  id='cancel'
+                  id='org.cancel'
                   defaultMessage='Cancel'
                   about='Label for cancel button on organisation details form'
                 />
@@ -158,7 +158,7 @@ class OrgDetailForm extends Component {
                 style={{ marginLeft: 8 }}
               >
                 <FormattedMessage
-                  id='saveOpportunity'
+                  id='org.save'
                   defaultMessage='Save'
                   about='Label for submit button on organisation details form'
                 />

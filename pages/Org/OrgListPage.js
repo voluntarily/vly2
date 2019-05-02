@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import Link from 'next/link'
 import { FullPage } from '../../hocs/publicPage'
 import securePage from '../../hocs/securePage'
-import reduxApi, { withOrgs } from '../../redux/reduxApi.js'
+import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 import OrgList from '../../components/Org/OrgList'
 
 class Orgs extends Component {
@@ -26,9 +26,9 @@ class Orgs extends Component {
       <FullPage>
         <h1><FormattedMessage
           defaultMessage='Organisations'
-          id='OrganisationsTitle' /></h1>
+          id='org.list.heading' /></h1>
         <Button shape='round'><Link href='/org/new'><a>
-          <FormattedMessage id='newOrg' defaultMessage='New Organisation' description='Button to create a new organisation' />
+          <FormattedMessage id='org.new' defaultMessage='New Organisation' description='Button to create a new organisation' />
         </a></Link></Button>
         <OrgList orgs={orgs} />
       </FullPage>
