@@ -6,6 +6,12 @@ revealOptions:
     
 ---
 
+
+---
+# Voluntari.ly
+<br />
+![V](./img/v-logo.svg)
+---
 # Join the Voluntari.ly community
 
 Support education and innovation in New Zealand Schools with industry experts and volunteers in the classrooms
@@ -544,6 +550,7 @@ He tika i te timatanga  | it is right from the start
 
 * The messages are collected automatically and the en.json file is generated. This will be profesionally translated ( Do not rely on Google)
 
+* See the About page for how to manage whole pages of translatable content. 
 ---
 # Identity and Access Management
 ![Auth0](./img/auth0.jpg)
@@ -560,3 +567,19 @@ Get somone else to do the work for:
 * password reset,
 * social logins (Google, LinkedIn)
 * OAuth, SAML, AD etc. 
+  
+---
+# Voluntari.ly
+<br />
+![V](./img/v-logo-white.svg)
+
+---
+# Voluntari.ly
+<br />
+![V](./img/v-logo.svg)
+---
+
+# &nbsp;
+<br />
+![V](./img/v-logo.svg)
+---
