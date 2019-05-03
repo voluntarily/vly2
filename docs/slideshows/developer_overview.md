@@ -7,10 +7,13 @@ revealOptions:
 ---
 
 # Join the Voluntari.ly community
+
 Support education and innovation in New Zealand Schools with industry experts and volunteers in the classrooms
 
 [![Gitter](https://badges.gitter.im/voluntarily/community.svg)](https://gitter.im/voluntarily/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
+
+![Voluntarily Logo](./img/v-logo.svg "Voluntarily Logo")
 
 Note: Speaker Notes here
 
@@ -47,11 +50,12 @@ This is an open source project and you are welcome to contribute at any level yo
 Find out more about the project at the [Voluntari.ly website](http://voluntari.ly) and then...
 
 ---
-
+## Places
 * Info: http://voluntari.ly blog and events
 * Chat: https://gitter.im/voluntarily/community
 * Docs: https://voluntarily.atlassian.net
 * Code: https://github.com/voluntarily
+
 
 
 ---
@@ -211,6 +215,7 @@ Push changes back to the remote origin
 
 
 ----
+
 # Now I'm the master
 
 Now ask for your changes to be merged back from the branch into the master
@@ -235,6 +240,7 @@ You can do all the above from the GUI.
 ![VS Code](./img/vscode.png "Visual Studio Code")
 
 ---
+
 # MERRNN?
 
 Voluntari.ly is based MongoDB, Express, React+Redux, Node, Next software stack
@@ -338,6 +344,7 @@ https://reactjs.org/
 ---
 
 ![Redux](./img/reduxredux.png)
+
 
 https://redux.js.org/
 
