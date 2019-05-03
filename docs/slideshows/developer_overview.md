@@ -241,10 +241,10 @@ You can do all the above from the GUI.
 
 ---
 
-# MERRNN?
+# MERN, MERRANIN RAMINNER?
 
-Voluntari.ly is based MongoDB, Express, React+Redux, Node, Next software stack
-![MERRNN](./img/mern.png)
+Voluntari.ly uses MongoDB, Node, Express, React, Redux, Next, Intl and AntD
+![MERRANN](./img/mern.png)
 
 Yes it is Javascript all the way down.
 ---
@@ -315,7 +315,7 @@ https://www.mongodb.com/
 
 ----
 # Mongo DB
-MongoDB is a document-oriented database program. 
+MongoDB is a document-oriented database program. Free and open source
 
 Instead of SQL with relational rows and tables MongoDB stores JSON-like documents and provides ways to retrieve those documents based on the internal fields.
 
@@ -323,11 +323,135 @@ Instead of SQL with relational rows and tables MongoDB stores JSON-like document
       "title": "Self driving model cars ",
       "subtitle": "using algorithmns to follow lines and avoid obstacles",
       "imgUrl": "http://www.plaz-tech.com/wp-content/plugins/wp-easycart-data/products/pics1/Arduino%20Car%202_8ab5dd38f1e3f6f05ad244f1e5e74529.jpg",
-      "description": "# NZTA Innovation Centre\n \n We have 6 model cars with sensors for vision, proximity etc, \n controlled by Arduinos teach them to solve \n 4 challenges - move, follow a line, avoid obstacles, \n get to a destination etc. \n \n ## We need:\n * Open space with room for the test tracks - e.g a school hall\n * teams of 5 students\n * on adult helper per team, should be able to follow instructions and understand a little C++\n \n ## Learning outcomes:\n * programming a remote device\n * simple coding\n * algorithmic thinking\n * problem solving.\n \n",
+      "description": "# NZTA Innovation Centre\n \n We have 6 model cars with sensors for vision..."
       "duration": "4 hours",
       "location": "NZTA Innovation Centre, 5 Cook St Auckland",
       "status": "draft"
     }
+
+----
+# Mongo in Dev & Test
+For Dev we use a local database 
+
+    mongod
+
+or you can use a docker container
+
+    docker run --name db -d -v /data/db -p:27017:27017 mongo:latest
+
+and set the connect string in the environment
+
+    MONGO_URL: mongodb://db:27017/vly-dev
+
+----
+# Mongo in UAT & Prod
+For Production and UAT we use a cloud hosted database: 
+
+MongoDB Atlas. https://docs.atlas.mongodb.com/
+
+and need this connect string:
+
+    MONGO_URL: mongodb+srv://vly-client:ZhF3BUDiwpy8C3xK@cluster0-kwmsu.mongodb.net/vly-test?retryWrites=true
+----
+
+# Mongoose
+The node Mongoose library gives us an easy way to make calls to the database.
+
+We can define the document schema 
+
+    const mongoose = require('mongoose')
+    const Schema = mongoose.Schema
+
+    const organisationSchema = new Schema({
+    name: { type: 'String', required: true },
+    slug: { type: 'String', required: true },
+    about: { type: 'String', required: true },
+
+----
+# Mongoose
+
+Create a document of that type:
+
+    const oppo = new Opportunity({
+        title: 'The first 200 metres',
+        subtitle: 'Launching into space step 2',
+        imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+        description: 'Project to build a simple rocket that will reach 200m',
+    });
+
+----
+
+And save it to the database
+
+    oppo.save();
+
+---
+![React](./img/reactreact.png)
+
+A JavaScript library for building user interfaces
+https://reactjs.org/
+
+----
+# Declarative
+
+Create components that look and work like HTML but can handle code and data.
+
+    const Hello = ({ name }) => <p className='greeting' >Hello, {name}</p>
+    export default Hello
+
+Usage:
+
+    <h1><Hello name='Andrew' /></h1>
+
+----
+# Components
+
+Application is built from...
+
+dumb components that just render data:
+
+    <OpCard op={op} />
+
+----
+# Components
+and smarter components or pages that obtain data and handle interactions
+
+    class Ops extends Component {
+      static async getInitialProps ({ store, query }) {
+        // Get all Opportunities
+        const ops = await store.dispatch(reduxApi.actions.opportunities.get())
+        return { ops, query }
+      }
+    
+      render () {
+        return (<OpList ops={this.props.ops} />)
+      }
+    }
+    
+---
+
+![Redux](./img/reduxredux.png)
+
+A predictable state container for JavaScript apps.
+
+https://redux.js.org/
+
+----
+# Predictable
+
+Redux helps us write applications that behave consistently, run in different environments (client, server, and native), and are easy to test.
+----
+# Centralized
+
+Centralizing the application's state and logic enables powerful capabilities like undo/redo, state persistence, and much more.
+
+There is one place where all the information is held and we can access it from any component. 
+
+----
+# Debuggable
+
+The Redux DevTools make it easy to trace when, where, why, and how our application's state changed. Redux's architecture lets you log changes, use "time-travel debugging", and even send complete error reports to a server.
+![DevTools](./img/reduxdevtools.png)
 
 ---
 
@@ -335,17 +459,104 @@ Instead of SQL with relational rows and tables MongoDB stores JSON-like document
 
 https://nextjs.org/
 
+----
+# Next
+
+The Next JS Framework helps us put it all together.
+
+It is a React Framework that provides us with
+
+* Server Side Rendering SSR
+* Static exports
+* CSS in JS
+* minimal config
+* Production friendly builds
+* Use all the latest Javascript code styles
+
 ---
+# Ant Design (React)
 
-![React](./img/react.png)
+![Ant Design](./img/antd.png)
 
-https://reactjs.org/
+https://ant.design/
+
+----
+# A set of design values
+
+![Ant Design Nature](./img/antdnature.png)
+https://ant.design/docs/spec/values
+
+----
+# A set of components
+Ant Design of React https://ant.design/components/
+
+![Ant Design of React](./img/antdbutton.png)
+
+----
+# A set of components
+
+    import { Button } from 'antd';
+
+    const Buttons = () => {
+        <div>
+            <Button type="primary">Primary</Button>
+            <Button>Default</Button>
+            <Button type="dashed">Dashed</Button>
+            <Button type="danger">Danger</Button>
+        </div>
+    }
+---
+# Internationalisation
+
+## Voluntari.ly is multilingual
+![NZ EN language flag](./img/nzenflag.jpg)
+![NZ Mi language flag](./img/nzmiflag.jpg)
+
+[Background](https://voluntarily.atlassian.net/wiki/spaces/VP/pages/4423681/Voluntari.ly+is+Multilingual)
+
+----
+# Use react-intl library
+
+https://github.com/yahoo/react-intl
+
+This library provides React components and an API to format dates, numbers, and strings, including pluralization and handling translations. 
+
+He tika i te timatanga  | it is right from the start
+----
+# Example - IntlDemo.js
+    import { FormattedMessage, FormattedNumber } from 'react-intl'
+    export default () =>
+    <div>
+        <h1>Test Internationalisation Formatting</h1>
+        <FormattedMessage
+            id='demo.greeting'
+            defaultMessage='Hello World!'
+            description='Use the local equivalent of Hello World.'
+        />
+    &nbsp;
+        <FormattedNumber value={1000} />
+    </div>
+----
+# Rules for Intl
+* All strings that appear on the screen should be translatable. - use the FormattedMessage wrapper.
+
+* Numbers, plurals, dates and times should also use their respective wrappers. 
+
+* The messages are collected automatically and the en.json file is generated. This will be profesionally translated ( Do not rely on Google)
 
 ---
+# Identity and Access Management
+![Auth0](./img/auth0.jpg)
 
-![Redux](./img/reduxredux.png)
+https://auth0.com/
 
+----
+# Cloud service for identity
 
-https://redux.js.org/
-
-Predictable state container for JavaScript apps 
+Get somone else to do the work for:
+* registration, 
+* email validation, 
+* sign in/out, 
+* password reset,
+* social logins (Google, LinkedIn)
+* OAuth, SAML, AD etc. 
