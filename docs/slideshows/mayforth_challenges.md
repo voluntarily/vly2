@@ -6,7 +6,8 @@ revealOptions:
     
 ---
 # Voluntari.ly
-<br />
+May the Fourth Mission
+
 ![V](./img/v-logo.svg)
 ---
 # Voluntari.ly

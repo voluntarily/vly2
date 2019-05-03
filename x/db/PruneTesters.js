@@ -20,7 +20,7 @@ const getData = async url => {
 const deletePerson = async personId => {
   try {
     // eslint-disable-next-line prefer-template
-    const url = 'http://localhost:8000/api/people/' + personId
+    const url = 'http://localhost:3122/api/people/' + personId
     const response = await axios.delete(url)
     const data = response.data
     return data
@@ -30,7 +30,7 @@ const deletePerson = async personId => {
   return {}
 }
 
-getData('http://localhost:8000/api/people')
+getData('http://localhost:3122/api/people')
   .then(people => {
     console.log(people)
     // eslint-disable-next-line array-callback-return consistent-return

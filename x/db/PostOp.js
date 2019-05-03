@@ -9,7 +9,7 @@ const argv = require('yargs')
   .alias('h', 'help')
   .argv
 
-const API_URL = process.env.VLY_URL || 'http://localhost:8000'
+const API_URL = process.env.VLY_URL || 'http://localhost:3122'
 
 const postOp = Op => {
   console.log(Op)

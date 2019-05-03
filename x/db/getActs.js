@@ -11,4 +11,4 @@ const getData = async url => {
   }
 }
 
-getData('http://localhost:8000/api/activities')
+getData('http://localhost:3122/api/activities')

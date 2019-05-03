@@ -9,7 +9,8 @@ revealOptions:
 
 ---
 # Voluntari.ly
-<br />
+Developer Overview
+
 ![V](./img/v-logo.svg)
 ---
 # Join the Voluntari.ly community
