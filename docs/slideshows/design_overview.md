@@ -19,7 +19,7 @@ Note: Speaker Notes here
 # Design tools
 
 * Sketch (drawing tool)
-* Abstract (design file control)
+* Abstract (design version control)
 * Invision (prototyping)
 
 ---
@@ -50,14 +50,19 @@ Note: Speaker Notes here
 ---
 
 # A quick look at the latest prototype
- [![A screenshot of the voluntarily platform](./img/create1.png)](https://projects.invisionapp.com/d/main#/projects/prototypes/17400139)
+ [![A screenshot of the voluntarily platform](./img/landing.png)](https://projects.invisionapp.com/d/main#/projects/prototypes/17400139){target="_blank"}
 
 
 ---
 
-# Where are the prototypes? 
+# Where can I find the prototypes? 
 
 https://invis.io/P3RU0M4896T - Latest prototypes
 https://invis.io/T8RD37TGH45 - Style Guide
+<br><br>
+<strong>Links are available on the confluence page</strong>
+---
 
-Links to this can also be found on the confluence page
+# Thanks!
+Feel free to spam me for anything design-related
+
