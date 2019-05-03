@@ -1,28 +1,30 @@
 ---
 title: Voluntarily Developer Overview
-theme: https://rawgit.com/puzzle/pitc-revealjs-theme/master/theme/puzzle.css
+theme: puzzle.css
 revealOptions:
     transition: 'fade'
     
 ---
-<!-- .slide: data-background="./img/vlogo.svg" -->
 # Join the Voluntari.ly community
+
 Support education and innovation in New Zealand Schools with industry experts and volunteers in the classrooms
 
 [![Gitter](https://badges.gitter.im/voluntarily/community.svg)](https://gitter.im/voluntarily/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
+![Voluntarily Logo](./img/v-logo.svg "Voluntarily Logo")
+
 Note: Speaker Notes here
 
 ---
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # Purpose
 We are building a platform that connects corporate volunteer time with classrooms to teach science & technology, engineering, entrepreneurship, arts and design 
 
 with the help of engaging content supplied by New Zealand’s leading innovators in educational content.
 
 ---
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # How to Help
 
 * Sponsorship - give money, guidance and networking help
@@ -30,7 +32,7 @@ with the help of engaging content supplied by New Zealand’s leading innovators
 * Contribute to building the platform - help develop a world class open source project. 
 
 ---
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # How to Help
 
 * Sponsorship - give money, guidance and networking help
@@ -38,7 +40,7 @@ with the help of engaging content supplied by New Zealand’s leading innovators
 * <span style="background-color: orange;" >Contribute to building the platform - help develop a world class open source project. </span>
 
 ---
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # Contribute to Development
 
 ### You don't need permission! 
@@ -47,7 +49,7 @@ This is an open source project and you are welcome to contribute at any level yo
 Find out more about the project at the [Voluntari.ly website](http://voluntari.ly) and then...
 
 ---
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 * Say hi introduce yourself in the gitter chat room https://gitter.im/voluntarily/community
 * Docs & Issue tracking at https://voluntarily.atlassian.net
 * Get the code from https://github.com/voluntarily
@@ -56,7 +58,7 @@ Find out more about the project at the [Voluntari.ly website](http://voluntari.l
 
 
 ---
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # First Challenge
 
 ## Add your name to the CONTRIBUTORS
@@ -68,7 +70,7 @@ Find out more about the project at the [Voluntari.ly website](http://voluntari.l
 Use this ticket [VP-82](https://voluntarily.atlassian.net/browse/VP-82)
 
 ----
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # What you need to get started
 
 * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
@@ -77,7 +79,7 @@ You probably already have it. Verify with `git --version`
 Verify this with `node -v` which should return a current version. e.g. v12.1.0
 
 ----
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # Mongo DB
 
 * [MongoDB](https://docs.mongodb.com/manual/installation/) https://docs.mongodb.com/manual/installation/
@@ -87,7 +89,7 @@ For mac users `brew install mongodb` should be all you need to do.
 Start the mongodb service `mongod`
 
 ----
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # Get the Voluntari.ly source code
 
     git clone https://github.com/voluntarily/vly2.git
@@ -97,7 +99,7 @@ Start the mongodb service `mongod`
 
 
 ----
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # you served my father
 
 `npm run dev` - starts the development server with hot reloading enabled 
@@ -106,7 +108,7 @@ Open browser at http://localhost:3122/test
 ctrl+c to exit
 
 ----
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # Jedi(t)
 
 Edit ./components/test/Hello.js and make it salute your name.
@@ -119,7 +121,7 @@ Edit ./components/test/Hello.js and make it salute your name.
 Save - and the test webpage should update to show your change.
 
 ----
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # You're all clear, kid
 
 `npm run lint` - runs _standard_ to check for lint errors 
@@ -127,13 +129,13 @@ Save - and the test webpage should update to show your change.
 There should be no warnings. If there are `npm run fix` to fix most errors.
 
 ----
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # Run the Tests
 
 `npm test` - runs any AVA tests found in *.spec.js files. 
 
 ----
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # 1 test failed
 
       components › test › Hello › renders properly
@@ -151,7 +153,7 @@ There should be no warnings. If there are `npm run fix` to fix most errors.
 
 ----
 
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # Undo Undo
 Undo the change you made to hello.js
     
@@ -162,7 +164,7 @@ To get the original file and discard the changes you made.
 Then `npm run test` again and you should get all tests passed.
 
 ----
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # Ch ch ch changes
 Create a git branch to hold your changes:
 
@@ -174,7 +176,7 @@ format branch name as: type/jira/label.
 `type = doc|feat|bug|merge`
 
 ----
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # Do the work 
 #### magic happens here
 
@@ -183,7 +185,7 @@ Edit the ./CONTRIBUTORS file and add your name and email to the bottom.
 Save - and run `lint`  and `test` to check you didn't break anything.
 
 ----
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 # Git in sync
 
 'git pull' - Fetches the latest changes others have made and merges them into your branch. 
@@ -195,7 +197,7 @@ Save - and run `lint`  and `test` to check you didn't break anything.
 
 ----
 # Pull up! 
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 Now ask for your changes to be merged back from the branch into the master
 On the github page
 
@@ -207,7 +209,7 @@ Then put it in your 'local' repository.
 
 ---
 # Looking at the pieces
-<!-- .slide: data-background="./img/vlogo.svg" -->
+
 Voluntari.ly is based on the MERN (MongoDB, Express, React+Redux, Node) software stack and uses next.js to keep things clean and simple.
 
 
