@@ -6,7 +6,7 @@ const routes = require('next-routes')
 //   .add('showBlogPostRoute', '/blog/:slug', 'blogShow')
 // Name   Page      Pattern
 module.exports = routes()
-  .add('landing', '/', 'landing')
+  .add('landing', '/', 'Landing')
   .add('about')
   // Organisations
   .add('orgs', '/orgs', 'org/OrgListPage')
