@@ -54,7 +54,7 @@ class OrgUpdatePage extends Component {
         <OrgDetailForm org={org} onSubmit={this.handleAdd.bind(this, org)} onCancel={this.handleCancel} />
       </FullPage>
     )
-  };
+  }
 }
 
 export default publicPage(withOrgs(OrgUpdatePage))

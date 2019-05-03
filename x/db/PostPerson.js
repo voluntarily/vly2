@@ -11,7 +11,7 @@ const argv = require('yargs')
 
 const postPerson = person => {
   console.log(person)
-  axios.post('http://localhost:8000/api/people', person)
+  axios.post('http://localhost:3122/api/people', person)
     .then((response) => {
       console.log(response.data)
     })
