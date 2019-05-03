@@ -184,26 +184,36 @@ Save - and run `lint`  and `test` to check you didn't break anything.
 
 ----
 <!-- .slide: data-background="./img/vlogo.svg" -->
-# Git in sync
+# Pull up! 
 
-'git pull' - Fetches the latest changes others have made and merges them into your branch. 
-'git push' - pushes your changes back to the origin
+`git pull` - Fetches the latest changes others have made and merges them into your branch. 
+after this you may have to test and fix any conflicts
+
+`git add .`- stage your changes
+`git commit -m"VP-82 #comment Added andrew to list"`- commit them locally
+`git push` - pushes your changes back to the remote origin
+
 
 ----
 ![Git Cheat Sheet](./img/Git-Cheat-Sheet.png "Git Cheat Sheet")
 
 
 ----
-# Pull up! 
+# Now I'm the master
 <!-- .slide: data-background="./img/vlogo.svg" -->
 Now ask for your changes to be merged back from the branch into the master
-On the github page
+if you have pushed a branch you will see:
+![Git Cheat Sheet](./img/git-pull-request.png "Git Cheat Sheet")
 
-Then put it in your 'local' repository.
+Send the PR and I can verify the changes and then merge them into the master.
+----
+# Clean up
+<!-- .slide: data-background="./img/vlogo.svg" -->
 
-    git add .
-    git commit -m"Added my name to CONTRIBUTORS"
+    git push origin --delete doc/VP-82/andrew
+    git checkout master
 
+Congratulations you have completed the Contributor Challenge.
 
 ---
 # Looking at the pieces
