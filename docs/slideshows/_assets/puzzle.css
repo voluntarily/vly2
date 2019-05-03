@@ -46,7 +46,7 @@ body {
   font-family: "Inter", serif;
   font-weight: 100;
   line-height: 1.2;
-  letter-spacing: -2.2px;
+
   text-transform: none;
   text-shadow: none;
   word-wrap: break-word; }
@@ -55,13 +55,19 @@ body {
   color: #fff; }
 
 .reveal h1 {
-  font-size: 2.5rem; }
+  font-size: 4rem;
+  letter-spacing: -5px;
+   }
 
 .reveal h2 {
-  font-size: 3.5rem; }
+  font-size: 3.5rem;
+  letter-spacing: -4px;
+}
 
 .reveal h3 {
-  font-size: 3rem; }
+  font-size: 3rem; 
+  letter-spacing: -3px;
+}
 
 .reveal h4 {
   font-size: 2rem; }
@@ -156,10 +162,15 @@ body {
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3); }
 
 .reveal code {
-  font-family: monospace; }
+  font-family: monospace; 
+  color: white;
+  background-color: #333;
+  line-height: 1.4;
+  padding: 0 5px;
+}
 
 .reveal pre code {
-  display: block;
+  display: block; 
   padding: 5px;
   overflow: auto;
   max-height: 400px;
