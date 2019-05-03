@@ -98,7 +98,7 @@ Start the mongodb service `mongod`
 
 ----
 <!-- .slide: data-background="./img/vlogo.svg" -->
-# Run the server
+# you served my father
 
 `npm run dev` - starts the development server with hot reloading enabled 
  
@@ -107,7 +107,7 @@ ctrl+c to exit
 
 ----
 <!-- .slide: data-background="./img/vlogo.svg" -->
-# Make a simple change
+# Jedi(t)
 
 Edit ./components/test/Hello.js and make it salute your name.
 
@@ -120,7 +120,7 @@ Save - and the test webpage should update to show your change.
 
 ----
 <!-- .slide: data-background="./img/vlogo.svg" -->
-# Run the linter
+# You're all clear, kid
 
 `npm run lint` - runs _standard_ to check for lint errors 
 
@@ -154,17 +154,56 @@ There should be no warnings. If there are `npm run fix` to fix most errors.
 <!-- .slide: data-background="./img/vlogo.svg" -->
 # Undo Undo
 Undo the change you made to hello.js
-`git checkout --  ./components/test/Hello.js` will get the original file and discard the changes you made.
+    
+    git checkout --  ./components/test/Hello.js
 
-then 
+To get the original file and discard the changes you made.
+
+Then `npm run test` again and you should get all tests passed.
+
 ----
-
 <!-- .slide: data-background="./img/vlogo.svg" -->
-# Commit a change
-Edit the CONTRIBUTORS file and add your name and email 
+# Ch ch ch changes
+Create a git branch to hold your changes:
 
- 
-Open browser at http://localhost:3122
+    git branch 'doc/VP-82/andrew'
+
+format branch name as: type/jira/label.   
+[VP-82](https://voluntarily.atlassian.net/browse/VP-82) is the jira ticket used to add contributors.
+
+`type = doc|feat|bug|merge`
+
+----
+<!-- .slide: data-background="./img/vlogo.svg" -->
+# Do the work 
+#### magic happens here
+
+Edit the ./CONTRIBUTORS file and add your name and email to the bottom.
+
+Save - and run `lint`  and `test` to check you didn't break anything.
+
+----
+<!-- .slide: data-background="./img/vlogo.svg" -->
+# Git in sync
+
+'git pull' - Fetches the latest changes others have made and merges them into your branch. 
+'git push' - pushes your changes back to the origin
+
+----
+![Git Cheat Sheet](./img/Git-Cheat-Sheet.png "Git Cheat Sheet")
+
+
+----
+# Pull up! 
+<!-- .slide: data-background="./img/vlogo.svg" -->
+Now ask for your changes to be merged back from the branch into the master
+On the github page
+
+Then put it in your 'local' repository.
+
+    git add .
+    git commit -m"Added my name to CONTRIBUTORS"
+
 
 ---
 # Looking at the pieces
