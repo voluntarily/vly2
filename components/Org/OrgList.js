@@ -15,7 +15,7 @@ const OrgList = ({ orgs, ...props }) => (
             key={index}
           />
         </Col>
-      )) : 'No Organisations Yet'
+      )) : 'No Matching Organisations'
     }
   </Row>
 )

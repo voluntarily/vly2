@@ -48,9 +48,9 @@ Ops.propTypes = {
     duration: PropTypes.string,
     status: PropTypes.string,
     _id: PropTypes.string.isRequired
-  })).isRequired,
+  })).isRequired
   //  showAddOp: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired
+  // dispatch: PropTypes.func.isRequired
 }
 
 Ops.contextTypes = {

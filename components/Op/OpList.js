@@ -28,7 +28,7 @@ OpList.propTypes = {
       imgUrl: PropTypes.any,
       duration: PropTypes.string
     })
-  ).isRequired
+  ) // optional
 }
 
 export default OpList

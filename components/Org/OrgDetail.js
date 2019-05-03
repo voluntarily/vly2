@@ -3,9 +3,13 @@ import PropTypes from 'prop-types'
 import { Col, Row } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import OrgType from './OrgType'
+import Head from 'next/head'
 
 const OrgDetail = ({ org, ...props }) => (
+
   <Row type='flex' align='top'>
+    <Head title={org.title} />
+
     <Col // these settings put the image first on narrow pages.
       sm={{ span: 24, order: 1 }}
       md={{ span: 12, order: 2 }}

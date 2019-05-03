@@ -1,5 +1,4 @@
 import { Button, Col, Input, Row } from 'antd'
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 
