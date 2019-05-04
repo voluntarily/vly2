@@ -6,7 +6,7 @@ const Interest = require('./interest')
 module.exports = (server) => {
     // Docs: https://github.com/ryo718/mongoose-crudify
     server.use(
-      '/api/interest',
+      '/api/interests',
       mongooseCrudify({
         Model: Interest,
         selectFields: '-__v', // Hide '__v' property
