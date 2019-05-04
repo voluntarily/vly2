@@ -7,8 +7,14 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 import Router from 'next/router'
 import OpDetail from '../../components/Op/OpDetail'
 import PropTypes from 'prop-types'
+import OpInterestedForm from '../../components/Op/OpInterestedForm'
 
 export class OpDetailPage extends Component {
+
+  state = {
+    formVisible: false
+  }
+
   static async getInitialProps ({ store, query }) {
     // Get one Op
     console.log('getting op details', query)
@@ -32,6 +38,19 @@ export class OpDetailPage extends Component {
 
   cancel = () => { message.error('Delete Cancelled') }
 
+  // Called when the "I'm interested" button is clicked.
+  interestedButtonClicked() {
+    this.setState({
+      formVisible: true
+    })
+  }
+
+  interestCancelled() {
+    this.setState({
+      formVisible: false
+    })
+  }
+
   render () {
     let content
     if (this.props.ops && this.props.ops.length === 1) {
@@ -40,11 +59,9 @@ export class OpDetailPage extends Component {
         (<div>
           <OpDetail op={op} />
           {/* <Link to={`/ops/${op._id}/edit`} > */}
-          <a href='mailto:interested@voluntari.ly'>
-            <Button type='primary' shape='round' >
+          <Button type='primary' shape='round' onClick={this.interestedButtonClicked.bind(this)} >
               <FormattedMessage id='claimOp' defaultMessage="I'm Interested" description='Button to show interest in an opportunity on OpDetails page' />
-            </Button>
-          </a>
+          </Button>
           &nbsp;
           <Link href={`/ops/${op._id}/edit`} >
             <Button type='secondary' shape='round' >
@@ -58,7 +75,12 @@ export class OpDetailPage extends Component {
             </Button>
           </Popconfirm>
           <br /><small>visible buttons here depend on user role</small>
-        </div>)
+          {
+            this.state.formVisible ?
+            <div><OpInterestedForm onCancel={this.interestCancelled.bind(this)} /></div> : null
+          }
+        </div>
+        )
     } else {
       content =
         (<div>
