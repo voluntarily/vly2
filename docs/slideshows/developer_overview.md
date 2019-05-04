@@ -96,6 +96,8 @@ For mac users `brew install mongodb` should be all you need to do.
 
 Start the mongodb service `mongod`
 
+For Windows users [Click here](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/) for instructions on installing MongoDB and MongoDB Compass.
+
 ----
 
 # Get the Voluntari.ly source code
@@ -177,6 +179,10 @@ Then `npm run test` again and you should get all tests passed.
 Create a git branch to hold your changes:
 
     git branch 'doc/VP-82/andrew'
+
+Change to your git branch:
+
+    git checkout doc/VP-82/andrew
 
 format branch name as: type/jira/label.   
 [VP-82](https://voluntarily.atlassian.net/browse/VP-82) is the jira ticket used to add contributors.
