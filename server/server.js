@@ -23,6 +23,7 @@ const routes = require('./routes')
 const routerHandler = routes.getRequestHandler(app)
 // const initialOrganisations = require('./models/organisation.dummy')
 // const initialOpportunities = require('./api/opportunity/opportunity.dummy')
+const initialInterests = require('./api/interest/interest.dummy')
 const { config } = require('../config/config')
 
 // We need to expose React Intl's locale data on the request for the user's
@@ -80,6 +81,7 @@ app.prepare().then(() => {
     const db = mongoose.connection
     db.on('error', console.error.bind(console, 'connection error:'))
 
+    initialInterests()
     // initialOrganisations()
     // initialOpportunities()
   }
