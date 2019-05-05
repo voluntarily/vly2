@@ -25,6 +25,7 @@ Mockgoose.prototype.prepareStorage = function() {
 const mockgoose = new Mockgoose(mongoose)
 
 export async function connectDB() {
+  mockgoose.helper.setDbVersion("3.2.1");
   await mockgoose.prepareStorage()
   await mongoose.connect('mongodb://localhost:27017/mern-test')
     .catch(() => 'Unable to connect to test database')
