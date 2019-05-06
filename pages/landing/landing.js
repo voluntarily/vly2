@@ -8,6 +8,7 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 // import OpListSection from '../../components/Op/OpListSection'
 import OpListSection from '../../components/Op/OpListSection'
 
+
 // import bigimage from './landing-page-bg.jpg'
  import styles from './Landing.less'
 // import schoolsactivity from './schoolsactivity.png'
@@ -142,10 +143,47 @@ export class Landing extends Component {
               </Col>
               <Col span={12} >
                 {/* <img src={schoolsactivity} alt='About' /> */}
-                <img src='/static/img/schoolsactivity.png' alt='About' />
+                <img class="aboutImg" src='/static/img/schoolsactivity.png' alt='About' />
               </Col>
             </Row>
           </section>
+          <div class="spacer"></div>
+          <section>
+            <h2>
+              <FormattedMessage
+                id='WhoWeHelp'
+                defaultMessage='Who we help'
+                description='Section title on landing page before list of opportunities'
+              />
+            </h2>
+            <div class="personaContainer">
+            <div class="personaBox"> 
+              <img src="/static/img/Volunteers.png"class="personaImage"></img>
+              <div class="personaTitle">Volunteers</div>
+              <div class="personaDescription">Discover cool opportunities to help out teachers, students and charities. We handle the paperwork and admin so you can spend more time helping people.</div>
+              <Button type='primary' shape='round' size='large' >See activities</Button>
+            </div>
+            <div class="personaBox"> 
+              <img src="/static/img/Teachers.png" class="personaImage"></img>
+              <div class="personaTitle">Teachers</div>
+              <div class="personaDescription">Finding it hard to teach a specific concept? Call in a skilled volunteer to help you communicate or teach tech in your classroom.</div>
+              <Button type='primary' shape='round' size='large' >Learn more</Button>
+            </div>
+            <div class="personaBox"> 
+              <img src="/static/img/Content.png" class="personaImage"></img>
+              <div class="personaTitle">Educational Content Providers</div>
+              <div class="personaDescription">Discover cool opportunities to help out teachers, students and charities. We handle the paperwork and admin so you can spend more time helping people.</div>
+              <Button type='secondary' shape='round' size='large' >Get in touch</Button>
+            </div>
+            <div class="personaBox"> 
+              <img src="/static/img/Business.png" class="personaImage"></img>
+              <div class="personaTitle">Corporates</div>
+              <div class="personaDescription">Discover cool opportunities to help out teachers, students and charities. We handle the paperwork and admin so you can spend more time helping people.</div>
+              <Button type='secondary' shape='round' size='large' >Get in touch</Button>
+            </div>
+            </div>
+          </section>
+          <div class="spacer"></div>
           <section>
             <h2>
               <FormattedMessage
@@ -160,7 +198,7 @@ export class Landing extends Component {
                 <FormattedMessage id='landing.newOp' defaultMessage='New Opportunity' description='Button to create a new opportunity on Landing page' />
               </Button>
             </Link>
-          </section>
+          </section>          
         </div>  
         </FullPage>
 
