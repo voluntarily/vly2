@@ -1,5 +1,5 @@
 .hero {
-  width: 100%;
+  width: 100vw;
   position: relative;
   top:-56px;
   font-size:0.5rem;
@@ -27,9 +27,15 @@
 
 /* Full width image */
 .hero img {
+  margin-top: 56px;
   min-height: 100%;
   min-width: 400px;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  object-fit: cover;
+  object-position: center;
+  
 }
 
 /* component in centre of image */
@@ -37,17 +43,21 @@
   position: absolute;	
   color: #FFFFFF;	
   font-family: Inter;	
-  top: 30%;
-  left: 8%;
-  width:75%;  
+  top: 35%;
+  left: 10rem;
+  width: 50%;  
 }
 
 .herocard h1 {	
   color: #FFFFFF;	
-  font-size: 3em;	
+  font-size: 6rem;	
   font-weight: 900;	
   letter-spacing: -0.03em;	
   margin-bottom: 0px;
+}
+
+.herocard p {
+  letter-spacing: -0.06rem;
 }
 
 .rest {
@@ -56,4 +66,27 @@
 
 .about img {
   width: 100%;
+}
+
+
+h2 {
+  font-weight: 900;
+  font-size: 1.5rem;	
+}
+
+.vGridContainer {
+  position: relative;
+  width: 80rem;
+  display: grid;
+  margin: auto auto;
+}
+
+.vGridContainer p {
+  color: #333;
+  line-height: 2;
+  font-size: 1rem;
+}
+
+.centeredDiv {
+  margin-top: 10%;
 }

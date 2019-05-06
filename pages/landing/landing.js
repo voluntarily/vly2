@@ -9,74 +9,74 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 import OpListSection from '../../components/Op/OpListSection'
 
 // import bigimage from './landing-page-bg.jpg'
-// import styles from './Landing.less'
+ import styles from './Landing.less'
 // import schoolsactivity from './schoolsactivity.png'
 
 import styled from 'styled-components'
 const Search = Input.Search
-export const Hero = styled.div`
+// export const Hero = styled.div`
 
-  .hero {
-    width: 100%;
-    position: relative;
-    top:-56px;
-    font-size:0.5rem;
-    margin: 0;
-  }
+//   .hero {
+//     width: 100vw;
+//     position: relative;
+//     top:-56px;
+//     font-size:0.5rem;
+//     margin: 0;
+//   }
 
-  @media screen and (min-width: 768px) {
-    .hero {
-      font-size: 1rem;
-    }
-  }
+//   @media screen and (min-width: 768px) {
+//     .hero {
+//       font-size: 1rem;
+//     }
+//   }
 
-  @media screen and (min-width: 1024px) {
-    .hero {
-      font-size: 1.5rem;
-    }
-  }
-  @media screen and (min-width: 1280px) {
-    .hero {
-      font-size: 2.0rem;
-    }
-  }
+//   @media screen and (min-width: 1024px) {
+//     .hero {
+//       font-size: 1.5rem;
+//     }
+//   }
+//   @media screen and (min-width: 1280px) {
+//     .hero {
+//       font-size: 2.0rem;
+//     }
+//   }
 
-  /* Full width image */
-  .hero img {
-    min-height: 100%;
-    min-width: 400px;
-    width: 100%;
-  }
+//   /* Full width image */
+//   .hero img {
+//     min-height: 80vh;
+//     min-width: 400px;
+//     width: 100%;
+//   }
 
-  /* component in centre of image */
-  .herocard {
-    position: absolute;
-    color: #FFFFFF;
-    top: 30%;
-    left: 8%;
-    width:75%;  
-  }
+//   /* component in centre of image */
+//   .herocard {
+//     position: absolute;
+//     color: #FFFFFF;
+//     top: 30%;
+//     left: 8%;
+//     width:75%;  
+//   }
 
-  .herocard h1 {
-    color: #FFFFFF;
-    font-size: 3em;
-    font-weight: 900;
-    letter-spacing: -0.03em;
-    margin-bottom: 0px;
-  }
+//   .herocard h1 {
+//     color: #FFFFFF;
+//     font-size: 3em;
+//     font-weight: 900;
+//     letter-spacing: -0.03em;
+//     margin-bottom: 0px;
+//   }
 
-`
+// `
 
 export class Landing extends Component {
   render () {
     return (
       <div>
-        <Hero className='hero'>
+        <div className='hero'>
           {/* <img src={bigimage} alt='Welcome' /> */}
           <img src='/static/img/landing-page-bg.jpg' alt='Welcome' />
           <div className='herocard' >
             <h1>
-              <FormattedMessage id='BeAwesome' defaultMessage='Become a Volunteer' description='First call to action on the landing page' />
+              <FormattedMessage id='BeAwesome' defaultMessage='Become a volunteer' description='First call to action on the landing page' />
             </h1>
             <p>
               <FormattedMessage
@@ -100,12 +100,21 @@ export class Landing extends Component {
                 description='Action button on landing page links to list of opportunities'
               />
             </Button>
+            <Button type='secondary' shape='round' size='large' >
+              <FormattedMessage
+                id='LearnMuchMore'
+                defaultMessage='Learn More'
+                description='Learn more about voluntarily'
+              />
+            </Button>
           </div>
-        </Hero>
+        </div>
         <FullPage>
+          <div class="vGridContainer">
           <section>
-            <Row gutter={32}>
+            <Row gutter={24} type="flex" justify="center">
               <Col span={12}>
+                <div class="centeredDiv">
                 <h2>
                   <FormattedMessage
                     id='SupportUs'
@@ -117,10 +126,11 @@ export class Landing extends Component {
                   <FormattedMessage
                     id='AboutUs'
                     // eslint-disable-next-line max-len
-                    defaultMessage='Voluntarily is a platform that connects you with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content. '
+                    defaultMessage='Voluntarily connects you with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content. '
                     description='body text of the about Voluntarily section.'
                   />
                 </p>
+                <br/>
                 <Button type='primary' shape='round' size='large' href='/about' >
                   <FormattedMessage
                     id='LearnMore'
@@ -128,7 +138,7 @@ export class Landing extends Component {
                     description='Action button to learn more about Voluntari.ly'
                   />
                 </Button>
-
+                </div>
               </Col>
               <Col span={12} >
                 {/* <img src={schoolsactivity} alt='About' /> */}
@@ -151,6 +161,7 @@ export class Landing extends Component {
               </Button>
             </Link>
           </section>
+        </div>  
         </FullPage>
 
       </div>
