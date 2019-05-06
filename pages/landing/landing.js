@@ -192,6 +192,7 @@ export class Landing extends Component {
                 description='Section title on landing page before list of opportunities'
               />
             </h2>
+            {/* @todo will style components here then convert to components */}
             <OpListSection store={this.props.store} />
             <Link href={'/op/new'} >
               <Button type='primary' shape='round' >
