@@ -1,4 +1,4 @@
-FROM node:8 as base
+FROM node:12 as base
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
@@ -11,9 +11,14 @@ COPY . ./
 RUN npm install
 CMD ["npm", "run", "dev"]
 
-FROM base as production
+FROM base as production_build
 ENV NODE_ENV=production
-COPY . ./
+COPY . .
 RUN npm install --production
 RUN npm run build
+
+FROM node:12-alpine as production
+ENV NODE_ENV=production
+COPY --from=production_build /usr/src/app /voluntarily
+WORKDIR /voluntarily
 CMD ["npm", "start" ]
