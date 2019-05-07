@@ -9,8 +9,7 @@
 /* Full width image */
 .hero img {
   margin-top: 56px;
-  min-height: 100%;
-  min-width: 400px;
+
   width: 100vw;
   height: 100vh;
   overflow: hidden;
@@ -33,7 +32,7 @@
   color: #FFFFFF;	
   font-size: 6rem;	
   font-weight: 900;	
-  letter-spacing: -0.03em;	
+  letter-spacing: -x0.03em;	
   margin-bottom: 0px;
 }
 
@@ -75,40 +74,47 @@ h2 {
   margin-top: 10%;
 }
 .spacer {
-  height: 6rem;
+  height: 8rem;
 }
-
+.blockTitle {
+  height: 4rem;
+  vertical-align: center;
+}
 
 .personaContainer {
-  display: grid;
-  grid-template-columns: 40rem 40rem;
-  grid-gap: 1.5rem;
-}
-.personaBox {
-  width: 38.5rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  color: #333;
-
+  width: 18.5rem;
+  position: relative;
 }
 
-.personaImage {
-  width: 38.5rem;
-  height: 15rem;
+.personaContainer:hover {
+  box-shadow: 2px 2px 24px 0 rgba(0,0,0,0.90);
+  transform: scale(1.05, 1.05);
+  -webkit-transition: all 0.7s;
 }
 
 .personaTitle {
-  margin-top: 0.5rem;
-  font-size: 1.5rem;
-  letter-spacing: -0.5px;
+position: absolute;
+bottom: 5rem;
+left: 1rem;
+font-size: 1.5rem;
+font-weight: 600;
+letter-spacing: -0.95px;
+color: white;
 }
 
-.personaDescription {
+.personaText {
+  position: absolute;
+  height: 3rem;
+  width: 16.5rem;
+  bottom: 1.5rem;
+  left: 1rem;
   font-size: 1rem;
-  margin-bottom: 0.5rem;
+  font-weight: 400;
+  color: white;
+  letter-spacing: -0.6px;
+  line-height: 24px;
+
 }
-
-
 
 .request4grid {
   display: grid;
@@ -169,7 +175,7 @@ h2 {
 
   .request4grid {
     display: grid;
-    grid-template-columns: 18.5rem 18.5rem 18.5rem 18.5rem;
+    grid-template-columns: 18rem 18rem 18rem 18rem;
     grid-gap: 2rem;
   }
   

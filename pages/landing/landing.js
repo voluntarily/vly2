@@ -149,43 +149,42 @@ export class Landing extends Component {
           </section>
           <div class="spacer"></div>
           <section>
-            <h2>
+            <h2 class="blockTitle">
               <FormattedMessage
                 id='WhoWeHelp'
                 defaultMessage='Who we help'
                 description='Section title on landing page before list of opportunities'
               />
             </h2>
-            <div class="personaContainer">
-            <div class="personaBox"> 
-              <img src="/static/img/Volunteers.png"class="personaImage"></img>
-              <div class="personaTitle">Volunteers</div>
-              <div class="personaDescription">Discover cool opportunities to help out teachers, students and charities. We handle the paperwork and admin so you can spend more time helping people.</div>
-              <Button type='primary' shape='round' size='large' >See activities</Button>
-            </div>
-            <div class="personaBox"> 
-              <img src="/static/img/Teachers.png" class="personaImage"></img>
-              <div class="personaTitle">Teachers</div>
-              <div class="personaDescription">Finding it hard to teach a specific concept? Call in a skilled volunteer to help you communicate or teach tech in your classroom.</div>
-              <Button type='primary' shape='round' size='large' >Learn more</Button>
-            </div>
-            <div class="personaBox"> 
-              <img src="/static/img/Content.png" class="personaImage"></img>
-              <div class="personaTitle">Educational Content Providers</div>
-              <div class="personaDescription">Discover cool opportunities to help out teachers, students and charities. We handle the paperwork and admin so you can spend more time helping people.</div>
-              <Button type='secondary' shape='round' size='large' >Get in touch</Button>
-            </div>
-            <div class="personaBox"> 
-              <img src="/static/img/Business.png" class="personaImage"></img>
-              <div class="personaTitle">Corporates</div>
-              <div class="personaDescription">Discover cool opportunities to help out teachers, students and charities. We handle the paperwork and admin so you can spend more time helping people.</div>
-              <Button type='secondary' shape='round' size='large' >Get in touch</Button>
-            </div>
+            <div class="request4grid">
+              <div class="personaContainer">
+                <img class="lol" src='/static/img/volunteerCard.png' alt='About' />
+                <h5 class="personaTitle">Volunteers</h5>
+                <p class="personaText">Discover cool opportunities to help out teachers, students and charities.</p>
+              </div>
+              <div class="personaContainer">
+                <img class="lol" src='/static/img/teacherCard.png' alt='About' />
+                <h5 class="personaTitle">Teachers</h5>
+                <p class="personaText">Get the help of skilled volunteers to  bring tech to your classroom.</p>
+              </div>
+              <div class="personaContainer">
+                <img class="lol" src='/static/img/contentCard.png' alt='About' />
+                <h5 class="personaTitle">Content providers</h5>
+                <p class="personaText">We help you get more people involved with your movement.</p>
+              </div>
+              <div class="personaContainer">
+                <img class="lol" src='/static/img/businessCard.png' alt='About' />
+                <h5 class="personaTitle">Businesses</h5>
+                <p class="personaText">We handle the admin so your people have a better time volunteering.</p>
+              </div>
+          
             </div>
           </section>
+
           <div class="spacer"></div>
+          
           <section>
-            <h2>
+            <h2 class="blockTitle">
               <FormattedMessage
                 id='UpcomingOpportunities'
                 defaultMessage='Happening soon'
