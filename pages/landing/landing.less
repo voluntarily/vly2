@@ -6,25 +6,6 @@
   margin: 0;
 }
 
-
-
-@media screen and (min-width: 768px) {
-  .hero {
-    font-size: 1rem;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .hero {
-    font-size: 1.5rem;
-  }
-}
-@media screen and (min-width: 1280px) {
-  .hero {
-    font-size: 2.0rem;
-  }
-}
-
 /* Full width image */
 .hero img {
   margin-top: 56px;
@@ -84,7 +65,7 @@ h2 {
   margin: auto auto;
 }
 
-.vGridContainer p {
+.vGridContainerText {
   color: #333;
   line-height: 2;
   font-size: 1rem;
@@ -94,7 +75,7 @@ h2 {
   margin-top: 10%;
 }
 .spacer {
-  height: 4rem;
+  height: 6rem;
 }
 
 
@@ -119,9 +100,161 @@ h2 {
 .personaTitle {
   margin-top: 0.5rem;
   font-size: 1.5rem;
+  letter-spacing: -0.5px;
 }
 
 .personaDescription {
   font-size: 1rem;
   margin-bottom: 0.5rem;
+}
+
+
+
+.request4grid {
+  display: grid;
+  grid-template-columns: 18.5rem 18.5rem 18.5rem 18.5rem;
+  grid-gap: 2rem;
+}
+
+
+
+.requestContainer {
+  width: 18.5rem;
+  letter-spacing: -0.3px;
+  line-height: 24px;
+
+}
+
+.requestImg {
+  width: 18.5rem;
+  height: 10rem;
+  object-fit: cover;
+  object-position: center;
+
+}
+ 
+.requestTitle {
+  margin-top: 0.5rem;
+  margin-bottom: 0px;
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
+}
+
+.requestDateTime {
+    height: 1.5rem;
+    margin-bottom: 0px;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 16px;
+    color: #585858;
+}
+.requestDescription {
+  vertical-align: top;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000;
+}
+
+// Lets start getting responsive lol
+
+@media screen and (min-width: 1281px) {
+  .hero {
+    font-size: 1rem;
+  }
+}
+@media screen and (min-width: 1024px) and (max-width: 1280px) {
+
+.vGridContainer {
+  width: 95vw;
+  left: -42px;
+  
+}
+
+.personaContainer {
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0rem;
+  
+}
+
+.personaBox {
+  width: 32rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+
+}
+
+.personaImage {
+  width: 100%;
+  height: 15rem;
+  object-fit: cover;
+}
+
+.personaTitle {
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+}
+
+.personaDescription {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .vGridContainer {
+    width: 100vw;
+    margin: initial;
+  }
+
+  .personaContainer {
+    grid-template-columns: 1fr;
+  }
+  .personaBox {
+    width: 100vw;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    color: #333;
+  
+  }
+  
+  .personaImage {
+    width: 100vw;
+    height: 15rem;
+    object-fit: cover;
+  }
+  
+  .personaTitle {
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+  }
+  
+  .personaDescription {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+  .vGridContainer {
+    width: 1fr;
+  }
+    
+  .personaImage {
+    width: 100vw;
+    height: 15rem;
+    object-fit: cover;
+  }
+
+  .personaContainer {
+    grid-template-columns: 100%;
+  }
 }
