@@ -196,50 +196,50 @@ export class Landing extends Component {
             {/* @todo will style components here then convert to components */}
             <div class="request4grid">
             <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?random"></img>
+              <img class="requestImg" src="https://placedog.net/640/480?id=5"></img>
+              <h6 class="requestTitle">Make a dog robot</h6>
+              <h6 class="requestDateTime">23 Jan / Lynnfield Primary School</h6>
+              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            </div>
+            <div class="requestContainer">
+              <img class="requestImg" src="https://placedog.net/640/480?id=6"></img>
               <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
               <h6 class="requestDateTime">23 Jan / Lynnfield Primary School</h6>
               <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
             <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?random"></img>
+              <img class="requestImg" src="https://placedog.net/640/480?id=7"></img>
               <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
               <h6 class="requestDateTime">23 Jan / Lynnfield Primary School</h6>
               <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
             <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?random"></img>
-              <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
-              <h6 class="requestDateTime">23 Jan / Lynnfield Primary School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
-            </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?random"></img>
+              <img class="requestImg" src="https://placedog.net/640/480?id=8"></img>
               <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
               <h6 class="requestDateTime">23 Jan / Lynnfield Primary School</h6>
               <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
 
             <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?random"></img>
+              <img class="requestImg" src="https://placedog.net/640/480?id=9"></img>
               <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
               <h6 class="requestDateTime">23 Jan / Lynnfield Primary School</h6>
               <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
             <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?random"></img>
+              <img class="requestImg" src="https://placedog.net/640/480?id=10"></img>
               <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
               <h6 class="requestDateTime">23 Jan / Lynnfield Primary School</h6>
               <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
             <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?random"></img>
+              <img class="requestImg" src="https://placedog.net/640/480?id=11"></img>
               <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
               <h6 class="requestDateTime">23 Jan / Lynnfield Primary School</h6>
               <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
             <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?random"></img>
+              <img class="requestImg" src="https://placedog.net/640/480?id=12"></img>
               <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
               <h6 class="requestDateTime">23 Jan / Lynnfield Primary School</h6>
               <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>

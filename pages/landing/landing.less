@@ -167,20 +167,27 @@ h2 {
 }
 @media screen and (min-width: 1024px) and (max-width: 1280px) {
 
+  .request4grid {
+    display: grid;
+    grid-template-columns: 18.5rem 18.5rem 18.5rem 18.5rem;
+    grid-gap: 2rem;
+  }
+  
+
 .vGridContainer {
   width: 95vw;
-  left: -42px;
+  left: -26px;
   
 }
 
 .personaContainer {
   grid-template-columns: 1fr 1fr;
-  grid-gap: 0rem;
+  grid-gap: 1rem;
   
 }
 
 .personaBox {
-  width: 32rem;
+  width: 50vw;
   margin-top: 2rem;
   margin-bottom: 2rem;
   color: #333;
@@ -194,12 +201,14 @@ h2 {
 }
 
 .personaTitle {
+  width: 100%;
   margin-top: 0.5rem;
   font-size: 1.5rem;
   letter-spacing: -0.5px;
 }
 
 .personaDescription {
+  width: 100%;
   font-size: 1rem;
   margin-bottom: 0.5rem;
 }
@@ -210,9 +219,15 @@ h2 {
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .vGridContainer {
     width: 100vw;
+    left: -26px;
     margin: initial;
   }
-
+  .request4grid {
+    display: grid;
+    grid-template-columns: 18.5rem 18.5rem 18.5rem; 
+    grid-gap: 2rem;
+  }
+  
   .personaContainer {
     grid-template-columns: 1fr;
   }
@@ -231,12 +246,14 @@ h2 {
   }
   
   .personaTitle {
+    width: 100%;
     margin-top: 0.5rem;
     font-size: 1.5rem;
     letter-spacing: -0.5px;
   }
   
   .personaDescription {
+    width: 100%;
     font-size: 1rem;
     margin-bottom: 0.5rem;
   }
@@ -246,7 +263,12 @@ h2 {
 @media screen and (max-width: 768px) {
   .vGridContainer {
     width: 1fr;
+    left: -26px;
   }
+
+
+  
+
     
   .personaImage {
     width: 100vw;
@@ -254,7 +276,52 @@ h2 {
     object-fit: cover;
   }
 
+  .request4grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+  }
   .personaContainer {
     grid-template-columns: 100%;
+  }
+
+  .requestContainer {
+    width: 100vw;
+    letter-spacing: -0.3px;
+    line-height: 24px;
+  
+  }
+  
+  .requestImg {
+    width: 100vw;
+    height: 17vh;
+    object-fit: cover;
+    object-position: center;
+  
+  }
+   
+  .requestTitle {
+    margin-top: 0.5rem;
+    margin-bottom: 0px;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 16px;
+    color: #000;
+  }
+  
+  .requestDateTime {
+      height: 1.5rem;
+      margin-bottom: 0px;
+      vertical-align: middle;
+      font-weight: bold;
+      font-size: 16px;
+      color: #585858;
+  }
+  .requestDescription {
+    vertical-align: top;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000;
   }
 }
