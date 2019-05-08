@@ -4,7 +4,7 @@ import { server } from '../../../server'
 import Interest from '../interest'
 import { connectDB, dropDB } from '../../../util/test-helpers'
 
-// Initial posts added into test db
+// Initial interests added into test db
 const interests = [
     new Interest({
         _id: '5cc8d60b8b16812b5b3920c4',
@@ -17,7 +17,7 @@ const interests = [
         personId: '54321fdcba',
         opportunityId: 'abcdef12345',
         comment: 'This is another test',
-    })
+    }),
 ]
 
 test.before('connect to mockgoose', async () => {
@@ -78,19 +78,17 @@ test.serial('Should correctly add an interest', async t => {
 
   const savedInterest = await Interest.findOne({ 
       personId: 'shbjhb234',
-      opportunityId: '1239u9u4b9u',
-      comment: 'hello there'
+      opportunityId: '1239u9u4b9u'
     }).exec()
   t.is(savedInterest.personId, 'shbjhb234')
   t.is(savedInterest.opportunityId, '1239u9u4b9u')
-  t.is(savedInterest.comment, 'hello there')
 })
 
 test.serial('Should correctly delete an interest', async t => {
   t.plan(2)
 
   const interest = new Interest({
-      _id: 'abcdef12345',
+      _id: '5cc8d60b8b16812b5b3920c9',
       personId: 'shbjhb234',
       opportunityId: '1239u9u4b9u',
       comment: 'hello there'
@@ -99,7 +97,7 @@ test.serial('Should correctly delete an interest', async t => {
   interest.save()
 
   const res = await request(server)
-    .delete(`/api/interests/${interest._id}`)
+    .delete('/api/interests/5cc8d60b8b16812b5b3920c9')
     .set('Accept', 'application/json')
 
   t.is(res.status, 200)
