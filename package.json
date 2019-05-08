@@ -11,7 +11,7 @@
     "dev": "nodemon -w server -w package.json server/server.js",
     "build": "next build && node ./x/default-lang",
     "heroku-postbuild": "next build",
-    "start": "NODE_ENV=production node server/server.js",
+    "start": "NODE_ENV=production node --experimental-modules server/server.js",
     "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100"
   },
   "pre-commit": [
@@ -92,11 +92,13 @@
   "homepage": "https://github.com/voluntarily/vly2#readme",
   "ava": {
     "files": [
-      "components/**/*.spec.js",
-      "server/**/*.spec.js"
+      "**/__tests__/**/*.spec.js"
     ],
     "sources": [
       "components/**/*.js",
+      "hocs/**/*.js",
+      "lib/**/*.js",
+      "pages/**/*.js",
       "server/**/*.js"
     ],
     "failFast": true,
