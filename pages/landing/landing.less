@@ -22,7 +22,6 @@
 .herocard {	
   position: absolute;	
   color: #FFFFFF;	
-  font-family: Inter;	
   top: 35%;
   left: 10rem;
   width: 50%;  
@@ -30,9 +29,10 @@
 
 .herocard h1 {	
   color: #FFFFFF;	
+  font-family: Inter;	
   font-size: 6rem;	
   font-weight: 900;	
-  letter-spacing: -x0.03em;	
+  letter-spacing: -0.03em;	
   margin-bottom: 0px;
 }
 
@@ -49,7 +49,9 @@
 }
 
 .aboutImg {
-  width: 38.5rem;
+  width: 39rem;
+  justify-self: end;
+
 }
 
 h2 {
@@ -70,11 +72,16 @@ h2 {
   font-size: 1rem;
 }
 
+.aboutContainer {
+  display: grid;
+  grid-template-columns: 40rem 40rem;
+}
+
 .centeredDiv {
   margin-top: 10%;
 }
 .spacer {
-  height: 8rem;
+  height: 5rem;
 }
 .blockTitle {
   height: 4rem;
@@ -86,31 +93,22 @@ h2 {
   position: relative;
 }
 
-.personaContainer:hover {
-  box-shadow: 2px 2px 24px 0 rgba(0,0,0,0.90);
-  transform: scale(1.05, 1.05);
-  -webkit-transition: all 0.7s;
-}
 
 .personaTitle {
-position: absolute;
-bottom: 5rem;
-left: 1rem;
+margin: 0.5rem 0rem 0rem 0rem;
 font-size: 1.5rem;
 font-weight: 600;
 letter-spacing: -0.95px;
-color: white;
+color: black;
 }
 
 .personaText {
-  position: absolute;
+  margin: 0.0rem 0rem 0rem 0rem;
   height: 3rem;
   width: 16.5rem;
-  bottom: 1.5rem;
-  left: 1rem;
   font-size: 1rem;
   font-weight: 400;
-  color: white;
+  color: black;
   letter-spacing: -0.6px;
   line-height: 24px;
 
@@ -166,10 +164,16 @@ color: white;
 
 // Lets start getting responsive lol
 
-@media screen and (min-width: 1281px) {
+@media screen and (min-width: 1380px) {
   .hero {
     font-size: 1rem;
   }
+}
+
+@media screen and (min-width: 1281px) and (max-width: 1380px) {
+  display: grid;
+  grid-template-columns: 18rem 18rem 18rem;
+  grid-gap: 2rem;
 }
 @media screen and (min-width: 1024px) and (max-width: 1280px) {
 
@@ -177,6 +181,12 @@ color: white;
     display: grid;
     grid-template-columns: 18rem 18rem 18rem 18rem;
     grid-gap: 2rem;
+  }
+
+  .aboutImg {
+    width: 50vw;
+    justify-self: end;
+    margin-right: 1.5rem;
   }
   
 
@@ -228,6 +238,13 @@ color: white;
     left: -26px;
     margin: initial;
   }
+
+
+  .aboutContainer {
+    display: grid;
+    grid-template-columns: 50vw 50vw;
+  }
+  
   .request4grid {
     display: grid;
     grid-template-columns: 18.5rem 18.5rem 18.5rem; 
@@ -267,12 +284,58 @@ color: white;
 }
 
 @media screen and (max-width: 768px) {
-  .vGridContainer {
-    width: 1fr;
-    left: -26px;
+
+  h2 {
+    font-weight: 900;
+    font-size: 2rem;
+    line-height: 1.3;	
+  }
+  
+  .spacer {
+    height: 2rem;
   }
 
+  .herocard {	
+    position: absolute;	
+    color: #FFFFFF;	
+    font-family: "Inter";	
+    top: 35%;
+    left: 2rem;
+    width: 50%;  
+  }
+  
+  .herocard h1 {	
+    color: #FFFFFF;	
+    font-size: 3rem;	
+    font-weight: 900;	
+    letter-spacing: -0.03em;	
+    margin-bottom: 0px;
+  }
+ 
+  .vGridContainer {
+    width: 100vw;
+  }
+  .vGridContainerText {
+    color: #333;
+    line-height: 2;
+    font-size: 1rem;
+    width: 90vw;
+  }
+  .centeredDiv {
+    margin-top: initial;
+  }
 
+  .aboutContainer {
+    display: grid;
+    grid-template-columns: 100vw;
+    margin-left: 1rem;
+  }
+  .aboutImg {
+    width: 100vw;
+    justify-self: start;
+    margin: initial;
+
+  }
   
 
     

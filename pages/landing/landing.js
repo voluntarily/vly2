@@ -110,11 +110,10 @@ export class Landing extends Component {
             </Button>
           </div>
         </div>
-        <FullPage>
+
           <div class="vGridContainer">
           <section>
-            <Row gutter={24} type="flex" justify="center">
-              <Col span={12}>
+            <div class="aboutContainer">
                 <div class="centeredDiv">
                 <h2>
                   <FormattedMessage
@@ -140,12 +139,9 @@ export class Landing extends Component {
                   />
                 </Button>
                 </div>
-              </Col>
-              <Col span={12} >
                 {/* <img src={schoolsactivity} alt='About' /> */}
                 <img class="aboutImg" src='/static/img/schoolsactivity.png' alt='About' />
-              </Col>
-            </Row>
+            </div>
           </section>
           <div class="spacer"></div>
           <section>
@@ -246,15 +242,14 @@ export class Landing extends Component {
 
             </div>
             <Divider></Divider>
-            <OpListSection store={this.props.store} />
+            {/* <OpListSection store={this.props.store} />
             <Link href={'/op/new'} >
               <Button type='primary' shape='round' >
                 <FormattedMessage id='landing.newOp' defaultMessage='New Opportunity' description='Button to create a new opportunity on Landing page' />
               </Button>
-            </Link>
+            </Link> */}
           </section>          
         </div>  
-        </FullPage>
 
       </div>
     )

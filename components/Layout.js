@@ -19,23 +19,21 @@ export default ({ children, title = 'Voluntari.ly', className }) => (
       <style jsx>{`
 
         .a4 {
-          margin: 3em;
           padding-bottom: 4em;
-          max-width: 50em;
         }
         @media (max-width: 600px) {
           .a4 {
-            margin: 0 3em;
+            margin: 0;
           }
         }
 
         .fullpage {
-          margin: 3em;
+          margin: 0;
           padding-bottom: 4em;
         }
         @media (max-width: 600px) {
           .fullpage {
-            margin: 0 3em;
+            margin: 0;
           }
         }
 

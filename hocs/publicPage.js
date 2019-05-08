@@ -9,7 +9,7 @@ import Header from '../components/Header/Header'
 
 import styled from 'styled-components'
 export const A4 = styled.div`
-  margin: 3em;
+  margin: 0;
   padding-bottom: 4em;
   max-width: 50em;
   margin-left: auto ;
@@ -21,7 +21,7 @@ export const A4 = styled.div`
   }
 `
 export const FullPage = styled.div`
-  margin: 3em;
+  margin: 0;
   padding-bottom: 4em;
 
   @media (max-width: 600px) {
@@ -75,7 +75,7 @@ export default Page => class DefaultPage extends React.Component {
           <title>Voluntari.ly</title>
           <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
           <meta charSet='utf-8' />
-          <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+          <meta name='viewport' content='initial-scale=1.0, width=device-width, viewport-fit=cover' />
         </Head>
         <Header {...this.props} />
         <Layout.Content >
