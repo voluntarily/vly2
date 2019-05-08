@@ -51,7 +51,7 @@ const supportedLanguages = glob
   .sync('./lang/*.json')
   .map(f => basename(f, '.json'))
 
-app.prepare().then(() => {
+const appReady = app.prepare().then(() => {
   // Parse application/x-www-form-urlencoded
   server.use(bodyParser.urlencoded({ extended: false }))
   // Parse application/json
@@ -97,4 +97,4 @@ app.prepare().then(() => {
   server.listen(config.serverPort, () => console.log(`${config.appName} running on http://localhost:${config.serverPort}/ Be Awesome`))
 })
 
-module.exports = { server }
+module.exports = { server, appReady }
