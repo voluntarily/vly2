@@ -1,10 +1,8 @@
 import test from 'ava'
 import request from 'supertest'
-import { server, mongoose, start } from '../../../server'
+import { server } from '../../../server'
 import Person from '../person'
-import MongodbMemoryServer from 'mongodb-memory-server'
-
-const mongod = new MongodbMemoryServer() // Start MongoDB Instance
+import { connectDB, dropDB } from '../../../util/test-helpers'
 
 // Initial people added into test db
 const people = [
@@ -23,20 +21,12 @@ const people = [
     role: ['tester']
   }
 ]
-
-test.before(async t => {
-  const connection = await mongod.getConnectionString()
-  await mongoose.connect(connection, { useNewUrlParser: true })
-    .then(console.log('Test mongodb connected at:', connection))
-  const db = mongoose.connection
-  db.on('error', console.error.bind(console, 'connection error:'))
-
-  await start()
+test.before('connect to mockgoose', async () => {
+  await connectDB()
 })
-// Disconnect MongoDB and mongoose after all tests are done
-test.after.always(async t => {
-  mongoose.disconnect()
-  mongod.stop()
+
+test.after.always(async () => {
+  await dropDB()
 })
 
 test.beforeEach('connect and add two person entries', async () => {
@@ -47,12 +37,12 @@ test.afterEach.always(async () => {
   await Person.deleteMany()
 })
 
-test.only('verify server health', async t => {
-  const res = await request(server)
-    .get('/health')
-    .expect(200)
-  t.is(res.body, 'Health OK')
-})
+// test.only('verify server health', async t => {
+//   const res = await request(server)
+//     .get('/health')
+//     .expect(200)
+//   t.is(res.body, 'Health OK')
+// })
 
 test.serial('verify fixture database has people', async t => {
   const count = await Person.countDocuments()

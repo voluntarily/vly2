@@ -36,8 +36,10 @@ test.before('connect to mockgoose', async () => {
 test.beforeEach('connect and add two oppo entries', async () => {
   await Opportunity.create(oppos).catch(() => 'Unable to create opportunities')
 })
-
-test.afterEach.always(async () => {
+test.afterEach.always('remove oppo entries', async () => {
+  await Opportunity.remove().catch(() => 'Unable to remove opportunities')
+})
+test.after.always(async () => {
   await dropDB()
 })
 
@@ -47,9 +49,9 @@ test.serial('Should correctly give number of Opportunities', async t => {
   const res = await request(server)
     .get('/api/opportunities')
     .set('Accept', 'application/json')
+    .expect(200)
     .expect('Content-Type', /json/)
     // .expect('Content-Length', '2')
-    .expect(200)
   t.is(res.status, 200)
   t.deepEqual(oppos.length, res.body.length)
 })
