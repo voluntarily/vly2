@@ -1,8 +1,8 @@
 import test from 'ava'
 import request from 'supertest'
-import { server } from '../../../server'
+import { server, appReady } from '../../../server'
 import Opportunity from '../opportunity'
-import { connectDB, dropDB } from '../../../util/test-helpers'
+import MemoryMongo from '../../../util/test-memory-mongo'
 
 // Initial posts added into test db
 const oppos = [
@@ -29,16 +29,22 @@ const oppos = [
 
 ]
 
+const testMongo = new MemoryMongo()
+
 test.before('connect to mockgoose', async () => {
-  await connectDB()
+  await appReady
+  await testMongo.start()
+})
+
+test.after.always(async () => {
+  await testMongo.stop()
 })
 
 test.beforeEach('connect and add two oppo entries', async () => {
   await Opportunity.create(oppos).catch(() => 'Unable to create opportunities')
 })
-
-test.afterEach.always(async () => {
-  await dropDB()
+test.afterEach.always('remove oppo entries', async () => {
+  await Opportunity.remove().catch(() => 'Unable to remove opportunities')
 })
 
 test.serial('Should correctly give number of Opportunities', async t => {
@@ -47,9 +53,9 @@ test.serial('Should correctly give number of Opportunities', async t => {
   const res = await request(server)
     .get('/api/opportunities')
     .set('Accept', 'application/json')
+    .expect(200)
     .expect('Content-Type', /json/)
     // .expect('Content-Length', '2')
-    .expect(200)
   t.is(res.status, 200)
   t.deepEqual(oppos.length, res.body.length)
 })

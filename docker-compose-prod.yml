@@ -3,8 +3,7 @@ services:
   web:
     build:
       context: ./
-      # dockerfile: x/docker/Dockerfile
-      target: development
+      target: production
     depends_on:
       - db
     ports:
@@ -12,8 +11,8 @@ services:
     volumes:
       - .:/usr/src/app
     environment:
-      NODE_ENV: development
-      MONGODB_URI: mongodb://db:27017/vly-dev
+      NODE_ENV: production
+      MONGODB_URI: mongodb://db:27017/vly-prod
     stdin_open: true
     tty: true
   db:

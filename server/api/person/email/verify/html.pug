@@ -1,0 +1,18 @@
+extends ../theme/layout.pug
+
+block tagline
+  span Get validated #{person.moniker}
+  
+block copybig
+  p Welcome to Voluntari.ly.
+
+block copy
+  p Kia ora #{person.moniker},
+  p Thanks for registering with Voluntari.ly.
+  p Please click on the link below to validate your email address and confirm your identity.
+  p your key is #{props.token}
+
+block copyimage
+  a(href="http://voluntari.ly" target="_blank")
+    include image.pug
+                                 

@@ -21,11 +21,11 @@ const completeConfig = {
   },
 
   development: {
-    appUrl: `http://localhost:${serverPort}/`
+    appUrl: process.env.APP_URL || `http://localhost:${serverPort}/`
   },
 
   production: {
-    appUrl: `https://nextjs-express-mongoose.herokuapp.com/`
+    appUrl: process.env.APP_URL || `http://localhost:${serverPort}/`
   }
 
 }

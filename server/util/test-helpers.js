@@ -2,6 +2,7 @@
 /* eslint-disable func-names */
 import mongoose from 'mongoose'
 import { Mockgoose } from 'mockgoose'
+import uuid from 'uuid'
 // fix parallel tests
 // eslint-disable-next-line space-before-function-paren
 Mockgoose.prototype.prepareStorage = function() {
@@ -25,8 +26,12 @@ Mockgoose.prototype.prepareStorage = function() {
 const mockgoose = new Mockgoose(mongoose)
 
 export async function connectDB() {
+  
+  mockgoose.helper.setDbVersion('3.2.1')
   await mockgoose.prepareStorage()
-  await mongoose.connect('mongodb://localhost:27017/mern-test')
+  const connecturl = `mongodb://localhost:27017/${uuid()}`
+  await mongoose.connect(connecturl, { useNewUrlParser: true })
+    .then(() => console.log('Test database connected:', connecturl))
     .catch(() => 'Unable to connect to test database')
 }
 
