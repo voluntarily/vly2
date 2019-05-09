@@ -1,9 +1,8 @@
 import test from 'ava'
 import request from 'supertest'
-import { server } from '../../../server'
+import { server, appReady } from '../../../server'
 import Person from '../person'
-import { connectDB, dropDB } from '../../../util/test-helpers'
-
+import MemoryMongo from '../../../util/test-memory-mongo'
 // Initial people added into test db
 const people = [
   {
@@ -21,30 +20,34 @@ const people = [
     role: ['tester']
   }
 ]
-test.before('connect to mockgoose', async () => {
-  await connectDB()
+let memMongo
+
+test.before('before connect to database', async () => {
+  await appReady
+  memMongo = new MemoryMongo()
+  // console.log('App ready')
+  await memMongo.start()
+  console.log('started')
 })
 
 test.after.always(async () => {
-  await dropDB()
+  await memMongo.stop()
+  console.log('stopped')
 })
 
 test.beforeEach('connect and add two person entries', async () => {
+  console.log('creating people')
   await Person.create(people).catch(() => 'Unable to create people')
+  console.log('creating people done')
 })
 
-test.afterEach.always(async () => {
-  await Person.deleteMany()
-})
-
-// test.only('verify server health', async t => {
-//   const res = await request(server)
-//     .get('/health')
-//     .expect(200)
-//   t.is(res.body, 'Health OK')
+// test.afterEach.always(async () => {
+//   console.log('removing people')
+//   await Person.deleteMany()
+//   console.log('removing people done')
 // })
 
-test.serial('verify fixture database has people', async t => {
+test.only('verify fixture database has people', async t => {
   const count = await Person.countDocuments()
   t.is(count, 2)
 
