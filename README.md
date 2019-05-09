@@ -103,7 +103,7 @@ Note In order to stop the root folder filling up I moved all the docker files to
 ### You are in.
 * Open your web browser at http://localhost:3122/
 
-You will now be able to see the voluntari.ly application (if not then ask for help on our [![gitter](https://badges.gitter.im/voluntarily/vly2.svg)](https://gitter.im/voluntarily/community) channel.
+You will now be able to see the voluntari.ly application (if not then ask for help on our [Gitter](https://gitter.im/voluntarily/community) channel.
 
 ### Stopping
 To halt the containers run:
