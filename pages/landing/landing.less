@@ -67,9 +67,10 @@ h2 {
 }
 
 .vGridContainerText {
-  color: #333;
-  line-height: 2;
+  color: #000;
+  line-height: 1.8;
   font-size: 1rem;
+  letter-spacing: -0.6px;
 }
 
 .aboutContainer {
@@ -81,11 +82,25 @@ h2 {
   margin-top: 10%;
 }
 .spacer {
-  height: 5rem;
+  height: 7rem;
 }
+
 .blockTitle {
-  height: 4rem;
+  height: 2rem;
+  font-size: 2rem;
   vertical-align: center;
+  text-align: left;
+  letter-spacing: -1.4px;
+}
+
+.blockDescription {
+  height: 1.5rem;
+  font-size: 1rem;
+  color: #000000;
+  letter-spacing: -0.3px;
+  line-height: 24px;  
+  margin-bottom: 2rem;
+
 }
 
 .personaContainer {
@@ -113,7 +128,12 @@ color: black;
   line-height: 24px;
 
 }
+.personaTextLink { 
+  color: #6549aa;
+  font-size: 1rem;
+  letter-spacing: -0.6px;
 
+}
 .request4grid {
   display: grid;
   grid-template-columns: 18.5rem 18.5rem 18.5rem 18.5rem;
@@ -223,7 +243,7 @@ color: black;
   letter-spacing: -0.5px;
 }
 
-.personaDescription {
+.personaText {
   width: 100%;
   font-size: 1rem;
   margin-bottom: 0.5rem;
@@ -285,6 +305,26 @@ color: black;
 
 @media screen and (max-width: 768px) {
 
+  .hero {
+    width: 100vw;
+    position: relative;
+    top:-56px;
+    font-size:1rem;
+    margin: 0;
+  }
+  
+  /* Full width image */
+  .hero img {
+    margin-top: 56px;
+  
+    width: 100vw;
+    height: 75vh;
+    overflow: hidden;
+    object-fit: cover;
+    object-position: center;
+    
+  }
+
   h2 {
     font-weight: 900;
     font-size: 2rem;
@@ -298,15 +338,16 @@ color: black;
   .herocard {	
     position: absolute;	
     color: #FFFFFF;	
-    font-family: "Inter";	
-    top: 35%;
-    left: 2rem;
-    width: 50%;  
+ 
+    top: 30vh;
+    left: 1rem;
+    width: 90%;  
   }
   
   .herocard h1 {	
     color: #FFFFFF;	
-    font-size: 3rem;	
+    font-family: Inter, -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 2rem;	
     font-weight: 900;	
     letter-spacing: -0.03em;	
     margin-bottom: 0px;
@@ -323,12 +364,14 @@ color: black;
   }
   .centeredDiv {
     margin-top: initial;
+    margin-left: 1rem;
+    margin-bottom: 3rem;
   }
 
   .aboutContainer {
     display: grid;
-    grid-template-columns: 100vw;
-    margin-left: 1rem;
+    grid-template-columns: 90vw;
+
   }
   .aboutImg {
     width: 100vw;
@@ -337,7 +380,11 @@ color: black;
 
   }
   
-
+  .blockTitle {
+    height: 4rem;
+    margin-left: 1rem;
+    vertical-align: center;
+  }
     
   .personaImage {
     width: 100vw;
@@ -348,22 +395,61 @@ color: black;
   .request4grid {
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: 2rem;
+    grid-gap: 1rem;
   }
   .personaContainer {
-    grid-template-columns: 100%;
+    grid-template-columns: 100vw;
   }
 
-  .requestContainer {
+  .personaBox {
     width: 100vw;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    color: #333;
+  
+  }
+  .personaContainer {
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .personaImage {
+    width: 90vw;
+    height: 15rem;
+    object-fit: cover;
+
+
+  }
+  
+  .personaTitle {
+    width: 100%;
+    font-weight: 500;
+    margin-top: 0.2rem;
+    font-size: 2rem;
+    letter-spacing: -1px;
+
+  }
+  
+  .personaText {
+    width: 100%;
+    font-size: 1.5rem;
+    line-height: 32px;
+    height: initial;
+
+  }
+
+
+  .requestContainer {
+    width: calc(100vw - 2rem);
     letter-spacing: -0.3px;
     line-height: 24px;
+    margin: 1rem;
   
   }
   
   .requestImg {
-    width: 100vw;
-    height: 17vh;
+    width: calc(100vw - 2rem);
+    height: 15rem;
     object-fit: cover;
     object-position: center;
   
