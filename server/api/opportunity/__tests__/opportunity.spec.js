@@ -3,51 +3,77 @@ import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Opportunity from '../opportunity'
 import MemoryMongo from '../../../util/test-memory-mongo'
+import ops from './opportunity.fixture.js'
+let memMongo
 
-// Initial posts added into test db
-const oppos = [
-  new Opportunity({
-    _id: '5cc8d60b8b16812b5b3920c2',
-    title: 'Growing in the garden',
-    subtitle: 'Growing digitally in the garden',
-    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
-    description: 'Project to grow something in the garden',
-    duration: '15 Minutes',
-    location: 'Newmarket, Auckland',
-    status: 'draft'
-  }),
-  new Opportunity({
-    _id: '5cc8d60b8b16812b5b3920c1',
-    title: 'The first 100 metres',
-    subtitle: 'Launching into space',
-    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
-    description: 'Project to build a simple rocket that will reach 100m',
-    duration: '2 hours',
-    location: 'Albany, Auckland',
-    status: 'draft'
-  })
-
-]
-
-const testMongo = new MemoryMongo()
-
-test.before('connect to mockgoose', async () => {
+test.before('before connect to database', async () => {
   await appReady
-  await testMongo.start()
+  memMongo = new MemoryMongo()
+  await memMongo.start()
 })
 
 test.after.always(async () => {
-  await testMongo.stop()
+  await memMongo.stop()
 })
 
 test.beforeEach('connect and add two oppo entries', async () => {
-  await Opportunity.create(oppos).catch(() => 'Unable to create opportunities')
-})
-test.afterEach.always('remove oppo entries', async () => {
-  await Opportunity.remove().catch(() => 'Unable to remove opportunities')
+  await Opportunity.create(ops).catch((err) => console.log('Unable to create opportunities', err))
 })
 
-test.serial('Should correctly give number of Opportunities', async t => {
+test.afterEach.always(async () => {
+  await Opportunity.deleteMany()
+})
+
+test.serial('verify fixture database has ops', async t => {
+  const count = await Opportunity.countDocuments()
+  t.is(count, ops.length)
+  // can find all
+  const p = await Opportunity.find()
+  t.is(ops.length, p.length)
+
+  // can find by things
+  const q = await Opportunity.findOne({ title: '4 The first 100 metres' })
+  t.is(q && q.duration, '2 hours')
+})
+
+test.serial('Should correctly give count of all active Ops sorted by title', async t => {
+  const res = await request(server)
+    .get('/api/opportunities')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  // console.log(got)
+  t.is(2, got.length)
+
+  t.is(got[0].title, '1 Mentor a year 12 business Impact Project')
+})
+
+test.serial('Should correctly give subset of ops matching status', async t => {
+  const res = await request(server)
+    .get('/api/opportunities?q={"status":"draft"}')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  // console.log('got', got)
+  t.is(got.length, 2)
+})
+
+test.serial('Should correctly select just the names and ids', async t => {
+  const res = await request(server)
+    .get('/api/opportunities?p={"title": 1}')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  // console.log('got', got)
+  t.is(got.length, 2)
+  t.is(got[0].status, undefined)
+  t.is(got[0].title, '1 Mentor a year 12 business Impact Project')
+})
+
+test.serial('Should correctly give number of active Opportunities', async t => {
   t.plan(2)
 
   const res = await request(server)
@@ -57,7 +83,7 @@ test.serial('Should correctly give number of Opportunities', async t => {
     .expect('Content-Type', /json/)
     // .expect('Content-Length', '2')
   t.is(res.status, 200)
-  t.deepEqual(oppos.length, res.body.length)
+  t.deepEqual(2, res.body.length)
 })
 
 test.serial('Should send correct data when queried against a _id', async t => {
