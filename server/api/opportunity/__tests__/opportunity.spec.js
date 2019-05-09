@@ -36,7 +36,7 @@ test.serial('verify fixture database has ops', async t => {
   t.is(q && q.duration, '2 hours')
 })
 
-test.serial('Should correctly give count of all active Ops sorted by title', async t => {
+test.serial('Should correctly give count of all Ops sorted by title', async t => {
   const res = await request(server)
     .get('/api/opportunities')
     .set('Accept', 'application/json')
@@ -44,7 +44,7 @@ test.serial('Should correctly give count of all active Ops sorted by title', asy
     .expect('Content-Type', /json/)
   const got = res.body
   // console.log(got)
-  t.is(2, got.length)
+  t.is(4, got.length)
 
   t.is(got[0].title, '1 Mentor a year 12 business Impact Project')
 })
@@ -68,22 +68,21 @@ test.serial('Should correctly select just the names and ids', async t => {
     .expect('Content-Type', /json/)
   const got = res.body
   // console.log('got', got)
-  t.is(got.length, 2)
+  t.is(got.length, 4)
   t.is(got[0].status, undefined)
   t.is(got[0].title, '1 Mentor a year 12 business Impact Project')
 })
 
 test.serial('Should correctly give number of active Opportunities', async t => {
-  t.plan(2)
-
   const res = await request(server)
-    .get('/api/opportunities')
+    .get('/api/opportunities?q={"status": "active"}')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
     // .expect('Content-Length', '2')
-  t.is(res.status, 200)
-  t.deepEqual(2, res.body.length)
+  const got = res.body
+
+  t.deepEqual(2, got.length)
 })
 
 test.serial('Should send correct data when queried against a _id', async t => {
