@@ -94,7 +94,9 @@ const appReady = app.prepare().then(() => {
   server.get('*', routerHandler)
 
   // Start server
-  server.listen(config.serverPort, () => console.log(`${config.appName} running on http://localhost:${config.serverPort}/ Be Awesome`))
+  if (process.env.NODE_ENV !== 'test') {
+    server.listen(config.serverPort, () => console.log(`${config.appName} running on http://localhost:${config.serverPort}/ Be Awesome`))
+  }
 })
 
 module.exports = { server, appReady }
