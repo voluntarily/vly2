@@ -2,35 +2,56 @@ import test from 'ava'
 import request from 'supertest'
 import { server } from '../../../server'
 import Interest from '../interest'
+import Opportunity from '../../opportunity/opportunity'
+import Person from '../../person/person'
 import { connectDB, dropDB } from '../../../util/test-helpers'
+import mongoose from 'mongoose'
+const ObjectId = mongoose.Types.ObjectId
+
+const person = new Person({
+    _id: "5cc8d60b8b16812b5b392123",
+    name: "Testy McTestface",
+    moniker: "Testy",
+    about: "30+ years in software development, product management, systems design and team leadership across a range of industries including science, technology, engineering, health, automotive, transport, mobile phone, and travel. I have a strong balance of technical and management skills.\n\nI have run my own company and led a start-up mobile phone company software team through a high growth period. I have created and developed multiple agile cross functional teams, managed DevOps processes and modernised IT platforms including migration to cloud services.\n\nI have a track record as a forward-thinking, customer focussed, innovative solutions designer and product development manager taking ideas from conception through implementation and delivery and into operation through a full business-process-aligned life cycle, managing teams using agile methodologies, leading-edge tools and technologies. ",
+    email: "testy@voluntar.ly",
+    phone: "027 444 5555",
+    gender: "rather not say",
+    password: "A43C1257802AF34895aDDDE",
+    avatar: "https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png",
+    role: ["tester", "volunteer"],
+    status: "active",
+})
+
+const opportunity = new Opportunity({
+  _id: "5cc8d60b8b16812b5b392321",
+  title: "Self driving model cars ",
+  subtitle: "using algorithmns to follow lines and avoid obstacles",
+  imgUrl: "http://www.plaz-tech.com/wp-content/plugins/wp-easycart-data/products/pics1/Arduino%20Car%202_8ab5dd38f1e3f6f05ad244f1e5e74529.jpg",
+  description: "# NZTA Innovation Centre\n \n We have 6 model cars with sensors for vision, proximity etc, \n controlled by Arduinos teach them to solve \n 4 challenges - move, follow a line, avoid obstacles, \n get to a destination etc. \n \n ## We need:\n * Open space with room for the test tracks - e.g a school hall\n * teams of 5 students\n * on adult helper per team, should be able to follow instructions and understand a little C++\n \n ## Learning outcomes:\n * programming a remote device\n * simple coding\n * algorithmic thinking\n * problem solving.\n \n",
+  duration: "4 hours",
+  location: "NZTA Innovation Centre, 5 Cook St Auckland",
+  status: "draft"
+})
 
 // Initial interests added into test db
-const interests = [
-    new Interest({
-        _id: '5cc8d60b8b16812b5b3920c4',
-        personId: 'acbdef12345',
-        opportunityId: 'abcdef12345',
-        comment: 'This is a test',
-    }),
-    new Interest({
-        _id: '5cc8d60b8b16812b5b3920c5',
-        personId: '54321fdcba',
-        opportunityId: 'abcdef12345',
-        comment: 'This is another test',
-    }),
-]
+const interest = new Interest({
+      _id: '5cc8d60b8b16812b5b3920c5',
+      person: person._id,
+      opportunity: opportunity._id,
+      comment: 'This is another test',
+})
 
-test.before('connect to mockgoose', async () => {
+
+test.before('connect to mockgoose and add initial data', async () => {
   await connectDB()
+  await Opportunity.create(opportunity).catch(() => 'Unable to create opportunity')
+  await Person.create(person).catch(() => 'Unables to create person')
+  await Interest.create(interest).catch(() => 'Unable to create interests')
 })
 
-test.beforeEach('connect and add two interest entries', async () => {
-  await Interest.create(interests).catch(() => 'Unable to create interests')
-})
-
-test.afterEach.always(async () => {
-  await dropDB()
-})
+// test.after.always(async () => {
+//   await dropDB()
+// })
 
 test.serial('Should correctly give number of Interests', async t => {
   t.plan(2)
@@ -42,66 +63,78 @@ test.serial('Should correctly give number of Interests', async t => {
     // .expect('Content-Length', '2')
     .expect(200)
   t.is(res.status, 200)
-  t.deepEqual(interests.length, res.body.length)
+  t.deepEqual(1, res.body.length)
 })
 
 test.serial('Should send correct data when queried against a _id', async t => {
-
-  const interest = new Interest(
-    {
-      _id: '5cc8d60b8b16812b5b3920c3',
-      personId: 'shbjhb234',
-      opportunityId: '1239u9u4b9u'
-    }
-  )
-  interest.save()
-
   const res = await request(server)
-    .get('/api/interests/5cc8d60b8b16812b5b3920c3')
+    .get(`/api/interests/${interest._id}`)
     .set('Accept', 'application/json')
-  t.is(res.status, 200)
-  t.is(res.body.personId, interest.personId)
-  t.is(res.body.opportunityId, interest.opportunityId)
+  t.is(200, res.status)
+  t.is(interest.person.toString(), res.body.person)
+  t.is(interest.opportunity.toString(), res.body.opportunity)
 })
 
-test.serial('Should correctly add an interest', async t => {
+test.serial('Should not add an invalid interest', async t => {
+
+  const newInterest = new Interest({
+      person: '5cc8d60b8b16812b5babcdef',
+      opportunity: '5cc8d60b8b16812b5babcdef'
+  })
 
   const res = await request(server)
     .post('/api/interests')
-    .send({
-        personId: 'shbjhb234',
-        opportunityId: '1239u9u4b9u'
-    })
+    .send(newInterest)
+    .set('Accept', 'application/json')
+
+  const savedInterest = await Interest.findOne({ 
+      person: newInterest.person,
+      opportunity: newInterest.opportunity
+    }).exec()
+
+  t.is(null, savedInterest)
+})
+
+test.serial('Should correctly add a valid interest', async t => {
+
+  const newInterest = {
+    person: person._id.toString(),
+    opportunity: opportunity._id.toString()
+  }
+
+  const res = await request(server)
+    .post('/api/interests')
+    .send(newInterest)
     .set('Accept', 'application/json')
 
   t.is(res.status, 200)
 
   const savedInterest = await Interest.findOne({ 
-      personId: 'shbjhb234',
-      opportunityId: '1239u9u4b9u'
+      person: newInterest.person,
+      opportunity: newInterest.opportunity
     }).exec()
-  t.is(savedInterest.personId, 'shbjhb234')
-  t.is(savedInterest.opportunityId, '1239u9u4b9u')
+  t.is(savedInterest.person._id.toString(), person._id.toString())
+  t.is(savedInterest.opportunity._id.toString(), opportunity._id.toString())
 })
 
 test.serial('Should correctly delete an interest', async t => {
   t.plan(2)
 
-  const interest = new Interest({
+  const newInterest = new Interest({
       _id: '5cc8d60b8b16812b5b3920c9',
-      personId: 'shbjhb234',
-      opportunityId: '1239u9u4b9u',
+      person: person._id,
+      opportunity: opportunity._id,
       comment: 'hello there'
   })
 
-  interest.save()
+  await newInterest.save()
 
   const res = await request(server)
-    .delete('/api/interests/5cc8d60b8b16812b5b3920c9')
+    .delete(`/api/interests/${newInterest._id}`)
     .set('Accept', 'application/json')
 
   t.is(res.status, 200)
 
-  const queriedInterest = await Interest.findOne({ _id: interest._id }).exec()
-  t.is(queriedInterest, null)
+  const queriedInterest = await Interest.findOne({ _id: newInterest._id }).exec()
+  t.is(null, queriedInterest)
 })
