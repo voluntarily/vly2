@@ -21,8 +21,6 @@ const app = next({ dev })
 
 const routes = require('./routes')
 const routerHandler = routes.getRequestHandler(app)
-// const initialOrganisations = require('./models/organisation.dummy')
-// const initialOpportunities = require('./api/opportunity/opportunity.dummy')
 const { config } = require('../config/config')
 
 // We need to expose React Intl's locale data on the request for the user's
@@ -79,9 +77,7 @@ const appReady = app.prepare().then(() => {
       .then(console.log('mongodb connected at:', config.databaseUrl))
     const db = mongoose.connection
     db.on('error', console.error.bind(console, 'connection error:'))
-
-    // initialOrganisations()
-    // initialOpportunities()
+    // use the x/db scripts to populate a test database
   }
 
   // REST API routes

@@ -41,11 +41,11 @@ test.beforeEach('connect and add two person entries', async () => {
   console.log('creating people done')
 })
 
-// test.afterEach.always(async () => {
-//   console.log('removing people')
-//   await Person.deleteMany()
-//   console.log('removing people done')
-// })
+test.afterEach.always(async () => {
+  console.log('removing people')
+  await Person.deleteMany()
+  console.log('removing people done')
+})
 
 test.only('verify fixture database has people', async t => {
   const count = await Person.countDocuments()
