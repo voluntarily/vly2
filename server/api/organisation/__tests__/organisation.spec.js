@@ -3,7 +3,6 @@ import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Organisation from '../organisation'
 import MemoryMongo from '../../../util/test-memory-mongo'
-// Initial orgs added into test db
 import orgs from './organisation.fixture.js'
 let memMongo
 

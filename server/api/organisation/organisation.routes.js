@@ -1,8 +1,8 @@
 const mongooseCrudify = require('mongoose-crudify')
-
 const helpers = require('../../services/helpers')
 const Organisation = require('./organisation')
 const { getOrganisations } = require('./organisation.controller')
+
 module.exports = function (server) {
   // Docs: https://github.com/ryo718/mongoose-crudify
   server.use(

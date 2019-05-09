@@ -1,6 +1,4 @@
-const Organisation = require('./organisation')
-// import slug from 'limax'
-// import sanitizeHtml from 'sanitize-html'
+const Opportunity = require('./opportunity')
 
 /**
  * Get all orgs
@@ -8,19 +6,19 @@ const Organisation = require('./organisation')
  * @param res
  * @returns void
  */
-function getOrganisations (req, res) {
-  let query = {}
-  let sort = 'name'
-  let select = ''
+function getOpportunities (req, res) {
+  let query = {} // { status: 'active' }
+  let sort = 'title'
+  let select = {}
   try {
-    query = req.query.q ? JSON.parse(req.query.q) : {}
-    sort = req.query.s ? JSON.parse(req.query.s) : 'name'
-    select = req.query.p ? JSON.parse(req.query.p) : {}
+    query = req.query.q ? JSON.parse(req.query.q) : query
+    sort = req.query.s ? JSON.parse(req.query.s) : sort
+    select = req.query.p ? JSON.parse(req.query.p) : select
   } catch (e) {
     console.log('bad JSON', req.query)
     return res.status(400).send(e)
   }
-  Organisation.find(query, select).sort(sort).exec((err, got) => {
+  Opportunity.find(query, select).sort(sort).exec((err, got) => {
     if (err) {
       console.log(err)
       res.status(404).send(err)
@@ -75,5 +73,5 @@ function getOrganisations (req, res) {
 // }
 
 module.exports = {
-  getOrganisations
+  getOpportunities
 }
