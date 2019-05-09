@@ -27,7 +27,6 @@ test.before('before connect to database', async () => {
   memMongo = new MemoryMongo()
   // console.log('App ready')
   await memMongo.start()
-  console.log('started')
 })
 
 test.after.always(async () => {
@@ -42,12 +41,10 @@ test.beforeEach('connect and add two person entries', async () => {
 })
 
 test.afterEach.always(async () => {
-  console.log('removing people')
   await Person.deleteMany()
-  console.log('removing people done')
 })
 
-test.only('verify fixture database has people', async t => {
+test.serial('verify fixture database has people', async t => {
   const count = await Person.countDocuments()
   t.is(count, 2)
 

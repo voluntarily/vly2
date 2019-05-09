@@ -47,14 +47,63 @@ test.serial('verify fixture database has orgs', async t => {
   })
 })
 
-test.serial('Should correctly give number of orgs', async t => {
+test.serial('Should correctly give count of all orgs sorted alpha', async t => {
   const res = await request(server)
     .get('/api/organisations')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
+  const got = res.body
+  t.is(orgs.length, got.length)
+  
+  t.is(got[0].name, 'Albany High School')
+})
 
-  t.is(orgs.length, res.body.length)
+test.serial('Should correctly give subset of orgs matching slug', async t => {
+  const res = await request(server)
+    .get('/api/organisations?q={"slug":"datacom"}')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  // console.log('got', got)
+  t.is(got.length, 1)
+})
+
+test.serial('Should correctly give subset of orgs of type', async t => {
+  const res = await request(server)
+    .get('/api/organisations?q={"type":"vp"}')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  // console.log('got', got)
+  t.is(got.length, 4)
+})
+
+test.serial('Should correctly give reverse sorted orgs of type', async t => {
+  const res = await request(server)
+    .get('/api/organisations?q={"type":"vp"}&s="-name"')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  // console.log('got', got)
+  t.is(got.length, 4)
+  t.is(got[0].slug, 'westpac')
+})
+
+test.serial('Should correctly select just the names and ids', async t => {
+  const res = await request(server)
+    .get('/api/organisations?q={"type":"vp"}&p={"name": 1}')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  // console.log('got', got)
+  t.is(got.length, 4)
+  t.is(got[0].slug, undefined)
+  t.is(got[0].name, 'Datacom')
 })
 
 test.serial('Should send correct data when queried against an id', async t => {
