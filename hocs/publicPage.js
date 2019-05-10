@@ -21,7 +21,7 @@ export const A4 = styled.div`
   }
 `
 export const FullPage = styled.div`
-  margin: 3em;
+  margin: 0em;
   padding-bottom: 4em;
 
   @media (max-width: 600px) {
