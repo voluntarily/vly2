@@ -1,11 +1,12 @@
 import React from 'react'
 import test from 'ava'
-import { shallow } from 'enzyme'
+import { shallow, render } from 'enzyme'
 import OpList from '../OpList'
 
 // Initial opportunities added into test db
 const ops = [
   {
+    _id: '5cc903e5f94141437622cea7',
     title: 'Growing in the garden',
     subtitle: 'Growing digitally in the garden',
     imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
@@ -15,6 +16,7 @@ const ops = [
     status: 'draft'
   },
   {
+    _id: '5cc903e5f94141437622ce87',
     title: 'The first 100 metres',
     subtitle: 'Launching into space',
     imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
@@ -25,10 +27,24 @@ const ops = [
   }
 ]
 
-test('renders the list', t => {
+test('shallow the list with ops', t => {
   const wrapper = shallow(
     <OpList ops={ops} handleShowOp={() => {}} handleDeleteOp={() => {}} />
   )
-
   t.is(wrapper.find('OpCard').length, 2)
+})
+
+test('renders the list with ops to get card coverage', t => {
+  const wrapper = render(
+    <OpList ops={ops} handleShowOp={() => {}} handleDeleteOp={() => {}} />
+  )
+  t.is(wrapper.find('.ant-card').length, 2)
+})
+
+test('renders the list with no ops', t => {
+  const wrapper = render(
+    <OpList handleShowOp={() => {}} handleDeleteOp={() => {}} />
+  )
+  t.is(wrapper.find('OpCard').length, 0)
+  t.is(wrapper.find('span').text(), 'No matching opportunities')
 })
