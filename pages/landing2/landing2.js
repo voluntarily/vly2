@@ -74,17 +74,23 @@ export class Landing2 extends Component {
       <div>
         <div className='awesomeHeroContainer'>
           {/* <img src={bigimage} alt='Welcome' /> */}
-          <img src='/static/img/landing-page-bg.jpg' alt='Welcome' />
+          <div class="heroLeft">
+          <div class="notch"></div>
+          <video class="awesomeVideo" poster="./static/img/businessCard.png" autoPlay loop muted playsInline>
+            <source src="./static/test.mp4" type="video/mp4"></source>
+            {/* @TODO Proper responsive images for real release cause the test one is a placeholder and looks like shit */}
+          </video>
+          </div>
           <div className='herocard' >
             <h1>
             volunteer yo—self.
             </h1>
             <p>
-            Find awesome ways to volunteer your skills.<br></br>Help schools and charities do epic things.
+            Find awesome ways to volunteer your skills.<br></br>Help your community do epic things.
             </p>
             <div class="searchBox">
             <Search
-              placeholder="try 'launching rockets' "
+              placeholder="try 'building robots' "
               enterButton='Search activities'
               size='large'
               // eslint-disable-next-line no-console
@@ -136,7 +142,7 @@ export class Landing2 extends Component {
             <h2 class="blockTitle">
               <FormattedMessage
                 id='WhoWeHelp'
-                defaultMessage='Who we help'
+                defaultMessage='How we help'
                 description='Section title on landing page before list of opportunities'
               />
             </h2>
@@ -150,13 +156,13 @@ export class Landing2 extends Component {
               </div>
               <div class="personaContainer">
                 <img class="personaImage" src='/static/img/teacherCard.png' alt='About' />
-                <h5 class="personaTitle">Teachers</h5>
-                <p class="personaText">Get the help of skilled volunteers to  bring tech to your classroom.</p>
+                <h5 class="personaTitle">Educators</h5>
+                <p class="personaText">Get the help of skilled volunteers to bring tech to your teaching.</p>
                 <a class="personaTextLink" href="#">Learn more</a>
               </div>
               <div class="personaContainer">
                 <img class="personaImage" src='/static/img/contentCard.png' alt='About' />
-                <h5 class="personaTitle">Content providers</h5>
+                <h5 class="personaTitle">Charities</h5>
                 <p class="personaText">We help you get more people involved with your movement.</p>
                 <a class="personaTextLink" href="#">Learn more</a>
               </div>
