@@ -1,7 +1,7 @@
 const mongooseCrudify = require('mongoose-crudify')
-
 const helpers = require('../../services/helpers')
 const Organisation = require('./organisation')
+const { getOrganisations } = require('./organisation.controller')
 
 module.exports = function (server) {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -14,6 +14,9 @@ module.exports = function (server) {
 
       // beforeActions: [],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
+      actions: {
+        list: getOrganisations
+      },
       afterActions: [
         { middlewares: [helpers.formatResponse] }
       ]

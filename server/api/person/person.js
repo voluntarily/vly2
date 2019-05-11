@@ -3,10 +3,10 @@ const Schema = mongoose.Schema
 
 // simplified version without Auth
 const personSchema = new Schema({
-  name: { type: 'String', index: true, unique: true, required: true }, // long full name
+  name: { type: 'String', index: true, required: true }, // long full name
+  email: { type: 'String', index: true, unique: true, required: true }, // person@example.com
   moniker: { type: 'String', default: '' }, // how we should address you - eg. Andrew
   about: { type: 'String', default: '' }, // person description
-  email: { type: 'String', index: true, required: true }, // person@example.com
   phone: { type: 'String', required: true }, // +64 27 7031007
   gender: { type: 'String', default: '' }, // whatever they want to write.
   password: { type: 'String' }, // encoded

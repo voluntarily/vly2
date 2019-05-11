@@ -1,7 +1,7 @@
 const mongooseCrudify = require('mongoose-crudify')
-
 const helpers = require('../../services/helpers')
 const Opportunity = require('./opportunity')
+const { getOpportunities } = require('./opportunity.controller')
 
 module.exports = (server) => {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -14,6 +14,9 @@ module.exports = (server) => {
 
       // beforeActions: [],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
+      actions: {
+        list: getOpportunities
+      },
       afterActions: [
         // this is the place to require user be authed.
         { middlewares: [helpers.formatResponse] }
