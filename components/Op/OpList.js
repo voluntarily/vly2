@@ -4,6 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import OpCard from './OpCard'
 import { Col, Row } from 'antd'
+import { FormattedMessage } from 'react-intl'
 
 const OpList = ({ ops, ...props }) => (
   <Row type='flex' align='top' gutter={{ xs: 8, sm: 16, md: 24 }} >
@@ -15,7 +16,7 @@ const OpList = ({ ops, ...props }) => (
             key={index}
           />
         </Col>
-      )) : 'No Matching Opportunities'
+      )) : <FormattedMessage id='op.list.empty' defaultMessage='No matching opportunities' description='no opportunities message in OpList' />
     }
   </Row>
 )
