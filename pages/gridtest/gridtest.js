@@ -46,7 +46,7 @@ export class gridtest extends Component {
            </div>
     
       {/*  Standalone Card */}
-      <div class="cardContainer center"></div>
+      <div class="cardContainer"></div>
 
 
     {/* End HTML */}
