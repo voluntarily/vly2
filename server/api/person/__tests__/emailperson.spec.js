@@ -1,7 +1,7 @@
 import test from 'ava'
 import { emailPerson } from '../email/emailperson'
 
-test('Should send verification email to person', async t => {
+test.skip('Should send verification email to person', async t => {
   const person = {
     name: 'Testy McTestFace',
     moniker: 'Testy',

@@ -10,7 +10,7 @@ import { getTransportTest, getTransportSES } from '../../email/email'
 //   await dropDB();
 // });
 
-test('Should setup and send test email', async t => {
+test.skip('Should setup and send test email', async t => {
   t.plan(3)
   const transport = await getTransportTest()
   const info = await transport.sendMail({
