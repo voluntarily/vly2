@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 export const sectionContainer = styled.div`
 // Big Screens
-.sectionContainer {
+.containerSection {
     margin: 0 auto;
     width: 80rem;
     margin-top: 20rem;
@@ -14,7 +14,7 @@ export const sectionContainer = styled.div`
   // Medium Screens
 @media screen and (min-width: 768px) and (max-width: 1680px) {
 
-  .sectionContainer {
+  .containerSection {
     width: calc(100vw - 2rem);
     margin-top: initial;
   }
@@ -23,7 +23,7 @@ export const sectionContainer = styled.div`
 // Small / Smol Screens & Phones
 @media screen and (max-width: 767px) {
 
-    .sectionContainer {
+    .containerSection {
       width: calc(100vw - 4rem);
       margin: 2rem;
     }
@@ -31,10 +31,10 @@ export const sectionContainer = styled.div`
 ` //end sectionContainer
 
 const Container = ({ item, ...props }) => (
-<sectionContainer>
+<containerSection>
 
 
-</sectionContainer>
+</containerSection>
 
 
 )
@@ -49,4 +49,4 @@ PersonCard.propTypes = {
   }).isRequired
 }
 
-export default PersonCard
+export default Container

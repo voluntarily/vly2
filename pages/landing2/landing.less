@@ -37,7 +37,7 @@
   width: 120rem;
   overflow: hidden;
   object-fit: fill;
-  background-color: black;
+  background-color: white;
   z-index: 1;
 
   
@@ -249,27 +249,74 @@ color: black;
 
 // Lets start getting responsive lol
 
+@media screen and (min-width: 1380px) and (max-width: 1920px) {
+.heroLeft {
+  margin-top: 6rem;
+  margin-left: 6rem;
+  width: 24rem;
+  height: 48rem;
+}
+.notch {
+  margin-left: 6rem;
+  background-color: white;
+}
+
+.herocard {
+  margin-top: 20rem;
+  margin-left: 0rem;
+}
+
+
+}
+
+
+
 @media screen and (min-width: 1380px) {
 
 }
 
 @media screen and (min-width: 1282px) and (max-width: 1380px) {
-
+  .heroLeft {
+    margin-top: 6rem;
+    margin-left: 6rem;
+    width: 24rem;
+    height: 48rem;
+  }
+  .notch {
+    margin-left: 6rem;
+    background-color: white;
+  }
+  
+  .herocard {
+    margin-top: 20rem;
+    margin-left: 0rem;
+    width: 32rem;
+  }
 }
 
 
 @media screen and (min-width: 1026px) and (max-width: 1281px) {
 
-.herocard {
-  width: 40rem;
-}
+  .heroLeft {
+    margin-top: 6rem;
+    margin-left: 6rem;
+    width: 24rem;
+    height: 48rem;
+  }
+  .notch {
+    margin-left: 6rem;
+    background-color: white;
+  }
+  
+  .herocard {
+    margin-top: 20rem;
+    margin-left: -2rem;
+    width: 35rem;
+  }
 
-.awesomeHeroContainer img {
-  width: 30rem;
-  height: 60rem;
-  margin-top: 2rem;
-  justify-items: center;
-}
+  .searchBox {
+    width: 30rem;
+  }
 
   .request4grid {
     display: grid;
@@ -333,6 +380,27 @@ color: black;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1025px) {
+
+  .heroLeft {
+    margin-top: 6rem;
+    margin-left: 6rem;
+    width: 24rem;
+    height: 48rem;
+  }
+  .notch {
+    margin-left: 6rem;
+    background-color: white;
+  }
+  
+  .herocard {
+    margin-top: 20rem;
+    margin-left: -2rem;
+    width: 35rem;
+  }
+
+  .searchBox {
+    width: 30rem;
+  }
 
   .awesomeHeroContainer {
     width: 100vw;
@@ -452,6 +520,35 @@ color: black;
 
 @media screen and (max-width: 768px) {
 
+  .awesomeHeroContainer {
+    grid-template-columns: 100vw;
+    height: 44rem;
+  }
+  .heroLeft {
+    margin-top: 0rem;
+    margin-left: 0rem;
+    width: 100vw;
+    height: 24rem;
+    border-radius: 0px;
+
+  }
+  .notch {
+    margin-left: 6rem;
+    display: none;
+  }
+  
+  .herocard {
+    color: #000;	  
+    margin: 1rem;
+    left: 0px;
+    width: calc(100vw - 2rem);  
+  }
+
+  .searchBox {
+    width: 20rem;
+  }
+
+
   .hero {
     width: 100vw;
     position: relative;
@@ -483,16 +580,11 @@ color: black;
   }
 
   .herocard {	
-    position: absolute;	
-    color: #FFFFFF;	
- 
-    top: 30vh;
-    left: 1rem;
-    width: 90%;  
+
   }
   
   .herocard h1 {	
-    color: #FFFFFF;	
+    color: #000;	
     font-size: 2rem;	
     font-weight: 900;	
     letter-spacing: -0.03em;	
