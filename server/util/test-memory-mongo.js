@@ -8,7 +8,10 @@ class MemoryMongo {
   constructor () {
     this.connection = null
     this.mms = new MongoMemoryServer({
-      debug: false // by default false
+      debug: false, // by default false
+      binary: {
+        version: '3.2.1'
+      }
     })
   }
 
