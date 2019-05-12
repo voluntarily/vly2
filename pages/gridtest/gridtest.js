@@ -1,7 +1,7 @@
 import { Button, Col, Input, Row, Divider } from 'antd'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-
+import Container from '../../components/Container/Container'
 import Link from 'next/link'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 
@@ -21,7 +21,7 @@ export class gridtest extends Component {
 
 
           {/*  Grid responsive test */}
-          <div class="sectionContainer">
+          <sectionContainer>
             <div class="fourColumnGrid"> 
               <div class="testPotatoCard">aaaaa</div>
               <div class="testPotatoCard">aaaa</div>
@@ -43,7 +43,7 @@ export class gridtest extends Component {
               <div class="testPotatoCard">aaaaaaa</div>
               <div class="testPotatoCard">aaaa</div>
             </div>
-           </div>
+            </sectionContainer>
     
       {/*  Standalone Card */}
       <div class="cardContainer"></div>

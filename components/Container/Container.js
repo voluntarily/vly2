@@ -1,45 +1,44 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
 
 
 export const sectionContainer = styled.div`
-// Big Screens
-.containerSection {
+/* // Big Screens */
     margin: 0 auto;
     width: 80rem;
     margin-top: 20rem;
     background-color: pink;
-  }
+  
 
-  // Medium Screens
+  /* // Medium Screens */
 @media screen and (min-width: 768px) and (max-width: 1680px) {
 
-  .containerSection {
     width: calc(100vw - 2rem);
     margin-top: initial;
-  }
 }
 
-// Small / Smol Screens & Phones
+/* // Small / Smol Screens & Phones */
 @media screen and (max-width: 767px) {
 
-    .containerSection {
       width: calc(100vw - 4rem);
       margin: 2rem;
-    }
+    
 }  
 ` //end sectionContainer
 
-const Container = ({ item, ...props }) => (
-<containerSection>
+const Container = () => (
+  
+<sectionContainer>
 
 
-</containerSection>
+</sectionContainer>
 
 
 )
 
-PersonCard.propTypes = {
+Container.propTypes = {
   person: PropTypes.shape({
     name: PropTypes.string.isRequired,
     moniker: PropTypes.string.isRequired,
