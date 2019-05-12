@@ -11,6 +11,7 @@ import styles from './grids.less'
 
 
 import styled from 'styled-components'
+import AwesomeCard from '../../components/AwesomeCard/AwesomeCard';
 const Search = Input.Search
 
 export class gridtest extends Component {
@@ -19,7 +20,7 @@ export class gridtest extends Component {
       <div>
       {/* Start HTML */}
 
-
+          <AwesomeCard></AwesomeCard>
           {/*  Grid responsive test */}
           <Container>
             <div class="fourColumnGrid"> 
