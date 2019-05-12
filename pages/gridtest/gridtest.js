@@ -21,7 +21,7 @@ export class gridtest extends Component {
 
 
           {/*  Grid responsive test */}
-          <sectionContainer>
+          <Container>
             <div class="fourColumnGrid"> 
               <div class="testPotatoCard">aaaaa</div>
               <div class="testPotatoCard">aaaa</div>
@@ -43,10 +43,10 @@ export class gridtest extends Component {
               <div class="testPotatoCard">aaaaaaa</div>
               <div class="testPotatoCard">aaaa</div>
             </div>
-            </sectionContainer>
-    
+            </Container>
+
       {/*  Standalone Card */}
-      <div class="cardContainer"></div>
+
 
 
     {/* End HTML */}

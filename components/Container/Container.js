@@ -1,40 +1,36 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-
-
-
-export const sectionContainer = styled.div`
-/* // Big Screens */
-    margin: 0 auto;
-    width: 80rem;
-    margin-top: 20rem;
-    background-color: pink;
-  
-
-  /* // Medium Screens */
-@media screen and (min-width: 768px) and (max-width: 1680px) {
-
-    width: calc(100vw - 2rem);
-    margin-top: initial;
-}
-
-/* // Small / Smol Screens & Phones */
-@media screen and (max-width: 767px) {
-
-      width: calc(100vw - 4rem);
-      margin: 2rem;
-    
-}  
-` //end sectionContainer
+import style from '../../components/Container/containerStyle.less'
 
 const Container = () => (
-  
-<sectionContainer>
+  <div>
 
+<div className="containerStyle"></div>
+<style jsx>{`
+  .containerStyle {
+    margin: 0 auto;
+    width: 80rem;
+    height: 30rem;
+    margin-top: 20rem;
+  }
+@media screen and (min-width: 768px) and (max-width: 1680px) {
 
-</sectionContainer>
+  .containerStyle {
+    width: calc(100vw - 2rem);
 
+  }
+}
+@media screen and (max-width: 767px) {
+
+  .containerStyle {
+    width: calc(100vw - 4rem);
+    margin: 2rem;
+  }
+}
+
+  `}</style>
+</div>
 
 )
 
