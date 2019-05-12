@@ -1,7 +1,7 @@
 import React from 'react'
 import test from 'ava'
 import { shallow, render } from 'enzyme'
-import OpList from '../OpList'
+import OpListSection from '../OpListSection'
 
 // Initial opportunities added into test db
 const ops = [
@@ -27,23 +27,24 @@ const ops = [
   }
 ]
 
-test('shallow the list with ops', t => {
+test.only('shallow the list with ops', t => {
   const wrapper = shallow(
-    <OpList ops={ops} handleShowOp={() => {}} handleDeleteOp={() => {}} />
+    <OpListSection ops={ops} handleShowOp={() => {}} handleDeleteOp={() => {}} />
   )
-  t.is(wrapper.find('OpCard').length, 2)
+  console.log(wrapper.debug())
+  t.is(wrapper.find('OpListSection').length, 1)
 })
 
 test('renders the list with ops to get card coverage', t => {
   const wrapper = render(
-    <OpList ops={ops} handleShowOp={() => {}} handleDeleteOp={() => {}} />
+    <OpListSection ops={ops} handleShowOp={() => {}} handleDeleteOp={() => {}} />
   )
   t.is(wrapper.find('.ant-card').length, 2)
 })
 
 test('renders the list with no ops', t => {
   const wrapper = render(
-    <OpList handleShowOp={() => {}} handleDeleteOp={() => {}} />
+    <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} />
   )
   t.is(wrapper.find('OpCard').length, 0)
   t.is(wrapper.find('span').text(), 'No matching opportunities')

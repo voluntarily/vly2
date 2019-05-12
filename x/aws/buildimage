@@ -7,7 +7,7 @@
 $(aws ecr get-login --no-include-email --region ap-southeast-1)
 
 # build the docker image
-docker build -t vly1-main-repo .
+docker build --target production -t vly1-main-repo .
 
 # tag the image
 docker tag vly1-main-repo:latest 585172581592.dkr.ecr.ap-southeast-1.amazonaws.com/vly1-main-repo:latest
