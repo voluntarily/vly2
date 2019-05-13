@@ -8,6 +8,9 @@ import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 
 import styled from 'styled-components'
+
+//Dump all the custom elements and responsive scaffolding crap here
+//BEGIN AWESOME DUMP OF CSS-ISH GOODNESS
 export const A4 = styled.div`
   margin: 3em;
   padding-bottom: 4em;
@@ -21,21 +24,40 @@ export const A4 = styled.div`
   }
 `
 export const FullPage = styled.div`
-  margin: 0em;
-  padding-bottom: 4em;
+      margin: 0 auto;
+      width: 80rem;
 
-  @media (max-width: 600px) {
-    .div {
-      margin: 0 3em;
-    }
+  @media screen and (min-width: 768px) and (max-width: 1680px) {
+      width: calc(100vw - 2rem);
+  }
+  @media screen and (max-width: 767px) {
+      width: calc(100vw - 1rem);
+      margin: 0.5rem;
+  }
+  ` //end fullpage
+  export const Grid = styled.div`
+  
+  position: relative;
+  display: grid;
+  justify-items: center;
+  justify-content: space-evenly;
+  grid-template-columns: repeat(auto-fit, 18.5rem);
+  grid-gap: 2rem;
+
+  @media screen and (max-width: 767px) {
+    grid-gap: 0rem;
+  }
+
+ ` //end grid
+
+  export const FillWindow = styled.div`
+  
+    min-height: calc(100vh - 220px); 
   }
 `
-export const FillWindow = styled.div`
-// subtract height of header and footer
-  min-height: calc(100vh - 220px); 
-}
-`
 
+
+//END AWESOME CSS DUMP
 export default Page => class DefaultPage extends React.Component {
   static async getInitialProps (ctx) {
     const loggedUser = process.browser ? getUserFromLocalCookie() : getUserFromServerCookie(ctx.req)

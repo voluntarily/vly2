@@ -30,12 +30,11 @@ const AwesomeCard = ({ op, onPress, ...props }) => (
 }
 
 .requestImg {
-  width: 18.5rem;
+  width: 100%;
   height: 10rem;
   background-color: black;
   object-fit: cover;
   object-position: center;
-
 }
  
 .requestTitle {
@@ -49,9 +48,7 @@ const AwesomeCard = ({ op, onPress, ...props }) => (
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  
-  
+  -webkit-box-orient: vertical;  
 }
 
 .requestDateTime {
@@ -66,6 +63,7 @@ const AwesomeCard = ({ op, onPress, ...props }) => (
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
+
 .requestDescription {
   vertical-align: top;
   font-weight: 400;
@@ -78,6 +76,18 @@ const AwesomeCard = ({ op, onPress, ...props }) => (
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+
+@media screen and (max-width: 670px) {
+
+.requestContainer {
+width: calc(100vw - 1rem);
+margin-bottom: 1.5rem;
+}
+.requestImg {
+  height: 12rem;
+}
+}
+
 
   `}</style>
 

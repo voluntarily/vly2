@@ -1,17 +1,15 @@
 import { Button, Col, Input, Row, Divider } from 'antd'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import Container from '../../components/TestContainer/Container'
 import Link from 'next/link'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import publicPage, { FullPage, Grid } from '../../hocs/publicPage'
+import AwesomeCard from '../../components/TestContainer/AwesomeCard/AwesomeCard'
 
 // import OpListSection from '../../components/Op/OpListSection'
 import OpListSection from '../../components/Op/OpListSection'
 import styles from './grids.less'
-
-
 import styled from 'styled-components'
-import AwesomeCard from '../../components/TestContainer/AwesomeCard/awesomeCard';
+
 const Search = Input.Search
 
 export class gridtest extends Component {
@@ -22,32 +20,26 @@ export class gridtest extends Component {
 
  
           {/*  Grid responsive test */}
-          <Container>
+          <FullPage>
+            <Grid>
+            <AwesomeCard></AwesomeCard>
+            <AwesomeCard></AwesomeCard>
+            <AwesomeCard></AwesomeCard>
+            <AwesomeCard></AwesomeCard>
+            <AwesomeCard></AwesomeCard>
+            <AwesomeCard></AwesomeCard>
+            <AwesomeCard></AwesomeCard>
+            <AwesomeCard></AwesomeCard>
+            <AwesomeCard></AwesomeCard>
+            <AwesomeCard></AwesomeCard>
+            <AwesomeCard></AwesomeCard>
+            <AwesomeCard></AwesomeCard>
+            <AwesomeCard></AwesomeCard>
+            <AwesomeCard></AwesomeCard>
 
-            </Container>
-            <div className="fourColumnGrid"> 
-              <div className="testPotatoCard">aaaaa</div>
-              <div className="testPotatoCard">aaaa</div>
-              <div className="testPotatoCard">aaaaaaa</div>
-              <div className="testPotatoCard">aaaa</div>
-
-              <div className="testPotatoCard">aaaaa</div>
-              <div className="testPotatoCard">aaaa</div>
-              <div className="testPotatoCard">aaaa</div>
-              <div className="testPotatoCard">aaaa</div>
-
-              <div className="testPotatoCard">aaaa</div>
-              <div className="testPotatoCard">aaaa</div>
-              <div className="testPotatoCard">aaaa</div>
-              <div className="testPotatoCard">aaaa</div>
-
-              <div className="testPotatoCard">aaaaa</div>
-              <div className="testPotatoCard">aaaa</div>
-              <div className="testPotatoCard">aaaaaaa</div>
-              <div className="testPotatoCard">aaaa</div>
-            </div>
+            </Grid>
       {/*  Standalone Card */}
-
+      </FullPage>
 
 
     {/* End HTML */}
