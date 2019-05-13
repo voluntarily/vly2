@@ -52,4 +52,5 @@ OpListSection.propTypes = {
   dispatch: PropTypes.func.isRequired
 }
 
+export const OpListSectionTest = OpListSection
 export default withOps(OpListSection)
