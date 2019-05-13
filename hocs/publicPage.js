@@ -44,7 +44,10 @@ export const FullPage = styled.div`
   grid-template-columns: repeat(auto-fit, 18.5rem);
   grid-gap: 2rem;
 
+  
+
   @media screen and (max-width: 767px) {
+    grid-template-columns: 100vw;
     grid-gap: 0rem;
   }
 

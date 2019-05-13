@@ -77,10 +77,10 @@ const AwesomeCard = ({ op, onPress, ...props }) => (
   -webkit-box-orient: vertical;
 }
 
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 768px) {
 
 .requestContainer {
-width: calc(100vw - 1rem);
+width: calc(100vw - 2rem);
 margin-bottom: 1.5rem;
 }
 .requestImg {
