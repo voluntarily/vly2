@@ -27,7 +27,7 @@ export const FullPage = styled.div`
       margin: 0 auto;
       width: 80rem;
 
-  @media screen and (min-width: 768px) and (max-width: 1680px) {
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
       width: calc(100vw - 2rem);
   }
   @media screen and (max-width: 767px) {
@@ -39,12 +39,14 @@ export const FullPage = styled.div`
   
   position: relative;
   display: grid;
-  justify-items: center;
-  justify-content: space-evenly;
-  grid-template-columns: repeat(auto-fit, 18.5rem);
+  grid-template-columns: 18.5rem 18.5rem 18.5rem 18.5rem;
   grid-gap: 2rem;
 
-  
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    grid-template-columns: repeat(auto-fit, 18.5rem);
+    justify-content: space-evenly;
+    justify-items: center;
+  }
 
   @media screen and (max-width: 767px) {
     grid-template-columns: 100vw;
