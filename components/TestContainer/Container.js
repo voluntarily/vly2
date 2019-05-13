@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import style from '../../components/Container/containerStyle.less'
+import style from '../../components/TestContainer/containerStyle.less'
 
 const Container = () => (
   <div>
 
-<div className="containerStyle"></div>
+<div className="containerStyle">
+
+</div>
 <style jsx>{`
   .containerStyle {
     margin: 0 auto;

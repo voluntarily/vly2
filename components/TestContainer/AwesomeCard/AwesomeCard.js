@@ -13,7 +13,7 @@ const AwesomeCard = ({ op, onPress, ...props }) => (
     <div className="requestContainer">
       <img className="requestImg"></img>
       <p className="requestTitle">Learn robotics by building a robot doggo a robot doggo a robot doggo a robot doggo a robot doggo cause robotos are cool loooong title haha</p>
-      <p className="requestDateTime">Doggototo College</p>
+      <p className="requestDateTime">Doggos Doggos Doggos Doggos Doggos Doggos Doggos  </p>
       <p className="requestDescription">We need a dogineer</p>
     </div>
    
@@ -26,7 +26,7 @@ const AwesomeCard = ({ op, onPress, ...props }) => (
   width: 18.5rem;
   letter-spacing: -0.3px;
   line-height: 24px;
-
+  margin-bottom: 0px;
 }
 
 .requestImg {
@@ -40,7 +40,7 @@ const AwesomeCard = ({ op, onPress, ...props }) => (
  
 .requestTitle {
   margin-top: 0px;
-  margin-bottom: 0px;
+
   vertical-align: middle;
   font-weight: bold;
   font-size: 16px;
@@ -55,12 +55,16 @@ const AwesomeCard = ({ op, onPress, ...props }) => (
 }
 
 .requestDateTime {
-    height: 1.5rem;
-    margin-bottom: 0px;
+
     vertical-align: middle;
     font-weight: bold;
     font-size: 16px;
     color: #585858;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .requestDescription {
   vertical-align: top;
@@ -68,6 +72,11 @@ const AwesomeCard = ({ op, onPress, ...props }) => (
   font-size: 16px;
   line-height: 24px;
   color: #000;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
   `}</style>

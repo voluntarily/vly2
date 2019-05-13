@@ -1,7 +1,7 @@
 import { Button, Col, Input, Row, Divider } from 'antd'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import Container from '../../components/Container/Container'
+import Container from '../../components/TestContainer/Container'
 import Link from 'next/link'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 
@@ -11,7 +11,7 @@ import styles from './grids.less'
 
 
 import styled from 'styled-components'
-import AwesomeCard from '../../components/AwesomeCard/AwesomeCard';
+import AwesomeCard from '../../components/TestContainer/AwesomeCard/awesomeCard';
 const Search = Input.Search
 
 export class gridtest extends Component {
@@ -20,32 +20,32 @@ export class gridtest extends Component {
       <div>
       {/* Start HTML */}
 
-          <AwesomeCard></AwesomeCard>
+ 
           {/*  Grid responsive test */}
           <Container>
-            <div class="fourColumnGrid"> 
-              <div class="testPotatoCard">aaaaa</div>
-              <div class="testPotatoCard">aaaa</div>
-              <div class="testPotatoCard">aaaaaaa</div>
-              <div class="testPotatoCard">aaaa</div>
 
-              <div class="testPotatoCard">aaaaa</div>
-              <div class="testPotatoCard">aaaa</div>
-              <div class="testPotatoCard">aaaa</div>
-              <div class="testPotatoCard">aaaa</div>
-
-              <div class="testPotatoCard">aaaa</div>
-              <div class="testPotatoCard">aaaa</div>
-              <div class="testPotatoCard">aaaa</div>
-              <div class="testPotatoCard">aaaa</div>
-
-              <div class="testPotatoCard">aaaaa</div>
-              <div class="testPotatoCard">aaaa</div>
-              <div class="testPotatoCard">aaaaaaa</div>
-              <div class="testPotatoCard">aaaa</div>
-            </div>
             </Container>
+            <div className="fourColumnGrid"> 
+              <div className="testPotatoCard">aaaaa</div>
+              <div className="testPotatoCard">aaaa</div>
+              <div className="testPotatoCard">aaaaaaa</div>
+              <div className="testPotatoCard">aaaa</div>
 
+              <div className="testPotatoCard">aaaaa</div>
+              <div className="testPotatoCard">aaaa</div>
+              <div className="testPotatoCard">aaaa</div>
+              <div className="testPotatoCard">aaaa</div>
+
+              <div className="testPotatoCard">aaaa</div>
+              <div className="testPotatoCard">aaaa</div>
+              <div className="testPotatoCard">aaaa</div>
+              <div className="testPotatoCard">aaaa</div>
+
+              <div className="testPotatoCard">aaaaa</div>
+              <div className="testPotatoCard">aaaa</div>
+              <div className="testPotatoCard">aaaaaaa</div>
+              <div className="testPotatoCard">aaaa</div>
+            </div>
       {/*  Standalone Card */}
 
 
