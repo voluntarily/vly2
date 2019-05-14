@@ -27,10 +27,8 @@ import { Provider } from 'react-redux'
 */
 const mockStore = configureStore()(
   {
-    ui: {
-      rst: {
-        name: ''
-      }
+    rst: {
+      name: ''
     }
   }
 )

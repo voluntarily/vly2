@@ -17,7 +17,7 @@ export const setName = (name) => {
 const initialState = { name: '' }
 
 export const ReduxStoreTestReducer = (state = initialState, action) => {
-  // console.log('ReduxStoreTestReducer', action)
+  // console.log('ReduxStoreTestReducer', action, state)
   switch (action.type) {
     case SET_NAME:
       console.log('Reducing SET_NAME')
@@ -63,7 +63,7 @@ export class ReduxStoreTest extends Component {
 
 // Copy out the bit of state we are interested in.
 const mapStateToProps = (store) => ({
-  name: store.ui.rst.name
+  name: store.rst ? store.rst.name : ''
 })
 
 export default connect(mapStateToProps, { setName })(ReduxStoreTest)
