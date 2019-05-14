@@ -13,13 +13,14 @@ export default class LocalStateTest extends Component {
 
   // when save clicked copy the edited name to the savedname
   handleClick = (e) => {
-    console.log('click', e.target, this.state.editname)
+    // console.log('click', e.target, this.state.editname)
     this.setState({ savedname: this.state.editname })
   }
 
   // as the render function is pure it should only show props or state with input updates handling state changes
   // using => functions binds to local this so we don't need bind(this).
   handleChange = (e) => {
+    // console.log('change', e.target)
     const { name, value } = e.target
     this.setState({ [name]: value })
   }

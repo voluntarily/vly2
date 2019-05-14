@@ -23,7 +23,7 @@ export function fetchHealth () {
 const initialState = { health: { } }
 
 export const HealthReducer = (state = initialState, action) => {
-  console.log('ReduxAsyncTestReducer', action)
+  // console.log('ReduxAsyncTestReducer', action)
   switch (action.type) {
     case ADD_HEALTH:
       return { ...state, health: action.health }
@@ -53,8 +53,8 @@ export class ReduxAsyncTest extends Component {
 
 // Copy out the bit of state we are interested in.
 const mapStateToProps = (store) => ({
-  health: store.ui.hlth.health,
-  name: store.ui.rst.name
+  health: store.hlth.health,
+  name: store.rst.name
 })
 
 export default connect(mapStateToProps, { fetchHealth })(ReduxAsyncTest)
