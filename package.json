@@ -47,6 +47,7 @@
     "mock-css-modules": "^1.0.0",
     "mongoose": "^5.5.4",
     "mongoose-crudify": "^0.2.0",
+    "mongoose-id-validator": "^0.5.3",
     "next": "^8.1.0",
     "next-redux-wrapper": "^3.0.0-alpha.2",
     "next-routes": "^1.4.2",
