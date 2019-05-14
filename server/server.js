@@ -91,7 +91,7 @@ const appReady = app.prepare().then(() => {
 
   // Start server
   if (process.env.NODE_ENV !== 'test') {
-    server.listen(config.serverPort, () => console.log(`${config.appName} running on http://localhost:${config.serverPort}/ Be Awesome`))
+    server.listen(config.serverPort, () => console.log(`${config.appName} running on ${config.appUrl}/ Be Awesome`))
   }
 })
 

@@ -25,7 +25,7 @@ const completeConfig = {
   },
 
   production: {
-    appUrl: process.env.APP_URL || `http://localhost:${serverPort}/`
+    appUrl: process.env.APP_URL || `http://alpha.voluntari.ly/`
   }
 
 }
