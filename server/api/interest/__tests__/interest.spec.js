@@ -1,12 +1,11 @@
 import test from 'ava'
 import request from 'supertest'
-import { server } from '../../../server'
+import { server, appReady } from '../../../server'
 import Interest from '../interest'
 import Opportunity from '../../opportunity/opportunity'
 import Person from '../../person/person'
 import { connectDB, dropDB } from '../../../util/test-helpers'
-import mongoose from 'mongoose'
-const ObjectId = mongoose.Types.ObjectId
+import MemoryMongo from '../../../util/test-memory-mongo'
 
 const person = new Person({
     _id: "5cc8d60b8b16812b5b392123",
@@ -41,17 +40,23 @@ const interest = new Interest({
       comment: 'This is another test',
 })
 
+let memMongo;
 
-test.before('connect to mockgoose and add initial data', async () => {
-  await connectDB()
+test.before('before connect to database', async () => {
+  await appReady
+  memMongo = new MemoryMongo()
+  await memMongo.start()
+})
+
+test.after.always(async () => {
+  await memMongo.stop()
+})
+
+test.beforeEach('connect and set up test fixture', async () => {
   await Opportunity.create(opportunity).catch(() => 'Unable to create opportunity')
   await Person.create(person).catch(() => 'Unables to create person')
   await Interest.create(interest).catch(() => 'Unable to create interests')
 })
-
-// test.after.always(async () => {
-//   await dropDB()
-// })
 
 test.serial('Should correctly give number of Interests', async t => {
   t.plan(2)
@@ -75,25 +80,27 @@ test.serial('Should send correct data when queried against a _id', async t => {
   t.is(interest.opportunity.toString(), res.body.opportunity)
 })
 
-test.serial('Should not add an invalid interest', async t => {
+test.serial('Should not add an invalid interest where referenced person or opp is not in DB',
+  async t => {
 
-  const newInterest = new Interest({
-      person: '5cc8d60b8b16812b5babcdef',
-      opportunity: '5cc8d60b8b16812b5babcdef'
-  })
+    const newInterest = new Interest({
+        person: '5cc8d60b8b16812b5babcdef',
+        opportunity: '5cc8d60b8b16812b5babcdef'
+    })
 
-  const res = await request(server)
-    .post('/api/interests')
-    .send(newInterest)
-    .set('Accept', 'application/json')
+    const res = await request(server)
+      .post('/api/interests')
+      .send(newInterest)
+      .set('Accept', 'application/json')
 
-  const savedInterest = await Interest.findOne({ 
-      person: newInterest.person,
-      opportunity: newInterest.opportunity
-    }).exec()
+    const savedInterest = await Interest.findOne({ 
+        person: newInterest.person,
+        opportunity: newInterest.opportunity
+      }).exec()
 
-  t.is(null, savedInterest)
-})
+    t.is(null, savedInterest)
+  }
+)
 
 test.serial('Should correctly add a valid interest', async t => {
 
