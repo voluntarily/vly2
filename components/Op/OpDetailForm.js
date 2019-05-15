@@ -17,10 +17,11 @@ class OpDetailForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
+
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // eslint-disable-next-line no-console
-        console.log('Received values of form: ', values)
+        // console.log('Received values of form: ', values)
         // TODO Send new op to database and update the store.
         const op = this.props.op
         op.title = values.title
@@ -275,7 +276,7 @@ OpDetailForm.propTypes = {
 export default Form.create({
   name: 'opportunity_detail_form',
   onFieldsChange (props, changedFields) {
-    console.log('onFieldsChange', changedFields)
+    // console.log('onFieldsChange', changedFields)
     // props.onChange(changedFields);
   },
   mapPropsToFields (props) {
@@ -288,8 +289,8 @@ export default Form.create({
       imgUrl: Form.createFormField({ ...props.op.imgUrl, value: props.op.imgUrl }),
       status: Form.createFormField({ ...props.op.status, value: props.op.status })
     }
-  },
-  onValuesChange (_, values) {
-    console.log('onValuesChange', values)
   }
+  // onValuesChange (_, values) {
+  //   console.log('onValuesChange', values)
+  // }
 })(OpDetailForm)

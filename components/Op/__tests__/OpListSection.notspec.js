@@ -1,7 +1,11 @@
 import React from 'react'
+import { Container } from 'next/app'
 import test from 'ava'
-import { shallow, render } from 'enzyme'
-import OpList from '../OpList'
+import { mount } from 'enzyme'
+import OpListSection from '../OpListSection'
+import withRedux from 'next-redux-wrapper'
+import { makeStore } from '../../../lib/redux/reduxApi'
+import { Provider } from 'react-redux'
 
 // Initial opportunities added into test db
 const ops = [
@@ -27,24 +31,17 @@ const ops = [
   }
 ]
 
-test('shallow the list with ops', t => {
-  const wrapper = shallow(
-    <OpList ops={ops} handleShowOp={() => {}} handleDeleteOp={() => {}} />
+test.only('mount the list with ops', t => {
+  const wrapper = mount(
+    withRedux(makeStore, { debug: true })(
+      <Container>
+        <Provider store={this.props.store}>
+          <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} />
+        </Provider>
+      </Container>
+    )
   )
-  t.is(wrapper.find('OpCard').length, 2)
-})
 
-test('renders the list with ops to get card coverage', t => {
-  const wrapper = render(
-    <OpList ops={ops} handleShowOp={() => {}} handleDeleteOp={() => {}} />
-  )
-  t.is(wrapper.find('.ant-card').length, 2)
-})
-
-test('renders the list with no ops', t => {
-  const wrapper = render(
-    <OpList handleShowOp={() => {}} handleDeleteOp={() => {}} />
-  )
-  t.is(wrapper.find('OpCard').length, 0)
-  t.is(wrapper.find('span').text(), 'No matching opportunities')
+  console.log(wrapper.html())
+  t.is(wrapper.find('OpListSection').length, 1)
 })
