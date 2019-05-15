@@ -1,13 +1,12 @@
-import { Button, Input, Divider } from 'antd'
+import { Button, Divider } from 'antd'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 // import OpListSection from '../../components/Op/OpListSection'
 import Hero from '../../components/Hero/Hero'
-import styles from '../../pages/landing2/landing.less'
+import '../../pages/landing2/landing.less'
 // import schoolsactivity from './schoolsactivity.png'
 
-const Search = Input.Search
 // export const Hero = styled.div`
 
 //   .hero {
@@ -64,7 +63,7 @@ const Search = Input.Search
 export class Landing2 extends Component {
   render () {
     return (
-      <div>
+      <FullPage>
         <Hero />
 
         <div className='vGridContainer'>
@@ -585,7 +584,7 @@ export class Landing2 extends Component {
             </Link> */}
           </section>
         </div>
-      </div>
+      </FullPage>
     )
   }
 }

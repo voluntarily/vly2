@@ -1,8 +1,6 @@
 import React from 'react'
-import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import { Button, Col, Input, Row, Divider } from 'antd'
+import { Button, Input } from 'antd'
 const Search = Input.Search
 
 // this is the big container block that holds the container together lol
@@ -235,8 +233,9 @@ const Hero = ({ ...props }) => (
     <HeroRight>
       <HeroHeader>volunteer yo—self.</HeroHeader>
       <HeroCopy>
-        Find awesome ways to volunteer your skills.<br />Help your community do
-        epic things.
+        Find awesome ways to volunteer your skills.
+        <br />
+        Help your community do epic things.
       </HeroCopy>
       <SearchBox>
         <Search
