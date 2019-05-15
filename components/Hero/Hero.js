@@ -8,7 +8,7 @@ const Search = Input.Search
  // this is the big container block that holds the container together lol
 const AwesomeHeroContainer = styled.div`
   width: 80rem;
-  height: 87vh;
+  height: 100vh;
   margin: auto;
   display: grid;
   grid-template-columns: 30rem 50rem;
@@ -231,6 +231,8 @@ const SearchBox = styled.div`
 `
 
 // end right hand copy and CTA side 
+
+// begin actual component
 const Hero = ({...props}) => (
 <AwesomeHeroContainer>
     <HeroLeft>
@@ -259,5 +261,5 @@ const Hero = ({...props}) => (
 
 </AwesomeHeroContainer>
 )
-
+ //LAUNCH IT. WOOOSH!
 export default Hero
