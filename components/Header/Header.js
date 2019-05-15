@@ -15,6 +15,8 @@ const Brand = styled.h1`
 const Wa = styled.a`
   text-decoration: none;
   color: white;
+  font-family: "gaoel";
+  font-weight: 500;
 `
 const Logo = styled.img`
   float: left;
