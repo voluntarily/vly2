@@ -7,7 +7,7 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 
 // import OpListSection from '../../components/Op/OpListSection'
 import OpListSection from '../../components/Op/OpListSection'
-
+import Hero from '../../components/Hero/Hero'
 
 // import bigimage from './landing-page-bg.jpg'
  import styles from './Landing.less'
@@ -72,55 +72,24 @@ export class Landing2 extends Component {
   render () {
     return (
       <div>
-        <div className='awesomeHeroContainer'>
-          {/* <img src={bigimage} alt='Welcome' /> */}
-          <div class="heroLeft">
-          <div class="notch"></div>
-          <video class="awesomeVideo" poster="./static/img/businessCard.png" autoPlay loop muted playsInline>
-            <source src="./static/test.mp4" type="video/mp4"></source>
-            {/* @TODO Proper responsive images for real release cause the test one is a placeholder and looks like shit */}
-          </video>
-          </div>
-          <div className='herocard' >
-            <h1>
-            volunteer yo—self.
-            </h1>
-            <p>
-            Find awesome ways to volunteer your skills.<br></br>Help your community do epic things.
-            </p>
-            <div class="searchBox">
-            <Search
-              placeholder="try 'building robots' "
-              enterButton='Search activities'
-              size='large'
-              // eslint-disable-next-line no-console
-              onSearch={value => console.log(value)}
-            />
-            </div>
-            <br /><br />
-            <Button type='secondary' shape='round' size='large' >
-              Learn more
-            </Button>
+        <Hero></Hero>
 
-          </div>
-        </div>
-
-          <div class="vGridContainer">
+          <div className="vGridContainer">
           <section>
-            <div class="aboutContainer">
-                <div class="centeredDiv">
+            <div className="aboutContainer">
+                <div className="centeredDiv">
                 <h2>
                   <FormattedMessage
                     id='SupportUs'
-                    defaultMessage='Support Innovation in the classroom.'
+                    defaultMessage='Support Innovation in the classNameroom.'
                     description='Sub heading for the call to action section of the landing page'
                   />
                 </h2>
-                <p class="vGridContainerText">
+                <p className="vGridContainerText">
                   <FormattedMessage
                     id='AboutUs'
                     // eslint-disable-next-line max-len
-                    defaultMessage='Voluntarily connects you with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content. '
+                    defaultMessage='Voluntarily connects you with classNamerooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content. '
                     description='body text of the about Voluntarily section.'
                   />
                 </p>
@@ -134,113 +103,113 @@ export class Landing2 extends Component {
                 </Button>
                 </div>
                 {/* <img src={schoolsactivity} alt='About' /> */}
-                <img class="aboutImg" src='/static/img/schoolsactivity.png' alt='About' />
+                <img className="aboutImg" src='/static/img/schoolsactivity.png' alt='About' />
             </div>
           </section>
-          <div class="spacer"></div>
+          <div className="spacer"></div>
           <section>
-            <h2 class="blockTitle">
+            <h2 className="blockTitle">
               <FormattedMessage
                 id='WhoWeHelp'
                 defaultMessage='How we help'
                 description='Section title on landing page before list of opportunities'
               />
             </h2>
-            <p class="blockDescription">We help these awesome people accomplish amazing things</p>
-            <div class="request4grid">
-              <div class="personaContainer">
-                <img class="personaImage" src='/static/img/volunteerCard.png' alt='About' />
-                <h5 class="personaTitle">Volunteers</h5>
-                <p class="personaText">Discover cool opportunities to help out teachers, students and charities.</p>
-                <a class="personaTextLink" href="#">Browse activities</a>
+            <p className="blockDescription">We help these awesome people accomplish amazing things</p>
+            <div className="request4grid">
+              <div className="personaContainer">
+                <img className="personaImage" src='/static/img/volunteerCard.png' alt='About' />
+                <h5 className="personaTitle">Volunteers</h5>
+                <p className="personaText">Discover cool opportunities to help out teachers, students and charities.</p>
+                <a className="personaTextLink" href="#">Browse activities</a>
               </div>
-              <div class="personaContainer">
-                <img class="personaImage" src='/static/img/teacherCard.png' alt='About' />
-                <h5 class="personaTitle">Educators</h5>
-                <p class="personaText">Get the help of skilled volunteers to bring tech to your teaching.</p>
-                <a class="personaTextLink" href="#">Learn more</a>
+              <div className="personaContainer">
+                <img className="personaImage" src='/static/img/teacherCard.png' alt='About' />
+                <h5 className="personaTitle">Educators</h5>
+                <p className="personaText">Get the help of skilled volunteers to bring tech to your teaching.</p>
+                <a className="personaTextLink" href="#">Learn more</a>
               </div>
-              <div class="personaContainer">
-                <img class="personaImage" src='/static/img/contentCard.png' alt='About' />
-                <h5 class="personaTitle">Charities</h5>
-                <p class="personaText">We help you get more people involved with your movement.</p>
-                <a class="personaTextLink" href="#">Learn more</a>
+              <div className="personaContainer">
+                <img className="personaImage" src='/static/img/contentCard.png' alt='About' />
+                <h5 className="personaTitle">Charities</h5>
+                <p className="personaText">We help you get more people involved with your movement.</p>
+                <a className="personaTextLink" href="#">Learn more</a>
               </div>
-              <div class="personaContainer">
-                <img class="personaImage" src='/static/img/businessCard.png' alt='About' />
-                <h5 class="personaTitle">Businesses</h5>
-                <p class="personaText">We handle the admin so your people have a better time volunteering.</p>
-                <a class="personaTextLink" href="#">Learn more</a>
+              <div className="personaContainer">
+                <img className="personaImage" src='/static/img/businessCard.png' alt='About' />
+                <h5 className="personaTitle">Businesses</h5>
+                <p className="personaText">We handle the admin so your people have a better time volunteering.</p>
+                <a className="personaTextLink" href="#">Learn more</a>
               </div>
           
             </div>
           </section>
           <Divider></Divider>
-          <div class="spacer"></div>
+          <div className="spacer"></div>
           <section>
-            <h2 class="blockTitle">
+            <h2 className="blockTitle">
               <FormattedMessage
                 id='UpcomingOpportunities'
                 defaultMessage='Happening near you'
                 description='Section title on landing page before list of opportunities'
               />
             </h2>
-            <p class="blockDescription">Get involved in your local community by using your skills 😀 </p>
+            <p className="blockDescription">Get involved in your local community by using your skills 😀 </p>
 
             {/* @todo will style components here then convert to components */}
-            <div class="request4grid">
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=5"></img>
-              <h6 class="requestTitle">I need help teaching robotics</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High</h6>
-              <p class="requestDescription">I want to build dog robots with Arduino because arduino boards are a great way to learn tech</p>
+            <div className="request4grid">
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=5"></img>
+              <h6 className="requestTitle">I need help teaching robotics</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High</h6>
+              <p className="requestDescription">I want to build dog robots with Arduino because arduino boards are a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=6"></img>
-              <h6 class="requestTitle">Need help explaining sorting algorithms</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">I need help explaining the difference between binary sort and bubble sort to my students</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=6"></img>
+              <h6 className="requestTitle">Need help explaining sorting algorithms</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">I need help explaining the difference between binary sort and bubble sort to my students</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=7"></img>
-              <h6 class="requestTitle">Engineering with paper bridges</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High</h6>
-              <p class="requestDescription">learn engineering by making bridges out of paper and making them do things</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=7"></img>
+              <h6 className="requestTitle">Engineering with paper bridges</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High</h6>
+              <p className="requestDescription">learn engineering by making bridges out of paper and making them do things</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=8"></img>
-              <h6 class="requestTitle">Learning Map Skills with Google Maps</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">We need a developer to help us deal with the google maps API</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=8"></img>
+              <h6 className="requestTitle">Learning Map Skills with Google Maps</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">We need a developer to help us deal with the google maps API</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=9"></img>
-              <h6 class="requestTitle">Make a dog robot</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=9"></img>
+              <h6 className="requestTitle">Make a dog robot</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=10"></img>
-              <h6 class="requestTitle">Audit my energy efficiency experiments</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">I need a scientist to validate my science project criteria</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=10"></img>
+              <h6 className="requestTitle">Audit my energy efficiency experiments</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">I need a scientist to validate my science project criteria</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=11"></img>
-              <h6 class="requestTitle">I need help teaching scratch programming</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">I don't understand why my code isn't working</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=11"></img>
+              <h6 className="requestTitle">I need help teaching scratch programming</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">I don't understand why my code isn't working</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=12"></img>
-              <h6 class="requestTitle">Web developer needed</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">I need help teaching good CSS practices so my students write awesome code</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=12"></img>
+              <h6 className="requestTitle">Web developer needed</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">I need help teaching good CSS practices so my students write awesome code</p>
             </div>
 
             </div>
             <Divider></Divider>
-            <div class="spacer"></div>
+            <div className="spacer"></div>
 
             {/* <OpListSection store={this.props.store} />
             <Link href={'/op/new'} >
@@ -251,108 +220,108 @@ export class Landing2 extends Component {
           </section>     
 
           <section>
-            <h2 class="blockTitle">
+            <h2 className="blockTitle">
               Happening near you
             </h2>
-            <p class="blockDescription">Get involved in your community by helping out with an activity below </p>
+            <p className="blockDescription">Get involved in your community by helping out with an activity below </p>
 
             {/* @todo will style components here then convert to components */}
-            <div class="request4grid">
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=13"></img>
-              <h6 class="requestTitle">Make a dog robot</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="request4grid">
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=13"></img>
+              <h6 className="requestTitle">Make a dog robot</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=14"></img>
-              <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=14"></img>
+              <h6 className="requestTitle">Machine Learning to do better rubbish recycling</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=15"></img>
-              <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=15"></img>
+              <h6 className="requestTitle">Machine Learning to do better rubbish recycling</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=16"></img>
-              <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=16"></img>
+              <h6 className="requestTitle">Machine Learning to do better rubbish recycling</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=17"></img>
-              <h6 class="requestTitle">Make a dog robot</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=17"></img>
+              <h6 className="requestTitle">Make a dog robot</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=18"></img>
-              <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=18"></img>
+              <h6 className="requestTitle">Machine Learning to do better rubbish recycling</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=19"></img>
-              <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=19"></img>
+              <h6 className="requestTitle">Machine Learning to do better rubbish recycling</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=20"></img>
-              <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=20"></img>
+              <h6 className="requestTitle">Machine Learning to do better rubbish recycling</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=21"></img>
-              <h6 class="requestTitle">Make a dog robot</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=21"></img>
+              <h6 className="requestTitle">Make a dog robot</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=22"></img>
-              <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=22"></img>
+              <h6 className="requestTitle">Machine Learning to do better rubbish recycling</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=23"></img>
-              <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=23"></img>
+              <h6 className="requestTitle">Machine Learning to do better rubbish recycling</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=24"></img>
-              <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=24"></img>
+              <h6 className="requestTitle">Machine Learning to do better rubbish recycling</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=25"></img>
-              <h6 class="requestTitle">Make a dog robot</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=25"></img>
+              <h6 className="requestTitle">Make a dog robot</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=26"></img>
-              <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=26"></img>
+              <h6 className="requestTitle">Machine Learning to do better rubbish recycling</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=27"></img>
-              <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=27"></img>
+              <h6 className="requestTitle">Machine Learning to do better rubbish recycling</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
-            <div class="requestContainer">
-              <img class="requestImg" src="https://placedog.net/640/480?id=28"></img>
-              <h6 class="requestTitle">Machine Learning to do better rubbish recycling</h6>
-              <h6 class="requestDateTime">23 Jan / Albany Senior High School</h6>
-              <p class="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
+            <div className="requestContainer">
+              <img className="requestImg" src="https://placedog.net/640/480?id=28"></img>
+              <h6 className="requestTitle">Machine Learning to do better rubbish recycling</h6>
+              <h6 className="requestDateTime">23 Jan / Albany Senior High School</h6>
+              <p className="requestDescription">Make awesome gadgets with Arduino because aruduino is a great way to learn tech</p>
             </div>
 
             </div>
