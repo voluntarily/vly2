@@ -4,6 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import OpCard from './OpCard'
 import { Col, Row } from 'antd'
+import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 export const Grid = styled.div`
   
@@ -25,6 +26,7 @@ grid-gap: 2rem;
 
 ` //end grid
 
+
 const OpList = ({ ops, ...props }) => (
   <Grid>
     {
@@ -35,7 +37,7 @@ const OpList = ({ ops, ...props }) => (
             key={index}
           />
         </Col>
-      )) : 'No Matching Opportunities'
+      )) : <FormattedMessage id='op.list.empty' defaultMessage='No matching opportunities' description='no opportunities message in OpList' />
     }
   </Grid>
 )
