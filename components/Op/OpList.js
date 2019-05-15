@@ -4,9 +4,29 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import OpCard from './OpCard'
 import { Col, Row } from 'antd'
+import styled from 'styled-components'
+export const Grid = styled.div`
+  
+position: relative;
+display: grid;
+grid-template-columns: 18.5rem 18.5rem 18.5rem 18.5rem;
+grid-gap: 2rem;
+
+@media screen and (min-width: 768px) and (max-width: 1280px) {
+  grid-template-columns: repeat(auto-fit, 18.5rem);
+  justify-content: start;
+  justify-items: center;
+}
+
+@media screen and (max-width: 767px) {
+  grid-template-columns: 100vw;
+  grid-gap: 0rem;
+}
+
+` //end grid
 
 const OpList = ({ ops, ...props }) => (
-  <Row type='flex' align='top' gutter={{ xs: 8, sm: 16, md: 24 }} >
+  <Grid>
     {
       ops ? ops.map((op, index) => (
         <Col xs={24} sm={12} md={8} lg={6} xxl={4} key={index} >
@@ -17,7 +37,7 @@ const OpList = ({ ops, ...props }) => (
         </Col>
       )) : 'No Matching Opportunities'
     }
-  </Row>
+  </Grid>
 )
 
 OpList.propTypes = {

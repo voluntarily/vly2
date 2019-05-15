@@ -12,8 +12,8 @@ const AwesomeCard = ({ op, onPress, ...props }) => (
   <Link href={`#`} >
     <div className="requestContainer">
       <img className="requestImg"></img>
-      <p className="requestTitle">Learn robotics by building a robot doggo a robot doggo a robot doggo a robot doggo a robot doggo cause robotos are cool loooong title haha</p>
-      <p className="requestDateTime">Doggos Doggos Doggos Doggos Doggos Doggos Doggos  </p>
+      <p className="requestTitle">We want to build robot doggos</p>
+      <p className="requestDateTime">24 April / Albany Senior High School</p>
       <p className="requestDescription">We need a dogineer</p>
     </div>
    

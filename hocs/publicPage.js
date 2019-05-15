@@ -44,7 +44,7 @@ export const FullPage = styled.div`
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
     grid-template-columns: repeat(auto-fit, 18.5rem);
-    justify-content: space-evenly;
+    justify-content: start;
     justify-items: center;
   }
 
@@ -59,10 +59,8 @@ export const FullPage = styled.div`
   
     min-height: calc(100vh - 220px); 
   }
-`
+` //END AWESOME CSS DUMP
 
-
-//END AWESOME CSS DUMP
 export default Page => class DefaultPage extends React.Component {
   static async getInitialProps (ctx) {
     const loggedUser = process.browser ? getUserFromLocalCookie() : getUserFromServerCookie(ctx.req)

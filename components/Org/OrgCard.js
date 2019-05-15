@@ -1,24 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
-import { Card } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import OrgType from './OrgType'
+import AwesomeCard from '../../components/TestContainer/AwesomeCard/AwesomeCard'
 
 const OrgCard = ({ org, ...props }) => (
-  <Link href={`/orgs/${org._id}`} >
-    <Card
-      cover={<img src={org.imgUrl} alt={org.title} />}
-      {...props}
-    >
-      <Card.Meta
-        title={<h1>{org.name}</h1>}
-        description={<div><Markdown>{org.about}</Markdown><br /><small>
-          <ul>{org.type.map((t, index) => <OrgType key={index} orgType={t} />)}</ul>
-        </small></div>}
-      />
-    </Card>
+  <Link href={`/orgs/`} >
+  
+
+    <AwesomeCard>
+
+    </AwesomeCard>
   </Link>
+  
+
 )
 
 OrgCard.propTypes = {
