@@ -17,11 +17,16 @@ const completeConfig = {
     auth: {
       'AUTH0_CLIENT_ID': 'TsRPTVINZVOdao2Lf7EU8sPDkVZ3VQJY',
       'AUTH0_CLIENT_DOMAIN': 'dev-x6k-p15l.au.auth0.com'
-    }
+    },
+    apiVersion: 'v1'
   },
 
   development: {
-    appUrl: process.env.APP_URL || `http://localhost:${serverPort}/`
+    appUrl: process.env.APP_URL || `http://localhost:${serverPort}`
+  },
+
+  test: {
+    appUrl: process.env.APP_URL || `http://localhost:${serverPort}`
   },
 
   production: {
