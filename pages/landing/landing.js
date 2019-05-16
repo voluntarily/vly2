@@ -1,10 +1,9 @@
 import { Button, Col, Input, Row } from 'antd'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-
 import Link from 'next/link'
 import publicPage, { FullPage } from '../../hocs/publicPage'
-
+import Hero from '../../components/HeroPage/Hero'
 // import OpListSection from '../../components/Op/OpListSection'
 import OpListSection from '../../components/Op/OpListSection'
 
@@ -12,97 +11,16 @@ import OpListSection from '../../components/Op/OpListSection'
 
 // import schoolsactivity from './schoolsactivity.png'
 
-import styled from 'styled-components'
-const Search = Input.Search
-export const Hero = styled.div`
 
-  .hero {
-    width: 100%;
-    position: relative;
-    top:-56px;
-    font-size:0.5rem;
-    margin: 0;
-  }
-
-  @media screen and (min-width: 768px) {
-    .hero {
-      font-size: 1rem;
-    }
-  }
-
-  @media screen and (min-width: 1024px) {
-    .hero {
-      font-size: 1.5rem;
-    }
-  }
-  @media screen and (min-width: 1280px) {
-    .hero {
-      font-size: 2.0rem;
-    }
-  }
-
-  /* Full width image */
-  .hero img {
-    min-height: 100%;
-    min-width: 400px;
-    width: 100%;
-  }
-
-  /* component in centre of image */
-  .herocard {
-    position: absolute;
-    color: #FFFFFF;
-    top: 30%;
-    left: 8%;
-    width:75%;  
-  }
-
-  .herocard h1 {
-    color: #FFFFFF;
-    font-size: 3em;
-    font-weight: 900;
-    letter-spacing: -0.03em;
-    margin-bottom: 0px;
-  }
-
-`
 
 export class Landing extends Component {
   render () {
     return (
-      <div>
-        <Hero className='hero'>
-          {/* <img src={bigimage} alt='Welcome' /> */}
-          <img src='/static/img/landing-page-bg.jpg' alt='Welcome' />
-          <div className='herocard' >
-            <h1>
-              <FormattedMessage id='BeAwesome' defaultMessage='Become a Volunteer' description='First call to action on the landing page' />
-            </h1>
-            <p>
-              <FormattedMessage
-                id='BeAwesomeSub'
-                defaultMessage='Volunteer your time to help the next generation of inventors accomplish epic projects.'
-                description='Subheading for call to action on the landing page'
-              />
-            </p>
-            <Search
-              placeholder="try 'launching rockets' "
-              enterButton='Search'
-              size='large'
-              // eslint-disable-next-line no-console
-              onSearch={value => console.log(value)}
-            />
-            <br /><br />
-            <Button type='primary' shape='round' size='large' >
-              <FormattedMessage
-                id='BrowseRequests'
-                defaultMessage='Browse Requests'
-                description='Action button on landing page links to list of opportunities'
-              />
-            </Button>
-          </div>
-        </Hero>
-        <FullPage>
+      <FullPage>
+                <Hero />
+      
+        
+
           <section>
             <Row gutter={32}>
               <Col span={12}>
@@ -151,9 +69,9 @@ export class Landing extends Component {
               </Button>
             </Link>
           </section>
-        </FullPage>
 
-      </div>
+
+        </FullPage>
     )
   }
 }

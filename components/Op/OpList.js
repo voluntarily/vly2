@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import OpCard from './OpCard'
 import { FormattedMessage } from 'react-intl'
 
-import Grid from '../../components/VTheme/VTheme'
+import Grid from '../VTheme/Grid'
 
 const OpList = ({ ops, ...props }) => (
   <Grid>
