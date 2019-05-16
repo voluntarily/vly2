@@ -27,13 +27,10 @@ import { Provider } from 'react-redux'
   state doesn't update.
 */
 const rstReducer = combineReducers({ rst: ReduxStoreTestReducer })
-const uiReducer = combineReducers({ ui: rstReducer })
-const realStore = createStore(uiReducer,
+const realStore = createStore(rstReducer,
   {
-    ui: {
-      rst: {
-        name: ''
-      }
+    rst: {
+      name: ''
     }
   }
 )
@@ -58,7 +55,7 @@ test('mount, render add input and save', t => {
   // now click the save button.
   wrapper.find('button').first().simulate('click')
   // console.log(realStore.getState())
-  t.is(realStore.getState().ui.rst.name, 'Andrew')
+  t.is(realStore.getState().rst.name, 'Andrew')
   // Hello class updates with the new text
   wrapper.update()
   // console.log(wrapper.html())

@@ -20,13 +20,16 @@ export function fetchHealth () {
       })
   }
 }
-const initialState = { health: { } }
+const initialState = {
+  message: 'Pending',
+  health: 'Unknown'
+}
 
 export const HealthReducer = (state = initialState, action) => {
-  console.log('ReduxAsyncTestReducer', action)
+  // console.log('ReduxAsyncTestReducer', action)
   switch (action.type) {
     case ADD_HEALTH:
-      return { ...state, health: action.health }
+      return { ...action.health }
     default:
       return state
   }
@@ -42,7 +45,7 @@ export class ReduxAsyncTest extends Component {
   render = () => (
     <div>
       <p>Hi {this.props.name}</p>
-      <p>Heath is {this.props.health.health}</p>
+      <p>Health is {this.props.health.health}</p>
       <p>Message is {this.props.health.message}</p>
       <button type='button' onClick={this.handleClick}>Get Health</button>
       <hr />
@@ -53,8 +56,16 @@ export class ReduxAsyncTest extends Component {
 
 // Copy out the bit of state we are interested in.
 const mapStateToProps = (store) => ({
-  health: store.ui.hlth.health,
-  name: store.ui.rst.name
+  health: store.health,
+  name: store.rst.name
 })
 
+// longer version
+// const mapStateToProps = (store) => {
+//   console.log(store)
+//   return ({
+//     health: store.health,
+//     name: store.rst.name
+//   })
+// } 
 export default connect(mapStateToProps, { fetchHealth })(ReduxAsyncTest)

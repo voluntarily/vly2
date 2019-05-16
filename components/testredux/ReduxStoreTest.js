@@ -63,7 +63,7 @@ export class ReduxStoreTest extends Component {
 
 // Copy out the bit of state we are interested in.
 const mapStateToProps = (store) => ({
-  name: store.ui.rst.name
+  name: store.rst.name
 })
 
 export default connect(mapStateToProps, { setName })(ReduxStoreTest)
