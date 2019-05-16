@@ -4,18 +4,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
+// import { FormattedMessage } from 'react-intl'
 
 // todo if image is not present then use a fallback.
-const OpCard = ({ op, onPress, ...props }) => (
+const AwesomeCard = ({ op, onPress, ...props }) => (
   <div>
-    <Link href={`/ops/${op._id}`}>
+    <Link href={`#`}>
       <div className='requestContainer'>
-        <img className='requestImg' src={op.imgUrl} />
-        <p className='requestTitle'>{op.title}</p>
-        <p className='requestDateTime'>{op.duration}</p>
-        <p className='requestDescription'>{op.subtitle}</p>
+        <img className='requestImg' />
+        <p className='requestTitle'>We want to build robot doggos</p>
+        <p className='requestDateTime'>24 April / Albany Senior High School</p>
+        <p className='requestDescription'>We need a dogineer</p>
       </div>
     </Link>
+
     <style jsx>{`
       .requestContainer {
         width: 18.5rem;
@@ -34,7 +36,7 @@ const OpCard = ({ op, onPress, ...props }) => (
 
       .requestTitle {
         margin-top: 0px;
-        margin-bottom: 0px;
+
         vertical-align: middle;
         font-weight: bold;
         font-size: 16px;
@@ -48,7 +50,6 @@ const OpCard = ({ op, onPress, ...props }) => (
 
       .requestDateTime {
         vertical-align: middle;
-        margin-bottom: 0px;
         font-weight: bold;
         font-size: 16px;
         color: #585858;
@@ -85,7 +86,7 @@ const OpCard = ({ op, onPress, ...props }) => (
   </div>
 )
 
-OpCard.propTypes = {
+AwesomeCard.propTypes = {
   op: PropTypes.shape({
     title: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
@@ -96,4 +97,4 @@ OpCard.propTypes = {
   onPress: PropTypes.func
 }
 
-export default OpCard
+export default AwesomeCard

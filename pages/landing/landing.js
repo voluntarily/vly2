@@ -9,7 +9,7 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 import OpListSection from '../../components/Op/OpListSection'
 
 // import bigimage from './landing-page-bg.jpg'
-// import styles from './Landing.less'
+
 // import schoolsactivity from './schoolsactivity.png'
 
 import styled from 'styled-components'

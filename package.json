@@ -20,7 +20,6 @@
   ],
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
-    "@babel/register": "^7.4.4",
     "@zeit/next-less": "^1.0.1",
     "accepts": "^1.3.5",
     "antd": "^3.5.4",
@@ -47,6 +46,7 @@
     "mock-css-modules": "^1.0.0",
     "mongoose": "^5.5.4",
     "mongoose-crudify": "^0.2.0",
+    "mongoose-id-validator": "^0.5.3",
     "next": "^8.1.0",
     "next-redux-wrapper": "^3.0.0-alpha.2",
     "next-routes": "^1.4.2",
@@ -64,6 +64,8 @@
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/register": "^7.4.4",
     "ava": "^1.4.1",
     "axios": "^0.18.0",
     "babel-eslint": "^10.0.1",

@@ -17,7 +17,7 @@ export const setName = (name) => {
 const initialState = { name: '' }
 
 export const ReduxStoreTestReducer = (state = initialState, action) => {
-  // console.log('ReduxStoreTestReducer', action)
+  // console.log('ReduxStoreTestReducer', action, state)
   switch (action.type) {
     case SET_NAME:
       console.log('Reducing SET_NAME')
