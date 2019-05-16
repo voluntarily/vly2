@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 // import OpListSection from '../../components/Op/OpListSection'
-import Hero from '../../components/Hero/Hero'
+import Hero from '../../components/HeroPage/Hero'
 import '../../pages/landing2/landing.less'
 // import schoolsactivity from './schoolsactivity.png'
 
