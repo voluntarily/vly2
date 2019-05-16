@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button, Input } from 'antd'
+import { FormattedMessage } from 'react-intl'
+import { Button } from 'antd'
 
 const HalfGrid = styled.div`
   display: grid;
@@ -19,6 +20,19 @@ const HalfGrid = styled.div`
 const AboutLeft = styled.div`
   margin-top: 14%;
 
+  h1 {
+    font-weight: 900;
+    font-size: 1.8rem;
+    letter-spacing: -1px;
+    line-height: 2.5rem;
+  }
+
+  p {
+    line-height: 1.8;
+    font-size: 1rem;
+    letter-spacing: -0.6px;
+  }
+
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     margin-top: 1rem;
     margin-right: 2rem;
@@ -28,6 +42,18 @@ const AboutLeft = styled.div`
     margin-top: initial;
     margin-left: 1rem;
     margin-bottom: 3rem;
+
+    h1 {
+      font-size: 2rem;
+      line-height: 1.3;
+    }
+
+    p {
+      color: #333;
+      line-height: 2;
+      font-size: 1rem;
+      width: 90vw;
+    }
   }
 `
 
@@ -53,3 +79,22 @@ const AboutRight = styled.img`
     margin: initial;
   }
 `
+
+const AboutSection = ({ title, subtitle, ...props }) => ( 
+    <HalfGrid>
+        <AboutLeft>
+            <h1>{title}</h1>
+            <p>{subtitle}</p>
+            <Button type='primary' shape='round' size='large' href='/about'>
+                  <FormattedMessage
+                    id='LearnMore'
+                    defaultMessage='Learn More'
+                    description='Action button to learn more about Voluntari.ly'
+                  />
+                </Button>
+        </AboutLeft>
+        <AboutRight src="/static/img/schoolsactivity.png">
+        </AboutRight>
+    </HalfGrid>
+)
+export default AboutSection
