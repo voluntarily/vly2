@@ -32,7 +32,7 @@ export class Landing extends Component {
         <div className='spacer' />
         <TitleSection
           title='Happening Soon'
-          subtitle='You are two clicks away from getting invovled with your community'
+          subtitle='You are two clicks away from getting involved with your community'
         />
 
         <OpListSection store={this.props.store} />
