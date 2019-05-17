@@ -17,7 +17,7 @@ const opportunity = {
   location: "NZTA Innovation Centre, 5 Cook St Auckland",
   status: "draft"
 }
-
+const op_id = '5cc8d60b8b16812b5b3920c1'
 
 // Initial interests added into test db
 const interests = people.map( person => ({
@@ -33,12 +33,17 @@ const TestInterestPage = ({ ...props }) =>
   <FullPage>
     <Head><title>Voluntari.ly Test Interests</title></Head>
 
-    <h1>Test Interested Components</h1>
-    <InterestSection />
-  <Divider />
+    <h1>People Interested in a Specific Op </h1>
+    <p>op = {op_id}</p>
+    <InterestSection op={op_id} />
+    <Divider />
+
+
     <h1>Single Interest Item</h1>
     <InterestItem style={{ width: '300px' }} interest={interests[0]} />  
-    <h1>Interest Table</h1>
+    <Divider />
+
+    <h1>Longer Interest Table</h1>
     <InterestTable style={{ width: '300px' }} interests={interests} />  
     {/* <code>{JSON.stringify(interests)}</code>  */}
     </FullPage>
