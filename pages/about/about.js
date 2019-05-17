@@ -6,7 +6,7 @@ import aboutEn from './about-en-md.js'
 import aboutMi from './about-mi-md.js'
 import withIntl from '../../lib/withIntl'
 import publicPage, { FullPage } from '../../hocs/publicPage'
-import { Spacer } from '../../Components/VTheme/VTheme'
+import { Spacer } from '../../components/VTheme/VTheme'
 const getText = locale => {
   switch (locale) {
     case 'mi': {

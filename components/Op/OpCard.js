@@ -8,7 +8,7 @@ import Link from 'next/link'
 // todo if image is not present then use a fallback.
 const OpCard = ({ op, onPress, ...props }) => (
   <div>
-    <Link href={`/ops/${op._id}`}><a target='_blank'>
+    <Link href={`/ops/${op._id}`}><a>
       <div className='requestContainer'>
         <img className='requestImg' src={op.imgUrl} />
         <p className='requestTitle'>{op.title}</p>
