@@ -2,21 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import { Button } from 'antd'
+import { HalfGrid } from '../VTheme/VTheme'
 
-const HalfGrid = styled.div`
-  display: grid;
-  grid-template-columns: 39rem 39rem;
-  grid-column-gap: 2rem;
 
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    width: calc(100vw - 4rem);
-    grid-template-columns: calc(50vw - 2rem) calc(50vw - 2rem);
-  }
-
-  @media screen and (max-width: 768px) {
-    grid-template-columns: calc(100vw - 2rem);
-  }
-`
 const AboutLeft = styled.div`
   margin-top: 14%;
 

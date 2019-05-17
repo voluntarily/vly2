@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 const TitleContainer = styled.div`
+  margin-top: 5rem;
   height: 6rem;
 
   h1 {
