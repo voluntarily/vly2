@@ -20,8 +20,8 @@ test('shallow the card with op', t => {
     <OpCard op={op} onPress={() => {}} />
   )
   // console.log(wrapper.debug())
-  t.is(wrapper.find('Card').length, 1)
-  t.is(wrapper.find(`Meta[title="${op.title}"]`).length, 1)
+  t.is(wrapper.find('.requestContainer').length, 1)
+  t.is(wrapper.find('.requestTitle').text(), op.title)
 })
 
 test.todo('Click the card and see if the link works')
