@@ -4,48 +4,84 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 import Markdown from 'markdown-to-jsx'
+import styled from 'styled-components'
+
 import { FormattedMessage } from 'react-intl'
-import { Button, Col, Row } from 'antd'
+import { Button } from 'antd'
+import { FullPage } from '../../hocs/publicPage'
+import { HalfGrid, Spacer } from '../VTheme/VTheme'
+
+const Left = styled.div``
+
+const Right = styled.div``
+
+const TitleFont = styled.h1`
+  font-weight: 900;
+  font-size: 2rem;
+  letter-spacing: -0.02rem;
+`
+const ItemHeader = styled.h3`
+  font-weight: 600;
+  font-size: 1rem;
+
+  margin-bottom: 0;
+`
+const ItemListing = styled.p`
+  font-weight: 500;
+  font-size: 1.2rem;
+  opacity: 1;
+  color: initial;
+  margin-bottom: 1rem;
+`
+const ItemP = styled.p`
+  letter-spacing: -0.02rem;
+  font-weight: 400;
+  font-size: 1rem;
+  opacity: 1;
+  color: initial;
+  margin-bottom: 1rem;
+`
 
 export function OpDetail ({ op }) {
   return (
-    <div>
+    <FullPage>
+      <Spacer />
       <Head>title = {op.title}</Head>
-      <Row type='flex' align='top'>
-        <Col // these settings put the image first on narrow pages.
-          sm={{ span: 24, order: 1 }}
-          md={{ span: 12, order: 2 }}
-        >
+      <HalfGrid>
+        <Left>
+          <TitleFont>{op.title}</TitleFont>
+
+          <ItemHeader>
+            <FormattedMessage
+              id='op.commitment'
+              defaultMessage='commitment'
+              description='label in opportunity e.g 2 hours commitment'
+            />
+          </ItemHeader>
+          <ItemListing>⏱{op.duration}</ItemListing>
+
+          <ItemHeader>location</ItemHeader>
+          <ItemListing>🏫{op.location}</ItemListing>
+
+          <ItemHeader>status</ItemHeader>
+          <ItemListing>📝{op.status}</ItemListing>
+          <ItemP>
+            <Markdown
+              children={op.description}
+              options={{
+                overrides: {
+                  Button: { component: Button }
+                }
+              }}
+            />
+          </ItemP>
+          <Spacer />
+        </Left>
+        <Right>
           <img style={{ width: '100%' }} src={op.imgUrl} alt={op.title} />
-        </Col>
-        <Col
-          sm={{ span: 24, order: 2 }}
-          md={{ span: 12, order: 1 }}
-        >
-          <h1>{op.title}</h1>
-          <p>{op.subtitle}</p>
-          <dl>
-            <dt>
-              <FormattedMessage
-                id='op.commitment'
-                defaultMessage='commitment'
-                description='label in opportunity e.g 2 hours commitment'
-              />
-            </dt><dd>{op.duration}</dd>
-            <dt>location</dt><dd>{op.location}</dd>
-            <dt>status</dt><dd>{op.status}</dd>
-          </dl>
-          <Markdown
-            children={op.description}
-            options={{
-              overrides: {
-                Button: { component: Button }
-              }
-            }}
-          />
-        </Col>
-      </Row>
-    </div>
+        </Right>
+      </HalfGrid>
+    </FullPage>
   )
 }
 

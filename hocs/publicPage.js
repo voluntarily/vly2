@@ -35,7 +35,8 @@ export const FullPage = styled.div`
   }
   @media screen and (max-width: 767px) {
     width: calc(100vw - 1rem);
-    margin: 0.5rem;
+    margin-left: 0;
+
   }
 ` // end fullpage
 export const Grid = styled.div`

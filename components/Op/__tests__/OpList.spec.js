@@ -38,7 +38,8 @@ test('renders the list with ops to get card coverage', t => {
   const wrapper = render(
     <OpList ops={ops} handleShowOp={() => {}} handleDeleteOp={() => {}} />
   )
-  t.is(wrapper.find('.ant-card').length, 2)
+
+  t.is(wrapper.find('a').length, 2)
 })
 
 test('renders the list with no ops', t => {
