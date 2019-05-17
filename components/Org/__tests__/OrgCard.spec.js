@@ -1,6 +1,6 @@
 import test from 'ava'
 import OrgCard from '../OrgCard'
-import { render } from 'enzyme'
+import { render, shallow } from 'enzyme'
 
 const org = {
   _id: 'f34gb2bh24b24b2',
@@ -15,12 +15,17 @@ const props = {
   org
 }
 
+
+
 test('OrgCard renders properly', t => {
-  const wrapper = render(
+  const wrapper = shallow(
     <OrgCard {...props} />
-  )
-  t.is(wrapper.find('h1').first().text(), org.name)
-  t.regex(wrapper.find('.ant-card-meta-description span').first().text(), new RegExp(org.about))
-  t.is(wrapper.find('small').first().text(), ' Activity provider Business')
+  )  
+  console.log(wrapper.find('p').at(1).text())
+  t.is(wrapper.find('p').at(0).text(), org.name)
+  t.is(wrapper.find('p').at(1).text(), org.type.join(""))
+
+  t.is(wrapper.find('p').at(2).text(), org.about)
+
   // t.deepEqual(wrapper.prop('org'), props.org);
 })
