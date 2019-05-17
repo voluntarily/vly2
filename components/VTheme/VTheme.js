@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 
 export const Spacer = styled.div`
@@ -37,3 +36,4 @@ export const Grid = styled.div`
     grid-gap: 0rem;
   }
 ` // end grid
+

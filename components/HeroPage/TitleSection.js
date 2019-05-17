@@ -18,7 +18,8 @@ const TitleContainer = styled.div`
   p {
     color: #333;
     line-height: 2;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    letter-spacing: -1px;
   }
 
   @media screen and (max-width: 768px) {
@@ -28,20 +29,18 @@ const TitleContainer = styled.div`
   }
 `
 
-const TitleSection = ({ title, subtitle, ...props }) => ( 
-<TitleContainer>
+const TitleSection = ({ title, subtitle, ...props }) => (
+  <TitleContainer>
     <h1>{title}</h1>
     <p>{subtitle}</p>
-</TitleContainer>
+  </TitleContainer>
 )
 
-
 TitleSection.propTypes = {
-    op: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      subtitle: PropTypes.string.isRequired,
-    }),
-  }
-  
+  op: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    subtitle: PropTypes.string.isRequired
+  })
+}
 
 export default TitleSection

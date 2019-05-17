@@ -7,7 +7,7 @@ import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
 
 import { FormattedMessage } from 'react-intl'
-import { Button, Col, Row, Divider } from 'antd'
+import { Button } from 'antd'
 import { FullPage } from '../../hocs/publicPage'
 import { HalfGrid, Spacer } from '../VTheme/VTheme'
 
@@ -21,8 +21,8 @@ const TitleFont = styled.h1`
   letter-spacing: -0.02rem;
 `
 const ItemHeader = styled.h3`
-  font-weight: 500;
-  font-size: 0.8rem;
+  font-weight: 600;
+  font-size: 1rem;
 
   margin-bottom: 0;
 `
@@ -35,11 +35,11 @@ const ItemListing = styled.p`
 `
 const ItemP = styled.p`
   letter-spacing: -0.02rem;
-font-weight: 400;
-font-size: 1rem;
-opacity: 1;
-color: initial;
-margin-bottom: 1rem;
+  font-weight: 400;
+  font-size: 1rem;
+  opacity: 1;
+  color: initial;
+  margin-bottom: 1rem;
 `
 
 export function OpDetail ({ op }) {
@@ -63,24 +63,19 @@ export function OpDetail ({ op }) {
           <ItemHeader>location</ItemHeader>
           <ItemListing>🏫{op.location}</ItemListing>
 
-          <ItemHeader>Status</ItemHeader>
+          <ItemHeader>status</ItemHeader>
           <ItemListing>📝{op.status}</ItemListing>
-          <ItemP>The facilitators re-aggregate a 360-degree thinking.
-The board-level executives accelerate an activity-centric implementation.
-The sales manager conservatively engineers low hanging fruits.
-The white-collar workforce controls the "why" behind technologies. The Digital Marketers expediently re-content our real-world lessons learned. The Products Owners articulate the realignments.
-Control Information Systems enable the facilitators on a transitional basis.
-Actually, the project manager adequately analyses a mindfulness.
+          <ItemP>
+            <Markdown
+              children={op.description}
+              options={{
+                overrides: {
+                  Button: { component: Button }
+                }
+              }}
+            />
           </ItemP>
           <Spacer />
-          <Markdown
-            children={op.description}
-            options={{
-              overrides: {
-                Button: { component: Button }
-              }
-            }}
-          />
         </Left>
         <Right>
           <img style={{ width: '100%' }} src={op.imgUrl} alt={op.title} />

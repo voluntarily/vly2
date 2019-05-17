@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FormattedMessage } from 'react-intl'
-import {Grid} from '../VTheme/VTheme'
+// import { FormattedMessage } from 'react-intl'
+import { Grid } from '../VTheme/VTheme'
 
 const PersonaContainer = styled.div`
   width: 18.5rem;

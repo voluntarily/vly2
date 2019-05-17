@@ -6,25 +6,26 @@ const Search = Input.Search
 // this is the big container block that holds the container together lol
 const AwesomeHeroContainer = styled.div`
   width: 80rem;
-  height: 100vh;
+  height: 72rem;
   margin: auto;
   display: grid;
   grid-template-columns: 30rem 50rem;
 
   @media screen and (min-width: 1380px) and (max-width: 1920px) {
-    height: 90vh;
+    height: 54rem;
   }
 
   @media screen and (min-width: 1282px) and (max-width: 1380px) {
+    height: 44rem;
   }
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    height: 72vh;
+    height: 44rem;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     width: 100vw;
-    height: 80vh;
+    height: 30rem;
     margin: auto;
     display: grid;
     grid-template-columns: 30vw 70vw;
@@ -33,6 +34,7 @@ const AwesomeHeroContainer = styled.div`
   @media screen and (max-width: 768px) {
     grid-template-columns: 100vw;
     height: auto;
+
   }
 `
 // start left hand video side
@@ -240,7 +242,7 @@ const Hero = ({ ...props }) => (
       <SearchBox>
         <Search
           placeholder="try 'building robots' "
-          enterButton='Search activities'
+          enterButton='Search'
           size='large'
           // eslint-disable-next-line no-console
           onSearch={value => console.log(value)}

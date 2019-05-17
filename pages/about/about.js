@@ -5,11 +5,16 @@ import { Button } from 'antd'
 import aboutEn from './about-en-md.js'
 import aboutMi from './about-mi-md.js'
 import withIntl from '../../lib/withIntl'
-import publicPage from '../../hocs/publicPage'
-const getText = (locale) => {
+import publicPage, { FullPage } from '../../hocs/publicPage'
+import { Spacer } from '../../Components/VTheme/VTheme'
+const getText = locale => {
   switch (locale) {
-    case 'mi': { return aboutMi() }
-    case 'fr': { return aboutMi() }
+    case 'mi': {
+      return aboutMi()
+    }
+    case 'fr': {
+      return aboutMi()
+    }
   }
   return aboutEn()
 }
@@ -19,9 +24,11 @@ class About extends Component {
     const about = getText(this.props.intl.locale)
 
     return (
-
-      <div className='about'>
-        <Head><title>Voluntari.ly - About</title></Head>
+      <FullPage>
+        <Head>
+          <title>Voluntari.ly - About</title>
+        </Head>
+        <Spacer />
         <Markdown
           children={about}
           options={{
@@ -31,20 +38,20 @@ class About extends Component {
           }}
         />
         <style jsx>{`
+          div {
+            margin: 3em;
+            max-width: 50em;
+          }
+          @media (max-width: 600px) {
             div {
-              margin: 3em;
-              max-width: 50em;
+              margin: 0 3em;
             }
-            @media (max-width: 600px) {
-              div {
-                margin: 0 3em;
-              }
-            }
-          `}</style>
-      </div>
+          }
+        `}</style>
+      </FullPage>
     )
   }
-};
+}
 
 export const AboutTest = About // for test
 

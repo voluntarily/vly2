@@ -1,9 +1,8 @@
-import { Button, Col, Input, Row } from 'antd'
+import { Button } from 'antd'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import Link from 'next/link'
 import publicPage, { FullPage } from '../../hocs/publicPage'
-
 
 import Hero from '../../components/HeroPage/Hero'
 import AboutSection from '../../components/HeroPage/AboutSection'
@@ -15,39 +14,38 @@ import TitleSection from '../../components/HeroPage/TitleSection'
 
 // import schoolsactivity from './schoolsactivity.png'
 
-
-
 export class Landing extends Component {
   render () {
     return (
       <FullPage>
         <Hero />
-        <AboutSection 
-        title="Support Innovation in the classroom."
-        subtitle="Voluntarily is a platform that connects you with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."
+        <AboutSection
+          title='Support Innovation in the classroom.'
+          subtitle='Voluntarily is a platform that connects you with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content.'
         />
-          <div className='spacer' />
-            <TitleSection 
-            title="How we help"
-            subtitle="We help these awesome people accomplish amazing things"
+        <div className='spacer' />
+        <TitleSection
+          title='How we help'
+          subtitle='We help these awesome people accomplish amazing things'
+        />
+        <PersonaSection />
+        <div className='spacer' />
+        <TitleSection
+          title='Happening Soon'
+          subtitle='You are two clicks away from getting invovled with your community'
+        />
+
+        <OpListSection store={this.props.store} />
+        <Link href={'/op/new'}>
+          <Button type='primary' shape='round'>
+            <FormattedMessage
+              id='landing.newOp'
+              defaultMessage='New Opportunity'
+              description='Button to create a new opportunity on Landing page'
             />
-            <PersonaSection />
-            <div className='spacer' />
-            <TitleSection 
-            title="Happening Soon"
-            subtitle="Get involved with your community"
-            />
-
-      
-            <OpListSection store={this.props.store} />
-            <Link href={'/op/new'} >
-              <Button type='primary' shape='round' >
-                <FormattedMessage id='landing.newOp' defaultMessage='New Opportunity' description='Button to create a new opportunity on Landing page' />
-              </Button>
-            </Link>
-
-
-        </FullPage>
+          </Button>
+        </Link>
+      </FullPage>
     )
   }
 }

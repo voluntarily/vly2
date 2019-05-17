@@ -4,9 +4,8 @@ import { FormattedMessage } from 'react-intl'
 import { Button } from 'antd'
 import { HalfGrid } from '../VTheme/VTheme'
 
-
 const AboutLeft = styled.div`
-  margin-top: 14%;
+  margin-top: 10%;
 
   h1 {
     font-weight: 900;
@@ -17,7 +16,7 @@ const AboutLeft = styled.div`
 
   p {
     line-height: 1.8;
-    font-size: 1rem;
+    font-size: 1.2rem;
     letter-spacing: -0.6px;
   }
 
@@ -68,21 +67,20 @@ const AboutRight = styled.img`
   }
 `
 
-const AboutSection = ({ title, subtitle, ...props }) => ( 
-    <HalfGrid>
-        <AboutLeft>
-            <h1>{title}</h1>
-            <p>{subtitle}</p>
-            <Button type='primary' shape='round' size='large' href='/about'>
-                  <FormattedMessage
-                    id='LearnMore'
-                    defaultMessage='Learn More'
-                    description='Action button to learn more about Voluntari.ly'
-                  />
-                </Button>
-        </AboutLeft>
-        <AboutRight src="/static/img/schoolsactivity.png">
-        </AboutRight>
-    </HalfGrid>
+const AboutSection = ({ title, subtitle, ...props }) => (
+  <HalfGrid>
+    <AboutLeft>
+      <h1>{title}</h1>
+      <p>{subtitle}</p>
+      <Button type='primary' shape='round' size='large' href='/about'>
+        <FormattedMessage
+          id='LearnMore'
+          defaultMessage='Learn More'
+          description='Action button to learn more about Voluntari.ly'
+        />
+      </Button>
+    </AboutLeft>
+    <AboutRight src='/static/img/schoolsactivity.png' />
+  </HalfGrid>
 )
 export default AboutSection
