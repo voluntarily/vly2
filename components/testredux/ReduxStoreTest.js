@@ -20,7 +20,7 @@ export const ReduxStoreTestReducer = (state = initialState, action) => {
   // console.log('ReduxStoreTestReducer', action, state)
   switch (action.type) {
     case SET_NAME:
-      console.log('Reducing SET_NAME')
+      // console.log('Reducing SET_NAME')
       return { ...state, name: action.name }
     default:
       return state

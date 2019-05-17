@@ -52,11 +52,11 @@ test('mount, render add input and save', t => {
 
   // now click the save button.
   wrapper.find('button').first().simulate('click')
-  console.log(mockStore.getState())
-  console.log(mockStore.getActions())
+  // console.log(mockStore.getState())
+  // console.log(mockStore.getActions())
   t.deepEqual(mockStore.getActions()[0], { type: 'SET_NAME', name: 'Andrew' })
   // Hello class updates with the new text
-  console.log(wrapper.html())
+  // console.log(wrapper.html())
   // t.is(wrapper.find('h2').text(), 'Hello, Andrew')
 })
 

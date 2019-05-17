@@ -11,13 +11,13 @@ import PropTypes from 'prop-types'
 export class OpDetailPage extends Component {
   static async getInitialProps ({ store, query }) {
     // Get one Op
-    console.log('getting op details', query)
+    // console.log('getting op details', query)
     try {
       const ops = await store.dispatch(reduxApi.actions.opportunities.get(query))
-      console.log('got ops for id', query, ops)
+      // console.log('got ops for id', query, ops)
       return { ops, query }
     } catch (err) {
-      console.log('error in getting ops', err)
+      // console.log('error in getting ops', err)
     }
   }
 

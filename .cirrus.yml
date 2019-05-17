@@ -9,9 +9,9 @@ lint_task:
 
   test_script: npm run lint
 
-test_task:
-  node_modules_cache:
-    folder: node_modules
-    fingerprint_script: cat package-lock.json
-    populate_script: npm install
-  test_script: npm test
+# test_task:
+#   node_modules_cache:
+#     folder: node_modules
+#     fingerprint_script: cat package-lock.json
+#     populate_script: npm install
+#   test_script: npm test

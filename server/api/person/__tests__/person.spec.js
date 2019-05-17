@@ -31,13 +31,13 @@ test.before('before connect to database', async () => {
 
 test.after.always(async () => {
   await memMongo.stop()
-  console.log('stopped')
+  // console.log('stopped')
 })
 
 test.beforeEach('connect and add two person entries', async () => {
-  console.log('creating people')
+  // console.log('creating people')
   await Person.create(people).catch(() => 'Unable to create people')
-  console.log('creating people done')
+  // console.log('creating people done')
 })
 
 test.afterEach.always(async () => {
