@@ -13,8 +13,6 @@ class OpListSection extends Component {
   state = {}
   async componentDidMount () {
     // Get all Ops
-
-    // console.log('getting ops for section')
     try {
       const ops = await this.props.dispatch(reduxApi.actions.opportunities.get())
       // console.log('got ops', ops)
