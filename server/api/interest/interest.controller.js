@@ -1,32 +1,26 @@
-const Opportunity = require('./opportunity')
+const Interest = require('./interest')
 
 /**
- * Get all orgs
- * @param req
- * @param res
- * @returns void
+  api/interests -> list all interests
+  api/interests?op='opid' -> lists all interests associated with opid.
  */
-function getOpportunities (req, res) {
+const listInterests = async (req, res) => {
   console.log(req.query)
-  let query = {} // { status: 'active' }
-  let sort = 'title'
-  let select = {}
+  let sort = 'dateAdded' // todo sort by date.
+  let got
   try {
-    query = req.query.q ? JSON.parse(req.query.q) : query
-    sort = req.query.s ? JSON.parse(req.query.s) : sort
-    select = req.query.p ? JSON.parse(req.query.p) : select
-  } catch (e) {
-    console.log('bad JSON', req.query)
-    return res.status(400).send(e)
-  }
-  Opportunity.find(query, select).sort(sort).exec((err, got) => {
-    if (err) {
-      console.log(err)
-      res.status(404).send(err)
+    if ( req.query.op ) {
+      const query = { opportunity: req.query.op }
+      got = await Interest.find(query).sort(sort).exec()
+    } else {
+      got = await Interest.find().sort(sort).exec()
     }
-    // console.log(got)
+    console.log(got)
     res.json(got)
-  })
+  } catch (err) {
+    console.log(err)
+    res.status(404).send(err)
+  }
 }
 
 // /**
@@ -74,5 +68,5 @@ function getOpportunities (req, res) {
 // }
 
 module.exports = {
-  getOpportunities
+  listInterests
 }
