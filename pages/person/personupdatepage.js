@@ -17,10 +17,10 @@ import Router from 'next/router'
 export class PersonUpdatePage extends Component {
   static async getInitialProps ({ store, query }) {
     // Get one Person
-    console.log('PersonUpdatePage, Get props', query)
+    // console.log('PersonUpdatePage, Get props', query)
     if (query && query.id) {
       const people = await store.dispatch(reduxApi.actions.people.get(query))
-      console.log('got person for id', query, people)
+      // console.log('got person for id', query, people)
       return { people, query }
     }
   }

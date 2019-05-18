@@ -6,12 +6,9 @@ import { Provider } from 'react-redux'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 
-
-const { MATCHED, UNMATCHED, fetchMock} = require('fetch-mock');
-
 import { API_URL } from '../../../lib/apiCaller'
 
-
+const { fetchMock } = require('fetch-mock')
 
 // Initial opportunities added into test db
 const ops = [
@@ -45,8 +42,8 @@ const initStore = {
 
 const realStore = makeStore(initStore)
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+function sleep (ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 test.only('mount the list with ops', async t => {
@@ -54,16 +51,15 @@ test.only('mount the list with ops', async t => {
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/`
   myMock.getOnce(api, ops)
-  
 
   const wrapper = await mount(
-    <Provider store={realStore}>  
+    <Provider store={realStore}>
       <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} />
     </Provider>
-    
+
   )
   await sleep(1) // allow asynch fetch to complete
-  wrapper.update();
-  t.is(wrapper.find('.ant-card').length, 2) // there are two cards on the screen
+  wrapper.update()
+  t.is(wrapper.find('a').length, 2) // there are two cards on the screen
   myMock.restore()
 })

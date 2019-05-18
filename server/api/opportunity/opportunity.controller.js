@@ -7,7 +7,7 @@ const Opportunity = require('./opportunity')
  * @returns void
  */
 function getOpportunities (req, res) {
-  console.log(req.query)
+  // console.log(req.query)
   let query = {} // { status: 'active' }
   let sort = 'title'
   let select = {}

@@ -16,10 +16,10 @@ import PersonList from '../../components/Person/PersonList'
 class PersonListPage extends Component {
   static async getInitialProps ({ store, query }) {
     // Get all People
-    console.log('getting people')
+    // console.log('getting people')
     try {
       const people = await store.dispatch(reduxApi.actions.people.get())
-      console.log('got people', people)
+      // console.log('got people', people)
       return { people, query }
     } catch (err) {
       console.log('error in getting people', err)
