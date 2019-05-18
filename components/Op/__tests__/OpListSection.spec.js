@@ -63,7 +63,7 @@ test.only('mount the list with ops', async t => {
     
   )
   await sleep(1) // allow asynch fetch to complete
-  wrapper.update();
-  t.is(wrapper.find('.ant-card').length, 2) // there are two cards on the screen
+  wrapper.update()
+  t.is(wrapper.find('a').length, 2) // there are two cards on the screen
   myMock.restore()
 })
