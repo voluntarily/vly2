@@ -1,12 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
-// import Markdown from 'markdown-to-jsx'
-// import OrgType from './OrgType'
-import AwesomeCard from '../../components/TestContainer/AwesomeCard/AwesomeCard'
 
 const OrgCard = ({ org, ...props }) => (
-<div>
+  <div>
     <Link href={`/orgs/${org._id}`}><a target='_blank'>
       <div className='requestContainer'>
         <img className='requestImg' src={org.imgUrl} />

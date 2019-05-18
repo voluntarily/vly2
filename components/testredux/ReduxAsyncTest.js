@@ -67,5 +67,5 @@ const mapStateToProps = (store) => ({
 //     health: store.health,
 //     name: store.rst.name
 //   })
-// } 
+// }
 export default connect(mapStateToProps, { fetchHealth })(ReduxAsyncTest)

@@ -20,7 +20,7 @@ class OrgDetailForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // eslint-disable-next-line no-console
-        console.log('Received values of form: ', values)
+        // console.log('Received values of form: ', values)
         // preserve the id and other values not edited by form.
         const org = this.props.org
         // update the rest from the form values.
@@ -211,7 +211,7 @@ OrgDetailForm.propTypes = {
 export default Form.create({
   name: 'organisation_detail_form',
   onFieldsChange (props, changedFields) {
-    console.log('onFieldsChange', changedFields)
+    // console.log('onFieldsChange', changedFields)
     // props.onChange(changedFields);
   },
   mapPropsToFields (props) {
@@ -223,6 +223,6 @@ export default Form.create({
     }
   },
   onValuesChange (_, values) {
-    console.log('onValuesChange', values)
+    // console.log('onValuesChange', values)
   }
 })(OrgDetailForm)

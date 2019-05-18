@@ -54,7 +54,7 @@ test.serial('Should correctly give count of all orgs sorted alpha', async t => {
     .expect('Content-Type', /json/)
   const got = res.body
   t.is(orgs.length, got.length)
-  
+
   t.is(got[0].name, 'Albany High School')
 })
 

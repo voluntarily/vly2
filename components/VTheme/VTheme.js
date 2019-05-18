@@ -36,4 +36,3 @@ export const Grid = styled.div`
     grid-gap: 0rem;
   }
 ` // end grid
-

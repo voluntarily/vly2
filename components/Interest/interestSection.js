@@ -17,10 +17,10 @@ class InterestSection extends Component {
     const op = this.props.op
     try {
       const interests = await this.props.dispatch(reduxApi.actions.interests.get({ id: '', op }))
-      console.log('got interests', interests, 'for', op)
+      // console.log('got interests', interests, 'for', op)
       this.setState({ interests })
     } catch (err) {
-      console.log('error in getting interests', err)
+      // console.log('error in getting interests', err)
     }
   }
   render () {
@@ -37,8 +37,6 @@ class InterestSection extends Component {
     }
   }
 }
-
-
 
 export const InterestSectionTest = InterestSection
 export default withInterests(InterestSection)

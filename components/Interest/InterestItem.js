@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Col, Row } from 'antd'
 
 const InterestItem = ({ interest, ...props }) => (
 
@@ -18,8 +17,8 @@ InterestItem.propTypes = {
   interest: PropTypes.shape({
     person: PropTypes.string.isRequired,
     opportunity: PropTypes.string.isRequired,
-    comment:PropTypes.string, 
-    status: PropTypes.string,
+    comment: PropTypes.string,
+    status: PropTypes.string
   }).isRequired
 }
 

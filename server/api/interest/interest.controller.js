@@ -5,17 +5,17 @@ const Interest = require('./interest')
   api/interests?op='opid' -> lists all interests associated with opid.
  */
 const listInterests = async (req, res) => {
-  console.log(req.query)
+  // console.log(req.query)
   let sort = 'dateAdded' // todo sort by date.
   let got
   try {
-    if ( req.query.op ) {
+    if (req.query.op) {
       const query = { opportunity: req.query.op }
       got = await Interest.find(query).sort(sort).exec()
     } else {
       got = await Interest.find().sort(sort).exec()
     }
-    console.log(got)
+    // console.log(got)
     res.json(got)
   } catch (err) {
     console.log(err)
