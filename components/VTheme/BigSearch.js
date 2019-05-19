@@ -35,9 +35,17 @@ const SearchFilterText = styled.p`
   letter-spacing: -0.5px;
   font-weight: 500;
   color: #333;
+  float: left;
 `
 
-const BigSearchForm = styled.input``
+const FilterItem = styled.a`
+float: left;
+margin-top: 1rem;
+margin-right: 0.5rem;
+width: 8rem;
+text-align: center;
+font-weight: bold;
+`
 
 const BigSearch = () => (
   <SearchContainer>
@@ -49,12 +57,14 @@ const BigSearch = () => (
         enterButton='Search'
       />
     </SearchInputContainer>
-    <SearchFilterText>Filter by:</SearchFilterText>
+    <SearchFilterText>Filter by:
+      
+    </SearchFilterText>
+    <FilterItem>Date</FilterItem>
+    <FilterItem>Location</FilterItem>
+    <FilterItem>Categories</FilterItem>
+    <FilterItem>Impact</FilterItem>
 
-    <p>Potatoes</p>
-    <p>Carrots</p>
-    <p>Eggs</p>
-    <p>Ham</p>
   </SearchContainer>
 )
 export default BigSearch
