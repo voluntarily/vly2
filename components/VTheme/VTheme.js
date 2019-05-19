@@ -37,3 +37,13 @@ export const Grid = styled.div`
   }
 ` // end grid
 
+
+
+
+export const TextH1 = styled.h1`
+font-weight: 900;
+font-size: 2rem;
+
+`//end TextH1
+
+

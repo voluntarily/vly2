@@ -1,6 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { FullPage } from '../hocs/publicPage';
+import { Spacer, TextH1 } from './VTheme/VTheme';
 
 const Heading = styled.h1`
   font-size: 50px;
@@ -29,9 +31,12 @@ const ContentLink = styled.a`
 
 export default () => (
   <div>
-    <Heading>You can't see this!</Heading>
-    <Content>
-      You're not authenticated yet. Maybe you want to <Link href='/auth/sign-in'><ContentLink>sign in</ContentLink></Link> and see what happens?
-    </Content>
+    <FullPage>
+      <Spacer />
+     <center>
+     <iframe src="https://giphy.com/embed/vPN3zK9dNL236" width="480" height="376" frameBorder="" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/catvidfest-no-grumpy-cat-vPN3zK9dNL236"></a></p>
+    <TextH1>You don't have access to this page 😅 <br/>Try and<a href="/auth/sign-in"> sign in</a> to see it?</TextH1>
+    </center>
+    </FullPage>
   </div>
 )

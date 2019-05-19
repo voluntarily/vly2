@@ -5,29 +5,35 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 import Hero from '../../components/HeroPage/Hero'
 import AboutSection from '../../components/HeroPage/AboutSection'
 import PersonaSection from '../../components/HeroPage/PersonaSection'
-import TitleSection from '../../components/HeroPage/TitleSection'
+import TitleSectionSub from '../../components/HeroPage/TitleSectionSub'
 import OpListSection from '../../components/Op/OpListSection'
 
 import '../../pages/landing2/landing.less'
+import FeaturedTwoSection from '../../components/HeroPage/FeaturedTwoSection';
+import { Spacer } from '../../components/VTheme/VTheme';
 
 export class Landing2 extends Component {
   render () {
     return (
       <FullPage>
         <Hero />
+        <FeaturedTwoSection></FeaturedTwoSection>
+        <Spacer />
+
         <AboutSection
           title='Support Innovation in the classroom.'
           subtitle='Voluntarily is a platform that connects you with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content.'
         />
         <div className='spacer' />
-        <TitleSection
+        <TitleSectionSub
           title='How we help'
           subtitle='We help these awesome people accomplish amazing things'
         />
         <PersonaSection />
         <Divider />
+
         <div className='spacer' />
-        <TitleSection
+        <TitleSectionSub
           title='Happening soon'
           subtitle='These events are happening soon. You should get involved! 😀'
         />

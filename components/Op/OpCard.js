@@ -8,13 +8,15 @@ import Link from 'next/link'
 // todo if image is not present then use a fallback.
 const OpCard = ({ op, onPress, ...props }) => (
   <div>
-    <Link href={`/ops/${op._id}`}><a>
-      <div className='requestContainer'>
-        <img className='requestImg' src={op.imgUrl} />
-        <p className='requestTitle'>{op.title}</p>
-        <p className='requestDateTime'>{op.duration}</p>
-        <p className='requestDescription'>{op.subtitle}</p>
-      </div></a>
+    <Link href={`/ops/${op._id}`}>
+      <a>
+        <div className='requestContainer'>
+          <img className='requestImg' src={op.imgUrl} />
+          <p className='requestTitle'>{op.title}</p>
+          <p className='requestDateTime'>{op.duration}</p>
+          <p className='requestDescription'>{op.subtitle}</p>
+        </div>
+      </a>
     </Link>
     <style jsx>{`
       .requestContainer {
@@ -33,7 +35,7 @@ const OpCard = ({ op, onPress, ...props }) => (
       }
 
       .requestTitle {
-        margin-top: 0px;
+        margin-top: 0.3rem;
         margin-bottom: 0px;
         vertical-align: middle;
         font-weight: bold;
@@ -45,9 +47,6 @@ const OpCard = ({ op, onPress, ...props }) => (
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
       }
-
-
-
 
       .requestDateTime {
         vertical-align: middle;
@@ -76,7 +75,7 @@ const OpCard = ({ op, onPress, ...props }) => (
       }
 
       .requestTitle :hover {
-        color: #6549AA;
+        color: #6549aa;
       }
 
       @media screen and (max-width: 768px) {

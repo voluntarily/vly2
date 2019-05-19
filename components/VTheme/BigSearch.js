@@ -5,7 +5,7 @@ import { Input } from 'antd'
 const Search = Input.Search
 
 const SearchContainer = styled.div`
-  margin-top: 32rem;
+  margin-top: 0rem;
   width: 80rem;
   height: 9rem;
   background: #ffffff;

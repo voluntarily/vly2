@@ -25,13 +25,13 @@ class OpListSection extends Component {
   render () {
     if (!this.state.ops) {
       return (<section>
-        <h3>search filter here</h3>
+        {/* <h3>search filter here</h3> */}
         <Loading><p>Loading opportunities...</p></Loading>
 
       </section>)
     } else {
       return (<section>
-        <h3>search filter here</h3>
+        {/* <h3>search filter here</h3> */}
         <OpList ops={this.state.ops} />
       </section>)
     }

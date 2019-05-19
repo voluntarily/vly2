@@ -1,16 +1,9 @@
-import Link from 'next/link'
-import Head from 'next/head'
-import publicPage, { A4, FullPage } from '../hocs/publicPage'
-import Hello from '../components/test/Hello'
-import LessStyled from '../components/test/LessStyled'
-import AntdType from '../components/test/AntdType'
-import IntlDemo from '../components/test/IntlDemo'
-import OrgCard from '../components/Org/OrgCard'
-import OrgDetail from '../components/Org/OrgDetail'
-import PersonCard from '../components/Person/PersonCard'
-import PersonDetail from '../components/Person/PersonDetail'
-import RoutePush, { RouteBack, RouteReplace } from '../components/test/RoutePush'
-import BigSearch from '../components/VTheme/BigSearch';
+
+import publicPage, { FullPage } from '../hocs/publicPage'
+import { Spacer } from  '../components/VTheme/VTheme'
+import BigSearch from '../components/VTheme/BigSearch'
+import TitleSection from '../components/HeroPage/TitleSection';
+import OpListSection from '../components/Op/OpListSection';
 const org = {
   _id: 'f34gb2bh24b24b2',
   name: 'OMGTech',
@@ -44,7 +37,12 @@ const UserProp = ({ loggedUser }) =>
 
 const TestPageTwo = ({ ...props }) =>
   <FullPage>
+    <TitleSection title="Search results for Potatoes" />
     <BigSearch />
+    <Spacer>
+
+    </Spacer>
+    <OpListSection />
 
   </FullPage>
 
