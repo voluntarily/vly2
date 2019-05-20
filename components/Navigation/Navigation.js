@@ -9,7 +9,7 @@ const Navigation = ({ items, defaultItem, router, ...props }) => {
   const activeItem = router.pathname.slice(1)
   return (
     <Menu
-      theme='dark'
+      theme='light'
       mode='horizontal'
       style={{ float: 'right' }}
       selectedKeys={[activeItem]}

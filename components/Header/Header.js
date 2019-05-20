@@ -14,8 +14,8 @@ const Brand = styled.h1`
 `
 const Wa = styled.a`
   text-decoration: none;
-  color: white;
-  font-family: "gaoel";
+  color: black;
+  font-family: 'gaoel';
   font-weight: 500;
 `
 const Logo = styled.img`
@@ -23,26 +23,24 @@ const Logo = styled.img`
   margin: 0.5rem;
 `
 
-const getAllowedLinks = isAuthenticated => links()
-  .filter(l => !l.authRequired || (l.authRequired && isAuthenticated))
-  .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
+const getAllowedLinks = isAuthenticated =>
+  links()
+    .filter(l => !l.authRequired || (l.authRequired && isAuthenticated))
+    .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
 
 // eslint-disable-next-line no-unused-vars
 const Header = ({ isAuthenticated, ...props }) => (
-  <Layout.Header >
-    <Logo src='/static/vlogo.svg' />
-    <Brand className='site-title' >
-      <Link href='/' >
-        <Wa><FormattedMessage
-          id='siteTitle'
-          defaultMessage='Voluntari.ly'
-          description='Name of the Application on the menu bar'
-        /></Wa>
-      </Link>
+  <Layout.Header>
+    <a>
+    <Link href='/'>
+      <Logo src='/static/vlogolong.svg' />
+    </Link>
+    </a>
+    <Brand className='site-title'>
+
     </Brand>
     {/* <SearchBar /> */}
     <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
-
   </Layout.Header>
 )
 Header.propTypes = {
