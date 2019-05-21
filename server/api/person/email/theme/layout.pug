@@ -1,0 +1,21 @@
+//- layout.pug
+html
+  head
+    title Voluntari.ly
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='description', content='Some description')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    
+    include style.pug
+    block head  
+      
+  body
+    block header 
+      include header.pug
+
+    block content
+      include content.pug
+      
+    block footer
+      include footer.pug

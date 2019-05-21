@@ -11,7 +11,7 @@ const getData = async url => {
   }
 }
 
-const API_URL = process.env.VLY_URL || 'http://localhost:8000'
+const API_URL = process.env.VLY_URL || 'http://localhost:3122'
 
 // eslint-disable-next-line prefer-template
 getData(API_URL + '/api/opportunities')

@@ -3,7 +3,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import OrgCard from './OrgCard'
-import { Row, Col } from 'antd'
+import { Col, Row } from 'antd'
 
 const OrgList = ({ orgs, ...props }) => (
   <Row type='flex' align='top' gutter={{ xs: 8, sm: 16, md: 24 }} >
@@ -15,7 +15,7 @@ const OrgList = ({ orgs, ...props }) => (
             key={index}
           />
         </Col>
-      )) : 'No Organisations Yet'
+      )) : 'No Matching Organisations'
     }
   </Row>
 )
@@ -29,7 +29,7 @@ OrgList.propTypes = {
       type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])).isRequired,
       _id: PropTypes.string.isRequired
     })
-  ).isRequired
+  ) // optional as may update later.
 }
 
 export default OrgList

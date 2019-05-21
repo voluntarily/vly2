@@ -1,5 +1,6 @@
 // React Components can be very very terse
-export default (props) =>
-  <div>
-    <p className='greeting' >Hello World!</p>
-  </div>
+export const Greet = () => <p className='greeting' >Hello, *Your name here*!</p>
+
+export const Hello = ({ name }) => <p className='greeting' >Hello, {name}</p>
+
+export default Greet

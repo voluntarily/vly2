@@ -28,7 +28,7 @@ class SignedIn extends React.Component {
         return
       }
       setToken(result.idToken, result.accessToken)
-      console.log('signed in.')
+      // console.log('signed in.')
       Router.push(`/`)
     })
   }

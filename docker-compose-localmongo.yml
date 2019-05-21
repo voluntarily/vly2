@@ -1,0 +1,17 @@
+version: '3.4'
+services:
+  web:
+    build:
+      context: ./
+      # dockerfile: x/docker/Dockerfile
+      target: development
+    ports:
+      - "${WEB_PORT:-3122}:3122"
+    volumes:
+      - .:/usr/src/app
+    environment:
+      NODE_ENV: development
+      MONGO_URL: mongodb://db:27017/vly-dev
+    stdin_open: true
+    tty: true
+ 

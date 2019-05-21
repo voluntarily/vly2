@@ -1,0 +1,709 @@
+.hero {
+  width: 40vw;
+  position: relative;
+  top:-56px;
+  font-size:0.5rem;
+  margin: 0;
+}
+
+
+/* component in centre of image */
+
+.awesomeHeroContainer {
+  width: 80rem;
+  height: 85vh;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 30rem 50rem;
+}
+
+/* Full width image */
+.awesomeHeroContainer img {
+  margin-top: 10rem;
+  width: 30rem;
+  height: 55rem;
+  overflow: hidden;
+  object-fit: cover;
+
+
+  
+}
+
+
+.awesomeVideo {
+  position: relative;
+  text-align: center;
+  margin: 0 auto;
+  overflow: hidden;
+  object-fit: fill;
+  background-color: white;
+  z-index: 1;
+
+  
+}
+
+.notch {
+  width: 12rem;
+  height: 2rem;
+  margin-left: 9rem;
+  background-color: white;
+  z-index: 100;
+  position: absolute;
+  border-radius: 0px 0px 24px 24px;
+  
+}
+
+.heroLeft {
+
+  margin-top: 7rem;
+  width: 30rem;
+  height: 55rem;
+  overflow: hidden;
+  object-fit: cover;
+  border-radius: 24px 24px 24px 24px;
+
+}
+
+
+.herocard {	
+  position: relative;	
+  color: #FFFFFF;	
+  margin-top: 24rem;
+  left: 5rem;
+}
+
+.herocard h1 {	
+  color: black;	
+  font-family: Inter, -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 3.5rem;	
+  font-weight: 900;	
+  letter-spacing: -0.03em;	
+  margin-bottom: 0px;
+  color: #000000;
+letter-spacing: -1.46px;
+}
+
+.herocard p {
+  letter-spacing: -0.3px;
+  font-size: 1.5rem;
+  color: #333333;
+
+
+
+}
+
+
+.rest {
+  margin: 0 1em 5em 1em;
+}
+
+.about img {
+  width: 100%;
+}
+
+.aboutImg {
+  width: 39rem;
+  justify-self: end;
+
+}
+.searchBox {
+  background-color: white;
+  height: 4rem;
+  width: 40rem;
+  border-radius: 0.25rem;
+  padding: 12px;
+  box-shadow: 2px 2px 12px 0 rgba(0,0,0,0.50);
+}
+
+
+
+
+h2 {
+  font-weight: 900;
+  font-size: 1.8rem;	
+}
+
+.vGridContainer {
+  position: relative;
+  width: 80rem;
+  display: grid;
+  margin: auto auto;
+}
+
+.vGridContainerText {
+  color: #000;
+  line-height: 1.8;
+  font-size: 1rem;
+  letter-spacing: -0.6px;
+}
+
+.aboutContainer {
+  display: grid;
+  grid-template-columns: 40rem 40rem;
+}
+
+.centeredDiv {
+  margin-top: 14%;
+}
+.spacer {
+  height: 7rem;
+}
+
+.blockTitle {
+  height: 2rem;
+  font-size: 2rem;
+  vertical-align: center;
+  text-align: left;
+  letter-spacing: -1.4px;
+}
+
+.blockDescription {
+  height: 1.5rem;
+  font-size: 1rem;
+  color: #000000;
+  letter-spacing: -0.3px;
+  line-height: 24px;  
+  margin-bottom: 2rem;
+
+}
+
+.personaContainer {
+  width: 18.5rem;
+  position: relative;
+}
+
+
+.personaTitle {
+margin: 0.5rem 0rem 0rem 0rem;
+font-size: 1.5rem;
+font-weight: 600;
+letter-spacing: -0.95px;
+color: black;
+}
+
+.personaText {
+  margin: 0.0rem 0rem 0rem 0rem;
+  height: 3rem;
+  width: 16.5rem;
+  font-size: 1rem;
+  font-weight: 400;
+  color: black;
+  letter-spacing: -0.6px;
+  line-height: 24px;
+
+}
+.personaTextLink { 
+  color: #6549aa;
+  font-size: 1rem;
+  letter-spacing: -0.6px;
+
+}
+.request4grid {
+  display: grid;
+  grid-template-columns: 18.5rem 18.5rem 18.5rem 18.5rem;
+  grid-gap: 2rem;
+}
+
+
+
+.requestContainer {
+  width: 18.5rem;
+  letter-spacing: -0.3px;
+  line-height: 24px;
+
+}
+
+.requestImg {
+  width: 18.5rem;
+  height: 10rem;
+  object-fit: cover;
+  object-position: center;
+
+}
+ 
+.requestTitle {
+  margin-top: 0.5rem;
+  margin-bottom: 0px;
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
+}
+
+.requestDateTime {
+    height: 1.5rem;
+    margin-bottom: 0px;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 16px;
+    color: #585858;
+}
+.requestDescription {
+  vertical-align: top;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000;
+}
+
+// Lets start getting responsive lol
+
+@media screen and (min-width: 1380px) and (max-width: 1920px) {
+.heroLeft {
+  margin-top: 6rem;
+  margin-left: 6rem;
+  width: 24rem;
+  height: 48rem;
+}
+.notch {
+  margin-left: 6rem;
+  background-color: white;
+}
+
+.herocard {
+  margin-top: 20rem;
+  margin-left: 0rem;
+}
+
+
+}
+
+
+
+@media screen and (min-width: 1282px) and (max-width: 1380px) {
+  .heroLeft {
+    margin-top: 6rem;
+    margin-left: 6rem;
+    width: 24rem;
+    height: 48rem;
+  }
+  .notch {
+    margin-left: 6rem;
+    background-color: white;
+  }
+  
+  .herocard {
+    margin-top: 20rem;
+    margin-left: 0rem;
+    width: 32rem;
+  }
+}
+
+
+@media screen and (min-width: 1026px) and (max-width: 1281px) {
+
+  .heroLeft {
+    margin-top: 6rem;
+    margin-left: 6rem;
+    width: 24rem;
+    height: 48rem;
+  }
+  .notch {
+    margin-left: 6rem;
+    background-color: white;
+  }
+  
+  .herocard {
+    margin-top: 20rem;
+    margin-left: -2rem;
+    width: 35rem;
+  }
+
+  .searchBox {
+    width: 30rem;
+  }
+
+  .request4grid {
+    display: grid;
+    grid-template-columns: 18rem 18rem 18rem 18rem;
+    grid-gap: 2rem;
+  }
+
+  .aboutImg {
+    width: 32rem;
+    justify-self: start;
+    margin-left: 2rem;
+  }
+  .aboutContainer { 
+  margin: 2rem;
+  width: calc(100vw - 4rem);
+  }
+  
+  
+
+.vGridContainer {
+  width: 95vw;
+  left: -26px;
+
+  
+}
+
+.personaContainer {
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+  
+}
+
+.personaBox {
+  width: 50vw;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+
+}
+
+.personaImage {
+  width: 100%;
+  height: 15rem;
+  object-fit: cover;
+}
+
+.personaTitle {
+  width: 100%;
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+}
+
+.personaText {
+  width: 100%;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 1025px) {
+
+  .heroLeft {
+    margin-top: 6rem;
+    margin-left: 6rem;
+    width: 24rem;
+    height: 48rem;
+  }
+  .notch {
+    margin-left: 6rem;
+    background-color: white;
+  }
+  
+  .herocard {
+    margin-top: 20rem;
+    margin-left: -2rem;
+    width: 35rem;
+  }
+
+  .searchBox {
+    width: 30rem;
+  }
+
+  .awesomeHeroContainer {
+    width: 100vw;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 30vw 70vw;
+  }
+  .vGridContainer {
+    width: calc(100vw - 2rem);
+    margin: initial;
+    margin-left: 2rem;
+  }
+
+  .awesomeHeroContainer img {
+    margin-top: 3rem;
+    margin-left: 4rem;
+    width: 24vw;
+    height: 70vh;
+    
+  }
+
+  .herocard {	
+    margin-top: 4.5rem;
+    position: relative;	
+    color: #FFFFFF;	
+    top: 2rem;
+
+    width: 60vw;  
+  }
+  
+  .herocard h1 {	
+    color: black;	
+    font-family: Inter, -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 2.5rem;	
+    font-weight: 900;	
+    letter-spacing: -0.1rem;	
+    margin-bottom: 0px;
+  }
+  
+  .herocard p {
+    letter-spacing: -0.06rem;
+    font-size: 1.5rem;
+  }
+  .searchBox { 
+    width: 50vw;
+  }
+  
+
+  .aboutContainer {
+    display: grid;
+    width: calc(100vw - 4rem);
+    grid-template-columns: calc(50vw - 2rem) calc(50vw - 2rem);
+  }
+  .aboutImg {
+    width: 100%;
+    height:100%;
+    object-fit: cover;
+  }
+  .centeredDiv {
+    margin-top: 1rem;
+    margin-right: 2rem;
+  }
+  .centeredDiv h2 {
+    letter-spacing: -1px;
+    line-height: 2.5rem;
+  }
+
+  .blockTitle {
+    height: 2rem;
+
+    font-size: 2rem;
+    vertical-align: center;
+    text-align: left;
+    letter-spacing: -1.4px;
+  }
+
+  .request4grid {
+    display: grid;
+    grid-template-columns: 30vw 30vw 30vw;
+    grid-gap: 0.5rem;
+  }
+  
+  .personaContainer {
+    grid-template-columns: 1fr 1fr;
+  }
+  .personaBox {
+    width: 16rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+  
+
+  .personaImage {
+    width: 16rem;
+    height: 15rem;
+    object-fit: cover;
+  }
+  
+  .personaTitle {
+    width: 100%;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+  }
+  
+  .personaDescription {
+    width: 100%;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+
+  .awesomeHeroContainer {
+    grid-template-columns: 100vw;
+    height: 44rem;
+  }
+  .heroLeft {
+    margin-top: 0rem;
+    margin-left: 0rem;
+    width: 100vw;
+    height: 24rem;
+    border-radius: 0px;
+
+  }
+  .notch {
+    margin-left: 6rem;
+    display: none;
+  }
+  
+  .herocard {
+    color: #000;	  
+    margin: 1rem;
+    left: 0px;
+    width: calc(100vw - 2rem);  
+  }
+
+  .searchBox {
+    width: 20rem;
+  }
+
+
+  .hero {
+    width: 100vw;
+    position: relative;
+    top:-56px;
+    font-size:1rem;
+    margin: 0;
+  }
+  
+  /* Full width image */
+  .hero img {
+    margin-top: 56px;
+  
+    width: 100vw;
+    height: 75vh;
+    overflow: hidden;
+    object-fit: cover;
+    object-position: center;
+    
+  }
+
+  h2 {
+    font-weight: 900;
+    font-size: 2rem;
+    line-height: 1.3;	
+  }
+  
+  .spacer {
+    height: 2rem;
+  }
+
+
+  .herocard h1 {	
+    color: #000;	
+    font-size: 2rem;	
+    font-weight: 900;	
+    letter-spacing: -0.03em;	
+    margin-bottom: 0px;
+  }
+ 
+  .vGridContainer {
+    width: 100vw;
+  }
+  .vGridContainerText {
+    color: #333;
+    line-height: 2;
+    font-size: 1rem;
+    width: 90vw;
+  }
+  .centeredDiv {
+    margin-top: initial;
+    margin-left: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .aboutContainer {
+    display: grid;
+    grid-template-columns: 90vw;
+
+  }
+  .aboutImg {
+    width: 100vw;
+    justify-self: start;
+    margin: initial;
+
+  }
+  
+  .blockTitle {
+    height: 4rem;
+    margin-left: 1rem;
+    vertical-align: center;
+  }
+    
+  .personaImage {
+    width: 100vw;
+    height: 15rem;
+    object-fit: cover;
+  }
+
+  .request4grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
+  }
+  .personaContainer {
+    grid-template-columns: 100vw;
+  }
+
+  .personaBox {
+    width: 100vw;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    color: #333;
+  
+  }
+  .personaContainer {
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .personaImage {
+    width: 90vw;
+    height: 15rem;
+    object-fit: cover;
+
+
+  }
+  
+  .personaTitle {
+    width: 100%;
+    font-weight: 500;
+    margin-top: 0.2rem;
+    font-size: 2rem;
+    letter-spacing: -1px;
+
+  }
+  
+  .personaText {
+    width: 100%;
+    font-size: 1.5rem;
+    line-height: 32px;
+    height: initial;
+
+  }
+
+
+  .requestContainer {
+    width: calc(100vw - 2rem);
+    letter-spacing: -0.3px;
+    line-height: 24px;
+    margin: 1rem;
+  
+  }
+  
+  .requestImg {
+    width: calc(100vw - 2rem);
+    height: 15rem;
+    object-fit: cover;
+    object-position: center;
+  
+  }
+   
+  .requestTitle {
+    margin-top: 0.5rem;
+    margin-bottom: 0px;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 16px;
+    color: #000;
+  }
+  
+  .requestDateTime {
+      height: 1.5rem;
+      margin-bottom: 0px;
+      vertical-align: middle;
+      font-weight: bold;
+      font-size: 16px;
+      color: #585858;
+  }
+  .requestDescription {
+    vertical-align: top;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000;
+  }
+}

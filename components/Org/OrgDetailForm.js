@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Button, Row, Col, Checkbox } from 'antd'
+import { Button, Col, Checkbox, Form, Input, Row } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import slug from 'limax'
 const { TextArea } = Input
@@ -20,7 +20,7 @@ class OrgDetailForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // eslint-disable-next-line no-console
-        console.log('Received values of form: ', values)
+        // console.log('Received values of form: ', values)
         // preserve the id and other values not edited by form.
         const org = this.props.org
         // update the rest from the form values.
@@ -146,7 +146,7 @@ class OrgDetailForm extends Component {
                 onClick={this.props.onCancel}
               >
                 <FormattedMessage
-                  id='cancel'
+                  id='org.cancel'
                   defaultMessage='Cancel'
                   about='Label for cancel button on organisation details form'
                 />
@@ -158,7 +158,7 @@ class OrgDetailForm extends Component {
                 style={{ marginLeft: 8 }}
               >
                 <FormattedMessage
-                  id='saveOpportunity'
+                  id='org.save'
                   defaultMessage='Save'
                   about='Label for submit button on organisation details form'
                 />
@@ -211,7 +211,7 @@ OrgDetailForm.propTypes = {
 export default Form.create({
   name: 'organisation_detail_form',
   onFieldsChange (props, changedFields) {
-    console.log('onFieldsChange', changedFields)
+    // console.log('onFieldsChange', changedFields)
     // props.onChange(changedFields);
   },
   mapPropsToFields (props) {
@@ -223,6 +223,6 @@ export default Form.create({
     }
   },
   onValuesChange (_, values) {
-    console.log('onValuesChange', values)
+    // console.log('onValuesChange', values)
   }
 })(OrgDetailForm)

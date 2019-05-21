@@ -1,0 +1,12 @@
+{
+  "_id": "5ccbe4d56c285b7184bff576",
+  "name": "Walter Lim",
+  "moniker": "Walt",
+  "about": "Awesome designer.",
+  "email": "walter@voluntar.ly",
+  "phone": "000 000 0000",
+  "gender": "Male",
+  "avatar": "https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png",
+  "role": ["admin", "volunteer"],
+  "status": "active"
+}
