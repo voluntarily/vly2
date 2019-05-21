@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import React from 'react'
 import { Input } from 'antd'
+import PropTypes from 'prop-types'
 
 const Search = Input.Search
 
@@ -47,7 +48,7 @@ text-align: center;
 font-weight: bold;
 `
 
-const BigSearch = () => (
+const BigSearch = (...props) => (
   <SearchContainer>
     <SearchTitle>Search</SearchTitle>
     <SearchInputContainer>
@@ -67,4 +68,15 @@ const BigSearch = () => (
 
   </SearchContainer>
 )
+
+
+BigSearch.propTypes = {
+  ops: PropTypes.arrayOf(PropTypes.shape({
+    query: PropTypes.string,
+  }))
+  //  showAddOp: PropTypes.bool.isRequired,
+  // dispatch: PropTypes.func.isRequired
+}
+
+
 export default BigSearch

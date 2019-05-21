@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 // import { FormattedMessage } from 'react-intl'
 import { Grid } from '../VTheme/VTheme'
+import { Button } from 'antd';
 
 const PersonaContainer = styled.div`
   width: 18.5rem;
@@ -38,8 +39,8 @@ const Title = styled.div`
 `
 
 const Text = styled.div`
-  margin: 0rem 0rem 0rem 0rem;
-  height: 3rem;
+  margin: 0rem 0rem 0.5rem 0rem;
+
   width: 16.5rem;
   font-size: 1rem;
   font-weight: 400;
@@ -64,7 +65,7 @@ const AboutSection = () => (
         Discover cool opportunities to help out teachers, students and
         charities.
       </Text>
-      <a href='#'>Browse Activities</a>
+      <Button>Learn More</Button>
     </PersonaContainer>
     <PersonaContainer>
       <Image src='/static/img/teacherCard.png' />
@@ -72,21 +73,21 @@ const AboutSection = () => (
       <Text>
         Get the help of skilled volunteers to bring tech to your teaching.
       </Text>
-      <a href='#'>Learn More</a>
+      <Button>Learn More</Button>
     </PersonaContainer>
     <PersonaContainer>
       <Image src='/static/img/contentCard.png' />
       <Title>Charities</Title>
       <Text>We help you get more people involved with your movement.</Text>
-      <a href='#'>Learn More</a>
+      <Button>Learn More</Button>
     </PersonaContainer>
     <PersonaContainer>
       <Image src='/static/img/businessCard.png' />
       <Title>Businesses</Title>
       <Text>
-        We handle the admin so your people have a better time volunteering.
+        We handle HR, admin, and discovery so your staff have more impact on the community.
       </Text>
-      <a href='#'>Learn More</a>
+      <Button>Learn More</Button>
     </PersonaContainer>
   </Grid>
 )
