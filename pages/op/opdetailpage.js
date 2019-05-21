@@ -1,11 +1,12 @@
 import { Component } from 'react'
 import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
-import { Button, Popconfirm, message } from 'antd'
+import { Button, Popconfirm, message, Divider } from 'antd'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import Router from 'next/router'
 import OpDetail from '../../components/Op/OpDetail'
+import InterestSection from '../../components/Interest/interestSection'
 import PropTypes from 'prop-types'
 import OpDetailPageButtons from '../../components/Op/OpDetailPageButtons'
 
@@ -13,13 +14,13 @@ export class OpDetailPage extends Component {
 
   static async getInitialProps({ store, query }) {
     // Get one Op
-    console.log('getting op details', query)
+    // console.log('getting op details', query)
     try {
       const ops = await store.dispatch(reduxApi.actions.opportunities.get(query))
-      console.log('got ops for id', query, ops)
+      // console.log('got ops for id', query, ops)
       return { ops, query }
     } catch (err) {
-      console.log('error in getting ops', err)
+      // console.log('error in getting ops', err)
     }
   }
 
@@ -68,10 +69,12 @@ export class OpDetailPage extends Component {
             <Button type='danger' shape='round' >
               <FormattedMessage id='deleteOp' defaultMessage='Remove Request' description='Button to remove an opportunity on OpDetails page' />
             </Button>
-        </Popconfirm>
+          </Popconfirm>
           <br /><small>visible buttons here depend on user role</small>*/}
-        </div>
-        )
+          <Divider />
+          <h2>Interested Volunteers</h2>
+          <InterestSection op={op._id} />
+        </div>)
     } else {
       content =
         (<div>

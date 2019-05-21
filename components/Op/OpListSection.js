@@ -13,14 +13,12 @@ class OpListSection extends Component {
   state = {}
   async componentDidMount () {
     // Get all Ops
-
-    console.log('getting ops for section')
     try {
       const ops = await this.props.dispatch(reduxApi.actions.opportunities.get())
-      console.log('got ops', ops)
+      // console.log('got ops', ops)
       this.setState({ ops })
     } catch (err) {
-      console.log('error in getting ops', err)
+      // console.log('error in getting ops', err)
     }
   }
   render () {
@@ -52,4 +50,5 @@ OpListSection.propTypes = {
   dispatch: PropTypes.func.isRequired
 }
 
+export const OpListSectionTest = OpListSection
 export default withOps(OpListSection)

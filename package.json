@@ -47,6 +47,7 @@
     "mock-css-modules": "^1.0.0",
     "mongoose": "^5.5.4",
     "mongoose-crudify": "^0.2.0",
+    "mongoose-id-validator": "^0.5.3",
     "next": "^8.1.0",
     "next-redux-wrapper": "^3.0.0-alpha.2",
     "next-routes": "^1.4.2",
@@ -64,12 +65,14 @@
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.4",
     "ava": "^1.4.1",
     "axios": "^0.18.0",
     "babel-eslint": "^10.0.1",
     "babel-preset-es2015": "^6.24.1",
     "cross-env": "^5.2.0",
     "enzyme": "^3.9.0",
+    "fetch-mock": "^7.3.3",
     "jasmine": "^3.4.0",
     "mockgoose": "^8.0.1",
     "mongodb-memory-server": "^5.1.0",
@@ -121,17 +124,14 @@
     "include": [
       "pages/**/*.js",
       "components/**/*.js",
-      "server/**/*.js"
+      "server/**/*.js",
+      "lib/**/*.js"
     ],
     "exclude": [
       "**/*.spec.js",
-      "client/reducers.js",
-      "client/store.js",
-      "client/routes.js",
       "server/util/setup-test-env.js",
       "server/util/test-helpers.js",
-      "server/config.js",
-      "server/dummyData.js"
+      "server/config.js"
     ],
     "reporter": [
       "lcov",

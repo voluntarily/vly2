@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 // really simple component taking a name property.
 const Hello = ({ name }) => <h2>Hello, {name}</h2>
 
-const SET_NAME = 'SET_NAME' // allows us to use the type without redefining strings everywhere
+export const SET_NAME = 'SET_NAME' // allows us to use the type without redefining strings everywhere
 
-function setName (name) {
+export const setName = (name) => {
   return {
     type: SET_NAME,
     name
@@ -17,9 +17,10 @@ function setName (name) {
 const initialState = { name: '' }
 
 export const ReduxStoreTestReducer = (state = initialState, action) => {
-  console.log('ReduxStoreTestReducer', action)
+  // console.log('ReduxStoreTestReducer', action, state)
   switch (action.type) {
     case SET_NAME:
+      // console.log('Reducing SET_NAME')
       return { ...state, name: action.name }
     default:
       return state
@@ -34,9 +35,8 @@ export class ReduxStoreTest extends Component {
 
   // when save clicked copy the edited name to the savedname
   handleClick = (e) => {
-    console.log('click', e.target, this.state.editname)
+    // console.log('handleClick', this.state.editname)
     // call redux dispatch with the setName Action and our new data.
-
     this.props.setName(this.state.editname)
   }
 
@@ -51,8 +51,7 @@ export class ReduxStoreTest extends Component {
     <div>
       <Hello name={this.props.name} />
       <label>Name:&nbsp;
-        <input type='text' id='editname' name='editname' onChange={this.handleChange}
-          defaultValue={this.state.editname} size='20' />
+        <input type='text' id='editname' name='editname' onChange={this.handleChange} size='20' />
       </label>
       <button type='submit' onClick={this.handleClick}>Save</button>
       <hr />
@@ -64,7 +63,7 @@ export class ReduxStoreTest extends Component {
 
 // Copy out the bit of state we are interested in.
 const mapStateToProps = (store) => ({
-  name: store.ui.rst.name
+  name: store.rst.name
 })
 
 export default connect(mapStateToProps, { setName })(ReduxStoreTest)

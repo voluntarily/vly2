@@ -40,7 +40,7 @@ export class RouteReplace extends Component {
 
 export class Redirect extends Component {
   componentDidMount () {
-    console.log('redirecting to.', this.props.href)
+    // console.log('redirecting to.', this.props.href)
     this.props.href && Router.replace(this.props.href)
   }
 

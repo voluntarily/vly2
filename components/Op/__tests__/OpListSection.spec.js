@@ -1,7 +1,14 @@
 import React from 'react'
 import test from 'ava'
-import { shallow, render } from 'enzyme'
+import { mount } from 'enzyme'
 import OpListSection from '../OpListSection'
+import { Provider } from 'react-redux'
+import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
+import adapterFetch from 'redux-api/lib/adapters/fetch'
+
+import { API_URL } from '../../../lib/apiCaller'
+
+const { fetchMock } = require('fetch-mock')
 
 // Initial opportunities added into test db
 const ops = [
@@ -27,25 +34,32 @@ const ops = [
   }
 ]
 
-test.only('shallow the list with ops', t => {
-  const wrapper = shallow(
-    <OpListSection ops={ops} handleShowOp={() => {}} handleDeleteOp={() => {}} />
-  )
-  console.log(wrapper.debug())
-  t.is(wrapper.find('OpListSection').length, 1)
-})
+const initStore = {
+  opportunities: {
+    data: [ ]
+  }
+}
 
-test('renders the list with ops to get card coverage', t => {
-  const wrapper = render(
-    <OpListSection ops={ops} handleShowOp={() => {}} handleDeleteOp={() => {}} />
-  )
-  t.is(wrapper.find('.ant-card').length, 2)
-})
+const realStore = makeStore(initStore)
 
-test('renders the list with no ops', t => {
-  const wrapper = render(
-    <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} />
+function sleep (ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+test.only('mount the list with ops', async t => {
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/`
+  myMock.getOnce(api, ops)
+
+  const wrapper = await mount(
+    <Provider store={realStore}>
+      <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} />
+    </Provider>
+
   )
-  t.is(wrapper.find('OpCard').length, 0)
-  t.is(wrapper.find('span').text(), 'No matching opportunities')
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
+  t.is(wrapper.find('a').length, 2) // there are two cards on the screen
+  myMock.restore()
 })

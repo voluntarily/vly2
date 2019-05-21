@@ -10,10 +10,10 @@ import OrgList from '../../components/Org/OrgList'
 class Orgs extends Component {
   static async getInitialProps ({ store, query }) {
     // Get all Orgs
-    console.log('getting orgs')
+    // console.log('getting orgs')
     try {
       const orgs = await store.dispatch(reduxApi.actions.organisations.get())
-      console.log('got orgs', orgs)
+      // console.log('got orgs', orgs)
       return { orgs, query }
     } catch (err) {
       console.log('error in getting orgs', err)

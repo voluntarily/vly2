@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import { shallow } from 'enzyme'
+import { render } from 'enzyme'
 import OpDetail from '../OpDetail'
 
 // Initial opportunities
@@ -15,14 +15,13 @@ const op = {
   status: 'draft'
 }
 
-test('shallow the detail with op', t => {
-  const wrapper = shallow(
+test('render the detail with op', t => {
+  const wrapper = render(
     <OpDetail op={op} onPress={() => {}} />
   )
-  // console.log(wrapper.debug())
-  t.is(wrapper.find('div').length, 1)
-  t.is(wrapper.find('Head').children().at(1).text(), op.title)
-  t.is(wrapper.find('h1').children().first().text(), op.title)
+  // console.log(wrapper.html())
+  t.truthy(wrapper.find('Head'))
+  t.is(wrapper.find('h1').text(), op.title)
 })
 
 test.todo('verify markdown in description is rendered')

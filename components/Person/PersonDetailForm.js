@@ -21,7 +21,7 @@ class PersonDetailForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // eslint-disable-next-line no-console
-        console.log('Received values of form: ', values)
+        // console.log('Received values of form: ', values)
         // TODO Send new person to database and update the store.
         const person = this.props.person
         person.name = values.name
@@ -283,7 +283,7 @@ PersonDetailForm.propTypes = {
 export default Form.create({
   name: 'person_detail_form',
   onFieldsChange (props, changedFields) {
-    console.log('onFieldsChange', changedFields)
+    // console.log('onFieldsChange', changedFields)
     // props.onChange(changedFields);
   },
   mapPropsToFields (props) {
@@ -300,6 +300,6 @@ export default Form.create({
     }
   },
   onValuesChange (_, values) {
-    console.log('onValuesChange', values)
+    // console.log('onValuesChange', values)
   }
 })(PersonDetailForm)

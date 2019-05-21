@@ -1,8 +1,8 @@
 import React from 'react'
 import test from 'ava'
 import { shallow, render } from 'enzyme'
-import { intl } from '../../lib/react-intl-test-helper'
-import { AboutTest } from '../about/about'
+import { intl } from '../lib/react-intl-test-helper'
+import { AboutTest } from '../pages/about/about'
 
 const intlPropEn = { ...intl, locale: 'en', enabledLanguages: ['en', 'mi'] }
 const intlPropMi = { ...intl, locale: 'mi', enabledLanguages: ['en', 'mi'] }
