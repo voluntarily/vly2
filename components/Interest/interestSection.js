@@ -16,7 +16,9 @@ class InterestSection extends Component {
 
     const op = this.props.op
     try {
-      const interests = await this.props.dispatch(reduxApi.actions.interests.get({ id: '', op }))
+      const interests = await this.props.dispatch(
+        reduxApi.actions.interests.get({ id: '', op })
+      )
       // console.log('got interests', interests, 'for', op)
       this.setState({ interests })
     } catch (err) {
@@ -25,15 +27,20 @@ class InterestSection extends Component {
   }
   render () {
     if (!this.state.interests) {
-      return (<section>
-        <Loading><p>Loading interested volunteers...</p></Loading>
-
-      </section>)
+      return (
+        <section>
+          <Loading>
+            <p>Loading interested volunteers...</p>
+          </Loading>
+        </section>
+      )
     } else {
-      return (<section>
-        <InterestTable interests={this.state.interests} />
-        {/* <code>{JSON.stringify(this.state.interests)}</code>  */}
-      </section>)
+      return (
+        <section>
+          <InterestTable interests={this.state.interests} />
+          {/* <code>{JSON.stringify(this.state.interests)}</code>  */}
+        </section>
+      )
     }
   }
 }

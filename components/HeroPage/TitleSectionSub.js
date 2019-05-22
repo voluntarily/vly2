@@ -3,15 +3,15 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 const TitleContainer = styled.div`
-  margin-top: 4rem;
-  height: 5rem;
+  margin-top: 5rem;
+  height: 6rem;
 
   h1 {
     vertical-align: center;
     text-align: left;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 900;
-    letter-spacing: -1.4px;
+    letter-spacing: -1px;
     margin-bottom: 0;
   }
 
@@ -19,7 +19,7 @@ const TitleContainer = styled.div`
     color: #333;
     line-height: 2;
     font-size: 1.1rem;
-    letter-spacing: -1px;
+    letter-spacing: -0.8px;
   }
 
   @media screen and (max-width: 768px) {
@@ -29,16 +29,18 @@ const TitleContainer = styled.div`
   }
 `
 
-const TitleSection = ({ title, subtitle, ...props }) => (
+const TitleSectionSub = ({ title, subtitle, ...props }) => (
   <TitleContainer>
     <h1>{title}</h1>
+    <p>{subtitle}</p>
   </TitleContainer>
 )
 
-TitleSection.propTypes = {
+TitleSectionSub.propTypes = {
   op: PropTypes.shape({
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    subtitle: PropTypes.string.isRequired
   })
 }
 
-export default TitleSection
+export default TitleSectionSub

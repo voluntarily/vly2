@@ -13,11 +13,10 @@ function addHealth (health) {
 }
 
 export function fetchHealth () {
-  return (dispatch) => {
-    return callApi('health')
-      .then(res => {
-        dispatch(addHealth(res))
-      })
+  return dispatch => {
+    return callApi('health').then(res => {
+      dispatch(addHealth(res))
+    })
   }
 }
 const initialState = {
@@ -37,7 +36,7 @@ export const HealthReducer = (state = initialState, action) => {
 
 export class ReduxAsyncTest extends Component {
   // when save clicked copy the edited name to the savedname
-  handleClick = (e) => {
+  handleClick = e => {
     // call redux dispatch with the addHealth Action and our new data.
     this.props.fetchHealth()
   }
@@ -47,7 +46,9 @@ export class ReduxAsyncTest extends Component {
       <p>Hi {this.props.name}</p>
       <p>Health is {this.props.health.health}</p>
       <p>Message is {this.props.health.message}</p>
-      <button type='button' onClick={this.handleClick}>Get Health</button>
+      <button type='button' onClick={this.handleClick}>
+        Get Health
+      </button>
       <hr />
       <code>{JSON.stringify(this.props.health)}</code>
     </div>
@@ -55,7 +56,7 @@ export class ReduxAsyncTest extends Component {
 }
 
 // Copy out the bit of state we are interested in.
-const mapStateToProps = (store) => ({
+const mapStateToProps = store => ({
   health: store.health,
   name: store.rst.name
 })
@@ -68,4 +69,7 @@ const mapStateToProps = (store) => ({
 //     name: store.rst.name
 //   })
 // }
-export default connect(mapStateToProps, { fetchHealth })(ReduxAsyncTest)
+export default connect(
+  mapStateToProps,
+  { fetchHealth }
+)(ReduxAsyncTest)

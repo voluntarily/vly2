@@ -9,7 +9,7 @@ const Navigation = ({ items, defaultItem, router, ...props }) => {
   const activeItem = router.pathname.slice(1)
   return (
     <Menu
-      theme='dark'
+      theme='light'
       mode='horizontal'
       style={{ float: 'right' }}
       selectedKeys={[activeItem]}
@@ -32,11 +32,13 @@ Navigation.defaultProps = {
 }
 
 Navigation.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string,
-    text: PropTypes.string,
-    url: PropTypes.string
-  })),
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string,
+      text: PropTypes.string,
+      url: PropTypes.string
+    })
+  ),
   defaultItem: PropTypes.string
 }
 

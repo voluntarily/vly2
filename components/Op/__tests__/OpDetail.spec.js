@@ -16,9 +16,7 @@ const op = {
 }
 
 test('render the detail with op', t => {
-  const wrapper = render(
-    <OpDetail op={op} onPress={() => {}} />
-  )
+  const wrapper = render(<OpDetail op={op} onPress={() => {}} />)
   // console.log(wrapper.html())
   t.truthy(wrapper.find('Head'))
   t.is(wrapper.find('h1').text(), op.title)
