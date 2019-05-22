@@ -3,6 +3,7 @@ const Interest = require('./interest')
 /**
   api/interests -> list all interests
   api/interests?op='opid' -> lists all interests associated with opid.
+  api/interests?op='opid'&me='personid' -> lists all interests (hopefully only 0 or 1) associated with opid and personid.
  */
 const listInterests = async (req, res) => {
   // console.log(req.query)
@@ -11,6 +12,9 @@ const listInterests = async (req, res) => {
   try {
     if (req.query.op) {
       const query = { opportunity: req.query.op }
+      if (req.query.me) {
+        query.person = req.query.me
+      }
       got = await Interest.find(query).sort(sort).exec()
     } else {
       got = await Interest.find().sort(sort).exec()
