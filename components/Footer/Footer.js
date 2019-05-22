@@ -3,9 +3,43 @@ import { FormattedMessage } from 'react-intl'
 import { Layout } from 'antd'
 import Navigation from '../Navigation/Navigation'
 import links from './FooterMenu'
+import styled from 'styled-components'
 const getAllowedLinks = isAuthenticated => links()
   .filter(l => !l.authRequired || (l.authRequired && isAuthenticated))
   .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
+
+
+const FooterBackground = styled.div`
+width: 100vw;
+background-color: #fff;
+`
+
+const FooterContainer = styled.div`
+width: 80vw;
+`
+
+const FooterLogo = styled.img`
+
+`
+
+const FooterText = styled.h1`
+
+`
+const FooterGrid=styled.div`
+display: grid;
+grid-template-columns: 18.5rem 18.5rem 18.5rem 18.5rem;
+`
+const FooterGridItem=styled.div`
+
+`
+const FooterGridItemTitle = styled.h1`
+
+`
+
+const FooterGridItemLink = styled.a`
+
+`
+
 
 const Footer = ({ isAuthenticated, ...props }) =>
   <Layout.Footer>
