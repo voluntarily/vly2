@@ -20,7 +20,8 @@ class MemoryMongo {
     console.log('Test mongodb connecting to:', mongoUri)
     const mongooseOpts = {
       // options for mongoose 4.11.3 and above
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useCreateIndex: true
     }
     this.connection = await mongoose.connect(mongoUri, mongooseOpts)
   }
