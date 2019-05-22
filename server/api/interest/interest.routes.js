@@ -3,7 +3,7 @@ const helpers = require('../../services/helpers')
 const Interest = require('./interest')
 const { listInterests } = require('./interest.controller')
 
-module.exports = (server) => {
+module.exports = server => {
   // Docs: https://github.com/ryo718/mongoose-crudify
   server.use(
     '/api/interests',

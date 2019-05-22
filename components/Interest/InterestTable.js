@@ -2,6 +2,8 @@
  */
 import React from 'react'
 // import PropTypes from 'prop-types'
+// import { FormattedMessage } from 'react-intl'
+// import styled from 'styled-components'
 import { Table, Button } from 'antd'
 
 const columns = [
@@ -25,9 +27,13 @@ const columns = [
     key: 'action',
     render: (text, record) => (
       <div>
-        <Button type='primary' shape='round' href='javascript:;'>Invite </Button>
+        <Button type='primary' shape='round' href='javascript:;'>
+          Invite{' '}
+        </Button>
         <br />
-        <Button type='secondary' shape='round' href='javascript:;'>Decline</Button>
+        <Button type='secondary' shape='round' href='javascript:;'>
+          Decline
+        </Button>
       </div>
     )
   }
