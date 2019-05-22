@@ -11,8 +11,9 @@ function hasErrors (fieldsError) {
 
 class OpDetailForm extends Component {
   componentDidMount () {
-    // To disabled submit button at the beginning.
-    this.props.form.validateFields()
+    // Call validateFields here to disable the submit button when on a blank form.
+    // empty callback supresses a default which prints to the console.
+    this.props.form.validateFields(() => { })
   }
 
   handleSubmit = (e) => {
@@ -20,9 +21,6 @@ class OpDetailForm extends Component {
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // eslint-disable-next-line no-console
-        // console.log('Received values of form: ', values)
-        // TODO Send new op to database and update the store.
         const op = this.props.op
         op.title = values.title
         op.subtitle = values.subtitle

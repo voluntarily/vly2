@@ -8,16 +8,26 @@ const orgs = [
   {
     _id: 'f34gb2bh24b24b2',
     name: 'OMGTech',
+    imgUrl: 'http://example.com/example.jpg',
     slug: 'hello-omgtech',
-    about: "All cats meow 'mern!'",
-    type: 'activity_provider'
+    about: 'Awesome Activity Provider',
+    type: ['ap']
   },
   {
     _id: 'f34gb2bh24b24b3',
     name: 'Datacom',
+    imgUrl: 'http://example.com/example2.jpg',
     slug: 'hi-datacom',
     about: "All dogs bark 'mern!'",
-    type: 'corporate'
+    type: ['vp']
+  },
+  {
+    _id: 'f34gb2bh24b2b4',
+    name: 'Voluntari.ly',
+    imgUrl: 'http://example.com/example3.jpg',
+    slug: 'voluntari-ly',
+    about: 'Everything Provider',
+    type: ['vp', 'op', 'admin']
   }
 ]
 
@@ -26,7 +36,7 @@ test('renders the list', t => {
     <OrgList orgs={orgs} handleShowOrg={() => {}} />
   )
 
-  t.is(wrapper.find('OrgCard').length, 2)
+  t.is(wrapper.find('OrgCard').length, 3)
 })
 
 test('renders no orgs', t => {
