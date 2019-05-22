@@ -40,12 +40,12 @@ const SearchFilterText = styled.p`
 `
 
 const FilterItem = styled.a`
-float: left;
-margin-top: 1rem;
-margin-right: 0.5rem;
-width: 8rem;
-text-align: center;
-font-weight: bold;
+  float: left;
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+  width: 8rem;
+  text-align: center;
+  font-weight: bold;
 `
 
 const BigSearch = (...props) => (
@@ -58,25 +58,22 @@ const BigSearch = (...props) => (
         enterButton='Search'
       />
     </SearchInputContainer>
-    <SearchFilterText>Filter by:
-      
-    </SearchFilterText>
+    <SearchFilterText>Filter by:</SearchFilterText>
     <FilterItem>Date</FilterItem>
     <FilterItem>Location</FilterItem>
     <FilterItem>Categories</FilterItem>
     <FilterItem>Impact</FilterItem>
-
   </SearchContainer>
 )
 
-
 BigSearch.propTypes = {
-  ops: PropTypes.arrayOf(PropTypes.shape({
-    query: PropTypes.string,
-  }))
+  ops: PropTypes.arrayOf(
+    PropTypes.shape({
+      query: PropTypes.string
+    })
+  )
   //  showAddOp: PropTypes.bool.isRequired,
   // dispatch: PropTypes.func.isRequired
 }
-
 
 export default BigSearch

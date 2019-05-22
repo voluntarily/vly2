@@ -7,7 +7,7 @@ const Hello = ({ name }) => <h2>Hello, {name}</h2>
 
 export const SET_NAME = 'SET_NAME' // allows us to use the type without redefining strings everywhere
 
-export const setName = (name) => {
+export const setName = name => {
   return {
     type: SET_NAME,
     name
@@ -34,7 +34,7 @@ export class ReduxStoreTest extends Component {
   }
 
   // when save clicked copy the edited name to the savedname
-  handleClick = (e) => {
+  handleClick = e => {
     // console.log('handleClick', this.state.editname)
     // call redux dispatch with the setName Action and our new data.
     this.props.setName(this.state.editname)
@@ -42,7 +42,7 @@ export class ReduxStoreTest extends Component {
 
   // as the render function is pure it should only show props or state with input updates handling state changes
   // using => functions binds to local this so we don't need bind(this).
-  handleChange = (e) => {
+  handleChange = e => {
     const { name, value } = e.target
     this.setState({ [name]: value })
   }
@@ -50,10 +50,19 @@ export class ReduxStoreTest extends Component {
   render = () => (
     <div>
       <Hello name={this.props.name} />
-      <label>Name:&nbsp;
-        <input type='text' id='editname' name='editname' onChange={this.handleChange} size='20' />
+      <label>
+        Name:&nbsp;
+        <input
+          type='text'
+          id='editname'
+          name='editname'
+          onChange={this.handleChange}
+          size='20'
+        />
       </label>
-      <button type='submit' onClick={this.handleClick}>Save</button>
+      <button type='submit' onClick={this.handleClick}>
+        Save
+      </button>
       <hr />
       <code>{JSON.stringify(this.state)}</code>
       <code>{JSON.stringify(this.store)}</code>
@@ -62,8 +71,11 @@ export class ReduxStoreTest extends Component {
 }
 
 // Copy out the bit of state we are interested in.
-const mapStateToProps = (store) => ({
+const mapStateToProps = store => ({
   name: store.rst.name
 })
 
-export default connect(mapStateToProps, { setName })(ReduxStoreTest)
+export default connect(
+  mapStateToProps,
+  { setName }
+)(ReduxStoreTest)

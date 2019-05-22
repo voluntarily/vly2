@@ -17,7 +17,6 @@ require('@babel/register')
     vly post people andrew.person.json
     vly post opportunities op-impact.json
 
-
 */
 /* eslint-disable no-console */
 const vlyapi = require('./vlyapi')
@@ -27,8 +26,7 @@ const argv = require('yargs')
   .usage('Usage: vly list entity | vly post entity datafile')
   .command('Post Person', 'Load a person from json file or stdin json')
   .help('h')
-  .alias('h', 'help')
-  .argv
+  .alias('h', 'help').argv
 
 const main = async () => {
   // console.log('vly', argv._[0], argv._[1])
@@ -45,12 +43,13 @@ const main = async () => {
         const content = fs.readFileSync(argv._[2] ? argv._[2] : 0, 'utf8')
         const json = JSON.parse(content)
         if (Array.isArray(json)) {
-          console.log( `posting ${json.length} items`)
-          json.map( j => { vlyapi.post(argv._[1], j) })
+          console.log(`posting ${json.length} items`)
+          json.map(j => {
+            vlyapi.post(argv._[1], j)
+          })
         } else {
           vlyapi.post(argv._[1], json)
         }
-
       } catch (e) {
         console.error(e)
       }

@@ -1,6 +1,6 @@
 import TitleSectionSub from '../HeroPage/TitleSectionSub'
 import styled from 'styled-components'
-import { Button } from 'antd';
+import { Button } from 'antd'
 
 const TripleGrid = styled.div`
   display: grid;
@@ -21,7 +21,7 @@ const TripleGrid = styled.div`
 
 // cardcontainer
 const CTAContainer = styled.div`
-width: 25rem;
+  width: 25rem;
 `
 
 // cardimg
@@ -49,38 +49,39 @@ const CTADescription = styled.h1`
   letter-spacing: -0.3px;
 `
 
-
 const AboutCTA = () => (
   <div>
     <TitleSectionSub title='How to get involved' />
     <TripleGrid>
-    <CTAContainer>
-      <CTAImage src='' />
-      <CTATitle>Developers</CTATitle>
-      <CTADescription>
-        Keen to join the build of the platform? Find us on Github and Gitter.
-        All skill levels are welcome.
-      </CTADescription>
-      <Button>Dev Chatroom</Button>
-      <Button> Github Repository</Button>
-
-    </CTAContainer>
-    <CTAContainer>
-      <CTAImage src='' />
-      <CTATitle>Volunteers</CTATitle>
-      <CTADescription>
-        We're looking for volunteers of all types to help manage the system - If you’re keen to get involved in volunteer operations, join the channel on gitter
-      </CTADescription>
-      <Button>Volunteer Operations Chatroom</Button>
-    </CTAContainer>
-    <CTAContainer>
-      <CTAImage src='' />
-      <CTATitle>Sponsors</CTATitle>
-      <CTADescription>
-      Donations and long term support help speed up the development of the voluntarily platform and be more effective in the lives of young Kiwis.
-      </CTADescription>
-      <Button>Donate</Button>
-    </CTAContainer>
+      <CTAContainer>
+        <CTAImage src='../../static/img/about/dev.png' />
+        <CTATitle>Developers</CTATitle>
+        <CTADescription>
+          Keen to join the build of the platform? Find us on Github and Gitter.
+          All skill levels are welcome.
+        </CTADescription>
+        <Button>Dev Chatroom</Button>
+        <Button> Github Repository</Button>
+      </CTAContainer>
+      <CTAContainer>
+        <CTAImage src='../../static/img/about/volunteers.png'  />
+        <CTATitle>Volunteers</CTATitle>
+        <CTADescription>
+          If you’re keen to get involved in volunteer operations and help run things, join the
+          channel on Gitter.
+        </CTADescription>
+        <Button>Volunteer Operations Chatroom</Button>
+      </CTAContainer>
+      <CTAContainer>
+        <CTAImage src='../../static/img/about/sponsors.png'  />
+        <CTATitle>Sponsors</CTATitle>
+        <CTADescription>
+          Donations and long term support help speed up the development of the
+          voluntarily platform and be more effective in the lives of young
+          Kiwis.
+        </CTADescription>
+        <Button>Donate</Button>
+      </CTAContainer>
     </TripleGrid>
   </div>
 )

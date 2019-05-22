@@ -33,7 +33,7 @@ const ItemListing = styled.p`
   color: initial;
   margin-bottom: 1rem;
 `
-const ItemP = styled.p`
+const ItemP = styled.div`
   letter-spacing: -0.02rem;
   font-weight: 400;
   font-size: 1rem;

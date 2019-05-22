@@ -22,20 +22,19 @@ const initHealth = {
   health: 'Unknown'
 }
 
-const expectedHealth = {
-  message: 'Hello from Voluntari.ly V0.0.2',
-  health: 'OK'
-}
+// const expectedHealth = {
+//   message: 'Hello from Voluntari.ly V0.0.2',
+//   health: 'OK'
+// }
 
-const reducers = combineReducers(
-  { 
-    health: HealthReducer,
-    rst: ReduxStoreTestReducer
-  })
+const reducers = combineReducers({
+  health: HealthReducer,
+  rst: ReduxStoreTestReducer
+})
 
- const initStore = {
+const initStore = {
   health: initHealth,
-  rst: { name: 'World'}
+  rst: { name: 'World' }
 }
 const realStore = createStore(reducers, initStore, applyMiddleware(thunk))
 
@@ -57,8 +56,8 @@ test('api/health', async t => {
   fetchMock.restore()
 })
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+function sleep (ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 test.only('mount, render add input and save', async t => {
@@ -77,18 +76,32 @@ test.only('mount, render add input and save', async t => {
   // console.log('realstore state', realStore.getState())
   t.is(realStore.getState().health.health, 'Unknown')
   // now click the save button.
-  await wrapper.find('button').first().simulate('click')
+  await wrapper
+    .find('button')
+    .first()
+    .simulate('click')
 
-  // TODO find out how to wait for the callback on the click handler to complete, 
+  // TODO find out how to wait for the callback on the click handler to complete,
   await sleep(10)
   // console.log(await realStore.getState())
   t.is(await realStore.getState().health.health, 'OK')
   // Hello class updates with the new text
   wrapper.update()
-  
+
   // console.log(wrapper.html())
-  t.is(wrapper.find('p').first().text(), 'Hi World')
-  t.is(wrapper.find('p').at(1).text(), 'Health is OK')
+  t.is(
+    wrapper
+      .find('p')
+      .first()
+      .text(),
+    'Hi World'
+  )
+  t.is(
+    wrapper
+      .find('p')
+      .at(1)
+      .text(),
+    'Health is OK'
+  )
   fetchMock.restore()
 })
-

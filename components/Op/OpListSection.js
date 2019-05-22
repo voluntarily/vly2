@@ -40,7 +40,7 @@ class OpListSection extends Component {
 
 OpListSection.propTypes = {
   ops: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequire,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     description: PropTypes.string,

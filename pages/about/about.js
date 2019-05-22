@@ -7,7 +7,7 @@ import aboutMi from './about-mi-md.js'
 import withIntl from '../../lib/withIntl'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import { Spacer } from '../../components/VTheme/VTheme'
-import AboutCTA from '../../components/About/AboutCTA.js';
+import AboutCTA from '../../components/About/AboutCTA.js'
 const getText = locale => {
   switch (locale) {
     case 'mi': {
@@ -38,9 +38,7 @@ class About extends Component {
             }
           }}
         />
-        <AboutCTA/>
-        
-
+        <AboutCTA />
 
         <style jsx>{`
           div {

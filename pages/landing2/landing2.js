@@ -9,15 +9,15 @@ import TitleSectionSub from '../../components/HeroPage/TitleSectionSub'
 import OpListSection from '../../components/Op/OpListSection'
 
 import '../../pages/landing2/landing.less'
-import FeaturedTwoSection from '../../components/HeroPage/FeaturedTwoSection';
-import { Spacer } from '../../components/VTheme/VTheme';
+import FeaturedTwoSection from '../../components/HeroPage/FeaturedTwoSection'
+import { Spacer } from '../../components/VTheme/VTheme'
 
 export class Landing2 extends Component {
   render () {
     return (
       <FullPage>
         <Hero />
-        <FeaturedTwoSection></FeaturedTwoSection>
+        <FeaturedTwoSection />
         <Spacer />
 
         <AboutSection

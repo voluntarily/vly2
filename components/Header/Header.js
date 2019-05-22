@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
+// import { FormattedMessage } from 'react-intl'
 import { Layout } from 'antd'
 import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
@@ -12,12 +12,12 @@ const Brand = styled.h1`
   font-size: 2em;
   float: left;
 `
-const Wa = styled.a`
-  text-decoration: none;
-  color: black;
-  font-family: 'gaoel';
-  font-weight: 500;
-`
+// const Wa = styled.a`
+//   text-decoration: none;
+//   color: black;
+//   font-family: 'gaoel';
+//   font-weight: 500;
+// `
 const Logo = styled.img`
   float: left;
   margin: 0.5rem;
@@ -32,13 +32,11 @@ const getAllowedLinks = isAuthenticated =>
 const Header = ({ isAuthenticated, ...props }) => (
   <Layout.Header>
     <a>
-    <Link href='/'>
-      <Logo src='/static/vlogolong.svg' />
-    </Link>
+      <Link href='/'>
+        <Logo src='/static/vlogolong.svg' alt='Voluntarily logo' />
+      </Link>
     </a>
-    <Brand className='site-title'>
-
-    </Brand>
+    <Brand className='site-title' />
     {/* <SearchBar /> */}
     <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
   </Layout.Header>
