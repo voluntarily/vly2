@@ -1,6 +1,6 @@
 export default [
   {
- _id: '5cc8d60b8b16812b5b392322',
+    _id: '5cc8d60b8b16812b5b392322',
     name: 'Testy A McTestface',
     moniker: 'A Testy',
     about: 'Tester',

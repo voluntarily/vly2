@@ -64,16 +64,16 @@ const AboutCTA = () => (
         <Button> Github Repository</Button>
       </CTAContainer>
       <CTAContainer>
-        <CTAImage src='../../static/img/about/volunteers.png'  />
+        <CTAImage src='../../static/img/about/volunteers.png' />
         <CTATitle>Volunteers</CTATitle>
         <CTADescription>
-          If you’re keen to get involved in volunteer operations and help run things, join the
-          channel on Gitter.
+          If you’re keen to get involved in volunteer operations and help run
+          things, join the channel on Gitter.
         </CTADescription>
         <Button>Volunteer Operations Chatroom</Button>
       </CTAContainer>
       <CTAContainer>
-        <CTAImage src='../../static/img/about/sponsors.png'  />
+        <CTAImage src='../../static/img/about/sponsors.png' />
         <CTATitle>Sponsors</CTATitle>
         <CTADescription>
           Donations and long term support help speed up the development of the

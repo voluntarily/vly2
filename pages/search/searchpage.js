@@ -9,20 +9,20 @@ import PropTypes from 'prop-types'
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
 
 export class SearchPage extends Component {
-  state = {}
-  async componentDidMount () {
-    // Get all Ops
+  // state = {}
+  // async componentDidMount () {
+  //   // Get all Ops
 
-    try {
-      const ops = await this.props.dispatch(
-        reduxApi.actions.opportunities.get()
-      )
-      // console.log('got ops', ops)
-      this.setState({ ops })
-    } catch (err) {
-      console.log('error in getting ops', err)
-    }
-  }
+  //   try {
+  //     const ops = await this.props.dispatch(
+  //       reduxApi.actions.opportunities.get()
+  //     )
+  //     // console.log('got ops', ops)
+  //     this.setState({ ops })
+  //   } catch (err) {
+  //     console.log('error in getting ops', err)
+  //   }
+  // }
 
   render () {
     return (

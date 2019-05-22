@@ -22,17 +22,15 @@ const initHealth = {
   health: 'Unknown'
 }
 
-
 const expectedHealth = {
   message: 'Hello from Voluntari.ly V0.0.2',
   health: 'OK'
 }
 
-const reducers = combineReducers(
-  {
-    health: HealthReducer,
-    rst: ReduxStoreTestReducer
-  })
+const reducers = combineReducers({
+  health: HealthReducer,
+  rst: ReduxStoreTestReducer
+})
 
 const initStore = {
   health: initHealth,
@@ -80,7 +78,19 @@ test('mount, render add input and save', async t => {
   wrapper.update()
 
   // console.log(wrapper.html())
-t.is(wrapper.find('p').first().text(), 'Hi World')
-  t.is(wrapper.find('p').at(1).text(), 'Health is OK')
+  t.is(
+    wrapper
+      .find('p')
+      .first()
+      .text(),
+    'Hi World'
+  )
+  t.is(
+    wrapper
+      .find('p')
+      .at(1)
+      .text(),
+    'Health is OK'
+  )
   // fetchMock.restore()
 })

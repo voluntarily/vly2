@@ -16,7 +16,9 @@ class InterestSection extends Component {
 
     const op = this.props.op
     try {
-const interests = await this.props.dispatch(reduxApi.actions.interests.get({ id: '', op }))
+      const interests = await this.props.dispatch(
+        reduxApi.actions.interests.get({ id: '', op })
+      )
       // console.log('got interests', interests, 'for', op)
       this.setState({ interests })
     } catch (err) {
