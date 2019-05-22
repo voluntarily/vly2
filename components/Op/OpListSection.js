@@ -9,21 +9,21 @@ import OpList from '../../components/Op/OpList'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi'
 import Loading from '../../components/Loading'
 
+// TODO: [VP-131] use redux instead of local state.
 class OpListSection extends Component {
-  state = {}
   async componentDidMount () {
     // Get all Ops
-
     try {
-      const ops = await this.props.dispatch(reduxApi.actions.opportunities.get())
-      // console.log('got ops', ops)
-      this.setState({ ops })
+      // TODO: [VP-128] document how to set the parameters correctly
+      // TODO: [VP-129] filter should be passed in here and translated into the query
+      // const _example_query = { q: '{"status": "active" }' }
+      await this.props.dispatch(reduxApi.actions.opportunities.get())
     } catch (err) {
-      console.log('error in getting ops', err)
+      // console.log('error in getting ops', err)
     }
   }
   render () {
-    if (!this.state.ops) {
+    if (this.props.opportunities.loading) {
       return (<section>
         {/* <h3>search filter here</h3> */}
         <Loading><p>Loading opportunities...</p></Loading>
@@ -31,8 +31,9 @@ class OpListSection extends Component {
       </section>)
     } else {
       return (<section>
-        {/* <h3>search filter here</h3> */}
-        <OpList ops={this.state.ops} />
+ // TODO: [VP-130] take out the search filter here line in OpListSection and pass in a property instead
+        <h3>search filter here</h3>
+        <OpList ops={this.props.opportunities.data} />
       </section>)
     }
   }

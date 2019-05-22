@@ -36,7 +36,8 @@ const ops = [
 
 const initStore = {
   opportunities: {
-    data: []
+    loading: false,
+    data: [ ]
   }
 }
 

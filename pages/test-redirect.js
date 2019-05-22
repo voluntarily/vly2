@@ -21,8 +21,8 @@ class TestRedirect extends React.Component {
   }
 
   async componentDidMount (props) {
-    console.log('test redirect called in componentDidMount ')
-    console.log(props)
+    // console.log('test redirect called in componentDidMount ')
+    // console.log(props)
     await this.wait(5000)
     Router.push(`/`)
   }

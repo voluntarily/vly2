@@ -26,7 +26,6 @@ Mockgoose.prototype.prepareStorage = function() {
 const mockgoose = new Mockgoose(mongoose)
 
 export async function connectDB() {
-  
   mockgoose.helper.setDbVersion('3.2.1')
   await mockgoose.prepareStorage()
   const connecturl = `mongodb://localhost:27017/${uuid()}`

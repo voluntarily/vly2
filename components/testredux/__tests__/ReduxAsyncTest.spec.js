@@ -22,30 +22,26 @@ const initHealth = {
   health: 'Unknown'
 }
 
-// const expectedHealth = {
-//   message: 'Hello from Voluntari.ly V0.0.2',
-//   health: 'OK'
-// }
 
-const reducers = combineReducers({
-  health: HealthReducer,
-  rst: ReduxStoreTestReducer
-})
+const expectedHealth = {
+  message: 'Hello from Voluntari.ly V0.0.2',
+  health: 'OK'
+}
+
+const reducers = combineReducers(
+  {
+    health: HealthReducer,
+    rst: ReduxStoreTestReducer
+  })
 
 const initStore = {
   health: initHealth,
   rst: { name: 'World' }
 }
 const realStore = createStore(reducers, initStore, applyMiddleware(thunk))
+fetchMock.get(`${API_URL}/health`, expectedHealth)
 
 test('api/health', async t => {
-  const expectedHealth = {
-    message: 'Hello from Voluntari.ly V0.0.2',
-    health: 'OK'
-  }
-
-  fetchMock.getOnce(`${API_URL}/health`, expectedHealth)
-
   // undefined store returns initial state
   const init = HealthReducer(undefined, {})
   t.deepEqual(init, initHealth)
@@ -53,20 +49,15 @@ test('api/health', async t => {
   await fetchHealth()(realStore.dispatch)
   const newstate = await realStore.getState().health
   t.deepEqual(newstate, expectedHealth)
-  fetchMock.restore()
+  // fetchMock.restore()
 })
 
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-test.only('mount, render add input and save', async t => {
-  const expectedHealth = {
-    message: 'Hello from Voluntari.ly V0.0.2',
-    health: 'OK'
-  }
-
-  fetchMock.getOnce(`${API_URL}/health`, expectedHealth)
+test('mount, render add input and save', async t => {
+  // fetchMock.getOnce(`${API_URL}/health`, expectedHealth)
 
   const wrapper = mount(
     <Provider store={realStore}>
@@ -89,19 +80,7 @@ test.only('mount, render add input and save', async t => {
   wrapper.update()
 
   // console.log(wrapper.html())
-  t.is(
-    wrapper
-      .find('p')
-      .first()
-      .text(),
-    'Hi World'
-  )
-  t.is(
-    wrapper
-      .find('p')
-      .at(1)
-      .text(),
-    'Health is OK'
-  )
-  fetchMock.restore()
+t.is(wrapper.find('p').first().text(), 'Hi World')
+  t.is(wrapper.find('p').at(1).text(), 'Health is OK')
+  // fetchMock.restore()
 })

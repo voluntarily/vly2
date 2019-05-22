@@ -11,10 +11,10 @@ import PropTypes from 'prop-types'
 export class PersonDetailPage extends Component {
   static async getInitialProps ({ store, query }) {
     // Get one Person
-    console.log('PersonDetailPage, GetProps', query)
+    // console.log('PersonDetailPage, GetProps', query)
     try {
       const people = await store.dispatch(reduxApi.actions.people.get(query))
-      console.log('got person for id', query, people)
+      // console.log('got person for id', query, people)
       return { people, query }
     } catch (err) {
       console.log('error in getting people', err)

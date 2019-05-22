@@ -17,27 +17,12 @@ const props = {
 }
 
 test('OrgCard renders properly', t => {
-  const wrapper = shallow(<OrgCard {...props} />)
-  console.log(
-    wrapper
-      .find('p')
-      .at(1)
-      .text()
+const wrapper = shallow(
+    <OrgCard {...props} />
   )
-  t.is(
-    wrapper
-      .find('p')
-      .at(0)
-      .text(),
-    org.name
-  )
-  t.is(
-    wrapper
-      .find('p')
-      .at(1)
-      .text(),
-    org.type.join('')
-  )
+  // console.log(wrapper.find('p').at(1).text())
+  t.is(wrapper.find('p').at(0).text(), org.name)
+  t.is(wrapper.find('p').at(1).text(), org.type.join(''))
 
   t.is(
     wrapper
