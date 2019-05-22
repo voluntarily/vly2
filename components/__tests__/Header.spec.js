@@ -24,7 +24,7 @@ test.only('renders the Header and Navigation properly', t => {
     <RoutedHeader isAuthenticated={false} />
   )
 
-  t.truthy(wrapper.find('Link').first().containsMatchingElement(<FormattedMessage id='siteTitle' />))
+  t.truthy(wrapper.find('Link').first().containsMatchingElement(<img />))
   t.is(wrapper.find('a').length, 4)
   t.is(wrapper.find('a').last().text(), 'Sign In')
   t.snapshot()

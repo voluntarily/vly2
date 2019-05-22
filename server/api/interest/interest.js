@@ -11,7 +11,14 @@ const interestSchema = new Schema({
     type: 'String',
     required: true,
     default: 'interested',
-    enum: ['interested', 'invited', 'committed', 'declined', 'completed', 'cancelled']
+    enum: [
+      'interested',
+      'invited',
+      'committed',
+      'declined',
+      'completed',
+      'cancelled'
+    ]
   },
   dateAdded: { type: 'Date', default: Date.now, required: true }
 })
