@@ -26,6 +26,6 @@ test.only('renders the Header and Navigation properly', t => {
 
   t.truthy(wrapper.find('Link').first().containsMatchingElement(<img />))
   t.is(wrapper.find('a').length, 4)
-  t.is(wrapper.find('a').last().text(), 'Sig\n In')
+  t.is(wrapper.find('a').last().text(), 'Sign In')
   t.snapshot()
 })
