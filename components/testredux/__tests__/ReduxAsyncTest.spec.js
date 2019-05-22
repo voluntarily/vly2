@@ -27,11 +27,10 @@ const expectedHealth = {
   health: 'OK'
 }
 
-const reducers = combineReducers(
-  {
-    health: HealthReducer,
-    rst: ReduxStoreTestReducer
-  })
+const reducers = combineReducers({
+  health: HealthReducer,
+  rst: ReduxStoreTestReducer
+})
 
 const initStore = {
   health: initHealth,
@@ -66,7 +65,10 @@ test('mount, render add input and save', async t => {
   // console.log('realstore state', realStore.getState())
   t.is(realStore.getState().health.health, 'Unknown')
   // now click the save button.
-  await wrapper.find('button').first().simulate('click')
+  await wrapper
+    .find('button')
+    .first()
+    .simulate('click')
 
   // TODO find out how to wait for the callback on the click handler to complete,
   await sleep(10)
@@ -76,7 +78,19 @@ test('mount, render add input and save', async t => {
   wrapper.update()
 
   // console.log(wrapper.html())
-  t.is(wrapper.find('p').first().text(), 'Hi World')
-  t.is(wrapper.find('p').at(1).text(), 'Health is OK')
+  t.is(
+    wrapper
+      .find('p')
+      .first()
+      .text(),
+    'Hi World'
+  )
+  t.is(
+    wrapper
+      .find('p')
+      .at(1)
+      .text(),
+    'Health is OK'
+  )
   // fetchMock.restore()
 })

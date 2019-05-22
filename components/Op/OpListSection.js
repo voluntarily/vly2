@@ -25,13 +25,13 @@ class OpListSection extends Component {
   render () {
     if (this.props.opportunities.loading) {
       return (<section>
-        <h3>search filter here</h3>
+        {/* <h3>search filter here</h3> */}
         <Loading><p>Loading opportunities...</p></Loading>
 
       </section>)
     } else {
       return (<section>
-        // TODO: [VP-130] take out the search filter here line in OpListSection and pass in a property instead
+ // TODO: [VP-130] take out the search filter here line in OpListSection and pass in a property instead
         <h3>search filter here</h3>
         <OpList ops={this.props.opportunities.data} />
       </section>)
@@ -41,7 +41,7 @@ class OpListSection extends Component {
 
 OpListSection.propTypes = {
   ops: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequire,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     description: PropTypes.string,
