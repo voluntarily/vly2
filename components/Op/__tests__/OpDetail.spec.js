@@ -22,4 +22,4 @@ test('render the detail with op', t => {
   t.is(wrapper.find('h1').text(), op.title)
 })
 
-test.todo('verify markdown in description is rendered')
+// test.todo('verify markdown in description is rendered')

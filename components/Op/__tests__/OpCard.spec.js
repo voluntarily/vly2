@@ -24,4 +24,4 @@ test('shallow the card with op', t => {
   t.is(wrapper.find('.requestTitle').text(), op.title)
 })
 
-test.todo('Click the card and see if the link works')
+// test.todo('Click the card and see if the link works')
