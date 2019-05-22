@@ -17,8 +17,9 @@ import TitleSectionSub from '../../components/HeroPage/TitleSectionSub'
 export class Landing extends Component {
   render () {
     return (
-      <FullPage>
+      <div>
         <Hero />
+        <FullPage>
         <AboutSection
           title='Support Innovation in the classroom.'
           subtitle='Voluntarily connects you with classrooms to teach science, technology, engineering, entrepreneurship, arts, and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content.'
@@ -46,6 +47,7 @@ export class Landing extends Component {
           </Button>
         </Link>
       </FullPage>
+      </div>
     )
   }
 }
