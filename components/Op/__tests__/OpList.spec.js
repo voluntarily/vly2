@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import { shallow, render } from 'enzyme'
+import { shallowWithIntl, renderWithIntl } from '../../../lib/react-intl-test-helper'
 import OpList from '../OpList'
 
 // Initial opportunities added into test db
@@ -28,14 +28,14 @@ const ops = [
 ]
 
 test('shallow the list with ops', t => {
-  const wrapper = shallow(
+  const wrapper = shallowWithIntl(
     <OpList ops={ops} handleShowOp={() => {}} handleDeleteOp={() => {}} />
   )
   t.is(wrapper.find('OpCard').length, 2)
 })
 
 test('renders the list with ops to get card coverage', t => {
-  const wrapper = render(
+  const wrapper = renderWithIntl(
     <OpList ops={ops} handleShowOp={() => {}} handleDeleteOp={() => {}} />
   )
 
@@ -43,7 +43,7 @@ test('renders the list with ops to get card coverage', t => {
 })
 
 test('renders the list with no ops', t => {
-  const wrapper = render(
+  const wrapper = renderWithIntl(
     <OpList handleShowOp={() => {}} handleDeleteOp={() => {}} />
   )
   t.is(wrapper.find('OpCard').length, 0)

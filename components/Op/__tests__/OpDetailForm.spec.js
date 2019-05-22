@@ -26,6 +26,19 @@ const noop = {
   status: 'draft'
 }
 
+// Suppress console warning messages from async validator as they mess up the test output
+const orginalWarn = console.warn
+test.before('before test silence async-validator', () => {
+  console.warn = (...args) => {
+    if (typeof args[0] === 'string' && args[0].startsWith('async-validator:')) return
+    orginalWarn(...args)
+  }
+})
+
+test.after.always(() => {
+  console.warn = orginalWarn
+})
+
 test('shallow the detail with op', t => {
   const wrapper = shallowWithIntl(
     <OpDetailForm op={op} onSubmit={() => {}} onCancel={() => {}} />
@@ -51,7 +64,7 @@ test('render the detail with op', t => {
   t.truthy(submitOp.calledWith(op))
 })
 
-test('render the detail with new blank op', t => {
+test.only('render the detail with new blank op', t => {
   const submitOp = sinon.spy()
   const cancelOp = sinon.spy()
 

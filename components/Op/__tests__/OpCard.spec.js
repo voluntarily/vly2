@@ -1,6 +1,7 @@
 import React from 'react'
 import test from 'ava'
-import { shallow } from 'enzyme'
+import { shallowWithIntl } from '../../../lib/react-intl-test-helper'
+
 import OpCard from '../OpCard'
 
 // Initial opportunities
@@ -16,7 +17,7 @@ const op = {
 }
 
 test('shallow the card with op', t => {
-  const wrapper = shallow(
+  const wrapper = shallowWithIntl(
     <OpCard op={op} onPress={() => {}} />
   )
   // console.log(wrapper.debug())
