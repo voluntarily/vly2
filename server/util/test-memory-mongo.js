@@ -10,7 +10,7 @@ class MemoryMongo {
     this.mms = new MongoMemoryServer({
       debug: false, // by default false
       binary: {
-        version: '4.0.0'
+        version: '4.0.5'
       }
     })
   }
