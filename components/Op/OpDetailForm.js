@@ -253,7 +253,7 @@ OpDetailForm.propTypes = {
   // dispatch: PropTypes.func.isRequired,
 }
 
-// TODO replace imageURL field with uploader.
+// TODO: [VP-145] replace imageURL field with uploader.
 // <Form.Item
 //     label="Image"
 //   >
