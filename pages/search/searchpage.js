@@ -30,7 +30,7 @@ export class SearchPage extends Component {
         <TitleSection title='Search results for tech' />
         <BigSearch />
         <Spacer />
-        <OpListSection query={props.query} />
+        <OpListSection />
       </FullPage>
     )
   }
