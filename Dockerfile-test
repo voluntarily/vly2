@@ -12,5 +12,6 @@ ENV MONGOMS_VERSION="4.0.5"
 ENV MONGOMS_DISABLE_POSTINSTALL=1
 ENV CI=true
 COPY . ./
+RUN shopt -s globstar
 RUN npm ci
 CMD ["npm", "run", "test"]
