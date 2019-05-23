@@ -4,7 +4,6 @@
 .results
 *Dockerfile*
 node_modules
-package-lock.json
 .editorconfig
 *.code-workspace
 coverage
