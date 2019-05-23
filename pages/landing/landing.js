@@ -20,33 +20,33 @@ export class Landing extends Component {
       <div>
         <Hero />
         <FullPage>
-        <AboutSection
-          title='Support Innovation in the classroom.'
-          subtitle='Voluntarily connects you with classrooms to teach science, technology, engineering, entrepreneurship, arts, and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content.'
-        />
-        <div className='spacer' />
-        <TitleSectionSub
-          title='How we help'
-          subtitle='We help these awesome people accomplish amazing things'
-        />
-        <PersonaSection />
-        <div className='spacer' />
-        <TitleSectionSub
-          title='Happening Soon'
-          subtitle='You are two clicks away from getting involved with your community'
-        />
+          <AboutSection
+            title='Support Innovation in the classroom.'
+            subtitle='Voluntarily connects you with classrooms to teach science, technology, engineering, entrepreneurship, arts, and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content.'
+          />
+          <div className='spacer' />
+          <TitleSectionSub
+            title='How we help'
+            subtitle='We help these awesome people accomplish amazing things'
+          />
+          <PersonaSection />
+          <div className='spacer' />
+          <TitleSectionSub
+            title='Happening Soon'
+            subtitle='You are two clicks away from getting involved with your community'
+          />
 
-        <OpListSection store={this.props.store} />
-        <Link href={'/op/new'}>
-          <Button type='primary' shape='round'>
-            <FormattedMessage
-              id='landing.newOp'
-              defaultMessage='New Opportunity'
-              description='Button to create a new opportunity on Landing page'
-            />
-          </Button>
-        </Link>
-      </FullPage>
+          <OpListSection store={this.props.store} />
+          <Link href={'/op/new'}>
+            <Button type='primary' shape='round'>
+              <FormattedMessage
+                id='landing.newOp'
+                defaultMessage='New Opportunity'
+                description='Button to create a new opportunity on Landing page'
+              />
+            </Button>
+          </Link>
+        </FullPage>
       </div>
     )
   }

@@ -259,7 +259,7 @@ const Hero = ({ ...props }) => (
       </SearchBox>
       <br />
       <br />
-      <Button type='secondary' shape='round' size='large'>
+      <Button type='secondary' shape='round' size='large' href='/about'>
         Learn more
       </Button>
     </HeroRight>

@@ -75,7 +75,7 @@ const AboutSection = ({ title, subtitle, ...props }) => (
       <Button type='primary' shape='round' size='large' href='/about'>
         <FormattedMessage
           id='LearnMore'
-          defaultMessage='Learn More'
+          defaultMessage='Sign up'
           description='Action button to learn more about Voluntari.ly'
         />
       </Button>

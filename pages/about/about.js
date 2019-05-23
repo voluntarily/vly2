@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Head from 'next/head'
 import Markdown from 'markdown-to-jsx'
+import styled from 'styled-components'
 import { Button } from 'antd'
 import aboutEn from './about-en-md.js'
 import aboutMi from './about-mi-md.js'
@@ -20,6 +21,51 @@ const getText = locale => {
   return aboutEn()
 }
 
+
+const AboutSection = styled.div`
+width: 64rem;
+margin: 0 0;
+
+h1 {
+  font-size: 4rem;
+  letter-spacing: -01px;
+  font-weight: bold;
+  color: gray;
+}
+
+p {
+  font-size: 2rem;
+  letter-spacing: -1px;
+  font-weight: bold;
+  color: #333;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1025px) {
+  width: calc(100vw - 4rem);
+  margin: 2rem 0 2rem 0;
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  }
+
+  @media screen and (max-width: 768px) {
+    width: calc(100vw - 2rem);
+  margin: 1rem 0 1rem 0;
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 1.5rem;
+  }
+  }
+
+
+`
+
+
 class About extends Component {
   render () {
     const about = getText(this.props.intl.locale)
@@ -30,6 +76,8 @@ class About extends Component {
           <title>Voluntari.ly - About</title>
         </Head>
         <Spacer />
+        <Spacer />
+        <AboutSection>
         <Markdown
           children={about}
           options={{
@@ -38,6 +86,7 @@ class About extends Component {
             }
           }}
         />
+        </AboutSection>
         <AboutCTA />
 
         <style jsx>{`

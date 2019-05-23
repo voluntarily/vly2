@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
 import Navigation from '../Navigation/Navigation'
-import { FullPage } from '../../hocs/publicPage'
+
 import links from './FooterMenu'
 import { Grid, Spacer } from '../VTheme/VTheme'
 import styled from 'styled-components'
@@ -22,7 +22,7 @@ const FooterContainer = styled.div`
   margin: 0 auto;
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
-width: 100vw;
+    width: 100vw;
   }
 
   @media screen and (max-width: 767px) {
@@ -31,16 +31,15 @@ width: 100vw;
 `
 
 const FooterLogo = styled.img`
-margin-top: 2rem;
+  margin-top: 2rem;
   width: 2.5rem;
   @media screen and (min-width: 768px) and (max-width: 1280px) {
-margin-left: 2rem;
+    margin-left: 2rem;
   }
 
   @media screen and (max-width: 767px) {
     margin-left: 1rem;
   }
-
 `
 
 const FooterText = styled.h1`
@@ -68,20 +67,23 @@ const FooterGridItemTitle = styled.h1`
 `
 
 const MenuItem = styled.a`
-  font-family: Inter-Bold;
+  font-family: Inter;
+  font-weight: 600;
   font-size: 1rem;
   color: #333333;
   letter-spacing: -1.07px;
   line-height: 32px;
+  @media screen and (max-width: 767px) {
+    line-height: 64px;
+  }
 `
 
 const Footer = ({ isAuthenticated, ...props }) => (
-
   <FooterBackground>
     <FooterContainer>
       <FooterLogo src='../../static/vlogo.svg' />
       <FooterText>
-        Voluntarily is an awesome open source project run by the <br />
+        Voluntarily is an awesome open source project run by the&nbsp;
         <a href='https://www.pamfergusson.org.nz/' target='_blank'>
           Pam Fergussion Charitable Trust
         </a>{' '}
@@ -91,15 +93,15 @@ const Footer = ({ isAuthenticated, ...props }) => (
       <Grid>
         <FooterGridItem>
           <FooterGridItemTitle>How it works</FooterGridItemTitle>
-          <MenuItem src='/volunteers'>For Volunteers</MenuItem>
+          <MenuItem href='/volunteers'>For Volunteers</MenuItem>
           <br />
-          <MenuItem src='/teachers'>For Teachers</MenuItem>
+          <MenuItem href='/teachers'>For Teachers</MenuItem>
           <br />
-          <MenuItem src='/charities'>For Charities</MenuItem>
+          <MenuItem href='/charities'>For Charities</MenuItem>
           <br />
-          <MenuItem src='/businesses'>For Businesses</MenuItem>
+          <MenuItem href='/businesses'>For Businesses</MenuItem>
           <br />
-          <MenuItem src='/government'>For Governments</MenuItem>
+          <MenuItem href='/government'>For Governments</MenuItem>
           <br />
         </FooterGridItem>
 
@@ -117,25 +119,42 @@ const Footer = ({ isAuthenticated, ...props }) => (
 
         <FooterGridItem>
           <FooterGridItemTitle>Social</FooterGridItemTitle>
-          <MenuItem href='http://twitter.com/voluntarilyhq' target='_blank'>Twitter</MenuItem>
+          <MenuItem href='http://twitter.com/voluntarilyhq' target='_blank'>
+            Twitter
+          </MenuItem>
           <br />
-          <MenuItem href='https://www.linkedin.com/groups/13709208/' target='_blank'>
+          <MenuItem
+            href='https://www.linkedin.com/groups/13709208/'
+            target='_blank'
+          >
             LinkedIn
           </MenuItem>
           <br />
-          <MenuItem href='https://www.youtube.com/channel/UCEDwH63ojQSq-S8us3iRZAA' target='_blank'>
+          <MenuItem
+            href='https://www.youtube.com/channel/UCEDwH63ojQSq-S8us3iRZAA'
+            target='_blank'
+          >
             Youtube
           </MenuItem>
           <br />
-          <MenuItem href='https://www.facebook.com/voluntarilyAotearoa/' target='_blank'>
+          <MenuItem
+            href='https://www.facebook.com/voluntarilyAotearoa/'
+            target='_blank'
+          >
             Facebook
           </MenuItem>
           <br />
-          <MenuItem href='https://www.messenger.com/t/voluntarilyAotearoa' target='_blank'>
+          <MenuItem
+            href='https://www.messenger.com/t/voluntarilyAotearoa'
+            target='_blank'
+          >
             Messenger
           </MenuItem>
           <br />
-          <MenuItem href='https://www.instagram.com/voluntarilyhq/' target='_blank'>
+          <MenuItem
+            href='https://www.instagram.com/voluntarilyhq/'
+            target='_blank'
+          >
             Instagram
           </MenuItem>
           <br />
@@ -160,7 +179,6 @@ const Footer = ({ isAuthenticated, ...props }) => (
 
     <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
   </FooterBackground>
-
 )
 
 Footer.propTypes = {
