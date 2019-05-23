@@ -90,8 +90,12 @@
   },
   "homepage": "https://github.com/voluntarily/vly2#readme",
   "ava": {   
+    "files": [
+      "**/__tests__/**/*.spec.js",
+      "components/**/__tests__/*.js"
+    ],
     "helpers": [
-      "**/*.fixture.js"
+      "**/__tests__/**/*.fixture.js"
     ],
     "sources": [
       "components/**/*.js",
