@@ -21,51 +21,46 @@ const getText = locale => {
   return aboutEn()
 }
 
-
 const AboutSection = styled.div`
-width: 64rem;
-margin: 0 0;
+  width: 64rem;
+  margin: 0 0;
 
-h1 {
-  font-size: 4rem;
-  letter-spacing: -3px;
-  font-weight: bold;
-  color: gray;
-}
-
-p {
-  font-size: 2rem;
-  letter-spacing: -1.3px;
-  font-weight: bold;
-  color: #333;
-}
-
-@media screen and (min-width: 768px) and (max-width: 1025px) {
-  width: calc(100vw - 4rem);
-  margin: 2rem 0 2rem 0;
-  letter-spacing: -01px;
   h1 {
-    font-size: 2.5rem;
+    font-size: 4rem;
+    letter-spacing: -3px;
+    font-weight: bold;
+    color: gray;
   }
 
+  p {
+    font-size: 2rem;
+    letter-spacing: -1.3px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    width: calc(100vw - 4rem);
+    margin: 2rem 0 2rem 0;
+    letter-spacing: -01px;
+    h1 {
+      font-size: 2.5rem;
+    }
   }
 
   @media screen and (max-width: 768px) {
     width: calc(100vw - 2rem);
-  margin: 1rem 0 1rem 0;
+    margin: 1rem 0 1rem 0;
 
-  h1 {
-    font-size: 1.5rem;
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 1.5rem;
+    }
   }
-
-  p {
-    font-size: 1.5rem;
-  }
-  }
-
-
 `
-
 
 class About extends Component {
   render () {
@@ -79,14 +74,14 @@ class About extends Component {
         <Spacer />
         <Spacer />
         <AboutSection>
-        <Markdown
-          children={about}
-          options={{
-            overrides: {
-              Button: { component: Button }
-            }
-          }}
-        />
+          <Markdown
+            children={about}
+            options={{
+              overrides: {
+                Button: { component: Button }
+              }
+            }}
+          />
         </AboutSection>
         <AboutCTA />
 
