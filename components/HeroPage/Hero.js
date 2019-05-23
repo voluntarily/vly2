@@ -237,7 +237,7 @@ const Hero = ({ ...props }) => (
   <AwesomeHeroContainer>
     <HeroLeft>
       <Notch />
-      <AwesomeVideo autoPlay loop muted playsInline>
+      <AwesomeVideo poster='./static/img/heroImage.png' autoPlay loop muted playsInline>
         <source src='./static/test.mp4' type='video/mp4' />
       </AwesomeVideo>
     </HeroLeft>

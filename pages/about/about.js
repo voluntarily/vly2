@@ -28,14 +28,14 @@ margin: 0 0;
 
 h1 {
   font-size: 4rem;
-  letter-spacing: -01px;
+  letter-spacing: -3px;
   font-weight: bold;
   color: gray;
 }
 
 p {
   font-size: 2rem;
-  letter-spacing: -1px;
+  letter-spacing: -1.3px;
   font-weight: bold;
   color: #333;
 }
@@ -43,6 +43,7 @@ p {
 @media screen and (min-width: 768px) and (max-width: 1025px) {
   width: calc(100vw - 4rem);
   margin: 2rem 0 2rem 0;
+  letter-spacing: -01px;
   h1 {
     font-size: 2.5rem;
   }

@@ -45,6 +45,7 @@ const FooterLogo = styled.img`
 const FooterText = styled.h1`
   letter-spacing: -0.4px;
   font-size: 1rem;
+  margin-top: 1rem;
   @media screen and (min-width: 768px) and (max-width: 1280px) {
     margin-left: 2rem;
   }
@@ -64,6 +65,7 @@ const FooterGridItemTitle = styled.h1`
   font-weight: 400;
   font-size: 1rem;
   letter-spacing: -0.8px;
+  margin-bottom: 1rem
 `
 
 const MenuItem = styled.a`
