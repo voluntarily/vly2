@@ -14,5 +14,5 @@ test_task:
     folder: node_modules
     fingerprint_script: cat package-lock.json
     populate_script: npm ci
-  test_script: npm test -- -t --verbose **/__tests__/**/*.js **/*.spec.js
+  test_script: npm test -- -t --verbose
 
