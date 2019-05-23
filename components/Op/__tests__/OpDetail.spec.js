@@ -1,6 +1,7 @@
 import React from 'react'
 import test from 'ava'
-import { render } from 'enzyme'
+import { renderWithIntl } from '../../../lib/react-intl-test-helper'
+
 import OpDetail from '../OpDetail'
 
 // Initial opportunities
@@ -16,10 +17,10 @@ const op = {
 }
 
 test('render the detail with op', t => {
-  const wrapper = render(<OpDetail op={op} onPress={() => {}} />)
+  const wrapper = renderWithIntl(<OpDetail op={op} onPress={() => {}} />)
   // console.log(wrapper.html())
   t.truthy(wrapper.find('Head'))
   t.is(wrapper.find('h1').text(), op.title)
 })
 
-test.todo('verify markdown in description is rendered')
+// test.todo('verify markdown in description is rendered')

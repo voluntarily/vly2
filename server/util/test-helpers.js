@@ -29,7 +29,7 @@ export async function connectDB() {
   mockgoose.helper.setDbVersion('3.2.1')
   await mockgoose.prepareStorage()
   const connecturl = `mongodb://localhost:27017/${uuid()}`
-  await mongoose.connect(connecturl, { useNewUrlParser: true })
+  await mongoose.connect(connecturl, { useNewUrlParser: true, useCreateIndex: true })
     .then(() => console.log('Test database connected:', connecturl))
     .catch(() => 'Unable to connect to test database')
 }

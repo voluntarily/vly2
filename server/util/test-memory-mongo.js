@@ -10,7 +10,7 @@ class MemoryMongo {
     this.mms = new MongoMemoryServer({
       debug: false, // by default false
       binary: {
-        version: '4.0.0'
+        version: '4.0.5'
       }
     })
   }
@@ -20,7 +20,8 @@ class MemoryMongo {
     console.log('Test mongodb connecting to:', mongoUri)
     const mongooseOpts = {
       // options for mongoose 4.11.3 and above
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useCreateIndex: true
     }
     this.connection = await mongoose.connect(mongoUri, mongooseOpts)
   }
