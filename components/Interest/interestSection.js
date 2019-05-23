@@ -11,7 +11,7 @@ import Loading from '../Loading'
 
 class InterestSection extends Component {
   state = {}
-  async componentDidMount () {
+  async componentDidMount() {
     // Get all interests
 
     const op = this.props.op
@@ -20,13 +20,12 @@ class InterestSection extends Component {
         reduxApi.actions.interests.get({ id: '', op })
       )
       // console.log('got interests', interests, 'for', op)
-      this.setState({ interests })
     } catch (err) {
       // console.log('error in getting interests', err)
     }
   }
-  render () {
-    if (!this.state.interests) {
+  render() {
+    if (!(this.props.interests && this.props.interests.data)) {
       return (
         <section>
           <Loading>
@@ -35,10 +34,11 @@ class InterestSection extends Component {
         </section>
       )
     } else {
+
       return (
         <section>
-          <InterestTable interests={this.state.interests} />
-          {/* <code>{JSON.stringify(this.state.interests)}</code>  */}
+          <InterestTable interests={this.props.interests.data} />
+          {/* <code>{JSON.stringify(this.props.interests.data)}</code>  */}
         </section>
       )
     }
