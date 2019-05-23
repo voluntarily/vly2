@@ -1,6 +1,6 @@
 container:
   dockerfile: Dockerfile-test
-  cpu: 8
+  cpu: 4
   # image: node:latest
 
 lint_task:      
@@ -15,7 +15,7 @@ test_task:
     folder: node_modules
     fingerprint_script: cat package-lock.json
     populate_script: MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" MONGOMS_VERSION="4.0.5" MONGOMS_DISABLE_POSTINSTALL=1 npm ci
-  test_script: npm test -- --tap --verbose `find . -name '*.spec.js'`
+  test_script: npm test -- --tap --verbose --serial `find . -name '*.spec.js'`
 
 # test_docker_builder: 
 #   only_if: $CIRRUS_TAG != ''

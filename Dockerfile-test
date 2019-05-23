@@ -8,7 +8,7 @@ EXPOSE 3122
 ENV NODE_ENV test \
     MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" \
     MONGOMS_VERSION="4.0.5" \
-    MONGOMS_DISABLE_POSTINSTALL=1 \
     CI=true
 COPY . ./
-CMD 
+RUN npm ci
+CMD ["npm", "test"]
