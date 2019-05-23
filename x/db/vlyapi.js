@@ -30,23 +30,25 @@ export const get = async (endpoint, id, params) => {
 export const post = (endpoint, thing) => {
   const url = `${API_URL}/api/${endpoint}`
   // console.log(thing)
-  axios.post(url, thing)
-    .then((response) => {
+  axios
+    .post(url, thing)
+    .then(response => {
       const data = response.data
       console.log(JSON.stringify(data))
     })
-    .catch((error) => {
+    .catch(error => {
       console.log(error)
     })
 }
 
 export const _delete = (endpoint, id) => {
   const url = `${API_URL}/api/${endpoint}/${id}`
-  axios.delete(url)
-    .then((response) => {
+  axios
+    .delete(url)
+    .then(response => {
       console.log(JSON.stringify(response.data))
     })
-    .catch((error) => {
+    .catch(error => {
       console.log(error)
     })
 }

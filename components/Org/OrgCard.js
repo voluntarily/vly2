@@ -1,16 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
+// import Markdown from 'markdown-to-jsx'
+// import OrgType from './OrgType'
+// import AwesomeCard from '../../components/TestContainer/AwesomeCard/AwesomeCard'
 
 const OrgCard = ({ org, ...props }) => (
   <div>
-    <Link href={`/orgs/${org._id}`}><a target='_blank'>
-      <div className='requestContainer'>
-        <img className='requestImg' src={org.imgUrl} />
-        <p className='requestTitle'>{org.name}</p>
-        <p className='requestDateTime'>{org.type}</p>
-        <p className='requestDescription'>{org.about}</p>
-      </div></a>
+    <Link href={`/orgs/${org._id}`}>
+      <a target='_blank'>
+        <div className='requestContainer'>
+          <img className='requestImg' src={org.imgUrl} />
+          <p className='requestTitle'>{org.name}</p>
+          <p className='requestDateTime'>{org.type}</p>
+          <p className='requestDescription'>{org.about}</p>
+        </div>
+      </a>
     </Link>
     <style jsx>{`
       .requestContainer {
@@ -42,9 +47,6 @@ const OrgCard = ({ org, ...props }) => (
         -webkit-box-orient: vertical;
       }
 
-
-
-
       .requestDateTime {
         vertical-align: middle;
         margin-bottom: 0px;
@@ -72,7 +74,7 @@ const OrgCard = ({ org, ...props }) => (
       }
 
       .requestTitle :hover {
-        color: #6549AA;
+        color: #6549aa;
       }
 
       @media screen and (max-width: 768px) {

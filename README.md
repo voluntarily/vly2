@@ -1,7 +1,9 @@
 # vly2
 
 [![Gitter](https://badges.gitter.im/voluntarily/community.svg)](https://gitter.im/voluntarily/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Build Status](https://api.cirrus-ci.com/github/voluntarily/vly2.svg)](https://cirrus-ci.com/github/voluntarily/vly2)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
+
 
 Support education and innovation in New Zealand Schools with industry experts and volunteers in the classrooms
 

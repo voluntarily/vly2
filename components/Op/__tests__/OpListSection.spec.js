@@ -36,6 +36,7 @@ const ops = [
 
 const initStore = {
   opportunities: {
+    loading: false,
     data: [ ]
   }
 }
@@ -56,10 +57,9 @@ test.only('mount the list with ops', async t => {
     <Provider store={realStore}>
       <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} />
     </Provider>
-
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('a').length, 2) // there are two cards on the screen
+  t.is(wrapper.find('OpCard').length, 2) // there are two cards on the screen
   myMock.restore()
 })

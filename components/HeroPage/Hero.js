@@ -34,7 +34,6 @@ const AwesomeHeroContainer = styled.div`
   @media screen and (max-width: 768px) {
     grid-template-columns: 100vw;
     height: auto;
-
   }
 `
 // start left hand video side

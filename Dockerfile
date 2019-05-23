@@ -7,6 +7,8 @@ EXPOSE 3122
 
 FROM base as development
 ENV NODE_ENV development
+ENV MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org"
+ENV MONGOMS_VERSION="v4.0-latest"
 COPY . ./
 RUN npm install
 CMD ["npm", "run", "dev"]
