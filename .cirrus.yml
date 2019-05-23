@@ -1,7 +1,7 @@
 container:
-  # dockerfile: Dockerfile-test
-  cpu: 4
-  image: node:latest
+  dockerfile: Dockerfile-test
+  cpu: 8
+  # image: node:latest
 
 lint_task:      
   node_modules_cache:
