@@ -5,7 +5,7 @@ lint_task:
   node_modules_cache:
     folder: node_modules
     fingerprint_script: cat package-lock.json
-    populate_script: npm install
+    populate_script: npm ci
 
   test_script: npm run lint
 
@@ -13,6 +13,6 @@ test_task:
   node_modules_cache:
     folder: node_modules
     fingerprint_script: cat package-lock.json
-    populate_script: npm install
-  test_script: npm test -- -t --verbose **/*.spec.js
+    populate_script: npm ci
+  test_script: npm test -- -t --verbose **/__tests__/**/*.spec.js
 

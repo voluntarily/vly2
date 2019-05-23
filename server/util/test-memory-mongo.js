@@ -8,16 +8,16 @@ class MemoryMongo {
   constructor () {
     this.connection = null
     this.mms = new MongoMemoryServer({
-      debug: false, // by default false
-      binary: {
-        version: '4.0.5'
-      }
+      // debug: false, // by default false
+      // binary: {
+      //   version: '4.0.5'
+      // }
     })
   }
 
   async start () {
     const mongoUri = await this.mms.getConnectionString()
-    console.log('Test mongodb connecting to:', mongoUri)
+    // console.log('Test mongodb connecting to:', mongoUri)
     const mongooseOpts = {
       // options for mongoose 4.11.3 and above
       useNewUrlParser: true,
