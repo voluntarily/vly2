@@ -1,13 +1,13 @@
 container:
-  dockerfile: Dockerfile-test
-  # image: node:latest
+  # dockerfile: Dockerfile-test
+  cpu: 4
+  image: node:latest
 
 lint_task:      
   node_modules_cache:
     folder: node_modules
     fingerprint_script: cat package-lock.json
     populate_script: npm ci
-
   test_script: npm run lint
 
 test_task:
