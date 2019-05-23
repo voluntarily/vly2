@@ -9,41 +9,34 @@ import { message } from 'antd'
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
 
+// Helper function to generate a blank interest.
+function getNewInterest(me, op) {
+    return {
+        person: me,
+        opportunity: op,
+        comment: '',
+        status: null,
+        dateAdded: Date.now()
+    }
+}
+
 class RegisterInterestSection extends Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {}
-    }
-
+    // When component mounts, make initial API call.
+    // TODO do we need to change this to getInitialProps?
     async componentDidMount() {
-        // Get all interests
-        console.log(this.props)
 
         const op = this.props.op
         const me = this.props.me
         try {
-            let interests = await this.props.dispatch(reduxApi.actions.interests.get({ id: '', op, me }))
-            console.log('got interests', interests, 'for op', op, 'for me', me)
+            await this.props.dispatch(reduxApi.actions.interests.get({ id: '', op, me }))
 
-            // Create an empty interest here if none were returned.
-            if (interests.length === 0) {
-                console.log('That person hasnt registered interest in this op yet')
-                interests = [{
-                    person: me,
-                    opportunity: op,
-                    comment: '',
-                    status: null,
-                    dateAdded: Date.now()
-                }]
-            }
-
-            this.setState({ interests })
         } catch (err) {
             console.log('error in getting interests', err)
         }
     }
 
+    // When the button is clicked to advance the interest status, make an appropriate api call.
     async handleChangeStatus(interest) {
 
         let res = {}
@@ -60,10 +53,10 @@ class RegisterInterestSection extends Component {
         }
 
         interest = res[0]
-        // console.log(res)
 
     }
 
+    // When the button is clicked to withdraw interest, make an appropriate api call.
     async handleWithdraw(interest) {
         // console.log('Deleting interest')
         await this.props.dispatch(reduxApi.actions.interests.delete({ id: interest._id }))
@@ -71,21 +64,37 @@ class RegisterInterestSection extends Component {
 
     }
 
+    // Render the component depending on whether we've completed the initial api call, and what information is contained in the store.
     render() {
-        // If we haven't loaded the interests from the server yet
-        if (!this.state.interests) {
+
+        // If we haven't finished making the API request to the server yet...
+        if (!this.props.interests) {
             return (
                 <section>
                     <Loading><p>Loading ...</p></Loading>
                 </section>)
         }
 
-        // If we have our interests
+        // If we have access to the interests section of the Redux store...
         else {
+
+            // Get the interest out of the store, if any.
+            let interest = null
+            if (this.props.interests && this.props.interests.data && this.props.interests.data.length > 0) {
+
+                interest = this.props.interests.data[0]
+            }
+
+            // If not, use a blank interest.
+            else {
+
+                interest = getNewInterest(this.props.me, this.props.op)
+            }
+
             return (
                 <section>
                     <RegisterInterestItem
-                        interest={this.state.interests[0]}
+                        interest={interest}
                         onChangeStatus={this.handleChangeStatus.bind(this)}
                         onWithdraw={this.handleWithdraw.bind(this)} />
                 </section>
