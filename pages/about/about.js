@@ -53,7 +53,8 @@ const AboutSection = styled.div`
     margin: 1rem 0 1rem 0;
 
     h1 {
-      font-size: 1.5rem;
+      font-size: 2rem;
+      letter-spacing: -1.5px;
     }
 
     p {

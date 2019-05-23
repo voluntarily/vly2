@@ -25,6 +25,7 @@ const TitleContainer = styled.div`
   @media screen and (max-width: 768px) {
     p {
       line-height: 1.8;
+     
     }
   }
 `

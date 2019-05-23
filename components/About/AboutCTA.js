@@ -14,7 +14,7 @@ const TripleGrid = styled.div`
   }
 
   @media screen and (max-width: 767px) {
-    grid-template-columns: 100vw;
+    grid-template-columns: 98vw;
     grid-gap: 0rem;
   }
 `
@@ -22,6 +22,11 @@ const TripleGrid = styled.div`
 // cardcontainer
 const CTAContainer = styled.div`
   width: 25rem;
+
+  @media screen and (max-width: 767px) {
+    width: calc(100vw - 2rem);
+   margin-bottom: 2rem;
+  }
 `
 
 // cardimg
@@ -31,6 +36,10 @@ const CTAImage = styled.img`
   background-color: black;
   object-fit: cover;
   object-position: center;
+  @media screen and (max-width: 767px) {
+   width: calc(100vw - 2rem);
+   margin-right: 0;
+  }
 `
 // cardtitle
 const CTATitle = styled.h1`
@@ -40,6 +49,10 @@ const CTATitle = styled.h1`
   letter-spacing: -0.8px;
   line-height: 40px;
   margin-bottom: 0;
+  @media screen and (max-width: 767px) {
+   width: calc(100vw - 2rem);
+   margin-right: 0;
+  }
 `
 // cardabout
 const CTADescription = styled.h1`
@@ -47,6 +60,10 @@ const CTADescription = styled.h1`
   line-height: 24px;
   font-weight: 400;
   letter-spacing: -0.3px;
+  @media screen and (max-width: 767px) {
+   width: calc(100vw - 2rem);
+   margin-right: 0;
+  }
 `
 
 const AboutCTA = () => (

@@ -77,6 +77,7 @@ const MenuItem = styled.a`
   line-height: 32px;
   @media screen and (max-width: 767px) {
     line-height: 64px;
+    font-size: 2rem;
   }
 `
 
