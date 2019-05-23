@@ -89,10 +89,7 @@
     "url": "https://github.com/voluntarily/vly2/issues"
   },
   "homepage": "https://github.com/voluntarily/vly2#readme",
-  "ava": {
-    "files": [
-      "**/__tests__/*.spec.js"
-    ],    
+  "ava": {   
     "helpers": [
       "**/*.fixture.js"
     ],

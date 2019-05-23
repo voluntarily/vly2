@@ -87,7 +87,7 @@ test.serial('Should send correct data when queried against a _id', async t => {
   t.is(interest.opportunity.toString(), res.body.opportunity)
 })
 
-test.serial(
+test.skip(
   'Should not add an invalid interest where referenced person or opp is not in DB',
   async t => {
     const newInterest = new Interest({
