@@ -1,4 +1,5 @@
 container:
+  dockerfile: Dockerfile-test
   image: node:latest
 
 lint_task:      
@@ -16,7 +17,10 @@ test_task:
     populate_script: npm ci
   test_script: npx ava
 
-ls_task:
-  test_script: ls **/__test__/**/*.spec.js
 
-
+# test_docker_builder: 
+#   only_if: $CIRRUS_TAG != ''
+#   depends_on: 
+#     - test
+#     - lint
+#   build_script: docker build --tag vly-test:latest -f Dockerfile-test
