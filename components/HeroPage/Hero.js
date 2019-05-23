@@ -24,7 +24,7 @@ const AwesomeHeroContainer = styled.div`
   }
 
   @media screen and (min-width: 768px) and (max-width: 1025px) {
-    width: 100vw;
+    width: calc(100vw - 2rem);
     height: 30rem;
     margin: auto;
     display: grid;
@@ -34,6 +34,7 @@ const AwesomeHeroContainer = styled.div`
   @media screen and (max-width: 768px) {
     grid-template-columns: 100vw;
     height: auto;
+    width: 100vw;
   }
 `
 // start left hand video side
@@ -73,7 +74,7 @@ const HeroLeft = styled.div`
     margin-top: 0rem;
     margin-left: 0rem;
     width: 100vw;
-    height: 24rem;
+    height: 22rem;
     border-radius: 0px;
   }
 `
@@ -118,11 +119,17 @@ const AwesomeVideo = styled.video`
   position: relative;
   text-align: center;
   margin: 0 auto;
-  height: 100vh;
+  width: 100vw;
   overflow: hidden;
   object-fit: fill;
   background-color: white;
   z-index: 1;
+
+  @media screen and (max-width: 768px) {
+    width: 100vh;
+  }
+
+
 `
 // end left hand video side
 
@@ -161,7 +168,7 @@ const HeroRight = styled.div`
     margin-top: 1rem;
     margin-left: 1rem;
     margin-bottom: 1rem;
-    width: 35rem;
+    width: calc(100vw - 2rem);
 
     left: 0rem;
   }
@@ -183,6 +190,8 @@ const HeroHeader = styled.h1`
 
   @media screen and (max-width: 768px) {
     font-size: 2rem;
+    width: 90vw;
+    margin-right: initial;
     letter-spacing: -0.03em;
   }
 `
@@ -198,6 +207,7 @@ const HeroCopy = styled.p`
   }
   @media screen and (max-width: 768px) {
     width: 90vw;
+    font-size: 1rem;
   }
 `
 
@@ -227,7 +237,7 @@ const Hero = ({ ...props }) => (
   <AwesomeHeroContainer>
     <HeroLeft>
       <Notch />
-      <AwesomeVideo autoPlay loop muted playsInline>
+      <AwesomeVideo poster='./static/img/heroImage.png' autoPlay loop muted playsInline>
         <source src='./static/test.mp4' type='video/mp4' />
       </AwesomeVideo>
     </HeroLeft>
@@ -249,7 +259,7 @@ const Hero = ({ ...props }) => (
       </SearchBox>
       <br />
       <br />
-      <Button type='secondary' shape='round' size='large'>
+      <Button type='secondary' shape='round' size='large' href='/about'>
         Learn more
       </Button>
     </HeroRight>

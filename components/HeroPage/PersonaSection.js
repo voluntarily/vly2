@@ -65,7 +65,7 @@ const AboutSection = () => (
         Discover cool opportunities to help out teachers, students and
         charities.
       </Text>
-      <Button>Learn More</Button>
+      <Button href='/volunteers'>Learn More</Button>
     </PersonaContainer>
     <PersonaContainer>
       <Image src='/static/img/teacherCard.png' />
@@ -73,13 +73,13 @@ const AboutSection = () => (
       <Text>
         Get the help of skilled volunteers to bring tech to your teaching.
       </Text>
-      <Button>Learn More</Button>
+      <Button href='/educators'>Learn More</Button>
     </PersonaContainer>
     <PersonaContainer>
       <Image src='/static/img/contentCard.png' />
       <Title>Charities</Title>
       <Text>We help you get more people involved with your movement.</Text>
-      <Button>Learn More</Button>
+      <Button href='/charities'>Learn More</Button>
     </PersonaContainer>
     <PersonaContainer>
       <Image src='/static/img/businessCard.png' />
@@ -87,7 +87,7 @@ const AboutSection = () => (
       <Text>
         We handle HR, admin, and discovery so your staff have more impact on the community.
       </Text>
-      <Button>Learn More</Button>
+      <Button href='/businesses'>Learn More</Button>
     </PersonaContainer>
   </Grid>
 )

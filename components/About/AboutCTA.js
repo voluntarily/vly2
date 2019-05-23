@@ -60,8 +60,8 @@ const AboutCTA = () => (
           Keen to join the build of the platform? Find us on Github and Gitter.
           All skill levels are welcome.
         </CTADescription>
-        <Button>Dev Chatroom</Button>
-        <Button> Github Repository</Button>
+        <Button href='https://gitter.im/voluntarily/community' target='_blank'>Dev Chatroom</Button>
+        <Button href='https://github.com/voluntarily/vly2' target='_blank'> Github Repository</Button>
       </CTAContainer>
       <CTAContainer>
         <CTAImage src='../../static/img/about/volunteers.png' />
@@ -70,7 +70,7 @@ const AboutCTA = () => (
           If you’re keen to get involved in volunteer operations and help run
           things, join the channel on Gitter.
         </CTADescription>
-        <Button>Volunteer Operations Chatroom</Button>
+        <Button href='https://gitter.im/voluntarily/Volunteers' target='_blank'>Volunteer Operations Chatroom</Button>
       </CTAContainer>
       <CTAContainer>
         <CTAImage src='../../static/img/about/sponsors.png' />
@@ -80,7 +80,7 @@ const AboutCTA = () => (
           voluntarily platform and be more effective in the lives of young
           Kiwis.
         </CTADescription>
-        <Button>Donate</Button>
+        <Button href='https://secure.squarespace.com/checkout/donate?donatePageId=5becd3d770a6adb0fa3e7b28' target='_blank'>Donate</Button>
       </CTAContainer>
     </TripleGrid>
   </div>

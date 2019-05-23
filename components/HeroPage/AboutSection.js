@@ -29,7 +29,7 @@ const AboutLeft = styled.div`
     margin-top: initial;
     margin-left: 1rem;
     margin-bottom: 3rem;
-
+    
     h1 {
       font-size: 2rem;
       line-height: 1.3;
@@ -49,7 +49,7 @@ const AboutRight = styled.img`
   justify-self: end;
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    width: 32rem;
+    width: 24rem;
     justify-self: start;
     margin-left: 2rem;
   }
@@ -61,7 +61,7 @@ const AboutRight = styled.img`
   }
 
   @media screen and (max-width: 768px) {
-    width: 100vw;
+    width: calc(100vw - 2rem);
     justify-self: start;
     margin: initial;
   }
@@ -75,7 +75,7 @@ const AboutSection = ({ title, subtitle, ...props }) => (
       <Button type='primary' shape='round' size='large' href='/about'>
         <FormattedMessage
           id='LearnMore'
-          defaultMessage='Learn More'
+          defaultMessage='Sign up'
           description='Action button to learn more about Voluntari.ly'
         />
       </Button>
