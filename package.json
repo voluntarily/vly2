@@ -14,7 +14,7 @@
     "start": "NODE_ENV=production node --experimental-modules server/server.js",
     "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "docker-test:build": "docker build -t vly-test:latest -f Dockerfile-test . ",
-    "docker-test": "docker run vly-test:latest "
+    "docker-test": "npm run docker-test:build && docker run vly-test:latest "
   },
   "dependencies": {
     "@babel/core": "^7.4.4",
@@ -103,7 +103,7 @@
       "pages/**/*.js",
       "server/**/*.js"
     ],
-    "failFast": true,
+    "failFast": false,
     "babel": {
       "testOptions": {
         "plugins": [
