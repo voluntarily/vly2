@@ -111,7 +111,7 @@
     ],
     "failFast": false,
     "verbose": true,
-    "concurrency": 8,
+    "concurrency": 0,
     "timeout": "5m",
     "babel": {
       "testOptions": {
