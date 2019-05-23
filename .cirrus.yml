@@ -15,8 +15,10 @@ test_task:
     folder: node_modules
     fingerprint_script: cat package-lock.json
     populate_script: npm ci
-  test_script: npx ava 
+  test_script: npx ava **/__tests__/*.spec.js 
 
+ls_task:
+  test_script: ls -l **/__tests__/*.spec.js 
 
 # test_docker_builder: 
 #   only_if: $CIRRUS_TAG != ''
