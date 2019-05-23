@@ -9,7 +9,6 @@ import OpDetail from '../../components/Op/OpDetail'
 import InterestSection from '../../components/Interest/interestSection'
 import RegisterInterestSection from '../../components/Interest/RegisterInterestSection'
 import PropTypes from 'prop-types'
-import OpDetailPageButtons from '../../components/Op/OpDetailPageButtons'
 
 export class OpDetailPage extends Component {
 
@@ -82,7 +81,7 @@ export class OpDetailPage extends Component {
             <small>visible buttons here depend on user role</small>
           </div>
 
-          {/* These components should only appear if a user is logged in and viewing an op they DID create themselves (probably??). */}
+          {/* These components should only appear if a user is logged in and viewing an op they DID create themselves. */}
           <div>
             <h2>Interested Volunteers</h2>
             <InterestSection op={op._id} />
