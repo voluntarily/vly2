@@ -89,7 +89,7 @@
     "url": "https://github.com/voluntarily/vly2/issues"
   },
   "homepage": "https://github.com/voluntarily/vly2#readme",
-  "ava": {   
+  "ava": {
     "files": [
       "__tests__/*.spec.js",
       "server/api/**/__tests__/**/*.spec.js",
@@ -111,6 +111,8 @@
     ],
     "failFast": false,
     "verbose": true,
+    "concurrency": 1,
+    "timeout": "5m",
     "babel": {
       "testOptions": {
         "plugins": [
