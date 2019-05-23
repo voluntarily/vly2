@@ -1,6 +1,6 @@
 container:
   dockerfile: Dockerfile-test
-  image: node:latest
+  # image: node:latest
 
 lint_task:      
   node_modules_cache:
