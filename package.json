@@ -92,7 +92,7 @@
   "ava": {   
     "files": [
       "**/__tests__/**/*.spec.js",
-      "components/**/__tests__/*.js",
+      "components/**/__tests__/*.spec.js",
       "!components/**/__tests__/*.fixture.js"
     ],
     "helpers": [

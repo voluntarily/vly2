@@ -14,13 +14,9 @@ test_task:
     folder: node_modules
     fingerprint_script: cat package-lock.json
     populate_script: npm ci
-  test_script: npm test
+  test_script: npm test -- -s
 
 ls_task:
-  node_modules_cache:
-    folder: node_modules
-    fingerprint_script: cat package-lock.json
-    populate_script: npm ci
   test_script: ls **/*.spec.js
-  
+
 
