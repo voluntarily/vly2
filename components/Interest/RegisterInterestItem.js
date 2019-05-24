@@ -7,15 +7,14 @@ import React, { Component } from 'react'
 import { Button, Col, Popconfirm, Form, Row } from 'antd'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import TextArea from 'antd/lib/input/TextArea';
+import TextArea from 'antd/lib/input/TextArea'
 
-function hasErrors(fieldsError) {
+function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
 }
 
 class RegisterInterestItem extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -23,11 +22,11 @@ class RegisterInterestItem extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.form.validateFields()
   }
 
-  handleChangeStateButtonClicked(e) {
+  handleChangeStateButtonClicked (e) {
     e.preventDefault()
 
     this.props.form.validateFields((err, values) => {
@@ -37,22 +36,20 @@ class RegisterInterestItem extends Component {
         interest.status = getNextStatus(interest)
 
         this.props.onChangeStatus(interest)
-      }
-      else {
+      } else {
         // console.log(err)
       }
     })
   }
 
-  handleWithdrawButtonClicked(e) {
+  handleWithdrawButtonClicked (e) {
     e.preventDefault()
     this.props.onWithdraw(this.props.interest)
   }
 
-  render() {
-
+  render () {
     const {
-      getFieldDecorator, getFieldsError, getFieldError, isFieldTouched
+      getFieldDecorator, getFieldsError
     } = this.props.form
 
     // Options to configure the controls on this page based on the state of the interest.
@@ -62,15 +59,15 @@ class RegisterInterestItem extends Component {
       <div>
         <Form>
           {/* Headers */}
-          {options.formAlwaysVisible || options.headerAlwaysVisible || this.state.isFormVisible ?
-            <Row>
+          {options.formAlwaysVisible || options.headerAlwaysVisible || this.state.isFormVisible
+            ? <Row>
               <h1>{options.headingText}</h1>
               <p>{options.subHeadingText}</p>
             </Row> : null}
 
           {/* Comment text area */}
-          {options.formAlwaysVisible || this.state.isFormVisible ?
-            <Row>
+          {options.formAlwaysVisible || this.state.isFormVisible
+            ? <Row>
               <Col
                 xs={{ span: 24 }}
                 md={{ span: 12 }}>
@@ -82,7 +79,7 @@ class RegisterInterestItem extends Component {
                   })(
                     <TextArea
                       readOnly={!options.commentsEditable}
-                      placeholder={options.commentsPlaceholderText}></TextArea>
+                      placeholder={options.commentsPlaceholderText} />
                   )}
                 </Form.Item>
               </Col>
@@ -91,51 +88,48 @@ class RegisterInterestItem extends Component {
           {/* Form buttons */}
           <Row>
             {/* Button to handle positive state change */}
-            {options.nextStateButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible) ?
-              <span>
+            {options.nextStateButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
+              ? <span>
                 <Button type='primary' disabled={hasErrors(getFieldsError())} shape='round' onClick={this.handleChangeStateButtonClicked.bind(this)}>
                   {options.nextStateButtonText}
                 </Button>
                 &nbsp;
-            </span> : null}
+              </span> : null}
 
             {/* Button to handle withdrawal from op */}
-            {options.withdrawInterestButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible) ?
-              <span>
+            {options.withdrawInterestButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
+              ? <span>
                 <Popconfirm title='Confirm withdrawal of interest' onConfirm={this.handleWithdrawButtonClicked.bind(this)} okText='Yes' cancelText='No'>
                   <Button type='danger' shape='round' >
                     {options.withdrawInterestButtonText}
                   </Button>
                 </Popconfirm>
                 &nbsp;
-            </span> : null}
+              </span> : null}
 
             {/* Button to show form */}
-            {!options.formAlwaysVisible && !this.state.isFormVisible ?
-              <span>
+            {!options.formAlwaysVisible && !this.state.isFormVisible
+              ? <span>
                 <Button type='primary' shape='round' onClick={() => this.setState({ isFormVisible: true })}>
                   {options.showFormButtonText}
                 </Button>
                 &nbsp;
-            </span> : null}
+              </span> : null}
 
             {/* Button to hide form */}
-            {!options.formAlwaysVisible && this.state.isFormVisible ?
-              <span>
+            {!options.formAlwaysVisible && this.state.isFormVisible
+              ? <span>
                 <Button type='secondary' shape='round' onClick={() => this.setState({ isFormVisible: false })}>
                   {options.hideFormButtonText}
                 </Button>
                 &nbsp;
-            </span> : null}
+              </span> : null}
           </Row>
         </Form>
       </div >
     )
-
   }
-
 }
-
 
 // Ensures the correct properties are being supplied to this component
 RegisterInterestItem.propTypes = {
@@ -150,24 +144,22 @@ RegisterInterestItem.propTypes = {
   onWithdraw: PropTypes.func.isRequired
 }
 
-
 // Adds form logic to this component
 export default Form.create({
   name: 'register_interest_form',
-  onFieldsChange(props, changedFields) {
+  onFieldsChange (props, changedFields) {
     // console.log('onFieldsChange', changedFields)
     // props.onChange(changedFields);
   },
-  mapPropsToFields(props) {
+  mapPropsToFields (props) {
     return {
       comment: Form.createFormField({ ...props.interest.comment, value: props.interest.comment })
     }
   }
 })(RegisterInterestItem)
 
-
 // Returns the next status, given the current status
-function getNextStatus(interest) {
+function getNextStatus (interest) {
   switch (interest.status) {
     case null:
       return 'interested'
@@ -178,8 +170,7 @@ function getNextStatus(interest) {
 }
 
 // Returns some config options for this component, depending on the state of the interest we're viewing.
-function getOptions(interest) {
-
+function getOptions (interest) {
   const options = {
     headerAlwaysVisible: true,
     headingText: '',
@@ -196,7 +187,6 @@ function getOptions(interest) {
   }
 
   switch (interest.status) {
-
     case null:
       options.headerAlwaysVisible = false
       options.headingText = <FormattedMessage id='getInvolvedHeading' defaultMessage='How do you want to get involved?' description='Heading displayed on form allowing volunteer to express interest in an opportunity' />
@@ -248,7 +238,6 @@ function getOptions(interest) {
       options.nextStateButtonEnabled = false
       options.withdrawInterestButtonEnabled = false
       break
-
   }
 
   return options

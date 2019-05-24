@@ -6,19 +6,7 @@ import { FormattedMessage } from 'react-intl'
 // import styled from 'styled-components'
 import { Table, Button, Popconfirm } from 'antd'
 
-// Returns the next status, given the current status
-function getNextStatus(interest) {
-  switch (interest.status) {
-    case 'interested':
-      return 'invited'
-
-    case 'invited':
-      return 'committed'
-  }
-}
-
 class InterestTable extends Component {
-
   columns = [
     {
       title: 'person ID',
@@ -39,7 +27,6 @@ class InterestTable extends Component {
       title: 'Action',
       key: 'action',
       render: (text, record) => {
-
         const options = getEnabledButtons(record)
         let withdrawInviteText = <FormattedMessage id='withdrawVolunteerInvite' defaultMessage='Withdraw Invite' description='Button allowing event organizer to withdraw a invite already issued to an interested volunteer' />
 
@@ -75,24 +62,23 @@ class InterestTable extends Component {
     }
   ]
 
-  handleInviteButtonClicked(interest) {
+  handleInviteButtonClicked (interest) {
     this.props.onInvite(interest)
   }
 
-  handleDeclineButtonClicked(interest) {
+  handleDeclineButtonClicked (interest) {
     this.props.onDecline(interest)
   }
 
-  handleWithdrawInviteButtonClicked(interest) {
+  handleWithdrawInviteButtonClicked (interest) {
     this.props.onWithdrawInvite(interest)
   }
 
-  render() {
+  render () {
     return (
       <Table columns={this.columns} dataSource={this.props.interests} pagination={false} />
     )
   }
-
 }
 
 InterestTable.propTypes = {
@@ -101,11 +87,11 @@ InterestTable.propTypes = {
   onDecline: PropTypes.func.isRequired
 }
 
-function getEnabledButtons(interest) {
+function getEnabledButtons (interest) {
   return {
-    inviteButtonEnabled: interest.status == 'interested',
-    declineButtonEnabled: interest.status != 'completed' && interest.status != 'cancelled' && interest.status != 'declined',
-    withdrawInviteButtonEnabled: interest.status != 'completed' && interest.status != 'cancelled' && interest.status != 'interested'
+    inviteButtonEnabled: interest.status === 'interested',
+    declineButtonEnabled: interest.status !== 'completed' && interest.status !== 'cancelled' && interest.status !== 'declined',
+    withdrawInviteButtonEnabled: interest.status !== 'completed' && interest.status !== 'cancelled' && interest.status !== 'interested'
   }
 }
 

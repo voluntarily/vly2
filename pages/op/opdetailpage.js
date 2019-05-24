@@ -11,8 +11,7 @@ import RegisterInterestSection from '../../components/Interest/RegisterInterestS
 import PropTypes from 'prop-types'
 
 export class OpDetailPage extends Component {
-
-  static async getInitialProps({ store, query }) {
+  static async getInitialProps ({ store, query }) {
     // Get one Op
     // console.log('getting op details', query)
     try {
@@ -25,7 +24,7 @@ export class OpDetailPage extends Component {
   }
 
   // Called when the user confirms they want to delete an op
-  async handleDelete(op) {
+  async handleDelete (op) {
     if (!op) return
     // Actual data request
     await this.props.dispatch(reduxApi.actions.opportunities.delete({ id: op._id }))
@@ -38,11 +37,11 @@ export class OpDetailPage extends Component {
   handleDeleteCancelled = () => { message.error('Delete Cancelled') }
 
   // Called when the user registers interest in an op
-  handleRegisterInterest(op) {
+  handleRegisterInterest (op) {
 
   }
 
-  render() {
+  render () {
     let content
     if (this.props.ops && this.props.ops.length === 1) {
       const op = this.props.ops[0]

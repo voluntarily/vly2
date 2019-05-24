@@ -10,37 +10,34 @@ import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
 
 class InterestSection extends Component {
-
-  async componentDidMount() {
+  async componentDidMount () {
     // Get all interests
 
     const op = this.props.op
     try {
-      const interests = await this.props.dispatch(
-        reduxApi.actions.interests.get({ id: '', op })
-      )
+      await this.props.dispatch(reduxApi.actions.interests.get({ id: '', op }))
       // console.log('got interests', interests, 'for', op)
     } catch (err) {
       // console.log('error in getting interests', err)
     }
   }
 
-  async handleInvite(interest) {
+  async handleInvite (interest) {
     interest.status = 'invited'
     await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
   }
 
-  async handleWithdrawInvite(interest) {
+  async handleWithdrawInvite (interest) {
     interest.status = 'interested'
     await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
   }
 
-  async handleDecline(interest) {
+  async handleDecline (interest) {
     interest.status = 'declined'
     await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
   }
 
-  render() {
+  render () {
     if (!(this.props.interests && this.props.interests.data)) {
       return (
         <section>
@@ -50,7 +47,6 @@ class InterestSection extends Component {
         </section>
       )
     } else {
-
       return (
         <section>
           <InterestTable
