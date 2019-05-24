@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Button, Input } from 'antd'
+import { TextH1, TextSubtitle } from '../VTheme/VTheme'
 const Search = Input.Search
 
 // this is the big container block that holds the container together lol
@@ -128,8 +129,6 @@ const AwesomeVideo = styled.video`
   @media screen and (max-width: 768px) {
     width: 100vh;
   }
-
-
 `
 // end left hand video side
 
@@ -174,44 +173,6 @@ const HeroRight = styled.div`
   }
 `
 
-const HeroHeader = styled.h1`
-  color: black;
-  font-family: Inter, -apple-system, 'Helvetica Neue', Helvetica, Arial,
-    sans-serif;
-  font-size: 3.5rem;
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  margin-bottom: 0px;
-  letter-spacing: -1.46px;
-
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    font-size: 2.5rem;
-    letter-spacing: -0.1rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    font-size: 2rem;
-    width: 90vw;
-    margin-right: initial;
-    letter-spacing: -0.03em;
-  }
-`
-
-const HeroCopy = styled.p`
-  letter-spacing: -0.3px;
-  font-size: 1.5rem;
-  color: #333333;
-
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    letter-spacing: -0.06rem;
-    font-size: 1.5rem;
-  }
-  @media screen and (max-width: 768px) {
-    width: 90vw;
-    font-size: 1rem;
-  }
-`
-
 const SearchBox = styled.div`
   background-color: white;
   height: 4rem;
@@ -238,17 +199,23 @@ const Hero = ({ ...props }) => (
   <AwesomeHeroContainer>
     <HeroLeft>
       <Notch />
-      <AwesomeVideo poster='./static/img/heroImage.png' autoPlay loop muted playsInline>
+      <AwesomeVideo
+        poster='./static/img/heroImage.png'
+        autoPlay
+        loop
+        muted
+        playsInline
+      >
         <source src='./static/test.mp4' type='video/mp4' />
       </AwesomeVideo>
     </HeroLeft>
     <HeroRight>
-      <HeroHeader>volunteer yo—self.</HeroHeader>
-      <HeroCopy>
+      <TextH1>volunteer yo—self.</TextH1>
+      <TextSubtitle>
         Find awesome ways to volunteer your skills.
         <br />
         Help your community do epic things.
-      </HeroCopy>
+      </TextSubtitle>
       <SearchBox>
         <Search
           placeholder="try 'building robots' "

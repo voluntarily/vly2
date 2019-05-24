@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Navigation from '../Navigation/Navigation'
 
 import links from './FooterMenu'
-import { Grid, Spacer } from '../VTheme/VTheme'
+import { Grid, Spacer, TextP } from '../VTheme/VTheme'
 import styled from 'styled-components'
 const getAllowedLinks = isAuthenticated =>
   links()
@@ -42,7 +42,7 @@ const FooterLogo = styled.img`
   }
 `
 
-const FooterText = styled.h1`
+const FooterText = styled.div`
   letter-spacing: -0.4px;
   font-size: 1rem;
   margin-top: 1rem;
@@ -70,7 +70,6 @@ const FooterGridItemTitle = styled.h1`
 `
 
 const MenuItem = styled.a`
-
   font-weight: 700;
   font-size: 1.2rem;
   color: #333333;
@@ -87,11 +86,13 @@ const Footer = ({ isAuthenticated, ...props }) => (
     <FooterContainer>
       <FooterLogo src='../../static/vlogo.svg' />
       <FooterText>
-        Voluntarily is an awesome open source project run by the&nbsp;
-        <a href='https://www.pamfergusson.org.nz/' target='_blank'>
-          Pam Fergussion Charitable Trust
-        </a>{' '}
-        lol
+        <TextP>
+          Voluntarily is an awesome open source project run by the&nbsp;
+          <a href='https://www.pamfergusson.org.nz/' target='_blank'>
+            Pam Fergussion Charitable Trust
+          </a>{' '}
+          lol
+        </TextP>
       </FooterText>
       <Spacer />
       <Grid>
