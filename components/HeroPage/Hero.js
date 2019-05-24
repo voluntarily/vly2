@@ -173,6 +173,7 @@ const HeroRight = styled.div`
     left: 0rem;
   }
 `
+
 const HeroHeader = styled.h1`
   color: black;
   font-family: Inter, -apple-system, 'Helvetica Neue', Helvetica, Arial,

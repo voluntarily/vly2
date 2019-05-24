@@ -22,7 +22,7 @@ const getText = locale => {
 }
 
 const AboutSection = styled.div`
-  width: 64rem;
+  width: 72rem;
   margin: 0 0;
 
   h1 {
@@ -35,7 +35,7 @@ const AboutSection = styled.div`
   p {
     font-size: 2rem;
     letter-spacing: -1.3px;
-    font-weight: bold;
+    font-weight: 400;
     color: #333;
   }
 

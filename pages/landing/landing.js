@@ -20,13 +20,13 @@ export class Landing extends Component {
       <div>
         <Hero />
         <FullPage>
-          <AboutSection
+          {/* <AboutSection
             title='Support Innovation in the classroom.'
             subtitle='Voluntarily connects you with classrooms to teach science, technology, engineering, entrepreneurship, arts, and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content.'
-          />
+          /> */}
           <div className='spacer' />
           <TitleSectionSub
-            title='How we help'
+            title='Who we help'
             subtitle='We help these awesome people accomplish amazing things'
           />
           <PersonaSection />
