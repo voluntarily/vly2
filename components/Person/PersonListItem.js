@@ -28,7 +28,7 @@ PersonListItem.propTypes = {
   person: PropTypes.shape({
     cuid: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    moniker: PropTypes.string,
+    nickname: PropTypes.string,
     email: PropTypes.string.isRequired,
     avatar: PropTypes.any,
     role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op-provider', 'volunteer', 'content-provider', 'tester'])),

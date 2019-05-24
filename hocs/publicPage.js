@@ -73,6 +73,7 @@ export default Page =>
         : getUserFromServerCookie(ctx.req)
       try {
         me = await getPersonFromUser(loggedUser)
+        console.log('got me', me)
       } catch (err) {
         console.error()
       }
@@ -84,8 +85,8 @@ export default Page =>
         me,
         currentUrl: ctx.pathname,
         isAuthenticated: !!loggedUser,
-        isPerson: !!me,
-        isAdmin: !!loggedUser && me.role.includes('admin')
+        isPerson: !!me
+        // isAdmin: !!loggedUser && me.role.includes('admin')
       }
     }
 

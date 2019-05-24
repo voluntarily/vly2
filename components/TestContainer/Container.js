@@ -31,7 +31,7 @@ const Container = () => (
 Container.propTypes = {
   person: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    moniker: PropTypes.string.isRequired,
+    nickname: PropTypes.string.isRequired,
     about: PropTypes.string.isRequired,
     // type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])).isRequired,
     _id: PropTypes.string.isRequired
