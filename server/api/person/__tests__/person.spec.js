@@ -183,3 +183,67 @@ test.serial('Should load a person into the db and delete them via the api', asyn
   const queriedPerson = await Person.findOne({ email: p.email }).exec()
   t.is(queriedPerson, null)
 })
+
+test.serial('Should find a person by email', async t => {
+  t.plan(1)
+  const p = {
+    name: 'Testy McTestFace',
+    moniker: 'Testy',
+    phone: '123 456789',
+    email: 'unique_email@voluntari.ly',
+    role: ['tester']
+  }
+
+  const person = new Person(p)
+  await person.save()
+  const email = p.email
+  // console.log('asking for ', `/api/people/email/${email}`)
+  const res = await request(server)
+    .get(`/api/person/by/email/${email}`)
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200)
+  // console.log(res.body)
+  t.is(res.body.name, p.name)
+})
+
+test.serial('Should find a person by moniker', async t => {
+  t.plan(1)
+  const p = {
+    name: 'Testy McTestFace',
+    moniker: 'Testy',
+    phone: '123 456789',
+    email: 'Testy555@voluntari.ly',
+    role: ['tester']
+  }
+
+  const person = new Person(p)
+  await person.save()
+  const res = await request(server)
+    .get(`/api/person/by/moniker/${p.moniker}`)
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200)
+  // console.log(res.body)
+  t.is(res.body.name, p.name)
+})
+
+test.only('Should find no person', async t => {
+  t.plan(1)
+  const p = {
+    name: 'Testy McTestFace',
+    moniker: 'Testy',
+    phone: '123 456789',
+    email: 'Testy555@voluntari.ly',
+    role: ['tester']
+  }
+
+  const person = new Person(p)
+  await person.save()
+  const res = await request(server)
+    .get(`/api/person/by/email/not_a_real_email@voluntari.ly`)
+    .set('Accept', 'application/json')
+    .expect(404)
+  // console.log(res.body)
+  t.is(res.body.error, 'person not found')
+})

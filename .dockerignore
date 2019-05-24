@@ -2,14 +2,14 @@
 
 .git
 .results
-scripts
 *Dockerfile*
 node_modules
-package-lock.json
 .editorconfig
 *.code-workspace
 coverage
 .nyc_output
 .next
 .vscode
-__tests__
+x
+*.pem
+
