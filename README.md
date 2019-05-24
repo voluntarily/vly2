@@ -114,6 +114,3 @@ To halt the containers run:
 
 More information at [Using Docker and Docker Compose](https://voluntarily.atlassian.net/wiki/spaces/VP/pages/9044043/Using+Docker+and+Docker+Compose)
 
-
-## But wait there's more
-
