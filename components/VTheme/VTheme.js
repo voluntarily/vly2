@@ -131,7 +131,7 @@ export const TextHeading = styled.p`
 
 export const TextHeadingBlack = styled.h1`
   font-size: 2rem;
-  letter-spacing: -4px;
+  letter-spacing: -2px;
   font-weight: 900;
   @media screen and (max-width: 767px) {
     font-size: 1rem;
@@ -150,9 +150,9 @@ export const TextHeadingBold = styled.p`
 export const TextHeadingSubtitle = styled.p`
   line-height: 2;
   font-size: 1.1rem;
-  letter-spacing: -0.8px;
+  letter-spacing: -0.6px;
   @media screen and (max-width: 768px) {
-    pline-height: 1.8;
+    line-height: 1.8;
   }
 ` // end TextHeading
 
@@ -163,6 +163,8 @@ HERO CLASSES
 Not the RPG Kind, but the ones we use for landing pages
 and the ones that
 
+
+We probably don't need this...
 ^__^
 
 ====================================================
