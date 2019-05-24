@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Button, Input } from 'antd'
+import { TextH1, TextSubtitle } from '../VTheme/VTheme'
 const Search = Input.Search
 
 // this is the big container block that holds the container together lol
@@ -128,8 +129,6 @@ const AwesomeVideo = styled.video`
   @media screen and (max-width: 768px) {
     width: 100vh;
   }
-
-
 `
 // end left hand video side
 
@@ -238,17 +237,23 @@ const Hero = ({ ...props }) => (
   <AwesomeHeroContainer>
     <HeroLeft>
       <Notch />
-      <AwesomeVideo poster='./static/img/heroImage.png' autoPlay loop muted playsInline>
+      <AwesomeVideo
+        poster='./static/img/heroImage.png'
+        autoPlay
+        loop
+        muted
+        playsInline
+      >
         <source src='./static/test.mp4' type='video/mp4' />
       </AwesomeVideo>
     </HeroLeft>
     <HeroRight>
-      <HeroHeader>volunteer yo—self.</HeroHeader>
-      <HeroCopy>
+      <TextH1>volunteer yo—self.</TextH1>
+      <TextSubtitle>
         Find awesome ways to volunteer your skills.
         <br />
         Help your community do epic things.
-      </HeroCopy>
+      </TextSubtitle>
       <SearchBox>
         <Search
           placeholder="try 'building robots' "

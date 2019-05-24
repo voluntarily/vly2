@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import { TextHeadingBlack } from '../VTheme/VTheme';
 
 const TitleContainer = styled.div`
   margin-top: 5rem;
@@ -32,7 +33,7 @@ const TitleContainer = styled.div`
 
 const TitleSectionSub = ({ title, subtitle, ...props }) => (
   <TitleContainer>
-    <h1>{title}</h1>
+    <TextHeadingBlack>{title}</TextHeadingBlack>
     <p>{subtitle}</p>
   </TitleContainer>
 )

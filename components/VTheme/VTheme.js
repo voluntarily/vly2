@@ -70,12 +70,40 @@ export const TextBigTitle = styled.h1`
 ` // end TextBigTitle
 
 export const TextH1 = styled.h1`
+  color: black;
+  font-size: 3.5rem;
   font-weight: 900;
-  font-size: 4rem;
-  @media screen and (max-width: 767px) {
-    font-size: 2rem;
+  letter-spacing: -0.03em;
+  margin-bottom: 0px;
+  letter-spacing: -1.46px;
+
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    font-size: 2.5rem;
+    letter-spacing: -0.1rem;
   }
-` // end TextH1
+
+  @media screen and (max-width: 768px) {
+    font-size: 2rem;
+    width: 90vw;
+    margin-right: initial;
+    letter-spacing: -0.03em;
+  }
+` // End TextH1
+
+export const TextSubtitle = styled.p`
+  letter-spacing: -0.3px;
+  font-size: 1.5rem;
+  color: #333333;
+
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    letter-spacing: -0.06rem;
+    font-size: 1.5rem;
+  }
+  @media screen and (max-width: 768px) {
+    width: 90vw;
+    font-size: 1rem;
+  }
+` // TextSubtitle
 
 export const TextP = styled.p`
   font-weight: 400;
@@ -85,7 +113,7 @@ export const TextP = styled.p`
   }
 ` // end TextP
 
-export const TextBold = styled.p`
+export const TextPBold = styled.p`
   font-weight: 700;
   font-size: 1rem;
   @media screen and (max-width: 767px) {
@@ -95,19 +123,38 @@ export const TextBold = styled.p`
 
 export const TextHeading = styled.p`
   font-size: 2rem;
-  font-weight:400;
+  font-weight: 400;
   @media screen and (max-width: 767px) {
     font-size: 1rem;
   }
-` //end TextHeading
+` // end TextHeading
+
+export const TextHeadingBlack = styled.h1`
+  font-size: 2rem;
+  letter-spacing: -4px;
+  font-weight: 900;
+  @media screen and (max-width: 767px) {
+    font-size: 1rem;
+  }
+` // end TextHeadingBold
 
 export const TextHeadingBold = styled.p`
   font-size: 2rem;
-  font-weight:700;
+  letter-spacing: -2px;
+  font-weight: 700;
   @media screen and (max-width: 767px) {
     font-size: 1rem;
   }
-` //end TextHeadingBold
+` // end TextHeadingBold
+
+export const TextHeadingSubtitle = styled.p`
+  line-height: 2;
+  font-size: 1.1rem;
+  letter-spacing: -0.8px;
+  @media screen and (max-width: 768px) {
+    pline-height: 1.8;
+  }
+` // end TextHeading
 
 /*
 ====================================================
@@ -120,5 +167,3 @@ and the ones that
 
 ====================================================
 */
-
-
