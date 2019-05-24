@@ -1,9 +1,10 @@
 import styled from 'styled-components'
+import { EDEADLK } from 'constants';
 
 /*
 ====================================================
 
-UTILITY AND GRIDS ERMAHGERD
+UTILITY, CONTAINERS AND GRIDS ERMAHGERD
 Use these objects to move components into a nice grid  and space them out when you need them
 
 (╯°□°)╯︵ ┻━┻  Grids > Tables (╯°□°)╯︵ ┻━┻
@@ -29,6 +30,11 @@ export const HalfGrid = styled.div`
     grid-template-columns: calc(100vw - 2rem);
   }
 ` // end halfgrid
+export const HalfGridContainer = styled.div`
+
+`
+
+
 
 export const Grid = styled.div`
   position: relative;
@@ -47,6 +53,14 @@ export const Grid = styled.div`
     grid-gap: 0rem;
   }
 ` // end grid
+
+export const GridContainer = styled.div`
+
+`
+
+export const GridTestItem = styled.div`
+background-color: pink;
+`
 
 /*
 ====================================================
@@ -112,9 +126,8 @@ export const TextHeadingBold = styled.p`
 /*
 ====================================================
 
-HERO CLASSES
-Not the RPG Kind, but the ones we use for landing pages
-and the ones that
+CONTAINER CLASSES
+We use these to contain th
 
 ^__^
 
