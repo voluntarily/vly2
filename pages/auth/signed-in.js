@@ -22,7 +22,10 @@ class SignedIn extends React.Component {
 
   componentDidMount () {
   // static async getInitialProps (ctx) {
+    console.log('componentDidMount')
     parseHash((err, result) => {
+      console.log('parseHash:', result)
+      if (!result) return
       if (err) {
         console.error('Something happened with the Sign In request')
         return
@@ -38,4 +41,5 @@ class SignedIn extends React.Component {
   }
 }
 
+export const SignedInTest = SignedIn
 export default publicPage(SignedIn)

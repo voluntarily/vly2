@@ -1,15 +1,16 @@
 import Link from 'next/link'
 import Head from 'next/head'
+import { Divider } from 'antd'
 import publicPage, { A4 } from '../hocs/publicPage'
-import Hello from '../components/test/Hello'
-import LessStyled from '../components/test/LessStyled'
-import AntdType from '../components/test/AntdType'
-import IntlDemo from '../components/test/IntlDemo'
+import Hello from '../components/examples/Hello'
+import LessStyled from '../components/examples/LessStyled'
+import AntdType from '../components/examples/AntdType'
+import IntlDemo from '../components/examples/IntlDemo'
 import OrgCard from '../components/Org/OrgCard'
 import OrgDetail from '../components/Org/OrgDetail'
 import PersonCard from '../components/Person/PersonCard'
 import PersonDetail from '../components/Person/PersonDetail'
-import RoutePush, { RouteBack, RouteReplace } from '../components/test/RoutePush'
+import RoutePush, { RouteBack, RouteReplace } from '../components/examples/RoutePush'
 const org = {
   _id: 'f34gb2bh24b24b2',
   name: 'OMGTech',
@@ -48,23 +49,27 @@ const TestPage = ({ ...props }) =>
     <Hello />
     <IntlDemo />
     <LessStyled />
+    <Divider />
     <h1>Test Router Actions</h1>
     <RoutePush href='/'>Home </RoutePush>
     <RoutePush href='/about'>About Page </RoutePush>
     <RouteReplace href='/orgs'>Replace Orgs </RouteReplace>
     <RouteBack href='/about'>Back</RouteBack>
-    <Link href='/test-redirect'><a>Test Redirect to About</a></Link>
+    <Link href='/examples-redirect'><a>Test Redirect to About</a></Link>
+    <Divider />
     <h1>Authenticated User Properties</h1>
     {props.isAuthenticated ? <UserProp {...props} /> : <p>Not signed in</p>}
-    <AntdType />
     <h1>Person Card</h1>
-    <PersonCard style={{ width: '300px' }} person={person} />
+    <PersonCard style={{ width: '300px' }} person={props.isPerson ? props.me : person} />
+
     <h1>Person Detail</h1>
-    <PersonDetail person={person} />
+    <PersonDetail person={props.isPerson ? props.me : person} />
+    <Divider />
     <h1>Organisation Card</h1>
     <OrgCard style={{ width: '300px' }} org={org} />
     <h1>Organisation Detail</h1>
     <OrgDetail org={org} />
+    <AntdType />
   </A4>
 
 export default publicPage((TestPage))
