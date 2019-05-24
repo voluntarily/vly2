@@ -84,7 +84,7 @@ export default Page =>
         me,
         currentUrl: ctx.pathname,
         isAuthenticated: !!loggedUser,
-        isPerson: !!me,
+        isPerson: !!me
         // isAdmin: !!loggedUser && me.role.includes('admin')
       }
     }
