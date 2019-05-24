@@ -16,3 +16,6 @@ Should allow sorting by rank, selecting a group for a group action and action bu
 Display an interest relation differently depending on state and provide buttons to change state
 Gets data from server
 
+### RegisterInterestSection
+Logic allowing a user to register their interest in an opportunity. Differs from InterestSection, which displays a summary of interested parties to an op owner.
+Gets data from server

@@ -10,23 +10,35 @@ import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
 
 class InterestSection extends Component {
-  state = {}
   async componentDidMount () {
     // Get all interests
 
     const op = this.props.op
     try {
-      const interests = await this.props.dispatch(
-        reduxApi.actions.interests.get({ id: '', op })
-      )
+      await this.props.dispatch(reduxApi.actions.interests.get({ id: '', op }))
       // console.log('got interests', interests, 'for', op)
-      this.setState({ interests })
     } catch (err) {
       // console.log('error in getting interests', err)
     }
   }
+
+  async handleInvite (interest) {
+    interest.status = 'invited'
+    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
+  }
+
+  async handleWithdrawInvite (interest) {
+    interest.status = 'interested'
+    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
+  }
+
+  async handleDecline (interest) {
+    interest.status = 'declined'
+    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
+  }
+
   render () {
-    if (!this.state.interests) {
+    if (!(this.props.interests && this.props.interests.data)) {
       return (
         <section>
           <Loading>
@@ -37,8 +49,12 @@ class InterestSection extends Component {
     } else {
       return (
         <section>
-          <InterestTable interests={this.state.interests} />
-          {/* <code>{JSON.stringify(this.state.interests)}</code>  */}
+          <InterestTable
+            interests={this.props.interests.data}
+            onInvite={this.handleInvite.bind(this)}
+            onWithdrawInvite={this.handleWithdrawInvite.bind(this)}
+            onDecline={this.handleDecline.bind(this)} />
+          {/* <code>{JSON.stringify(this.props.interests.data)}</code>  */}
         </section>
       )
     }
