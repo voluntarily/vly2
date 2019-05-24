@@ -91,9 +91,10 @@ export const TextH1 = styled.h1`
   color: black;
   font-size: 3.5rem;
   font-weight: 900;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.055em;
+  text-indent: -0.03em;
   margin-bottom: 0px;
-  letter-spacing: -1.46px;
+
 
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     font-size: 2.5rem;

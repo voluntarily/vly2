@@ -32,6 +32,8 @@ border-radius: 12px;
 `
 
 const HeroImage = styled.img`
+width: 624px;
+object-fit: cover;
 `
 const FullWidthBlock = styled.div`
 width: 80rem;
