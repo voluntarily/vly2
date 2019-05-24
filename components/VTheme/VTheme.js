@@ -5,7 +5,8 @@ import styled from 'styled-components'
 
 UTILITY AND GRIDS ERMAHGERD
 Use these objects to move components into a nice grid  and space them out when you need them
-
+Grids have been written to scale responsively
+Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZc
 (╯°□°)╯︵ ┻━┻  Grids > Tables (╯°□°)╯︵ ┻━┻
 
 ====================================================
@@ -30,6 +31,23 @@ export const HalfGrid = styled.div`
   }
 ` // end halfgrid
 
+export const TripleGrid = styled.div`
+  display: grid;
+  grid-template-columns: 25rem 25rem 25rem;
+  grid-gap: 2.5rem;
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    grid-template-columns: repeat(auto-fit, 25rem);
+    justify-content: start;
+    justify-items: center;
+  }
+
+  @media screen and (max-width: 767px) {
+    grid-template-columns: 98vw;
+    grid-gap: 0rem;
+  }
+` // end triplegrid
+
 export const Grid = styled.div`
   position: relative;
   display: grid;
@@ -53,7 +71,7 @@ export const Grid = styled.div`
 
 TEXT OBJECTS OMGLOL
 These text classes are used to maintain consistency across the entire platform
-I've been a terrible example so far, but will aim to fix usage soon
+I have done a terrible example so far, but will aim to fix usage soon
 -Walt
 ^__^
 
@@ -131,8 +149,10 @@ export const TextHeading = styled.p`
 
 export const TextHeadingBlack = styled.h1`
   font-size: 2rem;
-  letter-spacing: -2px;
+  letter-spacing: -1.4px;
   font-weight: 900;
+  line-height: 40px;
+  margin: initial;
   @media screen and (max-width: 767px) {
     font-size: 1rem;
   }
@@ -150,7 +170,7 @@ export const TextHeadingBold = styled.p`
 export const TextHeadingSubtitle = styled.p`
   line-height: 2;
   font-size: 1.1rem;
-  letter-spacing: -0.6px;
+  letter-spacing: -0.2px;
   @media screen and (max-width: 768px) {
     line-height: 1.8;
   }
@@ -162,7 +182,6 @@ export const TextHeadingSubtitle = styled.p`
 HERO CLASSES
 Not the RPG Kind, but the ones we use for landing pages
 and the ones that
-
 
 We probably don't need this...
 ^__^

@@ -5,7 +5,8 @@ import { TextHeadingBlack, TextHeadingSubtitle } from '../VTheme/VTheme'
 
 const TitleContainer = styled.div`
   margin-top: 5rem;
-  height: 6rem;
+  margin-bottom: 1rem;
+  position: relative;
 
 
 
