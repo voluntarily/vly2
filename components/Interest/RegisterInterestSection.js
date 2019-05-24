@@ -52,7 +52,7 @@ class RegisterInterestSection extends Component {
             message.success('Interest added')
         }
 
-        interest = res[0]
+        // interest = res[0]
 
     }
 

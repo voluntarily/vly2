@@ -10,7 +10,7 @@ import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
 
 class InterestSection extends Component {
-  state = {}
+
   async componentDidMount() {
     // Get all interests
 
@@ -24,6 +24,22 @@ class InterestSection extends Component {
       // console.log('error in getting interests', err)
     }
   }
+
+  async handleInvite(interest) {
+    interest.status = 'invited'
+    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
+  }
+
+  async handleWithdrawInvite(interest) {
+    interest.status = 'interested'
+    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
+  }
+
+  async handleDecline(interest) {
+    interest.status = 'declined'
+    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
+  }
+
   render() {
     if (!(this.props.interests && this.props.interests.data)) {
       return (
@@ -37,7 +53,11 @@ class InterestSection extends Component {
 
       return (
         <section>
-          <InterestTable interests={this.props.interests.data} />
+          <InterestTable
+            interests={this.props.interests.data}
+            onInvite={this.handleInvite.bind(this)}
+            onWithdrawInvite={this.handleWithdrawInvite.bind(this)}
+            onDecline={this.handleDecline.bind(this)} />
           {/* <code>{JSON.stringify(this.props.interests.data)}</code>  */}
         </section>
       )
