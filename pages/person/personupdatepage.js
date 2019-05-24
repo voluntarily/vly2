@@ -50,7 +50,7 @@ export class PersonUpdatePage extends Component {
       : {
         // for new people load the default template doc.
         name: '',
-        moniker: '',
+        nickname: '',
         about: '',
         email: '',
         phone: '',
@@ -65,7 +65,7 @@ export class PersonUpdatePage extends Component {
           <FormattedMessage
             defaultMessage='Profile for '
             id='person.pageheading' />
-          {person.moniker}
+          {person.nickname}
         </h1>
         <small><FormattedMessage
           defaultMessage='Tell us something about yourself.'
@@ -81,7 +81,7 @@ PersonUpdatePage.propTypes = {
   person: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
-    moniker: PropTypes.string,
+    nickname: PropTypes.string,
     about: PropTypes.string,
     email: PropTypes.string,
     phone: PropTypes.string,

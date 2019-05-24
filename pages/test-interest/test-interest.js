@@ -27,7 +27,7 @@ const interests = people.map(person => ({
   _id: person._id,
   person: person._id,
   opportunity: opportunity._id,
-  comment: `${person.moniker} is interested call ${person.phone}`,
+  comment: `${person.nickname} is interested call ${person.phone}`,
   status: 'interested'
 }))
 

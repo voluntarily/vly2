@@ -7,14 +7,14 @@ import MemoryMongo from '../../../util/test-memory-mongo'
 const people = [
   {
     name: 'ANDREW WATKINS',
-    moniker: 'Andrew',
+    nickname: 'Andrew',
     email: 'andrew@omgtech.co.nz',
     phone: '027 7031007',
     role: ['tester']
   },
   {
     name: 'WALTER LIM',
-    moniker: 'Walt',
+    nickname: 'Walt',
     phone: '027 7031007',
     email: 'walter@omgtech.co.nz',
     role: ['tester']
@@ -50,7 +50,7 @@ test.serial('verify fixture database has people', async t => {
 
   // can find by email with then
   await Person.findOne({ email: 'andrew@omgtech.co.nz' }).then((person) => {
-    t.is(person.moniker, 'Andrew')
+    t.is(person.nickname, 'Andrew')
   })
 
   await Person.find().then((p) => {
@@ -72,7 +72,7 @@ test.serial('Should send correct data when queried against an id', async t => {
   t.plan(1)
   const p = {
     name: 'Testy McTestFace',
-    moniker: 'Testy',
+    nickname: 'Testy',
     phone: '123 456789',
     email: 'query@omgtech.co.nz',
     role: ['tester']
@@ -96,7 +96,7 @@ test.serial('Should correctly add a person', async t => {
 
   const p = {
     name: 'Testy McTestFace',
-    moniker: 'Testy',
+    nickname: 'Testy',
     phone: '123 456789',
     email: 'addy@omgtech.co.nz',
     gender: 'binary',
@@ -133,7 +133,7 @@ test.serial('Should correctly add a person', async t => {
 test.serial('Should correctly add a person and sanitise inputs', async t => {
   const p = {
     name: 'Bobby; DROP TABLES', // is allowed
-    moniker: '<b>SQLINJECTOR</b>',
+    nickname: '<b>SQLINJECTOR</b>',
     phone: "1234<img src=x onerror=alert('img') />ABCD", // should remove img
     email: 'bobby@omgtech.co.nz', // ok
     gender: "console.log('hello world')", // ok
@@ -154,7 +154,7 @@ test.serial('Should load a person into the db and delete them via the api', asyn
   t.plan(2)
   const p = {
     name: 'Testy McTestFace',
-    moniker: 'Testy',
+    nickname: 'Testy',
     phone: '123 456789',
     email: 'loady@omgtech.co.nz',
     gender: 'binary',
@@ -182,4 +182,68 @@ test.serial('Should load a person into the db and delete them via the api', asyn
   // check person is gone
   const queriedPerson = await Person.findOne({ email: p.email }).exec()
   t.is(queriedPerson, null)
+})
+
+test.serial('Should find a person by email', async t => {
+  t.plan(1)
+  const p = {
+    name: 'Testy McTestFace',
+    nickname: 'Testy',
+    phone: '123 456789',
+    email: 'unique_email@voluntari.ly',
+    role: ['tester']
+  }
+
+  const person = new Person(p)
+  await person.save()
+  const email = p.email
+  // console.log('asking for ', `/api/people/email/${email}`)
+  const res = await request(server)
+    .get(`/api/person/by/email/${email}`)
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200)
+  // console.log(res.body)
+  t.is(res.body.name, p.name)
+})
+
+test.serial('Should find a person by nickname', async t => {
+  t.plan(1)
+  const p = {
+    name: 'Testy McTestFace',
+    nickname: 'Testy',
+    phone: '123 456789',
+    email: 'Testy555@voluntari.ly',
+    role: ['tester']
+  }
+
+  const person = new Person(p)
+  await person.save()
+  const res = await request(server)
+    .get(`/api/person/by/nickname/${p.nickname}`)
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200)
+  // console.log(res.body)
+  t.is(res.body.name, p.name)
+})
+
+test.only('Should find no person', async t => {
+  t.plan(1)
+  const p = {
+    name: 'Testy McTestFace',
+    nickname: 'Testy',
+    phone: '123 456789',
+    email: 'Testy555@voluntari.ly',
+    role: ['tester']
+  }
+
+  const person = new Person(p)
+  await person.save()
+  const res = await request(server)
+    .get(`/api/person/by/email/not_a_real_email@voluntari.ly`)
+    .set('Accept', 'application/json')
+    .expect(404)
+  // console.log(res.body)
+  t.is(res.body.error, 'person not found')
 })

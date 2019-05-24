@@ -4,7 +4,8 @@ import Router from 'next/router'
 
 import {
   getUserFromServerCookie,
-  getUserFromLocalCookie
+  getUserFromLocalCookie,
+  getPersonFromUser
 } from '../lib/auth/auth'
 import { Layout } from 'antd'
 import Footer from '../components/Footer/Footer'
@@ -66,16 +67,26 @@ export const FillWindow = styled.div`
 export default Page =>
   class DefaultPage extends React.Component {
     static async getInitialProps (ctx) {
+      let me = false
       const loggedUser = process.browser
         ? getUserFromLocalCookie()
         : getUserFromServerCookie(ctx.req)
+      try {
+        me = await getPersonFromUser(loggedUser)
+        console.log('got me', me)
+      } catch (err) {
+        console.error()
+      }
       const pageProps =
         Page.getInitialProps && (await Page.getInitialProps(ctx))
       return {
         ...pageProps,
         loggedUser,
+        me,
         currentUrl: ctx.pathname,
-        isAuthenticated: !!loggedUser
+        isAuthenticated: !!loggedUser,
+        isPerson: !!me
+        // isAdmin: !!loggedUser && me.role.includes('admin')
       }
     }
 

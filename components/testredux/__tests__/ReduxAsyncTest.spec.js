@@ -36,34 +36,44 @@ const initStore = {
   health: initHealth,
   rst: { name: 'World' }
 }
-const realStore = createStore(reducers, initStore, applyMiddleware(thunk))
-fetchMock.get(`${API_URL}/health`, expectedHealth)
 
-test('api/health', async t => {
+test.beforeEach('create a store', async t => {
+  // console.log('creating people')
+  t.context.realStore = createStore(reducers, initStore, applyMiddleware(thunk))
+  // console.log('creating people done')
+})
+
+test.afterEach.always(async t => {
+  t.context.realStore = null
+})
+
+test.serial('api/health', async t => {
   // undefined store returns initial state
+  fetchMock.get(`${API_URL}/health`, expectedHealth)
+
   const init = HealthReducer(undefined, {})
   t.deepEqual(init, initHealth)
 
-  await fetchHealth()(realStore.dispatch)
-  const newstate = await realStore.getState().health
+  await fetchHealth()(t.context.realStore.dispatch)
+  const newstate = await t.context.realStore.getState().health
   t.deepEqual(newstate, expectedHealth)
-  // fetchMock.restore()
+  fetchMock.restore()
 })
 
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-test('mount, render add input and save', async t => {
-  // fetchMock.getOnce(`${API_URL}/health`, expectedHealth)
+test.serial('mount, render add input and save', async t => {
+  fetchMock.getOnce(`${API_URL}/health`, expectedHealth)
 
   const wrapper = mount(
-    <Provider store={realStore}>
+    <Provider store={t.context.realStore}>
       <ReduxAsyncTest />
     </Provider>
   )
   // console.log('realstore state', realStore.getState())
-  t.is(realStore.getState().health.health, 'Unknown')
+  t.is(t.context.realStore.getState().health.health, 'Unknown')
   // now click the save button.
   await wrapper
     .find('button')
@@ -73,7 +83,7 @@ test('mount, render add input and save', async t => {
   // TODO find out how to wait for the callback on the click handler to complete,
   await sleep(10)
   // console.log(await realStore.getState())
-  t.is(await realStore.getState().health.health, 'OK')
+  t.is(await t.context.realStore.getState().health.health, 'OK')
   // Hello class updates with the new text
   wrapper.update()
 
@@ -92,5 +102,5 @@ test('mount, render add input and save', async t => {
       .text(),
     'Health is OK'
   )
-  // fetchMock.restore()
+  fetchMock.restore()
 })

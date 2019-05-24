@@ -1,0 +1,2 @@
+# super simple node shell mapped onto the current folder
+docker run -v $(pwd):/root -it -rm node /bin/bash

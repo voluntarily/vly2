@@ -24,7 +24,7 @@
   "status": "Status",
   "role": "Role",
   "personName": "Full Name",
-  "personMoniker": "What we should call you",
+  "personnickname": "What we should call you",
   "personEmail": "Email",
   "personPhone": "Phone",
   "personAbout": "About you",
