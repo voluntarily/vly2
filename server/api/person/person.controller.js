@@ -32,7 +32,7 @@ function ensureSanitized (req, res, next) {
   const p = req.body
 
   p.name = sanitizeHtml(p.name)
-  p.moniker = sanitizeHtml(p.moniker)
+  p.nickname = sanitizeHtml(p.nickname)
   p.email = sanitizeHtml(p.email)
   p.phone = sanitizeHtml(p.phone)
   p.gender = sanitizeHtml(p.gender)

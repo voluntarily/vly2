@@ -82,7 +82,7 @@ PersonDetailPage.propTypes = {
   person: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
-    moniker: PropTypes.string,
+    nickname: PropTypes.string,
     about: PropTypes.string,
     email: PropTypes.string,
     phone: PropTypes.string,

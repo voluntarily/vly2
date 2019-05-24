@@ -8,18 +8,18 @@ import { Row, Col } from 'antd'
 const PersonDetail = ({ person }, ...props) => (
 
   <Row type='flex' align='top'>
-    <Head title={person.moniker} />
+    <Head title={person.nickname} />
     <Col // these settings put the image first on narrow pages.
       sm={{ span: 24, order: 1 }}
       md={{ span: 12, order: 2 }}
     >
-      <img style={{ width: '100%', maxWidth: '300px' }} src={person.avatar} alt={person.moniker} />
+      <img style={{ width: '100%', maxWidth: '300px' }} src={person.avatar} alt={person.nickname} />
     </Col>
     <Col
       sm={{ span: 24, order: 2 }}
       md={{ span: 12, order: 1 }}
     >
-      <h1>{person.moniker}</h1>
+      <h1>{person.nickname}</h1>
       <p>{person.name}</p>
       <dl>
         <dt>
@@ -79,7 +79,7 @@ PersonDetail.propTypes = {
   person: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    moniker: PropTypes.string,
+    nickname: PropTypes.string,
     about: PropTypes.string,
     email: PropTypes.string.isRequired,
     phone: PropTypes.string,
