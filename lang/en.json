@@ -3,6 +3,8 @@
   "siteTitle": "Voluntari.ly",
   "error.pagenotfound.title": "Ooops! Page not found",
   "error.pagenotfound.description": "The page you are looking for is not here. We have looked everywhere but it doesn't seem to exist",
+  "error.servererror.title": "Sorry. There was a problem",
+  "error.servererror.description": "Sorry, there was a problem and we can not complete this task. We have let our team know so they can take a look and fix it. For now try to refresh the page, or go back to the previous page",
   "opcard.commitment": "commitment",
   "op.commitment": "commitment",
   "opTitle": "Title",

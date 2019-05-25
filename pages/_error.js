@@ -70,9 +70,9 @@ class ErrorPage extends React.Component {
           <FullPage>
             <Head>
             <FormattedMessage
-              id='error.pagenotfound.title'
-              description='Page title for the 404 error'
-              defaultMessage='Page not found'
+              id='error.servererror.title'
+              description='Page title for error pages'
+              defaultMessage='There was a problem'
               tagName="title"
             />
             </Head>
@@ -80,7 +80,7 @@ class ErrorPage extends React.Component {
             <Spacer />
             <div>
             <FormattedMessage
-              id='error.servererror.title'
+              id='error.servererror.description'
               description='A server error'
               defaultMessage='Sorry, there was a problem and we can not complete this task. We have let our team know so they can take a look and fix it. For now try to refresh the page, or go back to the previous page'
               tagName="h1"

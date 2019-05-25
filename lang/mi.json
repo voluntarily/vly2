@@ -3,6 +3,8 @@
   "siteTitle": "Voluntari.ly",
   "error.pagenotfound.title": "Kāore tēnei whārangi i te tīariari.",
   "error.pagenotfound.description": "Ko te whārangi e rapu ana koe ehara i konei. Kua tirohia e matou i nga wahi katoa engari kaore e kitea",
+  "error.servererror.title": "Aroha mai. He raruraru",
+  "error.servererror.description": "Aroha mai, he raruraru kaore e taea te whakaoti i tenei mahi. Kua tukua e matou te kapa kia mohio ai ratou ka whakatika. Na inaianei ka ngana ki te whakaora i te whārangi, ki te hoki ki te whārangi o mua",
   "opcard.commitment": "commitment",
   "op.commitment": "commitment",
   "opTitle": "Title",
