@@ -42,7 +42,7 @@ export class Landing2 extends Component {
         <section>
           <h2 className='blockTitle'>Happening near you</h2>
           <p className='blockDescription'>
-            Get involved in your community by helping out with an activity below{' '}
+            Get involved in your community by helping out with an activity below
           </p>
 
           {/* @todo will style components here then convert to components */}
