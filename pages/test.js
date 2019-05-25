@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import { Divider } from 'antd'
 import publicPage, { A4 } from '../hocs/publicPage'
-import Hello from '../components/examples/Hello'
+import { Hello, Greet } from '../components/examples/Hello'
 import LessStyled from '../components/examples/LessStyled'
 import AntdType from '../components/examples/AntdType'
 import IntlDemo from '../components/examples/IntlDemo'
@@ -46,7 +46,8 @@ const TestPage = ({ ...props }) =>
   <A4>
     <Head><title>Voluntari.ly Tests</title></Head>
     <h1>Tests</h1>
-    <Hello />
+    <Greet />
+    <Hello name='Andrew' surname='watkins' />
     <IntlDemo />
     <LessStyled />
     <Divider />
