@@ -14,6 +14,11 @@ class InterestTable extends Component {
       key: 'person'
     },
     {
+      title: 'name',
+      dataIndex: 'name',
+      key: 'name'
+    },
+    {
       title: 'Comment',
       dataIndex: 'comment',
       key: 'comment'

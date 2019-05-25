@@ -26,6 +26,8 @@ const opId = '5cc8d60b8b16812b5b3920c1'
 const interests = people.map(person => ({
   _id: person._id,
   person: person._id,
+  name: person.name,
+  email: person.email,
   opportunity: opportunity._id,
   comment: `${person.nickname} is interested call ${person.phone}`,
   status: 'interested'
