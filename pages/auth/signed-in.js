@@ -8,7 +8,6 @@ import { connect } from 'react-redux'
 import { setSession } from '../../lib/redux/actions'
 
 class SignedIn extends React.Component {
-
   // TODO save the redirect url.
   // static propTypes = {
   //   url: PropTypes.object.isRequired
@@ -35,7 +34,7 @@ class SignedIn extends React.Component {
       }
       setToken(result.idToken, result.accessToken)
       const session = parseTokenToSession(result.idToken, result.accessToken)
-      this.props.setSession(session);
+      this.props.setSession(session)
       // console.log('signed in.')
       Router.push(`/`)
     })
