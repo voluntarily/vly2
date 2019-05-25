@@ -11,8 +11,13 @@ const searchOpportunities = async (req, res) => {
     // const opps;
     if (req.query.q) {
       // search
+      const searchExpression = new RegExp(req.query.q, 'i')
       const searchParams = {
-        'title': new RegExp(req.query.q, 'i')
+        $or: [
+          { 'title': searchExpression },
+          { 'subtitle': searchExpression },
+          { 'description': searchExpression }
+        ]
       }
 
       const opportunities = await Opportunity.find(searchParams).exec()
