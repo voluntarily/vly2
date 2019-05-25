@@ -51,11 +51,18 @@ class ErrorPage extends React.Component {
             />
             <FormattedMessage
               id='error.pagenotfound.description'
-              defaultMessage="The page you are looking for is not here. We have looked everywhere but it doesn't seem to exist"
-              description='Use the local equivalent of Hello World.'
+              defaultMessage="The page you are looking for is not here. We have looked everywhere but it doesn't seem to exist. Perhaps it just hasn't been built yet."
             />
+            &nbsp;
+            <a href="https://voluntari.ly/get-involved">
+            <FormattedMessage
+              id='error.pagenotfound.contribute'
+              defaultMessage="If you can write code you can help fix that by becoming a contributor to the project.  "
+            />
+            </a>
           &nbsp;
           </div>
+          <Spacer />
           <Container className="pt-5 text-center">
             <p>
               An <strong>HTTP { this.props.errorCode }</strong> error occurred while
