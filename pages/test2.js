@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import publicPage, { FullPage } from '../../hocs/publicPage'
-import { HalfGrid } from '../../components/VTheme/VTheme'
 import { Button } from 'antd';
-import Header from '../../components/Header/Header';
-import TitleSectionSub from '../../components/HeroPage/TitleSectionSub';
+
+import publicPage, { FullPage } from '../hocs/publicPage'
+import TitleSectionSub from '../components/HeroPage/TitleSectionSub';
+
+
+
+
 
 const FullPage2Grid = styled.div`
   width: 100vw;

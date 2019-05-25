@@ -13,27 +13,32 @@ import {
   SpacerSmall
 } from '../../components/VTheme/VTheme'
 import { Button, Divider } from 'antd'
-import Header from '../../components/Header/Header'
 import TitleSection from '../../components/HeroPage/TitleSection'
 
 const GridContainer = styled.div`
   height: 25rem;
 `
 
+const ButtonContainer = styled.div`
+margin-top: 1rem;
+`
+
 const TextHeaderTitle = styled.h1`
   font-size: 2rem;
   letter-spacing: -2.2px;
   font-weight: 700;
-  line-height: 4rem;
+  line-height: 3.5rem;
   color: black;
+  margin-bottom: 0;
 `
 
 const TextMiniTitle = styled.p`
-  margin-top: 6rem;
+  margin-top: 4rem;
   width: 12.8rem;
   color: black;
   font-size: 1rem;
   letter-spacing: -0.5px;
+
   font-weight: 400;
   margin-bottom: 0.5rem;
   border-radius: 12px;
@@ -73,13 +78,14 @@ export class Business extends Component {
           <HalfGrid>
             <GridContainer>
               <TextMiniTitle>Voluntarily for Business</TextMiniTitle>
-              <TextHeaderTitle>
+              <TextH1>
                 We help your business do more volunteering
-              </TextHeaderTitle>
-              <TextP>Ready to get your business involved?</TextP>
+              </TextH1>
 
+              <ButtonContainer>
               <Button>Get involved</Button>&nbsp;&nbsp;
               <Button>Learn more</Button>
+              </ButtonContainer>
             </GridContainer>
             <GridContainer>
               <HeroImage src='/static/img/business/hero2.png' />
@@ -87,9 +93,9 @@ export class Business extends Component {
           </HalfGrid>
           <Spacer />
           <Divider />
-          <CentreTitleContainer>
-            <TextHeadingBold>How we help you</TextHeadingBold>
-          </CentreTitleContainer>
+<TitleSection 
+title='How we help you'
+/>
           <TripleGrid>
             <ItemContainer>
               <ItemIcon src='./static/img/icons/search.svg' />
@@ -141,6 +147,8 @@ export class Business extends Component {
             </ItemContainer>
           </TripleGrid>
           <Spacer />
+          <Divider />
+
           <TitleSection
             title='How to get started'
 
@@ -150,11 +158,13 @@ export class Business extends Component {
               <TextHeading>Get in touch</TextHeading>
               <SpacerSmall />
               <TextP>Ready to get your business involved?</TextP>
+              <Button type='secondary'>Send a Message</Button>
             </ItemContainer>
             <ItemContainer>
               <TextHeading>Schedule a call</TextHeading>
               <SpacerSmall />
               <TextP>Ready to get your business involved?</TextP>
+              <Button type='secondary'>Schedule a call</Button>
             </ItemContainer>
           </HalfGrid>
         </FullPage>
