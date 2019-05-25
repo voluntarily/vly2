@@ -1,4 +1,5 @@
 const Interest = require('./interest')
+const Person = require('../person/person')
 
 /**
   api/interests -> list all interests
@@ -19,6 +20,44 @@ const listInterests = async (req, res) => {
     } else {
       got = await Interest.find().sort(sort).exec()
     }
+
+    for (let i = 0; i < got.length; i++) {
+      person = await Person.findOne({ _id: got[i].person }).exec()
+      // console.log('PERSON IN SERVER BRO')
+      // console.log(person)
+      console.log(`Name: ${person.name}, Email: ${person.email}`)
+      got[i].personName = person.name
+      got[i].personEmail = person.email
+    }
+
+    // console.log(got)
+    res.json(got)
+  } catch (err) {
+    console.log(err)
+    res.status(404).send(err)
+  }
+}
+
+const listInterestsWithPeopleDetails = async (req, res) => {
+  let sort = 'dateAdded' // todo sort by date.
+  let got
+  try {
+    if (req.query.op) {
+      const query = { opportunity: req.query.op }
+      if (req.query.me) {
+        query.person = req.query.me
+      }
+      got = await Interest.find(query).sort(sort).exec()
+    } else {
+      got = await Interest.find().sort(sort).exec()
+    }
+
+    for (let i = 0; i < got.length; i++) {
+      person = await Person.findOne({ _id: got[i].person }).exec()
+      console.log('PERSON IN SERVER BRO')
+      console.log(person)
+    }
+
     // console.log(got)
     res.json(got)
   } catch (err) {
