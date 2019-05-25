@@ -62,7 +62,7 @@ const ItemContainer = styled.div`
 const ItemIcon = styled.img`
   width: 2.5rem;
   margin-top: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 ` // end itemIcon
 
 const FullWidthBlock = styled.div`
@@ -79,7 +79,6 @@ export class Business extends Component {
             <GridContainer>
               <TextMiniTitle>Voluntarily for Business</TextMiniTitle>
               <TextH1>We help your business do more volunteering</TextH1>
-
               <ButtonContainer>
                 <Button>Get involved</Button>&nbsp;&nbsp;
                 <Button>Learn more</Button>
@@ -122,7 +121,7 @@ export class Business extends Component {
               <TextPBold>Visibility</TextPBold>
               <TextP>
                 V provides you and your staff with an easy way to find schools
-                and charities that need help with tech.{' '}
+                and charities that need help with tech.
               </TextP>
             </ItemContainer>
             <ItemContainer>
