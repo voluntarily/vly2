@@ -1,5 +1,8 @@
 const Interest = require('./interest')
 const Person = require('../person/person')
+const Opportunity = require('../opportunity/opportunity')
+const sanitizeHtml = require('sanitize-html')
+// const { emailPerson } = require('./email/emailperson')
 
 /**
   api/interests -> list all interests
@@ -38,78 +41,65 @@ const listInterests = async (req, res) => {
   }
 }
 
-const listInterestsWithPeopleDetails = async (req, res) => {
-  let sort = 'dateAdded' // todo sort by date.
+const createInterest = async (req, res) => {
+
+  const newInterest = new Interest(req.body)
+  newInterest.comment = sanitizeHtml(newInterest.comment)
+  newInterest.save((err, saved) => {
+    if (err) {
+      res.status(500).send(err)
+    }
+
+    res.json(saved)
+  })
+
+}
+
+const updateInterest = async (req, res) => {
+
   let got
   try {
-    if (req.query.op) {
-      const query = { opportunity: req.query.op }
-      if (req.query.me) {
-        query.person = req.query.me
-      }
-      got = await Interest.find(query).sort(sort).exec()
-    } else {
-      got = await Interest.find().sort(sort).exec()
-    }
+    got = await Interest.update({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
+    console.log(got)
+    
 
-    for (let i = 0; i < got.length; i++) {
-      person = await Person.findOne({ _id: got[i].person }).exec()
-      console.log('PERSON IN SERVER BRO')
-      console.log(person)
-    }
+    res.json(req.body)
 
-    // console.log(got)
-    res.json(got)
   } catch (err) {
     console.log(err)
     res.status(404).send(err)
   }
 }
 
-// /**
-//  * Save an org
-//  * @param req
-//  * @param res
-//  * @returns void
-//  */
-// export function addOrganisation (req, res) {
-//   if (!req.body.organisation.name || !req.body.organisation.about) {
-//     res.status(403).end()
-//   }
+async function maybeInnovativelyDestructivelySendEmailPossibly(volunteerId, organizerId, prevStatus, currentStatus, modifier) {
 
-//   const newOrganisation = new Organisation(req.body.organisation)
+  if (modifier == 'volunteer') {
 
-//   // Let's sanitize inputs
-//   newOrganisation.name = sanitizeHtml(newOrganisation.name)
-//   newOrganisation.about = sanitizeHtml(newOrganisation.about)
+    if (currentStatus == 'interested') { // A volunteer just clicked "interested"
+      console.log('A volunteer just clicked "interested"')
 
-//   newOrganisation.slug = slug(newOrganisation.name.toLowerCase(), { lowercase: true })
-//   newOrganisation.save((err, saved) => {
-//     if (err) {
-//       res.status(500).send(err)
-//     }
-//     res.json({ organisation: saved })
-//   })
-// }
+    } else if (currentStatus == 'committed') { // A volunteer accepts an invitation
+      console.log('A volunteer accepts an invitation')
+    }
 
-// /**
-//  * Delete a organisation
-//  * @param req
-//  * @param res
-//  * @returns void
-//  */
-// export function deleteOrganisation (req, res) {
-//   Organisation.findOne({ cuid: req.params.cuid }).exec((err, organisation) => {
-//     if (err) {
-//       res.status(500).send(err)
-//     }
+  } else {
 
-//     organisation.remove(() => {
-//       res.status(200).end()
-//     })
-//   })
-// }
+    if (currentStatus == 'interested') { // An organizer just withdrew an invite
+      console.log('An organizer just withdrew an invite')
+
+    } else if (currentStatus == 'invited') { // An organizer just sent an invite
+      console.log('An organizer just sent an invite')
+
+    } else if (currentStatus == 'declined') { // An organizer just declined someone
+      console.log('An organizer just declined someone')
+    }
+
+  }
+
+}
 
 module.exports = {
-  listInterests
+  listInterests,
+  createInterest,
+  updateInterest
 }

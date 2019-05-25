@@ -33,7 +33,6 @@ class RegisterInterestItem extends Component {
       if (!err) {
         const interest = this.props.interest
         interest.comment = values.comment
-        interest.status = getNextStatus(interest)
 
         this.props.onChangeStatus(interest)
       } else {
@@ -157,17 +156,6 @@ export default Form.create({
     }
   }
 })(RegisterInterestItem)
-
-// Returns the next status, given the current status
-function getNextStatus (interest) {
-  switch (interest.status) {
-    case null:
-      return 'interested'
-
-    case 'invited':
-      return 'committed'
-  }
-}
 
 // Returns some config options for this component, depending on the state of the interest we're viewing.
 function getOptions (interest) {
