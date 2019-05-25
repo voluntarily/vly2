@@ -14,3 +14,5 @@ yarn.lock
 .ssh
 *.pem
 .env
+package-lock.json
+package-lock.json

@@ -1,6 +1,8 @@
 {
   "footerCredit": "Voluntari.ly is an initiative of the {pfctlink} Supported by: Datacom, Spark, ATEED",
   "siteTitle": "Voluntari.ly",
+  "error.pagenotfound.title": "Kāore tēnei whārangi i te tīariari.",
+  "error.pagenotfound.description": "Ko te whārangi e rapu ana koe ehara i konei. Kua tirohia e matou i nga wahi katoa engari kaore e kitea",
   "opcard.commitment": "commitment",
   "op.commitment": "commitment",
   "opTitle": "Title",
