@@ -5,4 +5,4 @@ const tagSchema = new Schema({
   tag: String // "e.g C++",
 })
 
-module.exports = mongoose.model('Tag', tagSchema)
+module.exports = tagSchema
