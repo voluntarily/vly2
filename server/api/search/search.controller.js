@@ -16,7 +16,8 @@ const searchOpportunities = async (req, res) => {
         $or: [
           { 'title': searchExpression },
           { 'subtitle': searchExpression },
-          { 'description': searchExpression }
+          { 'description': searchExpression },
+          { 'tags.tag': searchExpression }
         ]
       }
 
