@@ -1,32 +1,36 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react'
-import { Button, Col, Divider, Form, Input, Radio, Row, Icon, Upload, message } from 'antd'
+import { Button, Col, Divider, Form, Input, Radio, Row, Upload, message } from 'antd'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Axios from 'axios';
-const { TextArea } = Input
-const Dragger = Upload.Dragger
-const validImageFile = [ "image/png", "image/jpeg", "image/jpg"]
+import Axios from 'axios'
 
+import ImageUploader from '../UploadComponent/ImageUploadComponent'
+const { TextArea } = Input
+const validImageFile = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg']
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
 }
 
-function imageFileCheck( file) {
+function imageFileCheck (file) {
   const fileType = file.type
   const isImage = validImageFile.includes(fileType)
-  if (!isImage){
+  if (!isImage) {
     message.error('You can upload only image file')
   }
-  
+
   const isLessThan2M = file.size / 1024 / 1024 < 2
-  
-  if(!isLessThan2M){
+
+  if (!isLessThan2M) {
     message.error('You can upload image less than 2 Mb')
   }
 
   return isImage && isLessThan2M
+}
+
+function onChangeImageUpload (info) {
+  console.log(info)
 }
 
 class OpDetailForm extends Component {
@@ -55,20 +59,22 @@ class OpDetailForm extends Component {
     })
   }
 
-  handleUpload = ({file, error}) => {
+  handleUpload = ({ file, error }) => {
     console.log(file)
     if (error) console.error(error)
     else {
-
       let FR = new FileReader()
       FR.readAsBinaryString(file)
       FR.addEventListener('load', (e) => {
-        console.log(FR.result)
-        Axios.post("http://localhost:3000/api/postImage", {
-          image: FR.result
+        let formData = new FormData()
+        formData.append('File', file)
+        formData.append('image', FR.result)
+        Axios.post('http://localhost:3000/api/postImage', {
+          image: FR.result,
+          file: file
         })
-        .then(res => console.log(res))
-        .catch(err => console.error(err))
+          .then(res => console.log(res))
+          .catch(err => console.error(err))
       })
 
       // Axios.post("http://localhost:3000/api/postImage", {
@@ -76,10 +82,8 @@ class OpDetailForm extends Component {
       //   })
       //   .then(res => console.log(res))
       //   .catch(err => console.error(err))
-
     }
   }
-
 
   render () {
     // get translated labels
@@ -218,22 +222,15 @@ class OpDetailForm extends Component {
               md={{ span: 16 }}
             >
               <Form.Item label={opImgUrl}>
-                {/* {getFieldDecorator('imgUrl', {
+                {getFieldDecorator('imgUrl', {
                   rules: [
                     { type: 'url', message: 'a URL is required' }
                   ]
-                })( */}
-                <Dragger  name='image'
-                  multiple={false}
-                  customRequest={this.handleUpload}
-                  beforeUpload={imageFileCheck}
-                >
-                  <p className="ant-upload-drag-icon">
-                    <Icon type="inbox" />
-                  </p>
-                  <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                </Dragger>
-                {/* )} */}
+                })(
+                  <ImageUploader beforeUpload={imageFileCheck}
+                    customRequest={this.handleUpload}
+                    onChange={onChangeImageUpload} />
+                )}
               </Form.Item>
               <Form.Item label={opStatus}>
                 {getFieldDecorator('status', {

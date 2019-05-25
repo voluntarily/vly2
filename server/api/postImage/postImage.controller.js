@@ -15,15 +15,17 @@ const postImage = (req, res) => {
     params: req.params,
     query: req.query
   }
-  const ImageBin = req.body.image
+  // const ImageBin = req.body
 
-  fs.writeFile('upload/image.jpeg', new Buffer(ImageBin,'binary'), (err) => {
-    if (err) console.log(err)
-    else {
-      console.log('success')
-    }
-  })
-  
+  console.log(JSON.stringify(req.body))
+  // let ImageBuffer = Buffer.from(ImageBin, 'binary')
+  // fs.writeFile('upload/image.jpeg', ImageBuffer, (err) => {
+  //   if (err) console.log(err)
+  //   else {
+  //     console.log('success')
+  //   }
+  // })
+
   return res.status(200).json(result)
 }
 
