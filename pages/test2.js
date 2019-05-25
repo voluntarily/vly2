@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Button } from 'antd';
 
 import publicPage, { FullPage } from '../hocs/publicPage'
-import TitleSectionSub from '../components/HeroPage/TitleSectionSub';
+import TitleSectionSub from '../components/LandingPageComponents/TitleSectionSub';
 
 
 

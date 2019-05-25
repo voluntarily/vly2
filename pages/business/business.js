@@ -13,14 +13,14 @@ import {
   SpacerSmall
 } from '../../components/VTheme/VTheme'
 import { Button, Divider } from 'antd'
-import TitleSection from '../../components/HeroPage/TitleSection'
+import TitleSection from '../../components/LandingPageComponents/TitleSection'
 
 const GridContainer = styled.div`
   height: 25rem;
 `
 
 const ButtonContainer = styled.div`
-margin-top: 1rem;
+  margin-top: 1rem;
 `
 
 const TextHeaderTitle = styled.h1`
@@ -78,13 +78,11 @@ export class Business extends Component {
           <HalfGrid>
             <GridContainer>
               <TextMiniTitle>Voluntarily for Business</TextMiniTitle>
-              <TextH1>
-                We help your business do more volunteering
-              </TextH1>
+              <TextH1>We help your business do more volunteering</TextH1>
 
               <ButtonContainer>
-              <Button>Get involved</Button>&nbsp;&nbsp;
-              <Button>Learn more</Button>
+                <Button>Get involved</Button>&nbsp;&nbsp;
+                <Button>Learn more</Button>
               </ButtonContainer>
             </GridContainer>
             <GridContainer>
@@ -93,9 +91,7 @@ export class Business extends Component {
           </HalfGrid>
           <Spacer />
           <Divider />
-<TitleSection 
-title='How we help you'
-/>
+          <TitleSection title='How we help you' />
           <TripleGrid>
             <ItemContainer>
               <ItemIcon src='./static/img/icons/search.svg' />
@@ -137,7 +133,7 @@ title='How we help you'
                 your business ranks in social impact on our leaderboard.
               </TextP>
             </ItemContainer>
-          <ItemContainer>
+            <ItemContainer>
               <ItemIcon src='./static/img/icons/search.svg' />
               <TextPBold>Integration</TextPBold>
               <TextP>
@@ -149,22 +145,23 @@ title='How we help you'
           <Spacer />
           <Divider />
 
-          <TitleSection
-            title='How to get started'
-
-          />
+          <TitleSection title='How to get started' />
           <HalfGrid>
             <ItemContainer>
               <TextHeading>Get in touch</TextHeading>
               <SpacerSmall />
               <TextP>Ready to get your business involved?</TextP>
-              <Button type='secondary'>Send a Message</Button>
+              <ButtonContainer>
+                <Button type='secondary'>Send a Message</Button>
+              </ButtonContainer>
             </ItemContainer>
             <ItemContainer>
               <TextHeading>Schedule a call</TextHeading>
               <SpacerSmall />
               <TextP>Ready to get your business involved?</TextP>
-              <Button type='secondary'>Schedule a call</Button>
+              <ButtonContainer>
+                <Button type='secondary'>Schedule a call</Button>
+              </ButtonContainer>
             </ItemContainer>
           </HalfGrid>
         </FullPage>

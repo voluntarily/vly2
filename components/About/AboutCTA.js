@@ -1,4 +1,4 @@
-import TitleSectionSub from '../HeroPage/TitleSectionSub'
+import TitleSectionSub from '../LandingPageComponents/TitleSectionSub'
 import styled from 'styled-components'
 import { Button } from 'antd'
 
