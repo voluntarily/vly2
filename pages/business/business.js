@@ -157,7 +157,7 @@ export class Business extends Component {
             <ItemContainer>
               <TextHeading>Schedule a call</TextHeading>
               <SpacerSmall />
-              <TextP>Ready to get your business involved?</TextP>
+              <TextP>Ready to get your business involved? </TextP>
               <ButtonContainer>
                 <Button type='secondary'>Schedule a call</Button>
               </ButtonContainer>
