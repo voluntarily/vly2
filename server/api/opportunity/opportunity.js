@@ -15,7 +15,7 @@ const opportunitySchema = new Schema({
   dateAdded: { type: 'Date', default: Date.now, required: true },
   tags: {
     type: Schema.Types.ObjectId,
-    ref: "Tag"
+    ref: 'Tag'
   }
 })
 
