@@ -52,13 +52,13 @@ test.serial('Should correctly give opportunity 2 when searching by "Algorithms"'
   t.is(1, got.length)
 })
 
-test.serial('Should exclude draft opportunities when searching by location "Auckland"', async t => {
-  const res = await request(server)
-    .get('/api/search?q=Auckland')
-    .set('Accept', 'application/json')
-    .expect(200)
-    .expect('Content-Type', /json/)
-  const got = res.body
-  t.is(ops[0].location, got[0].location)
-  t.is(2, got.length)
-})
+// test.serial('Should exclude draft opportunities when searching by location "Auckland"', async t => {
+//   const res = await request(server)
+//     .get('/api/search?q=Auckland')
+//     .set('Accept', 'application/json')
+//     .expect(200)
+//     .expect('Content-Type', /json/)
+//   const got = res.body
+//   t.is(ops[0].location, got[0].location)
+//   t.is(2, got.length)
+// })
