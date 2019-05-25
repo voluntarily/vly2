@@ -45,19 +45,22 @@ export class OpDetailPage extends Component {
     let content
     if (this.props.ops && this.props.ops.length === 1) {
       const op = this.props.ops[0]
+      const interestedSection = () => {
+        return (this.props.isAuthenticated &&
+          this.props.me &&
+          this.props.me.role.includes('volunteer'))
+          ? <div>
+            <RegisterInterestSection op={op._id} me={this.props.me._id} />
+            <Divider />
+          </div>
+          : 'Need to be signed in as a volunteer to be interested'
+      }
+      // TODO: [VP-161] In register interest section, if person not signed in show Sign In button
       content =
         (<div>
           <OpDetail op={op} />
-
           <Divider />
-
-          {/* These components should only appear if a user is logged in and viewing an op they did NOT create themselves.
-              Note: Currently hardcoded Andrew W's id for "me".
-            */}
-          <div>
-            <RegisterInterestSection op={op._id} me='5ccbe4c26c285b7184bff574' />
-            <Divider />
-          </div>
+          {interestedSection()}
 
           {/* These components should only appear if a user is logged in and viewing an op they DID create themselves. */}
           <div>
