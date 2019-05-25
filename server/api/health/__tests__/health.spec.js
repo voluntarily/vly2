@@ -2,7 +2,7 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 
-test.only('Should respond to health check', async t => {
+test('Should respond to health check', async t => {
   await appReady
   const res = await request(server)
     .get('/api/health')
