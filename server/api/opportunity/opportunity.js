@@ -12,7 +12,11 @@ const opportunitySchema = new Schema({
   date: { type: 'Date' },
   offerOrg: String,
   requestor: String,
-  dateAdded: { type: 'Date', default: Date.now, required: true }
+  dateAdded: { type: 'Date', default: Date.now, required: true },
+  tags: {
+    type: Schema.Types.ObjectId,
+    ref: "Tag"
+  }
 })
 
 module.exports = mongoose.model('Opportunity', opportunitySchema)
