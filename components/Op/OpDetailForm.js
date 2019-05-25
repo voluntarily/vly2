@@ -1,12 +1,32 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react'
-import { Button, Col, Divider, Form, Input, Radio, Row } from 'antd'
+import { Button, Col, Divider, Form, Input, Radio, Row, Icon, Upload, message } from 'antd'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
+import Axios from 'axios';
 const { TextArea } = Input
+const Dragger = Upload.Dragger
+const validImageFile = [ "image/png", "image/jpeg", "image/jpg"]
+
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
+}
+
+function imageFileCheck( file) {
+  const fileType = file.type
+  const isImage = validImageFile.includes(fileType)
+  if (!isImage){
+    message.error('You can upload only image file')
+  }
+  
+  const isLessThan2M = file.size / 1024 / 1024 < 2
+  
+  if(!isLessThan2M){
+    message.error('You can upload image less than 2 Mb')
+  }
+
+  return isImage && isLessThan2M
 }
 
 class OpDetailForm extends Component {
@@ -34,6 +54,32 @@ class OpDetailForm extends Component {
       }
     })
   }
+
+  handleUpload = ({file, error}) => {
+    console.log(file)
+    if (error) console.error(error)
+    else {
+
+      let FR = new FileReader()
+      FR.readAsBinaryString(file)
+      FR.addEventListener('load', (e) => {
+        console.log(FR.result)
+        Axios.post("http://localhost:3000/api/postImage", {
+          image: FR.result
+        })
+        .then(res => console.log(res))
+        .catch(err => console.error(err))
+      })
+
+      // Axios.post("http://localhost:3000/api/postImage", {
+      //   file
+      //   })
+      //   .then(res => console.log(res))
+      //   .catch(err => console.error(err))
+
+    }
+  }
+
 
   render () {
     // get translated labels
@@ -172,13 +218,22 @@ class OpDetailForm extends Component {
               md={{ span: 16 }}
             >
               <Form.Item label={opImgUrl}>
-                {getFieldDecorator('imgUrl', {
+                {/* {getFieldDecorator('imgUrl', {
                   rules: [
                     { type: 'url', message: 'a URL is required' }
                   ]
-                })(
-                  <Input placeholder='http://example.com/image.jpg' />
-                )}
+                })( */}
+                <Dragger  name='image'
+                  multiple={false}
+                  customRequest={this.handleUpload}
+                  beforeUpload={imageFileCheck}
+                >
+                  <p className="ant-upload-drag-icon">
+                    <Icon type="inbox" />
+                  </p>
+                  <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                </Dragger>
+                {/* )} */}
               </Form.Item>
               <Form.Item label={opStatus}>
                 {getFieldDecorator('status', {
