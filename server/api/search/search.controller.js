@@ -7,11 +7,15 @@ const Opportunity = require('../opportunity/opportunity')
  */
 const searchOpportunities = async (req, res) => {
   console.log(req.query)
-  const opportunities = await Opportunity.find({}).exec()
   try {
     // const opps;
     if (req.query.q) {
       // search
+      const searchParams = {
+        'title': new RegExp(req.query.q, 'i')
+      }
+
+      const opportunities = await Opportunity.find(searchParams).exec()
       res.json(opportunities)
     } else {
       res.status(400).send('Bad Request: must include keyword parameters')
