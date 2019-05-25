@@ -84,7 +84,8 @@ class InterestTable extends Component {
 InterestTable.propTypes = {
   onInvite: PropTypes.func.isRequired,
   onWithdrawInvite: PropTypes.func.isRequired,
-  onDecline: PropTypes.func.isRequired
+  onDecline: PropTypes.func.isRequired,
+  interests: PropTypes.array
 }
 
 function getEnabledButtons (interest) {
