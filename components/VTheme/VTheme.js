@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { EDEADLK } from 'constants';
+
 
 /*
 ====================================================
@@ -12,6 +12,10 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 
 ====================================================
 */
+
+export const SpacerSmall = styled.div`
+height: 0.5rem;
+`
 
 export const Spacer = styled.div`
   height: 4rem;
@@ -31,11 +35,7 @@ export const HalfGrid = styled.div`
     grid-template-columns: calc(100vw - 2rem);
   }
 ` // end halfgrid
-export const HalfGridContainer = styled.div`
-
-`
-
-
+export const HalfGridContainer = styled.div``
 
 export const TripleGrid = styled.div`
   display: grid;
@@ -72,12 +72,10 @@ export const Grid = styled.div`
   }
 ` // end grid
 
-export const GridContainer = styled.div`
-
-`
+export const GridContainer = styled.div``
 
 export const GridTestItem = styled.div`
-background-color: pink;
+  background-color: pink;
 `
 
 /*
@@ -109,7 +107,6 @@ export const TextH1 = styled.h1`
   text-indent: -0.03em;
   margin-bottom: 0px;
 
-
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     font-size: 2.5rem;
     letter-spacing: -0.1rem;
@@ -140,7 +137,9 @@ export const TextSubtitle = styled.p`
 
 export const TextP = styled.p`
   font-weight: 400;
+  color: black;
   font-size: 1rem;
+  margin: initial;
   @media screen and (max-width: 767px) {
     font-size: 1rem;
   }
@@ -148,7 +147,9 @@ export const TextP = styled.p`
 
 export const TextPBold = styled.p`
   font-weight: 700;
+  color: black;
   font-size: 1rem;
+  margin: initial;
   @media screen and (max-width: 767px) {
     font-size: 1rem;
   }
@@ -157,6 +158,8 @@ export const TextPBold = styled.p`
 export const TextHeading = styled.p`
   font-size: 2rem;
   font-weight: 400;
+  letter-spacing: -0.04em;
+  margin: initial;
   @media screen and (max-width: 767px) {
     font-size: 1rem;
   }
