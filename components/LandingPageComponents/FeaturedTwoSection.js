@@ -7,13 +7,39 @@ import { HalfGrid } from '../VTheme/VTheme'
 const BigOpContainer = styled.a`
   width: 39rem;
   margin-bottom: 4rem;
+
+
+
+  @media screen and (min-width: 768px) and (max-width: 1281px) {
+    width: calc(50vw - 4rem);
+
+
+    margin-bottom: 2rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: calc(100vw - 2rem);
+  }
+
 `
 
 const BigOpImg = styled.img`
-  width: 100%;
+  width: 36rem;
   height: 21rem;
   object-fit: cover;
   object-position: center;
+
+  @media screen and (min-width: 768px) and (max-width: 1281px) {
+    height: 12rem;
+    width: calc(50vw - 5rem);
+
+
+  }
+
+
+  @media screen and (max-width: 768px) {
+    width: calc(100vw - 2rem);
+  }
 `
 
 const BigOpTitle = styled.h1`

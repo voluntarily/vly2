@@ -16,6 +16,7 @@ const Navigation = ({ items, defaultItem, router, ...props }) => {
     >
       {items.map(item => (
         <Menu.Item key={item.key}>
+
           {/* don't do prefetch during testing */}
           <Link key={item.href} href={item.href}>
             <a>{item.text}</a>

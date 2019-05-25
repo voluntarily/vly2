@@ -23,12 +23,17 @@ export const Spacer = styled.div`
 
 export const HalfGrid = styled.div`
   display: grid;
+  position: relative;
+  margin: 0;
   grid-template-columns: 39rem 39rem;
   grid-column-gap: 2rem;
 
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    width: calc(100vw - 4rem);
-    grid-template-columns: calc(50vw - 2rem) calc(50vw - 2rem);
+
+
+  @media screen and (min-width: 768px) and (max-width: 1281px) {
+    grid-template-columns:  calc(50vw - 4rem) calc(50vw - 4rem);
+    grid-column-gap: 2rem;
+
   }
 
   @media screen and (max-width: 768px) {

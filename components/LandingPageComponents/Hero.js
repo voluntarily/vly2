@@ -25,7 +25,7 @@ const AwesomeHeroContainer = styled.div`
   }
 
   @media screen and (min-width: 768px) and (max-width: 1025px) {
-    width: calc(100vw - 2rem);
+    width: calc(100vw - 4rem);
     height: 30rem;
     margin: auto;
     display: grid;
