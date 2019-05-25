@@ -8,6 +8,10 @@ const InterestItem = ({ interest, ...props }) => (
     <dd>{interest._id}</dd>
     <dt>Person</dt>
     <dd>{interest.person}</dd>
+    <dt>name</dt>
+    <dd>{interest.name}</dd>
+    <dt>email</dt>
+    <dd>{interest.email}</dd>
     <dt>Opportunity</dt>
     <dd>{interest.opportunity}</dd>
     <dt>Comment</dt>

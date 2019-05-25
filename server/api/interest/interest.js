@@ -5,8 +5,8 @@ const idvalidator = require('mongoose-id-validator')
 const interestSchema = new Schema({
 
   person: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
-  personName: String,
-  personEmail: String,
+  name: String,
+  email: String,
   opportunity: { type: Schema.Types.ObjectId, ref: 'Opportunity', required: true },
   comment: String,
   status: {

@@ -12,29 +12,30 @@ const sanitizeHtml = require('sanitize-html')
 const listInterests = async (req, res) => {
   // console.log(req.query)
   let sort = 'dateAdded' // todo sort by date.
-  let got
+  let interestsArray
   try {
     if (req.query.op) {
       const query = { opportunity: req.query.op }
       if (req.query.me) {
         query.person = req.query.me
       }
-      got = await Interest.find(query).sort(sort).exec()
+      interestsArray = await Interest.find(query).sort(sort).exec()
     } else {
-      got = await Interest.find().sort(sort).exec()
+      interestsArray = await Interest.find().sort(sort).exec()
+    }
+  
+     
+    for (let i = 0; i < interestsArray.length; i++) {
+
+      // Get individual person from database based on person id in interest
+      let person = await Person.findOne({ _id: interestsArray[i].person }).exec()
+      //console.log(`Name: ${person.name}, Email: ${person.email}`)
+      interestsArray[i].name = person.name
+      //Probably will want ot be careful about passing email information to clientside
+      interestsArray[i].email = person.email
     }
 
-    for (let i = 0; i < got.length; i++) {
-      person = await Person.findOne({ _id: got[i].person }).exec()
-      // console.log('PERSON IN SERVER BRO')
-      // console.log(person)
-      console.log(`Name: ${person.name}, Email: ${person.email}`)
-      got[i].personName = person.name
-      got[i].personEmail = person.email
-    }
-
-    // console.log(got)
-    res.json(got)
+    res.json(interestsArray)
   } catch (err) {
     console.log(err)
     res.status(404).send(err)
