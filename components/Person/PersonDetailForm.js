@@ -25,7 +25,7 @@ class PersonDetailForm extends Component {
         // TODO Send new person to database and update the store.
         const person = this.props.person
         person.name = values.name
-        person.moniker = values.moniker
+        person.nickname = values.nickname
         person.email = values.email
         person.phone = values.phone
         person.gender = values.gender
@@ -43,7 +43,7 @@ class PersonDetailForm extends Component {
   render () {
     // get translated labels
     const personName = (<FormattedMessage id='personName' defaultMessage='Full Name' description='person full name label in PersonDetails Form' />)
-    const personMoniker = (<FormattedMessage id='personMoniker' defaultMessage='What we should call you' description='person Subtitle label in personDetails Form' />)
+    const personnickname = (<FormattedMessage id='personnickname' defaultMessage='What we should call you' description='person Subtitle label in personDetails Form' />)
     const personEmail = (<FormattedMessage id='personEmail' defaultMessage='Email' description='person email label in personDetails Form' />)
     const personPhone = (<FormattedMessage id='personPhone' defaultMessage='Phone' description='person phone label in personDetails Form' />)
     const personAbout = (<FormattedMessage id='personAbout' defaultMessage='About you' description='person about label in personDetails Form' />)
@@ -112,8 +112,8 @@ class PersonDetailForm extends Component {
                   <Input placeholder='e.g. Salvador Felipe Jacinto Dalí y Domenech.' />
                 )}
               </Form.Item>
-              <Form.Item label={personMoniker}>
-                {getFieldDecorator('moniker', {
+              <Form.Item label={personnickname}>
+                {getFieldDecorator('nickname', {
                   rules: []
                 })(
                   <Input placeholder='e.g Dali' />
@@ -242,7 +242,7 @@ PersonDetailForm.propTypes = {
   person: PropTypes.shape({
     cuid: PropTypes.string,
     name: PropTypes.string,
-    moniker: PropTypes.string,
+    nickname: PropTypes.string,
     about: PropTypes.string,
     email: PropTypes.string,
     phone: PropTypes.string,
@@ -289,7 +289,7 @@ export default Form.create({
   mapPropsToFields (props) {
     return {
       name: Form.createFormField({ ...props.person.name, value: props.person.name }),
-      moniker: Form.createFormField({ ...props.person.moniker, value: props.person.moniker }),
+      nickname: Form.createFormField({ ...props.person.nickname, value: props.person.nickname }),
       about: Form.createFormField({ ...props.person.about, value: props.person.about }),
       email: Form.createFormField({ ...props.person.email, value: props.person.email }),
       phone: Form.createFormField({ ...props.person.phone, value: props.person.phone }),

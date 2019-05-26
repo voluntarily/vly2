@@ -7,6 +7,7 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 import Router from 'next/router'
 import OpDetail from '../../components/Op/OpDetail'
 import InterestSection from '../../components/Interest/interestSection'
+import RegisterInterestSection from '../../components/Interest/RegisterInterestSection'
 import PropTypes from 'prop-types'
 
 export class OpDetailPage extends Component {
@@ -22,6 +23,7 @@ export class OpDetailPage extends Component {
     }
   }
 
+  // Called when the user confirms they want to delete an op
   async handleDelete (op) {
     if (!op) return
     // Actual data request
@@ -31,37 +33,61 @@ export class OpDetailPage extends Component {
     Router.replace(`/ops`)
   }
 
-  cancel = () => { message.error('Delete Cancelled') }
+  // Called when the user starts to delete an op, but then cancels it.
+  handleDeleteCancelled = () => { message.error('Delete Cancelled') }
+
+  // Called when the user registers interest in an op
+  handleRegisterInterest (op) {
+
+  }
 
   render () {
     let content
     if (this.props.ops && this.props.ops.length === 1) {
       const op = this.props.ops[0]
+      const interestedSection = () => {
+        return (this.props.isAuthenticated &&
+          this.props.me &&
+          this.props.me.role.includes('volunteer'))
+          ? <div>
+            <RegisterInterestSection op={op._id} me={this.props.me._id} />
+            <Divider />
+          </div>
+          : 'Need to be signed in as a volunteer to be interested'
+      }
+      // TODO: [VP-161] In register interest section, if person not signed in show Sign In button
       content =
         (<div>
           <OpDetail op={op} />
-          {/* <Link to={`/ops/${op._id}/edit`} > */}
-          <a href='mailto:interested@voluntari.ly'>
-            <Button type='primary' shape='round' >
-              <FormattedMessage id='claimOp' defaultMessage="I'm Interested" description='Button to show interest in an opportunity on OpDetails page' />
-            </Button>
-          </a>
-          &nbsp;
-          <Link href={`/ops/${op._id}/edit`} >
-            <Button type='secondary' shape='round' >
-              <FormattedMessage id='editOp' defaultMessage='Edit' description='Button to edit an opportunity on OpDetails page' />
-            </Button>
-          </Link>
-          &nbsp;
-          <Popconfirm title='Confirm removal of this opportunity.' onConfirm={this.handleDeleteOp} onCancel={this.cancel} okText='Yes' cancelText='No'>
-            <Button type='danger' shape='round' >
-              <FormattedMessage id='deleteOp' defaultMessage='Remove Request' description='Button to remove an opportunity on OpDetails page' />
-            </Button>
-          </Popconfirm>
-          <br /><small>visible buttons here depend on user role</small>
           <Divider />
-          <h2>Interested Volunteers</h2>
-          <InterestSection op={op._id} />
+          {interestedSection()}
+
+          {/* These components should only appear if a user is logged in and viewing an op they DID create themselves. */}
+          <div>
+            <Link href={`/ops/${op._id}/edit`} >
+              <Button type='secondary' shape='round' >
+                <FormattedMessage id='editOp' defaultMessage='Edit' description='Button to edit an opportunity on OpDetails page' />
+              </Button>
+            </Link>
+            &nbsp;
+            <Popconfirm title='Confirm removal of this opportunity.' onConfirm={this.handleDeleteOp} onCancel={this.cancel} okText='Yes' cancelText='No'>
+              <Button type='danger' shape='round' >
+                <FormattedMessage id='deleteOp' defaultMessage='Remove Request' description='Button to remove an opportunity on OpDetails page' />
+              </Button>
+            </Popconfirm>
+            <Divider />
+          </div>
+
+          {/* Remove this message when appropriate. */}
+          <div>
+            <small>visible buttons here depend on user role</small>
+          </div>
+
+          {/* These components should only appear if a user is logged in and viewing an op they DID create themselves. */}
+          <div>
+            <h2>Interested Volunteers</h2>
+            <InterestSection op={op._id} />
+          </div>
         </div>)
     } else {
       content =

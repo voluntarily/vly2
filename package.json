@@ -12,12 +12,10 @@
     "build": "next build && node ./x/default-lang",
     "heroku-postbuild": "next build",
     "start": "NODE_ENV=production node --experimental-modules server/server.js",
-    "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100"
+    "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
+    "docker-test:build": "docker build -t vly-test:latest -f Dockerfile-test . ",
+    "docker-test": "npm run docker-test:build && docker run vly-test:latest "
   },
-  "pre-commit": [
-    "lint",
-    "test"
-  ],
   "dependencies": {
     "@babel/core": "^7.4.4",
     "@babel/polyfill": "^7.4.4",
@@ -93,7 +91,16 @@
   "homepage": "https://github.com/voluntarily/vly2#readme",
   "ava": {
     "files": [
-      "**/__tests__/**/*.spec.js"
+      "__tests__/*.spec.js",
+      "server/api/**/__tests__/**/*.spec.js",
+      "server/services/email/__tests__/*.spec.js",
+      "components/**/__tests__/*.spec.js",
+      "components/__tests__/*.spec.js",
+      "components/**/__tests__/*.spec.js",
+      "!components/**/__tests__/*.fixture.js"
+    ],
+    "helpers": [
+      "**/__tests__/**/*.fixture.js"
     ],
     "sources": [
       "components/**/*.js",
@@ -102,7 +109,10 @@
       "pages/**/*.js",
       "server/**/*.js"
     ],
-    "failFast": true,
+    "failFast": false,
+    "verbose": true,
+    "concurrency": 0,
+    "timeout": "5m",
     "babel": {
       "testOptions": {
         "plugins": [

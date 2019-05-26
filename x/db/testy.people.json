@@ -1,7 +1,7 @@
 [
 {
   "name": "Testy A McTestface",
-  "moniker": "A Testy",
+  "nickname": "A Testy",
   "about": "Tester",
   "email": "atesty@voluntar.ly",
   "phone": "027 444 5555",
@@ -12,7 +12,7 @@
 },
 {
   "name": "Testy B McTestface",
-  "moniker": "B Testy",
+  "nickname": "B Testy",
   "about": "Tester",
   "email": "btesty@voluntar.ly",
   "phone": "027 444 5555",
@@ -22,7 +22,7 @@
   "status": "active"
 },{
   "name": "Testy C McTestface",
-  "moniker": "C Testy",
+  "nickname": "C Testy",
   "about": "Tester",
   "email": "ctesty@voluntar.ly",
   "phone": "027 444 5555",
@@ -32,7 +32,7 @@
   "status": "active"
 },{
   "name": "Testy D McTestface",
-  "moniker": "D Testy",
+  "nickname": "D Testy",
   "about": "Tester",
   "email": "dtesty@voluntar.ly",
   "phone": "027 444 5555",
@@ -42,7 +42,7 @@
   "status": "active"
 },{
   "name": "Testy E McTestface",
-  "moniker": "E Testy",
+  "nickname": "E Testy",
   "about": "Tester",
   "email": "ftesty@voluntar.ly",
   "phone": "027 444 5555",
@@ -52,7 +52,7 @@
   "status": "active"
 },{
   "name": "Testy F McTestface",
-  "moniker": "F Testy",
+  "nickname": "F Testy",
   "about": "Tester",
   "email": "ftesty@voluntar.ly",
   "phone": "027 444 5555",

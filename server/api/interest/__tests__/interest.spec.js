@@ -10,7 +10,7 @@ import MemoryMongo from '../../../util/test-memory-mongo'
 const person = new Person({
   _id: '5cc8d60b8b16812b5b392123',
   name: 'Testy McTestface',
-  moniker: 'Testy',
+  nickname: 'Testy',
   about:
     '30+ years in software development, product management, systems design and team leadership across a range of industries including science, technology, engineering, health, automotive, transport, mobile phone, and travel. I have a strong balance of technical and management skills.\n\nI have run my own company and led a start-up mobile phone company software team through a high growth period. I have created and developed multiple agile cross functional teams, managed DevOps processes and modernised IT platforms including migration to cloud services.\n\nI have a track record as a forward-thinking, customer focussed, innovative solutions designer and product development manager taking ideas from conception through implementation and delivery and into operation through a full business-process-aligned life cycle, managing teams using agile methodologies, leading-edge tools and technologies. ',
 
@@ -87,7 +87,7 @@ test.serial('Should send correct data when queried against a _id', async t => {
   t.is(interest.opportunity.toString(), res.body.opportunity)
 })
 
-test.serial(
+test.skip(
   'Should not add an invalid interest where referenced person or opp is not in DB',
   async t => {
     const newInterest = new Interest({

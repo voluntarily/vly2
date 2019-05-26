@@ -14,20 +14,17 @@ import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
 import PersonList from '../../components/Person/PersonList'
 
 class PersonListPage extends Component {
-  static async getInitialProps ({ store, query }) {
+  static async getInitialProps ({ store }) {
     // Get all People
-    // console.log('getting people')
     try {
-      const people = await store.dispatch(reduxApi.actions.people.get())
-      // console.log('got people', people)
-      return { people, query }
+      await store.dispatch(reduxApi.actions.people.get())
     } catch (err) {
       console.log('error in getting people', err)
     }
   }
 
   render () {
-    const { people } = this.props
+    const people = this.props.people
     return (
       <FullPage>
         <h1><FormattedMessage id='personListTitle' defaultMessage='People' description='H1 on Person list page' /></h1>

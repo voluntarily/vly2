@@ -1,15 +1,16 @@
 import Link from 'next/link'
 import Head from 'next/head'
+import { Divider } from 'antd'
 import publicPage, { A4 } from '../hocs/publicPage'
-import Hello from '../components/test/Hello'
-import LessStyled from '../components/test/LessStyled'
-import AntdType from '../components/test/AntdType'
-import IntlDemo from '../components/test/IntlDemo'
+import { Hello, Greet } from '../components/examples/Hello'
+import LessStyled from '../components/examples/LessStyled'
+import AntdType from '../components/examples/AntdType'
+import IntlDemo from '../components/examples/IntlDemo'
 import OrgCard from '../components/Org/OrgCard'
 import OrgDetail from '../components/Org/OrgDetail'
 import PersonCard from '../components/Person/PersonCard'
 import PersonDetail from '../components/Person/PersonDetail'
-import RoutePush, { RouteBack, RouteReplace } from '../components/test/RoutePush'
+import RoutePush, { RouteBack, RouteReplace } from '../components/examples/RoutePush'
 const org = {
   _id: 'f34gb2bh24b24b2',
   name: 'OMGTech',
@@ -22,7 +23,7 @@ const org = {
 const person = {
   _id: 'f34gb2bh24b24b2',
   name: 'Testy McTestface',
-  moniker: 'Testy',
+  nickname: 'Testy',
   about: '30+ years in software development, product management, systems design and team leadership across a range of industries including science, technology, engineering, health, automotive, transport, mobile phone, and travel. I have a strong balance of technical and management skills.\n\nI have run my own company and led a start-up mobile phone company software team through a high growth period. I have created and developed multiple agile cross functional teams, managed DevOps processes and modernised IT platforms including migration to cloud services.\n\nI have a track record as a forward-thinking, customer focussed, innovative solutions designer and product development manager taking ideas from conception through implementation and delivery and into operation through a full business-process-aligned life cycle, managing teams using agile methodologies, leading-edge tools and technologies. ',
   email: 'testy@voluntar.ly',
   phone: '027 444 5555',
@@ -45,26 +46,31 @@ const TestPage = ({ ...props }) =>
   <A4>
     <Head><title>Voluntari.ly Tests</title></Head>
     <h1>Tests</h1>
-    <Hello />
+    <Greet />
+    <Hello name='Andrew' surname='watkins' />
     <IntlDemo />
     <LessStyled />
+    <Divider />
     <h1>Test Router Actions</h1>
     <RoutePush href='/'>Home </RoutePush>
     <RoutePush href='/about'>About Page </RoutePush>
     <RouteReplace href='/orgs'>Replace Orgs </RouteReplace>
     <RouteBack href='/about'>Back</RouteBack>
-    <Link href='/test-redirect'><a>Test Redirect to About</a></Link>
+    <Link href='/examples-redirect'><a>Test Redirect to About</a></Link>
+    <Divider />
     <h1>Authenticated User Properties</h1>
     {props.isAuthenticated ? <UserProp {...props} /> : <p>Not signed in</p>}
-    <AntdType />
     <h1>Person Card</h1>
-    <PersonCard style={{ width: '300px' }} person={person} />
+    <PersonCard style={{ width: '300px' }} person={props.isPerson ? props.me : person} />
+
     <h1>Person Detail</h1>
-    <PersonDetail person={person} />
+    <PersonDetail person={props.isPerson ? props.me : person} />
+    <Divider />
     <h1>Organisation Card</h1>
     <OrgCard style={{ width: '300px' }} org={org} />
     <h1>Organisation Detail</h1>
     <OrgDetail org={org} />
+    <AntdType />
   </A4>
 
 export default publicPage((TestPage))

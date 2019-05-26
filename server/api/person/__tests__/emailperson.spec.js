@@ -4,7 +4,7 @@ import { emailPerson } from '../email/emailperson'
 test.skip('Should send verification email to person', async t => {
   const person = {
     name: 'Testy McTestFace',
-    moniker: 'Testy',
+    nickname: 'Testy',
     phone: '123 456789',
     email: 'andrew@omgtech.co.nz',
     role: 'tester'

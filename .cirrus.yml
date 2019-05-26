@@ -1,18 +1,21 @@
 container:
-  image: node:latest
+  image: node:12
 
 lint_task:      
   node_modules_cache:
     folder: node_modules
     fingerprint_script: cat package-lock.json
-    populate_script: npm install
-
-  test_script: npm run lint
+    populate_script: npm ci
+  lint_script: npm run lint
 
 test_task:
+  env:
+    # For some reason AVA/Cirrus get confused about not all tasks being test tasks, so we override the defaults to
+    # force AVA to run all the tests in one task.
+    CI_NODE_INDEX: 0
+    CI_NODE_TOTAL: 1
   node_modules_cache:
     folder: node_modules
     fingerprint_script: cat package-lock.json
-    populate_script: npm install
-  test_script: npm test -- -t -v
-
+    populate_script: MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" MONGOMS_VERSION="4.0.5" MONGOMS_DISABLE_POSTINSTALL=1 npm ci
+  test_script: npm test -- --tap --verbose --serial `find . -name '*.spec.js'`
