@@ -11,12 +11,18 @@ function addHealth (health) {
     health
   }
 }
+const BadHealth = {
+  message: 'Hello from Voluntari.ly V0.0.2',
+  health: 'Not OK'
+}
 
 export function fetchHealth () {
   return dispatch => {
     return callApi('health').then(res => {
       dispatch(addHealth(res))
-    })
+    },
+    _err => { dispatch(addHealth(BadHealth)) }
+    )
   }
 }
 const initialState = {

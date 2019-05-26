@@ -12,15 +12,10 @@ const Brand = styled.h1`
   font-size: 2em;
   float: left;
 `
-// const Wa = styled.a`
-//   text-decoration: none;
-//   color: black;
-//   font-family: 'gaoel';
-//   font-weight: 500;
-// `
+
 const Logo = styled.img`
   float: left;
-  margin: 0.5rem;
+  margin: 0.7rem;
 `
 
 const getAllowedLinks = isAuthenticated =>
