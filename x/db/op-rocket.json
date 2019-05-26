@@ -5,5 +5,16 @@
   "description": "Project to build a simple rocket that will reach 100m",
   "duration": "4 hours",
   "location": "St Marys Intermediate School",
-  "status": "draft"
+  "status": "draft",
+  "tags": [
+    { 
+       "tag": "Model Rockets"
+    },
+    { 
+       "tag": "Physics"
+    },
+    { 
+       "tag": "Chemistry"
+    }
+  ]
 }

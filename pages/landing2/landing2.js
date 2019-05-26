@@ -2,14 +2,14 @@ import { Divider } from 'antd'
 import React, { Component } from 'react'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 // import OpListSection from '../../components/Op/OpListSection'
-import Hero from '../../components/HeroPage/Hero'
-import AboutSection from '../../components/HeroPage/AboutSection'
-import PersonaSection from '../../components/HeroPage/PersonaSection'
-import TitleSectionSub from '../../components/HeroPage/TitleSectionSub'
+import Hero from '../../components/LandingPageComponents/Hero'
+import AboutSection from '../../components/LandingPageComponents/AboutSection'
+import PersonaSection from '../../components/LandingPageComponents/PersonaSection'
+import TitleSectionSub from '../../components/LandingPageComponents/TitleSectionSub'
 import OpListSection from '../../components/Op/OpListSection'
 
 import '../../pages/landing2/landing.less'
-import FeaturedTwoSection from '../../components/HeroPage/FeaturedTwoSection'
+import FeaturedTwoSection from '../../components/LandingPageComponents/FeaturedTwoSection'
 import { Spacer } from '../../components/VTheme/VTheme'
 
 export class Landing2 extends Component {
@@ -42,7 +42,7 @@ export class Landing2 extends Component {
         <section>
           <h2 className='blockTitle'>Happening near you</h2>
           <p className='blockDescription'>
-            Get involved in your community by helping out with an activity below{' '}
+            Get involved in your community by helping out with an activity below
           </p>
 
           {/* @todo will style components here then convert to components */}

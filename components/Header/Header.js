@@ -6,21 +6,17 @@ import { Layout } from 'antd'
 import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
 import links from './HeaderMenu'
+import { connect } from 'react-redux'
 
 const Brand = styled.h1`
   font-weight: 300;
   font-size: 2em;
   float: left;
 `
-// const Wa = styled.a`
-//   text-decoration: none;
-//   color: black;
-//   font-family: 'gaoel';
-//   font-weight: 500;
-// `
+
 const Logo = styled.img`
   float: left;
-  margin: 0.5rem;
+  margin: 0.7rem;
 `
 
 const getAllowedLinks = isAuthenticated =>
@@ -44,5 +40,10 @@ const Header = ({ isAuthenticated, ...props }) => (
 Header.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
 }
+const mapStateToProps = store => ({
+  isAuthenticated: store.session.isAuthenticated
+})
 
-export default Header
+export default connect(
+  mapStateToProps
+)(Header)

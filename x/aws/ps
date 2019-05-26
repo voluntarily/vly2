@@ -1,1 +1,7 @@
+#!/bin/bash
+MY_DIR=$( dirname "${BASH_SOURCE[0]}" )
+
+# Get a docker login and run it
+source ${MY_DIR}/login
+
 ecs-cli ps

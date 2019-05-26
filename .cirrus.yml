@@ -1,7 +1,7 @@
 container:
   image: node:12
 
-lint_task:      
+lint_task:
   node_modules_cache:
     folder: node_modules
     fingerprint_script: cat package-lock.json
@@ -19,3 +19,24 @@ test_task:
     fingerprint_script: cat package-lock.json
     populate_script: MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" MONGOMS_VERSION="4.0.5" MONGOMS_DISABLE_POSTINSTALL=1 npm ci
   test_script: npm test -- --tap --verbose --serial `find . -name '*.spec.js'`
+
+prod_docker_docker_builder:
+  only_if: $CIRRUS_BRANCH == 'master'
+  depends_on:
+    - test
+    - lint
+  env:
+    AWS_ACCOUNT_ID: ENCRYPTED[3afae87e49cb7fb6d48c91aad7fdbca95b7bdad59a37ba5e5baa04f9be4bb7dc7b58dff4b44e754e438c21af6e414636]
+    AWS_ACCESS_KEY_ID: ENCRYPTED[d86162b4131f8b01011d04f450b54011d70b5b613fc9a86b1e6f589ecf9e0864e4e4469fafbcee218eac16f799c2391d]
+    AWS_SECRET_ACCESS_KEY: ENCRYPTED[74a41c950ca740c721e7be77eee13576159bceade6cbac8f179066a57edce4d9d43430df4b5af82d5d94b17b066895b3]
+    AWS_DEFAULT_REGION: ap-southeast-1
+    IMAGE_TAG_VERSION: ${CIRRUS_BRANCH}
+    HOME: /root
+  prepare_script:
+    - pip install awscli
+    - wget https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest -O ./ecs-cli
+    - chmod +x ./ecs-cli
+    - mv ./ecs-cli /usr/local/bin/
+    - which ecs-cli
+  build_script: ./x/aws/buildimage
+  deploy_script: ./x/aws/deploy-alpha

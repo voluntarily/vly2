@@ -4,10 +4,8 @@ import PropTypes from 'prop-types'
 
 const InterestItem = ({ interest, ...props }) => (
   <dl>
-    <dt>_id</dt>
-    <dd>{interest._id}</dd>
     <dt>Person</dt>
-    <dd>{interest.person}</dd>
+    <dd>{interest.person.nickname}</dd>
     <dt>Opportunity</dt>
     <dd>{interest.opportunity}</dd>
     <dt>Comment</dt>
@@ -19,10 +17,11 @@ const InterestItem = ({ interest, ...props }) => (
 
 InterestItem.propTypes = {
   interest: PropTypes.shape({
-    person: PropTypes.string.isRequired,
+    person: PropTypes.object.isRequired,
     opportunity: PropTypes.string.isRequired,
     comment: PropTypes.string,
-    status: PropTypes.string
+    status: PropTypes.string,
+    _id: PropTypes.string.isRequired
   }).isRequired
 }
 

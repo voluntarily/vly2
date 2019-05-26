@@ -5,13 +5,14 @@ import Router from 'next/router'
 import {
   getUserFromServerCookie,
   getUserFromLocalCookie,
-  getPersonFromUser
+  parseUserToSession
 } from '../lib/auth/auth'
 import { Layout } from 'antd'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 
 import styled from 'styled-components'
+import { setSession } from '../lib/redux/actions'
 
 // Dump all the custom elements and responsive scaffolding crap here
 // BEGIN AWESOME DUMP OF CSS-ISH GOODNESS
@@ -31,9 +32,11 @@ export const FullPage = styled.div`
   margin: 0 auto;
   width: 80rem;
 
+
   @media screen and (min-width: 768px) and (max-width: 1280px) {
-    width: calc(100vw - 2rem);
+    width: calc(100vw - 4rem);
     margin-left: 2rem;
+    margin-right: 2rem;
   }
   @media screen and (max-width: 767px) {
     width: calc(100vw - 1rem);
@@ -59,34 +62,31 @@ export const Grid = styled.div`
 ` // end grid
 
 export const FillWindow = styled.div`
-  
-    min-height: calc(100vh - 220px); 
+    min-height: calc(100vh - 220px);
   }
 ` // END AWESOME CSS DUMP
 
 export default Page =>
   class DefaultPage extends React.Component {
     static async getInitialProps (ctx) {
-      let me = false
+      let session = {}
       const loggedUser = process.browser
         ? getUserFromLocalCookie()
         : getUserFromServerCookie(ctx.req)
-      try {
-        me = await getPersonFromUser(loggedUser)
-        console.log('got me', me)
-      } catch (err) {
-        console.error()
+      if (loggedUser) {
+        try {
+          session = await parseUserToSession(loggedUser)
+          ctx.store.dispatch(setSession(session))
+        } catch (err) {
+          console.error()
+        }
       }
       const pageProps =
         Page.getInitialProps && (await Page.getInitialProps(ctx))
       return {
         ...pageProps,
-        loggedUser,
-        me,
-        currentUrl: ctx.pathname,
-        isAuthenticated: !!loggedUser,
-        isPerson: !!me
-        // isAdmin: !!loggedUser && me.role.includes('admin')
+        me: session.me,
+        isAuthenticated: session.isAuthenticated
       }
     }
 

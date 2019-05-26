@@ -1,42 +1,68 @@
 import publicPage, { FullPage } from '../../hocs/publicPage'
-import TitleSection from '../../components/HeroPage/TitleSectionSub'
+import TitleSection from '../../components/LandingPageComponents/TitleSectionSub'
 import BigSearch from '../../components/VTheme/BigSearch'
 import { Spacer } from '../../components/VTheme/VTheme'
 import OpListSection from '../../components/Op/OpListSection'
 import { Component } from 'react'
 import PropTypes from 'prop-types'
+import Router from 'next/router'
+import { FormattedMessage } from 'react-intl'
 
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
 
 export class SearchPage extends Component {
-  // state = {}
-  // async componentDidMount () {
-  //   // Get all Ops
+  state = {
+    search: null
+  }
 
-  //   try {
-  //     const ops = await this.props.dispatch(
-  //       reduxApi.actions.opportunities.get()
-  //     )
-  //     // console.log('got ops', ops)
-  //     this.setState({ ops })
-  //   } catch (err) {
-  //     console.log('error in getting ops', err)
-  //   }
-  // }
+  constructor (props) {
+    super(props)
+    this.state.search = props.search
+  }
+
+  static getDerivedStateFromProps ({ search }) {
+    return {
+      search
+    }
+  }
+
+  static async getInitialProps ({ query: { search } }) {
+    return {
+      search
+    }
+  }
+
+  handleSearch = search => {
+    if (!search) {
+      return false
+    }
+
+    Router.push({
+      pathname: '/search',
+      query: {
+        search
+      }
+    })
+
+    this.setState({ search })
+  }
 
   render () {
+    const { search } = this.state
+
     return (
       <FullPage>
-        <TitleSection title='Search results for tech' />
-        <BigSearch />
+        <TitleSection title={<FormattedMessage defaultMessage={`Search results for "{search}"`} values={{ search }} id='search.title' />} />
+        <BigSearch search={search} onSearch={this.handleSearch} />
         <Spacer />
-        <OpListSection />
+        <OpListSection search={search} />
       </FullPage>
     )
   }
 }
 
 SearchPage.propTypes = {
+  search: PropTypes.string,
   ops: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string,

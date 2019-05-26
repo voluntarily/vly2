@@ -36,6 +36,9 @@ class RegisterInterestSection extends Component {
 
   // When the button is clicked to advance the interest status, make an appropriate api call.
   async handleChangeStatus (interest) {
+    // const prevStatus = interest.status
+    interest.status = getNextStatus(interest)
+
     if (interest._id) {
       // console.log('Modifying interest')
       await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
@@ -81,6 +84,17 @@ class RegisterInterestSection extends Component {
         </section>
       )
     }
+  }
+}
+
+// Returns the next status, given the current status
+function getNextStatus (interest) {
+  switch (interest.status) {
+    case null:
+      return 'interested'
+
+    case 'invited':
+      return 'committed'
   }
 }
 

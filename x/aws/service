@@ -1,13 +1,19 @@
-# uses ECS command line to start the containers in the cluster based on the given docker compose yml file. 
+#!/bin/bash
+MY_DIR=$( dirname "${BASH_SOURCE[0]}" )
+
+# Get a docker login and run it
+source ${MY_DIR}/login
+
+# uses ECS command line to start the containers in the cluster based on the given docker compose yml file.
 # this one starts production server using atlas database.
-# will only work if you have an IAM account on AWS which is in our security group. 
+# will only work if you have an IAM account on AWS which is in our security group.
 # and have setup local key etc.
-# run this as 
+# run this as
 # source aws/service up
 # source aws/service down
-ecs-cli compose --verbose   -p vly --file docker-compose-ecs-atlas.yml service $1 $2
+ecs-cli compose --verbose -c vly-cluster1 -p vly --file docker-compose-alpha.yml service $*
 
-# note this creates a new task definition from the yml file and so you only really need to do this is the parameters have changed. 
+# note this creates a new task definition from the yml file and so you only really need to do this is the parameters have changed.
 # Otherwise you should be able to deploy a new container by draining the stack and starting new instances.
 
 

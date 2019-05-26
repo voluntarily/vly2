@@ -1,4 +1,7 @@
 const Interest = require('./interest')
+// const Person = require('../person/person')
+// const Opportunity = require('../opportunity/opportunity')
+// const { emailPerson } = require('./email/emailperson')
 
 /**
   api/interests -> list all interests
@@ -6,7 +9,6 @@ const Interest = require('./interest')
   api/interests?op='opid'&me='personid' -> lists all interests (hopefully only 0 or 1) associated with opid and personid.
  */
 const listInterests = async (req, res) => {
-  // console.log(req.query)
   let sort = 'dateAdded' // todo sort by date.
   let got
   try {
@@ -15,62 +17,58 @@ const listInterests = async (req, res) => {
       if (req.query.me) {
         query.person = req.query.me
       }
-      got = await Interest.find(query).sort(sort).exec()
+      // Return the nickname in person field
+      got = await Interest.find(query).populate({ path: 'person', select: 'nickname' }).sort(sort).exec()
     } else {
-      got = await Interest.find().sort(sort).exec()
+      got = await Interest.find().populate({ path: 'person', select: 'nickname' }).sort(sort).exec()
     }
-    // console.log(got)
     res.json(got)
   } catch (err) {
-    console.log(err)
     res.status(404).send(err)
   }
 }
 
-// /**
-//  * Save an org
-//  * @param req
-//  * @param res
-//  * @returns void
-//  */
-// export function addOrganisation (req, res) {
-//   if (!req.body.organisation.name || !req.body.organisation.about) {
-//     res.status(403).end()
+const updateInterest = async (req, res) => {
+  try {
+    await Interest.update({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
+
+    res.json(req.body)
+  } catch (err) {
+    res.status(404).send(err)
+  }
+}
+
+const createInterest = async (req, res) => {
+  const newInterest = new Interest(req.body)
+  newInterest.save(async (err, saved) => {
+    if (err) {
+      res.status(500).send(err)
+    }
+    const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
+    res.json(got)
+  })
+}
+
+// async function maybeInnovativelyDestructivelySendEmailPossibly (volunteerId, organizerId, prevStatus, currentStatus, modifier) {
+//   if (modifier == 'volunteer') {
+//     if (currentStatus == 'interested') { // A volunteer just clicked "interested"
+//       console.log('A volunteer just clicked "interested"')
+//     } else if (currentStatus == 'committed') { // A volunteer accepts an invitation
+//       console.log('A volunteer accepts an invitation')
+//     }
+//   } else {
+//     if (currentStatus == 'interested') { // An organizer just withdrew an invite
+//       console.log('An organizer just withdrew an invite')
+//     } else if (currentStatus == 'invited') { // An organizer just sent an invite
+//       console.log('An organizer just sent an invite')
+//     } else if (currentStatus == 'declined') { // An organizer just declined someone
+//       console.log('An organizer just declined someone')
+//     }
 //   }
-
-//   const newOrganisation = new Organisation(req.body.organisation)
-
-//   // Let's sanitize inputs
-//   newOrganisation.name = sanitizeHtml(newOrganisation.name)
-//   newOrganisation.about = sanitizeHtml(newOrganisation.about)
-
-//   newOrganisation.slug = slug(newOrganisation.name.toLowerCase(), { lowercase: true })
-//   newOrganisation.save((err, saved) => {
-//     if (err) {
-//       res.status(500).send(err)
-//     }
-//     res.json({ organisation: saved })
-//   })
-// }
-
-// /**
-//  * Delete a organisation
-//  * @param req
-//  * @param res
-//  * @returns void
-//  */
-// export function deleteOrganisation (req, res) {
-//   Organisation.findOne({ cuid: req.params.cuid }).exec((err, organisation) => {
-//     if (err) {
-//       res.status(500).send(err)
-//     }
-
-//     organisation.remove(() => {
-//       res.status(200).end()
-//     })
-//   })
 // }
 
 module.exports = {
-  listInterests
+  listInterests,
+  updateInterest,
+  createInterest
 }

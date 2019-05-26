@@ -2,13 +2,12 @@ import { Button } from 'antd'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import Link from 'next/link'
-import publicPage, { FullPage } from '../../hocs/publicPage'
 
-import Hero from '../../components/HeroPage/Hero'
-import AboutSection from '../../components/HeroPage/AboutSection'
-import PersonaSection from '../../components/HeroPage/PersonaSection'
+import publicPage, { FullPage } from '../../hocs/publicPage'
+import Hero from '../../components/LandingPageComponents/Hero'
+import PersonaSection from '../../components/LandingPageComponents/PersonaSection'
 import OpListSection from '../../components/Op/OpListSection'
-import TitleSectionSub from '../../components/HeroPage/TitleSectionSub'
+import TitleSectionSub from '../../components/LandingPageComponents/TitleSectionSub'
 
 // import bigimage from './landing-page-bg.jpg'
 
@@ -20,13 +19,13 @@ export class Landing extends Component {
       <div>
         <Hero />
         <FullPage>
-          <AboutSection
+          {/* <AboutSection
             title='Support Innovation in the classroom.'
             subtitle='Voluntarily connects you with classrooms to teach science, technology, engineering, entrepreneurship, arts, and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content.'
-          />
+          /> */}
           <div className='spacer' />
           <TitleSectionSub
-            title='How we help'
+            title='Who we help'
             subtitle='We help these awesome people accomplish amazing things'
           />
           <PersonaSection />
@@ -38,7 +37,7 @@ export class Landing extends Component {
 
           <OpListSection store={this.props.store} />
           <Link href={'/op/new'}>
-            <Button type='primary' shape='round'>
+            <Button type='primary' shape='round' size='large'>
               <FormattedMessage
                 id='landing.newOp'
                 defaultMessage='New Opportunity'

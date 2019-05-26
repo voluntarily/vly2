@@ -1,4 +1,10 @@
-# use the ecs-cli command line to start a new cluster with the given instance type and count 
+#!/bin/bash
+MY_DIR=$( dirname "${BASH_SOURCE[0]}" )
+
+# Get a docker login and run it
+source ${MY_DIR}/login
+
+# use the ecs-cli command line to start a new cluster with the given instance type and count
 # -f force down previous cluster.
 # warning this will take down the services for about 10 minutes.
 # to run this you will need the vly1 private key.

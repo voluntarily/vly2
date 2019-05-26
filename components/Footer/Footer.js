@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
-// import { FormattedMessage } from 'react-intl'
-
+import { FormattedMessage } from 'react-intl'
 import Navigation from '../Navigation/Navigation'
-
 import links from './FooterMenu'
-import { Grid, Spacer } from '../VTheme/VTheme'
+import { Grid, Spacer, TextP, TextPBold } from '../VTheme/VTheme'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+
 const getAllowedLinks = isAuthenticated =>
   links()
     .filter(l => !l.authRequired || (l.authRequired && isAuthenticated))
@@ -42,7 +42,7 @@ const FooterLogo = styled.img`
   }
 `
 
-const FooterText = styled.h1`
+const FooterText = styled.div`
   letter-spacing: -0.4px;
   font-size: 1rem;
   margin-top: 1rem;
@@ -52,6 +52,7 @@ const FooterText = styled.h1`
 
   @media screen and (max-width: 767px) {
     margin-left: 1rem;
+    margin-right: 1rem;
   }
 `
 
@@ -65,18 +66,18 @@ const FooterGridItemTitle = styled.h1`
   font-weight: 400;
   font-size: 1rem;
   letter-spacing: -0.8px;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 `
 
 const MenuItem = styled.a`
-  font-family: Inter;
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 1.2rem;
   color: #333333;
   letter-spacing: -1.07px;
-  line-height: 32px;
+  line-height: 40px;
   @media screen and (max-width: 767px) {
     line-height: 64px;
+    font-size: 2rem;
   }
 `
 
@@ -85,11 +86,13 @@ const Footer = ({ isAuthenticated, ...props }) => (
     <FooterContainer>
       <FooterLogo src='../../static/vlogo.svg' />
       <FooterText>
-        Voluntarily is an awesome open source project run by the&nbsp;
-        <a href='https://www.pamfergusson.org.nz/' target='_blank'>
-          Pam Fergussion Charitable Trust
-        </a>{' '}
-        lol
+        <TextP>
+          Voluntarily is an awesome open source project run by the&nbsp;
+          <a href='https://www.pamfergusson.org.nz/' target='_blank'>
+            Pam Fergussion Charitable Trust
+          </a>{' '}
+          lol
+        </TextP>
       </FooterText>
       <Spacer />
       <Grid>
@@ -101,7 +104,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
           <br />
           <MenuItem href='/charities'>For Charities</MenuItem>
           <br />
-          <MenuItem href='/businesses'>For Businesses</MenuItem>
+          <MenuItem href='/business'>For Businesses</MenuItem>
           <br />
           <MenuItem href='/government'>For Governments</MenuItem>
           <br />
@@ -170,10 +173,27 @@ const Footer = ({ isAuthenticated, ...props }) => (
             Github Repo
           </MenuItem>
           <br />
+          <MenuItem href='https://github.com/voluntarily/vly2' target='_blank'>
+            Developer resources
+          </MenuItem>
+          <br />
           <MenuItem>Jobs</MenuItem>
           <br />
           <MenuItem>Legal</MenuItem>
           <br />
+          <TextPBold>
+            <FormattedMessage
+              id='version'
+              defaultMessage='Version'
+              description='Source coder version label.'
+            />:&nbsp;
+            <FormattedMessage
+              id='revision'
+              defaultMessage='local-build'
+              description='Source code revision, auto generalted.'
+            />
+          </TextPBold>
+
         </FooterGridItem>
       </Grid>
       <Spacer />
@@ -187,4 +207,10 @@ Footer.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
 }
 
-export default Footer
+const mapStateToProps = store => ({
+  isAuthenticated: store.session.isAuthenticated
+})
+
+export default connect(
+  mapStateToProps
+)(Footer)
