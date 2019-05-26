@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { Input } from 'antd'
 import PropTypes from 'prop-types'
 
@@ -48,14 +48,18 @@ const FilterItem = styled.a`
   font-weight: bold;
 `
 
-const BigSearch = (...props) => (
-  <SearchContainer>
+class BigSearch extends PureComponent {
+  render() {
+    const {onSearch, search} = this.props;
+  return (<SearchContainer>
     <SearchTitle>Search</SearchTitle>
     <SearchInputContainer>
       <Search
         size='large'
         placeholder="try 'building robots' "
         enterButton='Search'
+        defaultValue={search}
+        onSearch={onSearch}
       />
     </SearchInputContainer>
     <SearchFilterText>Filter by:</SearchFilterText>
@@ -63,10 +67,12 @@ const BigSearch = (...props) => (
     <FilterItem>Location</FilterItem>
     <FilterItem>Categories</FilterItem>
     <FilterItem>Impact</FilterItem>
-  </SearchContainer>
-)
+  </SearchContainer>)
+  }}
 
 BigSearch.propTypes = {
+  search: PropTypes.string,
+  onSearch: PropTypes.func.isRequired,
   ops: PropTypes.arrayOf(
     PropTypes.shape({
       query: PropTypes.string
