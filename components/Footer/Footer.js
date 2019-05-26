@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
-// import { FormattedMessage } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 
 import Navigation from '../Navigation/Navigation'
 
 import links from './FooterMenu'
-import { Grid, Spacer, TextP } from '../VTheme/VTheme'
+import { Grid, Spacer, TextP, TextPBold } from '../VTheme/VTheme'
 import styled from 'styled-components'
 const getAllowedLinks = isAuthenticated =>
   links()
@@ -181,6 +181,19 @@ const Footer = ({ isAuthenticated, ...props }) => (
           <br />
           <MenuItem>Legal</MenuItem>
           <br />
+          <TextPBold>
+            <FormattedMessage
+              id='version'
+              defaultMessage='Version'
+              description='Source coder version label.'
+            />:&nbsp;
+            <FormattedMessage
+              id='revision'
+              defaultMessage='local-build'
+              description='Source code revision, auto generalted.'
+            />
+          </TextPBold>
+
         </FooterGridItem>
       </Grid>
       <Spacer />
