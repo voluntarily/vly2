@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const tagSchema = require('../tags/tag.js')
 
 const opportunitySchema = new Schema({
   title: String, // "Growing in the garden",
@@ -13,10 +14,7 @@ const opportunitySchema = new Schema({
   offerOrg: String,
   requestor: String,
   dateAdded: { type: 'Date', default: Date.now, required: true },
-  tags: {
-    type: Schema.Types.ObjectId,
-    ref: 'Tag'
-  }
+  tags: [tagSchema]
 })
 
 module.exports = mongoose.model('Opportunity', opportunitySchema)
