@@ -35,7 +35,6 @@ class RegisterInterestSection extends Component {
 
   // When the button is clicked to advance the interest status, make an appropriate api call.
   async handleChangeStatus (interest) {
-
     const prevStatus = interest.status
     interest.status = getNextStatus(interest)
 

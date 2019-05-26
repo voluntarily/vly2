@@ -23,19 +23,18 @@ class InterestSection extends Component {
   }
 
   async handleInvite (interest) {
-    const prevStatus = interst.status
     interest.status = 'invited'
-    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id, modifier: 'organizer', prev: prevStatus }, { body: JSON.stringify(interest) }))
+    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
   }
 
   async handleWithdrawInvite (interest) {
     interest.status = 'interested'
-    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id, modifier: 'organizer', prev: prevStatus }, { body: JSON.stringify(interest) }))
+    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
   }
 
   async handleDecline (interest) {
     interest.status = 'declined'
-    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id, modifier: 'organizer', prev: prevStatus }, { body: JSON.stringify(interest) }))
+    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
   }
 
   render () {

@@ -20,7 +20,7 @@ function getPersonBy (req, res) {
       // person does not exist
       return res.status(404).send({ error: 'person not found' })
     }
-    //console.log('getPersonBy ', got)
+    // console.log('getPersonBy ', got)
     res.json(got)
   })
 }
