@@ -87,7 +87,7 @@ const AboutSection = () => (
       <Text>
         We handle HR, admin, and discovery so your staff have more impact on the community.
       </Text>
-      <Button href='/businesses'>Learn More</Button>
+      <Button href='/business'>Learn More</Button>
     </PersonaContainer>
   </Grid>
 )
