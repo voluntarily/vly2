@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { message, Upload, Icon } from 'antd'
 import { FormattedMessage } from 'react-intl'
+import Axios from 'axios'
 
 const Dragger = Upload.Dragger
 const validImageFile = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg']
@@ -25,14 +26,27 @@ function imageFileCheck (file) {
   return isImage && isLessThan2M
 }
 
+function sendImageToAPI (file) {
+  console.log(file)
+  let FR = new window.FileReader()
+  FR.readAsBinaryString(file)
+  FR.addEventListener('load', (e) => {
+    Axios.post('/api/postImage', {
+      image: FR.result,
+      file: file.name
+    })
+      .then(res => console.log(res))
+      .catch(err => console.error(err))
+  })
+}
+
 class ImageUpload extends Component {
   render () {
     return (
       <Dragger
         name='file'
         beforeUpload={imageFileCheck}
-        // customRequest={this.handleUpload}
-        action='/api/postImage'
+        action={sendImageToAPI}
         onChange={onChangeImageUpload}
         multiple={false}>
         <p className='ant-upload-drag-icon'>
