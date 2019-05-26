@@ -49,11 +49,12 @@ export class OpUpdatePage extends Component {
   }
   render () {
     const op = this.props.ops[0]
+    const me = this.props.me
     return (
       <FullPage>
         <h1>Create a request</h1>
         <small>Ready to get some help? Lets start by letting volunteers know what you need</small>
-        <OpDetailForm op={op} onSubmit={this.handleAdd.bind(this, op)} onCancel={this.handleCancel} />
+        <OpDetailForm op={op} me={me} onSubmit={this.handleAdd.bind(this, op)} onCancel={this.handleCancel} />
         <br />
         {/* <Collapse>
           <Panel header="Debug" key="1">

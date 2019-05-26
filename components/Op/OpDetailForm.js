@@ -29,8 +29,11 @@ class OpDetailForm extends Component {
         op.description = values.description
         op.imgUrl = values.imgUrl
         op.status = values.status
+        op.requestor = this.props.me._id
 
         this.props.onSubmit(this.props.op)
+      } else {
+        // console.log('field validation error:', err)
       }
     })
   }
@@ -240,7 +243,11 @@ OpDetailForm.propTypes = {
     imgUrl: PropTypes.any,
     duration: PropTypes.string,
     location: PropTypes.string,
-    status: PropTypes.string
+    status: PropTypes.string,
+    requestor: PropTypes.string
+  }),
+  me: PropTypes.shape({
+    _id: PropTypes.string
   }),
   form: PropTypes.object,
   params: PropTypes.shape({

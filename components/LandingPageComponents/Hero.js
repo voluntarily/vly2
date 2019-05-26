@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button, Input } from 'antd'
+import Router from 'next/router'
+import { Button, Input, Icon } from 'antd'
 import { TextH1, TextSubtitle } from '../VTheme/VTheme'
+
 const Search = Input.Search
 
 // this is the big container block that holds the container together lol
@@ -178,7 +180,7 @@ const SearchBox = styled.div`
   height: 4rem;
   width: 40rem;
   border-radius: 0.25rem;
-  padding: 12px;
+  padding: 8px;
   box-shadow: 2px 2px 12px 0 rgba(0, 0, 0, 0.5);
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
@@ -190,9 +192,25 @@ const SearchBox = styled.div`
   @media screen and (max-width: 768px) {
     width: 90vw;
   }
+
+  .ant-input-affix-wrapper .ant-input:not(:first-child) {
+    padding-left: 40px;
+  }
 `
 
 // end right hand copy and CTA side
+
+const handleSearch = search => {
+  if (!search) {
+    return false
+  }
+  Router.push({
+    pathname: '/search',
+    query: {
+      search
+    }
+  })
+}
 
 // begin actual component
 const Hero = ({ ...props }) => (
@@ -218,11 +236,12 @@ const Hero = ({ ...props }) => (
       </TextSubtitle>
       <SearchBox>
         <Search
-          placeholder="try 'building robots' "
+          placeholder="try 'building robots'"
+          prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)' }} />}
           enterButton='Search'
           size='large'
           // eslint-disable-next-line no-console
-          onSearch={value => console.log(value)}
+          onSearch={handleSearch}
         />
       </SearchBox>
       <br />

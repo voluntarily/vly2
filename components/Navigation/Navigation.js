@@ -8,13 +8,20 @@ const StyledMenu = styled(Menu)`
   font-weight: bold;
   letter-spacing: -0.6px;
 `
+const StyledAvatar = styled(Avatar)`
+  background-color: #fff;
 
-const Navigation = ({ items, defaultItem, router, ...props }) => {
+  .ant-avatar > i {
+    margin-right: 0px;
+  }
+`
+
+const Navigation = ({ items, defaultItem, router, loggedUser, ...props }) => {
   // TODO next js get the location is different?
   // const activeItem = router && router.pathname ? router.pathname.slice(1) : defaultItem
   const activeItem = router.pathname.slice(1)
-  return (
 
+  return (
     <StyledMenu>
       <Menu
         theme='light'
@@ -32,12 +39,13 @@ const Navigation = ({ items, defaultItem, router, ...props }) => {
 
         ))}
         <Menu.Item>
-          <Avatar
-            icon='user'
-            size='small'
-            src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-          />
-
+          <StyledAvatar>
+            <Avatar
+              size='small'
+              src={loggedUser && loggedUser.avatar}
+              icon='user'
+            />
+          </StyledAvatar>
         </Menu.Item>
       </Menu>
     </StyledMenu>

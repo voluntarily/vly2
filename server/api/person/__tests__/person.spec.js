@@ -3,23 +3,9 @@ import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Person from '../person'
 import MemoryMongo from '../../../util/test-memory-mongo'
+import people from '../__tests__/person.fixture'
 // Initial people added into test db
-const people = [
-  {
-    name: 'ANDREW WATKINS',
-    nickname: 'Andrew',
-    email: 'andrew@omgtech.co.nz',
-    phone: '027 7031007',
-    role: ['tester']
-  },
-  {
-    name: 'WALTER LIM',
-    nickname: 'Walt',
-    phone: '027 7031007',
-    email: 'walter@omgtech.co.nz',
-    role: ['tester']
-  }
-]
+
 let memMongo
 
 test.before('before connect to database', async () => {
@@ -34,10 +20,9 @@ test.after.always(async () => {
   // console.log('stopped')
 })
 
-test.beforeEach('connect and add two person entries', async () => {
+test.beforeEach('connect and add peopl fixture', async () => {
   // console.log('creating people')
-  await Person.create(people).catch(() => 'Unable to create people')
-  // console.log('creating people done')
+  await Person.create(people).catch((err) => `Unable to create people: ${err}`)
 })
 
 test.afterEach.always(async () => {
@@ -46,12 +31,14 @@ test.afterEach.always(async () => {
 
 test.serial('verify fixture database has people', async t => {
   const count = await Person.countDocuments()
-  t.is(count, 2)
+  t.is(count, people.length)
 
   // can find by email with then
-  await Person.findOne({ email: 'andrew@omgtech.co.nz' }).then((person) => {
-    t.is(person.nickname, 'Andrew')
-  })
+  const andrew = await Person.findOne({ email: 'andrew@groat.nz' })
+  t.is(andrew.nickname, 'avowkind')
+
+  const dali = await Person.findOne({ email: 'salvador@voluntari.ly' })
+  t.is(dali.nickname, 'Dali')
 
   await Person.find().then((p) => {
     t.is(people.length, p.length)
@@ -228,7 +215,7 @@ test.serial('Should find a person by nickname', async t => {
   t.is(res.body.name, p.name)
 })
 
-test.only('Should find no person', async t => {
+test.serial('Should find no person', async t => {
   t.plan(1)
   const p = {
     name: 'Testy McTestFace',
