@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { message, Upload, Icon } from 'antd'
 import { FormattedMessage } from 'react-intl'
-/* global fetch */
-import 'isomorphic-fetch'
+
+const fetch = require('isomorphic-fetch')
 
 const Dragger = Upload.Dragger
 const validImageFile = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg']
@@ -28,24 +28,26 @@ function imageFileCheck (file) {
 }
 
 class ImageUpload extends Component {
-  // constructor (props) {
-  //   super(props)
-  //   this.state = { filenamePrepend: props.filenamePrepend }
-  // }
-  sendImageToAPI (file) {
+  constructor (props) {
+    super(props)
+    this.sendImageToAPI = this.sendImageToAPI.bind(this)
+  }
+  async sendImageToAPI (file) {
     console.log(file)
     let FR = new window.FileReader()
     FR.readAsBinaryString(file)
-    FR.addEventListener('load', (e) => {
-      const response = fetch('/api/postImage', {
-        headers: {},
+    let self = this
+    FR.addEventListener('load', async (e) => {
+      const response = await fetch('/api/postImage', {
+        headers: { 'content-type': 'application/json' },
         method: 'POST',
-        body: { image: FR.result, file: file.name } })
+        body: JSON.stringify({ image: FR.result, file: file.name }) })
       if (!response.ok) {
+        // TODO Deal with error response
         return Promise.reject(response)
       }
-      const json = response.json()
-      return json
+      const json = await response.json()
+      console.log(json)
     })
   }
 
