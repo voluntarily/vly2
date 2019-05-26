@@ -11,10 +11,6 @@ import Loading from '../../components/Loading'
 
 // TODO: [VP-131] use redux instead of local state.
 class OpListSection extends Component {
-  state = {
-    ops: null
-  }
-
   async loadData (search) {
     // Get all Ops
     try {
@@ -28,37 +24,26 @@ class OpListSection extends Component {
     }
   }
 
-  async getInitialProps ({ query: { search } }) {
-    return {
-      search
-    }
-  }
-
   async componentDidUpdate (prevProps) {
-    console.log('ts', prevProps)
     if (prevProps.search !== this.props.search) {
-      this.setState({ ops: await this.loadData(this.props.search) })
+      await this.loadData(this.props.search);
     }
   }
 
   async componentDidMount () {
-    this.setState({ ops: await this.loadData(this.props.search) })
+    await this.loadData(this.props.search);
   }
 
   render () {
-    const { ops } = this.state
-
     if (this.props.opportunities.loading) {
       return (<section>
-        {/* <h3>search filter here</h3> */}
         <Loading><p>Loading opportunities...</p></Loading>
 
       </section>)
     } else {
+      // TODO: [VP-130] take out the search filter here line in OpListSection and pass in a property instead
       return (<section>
-        // TODO: [VP-130] take out the search filter here line in OpListSection and pass in a property instead
-        <h3>search filter here</h3>
-        <OpList ops={ops} />
+        <OpList ops={this.props.opportunities.data} />
       </section>)
     }
   }
