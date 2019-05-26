@@ -192,6 +192,10 @@ const SearchBox = styled.div`
   @media screen and (max-width: 768px) {
     width: 90vw;
   }
+
+  .ant-input-affix-wrapper .ant-input:not(:first-child) {
+    padding-left: 40px;
+  }
 `
 
 // end right hand copy and CTA side
