@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button, Input } from 'antd'
 import Router from 'next/router'
+import { Button, Input, Icon } from 'antd'
 import { TextH1, TextSubtitle } from '../VTheme/VTheme'
 
 const Search = Input.Search
@@ -180,7 +180,7 @@ const SearchBox = styled.div`
   height: 4rem;
   width: 40rem;
   border-radius: 0.25rem;
-  padding: 12px;
+  padding: 8px;
   box-shadow: 2px 2px 12px 0 rgba(0, 0, 0, 0.5);
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
@@ -232,7 +232,8 @@ const Hero = ({ ...props }) => (
       </TextSubtitle>
       <SearchBox>
         <Search
-          placeholder="try 'building robots' "
+          placeholder="try 'building robots'"
+          prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)' }} />}
           enterButton='Search'
           size='large'
           // eslint-disable-next-line no-console
