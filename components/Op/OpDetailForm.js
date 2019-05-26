@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react'
-import { Button, Col, Divider, Form, Input, Radio, Row, Upload, message } from 'antd'
+import { Button, Col, Divider, Form, Input, Radio, Row, message } from 'antd'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import Axios from 'axios'
