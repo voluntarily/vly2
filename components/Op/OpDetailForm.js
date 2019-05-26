@@ -1,36 +1,15 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react'
-import { Button, Col, Divider, Form, Input, Radio, Row, message } from 'antd'
+import { Button, Col, Divider, Form, Input, Radio, Row } from 'antd'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import Axios from 'axios'
 
-import ImageUploader from '../UploadComponent/ImageUploadComponent'
+import ImageUpload from '../UploadComponent/ImageUploadComponent'
 const { TextArea } = Input
-const validImageFile = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg']
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
-}
-
-function imageFileCheck (file) {
-  const fileType = file.type
-  const isImage = validImageFile.includes(fileType)
-  if (!isImage) {
-    message.error('You can upload only image file')
-  }
-
-  const isLessThan2M = file.size / 1024 / 1024 < 2
-
-  if (!isLessThan2M) {
-    message.error('You can upload image less than 2 Mb')
-  }
-
-  return isImage && isLessThan2M
-}
-
-function onChangeImageUpload (info) {
-  console.log(info)
 }
 
 class OpDetailForm extends Component {
@@ -227,9 +206,7 @@ class OpDetailForm extends Component {
                     { type: 'url', message: 'a URL is required' }
                   ]
                 })(
-                  <ImageUploader beforeUpload={imageFileCheck}
-                    customRequest={this.handleUpload}
-                    onChange={onChangeImageUpload} />
+                  <ImageUpload />
                 )}
               </Form.Item>
               <Form.Item label={opStatus}>
