@@ -6,7 +6,6 @@ const Interest = require('./interest')
   api/interests?op='opid'&me='personid' -> lists all interests (hopefully only 0 or 1) associated with opid and personid.
  */
 const listInterests = async (req, res) => {
-  // console.log(req.query)
   let sort = 'dateAdded' // todo sort by date.
   let got
   try {
@@ -20,23 +19,18 @@ const listInterests = async (req, res) => {
     } else {
       got = await Interest.find().populate({ path: 'person', select: 'nickname' }).sort(sort).exec()
     }
-    // console.log(got)
     res.json(got)
   } catch (err) {
-    console.log(err)
     res.status(404).send(err)
   }
 }
 
 const updateInterest = async (req, res) => {
-  let got
   try {
-    got = await Interest.update({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
-    console.log(got)
+    await Interest.update({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
 
     res.json(req.body)
   } catch (err) {
-    console.log(err)
     res.status(404).send(err)
   }
 }
@@ -48,7 +42,6 @@ const createInterest = async (req, res) => {
       res.status(500).send(err)
     }
     const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
-    console.log(got)
     res.json(got)
   })
 }
