@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import EditableTagGroup from '../DynamicTags/OpDetailTags'
 const { TextArea } = Input
 
 function hasErrors (fieldsError) {
@@ -159,9 +160,11 @@ class OpDetailForm extends Component {
                   rules: [
 
                   ]
-                })(
-                  <Input placeholder='optional tags to help volunteers find this.' />
-                )}
+                })
+                (
+                  <EditableTagGroup />
+                )
+                }
               </Form.Item>
             </Col>
           </Row>
