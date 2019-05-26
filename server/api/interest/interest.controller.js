@@ -15,9 +15,10 @@ const listInterests = async (req, res) => {
       if (req.query.me) {
         query.person = req.query.me
       }
-      got = await Interest.find(query).sort(sort).exec()
+      // Return the nickname in person field
+      got = await Interest.find(query).populate({ path: 'person', select: 'nickname' }).sort(sort).exec()
     } else {
-      got = await Interest.find().sort(sort).exec()
+      got = await Interest.find().populate({ path: 'person', select: 'nickname' }).sort(sort).exec()
     }
     // console.log(got)
     res.json(got)
@@ -25,6 +26,31 @@ const listInterests = async (req, res) => {
     console.log(err)
     res.status(404).send(err)
   }
+}
+
+const updateInterest = async (req, res) => {
+  let got
+  try {
+    got = await Interest.update({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
+    console.log(got)
+
+    res.json(req.body)
+  } catch (err) {
+    console.log(err)
+    res.status(404).send(err)
+  }
+}
+
+const createInterest = async (req, res) => {
+  const newInterest = new Interest(req.body)
+  newInterest.save(async (err, saved) => {
+    if (err) {
+      res.status(500).send(err)
+    }
+    const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
+    console.log(got)
+    res.json(got)
+  })
 }
 
 // /**
@@ -72,5 +98,7 @@ const listInterests = async (req, res) => {
 // }
 
 module.exports = {
-  listInterests
+  listInterests,
+  updateInterest,
+  createInterest
 }

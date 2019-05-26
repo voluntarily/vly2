@@ -9,9 +9,9 @@ import { Table, Button, Popconfirm } from 'antd'
 class InterestTable extends Component {
   columns = [
     {
-      title: 'person ID',
-      dataIndex: 'person',
-      key: 'person'
+      title: 'Name',
+      dataIndex: 'person.nickname',
+      key: 'person.nickname'
     },
     {
       title: 'Comment',
