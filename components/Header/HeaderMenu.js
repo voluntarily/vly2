@@ -25,7 +25,7 @@ export default () =>
     {
       key: 'hsignoff',
       href: '/auth/sign-off',
-      text: 'Sign Off',
+      text: 'Sign Out',
       authRequired: true
     }
   ]

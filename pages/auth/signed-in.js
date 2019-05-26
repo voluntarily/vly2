@@ -23,9 +23,9 @@ class SignedIn extends React.Component {
   // });
 
   componentDidMount () {
-  // static async getInitialProps (ctx) {
+    // static async getInitialProps (ctx) {
     console.log('componentDidMount')
-    parseHash((err, result) => {
+    parseHash(async (err, result) => {
       console.log('parseHash:', result)
       if (!result) return
       if (err) {
@@ -33,7 +33,7 @@ class SignedIn extends React.Component {
         return
       }
       setToken(result.idToken, result.accessToken)
-      const session = parseTokenToSession(result.idToken, result.accessToken)
+      const session = await parseTokenToSession(result.idToken)
       this.props.setSession(session)
       // console.log('signed in.')
       Router.push(`/`)
