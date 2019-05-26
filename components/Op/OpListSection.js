@@ -16,9 +16,14 @@ class OpListSection extends Component {
     try {
       // TODO: [VP-128] document how to set the parameters correctly
       // TODO: [VP-129] filter should be passed in here and translated into the query
-      return await this.props.dispatch(reduxApi.actions.opportunities.get({
-        search
-      }))
+
+      const filters = {};
+
+      if (search) {
+        filters.search = search;
+      }
+
+      return await this.props.dispatch(reduxApi.actions.opportunities.get(filters))
     } catch (err) {
       // console.log('error in getting ops', err)
     }
