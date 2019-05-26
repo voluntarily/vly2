@@ -6,11 +6,11 @@ const Opportunity = require('./opportunity')
  * @param res
  * @returns void
  */
-function getOpportunities (req, res) {
-  // console.log(req.query)
+async function getOpportunities (req, res) {
   let query = {} // { status: 'active' }
   let sort = 'title'
   let select = {}
+
   try {
     query = req.query.q ? JSON.parse(req.query.q) : query
     sort = req.query.s ? JSON.parse(req.query.s) : sort
@@ -19,14 +19,33 @@ function getOpportunities (req, res) {
     console.log('bad JSON', req.query)
     return res.status(400).send(e)
   }
-  Opportunity.find(query, select).sort(sort).exec((err, got) => {
-    if (err) {
-      console.log(err)
-      res.status(404).send(err)
+
+  let got
+  if (req.query.search) {
+    const searchExpression = new RegExp(req.query.search, 'i')
+    const searchParams = {
+      $or: [
+        { 'title': searchExpression },
+        { 'subtitle': searchExpression },
+        { 'description': searchExpression },
+        { 'tags.tag': searchExpression }
+      ]
     }
-    // console.log(got)
+
+    query = {
+      $and: [
+        searchParams,
+        query
+      ]
+    }
+  }
+
+  try {
+    got = await Opportunity.find(query, select).sort(sort).exec()
     res.json(got)
-  })
+  } catch (e) {
+    res.status(404).send(e)
+  }
 }
 function getOpportunity (req, res) {
   // console.log(req.query)

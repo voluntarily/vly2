@@ -1,4 +1,7 @@
 const Interest = require('./interest')
+// const Person = require('../person/person')
+// const Opportunity = require('../opportunity/opportunity')
+// const { emailPerson } = require('./email/emailperson')
 
 /**
   api/interests -> list all interests
@@ -46,48 +49,22 @@ const createInterest = async (req, res) => {
   })
 }
 
-// /**
-//  * Save an org
-//  * @param req
-//  * @param res
-//  * @returns void
-//  */
-// export function addOrganisation (req, res) {
-//   if (!req.body.organisation.name || !req.body.organisation.about) {
-//     res.status(403).end()
+// async function maybeInnovativelyDestructivelySendEmailPossibly (volunteerId, organizerId, prevStatus, currentStatus, modifier) {
+//   if (modifier == 'volunteer') {
+//     if (currentStatus == 'interested') { // A volunteer just clicked "interested"
+//       console.log('A volunteer just clicked "interested"')
+//     } else if (currentStatus == 'committed') { // A volunteer accepts an invitation
+//       console.log('A volunteer accepts an invitation')
+//     }
+//   } else {
+//     if (currentStatus == 'interested') { // An organizer just withdrew an invite
+//       console.log('An organizer just withdrew an invite')
+//     } else if (currentStatus == 'invited') { // An organizer just sent an invite
+//       console.log('An organizer just sent an invite')
+//     } else if (currentStatus == 'declined') { // An organizer just declined someone
+//       console.log('An organizer just declined someone')
+//     }
 //   }
-
-//   const newOrganisation = new Organisation(req.body.organisation)
-
-//   // Let's sanitize inputs
-//   newOrganisation.name = sanitizeHtml(newOrganisation.name)
-//   newOrganisation.about = sanitizeHtml(newOrganisation.about)
-
-//   newOrganisation.slug = slug(newOrganisation.name.toLowerCase(), { lowercase: true })
-//   newOrganisation.save((err, saved) => {
-//     if (err) {
-//       res.status(500).send(err)
-//     }
-//     res.json({ organisation: saved })
-//   })
-// }
-
-// /**
-//  * Delete a organisation
-//  * @param req
-//  * @param res
-//  * @returns void
-//  */
-// export function deleteOrganisation (req, res) {
-//   Organisation.findOne({ cuid: req.params.cuid }).exec((err, organisation) => {
-//     if (err) {
-//       res.status(500).send(err)
-//     }
-
-//     organisation.remove(() => {
-//       res.status(200).end()
-//     })
-//   })
 // }
 
 module.exports = {
