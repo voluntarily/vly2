@@ -16,7 +16,9 @@ export function fetchHealth () {
   return dispatch => {
     return callApi('health').then(res => {
       dispatch(addHealth(res))
-    })
+    },
+    err => { console.log('failed', err) }
+    )
   }
 }
 const initialState = {
