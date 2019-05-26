@@ -1,7 +1,6 @@
 
 const fs = require('fs')
 const Cuid = require('cuid')
-// check a bunch of things here like whether the db is connected and responding.
 // any depended upon api services
 const postImage = (req, res) => {
   const ImageBin = req.body.image
