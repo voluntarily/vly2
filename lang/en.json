@@ -69,5 +69,6 @@
   "personListTitle": "People",
   "people.new": "New Person",
   "person.pageheading": "Profile for",
-  "PersonEditPrompt": "Tell us something about yourself."
+  "PersonEditPrompt": "Tell us something about yourself.",
+  "search.title": "Search results for \"{name}\""
 }
