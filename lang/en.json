@@ -1,6 +1,11 @@
 {
   "footerCredit": "Voluntari.ly is an initiative of the {pfctlink} Supported by: Datacom, Spark, ATEED",
   "siteTitle": "Voluntari.ly",
+  "error.pagenotfound.title": "Ooops! Page not found",
+  "error.pagenotfound.description": "The page you are looking for is not here. We have looked everywhere but it doesn't seem to exist. Perhaps it just hasn't been built yet.",
+  "error.pagenotfound.contribute": "If you can write code you can help fix that by becoming a contributor to the project.",
+  "error.servererror.title": "Sorry. There was a problem",
+  "error.servererror.description": "Sorry, there was a problem and we can not complete this task. We have let our team know so they can take a look and fix it. For now try to refresh the page, or go back to the previous page",
   "opcard.commitment": "commitment",
   "op.commitment": "commitment",
   "opTitle": "Title",
