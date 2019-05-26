@@ -1,0 +1,4 @@
+# Login to aws client tool. This file must be sourced not executed as it sets env vars
+
+$(aws ecr get-login --no-include-email --region ap-southeast-1)
+

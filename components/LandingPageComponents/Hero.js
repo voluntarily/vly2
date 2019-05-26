@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import Router from 'next/router'
 import { Button, Input, Icon } from 'antd'
 import { TextH1, TextSubtitle } from '../VTheme/VTheme'
+
 const Search = Input.Search
 
 // this is the big container block that holds the container together lol
@@ -190,9 +192,25 @@ const SearchBox = styled.div`
   @media screen and (max-width: 768px) {
     width: 90vw;
   }
+
+  .ant-input-affix-wrapper .ant-input:not(:first-child) {
+    padding-left: 40px;
+  }
 `
 
 // end right hand copy and CTA side
+
+const handleSearch = search => {
+  if (!search) {
+    return false
+  }
+  Router.push({
+    pathname: '/search',
+    query: {
+      search
+    }
+  })
+}
 
 // begin actual component
 const Hero = ({ ...props }) => (
@@ -223,7 +241,7 @@ const Hero = ({ ...props }) => (
           enterButton='Search'
           size='large'
           // eslint-disable-next-line no-console
-          onSearch={value => console.log(value)}
+          onSearch={handleSearch}
         />
       </SearchBox>
       <br />
