@@ -9,9 +9,9 @@ import { Table, Button, Popconfirm } from 'antd'
 class InterestTable extends Component {
   columns = [
     {
-      title: 'person ID',
-      dataIndex: 'person',
-      key: 'person'
+      title: 'Name',
+      dataIndex: 'person.nickname',
+      key: 'person.nickname'
     },
     {
       title: 'Comment',
@@ -84,7 +84,8 @@ class InterestTable extends Component {
 InterestTable.propTypes = {
   onInvite: PropTypes.func.isRequired,
   onWithdrawInvite: PropTypes.func.isRequired,
-  onDecline: PropTypes.func.isRequired
+  onDecline: PropTypes.func.isRequired,
+  interests: PropTypes.array
 }
 
 function getEnabledButtons (interest) {
