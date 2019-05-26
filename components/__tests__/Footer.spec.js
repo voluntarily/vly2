@@ -11,7 +11,7 @@ test('renders the footer properly', t => {
     <RoutedFooter isAuthenticated={false} />
   )
   // console.log(wrapper.debug())
-  t.is(wrapper.find('div').length, 16)
+  t.is(wrapper.find('div').length, 17)
 
   t.snapshot()
 })
