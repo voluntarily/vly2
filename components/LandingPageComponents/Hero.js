@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button, Input } from 'antd'
+import { Button, Input, Icon } from 'antd'
 import { TextH1, TextSubtitle } from '../VTheme/VTheme'
 const Search = Input.Search
 
@@ -218,9 +218,9 @@ const Hero = ({ ...props }) => (
       </TextSubtitle>
       <SearchBox>
         <Search
-          placeholder="try 'building robots' "
+          placeholder="try 'building robots'"
+          prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }}/>}
           enterButton='Search'
-          icon='search'
           size='large'
           // eslint-disable-next-line no-console
           onSearch={value => console.log(value)}
