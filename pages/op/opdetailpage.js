@@ -16,9 +16,8 @@ export class OpDetailPage extends Component {
     // Get one Op
     // console.log('getting op details', query)
     try {
-      const ops = await store.dispatch(reduxApi.actions.opportunities.get(query))
+      await store.dispatch(reduxApi.actions.opportunities.get(query))
       // console.log('got ops for id', query, ops)
-      return { ops, query }
     } catch (err) {
       // console.log('error in getting ops', err)
     }
@@ -37,26 +36,20 @@ export class OpDetailPage extends Component {
   // Called when the user starts to delete an op, but then cancels it.
   handleDeleteCancelled = () => { message.error('Delete Cancelled') }
 
-  // Called when the user registers interest in an op
-  handleRegisterInterest (op) {
-
-  }
-
   render () {
     let content
-    if (this.props.ops && this.props.ops.length === 1) {
-      const op = this.props.ops[0]
-      const organizer = this.props.opportunities.data[0].requestor
-      const isOwner = this.props.me._id === organizer._id
-
+    if (this.props.opportunities && this.props.opportunities.data.length === 1) {
+      const op = this.props.opportunities.data[0]
+      const organizer = op.requestor
+      const isOwner = (this.props.me._id === (organizer || {})._id)
+      console.log('isOwner', isOwner, this.props.me._id, organizer._id)
       console.log('111', this.props)
       // TODO add condition that when volunteer finished the comment then show organizer's contact
-      let isFUlfilled = true
+      let isFulfilled = true
       const organizerSection = () => {
-        return (isFUlfilled)
-          ? <div>
+        return (isFulfilled)
+          ? organizer &&
             <PersonCard style={{ width: '300px' }} person={organizer} />
-          </div>
           : null
       }
       const interestedSection = () => {
@@ -83,7 +76,7 @@ export class OpDetailPage extends Component {
                 </Button>
               </Link>
                 &nbsp;
-              <Popconfirm title='Confirm removal of this opportunity.' onConfirm={this.handleDeleteOp} onCancel={this.cancel} okText='Yes' cancelText='No'>
+              <Popconfirm title='Confirm removal of this opportunity.' onConfirm={this.handleDeleteOp} onCancel={this.handleDeleteCancelled} okText='Yes' cancelText='No'>
                 <Button type='danger' shape='round' >
                   <FormattedMessage id='deleteOp' defaultMessage='Remove Request' description='Button to remove an opportunity on OpDetails page' />
                 </Button>
