@@ -43,7 +43,7 @@ class ImageUpload extends Component {
         body: JSON.stringify({ image: FR.result, file: file.name }) })
       if (!response.ok) {
         // TODO Deal with error response
-        return Promise.reject(err => { console.log(err) })
+        return Promise.reject(new Error(response))
       }
       const json = await response.json()
       console.log(json)
