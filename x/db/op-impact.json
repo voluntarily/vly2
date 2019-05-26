@@ -9,15 +9,8 @@
   "location": "Albany High School, Auckland",
   "status": "draft",
   "tags": [
-    { 
-       "tag": "C++"
-    },
-    { 
-       "tag": "Java"
-    },
-    { 
-       "tag": "Environment"
-    }
-  ],
-  "requestor": "5ccbe4c26c285b7184bff574"
+    { "tag": "java"},
+    { "tag": "education"},
+    { "tag": "business"}
+  ]
 }
