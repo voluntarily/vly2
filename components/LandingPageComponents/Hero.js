@@ -219,7 +219,7 @@ const Hero = ({ ...props }) => (
       <SearchBox>
         <Search
           placeholder="try 'building robots'"
-          prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+          prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)' }} />}
           enterButton='Search'
           size='large'
           // eslint-disable-next-line no-console
