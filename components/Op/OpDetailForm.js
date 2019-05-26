@@ -32,6 +32,8 @@ class OpDetailForm extends Component {
         op.requestor = this.props.me._id
 
         this.props.onSubmit(this.props.op)
+      } else {
+        // console.log('field validation error:', err)
       }
     })
   }

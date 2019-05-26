@@ -50,9 +50,10 @@ test('shallow the detail with op', t => {
 test('render the detail with op', t => {
   const submitOp = sinon.spy()
   const cancelOp = sinon.spy()
+  const me = { _id: '5ccbffff958ff4833ed2188d' }
 
   const wrapper = mountWithIntl(
-    <OpDetailForm op={op} onSubmit={submitOp} onCancel={cancelOp} />
+    <OpDetailForm op={op} me={me} onSubmit={submitOp} onCancel={cancelOp} />
   )
   // console.log(wrapper.html())
   t.is(wrapper.find('OpDetailForm').length, 1)
@@ -64,12 +65,13 @@ test('render the detail with op', t => {
   t.truthy(submitOp.calledWith(op))
 })
 
-test.only('render the detail with new blank op', t => {
+test.serial('render the detail with new blank op', t => {
   const submitOp = sinon.spy()
   const cancelOp = sinon.spy()
+  const me = { _id: '5ccbffff958ff4833ed2188d' }
 
   const wrapper = mountWithIntl(
-    <OpDetailForm op={noop} onSubmit={submitOp} onCancel={cancelOp} />
+    <OpDetailForm op={noop} me={me} onSubmit={submitOp} onCancel={cancelOp} />
   )
   // console.log(wrapper.html())
   t.is(wrapper.find('OpDetailForm').length, 1)
