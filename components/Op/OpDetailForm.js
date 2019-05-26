@@ -29,8 +29,8 @@ class OpDetailForm extends Component {
         op.description = values.description
         op.imgUrl = values.imgUrl
         op.status = values.status
-        op.requestor =  this.props.me._id
-        
+        op.requestor = this.props.me._id
+
         this.props.onSubmit(this.props.op)
       }
     })

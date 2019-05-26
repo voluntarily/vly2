@@ -47,14 +47,15 @@ export class OpDetailPage extends Component {
     if (this.props.ops && this.props.ops.length === 1) {
       const op = this.props.ops[0]
       const organizer = this.props.opportunities.data[0].requestor
-      const isOwner = this.props.me._id == organizer._id
-      
-      console.log('111',this.props)
+      const isOwner = this.props.me._id === organizer._id
+
+      console.log('111', this.props)
       // TODO add condition that when volunteer finished the comment then show organizer's contact
+      let isFUlfilled = true
       const organizerSection = () => {
-        return (true)
+        return (isFUlfilled)
           ? <div>
-            <PersonCard style={{ width: '300px' }} person={organizer}/>
+            <PersonCard style={{ width: '300px' }} person={organizer} />
           </div>
           : null
       }
@@ -72,35 +73,35 @@ export class OpDetailPage extends Component {
           </div>
       }
       const requestSection = () => {
-        return (isOwner || this.props.me &&this.props.me.role.includes('admin'))
+        return (isOwner || (this.props.me && this.props.me.role.includes('admin')))
           ? <div>
-              {/* These components should only appear if a user is logged in and viewing an op they DID create themselves. */}
-              <div>
-                <Link href={`/ops/${op._id}/edit`} >
-                  <Button type='secondary' shape='round' >
-                    <FormattedMessage id='editOp' defaultMessage='Edit' description='Button to edit an opportunity on OpDetails page' />
-                  </Button>
-                </Link>
+            {/* These components should only appear if a user is logged in and viewing an op they DID create themselves. */}
+            <div>
+              <Link href={`/ops/${op._id}/edit`} >
+                <Button type='secondary' shape='round' >
+                  <FormattedMessage id='editOp' defaultMessage='Edit' description='Button to edit an opportunity on OpDetails page' />
+                </Button>
+              </Link>
                 &nbsp;
-                <Popconfirm title='Confirm removal of this opportunity.' onConfirm={this.handleDeleteOp} onCancel={this.cancel} okText='Yes' cancelText='No'>
-                  <Button type='danger' shape='round' >
-                    <FormattedMessage id='deleteOp' defaultMessage='Remove Request' description='Button to remove an opportunity on OpDetails page' />
-                  </Button>
-                </Popconfirm>
-                <Divider />
-              </div>
-
-              {/* Remove this message when appropriate. */}
-              <div>
-                <small>visible buttons here depend on user role</small>
-              </div>
-
-              {/* These components should only appear if a user is logged in and viewing an op they DID create themselves. */}
-              <div>
-                <h2>Interested Volunteers</h2>
-                <InterestSection op={op._id} />
-              </div>
+              <Popconfirm title='Confirm removal of this opportunity.' onConfirm={this.handleDeleteOp} onCancel={this.cancel} okText='Yes' cancelText='No'>
+                <Button type='danger' shape='round' >
+                  <FormattedMessage id='deleteOp' defaultMessage='Remove Request' description='Button to remove an opportunity on OpDetails page' />
+                </Button>
+              </Popconfirm>
+              <Divider />
             </div>
+
+            {/* Remove this message when appropriate. */}
+            <div>
+              <small>visible buttons here depend on user role</small>
+            </div>
+
+            {/* These components should only appear if a user is logged in and viewing an op they DID create themselves. */}
+            <div>
+              <h2>Interested Volunteers</h2>
+              <InterestSection op={op._id} />
+            </div>
+          </div>
           : null
       }
       // TODO: [VP-161] In register interest section, if person not signed in show Sign In button
@@ -113,7 +114,6 @@ export class OpDetailPage extends Component {
           {requestSection()}
           {organizerSection()}
 
-          
         </div>)
     } else {
       content =
