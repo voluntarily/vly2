@@ -50,7 +50,7 @@ function sleep (ms) {
 test.only('mount the list with ops', async t => {
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
-  const api = `${API_URL}/opportunities/`
+  const api = `${API_URL}/opportunities/?`
   myMock.getOnce(api, ops)
 
   const wrapper = await mount(
