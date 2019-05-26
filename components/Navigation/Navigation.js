@@ -14,6 +14,7 @@ const Navigation = ({ items, defaultItem, router, ...props }) => {
   // const activeItem = router && router.pathname ? router.pathname.slice(1) : defaultItem
   const activeItem = router.pathname.slice(1)
   return (
+
     <StyledMenu>
       <Menu
         theme='light'
@@ -36,6 +37,7 @@ const Navigation = ({ items, defaultItem, router, ...props }) => {
             size='small'
             src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
           />
+
         </Menu.Item>
       </Menu>
     </StyledMenu>
