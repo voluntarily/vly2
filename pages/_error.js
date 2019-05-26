@@ -3,30 +3,29 @@
  */
 import React from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
-import App, { Container } from 'next/app'
-import Markdown from 'markdown-to-jsx'
+import { Container } from 'next/app'
 import { withRouter } from 'next/router'
-import { FormattedMessage, FormattedNumber } from 'react-intl'
-import publicPage, { FullPage } from '../hocs/publicPage'
+import { FormattedMessage } from 'react-intl'
+import { FullPage } from '../hocs/publicPage'
 import { Spacer } from '../components/VTheme/VTheme'
 
 class ErrorPage extends React.Component {
 
-  static propTypes() {
+  static propTypes () {
     return {
       errorCode: React.PropTypes.number.isRequired,
       url: React.PropTypes.string.isRequired
     }
   }
 
-  static getInitialProps({res, xhr}) {
+  static getInitialProps ({ res, xhr }) {
     const errorCode = res ? res.statusCode : (xhr ? xhr.status : null)
     return {errorCode}
   }
 
-  render() {
+  render () {
     var response
+
     switch (this.props.errorCode) {
       case 200: // Also display a 404 if someone requests /_error explicitly
       case 404:
@@ -36,7 +35,7 @@ class ErrorPage extends React.Component {
             <FormattedMessage
               id='error.pagenotfound.title'
               description='Page title for the 404 error'
-              defaultMessage='Page not found'
+              defaultMessage='Oh no! Page not found'
               tagName="title"
             />
             </Head>
@@ -46,7 +45,7 @@ class ErrorPage extends React.Component {
             <FormattedMessage
               id='error.pagenotfound.title'
               description='Page title for the 404 error'
-              defaultMessage='Page not found'
+              defaultMessage='Oh no! Page not found'
               tagName="h1"
             />
             <FormattedMessage
@@ -109,7 +108,8 @@ class ErrorPage extends React.Component {
 
     return response
   }
-
 }
+
+export const ErrorPageTest = ErrorPage // for test
 
 export default withRouter(ErrorPage)
