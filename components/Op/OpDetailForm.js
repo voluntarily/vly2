@@ -33,6 +33,8 @@ class OpDetailForm extends Component {
         op.status = values.status
 
         this.props.onSubmit(this.props.op)
+      } else {
+        console.log(err)
       }
     })
   }
@@ -176,10 +178,10 @@ class OpDetailForm extends Component {
               <Form.Item label={opImgUrl}>
                 {getFieldDecorator('imgUrl', {
                   rules: [
-                    { type: 'url', message: 'a URL is required' }
+                    {/* { type: 'url', message: 'a URL is required' } */}
                   ]
                 })(
-                  <ImageUpload setImageURL={imgURL => { this.props.op.imgUrl = imgURL }} />
+                  <ImageUpload setImageURL={imgURL => { console.log(imgURL) }} />
                 )}
               </Form.Item>
               <Form.Item label={opStatus}>

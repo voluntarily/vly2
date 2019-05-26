@@ -11,6 +11,12 @@ function onChangeImageUpload (info) {
   console.log(info)
 }
 
+const dummyRequest = ({ file, onSuccess }) => {
+  setTimeout(() => {
+    onSuccess('ok')
+  }, 0)
+}
+
 function imageFileCheck (file) {
   const fileType = file.type
   const isImage = validImageFile.includes(fileType)
@@ -33,7 +39,6 @@ class ImageUpload extends Component {
     this.sendImageToAPI = this.sendImageToAPI.bind(this)
   }
   async sendImageToAPI (file) {
-    console.log(file)
     let FR = new window.FileReader()
     FR.readAsBinaryString(file)
     FR.addEventListener('load', async (e) => {
@@ -42,7 +47,6 @@ class ImageUpload extends Component {
         method: 'POST',
         body: JSON.stringify({ image: FR.result, file: file.name }) })
       if (!response.ok) {
-        // TODO Deal with error response
         return Promise.reject(new Error(response))
       }
       const json = await response.json()
@@ -53,17 +57,22 @@ class ImageUpload extends Component {
 
   render () {
     return (
-      <Dragger
-        name='file'
-        beforeUpload={imageFileCheck}
-        action={this.sendImageToAPI}
-        onChange={onChangeImageUpload}
-        multiple={false}>
-        <p className='ant-upload-drag-icon'>
-          <Icon type='inbox' />
-        </p>
-        <FormattedMessage id='imageUploadComponentMessage' defaultMessage='Click or drag file to this area to upload' description='opportunity Title label in OpDetails Form' />
-      </Dragger>)
+      <div>
+
+        <Dragger
+          name='file'
+          beforeUpload={imageFileCheck}
+          action={this.sendImageToAPI}
+          onChange={onChangeImageUpload}
+          showUploadList={false}
+          customRequest={dummyRequest}
+          multiple={false}>
+          <p className='ant-upload-drag-icon'>
+            <Icon type='inbox' />
+          </p>
+          <FormattedMessage id='imageUploadComponentMessage' defaultMessage='Click or drag file to this area to upload' description='opportunity Title label in OpDetails Form' />
+        </Dragger>
+      </div>)
   }
 }
 

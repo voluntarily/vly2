@@ -22,7 +22,7 @@ const postImage = (req, res) => {
       // If the file writer success
       result.status = 200
       result.message = 'Success'
-      result.imageURL = './static/img/' + req.body.file
+      result.imageURL = './static/img/' + uniqueID + '-' + req.body.file
     }
     res.status(result.status).json(result)
   })
