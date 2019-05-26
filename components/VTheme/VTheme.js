@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-
 /*
 ====================================================
 
@@ -14,7 +13,7 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 */
 
 export const SpacerSmall = styled.div`
-height: 0.5rem;
+  height: 0.5rem;
 `
 
 export const Spacer = styled.div`
@@ -28,12 +27,9 @@ export const HalfGrid = styled.div`
   grid-template-columns: 39rem 39rem;
   grid-column-gap: 2rem;
 
-
-
   @media screen and (min-width: 768px) and (max-width: 1281px) {
-    grid-template-columns:  calc(50vw - 4rem) calc(50vw - 4rem);
+    grid-template-columns: calc(50vw - 4rem) calc(50vw - 4rem);
     grid-column-gap: 2rem;
-
   }
 
   @media screen and (max-width: 768px) {

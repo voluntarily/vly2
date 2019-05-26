@@ -5,7 +5,6 @@ import {
   HalfGrid,
   Spacer,
   TextH1,
-  TextHeadingBold,
   TripleGrid,
   TextHeading,
   TextP,
@@ -23,14 +22,14 @@ const ButtonContainer = styled.div`
   margin-top: 1rem;
 `
 
-const TextHeaderTitle = styled.h1`
-  font-size: 2rem;
-  letter-spacing: -2.2px;
-  font-weight: 700;
-  line-height: 3.5rem;
-  color: black;
-  margin-bottom: 0;
-`
+// const TextHeaderTitle = styled.h1`
+//   font-size: 2rem;
+//   letter-spacing: -2.2px;
+//   font-weight: 700;
+//   line-height: 3.5rem;
+//   color: black;
+//   margin-bottom: 0;
+// `
 
 const TextMiniTitle = styled.p`
   margin-top: 4rem;
@@ -49,11 +48,11 @@ const HeroImage = styled.img`
   object-fit: cover;
 `
 
-const CentreTitleContainer = styled.div`
-  width: 40rem;
-  margin: 4rem auto 2rem auto;
-  text-align: center;
-` // end CentreTitle
+// const CentreTitleContainer = styled.div`
+//   width: 40rem;
+//   margin: 4rem auto 2rem auto;
+//   text-align: center;
+// ` // end CentreTitle
 
 const ItemContainer = styled.div`
   height: 10rem;
@@ -64,10 +63,6 @@ const ItemIcon = styled.img`
   margin-top: 2rem;
   margin-bottom: 0.5rem;
 ` // end itemIcon
-
-const FullWidthBlock = styled.div`
-  height: 60rem;
-`
 
 export class Business extends Component {
   render () {
