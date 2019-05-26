@@ -17,10 +17,10 @@ class OpListSection extends Component {
       // TODO: [VP-128] document how to set the parameters correctly
       // TODO: [VP-129] filter should be passed in here and translated into the query
 
-      const filters = {};
+      const filters = {}
 
       if (search) {
-        filters.search = search;
+        filters.search = search
       }
 
       return await this.props.dispatch(reduxApi.actions.opportunities.get(filters))
@@ -31,12 +31,12 @@ class OpListSection extends Component {
 
   async componentDidUpdate (prevProps) {
     if (prevProps.search !== this.props.search) {
-      await this.loadData(this.props.search);
+      await this.loadData(this.props.search)
     }
   }
 
   async componentDidMount () {
-    await this.loadData(this.props.search);
+    await this.loadData(this.props.search)
   }
 
   render () {
