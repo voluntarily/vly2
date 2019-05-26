@@ -9,7 +9,7 @@ test('InterestTable renders properly', t => {
     onWithdrawInvite={() => {}}
     onDecline={() => {}}
     interests={[{
-      person: 'Test Name',
+      person: { nickname: 'Test Name' },
       opportunity: 'Test Opportunity',
       comment: 'Test Comment',
       status: 'Test Status',
@@ -18,7 +18,7 @@ test('InterestTable renders properly', t => {
   />)
 
   // Confirm table headers
-  t.is(wrapper.find('th').at(0).text(), 'person ID')
+  t.is(wrapper.find('th').at(0).text(), 'Name')
   t.is(wrapper.find('th').at(1).text(), 'Comment')
   t.is(wrapper.find('th').at(2).text(), 'Status')
 
