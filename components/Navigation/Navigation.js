@@ -18,24 +18,24 @@ const Navigation = ({ items, defaultItem, router, ...props }) => {
       <Menu
         theme='light'
         mode='horizontal'
-        style={{ float: 'right'}}
+        style={{ float: 'right' }}
         selectedKeys={[activeItem]}
       >
         {items.map(item => (
-            <Menu.Item key={item.key}>
-              {/* don't do prefetch during testing */}
-                <Link key={item.href} href={item.href}>
-                    <a>{item.text}</a>
-                </Link>
-            </Menu.Item>
+          <Menu.Item key={item.key}>
+            {/* don't do prefetch during testing */}
+            <Link key={item.href} href={item.href}>
+              <a>{item.text}</a>
+            </Link>
+          </Menu.Item>
 
         ))}
         <Menu.Item>
-            <Avatar 
-              icon="user"
-              size="small"
-              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" 
-            />
+          <Avatar
+            icon='user'
+            size='small'
+            src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+          />
         </Menu.Item>
       </Menu>
     </StyledMenu>
