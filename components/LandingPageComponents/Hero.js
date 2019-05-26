@@ -178,7 +178,7 @@ const SearchBox = styled.div`
   height: 4rem;
   width: 40rem;
   border-radius: 0.25rem;
-  padding: 12px;
+  padding: 8px;
   box-shadow: 2px 2px 12px 0 rgba(0, 0, 0, 0.5);
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
@@ -220,6 +220,7 @@ const Hero = ({ ...props }) => (
         <Search
           placeholder="try 'building robots' "
           enterButton='Search'
+          icon='search'
           size='large'
           // eslint-disable-next-line no-console
           onSearch={value => console.log(value)}
