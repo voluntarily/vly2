@@ -155,3 +155,27 @@ test.serial('Should correctly delete an opportunity', async t => {
   const queriedOpportunity = await Opportunity.findOne({ _id: opp._id }).exec()
   t.is(queriedOpportunity, null)
 })
+
+// Searching by something in the title (case insensitive)
+test.serial('Should correctly give opportunity 1 when searching by "Mentor"', async t => {
+  const res = await request(server)
+    .get('/api/opportunities?search=MeNTor')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  t.is(ops[0].title, got[0].title)
+  t.is(1, got.length)
+})
+
+// Searching for something in the description (case insensitive)
+test.serial('Should correctly give opportunity 2 when searching by "Algorithms"', async t => {
+  const res = await request(server)
+    .get('/api/opportunities?search=AlgorithMs')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  t.is(ops[1].description, got[0].description)
+  t.is(1, got.length)
+})
