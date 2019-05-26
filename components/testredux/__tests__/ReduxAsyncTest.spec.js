@@ -60,7 +60,7 @@ test.serial('api/health', async t => {
   fetchMock.restore()
 })
 
-test.only('bad api/health', async t => {
+test.serial('bad api/health', async t => {
   // undefined store returns initial state
   fetchMock.get(`${API_URL}/health`, 404)
 
@@ -71,7 +71,7 @@ test.only('bad api/health', async t => {
 
   await fetchHealth()(t.context.realStore.dispatch)
   const newstate = await t.context.realStore.getState().health
-  t.deepEqual(newstate, expectedHealth)
+  t.deepEqual(newstate, expectedBadHealth)
   fetchMock.restore()
 })
 
