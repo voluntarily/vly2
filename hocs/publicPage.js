@@ -73,11 +73,13 @@ export default Page =>
       const loggedUser = process.browser
         ? getUserFromLocalCookie()
         : getUserFromServerCookie(ctx.req)
-      try {
-        session = await parseUserToSession(loggedUser)
-        ctx.store.dispatch(setSession(session))
-      } catch (err) {
-        console.error()
+      if (loggedUser) {
+        try {
+          session = await parseUserToSession(loggedUser)
+          ctx.store.dispatch(setSession(session))
+        } catch (err) {
+          console.error()
+        }
       }
       const pageProps =
         Page.getInitialProps && (await Page.getInitialProps(ctx))
@@ -131,4 +133,3 @@ export default Page =>
       )
     }
   }
-  
