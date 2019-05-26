@@ -64,6 +64,11 @@ test.serial('bad api/health', async t => {
   // undefined store returns initial state
   fetchMock.get(`${API_URL}/health`, 404)
 
+  const expectedBadHealth = {
+    message: 'Hello from Voluntari.ly V0.0.2',
+    health: 'Not OK'
+  }
+
   await fetchHealth()(t.context.realStore.dispatch)
   const newstate = await t.context.realStore.getState().health
   t.deepEqual(newstate, expectedBadHealth)
