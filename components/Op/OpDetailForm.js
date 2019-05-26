@@ -39,6 +39,10 @@ class OpDetailForm extends Component {
     })
   }
 
+  setImgUrl = (value) => {
+    this.props.op.op.imgUrl = value
+  }
+
   render () {
     // get translated labels
     const opTitle = (<FormattedMessage id='opTitle' defaultMessage='Title' description='opportunity Title label in OpDetails Form' />)
@@ -181,7 +185,7 @@ class OpDetailForm extends Component {
                     {/* { type: 'url', message: 'a URL is required' } */}
                   ]
                 })(
-                  <ImageUpload setImageURL={imgURL => { console.log(imgURL) }} />
+                  <ImageUpload setImageURL={imgURL => { this.setImgUrl(imgURL) }} />
                 )}
               </Form.Item>
               <Form.Item label={opStatus}>
