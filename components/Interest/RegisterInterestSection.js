@@ -35,16 +35,16 @@ class RegisterInterestSection extends Component {
 
   // When the button is clicked to advance the interest status, make an appropriate api call.
   async handleChangeStatus (interest) {
-    const prevStatus = interest.status
+    // const prevStatus = interest.status
     interest.status = getNextStatus(interest)
 
     if (interest._id) {
       // console.log('Modifying interest')
-      await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id, modifier: 'volunteer', prev: prevStatus }, { body: JSON.stringify(interest) }))
+      await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
       message.success('Interest updated')
     } else {
       // console.log('Adding interest')
-      await this.props.dispatch(reduxApi.actions.interests.post({ modifier: 'volunteer' }, { body: JSON.stringify(interest) }))
+      await this.props.dispatch(reduxApi.actions.interests.post({}, { body: JSON.stringify(interest) }))
       message.success('Interest added')
     }
   }
