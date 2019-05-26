@@ -37,7 +37,7 @@ export class Landing extends Component {
 
           <OpListSection store={this.props.store} />
           <Link href={'/op/new'}>
-            <Button type='primary' shape='round'>
+            <Button type='primary' shape='round' size='large'>
               <FormattedMessage
                 id='landing.newOp'
                 defaultMessage='New Opportunity'
