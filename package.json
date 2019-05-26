@@ -26,6 +26,7 @@
     "babel-plugin-import": "^1.7.0",
     "babel-plugin-react-intl": "^3.0.1",
     "babel-plugin-styled-components": "^1.10.0",
+    "cuid": "^2.1.6",
     "dotenv": "^7.0.0",
     "email-templates": "^5.0.5",
     "enzyme-adapter-react-16": "^1.12.1",

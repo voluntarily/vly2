@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { Button, Col, Divider, Form, Input, Radio, Row } from 'antd'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Axios from 'axios'
 
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 const { TextArea } = Input
@@ -36,32 +35,6 @@ class OpDetailForm extends Component {
         this.props.onSubmit(this.props.op)
       }
     })
-  }
-
-  handleUpload = ({ file, error }) => {
-    console.log(file)
-    if (error) console.error(error)
-    else {
-      let FR = new FileReader()
-      FR.readAsBinaryString(file)
-      FR.addEventListener('load', (e) => {
-        let formData = new FormData()
-        formData.append('File', file)
-        formData.append('image', FR.result)
-        Axios.post('http://localhost:3000/api/postImage', {
-          image: FR.result,
-          file: file
-        })
-          .then(res => console.log(res))
-          .catch(err => console.error(err))
-      })
-
-      // Axios.post("http://localhost:3000/api/postImage", {
-      //   file
-      //   })
-      //   .then(res => console.log(res))
-      //   .catch(err => console.error(err))
-    }
   }
 
   render () {
@@ -206,7 +179,7 @@ class OpDetailForm extends Component {
                     { type: 'url', message: 'a URL is required' }
                   ]
                 })(
-                  <ImageUpload />
+                  <ImageUpload setImageURL={imgURL => { this.props.op.imgUrl = imgURL }} />
                 )}
               </Form.Item>
               <Form.Item label={opStatus}>

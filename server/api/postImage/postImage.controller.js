@@ -1,22 +1,26 @@
 
 const fs = require('fs')
+const Cuid = require('cuid')
 // check a bunch of things here like whether the db is connected and responding.
 // any depended upon api services
 const postImage = (req, res) => {
   const ImageBin = req.body.image
   const ImageBuffer = Buffer.from(ImageBin, 'binary')
-
+  const uniqueID = Cuid()
+  let filename = './static/img/' + uniqueID + '-' + req.body.file
   const result = {
     status: 0,
     message: '',
-    imageUR: ''
+    imageURL: ''
   }
-  fs.writeFile('./static/img/' + req.body.file, ImageBuffer, (err) => {
+  fs.writeFile(filename, ImageBuffer, (err) => {
     if (err) {
+      // Sorry, I don't know what error to return
       result.status = 418
       result.message = 'I am a tea pot'
+      delete result.imageURL
     } else {
-      console.log('success')
+      // If the file writer success
       result.status = 200
       result.message = 'Success'
       result.imageURL = './static/img/' + req.body.file

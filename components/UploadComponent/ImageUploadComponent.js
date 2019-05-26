@@ -36,7 +36,6 @@ class ImageUpload extends Component {
     console.log(file)
     let FR = new window.FileReader()
     FR.readAsBinaryString(file)
-    let self = this
     FR.addEventListener('load', async (e) => {
       const response = await fetch('/api/postImage', {
         headers: { 'content-type': 'application/json' },
@@ -44,10 +43,11 @@ class ImageUpload extends Component {
         body: JSON.stringify({ image: FR.result, file: file.name }) })
       if (!response.ok) {
         // TODO Deal with error response
-        return Promise.reject(response)
+        return Promise.reject(err => { console.log(err) })
       }
       const json = await response.json()
       console.log(json)
+      this.props.setImageURL(json.imageURL)
     })
   }
 
