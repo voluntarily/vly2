@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import { mount } from 'enzyme'
+import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import OpListSection from '../OpListSection'
 import { Provider } from 'react-redux'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
@@ -50,10 +50,10 @@ function sleep (ms) {
 test.only('mount the list with ops', async t => {
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
-  const api = `${API_URL}/opportunities/`
+  const api = `${API_URL}/opportunities/?`
   myMock.getOnce(api, ops)
 
-  const wrapper = await mount(
+  const wrapper = await mountWithIntl(
     <Provider store={realStore}>
       <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} />
     </Provider>
