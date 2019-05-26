@@ -28,6 +28,28 @@ function getOpportunities (req, res) {
     res.json(got)
   })
 }
+function getOpportunity (req, res) {
+  // console.log(req.query)
+  let query = {} // { status: 'active' }
+  let sort = 'title'
+  let select = {}
+  try {
+    query = req.query.q ? JSON.parse(req.query.q) : query
+    sort = req.query.s ? JSON.parse(req.query.s) : sort
+    select = req.query.p ? JSON.parse(req.query.p) : select
+  } catch (e) {
+    console.log('bad JSON', req.query)
+    return res.status(400).send(e)
+  }
+  Opportunity.findOne(query).populate('requestor').sort(sort).exec((err, got) => {
+    if (err) {
+      console.log(err)
+      res.status(404).send(err)
+    }
+    console.log('yyyyyyyyyyy',got)
+    res.json(got)
+  })
+}
 
 // /**
 //  * Save an org
@@ -74,5 +96,6 @@ function getOpportunities (req, res) {
 // }
 
 module.exports = {
-  getOpportunities
+  getOpportunities,
+  getOpportunity
 }
