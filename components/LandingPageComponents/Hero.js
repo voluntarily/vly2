@@ -198,12 +198,12 @@ const SearchBox = styled.div`
 
 const handleSearch = search => {
   if (!search) {
-    return false;
+    return false
   }
   Router.push({
     pathname: '/search',
     query: {
-      search,
+      search
     }
   })
 }

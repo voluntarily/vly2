@@ -11,45 +11,43 @@ import Loading from '../../components/Loading'
 
 // TODO: [VP-131] use redux instead of local state.
 class OpListSection extends Component {
-
   state = {
     ops: null
   }
 
-
-  async loadData(search) {
+  async loadData (search) {
     // Get all Ops
     try {
       // TODO: [VP-128] document how to set the parameters correctly
       // TODO: [VP-129] filter should be passed in here and translated into the query
       return await this.props.dispatch(reduxApi.actions.opportunities.get({
-        search,
+        search
       }))
     } catch (err) {
       // console.log('error in getting ops', err)
     }
   }
 
-  async getInitialProps({query: {search}}) {
+  async getInitialProps ({ query: { search } }) {
     return {
-      search,
+      search
     }
   }
 
-  async componentDidUpdate(prevProps) {
-    console.log('ts',prevProps)
+  async componentDidUpdate (prevProps) {
+    console.log('ts', prevProps)
     if (prevProps.search !== this.props.search) {
-      this.setState({ops: await this.loadData(this.props.search)})
+      this.setState({ ops: await this.loadData(this.props.search) })
     }
   }
 
-  async componentDidMount() {
-    this.setState({ops: await this.loadData(this.props.search)})
+  async componentDidMount () {
+    this.setState({ ops: await this.loadData(this.props.search) })
   }
 
   render () {
-    const {ops} = this.state;
-    
+    const { ops } = this.state
+
     if (this.props.opportunities.loading) {
       return (<section>
         {/* <h3>search filter here</h3> */}

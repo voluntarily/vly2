@@ -6,7 +6,7 @@ import OpListSection from '../../components/Op/OpListSection'
 import { Component } from 'react'
 import PropTypes from 'prop-types'
 import Router from 'next/router'
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
 
@@ -15,44 +15,44 @@ export class SearchPage extends Component {
     search: null
   }
 
-  constructor(props) {
-    super(props);
-    this.state.search = props.search;
+  constructor (props) {
+    super(props)
+    this.state.search = props.search
   }
 
-  static getDerivedStateFromProps({search}) {
+  static getDerivedStateFromProps ({ search }) {
     return {
-      search,
+      search
     }
   }
 
-  static async getInitialProps({query: {search}}) {
+  static async getInitialProps ({ query: { search } }) {
     return {
-      search,
+      search
     }
   }
-  
+
   handleSearch = search => {
-   if (!search) {
-     return false;
-   }
-   
-   Router.push({
-     pathname: '/search',
-     query: {
-       search
-     }
-   })
+    if (!search) {
+      return false
+    }
 
-   this.setState({search})
- }
+    Router.push({
+      pathname: '/search',
+      query: {
+        search
+      }
+    })
+
+    this.setState({ search })
+  }
 
   render () {
-    const {search} = this.state;
-    
+    const { search } = this.state
+
     return (
       <FullPage>
-        <TitleSection title={<FormattedMessage defaultMessage={`Search results for "{search}"`} values={{search}} id="search.title"/>} />
+        <TitleSection title={<FormattedMessage defaultMessage={`Search results for "{search}"`} values={{ search }} id='search.title' />} />
         <BigSearch search={search} onSearch={this.handleSearch} />
         <Spacer />
         <OpListSection search={search} />
