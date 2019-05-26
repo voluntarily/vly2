@@ -49,7 +49,9 @@ For mac users `brew install mongodb` should be all you need to do.
 
 * start the mongodb service
 
-`mongod`
+For mac users: `mongod`
+
+For windows users: Run command prompt as adminstrator, then run `net start mongodb`
 
 ### Get the Voluntari.ly source code
 

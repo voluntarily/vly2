@@ -10,7 +10,6 @@ const sanitizeHtml = require('sanitize-html')
   api/interests?op='opid'&me='personid' -> lists all interests (hopefully only 0 or 1) associated with opid and personid.
  */
 const listInterests = async (req, res) => {
-  // console.log(req.query)
   let sort = 'dateAdded' // todo sort by date.
   let interestsArray
   try {
@@ -19,57 +18,36 @@ const listInterests = async (req, res) => {
       if (req.query.me) {
         query.person = req.query.me
       }
-      interestsArray = await Interest.find(query).sort(sort).exec()
+      // Return the nickname in person field
+      got = await Interest.find(query).populate({ path: 'person', select: 'nickname' }).sort(sort).exec()
     } else {
-      interestsArray = await Interest.find().sort(sort).exec()
+      got = await Interest.find().populate({ path: 'person', select: 'nickname' }).sort(sort).exec()
     }
-  
-     
-    for (let i = 0; i < interestsArray.length; i++) {
-
-      // Get individual person from database based on person id in interest
-      let person = await Person.findOne({ _id: interestsArray[i].person }).exec()
-      //console.log(`Name: ${person.name}, Email: ${person.email}`)
-      interestsArray[i].name = person.name
-      //Probably will want ot be careful about passing email information to clientside
-      interestsArray[i].email = person.email
-    }
-
-    res.json(interestsArray)
+    res.json(got)
   } catch (err) {
-    console.log(err)
+    res.status(404).send(err)
+  }
+}
+
+const updateInterest = async (req, res) => {
+  try {
+    await Interest.update({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
+
+    res.json(req.body)
+  } catch (err) {
     res.status(404).send(err)
   }
 }
 
 const createInterest = async (req, res) => {
-
   const newInterest = new Interest(req.body)
-  newInterest.comment = sanitizeHtml(newInterest.comment)
-  newInterest.save((err, saved) => {
+  newInterest.save(async (err, saved) => {
     if (err) {
       res.status(500).send(err)
     }
-
-    res.json(saved)
+    const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
+    res.json(got)
   })
-
-}
-
-const updateInterest = async (req, res) => {
-
-  let got
-  try {
-    got = await Interest.update({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
-    console.log(got)
-    
-
-    res.json(req.body)
-
-  } catch (err) {
-    console.log(err)
-    res.status(404).send(err)
-  }
 }
 
 async function maybeInnovativelyDestructivelySendEmailPossibly(volunteerId, organizerId, prevStatus, currentStatus, modifier) {
@@ -101,6 +79,6 @@ async function maybeInnovativelyDestructivelySendEmailPossibly(volunteerId, orga
 
 module.exports = {
   listInterests,
-  createInterest,
-  updateInterest
+  updateInterest,
+  createInterest
 }

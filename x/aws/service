@@ -5,7 +5,7 @@
 # run this as 
 # source aws/service up
 # source aws/service down
-ecs-cli compose --verbose   -p vly --file docker-compose-ecs-atlas.yml service $1 $2
+ecs-cli compose --verbose   -p vly --file docker-compose-alpha.yml service $1 $2
 
 # note this creates a new task definition from the yml file and so you only really need to do this is the parameters have changed. 
 # Otherwise you should be able to deploy a new container by draining the stack and starting new instances.

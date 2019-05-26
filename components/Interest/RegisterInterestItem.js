@@ -133,7 +133,7 @@ class RegisterInterestItem extends Component {
 // Ensures the correct properties are being supplied to this component
 RegisterInterestItem.propTypes = {
   interest: PropTypes.shape({
-    person: PropTypes.string.isRequired,
+    person: PropTypes.any.isRequired,
     opportunity: PropTypes.string.isRequired,
     comment: PropTypes.string,
     status: PropTypes.string
