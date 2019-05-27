@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import securePage from '../hocs/securePage'
+import { A4 } from '../hocs/publicPage'
 
 const Content = styled.p`
   font-size: 20px;
@@ -10,12 +11,12 @@ const Content = styled.p`
   line-height: 30px;
 `
 
-const Secret = ({ loggedUser }) => (
-  <div>
+const Secret = ({ me }) => (
+  <A4>
     <Content>
-      Hi <strong>{loggedUser.email}</strong>. Try loading this page again using the incognito/private mode of your browser.
+      Hi <strong>{me.email}</strong>. Try loading this page again using the incognito/private mode of your browser.
     </Content>
-  </div>
+  </A4>
 )
 
 Secret.propTypes = {

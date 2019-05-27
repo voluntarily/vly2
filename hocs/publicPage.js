@@ -5,13 +5,14 @@ import Router from 'next/router'
 import {
   getUserFromServerCookie,
   getUserFromLocalCookie,
-  getPersonFromUser
+  parseUserToSession
 } from '../lib/auth/auth'
 import { Layout } from 'antd'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 
 import styled from 'styled-components'
+import { setSession } from '../lib/redux/actions'
 
 // Dump all the custom elements and responsive scaffolding crap here
 // BEGIN AWESOME DUMP OF CSS-ISH GOODNESS
@@ -61,34 +62,31 @@ export const Grid = styled.div`
 ` // end grid
 
 export const FillWindow = styled.div`
-  
-    min-height: calc(100vh - 220px); 
+    min-height: calc(100vh - 220px);
   }
 ` // END AWESOME CSS DUMP
 
 export default Page =>
   class DefaultPage extends React.Component {
     static async getInitialProps (ctx) {
-      let me = false
+      let session = {}
       const loggedUser = process.browser
         ? getUserFromLocalCookie()
         : getUserFromServerCookie(ctx.req)
-      try {
-        me = await getPersonFromUser(loggedUser)
-        console.log('got me', me)
-      } catch (err) {
-        console.error()
+      if (loggedUser) {
+        try {
+          session = await parseUserToSession(loggedUser)
+          ctx.store.dispatch(setSession(session))
+        } catch (err) {
+          console.error()
+        }
       }
       const pageProps =
         Page.getInitialProps && (await Page.getInitialProps(ctx))
       return {
         ...pageProps,
-        loggedUser,
-        me,
-        currentUrl: ctx.pathname,
-        isAuthenticated: !!loggedUser,
-        isPerson: !!me
-        // isAdmin: !!loggedUser && me.role.includes('admin')
+        me: session.me,
+        isAuthenticated: session.isAuthenticated
       }
     }
 
@@ -111,7 +109,6 @@ export default Page =>
     componentWillUnmount () {
       window.removeEventListener('storage', this.logout, false)
     }
-
     render () {
       return (
         <Layout>
@@ -123,6 +120,8 @@ export default Page =>
               name='viewport'
               content='initial-scale=1.0, width=device-width'
             />
+            <script type='text/javascript' src='https://voluntarily.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-bgykhu/b/10/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=6cd14dc4' />
+
           </Head>
           <Header {...this.props} />
           <Layout.Content>

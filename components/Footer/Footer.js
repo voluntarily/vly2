@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-
 import Navigation from '../Navigation/Navigation'
-
 import links from './FooterMenu'
 import { Grid, Spacer, TextP, TextPBold } from '../VTheme/VTheme'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+
 const getAllowedLinks = isAuthenticated =>
   links()
     .filter(l => !l.authRequired || (l.authRequired && isAuthenticated))
@@ -207,4 +207,10 @@ Footer.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
 }
 
-export default Footer
+const mapStateToProps = store => ({
+  isAuthenticated: store.session.isAuthenticated
+})
+
+export default connect(
+  mapStateToProps
+)(Footer)
