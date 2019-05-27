@@ -35,11 +35,7 @@ class OpDetailForm extends Component {
 
         this.props.onSubmit(this.props.op)
       } else {
-<<<<<<< HEAD
-        console.log(err)
-=======
         // console.log('field validation error:', err)
->>>>>>> c69dd5cd76c32de271cc6c2ae40fb355768aea41
       }
     })
   }
