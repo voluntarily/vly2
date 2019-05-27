@@ -41,29 +41,39 @@ export class OpDetailPage extends Component {
     if (this.props.opportunities && this.props.opportunities.data.length === 1) {
       const op = this.props.opportunities.data[0]
       const organizer = op.requestor
-      const isOwner = (this.props.me._id === (organizer || {})._id)
-      console.log('isOwner', isOwner, this.props.me._id, organizer._id)
-      console.log('111', this.props)
+      const isOwner = ((this.props.me || {})._id === (organizer || {})._id)
       // TODO add condition that when volunteer finished the comment then show organizer's contact
       let isFulfilled = true
       const organizerSection = () => {
         return (isFulfilled)
           ? organizer &&
+          <div>
+            <h2>
+              <FormattedMessage id='organiser' defaultMessage='Requested by' description='Title for organiser card on op details page' />
+            </h2>
             <PersonCard style={{ width: '300px' }} person={organizer} />
+          </div>
           : null
       }
       const interestedSection = () => {
-        return (this.props.isAuthenticated &&
-          this.props.me &&
-          !isOwner)
-          ? <div>
-            <RegisterInterestSection op={op._id} me={this.props.me._id} />
-            <Divider />
-          </div>
-          : <div>
-            'Need to be signed in as a volunteer instead of organizer to be interested'
-            <Divider />
-          </div>
+        return (
+          !this.props.isAuthenticated
+            ? <div>
+              {/* TODO: [VP-176] Sign in to express interest in this item */}
+              <Link href={`/auth/sign-in`} >
+                <Button type='primary' shape='round' >
+                  <FormattedMessage id='iminterested-anon' defaultMessage="I'm Interested" description="I'm interested button that leads to sign in page" />
+                </Button>
+              </Link>
+              <Divider />
+            </div>
+            : !isOwner
+              ? <div>
+                <RegisterInterestSection op={op._id} me={this.props.me._id} />
+                <Divider />
+              </div>
+              : ''
+        )
       }
       const requestSection = () => {
         return (isOwner || (this.props.me && this.props.me.role.includes('admin')))
@@ -82,11 +92,6 @@ export class OpDetailPage extends Component {
                 </Button>
               </Popconfirm>
               <Divider />
-            </div>
-
-            {/* Remove this message when appropriate. */}
-            <div>
-              <small>visible buttons here depend on user role</small>
             </div>
 
             {/* These components should only appear if a user is logged in and viewing an op they DID create themselves. */}
