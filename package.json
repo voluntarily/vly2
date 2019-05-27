@@ -102,7 +102,8 @@
       "!components/**/__tests__/*.fixture.js"
     ],
     "helpers": [
-      "**/__tests__/**/*.fixture.js"
+      "**/__tests__/**/*.fixture.js",
+      "lib/react-intl-test*.js"
     ],
     "sources": [
       "components/**/*.js",
@@ -140,6 +141,9 @@
       "**/*.spec.js",
       "server/util/setup-test-env.js",
       "server/util/test-helpers.js",
+      "server/util/mockRouter.js",
+      "server/util/test-memory-mongo.js",
+      "lib/react-intl-test*.js",
       "server/config.js"
     ],
     "reporter": [
