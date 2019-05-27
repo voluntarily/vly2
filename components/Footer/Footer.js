@@ -87,11 +87,14 @@ const Footer = ({ isAuthenticated, ...props }) => (
       <FooterLogo src='../../static/vlogo.svg' />
       <FooterText>
         <TextP>
-          Voluntarily is an awesome open source project run by the&nbsp;
+          <FormattedMessage
+            id='Footer.PFCT tagline'
+            defaultMessage='Voluntarily is an awesome open source project run by the&nbsp;'
+            description='line in the footer that says we are supported by PFCT.'
+          />
           <a href='https://www.pamfergusson.org.nz/' target='_blank'>
-            Pam Fergussion Charitable Trust
-          </a>{' '}
-          lol
+            Pam Fergusson Charitable Trust
+          </a>
         </TextP>
       </FooterText>
       <Spacer />
