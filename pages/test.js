@@ -11,7 +11,7 @@ import OrgDetail from '../components/Org/OrgDetail'
 import PersonCard from '../components/Person/PersonCard'
 import PersonDetail from '../components/Person/PersonDetail'
 import RoutePush, { RouteBack, RouteReplace } from '../components/examples/RoutePush'
-import ConfirmationCard from '../components/Interest/InterestConfirmationCard';
+import ConfirmationCard from '../components/Interest/InterestConfirmationCard'
 const org = {
   _id: 'f34gb2bh24b24b2',
   name: 'OMGTech',
@@ -65,7 +65,7 @@ const TestPage = ({ ...props }) =>
     {props.isAuthenticated ? <UserProp {...props} /> : <p>Not signed in</p>}
     <h1>Person Card</h1>
     <PersonCard style={{ width: '300px' }} person={props.isPerson ? props.me : person} />
-    <ConfirmationCard person={person.org ? person : null}/> 
+    <ConfirmationCard person={person.org ? person : null} />
     <h1>Person Detail</h1>
     <PersonDetail person={props.isPerson ? props.me : person} />
     <Divider />
