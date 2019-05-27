@@ -11,7 +11,7 @@ import OrgDetail from '../components/Org/OrgDetail'
 import PersonCard from '../components/Person/PersonCard'
 import PersonDetail from '../components/Person/PersonDetail'
 import RoutePush, { RouteBack, RouteReplace } from '../components/examples/RoutePush'
-import ConfirmationCard from '../components/Interest/InterestConfirmation';
+import ConfirmationCard from '../components/Interest/InterestConfirmationCard';
 const org = {
   _id: 'f34gb2bh24b24b2',
   name: 'OMGTech',
