@@ -13,6 +13,7 @@ const cardHeading = {
   height: '50px'
 }
 
+// BUG: [VP-182] The strings in InterestConfirmationCard  are not in FormattedMessage components.
 const InterestConfirmationCard = ({ organizer, ...props }) => (
   <React.Fragment>
     <div style={{ color: 'black' }}>
@@ -25,7 +26,7 @@ const InterestConfirmationCard = ({ organizer, ...props }) => (
       <Card style={{ width: 450, marginTop: 16, borderRadius: 8 }}>
         <Meta style={cardHeading}
           avatar={
-            <Avatar src={organizer.imgUrl} />
+            <Avatar src={organizer.avatar} />
           }
           title={organizer.name}
           description={organizer.title}

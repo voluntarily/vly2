@@ -69,7 +69,7 @@ export class OpDetailPage extends Component {
             </div>
             : !isOwner
               ? <div>
-                <RegisterInterestSection op={op._id} me={this.props.me._id} />
+                <RegisterInterestSection op={op} me={this.props.me._id} />
                 <Divider />
               </div>
               : ''
