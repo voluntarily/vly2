@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl'
 
 const fetch = require('isomorphic-fetch')
 
-const Dragger = Upload.Dragger
 const validImageFile = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg']
 
 function onChangeImageUpload (info) {
@@ -58,8 +57,7 @@ class ImageUpload extends Component {
   render () {
     return (
       <div>
-
-        <Dragger
+        <Upload
           name='file'
           beforeUpload={imageFileCheck}
           action={this.sendImageToAPI}
@@ -71,7 +69,7 @@ class ImageUpload extends Component {
             <Icon type='inbox' />
           </p>
           <FormattedMessage id='imageUploadComponentMessage' defaultMessage='Click or drag file to this area to upload' description='opportunity Title label in OpDetails Form' />
-        </Dragger>
+        </Upload>
       </div>)
   }
 }

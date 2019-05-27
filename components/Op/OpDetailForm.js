@@ -41,7 +41,9 @@ class OpDetailForm extends Component {
   }
 
   setImgUrl = (value) => {
-    this.props.op.op.imgUrl = value
+    this.props.form.setFieldsValue({
+      imgUrl: value
+    })
   }
 
   render () {
