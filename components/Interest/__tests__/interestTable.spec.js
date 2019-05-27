@@ -1,10 +1,10 @@
 import InterestTable from '../InterestTable'
 import test from 'ava'
-import { mount, shallow } from 'enzyme'
+import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
 import sinon from 'sinon'
 
 test('InterestTable renders properly', t => {
-  const wrapper = mount(<InterestTable
+  const wrapper = mountWithIntl(<InterestTable
     onInvite={() => {}}
     onWithdrawInvite={() => {}}
     onDecline={() => {}}
@@ -33,7 +33,7 @@ test('Invite button click handler calls correct callback', t => {
   const onWithdrawInviteCallback = sinon.spy()
   const onDeclineCallback = sinon.spy()
 
-  const wrapper = shallow(<InterestTable
+  const wrapper = shallowWithIntl(<InterestTable
     onInvite={onInviteCallback}
     onWithdrawInvite={onWithdrawInviteCallback}
     onDecline={onDeclineCallback}
@@ -52,7 +52,7 @@ test('Withdraw invite button click handler calls correct callback', t => {
   const onWithdrawInviteCallback = sinon.spy()
   const onDeclineCallback = sinon.spy()
 
-  const wrapper = shallow(<InterestTable
+  const wrapper = shallowWithIntl(<InterestTable
     onInvite={onInviteCallback}
     onWithdrawInvite={onWithdrawInviteCallback}
     onDecline={onDeclineCallback}
@@ -71,7 +71,7 @@ test('Decline invite button click handler calls correct callback', t => {
   const onWithdrawInviteCallback = sinon.spy()
   const onDeclineCallback = sinon.spy()
 
-  const wrapper = shallow(<InterestTable
+  const wrapper = mountWithIntl(<InterestTable
     onInvite={onInviteCallback}
     onWithdrawInvite={onWithdrawInviteCallback}
     onDecline={onDeclineCallback}
@@ -83,4 +83,58 @@ test('Decline invite button click handler calls correct callback', t => {
   t.truthy(onInviteCallback.notCalled)
   t.truthy(onWithdrawInviteCallback.notCalled)
   t.truthy(onDeclineCallback.calledOnce)
+})
+
+test('InterestTable renders undeclined button ', t => {
+  const wrapper = mountWithIntl(<InterestTable
+    onInvite={() => {}}
+    onWithdrawInvite={() => {}}
+    onDecline={() => {}}
+    interests={[{
+      person: { nickname: 'Test Name' },
+      opportunity: 'Test Opportunity',
+      comment: 'Test Comment',
+      status: 'declined',
+      _id: '11223344'
+    }]}
+  />)
+
+  // Confirm table data
+  t.is(wrapper.find('button').last().text(), 'Undecline Invite')
+})
+
+test('InterestTable renders completed label ', t => {
+  const wrapper = mountWithIntl(<InterestTable
+    onInvite={() => {}}
+    onWithdrawInvite={() => {}}
+    onDecline={() => {}}
+    interests={[{
+      person: { nickname: 'Test Name' },
+      opportunity: 'Test Opportunity',
+      comment: 'Test Comment',
+      status: 'completed',
+      _id: '11223344'
+    }]}
+  />)
+  // Confirm table data
+  t.is(wrapper.find('td').at(2).text(), 'completed')
+})
+
+test('InterestTable renders invite button ', t => {
+  const wrapper = mountWithIntl(<InterestTable
+    onInvite={() => {}}
+    onWithdrawInvite={() => {}}
+    onDecline={() => {}}
+    interests={[{
+      person: { nickname: 'Test Name' },
+      opportunity: 'Test Opportunity',
+      comment: 'Test Comment',
+      status: 'interested',
+      _id: '11223344'
+    }]}
+  />)
+
+  // Confirm table data
+  t.is(wrapper.find('button').first().text(), 'Invite')
+  t.is(wrapper.find('button').last().text(), 'Decline')
 })
