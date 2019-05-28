@@ -69,6 +69,7 @@
     "ava": "^1.4.1",
     "axios": "^0.18.0",
     "babel-eslint": "^10.0.1",
+    "codecov": "^3.5.0",
     "cross-env": "^5.2.0",
     "enzyme": "^3.9.0",
     "fetch-mock": "^7.3.3",
@@ -102,7 +103,8 @@
       "!components/**/__tests__/*.fixture.js"
     ],
     "helpers": [
-      "**/__tests__/**/*.fixture.js"
+      "**/__tests__/**/*.fixture.js",
+      "lib/react-intl-test*.js"
     ],
     "sources": [
       "components/**/*.js",
@@ -140,6 +142,9 @@
       "**/*.spec.js",
       "server/util/setup-test-env.js",
       "server/util/test-helpers.js",
+      "server/util/mockRouter.js",
+      "server/util/test-memory-mongo.js",
+      "lib/react-intl-test*.js",
       "server/config.js"
     ],
     "reporter": [

@@ -76,7 +76,7 @@ class InterestTable extends Component {
 
   render () {
     return (
-      <Table columns={this.columns} dataSource={this.props.interests} pagination={false} />
+      <Table columns={this.columns} dataSource={this.props.interests} rowKey='_id' pagination={false} />
     )
   }
 }
