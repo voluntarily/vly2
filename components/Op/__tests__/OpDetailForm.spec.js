@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import { JSDOM } from 'jsdom'
+// import { JSDOM } from 'jsdom'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
 
 import OpDetailForm from '../OpDetailForm'

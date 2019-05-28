@@ -59,7 +59,7 @@ const TestPage = ({ ...props }) =>
     <h1>Uploaders</h1>
     <Uploader />
     <Divider />
-    
+
     <h1>Test Router Actions</h1>
     <RoutePush href='/'>Home </RoutePush>
     <RoutePush href='/about'>About Page </RoutePush>
