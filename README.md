@@ -1,10 +1,12 @@
-# vly2
+<p align="center">
+  <img src="https://i.imgur.com/aFjiS0u.png">
+</p>
 
+# vly2
 [![Gitter](https://badges.gitter.im/voluntarily/community.svg)](https://gitter.im/voluntarily/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Build Status](https://api.cirrus-ci.com/github/voluntarily/vly2.svg)](https://cirrus-ci.com/github/voluntarily/vly2)
 [![codecov](https://codecov.io/gh/voluntarily/vly2/branch/master/graph/badge.svg)](https://codecov.io/gh/voluntarily/vly2)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
-
 
 Support education and innovation in New Zealand Schools with industry experts and volunteers in the classrooms
 
