@@ -1,10 +1,8 @@
 import styled from 'styled-components'
 import { TextHeadingBlack, SpacerSmall } from '../VTheme/VTheme'
 import { Menu, Icon } from 'antd'
-const SubMenu = Menu.SubMenu
-const MenuItemGroup = Menu.ItemGroup
-const ItemContainer = styled.div``
 
+const ItemContainer = styled.div``
 
 const BigBlackLine = styled.div`
 width: 80rem;
@@ -20,7 +18,6 @@ background-color: #e3e3e3;
   }
 
 `
-
 
 const PageHeader = () => (
   <ItemContainer>

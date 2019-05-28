@@ -168,7 +168,7 @@ export const TextHeading = styled.p`
 
 export const TextHeadingBlack = styled.h1`
   font-size: 2rem;
-  letter-spacing: -1px;
+  letter-spacing: 0px;
   font-weight: 900;
   line-height: 40px;
   margin: initial;

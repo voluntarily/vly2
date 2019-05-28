@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import Navigation from '../Navigation/Navigation'
 import links from './FooterMenu'
-import { Grid, Spacer, TextP, TextPBold } from '../VTheme/VTheme'
+import { Grid, Spacer, TextP } from '../VTheme/VTheme'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
@@ -97,17 +97,17 @@ const Footer = ({ isAuthenticated, ...props }) => (
           </a>
         </TextP>
         <TextP>
-            <FormattedMessage
-              id='version'
-              defaultMessage='Version'
-              description='Source coder version label.'
-            />:&nbsp;
-            <FormattedMessage
-              id='revision'
-              defaultMessage='local-build'
-              description='Source code revision, auto generalted.'
-            />
-          </TextP>
+          <FormattedMessage
+            id='version'
+            defaultMessage='Version'
+            description='Source coder version label.'
+          />:&nbsp;
+          <FormattedMessage
+            id='revision'
+            defaultMessage='local-build'
+            description='Source code revision, auto generalted.'
+          />
+        </TextP>
 
       </FooterText>
       <Spacer />

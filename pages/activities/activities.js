@@ -1,7 +1,4 @@
-import { Button } from 'antd'
 import React, { Component } from 'react'
-import { FormattedMessage } from 'react-intl'
-import Link from 'next/link'
 
 import publicPage, { FullPage } from '../../hocs/publicPage'
 
@@ -9,7 +6,7 @@ import OpListSection from '../../components/Op/OpListSection'
 import TitleSectionSub from '../../components/LandingPageComponents/TitleSectionSub'
 import PageHeader from '../../components/Header/PageHeader'
 import { Spacer } from '../../components/VTheme/VTheme'
-import FeaturedTwoSection from '../../components/LandingPageComponents/FeaturedTwoSection';
+import FeaturedTwoSection from '../../components/LandingPageComponents/FeaturedTwoSection'
 import BigSearch from '../../components/VTheme/BigSearch'
 
 // import bigimage from './landing-page-bg.jpg'
@@ -24,19 +21,21 @@ export class Activities extends Component {
         <PageHeader />
         <Spacer />
         <BigSearch />
-        <FeaturedTwoSection 
-        title='Your Upcoming Activities'
-        subtitle='These activities are happening soon'
+        {/* // @TODO: [VP-187] Add real data to Upcoming Events component */}
+        <FeaturedTwoSection
+          title='Your Upcoming Activities'
+          subtitle='These activities are happening soon'
         />
 
         <div className='spacer' />
- 
 
+        {/* @TODO: [VP-188] Add past listings filter to OpListSection */}
         <TitleSectionSub
-        title='Your Past Activities'
-        subtitle='LOL subtitles'
+          title='Your Past Activities'
+          subtitle='LOL subtitles'
+
         />
-                <OpListSection />
+        <OpListSection />
       </FullPage>
     )
   }
