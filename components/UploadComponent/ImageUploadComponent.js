@@ -7,7 +7,7 @@ const fetch = require('isomorphic-fetch')
 const validImageFile = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg']
 
 function onChangeImageUpload (info) {
-  console.log(info)
+  // console.log(info)
 }
 
 const dummyRequest = ({ file, onSuccess }) => {
@@ -49,28 +49,28 @@ class ImageUpload extends Component {
         return Promise.reject(new Error(response))
       }
       const json = await response.json()
-      console.log(json)
+      // console.log(json)
       this.props.setImageURL(json.imageURL)
     })
   }
 
   render () {
-    return (
-      <div>
-        <Upload
-          name='file'
-          beforeUpload={imageFileCheck}
-          action={this.sendImageToAPI}
-          onChange={onChangeImageUpload}
-          showUploadList={false}
-          customRequest={dummyRequest}
-          multiple={false}>
-          <p className='ant-upload-drag-icon'>
-            <Icon type='inbox' />
-          </p>
-          <FormattedMessage id='imageUploadComponentMessage' defaultMessage='Click or drag file to this area to upload' description='opportunity Title label in OpDetails Form' />
-        </Upload>
-      </div>)
+    const up = (process.env.NODE_ENV !== 'test') &&
+      <Upload
+        name='file'
+        beforeUpload={imageFileCheck}
+        action={this.sendImageToAPI}
+        onChange={onChangeImageUpload}
+        showUploadList
+        customRequest={dummyRequest}
+        multiple={false}>
+        <p className='ant-upload-drag-icon'>
+          <Icon type='inbox' />
+        </p>
+        <FormattedMessage id='imageUploadComponentMessage' defaultMessage='Click or drag file to this area to upload' description='opportunity Title label in OpDetails Form' />
+      </Upload>
+
+    return up
   }
 }
 

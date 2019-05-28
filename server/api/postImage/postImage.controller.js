@@ -6,23 +6,24 @@ const postImage = (req, res) => {
   const ImageBin = req.body.image
   const ImageBuffer = Buffer.from(ImageBin, 'binary')
   const uniqueID = Cuid()
-  let filename = './static/img/' + uniqueID + '-' + req.body.file
+  let filename = `/static/upload/${uniqueID}-${req.body.file}`
+  const fqp = `.${filename}`
   const result = {
     status: 0,
     message: '',
     imageURL: ''
   }
-  fs.writeFile(filename, ImageBuffer, (err) => {
+  fs.writeFile(fqp, ImageBuffer, (err) => {
     if (err) {
-      // Sorry, I don't know what error to return
-      result.status = 418
-      result.message = 'I am a tea pot'
+      console.error('writefile error', err)
+      result.status = 500
+      result.message = 'Could not save the image'
       delete result.imageURL
     } else {
       // If the file writer success
       result.status = 200
       result.message = 'Success'
-      result.imageURL = './static/img/' + uniqueID + '-' + req.body.file
+      result.imageURL = filename
     }
     res.status(result.status).json(result)
   })

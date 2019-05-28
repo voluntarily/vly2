@@ -6,9 +6,7 @@ import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-hel
 import OpDetailForm from '../OpDetailForm'
 import sinon from 'sinon'
 // Initial opportunities
-// const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p`)
-// global.window = dom
-// global.SVGElement = Array
+
 const op = {
   _id: '5cc903e5f94141437622cea7',
   title: 'Growing in the garden',
@@ -30,9 +28,9 @@ const noop = {
   status: 'draft'
 }
 
-const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p`)
-global.window = dom// setting a mock window global object so the upload image component is not complaining
-global.SVGElement = Array
+// const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p`)
+// global.window = dom// setting a mock window global object so the upload image component is not complaining
+// global.SVGElement = Array
 // Suppress console warning messages from async validator as they mess up the test output
 const orginalWarn = console.warn
 
@@ -82,7 +80,6 @@ test.serial('render the detail with new blank op', t => {
     <OpDetailForm op={noop} me={me} onSubmit={submitOp} onCancel={cancelOp} />
   )
   t.log(wrapper.first())
-  console.log(wrapper.html())
   t.is(wrapper.find('OpDetailForm').length, 1)
   t.is(wrapper.find('button').length, 2)
   wrapper.find('button').first().simulate('click')

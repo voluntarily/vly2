@@ -12,6 +12,8 @@ import PersonCard from '../components/Person/PersonCard'
 import PersonDetail from '../components/Person/PersonDetail'
 import RoutePush, { RouteBack, RouteReplace } from '../components/examples/RoutePush'
 import ConfirmationCard from '../components/Interest/InterestConfirmationCard'
+import Uploader from '../components/examples/Upload'
+
 const org = {
   _id: 'f34gb2bh24b24b2',
   name: 'OMGTech',
@@ -54,6 +56,10 @@ const TestPage = ({ ...props }) =>
     <IntlDemo />
     <LessStyled />
     <Divider />
+    <h1>Uploaders</h1>
+    <Uploader />
+    <Divider />
+    
     <h1>Test Router Actions</h1>
     <RoutePush href='/'>Home </RoutePush>
     <RoutePush href='/about'>About Page </RoutePush>
@@ -65,7 +71,7 @@ const TestPage = ({ ...props }) =>
     {props.isAuthenticated ? <UserProp {...props} /> : <p>Not signed in</p>}
     <h1>Person Card</h1>
     <PersonCard style={{ width: '300px' }} person={props.isPerson ? props.me : person} />
-    <ConfirmationCard person={person.org ? person : null} />
+    <ConfirmationCard organizer={person.org ? person : null} />
     <h1>Person Detail</h1>
     <PersonDetail person={props.isPerson ? props.me : person} />
     <Divider />

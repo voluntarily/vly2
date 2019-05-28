@@ -43,7 +43,7 @@ const InterestConfirmationCard = ({ organizer, ...props }) => (
 InterestConfirmationCard.propTypes = {
   organizer: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    imgUrl: PropTypes.string
+    avatar: PropTypes.string
   }).isRequired
 }
 
