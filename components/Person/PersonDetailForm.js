@@ -169,7 +169,7 @@ class PersonDetailForm extends Component {
               <Form.Item label={personAvatar}>
                 {getFieldDecorator('avatar', {
                   rules: [
-                    { type: 'url', message: 'a URL is required' }
+                    {/* { type: 'url', message: 'a URL is required' } */}
                   ]
                 })(
                   <Input placeholder='http://example.com/image.jpg' />

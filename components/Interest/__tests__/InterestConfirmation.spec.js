@@ -30,7 +30,6 @@ const op = {
 
 test('render confirmation card', t => {
   const wrapper = mount(<InterestConfirmationCard organizer={op.requestor} />)
-  // console.log(wrapper.html())
   t.truthy(wrapper.find('Head'))
   t.truthy(wrapper.find('op.requestor.name', 'Testy McTestface'))
   t.truthy(wrapper.find('op.requestor.email', 'testy@voluntar.ly'))

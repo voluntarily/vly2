@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { Button, Col, Divider, Form, Input, Radio, Row } from 'antd'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
+
+import ImageUpload from '../UploadComponent/ImageUploadComponent'
 const { TextArea } = Input
 
 function hasErrors (fieldsError) {
@@ -35,6 +37,12 @@ class OpDetailForm extends Component {
       } else {
         // console.log('field validation error:', err)
       }
+    })
+  }
+
+  setImgUrl = (value) => {
+    this.props.form.setFieldsValue({
+      imgUrl: value
     })
   }
 
@@ -177,10 +185,10 @@ class OpDetailForm extends Component {
               <Form.Item label={opImgUrl}>
                 {getFieldDecorator('imgUrl', {
                   rules: [
-                    { type: 'url', message: 'a URL is required' }
+                    {/* { type: 'url', message: 'a URL is required' } */}
                   ]
                 })(
-                  <Input placeholder='http://example.com/image.jpg' />
+                  <ImageUpload setImageURL={imgURL => { this.setImgUrl(imgURL) }} />
                 )}
               </Form.Item>
               <Form.Item label={opStatus}>
