@@ -5,6 +5,7 @@
 import React, { Component } from 'react'
 import RegisterInterestItem from './RegisterInterestItem'
 import { message } from 'antd'
+import InterestConfirmationCard from './InterestConfirmationCard'
 
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
@@ -79,6 +80,7 @@ class RegisterInterestSection extends Component {
             interest={interest}
             onChangeStatus={this.handleChangeStatus.bind(this)}
             onWithdraw={this.handleWithdraw.bind(this)} />
+          <InterestConfirmationCard organizer={this.props.op.requestor} />
         </section>
       )
     }

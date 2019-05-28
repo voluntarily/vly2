@@ -1,10 +1,12 @@
 import React from 'react'
 import test from 'ava'
+// import { JSDOM } from 'jsdom'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
 
 import OpDetailForm from '../OpDetailForm'
 import sinon from 'sinon'
 // Initial opportunities
+
 const op = {
   _id: '5cc903e5f94141437622cea7',
   title: 'Growing in the garden',
@@ -26,8 +28,12 @@ const noop = {
   status: 'draft'
 }
 
+// const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p`)
+// global.window = dom// setting a mock window global object so the upload image component is not complaining
+// global.SVGElement = Array
 // Suppress console warning messages from async validator as they mess up the test output
 const orginalWarn = console.warn
+
 test.before('before test silence async-validator', () => {
   console.warn = (...args) => {
     if (typeof args[0] === 'string' && args[0].startsWith('async-validator:')) return
@@ -51,10 +57,10 @@ test('render the detail with op', t => {
   const submitOp = sinon.spy()
   const cancelOp = sinon.spy()
   const me = { _id: '5ccbffff958ff4833ed2188d' }
-
   const wrapper = mountWithIntl(
     <OpDetailForm op={op} me={me} onSubmit={submitOp} onCancel={cancelOp} />
   )
+  // t.log(wrapper)
   // console.log(wrapper.html())
   t.is(wrapper.find('OpDetailForm').length, 1)
   t.is(wrapper.find('button').length, 2)
@@ -73,7 +79,7 @@ test.serial('render the detail with new blank op', t => {
   const wrapper = mountWithIntl(
     <OpDetailForm op={noop} me={me} onSubmit={submitOp} onCancel={cancelOp} />
   )
-  // console.log(wrapper.html())
+  t.log(wrapper.first())
   t.is(wrapper.find('OpDetailForm').length, 1)
   t.is(wrapper.find('button').length, 2)
   wrapper.find('button').first().simulate('click')
