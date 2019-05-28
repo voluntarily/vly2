@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import React from 'react'
 import TitleSectionSub from './TitleSectionSub'
 import { HalfGrid } from '../VTheme/VTheme'
+import PropTypes from 'prop-types'
 // import { Button } from 'antd'
 
 const BigOpContainer = styled.a`
@@ -61,11 +62,11 @@ const BigOpDescription = styled.h1`
   letter-spacing: -0.3px;
 `
 
-const FeaturedTwoSection = () => (
+const FeaturedTwoSection = ({ title, subtitle, ...props }) => (
   <div>
     <TitleSectionSub
-      title='Featured activities'
-      subtitle='Use your skills to do awesome things in your community.'
+      title={title}
+      subtitle={subtitle}
     />
     <HalfGrid>
       <BigOpContainer>
@@ -92,5 +93,12 @@ const FeaturedTwoSection = () => (
     </HalfGrid>
   </div>
 )
+
+FeaturedTwoSection.propTypes = {
+  op: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    subtitle: PropTypes.string.isRequired
+  })
+}
 
 export default FeaturedTwoSection

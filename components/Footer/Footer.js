@@ -96,6 +96,19 @@ const Footer = ({ isAuthenticated, ...props }) => (
             Pam Fergusson Charitable Trust
           </a>
         </TextP>
+        <TextP>
+            <FormattedMessage
+              id='version'
+              defaultMessage='Version'
+              description='Source coder version label.'
+            />:&nbsp;
+            <FormattedMessage
+              id='revision'
+              defaultMessage='local-build'
+              description='Source code revision, auto generalted.'
+            />
+          </TextP>
+
       </FooterText>
       <Spacer />
       <Grid>
@@ -183,19 +196,6 @@ const Footer = ({ isAuthenticated, ...props }) => (
           <MenuItem>Jobs</MenuItem>
           <br />
           <MenuItem>Legal</MenuItem>
-          <br />
-          <TextPBold>
-            <FormattedMessage
-              id='version'
-              defaultMessage='Version'
-              description='Source coder version label.'
-            />:&nbsp;
-            <FormattedMessage
-              id='revision'
-              defaultMessage='local-build'
-              description='Source code revision, auto generalted.'
-            />
-          </TextPBold>
 
         </FooterGridItem>
       </Grid>

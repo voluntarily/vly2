@@ -168,14 +168,14 @@ export const TextHeading = styled.p`
 
 export const TextHeadingBlack = styled.h1`
   font-size: 2rem;
-  letter-spacing: -1.4px;
+  letter-spacing: -1px;
   font-weight: 900;
   line-height: 40px;
   margin: initial;
   @media screen and (max-width: 767px) {
-    font-size: 1rem;
+    font-size: 2rem;
   }
-` // end TextHeadingBold
+` // end TextHeadingBlack
 
 export const TextHeadingBold = styled.p`
   font-size: 2rem;
@@ -193,7 +193,7 @@ export const TextHeadingSubtitle = styled.p`
   @media screen and (max-width: 768px) {
     line-height: 1.8;
   }
-` // end TextHeading
+` // end TextHeadingSubtitle
 
 /*
 ====================================================

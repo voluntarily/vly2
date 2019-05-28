@@ -11,6 +11,14 @@ width: 80rem;
 height: 0.5rem;
 border-radius:120px;
 background-color: #e3e3e3;
+@media screen and (min-width: 768px) and (max-width: 1280px) {
+    width: calc(100vw - 6rem);
+  }
+
+  @media screen and (max-width: 767px) {
+    width: calc(100vw - 4rem);
+  }
+
 `
 
 

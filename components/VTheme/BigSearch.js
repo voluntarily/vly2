@@ -8,14 +8,33 @@ const Search = Input.Search
 const SearchContainer = styled.div`
   margin-top: 0rem;
   width: 80rem;
-  height: 9rem;
+  height: 10rem;
   background: #ffffff;
   box-shadow: 2px 2px 12px 0 rgba(117, 117, 117, 0.5);
   border-radius: 8px;
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    width: calc(100vw - 4rem);
+  }
+
+  @media screen and (max-width: 767px) {
+    width: calc(100vw - 2rem);
+    height: 12rem;
+  }
+
+
 `
 const SearchInputContainer = styled.div`
   width: 79rem;
   padding-left: 1rem;
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    width: calc(100vw - 6rem);
+  }
+
+  @media screen and (max-width: 767px) {
+    width: calc(100vw - 4rem);
+  }
 `
 
 const SearchTitle = styled.p`
