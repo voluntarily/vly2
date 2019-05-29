@@ -29,7 +29,7 @@ const OpCard = ({ op, onPress, ...props }) => (
       .requestImg {
         width: 100%;
         height: 10rem;
-        background-color: black;
+        background-color: rgba(0,0,0,0.0);
         object-fit: cover;
         object-position: center;
       }
