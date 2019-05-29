@@ -6,7 +6,6 @@ import Head from 'next/head'
 import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
 
-import { FormattedMessage } from 'react-intl'
 import { Button } from 'antd'
 import { FullPage } from '../../hocs/publicPage'
 import { HalfGrid, Spacer } from '../VTheme/VTheme'
@@ -19,12 +18,6 @@ const TitleFont = styled.h1`
   font-weight: 900;
   font-size: 2rem;
   letter-spacing: -0.02rem;
-`
-const ItemHeader = styled.h3`
-  font-weight: 600;
-  font-size: 1rem;
-
-  margin-bottom: 0;
 `
 const ItemListing = styled.p`
   font-weight: 500;
