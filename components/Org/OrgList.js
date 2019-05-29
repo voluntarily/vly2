@@ -3,21 +3,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import OrgCard from './OrgCard'
-import { Col, Row } from 'antd'
+import { Grid } from '../VTheme/VTheme'
 
 const OrgList = ({ orgs, ...props }) => (
-  <Row type='flex' align='top' gutter={{ xs: 8, sm: 16, md: 24 }} >
-    {
-      orgs ? orgs.map((org, index) => (
-        <Col xs={24} sm={12} md={8} lg={6} xxl={4} key={index} >
-          <OrgCard
-            org={org}
-            key={index}
-          />
-        </Col>
-      )) : 'No Matching Organisations'
-    }
-  </Row>
+  <Grid>
+    {orgs
+      ? orgs.map((org, index) => <OrgCard org={org} key={index} />)
+      : 'No Matching Organisations'}
+  </Grid>
 )
 
 OrgList.propTypes = {
@@ -26,7 +19,9 @@ OrgList.propTypes = {
       name: PropTypes.string.isRequired,
       imgUrl: PropTypes.string,
       about: PropTypes.string.isRequired,
-      type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])).isRequired,
+      type: PropTypes.arrayOf(
+        PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
+      ).isRequired,
       _id: PropTypes.string.isRequired
     })
   ) // optional as may update later.
