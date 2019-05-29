@@ -28,10 +28,10 @@ const ItemHeader = styled.h3`
 `
 const ItemListing = styled.p`
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: 1rem;
   opacity: 1;
   color: initial;
-  margin-bottom: 1rem;
+  margin-bottom: 0.2rem;
 `
 const ItemP = styled.div`
   letter-spacing: -0.02rem;
@@ -50,21 +50,10 @@ export function OpDetail ({ op }) {
       <HalfGrid>
         <Left>
           <TitleFont>{op.title}</TitleFont>
-
-          <ItemHeader>
-            <FormattedMessage
-              id='op.commitment'
-              defaultMessage='commitment'
-              description='label in opportunity e.g 2 hours commitment'
-            />
-          </ItemHeader>
-          <ItemListing>⏱{op.duration}</ItemListing>
-
-          <ItemHeader>location</ItemHeader>
-          <ItemListing>🏫{op.location}</ItemListing>
-
-          <ItemHeader>status</ItemHeader>
-          <ItemListing>📝{op.status}</ItemListing>
+          <ItemListing>⏱&nbsp;{op.duration}</ItemListing>
+          <ItemListing>🏫&nbsp;{op.location}</ItemListing>
+          <ItemListing>📝&nbsp;{op.status}</ItemListing>
+          <Spacer />
           <ItemP>
             <Markdown
               children={op.description}
