@@ -129,7 +129,9 @@ const AwesomeVideo = styled.video`
   z-index: 1;
 
   @media screen and (max-width: 768px) {
-    width: 100vh;
+    width: 100vw;
+    object-fit: cover;
+    object-position: top;
   }
 `
 // end left hand video side
@@ -218,7 +220,7 @@ const Hero = ({ ...props }) => (
     <HeroLeft>
       <Notch />
       <AwesomeVideo
-        poster='./static/img/hero1.jpg'
+        poster='./static/img/hero.png'
         autoPlay
         loop
         muted
