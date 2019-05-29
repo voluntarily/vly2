@@ -122,7 +122,7 @@ const AwesomeVideo = styled.video`
   position: relative;
   text-align: center;
   margin: 0 auto;
-  width: 100%;
+  height:100%;
   overflow: hidden;
   object-fit: cover;
   background-color: white;
