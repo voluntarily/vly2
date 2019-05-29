@@ -1,3 +1,5 @@
+
+
 export default () =>
   [
     {
@@ -9,6 +11,12 @@ export default () =>
       key: 'horgs',
       text: 'Organisations',
       href: '/orgs'
+    },
+    {
+      key: 'activities',
+      href: '/activities',
+      text: 'Activities',
+      authRequired: true
     },
     {
       key: 'hsecret',
@@ -29,3 +37,4 @@ export default () =>
       authRequired: true
     }
   ]
+
