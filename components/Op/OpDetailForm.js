@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Button, Col, Divider, Form, Input, Radio, Row } from 'antd'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
+// import Quil from 'quil'
 
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 const { TextArea } = Input
