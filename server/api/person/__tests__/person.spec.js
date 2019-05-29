@@ -4,20 +4,17 @@ import { server, appReady } from '../../../server'
 import Person from '../person'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../__tests__/person.fixture'
-// Initial people added into test db
 
-let memMongo
-
-test.before('before connect to database', async () => {
+test.before('before connect to database', async (t) => {
   await appReady
-  memMongo = new MemoryMongo()
+  t.context.memMongo = new MemoryMongo()
   // console.log('App ready')
-  await memMongo.start()
+  await t.context.memMongo.start()
 })
 
-test.after.always(async () => {
-  await memMongo.stop()
-  // console.log('stopped')
+test.after.always(t => {
+  t.context.memMongo.stop()
+  console.log('stopped')
 })
 
 test.beforeEach('connect and add peopl fixture', async () => {
