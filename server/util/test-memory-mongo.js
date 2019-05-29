@@ -25,7 +25,6 @@ class MemoryMongo {
       useCreateIndex: true
     }
     this.connection = await mongoose.connect(this.mongoUri, mongooseOpts)
-
   }
 
   async stop () {
