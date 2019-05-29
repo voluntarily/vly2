@@ -24,6 +24,7 @@
     "accepts": "^1.3.5",
     "acorn": "^6.1.1",
     "antd": "^3.5.4",
+    "atom": "^1.1.0",
     "auth0-js": "^9.10.2",
     "babel-plugin-import": "^1.7.0",
     "babel-plugin-react-intl": "^3.0.1",
@@ -115,8 +116,6 @@
       "server/**/*.js"
     ],
     "failFast": false,
-    "verbose": true,
-    "concurrency": 0,
     "timeout": "5m",
     "babel": {
       "testOptions": {
