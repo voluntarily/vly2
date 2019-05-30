@@ -11,28 +11,26 @@ import { Spacer } from '../components/VTheme/VTheme'
 import styled from 'styled-components'
 
 const BugImage = styled.img`
-width: 5rem;
-height: 5rem;
-position: relative;
-animation: rotation 2s infinite linear;
-float: left;
+  width: 5rem;
+  height: 5rem;
+  position: relative;
+  animation: rotation 2s infinite linear;
+  float: left;
 
-
-@keyframes rotation {
-  50% {
-    transform: rotate(20deg);
+  @keyframes rotation {
+    50% {
+      transform: rotate(20deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
   }
-  100% {
-    transform: rotate(0deg);
-  }
-}
 `
 
 const BugContainer = styled.div`
-margin-top: 1.5rem;
-margin-left: 3rem;
+  margin-top: 1.5rem;
+  margin-left: 3rem;
 `
-
 
 class ErrorPage extends React.Component {
   static propTypes () {
@@ -43,7 +41,7 @@ class ErrorPage extends React.Component {
   }
 
   static getInitialProps ({ res, xhr }) {
-    const errorCode = res ? res.statusCode : (xhr ? xhr.status : null)
+    const errorCode = res ? res.statusCode : xhr ? xhr.status : null
     return { errorCode }
   }
 
@@ -56,7 +54,6 @@ class ErrorPage extends React.Component {
         response = (
           <FullPage>
             <Head>
-
               <FormattedMessage
                 id='error.pagenotfound.title'
                 description='Page title for the 404 error'
@@ -77,25 +74,25 @@ class ErrorPage extends React.Component {
                 id='error.pagenotfound.description'
                 defaultMessage="The page you are looking for is not here. We have looked everywhere but it doesn't seem to exist. Perhaps it just hasn't been built yet."
               />
-            &nbsp;
+              &nbsp;
               <a href='https://voluntari.ly/get-involved'>
                 <FormattedMessage
                   id='error.pagenotfound.contribute'
                   defaultMessage='If you can write code you can help fix that by becoming a contributor to the project.'
                 />
               </a>
-          &nbsp;
+              &nbsp;
             </div>
             <Spacer />
             <BugImage src='/static/img/bug.png' />
             <BugContainer>
-            <Container className='pt-5 text-center'>
-              <p>
-                An <strong>HTTP { this.props.errorCode }</strong> error occurred while
-                trying to access <strong>{ this.props.router.asPath }</strong>
-              </p>
-
-            </Container>
+              <Container className='pt-5 text-center'>
+                <p>
+                  An <strong>HTTP {this.props.errorCode}</strong> error occurred
+                  while trying to access{' '}
+                  <strong>{this.props.router.asPath}</strong>
+                </p>
+              </Container>
             </BugContainer>
           </FullPage>
         )
@@ -120,18 +117,17 @@ class ErrorPage extends React.Component {
                 defaultMessage='Sorry, there was a problem and we can not complete this task. We have let our team know so they can take a look and fix it. For now try to refresh the page, or go back to the previous page'
                 tagName='h1'
               />
-
               <Container className='pt-5 text-center'>
-                <h1 className='display-4'>HTTP { this.props.errorCode } Error</h1>
+                <h1 className='display-4'>HTTP {this.props.errorCode} Error</h1>
                 <p>
-                  An <strong>HTTP { this.props.errorCode }</strong> error occurred while
-                  trying to access <strong>{ this.props.router.asPath }</strong>
+                  An <strong>HTTP {this.props.errorCode}</strong> error occurred
+                  while trying to access{' '}
+                  <strong>{this.props.router.asPath}</strong>
                 </p>
               </Container>
-          &nbsp;
+              &nbsp;
             </div>
           </FullPage>
-
         )
     }
 
