@@ -11,13 +11,7 @@ export default ({ children, title = 'Voluntari.ly', className }) => (
       <meta charSet='utf-8' />
       <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       <link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
-      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-141212194-1"></script>
-      <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments)}
-      gtag('js', new Date());
-      gtag('config', 'UA-141212194-1');
-      </script>
+
 
     </Head>
     <Header />
