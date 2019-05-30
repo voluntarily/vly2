@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { message, Upload, Icon, Button } from 'antd'
-import { FormattedMessage } from 'react-intl'
+// import { FormattedMessage } from 'react-intl'
 
 const fetch = require('isomorphic-fetch')
 
@@ -49,7 +49,8 @@ class ImageUpload extends Component {
     fetch('/api/postImage', {
       headers: { 'content-type': 'application/json' },
       method: 'POST',
-      body: JSON.stringify({ image: e.currentTarget.result, file: 'img.png' }) })
+      body: JSON.stringify({ image: e.currentTarget.result, file: 'img.png' })
+    })
       .then(response => {
         if (response.ok) {
           console.log('Success :)')
