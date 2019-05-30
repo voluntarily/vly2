@@ -1,6 +1,5 @@
 import React , {Component} from 'react'
-import  CKEditor from 'ckeditor4-react'
-
+import  Quill from 'quill'
 
 class OpCKEditor extends React{
  render(){
