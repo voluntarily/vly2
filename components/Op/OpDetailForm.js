@@ -4,8 +4,9 @@ import { Button, Col, Divider, Form, Input, Radio, Row } from 'antd'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
-
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
+
+
 const { TextArea } = Input
 
 function hasErrors (fieldsError) {
@@ -123,12 +124,11 @@ class OpDetailForm extends Component {
               <Form.Item label={opDescription}>
                 {getFieldDecorator('description', {
                   rules: [
-
                   ]
                 })(
                   <TextArea rows={20} placeholder='All the details about the request. You can use markdown here.' />
                 )}
-
+                <OpCKEditor/>
               </Form.Item>
             </Col>
           </Row>
@@ -165,7 +165,7 @@ class OpDetailForm extends Component {
                   <Input placeholder='school or somewhere else?' />
                 )}
               </Form.Item>
-            </Col>
+            </Col> 
           </Row>
           <Divider />
           <Row>
