@@ -33,34 +33,41 @@ function imageFileCheck(file) {
 }
 
 class ImageUpload extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
+    this.handleImageUpload = this.handleImageUpload.bind(this)
     this.sendImageToAPI = this.sendImageToAPI.bind(this)
   }
-  async sendImageToAPI(file) {
+
+  handleImageUpload (file) {
     let FR = new window.FileReader()
+    FR.onloadend = this.sendImageToAPI
     FR.readAsBinaryString(file)
-    FR.addEventListener('load', async (e) => {
-      const response = await fetch('/api/postImage', {
-        headers: { 'content-type': 'application/json' },
-        method: 'POST',
-        body: JSON.stringify({ image: FR.result, file: file.name })
-      })
-      if (!response.ok) {
-        return Promise.reject(new Error(response))
-      }
-      const json = await response.json()
-      // console.log(json)
-      this.props.setImageURL(json.imageURL)
-    })
   }
 
-  render() {
+  sendImageToAPI (e) {
+    fetch('/api/postImage', {
+      headers: { 'content-type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify({ image: e.currentTarget.result, file: 'img.png' }) })
+      .then(response => {
+        if (response.ok) {
+          console.log('Success :)')
+        } else {
+          console.log('Failed :(')
+        }
+      },
+      error => {
+        console.log('Failed to fetch with the following error: ' + error)
+      })
+  }
+
+  render () {
     const up = (process.env.NODE_ENV !== 'test') &&
       <Upload
         name='file'
         beforeUpload={imageFileCheck}
-        action={this.sendImageToAPI}
+        action={this.handleImageUpload}
         onChange={onChangeImageUpload}
         showUploadList
         customRequest={dummyRequest}
@@ -71,7 +78,6 @@ class ImageUpload extends Component {
           <Icon type='upload' />Click to Upload!
         </Button>
       </Upload>
-
     return up
   }
 }
