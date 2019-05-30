@@ -6,7 +6,7 @@ const fetch = require('isomorphic-fetch')
 
 const validImageFile = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg']
 
-function onChangeImageUpload(info) {
+function onChangeImageUpload (info) {
   // console.log(info)
 }
 
@@ -16,7 +16,7 @@ const dummyRequest = ({ file, onSuccess }) => {
   }, 0)
 }
 
-function imageFileCheck(file) {
+function imageFileCheck (file) {
   const fileType = file.type
   const isImage = validImageFile.includes(fileType)
   if (!isImage) {
