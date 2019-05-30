@@ -8,6 +8,31 @@ import { withRouter } from 'next/router'
 import { FormattedMessage } from 'react-intl'
 import { FullPage } from '../hocs/publicPage'
 import { Spacer } from '../components/VTheme/VTheme'
+import styled from 'styled-components'
+
+const BugImage = styled.img`
+width: 5rem;
+height: 5rem;
+position: relative;
+animation: rotation 2s infinite linear;
+float: left;
+
+
+@keyframes rotation {
+  50% {
+    transform: rotate(20deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+`
+
+const BugContainer = styled.div`
+margin-top: 1.5rem;
+margin-left: 3rem;
+`
+
 
 class ErrorPage extends React.Component {
   static propTypes () {
@@ -31,6 +56,7 @@ class ErrorPage extends React.Component {
         response = (
           <FullPage>
             <Head>
+
               <FormattedMessage
                 id='error.pagenotfound.title'
                 description='Page title for the 404 error'
@@ -61,12 +87,16 @@ class ErrorPage extends React.Component {
           &nbsp;
             </div>
             <Spacer />
+            <BugImage src='/static/img/bug.png' />
+            <BugContainer>
             <Container className='pt-5 text-center'>
               <p>
                 An <strong>HTTP { this.props.errorCode }</strong> error occurred while
                 trying to access <strong>{ this.props.router.asPath }</strong>
               </p>
+
             </Container>
+            </BugContainer>
           </FullPage>
         )
         break
