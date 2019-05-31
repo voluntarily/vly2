@@ -4,59 +4,50 @@ import callApi from '../../lib/apiCaller'
 
 const validImageFile = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg']
 
-const dummyRequest = ({ file, onSuccess }) => {
-  setTimeout(() => {
-    onSuccess('ok')
-  }, 0)
-}
-
-function imageFileCheck (file) {
-  const fileType = file.type
-  const isImage = validImageFile.includes(fileType)
-  if (!isImage) {
-    message.error('You can upload only image files')
-  }
-
-  const isLessThan2M = file.size / 1024 / 1024 < 2
-
-  if (!isLessThan2M) {
-    message.error('You can only upload image files less than 2 Mb')
-  }
-
-  return isImage && isLessThan2M
-}
-
 class ImageUpload extends Component {
+  TWO_MEGABYTES = 2000000
+
   state = {
     fileList: []
   }
 
   constructor (props) {
     super(props)
-    this.handleImageUpload = this.handleImageUpload.bind(this)
-    this.sendImageToAPI = this.sendImageToAPI.bind(this)
     this.onChangeImageUpload = this.onChangeImageUpload.bind(this)
-  }
-
-  handleImageUpload (file) {
-    let FR = new window.FileReader()
-    FR.onloadend = this.sendImageToAPI
-    FR.readAsBinaryString(file)
-  }
-
-  sendImageToAPI (e) {
-    callApi('postImage', 'post', { image: e.currentTarget.result, file: 'img.png' }).then(response => {
-      console.log('Success!')
-    },
-    error => {
-      console.log('Error: ' + error.statusText)
-    })
+    this.uploadCustomRequest = this.uploadCustomRequest.bind(this)
   }
 
   onChangeImageUpload (info) {
-    let fileList = [...info.fileList]
-    fileList = fileList.slice(-1)
-    this.setState({ fileList })
+    const fileType = info.file.type
+    const isImage = validImageFile.includes(fileType)
+
+    if (info.file.size > this.TWO_MEGABYTES) {
+      message.error('You can only upload image files less than 2 Mb')
+      this.setState({ fileList: [] })
+    } else if (!isImage) {
+      message.error('You can upload only image files')
+      this.setState({ fileList: [] })
+    } else {
+      let fileList = [...info.fileList]
+      fileList = fileList.slice(-1)
+      this.setState({ fileList })
+    }
+  }
+
+  uploadCustomRequest ({ onSuccess, onError, file }) {
+    let FR = new window.FileReader()
+    FR.onloadend = e => {
+      callApi('postImage', 'post', { image: e.currentTarget.result, file: 'img.png' }).then(response => {
+        console.log('Success!')
+        onSuccess('ok')
+      },
+      error => {
+        // TODO Clear file list upon error
+        message.error('An error occured: ' + error.status + ' ' + error.statusText)
+        onError('fail')
+      })
+    }
+    FR.readAsBinaryString(file)
   }
 
   render () {
@@ -64,11 +55,9 @@ class ImageUpload extends Component {
       <Upload
         fileList={this.state.fileList}
         name='file'
-        beforeUpload={imageFileCheck}
-        action={this.handleImageUpload}
         onChange={this.onChangeImageUpload}
         showUploadList
-        customRequest={dummyRequest}
+        customRequest={this.uploadCustomRequest}
         multiple={false}>
         <Button
           className='ant-upload-drag-button'
