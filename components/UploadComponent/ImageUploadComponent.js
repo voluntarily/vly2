@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { message, Upload, Icon, Button } from 'antd'
-// import { FormattedMessage } from 'react-intl'
-
-const fetch = require('isomorphic-fetch')
+import callApi from '../../lib/apiCaller'
 
 const validImageFile = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg']
 
@@ -46,21 +44,12 @@ class ImageUpload extends Component {
   }
 
   sendImageToAPI (e) {
-    fetch('/api/postImage', {
-      headers: { 'content-type': 'application/json' },
-      method: 'POST',
-      body: JSON.stringify({ image: e.currentTarget.result, file: 'img.png' })
+    callApi('postImage', 'post', { image: e.currentTarget.result, file: 'img.png' }).then(response => {
+      console.log('Success!')
+    },
+    error => {
+      console.log('Error: ' + error.statusText)
     })
-      .then(response => {
-        if (response.ok) {
-          console.log('Success :)')
-        } else {
-          console.log('Failed :(')
-        }
-      },
-      error => {
-        console.log('Failed to fetch with the following error: ' + error)
-      })
   }
 
   render () {
