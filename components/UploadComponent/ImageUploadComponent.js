@@ -4,10 +4,6 @@ import callApi from '../../lib/apiCaller'
 
 const validImageFile = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg']
 
-function onChangeImageUpload (info) {
-  // console.log(info)
-}
-
 const dummyRequest = ({ file, onSuccess }) => {
   setTimeout(() => {
     onSuccess('ok')
@@ -31,10 +27,15 @@ function imageFileCheck (file) {
 }
 
 class ImageUpload extends Component {
+  state = {
+    fileList: []
+  }
+
   constructor (props) {
     super(props)
     this.handleImageUpload = this.handleImageUpload.bind(this)
     this.sendImageToAPI = this.sendImageToAPI.bind(this)
+    this.onChangeImageUpload = this.onChangeImageUpload.bind(this)
   }
 
   handleImageUpload (file) {
@@ -52,13 +53,20 @@ class ImageUpload extends Component {
     })
   }
 
+  onChangeImageUpload (info) {
+    let fileList = [...info.fileList]
+    fileList = fileList.slice(-1)
+    this.setState({ fileList })
+  }
+
   render () {
     const up = (process.env.NODE_ENV !== 'test') &&
       <Upload
+        fileList={this.state.fileList}
         name='file'
         beforeUpload={imageFileCheck}
         action={this.handleImageUpload}
-        onChange={onChangeImageUpload}
+        onChange={this.onChangeImageUpload}
         showUploadList
         customRequest={dummyRequest}
         multiple={false}>
