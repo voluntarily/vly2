@@ -3,17 +3,15 @@ const fs = require('fs')
 const Cuid = require('cuid')
 // any depended upon api services
 const postImage = (req, res) => {
-  const ImageBin = req.body.image
-  const ImageBuffer = Buffer.from(ImageBin, 'binary')
+  const imageBuffer = Buffer.from(req.body.image, 'binary')
   const uniqueID = Cuid()
-  let filename = `/static/upload/${uniqueID}-${req.body.file}`
-  const fqp = `.${filename}`
+  let filename = `./static/upload/${uniqueID}`
   const result = {
     status: 0,
     message: '',
     imageURL: ''
   }
-  fs.writeFile(fqp, ImageBuffer, (err) => {
+  fs.writeFile(filename, imageBuffer, (err) => {
     if (err) {
       console.error('writefile error', err)
       result.status = 500
