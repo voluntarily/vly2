@@ -2,8 +2,6 @@ import Head from 'next/head'
 import { Layout } from 'antd'
 import Footer from './Footer/Footer'
 import Header from './Header/Header'
-import ReactGA from 'react-ga'
-ReactGA.initialize('UA-141212194-1')
 
 export default ({ children, title = 'Voluntari.ly', className }) => (
   <Layout>
