@@ -27,7 +27,7 @@ export class Landing extends Component {
           <TitleSectionSub
             title='Who we help'
             subtitle='We help these awesome people accomplish amazing things'
-          />
+          />  
           <PersonaSection />
           <div className='spacer' />
           <TitleSectionSub

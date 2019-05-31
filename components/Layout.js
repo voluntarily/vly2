@@ -2,8 +2,9 @@ import Head from 'next/head'
 import { Layout } from 'antd'
 import Footer from './Footer/Footer'
 import Header from './Header/Header'
-import ReactGA from 'react-ga';
-ReactGA.initialize('UA-141212194-1'); // Here we should use our GA id
+import ReactGA from 'react-ga'
+ReactGA.initialize('UA-141212194-1');
+
 export default ({ children, title = 'Voluntari.ly', className }) => (
   <Layout>
     <Head>
@@ -12,8 +13,6 @@ export default ({ children, title = 'Voluntari.ly', className }) => (
       <meta charSet='utf-8' />
       <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       <link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
-
-
     </Head>
     <Header />
     <Layout.Content >
