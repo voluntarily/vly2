@@ -8,5 +8,5 @@ const errorCode = 404
 
 test('render EN', t => {
   const wrapper = mountWithIntl(<ErrorPageTest router={router} errorCode={errorCode} />)
-  t.is(wrapper.find('h1').first().text(), 'Ooops! Page not found')
+  t.is(wrapper.find('h1').first().text(), 'Oh no! Page not found')
 })

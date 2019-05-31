@@ -45,16 +45,14 @@ const interest = new Interest({
   comment: 'This is another test'
 })
 
-let memMongo
-
-test.before('before connect to database', async () => {
+test.before('before connect to database', async (t) => {
   await appReady
-  memMongo = new MemoryMongo()
-  await memMongo.start()
+  t.context.memMongo = new MemoryMongo()
+  await t.context.memMongo.start()
 })
 
-test.after.always(async () => {
-  await memMongo.stop()
+test.after.always(async (t) => {
+  await t.context.memMongo.stop()
 })
 
 test.beforeEach('connect and set up test fixture', async () => {

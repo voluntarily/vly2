@@ -4,7 +4,6 @@ import { server, appReady } from '../../../server'
 import Organisation from '../organisation'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import orgs from './organisation.fixture.js'
-let memMongo
 
 const p = {
   name: 'International Testing Corporation',
@@ -13,14 +12,14 @@ const p = {
   about: 'Evil testing empire'
 }
 
-test.before('before connect to database', async () => {
+test.before('before connect to database', async (t) => {
   await appReady
-  memMongo = new MemoryMongo()
-  await memMongo.start()
+  t.context.memMongo = new MemoryMongo()
+  await t.context.memMongo.start()
 })
 
-test.after.always(async () => {
-  await memMongo.stop()
+test.after.always(async (t) => {
+  await t.context.memMongo.stop()
 })
 
 test.beforeEach('connect and add organisation entries', async () => {

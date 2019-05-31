@@ -14,6 +14,7 @@ const getHealth = (req, res) => {
     params: req.params,
     query: req.query
   }
+  console.log('api/health requested', result)
   return res.status(200).json(result)
 }
 
