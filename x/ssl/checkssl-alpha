@@ -1,0 +1,2 @@
+openssl s_client -connect alpha.voluntari.ly:443 -state -nbio 
+# 2>&1 | grep "^SSL"
