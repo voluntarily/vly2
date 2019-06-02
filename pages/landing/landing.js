@@ -1,12 +1,10 @@
-import { Button } from 'antd'
 import React, { Component } from 'react'
-import { FormattedMessage } from 'react-intl'
-import Link from 'next/link'
 
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import Hero from '../../components/LandingPageComponents/Hero'
 import PersonaSection from '../../components/LandingPageComponents/PersonaSection'
 import OpListSection from '../../components/Op/OpListSection'
+import OpAdd from '../../components/Op/OpAdd'
 import TitleSectionSub from '../../components/LandingPageComponents/TitleSectionSub'
 
 // import bigimage from './landing-page-bg.jpg'
@@ -36,15 +34,7 @@ export class Landing extends Component {
           />
 
           <OpListSection store={this.props.store} />
-          <Link href={'/op/new'}>
-            <Button type='primary' shape='round' size='large'>
-              <FormattedMessage
-                id='landing.newOp'
-                defaultMessage='New Opportunity'
-                description='Button to create a new opportunity on Landing page'
-              />
-            </Button>
-          </Link>
+          <OpAdd {...this.props} />
         </FullPage>
       </div>
     )
