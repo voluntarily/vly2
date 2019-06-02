@@ -7,24 +7,22 @@ import ActDetailForm from '../ActDetailForm'
 import sinon from 'sinon'
 // Initial activities
 
-const op = {
+const act = {
   _id: '5cc903e5f94141437622cea7',
   title: 'Growing in the garden',
   subtitle: 'Growing digitally in the garden',
   imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
   description: 'Project to grow something in the garden',
   duration: '15 Minutes',
-  location: 'Newmarket, Auckland',
   status: 'draft'
 }
 
-const noop = {
+const noact = {
   title: '',
   subtitle: '',
   imgUrl: '',
   description: '',
   duration: '',
-  location: '',
   status: 'draft'
 }
 
@@ -45,20 +43,20 @@ test.after.always(() => {
   console.warn = orginalWarn
 })
 
-test('shallow the detail with op', t => {
+test('shallow the detail with act', t => {
   const wrapper = shallowWithIntl(
-    <ActDetailForm op={op} onSubmit={() => {}} onCancel={() => {}} />
+    <ActDetailForm act={act} onSubmit={() => {}} onCancel={() => {}} />
   )
   // console.log(wrapper.debug())
   t.is(wrapper.find('ActDetailForm').length, 1)
 })
 
-test('render the detail with op', t => {
+test('render the detail with act', t => {
   const submitAct = sinon.spy()
   const cancelAct = sinon.spy()
   const me = { _id: '5ccbffff958ff4833ed2188d' }
   const wrapper = mountWithIntl(
-    <ActDetailForm op={op} me={me} onSubmit={submitAct} onCancel={cancelAct} />
+    <ActDetailForm act={act} me={me} onSubmit={submitAct} onCancel={cancelAct} />
   )
   // t.log(wrapper)
   // console.log(wrapper.html())
@@ -68,16 +66,16 @@ test('render the detail with op', t => {
   t.truthy(cancelAct.calledOnce)
   wrapper.find('Form').first().simulate('submit')
   t.truthy(submitAct.calledOnce)
-  t.truthy(submitAct.calledWith(op))
+  t.truthy(submitAct.calledWith(act))
 })
 
-test.serial('render the detail with new blank op', t => {
+test.serial('render the detail with new blank act', t => {
   const submitAct = sinon.spy()
   const cancelAct = sinon.spy()
   const me = { _id: '5ccbffff958ff4833ed2188d' }
 
   const wrapper = mountWithIntl(
-    <ActDetailForm op={noop} me={me} onSubmit={submitAct} onCancel={cancelAct} />
+    <ActDetailForm act={noact} me={me} onSubmit={submitAct} onCancel={cancelAct} />
   )
   t.log(wrapper.first())
   t.is(wrapper.find('ActDetailForm').length, 1)
