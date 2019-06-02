@@ -18,11 +18,31 @@ const op = {
 
 test('shallow the card with op', t => {
   const wrapper = shallowWithIntl(
-    <OpCard op={op} onPress={() => {}} />
+    <OpCard size='Small' op={op} onPress={() => {}} />
   )
   // console.log(wrapper.debug())
-  t.is(wrapper.find('.requestContainer').length, 1)
-  t.is(wrapper.find('.requestTitle').text(), op.title)
+  t.is(wrapper.find('.requestContainerSmall').length, 1)
+  t.is(wrapper.find('.requestTitleSmall').text(), op.title)
+  t.is(wrapper.find('.requestImgSmall').prop('src'), op.imgUrl)
+})
+
+test('op card with default image', t => {
+  const wrapper = shallowWithIntl(
+    <OpCard size='Small' op={{ ...op, imgUrl: undefined }} onPress={() => {}} />
+  )
+  // console.log(wrapper.debug())
+  t.is(wrapper.find('.requestContainerSmall').length, 1)
+  t.is(wrapper.find('.requestTitleSmall').text(), op.title)
+  t.is(wrapper.find('.requestImgSmall').prop('src'), 'static/missingimage.svg')
+})
+
+test('shallow the big card with op', t => {
+  const wrapper = shallowWithIntl(
+    <OpCard size='Big' op={op} onPress={() => {}} />
+  )
+  // console.log(wrapper.debug())
+  t.is(wrapper.find('.requestContainerBig').length, 1)
+  t.is(wrapper.find('.requestTitleBig').text(), op.title)
 })
 
 // test.todo('Click the card and see if the link works')

@@ -9,7 +9,7 @@ import { TextHeadingBlack, SpacerSmall } from '../../components/VTheme/VTheme'
 import FeaturedTwoSection from '../../components/LandingPageComponents/FeaturedTwoSection'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
-import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
+import reduxApi, { withPeople, withOps } from '../../lib/redux/reduxApi.js'
 const { TabPane } = Tabs
 
 function callback (key) {
@@ -19,6 +19,17 @@ function callback (key) {
 export class MyStuff extends Component {
   state = {
     editProfile: false
+  }
+
+  static async getInitialProps ({ store, query }) {
+    // Get all Ops
+    try {
+      const ops = await store.dispatch(reduxApi.actions.opportunities.get())
+      // console.log('got ops', ops)
+      return { ops, query }
+    } catch (err) {
+      console.log('error in getting ops', err)
+    }
   }
 
   handleCancel = () => {
@@ -41,6 +52,7 @@ export class MyStuff extends Component {
     const opsTab = <span><Icon type='schedule' /><FormattedMessage id='home.liveops' defaultMessage='Active' description='show opportunities list on volunteer home page' /></span>
     const searchTab = <span><Icon type='appstore' /><FormattedMessage id='home.pastops' defaultMessage='History' description='show volunteering history on volunteer home page' /></span>
     const profileTab = <span><Icon type='setting' /><FormattedMessage id='home.profile' defaultMessage='Profile' description='show profile on volunteer home page' /></span>
+    const myPastfilterString = '{"status":"done","requestor":"' + this.props.me._id + '"}'
     return (
       <FullPage>
         <TextHeadingBlack>
@@ -53,10 +65,10 @@ export class MyStuff extends Component {
         <SpacerSmall />
         <Tabs defaultActiveKey='1' onChange={callback}>
           <TabPane tab={opsTab} key='1'>
-            {/* // @TODO: [VP-187] Add real data to Upcoming Events component */}
             <FeaturedTwoSection
-              title='Your Upcoming Activities'
-              subtitle='These activities are happening soon'
+              title='Your Upcoming Requests'
+              subtitle='These Events are happening soon'
+              ops={this.props.ops.filter(op => op.status === 'active' && op.requestor === this.props.me._id)}
             />
             {/* // TODO: [VP-208] list of things volunteers can do on home page */}
             <h1>More things you can do</h1>
@@ -69,12 +81,11 @@ export class MyStuff extends Component {
             </ul>
           </TabPane>
           <TabPane tab={searchTab} key='2'>
-            {/* @TODO: [VP-188] Add past listings filter to OpListSection */}
             <TitleSectionSub
               title='Your Past Activities'
               subtitle='LOL subtitles'
             />
-            <OpListSection />
+            <OpListSection query={myPastfilterString} />
           </TabPane>
           <TabPane tab={profileTab} key='3'>
             {this.state.editProfile
@@ -95,4 +106,4 @@ export class MyStuff extends Component {
   }
 }
 
-export default securePage(withPeople(MyStuff))
+export default securePage(withPeople(withOps(MyStuff)))

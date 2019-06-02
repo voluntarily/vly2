@@ -11,7 +11,7 @@ import Loading from '../../components/Loading'
 
 // TODO: [VP-131] use redux instead of local state.
 class OpListSection extends Component {
-  async loadData (search) {
+  async loadData (search, query) {
     // Get all Ops
     try {
       // TODO: [VP-128] document how to set the parameters correctly
@@ -22,6 +22,9 @@ class OpListSection extends Component {
       if (search) {
         filters.search = search
       }
+      if (query) {
+        filters.q = query
+      }
 
       return await this.props.dispatch(reduxApi.actions.opportunities.get(filters))
     } catch (err) {
@@ -30,13 +33,13 @@ class OpListSection extends Component {
   }
 
   async componentDidUpdate (prevProps) {
-    if (prevProps.search !== this.props.search) {
-      await this.loadData(this.props.search)
+    if (prevProps.search !== this.props.search || prevProps.query !== this.props.query) {
+      await this.loadData(this.props.search, this.props.query)
     }
   }
 
   async componentDidMount () {
-    await this.loadData(this.props.search)
+    await this.loadData(this.props.search, this.props.query)
   }
 
   render () {
@@ -65,6 +68,7 @@ OpListSection.propTypes = {
     _id: PropTypes.string.isRequired
   })), // optional as we can show an empty list and data may arrive async
   dispatch: PropTypes.func.isRequired,
+  query: PropTypes.string,
   search: PropTypes.string
 }
 
