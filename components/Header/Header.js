@@ -8,6 +8,8 @@ import Navigation from '../Navigation/Navigation'
 import links from './HeaderMenu'
 import { connect } from 'react-redux'
 
+
+
 const Brand = styled.h1`
   font-weight: 300;
   font-size: 2em;
@@ -36,6 +38,7 @@ const Header = ({ isAuthenticated, ...props }) => (
     {/* <SearchBar /> */}
     <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
   </Layout.Header>
+  
 )
 Header.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
