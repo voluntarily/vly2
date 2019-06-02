@@ -36,6 +36,7 @@ const Header = ({ isAuthenticated, ...props }) => (
     {/* <SearchBar /> */}
     <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
   </Layout.Header>
+
 )
 Header.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
