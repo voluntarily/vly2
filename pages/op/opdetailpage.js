@@ -14,12 +14,11 @@ import PersonCard from '../../components/Person/PersonCard'
 export class OpDetailPage extends Component {
   static async getInitialProps ({ store, query }) {
     // Get one Op
-    // console.log('getting op details', query)
+    console.log('OpDetailPage - getInitialProps - getting op details', query)
     try {
       await store.dispatch(reduxApi.actions.opportunities.get(query))
-      // console.log('got ops for id', query, ops)
     } catch (err) {
-      // console.log('error in getting ops', err)
+      console.log('OpDetailPage - getInitialProps - error in getting ops', err)
     }
   }
 
@@ -35,6 +34,10 @@ export class OpDetailPage extends Component {
 
   // Called when the user starts to delete an op, but then cancels it.
   handleDeleteCancelled = () => { message.error('Delete Cancelled') }
+
+  componentWillReceiveProps () {
+    console.log('OpDetailPage - componentWillReceiveProps')
+  }
 
   render () {
     let content

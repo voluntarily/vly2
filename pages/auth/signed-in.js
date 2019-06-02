@@ -33,7 +33,8 @@ class SignedIn extends React.Component {
       setToken(result.idToken, result.accessToken)
       const session = await parseTokenToSession(result.idToken)
       this.props.setSession(session)
-      Router.push(Router.router.query.r)
+      console.log('signedin - componentdidmount - setSession', session)
+      await Router.push(Router.router.query.r)
     })
   }
 

@@ -73,7 +73,7 @@ class RegisterInterestSection extends Component {
       } else { // If not, use a blank interest.
         interest = getNewInterest(this.props.me, this.props.op)
       }
-
+      console.log(this.props)
       return (
         <section>
           <RegisterInterestItem

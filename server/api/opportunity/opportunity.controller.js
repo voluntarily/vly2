@@ -7,6 +7,7 @@ const Opportunity = require('./opportunity')
  * @returns void
  */
 const getOpportunities = async (req, res) => {
+  console.log('server - opportunity.controller - getOpportunities', req.query)
   let query = {} // { status: 'active' }
   let sort = 'title'
   let select = {}
@@ -47,6 +48,7 @@ const getOpportunities = async (req, res) => {
   }
 }
 const getOpportunity = async (req, res) => {
+  console.log('server - opportunity.controller - getOpportunity', req.params)
   try {
     const got = await Opportunity.findOne(req.params).populate('requestor').exec()
     res.json(got)
