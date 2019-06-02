@@ -9,7 +9,7 @@ const { emailPerson } = require('./email/emailperson')
  * @returns void
  */
 function getPersonBy (req, res) {
-  console.log('server - person.controller - getPersonBy', req.params)
+  console.log('getPersonBy', req.params)
   const query = { [req.params.by]: req.params.value }
   Person.findOne(query).exec((err, got) => {
     if (err) {
@@ -42,7 +42,7 @@ function ensureSanitized (req, res, next) {
 }
 
 function verifyEmailPerson (req, res) {
-  console.log('server - person.controller - verifyEmailPerson', req.params)
+  console.log('verifyEmailPerson', req.params)
   if (!req.params.id) {
     res.status(400).send() // bad request
   }
