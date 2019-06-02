@@ -10,7 +10,7 @@ services:
         awslogs-region: ap-southeast-1
         awslogs-group: voluntarily
     environment:
-      APP_URL: http://alpha.voluntari.ly
+      APP_URL: https://alpha.voluntari.ly
       NODE_ENV: production
       MONGODB_URI: mongodb+srv://vly-client:ZhF3BUDiwpy8C3xK@cluster0-kwmsu.mongodb.net/vly2-alpha?retryWrites=true
 
