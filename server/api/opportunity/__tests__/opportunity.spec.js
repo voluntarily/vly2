@@ -105,6 +105,13 @@ test.serial('Should send correct data when queried against an _id', async t => {
   t.is(res.body.requestor.name, person1.name)
 })
 
+test.serial('Should not find invalid _id', async t => {
+  const res = await request(server)
+    .get(`/api/opportunities/5ce8acae1fbf56001027b254`)
+    .set('Accept', 'application/json')
+  t.is(res.status, 404)
+})
+
 test.serial('Should correctly add an opportunity', async t => {
   t.plan(2)
 
@@ -162,6 +169,25 @@ test.serial('Should correctly give opportunity 1 when searching by "Mentor"', as
   const got = res.body
   t.is(ops[0].title, got[0].title)
   t.is(1, got.length)
+})
+
+test.serial('Should find no matches', async t => {
+  const res = await request(server)
+    .get('/api/opportunities?q={"title":"nomatches"}')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  // console.log('got', got)
+  t.is(got.length, 0)
+})
+
+test.serial('Should fail to find - invalid query', async t => {
+  const res = await request(server)
+    .get('/api/opportunities?s={"invalid":"nomatches"}')
+    .set('Accept', 'application/json')
+    .expect(404)
+  t.is(res.status, 404)
 })
 
 // Searching for something in the description (case insensitive)

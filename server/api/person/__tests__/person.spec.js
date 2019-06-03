@@ -214,16 +214,7 @@ test.serial('Should find a person by nickname', async t => {
 
 test.serial('Should find no person', async t => {
   t.plan(1)
-  const p = {
-    name: 'Testy McTestFace',
-    nickname: 'Testy',
-    phone: '123 456789',
-    email: 'Testy555@voluntari.ly',
-    role: ['tester']
-  }
 
-  const person = new Person(p)
-  await person.save()
   const res = await request(server)
     .get(`/api/person/by/email/not_a_real_email@voluntari.ly`)
     .set('Accept', 'application/json')
