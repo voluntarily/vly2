@@ -2,7 +2,7 @@ const mongooseCrudify = require('mongoose-crudify')
 
 const helpers = require('../../services/helpers')
 const Person = require('./person')
-const { verifyEmailPerson, ensureSanitized, getPersonBy } = require('./person.controller')
+const { ensureSanitized, getPersonBy } = require('./person.controller')
 
 module.exports = function (server) {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -24,6 +24,5 @@ module.exports = function (server) {
     })
   )
 
-  server.get('/api/person/verify_email/:id', verifyEmailPerson)
   server.get('/api/person/by/:by/:value', getPersonBy)
 }
