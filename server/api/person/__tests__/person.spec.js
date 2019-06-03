@@ -214,20 +214,33 @@ test.serial('Should find a person by nickname', async t => {
 
 test.serial('Should find no person', async t => {
   t.plan(1)
-  const p = {
-    name: 'Testy McTestFace',
-    nickname: 'Testy',
-    phone: '123 456789',
-    email: 'Testy555@voluntari.ly',
-    role: ['tester']
-  }
 
-  const person = new Person(p)
-  await person.save()
   const res = await request(server)
     .get(`/api/person/by/email/not_a_real_email@voluntari.ly`)
     .set('Accept', 'application/json')
     .expect(404)
   // console.log(res.body)
   t.is(res.body.error, 'person not found')
+})
+
+test.serial('Should correctly handle missing inputs', async t => {
+  const p = {
+    name: 'Testy McTestFace',
+    nickname: 'Testy',
+    phone: '123 456789',
+    // email: 'Testy555@voluntari.ly', <- explicity remove email
+    role: ['tester']
+  }
+  try {
+    const res = await request(server)
+      .post('/api/people')
+      .send(p)
+      .set('Accept', 'application/json')
+      .expect(200)
+    // console.log(res.body)
+    t.is(res.body.message, 'Person validation failed: email: Path `email` is required.')
+    t.is(res.body.name, 'ValidationError')
+  } catch (err) {
+    console.log('api/people', err)
+  }
 })

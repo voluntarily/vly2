@@ -4,5 +4,5 @@ MY_DIR=$( dirname "${BASH_SOURCE[0]}" )
 # Get a docker login and run it
 source ${MY_DIR}/login
 
-aws ecs update-service --service vly2 --cluster vly-cluster1 --force-new-deployment --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50
+aws ecs update-service --service voluntarily-loadbalanced-service --cluster vly-cluster1 --force-new-deployment --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50
 

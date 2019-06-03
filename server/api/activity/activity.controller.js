@@ -1,4 +1,4 @@
-const Opportunity = require('./opportunity')
+const Activity = require('./activity')
 
 /**
  * Get all orgs
@@ -6,7 +6,7 @@ const Opportunity = require('./opportunity')
  * @param res
  * @returns void
  */
-const getOpportunities = async (req, res) => {
+const getActivities = async (req, res) => {
   let query = {} // { status: 'active' }
   let sort = 'title'
   let select = {}
@@ -16,7 +16,7 @@ const getOpportunities = async (req, res) => {
     sort = req.query.s ? JSON.parse(req.query.s) : sort
     select = req.query.p ? JSON.parse(req.query.p) : select
   } catch (e) {
-    // console.log('bad JSON', req.query)
+    console.log('bad JSON', req.query)
     return res.status(400).send(e)
   }
 
@@ -40,24 +40,22 @@ const getOpportunities = async (req, res) => {
   }
 
   try {
-    const got = await Opportunity.find(query, select).sort(sort).exec()
+    const got = await Activity.find(query, select).sort(sort).exec()
     res.json(got)
   } catch (e) {
     res.status(404).send(e)
   }
 }
-const getOpportunity = async (req, res) => {
-  // console.log('getOpportunity', req.params)
+const getActivity = async (req, res) => {
   try {
-    const got = await Opportunity.findOne(req.params).populate('requestor').exec()
+    const got = await Activity.findOne(req.params).populate('owner').exec()
     res.json(got)
   } catch (e) {
-    // TEST: can't seem to get here. bad id handled earlier
     res.status(404).send(e)
   }
 }
 
 module.exports = {
-  getOpportunities,
-  getOpportunity
+  getActivities,
+  getActivity
 }

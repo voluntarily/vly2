@@ -10,7 +10,8 @@ export default ({ children, title = 'Voluntari.ly', className }) => (
       <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
       <meta charSet='utf-8' />
       <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-      <link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
+
+      {/* This doesn't actually apply? Remove in order to avoid confusion? */}
     </Head>
     <Header />
     <Layout.Content >

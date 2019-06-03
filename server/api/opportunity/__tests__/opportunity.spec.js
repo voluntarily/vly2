@@ -105,6 +105,13 @@ test.serial('Should send correct data when queried against an _id', async t => {
   t.is(res.body.requestor.name, person1.name)
 })
 
+test.serial('Should not find invalid _id', async t => {
+  const res = await request(server)
+    .get(`/api/opportunities/5ce8acae1fbf56001027b254`)
+    .set('Accept', 'application/json')
+  t.is(res.status, 404)
+})
+
 test.serial('Should correctly add an opportunity', async t => {
   t.plan(2)
 
@@ -117,7 +124,8 @@ test.serial('Should correctly add an opportunity', async t => {
       description: 'Project to build a simple rocket that will reach 400m',
       duration: '4 hours',
       location: 'Albany, Auckland',
-      status: 'draft'
+      status: 'draft',
+      requestor: t.context.people[0]._id
     })
     .set('Accept', 'application/json')
 
@@ -131,16 +139,16 @@ test.serial('Should correctly delete an opportunity', async t => {
   t.plan(2)
 
   const opp = new Opportunity({
-    _id: '5cc8d60b8b16812b5b3920c3',
     title: 'The first 1000 metres',
     subtitle: 'Launching into space step 4',
     imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
     description: 'Project to build a simple rocket that will reach 1000m',
     duration: '4 hours',
     location: 'Albany, Auckland',
-    status: 'draft'
+    status: 'draft',
+    requestor: t.context.people[0]._id
   })
-  opp.save()
+  await opp.save()
 
   const res = await request(server)
     .delete(`/api/opportunities/${opp._id}`)
@@ -162,6 +170,25 @@ test.serial('Should correctly give opportunity 1 when searching by "Mentor"', as
   const got = res.body
   t.is(ops[0].title, got[0].title)
   t.is(1, got.length)
+})
+
+test.serial('Should find no matches', async t => {
+  const res = await request(server)
+    .get('/api/opportunities?q={"title":"nomatches"}')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  // console.log('got', got)
+  t.is(got.length, 0)
+})
+
+test.serial('Should fail to find - invalid query', async t => {
+  const res = await request(server)
+    .get('/api/opportunities?s={"invalid":"nomatches"}')
+    .set('Accept', 'application/json')
+    .expect(404)
+  t.is(res.status, 404)
 })
 
 // Searching for something in the description (case insensitive)
