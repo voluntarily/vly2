@@ -23,7 +23,6 @@ class SignedIn extends React.Component {
   // });
 
   componentDidMount () {
-    // static async getInitialProps (ctx) {
     parseHash(async (err, result) => {
       if (!result) return
       if (err) {
