@@ -3,19 +3,14 @@
  */
 import React from 'react'
 import Head from 'next/head'
+import PropTypes from 'prop-types'
 import { Container } from 'next/app'
 import { withRouter } from 'next/router'
 import { FormattedMessage } from 'react-intl'
-import { FullPage } from '../hocs/publicPage'
+import publicPage, { FullPage } from '../hocs/publicPage'
 import { Spacer } from '../components/VTheme/VTheme'
 
 class ErrorPage extends React.Component {
-  static propTypes () {
-    return {
-      errorCode: React.PropTypes.number.isRequired,
-      url: React.PropTypes.string.isRequired
-    }
-  }
 
   static getInitialProps ({ res, xhr }) {
     const errorCode = res ? res.statusCode : (xhr ? xhr.status : null)
@@ -109,6 +104,11 @@ class ErrorPage extends React.Component {
   }
 }
 
+ErrorPage.propTypes = {
+  errorCode: PropTypes.number.isRequired,
+  url: PropTypes.string.isRequired
+}
+
 export const ErrorPageTest = ErrorPage // for test
 
-export default withRouter(ErrorPage)
+export default publicPage(withRouter(ErrorPage))
