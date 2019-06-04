@@ -15,6 +15,6 @@ yarn.lock
 *.pem
 .env
 package-lock.json
-package-lock.json
 .vscode/launch.json
 static/upload/*
+static/upload-test/*
