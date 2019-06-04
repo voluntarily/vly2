@@ -11,7 +11,6 @@ import publicPage, { FullPage } from '../hocs/publicPage'
 import { Spacer } from '../components/VTheme/VTheme'
 
 class ErrorPage extends React.Component {
-
   static getInitialProps ({ res, xhr }) {
     const errorCode = res ? res.statusCode : (xhr ? xhr.status : null)
     return { errorCode }
