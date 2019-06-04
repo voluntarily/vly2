@@ -149,7 +149,8 @@
       "server/util/mockRouter.js",
       "server/util/test-memory-mongo.js",
       "lib/react-intl-test*.js",
-      "server/config.js"
+      "server/config.js",
+      "components/examples/**/*.js"
     ],
     "reporter": [
       "lcov",
