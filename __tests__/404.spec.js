@@ -1,7 +1,7 @@
 import React from 'react'
 import test from 'ava'
 import { mountWithIntl } from '../lib/react-intl-test-helper'
-import ErrorPageTest from '../pages/_error'
+import { ErrorPageTest } from '../pages/_error'
 
 const router = { asPath: 'bogus' }
 const E404 = 404
