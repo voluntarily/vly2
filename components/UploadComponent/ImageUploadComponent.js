@@ -41,7 +41,7 @@ class ImageUpload extends Component {
     let FR = new window.FileReader()
     FR.readAsBinaryString(file)
     FR.addEventListener('load', async (e) => {
-      const response = await fetch('/api/postImage', {
+      const response = await fetch('/api/images', {
         headers: { 'content-type': 'application/json' },
         method: 'POST',
         body: JSON.stringify({ image: FR.result, file: file.name }) })
