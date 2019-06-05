@@ -81,6 +81,7 @@
     "mongodb-memory-server": "^5.1.2",
     "nodemon": "^1.18.11",
     "nyc": "^14.1.0",
+    "objectid": "^3.2.1",
     "redux-ava": "^2.2.0",
     "redux-mock-store": "^1.5.3",
     "sinon": "^7.3.2",
