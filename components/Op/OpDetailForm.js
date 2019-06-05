@@ -128,7 +128,6 @@ class OpDetailForm extends Component {
                 })(
                   <TextArea rows={20} placeholder='All the details about the request. You can use markdown here.' />
                 )}
-                <OpCKEditor/>
               </Form.Item>
             </Col>
           </Row>
