@@ -24,7 +24,7 @@ module.exports.emailPerson = async (person, template, props) => {
       // }
       transport
     })
-    console.log('email props', props)
+    // console.log('email props', props)
     return await email.send({
       template: path.join(__dirname, template),
       message: {
