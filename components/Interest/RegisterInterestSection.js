@@ -80,7 +80,12 @@ class RegisterInterestSection extends Component {
             interest={interest}
             onChangeStatus={this.handleChangeStatus.bind(this)}
             onWithdraw={this.handleWithdraw.bind(this)} />
-          <InterestConfirmationCard organizer={this.props.op.requestor} />
+          {
+            (interest.status === 'committed') &&
+              (
+                <InterestConfirmationCard organizer={this.props.op.requestor} />
+              )
+          }
         </section>
       )
     }
