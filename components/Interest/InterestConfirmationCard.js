@@ -3,7 +3,7 @@ import { Card, Icon, Avatar, Typography } from 'antd'
 
 import PropTypes from 'prop-types'
 
-const { Paragraph, Title } = Typography
+const { Paragraph } = Typography
 
 const { Meta } = Card
 
