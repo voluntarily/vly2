@@ -21,6 +21,7 @@ export class PersonDetailPage extends Component {
     }
   }
 
+  // TODO: [VP-209] only show person delete button for admins
   async handleDelete (person) {
     if (!person) return
     // Actual data request
