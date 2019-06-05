@@ -1,5 +1,11 @@
 export default () => [
   {
+    key: 'home',
+    href: '/home',
+    text: 'Home',
+    authRequired: true
+  },
+  {
     key: 'habout',
     text: 'About',
     href: '/about'
@@ -9,18 +15,7 @@ export default () => [
     text: 'Organisations',
     href: '/orgs'
   },
-  {
-    key: 'activities',
-    href: '/activities',
-    text: 'Activities',
-    authRequired: true
-  },
-  {
-    key: 'hsecret',
-    href: '/secret',
-    text: 'Private',
-    authRequired: true
-  },
+
   {
     key: 'hsignin',
     href: '/auth/sign-in',
