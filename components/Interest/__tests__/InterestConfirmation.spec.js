@@ -18,18 +18,8 @@ const requestor = {
   title: 'Awesome Human at OMGTech'
 }
 
-const op = {
-  _id: 'f34gb2bh24b24b2',
-  name: 'OMGTech',
-  slug: 'hello-omgtech',
-  imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbLLySM6USjl8xKaZJXdvTD08jW9jphCLSNXUW-kVDmPb7j8wC',
-  about: 'OMGTech! develops & delivers engaging workshops for both teachers and students on digital technologies and how to explore and invent with them',
-  type: ['ap'],
-  requestor: requestor
-}
-
 test('render confirmation card', t => {
-  const wrapper = mount(<InterestConfirmationCard organizer={op.requestor} />)
+  const wrapper = mount(<InterestConfirmationCard organizer={requestor} />)
   t.truthy(wrapper.find('Head'))
   t.truthy(wrapper.find('op.requestor.name', 'Testy McTestface'))
   t.truthy(wrapper.find('op.requestor.email', 'testy@voluntar.ly'))
