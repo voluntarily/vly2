@@ -1,16 +1,19 @@
 import test from 'ava'
 
-import { getTransportTest, getTransportSES } from '../../email/email'
+import { getTransport, getTransportTest, getTransportSES } from '../../email/email'
 
-// test.beforeEach('connect and add two person entries', async () => {
-//   await Person.create(people).catch(() => 'Unable to create people');
-// });
+test('Check transport is right transport', async t => {
+  const t1 = await getTransportSES()
+  t.is(t1.options.host, 'email-smtp.us-west-2.amazonaws.com')
 
-// test.afterEach.always(async () => {
-//   await dropDB();
-// });
+  const t2 = await getTransportTest()
+  t.is(t2.options.host, 'smtp.ethereal.email')
 
-test.skip('Should setup and send test email', async t => {
+  const t3 = await getTransport()
+  t.is(t3.options.host, 'smtp.ethereal.email')
+})
+
+test('Should setup and send test email', async t => {
   t.plan(3)
   const transport = await getTransportTest()
   const info = await transport.sendMail({
@@ -41,7 +44,6 @@ test.skip('send test email via AWS SMTP', async t => {
     html: '<b>This is a test email from the email.spec.js test</b>' // html body
   })
   // eslint-disable-next-line no-console
-  console.log(info)
   t.true(info.accepted[0] === 'andrew@omgtech.co.nz')
   t.true(info.rejected.length === 0)
   t.regex(info.response, /250 Ok.*/, info.response)
