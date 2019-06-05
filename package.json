@@ -81,6 +81,7 @@
     "mongodb-memory-server": "^5.1.2",
     "nodemon": "^1.18.11",
     "nyc": "^14.1.0",
+    "redux-ava": "^2.2.0",
     "redux-mock-store": "^1.5.3",
     "sinon": "^7.3.2",
     "standard": "^12.0.1",
@@ -149,7 +150,8 @@
       "server/util/mockRouter.js",
       "server/util/test-memory-mongo.js",
       "lib/react-intl-test*.js",
-      "server/config.js"
+      "server/config.js",
+      "components/examples/**/*.js"
     ],
     "reporter": [
       "lcov",
