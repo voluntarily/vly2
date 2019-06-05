@@ -57,6 +57,15 @@ test.serial('Should correctly give count of all orgs sorted alpha', async t => {
   t.is(got[0].name, 'Albany High School')
 })
 
+test.serial('Should handle bad JSON', async t => {
+  t.plan(1)
+
+  const res = await request(server)
+    .get('/api/organisations?q={"nocolon" "baddata"}')
+    .set('Accept', 'application/json')
+  t.is(res.status, 400)
+})
+
 test.serial('Should correctly give subset of orgs matching slug', async t => {
   const res = await request(server)
     .get('/api/organisations?q={"slug":"datacom"}')
@@ -68,6 +77,24 @@ test.serial('Should correctly give subset of orgs matching slug', async t => {
   t.is(got.length, 1)
 })
 
+test.serial('Should find no matches', async t => {
+  const res = await request(server)
+    .get('/api/organisations?q={"slug":"nomatches"}')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  // console.log('got', got)
+  t.is(got.length, 0)
+})
+
+test.serial('Should fail to find - invalid query', async t => {
+  const res = await request(server)
+    .get('/api/organisations?s={"invalid":"nomatches"}')
+    .set('Accept', 'application/json')
+    .expect(400)
+  t.is(res.status, 400)
+})
 test.serial('Should correctly give subset of orgs of type', async t => {
   const res = await request(server)
     .get('/api/organisations?q={"type":"vp"}')

@@ -25,5 +25,10 @@ module.exports = routes()
   .add('personedit', '/people/:id/edit', 'person/personupdatepage')
   .add('personnew', '/person/new', 'person/personupdatepage')
   .add('personsection', '/person/section', 'person/personlistsection')
-
+  // Activities
+  .add('acts', '/acts', 'act/actlistpage')
+  .add('act', '/acts/:id', 'act/actdetailpage')
+  .add('actedit', '/acts/:id/edit', 'act/actupdatepage')
+  .add('actnew', '/act/new', 'act/actupdatepage')
+  .add('actsection', '/act/section', 'act/actlistsection')
 // Usage inside Page.getInitialProps (req = { pathname, asPath, query } = { pathname: '/', asPath: '/about', query: { slug: 'about' } })

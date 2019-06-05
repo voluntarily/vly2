@@ -67,6 +67,7 @@
     "redux-thunk": "^2.3.0",
     "require-extension": "0.0.4",
     "sanitize-html": "^1.20.1",
+    "slug": "^1.1.0",
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
@@ -81,6 +82,7 @@
     "mongodb-memory-server": "^5.1.2",
     "nodemon": "^1.18.11",
     "nyc": "^14.1.0",
+    "redux-ava": "^2.2.0",
     "redux-mock-store": "^1.5.3",
     "sinon": "^7.3.2",
     "standard": "^12.0.1",
@@ -105,7 +107,8 @@
       "components/**/__tests__/*.spec.js",
       "components/__tests__/*.spec.js",
       "components/**/__tests__/*.spec.js",
-      "!components/**/__tests__/*.fixture.js"
+      "!components/**/__tests__/*.fixture.js",
+      "lib/**/__test__/*.spec.js"
     ],
     "helpers": [
       "**/__tests__/**/*.fixture.js",
@@ -148,7 +151,8 @@
       "server/util/mockRouter.js",
       "server/util/test-memory-mongo.js",
       "lib/react-intl-test*.js",
-      "server/config.js"
+      "server/config.js",
+      "components/examples/**/*.js"
     ],
     "reporter": [
       "lcov",
