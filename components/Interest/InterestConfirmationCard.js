@@ -17,8 +17,6 @@ const cardHeading = {
 const InterestConfirmationCard = ({ organizer, ...props }) => (
   <React.Fragment>
     <div style={{ color: 'black' }}>
-      <Title>Thanks!</Title>
-      <Paragraph>The organizer has been informed and will be in touch.</Paragraph>
       <Paragraph> This opportunity has been added to your activities. <br />
         If you want to learn more, contact the person below.</Paragraph>
     </div>
