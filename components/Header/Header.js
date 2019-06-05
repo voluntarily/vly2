@@ -28,7 +28,7 @@ const getAllowedLinks = isAuthenticated =>
 const Header = ({ isAuthenticated, ...props }) => (
   <Layout.Header>
     <a>
-      <Link href='/'>
+      <Link href={isAuthenticated ? '/home' : '/'}>
         <Logo src='/static/vlogolong.svg' alt='Voluntarily logo' />
       </Link>
     </a>
