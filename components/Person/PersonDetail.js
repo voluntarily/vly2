@@ -2,8 +2,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 import Markdown from 'markdown-to-jsx'
-import { FormattedMessage } from 'react-intl'
-import { Row, Col } from 'antd'
+import { Icon, Row, Col } from 'antd'
+import styled from 'styled-components'
+import PersonRoles from './PersonRole'
+
+const DL = styled.dl`
+
+dt {
+  float: left;
+  clear: left;
+  padding: 2px 4px;
+  text-align: right;
+}
+dd {
+  margin: 0;
+  padding: 2px 4px;
+}
+`
 
 const PersonDetail = ({ person }, ...props) => (
 
@@ -13,7 +28,7 @@ const PersonDetail = ({ person }, ...props) => (
       sm={{ span: 24, order: 1 }}
       md={{ span: 12, order: 2 }}
     >
-      <img style={{ width: '100%', maxWidth: '300px' }} src={person.avatar} alt={person.nickname} />
+      <img style={{ margin: '1rem', width: '100%', maxWidth: '300px' }} src={person.avatar} alt={person.nickname} />
     </Col>
     <Col
       sm={{ span: 24, order: 2 }}
@@ -21,54 +36,30 @@ const PersonDetail = ({ person }, ...props) => (
     >
       <h1>{person.nickname}</h1>
       <p>{person.name}</p>
-      <dl>
+      <DL>
         <dt>
-          <FormattedMessage
-            id='phone'
-            defaultMessage='phone'
-            description='label for phone number on persons profile'
-          />
+          <Icon type='phone' />
         </dt>
         <dd>{person.phone}</dd>
         <dt>
-          <FormattedMessage
-            id='email'
-            defaultMessage='email'
-            description='label for email address on persons profile'
-          />
+          <Icon type='mail' />
         </dt>
         <dd>{person.email}</dd>
         <dt>
-          <FormattedMessage
-            id='gender'
-            defaultMessage='Gender'
-            description='label for Gender on persons profile'
-          />
+          <Icon type='compass' />
         </dt>
         <dd>{person.gender}</dd>
         <dt>
-          <FormattedMessage
-            id='status'
-            defaultMessage='Status'
-            description='label for status on persons profile'
-          />
+          <Icon type='schedule' />
         </dt>
-        <dd>{person.status}</dd>
+        <dd>{person.status ? <Icon type='check' /> : <Icon type='close' />}</dd>
         <dt>
-          <FormattedMessage
-            id='role'
-            defaultMessage='Role'
-            description='label for role on persons profile'
-          />
+          <Icon type='coffee' />
         </dt>
         <dd>
-          <ul>{
-            person.role.map(role => (
-              <li key={role}>{role}</li>
-            ))
-          }</ul>
+          <PersonRoles roles={person.role} />
         </dd>
-      </dl>
+      </DL>
       <h3>About</h3>
       <Markdown children={person.about || ''} />
     </Col>
@@ -85,7 +76,7 @@ PersonDetail.propTypes = {
     phone: PropTypes.string,
     gender: PropTypes.string,
     avatar: PropTypes.any,
-    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op-provider', 'volunteer', 'content-provider', 'tester'])),
+    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])
   }).isRequired
 }

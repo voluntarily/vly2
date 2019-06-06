@@ -73,6 +73,20 @@ export const Grid = styled.div`
   }
 ` // end grid
 
+export const Grid8 = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(8, 10rem);
+  grid-gap: 2rem;
+
+  @media screen  and (max-width: 1280px) {
+    grid-template-columns: repeat(auto-fit, 10rem);
+    justify-content: start;
+    justify-items: center;
+  }
+
+` // end grid
+
 export const GridContainer = styled.div``
 
 export const GridTestItem = styled.div`

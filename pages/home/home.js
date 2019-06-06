@@ -16,7 +16,7 @@ function callback (key) {
   console.log(key)
 }
 
-export class MyStuff extends Component {
+class PersonHomePage extends Component {
   state = {
     editProfile: false
   }
@@ -105,5 +105,5 @@ export class MyStuff extends Component {
     )
   }
 }
-
+export const PersonHomePageTest = PersonHomePage // for test
 export default securePage(withPeople(withOps(MyStuff)))
