@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import OpQuill from '../Op/OpQuill'
+// import OpQuill from '../Op/OpQuill'
 
 
 const { TextArea } = Input
