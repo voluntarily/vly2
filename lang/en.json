@@ -1,6 +1,6 @@
 {
   "demo.greeting": "Replace in translation with Hello World!",
-  "Footer.PFCT tagline": "Voluntarily is an awesome open source project run by the",
+  "footer.credit": "Voluntarily is an awesome open source project run by the&nbsp;",
   "version": "Version",
   "revision": "local-build",
   "withdrawVolunteerInvite": "Withdraw Invite",

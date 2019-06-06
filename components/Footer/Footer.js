@@ -88,7 +88,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
       <FooterText>
         <TextP>
           <FormattedMessage
-            id='Footer.PFCT tagline'
+            id='footer.credit'
             defaultMessage='Voluntarily is an awesome open source project run by the&nbsp;'
             description='line in the footer that says we are supported by PFCT.'
           />

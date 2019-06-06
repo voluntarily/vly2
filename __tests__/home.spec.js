@@ -119,5 +119,4 @@ test.only('render Edit Profile ', t => {
   wrapper.find('.ant-tabs-tab').at(2).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Profile')
   t.is(wrapper.find('Button').first().text(), 'Edit')
-  
 })

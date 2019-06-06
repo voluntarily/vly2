@@ -2,28 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 import Markdown from 'markdown-to-jsx'
-import { FormattedMessage } from 'react-intl'
 import { Icon, Row, Col } from 'antd'
 import styled from 'styled-components'
 import PersonRoles from './PersonRole'
 
 const DL = styled.dl`
-  display: flex;
-  flex-flow: row wrap;
-  border: none;
-  border-width: 1px 1px 0 0;
 
 dt {
-  flex-basis: 20%;
+  float: left;
+  clear: left;
   padding: 2px 4px;
   text-align: right;
 }
 dd {
-  flex-basis: 70%;
-  flex-grow: 1;
   margin: 0;
   padding: 2px 4px;
-
 }
 `
 
@@ -35,7 +28,7 @@ const PersonDetail = ({ person }, ...props) => (
       sm={{ span: 24, order: 1 }}
       md={{ span: 12, order: 2 }}
     >
-      <img style={{ width: '100%', maxWidth: '300px' }} src={person.avatar} alt={person.nickname} />
+      <img style={{ margin: '1rem', width: '100%', maxWidth: '300px' }} src={person.avatar} alt={person.nickname} />
     </Col>
     <Col
       sm={{ span: 24, order: 2 }}

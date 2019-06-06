@@ -11,7 +11,8 @@ import { FormattedMessage } from 'react-intl'
 
 import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import { FullPage } from '../../hocs/publicPage'
+import securePage from '../../hocs/securePage'
 import Router from 'next/router'
 
 export class PersonUpdatePage extends Component {
@@ -94,4 +95,4 @@ PersonUpdatePage.propTypes = {
     id: PropTypes.string.isRequired
   })
 }
-export default publicPage(withPeople(PersonUpdatePage))
+export default securePage(withPeople(PersonUpdatePage))

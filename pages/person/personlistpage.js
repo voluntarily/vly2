@@ -4,12 +4,11 @@
   Entry - people menu item.
 */
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { Button } from 'antd'
 import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
-import publicPage, { FullPage } from '../../hocs/publicPage'
-// import securePage from '../../hocs/securePage'
+import { FullPage } from '../../hocs/publicPage'
+import securePage from '../../hocs/securePage'
 import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
 import PersonList from '../../components/Person/PersonList'
 
@@ -24,7 +23,7 @@ class PersonListPage extends Component {
   }
 
   render () {
-    const people = this.props.people
+    const people = this.props.people.data
     return (
       <FullPage>
         <h1><FormattedMessage id='personListTitle' defaultMessage='People' description='H1 on Person list page' /></h1>
@@ -37,18 +36,5 @@ class PersonListPage extends Component {
     )
   }
 }
-
-PersonListPage.propTypes = {
-  people: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    _id: PropTypes.string.isRequired
-  })).isRequired
-
-}
-
-PersonListPage.contextTypes = {
-  router: PropTypes.object
-}
-
-export default publicPage(withPeople(PersonListPage))
+export const PersonListPageTest = PersonListPage
+export default securePage(withPeople(PersonListPage))
