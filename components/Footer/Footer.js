@@ -89,9 +89,9 @@ const Footer = ({ isAuthenticated, ...props }) => (
         <TextP>
           <FormattedMessage
             id='footer.credit'
-            defaultMessage='Voluntarily is an awesome open source project run by the&nbsp;'
+            defaultMessage='Voluntarily is an awesome open source project run by the'
             description='line in the footer that says we are supported by PFCT.'
-          />
+          />&nbsp;
           <a href='https://www.pamfergusson.org.nz/' target='_blank'>
             Pam Fergusson Charitable Trust
           </a>
