@@ -2,6 +2,10 @@
   Smart component. Given a filter gets a list of opportunities
   and displays them in a grid. Clicking on a panel links to a
   details page.
+
+  WARNING: this component loads its own data and therefore updates the store.opportunities array.
+  if you have more than one on a page they will cancel each other out. In this case the parent
+  should obtain all the necessary data and use OpList to display the array.
 */
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
