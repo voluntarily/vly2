@@ -106,4 +106,4 @@ class PersonHomePage extends Component {
   }
 }
 export const PersonHomePageTest = PersonHomePage // for test
-export default securePage(withPeople(withOps(MyStuff)))
+export default securePage(withPeople(withOps(PersonHomePage)))
