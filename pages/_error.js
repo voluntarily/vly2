@@ -114,7 +114,7 @@ class ErrorPage extends React.Component {
               <Container className='pt-5 text-center'>
                 <h1 className='display-4'>HTTP {this.props.errorCode} Error</h1>
                 <p>
-                  A <strong>HTTP {this.props.errorCode}</strong> error occurred
+                  An <strong>HTTP {this.props.errorCode}</strong> error occurred
                   while trying to access{' '}
                   <strong>{this.props.router.asPath}</strong>
                 </p>
