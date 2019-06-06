@@ -16,7 +16,7 @@ const personSchema = new Schema({
     type: [String],
     required: true,
     default: ['volunteer'],
-    enum: ['admin', 'op-provider', 'volunteer', 'content-provider', 'tester']
+    enum: ['admin', 'orgAdmin', 'opportunityProvider', 'volunteer', 'activityProvider', 'resourceProvider', 'tester']
   },
   // used to indicate whether people show up in searches.
   status: {

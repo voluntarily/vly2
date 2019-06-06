@@ -1,5 +1,5 @@
 /*
-  Display an activity record in card format with a picture, title, and commitment.
+  New Opportunity Button
 */
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -8,9 +8,8 @@ import { FormattedMessage } from 'react-intl'
 import { Button } from 'antd'
 import { connect } from 'react-redux'
 
-// todo if image is not present then use a fallback.
 const OpAdd = ({ roles, ...props }) => {
-  if (roles && roles.includes('op-provider')) {
+  if (roles && roles.includes('opportunityProvider')) {
     return (
       <Link href={'/op/new'}>
         <Button type='primary' shape='round' size='large'>

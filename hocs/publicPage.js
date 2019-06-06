@@ -81,18 +81,19 @@ export default Page =>
           console.error()
         }
       }
+
       const pageProps =
         Page.getInitialProps && (await Page.getInitialProps(ctx))
       return {
         ...pageProps,
-        me: session.me,
-        isAuthenticated: session.isAuthenticated
+        me: session.me || false,
+        isAuthenticated: !!session.isAuthenticated,
+        isPlain: false
       }
     }
 
     constructor (props) {
       super(props)
-
       this.logout = this.logout.bind(this)
     }
 
@@ -129,13 +130,13 @@ export default Page =>
               gtag('js', new Date());
               gtag('config', 'UA-141212194-1'); ` }} />
           </Head>
-          <Header {...this.props} />
+          { !this.props.isPlain && <Header {...this.props} />}
           <Layout.Content>
             <FillWindow>
               <Page {...this.props} />
             </FillWindow>
           </Layout.Content>
-          <Footer {...this.props} />
+          { !this.props.isPlain && <Footer {...this.props} />}
         </Layout>
       )
     }
