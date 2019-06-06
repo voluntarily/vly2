@@ -62,7 +62,7 @@ test.only('renders the Header and Navigation for authenticated user', t => {
   )
 
   t.truthy(wrapper.find('Link').first().containsMatchingElement(<img />))
-  t.is(wrapper.find('a').length, 6)
+  t.is(wrapper.find('a').length, 5)
   t.is(wrapper.find('a').last().text(), 'Sign Out')
   t.snapshot()
 })
