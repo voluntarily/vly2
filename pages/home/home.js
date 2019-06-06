@@ -3,13 +3,13 @@ import { FormattedMessage } from 'react-intl'
 import { Button, Icon, message, Tabs } from 'antd'
 import { FullPage } from '../../hocs/publicPage'
 import securePage from '../../hocs/securePage'
-import OpListSection from '../../components/Op/OpListSection'
+import OpList from '../../components/Op/OpList'
 import TitleSectionSub from '../../components/LandingPageComponents/TitleSectionSub'
 import { TextHeadingBlack, SpacerSmall } from '../../components/VTheme/VTheme'
 import FeaturedTwoSection from '../../components/LandingPageComponents/FeaturedTwoSection'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
-import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
+import reduxApi, { withPeople, withOps } from '../../lib/redux/reduxApi.js'
 const { TabPane } = Tabs
 
 function callback (key) {
@@ -19,6 +19,15 @@ function callback (key) {
 class PersonHomePage extends Component {
   state = {
     editProfile: false
+  }
+
+  static async getInitialProps ({ store }) {
+    try {
+      // TODO: [VP-214] get only ops that invove the current user either as requestor, or volunteer
+      await store.dispatch(reduxApi.actions.opportunities.get())
+    } catch (err) {
+      console.log('error in getting ops', err)
+    }
   }
 
   handleCancel = () => {
@@ -38,9 +47,11 @@ class PersonHomePage extends Component {
   }
 
   render () {
+    const ops = this.props.opportunities.data
     const opsTab = <span><Icon type='schedule' /><FormattedMessage id='home.liveops' defaultMessage='Active' description='show opportunities list on volunteer home page' /></span>
     const searchTab = <span><Icon type='appstore' /><FormattedMessage id='home.pastops' defaultMessage='History' description='show volunteering history on volunteer home page' /></span>
     const profileTab = <span><Icon type='setting' /><FormattedMessage id='home.profile' defaultMessage='Profile' description='show profile on volunteer home page' /></span>
+    // const myPastfilterString = '{"status":"done","requestor":"' + this.props.me._id + '"}'
     return (
       <FullPage>
         <TextHeadingBlack>
@@ -53,10 +64,10 @@ class PersonHomePage extends Component {
         <SpacerSmall />
         <Tabs defaultActiveKey='1' onChange={callback}>
           <TabPane tab={opsTab} key='1'>
-            {/* // @TODO: [VP-187] Add real data to Upcoming Events component */}
             <FeaturedTwoSection
-              title='Your Upcoming Activities'
-              subtitle='These activities are happening soon'
+              title='Active Requests'
+              subtitle='These events are happening soon'
+              ops={ops.filter(op => ['active', 'draft'].includes(op.status) && op.requestor === this.props.me._id)}
             />
             {/* // TODO: [VP-208] list of things volunteers can do on home page */}
             <h1>More things you can do</h1>
@@ -69,12 +80,12 @@ class PersonHomePage extends Component {
             </ul>
           </TabPane>
           <TabPane tab={searchTab} key='2'>
-            {/* @TODO: [VP-188] Add past listings filter to OpListSection */}
             <TitleSectionSub
-              title='Your Past Activities'
-              subtitle='LOL subtitles'
+              title='Completed Requests'
+              subtitle='Completed activities'
             />
-            <OpListSection />
+            <OpList ops={ops.filter(op => op.status === 'done' && op.requestor === this.props.me._id)} />
+            {/* <OpListSection query={myPastfilterString} /> */}
           </TabPane>
           <TabPane tab={profileTab} key='3'>
             {this.state.editProfile
@@ -94,6 +105,5 @@ class PersonHomePage extends Component {
     )
   }
 }
-
-export const PersonHomePageTest = PersonHomePage // for test
-export default securePage(withPeople(PersonHomePage))
+export const PersonHomePageTest = withOps(PersonHomePage) // for test
+export default securePage(withPeople(PersonHomePageTest))

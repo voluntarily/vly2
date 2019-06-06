@@ -79,13 +79,17 @@ test('render volunteer home page - Active tab', t => {
     </Provider>)
   t.is(wrapper.find('h1').first().text(), 'My Stuff')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Your Upcoming Activities')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Active Requests')
+  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 1)
 })
 
 test('render volunteer home page - History tab', t => {
   const props = {
     me: t.context.me
   }
+  // take ownership of 2nd event and set to done
+  t.context.ops[1].requestor = t.context.me._id
+  t.context.ops[1].status = 'done'
 
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
@@ -93,7 +97,8 @@ test('render volunteer home page - History tab', t => {
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(1).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'History')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Your Past Activities')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Completed Requests')
+  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 1)
 })
 
 test('render volunteer home page - Profile tab', t => {
@@ -110,7 +115,7 @@ test('render volunteer home page - Profile tab', t => {
   t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), t.context.me.nickname)
 })
 
-test.only('render Edit Profile ', t => {
+test('render Edit Profile ', t => {
   const props = { me: t.context.me }
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>

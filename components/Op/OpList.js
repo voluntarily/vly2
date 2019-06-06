@@ -9,7 +9,7 @@ import { Grid } from '../VTheme/VTheme'
 const OpList = ({ ops, ...props }) => (
   <Grid>
     {ops ? (
-      ops.map((op, index) => <OpCard op={op} key={index} />)
+      ops.map((op, index) => <OpCard size='Small' op={op} key={index} />)
     ) : (
       <FormattedMessage
         id='op.list.empty'
