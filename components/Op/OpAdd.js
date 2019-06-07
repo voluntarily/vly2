@@ -14,9 +14,9 @@ const OpAdd = ({ roles, ...props }) => {
       <Link href={'/op/new'}>
         <Button type='primary' shape='round' size='large'>
           <FormattedMessage
-            id='landing.newOp'
-            defaultMessage='New Opportunity'
-            description='Button to create a new opportunity on Landing page'
+            id='opAdd.new'
+            defaultMessage='New Request'
+            description='Button to create a new opportunity multiple pages'
           />
         </Button>
       </Link>
