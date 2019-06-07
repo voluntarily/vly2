@@ -4,12 +4,11 @@ import { Button, Icon, message, Tabs } from 'antd'
 import { FullPage } from '../../hocs/publicPage'
 import securePage from '../../hocs/securePage'
 import OpList from '../../components/Op/OpList'
-import TitleSectionSub from '../../components/LandingPageComponents/TitleSectionSub'
+import OpAdd from '../../components/Op/OpAdd'
 import { TextHeadingBlack, SpacerSmall } from '../../components/VTheme/VTheme'
-import FeaturedTwoSection from '../../components/LandingPageComponents/FeaturedTwoSection'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
-import reduxApi, { withPeople, withOps } from '../../lib/redux/reduxApi.js'
+import reduxApi, { withInterests, withPeople, withOps } from '../../lib/redux/reduxApi.js'
 const { TabPane } = Tabs
 
 function callback (key) {
@@ -21,10 +20,30 @@ class PersonHomePage extends Component {
     editProfile: false
   }
 
+  mergeOpsList () {
+    const myops = this.props.opportunities.data // list of ops I own
+    const interests = this.props.interests.data // list of ops I'm volunteering for
+    const volops = interests.map((interest, index) => {
+      interest.opportunity.interest = { _id: interest._id, status: interest.status, comment: interest.comment }
+      return interest.opportunity
+    })
+    const ops = [ ...volops, ...myops ]
+    return ops
+  }
+
   static async getInitialProps ({ store }) {
     try {
-      // TODO: [VP-214] get only ops that invove the current user either as requestor, or volunteer
-      await store.dispatch(reduxApi.actions.opportunities.get())
+      const me = store.getState().session.me
+      const requestor = { requestor: me._id }
+      const filters = {
+        q: JSON.stringify(requestor)
+        // s: date
+      }
+
+      await Promise.all([
+        store.dispatch(reduxApi.actions.opportunities.get(filters)),
+        store.dispatch(reduxApi.actions.interests.get({ me: me._id }))
+      ])
     } catch (err) {
       console.log('error in getting ops', err)
     }
@@ -47,30 +66,38 @@ class PersonHomePage extends Component {
   }
 
   render () {
-    const ops = this.props.opportunities.data
+    const ops = this.mergeOpsList()
     const opsTab = <span><Icon type='schedule' /><FormattedMessage id='home.liveops' defaultMessage='Active' description='show opportunities list on volunteer home page' /></span>
     const searchTab = <span><Icon type='appstore' /><FormattedMessage id='home.pastops' defaultMessage='History' description='show volunteering history on volunteer home page' /></span>
     const profileTab = <span><Icon type='setting' /><FormattedMessage id='home.profile' defaultMessage='Profile' description='show profile on volunteer home page' /></span>
-    // const myPastfilterString = '{"status":"done","requestor":"' + this.props.me._id + '"}'
+    const opAddButton = <OpAdd {...this.props} />
     return (
       <FullPage>
         <TextHeadingBlack>
-          <FormattedMessage
+          {this.props.me.nickname}
+          {/* <FormattedMessage
             id='home.title'
             defaultMessage='My Stuff'
             description='title on volunteer home page.'
-          />
+          /> */}
         </TextHeadingBlack>
         <SpacerSmall />
-        <Tabs defaultActiveKey='1' onChange={callback}>
+        <Tabs defaultActiveKey='1' onChange={callback} tabBarExtraContent={opAddButton} >
           <TabPane tab={opsTab} key='1'>
-            <FeaturedTwoSection
-              title='Active Requests'
-              subtitle='These events are happening soon'
-              ops={ops.filter(op => ['active', 'draft'].includes(op.status) && op.requestor === this.props.me._id)}
-            />
+            <h2>
+              <FormattedMessage
+                id='home.liveOpportunities'
+                defaultMessage='Active Requests'
+                decription='subtitle on volunteer home page for active requests and opportunities'
+              />
+            </h2>
+            {ops &&
+              <OpList
+                ops={ops.filter(op => ['active', 'draft'].includes(op.status))}
+              />
+            }
             {/* // TODO: [VP-208] list of things volunteers can do on home page */}
-            <h1>More things you can do</h1>
+            <h2>More things you can do</h2>
             <ul>
               <li>Suggested for you</li>
               <li>Get verified</li>
@@ -80,10 +107,13 @@ class PersonHomePage extends Component {
             </ul>
           </TabPane>
           <TabPane tab={searchTab} key='2'>
-            <TitleSectionSub
-              title='Completed Requests'
-              subtitle='Completed activities'
-            />
+            <h2>
+              <FormattedMessage
+                id='home.pastOpportunities'
+                defaultMessage='Completed Requests'
+                decription='subtitle on volunteer home page for completed requests and opportunities'
+              />
+            </h2>
             <OpList ops={ops.filter(op => op.status === 'done' && op.requestor === this.props.me._id)} />
             {/* <OpListSection query={myPastfilterString} /> */}
           </TabPane>
@@ -105,5 +135,5 @@ class PersonHomePage extends Component {
     )
   }
 }
-export const PersonHomePageTest = withOps(PersonHomePage) // for test
+export const PersonHomePageTest = withInterests(withOps(PersonHomePage)) // for test
 export default securePage(withPeople(PersonHomePageTest))

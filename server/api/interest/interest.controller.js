@@ -7,6 +7,7 @@ const Interest = require('./interest')
   api/interests -> list all interests
   api/interests?op='opid' -> lists all interests associated with opid.
   api/interests?op='opid'&me='personid' -> lists all interests (hopefully only 0 or 1) associated with opid and personid.
+  api/interests?me='personid' -> list all the ops i'm interested in and populate the op out.
  */
 const listInterests = async (req, res) => {
   let sort = 'dateAdded' // todo sort by date.
@@ -19,8 +20,11 @@ const listInterests = async (req, res) => {
       }
       // Return the nickname in person field
       got = await Interest.find(query).populate({ path: 'person', select: 'nickname' }).sort(sort).exec()
+    } else if (req.query.me) {
+      const query = { person: req.query.me }
+      got = await Interest.find(query).populate({ path: 'opportunity' }).sort(sort).exec()
     } else {
-      got = await Interest.find().populate({ path: 'person', select: 'nickname' }).sort(sort).exec()
+      got = await Interest.find().sort(sort).exec()
     }
     res.json(got)
   } catch (err) {

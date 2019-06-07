@@ -8,7 +8,8 @@ import Link from 'next/link'
 // todo if image is not present then use a fallback.
 const OpCard = ({ size, op, onPress, ...props }) => {
   const cardImage = op.imgUrl ? op.imgUrl : 'static/missingimage.svg'
-  const draft = op.status === 'draft' ? '(DRAFT) ' : ''
+  const draft = op.status === 'draft' ? 'DRAFT: ' : ''
+  const interestState = op.interest ? ` - ${op.interest.status}` : ''
   return (
     <div>
       <Link href={`/ops/${op._id}`}>
@@ -17,7 +18,7 @@ const OpCard = ({ size, op, onPress, ...props }) => {
             <img className={'requestImg' + size} src={cardImage} />
             <p className={'requestTitle requestTitle' + size}>{draft}{op.title}</p>
             <p className={'requestDateTime' + size}>{op.duration}</p>
-            <p className={'requestDescription' + size}>{op.subtitle}</p>
+            <p className={'requestDescription' + size}>{op.subtitle}<strong>{interestState}</strong></p>
           </div>
         </a>
       </Link>
