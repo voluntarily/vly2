@@ -16,7 +16,7 @@ const getOpportunities = async (req, res) => {
     sort = req.query.s ? JSON.parse(req.query.s) : sort
     select = req.query.p ? JSON.parse(req.query.p) : select
   } catch (e) {
-    console.log('bad JSON', req.query)
+    // console.log('bad JSON', req.query)
     return res.status(400).send(e)
   }
 
@@ -47,10 +47,12 @@ const getOpportunities = async (req, res) => {
   }
 }
 const getOpportunity = async (req, res) => {
+  // console.log('getOpportunity', req.params)
   try {
     const got = await Opportunity.findOne(req.params).populate('requestor').exec()
     res.json(got)
   } catch (e) {
+    // TEST: can't seem to get here. bad id handled earlier
     res.status(404).send(e)
   }
 }

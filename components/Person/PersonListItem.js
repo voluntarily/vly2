@@ -31,7 +31,7 @@ PersonListItem.propTypes = {
     nickname: PropTypes.string,
     email: PropTypes.string.isRequired,
     avatar: PropTypes.any,
-    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op-provider', 'volunteer', 'content-provider', 'tester'])),
+    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])
   }).isRequired
   // npm onDelete: PropTypes.func.isRequired,

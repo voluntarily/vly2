@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import { Button, Divider, Popconfirm, message } from 'antd'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import { FullPage } from '../../hocs/publicPage'
+import securePage from '../../hocs/securePage'
 import Router from 'next/router'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PropTypes from 'prop-types'
@@ -21,6 +22,7 @@ export class PersonDetailPage extends Component {
     }
   }
 
+  // TODO: [VP-209] only show person delete button for admins
   async handleDelete (person) {
     if (!person) return
     // Actual data request
@@ -88,7 +90,7 @@ PersonDetailPage.propTypes = {
     phone: PropTypes.string,
     gender: PropTypes.string,
     avatar: PropTypes.any,
-    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op-provider', 'volunteer', 'content-provider', 'tester'])),
+    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])
   }),
   params: PropTypes.shape({
@@ -96,4 +98,4 @@ PersonDetailPage.propTypes = {
   })
 }
 
-export default publicPage(withOps(PersonDetailPage))
+export default securePage(withOps(PersonDetailPage))

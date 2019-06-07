@@ -4,13 +4,9 @@ import PropTypes from 'prop-types'
 import { TextHeadingBlack, TextHeadingSubtitle } from '../VTheme/VTheme'
 
 const TitleContainer = styled.div`
-  margin-top: 5rem;
+  margin-top: 1rem;
   margin-bottom: 1rem;
   position: relative;
-
-
-
-
 `
 
 const TitleSectionSub = ({ title, subtitle, ...props }) => (

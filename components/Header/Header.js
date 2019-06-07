@@ -28,7 +28,7 @@ const getAllowedLinks = isAuthenticated =>
 const Header = ({ isAuthenticated, ...props }) => (
   <Layout.Header>
     <a>
-      <Link href='/'>
+      <Link href={isAuthenticated ? '/home' : '/'}>
         <Logo src='/static/vlogolong.svg' alt='Voluntarily logo' />
       </Link>
     </a>
@@ -36,6 +36,7 @@ const Header = ({ isAuthenticated, ...props }) => (
     {/* <SearchBar /> */}
     <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
   </Layout.Header>
+
 )
 Header.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired

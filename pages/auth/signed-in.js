@@ -8,25 +8,8 @@ import { connect } from 'react-redux'
 import { setSession } from '../../lib/redux/actions'
 
 class SignedIn extends React.Component {
-  // TODO save the redirect url.
-  // static propTypes = {
-  //   url: PropTypes.object.isRequired
-  // }
-  // TODO Verify Token
-  // verifyToken(result.idToken).then(valid => {
-  //   if (valid) {
-  //     saveToken(result.idToken, result.accessToken);
-  //     Router.push('/');
-  //   } else {
-  //     Router.push('/')
-  //   }
-  // });
-
   componentDidMount () {
-    // static async getInitialProps (ctx) {
-    console.log('componentDidMount')
     parseHash(async (err, result) => {
-      console.log('parseHash:', result)
       if (!result) return
       if (err) {
         console.error('Something happened with the Sign In request')
@@ -35,8 +18,7 @@ class SignedIn extends React.Component {
       setToken(result.idToken, result.accessToken)
       const session = await parseTokenToSession(result.idToken)
       this.props.setSession(session)
-      // console.log('signed in.')
-      Router.push(`/`)
+      Router.push(Router.router.query.r)
     })
   }
 
