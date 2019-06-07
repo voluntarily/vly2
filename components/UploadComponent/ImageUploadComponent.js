@@ -37,8 +37,8 @@ class ImageUpload extends Component {
   uploadCustomRequest ({ onSuccess, onError, file }) {
     let FR = new window.FileReader()
     FR.onloadend = e => {
-      callApi('postImage', 'post', { image: e.currentTarget.result, file: 'img.png' }).then(response => {
-        console.log('Success!')
+      callApi('images', 'post', { image: e.currentTarget.result, file: 'img.png' }).then(response => {
+        console.log('Success! ' + response)
         onSuccess('ok')
       },
       error => {
