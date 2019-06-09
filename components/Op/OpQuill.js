@@ -1,6 +1,30 @@
+///Quick starter to Quill 
+
+// //Stylesheet 
+// <link herf="https://cdn.quilljs.com/1.3.6/quill.smow.css" rel="stylesheet"/>
+
+// ///creating the editor container 
+// <div id="editor">
+// <p>Testing</p>
+// <p>Some Initial<strong>bold</strong>text</p>
+// </div>
+
+// /////////Including Quill library
+
+// <script
+//   src="https://cdn.quilljs.com/1.3.6/quill.js">
+// </script>
+
+
+// //Intialise the quill editor
+// <script>
+// var editor = new Quill('.editor')
+// </script>
+
+
 import React from 'react';
 import 'quill/dist/quill.snow.css';
-import Quill from 'quill/core';
+import Quill from 'quill';
 import Toolbar from 'quill/modules/toolbar';
 import Snow from 'quill/themes/snow'; 
 import Bold from 'quill/formats/bold';

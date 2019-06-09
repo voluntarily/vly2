@@ -11,7 +11,8 @@ import { FormattedMessage } from 'react-intl'
 
 import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import { FullPage } from '../../hocs/publicPage'
+import securePage from '../../hocs/securePage'
 import Router from 'next/router'
 
 export class PersonUpdatePage extends Component {
@@ -87,11 +88,11 @@ PersonUpdatePage.propTypes = {
     phone: PropTypes.string,
     gender: PropTypes.string,
     avatar: PropTypes.any,
-    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op-provider', 'volunteer', 'content-provider', 'tester'])),
+    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])
   }),
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
   })
 }
-export default publicPage(withPeople(PersonUpdatePage))
+export default securePage(withPeople(PersonUpdatePage))

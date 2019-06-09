@@ -122,14 +122,17 @@ class OpDetailForm extends Component {
                   <Input placeholder='short summary that appears on the listing.' />
                 )}
               </Form.Item>
+
               <Form.Item label={opDescription}>
+              
                 {getFieldDecorator('description', {
                   rules: [
                   ]
                 })(
-                  <TextArea rows={20} placeholder='All the details about the request. You can use markdown here.' />
+                  <TextArea rows={10} placeholder='All the details about the request. You can use markdown here.' />
                 )}
               </Form.Item>
+
             </Col>
           </Row>
           <Divider />
@@ -143,7 +146,7 @@ class OpDetailForm extends Component {
                 volunteers to organise logistics and increase volunteer numbers.
               </p>
             </Col>
-            <Col
+                                                                                                                                                                                                                                                  <Col
               xs={{ span: 24 }}
               md={{ span: 16 }}
             >

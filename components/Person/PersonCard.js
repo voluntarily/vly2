@@ -1,32 +1,63 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
-import { Card } from 'antd'
-import Markdown from 'markdown-to-jsx'
-// import PersonType from './PersonType'
 
 const PersonCard = ({ person, ...props }) => (
-  <Link href={`/people/${person._id}`} >
-    <Card
-      cover={<img src={person.avatar} alt={person.nickname} />}
-      {...props}
-    >
-      <Card.Meta
-        title={<h1>{person.nickname}</h1>}
-        description={<div><Markdown>{person.email}</Markdown><br /><small>
-          {/* <ul>{person.type.map((t, index) => <PersonType key={index} personType={t} />)}</ul> */}
-        </small></div>}
-      />
-    </Card>
-  </Link>
+  <div>
+    <Link href={`/people/${person._id}`} >
+      <a>
+        <div className='personContainer'>
+          <img className='personImg' src={person.avatar} />
+          <p className='personTitle'>{person.nickname}</p>
+          <p className='personName'>{person.name}</p>
+        </div>
+      </a>
+    </Link>
+    <style jsx>{`
+      .personContainer {
+        width: 10rem;
+        letter-spacing: -0.3px;
+        line-height: 24px;
+        margin-bottom: 0px;
+      }
+
+      .personImg {
+        width: 100%;
+        height: 10rem;
+        background-color: rgba(0,0,0,0.0);
+        object-fit: cover;
+        object-position: center;
+        
+      }
+
+      .personTitle {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        vertical-align: middle;
+        font-weight: bold;
+        font-size: 16px;
+        color: #000;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+     
+      .personTitle :hover {
+        color: #6549aa;
+      }
+      
+
+    `}</style>
+  </div>
 )
 
 PersonCard.propTypes = {
   person: PropTypes.shape({
     name: PropTypes.string.isRequired,
     nickname: PropTypes.string.isRequired,
-    about: PropTypes.string.isRequired,
-    // type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])).isRequired,
+    avatar: PropTypes.string,
     _id: PropTypes.string.isRequired
   }).isRequired
 }

@@ -20,7 +20,7 @@ const people = [
     'language': 'EN',
     'role': [
       'volunteer',
-      'content-provider'
+      'activityProvider'
     ],
     'status': 'active',
     'name': 'Salvador Domingo Felipe Jacinto Dalí i Domènech, 1st Marquis of Dalí de Púbol ',

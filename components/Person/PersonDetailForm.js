@@ -43,23 +43,23 @@ class PersonDetailForm extends Component {
   render () {
     // get translated labels
     const personName = (<FormattedMessage id='personName' defaultMessage='Full Name' description='person full name label in PersonDetails Form' />)
-    const personnickname = (<FormattedMessage id='personnickname' defaultMessage='What we should call you' description='person Subtitle label in personDetails Form' />)
+    const personnickname = (<FormattedMessage id='personnickname' defaultMessage='Nickname' description='person nickname label in personDetails Form' />)
     const personEmail = (<FormattedMessage id='personEmail' defaultMessage='Email' description='person email label in personDetails Form' />)
     const personPhone = (<FormattedMessage id='personPhone' defaultMessage='Phone' description='person phone label in personDetails Form' />)
     const personAbout = (<FormattedMessage id='personAbout' defaultMessage='About you' description='person about label in personDetails Form' />)
     const personAvatar = (<FormattedMessage id='personAvatar' defaultMessage='Image Link' description='person Image URL label in personDetails Form' />)
     const personGender = (<FormattedMessage id='personGender' defaultMessage='Gender' description='person gender label in personDetails Form' />)
-    const personRole = (<FormattedMessage id='personRole' defaultMessage='Role' description='Admin Role' />)
-    const personStatus = (<FormattedMessage id='personStatus' defaultMessage='Status' description='active or retired status' />)
+    const personRole = (<FormattedMessage id='personRole' defaultMessage='Role' description='person Role label in personDetails page' />)
+    const personStatus = (<FormattedMessage id='personStatus' defaultMessage='Availability' description='active or retired status' />)
     const {
       getFieldDecorator, getFieldsError, getFieldError, isFieldTouched
     } = this.props.form
 
     const roleOptions = [
       { label: 'Admin', value: 'admin' },
-      { label: 'Requestor', value: 'op-provider' },
+      { label: 'Requestor', value: 'opportunityProvider' },
       { label: 'Volunteer', value: 'volunteer' },
-      { label: 'Content provider', value: 'content-provider' },
+      { label: 'Content provider', value: 'activityProvider' },
       { label: 'Tester', value: 'tester' }
     ]
 
@@ -193,9 +193,10 @@ class PersonDetailForm extends Component {
                   ]
                 })(
                   <Radio.Group buttonStyle='solid'>
-                    <Radio.Button value='draft'>Draft</Radio.Button>
-                    <Radio.Button value='active'>Active</Radio.Button>
-                    <Radio.Button value='done'>Done</Radio.Button>
+                    <Radio.Button value='inactive'>Not Available</Radio.Button>
+                    <Radio.Button value='active'>Available</Radio.Button>
+                    {/* // TODO: [VP-212] on person detail form only show Hold button to admins */}
+                    <Radio.Button value='hold'>Hold</Radio.Button>
                   </Radio.Group>
                 )}
               </Form.Item>
@@ -248,7 +249,7 @@ PersonDetailForm.propTypes = {
     phone: PropTypes.string,
     gender: PropTypes.string,
     avatar: PropTypes.any,
-    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op-provider', 'volunteer', 'content-provider', 'tester'])),
+    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])
   }),
   form: PropTypes.object,
