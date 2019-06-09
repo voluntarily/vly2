@@ -27,13 +27,18 @@ class ImageUpload extends Component {
       restrictions: {
         maxFileSize: 2000000,
         maxNumberOfFiles: 1,
-        minNumberOfFiles: 1,
-        allowedFileTypes: null
+        minNumberOfFiles: 0,
+        allowedFileTypes: ['.jpg', '.jpeg', '.png', '.svg']
       },
       meta: {}
     })
 
     this.uppy.on('upload', this.onUpload)
+    this.uppy.on('restriction-failed', (file, error) => {
+      message.error(error.message)
+      console.log(file, error)
+      console.log(error)
+    })
     // TODO Override other uppy events (file-added, file-removed, upload, upload-progress, upload-success, complete, error, upload-errror, upload-retry, info-visible, info-hidden, cancel-all, restriction-failed)
   }
 
