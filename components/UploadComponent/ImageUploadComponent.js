@@ -17,27 +17,29 @@ class ImageUpload extends Component {
 
   constructor (props) {
     super(props)
-    this.onFileAdded = this.onFileAdded.bind(this)
+    this.onUpload = this.onUpload.bind(this)
     this.uppy = Uppy({
       id: 'uppy',
-      autoProceed: false,
+      autoProceed: true,
       allowMultipleUploads: false,
       debug: true,
       formData: true,
       restrictions: {
         maxFileSize: 2000000,
         maxNumberOfFiles: 1,
-        minNumberOfFiles: 0,
+        minNumberOfFiles: 1,
         allowedFileTypes: null
       },
       meta: {}
     })
 
-    this.uppy.on('file-added', this.onFileAdded)
+    this.uppy.on('upload', this.onUpload)
     // TODO Override other uppy events (file-added, file-removed, upload, upload-progress, upload-success, complete, error, upload-errror, upload-retry, info-visible, info-hidden, cancel-all, restriction-failed)
   }
 
-  onFileAdded (file) {
+  onUpload (data) {
+    var file = this.uppy.getFile(data.fileIDs[0])
+    console.log(file)
     let FR = new window.FileReader()
     FR.onloadend = e => {
       callApi('images', 'post', { image: e.currentTarget.result, file: file.name }).then(response => {
@@ -67,22 +69,6 @@ class ImageUpload extends Component {
   //     fileList = fileList.slice(-1)
   //     this.setState({ fileList })
   //   }
-  // }
-
-  // uploadCustomRequest ({ onSuccess, onError, file }) {
-  //   let FR = new window.FileReader()
-  //   FR.onloadend = e => {
-  //     callApi('images', 'post', { image: e.currentTarget.result, file: 'img.png' }).then(response => {
-  //       console.log('Success! ' + response)
-  //       onSuccess('ok')
-  //     },
-  //     error => {
-  //       // TODO Clear file list upon error
-  //       message.error('An error occured: ' + error.status + ' ' + error.statusText)
-  //       onError('fail')
-  //     })
-  //   }
-  //   FR.readAsBinaryString(file)
   // }
 
   render () {
