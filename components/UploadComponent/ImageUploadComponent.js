@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { message } from 'antd'
 import callApi from '../../lib/apiCaller'
+import './imageuploader.less'
 
 const Uppy = require('@uppy/core')
 const { DragDrop } = require('@uppy/react')
