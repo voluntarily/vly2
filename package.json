@@ -21,6 +21,8 @@
   "dependencies": {
     "@babel/core": "^7.4.4",
     "@babel/polyfill": "^7.4.4",
+    "@uppy/core": "^1.1.0",
+    "@uppy/react": "^1.1.0",
     "@zeit/next-less": "^1.0.1",
     "accepts": "^1.3.5",
     "acorn": "^6.1.1",
