@@ -12,10 +12,15 @@ function hasErrors (fieldsError) {
 }
 
 class OpDetailForm extends Component {
+  constructor (props) {
+    super(props)
+    this.setImgUrl = this.setImgUrl.bind(this)
+  }
+
   componentDidMount () {
     // Call validateFields here to disable the submit button when on a blank form.
     // empty callback supresses a default which prints to the console.
-    this.props.form.validateFields(() => { })
+    this.props.form.validateFields(() => { })    
   }
 
   handleSubmit = (e) => {
@@ -182,13 +187,14 @@ class OpDetailForm extends Component {
               xs={{ span: 24 }}
               md={{ span: 16 }}
             >
+              <ImageUpload setImgUrl={this.setImgUrl} />
               <Form.Item label={opImgUrl}>
                 {getFieldDecorator('imgUrl', {
                   rules: [
-                    {/* { type: 'url', message: 'a URL is required' } */}
+
                   ]
                 })(
-                  <ImageUpload setImageURL={imgURL => { this.setImgUrl(imgURL) }} />
+                  <Input />
                 )}
               </Form.Item>
               <Form.Item label={opStatus}>
@@ -248,7 +254,7 @@ OpDetailForm.propTypes = {
     _id: PropTypes.string,
     title: PropTypes.string,
     subtitle: PropTypes.string,
-    imgUrl: PropTypes.any,
+    imgUrl: PropTypes.string,
     duration: PropTypes.string,
     location: PropTypes.string,
     status: PropTypes.string,
@@ -265,26 +271,6 @@ OpDetailForm.propTypes = {
   onCancel: PropTypes.func.isRequired
   // dispatch: PropTypes.func.isRequired,
 }
-
-// TODO: [VP-145] replace imageURL field with uploader.
-// <Form.Item
-//     label="Image"
-//   >
-//     <div className="dropbox">
-//       {getFieldDecorator('dragger', {
-//         valuePropName: 'fileList',
-//         getValueFromEvent: this.normFile,
-//       })(
-//         <Upload.Dragger name="files" action="">
-//           <p className="ant-upload-drag-icon">
-//             <Icon type="inbox" />
-//           </p>
-//           <p className="ant-upload-text">Click or drag file to this area to upload</p>
-//           <p className="ant-upload-hint">Image ideal is 4:3 aspect ratio.</p>
-//         </Upload.Dragger>
-//       )}
-//     </div>
-//   </Form.Item>
 
 export default Form.create({
   name: 'opportunity_detail_form',
