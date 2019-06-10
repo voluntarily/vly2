@@ -20,7 +20,7 @@ class OpDetailForm extends Component {
   componentDidMount () {
     // Call validateFields here to disable the submit button when on a blank form.
     // empty callback supresses a default which prints to the console.
-    this.props.form.validateFields(() => { })    
+    this.props.form.validateFields(() => { })
   }
 
   handleSubmit = (e) => {
