@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { message } from 'antd'
+import { message, Button } from 'antd'
 import callApi from '../../lib/apiCaller'
 import './imageuploader.less'
 
+const { Dashboard } = require('@uppy/react')
 const Uppy = require('@uppy/core')
-const { DragDrop } = require('@uppy/react')
-
 // const validImageFile = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg']
+
+//.uppy-DashboardItem-remove
 
 class ImageUpload extends Component {
   TWO_MEGABYTES = 2000000
@@ -15,7 +16,7 @@ class ImageUpload extends Component {
     fileList: []
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.onUpload = this.onUpload.bind(this)
     this.uppy = Uppy({
@@ -32,7 +33,6 @@ class ImageUpload extends Component {
       },
       meta: {}
     })
-
     this.uppy.on('upload', this.onUpload)
     this.uppy.on('restriction-failed', (file, error) => {
       message.error(error.message)
@@ -42,7 +42,7 @@ class ImageUpload extends Component {
     // TODO Override other uppy events (file-added, file-removed, upload, upload-progress, upload-success, complete, error, upload-errror, upload-retry, info-visible, info-hidden, cancel-all, restriction-failed)
   }
 
-  onUpload (data) {
+  onUpload(data) {
     var file = this.uppy.getFile(data.fileIDs[0])
     console.log(file)
     let FR = new window.FileReader()
@@ -50,9 +50,9 @@ class ImageUpload extends Component {
       callApi('images', 'post', { image: e.currentTarget.result, file: file.name }).then(response => {
         console.log('Success! ' + response)
       },
-      error => {
-        message.error('An error occured: ' + error.status + ' ' + error.statusText)
-      })
+        error => {
+          message.error('An error occured: ' + error.status + ' ' + error.statusText)
+        })
     }
     FR.readAsBinaryString(file.data)
   }
@@ -76,8 +76,8 @@ class ImageUpload extends Component {
   //   }
   // }
 
-  render () {
-    const up = (process.env.NODE_ENV !== 'test') && <DragDrop uppy={this.uppy} />
+  render() {
+    const up = (process.env.NODE_ENV !== 'test') && <Dashboard uppy={this.uppy} proudlyDisplayPoweredByUppy={false} />
     // <Upload
     //   fileList={this.state.fileList}
     //   name='file'
