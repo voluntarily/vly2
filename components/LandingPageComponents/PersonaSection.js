@@ -17,24 +17,27 @@ const PersonaContainer = styled.div`
   @media screen and (max-width: 768px) {
     width: calc(100vw - 2rem);
     height: auto;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
   }
 `
 
 const Image = styled.img`
   width: 100%;
   object-fit: cover;
+  @media screen and (max-width: 768px) {
+    height: 60%;
+  }
 `
 
 const Title = styled.div`
   height: auto;
-  margin: 0;
+  margin: 0.2rem 0 0 0;
   font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.95px;
+  font-weight: 700;
+  letter-spacing: -0.85px;
   color: black;
   @media screen and (max-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
   }
 `
 
@@ -49,10 +52,11 @@ const Text = styled.div`
   line-height: 24px;
 
   @media screen and (max-width: 768px) {
-    font-size: 1.5rem;
+    font-size: 1rem;
     line-height: 1.4;
-    width: auto;
+    width: calc(90vw - 2rem);
     height: auto;
+    margin-bottom: 1rem;
   }
 `
 

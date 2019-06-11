@@ -47,20 +47,48 @@ const TextMiniTitle = styled.p`
   margin-bottom: -0.5rem;
   border-radius: 12px;
 `
-//Page-Specific Images
+// Page-Specific Images
 
 const HeroImage = styled.img`
   width: 624px;
   object-fit: cover;
+  height: auto;
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    width: calc(50vw - 4rem);
+    height: auto;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    width: calc(50vw - 4rem);
+    height: auto;
+  }
+  @media screen and (max-width: 768px) {
+    margin-top: -8rem;
+    width: calc(50vw - 4rem);
+    height: auto;
+  }
+
 `
 const AboutImage = styled.img`
   width: 80rem;
   height: 987px;
   margin: 0 auto;
-
   margin-bottom: 0.5rem;
   object-fit: fill;
-object-position: center;
+  object-position: center;
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    margin-top: -8rem;
+    width: calc(100vw - 4rem);
+    height: auto;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    width: calc(100vw - 4rem);
+    height: auto;
+  }
+  @media screen and (max-width: 768px) {
+    margin-top: -8rem;
+    width: calc(100vw - 4rem);
+    height: auto;
+  }
 `
 const ListItemImage = styled.img`
   width: 39rem;
@@ -68,34 +96,47 @@ const ListItemImage = styled.img`
   background-color: black;
 `
 const SponsorIcon = styled.img`
-object-fit: cover;
-object-position: center;
-background-color: black;
-height: 10rem;
-width: 10rem;
-
+  object-fit: cover;
+  object-position: center;
+  background-color: black;
+  height: 10rem;
+  width: 10rem;
 `
 
-//Page-Specific Containers
+// Page-Specific Containers
 
 const HeroContainer = styled.div`
   height: 45rem;
-  padding-top: 20em;
+  padding-top: 20rem;
   position: relative;
   padding-bottom: 30rem;
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    padding-top: 8rem;
+    padding-bottom: 1rem;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+  }
+
+  @media screen and (max-width: 768px) {
+  }
 `
 const SectionContainer = styled.div`
   margin-bottom: 10rem;
   margin-top: 10rem;
   position: relative;
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
 `
+
 const AboutListItem = styled.div`
   margin-bottom: 5rem;
 `
 
-
 const AboutListContainer = styled.div`
-margin-top: 0rem;
+  margin-top: 0rem;
   margin-left: 0rem;
 `
 
@@ -104,9 +145,9 @@ const BigQuoteContainer = styled.div`
 `
 
 const SponsorContainer = styled.div`
-display: grid;
-grid-template-columns: repeat(auto-fit, 10rem);
-grid-gap: 4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 10rem);
+  grid-gap: 4rem;
 `
 
 // const CentreTitleContainer = styled.div`
@@ -137,8 +178,8 @@ export class Business extends Component {
                 <TextH1>Do more social good in your community</TextH1>
                 <TextSubtitle>
                   <br />
-                Launch gas-powered rockets from rural schools. <br />
-                  Get your staff building robots that shoot lazors. <br/>
+                  Launch gas-powered rockets from rural schools. <br />
+                  Get your staff building robots that shoot lazors. <br />
                   Make video games with no prior experience.
                 </TextSubtitle>
                 <ButtonContainer>
@@ -152,7 +193,7 @@ export class Business extends Component {
             </HalfGrid>
           </HeroContainer>
           <SectionContainer>
-            <AboutImage src="./static/test2.png"/>
+            <AboutImage src='./static/test2.png' />
             <TextHeadingBold>
               Enable your staff to become role models for future innovators.
             </TextHeadingBold>
@@ -164,24 +205,20 @@ export class Business extends Component {
             </TextHeading>
           </SectionContainer>
           <SectionContainer>
-          <TitleSection
-          title='In partnership with...'
-          />
-          <SponsorContainer>
-            <SponsorIcon src="static/img/partners/Spark.png" />
-            <SponsorIcon src="static/img/partners/Westpac.png" />
-            <SponsorIcon src="static/img/partners/Datacom.png" />
-            <SponsorIcon src="static/img/partners/innovationfund.png" />
-            <SponsorIcon src="static/img/partners/MOE.png" />
-            
-
+            <TitleSection title='In partnership with...' />
+            <SponsorContainer>
+              <SponsorIcon src='static/img/partners/Spark.png' />
+              <SponsorIcon src='static/img/partners/Westpac.png' />
+              <SponsorIcon src='static/img/partners/Datacom.png' />
+              <SponsorIcon src='static/img/partners/innovationfund.png' />
+              <SponsorIcon src='static/img/partners/MOE.png' />
             </SponsorContainer>
-          </SectionContainer>  
+          </SectionContainer>
 
           <SectionContainer>
             <HalfGrid>
               <GridContainer>
-                <ListItemImage src='/static/img/business/item1.png'/>
+                <ListItemImage src='/static/img/business/item1.png' />
               </GridContainer>
               <GridContainer>
                 <AboutListContainer>
@@ -199,11 +236,13 @@ export class Business extends Component {
           <SectionContainer>
             <HalfGrid>
               <GridContainer>
-              <ListItemImage src='/static/img/business/item2.png'/>
+                <ListItemImage src='/static/img/business/item2.png' />
               </GridContainer>
               <GridContainer>
                 <AboutListContainer>
-                  <TextHeadingBold>Great for employee engagement</TextHeadingBold>
+                  <TextHeadingBold>
+                    Great for employee engagement
+                  </TextHeadingBold>
                   <TextHeading>
                     By deploying staff into schools to train students and
                     teachers, you get first pick of the next generation of
@@ -213,7 +252,6 @@ export class Business extends Component {
               </GridContainer>
             </HalfGrid>
           </SectionContainer>
-
 
           {/* <SectionContainer>
             <HalfGrid>
@@ -236,13 +274,18 @@ export class Business extends Component {
           <SectionContainer>
             <HalfGrid>
               <GridContainer>
-              <ListItemImage src='/static/img/business/item3.png'/>
+                <ListItemImage src='/static/img/business/item3.png' />
               </GridContainer>
               <GridContainer>
                 <AboutListContainer>
-                  <TextHeadingBold>A cheaper way to automate and track your CSR and PR initiatives</TextHeadingBold>
+                  <TextHeadingBold>
+                    A cheaper way to automate and track your CSR and PR
+                    initiatives
+                  </TextHeadingBold>
                   <TextHeading>
-                    If you have a corporate volunteer day programme, we can make it cheaper to run, and give you hard stats your social impact
+                    If you have a corporate volunteer day programme, we can make
+                    it cheaper to run, and give you hard stats your social
+                    impact
                   </TextHeading>
                 </AboutListContainer>
               </GridContainer>
@@ -298,7 +341,8 @@ export class Business extends Component {
               <ItemIcon src='./static/img/icons/search.svg' />
               <TextPBold>Cause Targeting</TextPBold>
               <TextP>
-                Our systems enable you to target specific causes you want to support
+                Our systems enable you to target specific causes you want to
+                support
               </TextP>
             </ItemContainer>
             <ItemContainer>
@@ -318,25 +362,26 @@ export class Business extends Component {
             <ItemContainer>
               <TextHeading>Create an account</TextHeading>
               <SpacerSmall />
-              <TextP>
-                It takes a few minutes to get started volunteering.
-              </TextP>
+              <TextP>It takes a few minutes to get started volunteering.</TextP>
               <ButtonContainer>
-                <Button type='primary'size="large">Sign up</Button>
+                <Button type='primary' size='large'>
+                  Sign up
+                </Button>
               </ButtonContainer>
             </ItemContainer>
             <ItemContainer>
               <TextHeading>Contact us</TextHeading>
               <SpacerSmall />
-              <TextP>Get help setting up an account by getting in touch. We have people ready to help you standing by :)</TextP>
-              <br/>
+              <TextP>
+                Get help setting up an account by getting in touch. We have
+                people ready to help you standing by :)
+              </TextP>
+              <br />
               <a>business@voluntari.ly</a>
-              <br/>
-              <br/>
+              <br />
+              <br />
               <a>+64-9-123-4567</a>
-              <ButtonContainer>
-             
-              </ButtonContainer>
+              <ButtonContainer />
             </ItemContainer>
           </HalfGrid>
         </FullPage>
