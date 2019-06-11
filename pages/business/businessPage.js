@@ -116,6 +116,8 @@ const HeroContainer = styled.div`
   }
 
   @media screen and (min-width: 768px) and (max-width: 1025px) {
+    padding-top: 4rem;
+    padding-bottom: 2rem;
   }
 
   @media screen and (max-width: 768px) {
@@ -126,6 +128,10 @@ const SectionContainer = styled.div`
   margin-top: 10rem;
   position: relative;
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
     margin-top: 2rem;
     margin-bottom: 2rem;
   }
