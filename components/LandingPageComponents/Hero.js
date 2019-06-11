@@ -77,7 +77,7 @@ const HeroLeft = styled.div`
     margin-top: 0rem;
     margin-left: 0rem;
     width: 100vw;
-    height: 22rem;
+    height: 15rem;
     border-radius: 0px;
   }
 `
@@ -180,6 +180,7 @@ const HeroRight = styled.div`
 const SearchBox = styled.div`
   background-color: white;
   height: 4rem;
+  margin-top: 1rem;
   width: 40rem;
   border-radius: 0.25rem;
   padding: 8px;

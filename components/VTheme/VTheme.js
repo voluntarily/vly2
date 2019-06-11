@@ -53,7 +53,7 @@ export const TripleGrid = styled.div`
     grid-template-columns: 98vw;
     grid-gap: 0rem;
   }
-` // end triplegrid
+`// end triplegrid
 
 export const Grid = styled.div`
   position: relative;
@@ -87,7 +87,9 @@ export const Grid8 = styled.div`
 
 ` // end grid
 
-export const GridContainer = styled.div``
+export const GridContainer = styled.div`
+position: relative;
+`
 
 export const GridTestItem = styled.div`
   background-color: pink;
@@ -118,9 +120,10 @@ export const TextH1 = styled.h1`
   color: black;
   font-size: 3.5rem;
   font-weight: 900;
-  letter-spacing: -0.055em;
-  text-indent: -0.03em;
+  letter-spacing: -0.15rem;
+  line-height: 5rem;
   margin-bottom: 0px;
+  margin-top: 0px;
 
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     font-size: 2.5rem;
@@ -138,7 +141,8 @@ export const TextH1 = styled.h1`
 export const TextSubtitle = styled.p`
   letter-spacing: -0.3px;
   font-size: 1.5rem;
-  color: #333333;
+  color: #000;
+  margin-bottom: 0;
 
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     letter-spacing: -0.06rem;
@@ -149,6 +153,23 @@ export const TextSubtitle = styled.p`
     font-size: 1rem;
   }
 ` // TextSubtitle
+
+export const TextH3 = styled.h3`
+  letter-spacing: -0.3px;
+  font-size: 1.5rem;
+  font-weight:700;
+  color: #000;
+  margin-bottom: 0;
+
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    letter-spacing: -0.06rem;
+    font-size: 1.5rem;
+  }
+  @media screen and (max-width: 768px) {
+    width: 90vw;
+    font-size: 1rem;
+  }
+` // TextH3
 
 export const TextP = styled.p`
   font-weight: 400;
@@ -193,8 +214,10 @@ export const TextHeadingBlack = styled.h1`
 
 export const TextHeadingBold = styled.p`
   font-size: 2rem;
-  letter-spacing: -2px;
+  letter-spacing: -1.4px;
   font-weight: 700;
+  margin-bottom: 0;
+  color: black;
   @media screen and (max-width: 767px) {
     font-size: 1rem;
   }
@@ -208,6 +231,23 @@ export const TextHeadingSubtitle = styled.p`
     line-height: 1.8;
   }
 ` // end TextHeadingSubtitle
+  export const BigQuote = styled.h2`
+font-size: 3rem;
+letter-spacing: -0.2rem;
+font-weight: 300;
+font-style: italic;
+margin-bottom: 0.5rem;
+  ` //end BigQuote
+
+  export const BigQuoteAuthor = styled.p`
+  color: #222;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  `
+
 
 /*
 ====================================================

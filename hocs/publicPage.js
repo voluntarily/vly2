@@ -39,7 +39,7 @@ export const FullPage = styled.div`
     margin-right: 2rem;
   }
   @media screen and (max-width: 767px) {
-    width: calc(100vw - 1rem);
+    width: calc(100vw - 4rem);
     margin-left: 1rem;
   }
 ` // end fullpage
@@ -56,7 +56,7 @@ export const Grid = styled.div`
   }
 
   @media screen and (max-width: 767px) {
-    grid-template-columns: 100vw;
+    grid-template-columns: calc(100vw - 2rem);
     grid-gap: 0rem;
   }
 ` // end grid
