@@ -179,8 +179,9 @@ class PersonDetailForm extends Component {
                     {/* { type: 'url', message: 'a URL is required' } */}
                   ]
                 })(
-                  <ImageUpload setImgUrl={this.setImgUrl} />
+                  <Input />
                 )}
+                <ImageUpload setImgUrl={this.setImgUrl} />
               </Form.Item>
               <Form.Item label={personRole}>
                 {getFieldDecorator('role', {
