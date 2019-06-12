@@ -53,9 +53,10 @@ export default class QuillEditor extends React.Component {
     icons['italic'] = '<i class="fa fa-italic" aria-hidden="true"></i>'
     icons['underline'] = '<i class="fa fa-underline" aria-hidden="true"></i>'
     icons['link'] = '<i class="fa fa-link" aria-hidden="true"></i>'
-    icons['clean'] = '<i class="fa fa-eraser" aria-hidden="true"></i>' 
+    icons['clean'] = '<i class="fa fa-eraser" aria-hidden="true"></i>'
 
-    var quill = new Quill('#editor', {
+    // eslint-disable-next-line no-unused-vars
+    var _quill = new Quill('#editor', {
       theme: 'snow',
       placeholder: 'Write something awesome...'
     })

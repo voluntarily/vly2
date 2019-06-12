@@ -7,7 +7,6 @@ import { FormattedMessage } from 'react-intl'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 // import OpQuill from '../Op/OpQuill'
 
-
 const { TextArea } = Input
 
 function hasErrors (fieldsError) {
@@ -124,7 +123,7 @@ class OpDetailForm extends Component {
               </Form.Item>
 
               <Form.Item label={opDescription}>
-              
+
                 {getFieldDecorator('description', {
                   rules: [
                   ]
@@ -146,7 +145,7 @@ class OpDetailForm extends Component {
                 volunteers to organise logistics and increase volunteer numbers.
               </p>
             </Col>
-                                                                                                                                                                                                                                                  <Col
+            <Col
               xs={{ span: 24 }}
               md={{ span: 16 }}
             >
@@ -168,7 +167,7 @@ class OpDetailForm extends Component {
                   <Input placeholder='school or somewhere else?' />
                 )}
               </Form.Item>
-            </Col> 
+            </Col>
           </Row>
           <Divider />
           <Row>
