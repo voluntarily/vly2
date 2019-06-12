@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const idvalidator = require('mongoose-id-validator')
-require('../tag/tag')
 
 const opportunitySchema = new Schema({
   title: String, // "Growing in the garden",

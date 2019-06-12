@@ -46,14 +46,14 @@ export class OpUpdatePage extends Component {
   async handleAdd (op) {
     if (!op) return
 
-    // determine which tags need to be added to the database
-    // based on whether they exist already or not.
-    // const userTags = op.tags // user-defined tags
-    const userTags = ['databases2', 'backend2']
+    op.tags = ['bababab', 'ccccc', 'yoyoyo', 'ayup'] // remove once tags form linked up with op property
+    const userTags = op.tags
     const dbTags = this.props.tags.data // tags existing in db
     const tagIds = [] // user-defined tags converted to their objectids
     const newTags = [] // user-defined tag values that aren't in the db
 
+    // determine which tags need to be added to the database
+    // based on whether they exist already or not.
     userTags.forEach(tag => {
       const match = dbTags.find((dbTag) => tag === dbTag.tag)
       if (match) {
@@ -63,21 +63,12 @@ export class OpUpdatePage extends Component {
       }
     })
 
-    console.log('tags needing to be added:')
-    console.log(newTags)
-
     // send post requests for each non-existing tag to create them
-    const promises = []
-    newTags.forEach(newTag => {
-      promises.push(this.props.dispatch(reduxApi.actions.tags.post({}, { body: JSON.stringify(newTag) })))
-    })
-
-    console.log(promises)
-    const results = await Promise.all(promises)
-    console.log(results)
-    results.forEach(result => {
-      tagIds.push(result._id)
-    })
+    for (let i = 0; i < newTags.length; i++) {
+      // redux api does not allow sending multiple actions at once so must await on each individually
+      await this.props.dispatch(reduxApi.actions.tags.post({}, { body: JSON.stringify(newTags[i]) }))
+      tagIds.push(this.props.tags.data[this.props.tags.data.length - 1]._id)
+    }
 
     op.tags = tagIds
 

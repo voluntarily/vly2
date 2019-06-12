@@ -288,7 +288,7 @@ OpDetailForm.propTypes = {
     location: PropTypes.string,
     status: PropTypes.string,
     requestor: PropTypes.string,
-    tags: PropTypes.string
+    tags: PropTypes.arrayOf(PropTypes.string)
   }),
   me: PropTypes.shape({
     _id: PropTypes.string
