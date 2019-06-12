@@ -41,7 +41,6 @@ class PersonDetailForm extends Component {
         person.avatar = values.avatar
         person.role = values.role
         person.status = values.status
-
         this.props.onSubmit(this.props.person)
       }
     })
