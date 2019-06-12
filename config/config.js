@@ -15,8 +15,8 @@ const completeConfig = {
       }
     },
     auth: {
-      'AUTH0_CLIENT_ID': 'TsRPTVINZVOdao2Lf7EU8sPDkVZ3VQJY',
-      'AUTH0_CLIENT_DOMAIN': 'dev-x6k-p15l.au.auth0.com'
+      'AUTH0_CLIENT_ID': 'S4yd4VgZ92NIjhwO3vt4h0Gifb9mXv1k',
+      'AUTH0_CLIENT_DOMAIN': 'voluntarily.au.auth0.com'
     },
     apiVersion: 'v1'
   },
