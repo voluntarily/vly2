@@ -41,7 +41,6 @@ class PersonDetailForm extends Component {
         person.avatar = values.avatar
         person.role = values.role
         person.status = values.status
-
         this.props.onSubmit(this.props.person)
       }
     })
@@ -179,8 +178,9 @@ class PersonDetailForm extends Component {
                     {/* { type: 'url', message: 'a URL is required' } */}
                   ]
                 })(
-                  <ImageUpload setImgUrl={this.setImgUrl} />
+                  <Input />
                 )}
+                <ImageUpload setImgUrl={this.setImgUrl} />
               </Form.Item>
               <Form.Item label={personRole}>
                 {getFieldDecorator('role', {

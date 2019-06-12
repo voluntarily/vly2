@@ -25,9 +25,9 @@ function ensureSanitized (req, res, next) {
   const p = req.body
   p.name = sanitizeHtml(p.name)
   p.nickname = sanitizeHtml(p.nickname)
-  p.phone = sanitizeHtml(p.phone)
-  p.gender = sanitizeHtml(p.gender)
-  p.about = sanitizeHtml(p.about)
+  p.phone = (p.phone != null) ? sanitizeHtml(p.phone) : ''
+  p.gender = (p.gender != null) ? sanitizeHtml(p.gender) : ''
+  p.about = (p.about != null) ? sanitizeHtml(p.about) : ''
   req.body = p
   next()
 }
