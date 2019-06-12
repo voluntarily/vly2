@@ -160,8 +160,7 @@ class OpDetailForm extends Component {
                   rules: [
 
                   ]
-                })
-                (
+                })(
                   <EditableTagGroup />
                 )
                 }
