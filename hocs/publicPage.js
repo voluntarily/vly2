@@ -122,6 +122,7 @@ export default Page =>
               content='initial-scale=1.0, width=device-width'
             />
             <link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
+            <link rel='stylesheet' href='//cdn.quilljs.com/1.2.6/quill.snow.css' />
             <script type='text/javascript' src='https://voluntarily.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-bgykhu/b/10/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=6cd14dc4' />
             <script type='text/javascript' async src='https://www.googletagmanager.com/gtag/js?id=UA-141212194-1' />
             <script type='text/javascript' dangerouslySetInnerHTML={{ __html: `
