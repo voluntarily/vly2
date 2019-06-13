@@ -74,7 +74,7 @@ const AboutSection = () => (
       </Text>
       <Button href='/about'>Learn More</Button>
     </PersonaContainer>
-    <PersonaContainer  href='/educators' target='_blank' >
+    <PersonaContainer href='/educators' target='_blank' >
       <Image src='/static/img/teacherCard.png' />
       <Title>Educators</Title>
       <Text>

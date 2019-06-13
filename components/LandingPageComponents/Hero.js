@@ -88,7 +88,7 @@ const HeroLeft = styled.div`
     height: 45vh;
     /* iphone 5 and below */
   }
-` 
+`
 
 const Notch = styled.div`
   width: 12rem;

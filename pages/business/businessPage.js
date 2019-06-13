@@ -13,8 +13,8 @@ import {
   SpacerSmall,
   TextSubtitle,
   BigQuote,
-  BigQuoteAuthor,
-  TextH3
+  BigQuoteAuthor
+
 } from '../../components/VTheme/VTheme'
 import { Button, Divider } from 'antd'
 import TitleSection from '../../components/LandingPageComponents/TitleSection'
@@ -171,10 +171,6 @@ const SectionContainer = styled.div`
     margin-bottom: 2.5rem;
     width: calc(100vw - 2rem);
   }
-`
-
-const AboutListItem = styled.div`
-  margin-bottom: 5rem;
 `
 
 const AboutListContainer = styled.div`
