@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Grid } from '../VTheme/VTheme'
 import { Button } from 'antd'
 
-const PersonaContainer = styled.a`
+const PersonaContainer = styled.div`
   width: 18.5rem;
   position: relative;
 
