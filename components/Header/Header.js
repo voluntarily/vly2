@@ -14,9 +14,23 @@ const Brand = styled.h1`
   float: left;
 `
 
+const LogoContainer = styled.a`
+
+`
+
 const Logo = styled.img`
   float: left;
+  height: 3rem;
+  width: 12rem;
   margin: 0.7rem;
+  background-image: url('/static/vlogolong.svg');
+  background-repeat: no-repeat;
+  background-position: left top;
+  @media screen and (max-width: 767px) {
+    background-image: url('/static/vlogo.svg');
+    width: 3rem;
+  }
+
 `
 
 const getAllowedLinks = isAuthenticated =>
@@ -27,11 +41,11 @@ const getAllowedLinks = isAuthenticated =>
 // eslint-disable-next-line no-unused-vars
 const Header = ({ isAuthenticated, ...props }) => (
   <Layout.Header>
-    <a>
+    <LogoContainer>
       <Link href={isAuthenticated ? '/home' : '/'}>
-        <Logo src='/static/vlogolong.svg' alt='Voluntarily logo' />
+        <Logo src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt='Voluntarily logo' />
       </Link>
-    </a>
+    </LogoContainer>
     <Brand className='site-title' />
     {/* <SearchBar /> */}
     <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />

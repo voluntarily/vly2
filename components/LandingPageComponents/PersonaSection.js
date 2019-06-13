@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Grid } from '../VTheme/VTheme'
 import { Button } from 'antd'
 
-const PersonaContainer = styled.div`
+const PersonaContainer = styled.a`
   width: 18.5rem;
   position: relative;
 
@@ -25,8 +25,11 @@ const Image = styled.img`
   width: 100%;
   object-fit: cover;
   @media screen and (max-width: 768px) {
-    height: 60%;
+    height: 20rem;
+    object-position: top;
   }
+
+
 `
 
 const Title = styled.div`
@@ -62,16 +65,16 @@ const Text = styled.div`
 
 const AboutSection = () => (
   <Grid>
-    <PersonaContainer>
+    <PersonaContainer href='/about' target='_blank' >
       <Image src='/static/img/volunteerCard.png' />
       <Title>Volunteers</Title>
       <Text>
         Discover cool opportunities to help out teachers, students and
         charities.
       </Text>
-      <Button href='/volunteers'>Learn More</Button>
+      <Button href='/about'>Learn More</Button>
     </PersonaContainer>
-    <PersonaContainer>
+    <PersonaContainer  href='/educators' target='_blank' >
       <Image src='/static/img/teacherCard.png' />
       <Title>Educators</Title>
       <Text>
@@ -79,13 +82,13 @@ const AboutSection = () => (
       </Text>
       <Button href='/educators'>Learn More</Button>
     </PersonaContainer>
-    <PersonaContainer>
+    <PersonaContainer href='/charities' target='_blank' >
       <Image src='/static/img/contentCard.png' />
       <Title>Charities</Title>
       <Text>We help you get more people involved with your movement.</Text>
       <Button href='/charities'>Learn More</Button>
     </PersonaContainer>
-    <PersonaContainer>
+    <PersonaContainer href='/business' target='_blank' >
       <Image src='/static/img/businessCard.png' />
       <Title>Businesses</Title>
       <Text>

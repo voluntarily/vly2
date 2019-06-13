@@ -83,7 +83,12 @@ const HeroLeft = styled.div`
     height: 15rem;
     border-radius: 0px;
   }
-`
+
+  @media only screen and (min-width : 320px) and (max-width : 568px) {
+    height: 45vh;
+    /* iphone 5 and below */
+  }
+` 
 
 const Notch = styled.div`
   width: 12rem;
