@@ -33,12 +33,12 @@ test('Should upload a small file', async t => {
   const res = await sendImageToAPI(__dirname, '194px-Testcard_F.jpg')
     .expect(200)
     .expect('Content-Type', /json/)
-  // console.log(res)
-  t.regex(res.body.imageURL, /.*194px-testcard_f.jpg/)
+  console.log(res)
+  t.regex(res.body.imageUrl, /.*194px-testcard_f.jpg/)
 
   // get the image back from server
   const img = await request(server)
-    .get(res.body.imageURL)
+    .get(res.body.imageUrl)
     .set('Accept', 'image')
     .expect(200)
     .expect('Content-Type', /image/)

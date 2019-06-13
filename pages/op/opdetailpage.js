@@ -25,12 +25,13 @@ export class OpDetailPage extends Component {
 
   // Called when the user confirms they want to delete an op
   async handleDelete (op) {
+    console.log('deleting op', op)
     if (!op) return
     // Actual data request
     await this.props.dispatch(reduxApi.actions.opportunities.delete({ id: op._id }))
     // TODO error handling - how can this fail?
-    message.success('Deleted. ')
-    Router.replace(`/ops`)
+    message.success('Request Deleted. ')
+    Router.replace(`/home`)
   }
 
   // Called when the user starts to delete an op, but then cancels it.
@@ -81,14 +82,14 @@ export class OpDetailPage extends Component {
             {/* These components should only appear if a user is logged in and viewing an op they DID create themselves. */}
             <div>
               <Link href={`/ops/${op._id}/edit`} >
-                <Button type='secondary' shape='round' >
+                <Button type='primary' shape='round' >
                   <FormattedMessage id='editOp' defaultMessage='Edit' description='Button to edit an opportunity on OpDetails page' />
                 </Button>
               </Link>
                 &nbsp;
-              <Popconfirm title='Confirm removal of this opportunity.' onConfirm={this.handleDeleteOp} onCancel={this.handleDeleteCancelled} okText='Yes' cancelText='No'>
+              <Popconfirm title='Confirm removal of this opportunity.' onConfirm={this.handleDelete.bind(this, op)} onCancel={this.handleDeleteCancelled} okText='Yes' cancelText='No'>
                 <Button type='danger' shape='round' >
-                  <FormattedMessage id='deleteOp' defaultMessage='Remove Request' description='Button to remove an opportunity on OpDetails page' />
+                  <FormattedMessage id='deleteOp' defaultMessage='Cancel Request' description='Button to remove an opportunity on OpDetails page' />
                 </Button>
               </Popconfirm>
               <Divider />
@@ -108,7 +109,6 @@ export class OpDetailPage extends Component {
           <OpDetail op={op} />
           <Divider />
           {interestedSection()}
-
           {requestSection()}
           {organizerSection()}
 

@@ -1,75 +1,56 @@
 import React, { Component } from 'react'
-import { message, Upload, Icon } from 'antd'
-import { FormattedMessage } from 'react-intl'
+import { message } from 'antd'
+import callApi from '../../lib/apiCaller'
+import './imageuploader.less'
 
-const fetch = require('isomorphic-fetch')
-
-const validImageFile = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg']
-
-function onChangeImageUpload (info) {
-  // console.log(info)
-}
-
-const dummyRequest = ({ file, onSuccess }) => {
-  setTimeout(() => {
-    onSuccess('ok')
-  }, 0)
-}
-
-function imageFileCheck (file) {
-  const fileType = file.type
-  const isImage = validImageFile.includes(fileType)
-  if (!isImage) {
-    message.error('You can upload only image file')
-  }
-
-  const isLessThan2M = file.size / 1024 / 1024 < 2
-
-  if (!isLessThan2M) {
-    message.error('You can upload image less than 2 Mb')
-  }
-
-  return isImage && isLessThan2M
-}
+const { Dashboard } = require('@uppy/react')
+const Uppy = require('@uppy/core')
 
 class ImageUpload extends Component {
+  TWO_MEGABYTES = 2000000
+
   constructor (props) {
     super(props)
-    this.sendImageToAPI = this.sendImageToAPI.bind(this)
-  }
-  async sendImageToAPI (file) {
-    let FR = new window.FileReader()
-    FR.readAsBinaryString(file)
-    FR.addEventListener('load', async (e) => {
-      const response = await fetch('/api/images', {
-        headers: { 'content-type': 'application/json' },
-        method: 'POST',
-        body: JSON.stringify({ image: FR.result, file: file.name }) })
-      if (!response.ok) {
-        return Promise.reject(new Error(response))
-      }
-      const json = await response.json()
-      // console.log(json)
-      this.props.setImageURL(json.imageURL)
+
+    this.uppy = Uppy({
+      id: 'uppy',
+      autoProceed: true,
+      debug: false,
+      formData: true,
+      restrictions: {
+        maxFileSize: this.TWO_MEGABYTES,
+        maxNumberOfFiles: 1,
+        minNumberOfFiles: 0,
+        allowedFileTypes: ['.jpg', '.jpeg', '.png', '.svg']
+      },
+      meta: {}
     })
+
+    this.onUpload = this.onUpload.bind(this)
+    this.uppy.on('file-removed', (e) => { this.props.setImgUrl('') })
+    this.uppy.addUploader(this.onUpload)
+  }
+
+  onUpload (fileIDs) {
+    var file = this.uppy.getFile(fileIDs[0])
+    let FR = new window.FileReader()
+    var setImgUrl = this.props.setImgUrl
+    FR.onloadend = e => {
+      callApi('images', 'post', { image: e.currentTarget.result, file: file.name }).then(response => {
+        setImgUrl(response.imageUrl)
+      },
+      error => {
+        message.error('An error occured: ' + error.status + ' ' + error.statusText)
+      })
+    }
+    FR.readAsBinaryString(file.data)
   }
 
   render () {
     const up = (process.env.NODE_ENV !== 'test') &&
-      <Upload
-        name='file'
-        beforeUpload={imageFileCheck}
-        action={this.sendImageToAPI}
-        onChange={onChangeImageUpload}
-        showUploadList
-        customRequest={dummyRequest}
-        multiple={false}>
-        <p className='ant-upload-drag-icon'>
-          <Icon type='inbox' />
-        </p>
-        <FormattedMessage id='imageUploadComponentMessage' defaultMessage='Click or drag file to this area to upload' description='opportunity Title label in OpDetails Form' />
-      </Upload>
-
+    <div onChange={this.onChange}>
+      <Dashboard uppy={this.uppy} proudlyDisplayPoweredByUppy={false} hideUploadButton />
+    </div>
     return up
   }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { Button, Col, Checkbox, Form, Input, Row } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import slug from 'limax'
@@ -10,6 +11,11 @@ function hasErrors (fieldsError) {
 }
 
 class OrgDetailForm extends Component {
+  constructor (props) {
+    super(props)
+    this.setImgUrl = this.setImgUrl.bind(this)
+  }
+
   componentDidMount () {
     // To disabled submit button at the beginning.
     this.props.form.validateFields()
@@ -32,6 +38,12 @@ class OrgDetailForm extends Component {
 
         this.props.onSubmit(this.props.org)
       }
+    })
+  }
+
+  setImgUrl = (value) => {
+    this.props.form.setFieldsValue({
+      imgUrl: value
     })
   }
 
@@ -112,13 +124,14 @@ class OrgDetailForm extends Component {
               xs={{ span: 24 }}
               md={{ span: 16 }}
             >
+              <ImageUpload setImgUrl={this.setImgUrl} />
               <Form.Item label={orgImgUrl}>
                 {getFieldDecorator('imgUrl', {
                   rules: [
-                    { type: 'url', message: 'a URL is required' }
+
                   ]
                 })(
-                  <Input placeholder='http://example.com/image.jpg' />
+                  <Input />
                 )}
               </Form.Item>
               <Form.Item label={orgType}>

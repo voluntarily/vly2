@@ -1,5 +1,5 @@
-const postImage = require('./image.controller')
+const imageController = require('./image.controller')
 
 module.exports = server => {
-  server.post('/api/images', postImage)
+  server.post('/api/images', imageController)
 }
