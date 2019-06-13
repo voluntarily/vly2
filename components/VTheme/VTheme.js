@@ -36,7 +36,8 @@ export const HalfGrid = styled.div`
     grid-template-columns: calc(100vw - 2rem);
   }
 ` // end halfgrid
-export const HalfGridContainer = styled.div``
+export const HalfGridContainer = styled.div`
+`
 
 export const TripleGrid = styled.div`
   display: grid;
@@ -50,7 +51,7 @@ export const TripleGrid = styled.div`
   }
 
   @media screen and (max-width: 767px) {
-    grid-template-columns: 98vw;
+    grid-template-columns: calc(100vw - 2rem);
     grid-gap: 0rem;
   }
 ` // end triplegrid
@@ -79,15 +80,16 @@ export const Grid8 = styled.div`
   grid-template-columns: repeat(8, 10rem);
   grid-gap: 2rem;
 
-  @media screen  and (max-width: 1280px) {
+  @media screen and (max-width: 1280px) {
     grid-template-columns: repeat(auto-fit, 10rem);
     justify-content: start;
     justify-items: center;
   }
-
 ` // end grid
 
-export const GridContainer = styled.div``
+export const GridContainer = styled.div`
+  position: relative;
+`
 
 export const GridTestItem = styled.div`
   background-color: pink;
@@ -118,13 +120,19 @@ export const TextH1 = styled.h1`
   color: black;
   font-size: 3.5rem;
   font-weight: 900;
-  letter-spacing: -0.055em;
-  text-indent: -0.03em;
+  letter-spacing: -0.15rem;
+  line-height: 1.5;
   margin-bottom: 0px;
-
+  margin-top: 0px;
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    font-size: 2rem;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
-    font-size: 2.5rem;
-    letter-spacing: -0.1rem;
+    font-size: 2rem;
+    letter-spacing: -0.05rem;
+    line-height: 3.75rem;
   }
 
   @media screen and (max-width: 768px) {
@@ -132,13 +140,15 @@ export const TextH1 = styled.h1`
     width: 90vw;
     margin-right: initial;
     letter-spacing: -0.03em;
+    line-height: 3rem;
   }
 ` // End TextH1
 
 export const TextSubtitle = styled.p`
   letter-spacing: -0.3px;
   font-size: 1.5rem;
-  color: #333333;
+  color: #000;
+  margin-bottom: 0;
 
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     letter-spacing: -0.06rem;
@@ -149,6 +159,23 @@ export const TextSubtitle = styled.p`
     font-size: 1rem;
   }
 ` // TextSubtitle
+
+export const TextH3 = styled.h3`
+  letter-spacing: -0.3px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 0;
+
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    letter-spacing: -0.06rem;
+    font-size: 1.5rem;
+  }
+  @media screen and (max-width: 768px) {
+    width: 90vw;
+    font-size: 1rem;
+  }
+` // TextH3
 
 export const TextP = styled.p`
   font-weight: 400;
@@ -175,8 +202,17 @@ export const TextHeading = styled.p`
   font-weight: 400;
   letter-spacing: -0.04em;
   margin: initial;
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    font-size: 1.7rem;
+    letter-spacing: -0.02em;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+  }
   @media screen and (max-width: 767px) {
     font-size: 1rem;
+    letter-spacing: -0.02em;
   }
 ` // end TextHeading
 
@@ -193,10 +229,21 @@ export const TextHeadingBlack = styled.h1`
 
 export const TextHeadingBold = styled.p`
   font-size: 2rem;
-  letter-spacing: -2px;
+  letter-spacing: -1.4px;
   font-weight: 700;
+  margin-bottom: 0;
+  color: black;
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    font-size: 1.7rem;
+    letter-spacing: -0.02em;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+  }
   @media screen and (max-width: 767px) {
     font-size: 1rem;
+    letter-spacing: -0.8px;
   }
 ` // end TextHeadingBold
 
@@ -205,9 +252,35 @@ export const TextHeadingSubtitle = styled.p`
   font-size: 1.1rem;
   letter-spacing: -0.2px;
   @media screen and (max-width: 768px) {
-    line-height: 1.8;
+    line-height: 1.5;
   }
 ` // end TextHeadingSubtitle
+export const BigQuote = styled.h2`
+  font-size: 3rem;
+  letter-spacing: -0.2rem;
+  font-weight: 300;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.5rem;
+    letter-spacing: -0.05rem;
+    line-height: 1.5;
+  }
+` // end BigQuote
+
+export const BigQuoteAuthor = styled.p`
+  color: #222;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-top: 0;
+  margin-bottom: 0;
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
+    letter-spacing: -0.05rem;
+    line-height: 1.5;
+  }
+`
 
 /*
 ====================================================

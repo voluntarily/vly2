@@ -29,17 +29,17 @@ export const A4 = styled.div`
   }
 `
 export const FullPage = styled.div`
-  margin: 0 auto;
+margin: 0 auto;
   width: 80rem;
 
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
-    width: calc(100vw - 4rem);
+    width: calc(100vw - 2rem);
     margin-left: 2rem;
     margin-right: 2rem;
   }
   @media screen and (max-width: 767px) {
-    width: calc(100vw - 1rem);
+    width: calc(100vw - 2rem);
     margin-left: 1rem;
   }
 ` // end fullpage
@@ -56,7 +56,7 @@ export const Grid = styled.div`
   }
 
   @media screen and (max-width: 767px) {
-    grid-template-columns: 100vw;
+    grid-template-columns: calc(100vw - 2rem);
     grid-gap: 0rem;
   }
 ` // end grid
