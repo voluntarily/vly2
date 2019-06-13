@@ -1,0 +1,25 @@
+extends ../theme/layout.pug
+
+block tagline
+  span Get ready for a fun event #{person.nickname}
+  
+block copybig
+  p Thank for volunteering for Voluntari.ly
+
+block copy
+  p Kia ora #{person.nickname},
+  p On behalf of the team and requestor, we would like to thank you for expressing interest in volunteering for #{person.eventVolunteerFor}
+  h5 Things you gonna need for the volunteering:
+  p Positivity
+  p Smile
+  p Willing to learn and help each other
+//- Override copy button because the layout has a block for authentical user
+//- Replace it witht this will do
+block copybutton
+  h5 Your contributions is super valuable to us.
+  p We will get in touch you soon.
+   
+block copyimage
+  a(href="http://voluntari.ly" target="_blank")
+    include ../verify/image.pug
+                                 

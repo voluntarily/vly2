@@ -1,7 +1,7 @@
 const Interest = require('./interest')
-// const Person = require('../person/person')
+const Person = require('../person/person')
 // const Opportunity = require('../opportunity/opportunity')
-// const { emailPerson } = require('./email/emailperson')
+const { emailPerson } = require('../person/email/emailperson')
 
 /**
   api/interests -> list all interests
@@ -34,8 +34,19 @@ const listInterests = async (req, res) => {
 
 const updateInterest = async (req, res) => {
   try {
+    console.log('Updating interest with req body of ', req.body)
     await Interest.update({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
 
+    const interesetPersonID = req.body.person
+    let personInterestInOP = await Person.findById(interesetPersonID, (err, res) => {
+      if (err) console.log(err)
+      else {
+        console.log(res)
+      }
+    })
+    personInterestInOP.email = 'emma.lockman76@ethereal.email'
+    const sendingInfo = emailPerson(personInterestInOP, 'acknowledgeInterest', {})
+    console.log('Sending info is ', sendingInfo)
     res.json(req.body)
   } catch (err) {
     res.status(404).send(err)
@@ -48,6 +59,27 @@ const createInterest = async (req, res) => {
     if (err) {
       res.status(500).send(err)
     }
+    const interesetPersonID = req.body.person
+    const { opportunity } = req.body
+    const { title } = opportunity
+    let personInterestInOP = await Person.findById(interesetPersonID, (err, res) => {
+      if (err) console.log(err)
+      // We only catch if there is any error
+    })
+
+    const props = {
+      send: true // when true email is actually sent
+    }
+    personInterestInOP.eventVolunteerFor = title
+    personInterestInOP.email = 'emma.lockman76@ethereal.email'
+
+    await emailPerson(personInterestInOP, 'acknowledgeInterest', props)
+
+    // To see if the email sent successfully uncomment bellow
+    // const sendingInfo = await emailPerson(personInterestInOP, 'acknowledgeInterest', props)
+    // console.log('Sending info is sent to ', sendingInfo.accepted)
+    // console.log('Sending email has a response of ', sendingInfo.response)
+
     const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
     res.json(got)
   })
