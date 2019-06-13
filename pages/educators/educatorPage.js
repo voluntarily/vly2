@@ -14,6 +14,7 @@ import {
   TextSubtitle,
   BigQuote,
   BigQuoteAuthor
+
 } from '../../components/VTheme/VTheme'
 import { Button, Divider } from 'antd'
 import TitleSection from '../../components/LandingPageComponents/TitleSection'
@@ -224,7 +225,7 @@ export class Educator extends Component {
                 <TextMiniTitle>Voluntarily for Business</TextMiniTitle>
                 <TextH1>Do more social good in your community</TextH1>
                 <TextSubtitle>
-                  <br />
+
                   Launch gas-powered rockets from rural schools. <br />
                   Get your staff building robots that shoot lazors. <br />
                   Make video games with no prior experience.

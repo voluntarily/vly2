@@ -121,13 +121,17 @@ export const TextH1 = styled.h1`
   font-size: 3.5rem;
   font-weight: 900;
   letter-spacing: -0.15rem;
-  line-height: 5rem;
+  line-height: 1.5;
   margin-bottom: 0px;
   margin-top: 0px;
-
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    font-size: 2rem;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
-    font-size: 2.5rem;
-    letter-spacing: -0.1rem;
+    font-size: 2rem;
+    letter-spacing: -0.05rem;
     line-height: 3.75rem;
   }
 
