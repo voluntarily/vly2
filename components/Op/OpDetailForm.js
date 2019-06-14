@@ -187,15 +187,13 @@ class OpDetailForm extends Component {
               xs={{ span: 24 }}
               md={{ span: 16 }}
             >
-              <ImageUpload setImgUrl={this.setImgUrl} />
               <Form.Item label={opImgUrl}>
                 {getFieldDecorator('imgUrl', {
-                  rules: [
-
-                  ]
+                  rules: []
                 })(
                   <Input />
                 )}
+                <ImageUpload setImgUrl={this.setImgUrl} />
               </Form.Item>
               <Form.Item label={opStatus}>
                 {getFieldDecorator('status', {
