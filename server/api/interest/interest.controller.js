@@ -34,19 +34,8 @@ const listInterests = async (req, res) => {
 
 const updateInterest = async (req, res) => {
   try {
-    // console.log('Updating interest with req body of ', req.body)
     await Interest.update({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
 
-    const interesetPersonID = req.body.person
-    let personInterestInOP = await Person.findById(interesetPersonID, (err, res) => {
-      if (err) console.log(err)
-      else {
-        console.log(res)
-      }
-    })
-    personInterestInOP.email = 'kobebryant0304@gmail.com'
-    // const sendingInfo = emailPerson(personInterestInOP, 'acknowledgeInterest', {})
-    // console.log('Sending info is ', sendingInfo)
     res.json(req.body)
   } catch (err) {
     res.status(404).send(err)
@@ -69,20 +58,9 @@ const createInterest = async (req, res) => {
     if (process.env.NODE_ENV !== 'test') {
       Person.findById(interesetPersonID, (err, person) => {
         if (err) console.log(err)
-        // We only catch if there is any error
-        sendEmailNotification(requestor, person, title) // This method will send to both requestor and person
+        else sendEmailNotification(requestor, person, title) // This method will send to both requestor and person
       })
     }
-
-    // personInterestInOP.email = 'kobebryant0304@gmail.com'
-    // personInterestInOP.email = 'emma.lockman76@ethereal.email'
-
-    // emailPerson(personInterestInOP, 'acknowledgeInterest', emailProps)
-
-    // To see if the email sent successfully uncomment bellow
-    // const sendingInfo = await emailPerson(personInterestInOP, 'acknowledgeInterest', emailProps)
-    // console.log('Sending info is sent to ', sendingInfo.accepted)
-    // console.log('Sending email has a response of ', sendingInfo.response)
 
     const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
     res.json(got)
@@ -90,8 +68,6 @@ const createInterest = async (req, res) => {
 }
 
 const sendEmailNotification = (requestor, volunteer, volunteerEvent) => {
-  volunteer.email = 'kobebryant0304@gmail.com'
-  requestor.email = 'kobebryant0304@gmail.com'
   requestor.volunteerEvent = volunteerEvent
   requestor.volunteerName = volunteer.nickname
   volunteer.volunteerEvent = volunteerEvent
@@ -102,9 +78,6 @@ const sendEmailNotification = (requestor, volunteer, volunteerEvent) => {
 
   emailPerson(volunteer, 'acknowledgeInterest', emailProps)
   emailPerson(requestor, 'RequestorNotificationEmail', emailProps)
-
-  volunteer.email = ''
-  requestor.email = ''
 }
 
 // async function maybeInnovativelyDestructivelySendEmailPossibly (volunteerId, organizerId, prevStatus, currentStatus, modifier) {
