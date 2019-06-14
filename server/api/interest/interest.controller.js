@@ -19,11 +19,7 @@ const listInterests = async (req, res) => {
         query.person = req.query.me
       }
       // Return the nickname in person field
-      try {
-        got = await Interest.find(query).populate({ path: 'person', select: 'nickname' }).sort(sort).exec()
-      } catch (err) {
-        console.log(err)
-      }
+      got = await Interest.find(query).populate({ path: 'person', select: 'nickname' }).sort(sort).exec()
     } else if (req.query.me) {
       const query = { person: req.query.me }
       got = await Interest.find(query).populate({ path: 'opportunity' }).sort(sort).exec()
@@ -69,14 +65,14 @@ const createInterest = async (req, res) => {
 
     const { requestor } = req.body.opportunity
 
-    // const emailProps = {
-    //   send: true // when true email is actually sent
-    // }
-    Person.findById(interesetPersonID, (err, person) => {
-      if (err) console.log(err)
-      // We only catch if there is any error
-      sendEmailNotification(requestor, person, title)
-    })
+    // This will perform actual database query so it will return as undefined in test
+    if (process.env.NODE_ENV !== 'test') {
+      Person.findById(interesetPersonID, (err, person) => {
+        if (err) console.log(err)
+        // We only catch if there is any error
+        sendEmailNotification(requestor, person, title) // This method will send to both requestor and person
+      })
+    }
 
     // personInterestInOP.email = 'kobebryant0304@gmail.com'
     // personInterestInOP.email = 'emma.lockman76@ethereal.email'
@@ -106,6 +102,9 @@ const sendEmailNotification = (requestor, volunteer, volunteerEvent) => {
 
   emailPerson(volunteer, 'acknowledgeInterest', emailProps)
   emailPerson(requestor, 'RequestorNotificationEmail', emailProps)
+
+  volunteer.email = ''
+  requestor.email = ''
 }
 
 // async function maybeInnovativelyDestructivelySendEmailPossibly (volunteerId, organizerId, prevStatus, currentStatus, modifier) {

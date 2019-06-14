@@ -120,7 +120,7 @@ test.serial('Should correctly add a valid interest', async t => {
     .set('Accept', 'application/json')
 
   t.is(res.status, 200)
-
+  t.log('I got called')
   const savedInterest = await Interest.findOne({
     person: newInterest.person,
     opportunity: newInterest.opportunity
