@@ -17,24 +17,30 @@ const PersonaContainer = styled.div`
   @media screen and (max-width: 768px) {
     width: calc(100vw - 2rem);
     height: auto;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
   }
 `
 
 const Image = styled.img`
   width: 100%;
   object-fit: cover;
+  @media screen and (max-width: 768px) {
+    height: 20rem;
+    object-position: top;
+  }
+
+
 `
 
 const Title = styled.div`
   height: auto;
-  margin: 0;
+  margin: 0.2rem 0 0 0;
   font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.95px;
+  font-weight: 700;
+  letter-spacing: -0.85px;
   color: black;
   @media screen and (max-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
   }
 `
 
@@ -49,25 +55,26 @@ const Text = styled.div`
   line-height: 24px;
 
   @media screen and (max-width: 768px) {
-    font-size: 1.5rem;
+    font-size: 1rem;
     line-height: 1.4;
-    width: auto;
+    width: calc(90vw - 2rem);
     height: auto;
+    margin-bottom: 1rem;
   }
 `
 
 const AboutSection = () => (
   <Grid>
-    <PersonaContainer>
+    <PersonaContainer href='/about' target='_blank' >
       <Image src='/static/img/volunteerCard.png' />
       <Title>Volunteers</Title>
       <Text>
         Discover cool opportunities to help out teachers, students and
         charities.
       </Text>
-      <Button href='/volunteers'>Learn More</Button>
+      <Button href='/about'>Learn More</Button>
     </PersonaContainer>
-    <PersonaContainer>
+    <PersonaContainer href='/educators' target='_blank' >
       <Image src='/static/img/teacherCard.png' />
       <Title>Educators</Title>
       <Text>
@@ -75,13 +82,13 @@ const AboutSection = () => (
       </Text>
       <Button href='/educators'>Learn More</Button>
     </PersonaContainer>
-    <PersonaContainer>
+    <PersonaContainer href='/charities' target='_blank' >
       <Image src='/static/img/contentCard.png' />
       <Title>Charities</Title>
       <Text>We help you get more people involved with your movement.</Text>
       <Button href='/charities'>Learn More</Button>
     </PersonaContainer>
-    <PersonaContainer>
+    <PersonaContainer href='/business' target='_blank' >
       <Image src='/static/img/businessCard.png' />
       <Title>Businesses</Title>
       <Text>

@@ -29,17 +29,17 @@ export const A4 = styled.div`
   }
 `
 export const FullPage = styled.div`
-  margin: 0 auto;
+margin: 0 auto;
   width: 80rem;
 
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
-    width: calc(100vw - 4rem);
+    width: calc(100vw - 2rem);
     margin-left: 2rem;
     margin-right: 2rem;
   }
   @media screen and (max-width: 767px) {
-    width: calc(100vw - 1rem);
+    width: calc(100vw - 2rem);
     margin-left: 1rem;
   }
 ` // end fullpage
@@ -56,7 +56,7 @@ export const Grid = styled.div`
   }
 
   @media screen and (max-width: 767px) {
-    grid-template-columns: 100vw;
+    grid-template-columns: calc(100vw - 2rem);
     grid-gap: 0rem;
   }
 ` // end grid
@@ -122,7 +122,7 @@ export default Page =>
               content='initial-scale=1.0, width=device-width'
             />
             <link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
-            <script type='text/javascript' src='https://voluntarily.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-bgykhu/b/10/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=6cd14dc4' />
+            <script type='text/javascript' src='https://voluntarily.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-t2deah/b/11/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=2e085869' />
             <script type='text/javascript' async src='https://www.googletagmanager.com/gtag/js?id=UA-141212194-1' />
             <script type='text/javascript' dangerouslySetInnerHTML={{ __html: `
               window.dataLayer = window.dataLayer || [];

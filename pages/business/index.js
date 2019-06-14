@@ -1,3 +1,3 @@
-import Business from './business.js'
+import Business from './businessPage.js'
 
 export default Business
