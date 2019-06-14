@@ -15,7 +15,11 @@ export default () => [
     text: 'Organisations',
     href: '/orgs'
   },
-
+  {
+    key: 'help',
+    text: 'Help',
+    href: 'https://voluntarily.atlassian.net/servicedesk/customer/portals'
+  },
   {
     key: 'hsignin',
     href: '/auth/sign-in',
