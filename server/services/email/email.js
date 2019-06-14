@@ -5,7 +5,7 @@ const getTransportTest = () => {
   // Only needed if you don't have a real mail account for testing
   return nodemailer.createTestAccount()
     .then(testAccount => {
-      console.log('Created teset account ', testAccount)
+      // console.log('Created test account ', testAccount)
       return nodemailer.createTransport({
         host: 'smtp.ethereal.email',
         port: 587,
