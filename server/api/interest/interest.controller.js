@@ -51,11 +51,12 @@ const createInterest = async (req, res) => {
     const interesetPersonID = req.body.person
     const { opportunity } = req.body
     const { title } = opportunity
-
     const { requestor } = req.body.opportunity
 
     // This will perform actual database query so it will return as undefined in test
     if (process.env.NODE_ENV !== 'test') {
+      const { comment } = req.body
+      requestor.volunteerComment = comment
       Person.findById(interesetPersonID, (err, person) => {
         if (err) console.log(err)
         else sendEmailNotification(requestor, person, title) // This method will send to both requestor and person
