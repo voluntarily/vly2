@@ -55,7 +55,7 @@ const createInterest = async (req, res) => {
     if (err) {
       res.status(500).send(err)
     }
-    const interesetPersonID = req.body.person
+    const volunteerID = req.body.person
     const { opportunity } = req.body
     const { title } = opportunity
     const { requestor } = req.body.opportunity
@@ -64,37 +64,13 @@ const createInterest = async (req, res) => {
     if (process.env.NODE_ENV !== 'test') {
       const { comment } = req.body
       requestor.volunteerComment = comment
-      Person.findById(interesetPersonID, (err, volunteer) => {
-        if (err) console.log(err)
-        else {
-          requestor.emailTemplate = 'RequestorNotificationEmail'
-          volunteer.emailTemplate = 'acknowledgeInterest'
-          sendEmailInformBoth(requestor, volunteer, title) // This method will send to both requestor and person
-        }
-      })
+      sendEmailBaseOn('acknowledgeInterest', volunteerID, title)
+      sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, comment)
     }
 
     const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
     res.json(got)
   })
-}
-
-/**
- * Quite different from the processStatusToSendEmail this function will send email to both requestor and volunteer inform a new interest created
- * @param {*} requestor
- * @param {*} volunteer
- * @param {*} volunteerEvent The title of it
- */
-const sendEmailInformBoth = (requestor, volunteer, volunteerEvent) => {
-  requestor.volunteerEvent = volunteerEvent
-  requestor.volunteerName = volunteer.nickname
-  volunteer.volunteerEvent = volunteerEvent
-  const emailProps = {
-    send: true
-  }
-
-  emailPerson(volunteer, volunteer.emailTemplate, emailProps)
-  emailPerson(requestor, requestor.emailTemplate, emailProps)
 }
 
 const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
@@ -111,22 +87,23 @@ const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
 
 /**
  * This will be easier to add more status without having too much if. All we need is add another folder in email template folder and the status will reference to that folder
- * @param {*} status status will be used to indicate which email template to use
- * @param {*} personID so we can find the email of that person
- * @param {*} opportunityTitle just making the email content clearer
- * @param {*} volunteerNickname optional this only be used to inform requestor when volunteer is commited
+ * @param {string} status status will be used to indicate which email template to use
+ * @param {string} personID so we can find the email of that person
+ * @param {string} opportunityTitle Just making the email content clearer
+ * @param {string} volunteerNickname optional this only be used to inform requestor when volunteer is commited
+ * @param {string} volunteerCommment (optional) This is only for requestor notification email only,default is empty string
  */
-const sendEmailBaseOn = (status, personID, opportunityTitle, volunteerNickname = '') => {
-  console.log('The status is ', status)
+const sendEmailBaseOn = (status, personID, opportunityTitle, volunteerNickname = '', volunteerComment = '') => {
+  // console.log('The status is ', status)
   Person.findById(personID, (err, person) => {
     if (err) console.log(err)
     else {
       const emailProps = {
         send: true
       }
-      person.email = 'emma.lockman76@ethereal.email'
       person.volunteerEvent = opportunityTitle
       person.volunteerNickname = volunteerNickname
+      person.volunteerComment = volunteerComment
       emailPerson(person, status, emailProps)
     }
   })

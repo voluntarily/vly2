@@ -15,6 +15,8 @@ module.exports.emailPerson = async (person, template, props) => {
       // uncomment below to send emails in development/test env:
       send: true,
 
+      // Comment the line bellow to see preview email
+      preview: false,
       // Uncomment this line to see the result of the email when it sent
       // preview: {
       //   app: 'chrome',

@@ -52,7 +52,7 @@ class RegisterInterestSection extends Component {
 
   // When the button is clicked to withdraw interest, make an appropriate api call.
   async handleWithdraw (interest) {
-    // console.log('Deleting interest')
+    // console.log('Deleting interest ', interest)
     await this.props.dispatch(reduxApi.actions.interests.delete({ id: interest._id }))
     message.success('Interest deleted')
   }
