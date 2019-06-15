@@ -16,10 +16,10 @@ module.exports.emailPerson = async (person, template, props) => {
       send: true,
 
       // Uncomment this line to see the result of the email when it sent
-      preview: {
-        app: 'chrome',
-        wait: false
-      },
+      // preview: {
+      //   app: 'chrome',
+      //   wait: false
+      // },
 
       // Not sure if the transport is neccesary anymore
       // transport: {
