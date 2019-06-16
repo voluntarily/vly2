@@ -1,5 +1,4 @@
 extends ../theme/layout.pug
-
 block tagline
   span Good news of the day
   
@@ -8,9 +7,9 @@ block copybig
 
 block copy
   p Kia ora #{person.nickname},
-  h4 #{person.volunteerName} interested in #{person.volunteerEvent} with a comment "#{person.volunteerComment}"
-  h5 We are so exited to have #{person.volunteerName} for the event. If there is any problems or any schedule change.
-  h5  Please let us know asap
+  h4 Another person interested in volunteering for #{person.volunteerEvent} with a comment "#{person.volunteerComment}"
+  h5 We are so exited for the event. Click on the link bellow to send invitation.
+  a(href=`${person.opUrl}`) Link to opportunity
   
 //- Override copy button because the layout has a block for authentical user
 //- Replace it witht this will do

@@ -1,6 +1,7 @@
 const Interest = require('./interest')
 const Person = require('../person/person')
 const Opportunity = require('../opportunity/opportunity')
+const { config } = require('../../../config/config')
 const { emailPerson } = require('../person/email/emailperson')
 
 /**
@@ -59,13 +60,14 @@ const createInterest = async (req, res) => {
     const { opportunity } = req.body
     const { title } = opportunity
     const { requestor } = req.body.opportunity
+    const opId = opportunity._id
 
     // This will perform actual database query so it will return as undefined in test
     if (process.env.NODE_ENV !== 'test') {
       const { comment } = req.body
       requestor.volunteerComment = comment
-      sendEmailBaseOn('acknowledgeInterest', volunteerID, title)
-      sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, comment)
+      sendEmailBaseOn('acknowledgeInterest', volunteerID, title, opId)
+      sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
     }
 
     const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
@@ -74,14 +76,15 @@ const createInterest = async (req, res) => {
 }
 
 const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
-  const { _id, nickname } = volunteer
+  const { _id } = volunteer
   const { requestor, title } = opportunity
+  const opID = opportunity._id// This id is different from the _id on the top
   if (interestStatus === 'invited' || interestStatus === 'declined') {
     // send email to volunteer
-    sendEmailBaseOn(interestStatus, _id, title)
+    sendEmailBaseOn(interestStatus, _id, title, opID) // The _id in here is the volunteer id
   } else if (interestStatus === 'committed') {
     // send email to requestor
-    sendEmailBaseOn(interestStatus, requestor, title, nickname)
+    sendEmailBaseOn(interestStatus, requestor, title, opID)
   }
 }
 
@@ -90,19 +93,19 @@ const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
  * @param {string} status status will be used to indicate which email template to use
  * @param {string} personID so we can find the email of that person
  * @param {string} opportunityTitle Just making the email content clearer
- * @param {string} volunteerNickname optional this only be used to inform requestor when volunteer is commited
+ * @param {string} opId To construct url that link to the opportunity
  * @param {string} volunteerCommment (optional) This is only for requestor notification email only,default is empty string
  */
-const sendEmailBaseOn = (status, personID, opportunityTitle, volunteerNickname = '', volunteerComment = '') => {
-  // console.log('The status is ', status)
+const sendEmailBaseOn = (status, personID, opportunityTitle, opId, volunteerComment = '') => {
+  let opUrl = `${config.appUrl + '/ops/' + opId}`
   Person.findById(personID, (err, person) => {
     if (err) console.log(err)
     else {
       const emailProps = {
         send: true
       }
+      person.opUrl = opUrl
       person.volunteerEvent = opportunityTitle
-      person.volunteerNickname = volunteerNickname
       person.volunteerComment = volunteerComment
       emailPerson(person, status, emailProps)
     }
