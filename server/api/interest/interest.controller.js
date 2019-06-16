@@ -61,13 +61,18 @@ const createInterest = async (req, res) => {
     const { title } = opportunity
     const { requestor } = req.body.opportunity
     const opId = opportunity._id
+    const { comment } = req.body
+    requestor.volunteerComment = comment
 
-    // This will perform actual database query so it will return as undefined in test
+    // The reason is that the sendEmail Base on function will cause longer delay with await keyword when user clicked interested
+    // But if there is no await keyword in there. The test run will fail because the call back function inside the sendEmailBaseOn
+    // will call anytime causing the test to fail
     if (process.env.NODE_ENV !== 'test') {
-      const { comment } = req.body
-      requestor.volunteerComment = comment
       sendEmailBaseOn('acknowledgeInterest', volunteerID, title, opId)
       sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
+    } else {
+      await sendEmailBaseOn('acknowledgeInterest', volunteerID, title, opId)
+      await sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
     }
 
     const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
@@ -96,9 +101,9 @@ const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
  * @param {string} opId To construct url that link to the opportunity
  * @param {string} volunteerCommment (optional) This is only for requestor notification email only,default is empty string
  */
-const sendEmailBaseOn = (status, personID, opportunityTitle, opId, volunteerComment = '') => {
+const sendEmailBaseOn = async (status, personID, opportunityTitle, opId, volunteerComment = '') => {
   let opUrl = `${config.appUrl + '/ops/' + opId}`
-  Person.findById(personID, (err, person) => {
+  await Person.findById(personID, (err, person) => {
     if (err) console.log(err)
     else {
       const emailProps = {

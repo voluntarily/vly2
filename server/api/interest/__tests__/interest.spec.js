@@ -109,9 +109,10 @@ test.skip(
 )
 
 test.serial('Should correctly add a valid interest', async t => {
+  opportunity.requestor = person
   const newInterest = {
     person: person._id.toString(),
-    opportunity: opportunity._id.toString()
+    opportunity: opportunity
   }
 
   const res = await request(server)
@@ -120,7 +121,7 @@ test.serial('Should correctly add a valid interest', async t => {
     .set('Accept', 'application/json')
 
   t.is(res.status, 200)
-  t.log('I got called')
+  // t.log('I got called')
   const savedInterest = await Interest.findOne({
     person: newInterest.person,
     opportunity: newInterest.opportunity
