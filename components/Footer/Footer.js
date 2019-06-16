@@ -189,7 +189,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
             Github Repo
           </MenuItem>
           <br />
-          <MenuItem href='https://github.com/voluntarily/vly2' target='_blank'>
+          <MenuItem href='https://voluntarily.atlassian.net/wiki' target='_blank'>
             Developer resources
           </MenuItem>
           <br />
