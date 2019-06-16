@@ -25,7 +25,7 @@ export class OpDetailPage extends Component {
 
   // Called when the user confirms they want to delete an op
   async handleDelete (op) {
-    console.log('deleting op', op)
+    // console.log('deleting op', op)
     if (!op) return
     // Actual data request
     await this.props.dispatch(reduxApi.actions.opportunities.delete({ id: op._id }))

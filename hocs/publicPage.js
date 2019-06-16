@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import Router from 'next/router'
-
+import Cookie from 'js-cookie'
 import {
   getUserFromServerCookie,
   getUserFromLocalCookie,
@@ -69,13 +69,14 @@ export const FillWindow = styled.div`
 export default Page =>
   class DefaultPage extends React.Component {
     static async getInitialProps (ctx) {
+      let cookies = ctx.req ? ctx.req.cookies : Cookie.get()
       let session = {}
       const loggedUser = process.browser
         ? getUserFromLocalCookie()
         : getUserFromServerCookie(ctx.req)
       if (loggedUser) {
         try {
-          session = await parseUserToSession(loggedUser)
+          session = await parseUserToSession(loggedUser, cookies)
           ctx.store.dispatch(setSession(session))
         } catch (err) {
           console.error()

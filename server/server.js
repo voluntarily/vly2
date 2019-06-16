@@ -16,11 +16,12 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const glob = require('glob')
 const next = require('next')
-
+const cookieParser = require('cookie-parser')
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 server.use(bodyParser.urlencoded({ limit: UPLOAD_LIMIT, extended: true }))
 server.use(bodyParser.json({ limit: UPLOAD_LIMIT, extended: true }))
+server.use(cookieParser())
 const routes = require('./routes')
 const routerHandler = routes.getRequestHandler(app)
 const { config } = require('../config/config')
