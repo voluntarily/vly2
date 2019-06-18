@@ -15,7 +15,7 @@ class EditableTagGroup extends React.Component {
         value={this.state.inputvalue} />
       {this.state.tags.map(tag =>
         <Tag closable
-          onClose={this.removeTag}
+          onClose={() => this.removeTag(tag)}
         >{tag}</Tag>
       )}
     </div>
@@ -28,10 +28,18 @@ class EditableTagGroup extends React.Component {
 
   addTag = (e) => {
     // console.log(e)
+    e.preventDefault()
     if (!this.state.tags.includes(this.state.inputvalue)) {
       this.setState({ tags: [...this.state.tags, this.state.inputvalue], inputvalue: '' })
     }
   }
+
+  removeTag = removedTag => {
+    // console.log(removedTag)
+    const tags = this.state.tags.filter(tag => tag !== removedTag)
+    // console.log(tags)
+    this.setState({ tags })
+  };
 }
 
 export default EditableTagGroup
