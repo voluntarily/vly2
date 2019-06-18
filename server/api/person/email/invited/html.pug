@@ -8,14 +8,14 @@ block copybig
 
 block copy
   p Kia ora #{person.nickname},
-  p You are invited in to #{person.volunteerEvent}
-  p Click on the link bellow to accept invitation
+  p You are invited to #{person.volunteerEvent}
+  p Click on the link below to accept the invitation
   a(href=`${person.opUrl}`) Accept invitation
 
 //- Override copy button because the layout has a block for authentical user
 //- Replace it witht this will do
 block copybutton
-  p We would love to see you at the event
+  p We are looking forward to seeing you at the event
    
 block copyimage
   a(href="http://voluntari.ly" target="_blank")
