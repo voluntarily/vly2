@@ -13,18 +13,23 @@ module.exports.emailPerson = async (person, template, props) => {
         from: 'andrew@voluntari.ly'
       },
       // uncomment below to send emails in development/test env:
-      send: props.send,
+      send: true,
 
+      // Comment the line bellow to see preview email
+      preview: false,
+      // Uncomment this line to see the result of the email when it sent
       // preview: {
-      //   app: 'firefox',
+      //   app: 'chrome',
       //   wait: false
       // },
+
+      // Not sure if the transport is neccesary anymore
       // transport: {
       //   jsonTransport: true,
       // }
       transport
     })
-    // console.log('email props', props)
+    // console.log('email props ', props)
     return await email.send({
       template: path.join(__dirname, template),
       message: {

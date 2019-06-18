@@ -1,0 +1,21 @@
+extends ../theme/layout.pug
+block tagline
+  span Good news of the day
+  
+block copybig
+  p Another person just signed up
+
+block copy
+  p Kia ora #{person.nickname},
+  h4 Another person interested in volunteering for #{person.volunteerEvent} with a comment "#{person.volunteerComment}"
+  h5 We are so excited for the event. Click on the link below to send invitation.
+  a(href=`${person.opUrl}`) Link to opportunity
+  
+//- Override copy button because the layout has a block for authentical user
+//- Replace it witht this will do
+block copybutton
+  h5 Looking forward to seeing you at the event
+   
+block copyimage
+  a(href="http://voluntari.ly" target="_blank")
+    img(width="100%" src='https://images.squarespace-cdn.com/content/v1/5b341f644cde7a925f522486/1553752247040-N1M39DEKVS6XF1D71OKD/ke17ZwdGBToddI8pDm48kFQQgP34qnCpeHaeAOzTt7pZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PIvwpK0aFuhG0GtLLHqvbV4raqY38tdDiF-KTEvoUH9G4/aaaaaaaaa.gif')       

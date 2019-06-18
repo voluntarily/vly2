@@ -1,7 +1,8 @@
 const Interest = require('./interest')
-// const Person = require('../person/person')
-// const Opportunity = require('../opportunity/opportunity')
-// const { emailPerson } = require('./email/emailperson')
+const Person = require('../person/person')
+const Opportunity = require('../opportunity/opportunity')
+const { config } = require('../../../config/config')
+const { emailPerson } = require('../person/email/emailperson')
 
 /**
   api/interests -> list all interests
@@ -36,6 +37,13 @@ const updateInterest = async (req, res) => {
   try {
     await Interest.update({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
 
+    const { opportunity, status, person } = req.body // person in here is the volunteer-- quite not good naming here
+    Opportunity.findById(opportunity, (err, opportunityFound) => {
+      if (err) console.log(err)
+      else {
+        processStatusToSendEmail(status, opportunityFound, person)
+      }
+    })
     res.json(req.body)
   } catch (err) {
     res.status(404).send(err)
@@ -48,10 +56,72 @@ const createInterest = async (req, res) => {
     if (err) {
       res.status(500).send(err)
     }
+    const volunteerID = req.body.person
+    const { opportunity } = req.body
+    const { title } = opportunity
+    const { requestor } = req.body.opportunity
+    const opId = opportunity._id
+    const { comment } = req.body
+    requestor.volunteerComment = comment
+
+    // The reason is that the sendEmail Base on function will cause longer delay with await keyword when user clicked interested
+    // But if there is no await keyword in there. The test run will fail because the call back function inside the sendEmailBaseOn
+    // will call anytime causing the test to fail
+    if (process.env.NODE_ENV !== 'test') {
+      sendEmailBaseOn('acknowledgeInterest', volunteerID, title, opId)
+      sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
+    } else {
+      await sendEmailBaseOn('acknowledgeInterest', volunteerID, title, opId)
+      await sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
+    }
+
     const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
     res.json(got)
   })
 }
+
+const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
+  const { _id } = volunteer
+  const { requestor, title } = opportunity
+  const opID = opportunity._id// This id is different from the _id on the top
+  if (interestStatus === 'invited' || interestStatus === 'declined') {
+    // send email to volunteer
+    sendEmailBaseOn(interestStatus, _id, title, opID) // The _id in here is the volunteer id
+  } else if (interestStatus === 'committed') {
+    // send email to requestor
+    sendEmailBaseOn(interestStatus, requestor, title, opID)
+  }
+}
+
+/**
+ * This will be easier to add more status without having too much if. All we need is add another folder in email template folder and the status will reference to that folder
+ * @param {string} status status will be used to indicate which email template to use
+ * @param {string} personID so we can find the email of that person
+ * @param {string} opportunityTitle Just making the email content clearer
+ * @param {string} opId To construct url that link to the opportunity
+ * @param {string} volunteerCommment (optional) This is only for requestor notification email only,default is empty string
+ */
+const sendEmailBaseOn = async (status, personID, opportunityTitle, opId, volunteerComment = '') => {
+  let opUrl = `${config.appUrl + '/ops/' + opId}`
+  await Person.findById(personID, (err, person) => {
+    if (err) console.log(err)
+    else {
+      const emailProps = {
+        send: true
+      }
+      person.opUrl = opUrl
+      person.volunteerEvent = opportunityTitle
+      person.volunteerComment = volunteerComment
+      emailPerson(person, status, emailProps)
+    }
+  })
+}
+
+// Possible states of the opportunity
+// 1 ->Intertested
+// 2 ->Invited
+// 3 ->Declined
+// 4 ->Commited
 
 // async function maybeInnovativelyDestructivelySendEmailPossibly (volunteerId, organizerId, prevStatus, currentStatus, modifier) {
 //   if (modifier == 'volunteer') {
