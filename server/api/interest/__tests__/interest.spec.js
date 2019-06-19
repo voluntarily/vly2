@@ -71,7 +71,7 @@ test.serial('Should correctly give number of Interests', async t => {
     .get('/api/interests')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
-    // .expect('Content-Length', '2')
+    .expect('Content-Length', '215')
     .expect(200)
   t.is(res.status, 200)
   t.deepEqual(1, res.body.length)
@@ -121,13 +121,34 @@ test.serial('Should correctly add a valid interest', async t => {
     .set('Accept', 'application/json')
 
   t.is(res.status, 200)
-  // t.log('I got called')
+
   const savedInterest = await Interest.findOne({
     person: newInterest.person,
     opportunity: newInterest.opportunity
   }).exec()
   t.is(savedInterest.person._id.toString(), person._id.toString())
   t.is(savedInterest.opportunity._id.toString(), opportunity._id.toString())
+})
+
+test.serial('Should update the interest state', async t => {
+  const reqData = {
+    status: 'invited',
+    _id: interest._id,
+    person: {
+      nickname: person.nickname,
+      _id: person._id
+    },
+    comment: 'lol',
+    opportunity: opportunity._id,
+    date: 'Sanitize it plz'
+  }
+
+  const res = await request(server)
+    .put(`/api/interests/${interest._id}`)
+    .send(reqData)
+    .set('Accept', 'application/json')
+
+  t.is(res.status, 200)
 })
 
 test.serial('Should correctly delete an interest', async t => {
