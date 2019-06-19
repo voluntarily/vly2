@@ -3,38 +3,25 @@ export default () =>
     {
       key: 'facts',
       text: 'Activities',
-      href: '/acts'
+      href: '/acts',
+      authRequired: true
     },
     {
       key: 'forgs',
       text: 'Organisations',
-      href: '/orgs'
+      href: '/orgs',
+      authRequired: true
     },
     {
       key: 'fpeople',
       text: 'People',
-      href: '/people'
+      href: '/people',
+      authRequired: true
     },
     {
       key: 'fops',
       text: 'Opportunities',
-      href: '/ops'
-    },
-    {
-      key: 'ftest',
-      text: 'Showcase',
-      href: '/test'
-    },
-    {
-      key: 'fnotsecret',
-      text: 'Not Secret',
-      href: '/notsecret',
-      anonymousOnly: true
-    },
-    {
-      key: 'fsecret',
-      text: 'Secret',
-      href: '/secret',
+      href: '/ops',
       authRequired: true
     }
   ]

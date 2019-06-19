@@ -1,7 +1,5 @@
 import React from 'react'
 import test from 'ava'
-import { shallow } from 'enzyme'
-import { FormattedMessage } from 'react-intl'
 import Header from '../../components/Header/Header'
 import { mountWithIntl } from '../../lib/react-intl-test-helper'
 import withMockRoute from '../../server/util/mockRouter'
@@ -16,21 +14,9 @@ const mockStore = configureStore()(
   }
 )
 
-test('renders the header properly', t => {
-  const RoutedHeader = withMockRoute(Header, '/')
-  const wrapper = shallow(
-    <Provider store={mockStore}>
-      <RoutedHeader isAuthenticated={false} />
-    </Provider>
-  )
-
-  t.truthy(wrapper.find('Link').first().containsMatchingElement(<FormattedMessage id='siteTitle' />))
-  // t.is(wrapper.find('a').length, 2);
-  t.snapshot()
-})
-
-test.only('renders the Header and Navigation for anon user', t => {
+test('renders the Header and Navigation for anon user', t => {
   const RoutedHeader = withMockRoute(Header, '/about')
+  // test searching
 
   const wrapper = mountWithIntl(
     <Provider store={mockStore}>
@@ -39,12 +25,17 @@ test.only('renders the Header and Navigation for anon user', t => {
   )
 
   t.truthy(wrapper.find('Link').first().containsMatchingElement(<img />))
-  t.is(wrapper.find('a').length, 5)
+  t.is(wrapper.find('a').length, 4)
   t.is(wrapper.find('a').last().text(), 'Sign In')
   t.snapshot()
+
+  const search = wrapper.find('input').first()
+  search.simulate('change', { target: { value: 'auckland' } })
+  search.simulate('keyDown', { keyCode: 13 })
+  // t.truthy(onpush.calledOnce)
 })
 
-test.only('renders the Header and Navigation for authenticated user', t => {
+test('renders the Header and Navigation for authenticated user', t => {
   const RoutedHeader = withMockRoute(Header, '/about')
 
   const mockStoreAuth = configureStore()(
@@ -62,7 +53,7 @@ test.only('renders the Header and Navigation for authenticated user', t => {
   )
 
   t.truthy(wrapper.find('Link').first().containsMatchingElement(<img />))
-  t.is(wrapper.find('a').length, 6)
+  t.is(wrapper.find('a').length, 5)
   t.is(wrapper.find('a').last().text(), 'Sign Out')
   t.snapshot()
 })

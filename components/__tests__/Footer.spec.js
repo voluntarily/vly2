@@ -9,7 +9,8 @@ import { Provider } from 'react-redux'
 const mockStore = configureStore()(
   {
     session: {
-      isAuthenticated: false
+      isAuthenticated: false,
+      me: { role: ['admin', 'volunteer'] }
     }
   }
 )
@@ -23,7 +24,7 @@ test('renders the footer properly', t => {
     </Provider>
   )
   // console.log(wrapper.debug())
-  t.is(wrapper.find('div').length, 18)
+  t.is(wrapper.find('div').length, 12)
 
   t.snapshot()
 })
