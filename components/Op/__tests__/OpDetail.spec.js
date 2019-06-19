@@ -13,7 +13,8 @@ const op = {
   description: 'Project to grow something in the garden',
   duration: '15 Minutes',
   location: 'Newmarket, Auckland',
-  status: 'draft'
+  status: 'draft',
+  tags: []
 }
 
 test('render the detail with op', t => {
