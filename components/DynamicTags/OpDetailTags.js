@@ -13,9 +13,10 @@ class EditableTagGroup extends React.Component {
         onChange={this.updateInputValue}
         onPressEnter={this.addTag}
         value={this.state.inputvalue} />
-      {this.state.tags.map(tag =>
+      {this.state.tags.map((tag, index) =>
         <Tag closable
           onClose={() => this.removeTag(tag)}
+          key={index}
         >{tag}</Tag>
       )}
     </div>

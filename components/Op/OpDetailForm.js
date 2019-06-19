@@ -27,6 +27,8 @@ class OpDetailForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
 
+    console.log('The current op title in op detail form is: ' + this.props.op.title)
+
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const op = this.props.op
@@ -288,7 +290,7 @@ OpDetailForm.propTypes = {
     location: PropTypes.string,
     status: PropTypes.string,
     requestor: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.string)
+    tags: PropTypes.arrayOf(PropTypes.object)
   }),
   me: PropTypes.shape({
     _id: PropTypes.string

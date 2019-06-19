@@ -47,6 +47,8 @@ export class OpUpdatePage extends Component {
     if (!op) return
 
     op.tags = ['tagtagtag', 'tag2', 'tag5'] // remove once tags form linked up with op property
+    // op.tags = ['bababab', 'ccccc', 'yoyoyo', 'ayup'] // remove once tags form linked up with op property
+    console.log('The current op title in op update page is: ' + op.title)
     const userTags = op.tags
     const dbTags = this.props.tags.data // tags existing in db
     const tagIds = [] // user-defined tags converted to their objectids
@@ -114,6 +116,7 @@ OpUpdatePage.propTypes = {
     imgUrl: PropTypes.any,
     duration: PropTypes.string,
     location: PropTypes.string,
+    tags: PropTypes.object,
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])
   }),
   params: PropTypes.shape({
