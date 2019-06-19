@@ -2,8 +2,8 @@ import React from 'react'
 import Router from 'next/router'
 
 const actionWithPromise = () => {
-  console.log('route changed')
-  return new Promise((resolve, reject) => reject(Error('fail promise')))
+  // return new Promise((resolve, reject) => reject(Error('fail promise')))
+  return new Promise((resolve, reject) => resolve('route changed'))
 }
 
 const withMockRoute = (WrappedComponent, path, query) => {
@@ -35,7 +35,7 @@ const withMockRoute = (WrappedComponent, path, query) => {
     }
 
     render () {
-      Router.router = this.state
+      Router.router = this.state.router
       return <WrappedComponent {...this.state} {...this.props} />
     }
   }

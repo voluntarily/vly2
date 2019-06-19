@@ -36,6 +36,9 @@ const ItemP = styled.div`
 `
 
 export function OpDetail ({ op }) {
+  // This will make sure that if the description is undefined we will set it to an empty string
+  // Otherwise Markdown will throw error
+  const description = op.description == null ? '' : op.description
   return (
     <FullPage>
       <Spacer />
@@ -49,7 +52,7 @@ export function OpDetail ({ op }) {
           <Spacer />
           <ItemP>
             <Markdown
-              children={op.description}
+              children={description}
               options={{
                 overrides: {
                   Button: { component: Button }

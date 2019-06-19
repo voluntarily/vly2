@@ -52,7 +52,7 @@ class RegisterInterestSection extends Component {
 
   // When the button is clicked to withdraw interest, make an appropriate api call.
   async handleWithdraw (interest) {
-    // console.log('Deleting interest')
+    // console.log('Deleting interest ', interest)
     await this.props.dispatch(reduxApi.actions.interests.delete({ id: interest._id }))
     message.success('Interest deleted')
   }
@@ -68,6 +68,7 @@ class RegisterInterestSection extends Component {
     } else { // If we have access to the interests section of the Redux store...
       // Get the interest out of the store, if any.
       let interest = null
+
       if (this.props.interests && this.props.interests.data && this.props.interests.data.length > 0) {
         interest = this.props.interests.data[0]
       } else { // If not, use a blank interest.

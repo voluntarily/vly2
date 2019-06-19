@@ -11,11 +11,6 @@ export default () => [
     href: '/about'
   },
   {
-    key: 'horgs',
-    text: 'Organisations',
-    href: '/orgs'
-  },
-  {
     key: 'help',
     text: 'Help',
     href: 'https://voluntarily.atlassian.net/servicedesk/customer/portals'

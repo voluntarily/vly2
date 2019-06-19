@@ -5,6 +5,7 @@ const getTransportTest = () => {
   // Only needed if you don't have a real mail account for testing
   return nodemailer.createTestAccount()
     .then(testAccount => {
+      // console.log('Created test account ', testAccount)
       return nodemailer.createTransport({
         host: 'smtp.ethereal.email',
         port: 587,
@@ -17,6 +18,17 @@ const getTransportTest = () => {
     })
 }
 
+const getDevelopmentTransport = () =>
+  nodemailer.createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    secure: false,
+    auth: {
+      user: 'emma.lockman76@ethereal.email', // If the email is not sent, just need to get on the website and create a new account
+      pass: 'CzBhFBWqHqGkZVvDFH'
+    }
+  })
+
 // Use AWS SMTP service
 // for ses-smtp-user.20190425-160307
 // from must be andrew@voluntari.ly
@@ -27,14 +39,15 @@ const getTransportSES = () =>
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-      user: 'AKIAYQPYA7TMBMIRDKX2',
-      pass: 'BFNKuwq/8ud/fq+kEUWV0yJDg6cexZ0gYwaNctH7Yfp3'
+      user: '',
+      pass: ''
     }
   })
 
 module.exports = {
   getTransportSES,
   getTransportTest,
+  getDevelopmentTransport, // should use this one for development only
   getTransport: (process.env.NODE_ENV === 'test') ? getTransportTest : getTransportSES
   // getTransport: getTransportSES
 }

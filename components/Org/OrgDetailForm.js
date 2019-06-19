@@ -124,15 +124,13 @@ class OrgDetailForm extends Component {
               xs={{ span: 24 }}
               md={{ span: 16 }}
             >
-              <ImageUpload setImgUrl={this.setImgUrl} />
               <Form.Item label={orgImgUrl}>
                 {getFieldDecorator('imgUrl', {
-                  rules: [
-
-                  ]
+                  rules: []
                 })(
                   <Input />
                 )}
+                <ImageUpload setImgUrl={this.setImgUrl} />
               </Form.Item>
               <Form.Item label={orgType}>
                 {getFieldDecorator('type', {
@@ -200,26 +198,6 @@ OrgDetailForm.propTypes = {
   onCancel: PropTypes.func.isRequired
   // dispatch: PropTypes.func.isRequired,
 }
-
-// TODO replace imageURL field with uploader.
-// <Form.Item
-//     label="Image"
-//   >
-//     <div className="dropbox">
-//       {getFieldDecorator('dragger', {
-//         valuePropName: 'fileList',
-//         getValueFromEvent: this.normFile,
-//       })(
-//         <Upload.Dragger name="files" action="">
-//           <p className="ant-upload-drag-icon">
-//             <Icon type="inbox" />
-//           </p>
-//           <p className="ant-upload-text">Click or drag file to this area to upload</p>
-//           <p className="ant-upload-hint">Image ideal is 4:3 aspect ratio.</p>
-//         </Upload.Dragger>
-//       )}
-//     </div>
-//   </Form.Item>
 
 export default Form.create({
   name: 'organisation_detail_form',

@@ -1,0 +1,22 @@
+extends ../theme/layout.pug
+
+block tagline
+  span Heads-up #{person.nickname}, an update
+  
+block copybig
+  p Thank you for volunteering through Voluntari.ly
+
+block copy
+  p Kia ora #{person.nickname},
+  p Right now we have all the people we need for #{person.volunteerEvent}. But will let you know if that changes. 
+
+//- Override copy button because the layout has a block for authentical user
+//- Replace it witht this will do
+block copybutton
+  p Meanwhile, please take a look at the other opportunities still needing volunteers.
+  p Ngā mihi, Voluntari.ly
+   
+block copyimage
+  a(href="http://voluntari.ly" target="_blank")
+     img(width="100%" src='https://images.squarespace-cdn.com/content/v1/5b341f644cde7a925f522486/1553752247040-N1M39DEKVS6XF1D71OKD/ke17ZwdGBToddI8pDm48kFQQgP34qnCpeHaeAOzTt7pZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PIvwpK0aFuhG0GtLLHqvbV4raqY38tdDiF-KTEvoUH9G4/aaaaaaaaa.gif')
+                                 

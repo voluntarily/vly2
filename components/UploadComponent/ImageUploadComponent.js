@@ -49,7 +49,7 @@ class ImageUpload extends Component {
   render () {
     const up = (process.env.NODE_ENV !== 'test') &&
     <div onChange={this.onChange}>
-      <Dashboard uppy={this.uppy} proudlyDisplayPoweredByUppy={false} hideUploadButton />
+      <Dashboard uppy={this.uppy} inline height={100} proudlyDisplayPoweredByUppy={false} hideUploadButton />
     </div>
     return up
   }
