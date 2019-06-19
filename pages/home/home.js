@@ -5,14 +5,22 @@ import { FullPage } from '../../hocs/publicPage'
 import securePage from '../../hocs/securePage'
 import OpList from '../../components/Op/OpList'
 import OpAdd from '../../components/Op/OpAdd'
-import { TextHeadingBlack, SpacerSmall } from '../../components/VTheme/VTheme'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import reduxApi, { withInterests, withPeople, withOps } from '../../lib/redux/reduxApi.js'
 import NextActionBlock from '../../components/Action/NextActionBlock';
+import styled from 'styled-components'
+
+import { TextHeadingBlack, TextHeading, SpacerSmall, Spacer } from '../../components/VTheme/VTheme'
+
 const { TabPane } = Tabs
 
-
+const SectionTitleWrapper = styled.div`
+margin: 2rem 0rem;
+`
+const SectionWrapper = styled.div`
+margin: 4rem 0 6rem 0;
+`
 
 function callback (key) {
   console.log(key)
@@ -78,6 +86,7 @@ class PersonHomePage extends Component {
     const opAddButton = <OpAdd {...this.props} />
     return (
       <FullPage>
+        <Spacer />
         <TextHeadingBlack>
           {this.props.me.nickname}'s Opportunities
           {/* <FormattedMessage
@@ -89,20 +98,32 @@ class PersonHomePage extends Component {
         <SpacerSmall />
         <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback} tabBarExtraContent={opAddButton} >
           <TabPane tab={opsTab} key='1'>
-            <h2>
+            <SectionWrapper>
+              <SectionTitleWrapper>
+            <TextHeadingBlack>
               <FormattedMessage
                 id='home.liveOpportunities'
                 defaultMessage='Active Requests'
                 decription='subtitle on volunteer home page for active requests and opportunities'
               />
-            </h2>
+            </TextHeadingBlack>
+            </SectionTitleWrapper>
             {ops &&
               <OpList
                 ops={ops.filter(op => ['active', 'draft'].includes(op.status))}
               />
             }
+            </SectionWrapper>
+
+            <SectionWrapper>
+              <SectionTitleWrapper>
+                <TextHeadingBlack>
+                To get started, here are a few things we recommend doing:
+                </TextHeadingBlack>
+              </SectionTitleWrapper>
             {/* // TODO: [VP-208] list of things volunteers can do on home page */}
-            <NextActionBlock></NextActionBlock>
+            <NextActionBlock />
+            </SectionWrapper>
           </TabPane>
           <TabPane tab={searchTab} key='2'>
             <h2>
