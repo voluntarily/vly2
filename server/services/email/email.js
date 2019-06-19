@@ -39,8 +39,8 @@ const getTransportSES = () =>
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-      user: 'AKIAYQPYA7TMBMIRDKX2',
-      pass: 'BFNKuwq/8ud/fq+kEUWV0yJDg6cexZ0gYwaNctH7Yfp3'
+      user: '',
+      pass: ''
     }
   })
 
