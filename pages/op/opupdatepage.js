@@ -46,7 +46,7 @@ export class OpUpdatePage extends Component {
   async handleAdd (op) {
     if (!op) return
 
-    op.tags = ['bababab', 'ccccc', 'yoyoyo', 'ayup'] // remove once tags form linked up with op property
+    op.tags = ['tagtagtag', 'tag2', 'tag5'] // remove once tags form linked up with op property
     const userTags = op.tags
     const dbTags = this.props.tags.data // tags existing in db
     const tagIds = [] // user-defined tags converted to their objectids
@@ -64,11 +64,12 @@ export class OpUpdatePage extends Component {
     })
 
     // send post requests for each non-existing tag to create them
-    for (let i = 0; i < newTags.length; i++) {
-      // redux api does not allow sending multiple actions at once so must await on each individually
-      await this.props.dispatch(reduxApi.actions.tags.post({}, { body: JSON.stringify(newTags[i]) }))
-      tagIds.push(this.props.tags.data[this.props.tags.data.length - 1]._id)
-    }
+    await this.props.dispatch(reduxApi.actions.tags.post({}, { body: JSON.stringify(newTags) }))
+
+    // find the ids of all the newly created tags, which are now in props
+    newTags.forEach(newTag => {
+      tagIds.push(this.props.tags.data.find(tag => tag.tag === newTag.tag)._id)
+    })
 
     op.tags = tagIds
 

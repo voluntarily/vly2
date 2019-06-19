@@ -1,6 +1,7 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Tag = require('./tag')
+const { createTags } = require('./tag.controller.js')
 
 module.exports = server => {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -13,6 +14,9 @@ module.exports = server => {
 
       // beforeActions: [],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
+      actions: {
+        create: createTags
+      },
       afterActions: [
         // this is the place to require user be authed.
         { middlewares: [helpers.formatResponse] }
