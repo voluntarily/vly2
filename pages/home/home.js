@@ -9,7 +9,10 @@ import { TextHeadingBlack, SpacerSmall } from '../../components/VTheme/VTheme'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import reduxApi, { withInterests, withPeople, withOps } from '../../lib/redux/reduxApi.js'
+import NextActionBlock from '../../components/Action/NextActionBlock';
 const { TabPane } = Tabs
+
+
 
 function callback (key) {
   console.log(key)
@@ -66,6 +69,8 @@ class PersonHomePage extends Component {
   }
 
   render () {
+
+    var shadowStyle = {overflow: 'visible'}
     const ops = this.mergeOpsList()
     const opsTab = <span><Icon type='schedule' /><FormattedMessage id='home.liveops' defaultMessage='Active' description='show opportunities list on volunteer home page' /></span>
     const searchTab = <span><Icon type='appstore' /><FormattedMessage id='home.pastops' defaultMessage='History' description='show volunteering history on volunteer home page' /></span>
@@ -74,7 +79,7 @@ class PersonHomePage extends Component {
     return (
       <FullPage>
         <TextHeadingBlack>
-          {this.props.me.nickname}
+          {this.props.me.nickname}'s Opportunities
           {/* <FormattedMessage
             id='home.title'
             defaultMessage='My Stuff'
@@ -82,7 +87,7 @@ class PersonHomePage extends Component {
           /> */}
         </TextHeadingBlack>
         <SpacerSmall />
-        <Tabs defaultActiveKey='1' onChange={callback} tabBarExtraContent={opAddButton} >
+        <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback} tabBarExtraContent={opAddButton} >
           <TabPane tab={opsTab} key='1'>
             <h2>
               <FormattedMessage
@@ -97,14 +102,7 @@ class PersonHomePage extends Component {
               />
             }
             {/* // TODO: [VP-208] list of things volunteers can do on home page */}
-            <h2>More things you can do</h2>
-            <ul>
-              <li>Suggested for you</li>
-              <li>Get verified</li>
-              <li>Training</li>
-              <li>Create an activity</li>
-              <li>create an offer</li>
-            </ul>
+            <NextActionBlock></NextActionBlock>
           </TabPane>
           <TabPane tab={searchTab} key='2'>
             <h2>
