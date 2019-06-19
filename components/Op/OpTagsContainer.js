@@ -4,7 +4,7 @@ export function OpTagsContainer ({ tags }) {
   return (
     <div>
       {tags.map(tag => {
-        return <div>{tag.tag}</div> // TODO: styling when designs are finalised
+        return <div key={tag.tag}>{tag.tag}</div> // TODO: styling when designs are finalised
       })}
     </div>
   )
