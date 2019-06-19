@@ -23,7 +23,6 @@ const isUrlBlacklisted = url => {
 module.exports = async (req, res, next) => {
   req.session = DEFAULT_SESSION
   if (!isUrlBlacklisted(req.url) && req.cookies.idToken) {
-    console.log(req.url)
     try {
       const user = jwtDecode(req.cookies.idToken)
       req.session.isAuthenticated = true
