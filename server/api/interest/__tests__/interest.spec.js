@@ -131,13 +131,6 @@ test.serial('Should correctly add a valid interest', async t => {
 })
 
 test.serial('Should update the interest state', async t => {
-  // The req data has a value of
-  // --- status
-  // --- interest ID
-  // --- person: nickname and _id
-  // --- opportunity: _id 
-  // --- comment
-  // --- dateAdded
   const reqData = {
     status: 'invited',
     _id: interest._id,
