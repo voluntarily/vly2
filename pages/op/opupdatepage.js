@@ -32,8 +32,6 @@ export class OpUpdatePage extends Component {
   async componentDidMount () {
     try {
       await this.props.dispatch(reduxApi.actions.tags.get())
-      console.log('got tags')
-      console.log(this.props.tags.data)
     } catch (err) {
       console.log('error in getting tags', err)
     }
