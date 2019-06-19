@@ -49,7 +49,7 @@ export function OpDetail ({ op }) {
           <ItemListing>⏱&nbsp;{op.duration}</ItemListing>
           <ItemListing>🏫&nbsp;{op.location}</ItemListing>
           <ItemListing>📝&nbsp;{op.status}</ItemListing>
-          <ItemListing>🔖&nbsp;{op.tags}</ItemListing>
+          <ItemListing>🔖&nbsp;//TODO</ItemListing>
 
           <Spacer />
 
