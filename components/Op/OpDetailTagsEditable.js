@@ -28,7 +28,8 @@ class OpDetailTagsEditable extends React.Component {
 
   addTag = (e) => {
     e.preventDefault()
-    if (!this.props.value.includes(this.state.inputvalue)) {
+    if (this.state.inputvalue === '') {
+    } else if (!this.props.value.includes(this.state.inputvalue)) {
       this.props.onChange([...this.props.value, this.state.inputvalue])
       this.setState({ inputvalue: '' })
     }
