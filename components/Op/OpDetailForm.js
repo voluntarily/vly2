@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import EditableTagGroup from '../DynamicTags/OpDetailTags'
+import OpDetailTagsEditable from './OpDetailTagsEditable'
 const { TextArea } = Input
 
 function hasErrors (fieldsError) {
@@ -26,9 +26,6 @@ class OpDetailForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-
-    console.log('The current op title in op detail form is: ' + this.props.op.title)
-
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const op = this.props.op
@@ -159,11 +156,12 @@ class OpDetailForm extends Component {
             >
               <Form.Item label={opTags}>
                 {getFieldDecorator('tags', {
+                  initialValue: [],
                   rules: [
 
                   ]
                 })(
-                  <EditableTagGroup />
+                  <OpDetailTagsEditable />
                 )
                 }
               </Form.Item>
@@ -290,7 +288,7 @@ OpDetailForm.propTypes = {
     location: PropTypes.string,
     status: PropTypes.string,
     requestor: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.object)
+    tags: PropTypes.arrayOf(PropTypes.string)
   }),
   me: PropTypes.shape({
     _id: PropTypes.string

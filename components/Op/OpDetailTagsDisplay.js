@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-export function OpTagsContainer ({ tags }) {
+export function OpDetailTagsDisplay ({ tags }) {
   return (
     <div>
       {tags.map(tag => {
@@ -10,11 +10,11 @@ export function OpTagsContainer ({ tags }) {
   )
 }
 
-OpTagsContainer.propTypes = {
+OpDetailTagsDisplay.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.shape({
     tag: PropTypes.string.isRequired,
     _id: PropTypes.string
   }))
 }
 
-export default OpTagsContainer
+export default OpDetailTagsDisplay

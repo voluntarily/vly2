@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import { Button } from 'antd'
 import { FullPage } from '../../hocs/publicPage'
 import { HalfGrid, Spacer } from '../VTheme/VTheme'
-import OpTagsContainer from './OpTagsContainer'
+import OpDetailTagsDisplay from './OpDetailTagsDisplay'
 
 const Left = styled.div``
 
@@ -67,7 +67,7 @@ export function OpDetail ({ op }) {
         </Left>
         <Right>
           <img style={{ width: '100%' }} src={op.imgUrl} alt={op.title} />
-          <OpTagsContainer tags={op.tags} />
+          <OpDetailTagsDisplay tags={op.tags} />
         </Right>
       </HalfGrid>
     </FullPage>

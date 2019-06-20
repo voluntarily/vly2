@@ -12,21 +12,18 @@ const newOp = {
   imgUrl: '',
   duration: '',
   location: '',
-  status: 'inactive'
+  status: 'inactive',
+  tags: []
 }
 
 export class OpUpdatePage extends Component {
   static async getInitialProps ({ store, query }) {
     // Get one Op
-    if (query && query.id) {
-      const ops = await store.dispatch(reduxApi.actions.opportunities.get(query))
-      return { ops, query }
-    } else {
-      return {
-        ops: [ { op: newOp } ],
-        query
-      }
+    const opExists = !!(query && query.id) // !! converts to a boolean value
+    if (opExists) {
+      await store.dispatch(reduxApi.actions.opportunities.get(query))
     }
+    return { opExists }
   }
 
   async componentDidMount () {
@@ -44,9 +41,6 @@ export class OpUpdatePage extends Component {
   async handleAdd (op) {
     if (!op) return
 
-    op.tags = ['tagtagtag', 'tag2', 'tag5'] // remove once tags form linked up with op property
-    // op.tags = ['bababab', 'ccccc', 'yoyoyo', 'ayup'] // remove once tags form linked up with op property
-    console.log('The current op title in op update page is: ' + op.title)
     const userTags = op.tags
     const dbTags = this.props.tags.data // tags existing in db
     const tagIds = [] // user-defined tags converted to their objectids
@@ -82,11 +76,16 @@ export class OpUpdatePage extends Component {
     }
     op = res[0]
     message.success('Saved.')
+
     // go  to details page
     if (op && op._id) Router.push(`/ops/${op._id}`)
   }
   render () {
-    const op = this.props.ops[0]
+    const op = this.props.opExists ? {
+      ...this.props.opportunities.data[0],
+      tags: this.props.opportunities.data[0].tags.map(op => op.tag)
+    } : newOp
+
     const me = this.props.me
     return (
       <FullPage>
