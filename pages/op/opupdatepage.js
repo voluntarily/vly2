@@ -87,11 +87,12 @@ export class OpUpdatePage extends Component {
     } : newOp
 
     const me = this.props.me
+    const existingTags = this.props.tags.data.map(tag => tag.tag)
     return (
       <FullPage>
         <h1>Create a request</h1>
         <small>Ready to get some help? Lets start by letting volunteers know what you need</small>
-        <OpDetailForm op={op} me={me} onSubmit={this.handleAdd.bind(this, op)} onCancel={this.handleCancel} />
+        <OpDetailForm op={op} me={me} onSubmit={this.handleAdd.bind(this, op)} onCancel={this.handleCancel} existingTags={existingTags} />
         <br />
         {/* <Collapse>
           <Panel header="Debug" key="1">

@@ -161,7 +161,7 @@ class OpDetailForm extends Component {
 
                   ]
                 })(
-                  <OpDetailTagsEditable />
+                  <OpDetailTagsEditable existingTags={this.props.existingTags} />
                 )
                 }
               </Form.Item>
@@ -298,7 +298,8 @@ OpDetailForm.propTypes = {
     id: PropTypes.string.isRequired
   }),
   onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired
+  onCancel: PropTypes.func.isRequired,
+  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired
   // dispatch: PropTypes.func.isRequired,
 }
 
