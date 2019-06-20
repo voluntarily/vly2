@@ -30,8 +30,9 @@ OpAdd.propTypes = {
   roles: PropTypes.array
 }
 
+// Warning me will be {} if not signed in and role will be undefined.
 const mapStateToProps = store => ({
-  roles: store.session.me.role
+  roles: store.session.me.role || []
 })
 
 export default connect(
