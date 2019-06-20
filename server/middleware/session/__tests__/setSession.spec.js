@@ -52,26 +52,26 @@ test.beforeEach('connect and add peopl fixture', async () => {
 })
 
 test.serial('Check session set to default when user not logged in', async t => {
-  const req = { cookies: { } }
-  await setSession(req, null, () => {})
+  const req = { url: '/api/foo', cookies: {} }
+  await setSession(req, null, () => { })
   t.deepEqual(req.session, DEFAULT_SESSION)
 })
 
 test.serial('Check session set to default when idToken is bad', async t => {
-  const req = { cookies: { idToken: 'foo' } }
-  await setSession(req, null, () => {})
+  const req = { url: '/api/foo', cookies: { idToken: 'foo' } }
+  await setSession(req, null, () => { })
   t.deepEqual(req.session, DEFAULT_SESSION)
 })
 
 test.serial('Check session set to default when url is blacklisted', async t => {
   const req = { url: '/static/someimage.jpg', cookies: { idToken: jwtData.idToken } }
-  await setSession(req, null, () => {})
+  await setSession(req, null, () => { })
   t.deepEqual(req.session, DEFAULT_SESSION)
 })
 
 test.serial('Check session set when user logged in', async t => {
-  const req = { cookies: { idToken: jwtData.idToken } }
-  await setSession(req, null, () => {})
+  const req = { url: '/api/foo', cookies: { idToken: jwtData.idToken } }
+  await setSession(req, null, () => { })
   t.true(req.session.isAuthenticated)
   t.is(req.session.user.email, jwtData.idTokenPayload.email)
   t.is(req.session.me.email, jwtData.idTokenPayload.email)
