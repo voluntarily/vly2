@@ -15,8 +15,8 @@ class Landing extends Component {
   render () {
     return (
       <div>
+        <Hero />
         <FullPage>
-          <Hero />
           <Spacer />
           {/* <AboutSection
             title='Support Innovation in the classroom.'

@@ -61,6 +61,7 @@ export const Grid = styled.div`
   display: grid;
   grid-template-columns: 18.5rem 18.5rem 18.5rem 18.5rem;
   grid-gap: 2rem;
+  overflow:visible;
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
     grid-template-columns: repeat(auto-fit, 18.5rem);
@@ -69,7 +70,7 @@ export const Grid = styled.div`
   }
 
   @media screen and (max-width: 767px) {
-    grid-template-columns: 100vw;
+    grid-template-columns: calc(100vw - 2rem);
     grid-gap: 0rem;
   }
 ` // end grid

@@ -3,15 +3,26 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-// import styled from 'styled-components'
-import { Table, Button, Popconfirm } from 'antd'
+import { Avatar, Button, Popconfirm, Table } from 'antd'
+import Router from 'next/router'
 
 class InterestTable extends Component {
   columns = [
-    {
-      title: 'Name',
-      dataIndex: 'person.nickname',
-      key: 'person.nickname'
+    { title: 'Name',
+      key: 'avatar',
+      render: (text, record) => {
+        return (
+          <span>
+            <Avatar
+              size='large'
+              shape='square'
+              src={record.person.avatar}
+              icon='user'
+            />&nbsp;
+            {record.person.nickname}
+          </span>
+        )
+      }
     },
     {
       title: 'Comment',
@@ -76,7 +87,17 @@ class InterestTable extends Component {
 
   render () {
     return (
-      <Table columns={this.columns} dataSource={this.props.interests} rowKey='_id' pagination={false} />
+      <Table
+        columns={this.columns}
+        dataSource={this.props.interests}
+        rowKey='_id'
+        pagination={false}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: event => { Router.push(`/people/${record.person._id}`) } // click row
+          }
+        }}
+      />
     )
   }
 }
