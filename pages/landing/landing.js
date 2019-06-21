@@ -11,12 +11,12 @@ import { Spacer } from '../../components/VTheme/VTheme'
 
 // import schoolsactivity from './schoolsactivity.png'
 
-export class Landing extends Component {
+class Landing extends Component {
   render () {
     return (
       <div>
+        <Hero />
         <FullPage>
-          <Hero />
           <Spacer />
           {/* <AboutSection
             title='Support Innovation in the classroom.'
@@ -41,5 +41,5 @@ export class Landing extends Component {
     )
   }
 }
-
+export const LandingTest = Landing // for test
 export default publicPage(Landing)

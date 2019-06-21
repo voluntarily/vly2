@@ -20,7 +20,7 @@ const listInterests = async (req, res) => {
         query.person = req.query.me
       }
       // Return the nickname in person field
-      got = await Interest.find(query).populate({ path: 'person', select: 'nickname' }).sort(sort).exec()
+      got = await Interest.find(query).populate({ path: 'person', select: 'nickname name avatar' }).sort(sort).exec()
     } else if (req.query.me) {
       const query = { person: req.query.me }
       got = await Interest.find(query).populate({ path: 'opportunity' }).sort(sort).exec()

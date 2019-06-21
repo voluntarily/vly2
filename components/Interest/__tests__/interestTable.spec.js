@@ -2,6 +2,7 @@ import InterestTable from '../InterestTable'
 import test from 'ava'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
 import sinon from 'sinon'
+import withMockRoute from '../../../server/util/mockRouter'
 
 test('InterestTable renders properly', t => {
   const wrapper = mountWithIntl(<InterestTable
@@ -23,9 +24,28 @@ test('InterestTable renders properly', t => {
   t.is(wrapper.find('th').at(2).text(), 'Status')
 
   // Confirm table data
-  t.is(wrapper.find('td').at(0).text(), 'Test Name')
+  t.regex(wrapper.find('td').at(0).text(), /Test Name/)
   t.is(wrapper.find('td').at(1).text(), 'Test Comment')
   t.is(wrapper.find('td').at(2).text(), 'Test Status')
+})
+
+test('row click handler pushes to profile page', t => {
+  const RoutedTable = withMockRoute(InterestTable, '/about')
+  const wrapper = mountWithIntl(<RoutedTable
+    onInvite={() => {}}
+    onWithdrawInvite={() => {}}
+    onDecline={() => {}}
+    interests={[{
+      person: { nickname: 'Test Name' },
+      opportunity: 'Test Opportunity',
+      comment: 'Test Comment',
+      status: 'Test Status',
+      _id: '11223344'
+    }]}
+  />, '/test')
+
+  wrapper.find('td').at(0).simulate('click')
+  t.regex(wrapper.find('td').at(0).text(), /Test Name/)
 })
 
 test('Invite button click handler calls correct callback', t => {
