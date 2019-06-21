@@ -13,7 +13,7 @@ class OpDetailTagsEditable extends React.Component {
   render () {
     const { matchingTags, inputvalue } = this.state
     const children = matchingTags.map(tag => <Option key={tag}>{tag}</Option>)
-    if (inputvalue && !matchingTags.includes(inputvalue)) {
+    if (inputvalue.trim() && !matchingTags.includes(inputvalue.trim())) {
       // let the user select what they have typed
       children.unshift(<Option key={inputvalue}>{inputvalue}</Option>)
     }
@@ -37,15 +37,16 @@ class OpDetailTagsEditable extends React.Component {
   }
 
   optionSelected = value => {
-    if (value && !this.props.value.includes(value)) {
-      this.props.onChange([...this.props.value, value])
-      this.setState({ inputvalue: '' })
+    const trimmedVal = value.trim()
+    if (trimmedVal && !this.props.value.includes(trimmedVal)) {
+      this.props.onChange([...this.props.value, trimmedVal])
     }
+    this.setState({ inputvalue: '' })
   }
 
   handleSearch = value => {
-    const matchingTags = value
-      ? this.props.existingTags.filter(tag => tag.toUpperCase().indexOf(value.toUpperCase()) !== -1)
+    const matchingTags = value.trim()
+      ? this.props.existingTags.filter(tag => tag.toUpperCase().indexOf(value.trim().toUpperCase()) !== -1)
       : []
     this.setState({
       inputvalue: value,

@@ -65,20 +65,23 @@ export class OpUpdatePage extends Component {
       tagIds.push(this.props.tags.data.find(tag => tag.tag === newTag.tag)._id)
     })
 
-    op.tags = tagIds
+    let updatedOp = {
+      ...op,
+      tags: tagIds
+    }
 
     // Actual data request
     let res = {}
-    if (op._id) {
-      res = await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify(op) }))
+    if (updatedOp._id) {
+      res = await this.props.dispatch(reduxApi.actions.opportunities.put({ id: updatedOp._id }, { body: JSON.stringify(updatedOp) }))
     } else {
-      res = await this.props.dispatch(reduxApi.actions.opportunities.post({}, { body: JSON.stringify(op) }))
+      res = await this.props.dispatch(reduxApi.actions.opportunities.post({}, { body: JSON.stringify(updatedOp) }))
     }
-    op = res[0]
+    updatedOp = res[0]
     message.success('Saved.')
 
     // go  to details page
-    if (op && op._id) Router.push(`/ops/${op._id}`)
+    if (updatedOp && updatedOp._id) Router.push(`/ops/${updatedOp._id}`)
   }
   render () {
     const op = this.props.opExists ? {
