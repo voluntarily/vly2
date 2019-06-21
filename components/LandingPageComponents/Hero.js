@@ -16,17 +16,17 @@ const AwesomeHeroContainer = styled.div`
 
   @media screen and (min-width: 1380px) and (max-width: 1920px) {
     height: 54rem;
-    width: calc(100vw - 4rem);
+    width: 80rem;
   }
 
   @media screen and (min-width: 1282px) and (max-width: 1380px) {
     height: 44rem;
-    width: calc(100vw - 4rem);
+    width: calc(100vw - 2rem);
   }
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
     height: 44rem;
-    width: calc(100vw - 4rem);
+    width: calc(100vw - 2rem);
   }
 
   @media screen and (min-width: 768px) and (max-width: 1025px) {
@@ -155,6 +155,7 @@ const HeroRight = styled.div`
   @media screen and (min-width: 1380px) and (max-width: 1920px) {
     margin-top: 20rem;
     margin-left: 0rem;
+    width: 32rem;
   }
 
   @media screen and (min-width: 1282px) and (max-width: 1380px) {
