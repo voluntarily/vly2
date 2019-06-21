@@ -19,7 +19,8 @@ const CardContainer = styled.a`
   @media screen and (max-width: 768px) {
 
           width: calc(100vw - 2rem);
-          margin-bottom: 1.5rem;
+          margin-bottom: 1rem;
+          height: auto;
 
   }
 
@@ -38,6 +39,9 @@ margin: 2rem 1rem 0.5rem 1rem;
   color: #6549AA;
   letter-spacing: -0.38px;
   line-height: 24px;
+    @media screen and (max-width: 768px) {
+      margin: 0rem 1rem 0.5rem 1rem;
+  }
 ` // end ActionCardTitle
 
 const CardDescription = styled.p`
