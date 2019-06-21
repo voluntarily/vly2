@@ -7,19 +7,35 @@ import OpList from '../../components/Op/OpList'
 import OpAdd from '../../components/Op/OpAdd'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
-import reduxApi, { withInterests, withPeople, withOps } from '../../lib/redux/reduxApi.js'
-import NextActionBlock from '../../components/Action/NextActionBlock';
+import reduxApi, {
+  withInterests,
+  withPeople,
+  withOps
+} from '../../lib/redux/reduxApi.js'
+import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
 
-import { TextHeadingBlack, TextHeading, SpacerSmall, Spacer } from '../../components/VTheme/VTheme'
+import {
+  TextHeadingBlack,
+  TextHeading,
+  TextP,
+  SpacerSmall,
+  Spacer,
+  TextSubtitle
+} from '../../components/VTheme/VTheme'
 
 const { TabPane } = Tabs
 
 const SectionTitleWrapper = styled.div`
-margin: 2rem 0rem;
+  margin: 2rem 0rem;
 `
 const SectionWrapper = styled.div`
-margin: 4rem 0 6rem 0;
+  margin: 4rem 0 6rem 0;
+`
+
+const TitleContainer = styled.div`
+margin: 4rem 0 2rem 0;
+
 `
 
 function callback (key) {
@@ -35,10 +51,14 @@ class PersonHomePage extends Component {
     const myops = this.props.opportunities.data // list of ops I own
     const interests = this.props.interests.data // list of ops I'm volunteering for
     const volops = interests.map((interest, index) => {
-      interest.opportunity.interest = { _id: interest._id, status: interest.status, comment: interest.comment }
+      interest.opportunity.interest = {
+        _id: interest._id,
+        status: interest.status,
+        comment: interest.comment
+      }
       return interest.opportunity
     })
-    const ops = [ ...volops, ...myops ]
+    const ops = [...volops, ...myops]
     return ops
   }
 
@@ -68,7 +88,12 @@ class PersonHomePage extends Component {
     if (!person) return
     // Actual data request
     let res = {}
-    res = await this.props.dispatch(reduxApi.actions.people.put({ id: person._id }, { body: JSON.stringify(person) }))
+    res = await this.props.dispatch(
+      reduxApi.actions.people.put(
+        { id: person._id },
+        { body: JSON.stringify(person) }
+      )
+    )
 
     person = res[0]
     message.success('Saved.')
@@ -77,52 +102,87 @@ class PersonHomePage extends Component {
   }
 
   render () {
-
-    var shadowStyle = {overflow: 'visible'}
+    var shadowStyle = { overflow: 'visible' }
     const ops = this.mergeOpsList()
-    const opsTab = <span><Icon type='schedule' /><FormattedMessage id='home.liveops' defaultMessage='Active' description='show opportunities list on volunteer home page' /></span>
-    const searchTab = <span><Icon type='appstore' /><FormattedMessage id='home.pastops' defaultMessage='History' description='show volunteering history on volunteer home page' /></span>
-    const profileTab = <span><Icon type='setting' /><FormattedMessage id='home.profile' defaultMessage='Profile' description='show profile on volunteer home page' /></span>
+    const opsTab = (
+      <span>
+        <Icon type='schedule' />
+        <FormattedMessage
+          id='home.liveops'
+          defaultMessage='Active'
+          description='show opportunities list on volunteer home page'
+        />
+      </span>
+    )
+    const searchTab = (
+      <span>
+        <Icon type='appstore' />
+        <FormattedMessage
+          id='home.pastops'
+          defaultMessage='History'
+          description='show volunteering history on volunteer home page'
+        />
+      </span>
+    )
+    const profileTab = (
+      <span>
+        <Icon type='setting' />
+        <FormattedMessage
+          id='home.profile'
+          defaultMessage='Profile'
+          description='show profile on volunteer home page'
+        />
+      </span>
+    )
     const opAddButton = <OpAdd {...this.props} />
     return (
       <FullPage>
-        <Spacer />
-        <TextHeadingBlack>
-          {this.props.me.nickname}'s Opportunities
-          {/* <FormattedMessage
+        <TitleContainer>
+          <TextHeadingBlack>
+            {this.props.me.nickname}'s Opportunities
+            {/* <FormattedMessage
             id='home.title'
             defaultMessage='My Stuff'
             description='title on volunteer home page.'
           /> */}
-        </TextHeadingBlack>
-        <SpacerSmall />
-        <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback} tabBarExtraContent={opAddButton} >
+          </TextHeadingBlack>
+        </TitleContainer>
+
+        <Tabs
+          style={shadowStyle}
+          defaultActiveKey='1'
+          onChange={callback}
+          tabBarExtraContent={opAddButton}
+        >
           <TabPane tab={opsTab} key='1'>
             <SectionWrapper>
               <SectionTitleWrapper>
-            <TextHeadingBlack>
-              <FormattedMessage
-                id='home.liveOpportunities'
-                defaultMessage='Active Requests'
-                decription='subtitle on volunteer home page for active requests and opportunities'
-              />
-            </TextHeadingBlack>
-            </SectionTitleWrapper>
-            {ops &&
-              <OpList
-                ops={ops.filter(op => ['active', 'draft'].includes(op.status))}
-              />
-            }
+                <TextHeadingBlack>
+                  <FormattedMessage
+                    id='home.liveOpportunities'
+                    defaultMessage='Active Requests'
+                    decription='subtitle on volunteer home page for active requests and opportunities'
+                  />
+                </TextHeadingBlack>
+              </SectionTitleWrapper>
+              {ops && (
+                <OpList
+                  ops={ops.filter(op =>
+                    ['active', 'draft'].includes(op.status)
+                  )}
+                />
+              )}
             </SectionWrapper>
 
             <SectionWrapper>
               <SectionTitleWrapper>
-                <TextHeadingBlack>
-                To get started, here are a few things we recommend doing:
-                </TextHeadingBlack>
+                <TextHeadingBlack>Getting Started</TextHeadingBlack>
+                <TextP>
+                  To start volunteering on Voluntarily, here are a few things we recommend doing:
+                </TextP>
               </SectionTitleWrapper>
-            {/* // TODO: [VP-208] list of things volunteers can do on home page */}
-            <NextActionBlock />
+              {/* // TODO: [VP-208] list of things volunteers can do on home page */}
+              <NextActionBlock />
             </SectionWrapper>
           </TabPane>
           <TabPane tab={searchTab} key='2'>
@@ -133,23 +193,39 @@ class PersonHomePage extends Component {
                 decription='subtitle on volunteer home page for completed requests and opportunities'
               />
             </h2>
-            <OpList ops={ops.filter(op => op.status === 'done' && op.requestor === this.props.me._id)} />
+            <OpList
+              ops={ops.filter(
+                op => op.status === 'done' && op.requestor === this.props.me._id
+              )}
+            />
             {/* <OpListSection query={myPastfilterString} /> */}
           </TabPane>
           <TabPane tab={profileTab} key='3'>
-            {this.state.editProfile
-              ? <PersonDetailForm person={this.props.me} onSubmit={this.handleUpdate.bind(this, this.props.me)} onCancel={this.handleCancel} />
-              : <div>
-                <Button style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editProfile: true })} >
-                  <FormattedMessage id='editPerson' defaultMessage='Edit' description='Button to edit an person on PersonDetails page' />
+            {this.state.editProfile ? (
+              <PersonDetailForm
+                person={this.props.me}
+                onSubmit={this.handleUpdate.bind(this, this.props.me)}
+                onCancel={this.handleCancel}
+              />
+            ) : (
+              <div>
+                <Button
+                  style={{ float: 'right' }}
+                  type='primary'
+                  shape='round'
+                  onClick={() => this.setState({ editProfile: true })}
+                >
+                  <FormattedMessage
+                    id='editPerson'
+                    defaultMessage='Edit'
+                    description='Button to edit an person on PersonDetails page'
+                  />
                 </Button>
                 <PersonDetail person={this.props.me} />
-
               </div>
-            }
+            )}
           </TabPane>
         </Tabs>
-
       </FullPage>
     )
   }

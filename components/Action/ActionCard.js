@@ -14,9 +14,22 @@ const CardContainer = styled.a`
     transform: scale(1.02);
   }
  
+
+
+  @media screen and (max-width: 768px) {
+
+          width: calc(100vw - 2rem);
+          margin-bottom: 1.5rem;
+
+  }
+
+
 ` //end card container
 
-const CardImage = styled.img`` // end ActionCardImage
+const CardImage = styled.img`
+
+
+` // end ActionCardImage
 
 const CardTitle = styled.h1`
 margin: 2rem 1rem 0.5rem 1rem;
