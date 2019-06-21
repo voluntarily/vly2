@@ -1,6 +1,5 @@
 import InterestTable from '../InterestTable'
 import test from 'ava'
-import { mount } from 'enzyme'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
 import sinon from 'sinon'
 import withMockRoute from '../../../server/util/mockRouter'
