@@ -4,7 +4,6 @@ import React from 'react'
 import { Grid } from '../VTheme/VTheme'
 import ActionCard from '../Action/ActionCard'
 import styled from 'styled-components'
-import TitleSection from '../LandingPageComponents/TitleSection.js'
 
 const BlockContainer = styled.div`` // BlockContainer
 
@@ -33,7 +32,6 @@ const NextActionBlock = ({ ...props }) => (
         description='Help mobilise more volunteers by contributing. All skill levels are welcome, and training is provided.'
         link='https://github.com/voluntarily/vly2'
       />
-
 
     </Grid>
   </BlockContainer>

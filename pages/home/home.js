@@ -15,14 +15,7 @@ import reduxApi, {
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
 
-import {
-  TextHeadingBlack,
-  TextHeading,
-  TextP,
-  SpacerSmall,
-  Spacer,
-  TextSubtitle
-} from '../../components/VTheme/VTheme'
+import { TextHeadingBlack, TextP } from '../../components/VTheme/VTheme'
 
 const { TabPane } = Tabs
 
@@ -34,8 +27,7 @@ const SectionWrapper = styled.div`
 `
 
 const TitleContainer = styled.div`
-margin: 4rem 0 2rem 0;
-
+  margin: 4rem 0 2rem 0;
 `
 
 function callback (key) {
@@ -139,7 +131,7 @@ class PersonHomePage extends Component {
       <FullPage>
         <TitleContainer>
           <TextHeadingBlack>
-            {this.props.me.nickname}'s Opportunities
+            {this.props.me.nickname}
             {/* <FormattedMessage
             id='home.title'
             defaultMessage='My Stuff'
@@ -178,7 +170,8 @@ class PersonHomePage extends Component {
               <SectionTitleWrapper>
                 <TextHeadingBlack>Getting Started</TextHeadingBlack>
                 <TextP>
-                  To start volunteering on Voluntarily, here are a few things we recommend doing:
+                  To start volunteering on Voluntarily, here are a few things we
+                  recommend doing:
                 </TextP>
               </SectionTitleWrapper>
               {/* // TODO: [VP-208] list of things volunteers can do on home page */}

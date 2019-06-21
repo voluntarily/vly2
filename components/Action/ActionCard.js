@@ -25,7 +25,7 @@ const CardContainer = styled.a`
   }
 
 
-` //end card container
+` // end card container
 
 const CardImage = styled.img`
 
@@ -53,12 +53,11 @@ margin: 0 1rem 1rem 1rem;
 
 const ActionCard = ({ image, title, description, link, ...props }) => (
 
-
-    <CardContainer href={link} target="_blank">
-       <CardImage src={image} />
-       <CardTitle>{title}</CardTitle>
-       <CardDescription>{description}</CardDescription> 
-    </CardContainer>
+  <CardContainer href={link} target='_blank'>
+    <CardImage src={image} />
+    <CardTitle>{title}</CardTitle>
+    <CardDescription>{description}</CardDescription>
+  </CardContainer>
 
 )
 export default ActionCard
