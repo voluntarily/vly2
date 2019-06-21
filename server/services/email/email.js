@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer')
+const { config } = require('../../../config/config')
 
 const getTransportTest = () => {
   // Generate test SMTP service account from ethereal.email
@@ -39,8 +40,8 @@ const getTransportSES = () =>
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-      user: 'AKIAYQPYA7TMBMIRDKX2',
-      pass: 'BFNKuwq/8ud/fq+kEUWV0yJDg6cexZ0gYwaNctH7Yfp3'
+      user: config.SMTP_ID,
+      pass: config.SMTP_PWD
     }
   })
 

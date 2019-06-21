@@ -2,11 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 // import { FormattedMessage } from 'react-intl'
-import { Layout } from 'antd'
+import { Input, Layout } from 'antd'
 import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
+import Router from 'next/router'
+
 import links from './HeaderMenu'
 import { connect } from 'react-redux'
+const Search = Input.Search
 
 const Brand = styled.h1`
   font-weight: 300;
@@ -32,6 +35,21 @@ const Logo = styled.img`
   }
 
 `
+const SearchInput = styled(Search)`
+  width: 18rem;
+  display: inline-block;
+  padding-left: 1rem;
+  
+`
+
+const handleSearch = search => {
+  Router.push({
+    pathname: '/search',
+    query: {
+      search
+    }
+  })
+}
 
 const getAllowedLinks = isAuthenticated =>
   links()
@@ -47,7 +65,12 @@ const Header = ({ isAuthenticated, ...props }) => (
       </Link>
     </LogoContainer>
     <Brand className='site-title' />
-    {/* <SearchBar /> */}
+    <SearchInput
+      // size='small'
+      placeholder='search for opportunities'
+      // enterButton='Search'
+      onSearch={handleSearch}
+    />
     <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
   </Layout.Header>
 
@@ -56,7 +79,8 @@ Header.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
 }
 const mapStateToProps = store => ({
-  isAuthenticated: store.session.isAuthenticated
+  isAuthenticated: store.session.isAuthenticated,
+  me: store.session.me
 })
 
 export default connect(

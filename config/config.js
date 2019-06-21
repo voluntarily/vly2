@@ -18,7 +18,9 @@ const completeConfig = {
       'AUTH0_CLIENT_ID': 'S4yd4VgZ92NIjhwO3vt4h0Gifb9mXv1k',
       'AUTH0_CLIENT_DOMAIN': 'voluntarily.au.auth0.com'
     },
-    apiVersion: 'v1'
+    apiVersion: 'v1',
+    SMTP_ID: process.env.SMTP_ID,
+    SMTP_PWD: process.env.SMTP_PWD
   },
 
   development: {
