@@ -12,7 +12,10 @@ const newOp = {
   imgUrl: '',
   duration: '',
   location: '',
-  status: 'inactive'
+  status: 'inactive',
+  date: [],
+  startDate: null,
+  endDate: null
 }
 
 export class OpUpdatePage extends Component {
@@ -20,6 +23,7 @@ export class OpUpdatePage extends Component {
     // Get one Op
     if (query && query.id) {
       const ops = await store.dispatch(reduxApi.actions.opportunities.get(query))
+      // Split Date array into 2 attribute to show it easily in OpDetailForm
       ops[0] = { ...ops[0], startDate: ops[0].date[0], endDate: ops[0].date[1] }
       return { ops, query }
     } else {

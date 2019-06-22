@@ -304,8 +304,8 @@ export default Form.create({
       duration: Form.createFormField({ ...props.op.duration, value: props.op.duration }),
       location: Form.createFormField({ ...props.op.location, value: props.op.location }),
       imgUrl: Form.createFormField({ ...props.op.imgUrl, value: props.op.imgUrl }),
-      startDate: Form.createFormField({ ...props.op.startDate, value: moment(props.op.startDate, 'YYYY-MM-DD HH:mm:ss') }),
-      endDate: Form.createFormField({ ...props.op.endDate, value: moment(props.op.endDate, 'YYYY-MM-DD HH:mm:ss') }),
+      startDate: Form.createFormField({ ...props.op.startDate, value: (props.op.startDate != null) ? moment(props.op.startDate, 'YYYY-MM-DD HH:mm:ss') : null }),
+      endDate: Form.createFormField({ ...props.op.endDate, value: (props.op.endDate != null) ? moment(props.op.endDate, 'YYYY-MM-DD HH:mm:ss') : null }),
       status: Form.createFormField({ ...props.op.status, value: props.op.status })
     }
   }
