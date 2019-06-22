@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Grid } from '../VTheme/VTheme'
 import { Button } from 'antd'
 
-const PersonaContainer = styled.div`
+const PersonaContainer = styled.a`
   width: 18.5rem;
   position: relative;
 
@@ -19,6 +19,14 @@ const PersonaContainer = styled.div`
     height: auto;
     margin-bottom: 3rem;
   }
+
+  :hover {
+          -webkit-transition: all 0.3s;
+          transition: all 0.3s;
+
+          transform: scale(1.04);
+        }
+
 `
 
 const Image = styled.img`
