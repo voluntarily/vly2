@@ -177,7 +177,6 @@ class ActDetailForm extends Component {
               xs={{ span: 24 }}
               md={{ span: 16 }}
             >
-              <ImageUpload setImgUrl={this.setImgUrl} />
               <Form.Item label={actImgUrl}>
                 {getFieldDecorator('imgUrl', {
                   rules: [
@@ -186,6 +185,7 @@ class ActDetailForm extends Component {
                 })(
                   <Input />
                 )}
+                <ImageUpload setImgUrl={this.setImgUrl} />
               </Form.Item>
               <Form.Item label={actStatus}>
                 {getFieldDecorator('status', {
