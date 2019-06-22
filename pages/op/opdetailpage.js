@@ -87,7 +87,7 @@ export class OpDetailPage extends Component {
                 </Button>
               </Link>
                 &nbsp;
-              <Popconfirm title='Confirm removal of this opportunity.' onConfirm={this.handleDelete.bind(this, op)} onCancel={this.handleDeleteCancelled} okText='Yes' cancelText='No'>
+              <Popconfirm id='deleteOpPopConfirm' title='Confirm removal of this opportunity.' onConfirm={this.handleDelete.bind(this, op)} onCancel={this.handleDeleteCancelled} okText='Yes' cancelText='No'>
                 <Button type='danger' shape='round' >
                   <FormattedMessage id='deleteOp' defaultMessage='Cancel Request' description='Button to remove an opportunity on OpDetails page' />
                 </Button>
