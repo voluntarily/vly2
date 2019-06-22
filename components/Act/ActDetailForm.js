@@ -30,6 +30,7 @@ class ActDetailForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const act = this.props.act
+        act.time = values.time
         act.title = values.title
         act.subtitle = values.subtitle
         act.duration = values.duration
@@ -269,6 +270,7 @@ ActDetailForm.propTypes = {
     subtitle: PropTypes.string,
     imgUrl: PropTypes.string,
     resource: PropTypes.string,
+    time: PropTypes.Array,
     duration: PropTypes.string,
     status: PropTypes.string,
     owner: PropTypes.string
@@ -299,6 +301,8 @@ export default Form.create({
       duration: Form.createFormField({ ...props.act.duration, value: props.act.duration }),
       location: Form.createFormField({ ...props.act.location, value: props.act.location }),
       imgUrl: Form.createFormField({ ...props.act.imgUrl, value: props.act.imgUrl }),
+      time: Form.createFormField({ ...props.act.time, value: props.act.time }),
+      resource: Form.createFormField({ ...props.act.resource, value: props.act.resource }),
       status: Form.createFormField({ ...props.act.status, value: props.act.status })
     }
   }

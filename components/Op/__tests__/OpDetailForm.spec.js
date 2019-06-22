@@ -15,6 +15,14 @@ const op = {
   description: 'Project to grow something in the garden',
   duration: '15 Minutes',
   location: 'Newmarket, Auckland',
+  date: [
+    {
+      '$date': '2019-06-16T05:57:01.000Z'
+    },
+    {
+      '$date': '2019-06-23T05:57:01.000Z'
+    }
+  ],
   status: 'draft'
 }
 
@@ -25,7 +33,8 @@ const noop = {
   description: '',
   duration: '',
   location: '',
-  status: 'draft'
+  status: 'draft',
+  date: []
 }
 
 // const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p`)

@@ -14,6 +14,9 @@ const ActivitySchema = new Schema({
     type: String,
     default: ''
   },
+  time: {
+    type: [Date]
+  },
   tags: [tagSchema],
   status: {
     type: 'String',

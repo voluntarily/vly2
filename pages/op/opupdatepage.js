@@ -4,6 +4,7 @@ import OpDetailForm from '../../components/Op/OpDetailForm'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import { message } from 'antd'
 import Router from 'next/router'
+import moment from 'moment'
 import PropTypes from 'prop-types'
 
 const newOp = {
@@ -20,6 +21,7 @@ export class OpUpdatePage extends Component {
     // Get one Op
     if (query && query.id) {
       const ops = await store.dispatch(reduxApi.actions.opportunities.get(query))
+      // ops[0].date = ops[0].date.filter(element => moment(element, 'YYYY-MM-DD HH:mm:ss')) // Convert each of the element to moment type for date picker
       return { ops, query }
     } else {
       return {
@@ -74,6 +76,7 @@ OpUpdatePage.propTypes = {
     title: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
+    date: PropTypes.any,
     duration: PropTypes.string,
     location: PropTypes.string,
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])

@@ -1,11 +1,13 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react'
-import { Button, Col, Divider, Form, Input, Radio, Row } from 'antd'
+import { Button, Col, Divider, Form, Input, Radio, Row, DatePicker } from 'antd'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
+import moment from 'moment'
 
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 const { TextArea } = Input
+const { RangePicker } = DatePicker
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
@@ -33,6 +35,7 @@ class OpDetailForm extends Component {
         op.subtitle = values.subtitle
         op.duration = values.duration
         op.location = values.location
+        op.date = values.date
         op.description = values.description
         op.imgUrl = values.imgUrl
         op.status = values.status
@@ -56,6 +59,7 @@ class OpDetailForm extends Component {
     const opTitle = (<FormattedMessage id='opTitle' defaultMessage='Title' description='opportunity Title label in OpDetails Form' />)
     const opSubtitle = (<FormattedMessage id='opSubtitle' defaultMessage='Subtitle' description='opportunity Subtitle label in OpDetails Form' />)
     const opCommitment = (<FormattedMessage id='opCommitment' defaultMessage='Commitment' description='opportunity Commitment label in OpDetails Form' />)
+    const opDate = (<FormattedMessage id='opDate' defaultMessage='Date' description='opportunity Time label in OpDetails Form' />)
     const opLocation = (<FormattedMessage id='opLocation' defaultMessage='Location' description='opportunity Location label in OpDetails Form' />)
     const opDescription = (<FormattedMessage id='opDescription' defaultMessage='Description' description='opportunity Description label in OpDetails Form' />)
     const opImgUrl = (<FormattedMessage id='opImgUrl' defaultMessage='Image Link' description='opportunity Image URL label in OpDetails Form' />)
@@ -74,6 +78,13 @@ class OpDetailForm extends Component {
         sm: { span: 20 },
         md: { span: 16 }
       }
+    }
+
+    const dateRangeConfig = {
+      rules: [{
+        type: 'array',
+        message: 'A time is required'
+      }]
     }
 
     // Only show error after a field is touched.
@@ -161,12 +172,13 @@ class OpDetailForm extends Component {
                 )}
               </Form.Item>
               <Form.Item label={opLocation}>
-                {getFieldDecorator('location', {
-                  rules: [
-
-                  ]
-                })(
+                {getFieldDecorator('location', { rules: [] })(
                   <Input placeholder='school or somewhere else?' />
+                )}
+              </Form.Item>
+              <Form.Item label={opDate}>
+                {getFieldDecorator('date', dateRangeConfig)(
+                  <RangePicker showTime format='DD-MM-YYYY HH:mm:ss' />
                 )}
               </Form.Item>
             </Col>
@@ -255,6 +267,7 @@ OpDetailForm.propTypes = {
     imgUrl: PropTypes.string,
     duration: PropTypes.string,
     location: PropTypes.string,
+    date: PropTypes.array,
     status: PropTypes.string,
     requestor: PropTypes.string
   }),
@@ -284,6 +297,7 @@ export default Form.create({
       duration: Form.createFormField({ ...props.op.duration, value: props.op.duration }),
       location: Form.createFormField({ ...props.op.location, value: props.op.location }),
       imgUrl: Form.createFormField({ ...props.op.imgUrl, value: props.op.imgUrl }),
+      date: Form.createFormField({ ...props.op.date, value: props.op.date.map(element => moment(element, 'YYYY-MM-DD HH:mm:ss')) }),
       status: Form.createFormField({ ...props.op.status, value: props.op.status })
     }
   }
