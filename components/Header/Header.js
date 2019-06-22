@@ -60,7 +60,7 @@ const getAllowedLinks = isAuthenticated =>
 const Header = ({ isAuthenticated, ...props }) => (
   <Layout.Header>
     <LogoContainer>
-      <Link href={isAuthenticated ? '/home' : '/'}>
+      <Link href={isAuthenticated ? '/' : '/'}>
         <Logo src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' alt='Voluntarily logo' />
       </Link>
     </LogoContainer>
