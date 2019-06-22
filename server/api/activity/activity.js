@@ -10,6 +10,10 @@ const ActivitySchema = new Schema({
   duration: String, // "15 Minutes",
   org: { type: Schema.Types.ObjectId, ref: 'Organisation' },
   owner: { type: Schema.Types.ObjectId, ref: 'Person' },
+  resource: {
+    type: String,
+    default: ''
+  },
   tags: [tagSchema],
   status: {
     type: 'String',

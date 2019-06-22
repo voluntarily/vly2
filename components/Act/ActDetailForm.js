@@ -1,11 +1,12 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react'
-import { Button, Col, Divider, Form, Input, Radio, Row } from 'antd'
+import { Button, Col, Divider, Form, Input, Radio, Row, DatePicker } from 'antd'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 const { TextArea } = Input
+const { RangePicker } = DatePicker
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
@@ -32,6 +33,7 @@ class ActDetailForm extends Component {
         act.title = values.title
         act.subtitle = values.subtitle
         act.duration = values.duration
+        act.resource = values.resource
         act.description = values.description
         act.imgUrl = values.imgUrl
         act.status = values.status
@@ -55,12 +57,21 @@ class ActDetailForm extends Component {
     const actTitle = (<FormattedMessage id='actTitle' defaultMessage='Title' description='activity Title label in ActDetails Form' />)
     const actSubtitle = (<FormattedMessage id='actSubtitle' defaultMessage='Subtitle' description='activity Subtitle label in ActDetails Form' />)
     const actCommitment = (<FormattedMessage id='actCommitment' defaultMessage='Commitment' description='activity Commitment label in ActDetails Form' />)
+    const actResource = (<FormattedMessage id='actResource' defaultMessage='Resource' description='activity Resource label in ActDetails Form' />)
+    const actTime = (<FormattedMessage id='actTime' defaultMessage='Time' description='activity Time label in ActDetails Form' />)
     const actDescription = (<FormattedMessage id='actDescription' defaultMessage='Description' description='activity Description label in ActDetails Form' />)
     const actImgUrl = (<FormattedMessage id='actImgUrl' defaultMessage='Image Link' description='activity Image URL label in ActDetails Form' />)
     const actStatus = (<FormattedMessage id='actStatus' defaultMessage='Status' description='Draft or published status' />)
     const {
       getFieldDecorator, getFieldsError, getFieldError, isFieldTouched
     } = this.props.form
+
+    const timeRangeConfig = {
+      rules: [ {
+        type: 'array'
+        // required: true
+      }]
+    }
 
     const formItemLayout = {
       labelCol: {
@@ -159,7 +170,19 @@ class ActDetailForm extends Component {
                   <Input placeholder='4 hours' />
                 )}
               </Form.Item>
-            // TODO: [VP-206] Add activity resource requirement list.
+              <Form.Item label={actTime}>
+                {getFieldDecorator('time', timeRangeConfig)(
+                  <RangePicker showTime format='DD-MM-YYYY' />
+                )}
+              </Form.Item>
+              <Form.Item label={actResource}>
+                {getFieldDecorator('resource', {
+                  rules: []
+                })(
+                  <Input placeholder='Any resources needed?' />
+                )}
+              </Form.Item>
+              {/* TODO: [VP-206] Add activity resource requirement list. */}
             </Col>
           </Row>
           <Divider />
@@ -245,6 +268,7 @@ ActDetailForm.propTypes = {
     title: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.string,
+    resource: PropTypes.string,
     duration: PropTypes.string,
     status: PropTypes.string,
     owner: PropTypes.string
