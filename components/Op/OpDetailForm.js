@@ -7,7 +7,6 @@ import moment from 'moment'
 
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 const { TextArea } = Input
-const { RangePicker } = DatePicker
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
@@ -31,11 +30,12 @@ class OpDetailForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const op = this.props.op
+        op.date = [] // Dirty work around to not change schema
+        op.date.push(values.startDate, values.endDate)
         op.title = values.title
         op.subtitle = values.subtitle
         op.duration = values.duration
         op.location = values.location
-        op.date = values.date
         op.description = values.description
         op.imgUrl = values.imgUrl
         op.status = values.status
@@ -59,7 +59,8 @@ class OpDetailForm extends Component {
     const opTitle = (<FormattedMessage id='opTitle' defaultMessage='Title' description='opportunity Title label in OpDetails Form' />)
     const opSubtitle = (<FormattedMessage id='opSubtitle' defaultMessage='Subtitle' description='opportunity Subtitle label in OpDetails Form' />)
     const opCommitment = (<FormattedMessage id='opCommitment' defaultMessage='Commitment' description='opportunity Commitment label in OpDetails Form' />)
-    const opDate = (<FormattedMessage id='opDate' defaultMessage='Date' description='opportunity Time label in OpDetails Form' />)
+    const opDate = (<FormattedMessage id='opDate' defaultMessage='Start Date' description='opportunity Time label in OpDetails Form' />)
+    const opDateEnd = (<FormattedMessage id='opDateEnd' defaultMessage='End date' description='opportunity Time label in OpDetails Form' />)
     const opLocation = (<FormattedMessage id='opLocation' defaultMessage='Location' description='opportunity Location label in OpDetails Form' />)
     const opDescription = (<FormattedMessage id='opDescription' defaultMessage='Description' description='opportunity Description label in OpDetails Form' />)
     const opImgUrl = (<FormattedMessage id='opImgUrl' defaultMessage='Image Link' description='opportunity Image URL label in OpDetails Form' />)
@@ -80,10 +81,11 @@ class OpDetailForm extends Component {
       }
     }
 
-    const dateRangeConfig = {
+    const dateConfig = {
       rules: [{
-        type: 'array',
-        message: 'A time is required'
+        type: 'object',
+        // required: true,
+        message: 'A date is required'
       }]
     }
 
@@ -177,8 +179,13 @@ class OpDetailForm extends Component {
                 )}
               </Form.Item>
               <Form.Item label={opDate}>
-                {getFieldDecorator('date', dateRangeConfig)(
-                  <RangePicker showTime format='DD-MM-YYYY HH:mm:ss' />
+                {getFieldDecorator('startDate', dateConfig)(
+                  <DatePicker showTime size='large' format='DD-MM-YYYY HH:mm:ss' />
+                )}
+              </Form.Item>
+              <Form.Item label={opDateEnd}>
+                {getFieldDecorator('endDate', dateConfig)(
+                  <DatePicker showTime format='DD-MM-YYYY HH:mm:ss' />
                 )}
               </Form.Item>
             </Col>
@@ -297,7 +304,8 @@ export default Form.create({
       duration: Form.createFormField({ ...props.op.duration, value: props.op.duration }),
       location: Form.createFormField({ ...props.op.location, value: props.op.location }),
       imgUrl: Form.createFormField({ ...props.op.imgUrl, value: props.op.imgUrl }),
-      date: Form.createFormField({ ...props.op.date, value: props.op.date.map(element => moment(element, 'YYYY-MM-DD HH:mm:ss')) }),
+      startDate: Form.createFormField({ ...props.op.startDate, value: moment(props.op.startDate, 'YYYY-MM-DD HH:mm:ss') }),
+      endDate: Form.createFormField({ ...props.op.endDate, value: moment(props.op.endDate, 'YYYY-MM-DD HH:mm:ss') }),
       status: Form.createFormField({ ...props.op.status, value: props.op.status })
     }
   }

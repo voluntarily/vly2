@@ -20,7 +20,7 @@ export class OpUpdatePage extends Component {
     // Get one Op
     if (query && query.id) {
       const ops = await store.dispatch(reduxApi.actions.opportunities.get(query))
-      // ops[0].date = ops[0].date.filter(element => moment(element, 'YYYY-MM-DD HH:mm:ss')) // Convert each of the element to moment type for date picker
+      ops[0] = { ...ops[0], startDate: ops[0].date[0], endDate: ops[0].date[1] }
       return { ops, query }
     } else {
       return {
