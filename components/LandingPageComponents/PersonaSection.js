@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Grid } from '../VTheme/VTheme'
 import { Button } from 'antd'
 
-const PersonaContainer = styled.div`
+const PersonaContainer = styled.a`
   width: 18.5rem;
   position: relative;
 
@@ -19,6 +19,13 @@ const PersonaContainer = styled.div`
     height: auto;
     margin-bottom: 3rem;
   }
+
+  :hover {
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+
+    transform: scale(1.04);
+  }
 `
 
 const Image = styled.img`
@@ -28,8 +35,6 @@ const Image = styled.img`
     height: 20rem;
     object-position: top;
   }
-
-
 `
 
 const Title = styled.div`
@@ -65,7 +70,7 @@ const Text = styled.div`
 
 const AboutSection = () => (
   <Grid>
-    <PersonaContainer href='/about' target='_blank' >
+    <PersonaContainer href='/about' target='_blank'>
       <Image src='/static/img/volunteerCard.png' />
       <Title>Volunteers</Title>
       <Text>
@@ -74,7 +79,7 @@ const AboutSection = () => (
       </Text>
       <Button href='/about'>Learn More</Button>
     </PersonaContainer>
-    <PersonaContainer href='/educators' target='_blank' >
+    <PersonaContainer href='/educators' target='_blank'>
       <Image src='/static/img/teacherCard.png' />
       <Title>Educators</Title>
       <Text>
@@ -82,17 +87,18 @@ const AboutSection = () => (
       </Text>
       <Button href='/educators'>Learn More</Button>
     </PersonaContainer>
-    <PersonaContainer href='/charities' target='_blank' >
+    <PersonaContainer href='/charities' target='_blank'>
       <Image src='/static/img/contentCard.png' />
       <Title>Charities</Title>
       <Text>We help you get more people involved with your movement.</Text>
       <Button href='/charities'>Learn More</Button>
     </PersonaContainer>
-    <PersonaContainer href='/business' target='_blank' >
+    <PersonaContainer href='/business' target='_blank'>
       <Image src='/static/img/businessCard.png' />
       <Title>Businesses</Title>
       <Text>
-        We handle HR, admin, and discovery so your staff have more impact on the community.
+        We handle HR, admin, and discovery so your staff have more impact on the
+        community.
       </Text>
       <Button href='/business'>Learn More</Button>
     </PersonaContainer>
