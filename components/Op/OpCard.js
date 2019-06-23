@@ -4,6 +4,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
+import moment from 'moment'
 
 // todo if image is not present then use a fallback.
 const OpCard = ({ size, op, onPress, ...props }) => {
@@ -19,6 +20,9 @@ const OpCard = ({ size, op, onPress, ...props }) => {
             <p className={'requestTitle requestTitle' + size}>
               {draft}
               {op.title}
+            </p>
+            <p className={'requestDateTime' + size}>
+            📅 {op.date[0] == null ? 'On going' : moment(op.date[0]).format('DD-MM-YYYY')}
             </p>
             <p className={'requestDateTime' + size}>{op.duration}</p>
             <p className={'requestDescription' + size}>

@@ -180,12 +180,12 @@ class OpDetailForm extends Component {
               </Form.Item>
               <Form.Item label={opDate}>
                 {getFieldDecorator('startDate', dateConfig)(
-                  <DatePicker showTime size='large' format='DD-MM-YYYY HH:mm:ss' />
+                  <DatePicker showTime size='large' format='DD-MM-YYYY HH:mm:ss' style={{ width: '100%' }} />
                 )}
               </Form.Item>
               <Form.Item label={opDateEnd}>
                 {getFieldDecorator('endDate', dateConfig)(
-                  <DatePicker showTime format='DD-MM-YYYY HH:mm:ss' />
+                  <DatePicker showTime format='DD-MM-YYYY HH:mm:ss' style={{ width: '100%' }} />
                 )}
               </Form.Item>
             </Col>

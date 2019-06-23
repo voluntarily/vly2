@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import Head from 'next/head'
 import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
+import moment from 'moment'
 
 import { Button } from 'antd'
 import { FullPage } from '../../hocs/publicPage'
@@ -46,9 +47,11 @@ export function OpDetail ({ op }) {
       <HalfGrid>
         <Left>
           <TitleFont>{op.title}</TitleFont>
-          <ItemListing>⏱&nbsp;{op.duration}</ItemListing>
-          <ItemListing>🏫&nbsp;{op.location}</ItemListing>
-          <ItemListing>📝&nbsp;{op.status}</ItemListing>
+          <ItemListing>Duration 🔥&nbsp;&nbsp;&nbsp;{op.duration}</ItemListing>
+          <ItemListing>Location 🏫&nbsp;&nbsp;&nbsp;{op.location}</ItemListing>
+          <ItemListing>Status 📝&nbsp;&nbsp;&nbsp;{op.status}</ItemListing>
+          <ItemListing>Start date ⏱&nbsp;&nbsp;&nbsp; {moment(op.date[0]).format('DD-MM-YYYY')}</ItemListing>
+          <ItemListing>End date 📣 &nbsp;&nbsp;{(op.date[1]) ? moment(op.date[1]).format('DD-MM-YYYY') : 'On going'} </ItemListing>
           <Spacer />
           <ItemP>
             <Markdown

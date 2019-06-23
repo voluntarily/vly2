@@ -13,7 +13,15 @@ const op = {
   description: 'Project to grow something in the garden',
   duration: '15 Minutes',
   location: 'Newmarket, Auckland',
-  status: 'draft'
+  status: 'draft',
+  date: [
+    {
+      '$date': '2019-05-23T12:26:18.000Z'
+    },
+    {
+      '$date': '2019-06-12T04:55:10.014Z'
+    }
+  ]
 }
 
 test('render the detail with op', t => {
