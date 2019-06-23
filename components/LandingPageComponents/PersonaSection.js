@@ -5,9 +5,8 @@ import { Grid } from '../VTheme/VTheme'
 import { Button } from 'antd'
 
 const PersonaBox = styled.div`
-margin-bottom: 8rem;
-@media screen and (max-width: 768px) {
-
+  margin-bottom: 8rem;
+  @media screen and (max-width: 768px) {
     margin-bottom: 2rem;
   }
 `
@@ -15,12 +14,13 @@ margin-bottom: 8rem;
 const PersonaContainer = styled.div`
   width: 18.5rem;
   position: relative;
-  
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    height: auto;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1025px) {
+    height: auto;
   }
 
   @media screen and (max-width: 768px) {
@@ -30,12 +30,11 @@ const PersonaContainer = styled.div`
   }
 
   :hover {
-          -webkit-transition: all 0.3s;
-          transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
 
-          transform: scale(1.04);
-        }
-
+    transform: scale(1.04);
+  }
 `
 
 const Image = styled.img`
@@ -45,8 +44,6 @@ const Image = styled.img`
     height: 20rem;
     object-position: top;
   }
-
-
 `
 
 const Title = styled.div`
@@ -82,47 +79,48 @@ const Text = styled.div`
 
 const AboutSection = () => (
   <PersonaBox>
-  <Grid>
-    <a href='/about' target='_blank'>
-    <PersonaContainer>
-      <Image src='/static/img/volunteerCard.png' />
-      <Title>Volunteers</Title>
-      <Text>
-        Discover cool opportunities to help out teachers, students and
-        charities.
-      </Text>
-      <Button href='/about'>Learn More</Button>
-    </PersonaContainer>
-    </a>
-    <a href='/educators' target='_blank' >
-    <PersonaContainer>
-      <Image src='/static/img/teacherCard.png' />
-      <Title>Educators</Title>
-      <Text>
-        Get the help of skilled volunteers to bring tech to your teaching.
-      </Text>
-      <Button href='/educators'>Learn More</Button>
-    </PersonaContainer>
-    </a>
-<a  href='/charities' target='_blank' >
-    <PersonaContainer>
-      <Image src='/static/img/contentCard.png' />
-      <Title>Charities</Title>
-      <Text>We help you get more people involved with your movement.</Text>
-      <Button href='/charities'>Learn More</Button>
-    </PersonaContainer>
-    </a>
-    <a href='/business' target='_blank'>
-    <PersonaContainer>
-      <Image src='/static/img/businessCard.png' />
-      <Title>Businesses</Title>
-      <Text>
-        We handle HR, admin, and discovery so your staff have more impact on the community.
-      </Text>
-      <Button href='/business'>Learn More</Button>
-    </PersonaContainer>
-    </a>
-  </Grid>
+    <Grid>
+      <a href='/about' target='_blank'>
+        <PersonaContainer>
+          <Image src='/static/img/volunteerCard.png' />
+          <Title>Volunteers</Title>
+          <Text>
+            Discover cool opportunities to help out teachers, students and
+            charities.
+          </Text>
+          <Button href='/about'>Learn More</Button>
+        </PersonaContainer>
+      </a>
+      <a href='/educators' target='_blank'>
+        <PersonaContainer>
+          <Image src='/static/img/teacherCard.png' />
+          <Title>Educators</Title>
+          <Text>
+            Get the help of skilled volunteers to bring tech to your teaching.
+          </Text>
+          <Button href='/educators'>Learn More</Button>
+        </PersonaContainer>
+      </a>
+      <a href='/charities' target='_blank'>
+        <PersonaContainer>
+          <Image src='/static/img/contentCard.png' />
+          <Title>Charities</Title>
+          <Text>We help you get more people involved with your movement.</Text>
+          <Button href='/charities'>Learn More</Button>
+        </PersonaContainer>
+      </a>
+      <a href='/business' target='_blank'>
+        <PersonaContainer>
+          <Image src='/static/img/businessCard.png' />
+          <Title>Businesses</Title>
+          <Text>
+            We handle HR, admin, and discovery so your staff have more impact on
+            the community.
+          </Text>
+          <Button href='/business'>Learn More</Button>
+        </PersonaContainer>
+      </a>
+    </Grid>
   </PersonaBox>
 )
 export default AboutSection
