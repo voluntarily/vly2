@@ -9,6 +9,11 @@ import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
 import people from '../server/api/person/__tests__/person.fixture'
 import withMockRoute from '../server/util/mockRouter'
 import thunk from 'redux-thunk'
+import reduxApi from '../lib/redux/reduxApi'
+import adapterFetch from 'redux-api/lib/adapters/fetch'
+import { API_URL } from '../lib/apiCaller'
+
+const fetchMock = require('fetch-mock')
 
 test.before('Setup fixtures', (t) => {
   // This gives all the people fake ids to better represent a fake mongo db
@@ -47,6 +52,10 @@ test.before('Setup fixtures', (t) => {
 
 test('send "DELETE" request to redux-api when deletion is confirmed on OpDetailPage', t => {
   const opportunityToDelete = t.context.ops[0]
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  myMock.get(API_URL + '/interests/?op=' + opportunityToDelete._id, { body: { status: 200 } })
+  myMock.delete(API_URL + '/opportunities/' + opportunityToDelete._id, { body: { status: 200 } })
   const props = {
     opportunities: {
       data: [ opportunityToDelete ]
