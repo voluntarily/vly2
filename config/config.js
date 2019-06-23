@@ -20,7 +20,8 @@ const completeConfig = {
     },
     apiVersion: 'v1',
     SMTP_ID: process.env.SMTP_ID,
-    SMTP_PWD: process.env.SMTP_PWD
+    SMTP_PWD: process.env.SMTP_PWD,
+    onlyEmailText: process.env.TEXT_ONLY_EMAIL === 'true'
   },
 
   development: {

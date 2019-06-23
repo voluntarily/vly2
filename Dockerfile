@@ -13,6 +13,10 @@ RUN npm run prod-build
 
 FROM node:12-alpine as production
 ARG BUILD_REVISION=local-build
+ARG BUILD_SMTP_ID
+ENV SMTP_ID=${BUILD_SMTP_ID}
+ARG BUILD_SMTP_PWD
+ENV SMTP_PWD=${BUILD_SMTP_PWD}
 ENV REVISION=${BUILD_REVISION}
 ENV NODE_ENV=production
 COPY --from=production_build /usr/src/app /voluntarily
