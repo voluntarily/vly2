@@ -1,12 +1,14 @@
 const { getTransport, getDevelopmentTransport } = require('../../../services/email/email')
 const Email = require('email-templates')
 const path = require('path')
+const { config } = require('../../../../config/config')
 
 /*
   format and send a email to the given address
 */
 module.exports.emailPerson = async (person, template, props) => {
   try {
+    console.log('The value from the env has a type of string? ' + config.onlyEmailText)
     const transport = (process.env.NODE_ENV === 'development') ? await getDevelopmentTransport() : await getTransport()
     const email = new Email({
       message: {
@@ -27,6 +29,7 @@ module.exports.emailPerson = async (person, template, props) => {
       // transport: {
       //   jsonTransport: true,
       // }
+      textOnly: config.onlyEmailText, // The value onlyEmailText has a Boolean type not string
       transport
     })
     // console.log('email props ', props)
