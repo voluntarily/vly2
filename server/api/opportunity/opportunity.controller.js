@@ -49,7 +49,10 @@ const getOpportunities = async (req, res) => {
 const getOpportunity = async (req, res) => {
   // console.log('getOpportunity', req.params)
   try {
-    const got = await Opportunity.findOne(req.params).populate('requestor').exec()
+    const got = await Opportunity.findOne(req.params)
+      .populate('requestor')
+      .populate('tags')
+      .exec()
     res.json(got)
   } catch (e) {
     // TEST: can't seem to get here. bad id handled earlier

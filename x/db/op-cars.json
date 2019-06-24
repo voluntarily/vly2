@@ -8,9 +8,8 @@
   "location": "NZTA Innovation Centre, 5 Cook St Auckland",
   "status": "draft",
   "tags": [
-    { 
-       "tag": "C++"
-    }
-  ],
+    { "_id": "5d00656d9c52c52080187aa6" },
+    { "_id": "2d00626d9c22c22080187bb6" }
+  ],	
   "requestor": "5ccbe4c26c285b7184bff574"
 }

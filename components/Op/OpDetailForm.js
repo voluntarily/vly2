@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import OpDetailTagsEditable from './OpDetailTagsEditable'
 const { TextArea } = Input
 
 function hasErrors (fieldsError) {
@@ -25,12 +26,12 @@ class OpDetailForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const op = this.props.op
         op.title = values.title
         op.subtitle = values.subtitle
+        op.tags = values.tags
         op.duration = values.duration
         op.location = values.location
         op.description = values.description
@@ -60,6 +61,7 @@ class OpDetailForm extends Component {
     const opDescription = (<FormattedMessage id='opDescription' defaultMessage='Description' description='opportunity Description label in OpDetails Form' />)
     const opImgUrl = (<FormattedMessage id='opImgUrl' defaultMessage='Image Link' description='opportunity Image URL label in OpDetails Form' />)
     const opStatus = (<FormattedMessage id='opStatus' defaultMessage='Status' description='Draft or published status' />)
+    const opTags = (<FormattedMessage id='opTags' defaultMessage='Tags' description='Descriptions of general areas the opportunity relates to' />)
     const {
       getFieldDecorator, getFieldsError, getFieldError, isFieldTouched
     } = this.props.form
@@ -142,7 +144,36 @@ class OpDetailForm extends Component {
               xs={{ span: 24 }}
               md={{ span: 8 }}
             >
-              <h2>2. Where and when? (optional)</h2>
+              <h2>2. What kind of topics does it cover (optional)</h2>
+              <p>
+                Tell us how to categorise this request so we can tell relevant
+                volunteers about it.
+              </p>
+            </Col>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 16 }}
+            >
+              <Form.Item label={opTags}>
+                {getFieldDecorator('tags', {
+                  initialValue: [],
+                  rules: [
+
+                  ]
+                })(
+                  <OpDetailTagsEditable existingTags={this.props.existingTags} />
+                )
+                }
+              </Form.Item>
+            </Col>
+          </Row>
+          <Divider />
+          <Row>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 8 }}
+            >
+              <h2>3. Where and when? (optional)</h2>
               <p>If you know when you'll need help, or where - this will help
                 volunteers to organise logistics and increase volunteer numbers.
               </p>
@@ -177,7 +208,7 @@ class OpDetailForm extends Component {
               xs={{ span: 24 }}
               md={{ span: 8 }}
             >
-              <h2>3. Illustration? (optional)</h2>
+              <h2>4. Illustration? (optional)</h2>
               <p>Requests with photos get more responses.
                 If you don't have a photo leave blank and we will provide one
                 based on the category.
@@ -256,7 +287,8 @@ OpDetailForm.propTypes = {
     duration: PropTypes.string,
     location: PropTypes.string,
     status: PropTypes.string,
-    requestor: PropTypes.string
+    requestor: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string)
   }),
   me: PropTypes.shape({
     _id: PropTypes.string
@@ -266,7 +298,8 @@ OpDetailForm.propTypes = {
     id: PropTypes.string.isRequired
   }),
   onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired
+  onCancel: PropTypes.func.isRequired,
+  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired
   // dispatch: PropTypes.func.isRequired,
 }
 
@@ -284,7 +317,8 @@ export default Form.create({
       duration: Form.createFormField({ ...props.op.duration, value: props.op.duration }),
       location: Form.createFormField({ ...props.op.location, value: props.op.location }),
       imgUrl: Form.createFormField({ ...props.op.imgUrl, value: props.op.imgUrl }),
-      status: Form.createFormField({ ...props.op.status, value: props.op.status })
+      status: Form.createFormField({ ...props.op.status, value: props.op.status }),
+      tags: Form.createFormField({ ...props.op.tags, value: props.op.tags })
     }
   }
   // onValuesChange (_, values) {
