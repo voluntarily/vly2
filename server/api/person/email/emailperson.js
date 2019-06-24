@@ -1,4 +1,4 @@
-const { getTransport } = require('../../../services/email/email')
+const { getTransport, getDevelopmentTransport } = require('../../../services/email/email')
 const Email = require('email-templates')
 const path = require('path')
 
@@ -7,7 +7,7 @@ const path = require('path')
 */
 module.exports.emailPerson = async (person, template, props) => {
   try {
-    const transport = await getTransport()
+    const transport = (process.env.NODE_ENV === 'development') ? await getDevelopmentTransport() : await getTransport()
     const email = new Email({
       message: {
         from: 'andrew@voluntari.ly'

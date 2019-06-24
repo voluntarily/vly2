@@ -40,6 +40,8 @@ export function OpDetail ({ op }) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
   const description = op.description == null ? '' : op.description
+  const startDate = op.date[0] ? moment(op.date[0]).format('ddd DD/MM/YY | HH:mm') : 'N/a'
+  const endDate = op.date[1] ? moment(op.date[1]).format('DD-MM-YYYY') : 'Open ended opportunity'
   return (
     <FullPage>
       <Spacer />
@@ -50,8 +52,8 @@ export function OpDetail ({ op }) {
           <ItemListing>Duration 🔥&nbsp;&nbsp;&nbsp;{op.duration}</ItemListing>
           <ItemListing>Location 🏫&nbsp;&nbsp;&nbsp;{op.location}</ItemListing>
           <ItemListing>Status 📝&nbsp;&nbsp;&nbsp;{op.status}</ItemListing>
-          <ItemListing>Start date ⏱&nbsp;&nbsp;&nbsp; {moment(op.date[0]).format('DD-MM-YYYY')}</ItemListing>
-          <ItemListing>End date 📣 &nbsp;&nbsp;{(op.date[1]) ? moment(op.date[1]).format('DD-MM-YYYY') : 'On going'} </ItemListing>
+          <ItemListing>Start date ⏱&nbsp;&nbsp;&nbsp; {startDate}</ItemListing>
+          <ItemListing>End date 📣 &nbsp;&nbsp;{endDate} </ItemListing>
           <Spacer />
           <ItemP>
             <Markdown

@@ -11,6 +11,7 @@ const OpCard = ({ size, op, onPress, ...props }) => {
   const cardImage = op.imgUrl ? op.imgUrl : 'static/missingimage.svg'
   const draft = op.status === 'draft' ? 'DRAFT: ' : ''
   const interestState = op.interest ? ` - ${op.interest.status}` : ''
+  const startTime = op.date[0] ? moment(op.date[0]).format('ddd Do/MM/YY | HH:mm') : 'Open ended opportunity'
   return (
     <div>
       <Link href={`/ops/${op._id}`}>
@@ -21,9 +22,7 @@ const OpCard = ({ size, op, onPress, ...props }) => {
               {draft}
               {op.title}
             </p>
-            <p className={'requestDateTime' + size}>
-            📅 {op.date[0] == null ? 'On going' : moment(op.date[0]).format('DD-MM-YYYY')}
-            </p>
+            <p className={'requestDateTime' + size}> 📅 {startTime} </p>
             <p className={'requestDateTime' + size}>{op.duration}</p>
             <p className={'requestDescription' + size}>
               {op.subtitle}
