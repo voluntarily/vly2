@@ -37,7 +37,7 @@ class OpDetailTagsEditable extends React.Component {
   }
 
   optionSelected = value => {
-    const trimmedVal = value.trim()
+    const trimmedVal = value.trim().toLowerCase()
     if (trimmedVal && !this.props.value.includes(trimmedVal)) {
       this.props.onChange([...this.props.value, trimmedVal])
     }
@@ -45,8 +45,9 @@ class OpDetailTagsEditable extends React.Component {
   }
 
   handleSearch = value => {
-    const matchingTags = value.trim()
-      ? this.props.existingTags.filter(tag => tag.toUpperCase().indexOf(value.trim().toUpperCase()) !== -1)
+    const val = value.trim()
+    const matchingTags = val
+      ? this.props.existingTags.filter(tag => tag.toLowerCase().indexOf(val.toLowerCase()) !== -1)
       : []
     this.setState({
       inputvalue: value,
