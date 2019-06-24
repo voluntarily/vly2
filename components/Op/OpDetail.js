@@ -10,6 +10,7 @@ import moment from 'moment'
 import { Button } from 'antd'
 import { FullPage } from '../../hocs/publicPage'
 import { HalfGrid, Spacer } from '../VTheme/VTheme'
+import OpDetailTagsDisplay from './OpDetailTagsDisplay'
 
 const Left = styled.div``
 
@@ -55,6 +56,7 @@ export function OpDetail ({ op }) {
           <ItemListing>Start date ⏱&nbsp;&nbsp;&nbsp; {startDate}</ItemListing>
           <ItemListing>End date 📣 &nbsp;&nbsp;{endDate} </ItemListing>
           <Spacer />
+
           <ItemP>
             <Markdown
               children={description}
@@ -69,6 +71,7 @@ export function OpDetail ({ op }) {
         </Left>
         <Right>
           <img style={{ width: '100%' }} src={op.imgUrl} alt={op.title} />
+          <OpDetailTagsDisplay tags={op.tags} />
         </Right>
       </HalfGrid>
     </FullPage>

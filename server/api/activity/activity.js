@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const tagSchema = require('../tags/tag.js')
 
 const ActivitySchema = new Schema({
   title: String, // "Growing in the garden",
@@ -17,7 +16,11 @@ const ActivitySchema = new Schema({
   time: {
     type: [Date]
   },
-  tags: [tagSchema],
+  tags: [
+    {
+      type: Schema.Types.ObjectId, ref: 'Tag'
+    }
+  ],
   status: {
     type: 'String',
     required: true,

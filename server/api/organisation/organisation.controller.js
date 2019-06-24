@@ -22,7 +22,7 @@ function getOrganisations (req, res) {
         res.json(got)
       })
   } catch (e) {
-    console.log('bad JSON', req.query)
+    console.log('Bad request', req.query)
     return res.status(400).send(e)
   }
 }
