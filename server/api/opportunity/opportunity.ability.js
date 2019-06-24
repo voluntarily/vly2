@@ -1,5 +1,5 @@
 const { OpportunityStatus, OpportunityFields } = require('./opportunity.constants')
-const { Roles } = require('../../services/auth/role')
+const { Role } = require('../../services/auth/role')
 const { Action } = require('../../services/abilities/ability.constants')
 
 /*
@@ -19,12 +19,11 @@ const subject = 'Opportunity'
 const anonAbilities = [{
   subject,
   action: Action.READ,
-  conditions: { status: OpportunityStatus.DRAFT }
-},
-{
+  conditions: { status: OpportunityStatus.ACTIVE }
+}, {
   subject,
   action: Action.LIST,
-  conditions: { status: OpportunityStatus.DRAFT },
+  conditions: { status: OpportunityStatus.ACTIVE },
   fields: [OpportunityFields.ID, OpportunityFields.TITLE, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION]
 }, {
   subject,
@@ -40,9 +39,18 @@ const anonAbilities = [{
   inverted: true
 }]
 
-const allAbilities = [{ subject, action: Action.READ }]
+const allAbilities = [{ subject, action: Action.READ }, { subject, action: Action.LIST }]
+const vpAbilities = allAbilities.concat([{ subject, action: Action.CREATE }])
+const opAbilities = allAbilities.concat([{ subject, action: Action.CREATE }])
+const testerAbilities = [{ subject, action: Action.MANAGE }]
+const adminAbilities = [{ subject, action: Action.MANAGE }]
+const orgAdminAbilities = [{ subject, action: Action.MANAGE }]
 
 module.exports = {
-  [Roles.ANON]: anonAbilities,
-  [Roles.ALL]: allAbilities
+  [Role.ANON]: anonAbilities,
+  [Role.VOLUNTEER_PROVIDER]: vpAbilities,
+  [Role.OPPORTUNITY_PROVIDER]: opAbilities,
+  [Role.TESTER]: testerAbilities,
+  [Role.ADMIN]: adminAbilities,
+  [Role.ORG_ADMIN]: orgAdminAbilities
 }

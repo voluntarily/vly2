@@ -1,6 +1,16 @@
 const Opportunity = require('./opportunity')
 const { Action } = require('../../services/abilities/ability.constants')
 
+const convertSelectObjectToArray = select => {
+  let propsToSelect = []
+  Object.keys(select).map(key => {
+    if (select[key]) {
+      propsToSelect.push(key)
+    }
+  })
+  return propsToSelect
+}
+
 /**
  * Get all orgs
  * @param req
@@ -10,10 +20,12 @@ const { Action } = require('../../services/abilities/ability.constants')
 const getOpportunities = async (req, res) => {
   let query = {} // { status: 'active' }
   let sort = 'title'
+  let select = {}
 
   try {
     query = req.query.q ? JSON.parse(req.query.q) : query
     sort = req.query.s ? JSON.parse(req.query.s) : sort
+    select = req.query.p ? JSON.parse(req.query.p) : select
   } catch (e) {
     return res.status(400).send(e)
   }
@@ -38,10 +50,22 @@ const getOpportunities = async (req, res) => {
   }
 
   try {
-    const accessibleFields = Opportunity.accessibleFieldsBy(req.ability, Action.LIST).join(' ')
-    const got = await Opportunity.accessibleBy(req.ability, Action.LIST).find(query).select(accessibleFields).sort(sort).exec()
+    // console.log('req.ability', req.ability)
+    // console.log('select', select)
+    const desiredFieldsToSelect = convertSelectObjectToArray(select)
+    // console.log('desiredFieldsToSelect', desiredFieldsToSelect)
+    const accessibleFields = Opportunity.accessibleFieldsBy(req.ability, Action.LIST)
+    let fieldsToSelect = accessibleFields.join(' ')
+    if (desiredFieldsToSelect.length > 0) {
+      fieldsToSelect = desiredFieldsToSelect.filter(field => accessibleFields.includes(field))
+      // console.log('fieldsToSelect', fieldsToSelect)
+    }
+    // console.log('query: ', query)
+    const got = await Opportunity.accessibleBy(req.ability, Action.LIST).find(query).select(fieldsToSelect).sort(sort).exec()
+    // console.log('got', got)
     res.json(got)
   } catch (e) {
+    console.log(e)
     res.status(404).send(e)
   }
 }

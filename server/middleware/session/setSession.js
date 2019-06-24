@@ -21,13 +21,15 @@ const isUrlBlacklisted = url => {
 }
 
 module.exports = async (req, res, next) => {
-  req.session = DEFAULT_SESSION
+  req.session = { ...DEFAULT_SESSION }
   if (!isUrlBlacklisted(req.url) && req.cookies.idToken) {
     try {
       const user = jwtDecode(req.cookies.idToken)
       req.session.isAuthenticated = true
       req.session.user = user
+      // console.log('req.session.user.email', req.session.user.email)
       req.session.me = await Person.findOne({ email: req.session.user.email }).exec()
+      // console.log('req.session.me', req.session.me)
     } catch (err) {
       console.log(err)
     }

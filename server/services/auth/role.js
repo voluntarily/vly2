@@ -1,14 +1,15 @@
-const Roles = {
-  ANON: 'anon',
+const Role = {
+  ANON: 'anonymous',
   ALL: 'all',
-  VOLUNTEER_PROVIDER: 'vp',
-  OPPORTUNITY_PROVIDER: 'op',
-  ACTIVITY_PROVIDER: 'ap',
+  VOLUNTEER_PROVIDER: 'volunteer',
+  OPPORTUNITY_PROVIDER: 'opportunityProvider',
+  ACTIVITY_PROVIDER: 'activityProvider',
+  RESOURCE_PROVIDER: 'resourceProvider',
   TESTER: 'tester',
   ADMIN: 'admin',
-  ORG_ADMIN: 'org-admin'
+  ORG_ADMIN: 'orgAdmin'
 }
 
 module.exports = {
-  Roles
+  Role
 }

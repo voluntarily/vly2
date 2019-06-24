@@ -13,20 +13,23 @@ require('dotenv').config()
 const express = require('express')
 const server = express()
 const bodyParser = require('body-parser')
-const setSession = require('./middleware/session/setSession')
 const mongoose = require('mongoose')
 const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
+mongoose.Promise = Promise
+mongoose.plugin(accessibleRecordsPlugin)
+mongoose.plugin(accessibleFieldsPlugin)
 const glob = require('glob')
 const next = require('next')
 const cookieParser = require('cookie-parser')
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
-const getAbility = require('../server/middleware/getAbility/getAbility')
+const setSession = require('./middleware/session/setSession')
+const getAbility = require('./middleware/getAbility/getAbility')
 server.use(bodyParser.urlencoded({ limit: UPLOAD_LIMIT, extended: true }))
 server.use(bodyParser.json({ limit: UPLOAD_LIMIT, extended: true }))
 server.use(cookieParser())
 server.use(setSession)
-server.use(getAbility)
+server.use(getAbility({ searchPattern: '/server/api/**/*.ability.js' }))
 const routes = require('./routes')
 const routerHandler = routes.getRequestHandler(app)
 const { config } = require('../config/config')
@@ -79,9 +82,6 @@ const appReady = app.prepare().then(() => {
   })
 
   // MongoDB
-  mongoose.Promise = Promise
-  mongoose.plugin(accessibleRecordsPlugin)
-  mongoose.plugin(accessibleFieldsPlugin)
   if (process.env.NODE_ENV !== 'test') {
     mongoose.connect(config.databaseUrl, { useNewUrlParser: true, useCreateIndex: true })
       .then(console.log('mongodb connected at:', config.databaseUrl))
