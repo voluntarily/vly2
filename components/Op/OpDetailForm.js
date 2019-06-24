@@ -15,6 +15,12 @@ function hasErrors (fieldsError) {
 class OpDetailForm extends Component {
   constructor (props) {
     super(props)
+
+    this.state = {
+      startDateValue: null,
+      endDateValue: null,
+      endOpen: false
+    }
     this.setImgUrl = this.setImgUrl.bind(this)
   }
 
@@ -22,6 +28,8 @@ class OpDetailForm extends Component {
     // Call validateFields here to disable the submit button when on a blank form.
     // empty callback supresses a default which prints to the console.
     this.props.form.validateFields(() => { })
+    this.setState({ startDateValue: this.props.op.date[0] })
+    this.setState({ endDateValue: this.props.op.date[1] })
   }
 
   handleSubmit = (e) => {
@@ -30,8 +38,9 @@ class OpDetailForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const op = this.props.op
+        const { startDateValue, endDateValue } = this.state
         op.date = [] // Dirty work around to not change schema
-        op.date.push(values.startDate, values.endDate)
+        op.date.push(startDateValue, endDateValue)
         op.title = values.title
         op.subtitle = values.subtitle
         op.duration = values.duration
@@ -46,6 +55,36 @@ class OpDetailForm extends Component {
         // console.log('field validation error:', err)
       }
     })
+  }
+
+  changeStateValue = (state, value) => {
+    this.setState({
+      [ state ]: value
+    })
+  }
+
+  onEndDateChange = value => {
+    this.changeStateValue('endDateValue', value)
+  }
+
+  onStartDateChange = value => {
+    this.changeStateValue('startDateValue', value)
+  }
+
+  disabledStartDate = startDateValue => {
+    const { endDateValue } = this.state
+    if (!startDateValue || !endDateValue) {
+      return false
+    }
+    return startDateValue.valueOf() >= endDateValue.valueOf()
+  };
+
+  disabledEndDate = endDateValue => {
+    const { startDateValue } = this.state
+    if (!endDateValue || !startDateValue) {
+      return false
+    }
+    return endDateValue.valueOf() <= startDateValue.valueOf()
   }
 
   setImgUrl = (value) => {
@@ -180,12 +219,20 @@ class OpDetailForm extends Component {
               </Form.Item>
               <Form.Item label={opDate}>
                 {getFieldDecorator('startDate', dateConfig)(
-                  <DatePicker showTime size='large' format='DD-MM-YYYY HH:mm:ss' style={{ width: '100%' }} />
+                  <DatePicker showTime
+                    disabledDate={this.disabledStartDate}
+                    format='DD-MM-YYYY HH:mm:ss'
+                    onChange={this.onStartDateChange}
+                    style={{ width: '100%' }} />
                 )}
               </Form.Item>
               <Form.Item label={opDateEnd}>
                 {getFieldDecorator('endDate', dateConfig)(
-                  <DatePicker showTime format='DD-MM-YYYY HH:mm:ss' style={{ width: '100%' }} />
+                  <DatePicker showTime
+                    disabledDate={this.disabledEndDate}
+                    format='DD-MM-YYYY HH:mm:ss'
+                    onChange={this.onEndDateChange}
+                    style={{ width: '100%' }} />
                 )}
               </Form.Item>
             </Col>

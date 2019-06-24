@@ -65,7 +65,6 @@ const createInterest = async (req, res) => {
 
     sendEmailBaseOn('acknowledgeInterest', volunteerID, title, opId)
     sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
-    
     const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
     res.json(got)
   })
@@ -74,12 +73,12 @@ const createInterest = async (req, res) => {
 const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
   const { _id } = volunteer
   const { requestor, title } = opportunity
-  const opID = opportunity._id// This id is different from the _id on the top
+  const opID = opportunity._id
   if (interestStatus === 'invited' || interestStatus === 'declined') {
-    // send email to volunteer
+    // send email to volunteer only
     sendEmailBaseOn(interestStatus, _id, title, opID) // The _id in here is the volunteer id
   } else if (interestStatus === 'committed') {
-    // send email to requestor
+    // send email to requestor only
     sendEmailBaseOn(interestStatus, requestor, title, opID)
   }
 }
