@@ -63,17 +63,9 @@ const createInterest = async (req, res) => {
     const { comment } = req.body
     requestor.volunteerComment = comment
 
-    // The reason is that the sendEmail Base on function will cause longer delay with await keyword when user clicked interested
-    // But if there is no await keyword in there. The test run will fail because the call back function inside the sendEmailBaseOn
-    // will call anytime causing the test to fail
-    if (process.env.NODE_ENV !== 'test') {
-      sendEmailBaseOn('acknowledgeInterest', volunteerID, title, opId)
-      sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
-    } else {
-      await sendEmailBaseOn('acknowledgeInterest', volunteerID, title, opId)
-      await sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
-    }
-
+    sendEmailBaseOn('acknowledgeInterest', volunteerID, title, opId)
+    sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
+    
     const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
     res.json(got)
   })
