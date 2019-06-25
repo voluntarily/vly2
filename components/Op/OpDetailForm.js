@@ -53,6 +53,9 @@ const InputContainer = styled.div`
     /* iPhone X */
    margin: 1rem 0 0 0;
   }
+  @media (min-width: 320px) and (max-width: 480px) {  /*  ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
+    margin: 1rem 0 0 0;
+}
 ` // end inputContainer
 
 const MiniDescription = styled.p`
@@ -66,6 +69,10 @@ const ShortInputContainer = styled.div`
     /* iPhone X */
    width: auto;
   }
+      
+@media (min-width: 320px) and (max-width: 480px) {  /*  ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
+  width: auto;
+}
 `
 
 const MediumInputContainer = styled.div`
@@ -76,6 +83,9 @@ const MediumInputContainer = styled.div`
   }
   @media (min-width: 768px) and (max-width: 1024px) { /* #Device = Tablets, Ipads (portrait) #Screen = B/w 768px to 1024px */
   width: 25rem;
+}
+@media (min-width: 320px) and (max-width: 480px) {  /*  ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
+  width: auto;
 }
 `
 
