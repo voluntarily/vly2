@@ -11,7 +11,7 @@ const OpCard = ({ size, op, onPress, ...props }) => {
   const cardImage = op.imgUrl ? op.imgUrl : 'static/missingimage.svg'
   const draft = op.status === 'draft' ? 'DRAFT: ' : ''
   const interestState = op.interest ? ` - ${op.interest.status}` : ''
-  const startTime = op.date[0] ? moment(op.date[0]).format('ddd Do/MM/YY | HH:mm') : 'Open ended opportunity'
+  const startTime = op.date[0] ? moment(op.date[0]).format('ddd Do/MM/YY | HH:mm') : 'No start date'
   return (
     <div>
       <Link href={`/ops/${op._id}`}>

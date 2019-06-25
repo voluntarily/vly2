@@ -1,5 +1,6 @@
 import React from 'react'
 import test from 'ava'
+import { tagList } from '../../../server/api/tag/__tests__/tag.fixture'
 // import { JSDOM } from 'jsdom'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
 
@@ -23,7 +24,10 @@ const op = {
       '$date': '2019-06-23T05:57:01.000Z'
     }
   ],
-  status: 'draft'
+  status: 'draft',
+  startDate: null,
+  endDate: null,
+  tag: tagList
 }
 
 const noop = {
@@ -34,6 +38,9 @@ const noop = {
   duration: '',
   location: '',
   status: 'draft',
+  tag: [],
+  startDate: null,
+  endDate: null,
   date: []
 }
 

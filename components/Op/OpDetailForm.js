@@ -58,34 +58,38 @@ class OpDetailForm extends Component {
     })
   }
 
-  changeStateValue = (state, value) => {
+  changeFormValue = (state, value) => {
     this.setState({
       [ state ]: value
     })
   }
 
   onEndDateChange = value => {
-    this.changeStateValue('endDateValue', value)
+    this.changeFormValue('endDateValue', value)
   }
 
   onStartDateChange = value => {
-    this.changeStateValue('startDateValue', value)
+    this.changeFormValue('startDateValue', value)
   }
 
   disabledStartDate = startDateValue => {
     const { endDateValue } = this.state
-    if (!startDateValue || !endDateValue) {
+    if (this.isEitherFirstOrSecondValueNull(startDateValue, endDateValue)) {
       return false
     }
-    return startDateValue.valueOf() >= endDateValue.valueOf()
-  };
+    return startDateValue.valueOf() > endDateValue.valueOf()
+  }
 
   disabledEndDate = endDateValue => {
     const { startDateValue } = this.state
-    if (!endDateValue || !startDateValue) {
+    if (this.isEitherFirstOrSecondValueNull(startDateValue, endDateValue)) {
       return false
     }
     return endDateValue.valueOf() <= startDateValue.valueOf()
+  }
+
+  isEitherFirstOrSecondValueNull = (firstValue, secondValue) => {
+      return !firstValue || !secondValue
   }
 
   setImgUrl = (value) => {
@@ -384,8 +388,8 @@ export default Form.create({
       duration: Form.createFormField({ ...props.op.duration, value: props.op.duration }),
       location: Form.createFormField({ ...props.op.location, value: props.op.location }),
       imgUrl: Form.createFormField({ ...props.op.imgUrl, value: props.op.imgUrl }),
-      startDate: Form.createFormField({ ...props.op.startDate, value: (props.op.startDate != null) ? moment(props.op.startDate, 'YYYY-MM-DD HH:mm:ss') : null }),
-      endDate: Form.createFormField({ ...props.op.endDate, value: (props.op.endDate != null) ? moment(props.op.endDate, 'YYYY-MM-DD HH:mm:ss') : null }),
+      startDate: Form.createFormField({ ...props.op.startDate, value: (props.op.startDate != null) ? moment(props.op.startDate) : null }),
+      endDate: Form.createFormField({ ...props.op.endDate, value: (props.op.endDate != null) ? moment(props.op.endDate) : null }),
       status: Form.createFormField({ ...props.op.status, value: props.op.status }),
       tags: Form.createFormField({ ...props.op.tags, value: props.op.tags })
     }

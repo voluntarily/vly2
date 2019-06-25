@@ -4,6 +4,7 @@ import OpDetailForm from '../../components/Op/OpDetailForm'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import { message } from 'antd'
 import Router from 'next/router'
+import moment from 'moment'
 import PropTypes from 'prop-types'
 
 const newOp = {
@@ -26,6 +27,7 @@ export class OpUpdatePage extends Component {
     if (opExists) {
       await store.dispatch(reduxApi.actions.opportunities.get(query))
     }
+    console.log('The value found is ', { opExists })
     return { opExists }
   }
 
@@ -89,7 +91,9 @@ export class OpUpdatePage extends Component {
   render () {
     const op = this.props.opExists ? {
       ...this.props.opportunities.data[0],
-      tags: this.props.opportunities.data[0].tags.map(op => op.tag)
+      tags: this.props.opportunities.data[0].tags.map(op => op.tag),
+      startDate: this.props.opportunities.data[0].date[0],
+      endDate: this.props.opportunities.data[0].date[1]
     } : newOp
 
     const me = this.props.me
