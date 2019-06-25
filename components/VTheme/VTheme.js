@@ -68,6 +68,8 @@ export const Grid = styled.div`
     justify-items: center;
   }
 
+  
+
   @media screen and (max-width: 767px) {
     grid-template-columns: calc(100vw - 2rem);
     grid-gap: 0rem;
