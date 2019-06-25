@@ -17,6 +17,7 @@ import styled from 'styled-components'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { TextHeadingBold, TextP, Spacer } from '../VTheme/VTheme'
 import Title from 'antd/lib/typography/Title'
+import OpDetailTagsEditable from './OpDetailTagsEditable'
 const { TextArea } = Input
 
 // custom form components go here
@@ -109,12 +110,12 @@ class OpDetailForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const op = this.props.op
         op.title = values.title
         op.subtitle = values.subtitle
+        op.tags = values.tags
         op.duration = values.duration
         op.location = values.location
         op.description = values.description
@@ -230,6 +231,8 @@ class OpDetailForm extends Component {
         </Tooltip>
       </span>
     )
+        const opTags = (<FormattedMessage id='opTags' defaultMessage='Tags' description='Descriptions of general areas the opportunity relates to' />)
+
     const {
       getFieldDecorator,
       getFieldsError,
@@ -289,6 +292,35 @@ class OpDetailForm extends Component {
 
           <Divider />
 
+          <Row>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 8 }}
+            >
+              <h2>2. What kind of topics does it cover (optional)</h2>
+              <p>
+                Tell us how to categorise this request so we can tell relevant
+                volunteers about it.
+              </p>
+            </Col>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 16 }}
+            >
+              <Form.Item label={opTags}>
+                {getFieldDecorator('tags', {
+                  initialValue: [],
+                  rules: [
+
+                  ]
+                })(
+                  <OpDetailTagsEditable existingTags={this.props.existingTags} />
+                )
+                }
+              </Form.Item>
+            </Col>
+          </Row>
+
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -324,6 +356,7 @@ class OpDetailForm extends Component {
 
           <Divider />
 
+
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -354,6 +387,7 @@ class OpDetailForm extends Component {
               <TextP>Users can see active requests</TextP>
             </DescriptionContainer>
             <InputContainer>
+
               <Form.Item label={opStatus}>
                 {getFieldDecorator('status', {
                   rules: [{ required: true, message: 'status is required' }]
@@ -414,7 +448,8 @@ OpDetailForm.propTypes = {
     duration: PropTypes.string,
     location: PropTypes.string,
     status: PropTypes.string,
-    requestor: PropTypes.string
+    requestor: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string)
   }),
   me: PropTypes.shape({
     _id: PropTypes.string
@@ -424,7 +459,8 @@ OpDetailForm.propTypes = {
     id: PropTypes.string.isRequired
   }),
   onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired
+  onCancel: PropTypes.func.isRequired,
+  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired
   // dispatch: PropTypes.func.isRequired,
 }
 
@@ -437,6 +473,7 @@ export default Form.create({
   mapPropsToFields (props) {
     return {
       title: Form.createFormField({ ...props.op.title, value: props.op.title }),
+
       subtitle: Form.createFormField({
         ...props.op.subtitle,
         value: props.op.subtitle
@@ -461,6 +498,8 @@ export default Form.create({
         ...props.op.status,
         value: props.op.status
       })
+          tags: Form.createFormField({ ...props.op.tags, value: props.op.tags })
+
     }
   }
   // onValuesChange (_, values) {

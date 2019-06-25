@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import { Button } from 'antd'
 import { FullPage } from '../../hocs/publicPage'
 import { HalfGrid, Spacer } from '../VTheme/VTheme'
+import OpDetailTagsDisplay from './OpDetailTagsDisplay'
 
 const Left = styled.div``
 
@@ -49,7 +50,9 @@ export function OpDetail ({ op }) {
           <ItemListing>⏱&nbsp;{op.duration}</ItemListing>
           <ItemListing>🏫&nbsp;{op.location}</ItemListing>
           <ItemListing>📝&nbsp;{op.status}</ItemListing>
+
           <Spacer />
+
           <ItemP>
             <Markdown
               children={description}
@@ -64,6 +67,7 @@ export function OpDetail ({ op }) {
         </Left>
         <Right>
           <img style={{ width: '100%' }} src={op.imgUrl} alt={op.title} />
+          <OpDetailTagsDisplay tags={op.tags} />
         </Right>
       </HalfGrid>
     </FullPage>
