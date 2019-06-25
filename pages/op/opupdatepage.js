@@ -2,10 +2,11 @@ import { Component } from 'react'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import OpDetailForm from '../../components/Op/OpDetailForm'
 import publicPage, { FullPage } from '../../hocs/publicPage'
-import { message } from 'antd'
+import { message, Divider } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
-
+import styled from 'styled-components'
+import PageTitle from '../../components/LandingPageComponents/PageTitle.js';
 const newOp = {
   title: '',
   subtitle: '',
@@ -14,6 +15,11 @@ const newOp = {
   location: '',
   status: 'inactive'
 }
+
+const TitleContainer = styled.div`
+margin-top:5rem;
+margin-bottom: 5rem;
+`
 
 export class OpUpdatePage extends Component {
   static async getInitialProps ({ store, query }) {
@@ -52,8 +58,12 @@ export class OpUpdatePage extends Component {
     const me = this.props.me
     return (
       <FullPage>
-        <h1>Create a request</h1>
-        <small>Ready to get some help? Lets start by letting volunteers know what you need</small>
+<PageTitle
+title='Create a request'
+subtitle='Ask volunteers for assistance with anything related to tech - there are 1,312 volunteers looking for opportunities to help out'
+/>
+<Divider />
+        
         <OpDetailForm op={op} me={me} onSubmit={this.handleAdd.bind(this, op)} onCancel={this.handleCancel} />
         <br />
         {/* <Collapse>

@@ -287,9 +287,12 @@ export const BigQuoteAuthor = styled.p`
 ====================================================
 
 CONTAINER CLASSES
-We use these to contain th
+We use these to contain components and nudge them around
 
-We probably don't need this...
+Will refactor all the containers in here soon :)
+
+Need the form ones as well soon as we create other forms on top of the OpDetailForm component work :L
+
 ^__^
 
 ====================================================
