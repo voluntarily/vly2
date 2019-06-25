@@ -16,6 +16,7 @@ class InterestTable extends Component {
             <Avatar
               size='large'
               shape='square'
+              onClick={() => Router.push(`/people/${record.person._id}`)}
               src={record.person.avatar}
               icon='user'
             />&nbsp;
@@ -92,11 +93,6 @@ class InterestTable extends Component {
         dataSource={this.props.interests}
         rowKey='_id'
         pagination={false}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: event => { Router.push(`/people/${record.person._id}`) } // click row
-          }
-        }}
       />
     )
   }
