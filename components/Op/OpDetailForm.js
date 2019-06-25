@@ -89,7 +89,7 @@ class OpDetailForm extends Component {
   }
 
   isEitherFirstOrSecondValueNull = (firstValue, secondValue) => {
-      return !firstValue || !secondValue
+    return !firstValue || !secondValue
   }
 
   setImgUrl = (value) => {

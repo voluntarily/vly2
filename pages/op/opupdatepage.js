@@ -4,7 +4,6 @@ import OpDetailForm from '../../components/Op/OpDetailForm'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import { message } from 'antd'
 import Router from 'next/router'
-import moment from 'moment'
 import PropTypes from 'prop-types'
 
 const newOp = {
