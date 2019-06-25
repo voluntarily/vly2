@@ -291,23 +291,17 @@ class OpDetailForm extends Component {
           </FormGrid>
 
           <Divider />
-
-          <Row>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 8 }}
-            >
-              <h2>2. What kind of topics does it cover (optional)</h2>
-              <p>
-                Tell us how to categorise this request so we can tell relevant
-                volunteers about it.
-              </p>
-            </Col>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 16 }}
-            >
-              <Form.Item label={opTags}>
+          <FormGrid>
+            <DescriptionContainer>
+            <TitleContainer>
+                <TextHeadingBold>Do you need any specific skills?</TextHeadingBold>
+              </TitleContainer>
+              <TextP>
+                Does what you're asking for fit into any specific categories like programming, electronics, or robots? Enter them here to make it easier for volunteers to find you.
+              </TextP>
+            </DescriptionContainer>
+            <InputContainer>
+            <Form.Item label={opTags}>
                 {getFieldDecorator('tags', {
                   initialValue: [],
                   rules: [
@@ -318,8 +312,9 @@ class OpDetailForm extends Component {
                 )
                 }
               </Form.Item>
-            </Col>
-          </Row>
+            </InputContainer>
+          </FormGrid>
+          <Divider />
 
           <FormGrid>
             <DescriptionContainer>
@@ -497,7 +492,7 @@ export default Form.create({
       status: Form.createFormField({
         ...props.op.status,
         value: props.op.status
-      })
+      }),
           tags: Form.createFormField({ ...props.op.tags, value: props.op.tags })
 
     }

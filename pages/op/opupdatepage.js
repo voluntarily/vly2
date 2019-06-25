@@ -100,7 +100,11 @@ export class OpUpdatePage extends Component {
     return (
       <FullPage>
 
-        
+                <PageTitle
+                title='Create a request'
+                subtitle='Ask volunteers for assistance with anything related to tech - there are 1,312 volunteers looking for opportunities to help out'
+                />
+                <Divider />
                 <OpDetailForm op={op} me={me} onSubmit={this.handleAdd.bind(this, op)} onCancel={this.handleCancel} existingTags={existingTags} />
 
         <br />
