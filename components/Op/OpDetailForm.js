@@ -16,7 +16,6 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { TextHeadingBold, TextP, Spacer } from '../VTheme/VTheme'
-import Title from 'antd/lib/typography/Title'
 import OpDetailTagsEditable from './OpDetailTagsEditable'
 const { TextArea } = Input
 
@@ -25,7 +24,6 @@ const { TextArea } = Input
 const FormGrid = styled.div`
   display: grid;
   grid-template-columns: 40fr 60fr;
-
 
   @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
     /* iPhone X */
@@ -52,42 +50,41 @@ const InputContainer = styled.div`
   margin-bottom: 2rem;
   @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
     /* iPhone X */
-   margin: 1rem 0 0 0;
-  }
-  @media (min-width: 320px) and (max-width: 480px) {  /*  ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
     margin: 1rem 0 0 0;
-}
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    /*  ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
+    margin: 1rem 0 0 0;
+  }
 ` // end inputContainer
-
-const MiniDescription = styled.p`
-  font-size: 0.5rem;
-  font-weight: 700;
-`
 
 const ShortInputContainer = styled.div`
   width: 25rem;
   @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
     /* iPhone X */
-   width: auto;
+    width: auto;
   }
-      
-@media (min-width: 320px) and (max-width: 480px) {  /*  ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
-  width: auto;
-}
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    /*  ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
+    width: auto;
+  }
 `
 
 const MediumInputContainer = styled.div`
   width: 35rem;
   @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
     /* iPhone X */
-   width: auto;
+    width: auto;
   }
-  @media (min-width: 768px) and (max-width: 1024px) { /* #Device = Tablets, Ipads (portrait) #Screen = B/w 768px to 1024px */
-  width: 25rem;
-}
-@media (min-width: 320px) and (max-width: 480px) {  /*  ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
-  width: auto;
-}
+  @media (min-width: 768px) and (max-width: 1024px) {
+    /* #Device = Tablets, Ipads (portrait) #Screen = B/w 768px to 1024px */
+    width: 25rem;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    /*  ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
+    width: auto;
+  }
 `
 
 // end custom form components
@@ -231,7 +228,13 @@ class OpDetailForm extends Component {
         </Tooltip>
       </span>
     )
-        const opTags = (<FormattedMessage id='opTags' defaultMessage='Tags' description='Descriptions of general areas the opportunity relates to' />)
+    const opTags = (
+      <FormattedMessage
+        id='opTags'
+        defaultMessage='Tags'
+        description='Descriptions of general areas the opportunity relates to'
+      />
+    )
 
     const {
       getFieldDecorator,
@@ -293,24 +296,27 @@ class OpDetailForm extends Component {
           <Divider />
           <FormGrid>
             <DescriptionContainer>
-            <TitleContainer>
-                <TextHeadingBold>Do you need any specific skills?</TextHeadingBold>
+              <TitleContainer>
+                <TextHeadingBold>
+                  Do you need any specific skills?
+                </TextHeadingBold>
               </TitleContainer>
               <TextP>
-                Does what you're asking for fit into any specific categories like programming, electronics, or robots? Enter them here to make it easier for volunteers to find you.
+                Does what you're asking for fit into any specific categories
+                like programming, electronics, or robots? Enter them here to
+                make it easier for volunteers to find you.
               </TextP>
             </DescriptionContainer>
             <InputContainer>
-            <Form.Item label={opTags}>
+              <Form.Item label={opTags}>
                 {getFieldDecorator('tags', {
                   initialValue: [],
-                  rules: [
-
-                  ]
+                  rules: []
                 })(
-                  <OpDetailTagsEditable existingTags={this.props.existingTags} />
-                )
-                }
+                  <OpDetailTagsEditable
+                    existingTags={this.props.existingTags}
+                  />
+                )}
               </Form.Item>
             </InputContainer>
           </FormGrid>
@@ -351,7 +357,6 @@ class OpDetailForm extends Component {
 
           <Divider />
 
-
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -382,7 +387,6 @@ class OpDetailForm extends Component {
               <TextP>Users can see active requests</TextP>
             </DescriptionContainer>
             <InputContainer>
-
               <Form.Item label={opStatus}>
                 {getFieldDecorator('status', {
                   rules: [{ required: true, message: 'status is required' }]
@@ -493,8 +497,7 @@ export default Form.create({
         ...props.op.status,
         value: props.op.status
       }),
-          tags: Form.createFormField({ ...props.op.tags, value: props.op.tags })
-
+      tags: Form.createFormField({ ...props.op.tags, value: props.op.tags })
     }
   }
   // onValuesChange (_, values) {
