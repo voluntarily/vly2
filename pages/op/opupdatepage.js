@@ -2,10 +2,10 @@ import { Component } from 'react'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import OpDetailForm from '../../components/Op/OpDetailForm'
 import publicPage, { FullPage } from '../../hocs/publicPage'
-import { message } from 'antd'
+import { message, Divider } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
-
+import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
 const newOp = {
   title: '',
   subtitle: '',
@@ -34,7 +34,7 @@ export class OpUpdatePage extends Component {
     }
   }
 
-  handleCancel = (op) => {
+  handleCancel = op => {
     Router.back()
   }
 
@@ -49,7 +49,7 @@ export class OpUpdatePage extends Component {
     // determine which tags need to be added to the database
     // based on whether they exist already or not.
     userTags.forEach(tag => {
-      const match = dbTags.find((dbTag) => tag === dbTag.tag)
+      const match = dbTags.find(dbTag => tag === dbTag.tag)
       if (match) {
         tagIds.push(match._id)
       } else {
@@ -58,7 +58,9 @@ export class OpUpdatePage extends Component {
     })
 
     // send post requests for each non-existing tag to create them
-    await this.props.dispatch(reduxApi.actions.tags.post({}, { body: JSON.stringify(newTags) }))
+    await this.props.dispatch(
+      reduxApi.actions.tags.post({}, { body: JSON.stringify(newTags) })
+    )
 
     // find the ids of all the newly created tags, which are now in props
     newTags.forEach(newTag => {
@@ -73,9 +75,19 @@ export class OpUpdatePage extends Component {
     // Actual data request
     let res = {}
     if (updatedOp._id) {
-      res = await this.props.dispatch(reduxApi.actions.opportunities.put({ id: updatedOp._id }, { body: JSON.stringify(updatedOp) }))
+      res = await this.props.dispatch(
+        reduxApi.actions.opportunities.put(
+          { id: updatedOp._id },
+          { body: JSON.stringify(updatedOp) }
+        )
+      )
     } else {
-      res = await this.props.dispatch(reduxApi.actions.opportunities.post({}, { body: JSON.stringify(updatedOp) }))
+      res = await this.props.dispatch(
+        reduxApi.actions.opportunities.post(
+          {},
+          { body: JSON.stringify(updatedOp) }
+        )
+      )
     }
     updatedOp = res[0]
     message.success('Saved.')
@@ -84,18 +96,30 @@ export class OpUpdatePage extends Component {
     if (updatedOp && updatedOp._id) Router.push(`/ops/${updatedOp._id}`)
   }
   render () {
-    const op = this.props.opExists ? {
-      ...this.props.opportunities.data[0],
-      tags: this.props.opportunities.data[0].tags.map(op => op.tag)
-    } : newOp
+    const op = this.props.opExists
+      ? {
+        ...this.props.opportunities.data[0],
+        tags: this.props.opportunities.data[0].tags.map(op => op.tag)
+      }
+      : newOp
 
     const me = this.props.me
     const existingTags = this.props.tags.data.map(tag => tag.tag)
     return (
       <FullPage>
-        <h1>Create a request</h1>
-        <small>Ready to get some help? Lets start by letting volunteers know what you need</small>
-        <OpDetailForm op={op} me={me} onSubmit={this.handleAdd.bind(this, op)} onCancel={this.handleCancel} existingTags={existingTags} />
+        <PageTitle
+          title='Create a request'
+          subtitle='Ask volunteers for assistance with anything related to tech - there are 1,312 volunteers looking for opportunities to help out'
+        />
+        <Divider />
+        <OpDetailForm
+          op={op}
+          me={me}
+          onSubmit={this.handleAdd.bind(this, op)}
+          onCancel={this.handleCancel}
+          existingTags={existingTags}
+        />
+
         <br />
         {/* <Collapse>
           <Panel header="Debug" key="1">
