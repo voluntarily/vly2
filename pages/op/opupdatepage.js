@@ -5,7 +5,6 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 import { message, Divider } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
 const newOp = {
   title: '',
