@@ -26,7 +26,6 @@ export class OpUpdatePage extends Component {
     if (opExists) {
       await store.dispatch(reduxApi.actions.opportunities.get(query))
     }
-    console.log('The value found is ', { opExists })
     return { opExists }
   }
 
