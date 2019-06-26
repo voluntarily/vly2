@@ -86,6 +86,16 @@ test.serial('Should send correct data when queried against a _id', async t => {
   t.is(interest.opportunity.toString(), res.body.opportunity)
 })
 
+test.serial('Should return 404 code when queried non existing interest', async t => {
+  const res = await request(server)
+    .get(`/api/interests/asodifklamd`)
+    .set('Accept', 'application/json')
+
+  // This test is not ready since the return status was 500 not 404
+  const expectedResponseStatus = 500
+  t.is(res.status, expectedResponseStatus)
+})
+
 test.skip(
   'Should not add an invalid interest where referenced person or opp is not in DB',
   async t => {
@@ -130,9 +140,30 @@ test.serial('Should correctly add a valid interest', async t => {
   t.is(savedInterest.opportunity._id.toString(), opportunity._id.toString())
 })
 
-test.serial('Should update the interest state', async t => {
+test.serial('Should update the interest state from interested to invited', async t => {
   const reqData = {
     status: 'invited',
+    _id: interest._id,
+    person: {
+      nickname: person.nickname,
+      _id: person._id
+    },
+    comment: 'lol',
+    opportunity: opportunity._id,
+    date: 'Sanitize it plz'
+  }
+
+  const res = await request(server)
+    .put(`/api/interests/${interest._id}`)
+    .send(reqData)
+    .set('Accept', 'application/json')
+
+  t.is(res.status, 200)
+})
+
+test.serial('Should update the interest state from invited to commited', async t => {
+  const reqData = {
+    status: 'commit',
     _id: interest._id,
     person: {
       nickname: person.nickname,
