@@ -7,7 +7,7 @@ const opList = [
     duration: '12 weeks, 1 hour sessions',
     date: '20190401',
     offerOrg: 'Albany High School',
-    reqestor: 'Arthur Henry Smith',
+    requestor: 'Arthur Henry Smith',
     location: 'Albany High School, Auckland',
     status: 'active'
   },

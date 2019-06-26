@@ -6,6 +6,8 @@ import Opportunity from '../../opportunity/opportunity'
 import Person from '../../person/person'
 // import { connectDB, dropDB } from '../../../util/test-helpers'
 import MemoryMongo from '../../../util/test-memory-mongo'
+// import people from '../../person/__tests__/person.fixture'
+// import ops from './opportunity.fixture.js'
 
 const person = new Person({
   _id: '5cc8d60b8b16812b5b392123',

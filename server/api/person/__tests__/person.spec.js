@@ -17,7 +17,7 @@ test.after.always(t => {
   console.log('stopped')
 })
 
-test.beforeEach('connect and add peopl fixture', async () => {
+test.beforeEach('connect and add people fixture', async () => {
   // console.log('creating people')
   await Person.create(people).catch((err) => `Unable to create people: ${err}`)
 })
@@ -29,7 +29,7 @@ test.afterEach.always(async () => {
 test.serial('verify fixture database has people', async t => {
   const count = await Person.countDocuments()
   t.is(count, people.length)
-
+  console.log(count, people.length)
   // can find by email with then
   const andrew = await Person.findOne({ email: 'andrew@groat.nz' })
   t.is(andrew.nickname, 'avowkind')
