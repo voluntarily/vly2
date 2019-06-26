@@ -11,7 +11,8 @@ const opList = [
     date: [
       null,
       null
-    ]
+    ],
+    tags: []
   },
   {
     title: '2 Self driving model cars',
@@ -24,7 +25,8 @@ const opList = [
     date: [
       null,
       null
-    ]
+    ],
+    tags: []
   },
   {
     title: '3 Growing in the garden',
@@ -37,7 +39,8 @@ const opList = [
     date: [
       null,
       null
-    ]
+    ],
+    tags: []
   },
   {
     title: '4 The first 100 metres',
@@ -50,7 +53,8 @@ const opList = [
     date: [
       null,
       null
-    ]
+    ],
+    tags: []
   }
 ]
 
