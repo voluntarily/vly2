@@ -13,6 +13,9 @@ const newOp = {
   duration: '',
   location: '',
   status: 'inactive',
+  date: [],
+  startDate: null,
+  endDate: null,
   tags: []
 }
 
@@ -96,12 +99,12 @@ export class OpUpdatePage extends Component {
     if (updatedOp && updatedOp._id) Router.push(`/ops/${updatedOp._id}`)
   }
   render () {
-    const op = this.props.opExists
-      ? {
-        ...this.props.opportunities.data[0],
-        tags: this.props.opportunities.data[0].tags.map(op => op.tag)
-      }
-      : newOp
+    const op = this.props.opExists ? {
+      ...this.props.opportunities.data[0],
+      tags: this.props.opportunities.data[0].tags.map(op => op.tag),
+      startDate: this.props.opportunities.data[0].date[0],
+      endDate: this.props.opportunities.data[0].date[1]
+    } : newOp
 
     const me = this.props.me
     const existingTags = this.props.tags.data.map(tag => tag.tag)
@@ -139,6 +142,7 @@ OpUpdatePage.propTypes = {
     title: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
+    date: PropTypes.any,
     duration: PropTypes.string,
     location: PropTypes.string,
     tags: PropTypes.object,
