@@ -76,3 +76,17 @@ test('send "DELETE" request to redux-api when deletion is confirmed on OpDetailP
   t.is(t.context.mockStore.getActions()[0].request.params.method, 'DELETE')
   t.is(t.context.mockStore.getActions()[0].request.pathvars.id, opportunityToDelete._id)
 })
+
+test('display unavailable opportunity message when opportunity id is invalid on OpDetailPage', t => {
+  const props = {
+    me: t.context.me
+  }
+  const RoutedOpDetailPage = withMockRoute(OpDetailPage)
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <RoutedOpDetailPage {...props} />
+    </Provider>
+  )
+
+  t.is(wrapper.find('h2').filter('#unavailableOpportunityHeader').first().text(), 'Sorry this opportunity is no longer available')
+})

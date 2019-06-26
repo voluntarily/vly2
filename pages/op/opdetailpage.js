@@ -116,7 +116,7 @@ export class OpDetailPage extends Component {
     } else {
       content =
         (<div>
-          <h2>Sorry this opportunity is no longer available</h2>
+          <h2 id='unavailableOpportunityHeader'>Sorry this opportunity is no longer available</h2>
           <Link href={'/ops'} ><a>Search for some more</a></Link>
           <p>or </p>
           <Link href={'/ops/new'} ><a>create a new opportunity</a></Link>
