@@ -22,8 +22,20 @@ const PersonaContainer = styled.div`
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     height: auto;
   }
-
   @media screen and (max-width: 768px) {
+
+    height: auto;
+    margin-bottom: 3rem;
+  }
+
+
+@media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
+/* iPhone X */
+width: calc(100vw - 2rem);
+height: auto;
+}
+
+  @media screen and (max-width: 480px) {
     width: calc(100vw - 2rem);
     height: auto;
     margin-bottom: 3rem;
@@ -44,6 +56,13 @@ const Image = styled.img`
     height: 20rem;
     object-position: top;
   }
+
+
+@media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
+/* iPhone X */
+height: 20rem;
+object-position: top;
+}
 `
 
 const Title = styled.div`
@@ -68,7 +87,17 @@ const Text = styled.div`
   letter-spacing: -0.6px;
   line-height: 24px;
 
-  @media screen and (max-width: 768px) {
+  
+@media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
+/* iPhone X */
+font-size: 1rem;
+    line-height: 1.4;
+    width: calc(90vw - 2rem);
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+  @media screen and (max-width: 480px) {
     font-size: 1rem;
     line-height: 1.4;
     width: calc(90vw - 2rem);
@@ -88,7 +117,7 @@ const AboutSection = () => (
             Discover cool opportunities to help out teachers, students and
             charities.
           </Text>
-          <Button href='/about'>Learn More</Button>
+          <Button>Learn More</Button>
         </PersonaContainer>
       </a>
       <a href='/educators' target='_blank'>
@@ -98,7 +127,7 @@ const AboutSection = () => (
           <Text>
             Get the help of skilled volunteers to bring tech to your teaching.
           </Text>
-          <Button href='/educators'>Learn More</Button>
+          <Button>Learn More</Button>
         </PersonaContainer>
       </a>
       <a href='/charities' target='_blank'>
@@ -106,7 +135,7 @@ const AboutSection = () => (
           <Image src='/static/img/contentCard.png' />
           <Title>Charities</Title>
           <Text>We help you get more people involved with your movement.</Text>
-          <Button href='/charities'>Learn More</Button>
+          <Button>Learn More</Button>
         </PersonaContainer>
       </a>
       <a href='/business' target='_blank'>
@@ -117,7 +146,7 @@ const AboutSection = () => (
             We handle HR, admin, and discovery so your staff have more impact on
             the community.
           </Text>
-          <Button href='/business'>Learn More</Button>
+          <Button>Learn More</Button>
         </PersonaContainer>
       </a>
     </Grid>

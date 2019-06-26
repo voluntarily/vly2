@@ -37,11 +37,16 @@ const AwesomeHeroContainer = styled.div`
     grid-template-columns: 30vw 70vw;
   }
 
+
+
   @media screen and (max-width: 768px) {
     grid-template-columns: 100vw;
     height: auto;
     width: 100vw;
   }
+
+
+
 `
 // start left hand video side
 const HeroLeft = styled.div`
@@ -76,6 +81,8 @@ const HeroLeft = styled.div`
     width: 11rem;
     height: 22rem;
   }
+
+
   @media screen and (max-width: 768px) {
     margin-top: 0rem;
     margin-left: 0rem;

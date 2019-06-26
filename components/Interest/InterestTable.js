@@ -19,7 +19,7 @@ class InterestTable extends Component {
               onClick={() => Router.push(`/people/${record.person._id}`)}
               src={record.person.avatar}
               icon='user'
-            />&nbsp;
+            />&nbsp;&nbsp;
             {record.person.nickname}
           </span>
         )

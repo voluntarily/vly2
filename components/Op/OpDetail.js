@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import Head from 'next/head'
 import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
+import moment from 'moment'
 
 import { Button } from 'antd'
 import { FullPage } from '../../hocs/publicPage'
@@ -35,11 +36,16 @@ const ItemP = styled.div`
   color: initial;
   margin-bottom: 1rem;
 `
+const TagContainer = styled.div`
+  margin-top: 0.2rem;
+`
 
 export function OpDetail ({ op }) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
   const description = op.description == null ? '' : op.description
+  const startDate = op.date[0] ? moment(op.date[0]).format('ddd DD/MM/YY | HH:mm') : 'N/a'
+  const endDate = op.date[1] ? moment(op.date[1]).format('DD-MM-YYYY') : 'Open ended opportunity'
   return (
     <FullPage>
       <Spacer />
@@ -47,10 +53,11 @@ export function OpDetail ({ op }) {
       <HalfGrid>
         <Left>
           <TitleFont>{op.title}</TitleFont>
-          <ItemListing>⏱&nbsp;{op.duration}</ItemListing>
-          <ItemListing>🏫&nbsp;{op.location}</ItemListing>
-          <ItemListing>📝&nbsp;{op.status}</ItemListing>
-
+          <ItemListing>Duration 🔥&nbsp;&nbsp;&nbsp;{op.duration}</ItemListing>
+          <ItemListing>Location 🏫&nbsp;&nbsp;&nbsp;{op.location}</ItemListing>
+          <ItemListing>Status 📝&nbsp;&nbsp;&nbsp;{op.status}</ItemListing>
+          <ItemListing>Start date ⏱&nbsp;&nbsp;&nbsp; {startDate}</ItemListing>
+          <ItemListing>End date 📣 &nbsp;&nbsp;{endDate} </ItemListing>
           <Spacer />
 
           <ItemP>
@@ -67,7 +74,9 @@ export function OpDetail ({ op }) {
         </Left>
         <Right>
           <img style={{ width: '100%' }} src={op.imgUrl} alt={op.title} />
-          <OpDetailTagsDisplay tags={op.tags} />
+          <TagContainer>
+            <OpDetailTagsDisplay tags={op.tags} />
+          </TagContainer>
         </Right>
       </HalfGrid>
     </FullPage>

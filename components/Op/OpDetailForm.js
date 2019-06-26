@@ -1,18 +1,9 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react'
-import {
-  Button,
-  Col,
-  Divider,
-  Form,
-  Input,
-  Radio,
-  Row,
-  Tooltip,
-  Icon
-} from 'antd'
+import { Button, Col, Divider, Form, Input, Radio, Row, DatePicker, Tooltip, Icon } from 'antd'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
+import moment from 'moment'
 import styled from 'styled-components'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { TextHeadingBold, TextP, Spacer } from '../VTheme/VTheme'
@@ -96,13 +87,21 @@ function hasErrors (fieldsError) {
 class OpDetailForm extends Component {
   constructor (props) {
     super(props)
+
+    this.state = {
+      startDateValue: null,
+      endDateValue: null,
+      endOpen: false
+    }
     this.setImgUrl = this.setImgUrl.bind(this)
   }
 
   componentDidMount () {
     // Call validateFields here to disable the submit button when on a blank form.
     // empty callback supresses a default which prints to the console.
-    this.props.form.validateFields(() => {})
+    this.props.form.validateFields(() => { })
+    this.setState({ startDateValue: this.props.op.date[0] })
+    this.setState({ endDateValue: this.props.op.date[1] })
   }
 
   handleSubmit = e => {
@@ -110,6 +109,9 @@ class OpDetailForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const op = this.props.op
+        const { startDateValue, endDateValue } = this.state
+        op.date = [] // Dirty work around to not change schema
+        op.date.push(startDateValue, endDateValue)
         op.title = values.title
         op.subtitle = values.subtitle
         op.tags = values.tags
@@ -127,7 +129,41 @@ class OpDetailForm extends Component {
     })
   }
 
-  setImgUrl = value => {
+  changeFormValue = (state, value) => {
+    this.setState({
+      [ state ]: value
+    })
+  }
+
+  onEndDateChange = value => {
+    this.changeFormValue('endDateValue', value)
+  }
+
+  onStartDateChange = value => {
+    this.changeFormValue('startDateValue', value)
+  }
+
+  disabledStartDate = startDateValue => {
+    const { endDateValue } = this.state
+    if (this.isEitherFirstOrSecondValueNull(startDateValue, endDateValue)) {
+      return false
+    }
+    return startDateValue.valueOf() > endDateValue.valueOf()
+  }
+
+  disabledEndDate = endDateValue => {
+    const { startDateValue } = this.state
+    if (this.isEitherFirstOrSecondValueNull(startDateValue, endDateValue)) {
+      return false
+    }
+    return endDateValue.valueOf() <= startDateValue.valueOf()
+  }
+
+  isEitherFirstOrSecondValueNull = (firstValue, secondValue) => {
+    return !firstValue || !secondValue
+  }
+
+  setImgUrl = (value) => {
     this.props.form.setFieldsValue({
       imgUrl: value
     })
@@ -202,6 +238,36 @@ class OpDetailForm extends Component {
         </Tooltip>
       </span>
     )
+    const opStartDate = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='opStartDate'
+          defaultMessage='Start Date'
+          description='opportunity start date label in OpDetails Form'
+        />
+        &nbsp;
+        <Tooltip title='Choose your start date '>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+
+    const opEndDate = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='opEndDate'
+          defaultMessage='End Date'
+          description='opportunity end date label in OpDetails Form'
+        />
+        &nbsp;
+        <Tooltip title='Choose your end date '>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+
     const opImgUrl = (
       <span>
         <FormattedMessage
@@ -344,6 +410,24 @@ class OpDetailForm extends Component {
                     ]
                   })(<Input placeholder='4 hours' />)}
                 </Form.Item>
+                <Form.Item label={opStartDate}>
+                  {getFieldDecorator('startDate', {})(
+                    <DatePicker showTime
+                      disabledDate={this.disabledStartDate}
+                      format='DD-MM-YYYY HH:mm:ss'
+                      onChange={this.onStartDateChange}
+                      style={{ width: '100%' }} />
+                  )}
+                </Form.Item>
+                <Form.Item label={opEndDate}>
+                  {getFieldDecorator('endDate', {})(
+                    <DatePicker showTime
+                      disabledDate={this.disabledEndDate}
+                      format='DD-MM-YYYY HH:mm:ss'
+                      onChange={this.onEndDateChange}
+                      style={{ width: '100%' }} />
+                  )}
+                </Form.Item>
               </ShortInputContainer>
               <MediumInputContainer>
                 <Form.Item label={opLocation}>
@@ -446,6 +530,7 @@ OpDetailForm.propTypes = {
     imgUrl: PropTypes.string,
     duration: PropTypes.string,
     location: PropTypes.string,
+    date: PropTypes.array,
     status: PropTypes.string,
     requestor: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string)
@@ -497,7 +582,18 @@ export default Form.create({
         ...props.op.status,
         value: props.op.status
       }),
-      tags: Form.createFormField({ ...props.op.tags, value: props.op.tags })
+      tags: Form.createFormField({
+        ...props.op.tags,
+        value: props.op.tags
+      }),
+      startDate: Form.createFormField({
+        ...props.op.startDate,
+        value: (props.op.startDate != null) ? moment(props.op.startDate) : null
+      }),
+      endDate: Form.createFormField({
+        ...props.op.endDate,
+        value: (props.op.endDate != null) ? moment(props.op.endDate) : null
+      })
     }
   }
   // onValuesChange (_, values) {

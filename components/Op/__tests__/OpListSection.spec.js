@@ -20,7 +20,15 @@ const ops = [
     description: 'Project to grow something in the garden',
     duration: '15 Minutes',
     location: 'Newmarket, Auckland',
-    status: 'draft'
+    status: 'draft',
+    date: [
+      {
+        '$date': '2019-05-23T12:26:18.000Z'
+      },
+      {
+        '$date': '2019-06-12T04:55:10.014Z'
+      }
+    ]
   },
   {
     _id: '5cc903e5f94141437622ce87',
@@ -30,7 +38,15 @@ const ops = [
     description: 'Project to build a simple rocket that will reach 100m',
     duration: '2 hours',
     location: 'Albany, Auckland',
-    status: 'done'
+    status: 'done',
+    date: [
+      {
+        '$date': '2019-05-23T12:26:18.000Z'
+      },
+      {
+        '$date': '2019-06-12T04:55:10.014Z'
+      }
+    ]
   }
 ]
 

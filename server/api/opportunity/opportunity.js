@@ -10,7 +10,7 @@ const opportunitySchema = new Schema({
   duration: String, // "15 Minutes",
   location: String, // "Newmarket, Auckland",
   status: String, // "draft",
-  date: { type: 'Date' },
+  date: [Date],
   offerOrg: String,
   requestor: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
   dateAdded: { type: 'Date', default: Date.now, required: true },
