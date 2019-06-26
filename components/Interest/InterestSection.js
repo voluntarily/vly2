@@ -13,7 +13,7 @@ import Loading from '../Loading'
 class InterestSection extends Component {
   async componentDidMount () {
     // Get all interests
-    console.log('interest section did mount')
+    // console.log('interest section did mount')
     const opid = this.props.opid
     try {
       await this.props.dispatch(reduxApi.actions.interests.get({ id: '', opid }))

@@ -110,11 +110,11 @@ test('mount the InterestSection with two interests', async t => {
 
   const declinebutton = wrapper.find('tbody tr').first().find('button').at(1)
   t.is(declinebutton.text(), 'Decline')
-  console.log(declinebutton.html())
+  // console.log(declinebutton.html())
   declinebutton.simulate('click')
 
   const popconfirm = wrapper.find('Popconfirm').filter('#declineInvitePopConfirm').first()
-  console.log(popconfirm.html())
+  // console.log(popconfirm.html())
 
   // TODO: fix throw of rejected promise at this point
   // popconfirm.props().onConfirm(interests[0])
