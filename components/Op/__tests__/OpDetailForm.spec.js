@@ -96,6 +96,11 @@ test.serial('render the detail with new blank op', t => {
     <OpDetailForm op={noop} me={me} onSubmit={submitOp} onCancel={cancelOp} />
   )
   t.log(wrapper.first())
+  const datePicker = wrapper.find('.ant-calendar-picker')
+  datePicker.at(0).simulate('click') // Check if the dissable date method got called
+  datePicker.at(1).simulate('click') // Check if the dissable date method got called
+  t.is(datePicker.length, 2) // should find 1 date picker component
+
   t.is(wrapper.find('OpDetailForm').length, 1)
   t.is(wrapper.find('button').length, 2)
   wrapper.find('button').first().simulate('click')
