@@ -236,7 +236,7 @@ test.serial('Should fail to find - invalid query', async t => {
   t.is(res.status, 404)
 })
 
-// Searching for something in the description (case insensitive)
+// Searching for something in the subtitle (case insensitive)
 test.serial('Should correctly give opportunity 2 when searching by "Algorithms"', async t => {
   const res = await request(server)
     .get('/api/opportunities?search=AlgorithMs')
@@ -244,6 +244,55 @@ test.serial('Should correctly give opportunity 2 when searching by "Algorithms"'
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(ops[1].description, got[0].description)
+  t.is(ops[1].subtitle, got[0].subtitle)
   t.is(1, got.length)
+})
+
+test.serial('Should include description in search', async t => {
+  const res = await request(server)
+    .get('/api/opportunities?search=ROCKEt')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  t.is(ops[3].description, got[0].description)
+  t.is(1, got.length)
+})
+
+test.serial('Should return any opportunities with matching tags or title/desc/subtitle', async t => {
+  // assign tags to opportunities
+  const tags = t.context.tags
+  t.context.opportunities[2].tags = [tags[0]._id, tags[2]._id]
+  t.context.opportunities[0].tags = [tags[0]._id]
+  t.context.opportunities[1].tags = [tags[2]._id]
+
+  await Promise.all([
+    t.context.opportunities[2].save(),
+    t.context.opportunities[1].save(),
+    t.context.opportunities[0].save()
+  ])
+
+  // opportunity with matching title, but not tags
+  const opp = new Opportunity({
+    title: 'Java Robots in the house',
+    subtitle: 'Launching into space step 4',
+    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+    description: 'Project to build a simple rocket that will reach 1000m',
+    duration: '4 hours',
+    location: 'Albany, Auckland',
+    status: 'draft',
+    requestor: t.context.people[0]._id,
+    tags: []
+  })
+  await opp.save()
+
+  const res = await request(server)
+    .get(`/api/opportunities?search=java robots`)
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+
+  // should return the 3 with assigned tags, and the one with matching title
+  t.is(4, got.length)
 })
