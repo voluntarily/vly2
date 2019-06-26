@@ -36,7 +36,7 @@ const ItemP = styled.div`
   margin-bottom: 1rem;
 `
 const TagContainer = styled.div`
-margin-top: 0.2rem;
+  margin-top: 0.2rem;
 `
 
 export function OpDetail ({ op }) {
@@ -71,7 +71,7 @@ export function OpDetail ({ op }) {
         <Right>
           <img style={{ width: '100%' }} src={op.imgUrl} alt={op.title} />
           <TagContainer>
-          <OpDetailTagsDisplay tags={op.tags} />
+            <OpDetailTagsDisplay tags={op.tags} />
           </TagContainer>
         </Right>
       </HalfGrid>
