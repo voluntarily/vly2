@@ -35,6 +35,9 @@ const ItemP = styled.div`
   color: initial;
   margin-bottom: 1rem;
 `
+const TagContainer = styled.div`
+  margin-top: 0.2rem;
+`
 
 export function OpDetail ({ op }) {
   // This will make sure that if the description is undefined we will set it to an empty string
@@ -67,7 +70,9 @@ export function OpDetail ({ op }) {
         </Left>
         <Right>
           <img style={{ width: '100%' }} src={op.imgUrl} alt={op.title} />
-          <OpDetailTagsDisplay tags={op.tags} />
+          <TagContainer>
+            <OpDetailTagsDisplay tags={op.tags} />
+          </TagContainer>
         </Right>
       </HalfGrid>
     </FullPage>
