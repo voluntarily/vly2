@@ -1,4 +1,5 @@
 const Opportunity = require('./opportunity')
+const Tag = require('./../tag/tag')
 
 /**
  * Get all orgs
@@ -21,14 +22,32 @@ const getOpportunities = async (req, res) => {
   }
 
   if (req.query.search) {
+    const { search } = req.query
+
+    // split around one or more whitespace characters
+    const keywordArray = search.trim().split(/\s+/)
+
+    // case insensitive regex which will find tags matching any of the array values
+    const tagSearchExpression = new RegExp(keywordArray.join('|'), 'i')
+
+    // find tag ids to include in the opportunity search
+    const matchingTagIds = await Tag.find({ 'tag': tagSearchExpression }, '_id').exec()
+
     const searchExpression = new RegExp(req.query.search, 'i')
     const searchParams = {
       $or: [
         { 'title': searchExpression },
         { 'subtitle': searchExpression },
-        { 'description': searchExpression },
-        { 'tags.tag': searchExpression }
+        { 'description': searchExpression }
       ]
+    }
+
+    // mongoose isn't happy if we provide an empty array as an expression
+    if (matchingTagIds.length > 0) {
+      const tagIdExpression = {
+        $or: matchingTagIds.map(id => ({ 'tags': id }))
+      }
+      searchParams.$or.push(tagIdExpression)
     }
 
     query = {
