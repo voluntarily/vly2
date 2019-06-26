@@ -68,6 +68,8 @@ export const Grid = styled.div`
     justify-items: center;
   }
 
+  
+
   @media screen and (max-width: 767px) {
     grid-template-columns: calc(100vw - 2rem);
     grid-gap: 0rem;
@@ -182,6 +184,7 @@ export const TextP = styled.p`
   color: black;
   font-size: 1rem;
   margin: initial;
+  letter-spacing: -0.03rem;
   @media screen and (max-width: 767px) {
     font-size: 1rem;
   }
@@ -191,6 +194,7 @@ export const TextPBold = styled.p`
   font-weight: 700;
   color: black;
   font-size: 1rem;
+  
   margin: initial;
   @media screen and (max-width: 767px) {
     font-size: 1rem;
