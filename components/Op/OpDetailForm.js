@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { TextHeadingBold, TextP, Spacer } from '../VTheme/VTheme'
 import OpDetailTagsEditable from './OpDetailTagsEditable'
+import OpDetailLocation from './OpDetailLocation'
 const { TextArea } = Input
 
 // custom form components go here
@@ -432,8 +433,13 @@ class OpDetailForm extends Component {
               <MediumInputContainer>
                 <Form.Item label={opLocation}>
                   {getFieldDecorator('location', {
-                    rules: []
-                  })(<Input placeholder='school or somewhere else?' />)}
+                    rules: [
+                      {
+                        required: true,
+                        message: 'A region must be provided'
+                      }
+                    ]
+                  })(<OpDetailLocation />)}
                 </Form.Item>
               </MediumInputContainer>
             </InputContainer>
