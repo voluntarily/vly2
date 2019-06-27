@@ -8,7 +8,7 @@ const opList = [
     offerOrg: 'Albany High School',
     location: 'Albany High School, Auckland',
     status: 'active',
-    tags: [ { tag: 'awesome' } ]
+    tags: [ { tag: 'awesome' } ],
     date: [
       null,
       null
@@ -23,7 +23,7 @@ const opList = [
     duration: '4 hours',
     location: 'NZTA Innovation Centre, 5 Cook St Auckland',
     status: 'active',
-    tags: [ { tag: 'awesome' } ]
+    tags: [ { tag: 'awesome' } ],
     date: [
       null,
       null
@@ -38,7 +38,7 @@ const opList = [
     duration: '15 Minutes',
     location: 'Newmarket, Auckland',
     status: 'draft',
-    tags: [ { tag: 'awesome' } ]
+    tags: [ { tag: 'awesome' } ],
     date: [
       null,
       null
@@ -53,7 +53,7 @@ const opList = [
     duration: '2 hours',
     location: 'Albany, Auckland',
     status: 'draft',
-    tags: [ { tag: 'awesome' } ]
+    tags: [ { tag: 'awesome' } ],
     date: [
       null,
       null
