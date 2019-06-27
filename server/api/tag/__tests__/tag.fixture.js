@@ -37,6 +37,9 @@ const tagList = [
     tag: 'tag09'
   },
   {
+    tag: 'awesome'
+  },
+  {
     tag: 'yo yo'
   }
 ]
