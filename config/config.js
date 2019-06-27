@@ -19,8 +19,8 @@ const completeConfig = {
       'AUTH0_CLIENT_DOMAIN': 'voluntarily.au.auth0.com'
     },
     apiVersion: 'v1',
-    SMTP_ID: process.env.SMTP_ID,
-    SMTP_PWD: process.env.SMTP_PWD,
+    SMTP_ID: process.env.SMTP_ID || '',
+    SMTP_PWD: process.env.SMTP_PWD || '',
     onlyEmailText: process.env.TEXT_ONLY_EMAIL === 'true'
   },
 
@@ -40,6 +40,6 @@ const completeConfig = {
 
 // Public API
 module.exports = {
-  config: { ...completeConfig.default, ...completeConfig[process.env.NODE_ENV] },
-  completeConfig
+  config: { ...completeConfig.default, ...completeConfig[process.env.NODE_ENV] }
+  // completeConfig
 }
