@@ -5,6 +5,7 @@
 // import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import InterestTable from './InterestTable'
+import { FormattedMessage } from 'react-intl'
 
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
@@ -12,10 +13,10 @@ import Loading from '../Loading'
 class InterestSection extends Component {
   async componentDidMount () {
     // Get all interests
-
-    const op = this.props.op
+    // console.log('interest section did mount')
+    const opid = this.props.opid
     try {
-      await this.props.dispatch(reduxApi.actions.interests.get({ id: '', op }))
+      await this.props.dispatch(reduxApi.actions.interests.get({ id: '', opid }))
       // console.log('got interests', interests, 'for', op)
     } catch (err) {
       // console.log('error in getting interests', err)
@@ -49,12 +50,18 @@ class InterestSection extends Component {
     } else {
       return (
         <section>
+          <h2>
+            <FormattedMessage
+              id='interestSection.title'
+              defaultMessage='Interested Volunteers'
+              description='label for interest table on op detail page'
+            /></h2>
+
           <InterestTable
             interests={this.props.interests.data}
             onInvite={this.handleInvite.bind(this)}
             onWithdrawInvite={this.handleWithdrawInvite.bind(this)}
             onDecline={this.handleDecline.bind(this)} />
-          {/* <code>{JSON.stringify(this.props.interests.data)}</code>  */}
         </section>
       )
     }

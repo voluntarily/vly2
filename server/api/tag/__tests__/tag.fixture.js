@@ -1,3 +1,4 @@
+
 const tagList = [
   {
     tag: 'java'
@@ -9,7 +10,31 @@ const tagList = [
     tag: 'robots'
   },
   {
-    tag: 'very fun'
+    tag: 'tag01'
+  },
+  {
+    tag: 'tag02'
+  },
+  {
+    tag: 'tag03'
+  },
+  {
+    tag: 'tag04'
+  },
+  {
+    tag: 'tag05'
+  },
+  {
+    tag: 'tag06'
+  },
+  {
+    tag: 'tag07'
+  },
+  {
+    tag: 'tag08'
+  },
+  {
+    tag: 'tag09'
   },
   {
     tag: 'yo yo'

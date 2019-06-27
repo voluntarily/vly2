@@ -62,7 +62,7 @@ class InterestTable extends Component {
               &nbsp;
             </span> : null}
             {options.declineButtonEnabled ? <span>
-              <Popconfirm title='Are you sure?' onConfirm={this.handleDeclineButtonClicked.bind(this, record)} okText='Yes' cancelText='No'>
+              <Popconfirm id='declineInvitePopConfirm' title='Are you sure?' onConfirm={this.handleDeclineButtonClicked.bind(this, record)} okText='Yes' cancelText='No'>
                 <Button type='danger' shape='round'>
                   <FormattedMessage id='declineVolunteer' defaultMessage='Decline' description='Button allowing event organizer to decline an interested volunteer' />
                 </Button>
