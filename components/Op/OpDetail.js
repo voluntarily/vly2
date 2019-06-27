@@ -6,6 +6,7 @@ import Head from 'next/head'
 import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
 import moment from 'moment'
+import sanitize from 'sanitize-html'
 
 import { Button } from 'antd'
 import { FullPage } from '../../hocs/publicPage'
@@ -43,7 +44,7 @@ const TagContainer = styled.div`
 export function OpDetail ({ op }) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
-  const description = op.description == null ? '' : op.description
+  const description = op.description == null ? '' : sanitize(op.description, { allowedAttributes: { 'a': ['href', 'style'] } }) // Only href and style attribute is allowed in link tag
   const startDate = op.date[0] ? moment(op.date[0]).format('ddd DD/MM/YY | HH:mm') : 'N/a'
   const endDate = op.date[1] ? moment(op.date[1]).format('DD-MM-YYYY') : 'Open ended opportunity'
   return (
@@ -53,9 +54,9 @@ export function OpDetail ({ op }) {
       <HalfGrid>
         <Left>
           <TitleFont>{op.title}</TitleFont>
-          <ItemListing>Duration 🔥&nbsp;&nbsp;&nbsp;{op.duration}</ItemListing>
-          <ItemListing>Location 🏫&nbsp;&nbsp;&nbsp;{op.location}</ItemListing>
-          <ItemListing>Status 📝&nbsp;&nbsp;&nbsp;{op.status}</ItemListing>
+          <ItemListing>Duration 🔥&nbsp;&nbsp;&nbsp;{sanitize(op.duration)}</ItemListing>
+          <ItemListing>Location 🏫&nbsp;&nbsp;&nbsp;{sanitize(op.location)}</ItemListing>
+          <ItemListing>Status 📝&nbsp;&nbsp;&nbsp;{sanitize(op.status)}</ItemListing>
           <ItemListing>Start date ⏱&nbsp;&nbsp;&nbsp; {startDate}</ItemListing>
           <ItemListing>End date 📣 &nbsp;&nbsp;{endDate} </ItemListing>
           <Spacer />
