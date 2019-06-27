@@ -439,7 +439,9 @@ class OpDetailForm extends Component {
                         message: 'A region must be provided'
                       }
                     ]
-                  })(<OpDetailLocation />)}
+                  })(<OpDetailLocation
+                    existingLocations={this.props.existingLocations}
+                  />)}
                 </Form.Item>
               </MediumInputContainer>
             </InputContainer>
@@ -550,7 +552,8 @@ OpDetailForm.propTypes = {
   }),
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired
+  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired
   // dispatch: PropTypes.func.isRequired,
 }
 
