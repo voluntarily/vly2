@@ -25,18 +25,19 @@ const getOpportunities = async (req, res) => {
   if (req.query.search) {
     try {
       // decode the search term in case of strange characters
-      const { search } = req.query
+      const search = req.query.search.trim()
+      const regexSearch = escapeRegex(search)
 
       // split around one or more whitespace characters
-      const keywordArray = search.trim().split(/\s+/)
+      const keywordArray = search.split(/\s+/)
 
       // case insensitive regex which will find tags matching any of the array values
-      const tagSearchExpression = new RegExp(escapeRegex(keywordArray.join('|')), 'i')
+      const tagSearchExpression = new RegExp(keywordArray.map(w => escapeRegex(w)).join('|'), 'i')
 
       // find tag ids to include in the opportunity search
       const matchingTagIds = await Tag.find({ 'tag': tagSearchExpression }, '_id').exec()
 
-      const searchExpression = new RegExp(escapeRegex(search.trim()), 'i')
+      const searchExpression = new RegExp(regexSearch, 'i')
       const searchParams = {
         $or: [
           { 'title': searchExpression },
