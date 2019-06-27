@@ -4,25 +4,18 @@ import { Select } from 'antd'
 
 const { Option } = Select
 
-class OpDetailLocation extends React.Component {
-  handleChange = selectedOption => {
-    this.props.onChange(selectedOption)
-  };
-
-  render () {
-    const { existingLocations } = this.props
-    const children = existingLocations.map(location => <Option key={location}>{location}</Option>)
-
-    return (
-      <Select
-        showSearch
-        placeholder='Select the most applicable region'
-        onChange={this.handleChange}
-      >
-        {children}
-      </Select>
-    )
-  }
+const OpDetailLocation = ({ onChange, value, existingLocations }) => {
+  const children = existingLocations.map(location => <Option key={location}>{location}</Option>)
+  return (
+    <Select
+      showSearch
+      placeholder='Select the most applicable region'
+      onChange={onChange}
+      value={value}
+    >
+      {children}
+    </Select>
+  )
 }
 
 OpDetailLocation.propTypes = {
