@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import objectid from 'objectid'
 import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
 import people from '../server/api/person/__tests__/person.fixture'
+import tags from '../server/api/tag/__tests__/tag.fixture.js'
 import withMockRoute from '../server/util/mockRouter'
 import thunk from 'redux-thunk'
 import reduxApi from '../lib/redux/reduxApi'
@@ -21,15 +22,17 @@ test.before('Setup fixtures', (t) => {
   const me = people[0]
 
   // Set myself as the requestor for all of the opportunities, and fake ids
-  ops.map(op => {
+  ops.map((op, index) => {
     op._id = objectid().toString()
     op.requestor = me
+    op.tags = [ tags[index], tags[index + 1] ]
   })
 
   t.context = {
     me,
     people,
-    ops
+    ops,
+    tags
   }
 
   t.context.mockStore = configureStore([thunk])(
@@ -44,6 +47,13 @@ test.before('Setup fixtures', (t) => {
         syncing: false,
         loading: false,
         data: ops,
+        request: null
+      },
+      tags: {
+        sync: false,
+        syncing: false,
+        loading: false,
+        data: tags,
         request: null
       }
     }
