@@ -3,7 +3,7 @@ import Head from 'next/head'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import InterestItem from '../../components/Interest/InterestItem'
 import InterestTable from '../../components/Interest/InterestTable'
-import InterestSection from '../../components/Interest/interestSection'
+import InterestSection from '../../components/Interest/InterestSection'
 import people from './testy.people'
 import { Divider } from 'antd'
 
