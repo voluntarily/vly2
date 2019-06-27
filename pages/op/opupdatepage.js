@@ -1,7 +1,8 @@
 import { Component } from 'react'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import OpDetailForm from '../../components/Op/OpDetailForm'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import { FullPage } from '../../hocs/publicPage'
+import securePage from '../../hocs/securePage'
 import { message, Divider } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
@@ -153,4 +154,4 @@ OpUpdatePage.propTypes = {
   })
 }
 
-export default publicPage(withOps(OpUpdatePage))
+export default securePage(withOps(OpUpdatePage))
