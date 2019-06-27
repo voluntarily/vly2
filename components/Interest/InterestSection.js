@@ -16,7 +16,7 @@ class InterestSection extends Component {
     // console.log('interest section did mount')
     const opid = this.props.opid
     try {
-      await this.props.dispatch(reduxApi.actions.interests.get({ id: '', opid }))
+      await this.props.dispatch(reduxApi.actions.interests.get({ id: '', op: opid }))
       // console.log('got interests', interests, 'for', op)
     } catch (err) {
       // console.log('error in getting interests', err)
