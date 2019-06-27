@@ -40,6 +40,7 @@ const opList = [
     date: [
       null,
       null
+    ]
   },
   {
     title: '4 The first 100 metres',
@@ -53,6 +54,7 @@ const opList = [
     date: [
       null,
       null
+    ]
   }
 ]
 
