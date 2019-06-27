@@ -24,7 +24,6 @@ const getOpportunities = async (req, res) => {
 
   if (req.query.search) {
     try {
-      // decode the search term in case of strange characters
       const search = req.query.search.trim()
       const regexSearch = escapeRegex(search)
 
