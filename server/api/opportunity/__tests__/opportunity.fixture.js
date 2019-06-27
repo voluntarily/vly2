@@ -8,11 +8,11 @@ const opList = [
     offerOrg: 'Albany High School',
     location: 'Albany High School, Auckland',
     status: 'active',
+    tags: [ ],
     date: [
       null,
       null
-    ],
-    tags: []
+    ]
   },
   {
     title: '2 Self driving model cars',
@@ -22,11 +22,11 @@ const opList = [
     duration: '4 hours',
     location: 'NZTA Innovation Centre, 5 Cook St Auckland',
     status: 'active',
+    tags: [ ],
     date: [
       null,
       null
-    ],
-    tags: []
+    ]
   },
   {
     title: '3 Growing in the garden',
@@ -36,11 +36,11 @@ const opList = [
     duration: '15 Minutes',
     location: 'Newmarket, Auckland',
     status: 'draft',
+    tags: [ ],
     date: [
       null,
       null
-    ],
-    tags: []
+    ]
   },
   {
     title: '4 The first 100 metres',
@@ -50,11 +50,11 @@ const opList = [
     duration: '2 hours',
     location: 'Albany, Auckland',
     status: 'draft',
+    tags: [ ],
     date: [
       null,
       null
-    ],
-    tags: []
+    ]
   }
 ]
 
