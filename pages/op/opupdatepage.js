@@ -1,7 +1,8 @@
 import { Component } from 'react'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import OpDetailForm from '../../components/Op/OpDetailForm'
-import SecurePage from '../../hocs/securePage'
+import { FullPage } from '../../hocs/publicPage'
+import securePage from '../../hocs/securePage'
 import { message, Divider } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
@@ -109,7 +110,7 @@ export class OpUpdatePage extends Component {
     const me = this.props.me
     const existingTags = this.props.tags.data.map(tag => tag.tag)
     return (
-      <SecurePage>
+      <FullPage>
         <PageTitle
           title='Create a request'
           subtitle='Ask volunteers for assistance with anything related to tech - there are 1,312 volunteers looking for opportunities to help out'
@@ -131,7 +132,7 @@ export class OpUpdatePage extends Component {
             </pre>
           </Panel>
         </Collapse> */}
-      </SecurePage>
+      </FullPage>
     )
   }
 }
@@ -153,4 +154,4 @@ OpUpdatePage.propTypes = {
   })
 }
 
-export default SecurePage(withOps(OpUpdatePage))
+export default securePage(withOps(OpUpdatePage))
