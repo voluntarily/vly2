@@ -1,13 +1,11 @@
 import React from 'react'
 
 class RichTextEditor extends React.Component {
-  constructor (props) {
-    super(props)
+  componentWillMount () {
     if (document) {
       this.quill = require('react-quill')
     }
   }
-
   render () {
     const Quill = this.quill
     if (Quill) {

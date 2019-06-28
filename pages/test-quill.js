@@ -7,6 +7,29 @@ class TestEditor extends Component {
   state = {
     editing: false,
     text: `<div>
+   
+    <h1>Heading 1</h1>
+    <h2>Heading 2</h2>
+    <h3>Heading 3</h3>
+    <p>Normal body text</p>
+    <em>Emphasis</em>
+    <i>Italic</i>
+    <strong>Strong</strong>
+    <b>Bold</b>
+
+    <h2>Lists</h2>
+    <h3>Bullets</h3>
+    <ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+    </ul>
+    <h3>Numbers</h3>
+    <ol>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+    </ol> 
     
     <h2><span class="mw-headline" id="Example_text">Example text</span></h2>
     <p>A common form of <i>lorem ipsum</i> reads:
