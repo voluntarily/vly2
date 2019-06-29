@@ -80,6 +80,12 @@ export class OpDetailPage extends Component {
               </Button>
             </Link>
               &nbsp;
+            <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' okText='Yes' cancelText='No'>
+              <Button type='primary' shape='round'>
+                <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
+              </Button>
+            </Popconfirm>
+              &nbsp;
             <Popconfirm id='deleteOpPopConfirm' title='Confirm removal of this opportunity.' onConfirm={this.handleDelete.bind(this, op)} onCancel={this.handleDeleteCancelled} okText='Yes' cancelText='No'>
               <Button type='danger' shape='round' >
                 <FormattedMessage id='deleteOp' defaultMessage='Cancel Request' description='Button to remove an opportunity on OpDetails page' />

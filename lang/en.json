@@ -90,5 +90,6 @@
   "people.new": "New Person",
   "person.pageheading": "Profile for",
   "PersonEditPrompt": "Tell us something about yourself.",
-  "search.title": "Search results for \"{search}\""
+  "search.title": "Search results for \"{search}\"",
+  "completedOp": "Complete Opportunity"
 }
