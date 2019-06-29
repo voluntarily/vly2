@@ -75,7 +75,7 @@ test('mount the InterestSection with two interests', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
-  myMock.getOnce(`${API_URL}/interests/?op=${opid}`, interests)
+  myMock.getOnce(`${API_URL}/interests/?opportunity=${opid}`, interests)
   myMock.putOnce(`${API_URL}/interests/${interestid}`, invitedAndrew)
 
   const wrapper = await mountWithIntl(
