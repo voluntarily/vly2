@@ -1,3 +1,4 @@
+const escapeRegex = require('../../util/regexUtil')
 const Opportunity = require('./opportunity')
 const Tag = require('./../tag/tag')
 
@@ -22,39 +23,45 @@ const getOpportunities = async (req, res) => {
   }
 
   if (req.query.search) {
-    const { search } = req.query
+    try {
+      const search = req.query.search.trim()
+      const regexSearch = escapeRegex(search)
 
-    // split around one or more whitespace characters
-    const keywordArray = search.trim().split(/\s+/)
+      // split around one or more whitespace characters
+      const keywordArray = search.split(/\s+/)
 
-    // case insensitive regex which will find tags matching any of the array values
-    const tagSearchExpression = new RegExp(keywordArray.join('|'), 'i')
+      // case insensitive regex which will find tags matching any of the array values
+      const tagSearchExpression = new RegExp(keywordArray.map(w => escapeRegex(w)).join('|'), 'i')
 
-    // find tag ids to include in the opportunity search
-    const matchingTagIds = await Tag.find({ 'tag': tagSearchExpression }, '_id').exec()
+      // find tag ids to include in the opportunity search
+      const matchingTagIds = await Tag.find({ 'tag': tagSearchExpression }, '_id').exec()
 
-    const searchExpression = new RegExp(req.query.search, 'i')
-    const searchParams = {
-      $or: [
-        { 'title': searchExpression },
-        { 'subtitle': searchExpression },
-        { 'description': searchExpression }
-      ]
-    }
-
-    // mongoose isn't happy if we provide an empty array as an expression
-    if (matchingTagIds.length > 0) {
-      const tagIdExpression = {
-        $or: matchingTagIds.map(id => ({ 'tags': id }))
+      const searchExpression = new RegExp(regexSearch, 'i')
+      const searchParams = {
+        $or: [
+          { 'title': searchExpression },
+          { 'subtitle': searchExpression },
+          { 'description': searchExpression }
+        ]
       }
-      searchParams.$or.push(tagIdExpression)
-    }
 
-    query = {
-      $and: [
-        searchParams,
-        query
-      ]
+      // mongoose isn't happy if we provide an empty array as an expression
+      if (matchingTagIds.length > 0) {
+        const tagIdExpression = {
+          $or: matchingTagIds.map(id => ({ 'tags': id }))
+        }
+        searchParams.$or.push(tagIdExpression)
+      }
+
+      query = {
+        $and: [
+          searchParams,
+          query
+        ]
+      }
+    } catch (e) {
+      // something went wrong constructing the query but we don't know what
+      return res.status(500).send(e)
     }
   }
 
@@ -62,9 +69,10 @@ const getOpportunities = async (req, res) => {
     const got = await Opportunity.find(query, select).sort(sort).exec()
     res.json(got)
   } catch (e) {
-    res.status(404).send(e)
+    return res.status(404).send(e)
   }
 }
+
 const getOpportunity = async (req, res) => {
   // console.log('getOpportunity', req.params)
   try {
