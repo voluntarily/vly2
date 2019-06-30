@@ -37,6 +37,20 @@ export class OpDetailPage extends Component {
   // Called when the user starts to delete an op, but then cancels it.
   handleDeleteCancelled = () => { message.error('Delete Cancelled') }
 
+  async handleConfirm (op) {
+    // console.log('Event Confirmed!!!')
+    if (!op) return
+    // Data request
+    // TODO change hard coded 'done' string to a constant.
+    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: 'done' }) }))
+    // TODO error handling - see above
+    message.success('Opportunity Confimed')
+  }
+
+  handleConfirmCancelled = () => {
+    message.error('Confirm Cancelled')
+  }
+
   render () {
     let content
     if (this.props.opportunities && this.props.opportunities.data.length === 1) {
@@ -80,7 +94,7 @@ export class OpDetailPage extends Component {
               </Button>
             </Link>
               &nbsp;
-            <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' okText='Yes' cancelText='No'>
+            <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' onConfirm={this.handleConfirm.bind(this, op)} onCancel={this.handleConfirmCancelled} okText='Yes' cancelText='No'>
               <Button type='primary' shape='round'>
                 <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
               </Button>
