@@ -90,7 +90,7 @@ const getOpportunity = async (req, res) => {
 
 const putOpportunity = async (req, res) => {
   try {
-    if (req.body.status === 'done') {
+    if (req.body.status === 'done' || req.body.status === 'cancelled') {
       await Opportunity.findByIdAndUpdate(req.params._id, { $set: req.body })
       await archiveOpportunity(req.params._id)
     } else {

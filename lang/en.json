@@ -91,5 +91,6 @@
   "person.pageheading": "Profile for",
   "PersonEditPrompt": "Tell us something about yourself.",
   "search.title": "Search results for \"{search}\"",
-  "completedOp": "Complete Opportunity"
+  "completedOp": "Complete Opportunity",
+  "cancelOp": "Cancel Opportunity"
 }

@@ -24,18 +24,18 @@ export class OpDetailPage extends Component {
   }
 
   // Called when the user confirms they want to delete an op
-  async handleDelete (op) {
+  async handleCancel (op) {
     // console.log('deleting op', op)
     if (!op) return
     // Actual data request
-    await this.props.dispatch(reduxApi.actions.opportunities.delete({ id: op._id }))
+    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: 'cancelled' }) }))
     // TODO error handling - how can this fail?
-    message.success('Request Deleted. ')
+    message.success('Request Cancelled. ')
     Router.replace(`/home`)
   }
 
   // Called when the user starts to delete an op, but then cancels it.
-  handleDeleteCancelled = () => { message.error('Delete Cancelled') }
+  handleCancelButtonCancelled = () => { message.error('Cancel Request Cancelled') }
 
   async handleConfirm (op) {
     // console.log('Event Confirmed!!!')
@@ -101,9 +101,9 @@ export class OpDetailPage extends Component {
               </Button>
             </Popconfirm>
               &nbsp;
-            <Popconfirm id='deleteOpPopConfirm' title='Confirm removal of this opportunity.' onConfirm={this.handleDelete.bind(this, op)} onCancel={this.handleDeleteCancelled} okText='Yes' cancelText='No'>
+            <Popconfirm id='cancelOpPopConfirm' title='Confirm cancel of this opportunity.' onConfirm={this.handleCancel.bind(this, op)} onCancel={this.handleCancelButtonCancelled} okText='Yes' cancelText='No'>
               <Button type='danger' shape='round' >
-                <FormattedMessage id='deleteOp' defaultMessage='Cancel Request' description='Button to remove an opportunity on OpDetails page' />
+                <FormattedMessage id='cancelOp' defaultMessage='Cancel Request' description='Button to cancel an opportunity on OpDetails page' />
               </Button>
             </Popconfirm>
             <Divider />
