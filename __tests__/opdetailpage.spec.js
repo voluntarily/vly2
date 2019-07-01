@@ -66,15 +66,15 @@ function makeFetchMock (opportunityId) {
   return myMock
 }
 
-test('send "DELETE" request to redux-api when deletion is confirmed on OpDetailPage', t => {
-  const opportunityToDelete = t.context.ops[0]
-  const myMock = makeFetchMock(opportunityToDelete._id)
-  myMock.delete(API_URL + '/opportunities/' + opportunityToDelete._id, { body: { status: 200 } })
+test('send "PUT" request to redux-api when opportunity is deleted on OpDetailPage', t => {
+  const opportunityToCancel = t.context.ops[0]
+  const myMock = makeFetchMock(opportunityToCancel._id)
+  myMock.put(API_URL + '/opportunities/' + opportunityToCancel._id, { body: { status: 200 } })
   reduxApi.use('fetch', adapterFetch(myMock))
 
   const props = {
     opportunities: {
-      data: [ opportunityToDelete ]
+      data: [ opportunityToCancel ]
     },
     me: t.context.me,
     dispatch: t.context.mockStore.dispatch
@@ -87,20 +87,20 @@ test('send "DELETE" request to redux-api when deletion is confirmed on OpDetailP
   )
 
   t.context.mockStore.clearActions()
-  wrapper.find('Popconfirm').filter('#deleteOpPopConfirm').props().onConfirm({})
+  wrapper.find('Popconfirm').filter('#cancelOpPopConfirm').props().onConfirm({})
   t.is(t.context.mockStore.getActions()[0].type, '@@redux-api@opportunities')
-  t.is(t.context.mockStore.getActions()[0].request.params.method, 'DELETE')
-  t.is(t.context.mockStore.getActions()[0].request.pathvars.id, opportunityToDelete._id)
+  t.is(t.context.mockStore.getActions()[0].request.params.method, 'PUT')
+  t.is(t.context.mockStore.getActions()[0].request.pathvars.id, opportunityToCancel._id)
 })
 
-test('does not send "DELETE" request to redux-api when deletion is cancelled on OpDetailPage', t => {
-  const opportunityToDelete = t.context.ops[0]
-  const myMock = makeFetchMock(opportunityToDelete._id)
+test('does not send "PUT" request to redux-api when cancel opportunity button is cancelled on OpDetailPage', t => {
+  const opportunityToCancel = t.context.ops[0]
+  const myMock = makeFetchMock(opportunityToCancel._id)
   reduxApi.use('fetch', adapterFetch(myMock))
 
   const props = {
     opportunities: {
-      data: [ opportunityToDelete ]
+      data: [ opportunityToCancel ]
     },
     me: t.context.me,
     dispatch: t.context.mockStore.dispatch
@@ -113,11 +113,11 @@ test('does not send "DELETE" request to redux-api when deletion is cancelled on 
   )
 
   t.context.mockStore.clearActions()
-  wrapper.find('Popconfirm').filter('#deleteOpPopConfirm').props().onCancel({})
+  wrapper.find('Popconfirm').filter('#cancelOpPopConfirm').props().onCancel({})
   t.is(t.context.mockStore.getActions().length, 0)
 })
 
-test('send "PUT" request to redu-api when opportunity is completed on OpDetailPage', t => {
+test('send "PUT" request to redux-api when opportunity is completed on OpDetailPage', t => {
   const opportunityToComplete = t.context.ops[0]
   const myMock = makeFetchMock(opportunityToComplete._id)
   myMock.put(API_URL + '/opportunities/' + opportunityToComplete._id, { body: { status: 200 } })
