@@ -5,10 +5,13 @@ import PropTypes from 'prop-types'
 import Head from 'next/head'
 import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
+import moment from 'moment'
+import sanitize from 'sanitize-html'
 
 import { Button } from 'antd'
 import { FullPage } from '../../hocs/publicPage'
 import { HalfGrid, Spacer } from '../VTheme/VTheme'
+import OpDetailTagsDisplay from './OpDetailTagsDisplay'
 
 const Left = styled.div``
 
@@ -34,11 +37,16 @@ const ItemP = styled.div`
   color: initial;
   margin-bottom: 1rem;
 `
+const TagContainer = styled.div`
+  margin-top: 0.2rem;
+`
 
 export function OpDetail ({ op }) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
-  const description = op.description == null ? '' : op.description
+  const description = op.description == null ? '' : sanitize(op.description, { allowedAttributes: { 'a': ['href', 'style'] } }) // Only href and style attribute is allowed in link tag
+  const startDate = op.date[0] ? moment(op.date[0]).format('ddd DD/MM/YY | HH:mm') : 'N/a'
+  const endDate = op.date[1] ? moment(op.date[1]).format('DD-MM-YYYY') : 'Open ended opportunity'
   return (
     <FullPage>
       <Spacer />
@@ -46,10 +54,13 @@ export function OpDetail ({ op }) {
       <HalfGrid>
         <Left>
           <TitleFont>{op.title}</TitleFont>
-          <ItemListing>⏱&nbsp;{op.duration}</ItemListing>
-          <ItemListing>🏫&nbsp;{op.location}</ItemListing>
-          <ItemListing>📝&nbsp;{op.status}</ItemListing>
+          <ItemListing>Duration 🔥&nbsp;&nbsp;&nbsp;{sanitize(op.duration)}</ItemListing>
+          <ItemListing>Location 🏫&nbsp;&nbsp;&nbsp;{sanitize(op.location)}</ItemListing>
+          <ItemListing>Status 📝&nbsp;&nbsp;&nbsp;{sanitize(op.status)}</ItemListing>
+          <ItemListing>Start date ⏱&nbsp;&nbsp;&nbsp; {startDate}</ItemListing>
+          <ItemListing>End date 📣 &nbsp;&nbsp;{endDate} </ItemListing>
           <Spacer />
+
           <ItemP>
             <Markdown
               children={description}
@@ -64,6 +75,9 @@ export function OpDetail ({ op }) {
         </Left>
         <Right>
           <img style={{ width: '100%' }} src={op.imgUrl} alt={op.title} />
+          <TagContainer>
+            <OpDetailTagsDisplay tags={op.tags} />
+          </TagContainer>
         </Right>
       </HalfGrid>
     </FullPage>

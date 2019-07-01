@@ -4,12 +4,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
+import moment from 'moment'
 
 // todo if image is not present then use a fallback.
 const OpCard = ({ size, op, onPress, ...props }) => {
   const cardImage = op.imgUrl ? op.imgUrl : 'static/missingimage.svg'
   const draft = op.status === 'draft' ? 'DRAFT: ' : ''
   const interestState = op.interest ? ` - ${op.interest.status}` : ''
+  const startTime = op.date[0] ? moment(op.date[0]).format('ddd Do/MM/YY | HH:mm') : 'No start date'
   return (
     <div>
       <Link href={`/ops/${op._id}`}>
@@ -20,6 +22,7 @@ const OpCard = ({ size, op, onPress, ...props }) => {
               {draft}
               {op.title}
             </p>
+            <p className={'requestDateTime' + size}> 📅 {startTime} </p>
             <p className={'requestDateTime' + size}>{op.duration}</p>
             <p className={'requestDescription' + size}>
               {op.subtitle}

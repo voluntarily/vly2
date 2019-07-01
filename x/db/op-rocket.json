@@ -6,16 +6,6 @@
   "duration": "4 hours",
   "location": "St Marys Intermediate School",
   "status": "draft",
-  "tags": [
-    { 
-       "tag": "Model Rockets"
-    },
-    { 
-       "tag": "Physics"
-    },
-    { 
-       "tag": "Chemistry"
-    }
-  ],
+  "tags": [],
   "requestor": "5ccbe4c26c285b7184bff574"
 }

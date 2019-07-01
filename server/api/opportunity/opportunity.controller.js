@@ -1,6 +1,7 @@
+const escapeRegex = require('../../util/regexUtil')
 const Opportunity = require('./opportunity')
 const { Action } = require('../../services/abilities/ability.constants')
-
+const Tag = require('./../tag/tag')
 const convertSelectObjectToArray = select => {
   let propsToSelect = []
   Object.keys(select).map(key => {
@@ -31,48 +32,72 @@ const getOpportunities = async (req, res) => {
   }
 
   if (req.query.search) {
-    const searchExpression = new RegExp(req.query.search, 'i')
-    const searchParams = {
-      $or: [
-        { 'title': searchExpression },
-        { 'subtitle': searchExpression },
-        { 'description': searchExpression },
-        { 'tags.tag': searchExpression }
-      ]
-    }
+    try {
+      const search = req.query.search.trim()
+      const regexSearch = escapeRegex(search)
 
-    query = {
-      $and: [
-        searchParams,
-        query
-      ]
+      // split around one or more whitespace characters
+      const keywordArray = search.split(/\s+/)
+
+      // case insensitive regex which will find tags matching any of the array values
+      const tagSearchExpression = new RegExp(keywordArray.map(w => escapeRegex(w)).join('|'), 'i')
+
+      // find tag ids to include in the opportunity search
+      const matchingTagIds = await Tag.find({ 'tag': tagSearchExpression }, '_id').exec()
+
+      const searchExpression = new RegExp(regexSearch, 'i')
+      const searchParams = {
+        $or: [
+          { 'title': searchExpression },
+          { 'subtitle': searchExpression },
+          { 'description': searchExpression }
+        ]
+      }
+
+      // mongoose isn't happy if we provide an empty array as an expression
+      if (matchingTagIds.length > 0) {
+        const tagIdExpression = {
+          $or: matchingTagIds.map(id => ({ 'tags': id }))
+        }
+        searchParams.$or.push(tagIdExpression)
+      }
+
+      query = {
+        $and: [
+          searchParams,
+          query
+        ]
+      }
+    } catch (e) {
+      // something went wrong constructing the query but we don't know what
+      return res.status(500).send(e)
     }
   }
 
   try {
-    // console.log('req.ability', req.ability)
-    // console.log('select', select)
     const desiredFieldsToSelect = convertSelectObjectToArray(select)
-    // console.log('desiredFieldsToSelect', desiredFieldsToSelect)
     const accessibleFields = Opportunity.accessibleFieldsBy(req.ability, Action.LIST)
     let fieldsToSelect = accessibleFields.join(' ')
     if (desiredFieldsToSelect.length > 0) {
       fieldsToSelect = desiredFieldsToSelect.filter(field => accessibleFields.includes(field))
       // console.log('fieldsToSelect', fieldsToSelect)
     }
-    // console.log('query: ', query)
-    const got = await Opportunity.accessibleBy(req.ability, Action.LIST).find(query).select(fieldsToSelect).sort(sort).exec()
-    // console.log('got', got)
+    const got = await Opportunity.find(query, select).sort(sort).exec()
     res.json(got)
   } catch (e) {
-    console.log(e)
-    res.status(404).send(e)
+    return res.status(404).send(e)
   }
 }
+
 const getOpportunity = async (req, res) => {
+  // console.log('getOpportunity', req.params)
   try {
     const accessibleFields = Opportunity.accessibleFieldsBy(req.ability, Action.LIST).join(' ')
-    const got = await Opportunity.accessibleBy(req.ability).findOne(req.params).select(accessibleFields).populate('requestor').exec()
+    const got = await Opportunity.findOne(req.params)
+      .select(accessibleFields)
+      .populate('requestor')
+      .populate('tags')
+      .exec()
     res.json(got)
   } catch (e) {
     res.status(404).send(e)

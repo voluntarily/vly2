@@ -35,7 +35,7 @@ const listInterests = async (req, res) => {
 
 const updateInterest = async (req, res) => {
   try {
-    await Interest.update({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
+    await Interest.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
     const { opportunity, status, person } = req.body // person in here is the volunteer-- quite not good naming here
     Opportunity.findById(opportunity, (err, opportunityFound) => {
       if (err) console.log(err)
@@ -63,17 +63,8 @@ const createInterest = async (req, res) => {
     const { comment } = req.body
     requestor.volunteerComment = comment
 
-    // The reason is that the sendEmail Base on function will cause longer delay with await keyword when user clicked interested
-    // But if there is no await keyword in there. The test run will fail because the call back function inside the sendEmailBaseOn
-    // will call anytime causing the test to fail
-    if (process.env.NODE_ENV !== 'test') {
-      sendEmailBaseOn('acknowledgeInterest', volunteerID, title, opId)
-      sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
-    } else {
-      await sendEmailBaseOn('acknowledgeInterest', volunteerID, title, opId)
-      await sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
-    }
-
+    sendEmailBaseOn('acknowledgeInterest', volunteerID, title, opId)
+    sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
     const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
     res.json(got)
   })
@@ -82,12 +73,12 @@ const createInterest = async (req, res) => {
 const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
   const { _id } = volunteer
   const { requestor, title } = opportunity
-  const opID = opportunity._id// This id is different from the _id on the top
+  const opID = opportunity._id
   if (interestStatus === 'invited' || interestStatus === 'declined') {
-    // send email to volunteer
+    // send email to volunteer only
     sendEmailBaseOn(interestStatus, _id, title, opID) // The _id in here is the volunteer id
   } else if (interestStatus === 'committed') {
-    // send email to requestor
+    // send email to requestor only
     sendEmailBaseOn(interestStatus, requestor, title, opID)
   }
 }

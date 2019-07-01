@@ -36,8 +36,7 @@ export const HalfGrid = styled.div`
     grid-template-columns: calc(100vw - 2rem);
   }
 ` // end halfgrid
-export const HalfGridContainer = styled.div`
-`
+export const HalfGridContainer = styled.div``
 
 export const TripleGrid = styled.div`
   display: grid;
@@ -61,13 +60,15 @@ export const Grid = styled.div`
   display: grid;
   grid-template-columns: 18.5rem 18.5rem 18.5rem 18.5rem;
   grid-gap: 2rem;
-  overflow:visible;
+  overflow: visible;
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
     grid-template-columns: repeat(auto-fit, 18.5rem);
     justify-content: start;
     justify-items: center;
   }
+
+  
 
   @media screen and (max-width: 767px) {
     grid-template-columns: calc(100vw - 2rem);
@@ -183,6 +184,7 @@ export const TextP = styled.p`
   color: black;
   font-size: 1rem;
   margin: initial;
+  letter-spacing: -0.03rem;
   @media screen and (max-width: 767px) {
     font-size: 1rem;
   }
@@ -192,6 +194,7 @@ export const TextPBold = styled.p`
   font-weight: 700;
   color: black;
   font-size: 1rem;
+  
   margin: initial;
   @media screen and (max-width: 767px) {
     font-size: 1rem;
@@ -287,9 +290,12 @@ export const BigQuoteAuthor = styled.p`
 ====================================================
 
 CONTAINER CLASSES
-We use these to contain th
+We use these to contain components and nudge them around
 
-We probably don't need this...
+Will refactor all the containers in here soon :)
+
+Need the form ones as well soon as we create other forms on top of the OpDetailForm component work :L
+
 ^__^
 
 ====================================================

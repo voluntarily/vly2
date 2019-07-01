@@ -21,7 +21,6 @@ function getPersonBy (req, res) {
 function ensureSanitized (req, res, next) {
   // if user puts html in their inputs - remove stuff we don't want.
   // TODO - Also sanitize mongo $ commands. see mongo-sanitize
-  // BUG: [VP-207] ensureSanitised is incorrectly added string undefined to person properties.
   const p = req.body
   p.name = sanitizeHtml(p.name)
   p.nickname = sanitizeHtml(p.nickname)

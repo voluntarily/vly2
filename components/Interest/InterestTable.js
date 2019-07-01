@@ -16,9 +16,10 @@ class InterestTable extends Component {
             <Avatar
               size='large'
               shape='square'
+              onClick={() => Router.push(`/people/${record.person._id}`)}
               src={record.person.avatar}
               icon='user'
-            />&nbsp;
+            />&nbsp;&nbsp;
             {record.person.nickname}
           </span>
         )
@@ -61,7 +62,7 @@ class InterestTable extends Component {
               &nbsp;
             </span> : null}
             {options.declineButtonEnabled ? <span>
-              <Popconfirm title='Are you sure?' onConfirm={this.handleDeclineButtonClicked.bind(this, record)} okText='Yes' cancelText='No'>
+              <Popconfirm id='declineInvitePopConfirm' title='Are you sure?' onConfirm={this.handleDeclineButtonClicked.bind(this, record)} okText='Yes' cancelText='No'>
                 <Button type='danger' shape='round'>
                   <FormattedMessage id='declineVolunteer' defaultMessage='Decline' description='Button allowing event organizer to decline an interested volunteer' />
                 </Button>
@@ -92,11 +93,6 @@ class InterestTable extends Component {
         dataSource={this.props.interests}
         rowKey='_id'
         pagination={false}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: event => { Router.push(`/people/${record.person._id}`) } // click row
-          }
-        }}
       />
     )
   }
