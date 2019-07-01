@@ -323,3 +323,28 @@ test.serial('Should update status of Opportunity when a put request is sent', as
   const queriedOpportunity = await OpportunityArchive.findOne({ title: 'Java Robots in the house' }).exec()
   t.is(queriedOpportunity.status, 'done')
 })
+
+test.serial('should return 400 for a bad request', async t => {
+  t.plan(1)
+
+  const opp = new Opportunity({
+    title: 'Java Robots in the house',
+    subtitle: 'Launching into space step 4',
+    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+    description: 'Project to build a simple rocket that will reach 1000m',
+    duration: '4 hours',
+    location: 'Albany, Auckland',
+    status: 'draft',
+    requestor: t.context.people[0]._id
+  })
+
+  await opp.save()
+
+  const res = await request(server)
+    .put(`/api/opportunities/${opp._id}`)
+    .send({ status: { invalidObject: '' } })
+    .set('Accept', 'application/json')
+    .expect(400)
+
+  t.is(res.status, 400)
+})
