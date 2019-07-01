@@ -24,7 +24,7 @@ const cookieParser = require('cookie-parser')
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const setSession = require('./middleware/session/setSession')
-const getAbility = require('./middleware/getAbility/getAbility')
+const getAbility = require('./middleware/ability/getAbility')
 server.use(bodyParser.urlencoded({ limit: UPLOAD_LIMIT, extended: true }))
 server.use(bodyParser.json({ limit: UPLOAD_LIMIT, extended: true }))
 server.use(cookieParser())
