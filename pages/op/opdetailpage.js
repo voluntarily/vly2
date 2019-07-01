@@ -45,6 +45,7 @@ export class OpDetailPage extends Component {
     await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: 'done' }) }))
     // TODO error handling - see above
     message.success('Opportunity Confimed')
+    Router.replace('/home')
   }
 
   handleConfirmCancelled = () => {
