@@ -1,6 +1,7 @@
 const escapeRegex = require('../../util/regexUtil')
 const Opportunity = require('./opportunity')
 const Tag = require('./../tag/tag')
+const OpportunityArchive = require('./../opportunity-archive/opportunityArchive')
 
 /**
  * Get all orgs
@@ -87,7 +88,31 @@ const getOpportunity = async (req, res) => {
   }
 }
 
+const putOpportunity = async (req, res) => {
+  try {
+    if (req.body.status === 'done' || req.body.status === 'cancelled') {
+      await Opportunity.findByIdAndUpdate(req.params._id, { $set: req.body })
+      await archiveOpportunity(req.params._id)
+    } else {
+      await Opportunity.findByIdAndUpdate(req.params._id, { $set: req.body })
+    }
+    res.json(req.body)
+  } catch (e) {
+    res.status(400).send(e)
+  }
+}
+
+const archiveOpportunity = async (id) => {
+  let opportunity = await Opportunity.findById(id).exec()
+  let opObject = opportunity.toJSON()
+  const opportunityArchive = new OpportunityArchive(opObject)
+  await opportunityArchive.save()
+  await Opportunity.findByIdAndDelete(id).exec()
+  return archiveOpportunity
+}
+
 module.exports = {
   getOpportunities,
-  getOpportunity
+  getOpportunity,
+  putOpportunity
 }
