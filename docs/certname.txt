@@ -1,0 +1,5 @@
+Add the following CNAME record to the DNS configuration for your domain. 
+
+type CNAME
+name _ad93eac2d3446de5af97704b3500ae57.voluntarily.nz.
+value _8c3d41a98fbfeec11b0d812760dd2f1d.duyqrilejt.acm-validations.aws.
