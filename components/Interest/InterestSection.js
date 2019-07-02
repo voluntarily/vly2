@@ -58,6 +58,7 @@ class InterestSection extends Component {
             /></h2>
 
           <InterestTable
+            checkboxEnabled
             interests={this.props.interests.data}
             onInvite={this.handleInvite.bind(this)}
             onWithdrawInvite={this.handleWithdrawInvite.bind(this)}
