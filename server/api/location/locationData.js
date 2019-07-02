@@ -135,6 +135,10 @@ const regions = [
       'Gore District',
       'Invercargill City'
     ]
+  },
+  {
+    name: 'Online', // special location, i.e. online volunteer opportunities
+    containedTerritories: []
   }
 ]
 
