@@ -339,27 +339,15 @@ class OpDetailForm extends Component {
                   })(<Input placeholder='Title' />)}
                 </Form.Item>
 
-<<<<<<< HEAD
                   ]
                 })(
                   <Input placeholder='short summary that appears on the listing.' />
                 )}
               </Form.Item>
 
-=======
-                <Form.Item label={opSubtitle}>
-                  {getFieldDecorator('subtitle', {
-                    rules: []
-                  })(
-                    <Input placeholder='short summary that appears on the listing.' />
-                  )}
-                </Form.Item>
-              </ShortInputContainer>
->>>>>>> master
               <Form.Item label={opDescription}>
 
                 {getFieldDecorator('description', {
-<<<<<<< HEAD
                   rules: [
                   ]
                 })(
@@ -369,19 +357,6 @@ class OpDetailForm extends Component {
 
             </Col>
           </Row>
-=======
-                  rules: []
-                })(
-                  <TextArea
-                    rows={6}
-                    placeholder='All the details about the request. You can use markdown here.'
-                  />
-                )}
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>
-
->>>>>>> master
           <Divider />
           <FormGrid>
             <DescriptionContainer>
