@@ -11,8 +11,7 @@ module.exports = routes()
   // Organisations
   .add('orgs', '/orgs', 'org/orglistpage')
   .add('org', '/orgs/:id', 'org/orgdetailpage')
-  .add('orgedit', '/orgs/:id/edit', 'org/orgupdatepage')
-  .add('orgnew', '/org/new', 'org/orgupdatepage')
+  .add('orgnew', '/org/:new', 'org/orgdetailpage')
   // Opportunities
   .add('ops', '/ops', 'op/oplistpage')
   .add('op', '/ops/:id', 'op/opdetailpage')

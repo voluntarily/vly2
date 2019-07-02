@@ -21,7 +21,7 @@ const OrgDetail = ({ org, ...props }) => (
       md={{ span: 12, order: 1 }}
     >
       <h1>{org.name}</h1>
-      <ul>{org.type.map((t, index) => <OrgType key={index} orgType={t} />)}</ul>
+      <OrgType orgType={org.type} />
       <h3>About</h3>
       <Markdown children={org.about || ''} />
     </Col>
