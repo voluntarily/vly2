@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl'
 import moment from 'moment'
 import styled from 'styled-components'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-
 import { TextHeadingBold, TextP, Spacer } from '../VTheme/VTheme'
 import OpDetailTagsEditable from './OpDetailTagsEditable'
 const { TextArea } = Input
@@ -339,24 +338,27 @@ class OpDetailForm extends Component {
                   })(<Input placeholder='Title' />)}
                 </Form.Item>
 
-                  ]
-                })(
-                  <Input placeholder='short summary that appears on the listing.' />
-                )}
-              </Form.Item>
-
+                <Form.Item label={opSubtitle}>
+                  {getFieldDecorator('subtitle', {
+                    rules: []
+                  })(
+                    <Input placeholder='short summary that appears on the listing.' />
+                  )}
+                </Form.Item>
+              </ShortInputContainer>
               <Form.Item label={opDescription}>
-
                 {getFieldDecorator('description', {
-                  rules: [
-                  ]
+                  rules: []
                 })(
-                  <TextArea rows={10} placeholder='All the details about the request. You can use markdown here.' />
+                  <TextArea
+                    rows={6}
+                    placeholder='All the details about the request. You can use markdown here.'
+                  />
                 )}
               </Form.Item>
+            </InputContainer>
+          </FormGrid>
 
-            </Col>
-          </Row>
           <Divider />
           <FormGrid>
             <DescriptionContainer>
