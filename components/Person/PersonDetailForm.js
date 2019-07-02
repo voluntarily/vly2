@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react'
 import { Form, Input, Button, Row, Col, Divider, Radio, Checkbox } from 'antd'
+import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 const { TextArea } = Input
@@ -14,6 +15,12 @@ class PersonDetailForm extends Component {
   componentDidMount () {
     // To disabled submit button at the beginning.
     this.props.form.validateFields()
+  }
+
+  setImgUrl = (value) => {
+    this.props.form.setFieldsValue({
+      avatar: value
+    })
   }
 
   handleSubmit = (e) => {
@@ -34,7 +41,6 @@ class PersonDetailForm extends Component {
         person.avatar = values.avatar
         person.role = values.role
         person.status = values.status
-
         this.props.onSubmit(this.props.person)
       }
     })
@@ -172,8 +178,9 @@ class PersonDetailForm extends Component {
                     {/* { type: 'url', message: 'a URL is required' } */}
                   ]
                 })(
-                  <Input placeholder='http://example.com/image.jpg' />
+                  <Input />
                 )}
+                <ImageUpload setImgUrl={this.setImgUrl} />
               </Form.Item>
               <Form.Item label={personRole}>
                 {getFieldDecorator('role', {

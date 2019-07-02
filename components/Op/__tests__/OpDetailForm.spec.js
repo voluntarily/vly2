@@ -1,5 +1,6 @@
 import React from 'react'
 import test from 'ava'
+import { tagList } from '../../../server/api/tag/__tests__/tag.fixture'
 // import { JSDOM } from 'jsdom'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
 
@@ -15,7 +16,18 @@ const op = {
   description: 'Project to grow something in the garden',
   duration: '15 Minutes',
   location: 'Newmarket, Auckland',
-  status: 'draft'
+  date: [
+    {
+      '$date': '2019-06-16T05:57:01.000Z'
+    },
+    {
+      '$date': '2019-06-23T05:57:01.000Z'
+    }
+  ],
+  status: 'draft',
+  startDate: null,
+  endDate: null,
+  tag: tagList
 }
 
 const noop = {
@@ -25,7 +37,11 @@ const noop = {
   description: '',
   duration: '',
   location: '',
-  status: 'draft'
+  status: 'draft',
+  tag: [],
+  startDate: null,
+  endDate: null,
+  date: []
 }
 
 // const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p`)
@@ -80,6 +96,11 @@ test.serial('render the detail with new blank op', t => {
     <OpDetailForm op={noop} me={me} onSubmit={submitOp} onCancel={cancelOp} />
   )
   t.log(wrapper.first())
+  const datePicker = wrapper.find('.ant-calendar-picker')
+  datePicker.at(0).simulate('click') // Check if the dissable date method got called
+  datePicker.at(1).simulate('click') // Check if the dissable date method got called
+  t.is(datePicker.length, 2) // should find 1 date picker component
+
   t.is(wrapper.find('OpDetailForm').length, 1)
   t.is(wrapper.find('button').length, 2)
   wrapper.find('button').first().simulate('click')

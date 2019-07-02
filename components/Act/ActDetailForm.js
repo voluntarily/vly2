@@ -1,17 +1,23 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react'
-import { Button, Col, Divider, Form, Input, Radio, Row } from 'antd'
+import { Button, Col, Divider, Form, Input, Radio, Row, DatePicker } from 'antd'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 const { TextArea } = Input
+const { RangePicker } = DatePicker
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
 }
 
 class ActDetailForm extends Component {
+  constructor (props) {
+    super(props)
+    this.setImgUrl = this.setImgUrl.bind(this)
+  }
+
   componentDidMount () {
     // Call validateFields here to disable the submit button when on a blank form.
     // empty callback supresses a default which prints to the console.
@@ -24,9 +30,11 @@ class ActDetailForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const act = this.props.act
+        act.time = values.time
         act.title = values.title
         act.subtitle = values.subtitle
         act.duration = values.duration
+        act.resource = values.resource
         act.description = values.description
         act.imgUrl = values.imgUrl
         act.status = values.status
@@ -50,12 +58,21 @@ class ActDetailForm extends Component {
     const actTitle = (<FormattedMessage id='actTitle' defaultMessage='Title' description='activity Title label in ActDetails Form' />)
     const actSubtitle = (<FormattedMessage id='actSubtitle' defaultMessage='Subtitle' description='activity Subtitle label in ActDetails Form' />)
     const actCommitment = (<FormattedMessage id='actCommitment' defaultMessage='Commitment' description='activity Commitment label in ActDetails Form' />)
+    const actResource = (<FormattedMessage id='actResource' defaultMessage='Resource' description='activity Resource label in ActDetails Form' />)
+    const actTime = (<FormattedMessage id='actTime' defaultMessage='Time' description='activity Time label in ActDetails Form' />)
     const actDescription = (<FormattedMessage id='actDescription' defaultMessage='Description' description='activity Description label in ActDetails Form' />)
     const actImgUrl = (<FormattedMessage id='actImgUrl' defaultMessage='Image Link' description='activity Image URL label in ActDetails Form' />)
     const actStatus = (<FormattedMessage id='actStatus' defaultMessage='Status' description='Draft or published status' />)
     const {
       getFieldDecorator, getFieldsError, getFieldError, isFieldTouched
     } = this.props.form
+
+    const timeRangeConfig = {
+      rules: [ {
+        type: 'array'
+        // required: true
+      }]
+    }
 
     const formItemLayout = {
       labelCol: {
@@ -154,7 +171,19 @@ class ActDetailForm extends Component {
                   <Input placeholder='4 hours' />
                 )}
               </Form.Item>
-              // TODO: [VP-206] Add activity resource requirement list.
+              <Form.Item label={actTime}>
+                {getFieldDecorator('time', timeRangeConfig)(
+                  <RangePicker showTime format='DD-MM-YYYY' />
+                )}
+              </Form.Item>
+              <Form.Item label={actResource}>
+                {getFieldDecorator('resource', {
+                  rules: []
+                })(
+                  <Input placeholder='Any resources needed?' />
+                )}
+              </Form.Item>
+              {/* TODO: [VP-206] Add activity resource requirement list. */}
             </Col>
           </Row>
           <Divider />
@@ -175,11 +204,12 @@ class ActDetailForm extends Component {
               <Form.Item label={actImgUrl}>
                 {getFieldDecorator('imgUrl', {
                   rules: [
-                    {/* { type: 'url', message: 'a URL is required' } */}
+
                   ]
                 })(
-                  <ImageUpload setImageURL={imgURL => { this.setImgUrl(imgURL) }} />
+                  <Input />
                 )}
+                <ImageUpload setImgUrl={this.setImgUrl} />
               </Form.Item>
               <Form.Item label={actStatus}>
                 {getFieldDecorator('status', {
@@ -238,7 +268,9 @@ ActDetailForm.propTypes = {
     _id: PropTypes.string,
     title: PropTypes.string,
     subtitle: PropTypes.string,
-    imgUrl: PropTypes.any,
+    imgUrl: PropTypes.string,
+    resource: PropTypes.string,
+    time: PropTypes.Array,
     duration: PropTypes.string,
     status: PropTypes.string,
     owner: PropTypes.string
@@ -255,26 +287,6 @@ ActDetailForm.propTypes = {
   // dispatch: PropTypes.func.isRequired,
 }
 
-// TODO: [VP-145] replace imageURL field with uploader.
-// <Form.Item
-//     label="Image"
-//   >
-//     <div className="dropbox">
-//       {getFieldDecorator('dragger', {
-//         valuePropName: 'fileList',
-//         getValueFromEvent: this.normFile,
-//       })(
-//         <Upload.Dragger name="files" action="">
-//           <p className="ant-upload-drag-icon">
-//             <Icon type="inbox" />
-//           </p>
-//           <p className="ant-upload-text">Click or drag file to this area to upload</p>
-//           <p className="ant-upload-hint">Image ideal is 4:3 aspect ratio.</p>
-//         </Upload.Dragger>
-//       )}
-//     </div>
-//   </Form.Item>
-
 export default Form.create({
   name: 'activity_detail_form',
   onFieldsChange (props, changedFields) {
@@ -289,6 +301,8 @@ export default Form.create({
       duration: Form.createFormField({ ...props.act.duration, value: props.act.duration }),
       location: Form.createFormField({ ...props.act.location, value: props.act.location }),
       imgUrl: Form.createFormField({ ...props.act.imgUrl, value: props.act.imgUrl }),
+      time: Form.createFormField({ ...props.act.time, value: props.act.time }),
+      resource: Form.createFormField({ ...props.act.resource, value: props.act.resource }),
       status: Form.createFormField({ ...props.act.status, value: props.act.status })
     }
   }

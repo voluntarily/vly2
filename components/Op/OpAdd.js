@@ -14,9 +14,9 @@ const OpAdd = ({ roles, ...props }) => {
       <Link href={'/op/new'}>
         <Button type='primary' shape='round' size='large'>
           <FormattedMessage
-            id='landing.newOp'
-            defaultMessage='New Opportunity'
-            description='Button to create a new opportunity on Landing page'
+            id='opAdd.new'
+            defaultMessage='New Request'
+            description='Button to create a new opportunity multiple pages'
           />
         </Button>
       </Link>
@@ -30,8 +30,9 @@ OpAdd.propTypes = {
   roles: PropTypes.array
 }
 
+// Warning me will be {} if not signed in and role will be undefined.
 const mapStateToProps = store => ({
-  roles: store.session.me.role
+  roles: store.session.me.role || []
 })
 
 export default connect(

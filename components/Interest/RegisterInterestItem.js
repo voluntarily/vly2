@@ -98,7 +98,7 @@ class RegisterInterestItem extends Component {
             {/* Button to handle withdrawal from op */}
             {options.withdrawInterestButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
               ? <span>
-                <Popconfirm title='Confirm withdrawal of interest' onConfirm={this.handleWithdrawButtonClicked.bind(this)} okText='Yes' cancelText='No'>
+                <Popconfirm id='WithdrawInterestPopConfirm' title='Confirm withdrawal of interest' onConfirm={this.handleWithdrawButtonClicked.bind(this)} okText='Yes' cancelText='No'>
                   <Button type='danger' shape='round' >
                     {options.withdrawInterestButtonText}
                   </Button>
@@ -134,7 +134,7 @@ class RegisterInterestItem extends Component {
 RegisterInterestItem.propTypes = {
   interest: PropTypes.shape({
     person: PropTypes.any.isRequired,
-    opportunity: PropTypes.string.isRequired,
+    opportunity: PropTypes.object.isRequired,
     comment: PropTypes.string,
     status: PropTypes.string
   }).isRequired,

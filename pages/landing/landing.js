@@ -6,17 +6,18 @@ import PersonaSection from '../../components/LandingPageComponents/PersonaSectio
 import OpListSection from '../../components/Op/OpListSection'
 import OpAdd from '../../components/Op/OpAdd'
 import TitleSectionSub from '../../components/LandingPageComponents/TitleSectionSub'
-
+import { Spacer } from '../../components/VTheme/VTheme'
 // import bigimage from './landing-page-bg.jpg'
 
 // import schoolsactivity from './schoolsactivity.png'
 
-export class Landing extends Component {
+class Landing extends Component {
   render () {
     return (
       <div>
         <Hero />
         <FullPage>
+          <Spacer />
           {/* <AboutSection
             title='Support Innovation in the classroom.'
             subtitle='Voluntarily connects you with classrooms to teach science, technology, engineering, entrepreneurship, arts, and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content.'
@@ -40,5 +41,5 @@ export class Landing extends Component {
     )
   }
 }
-
+export const LandingTest = Landing // for test
 export default publicPage(Landing)

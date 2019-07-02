@@ -16,11 +16,15 @@
     "start": "NODE_ENV=production node --experimental-modules server/server.js",
     "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "docker-test:build": "docker build -t vly-test:latest -f Dockerfile-test . ",
-    "docker-test": "npm run docker-test:build && docker run vly-test:latest "
+    "docker-test": "npm run docker-test:build && docker run vly-test:latest ",
+    "remote": "APP_URL=http://$(ifconfig | grep -A 1 ‘en0’ | tail -1 | cut -d ' ' -f 2):3122 nodemon -w server -w package.json server/server.js"
   },
   "dependencies": {
     "@babel/core": "^7.4.4",
     "@babel/polyfill": "^7.4.4",
+    "@casl/ability": "^3.0.2",
+    "@uppy/core": "^1.1.0",
+    "@uppy/react": "^1.1.0",
     "@zeit/next-less": "^1.0.1",
     "accepts": "^1.3.5",
     "acorn": "^6.1.1",
@@ -30,6 +34,7 @@
     "babel-plugin-import": "^1.7.0",
     "babel-plugin-react-intl": "^3.0.1",
     "babel-plugin-styled-components": "^1.10.0",
+    "cookie-parser": "^1.4.4",
     "cuid": "^2.1.6",
     "dotenv": "^7.0.0",
     "email-templates": "^5.0.5",
@@ -48,6 +53,7 @@
     "lodash": "^4.17.11",
     "markdown-to-jsx": "^6.9.4",
     "mock-css-modules": "^1.0.0",
+    "moment": "^2.24.0",
     "mongoose": "^5.5.4",
     "mongoose-crudify": "^0.2.0",
     "mongoose-id-validator": "^0.5.3",
@@ -106,11 +112,13 @@
       "__tests__/*.spec.js",
       "server/api/**/__tests__/**/*.spec.js",
       "server/services/email/__tests__/*.spec.js",
+      "server/middleware/**/__tests__/**/*.spec.js",
       "components/**/__tests__/*.spec.js",
       "components/__tests__/*.spec.js",
       "components/**/__tests__/*.spec.js",
       "!components/**/__tests__/*.fixture.js",
-      "lib/**/__test__/*.spec.js"
+      "lib/**/__test__/*.spec.js",
+      "lib/__test__/*.spec.js"
     ],
     "helpers": [
       "**/__tests__/**/*.fixture.js",

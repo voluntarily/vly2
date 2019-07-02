@@ -189,7 +189,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
             Github Repo
           </MenuItem>
           <br />
-          <MenuItem href='https://github.com/voluntarily/vly2' target='_blank'>
+          <MenuItem href='https://voluntarily.atlassian.net/wiki' target='_blank'>
             Developer resources
           </MenuItem>
           <br />
@@ -201,8 +201,8 @@ const Footer = ({ isAuthenticated, ...props }) => (
       </Grid>
       <Spacer />
     </FooterContainer>
-
-    <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
+    { props.isAdmin &&
+      <Navigation items={getAllowedLinks(isAuthenticated)} {...props} /> }
   </FooterBackground>
 )
 
@@ -211,7 +211,8 @@ Footer.propTypes = {
 }
 
 const mapStateToProps = store => ({
-  isAuthenticated: store.session.isAuthenticated
+  isAuthenticated: store.session.isAuthenticated,
+  isAdmin: store.session.me.role && store.session.me.role.includes('admin')
 })
 
 export default connect(

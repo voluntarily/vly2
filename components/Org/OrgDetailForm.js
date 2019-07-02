@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import RichTextEditor from '../Editor/RichTextEditor'
-
+import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { Button, Checkbox, Form, Input } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import slug from 'limax'
@@ -17,6 +17,7 @@ class OrgDetailForm extends Component {
   constructor (props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
+    this.setImgUrl = this.setImgUrl.bind(this)
   }
 
   componentDidMount () {
@@ -47,6 +48,12 @@ class OrgDetailForm extends Component {
 
         this.props.onSubmit(this.props.org)
       }
+    })
+  }
+
+  setImgUrl = (value) => {
+    this.props.form.setFieldsValue({
+      imgUrl: value
     })
   }
 
@@ -117,12 +124,11 @@ class OrgDetailForm extends Component {
           </Form.Item>
           <Form.Item label={orgImgUrl}>
             {getFieldDecorator('imgUrl', {
-              rules: [
-                { type: 'url', message: 'a URL is required' }
-              ]
+              rules: []
             })(
-              <Input placeholder='http://example.com/image.jpg' />
+              <Input />
             )}
+            <ImageUpload setImgUrl={this.setImgUrl} />
           </Form.Item>
           <Form.Item label={orgType}>
             {getFieldDecorator('type', {

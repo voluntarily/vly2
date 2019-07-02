@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const tagSchema = require('../tags/tag.js')
 const idvalidator = require('mongoose-id-validator')
 
 const opportunitySchema = new Schema({
@@ -11,11 +10,15 @@ const opportunitySchema = new Schema({
   duration: String, // "15 Minutes",
   location: String, // "Newmarket, Auckland",
   status: String, // "draft",
-  date: { type: 'Date' },
+  date: [Date],
   offerOrg: String,
   requestor: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
   dateAdded: { type: 'Date', default: Date.now, required: true },
-  tags: [tagSchema]
+  tags: [
+    {
+      type: Schema.Types.ObjectId, ref: 'Tag'
+    }
+  ]
 })
 
 opportunitySchema.plugin(idvalidator)
