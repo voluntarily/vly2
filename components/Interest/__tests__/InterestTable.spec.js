@@ -19,14 +19,15 @@ test('InterestTable renders properly', t => {
   />)
 
   // Confirm table headers
-  t.is(wrapper.find('th').at(0).text(), 'Name')
-  t.is(wrapper.find('th').at(1).text(), 'Comment')
-  t.is(wrapper.find('th').at(2).text(), 'Status')
+  t.is(wrapper.find('th').at(0).text(), 'Selected')
+  t.is(wrapper.find('th').at(1).text(), 'Name')
+  t.is(wrapper.find('th').at(2).text(), 'Comment')
+  t.is(wrapper.find('th').at(3).text(), 'Status')
 
   // Confirm table data
-  t.regex(wrapper.find('td').at(0).text(), /Test Name/)
-  t.is(wrapper.find('td').at(1).text(), 'Test Comment')
-  t.is(wrapper.find('td').at(2).text(), 'Test Status')
+  t.regex(wrapper.find('td').at(1).text(), /Test Name/)
+  t.is(wrapper.find('td').at(2).text(), 'Test Comment')
+  t.is(wrapper.find('td').at(3).text(), 'Test Status')
 })
 
 test('row click handler pushes to profile page', t => {
@@ -45,7 +46,7 @@ test('row click handler pushes to profile page', t => {
   />, '/test')
 
   wrapper.find('td').at(0).simulate('click')
-  t.regex(wrapper.find('td').at(0).text(), /Test Name/)
+  t.regex(wrapper.find('td').at(1).text(), /Test Name/)
 })
 
 test('Invite button click handler calls correct callback', t => {
@@ -137,7 +138,7 @@ test('InterestTable renders completed label ', t => {
     }]}
   />)
   // Confirm table data
-  t.is(wrapper.find('td').at(2).text(), 'completed')
+  t.is(wrapper.find('td').at(3).text(), 'completed')
 })
 
 test('InterestTable renders invite button ', t => {
