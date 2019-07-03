@@ -19,7 +19,6 @@ const getOpportunities = async (req, res) => {
     sort = req.query.s ? JSON.parse(req.query.s) : sort
     select = req.query.p ? JSON.parse(req.query.p) : select
   } catch (e) {
-    // console.log('bad JSON', req.query)
     return res.status(400).send(e)
   }
 
@@ -67,7 +66,12 @@ const getOpportunities = async (req, res) => {
   }
 
   try {
-    const got = await Opportunity.find(query, select).sort(sort).exec()
+    const got = await Opportunity
+      .accessibleBy(req.ability)
+      .find(query)
+      .select(select)
+      .sort(sort)
+      .exec()
     res.json(got)
   } catch (e) {
     return res.status(404).send(e)
@@ -75,15 +79,15 @@ const getOpportunities = async (req, res) => {
 }
 
 const getOpportunity = async (req, res) => {
-  // console.log('getOpportunity', req.params)
   try {
-    const got = await Opportunity.findOne(req.params)
+    const got = await Opportunity
+      .accessibleBy(req.ability)
+      .findOne(req.params)
       .populate('requestor')
       .populate('tags')
       .exec()
     res.json(got)
   } catch (e) {
-    // TEST: can't seem to get here. bad id handled earlier
     res.status(404).send(e)
   }
 }

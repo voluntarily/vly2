@@ -7,7 +7,7 @@ const people = [
     'gender': 'male',
     'language': 'EN',
     'role': [
-      'volunteer'
+      'admin'
     ],
     'status': 'active',
     'avatar': 'https://avatars2.githubusercontent.com/u/1596437?v=4',

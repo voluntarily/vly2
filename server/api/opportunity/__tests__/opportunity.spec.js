@@ -8,6 +8,7 @@ import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
 import ops from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
+import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 import OpportunityArchive from './../../opportunity-archive/opportunityArchive'
 
 test.before('before connect to database', async (t) => {
@@ -50,12 +51,11 @@ test.serial('Should correctly give count of all Ops sorted by title', async t =>
   const res = await request(server)
     .get('/api/opportunities')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log(got)
   t.is(4, got.length)
-
   t.is(got[0].title, '1 Mentor a year 12 business Impact Project')
 })
 
@@ -63,6 +63,7 @@ test.serial('Should correctly give subset of ops matching status', async t => {
   const res = await request(server)
     .get('/api/opportunities?q={"status":"draft"}')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -74,6 +75,7 @@ test.serial('Should correctly select just the names and ids', async t => {
   const res = await request(server)
     .get('/api/opportunities?p={"title": 1}')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -87,6 +89,7 @@ test.serial('Should correctly give number of active Opportunities', async t => {
   const res = await request(server)
     .get('/api/opportunities?q={"status": "active"}')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
     // .expect('Content-Length', '2')
@@ -115,6 +118,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
   const res = await request(server)
     .get(`/api/opportunities/${opp._id}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 200)
   t.is(res.body.title, opp.title)
 
@@ -129,6 +133,7 @@ test.serial('Should not find invalid _id', async t => {
   const res = await request(server)
     .get(`/api/opportunities/5ce8acae1fbf56001027b254`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 404)
 })
 
@@ -149,9 +154,9 @@ test.serial('Should correctly add an opportunity with valid tag refs', async t =
       status: 'draft',
       tags: tagIds,
       requestor: t.context.people[0]._id
-
     })
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 200)
 
@@ -176,6 +181,7 @@ test.serial('Should not add an opportunity with invalid tag refs', async t => {
 
     })
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   const savedOpportunity = await Opportunity.findOne({ title: 'The first 400 metres' }).exec()
   t.is(null, savedOpportunity)
@@ -199,6 +205,7 @@ test.serial('Should correctly delete an opportunity', async t => {
   const res = await request(server)
     .delete(`/api/opportunities/${opp._id}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 200)
 
@@ -211,6 +218,7 @@ test.serial('Should correctly give opportunity 1 when searching by "Mentor"', as
   const res = await request(server)
     .get('/api/opportunities?search=MeNTor')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -222,6 +230,7 @@ test.serial('Should find no matches', async t => {
   const res = await request(server)
     .get('/api/opportunities?q={"title":"nomatches"}')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -233,6 +242,7 @@ test.serial('Should fail to find - invalid query', async t => {
   const res = await request(server)
     .get('/api/opportunities?s={"invalid":"nomatches"}')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(404)
   t.is(res.status, 404)
 })
@@ -242,6 +252,7 @@ test.serial('Should correctly give opportunity 2 when searching by "Algorithms"'
   const res = await request(server)
     .get('/api/opportunities?search=AlgorithMs')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -253,6 +264,7 @@ test.serial('Should include description in search', async t => {
   const res = await request(server)
     .get('/api/opportunities?search=ROCKEt')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -290,6 +302,7 @@ test.serial('Should return any opportunities with matching tags or title/desc/su
   const res = await request(server)
     .get(`/api/opportunities?search=java robots`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -317,6 +330,7 @@ test.serial('Should update status of Opportunity when a put request is sent', as
     .put(`/api/opportunities/${opp._id}`)
     .send({ status: 'done' })
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
 
   t.is(res.status, 200)
@@ -344,6 +358,7 @@ test.serial('should return 400 for a bad request', async t => {
     .put(`/api/opportunities/${opp._id}`)
     .send({ status: { invalidObject: '' } })
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(400)
 
   t.is(res.status, 400)
