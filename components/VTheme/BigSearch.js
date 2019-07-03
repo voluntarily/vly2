@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import React, { PureComponent } from 'react'
 import { Input } from 'antd'
 import PropTypes from 'prop-types'
+import OpLocationSelector from '../Op/OpLocationSelector'
 
 const Search = Input.Search
 
@@ -67,26 +68,63 @@ const FilterItem = styled.a`
   font-weight: bold;
 `
 
+const FilterDetailsContainer = styled.div`
+  margin-top: 0rem;
+  width: 80rem;
+  height: 10rem;
+  background: #ffffff;
+  box-shadow: 2px 2px 12px 0 rgba(117, 117, 117, 0.5);
+  border-radius: 8px;
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    width: calc(100vw - 4rem);
+  }
+
+  @media screen and (max-width: 767px) {
+    width: calc(100vw - 2rem);
+    height: 12rem;
+  }
+
+
+`
+
 class BigSearch extends PureComponent {
+  state = {
+    filterShowing: false
+  }
+
   render () {
-    const { onSearch, search } = this.props
-    return (<SearchContainer>
-      <SearchTitle>Search</SearchTitle>
-      <SearchInputContainer>
-        <Search
-          size='large'
-          placeholder="try 'building robots' "
-          enterButton='Search'
-          defaultValue={search}
-          onSearch={onSearch}
-        />
-      </SearchInputContainer>
-      <SearchFilterText>Filter by:</SearchFilterText>
-      <FilterItem>Date</FilterItem>
-      <FilterItem>Location</FilterItem>
-      <FilterItem>Categories</FilterItem>
-      <FilterItem>Impact</FilterItem>
-    </SearchContainer>)
+    const { onSearch, search, locations } = this.props
+    const { filterShowing } = this.state
+    return (
+    <>
+      <SearchContainer>
+        <SearchTitle>Search</SearchTitle>
+        <SearchInputContainer>
+          <Search
+            size='large'
+            placeholder="try 'building robots' "
+            enterButton='Search'
+            defaultValue={search}
+            onSearch={onSearch}
+          />
+        </SearchInputContainer>
+        <SearchFilterText>Filter by:</SearchFilterText>
+        <FilterItem>Date</FilterItem>
+        <FilterItem onClick={this.toggleFilterDetails}>Location</FilterItem>
+        <FilterItem>Categories</FilterItem>
+        <FilterItem>Impact</FilterItem>
+      </SearchContainer>
+      {filterShowing &&
+      <FilterDetailsContainer>
+        <SearchInputContainer><OpLocationSelector value='test' existingLocations={locations} /></SearchInputContainer>
+
+      </FilterDetailsContainer>}
+      </>)
+  }
+
+  toggleFilterDetails = () => {
+    this.setState({ filterShowing: !this.state.filterShowing })
   }
 }
 
@@ -97,7 +135,8 @@ BigSearch.propTypes = {
     PropTypes.shape({
       query: PropTypes.string
     })
-  )
+  ),
+  locations: PropTypes.arrayOf(PropTypes.string).isRequired
   //  showAddOp: PropTypes.bool.isRequired,
   // dispatch: PropTypes.func.isRequired
 }

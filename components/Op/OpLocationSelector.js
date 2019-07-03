@@ -4,7 +4,7 @@ import { Select } from 'antd'
 
 const { Option } = Select
 
-const OpDetailLocation = ({ onChange, value, existingLocations }) => {
+const OpLocationSelector = ({ onChange, value, existingLocations }) => {
   const children = existingLocations.map(location => <Option key={location}>{location}</Option>)
   return (
     <Select
@@ -18,10 +18,10 @@ const OpDetailLocation = ({ onChange, value, existingLocations }) => {
   )
 }
 
-OpDetailLocation.propTypes = {
+OpLocationSelector.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 
-export default OpDetailLocation
+export default OpLocationSelector

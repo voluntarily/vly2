@@ -3,6 +3,7 @@ import TitleSection from '../../components/LandingPageComponents/TitleSectionSub
 import BigSearch from '../../components/VTheme/BigSearch'
 import { Spacer } from '../../components/VTheme/VTheme'
 import OpListSection from '../../components/Op/OpListSection'
+import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
 import { Component } from 'react'
 import PropTypes from 'prop-types'
 import Router from 'next/router'
@@ -26,7 +27,8 @@ export class SearchPage extends Component {
     }
   }
 
-  static async getInitialProps ({ query: { search } }) {
+  static async getInitialProps ({ store, query: { search } }) {
+    await store.dispatch(reduxApi.actions.locations.get())
     return {
       search
     }
@@ -50,10 +52,15 @@ export class SearchPage extends Component {
   render () {
     const { search } = this.state
 
+    const existingLocations = [
+      ...this.props.locations.data[0].regions.map(r => r.name),
+      ...this.props.locations.data[0].territories
+    ]
+
     return (
       <FullPage>
         <TitleSection title={<FormattedMessage defaultMessage={`Search results for "{search}"`} values={{ search }} id='search.title' />} />
-        <BigSearch search={search} onSearch={this.handleSearch} />
+        <BigSearch search={search} onSearch={this.handleSearch} locations={existingLocations} />
         <Spacer />
         <OpListSection search={search} />
       </FullPage>
@@ -78,4 +85,4 @@ SearchPage.propTypes = {
   // dispatch: PropTypes.func.isRequired
 }
 
-export default publicPage(SearchPage)
+export default publicPage(withLocations(SearchPage))

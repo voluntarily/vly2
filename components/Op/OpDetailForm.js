@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { TextHeadingBold, TextP, Spacer } from '../VTheme/VTheme'
 import OpDetailTagsEditable from './OpDetailTagsEditable'
-import OpDetailLocation from './OpDetailLocation'
+import OpLocationSelector from './OpLocationSelector'
 const { TextArea } = Input
 
 // custom form components go here
@@ -439,7 +439,7 @@ class OpDetailForm extends Component {
                         message: 'A region must be provided'
                       }
                     ]
-                  })(<OpDetailLocation
+                  })(<OpLocationSelector
                     existingLocations={this.props.existingLocations}
                   />)}
                 </Form.Item>
