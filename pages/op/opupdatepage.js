@@ -1,7 +1,8 @@
 import { Component } from 'react'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import OpDetailForm from '../../components/Op/OpDetailForm'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import { FullPage } from '../../hocs/publicPage'
+import securePage from '../../hocs/securePage'
 import { message, Divider } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
@@ -26,15 +27,9 @@ export class OpUpdatePage extends Component {
     if (opExists) {
       await store.dispatch(reduxApi.actions.opportunities.get(query))
     }
+    await store.dispatch(reduxApi.actions.locations.get())
+    await store.dispatch(reduxApi.actions.tags.get())
     return { opExists }
-  }
-
-  async componentDidMount () {
-    try {
-      await this.props.dispatch(reduxApi.actions.tags.get())
-    } catch (err) {
-      console.log('error in getting tags', err)
-    }
   }
 
   handleCancel = op => {
@@ -108,6 +103,12 @@ export class OpUpdatePage extends Component {
 
     const me = this.props.me
     const existingTags = this.props.tags.data.map(tag => tag.tag)
+
+    const existingLocations = [
+      ...this.props.locations.data[0].regions.map(r => r.name),
+      ...this.props.locations.data[0].territories
+    ]
+
     return (
       <FullPage>
         <PageTitle
@@ -121,6 +122,7 @@ export class OpUpdatePage extends Component {
           onSubmit={this.handleAdd.bind(this, op)}
           onCancel={this.handleCancel}
           existingTags={existingTags}
+          existingLocations={existingLocations}
         />
 
         <br />
@@ -153,4 +155,4 @@ OpUpdatePage.propTypes = {
   })
 }
 
-export default publicPage(withOps(OpUpdatePage))
+export default securePage(withOps(OpUpdatePage))

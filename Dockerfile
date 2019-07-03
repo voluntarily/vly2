@@ -19,6 +19,7 @@ ARG BUILD_SMTP_PWD
 ENV SMTP_PWD=${BUILD_SMTP_PWD}
 ENV REVISION=${BUILD_REVISION}
 ENV NODE_ENV=production
+ENV APP_URL=${BUILD_APP_URL}
 COPY --from=production_build /usr/src/app /voluntarily
 WORKDIR /voluntarily
 CMD ["npm", "start" ]

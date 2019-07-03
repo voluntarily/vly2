@@ -88,8 +88,8 @@ test('mount the InterestSection with two interests', async t => {
   // console.log(wrapper.html())
   t.is(wrapper.find('h2').text(), 'Interested Volunteers') // there are two cards on the screen
   t.is(wrapper.find('tbody tr').length, 2)
-  t.regex(wrapper.find('tbody tr td').first().text(), /avowkind/)
-  t.regex(wrapper.find('tbody tr').at(1).find('td').first().text(), /Dali/)
+  t.regex(wrapper.find('tbody tr td').at(1).text(), /avowkind/)
+  t.regex(wrapper.find('tbody tr').at(1).find('td').at(1).text(), /Dali/)
 
   // test invite button
   const invitebutton = wrapper.find('tbody tr').first().find('button').first()

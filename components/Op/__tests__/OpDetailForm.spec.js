@@ -6,8 +6,10 @@ import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-hel
 
 import OpDetailForm from '../OpDetailForm'
 import sinon from 'sinon'
-// Initial opportunities
 
+const locations = ['Auckland, Wellington, Christchurch']
+
+// Initial opportunities
 const op = {
   _id: '5cc903e5f94141437622cea7',
   title: 'Growing in the garden',
@@ -63,7 +65,12 @@ test.after.always(() => {
 
 test('shallow the detail with op', t => {
   const wrapper = shallowWithIntl(
-    <OpDetailForm op={op} onSubmit={() => {}} onCancel={() => {}} />
+    <OpDetailForm
+      op={op}
+      onSubmit={() => {}}
+      onCancel={() => {}}
+      existingLocations={locations}
+      existingTags={[]} />
   )
   // console.log(wrapper.debug())
   t.is(wrapper.find('OpDetailForm').length, 1)
@@ -74,7 +81,13 @@ test('render the detail with op', t => {
   const cancelOp = sinon.spy()
   const me = { _id: '5ccbffff958ff4833ed2188d' }
   const wrapper = mountWithIntl(
-    <OpDetailForm op={op} me={me} onSubmit={submitOp} onCancel={cancelOp} />
+    <OpDetailForm
+      op={op}
+      me={me}
+      onSubmit={submitOp}
+      onCancel={cancelOp}
+      existingLocations={locations}
+      existingTags={[]} />
   )
   // t.log(wrapper)
   // console.log(wrapper.html())
@@ -93,7 +106,13 @@ test.serial('render the detail with new blank op', t => {
   const me = { _id: '5ccbffff958ff4833ed2188d' }
 
   const wrapper = mountWithIntl(
-    <OpDetailForm op={noop} me={me} onSubmit={submitOp} onCancel={cancelOp} />
+    <OpDetailForm
+      op={noop}
+      me={me}
+      onSubmit={submitOp}
+      onCancel={cancelOp}
+      existingLocations={locations}
+      existingTags={[]} />
   )
   t.log(wrapper.first())
   const datePicker = wrapper.find('.ant-calendar-picker')
@@ -117,6 +136,10 @@ test.serial('render the detail with new blank op', t => {
   title
     .simulate('keydown', { which: 'a' })
     .simulate('change', { target: { value: 'My new value' } })
+
+  const locationInput = wrapper.find('OpDetailLocation').first()
+  locationInput.props().onChange('Auckland')
+
   wrapper.update()
 
   const duration = wrapper.find('input#opportunity_detail_form_duration').first()

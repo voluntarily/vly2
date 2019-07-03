@@ -38,6 +38,7 @@ prod_docker_docker_builder:
     SMTP_PWD: ENCRYPTED[9be38cf7a68886cd0a5526c3438b5ea38ebd94e79c040beaeee81c4ea7c2480edc46642758ec2fe5894ec8ebcfae0d54]
     IMAGE_TAG_VERSION: ${CIRRUS_BRANCH}
     HOME: /root
+    APP_URL: https://alpha.voluntarily.nz
   prepare_script:
     - pip install awscli
     - wget https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest -O ./ecs-cli
