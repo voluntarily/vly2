@@ -4,7 +4,7 @@ import { appReady } from '../../server'
 import Person from '../../api/person/person'
 import Opportunity from '../../api/opportunity/opportunity'
 import MemoryMongo from '../test-memory-mongo'
-import { initDB } from './test.utils.spec'
+import { initDB } from './setupDatabase.js'
 // import {shallow} from 'enzyme'
 
 test.before('before connect to database', async (t) => {
@@ -26,7 +26,6 @@ test.afterEach.always(async () => {
 
 test.serial('database has loaded the people fixture', async t => {
   const count = await Person.countDocuments()
-  // console.log(count)
   t.is(count, t.context.people.length)
   t.is(t.context.people[0].nickname, 'avowkind')
 })

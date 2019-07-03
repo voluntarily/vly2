@@ -1,35 +1,27 @@
 import ops from '../../api/opportunity/__tests__/opportunity.fixture'
 import Opportunity from '../../api/opportunity/opportunity'
-import objectID from 'bson-objectid'
 import people from './test.database.fixture'
 import Person from '../../api/person/person'
-// import Interest from '../../api/interest/interest'
 
-const personCreate = async t => {
-  people.map(p => {
-    p._id = objectID.generate()
-  })
-  t.context.people = people
-  await Person.create(people).catch((err) => `Unable to create people: ${console.log(err)}`)
+export const personCreate = async t => {
+  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${console.log(err)}`)
 }
 
 const opportunityCreate = async t => {
   ops.map((op, index) => {
-    op._id = objectID.generate()
-    op.requestor = people[index]._id
+    op.requestor = t.context.people[index]._id
   })
+  t.context.ops = await Opportunity.create(ops).catch((err) => `Unable to create ops: ${console.log(err)}`)
+
   // replace the requestor id with the actual person
-  ops.map((op, index) => {
-    op.requestor = people[index]
+  t.context.ops.map((op, index) => {
+    op.requestor = t.context.people[index]
   })
-  // console.log('Total Length: ', ops.length)
-  t.context.ops = ops
-  await Opportunity.create(ops).catch((err) => `Unable to create ops: ${console.log(err)}`)
 }
 
 export const initDB = async t => {
-  opportunityCreate(t)
-  personCreate(t)
+  await personCreate(t)
+  await opportunityCreate(t)
 }
 
 //   for (let j = 0; j < ops.length; j++) {
