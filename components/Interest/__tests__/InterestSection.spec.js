@@ -116,6 +116,7 @@ test('mount the InterestSection with two interests', async t => {
   // const popconfirm = wrapper.find('Popconfirm').filter('#declineInvitePopConfirm').first()
   // console.log(popconfirm.html())
 
+
   // TODO: fix throw of rejected promise at this point
   // popconfirm.props().onConfirm(interests[0])
   // await sleep(1) // allow asynch fetch to complete
