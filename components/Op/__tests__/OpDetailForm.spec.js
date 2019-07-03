@@ -1,12 +1,15 @@
 import React from 'react'
 import test from 'ava'
+import { tagList } from '../../../server/api/tag/__tests__/tag.fixture'
 // import { JSDOM } from 'jsdom'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
 
 import OpDetailForm from '../OpDetailForm'
 import sinon from 'sinon'
-// Initial opportunities
 
+const locations = ['Auckland, Wellington, Christchurch']
+
+// Initial opportunities
 const op = {
   _id: '5cc903e5f94141437622cea7',
   title: 'Growing in the garden',
@@ -15,7 +18,18 @@ const op = {
   description: 'Project to grow something in the garden',
   duration: '15 Minutes',
   location: 'Newmarket, Auckland',
-  status: 'draft'
+  date: [
+    {
+      '$date': '2019-06-16T05:57:01.000Z'
+    },
+    {
+      '$date': '2019-06-23T05:57:01.000Z'
+    }
+  ],
+  status: 'draft',
+  startDate: null,
+  endDate: null,
+  tag: tagList
 }
 
 const noop = {
@@ -25,7 +39,11 @@ const noop = {
   description: '',
   duration: '',
   location: '',
-  status: 'draft'
+  status: 'draft',
+  tag: [],
+  startDate: null,
+  endDate: null,
+  date: []
 }
 
 // const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p`)
@@ -47,7 +65,12 @@ test.after.always(() => {
 
 test('shallow the detail with op', t => {
   const wrapper = shallowWithIntl(
-    <OpDetailForm op={op} onSubmit={() => {}} onCancel={() => {}} />
+    <OpDetailForm
+      op={op}
+      onSubmit={() => {}}
+      onCancel={() => {}}
+      existingLocations={locations}
+      existingTags={[]} />
   )
   // console.log(wrapper.debug())
   t.is(wrapper.find('OpDetailForm').length, 1)
@@ -58,7 +81,13 @@ test('render the detail with op', t => {
   const cancelOp = sinon.spy()
   const me = { _id: '5ccbffff958ff4833ed2188d' }
   const wrapper = mountWithIntl(
-    <OpDetailForm op={op} me={me} onSubmit={submitOp} onCancel={cancelOp} />
+    <OpDetailForm
+      op={op}
+      me={me}
+      onSubmit={submitOp}
+      onCancel={cancelOp}
+      existingLocations={locations}
+      existingTags={[]} />
   )
   // t.log(wrapper)
   // console.log(wrapper.html())
@@ -77,9 +106,20 @@ test.serial('render the detail with new blank op', t => {
   const me = { _id: '5ccbffff958ff4833ed2188d' }
 
   const wrapper = mountWithIntl(
-    <OpDetailForm op={noop} me={me} onSubmit={submitOp} onCancel={cancelOp} />
+    <OpDetailForm
+      op={noop}
+      me={me}
+      onSubmit={submitOp}
+      onCancel={cancelOp}
+      existingLocations={locations}
+      existingTags={[]} />
   )
   t.log(wrapper.first())
+  const datePicker = wrapper.find('.ant-calendar-picker')
+  datePicker.at(0).simulate('click') // Check if the dissable date method got called
+  datePicker.at(1).simulate('click') // Check if the dissable date method got called
+  t.is(datePicker.length, 2) // should find 1 date picker component
+
   t.is(wrapper.find('OpDetailForm').length, 1)
   t.is(wrapper.find('button').length, 2)
   wrapper.find('button').first().simulate('click')
@@ -96,6 +136,10 @@ test.serial('render the detail with new blank op', t => {
   title
     .simulate('keydown', { which: 'a' })
     .simulate('change', { target: { value: 'My new value' } })
+
+  const locationInput = wrapper.find('OpDetailLocation').first()
+  locationInput.props().onChange('Auckland')
+
   wrapper.update()
 
   const duration = wrapper.find('input#opportunity_detail_form_duration').first()

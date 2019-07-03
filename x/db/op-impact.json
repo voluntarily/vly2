@@ -6,19 +6,10 @@
   "duration": "12 weeks, 1 hour sessions",
   "date": "20190401",
   "offerOrg": "Albany High School",
-  "reqestor": "Arthur Henry Smith",
   "location": "Albany High School, Auckland",
   "status": "draft",
   "tags": [
-    { 
-       "tag": "C++"
-    },
-    { 
-       "tag": "Java"
-    },
-    { 
-       "tag": "Environment"
-    }
+    { "_id": "2d00626d9c22c22080187bb6" }
   ],
   "requestor": "5ccbe4c26c285b7184bff574"
 }

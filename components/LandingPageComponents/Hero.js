@@ -16,14 +16,17 @@ const AwesomeHeroContainer = styled.div`
 
   @media screen and (min-width: 1380px) and (max-width: 1920px) {
     height: 54rem;
+    width: 80rem;
   }
 
   @media screen and (min-width: 1282px) and (max-width: 1380px) {
     height: 44rem;
+    width: calc(100vw - 2rem);
   }
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
     height: 44rem;
+    width: calc(100vw - 2rem);
   }
 
   @media screen and (min-width: 768px) and (max-width: 1025px) {
@@ -34,11 +37,16 @@ const AwesomeHeroContainer = styled.div`
     grid-template-columns: 30vw 70vw;
   }
 
+
+
   @media screen and (max-width: 768px) {
     grid-template-columns: 100vw;
     height: auto;
     width: 100vw;
   }
+
+
+
 `
 // start left hand video side
 const HeroLeft = styled.div`
@@ -73,12 +81,19 @@ const HeroLeft = styled.div`
     width: 11rem;
     height: 22rem;
   }
+
+
   @media screen and (max-width: 768px) {
     margin-top: 0rem;
     margin-left: 0rem;
     width: 100vw;
-    height: 22rem;
+    height: 15rem;
     border-radius: 0px;
+  }
+
+  @media only screen and (min-width : 320px) and (max-width : 568px) {
+    height: 45vh;
+    /* iphone 5 and below */
   }
 `
 
@@ -147,6 +162,7 @@ const HeroRight = styled.div`
   @media screen and (min-width: 1380px) and (max-width: 1920px) {
     margin-top: 20rem;
     margin-left: 0rem;
+    width: 32rem;
   }
 
   @media screen and (min-width: 1282px) and (max-width: 1380px) {
@@ -164,14 +180,14 @@ const HeroRight = styled.div`
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     margin-top: 3rem;
     margin-left: -2rem;
-    width: 32rem;
+    width: 28rem;
   }
 
   @media screen and (max-width: 768px) {
     margin-top: 1rem;
     margin-left: 1rem;
     margin-bottom: 1rem;
-    width: calc(100vw - 2rem);
+    width: calc(100vw - 4rem);
 
     left: 0rem;
   }
@@ -180,6 +196,7 @@ const HeroRight = styled.div`
 const SearchBox = styled.div`
   background-color: white;
   height: 4rem;
+  margin-top: 1rem;
   width: 40rem;
   border-radius: 0.25rem;
   padding: 8px;

@@ -7,6 +7,8 @@ Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
 const { readFileSync } = require('fs')
 const { basename } = require('path')
 
+const UPLOAD_LIMIT = '6000kb'
+
 require('dotenv').config()
 const express = require('express')
 const server = express()
@@ -14,11 +16,16 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const glob = require('glob')
 const next = require('next')
-
+const cookieParser = require('cookie-parser')
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
-server.use(bodyParser.urlencoded({ extended: true }))
-server.use(bodyParser.json({ limit: '2000kb' }))
+const setSession = require('./middleware/session/setSession')
+const getAbility = require('./middleware/ability/getAbility')
+server.use(bodyParser.urlencoded({ limit: UPLOAD_LIMIT, extended: true }))
+server.use(bodyParser.json({ limit: UPLOAD_LIMIT, extended: true }))
+server.use(cookieParser())
+server.use(setSession)
+server.use(getAbility({ searchPattern: '/server/api/**/*.ability.js' }))
 const routes = require('./routes')
 const routerHandler = routes.getRequestHandler(app)
 const { config } = require('../config/config')
@@ -51,10 +58,9 @@ const supportedLanguages = glob
 
 const appReady = app.prepare().then(() => {
   // Parse application/x-www-form-urlencoded
-  server.use(bodyParser.urlencoded({ extended: true }))
+  server.use(bodyParser.urlencoded({ limit: UPLOAD_LIMIT, extended: true }))
   // Parse application/json
-  server.use(bodyParser.json({ limit: '2000kb' }))
-
+  server.use(bodyParser.json({ limit: UPLOAD_LIMIT, extended: true }))
   server.use(function (req, res, next) {
     req.locale = req.acceptsLanguages(supportedLanguages)
     req.localeDataScript = getLocaleDataScript(req.locale)

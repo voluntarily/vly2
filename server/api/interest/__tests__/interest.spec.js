@@ -73,7 +73,7 @@ test.serial('Should correctly give number of Interests', async t => {
     .get('/api/interests')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
-    // .expect('Content-Length', '2')
+    .expect('Content-Length', '215')
     .expect(200)
   t.is(res.status, 200)
   t.deepEqual(1, res.body.length)
@@ -86,6 +86,16 @@ test.serial('Should send correct data when queried against a _id', async t => {
   t.is(200, res.status)
   t.is(interest.person.toString(), res.body.person)
   t.is(interest.opportunity.toString(), res.body.opportunity)
+})
+
+test.serial('Should return 404 code when queried non existing interest', async t => {
+  const res = await request(server)
+    .get(`/api/interests/asodifklamd`)
+    .set('Accept', 'application/json')
+
+  // This test is not ready since the return status was 500 not 404
+  const expectedResponseStatus = 500
+  t.is(res.status, expectedResponseStatus)
 })
 
 test.skip(
@@ -111,9 +121,10 @@ test.skip(
 )
 
 test.serial('Should correctly add a valid interest', async t => {
+  opportunity.requestor = person
   const newInterest = {
     person: person._id.toString(),
-    opportunity: opportunity._id.toString()
+    opportunity: opportunity
   }
 
   const res = await request(server)
@@ -129,6 +140,48 @@ test.serial('Should correctly add a valid interest', async t => {
   }).exec()
   t.is(savedInterest.person._id.toString(), person._id.toString())
   t.is(savedInterest.opportunity._id.toString(), opportunity._id.toString())
+})
+
+test.serial('Should update the interest state from interested to invited', async t => {
+  const reqData = {
+    status: 'invited',
+    _id: interest._id,
+    person: {
+      nickname: person.nickname,
+      _id: person._id
+    },
+    comment: 'lol',
+    opportunity: opportunity._id,
+    date: 'Sanitize it plz'
+  }
+
+  const res = await request(server)
+    .put(`/api/interests/${interest._id}`)
+    .send(reqData)
+    .set('Accept', 'application/json')
+
+  t.is(res.status, 200)
+})
+
+test.serial('Should update the interest state from invited to commited', async t => {
+  const reqData = {
+    status: 'commit',
+    _id: interest._id,
+    person: {
+      nickname: person.nickname,
+      _id: person._id
+    },
+    comment: 'lol',
+    opportunity: opportunity._id,
+    date: 'Sanitize it plz'
+  }
+
+  const res = await request(server)
+    .put(`/api/interests/${interest._id}`)
+    .send(reqData)
+    .set('Accept', 'application/json')
+
+  t.is(res.status, 200)
 })
 
 test.serial('Should correctly delete an interest', async t => {

@@ -64,7 +64,7 @@ const AboutCTA = () => (
         </CTADescription>
         <Button href='https://gitter.im/voluntarily/community' target='_blank'>
           Dev Chatroom
-        </Button>
+        </Button>&nbsp;&nbsp;
         <Button href='https://github.com/voluntarily/vly2' target='_blank'>
           {' '}
           Github Repository

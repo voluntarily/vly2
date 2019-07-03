@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import { withRouter } from 'next/router'
-import { Menu, Avatar } from 'antd'
+import { Avatar, Menu } from 'antd'
 
 const StyledMenu = styled(Menu)`
   font-weight: bold;
@@ -16,38 +16,36 @@ const StyledAvatar = styled(Avatar)`
   }
 `
 
-const Navigation = ({ items, defaultItem, router, loggedUser, ...props }) => {
+const Navigation = ({ items, defaultItem, router, me, ...props }) => {
   // TODO next js get the location is different?
   // const activeItem = router && router.pathname ? router.pathname.slice(1) : defaultItem
   const activeItem = router.pathname.slice(1)
 
   return (
-    <StyledMenu>
-      <Menu
-        theme='light'
-        mode='horizontal'
-        style={{ float: 'right' }}
-        selectedKeys={[activeItem]}
-      >
-        {items.map(item => (
-          <Menu.Item key={item.key}>
-            {/* don't do prefetch during testing */}
-            <Link key={item.href} href={item.href}>
-              <a>{item.text}</a>
-            </Link>
-          </Menu.Item>
-
-        ))}
-        <Menu.Item>
-          <StyledAvatar>
-            <Avatar
-              size='small'
-              src={loggedUser && loggedUser.avatar}
-              icon='user'
-            />
-          </StyledAvatar>
+    <StyledMenu
+      theme='light'
+      mode='horizontal'
+      style={{ float: 'right' }}
+      selectedKeys={[activeItem]}
+    >
+      {items.map(item => (
+        <Menu.Item key={item.key}>
+          {/* don't do prefetch during testing */}
+          <Link key={item.href} href={item.href}>
+            <a>{item.text}</a>
+          </Link>
         </Menu.Item>
-      </Menu>
+
+      ))}
+      <Menu.Item>
+        <StyledAvatar>
+          <Avatar
+            size='small'
+            src={me && me.avatar}
+            icon='user'
+          />
+        </StyledAvatar>
+      </Menu.Item>
     </StyledMenu>
   )
 }

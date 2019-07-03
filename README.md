@@ -10,7 +10,7 @@
 
 Support education and innovation in New Zealand Schools with industry experts and volunteers in the classrooms
 
-# I want to join the Voluntari.ly community
+# How to join the Voluntari.ly community
 You don't need permission to help - its open.
 
 This is an open source project and you are welcome to contribute at any level you feel comfortable.
@@ -24,7 +24,7 @@ Find out more about the project at the [Website](http://voluntari.ly) and then..
 6. Come along to a Drop in Wednesday Afternoon or after work social at our [Auckland office](https://goo.gl/maps/fEtq6mdpz446iXVQA)
 7. Come along to one of our developer events - see http://voluntari.ly for the latest details.
 
-# Just let me build it
+# How to build it
 
 Voluntari.ly is based on the [MERN (MongoDB, Express, React+Redux, Node)](http://mern.io/) software stack but also uses next.js to keep things clean and simple.
 

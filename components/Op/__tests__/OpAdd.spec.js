@@ -15,21 +15,40 @@ const mockStore = configureStore()(
   }
 )
 
-test('render the opadd as null if not op-provider role', t => {
+test('do not render the opadd if not signed in ', t => {
+  const mockStoreAnon = configureStore()(
+    {
+      session: {
+        isAuthenticated: false,
+        user: {},
+        me: {}
+      }
+    }
+  )
   const wrapper = mountWithIntl(
-    <Provider store={mockStore}>
-      <OpAdd store={mockStore} />
+    <Provider store={mockStoreAnon}>
+      <OpAdd />
     </Provider>
   )
 
   t.falsy(wrapper.find('button').exists())
 })
 
-test('render the opadd correctly if op-provider role', t => {
-  mockStore.getState().session.me.role = ['op-provider']
+test('render the opadd as null if not opportunityProvider role', t => {
   const wrapper = mountWithIntl(
     <Provider store={mockStore}>
-      <OpAdd store={mockStore} />
+      <OpAdd />
+    </Provider>
+  )
+
+  t.falsy(wrapper.find('button').exists())
+})
+
+test('render the opadd correctly if opportunityProvider role', t => {
+  mockStore.getState().session.me.role = ['opportunityProvider']
+  const wrapper = mountWithIntl(
+    <Provider store={mockStore}>
+      <OpAdd />
     </Provider>
   )
 

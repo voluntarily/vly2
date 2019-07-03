@@ -1,18 +1,34 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Col, Checkbox, Form, Input, Row } from 'antd'
+import RichTextEditor from '../Editor/RichTextEditor'
+import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import { Button, Checkbox, Form, Input } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import slug from 'limax'
-const { TextArea } = Input
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
 }
 
 class OrgDetailForm extends Component {
+  state = {
+    about: ''
+  }
+  constructor (props) {
+    super(props)
+    this.handleChange = this.handleChange.bind(this)
+    this.setImgUrl = this.setImgUrl.bind(this)
+  }
+
   componentDidMount () {
     // To disabled submit button at the beginning.
+    this.setState({ about: this.props.org.about })
     this.props.form.validateFields()
+  }
+
+  handleChange (value) {
+    console.log('par', value)
+    this.setState({ about: value })
   }
 
   handleSubmit = (e) => {
@@ -26,12 +42,18 @@ class OrgDetailForm extends Component {
         // update the rest from the form values.
         org.name = values.name
         org.slug = slug(values.name)
-        org.about = values.about
+        org.about = this.state.about
         org.imgUrl = values.imgUrl
         org.type = values.type
 
         this.props.onSubmit(this.props.org)
       }
+    })
+  }
+
+  setImgUrl = (value) => {
+    this.props.form.setFieldsValue({
+      imgUrl: value
     })
   }
 
@@ -62,8 +84,7 @@ class OrgDetailForm extends Component {
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 20 },
-        md: { span: 16 }
+        sm: { span: 20 }
       }
     }
 
@@ -78,93 +99,74 @@ class OrgDetailForm extends Component {
           hideRequiredMark
           colon={false}
         >
-          <Row>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 16 }}
-            >
-              <Form.Item
-                label={orgName}
-                validateStatus={orgNameError ? 'error' : ''}
-                help={orgNameError || ''}
-              >
-                {getFieldDecorator('name', {
-                  rules: [
-                    { required: true, message: 'A name is required' }
-                  ]
-                })(
-                  <Input placeholder='Organisation Name' />
-                )}
-              </Form.Item>
-              <Form.Item label={orgAbout}>
-                {getFieldDecorator('about', {
-                  rules: [
+          <Form.Item
+            label={orgName}
+            validateStatus={orgNameError ? 'error' : ''}
+            help={orgNameError || ''}
+          >
+            {getFieldDecorator('name', {
+              rules: [
+                { required: true, message: 'A name is required' }
+              ]
+            })(
+              <Input placeholder='Organisation Name' />
+            )}
+          </Form.Item>
+          <Form.Item label={orgAbout}>
+            {getFieldDecorator('about', {
+              rules: [
 
-                  ]
-                })(
-                  <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 16 }}
-            >
-              <Form.Item label={orgImgUrl}>
-                {getFieldDecorator('imgUrl', {
-                  rules: [
-                    { type: 'url', message: 'a URL is required' }
-                  ]
-                })(
-                  <Input placeholder='http://example.com/image.jpg' />
-                )}
-              </Form.Item>
-              <Form.Item label={orgType}>
-                {getFieldDecorator('type', {
-                  rules: [
-                    { required: true, message: 'type is required' }
-                  ]
-                })(
-                  <Checkbox.Group
-                    options={typeOptions}
-                  />
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col
-              style={{ textAlign: 'right' }}
-              xs={{ span: 24, offset: 0 }}
-              md={{ span: 8, offset: 12 }}
-            >
-              <Button
-                type='secondary'
-                htmlType='button'
-                onClick={this.props.onCancel}
-              >
-                <FormattedMessage
-                  id='org.cancel'
-                  defaultMessage='Cancel'
-                  about='Label for cancel button on organisation details form'
-                />
-              </Button>
-              <Button
-                type='primary'
-                htmlType='submit'
-                disabled={hasErrors(getFieldsError())}
-                style={{ marginLeft: 8 }}
-              >
-                <FormattedMessage
-                  id='org.save'
-                  defaultMessage='Save'
-                  about='Label for submit button on organisation details form'
-                />
-              </Button>
-            </Col>
-          </Row>
+              ]
+            })(
+              // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+              <RichTextEditor value={this.state.about} onChange={this.handleChange} />
+            )}
+          </Form.Item>
+          <Form.Item label={orgImgUrl}>
+            {getFieldDecorator('imgUrl', {
+              rules: []
+            })(
+              <Input />
+            )}
+            <ImageUpload setImgUrl={this.setImgUrl} />
+          </Form.Item>
+          <Form.Item label={orgType}>
+            {getFieldDecorator('type', {
+              rules: [
+                { required: true, message: 'type is required' }
+              ]
+            })(
+              <Checkbox.Group
+                options={typeOptions}
+              />
+            )}
+          </Form.Item>
+          <Button
+            type='secondary'
+            htmlType='button'
+            shape='round'
+            onClick={this.props.onCancel}
+          >
+            <FormattedMessage
+              id='org.cancel'
+              defaultMessage='Cancel'
+              about='Label for cancel button on organisation details form'
+            />
+          </Button>
+          <Button
+            type='primary'
+            htmlType='submit'
+            shape='round'
+            disabled={hasErrors(getFieldsError())}
+            style={{ marginLeft: 8 }}
+          >
+            <FormattedMessage
+              id='org.save'
+              defaultMessage='Save'
+              shape='round'
+              about='Label for submit button on organisation details form'
+            />
+          </Button>
         </Form>
       </div>
     )
@@ -187,26 +189,6 @@ OrgDetailForm.propTypes = {
   onCancel: PropTypes.func.isRequired
   // dispatch: PropTypes.func.isRequired,
 }
-
-// TODO replace imageURL field with uploader.
-// <Form.Item
-//     label="Image"
-//   >
-//     <div className="dropbox">
-//       {getFieldDecorator('dragger', {
-//         valuePropName: 'fileList',
-//         getValueFromEvent: this.normFile,
-//       })(
-//         <Upload.Dragger name="files" action="">
-//           <p className="ant-upload-drag-icon">
-//             <Icon type="inbox" />
-//           </p>
-//           <p className="ant-upload-text">Click or drag file to this area to upload</p>
-//           <p className="ant-upload-hint">Image ideal is 4:3 aspect ratio.</p>
-//         </Upload.Dragger>
-//       )}
-//     </div>
-//   </Form.Item>
 
 export default Form.create({
   name: 'organisation_detail_form',

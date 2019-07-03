@@ -15,10 +15,13 @@ const completeConfig = {
       }
     },
     auth: {
-      'AUTH0_CLIENT_ID': 'TsRPTVINZVOdao2Lf7EU8sPDkVZ3VQJY',
-      'AUTH0_CLIENT_DOMAIN': 'dev-x6k-p15l.au.auth0.com'
+      'AUTH0_CLIENT_ID': 'S4yd4VgZ92NIjhwO3vt4h0Gifb9mXv1k',
+      'AUTH0_CLIENT_DOMAIN': 'voluntarily.au.auth0.com'
     },
-    apiVersion: 'v1'
+    apiVersion: 'v1',
+    SMTP_ID: process.env.SMTP_ID || '',
+    SMTP_PWD: process.env.SMTP_PWD || '',
+    onlyEmailText: process.env.TEXT_ONLY_EMAIL === 'true'
   },
 
   development: {
@@ -30,13 +33,13 @@ const completeConfig = {
   },
 
   production: {
-    appUrl: process.env.APP_URL || `https://alpha.voluntari.ly/`
+    appUrl: process.env.APP_URL || `https://alpha.voluntarily.nz/`
   }
 
 }
 
 // Public API
 module.exports = {
-  config: { ...completeConfig.default, ...completeConfig[process.env.NODE_ENV] },
-  completeConfig
+  config: { ...completeConfig.default, ...completeConfig[process.env.NODE_ENV] }
+  // completeConfig
 }

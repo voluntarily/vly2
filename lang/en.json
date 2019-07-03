@@ -1,6 +1,6 @@
 {
   "demo.greeting": "Replace in translation with Hello World!",
-  "Footer.PFCT tagline": "Voluntarily is an awesome open source project run by the",
+  "footer.credit": "Voluntarily is an awesome open source project run by the",
   "version": "Version",
   "revision": "local-build",
   "withdrawVolunteerInvite": "Withdraw Invite",
@@ -90,5 +90,7 @@
   "people.new": "New Person",
   "person.pageheading": "Profile for",
   "PersonEditPrompt": "Tell us something about yourself.",
-  "search.title": "Search results for \"{search}\""
+  "search.title": "Search results for \"{search}\"",
+  "completedOp": "Complete Opportunity",
+  "cancelOp": "Cancel Opportunity"
 }

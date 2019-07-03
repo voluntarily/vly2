@@ -12,9 +12,8 @@ test.before('before connect to database', async (t) => {
   await t.context.memMongo.start()
 })
 
-test.after.always(t => {
-  t.context.memMongo.stop()
-  console.log('stopped')
+test.after.always(async (t) => {
+  await t.context.memMongo.stop()
 })
 
 test.beforeEach('connect and add people fixture', async () => {

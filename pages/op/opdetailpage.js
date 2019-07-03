@@ -6,7 +6,7 @@ import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import Router from 'next/router'
 import OpDetail from '../../components/Op/OpDetail'
-import InterestSection from '../../components/Interest/interestSection'
+import InterestSection from '../../components/Interest/InterestSection'
 import RegisterInterestSection from '../../components/Interest/RegisterInterestSection'
 import PropTypes from 'prop-types'
 import PersonCard from '../../components/Person/PersonCard'
@@ -24,17 +24,33 @@ export class OpDetailPage extends Component {
   }
 
   // Called when the user confirms they want to delete an op
-  async handleDelete (op) {
+  async handleCancel (op) {
+    // console.log('deleting op', op)
     if (!op) return
     // Actual data request
-    await this.props.dispatch(reduxApi.actions.opportunities.delete({ id: op._id }))
+    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: 'cancelled' }) }))
     // TODO error handling - how can this fail?
-    message.success('Deleted. ')
-    Router.replace(`/ops`)
+    message.success('Request Cancelled. ')
+    Router.replace(`/home`)
   }
 
   // Called when the user starts to delete an op, but then cancels it.
-  handleDeleteCancelled = () => { message.error('Delete Cancelled') }
+  handleCancelButtonCancelled = () => { message.error('Cancel Request Cancelled') }
+
+  async handleConfirm (op) {
+    // console.log('Event Confirmed!!!')
+    if (!op) return
+    // Data request
+    // TODO change hard coded 'done' string to a constant.
+    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: 'done' }) }))
+    // TODO error handling - see above
+    message.success('Opportunity Confimed')
+    Router.replace('/home')
+  }
+
+  handleConfirmCancelled = () => {
+    message.error('Confirm Cancelled')
+  }
 
   render () {
     let content
@@ -42,24 +58,19 @@ export class OpDetailPage extends Component {
       const op = this.props.opportunities.data[0]
       const organizer = op.requestor
       const isOwner = ((this.props.me || {})._id === (organizer || {})._id)
-      // TODO add condition that when volunteer finished the comment then show organizer's contact
-      let isFulfilled = true
-      const organizerSection = () => {
-        return (isFulfilled)
-          ? organizer &&
+      const organizerInfo = () => {
+        return organizer &&
           <div>
             <h2>
               <FormattedMessage id='organiser' defaultMessage='Requested by' description='Title for organiser card on op details page' />
             </h2>
             <PersonCard style={{ width: '300px' }} person={organizer} />
           </div>
-          : null
       }
-      const interestedSection = () => {
+      const volunteerInterestSection = () => {
         return (
           !this.props.isAuthenticated
             ? <div>
-              {/* TODO: [VP-176] Sign in to express interest in this item */}
               <Link href={`/auth/sign-in`} >
                 <Button type='primary' shape='round' >
                   <FormattedMessage id='iminterested-anon' defaultMessage="I'm Interested" description="I'm interested button that leads to sign in page" />
@@ -67,56 +78,52 @@ export class OpDetailPage extends Component {
               </Link>
               <Divider />
             </div>
-            : !isOwner
-              ? <div>
-                <RegisterInterestSection op={op} me={this.props.me._id} />
-                <Divider />
-              </div>
-              : ''
-        )
-      }
-      const requestSection = () => {
-        return (isOwner || (this.props.me && this.props.me.role.includes('admin')))
-          ? <div>
-            {/* These components should only appear if a user is logged in and viewing an op they DID create themselves. */}
-            <div>
-              <Link href={`/ops/${op._id}/edit`} >
-                <Button type='secondary' shape='round' >
-                  <FormattedMessage id='editOp' defaultMessage='Edit' description='Button to edit an opportunity on OpDetails page' />
-                </Button>
-              </Link>
-                &nbsp;
-              <Popconfirm title='Confirm removal of this opportunity.' onConfirm={this.handleDeleteOp} onCancel={this.handleDeleteCancelled} okText='Yes' cancelText='No'>
-                <Button type='danger' shape='round' >
-                  <FormattedMessage id='deleteOp' defaultMessage='Remove Request' description='Button to remove an opportunity on OpDetails page' />
-                </Button>
-              </Popconfirm>
+            : !isOwner && <div>
+              <RegisterInterestSection op={op} me={this.props.me._id} />
               <Divider />
             </div>
-
-            {/* These components should only appear if a user is logged in and viewing an op they DID create themselves. */}
-            <div>
-              <h2>Interested Volunteers</h2>
-              <InterestSection op={op._id} />
-            </div>
-          </div>
-          : null
+        )
       }
-      // TODO: [VP-161] In register interest section, if person not signed in show Sign In button
+
+      /* These components should only appear if a user is logged in and viewing an op they DID create themselves. */
+      const ownerManageInterests = () => {
+        return (isOwner || (this.props.me && this.props.me.role.includes('admin'))) &&
+          <div>
+            <Link href={`/ops/${op._id}/edit`} >
+              <Button type='primary' shape='round' >
+                <FormattedMessage id='editOp' defaultMessage='Edit' description='Button to edit an opportunity on OpDetails page' />
+              </Button>
+            </Link>
+              &nbsp;
+            <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' onConfirm={this.handleConfirm.bind(this, op)} onCancel={this.handleConfirmCancelled} okText='Yes' cancelText='No'>
+              <Button type='primary' shape='round'>
+                <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
+              </Button>
+            </Popconfirm>
+              &nbsp;
+            <Popconfirm id='cancelOpPopConfirm' title='Confirm cancel of this opportunity.' onConfirm={this.handleCancel.bind(this, op)} onCancel={this.handleCancelButtonCancelled} okText='Yes' cancelText='No'>
+              <Button type='danger' shape='round' >
+                <FormattedMessage id='cancelOp' defaultMessage='Cancel Request' description='Button to cancel an opportunity on OpDetails page' />
+              </Button>
+            </Popconfirm>
+            <Divider />
+
+            <InterestSection opid={op._id} />
+          </div>
+      }
       content =
         (<div>
           <OpDetail op={op} />
+          {organizerInfo()}
           <Divider />
-          {interestedSection()}
-
-          {requestSection()}
-          {organizerSection()}
+          {volunteerInterestSection()}
+          {ownerManageInterests()}
 
         </div>)
     } else {
       content =
         (<div>
-          <h2>Sorry this opportunity is no longer available</h2>
+          <h2 id='unavailableOpportunityHeader'>Sorry this opportunity is no longer available</h2>
           <Link href={'/ops'} ><a>Search for some more</a></Link>
           <p>or </p>
           <Link href={'/ops/new'} ><a>create a new opportunity</a></Link>
