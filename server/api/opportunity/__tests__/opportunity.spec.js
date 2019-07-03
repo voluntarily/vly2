@@ -358,6 +358,7 @@ test.serial('should return 400 for a bad request', async t => {
     .put(`/api/opportunities/${opp._id}`)
     .send({ status: { invalidObject: '' } })
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(400)
 
   t.is(res.status, 400)
