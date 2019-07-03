@@ -11,6 +11,8 @@ import tags from '../../tag/__tests__/tag.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 import OpportunityArchive from './../../opportunity-archive/opportunityArchive'
 
+const { regions } = require('../../location/locationData')
+
 test.before('before connect to database', async (t) => {
   await appReady
   t.context.memMongo = new MemoryMongo()
@@ -55,7 +57,13 @@ test.serial('Should correctly give count of all Ops sorted by title', async t =>
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
+<<<<<<< HEAD
   t.is(4, got.length)
+=======
+  // console.log(got)
+  t.is(ops.length, got.length)
+
+>>>>>>> Add tests specifying behaviour for location searching
   t.is(got[0].title, '1 Mentor a year 12 business Impact Project')
 })
 
@@ -68,7 +76,7 @@ test.serial('Should correctly give subset of ops matching status', async t => {
     .expect('Content-Type', /json/)
   const got = res.body
   // console.log('got', got)
-  t.is(got.length, 2)
+  t.is(got.length, 3)
 })
 
 test.serial('Should correctly select just the names and ids', async t => {
@@ -80,7 +88,7 @@ test.serial('Should correctly select just the names and ids', async t => {
     .expect('Content-Type', /json/)
   const got = res.body
   // console.log('got', got)
-  t.is(got.length, 4)
+  t.is(got.length, ops.length)
   t.is(got[0].status, undefined)
   t.is(got[0].title, '1 Mentor a year 12 business Impact Project')
 })
@@ -362,4 +370,44 @@ test.serial('should return 400 for a bad request', async t => {
     .expect(400)
 
   t.is(res.status, 400)
+})
+
+test.serial('should return all matching opps within the specified region', async t => {
+  const res = await request(server)
+    .get(`/api/opportunities?search=algorithms&location=${regions[0].name}`)
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+
+  const got = res.body
+
+  // 1 match for the search term and 3 for the region
+  t.is(got.length, 4)
+
+  const validLocs = [
+    regions[0].name,
+    ...regions[0].containedTerritories
+  ]
+
+  // ensure nothing was retrieved that shouldn't have been
+  t.falsy(got.find(op => op.title !== ops[1].title && !validLocs.includes(op.location)))
+})
+
+test.serial('should return all matching opps at the specified territory', async t => {
+  const res = await request(server)
+    .get(`/api/opportunities?search=algorithms&location=${regions[0].containedTerritories[1]}`)
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+
+  const got = res.body
+
+  // 1 match for the search term and 1 for the territory
+  t.is(got.length, 2)
+
+  // ensure nothing was retrieved that shouldn't have been
+  t.falsy(
+    got.find(
+      op => op.title !== ops[1].title && op.location !== regions[0].containedTerritories[1]
+    ))
 })
