@@ -1,7 +1,7 @@
-import { Action } from '../../services/abilities/ability.constants'
-import { Subject, OpportunityRoutes } from './opportunity.constants'
-import Opportunity from './opportunity'
-import pick from 'lodash.pick'
+const Action = require('../../services/abilities/ability.constants')
+const { Subject, OpportunityRoutes } = require('./opportunity.constants')
+const Opportunity = require('./opportunity')
+const pick = require('lodash.pick')
 
 const convertRequestToAction = (req) => {
   switch (req.method) {
