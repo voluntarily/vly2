@@ -1,4 +1,4 @@
-import { Action } from '../../services/abilities/ability.constants'
+const { Action } = require('../../services/abilities/ability.constants')
 
 const OpportunityRoutes = {
   [Action.LIST]: '/orgs',
