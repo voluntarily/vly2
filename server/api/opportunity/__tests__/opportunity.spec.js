@@ -330,6 +330,7 @@ test.serial('Should update status of Opportunity when a put request is sent', as
     .put(`/api/opportunities/${opp._id}`)
     .send({ status: 'done' })
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
 
   t.is(res.status, 200)

@@ -14,10 +14,6 @@ const express = require('express')
 const server = express()
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
-mongoose.Promise = Promise
-mongoose.plugin(accessibleRecordsPlugin)
-mongoose.plugin(accessibleFieldsPlugin)
 const glob = require('glob')
 const next = require('next')
 const cookieParser = require('cookie-parser')
@@ -82,6 +78,7 @@ const appReady = app.prepare().then(() => {
   })
 
   // MongoDB
+  mongoose.Promise = Promise
   if (process.env.NODE_ENV !== 'test') {
     mongoose.connect(config.databaseUrl, { useNewUrlParser: true, useCreateIndex: true })
       .then(console.log('mongodb connected at:', config.databaseUrl))

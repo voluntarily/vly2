@@ -1,32 +1,3 @@
-import { Role } from '../../../services/auth/role'
-import { Action } from '../../../services/abilities/ability.constants'
-import { OpportunityStatus, OpportunityFields } from '../opportunity.constants'
-
-const subject = 'Opportunity'
-
-const anonAbilities = [{
-  subject,
-  action: Action.READ
-},
-{
-  subject,
-  action: Action.LIST
-}, {
-  subject,
-  action: Action.UPDATE,
-  inverted: true
-}, {
-  subject,
-  action: Action.DELETE,
-  inverted: true
-}, {
-  subject,
-  action: Action.CREATE,
-  inverted: true
-}]
-
-const allAbilities = [{ subject, action: Action.READ }]
-
 const opList = [
   {
     title: '1 Mentor a year 12 business Impact Project',
@@ -87,8 +58,4 @@ const opList = [
   }
 ]
 
-module.exports = {
-  ops: opList,
-  [Role.ANON]: anonAbilities,
-  [Role.ALL]: allAbilities
-}
+module.exports = opList
