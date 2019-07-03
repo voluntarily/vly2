@@ -43,13 +43,17 @@ class PersonHomePage extends Component {
     const myops = this.props.opportunities.data // list of ops I own
     const interests = this.props.interests.data // list of ops I'm volunteering for
     const volops = interests.map((interest, index) => {
-      interest.opportunity.interest = {
-        _id: interest._id,
-        status: interest.status,
-        comment: interest.comment
+      if (!interest.opportunity || typeof (interest.opportunity) === 'string') {
+        return null
+      } else {
+        interest.opportunity.interest = {
+          _id: interest._id,
+          status: interest.status,
+          comment: interest.comment
+        }
+        return interest.opportunity
       }
-      return interest.opportunity
-    })
+    }).filter(op => op)
     const ops = [...volops, ...myops]
     return ops
   }

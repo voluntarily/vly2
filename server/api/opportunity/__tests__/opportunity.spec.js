@@ -6,9 +6,10 @@ import Tag from '../../tag/tag'
 import Person from '../../person/person'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
-import { ops } from './opportunity.fixture.js'
+import ops from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
+import OpportunityArchive from './../../opportunity-archive/opportunityArchive'
 
 test.before('before connect to database', async (t) => {
   await appReady
@@ -258,6 +259,7 @@ test.serial('Should correctly give opportunity 2 when searching by "Algorithms"'
   t.is(ops[1].subtitle, got[0].subtitle)
   t.is(1, got.length)
 })
+
 test.serial('Should include description in search', async t => {
   const res = await request(server)
     .get('/api/opportunities?search=ROCKEt')
@@ -307,4 +309,55 @@ test.serial('Should return any opportunities with matching tags or title/desc/su
 
   // should return the 3 with assigned tags, and the one with matching title
   t.is(4, got.length)
+})
+
+test.serial('Should update status of Opportunity when a put request is sent', async t => {
+  t.plan(2)
+
+  const opp = new Opportunity({
+    title: 'Java Robots in the house',
+    subtitle: 'Launching into space step 4',
+    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+    description: 'Project to build a simple rocket that will reach 1000m',
+    duration: '4 hours',
+    location: 'Albany, Auckland',
+    status: 'draft',
+    requestor: t.context.people[0]._id
+  })
+
+  await opp.save()
+  const res = await request(server)
+    .put(`/api/opportunities/${opp._id}`)
+    .send({ status: 'done' })
+    .set('Accept', 'application/json')
+    .expect(200)
+
+  t.is(res.status, 200)
+  const queriedOpportunity = await OpportunityArchive.findOne({ title: 'Java Robots in the house' }).exec()
+  t.is(queriedOpportunity.status, 'done')
+})
+
+test.serial('should return 400 for a bad request', async t => {
+  t.plan(1)
+
+  const opp = new Opportunity({
+    title: 'Java Robots in the house',
+    subtitle: 'Launching into space step 4',
+    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+    description: 'Project to build a simple rocket that will reach 1000m',
+    duration: '4 hours',
+    location: 'Albany, Auckland',
+    status: 'draft',
+    requestor: t.context.people[0]._id
+  })
+
+  await opp.save()
+
+  const res = await request(server)
+    .put(`/api/opportunities/${opp._id}`)
+    .send({ status: { invalidObject: '' } })
+    .set('Accept', 'application/json')
+    .expect(400)
+
+  t.is(res.status, 400)
 })

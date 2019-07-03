@@ -33,7 +33,7 @@ const completeConfig = {
   },
 
   production: {
-    appUrl: process.env.APP_URL || `https://alpha.voluntari.ly/`
+    appUrl: process.env.APP_URL || `https://alpha.voluntarily.nz/`
   }
 
 }
