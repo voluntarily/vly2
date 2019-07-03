@@ -5,7 +5,7 @@ import { mountWithIntl } from '../lib/react-intl-test-helper'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import objectid from 'objectid'
-import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
+import { ops } from '../server/api/opportunity/__tests__/opportunity.fixture'
 import people from '../server/api/person/__tests__/person.fixture'
 
 test.before('Setup fixtures', (t) => {

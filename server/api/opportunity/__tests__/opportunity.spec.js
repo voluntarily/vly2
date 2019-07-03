@@ -6,7 +6,7 @@ import Tag from '../../tag/tag'
 import Person from '../../person/person'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
-import ops from './opportunity.fixture.js'
+import { ops } from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 

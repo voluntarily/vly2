@@ -1,3 +1,12 @@
+import { Action } from '../../services/abilities/ability.constants'
+
+const OpportunityRoutes = {
+  [Action.LIST]: '/orgs',
+  [Action.READ]: '/orgs/:id',
+  [Action.UPDATE]: '/orgs/:id/edit',
+  [Action.CREATE]: '/org/new'
+}
+
 const OpportunityStatus = {
   DRAFT: 'draft',
   ACTIVE: 'active',
@@ -13,6 +22,8 @@ const OpportunityFields = {
 }
 
 module.exports = {
+  Subject: 'Opportunity',
   OpportunityStatus,
-  OpportunityFields
+  OpportunityFields,
+  OpportunityRoutes
 }

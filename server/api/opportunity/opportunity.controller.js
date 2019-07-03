@@ -1,16 +1,6 @@
 const escapeRegex = require('../../util/regexUtil')
 const Opportunity = require('./opportunity')
-const { Action } = require('../../services/abilities/ability.constants')
 const Tag = require('./../tag/tag')
-const convertSelectObjectToArray = select => {
-  let propsToSelect = []
-  Object.keys(select).map(key => {
-    if (select[key]) {
-      propsToSelect.push(key)
-    }
-  })
-  return propsToSelect
-}
 
 /**
  * Get all orgs
@@ -75,14 +65,12 @@ const getOpportunities = async (req, res) => {
   }
 
   try {
-    const desiredFieldsToSelect = convertSelectObjectToArray(select)
-    const accessibleFields = Opportunity.accessibleFieldsBy(req.ability, Action.LIST)
-    let fieldsToSelect = accessibleFields.join(' ')
-    if (desiredFieldsToSelect.length > 0) {
-      fieldsToSelect = desiredFieldsToSelect.filter(field => accessibleFields.includes(field))
-      // console.log('fieldsToSelect', fieldsToSelect)
-    }
-    const got = await Opportunity.find(query, select).sort(sort).exec()
+    const got = await Opportunity
+      .accessibleBy(req.ability)
+      .find(query)
+      .select(select)
+      .sort(sort)
+      .exec()
     res.json(got)
   } catch (e) {
     return res.status(404).send(e)
@@ -90,11 +78,10 @@ const getOpportunities = async (req, res) => {
 }
 
 const getOpportunity = async (req, res) => {
-  // console.log('getOpportunity', req.params)
   try {
-    const accessibleFields = Opportunity.accessibleFieldsBy(req.ability, Action.LIST).join(' ')
-    const got = await Opportunity.findOne(req.params)
-      .select(accessibleFields)
+    const got = await Opportunity
+      .accessibleBy(req.ability)
+      .findOne(req.params)
       .populate('requestor')
       .populate('tags')
       .exec()
