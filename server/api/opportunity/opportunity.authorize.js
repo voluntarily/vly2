@@ -1,4 +1,4 @@
-const Action = require('../../services/abilities/ability.constants')
+const { Action } = require('../../services/abilities/ability.constants')
 const { Subject, OpportunityRoutes } = require('./opportunity.constants')
 const Opportunity = require('./opportunity')
 const pick = require('lodash.pick')
