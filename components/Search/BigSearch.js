@@ -128,11 +128,6 @@ class BigSearch extends PureComponent {
 BigSearch.propTypes = {
   search: PropTypes.string,
   onSearch: PropTypes.func.isRequired,
-  ops: PropTypes.arrayOf(
-    PropTypes.shape({
-      query: PropTypes.string
-    })
-  ),
   locations: PropTypes.arrayOf(PropTypes.string).isRequired,
   onFilterChange: PropTypes.func.isRequired
   //  showAddOp: PropTypes.bool.isRequired,

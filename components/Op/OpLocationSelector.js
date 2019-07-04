@@ -24,7 +24,7 @@ class OpLocationSelector extends React.Component {
 
 OpLocationSelector.propTypes = {
   value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired,
   width: PropTypes.string
 }
