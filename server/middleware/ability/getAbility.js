@@ -8,9 +8,10 @@ module.exports = options => (req, res, next) => {
   const userRoles = req.session && req.session.me ? req.session.me.role : [Role.ANON]
   let allRules = []
   glob.sync(pattern).forEach(abilityPath => {
+    const ab = require(abilityPath)
     userRoles.forEach(role => {
-      const rules = require(abilityPath)[role]
-      allRules = allRules.concat(rules)
+      // TODO: [VP-277] when concat roles we will get duplicates - use set.
+      allRules = allRules.concat(ab[role] || ab[Role.VOLUNTEER_PROVIDER])
     })
   })
   req.ability = new Ability(allRules)
