@@ -33,11 +33,19 @@ const PageHeaderContainer = styled.div`
   margin: 4rem 0 2rem 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-
+  @media screen and (max-width: 767px) {
+    margin-top: 4rem;
+    grid-template-columns: calc(100vw - 2rem);
+    grid-gap: 0rem;
+  }
 `
 
 const RequestButtonContainer = styled.div`
 justify-self: end;
+@media screen and (max-width: 767px) {
+  margin-top: 1rem;
+  justify-self: start;
+  }
 `
 
 
