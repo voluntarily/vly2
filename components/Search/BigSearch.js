@@ -2,11 +2,12 @@ import styled from 'styled-components'
 import React, { PureComponent } from 'react'
 import { Input } from 'antd'
 import PropTypes from 'prop-types'
-import OpLocationSelector from '../Op/OpLocationSelector'
+import FilterContainer from './FilterContainer'
+import LocationFilter from './LocationFilter'
 
 const Search = Input.Search
 
-const SearchContainer = styled.div`
+export const SearchContainer = styled.div`
   margin-top: 0rem;
   width: 80rem;
   height: 10rem;
@@ -68,34 +69,19 @@ const FilterItem = styled.a`
   font-weight: bold;
 `
 
-const FilterDetailsContainer = styled.div`
-  margin-top: 0rem;
-  width: 80rem;
-  height: 10rem;
-  background: #ffffff;
-  box-shadow: 2px 2px 12px 0 rgba(117, 117, 117, 0.5);
-  border-radius: 8px;
-
-  @media screen and (min-width: 768px) and (max-width: 1280px) {
-    width: calc(100vw - 4rem);
-  }
-
-  @media screen and (max-width: 767px) {
-    width: calc(100vw - 2rem);
-    height: 12rem;
-  }
-
-
-`
-
 class BigSearch extends PureComponent {
   state = {
-    filterShowing: false
+    filterShowing: true,
+    selectedLocation: null
+  }
+
+  locationSelected = location => {
+    this.setState({ selectedLocation: location })
   }
 
   render () {
     const { onSearch, search, locations } = this.props
-    const { filterShowing } = this.state
+    const { filterShowing, selectedLocation } = this.state
     return (
     <>
       <SearchContainer>
@@ -116,10 +102,12 @@ class BigSearch extends PureComponent {
         <FilterItem>Impact</FilterItem>
       </SearchContainer>
       {filterShowing &&
-      <FilterDetailsContainer>
-        <SearchInputContainer><OpLocationSelector value='test' existingLocations={locations} /></SearchInputContainer>
-
-      </FilterDetailsContainer>}
+      <FilterContainer>
+        <LocationFilter
+          locations={locations}
+          selectedLocation={selectedLocation}
+          onLocationSelected={this.locationSelected} />
+      </FilterContainer>}
       </>)
   }
 

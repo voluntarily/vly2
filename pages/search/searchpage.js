@@ -1,6 +1,6 @@
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import TitleSection from '../../components/LandingPageComponents/TitleSectionSub'
-import BigSearch from '../../components/VTheme/BigSearch'
+import BigSearch from '../../components/Search/BigSearch'
 import { Spacer } from '../../components/VTheme/VTheme'
 import OpListSection from '../../components/Op/OpListSection'
 import reduxApi, { withLocations } from '../../lib/redux/reduxApi'

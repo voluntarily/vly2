@@ -6,7 +6,7 @@ const { Option } = Select
 
 class OpLocationSelector extends React.Component {
   render () {
-    const { existingLocations, onChange, value } = this.props
+    const { existingLocations, onChange, value, width } = this.props
     const children = existingLocations.map(location => <Option key={location}>{location}</Option>)
     return (
       <Select
@@ -14,6 +14,7 @@ class OpLocationSelector extends React.Component {
         placeholder='Select the most applicable region'
         onChange={onChange}
         value={value}
+        style={width && { width: width }}
       >
         {children}
       </Select>
@@ -22,9 +23,10 @@ class OpLocationSelector extends React.Component {
 }
 
 OpLocationSelector.propTypes = {
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-  existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired,
+  width: PropTypes.string
 }
 
 export default OpLocationSelector
