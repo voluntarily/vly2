@@ -9,6 +9,7 @@ import { Modal, Dropdown, Menu, Button } from 'antd'
 import Router from 'next/router'
 import { FormattedMessage } from 'react-intl'
 import DatePickerComponent from './DatePickerComponent'
+import DatePickerType from '../../components/Op/DatePickerType.constant'
 
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
 const { Item } = Menu
@@ -72,16 +73,16 @@ export class SearchPage extends Component {
 
     const DatePickerOption = (
       <Menu>
-        <Item onClick={() => this.changePickerType('date')}>
+        <Item onClick={() => this.changePickerType(DatePickerType.IndividualDate)}>
           <p>Date</p>
         </Item> 
-        <Item onClick={() => this.changePickerType('weekPicker')}>
+        <Item onClick={() => this.changePickerType(DatePickerType.WeekRange)}>
           <p>Week Picker</p>
         </Item>
-        <Item onClick={() => this.changePickerType('month')}>
+        <Item onClick={() => this.changePickerType(DatePickerType.MonthRange)}>
           <p> Month Picker </p>
         </Item> 
-        <Item onClick={() => this.changePickerType('rangePicker')}>
+        <Item onClick={() => this.changePickerType(DatePickerType.DateRange)}>
           <p> Date Range </p>
         </Item>
       </Menu>
@@ -100,7 +101,7 @@ export class SearchPage extends Component {
           <DatePickerComponent datePickerType={this.state.datePickerType} onDateChange={this.handleDateChange} />
         </Modal>
         <Spacer />
-        <OpListSection search={search} filter={this.state.filter} />
+        <OpListSection search={search} filter={this.state.filter} dateFilterType={this.state.datePickerType} />
       </FullPage>
     )
   }

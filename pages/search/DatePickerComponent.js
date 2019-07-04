@@ -1,4 +1,5 @@
 import React from 'react'
+import DatePickerType from '../../components/Op/DatePickerType.constant'
 import { DatePicker } from 'antd'
 
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker
@@ -8,11 +9,11 @@ const { MonthPicker, RangePicker, WeekPicker } = DatePicker
 export default function DatePickerComponent(props) {
     const { onDateChange } = props
     switch (props.datePickerType) {
-        case 'month':
+        case DatePickerType.MonthRange:
             return (<MonthPicker onChange={month => onDateChange(month)} />)
-        case 'rangePicker':
+        case DatePickerType.DateRange:
             return (<RangePicker onChange={dates => onDateChange(dates)} />)
-        case 'weekPicker':
+        case DatePicker.WeekRange:
             return (<WeekPicker onChange={week => onDateChange(week)} />)
         default:
             return (<DatePicker onChange={date => onDateChange(date)} />)

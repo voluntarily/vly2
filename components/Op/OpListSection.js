@@ -13,6 +13,7 @@ import OpList from '../../components/Op/OpList'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi'
 import moment from 'moment'
 import Loading from '../../components/Loading'
+import DatePickerType from './DatePickerType.constant'
 
 // TODO: [VP-131] use redux instead of local state.
 class OpListSection extends Component {
@@ -44,11 +45,24 @@ class OpListSection extends Component {
       const filteredData = this.props.opportunities.data.filter(element => this.isDateFilterBetween(momentObject, element))
       console.log(filteredData)
     }
-    return this.props.opportunities.data
   }
 
   isDateFilterBetween = (date, opDateArray) => {
-    return true
+    switch (this.props.dateFilterType) {
+      case DatePickerType.IndividualDatete:
+        break
+      case DatePickerType.MonthRange:
+        break
+      case DatePickerType.WeekRange:
+        break
+      case DatePickerType.DateRange:
+        break
+      default:
+        break
+    }
+    console.log(`date picker type is ${this.props.dateFilterType}`)
+    console.log('date user chose ', moment(date).format('DD MM YYYY'))
+    console.log(opDateArray)
   }
 
   async componentDidUpdate (prevProps) {
