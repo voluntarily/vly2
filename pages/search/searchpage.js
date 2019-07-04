@@ -57,10 +57,7 @@ export class SearchPage extends Component {
   render () {
     const { search, filterValue } = this.state
 
-    const existingLocations = [
-      ...this.props.locations.data[0].regions.map(r => r.name),
-      ...this.props.locations.data[0].territories
-    ]
+    const existingLocations = this.props.locations.data
 
     return (
       <FullPage>
