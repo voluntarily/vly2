@@ -50,7 +50,7 @@
   "status": "Status",
   "role": "Role",
   "personName": "Full Name",
-  "personnickname": "What we should call you",
+  "personnickname": "Nickname",
   "personEmail": "Email",
   "personPhone": "Phone",
   "personAbout": "About you",
