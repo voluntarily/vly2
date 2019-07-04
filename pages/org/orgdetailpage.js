@@ -29,7 +29,7 @@ class OrgDetailPage extends Component {
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     if (isNew) {
-      console.log('opdetailpage: getInitialProps', isNew)
+      // console.log('opdetailpage: getInitialProps', isNew)
 
       return {
         isNew: true,
@@ -45,7 +45,6 @@ class OrgDetailPage extends Component {
   }
 
   componentDidMount () {
-    console.log('opdetailpage: componentDidMount', this.props.isNew)
     if (this.props.isNew) {
       this.setState({ editing: true })
     }
@@ -86,7 +85,7 @@ class OrgDetailPage extends Component {
   handleDeleteCancel = () => { message.error('Delete Cancelled') }
 
   render () {
-    // TODO: identify if current person is an org Admin for this organisation
+    // TODO: [VP-274] identify if current person is an org Admin for this organisation
     const isOrgAdmin = false
     const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
     const canEdit = (isOrgAdmin || isAdmin)
