@@ -42,15 +42,15 @@ class OpListSection extends Component {
     const date = filter.date === undefined ? null : filter.date
     const momentObject = moment(date)
     if (!this.props.opportunities.isloading) {
-      const filteredData = this.props.opportunities.data.filter(element => this.isDateFilterBetween(momentObject, element))
+      const filteredData = this.props.opportunities.data.filter(element => this.isDateFilterBetween(momentObject, element.date))
       console.log(filteredData)
     }
   }
 
   isDateFilterBetween = (date, opDateArray) => {
     switch (this.props.dateFilterType) {
-      case DatePickerType.IndividualDatete:
-        break
+      case DatePickerType.IndividualDate:
+        return moment(date).isSame(opDateArray[0], 'day')
       case DatePickerType.MonthRange:
         break
       case DatePickerType.WeekRange:
@@ -58,6 +58,7 @@ class OpListSection extends Component {
       case DatePickerType.DateRange:
         break
       default:
+        console.log('default')
         break
     }
     console.log(`date picker type is ${this.props.dateFilterType}`)
@@ -76,8 +77,8 @@ class OpListSection extends Component {
   }
 
   render () {
-    const data = this.applyDateFilter(this.props.filter)
-    console.log(data) // Temp for lint fix
+    this.applyDateFilter(this.props.filter)
+     // Temp for lint fix
     if (this.props.opportunities.loading) {
       return (<section>
         <Loading><p>Loading opportunities...</p></Loading>

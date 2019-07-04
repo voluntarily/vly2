@@ -17,7 +17,7 @@ const { Item } = Menu
 export class SearchPage extends Component {
   state = {
     search: null,
-    datePickerType: '',
+    datePickerType: DatePickerType.IndividualDate,
     showDatePickerModal: false,
     filter: {
       date: []
