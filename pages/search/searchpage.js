@@ -75,13 +75,13 @@ export class SearchPage extends Component {
       <Menu>
         <Item onClick={() => this.changePickerType(DatePickerType.IndividualDate)}>
           <p>Date</p>
-        </Item> 
+        </Item>
         <Item onClick={() => this.changePickerType(DatePickerType.WeekRange)}>
           <p>Week Picker</p>
         </Item>
         <Item onClick={() => this.changePickerType(DatePickerType.MonthRange)}>
           <p> Month Picker </p>
-        </Item> 
+        </Item>
         <Item onClick={() => this.changePickerType(DatePickerType.DateRange)}>
           <p> Date Range </p>
         </Item>

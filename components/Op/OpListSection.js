@@ -77,7 +77,7 @@ class OpListSection extends Component {
 
   render () {
     const data = this.applyDateFilter(this.props.filter)
-
+    console.log(data) // Temp for lint fix
     if (this.props.opportunities.loading) {
       return (<section>
         <Loading><p>Loading opportunities...</p></Loading>
