@@ -11,6 +11,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import OpList from '../../components/Op/OpList'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi'
+import moment from 'moment'
 import Loading from '../../components/Loading'
 
 // TODO: [VP-131] use redux instead of local state.
@@ -36,6 +37,20 @@ class OpListSection extends Component {
     }
   }
 
+  applyDateFilter = (filter) => {
+    const date = filter.date === undefined ? null : filter.date
+    const momentObject = moment(date)
+    if (!this.props.opportunities.isloading) {
+      const filteredData = this.props.opportunities.data.filter(element => this.isDateFilterBetween(momentObject, element))
+      console.log(filteredData)
+    }
+    return this.props.opportunities.data
+  }
+
+  isDateFilterBetween = (date, opDateArray) => {
+    return true
+  }
+
   async componentDidUpdate (prevProps) {
     if (prevProps.search !== this.props.search || prevProps.query !== this.props.query) {
       await this.loadData(this.props.search, this.props.query)
@@ -47,6 +62,8 @@ class OpListSection extends Component {
   }
 
   render () {
+    const data = this.applyDateFilter(this.props.filter)
+
     if (this.props.opportunities.loading) {
       return (<section>
         <Loading><p>Loading opportunities...</p></Loading>

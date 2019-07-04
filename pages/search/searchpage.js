@@ -5,14 +5,22 @@ import { Spacer } from '../../components/VTheme/VTheme'
 import OpListSection from '../../components/Op/OpListSection'
 import { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Modal, Dropdown, Menu, Button } from 'antd'
 import Router from 'next/router'
 import { FormattedMessage } from 'react-intl'
+import DatePickerComponent from './DatePickerComponent'
 
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
+const { Item } = Menu
 
 export class SearchPage extends Component {
   state = {
-    search: null
+    search: null,
+    datePickerType: '',
+    showDatePickerModal: false,
+    filter: {
+      date: []
+    }
   }
 
   constructor (props) {
@@ -32,6 +40,10 @@ export class SearchPage extends Component {
     }
   }
 
+  handleOpenDatePickperModal = () => {
+    this.setState({ showDatePickerModal: !this.state.showDatePickerModal })
+  }
+
   handleSearch = search => {
     if (!search) {
       return false
@@ -47,15 +59,48 @@ export class SearchPage extends Component {
     this.setState({ search })
   }
 
+  handleDateChange = change => {
+    this.setState({ filter: { ...this.state.filter, date: change } })
+  }
+
+  changePickerType = type => {
+    this.setState({ datePickerType: type })
+  }
+
   render () {
     const { search } = this.state
+
+    const DatePickerOption = (
+      <Menu>
+        <Item onClick={() => this.changePickerType('date')}>
+          <p>Date</p>
+        </Item> 
+        <Item onClick={() => this.changePickerType('weekPicker')}>
+          <p>Week Picker</p>
+        </Item>
+        <Item onClick={() => this.changePickerType('month')}>
+          <p> Month Picker </p>
+        </Item> 
+        <Item onClick={() => this.changePickerType('rangePicker')}>
+          <p> Date Range </p>
+        </Item>
+      </Menu>
+    )
 
     return (
       <FullPage>
         <TitleSection title={<FormattedMessage defaultMessage={`Search results for "{search}"`} values={{ search }} id='search.title' />} />
-        <BigSearch search={search} onSearch={this.handleSearch} />
+        <BigSearch search={search} onSearch={this.handleSearch} onClickDateFilter={this.handleOpenDatePickperModal} />
+        <Modal title='Pick date' visible={this.state.showDatePickerModal}
+          onCancel={() => this.setState({ showDatePickerModal: !this.state.showDatePickerModal })}
+          onOk={() => this.setState({ showDatePickerModal: !this.state.showDatePickerModal })}>
+          <Dropdown overlay={DatePickerOption} placement='bottomCenter'>
+            <Button>{ this.state.datePickerType === '' ? 'Date' : this.state.datePickerType}</Button>
+          </Dropdown>
+          <DatePickerComponent datePickerType={this.state.datePickerType} onDateChange={this.handleDateChange} />
+        </Modal>
         <Spacer />
-        <OpListSection search={search} />
+        <OpListSection search={search} filter={this.state.filter} />
       </FullPage>
     )
   }

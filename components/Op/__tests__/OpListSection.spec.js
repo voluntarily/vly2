@@ -56,6 +56,9 @@ const initStore = {
     data: [ ]
   }
 }
+const filterState = {
+  date: ''
+}
 
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -70,7 +73,7 @@ test.only('mount the list with ops', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} />
+      <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -89,7 +92,7 @@ test.only('mount the list with ops search with results', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='Growing' handleShowOp={() => {}} handleDeleteOp={() => {}} />
+      <OpListSection search='Growing' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -108,7 +111,7 @@ test.only('mount the list with ops search with no results', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='NoSuchItem' handleShowOp={() => {}} handleDeleteOp={() => {}} />
+      <OpListSection search='NoSuchItem' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -127,7 +130,7 @@ test.only('mount the list with ops query and search', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='100' query={'{\'status\':\'done\'}'} handleShowOp={() => {}} handleDeleteOp={() => {}} />
+      <OpListSection search='100' query={'{\'status\':\'done\'}'} handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
