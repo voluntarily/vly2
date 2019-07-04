@@ -13,7 +13,8 @@ import { FormattedMessage } from 'react-intl'
 
 export class SearchPage extends Component {
   state = {
-    search: null
+    search: null,
+    filterValue: null
   }
 
   constructor (props) {
@@ -49,8 +50,12 @@ export class SearchPage extends Component {
     this.setState({ search })
   }
 
+  locFilterChanged = location => {
+    this.setState({ filterValue: location })
+  }
+
   render () {
-    const { search } = this.state
+    const { search, filterValue } = this.state
 
     const existingLocations = [
       ...this.props.locations.data[0].regions.map(r => r.name),
@@ -60,9 +65,14 @@ export class SearchPage extends Component {
     return (
       <FullPage>
         <TitleSection title={<FormattedMessage defaultMessage={`Search results for "{search}"`} values={{ search }} id='search.title' />} />
-        <BigSearch search={search} onSearch={this.handleSearch} locations={existingLocations} />
+        <BigSearch
+          search={search}
+          onSearch={this.handleSearch}
+          locations={existingLocations}
+          onFilterChange={this.locFilterChanged}
+        />
         <Spacer />
-        <OpListSection search={search} />
+        <OpListSection search={search} location={filterValue} />
       </FullPage>
     )
   }

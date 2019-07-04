@@ -71,12 +71,25 @@ const FilterItem = styled.a`
 
 class BigSearch extends PureComponent {
   state = {
-    filterShowing: true,
-    selectedLocation: null
+    filterShowing: false,
+    selectedLocation: undefined
   }
 
   locationSelected = location => {
     this.setState({ selectedLocation: location })
+  }
+
+  showFilterDetails = () => {
+    this.setState({ filterShowing: true })
+  }
+
+  filterApplied = () => {
+    this.props.onFilterChange(this.state.selectedLocation)
+  }
+
+  cancelFilter = () => {
+    this.setState({ selectedLocation: undefined, filterShowing: false })
+    this.props.onFilterChange(null)
   }
 
   render () {
@@ -97,22 +110,18 @@ class BigSearch extends PureComponent {
         </SearchInputContainer>
         <SearchFilterText>Filter by:</SearchFilterText>
         <FilterItem>Date</FilterItem>
-        <FilterItem onClick={this.toggleFilterDetails}>Location</FilterItem>
+        <FilterItem onClick={this.showFilterDetails}>Location</FilterItem>
         <FilterItem>Categories</FilterItem>
         <FilterItem>Impact</FilterItem>
       </SearchContainer>
       {filterShowing &&
-      <FilterContainer>
+      <FilterContainer onFilterApplied={this.filterApplied} onCancel={this.cancelFilter}>
         <LocationFilter
           locations={locations}
           selectedLocation={selectedLocation}
           onLocationSelected={this.locationSelected} />
       </FilterContainer>}
       </>)
-  }
-
-  toggleFilterDetails = () => {
-    this.setState({ filterShowing: !this.state.filterShowing })
   }
 }
 
@@ -124,7 +133,8 @@ BigSearch.propTypes = {
       query: PropTypes.string
     })
   ),
-  locations: PropTypes.arrayOf(PropTypes.string).isRequired
+  locations: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onFilterChange: PropTypes.func.isRequired
   //  showAddOp: PropTypes.bool.isRequired,
   // dispatch: PropTypes.func.isRequired
 }

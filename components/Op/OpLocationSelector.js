@@ -11,7 +11,7 @@ class OpLocationSelector extends React.Component {
     return (
       <Select
         showSearch
-        placeholder='Select the most applicable region'
+        placeholder='Select the most applicable location'
         onChange={onChange}
         value={value}
         style={width && { width: width }}
@@ -23,7 +23,7 @@ class OpLocationSelector extends React.Component {
 }
 
 OpLocationSelector.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired,
   width: PropTypes.string

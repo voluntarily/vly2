@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import { Button } from 'antd'
 import { SearchContainer as DetailsContainer } from './BigSearch'
@@ -36,5 +37,10 @@ const FilterContainer = ({ children, onFilterApplied, onCancel }) => (
     </div>
   </DetailsContainer>
 )
+
+FilterContainer.propTypes = {
+  onFilterApplied: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired
+}
 
 export default FilterContainer
