@@ -27,8 +27,19 @@ const SectionWrapper = styled.div`
 `
 
 const TitleContainer = styled.div`
-  margin: 4rem 0 2rem 0;
 `
+
+const PageHeaderContainer = styled.div`
+  margin: 4rem 0 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+`
+
+const RequestButtonContainer = styled.div`
+justify-self: end;
+`
+
 
 function callback (key) {
   console.log(key)
@@ -133,6 +144,7 @@ class PersonHomePage extends Component {
     const opAddButton = <OpAdd {...this.props} />
     return (
       <FullPage>
+        <PageHeaderContainer>
         <TitleContainer>
           <TextHeadingBlack>
             {this.props.me.nickname}
@@ -143,12 +155,16 @@ class PersonHomePage extends Component {
           /> */}
           </TextHeadingBlack>
         </TitleContainer>
+        <RequestButtonContainer>
+        <OpAdd {...this.props} />
+        </RequestButtonContainer>
+        </PageHeaderContainer>
 
         <Tabs
           style={shadowStyle}
           defaultActiveKey='1'
           onChange={callback}
-          tabBarExtraContent={opAddButton}
+
         >
           <TabPane tab={opsTab} key='1'>
             <SectionWrapper>

@@ -365,7 +365,7 @@ class OpDetailForm extends Component {
             <DescriptionContainer>
               <TitleContainer>
                 <TextHeadingBold>
-                  Do you need any specific skills?
+                  Do you need any specific skills? (Optional)
                 </TextHeadingBold>
               </TitleContainer>
               <TextP>
