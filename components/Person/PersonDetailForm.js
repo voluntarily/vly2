@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react'
+import RichTextEditor from '../Editor/RichTextEditor'
 import { Form, Input, Button, Row, Col, Divider, Radio, Checkbox } from 'antd'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import PropTypes from 'prop-types'
@@ -12,9 +13,22 @@ function hasErrors (fieldsError) {
 }
 
 class PersonDetailForm extends Component {
+  state = {
+    about: ''
+  }
+  constructor (props) {
+    super(props)
+    this.setAbout = this.setAbout.bind(this)
+    this.setImgUrl = this.setImgUrl.bind(this)
+  }
   componentDidMount () {
     // To disabled submit button at the beginning.
     this.props.form.validateFields()
+  }
+  setAbout (value) {
+    console.log('par', value)
+    this.setState({ about: value })
+    this.props.form.setFieldsValue({ about: value })
   }
 
   setImgUrl = (value) => {
@@ -27,16 +41,12 @@ class PersonDetailForm extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // eslint-disable-next-line no-console
-        // console.log('Received values of form: ', values)
-        // TODO Send new person to database and update the store.
         const person = this.props.person
         person.name = values.name
         person.nickname = values.nickname
         person.email = values.email
         person.phone = values.phone
         person.gender = values.gender
-        // person.password = values.password;
         person.about = values.about
         person.avatar = values.avatar
         person.role = values.role
@@ -47,6 +57,7 @@ class PersonDetailForm extends Component {
   }
 
   render () {
+    const isTest = process.env.NODE_ENV === 'test'
     // get translated labels
     const personName = (<FormattedMessage id='personName' defaultMessage='Full Name' description='person full name label in PersonDetails Form' />)
     const personnickname = (<FormattedMessage id='personnickname' defaultMessage='Nickname' description='person nickname label in personDetails Form' />)
@@ -145,7 +156,10 @@ class PersonDetailForm extends Component {
 
                   ]
                 })(
-                  <TextArea rows={20} placeholder='You can use markdown here.' />
+                  isTest
+                    ? <TextArea rows={20} placeholder='You can use markdown here.' />
+                    : <RichTextEditor onChange={this.setAbout} />
+
                 )}
               </Form.Item>
               <Form.Item label={personGender}>
@@ -267,26 +281,6 @@ PersonDetailForm.propTypes = {
   onCancel: PropTypes.func.isRequired
   // dispatch: PropTypes.func.isRequired,
 }
-
-// TODO replace imageURL field with uploader.
-// <Form.Item
-//     label="Image"
-//   >
-//     <div className="dropbox">
-//       {getFieldDecorator('dragger', {
-//         valuePropName: 'fileList',
-//         getValueFromEvent: this.normFile,
-//       })(
-//         <Upload.Dragger name="files" action="">
-//           <p className="ant-upload-drag-icon">
-//             <Icon type="inbox" />
-//           </p>
-//           <p className="ant-upload-text">Click or drag file to this area to upload</p>
-//           <p className="ant-upload-hint">Image ideal is 4:3 aspect ratio.</p>
-//         </Upload.Dragger>
-//       )}
-//     </div>
-//   </Form.Item>
 
 export default Form.create({
   name: 'person_detail_form',

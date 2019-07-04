@@ -47,7 +47,7 @@ test('render the detail with op', t => {
   const wrapper = mountWithIntl(
     <PersonDetailForm person={t.context.me} onSubmit={submitOp} onCancel={cancelOp} />
   )
-  // t.log(wrapper)
+  t.log(wrapper)
   // console.log(wrapper.html())
   t.is(wrapper.find('PersonDetailForm').length, 1)
   t.is(wrapper.find('button').length, 2)

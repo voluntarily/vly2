@@ -27,7 +27,6 @@ class OrgDetailForm extends Component {
   }
 
   handleChange (value) {
-    console.log('par', value)
     this.setState({ about: value })
   }
 
@@ -35,8 +34,6 @@ class OrgDetailForm extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // eslint-disable-next-line no-console
-        // console.log('Received values of form: ', values)
         // preserve the id and other values not edited by form.
         const org = this.props.org
         // update the rest from the form values.
