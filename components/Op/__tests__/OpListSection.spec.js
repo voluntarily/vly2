@@ -141,34 +141,20 @@ test.serial('mount the list with ops query and search', async t => {
   myMock.restore()
 })
 
-<<<<<<< HEAD
 test.serial('test filter by date is called, no op is shown', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/?search=Growing`
-  myMock.getOnce(api, [ops[0]])
+  myMock.get(api, [ops[0]])
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='Growing' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} dateFilterType={DatePickerType.IndividualDate} />
-=======
-test.serial('mount the list with ops search and location', async t => {
-  const realStore = makeStore(initStore)
-  const myMock = fetchMock.sandbox()
-  reduxApi.use('fetch', adapterFetch(myMock))
-  const api = `${API_URL}/opportunities/?search=Growing&location=Auckland`
-  myMock.getOnce(api, [ops[0], ops[1]])
-
-  const wrapper = await mountWithIntl(
-    <Provider store={realStore}>
-      <OpListSection search='Growing' location='Auckland' handleShowOp={() => {}} handleDeleteOp={() => {}} />
->>>>>>> 18eed1146ce5f4a6554f659106f142d6239c3799
+      <OpListSection search='Growing' location='' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} dateFilterType={DatePickerType.IndividualDate} />
     </Provider>
   )
-  await sleep(1) // allow asynch fetch to complete
+  await sleep(2) // allow asynch fetch to complete
   wrapper.update()
-<<<<<<< HEAD
   t.is(wrapper.find('OpCard').length, 0) // there are no cards on the screen
   t.truthy(myMock.done())
   myMock.restore()
@@ -179,37 +165,16 @@ test.serial('test filter by month is called. There is one OP is shown', async t 
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/?search=Growing`
-=======
-  t.is(wrapper.find('OpCard').length, 2) // there are two cards on the screen
-  t.truthy(myMock.done()) // ensure location query is added to the url
-  myMock.restore()
-})
-
-test.serial('mount the list with ops location only', async t => {
-  const realStore = makeStore(initStore)
-  const myMock = fetchMock.sandbox()
-  reduxApi.use('fetch', adapterFetch(myMock))
-  const api = `${API_URL}/opportunities/?location=Northland`
->>>>>>> 18eed1146ce5f4a6554f659106f142d6239c3799
   myMock.getOnce(api, [ops[0]])
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-<<<<<<< HEAD
-      <OpListSection search='Growing' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} dateFilterType={DatePickerType.MonthRange} />
-=======
-      <OpListSection location='Northland' handleShowOp={() => {}} handleDeleteOp={() => {}} />
->>>>>>> 18eed1146ce5f4a6554f659106f142d6239c3799
+      <OpListSection search='Growing' location='' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} dateFilterType={DatePickerType.MonthRange} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-<<<<<<< HEAD
   t.is(wrapper.find('OpCard').length, 1) // there should be one cards on the screen because it's the same month
   t.truthy(myMock.done())
-=======
-  t.is(wrapper.find('OpCard').length, 1) // there are two cards on the screen
-  t.truthy(myMock.done()) // ensure location query is added to the url
->>>>>>> 18eed1146ce5f4a6554f659106f142d6239c3799
   myMock.restore()
 })
