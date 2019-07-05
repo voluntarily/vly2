@@ -39,46 +39,44 @@ class OpListSection extends Component {
   }
 
   applyDateFilter = (filter) => {
-    const date = filter.date === undefined ? null : filter.date
+    const date = (filter.date === undefined) ? null : filter.date
     const momentObject = moment(date)
     if (!this.props.opportunities.isloading) {
+      if (filter.date.length === 0) return this.props.opportunities.data
       const filteredData = this.props.opportunities.data.filter(element => this.isDateFilterBetween(momentObject, element.date))
-      console.log(filteredData)
+      return filteredData
     }
+    return this.props.opportunities.data
   }
 
   isDateFilterBetween = (date, opDateArray) => {
+    if (date == null) return true
     switch (this.props.dateFilterType) {
       case DatePickerType.IndividualDate:
-        return moment(date).isSame(opDateArray[0], 'day')
+        return moment(date).isSame(opDateArray[0], 'day') // This only compare the start date to the filter. Not included things like end date of the opportunity
       case DatePickerType.MonthRange:
-        break
+        return moment(date).isSame(opDateArray[0], 'month')
       case DatePickerType.WeekRange:
-        break
+        return true // TODO: implement the week range
       case DatePickerType.DateRange:
-        break
+        return true
       default:
-        console.log('default')
-        break
+        return true
     }
-    console.log(`date picker type is ${this.props.dateFilterType}`)
-    console.log('date user chose ', moment(date).format('DD MM YYYY'))
-    console.log(opDateArray)
   }
 
-  async componentDidUpdate (prevProps) {
+  async componentDidUpdate(prevProps) {
     if (prevProps.search !== this.props.search || prevProps.query !== this.props.query) {
       await this.loadData(this.props.search, this.props.query)
     }
   }
 
-  async componentDidMount () {
+  async componentDidMount() {
     await this.loadData(this.props.search, this.props.query)
   }
 
-  render () {
-    this.applyDateFilter(this.props.filter)
-     // Temp for lint fix
+  render() {
+    const opData = this.applyDateFilter(this.props.filter)
     if (this.props.opportunities.loading) {
       return (<section>
         <Loading><p>Loading opportunities...</p></Loading>
@@ -87,7 +85,7 @@ class OpListSection extends Component {
     } else {
       // TODO: [VP-130] take out the search filter here line in OpListSection and pass in a property instead
       return (<section>
-        <OpList ops={this.props.opportunities.data} />
+        <OpList ops={opData} />
       </section>)
     }
   }

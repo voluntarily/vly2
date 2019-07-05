@@ -61,7 +61,10 @@ export class SearchPage extends Component {
   }
 
   handleDateChange = change => {
-    this.setState({ filter: { ...this.state.filter, date: change } })
+    // When user clear date picker value it the date value in the state will becom null which is not an array anymore.
+    // By checking if the data changed is null then we instead make it an empty array
+    if (change) this.setState({ filter: { ...this.state.filter, date: change } })
+    else this.setState({ filter: { ...this.state.fitler, date: [] } })
   }
 
   changePickerType = type => {
@@ -98,7 +101,7 @@ export class SearchPage extends Component {
           <Dropdown overlay={DatePickerOption} placement='bottomCenter'>
             <Button>{ this.state.datePickerType === '' ? 'Date' : this.state.datePickerType}</Button>
           </Dropdown>
-          <DatePickerComponent datePickerType={this.state.datePickerType} onDateChange={this.handleDateChange} />
+          <DatePickerComponent datePickerType={this.state.datePickerType} onDateChange={this.handleDateChange} dateValue={this.state.filter.date} />
         </Modal>
         <Spacer />
         <OpListSection search={search} filter={this.state.filter} dateFilterType={this.state.datePickerType} />

@@ -7,15 +7,16 @@ const { MonthPicker, RangePicker, WeekPicker } = DatePicker
  * Stupid components only show the type of date picker depends on the parent value passed down
  */
 export default function DatePickerComponent (props) {
-  const { onDateChange } = props
+  const { onDateChange, dateValue } = props
+  console.log(dateValue)
   switch (props.datePickerType) {
     case DatePickerType.MonthRange:
-      return (<MonthPicker onChange={month => onDateChange(month)} />)
+      return (<MonthPicker onChange={month => onDateChange(month)} value={dateValue} />)
     case DatePickerType.DateRange:
       return (<RangePicker onChange={dates => onDateChange(dates)} />)
-    case DatePicker.WeekRange:
+    case DatePickerType.WeekRange:
       return (<WeekPicker onChange={week => onDateChange(week)} />)
     default:
-      return (<DatePicker onChange={date => onDateChange(date)} />)
+      return (<DatePicker onChange={date => onDateChange(date)}/>)
   }
 }
