@@ -13,7 +13,7 @@ test.before('Setup fixtures', (t) => {
     imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
     description: 'Project to grow something in the garden',
     duration: '15 Minutes',
-    location: 'Newmarket, Auckland',
+    location: 'Auckland',
     status: 'active',
     date: [
       {
@@ -35,6 +35,7 @@ test('shallow the card with op', t => {
   t.is(wrapper.find('.requestContainerSmall').length, 1)
   t.is(wrapper.find('.requestTitleSmall').text(), op.title)
   t.is(wrapper.find('.requestImgSmall').prop('src'), op.imgUrl)
+  t.truthy(wrapper.find('.requestContainerSmall').first().html().includes(op.location))
 })
 
 test('op card with default image', t => {

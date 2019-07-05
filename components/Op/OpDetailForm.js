@@ -8,8 +8,9 @@ import RichTextEditor from '../Editor/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { TextHeadingBold, TextP } from '../VTheme/VTheme'
 import OpDetailLocation from './OpDetailLocation'
-import OpDetailTagsEditable from './OpDetailTagsEditable'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
+import OpDetailTagsEditable from './OpDetailTagsEditable'
+import OpLocationSelector from './OpLocationSelector'
 const { TextArea } = Input
 
 // custom form components go here
@@ -431,7 +432,7 @@ class OpDetailForm extends Component {
                         message: 'A region must be provided'
                       }
                     ]
-                  })(<OpDetailLocation
+                  })(<OpLocationSelector
                     existingLocations={this.props.existingLocations}
                   />)}
                 </Form.Item>

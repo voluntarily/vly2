@@ -3,6 +3,7 @@ const Opportunity = require('./opportunity')
 const Tag = require('./../tag/tag')
 const OpportunityArchive = require('./../opportunity-archive/opportunityArchive')
 const { OpportunityStatus } = require('./opportunity.constants')
+const { regions } = require('../location/locationData')
 
 /**
  * Get all orgs
@@ -23,8 +24,8 @@ const getOpportunities = async (req, res) => {
     return res.status(400).send(e)
   }
 
-  if (req.query.search) {
-    try {
+  try {
+    if (req.query.search) {
       const search = req.query.search.trim()
       const regexSearch = escapeRegex(search)
 
@@ -60,22 +61,35 @@ const getOpportunities = async (req, res) => {
           query
         ]
       }
-    } catch (e) {
-      // something went wrong constructing the query but we don't know what
-      return res.status(500).send(e)
     }
-  }
 
-  try {
-    const got = await Opportunity
-      .accessibleBy(req.ability)
-      .find(query)
-      .select(select)
-      .sort(sort)
-      .exec()
-    res.json(got)
+    const locFilter = req.query.location
+    if (locFilter) {
+      const region = regions.find(r => r.name === locFilter)
+      const locsToFind = region ? [locFilter, ...region.containedTerritories] : [locFilter]
+
+      // location is a filter so should still match all other queries. use AND, not OR
+      query = {
+        $and: [
+          { 'location': { $in: locsToFind } },
+          query
+        ]
+      }
+    }
+
+    try {
+      const got = await Opportunity
+        .accessibleBy(req.ability)
+        .find(query)
+        .select(select)
+        .sort(sort)
+        .exec()
+      res.json(got)
+    } catch (e) {
+      return res.status(404).send(e)
+    }
   } catch (e) {
-    return res.status(404).send(e)
+    return res.status(500).send(e)
   }
 }
 
