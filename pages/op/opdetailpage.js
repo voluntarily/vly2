@@ -1,35 +1,132 @@
-import { Component } from 'react'
+import { Button, Divider, message, Popconfirm } from 'antd'
 import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
-import { Button, Popconfirm, message, Divider } from 'antd'
-import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
-import publicPage, { FullPage } from '../../hocs/publicPage'
 import Router from 'next/router'
-import OpDetail from '../../components/Op/OpDetail'
+import PropTypes from 'prop-types'
+import { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 import InterestSection from '../../components/Interest/InterestSection'
 import RegisterInterestSection from '../../components/Interest/RegisterInterestSection'
-import PropTypes from 'prop-types'
+import OpDetail from '../../components/Op/OpDetail'
+import OpDetailForm from '../../components/Op/OpDetailForm'
 import PersonCard from '../../components/Person/PersonCard'
+import publicPage, { FullPage } from '../../hocs/publicPage'
+import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
+import Loading from '../../components/Loading'
+import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
+
+const blankOp = {
+  title: '',
+  subtitle: '',
+  imgUrl: '',
+  duration: '',
+  location: '',
+  status: 'inactive',
+  date: [],
+  startDate: null,
+  endDate: null,
+  tags: []
+}
 
 export class OpDetailPage extends Component {
+  state = {
+    editing: false
+  }
+
   static async getInitialProps ({ store, query }) {
-    // Get one Op
-    // console.log('getting op details', query)
-    try {
-      await store.dispatch(reduxApi.actions.opportunities.get(query))
-      // console.log('got ops for id', query, ops)
-    } catch (err) {
-      // console.log('error in getting ops', err)
+    // Get one Org
+    const isNew = query && query.new && query.new === 'new'
+    const opExists = !!(query && query.id) // !! converts to a boolean value
+    // TODO: [VP-280] run get location and tag data requests in parallel
+    await store.dispatch(reduxApi.actions.locations.get())
+    await store.dispatch(reduxApi.actions.tags.get())
+    if (isNew) {
+      return {
+        isNew
+      }
+    } else {
+      if (opExists) {
+        await store.dispatch(reduxApi.actions.opportunities.get(query))
+      }
+      return {
+        isNew,
+        opExists
+      }
+    }
+  }
+
+  componentDidMount () {
+    if (this.props.isNew) {
+      this.setState({ editing: true })
+    }
+  }
+
+  async handleSubmit (op) {
+    const userTags = op.tags
+    const dbTags = this.props.tags.data // tags existing in db
+    const tagIds = [] // user-defined tags converted to their objectids
+    const newTags = [] // user-defined tag values that aren't in the db
+
+    // determine which tags need to be added to the database
+    // based on whether they exist already or not.
+    userTags.forEach(t => {
+      const match = dbTags.find(dbTag => t.tag === dbTag.tag)
+      if (match) {
+        tagIds.push(match._id)
+      } else {
+        newTags.push(t)
+      }
+    })
+
+    // send post requests for each non-existing tag to create them
+    await this.props.dispatch(
+      reduxApi.actions.tags.post({}, { body: JSON.stringify(newTags) })
+    )
+
+    // find the ids of all the newly created tags, which are now in props
+    newTags.forEach(newTag => {
+      tagIds.push(this.props.tags.data.find(tag => tag.tag === newTag.tag)._id)
+    })
+
+    let updatedOp = {
+      ...op,
+      tags: tagIds
+    }
+
+    // Actual data request
+    let res = {}
+    if (updatedOp._id) {
+      res = await this.props.dispatch(
+        reduxApi.actions.opportunities.put(
+          { id: updatedOp._id },
+          { body: JSON.stringify(updatedOp) }
+        )
+      )
+    } else {
+      res = await this.props.dispatch(
+        reduxApi.actions.opportunities.post(
+          {},
+          { body: JSON.stringify(updatedOp) }
+        )
+      )
+      updatedOp = res[0]
+      Router.replace(`/ops/${updatedOp._id}`)
+    }
+    this.setState({ editing: false })
+    message.success('Saved.')
+  }
+
+  handleCancelEdit = () => {
+    this.setState({ editing: false })
+    if (this.props.isNew) { // return to previous
+      Router.back()
     }
   }
 
   // Called when the user confirms they want to delete an op
-  async handleCancel (op) {
-    // console.log('deleting op', op)
+  async handleCancelOp (op) {
     if (!op) return
-    // Actual data request
-    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: 'cancelled' }) }))
-    // TODO error handling - how can this fail?
+    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.CANCELLED }) }))
+    // TODO: error handling - how can this fail?
     message.success('Request Cancelled. ')
     Router.replace(`/home`)
   }
@@ -37,99 +134,144 @@ export class OpDetailPage extends Component {
   // Called when the user starts to delete an op, but then cancels it.
   handleCancelButtonCancelled = () => { message.error('Cancel Request Cancelled') }
 
-  async handleConfirm (op) {
-    // console.log('Event Confirmed!!!')
+  async handledCompleted (op) {
     if (!op) return
     // Data request
-    // TODO change hard coded 'done' string to a constant.
-    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: 'done' }) }))
-    // TODO error handling - see above
+    // TODO: change hard coded 'done' string to a constant.
+    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.COMPLETED }) }))
+    // TODO: error handling - see above
     message.success('Opportunity Confimed')
     Router.replace('/home')
   }
 
-  handleConfirmCancelled = () => {
+  handledCompletedCancelled = () => {
     message.error('Confirm Cancelled')
   }
 
   render () {
+    const me = this.props.me
+    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
+    const isAdmin = (me && me.role.includes('admin'))
+    let isOwner = false
     let content
-    if (this.props.opportunities && this.props.opportunities.data.length === 1) {
-      const op = this.props.opportunities.data[0]
-      const organizer = op.requestor
-      const isOwner = ((this.props.me || {})._id === (organizer || {})._id)
-      const organizerInfo = () => {
-        return organizer &&
-          <div>
-            <h2>
-              <FormattedMessage id='organiser' defaultMessage='Requested by' description='Title for organiser card on op details page' />
-            </h2>
-            <PersonCard style={{ width: '300px' }} person={organizer} />
-          </div>
+    let op
+    let organizer
+    if (this.props.isNew) {
+      op = blankOp
+      organizer = me
+      isOwner = true
+    } else if (this.props.opportunities.loading) {
+      content = <Loading><p>Loading details...</p></Loading>
+    } else {
+      const ops = this.props.opportunities.data
+      if (ops.length === 1) {
+        op = {
+          ...ops[0],
+          // tags: this.props.opportunities.data[0].tags.map(op => op.tag),
+          startDate: this.props.opportunities.data[0].date[0],
+          endDate: this.props.opportunities.data[0].date[1]
+        }
+        organizer = op.requestor
+        isOwner = ((this.props.me || {})._id === organizer._id)
+      } else { // array must be empty
+        console.log('length', ops.length)
+        content = <h2><FormattedMessage id='op.notavailable' defaultMessage='Sorry, this opportunity is not available' description='message on person not found page' /></h2>
       }
-      const volunteerInterestSection = () => {
-        return (
-          !this.props.isAuthenticated
-            ? <div>
-              <Link href={`/auth/sign-in`} >
-                <Button type='primary' shape='round' >
-                  <FormattedMessage id='iminterested-anon' defaultMessage="I'm Interested" description="I'm interested button that leads to sign in page" />
-                </Button>
-              </Link>
-              <Divider />
-            </div>
-            : !isOwner && <div>
-              <RegisterInterestSection op={op} me={this.props.me._id} />
-              <Divider />
-            </div>
-        )
-      }
+    }
 
-      /* These components should only appear if a user is logged in and viewing an op they DID create themselves. */
-      const ownerManageInterests = () => {
-        return (isOwner || (this.props.me && this.props.me.role.includes('admin'))) &&
-          <div>
-            <Link href={`/ops/${op._id}/edit`} >
+    // display permissions
+    const canEdit = (isOwner || isOrgAdmin || isAdmin)
+    const canManageInterests = (isOwner || isAdmin)
+    const canRegisterInterest = (this.props.isAuthenticated && !isOwner)
+
+    const existingTags = this.props.tags.data.map(tag => tag.tag)
+    const existingLocations = [
+      ...this.props.locations.data[0].regions.map(r => r.name),
+      ...this.props.locations.data[0].territories
+    ]
+
+    const organizerInfo = () => {
+      return organizer &&
+        <div>
+          <h2>
+            <FormattedMessage id='organiser' defaultMessage='Requested by' description='Title for organiser card on op details page' />
+          </h2>
+          <PersonCard style={{ width: '300px' }} person={organizer} />
+        </div>
+    }
+    const volunteerInterestSection = () => {
+      return (
+        // if not signed in then the interested button signs in first
+        !this.props.isAuthenticated
+          ? <div>
+            <Link href={`/auth/sign-in`} >
               <Button type='primary' shape='round' >
-                <FormattedMessage id='editOp' defaultMessage='Edit' description='Button to edit an opportunity on OpDetails page' />
+                <FormattedMessage id='iminterested-anon' defaultMessage="I'm Interested" description="I'm interested button that leads to sign in page" />
               </Button>
             </Link>
-              &nbsp;
-            <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' onConfirm={this.handleConfirm.bind(this, op)} onCancel={this.handleConfirmCancelled} okText='Yes' cancelText='No'>
-              <Button type='primary' shape='round'>
-                <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
-              </Button>
-            </Popconfirm>
-              &nbsp;
-            <Popconfirm id='cancelOpPopConfirm' title='Confirm cancel of this opportunity.' onConfirm={this.handleCancel.bind(this, op)} onCancel={this.handleCancelButtonCancelled} okText='Yes' cancelText='No'>
-              <Button type='danger' shape='round' >
-                <FormattedMessage id='cancelOp' defaultMessage='Cancel Request' description='Button to cancel an opportunity on OpDetails page' />
-              </Button>
-            </Popconfirm>
             <Divider />
-
-            <InterestSection opid={op._id} />
           </div>
-      }
-      content =
-        (<div>
+          : canRegisterInterest && <div>
+            <RegisterInterestSection op={op} me={this.props.me._id} />
+            <Divider />
+          </div>
+      )
+    }
+
+    /* These components should only appear if a user is logged in and viewing an op they DID create themselves. */
+    const ownerManageInterests = () => {
+      return (canManageInterests &&
+        <div>
+          <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' onConfirm={this.handledCompleted.bind(this, op)} onCancel={this.handledCompletedCancelled} okText='Yes' cancelText='No'>
+            <Button type='primary' shape='round'>
+              <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
+            </Button>
+          </Popconfirm>
+            &nbsp;
+          <Popconfirm id='cancelOpPopConfirm' title='Confirm cancel of this opportunity.' onConfirm={this.handleCancelOp.bind(this, op)} onCancel={this.handleCancelButtonCancelled} okText='Yes' cancelText='No'>
+            <Button type='danger' shape='round' >
+              <FormattedMessage id='cancelOp' defaultMessage='Cancel Request' description='Button to cancel an opportunity on OpDetails page' />
+            </Button>
+          </Popconfirm>
+          <Divider />
+
+          <InterestSection opid={op._id} />
+        </div>
+      )
+    }
+
+    if (!content) {
+      if (op && this.state.editing) {
+        content = <div>
+          <OpDetailForm
+            op={op}
+            me={me}
+            onSubmit={this.handleSubmit.bind(this, op)}
+            onCancel={this.handleCancelEdit.bind(this)}
+            existingTags={existingTags}
+            existingLocations={existingLocations}
+          />
+        </div>
+      } else {
+        content = <div>
+          { canEdit && <Button id='editOpBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
+            <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
+          </Button>}
+
           <OpDetail op={op} />
           {organizerInfo()}
           <Divider />
           {volunteerInterestSection()}
           {ownerManageInterests()}
-
-        </div>)
-    } else {
-      content =
-        (<div>
-          <h2 id='unavailableOpportunityHeader'>Sorry this opportunity is no longer available</h2>
-          <Link href={'/ops'} ><a>Search for some more</a></Link>
-          <p>or </p>
-          <Link href={'/ops/new'} ><a>create a new opportunity</a></Link>
-        </div>)
+        </div>
+      }
     }
-    return (<FullPage>{content}</FullPage>)
+
+    return (
+      <FullPage>
+        {content}
+      </FullPage>
+    )
   }
 }
 
@@ -147,4 +289,5 @@ OpDetailPage.propTypes = {
   })
 }
 
+export const OpDetailPageWithOps = withOps(OpDetailPage)
 export default publicPage(withOps(OpDetailPage))

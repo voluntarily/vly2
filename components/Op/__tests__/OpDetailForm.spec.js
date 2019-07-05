@@ -1,9 +1,7 @@
 import React from 'react'
 import test from 'ava'
-import { tagList } from '../../../server/api/tag/__tests__/tag.fixture'
-// import { JSDOM } from 'jsdom'
+import tagList from '../../../server/api/tag/__tests__/tag.fixture'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
-
 import OpDetailForm from '../OpDetailForm'
 import sinon from 'sinon'
 
@@ -29,7 +27,7 @@ const op = {
   status: 'draft',
   startDate: null,
   endDate: null,
-  tag: tagList
+  tags: tagList
 }
 
 const noop = {
@@ -40,7 +38,7 @@ const noop = {
   duration: '',
   location: '',
   status: 'draft',
-  tag: [],
+  tags: [],
   startDate: null,
   endDate: null,
   date: []
@@ -92,15 +90,19 @@ test('render the detail with op', t => {
   // t.log(wrapper)
   // console.log(wrapper.html())
   t.is(wrapper.find('OpDetailForm').length, 1)
-  t.is(wrapper.find('button').length, 2)
+  t.is(wrapper.find('button').length, 3)
   wrapper.find('button').first().simulate('click')
   t.truthy(cancelOp.calledOnce)
-  wrapper.find('Form').first().simulate('submit')
+  wrapper.find('button').at(1).simulate('click')
   t.truthy(submitOp.calledOnce)
+  t.truthy(submitOp.calledWith(op))
+
+  wrapper.find('button').at(2).simulate('click')
+  t.truthy(submitOp.calledTwice)
   t.truthy(submitOp.calledWith(op))
 })
 
-test.serial('render the detail with new blank op', t => {
+test('render the detail with new blank op', t => {
   const submitOp = sinon.spy()
   const cancelOp = sinon.spy()
   const me = { _id: '5ccbffff958ff4833ed2188d' }
@@ -121,7 +123,7 @@ test.serial('render the detail with new blank op', t => {
   t.is(datePicker.length, 2) // should find 1 date picker component
 
   t.is(wrapper.find('OpDetailForm').length, 1)
-  t.is(wrapper.find('button').length, 2)
+  t.is(wrapper.find('button').length, 3) // cancel, save and publish
   wrapper.find('button').first().simulate('click')
   t.truthy(cancelOp.calledOnce)
 
@@ -145,6 +147,6 @@ test.serial('render the detail with new blank op', t => {
   const duration = wrapper.find('input#opportunity_detail_form_duration').first()
   duration.simulate('change', { target: { value: '10 hours' } })
 
-  wrapper.find('Form').first().simulate('submit')
+  wrapper.find('button').at(1).simulate('click')
   t.truthy(submitOp.calledOnce)
 })

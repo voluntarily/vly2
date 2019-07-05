@@ -2,6 +2,7 @@ const escapeRegex = require('../../util/regexUtil')
 const Opportunity = require('./opportunity')
 const Tag = require('./../tag/tag')
 const OpportunityArchive = require('./../opportunity-archive/opportunityArchive')
+const { OpportunityStatus } = require('./opportunity.constants')
 
 /**
  * Get all orgs
@@ -94,13 +95,16 @@ const getOpportunity = async (req, res) => {
 
 const putOpportunity = async (req, res) => {
   try {
-    if (req.body.status === 'done' || req.body.status === 'cancelled') {
+    if (req.body.status === OpportunityStatus.COMPLETED || req.body.status === OpportunityStatus.CANCELLED) {
       await Opportunity.findByIdAndUpdate(req.params._id, { $set: req.body })
-      await archiveOpportunity(req.params._id)
+      const archop = await archiveOpportunity(req.params._id)
+      // TODO: [VP-282] after archiving return a 301 redirect to the archived opportunity
+      // res.redirect(301, `/opsarchive/${archop._id}`)
+      res.json(archop)
     } else {
       await Opportunity.findByIdAndUpdate(req.params._id, { $set: req.body })
+      getOpportunity(req, res)
     }
-    res.json(req.body)
   } catch (e) {
     res.status(400).send(e)
   }

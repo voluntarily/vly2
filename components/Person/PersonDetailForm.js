@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { Component } from 'react'
 import RichTextEditor from '../Editor/RichTextEditor'
 import { Form, Input, Button, Row, Col, Divider, Radio, Checkbox } from 'antd'
@@ -13,9 +12,6 @@ function hasErrors (fieldsError) {
 }
 
 class PersonDetailForm extends Component {
-  state = {
-    about: ''
-  }
   constructor (props) {
     super(props)
     this.setAbout = this.setAbout.bind(this)
@@ -26,15 +22,11 @@ class PersonDetailForm extends Component {
     this.props.form.validateFields()
   }
   setAbout (value) {
-    console.log('par', value)
-    this.setState({ about: value })
     this.props.form.setFieldsValue({ about: value })
   }
 
   setImgUrl = (value) => {
-    this.props.form.setFieldsValue({
-      avatar: value
-    })
+    this.props.form.setFieldsValue({ avatar: value })
   }
 
   handleSubmit = (e) => {
@@ -57,7 +49,6 @@ class PersonDetailForm extends Component {
   }
 
   render () {
-    const isTest = process.env.NODE_ENV === 'test'
     // get translated labels
     const personName = (<FormattedMessage id='personName' defaultMessage='Full Name' description='person full name label in PersonDetails Form' />)
     const personnickname = (<FormattedMessage id='personnickname' defaultMessage='Nickname' description='person nickname label in personDetails Form' />)
@@ -94,6 +85,7 @@ class PersonDetailForm extends Component {
 
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
+    const isTest = process.env.NODE_ENV === 'test'
 
     return (
       <div className='PersonDetailForm'>
