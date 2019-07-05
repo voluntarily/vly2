@@ -5,6 +5,7 @@ import OpListSection from '../OpListSection'
 import { Provider } from 'react-redux'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
+import DatePickerType from '../DatePickerType.constant'
 
 import { API_URL } from '../../../lib/apiCaller'
 
@@ -57,14 +58,14 @@ const initStore = {
   }
 }
 const filterState = {
-  date: ''
+  date: '2019-07-16T08:04:02.793Z' // Tue, 16 Jul 2019 01:04:02
 }
 
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-test.only('mount the list with ops', async t => {
+test.serial('mount the list with ops', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -83,7 +84,7 @@ test.only('mount the list with ops', async t => {
   myMock.restore()
 })
 
-test.only('mount the list with ops search with results', async t => {
+test.serial('mount the list with ops search with results', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -102,7 +103,7 @@ test.only('mount the list with ops search with results', async t => {
   myMock.restore()
 })
 
-test.only('mount the list with ops search with no results', async t => {
+test.serial('mount the list with ops search with no results', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -121,7 +122,7 @@ test.only('mount the list with ops search with no results', async t => {
   myMock.restore()
 })
 
-test.only('mount the list with ops query and search', async t => {
+test.serial('mount the list with ops query and search', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -136,6 +137,44 @@ test.only('mount the list with ops query and search', async t => {
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   t.is(wrapper.find('OpCard').length, 1) // there are two cards on the screen
+  t.truthy(myMock.done())
+  myMock.restore()
+})
+
+test.serial('test filter by date is called, no op is shown', async t => {
+  const realStore = makeStore(initStore)
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/?search=Growing`
+  myMock.getOnce(api, [ops[0]])
+
+  const wrapper = await mountWithIntl(
+    <Provider store={realStore}>
+      <OpListSection search='Growing' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} dateFilterType={DatePickerType.IndividualDate} />
+    </Provider>
+  )
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
+  t.is(wrapper.find('OpCard').length, 0) // there are no cards on the screen
+  t.truthy(myMock.done())
+  myMock.restore()
+})
+
+test.serial('test filter by month is called. There is one OP is shown', async t => {
+  const realStore = makeStore(initStore)
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/?search=Growing`
+  myMock.getOnce(api, [ops[0]])
+
+  const wrapper = await mountWithIntl(
+    <Provider store={realStore}>
+      <OpListSection search='Growing' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} dateFilterType={DatePickerType.MonthRange} />
+    </Provider>
+  )
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
+  t.is(wrapper.find('OpCard').length, 1) // there should be one cards on the screen because it's the same month
   t.truthy(myMock.done())
   myMock.restore()
 })

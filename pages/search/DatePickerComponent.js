@@ -17,6 +17,6 @@ export default function DatePickerComponent (props) {
     case DatePickerType.WeekRange:
       return (<WeekPicker onChange={week => onDateChange(week)} />)
     default:
-      return (<DatePicker onChange={date => onDateChange(date)}/>)
+      return (<DatePicker onChange={date => onDateChange(date)} />)
   }
 }

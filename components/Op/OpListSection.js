@@ -65,17 +65,17 @@ class OpListSection extends Component {
     }
   }
 
-  async componentDidUpdate(prevProps) {
+  async componentDidUpdate (prevProps) {
     if (prevProps.search !== this.props.search || prevProps.query !== this.props.query) {
       await this.loadData(this.props.search, this.props.query)
     }
   }
 
-  async componentDidMount() {
+  async componentDidMount () {
     await this.loadData(this.props.search, this.props.query)
   }
 
-  render() {
+  render () {
     const opData = this.applyDateFilter(this.props.filter)
     if (this.props.opportunities.loading) {
       return (<section>
