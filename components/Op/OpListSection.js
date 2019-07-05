@@ -15,16 +15,16 @@ import Loading from '../../components/Loading'
 
 // TODO: [VP-131] use redux instead of local state.
 class OpListSection extends Component {
-  async loadData (search, query) {
+  async loadData (search, location, query) {
     // Get all Ops
     try {
-      // TODO: [VP-128] document how to set the parameters correctly
-      // TODO: [VP-129] filter should be passed in here and translated into the query
-
       const filters = {}
 
       if (search) {
         filters.search = search
+      }
+      if (location) {
+        filters.location = location
       }
       if (query) {
         filters.q = query
@@ -37,13 +37,15 @@ class OpListSection extends Component {
   }
 
   async componentDidUpdate (prevProps) {
-    if (prevProps.search !== this.props.search || prevProps.query !== this.props.query) {
-      await this.loadData(this.props.search, this.props.query)
+    if (prevProps.search !== this.props.search ||
+      prevProps.location !== this.props.location ||
+      prevProps.query !== this.props.query) {
+      await this.loadData(this.props.search, this.props.location, this.props.query)
     }
   }
 
   async componentDidMount () {
-    await this.loadData(this.props.search, this.props.query)
+    await this.loadData(this.props.search, this.props.location, this.props.query)
   }
 
   render () {
@@ -53,7 +55,6 @@ class OpListSection extends Component {
 
       </section>)
     } else {
-      // TODO: [VP-130] take out the search filter here line in OpListSection and pass in a property instead
       return (<section>
         <OpList ops={this.props.opportunities.data} />
       </section>)
@@ -73,7 +74,8 @@ OpListSection.propTypes = {
   })), // optional as we can show an empty list and data may arrive async
   dispatch: PropTypes.func.isRequired,
   query: PropTypes.string,
-  search: PropTypes.string
+  search: PropTypes.string,
+  location: PropTypes.string
 }
 
 export const OpListSectionTest = OpListSection

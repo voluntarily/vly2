@@ -23,6 +23,7 @@ const OpCard = ({ size, op, onPress, ...props }) => {
               {op.title}
             </p>
             <p className={'requestDateTime' + size}> 📅 {startTime} </p>
+            <p className={'requestDateTime' + size}>{op.location}</p>
             <p className={'requestDateTime' + size}>{op.duration}</p>
             <p className={'requestDescription' + size}>
               {op.subtitle}
