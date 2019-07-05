@@ -63,7 +63,7 @@ export class SearchPage extends Component {
   handleDateChange = change => {
     // When user clear date picker value it the date value in the state will becom null which is not an array anymore.
     // By checking if the data changed is null then we instead make it an empty array
-    if (change) this.setState({ filter: { ...this.state.filter, date: change } })
+    if (change) this.setState({ filter: { ...this.state.filter, date: Array.isArray(change) ? change : [change] } })
     else this.setState({ filter: { ...this.state.fitler, date: [] } })
   }
 
