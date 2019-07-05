@@ -1,8 +1,9 @@
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import TitleSection from '../../components/LandingPageComponents/TitleSectionSub'
-import BigSearch from '../../components/VTheme/BigSearch'
+import BigSearch from '../../components/Search/BigSearch'
 import { Spacer } from '../../components/VTheme/VTheme'
 import OpListSection from '../../components/Op/OpListSection'
+import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
 import { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Modal, Dropdown, Menu, Button } from 'antd'
@@ -21,7 +22,8 @@ export class SearchPage extends Component {
     showDatePickerModal: false,
     filter: {
       date: []
-    }
+    },
+    filterValue: null
   }
 
   constructor (props) {
@@ -35,7 +37,8 @@ export class SearchPage extends Component {
     }
   }
 
-  static async getInitialProps ({ query: { search } }) {
+  static async getInitialProps ({ store, query: { search } }) {
+    await store.dispatch(reduxApi.actions.locations.get())
     return {
       search
     }
@@ -70,9 +73,14 @@ export class SearchPage extends Component {
   changePickerType = type => {
     this.setState({ datePickerType: type })
   }
+  locFilterChanged = location => {
+    this.setState({ filterValue: location })
+  }
 
   render () {
-    const { search } = this.state
+    const { search, filterValue } = this.state
+
+    const existingLocations = this.props.locations.data
 
     const DatePickerOption = (
       <Menu>
@@ -94,7 +102,7 @@ export class SearchPage extends Component {
     return (
       <FullPage>
         <TitleSection title={<FormattedMessage defaultMessage={`Search results for "{search}"`} values={{ search }} id='search.title' />} />
-        <BigSearch search={search} onSearch={this.handleSearch} onClickDateFilter={this.handleOpenDatePickperModal} />
+        <BigSearch search={search} onSearch={this.handleSearch} onClickDateFilter={this.handleOpenDatePickperModal} locations={existingLocations} onFilterChange={this.locFilterChanged} />
         <Modal title='Pick date' visible={this.state.showDatePickerModal}
           onCancel={() => this.setState({ showDatePickerModal: !this.state.showDatePickerModal })}
           onOk={() => this.setState({ showDatePickerModal: !this.state.showDatePickerModal })}>
@@ -104,7 +112,7 @@ export class SearchPage extends Component {
           <DatePickerComponent datePickerType={this.state.datePickerType} onDateChange={this.handleDateChange} dateValue={this.state.filter.date} />
         </Modal>
         <Spacer />
-        <OpListSection search={search} filter={this.state.filter} dateFilterType={this.state.datePickerType} />
+        <OpListSection search={search} filter={this.state.filter} dateFilterType={this.state.datePickerType} location={filterValue} />
       </FullPage>
     )
   }
@@ -127,4 +135,4 @@ SearchPage.propTypes = {
   // dispatch: PropTypes.func.isRequired
 }
 
-export default publicPage(SearchPage)
+export default publicPage(withLocations(SearchPage))

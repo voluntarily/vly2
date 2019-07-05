@@ -1,7 +1,7 @@
-const { regions, territories } = require('./locationData')
+const { sortedLocations } = require('./locationData')
 
 const getLocations = function (req, res) {
-  res.json({ regions, territories })
+  res.json(sortedLocations)
 }
 
 module.exports = getLocations

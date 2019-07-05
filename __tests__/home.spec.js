@@ -78,7 +78,7 @@ test('render volunteer home page - Active tab', t => {
   t.is(wrapper.find('h1').first().text(), t.context.me.nickname)
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
   t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Active Requests')
-  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 9)
+  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 11)
 })
 
 test('render volunteer home page - History tab', t => {
