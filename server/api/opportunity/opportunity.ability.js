@@ -1,4 +1,4 @@
-const { OpportunityStatus, OpportunityFields } = require('./opportunity.constants')
+const { Subject, OpportunityStatus, OpportunityFields } = require('./opportunity.constants')
 const { Role } = require('../../services/auth/role')
 const { Action } = require('../../services/abilities/ability.constants')
 
@@ -6,7 +6,7 @@ const { Action } = require('../../services/abilities/ability.constants')
 // TypeScript definition
 interface Rule {
   actions: string | string[],
-  subject: string | string[],
+  Subject: string | string[],
   conditions?: Object,
   fields?: string[],
   inverted?: boolean, // default is `false`
@@ -14,37 +14,35 @@ interface Rule {
 }
 */
 
-const subject = 'Opportunity'
-
 const anonAbilities = [{
-  subject,
+  Subject,
   action: Action.READ,
   conditions: { status: OpportunityStatus.ACTIVE }
 }, {
-  subject,
+  Subject,
   action: Action.LIST,
   conditions: { status: OpportunityStatus.ACTIVE },
   fields: [OpportunityFields.ID, OpportunityFields.TITLE, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION]
 }, {
-  subject,
+  Subject,
   action: Action.UPDATE,
   inverted: true
 }, {
-  subject,
+  Subject,
   action: Action.DELETE,
   inverted: true
 }, {
-  subject,
+  Subject,
   action: Action.CREATE,
   inverted: true
 }]
 
-const allAbilities = [{ subject, action: Action.READ }, { subject, action: Action.LIST }]
-const vpAbilities = allAbilities.concat([{ subject, action: Action.CREATE }])
-const opAbilities = allAbilities.concat([{ subject, action: Action.CREATE }])
-const testerAbilities = [{ subject, action: Action.MANAGE }]
-const adminAbilities = [{ subject, action: Action.MANAGE }]
-const orgAdminAbilities = [{ subject, action: Action.MANAGE }]
+const allAbilities = [{ Subject, action: Action.READ }, { Subject, action: Action.LIST }]
+const vpAbilities = allAbilities.concat([{ Subject, action: Action.CREATE }])
+const opAbilities = allAbilities.concat([{ Subject, action: Action.CREATE }])
+const testerAbilities = [{ Subject, action: Action.MANAGE }]
+const adminAbilities = [{ Subject, action: Action.MANAGE }]
+const orgAdminAbilities = [{ Subject, action: Action.MANAGE }]
 
 module.exports = {
   [Role.ANON]: anonAbilities,
