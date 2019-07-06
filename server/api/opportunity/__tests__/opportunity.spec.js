@@ -10,6 +10,9 @@ import ops from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 import OpportunityArchive from './../../opportunity-archive/opportunityArchive'
+import Interest from '../../interest/interest'
+import InterestArchive from '../../interest-archive/interestArchive'
+import objectid from 'objectid'
 
 const { regions } = require('../../location/locationData')
 
@@ -340,6 +343,44 @@ test.serial('Should update status of Opportunity when a put request is sent', as
   t.is(res.status, 200)
   const queriedOpportunity = await OpportunityArchive.findOne({ title: 'Java Robots in the house' }).exec()
   t.is(queriedOpportunity.status, 'done')
+})
+
+test.serial('should archive interests assocaited with opportunity', async t => {
+  t.plan(3)
+
+  const opp = new Opportunity({
+    title: 'Java Robots in the house',
+    subtitle: 'Launching into space step 4',
+    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+    description: 'Project to build a simple rocket that will reach 1000m',
+    duration: '4 hours',
+    location: 'Albany, Auckland',
+    status: 'draft',
+    requestor: t.context.people[0]._id
+  })
+
+  await opp.save()
+
+  const interest = new Interest({
+    opportunity: opp._id,
+    status: 'interested',
+    person: t.context.people[1]._id
+  })
+
+  await interest.save()
+
+  const res = await request(server)
+    .put(`/api/opportunities/${opp._id}`)
+    .send({ status: 'done' })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const archivedInterest = await InterestArchive.findOne({ _id: interest._id }).exec()
+  t.is(archivedInterest.status, 'interested')
+  const oldInterest = await Interest.findOne({ _id: interest._id }).exec()
+  t.is(oldInterest, null)
 })
 
 test.serial('should return 400 for a bad request', async t => {

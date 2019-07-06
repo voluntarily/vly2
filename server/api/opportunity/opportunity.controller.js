@@ -1,7 +1,9 @@
 const escapeRegex = require('../../util/regexUtil')
 const Opportunity = require('./opportunity')
+const Interest = require('./../interest/interest')
 const Tag = require('./../tag/tag')
 const OpportunityArchive = require('./../opportunity-archive/opportunityArchive')
+const InterestArchive = require('./../interest-archive/interestArchive')
 const { regions } = require('../location/locationData')
 
 /**
@@ -111,6 +113,7 @@ const putOpportunity = async (req, res) => {
     if (req.body.status === 'done' || req.body.status === 'cancelled') {
       await Opportunity.findByIdAndUpdate(req.params._id, { $set: req.body })
       await archiveOpportunity(req.params._id)
+      await archiveInterests(req.params._id)
     } else {
       await Opportunity.findByIdAndUpdate(req.params._id, { $set: req.body })
     }
@@ -122,11 +125,18 @@ const putOpportunity = async (req, res) => {
 
 const archiveOpportunity = async (id) => {
   let opportunity = await Opportunity.findById(id).exec()
-  let opObject = opportunity.toJSON()
-  const opportunityArchive = new OpportunityArchive(opObject)
-  await opportunityArchive.save()
-  await Opportunity.findByIdAndDelete(id).exec()
+  await new OpportunityArchive(opportunity.toJSON()).save()
+  await Opportunity.deleteOne({ _id: id }).exec()
   return archiveOpportunity
+}
+
+const archiveInterests = async (opId) => {
+  let opportunityInterests = await Interest.find({ opportunity: opId }).exec()
+  let interest
+  for (interest of opportunityInterests) {
+    await new InterestArchive(interest.toJSON()).save()
+    await Interest.deleteOne({ _id: interest._id }).exec()
+  }
 }
 
 module.exports = {
