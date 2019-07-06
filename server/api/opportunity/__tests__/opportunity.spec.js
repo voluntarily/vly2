@@ -12,7 +12,6 @@ import { jwtData } from '../../../middleware/session/__tests__/setSession.fixtur
 import OpportunityArchive from './../../opportunity-archive/opportunityArchive'
 import Interest from '../../interest/interest'
 import InterestArchive from '../../interest-archive/interestArchive'
-import objectid from 'objectid'
 
 const { regions } = require('../../location/locationData')
 
