@@ -26,15 +26,12 @@ const blankPerson = {
 
 export class PersonDetailPage extends Component {
   state = {
-    editing: false,
-    text: ''
+    editing: false
   }
   static async getInitialProps ({ store, query }) {
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     if (isNew) {
-      console.log('personDetailPage: getInitialProps', isNew)
-
       return {
         isNew: true,
         personid: null
@@ -49,7 +46,6 @@ export class PersonDetailPage extends Component {
   }
 
   componentDidMount () {
-    console.log('persondetailpage: componentDidMount', this.props.isNew)
     if (this.props.isNew) {
       this.setState({ editing: true })
     }
@@ -65,7 +61,6 @@ export class PersonDetailPage extends Component {
   // TODO: [VP-209] only show person delete button for admins
   async handleDelete (person) {
     if (!person) return
-    // Actual data request
     await this.props.dispatch(reduxApi.actions.people.delete({ id: person._id }))
     // TODO error handling - how can this fail?
     message.success('Deleted. ')

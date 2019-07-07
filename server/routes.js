@@ -15,14 +15,12 @@ module.exports = routes()
   // Opportunities
   .add('ops', '/ops', 'op/oplistpage')
   .add('op', '/ops/:id', 'op/opdetailpage')
-  .add('opedit', '/ops/:id/edit', 'op/opupdatepage')
-  .add('opnew', '/op/new', 'op/opupdatepage')
+  .add('opnew', '/op/:new', 'op/opdetailpage')
   .add('opsection', '/op/section', 'op/oplistsection')
   // People
   .add('people', '/people', 'person/personlistpage')
   .add('person', '/people/:id', 'person/persondetailpage')
-  .add('personedit', '/people/:id/edit', 'person/personupdatepage')
-  .add('personnew', '/person/new', 'person/personupdatepage')
+  .add('personnew', '/person/:new', 'person/persondetailpage')
   .add('personsection', '/person/section', 'person/personlistsection')
   // Activities
   .add('acts', '/acts', 'act/actlistpage')
