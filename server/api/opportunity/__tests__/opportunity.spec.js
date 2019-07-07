@@ -334,14 +334,14 @@ test.serial('Should update status of Opportunity when a put request is sent', as
   await opp.save()
   const res = await request(server)
     .put(`/api/opportunities/${opp._id}`)
-    .send({ status: 'done' })
+    .send({ status: 'completed' })
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
 
   t.is(res.status, 200)
   const queriedOpportunity = await OpportunityArchive.findOne({ title: 'Java Robots in the house' }).exec()
-  t.is(queriedOpportunity.status, 'done')
+  t.is(queriedOpportunity.status, 'completed')
 })
 
 test.serial('should archive interests assocaited with opportunity', async t => {
