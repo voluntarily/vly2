@@ -39,8 +39,8 @@ class OpListSection extends Component {
   }
 
   applyDateFilter = (filter) => {
-    const date = (filter.date === undefined) ? null : filter.date
-    const momentObject = moment(date)
+    if (filter.date.length === 0) return this.props.opportunities.data
+    const momentObject = moment(filter.date[0])
     if (!this.props.opportunities.isloading) {
       if (filter.date.length === 0) return this.props.opportunities.data
       const filteredData = this.props.opportunities.data.filter(element => this.isDateFilterBetween(momentObject, element.date))
@@ -51,19 +51,32 @@ class OpListSection extends Component {
 
   isDateFilterBetween = (date, opDateArray) => {
     if (date == null) return true
+    const startDateOpportunities = moment(opDateArray[0])
     switch (this.props.dateFilterType) {
       case DatePickerType.IndividualDate:
-        return moment(date).isSame(opDateArray[0], 'day') // This only compare the start date to the filter. Not included things like end date of the opportunity
+        return date.isSame(startDateOpportunities, 'day') // This only compare the start date to the filter. Not included things like end date of the opportunity
       case DatePickerType.MonthRange:
         return moment(date).isSame(opDateArray[0], 'month')
       case DatePickerType.WeekRange:
-        return true // TODO: implement the week range
+        // The reason why checking is that if any of the opportunity that is open end then is a valid search result
+        // We only check for opportunity that has a specific date range only
+        if (this.opportunityHasEndDate(opDateArray[1]) && this.opportunityHasStartDate(opDateArray[0])) {
+          const weekOfStartDate = startDateOpportunities.week()
+          const weekOfEndDate = moment(opDateArray[1]).week()
+          const weekOfDateFilter = date.week()
+          return (weekOfDateFilter === weekOfStartDate) && (weekOfEndDate === weekOfDateFilter)
+        }
+        return true
       case DatePickerType.DateRange:
         return true
       default:
         return true
     }
   }
+
+  opportunityHasEndDate = (endDate) => { return endDate != null }
+
+  opportunityHasStartDate = (startDate) => startDate != null
 
   async componentDidUpdate (prevProps) {
     if (prevProps.search !== this.props.search ||
