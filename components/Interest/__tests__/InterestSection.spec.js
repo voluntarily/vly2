@@ -113,6 +113,10 @@ test('mount the InterestSection with two interests', async t => {
   // console.log(declinebutton.html())
   declinebutton.simulate('click')
 
+
+
+
+  
   // const popconfirm = wrapper.find('Popconfirm').filter('#declineInvitePopConfirm').first()
   // console.log(popconfirm.html())
 

@@ -49,8 +49,21 @@ const interests = [
     opportunity: ops[0],
     comment: "I'm Andrew",
     status: 'committed'
-  }
-
+  },
+  {
+    _id: interestid,
+    person: people[0],
+    opportunity: ops[0],
+    comment: "I'm Andrew",
+    status: 'completed'
+    },
+  {
+    _id: interestid,
+    person: people[0],
+    opportunity: ops[0],
+    comment: "I'm Andrew",
+    status: 'cancelled'
+    }
 ]
 
 test('initial state', t => {
