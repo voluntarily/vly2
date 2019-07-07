@@ -3,6 +3,8 @@ const Person = require('../person/person')
 const Opportunity = require('../opportunity/opportunity')
 const { config } = require('../../../config/config')
 const { emailPerson } = require('../person/email/emailperson')
+const { InterestFields, InterestStatus } = require('./interest.constants')
+const { Subject: OpportunitySubject } = require('../opportunity/opportunity.constants')
 
 /**
   api/interests -> list all interests
@@ -11,7 +13,7 @@ const { emailPerson } = require('../person/email/emailperson')
   api/interests?me='personid' -> list all the ops i'm interested in and populate the op out.
  */
 const listInterests = async (req, res) => {
-  let sort = 'dateAdded' // todo sort by date.
+  let sort = InterestFields.DATE_ADDED // todo sort by date.
   let got
   try {
     if (req.query.op) {
@@ -23,7 +25,7 @@ const listInterests = async (req, res) => {
       got = await Interest.find(query).populate({ path: 'person', select: 'nickname name avatar' }).sort(sort).exec()
     } else if (req.query.me) {
       const query = { person: req.query.me }
-      got = await Interest.find(query).populate({ path: 'opportunity' }).sort(sort).exec()
+      got = await Interest.find(query).populate({ path: OpportunitySubject }).sort(sort).exec()
     } else {
       got = await Interest.find().sort(sort).exec()
     }
@@ -74,10 +76,10 @@ const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
   const { _id } = volunteer
   const { requestor, title } = opportunity
   const opID = opportunity._id
-  if (interestStatus === 'invited' || interestStatus === 'declined') {
+  if (interestStatus === InterestStatus.INVITED || interestStatus === InterestStatus.DECLINED) {
     // send email to volunteer only
     sendEmailBaseOn(interestStatus, _id, title, opID) // The _id in here is the volunteer id
-  } else if (interestStatus === 'committed') {
+  } else if (interestStatus === InterestStatus.COMMITTED) {
     // send email to requestor only
     sendEmailBaseOn(interestStatus, requestor, title, opID)
   }

@@ -3,6 +3,7 @@ const Opportunity = require('./opportunity')
 const Tag = require('./../tag/tag')
 const OpportunityArchive = require('./../opportunity-archive/opportunityArchive')
 const { regions } = require('../location/locationData')
+const { OpportunityFields } = require('./opportunity.constants')
 
 /**
  * Get all orgs
@@ -12,7 +13,7 @@ const { regions } = require('../location/locationData')
  */
 const getOpportunities = async (req, res) => {
   let query = {} // { status: 'active' }
-  let sort = 'title'
+  let sort = OpportunityFields.TITLE
   let select = {}
 
   try {
@@ -40,16 +41,16 @@ const getOpportunities = async (req, res) => {
       const searchExpression = new RegExp(regexSearch, 'i')
       const searchParams = {
         $or: [
-          { 'title': searchExpression },
-          { 'subtitle': searchExpression },
-          { 'description': searchExpression }
+          { [OpportunityFields.TITLE]: searchExpression },
+          { [OpportunityFields.SUBTITLE]: searchExpression },
+          { [OpportunityFields.DESCRIPTION]: searchExpression }
         ]
       }
 
       // mongoose isn't happy if we provide an empty array as an expression
       if (matchingTagIds.length > 0) {
         const tagIdExpression = {
-          $or: matchingTagIds.map(id => ({ 'tags': id }))
+          $or: matchingTagIds.map(id => ({ [OpportunityFields.TAGS]: id }))
         }
         searchParams.$or.push(tagIdExpression)
       }
@@ -70,7 +71,7 @@ const getOpportunities = async (req, res) => {
       // location is a filter so should still match all other queries. use AND, not OR
       query = {
         $and: [
-          { 'location': { $in: locsToFind } },
+          { [OpportunityFields.LOCATION]: { $in: locsToFind } },
           query
         ]
       }
@@ -97,8 +98,8 @@ const getOpportunity = async (req, res) => {
     const got = await Opportunity
       .accessibleBy(req.ability)
       .findOne(req.params)
-      .populate('requestor')
-      .populate('tags')
+      .populate(OpportunityFields.REQUESTOR)
+      .populate(OpportunityFields.TAGS)
       .exec()
     res.json(got)
   } catch (e) {
