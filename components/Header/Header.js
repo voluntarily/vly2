@@ -18,22 +18,21 @@ const Brand = styled.h1`
 `
 
 const MenuGrid = styled.div`
-display: grid;
-grid-template-columns: 2fr 1fr 2fr;
-@media screen and (max-width: 767px) {
-  grid-template-columns: 0fr 1fr 2fr;
-}
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+  @media screen and (max-width: 767px) {
+    grid-template-columns: 0fr 1fr 2fr;
+  }
 `
 
 const LogoContainer = styled.a`
-margin: 0 auto;
-@media screen and (max-width: 767px) {
-margin: 0;
-}
+  margin: 0 auto;
+  @media screen and (max-width: 767px) {
+    margin: 0;
+  }
 `
 
 const Logo = styled.img`
-
   height: 3rem;
   width: 12rem;
   margin: 0.7rem;
@@ -47,19 +46,18 @@ const Logo = styled.img`
     margin-left: 0.5rem;
     width: 3rem;
   }
-
 `
 const SearchInput = styled(Search)`
   width: 20rem;
   display: inline-block;
   margin-left: 0.5rem;
 
-box-shadow: 1px 1px 12px 0 rgba(0,0,0,0.2);
-padding: 4px;
-border-radius: 4px;
+  box-shadow: 1px 1px 12px 0 rgba(0, 0, 0, 0.2);
+  padding: 4px;
+  border-radius: 4px;
 
   @media screen and (max-width: 767px) {
- display: none;
+    display: none;
   }
 `
 
@@ -81,26 +79,28 @@ const getAllowedLinks = isAuthenticated =>
 const Header = ({ isAuthenticated, ...props }) => (
   <Layout.Header>
     <MenuGrid>
-    <div>
-    <Brand className='site-title' />
-    <SearchInput
-      // size='small'
-      placeholder='Search for cool ways to help out'
-      // enterButton='Search'
-      onSearch={handleSearch}
-    />
-    </div>
-        <LogoContainer>
-      <Link href={isAuthenticated ? '/' : '/'}>
-        <Logo src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' alt='Voluntarily logo' />
-      </Link>
-    </LogoContainer>
-    <div>
-    <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
-    </div>
+      <div>
+        <Brand className='site-title' />
+        <SearchInput
+          // size='small'
+          placeholder='Search for cool ways to help out'
+          // enterButton='Search'
+          onSearch={handleSearch}
+        />
+      </div>
+      <LogoContainer>
+        <Link href={isAuthenticated ? '/' : '/'}>
+          <Logo
+            src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+            alt='Voluntarily logo'
+          />
+        </Link>
+      </LogoContainer>
+      <div>
+        <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
+      </div>
     </MenuGrid>
   </Layout.Header>
-
 )
 Header.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
@@ -110,6 +110,4 @@ const mapStateToProps = store => ({
   me: store.session.me
 })
 
-export default connect(
-  mapStateToProps
-)(Header)
+export default connect(mapStateToProps)(Header)
