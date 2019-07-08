@@ -219,7 +219,7 @@ test.serial('test filter by week is called. No opportunities shown', async t => 
 
 test.serial('Test filter by date range. No opportunities shown', async t => {
   const realStore = makeStore(initStore)
-  
+
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/?search=Growing`
@@ -239,7 +239,7 @@ test.serial('Test filter by date range. No opportunities shown', async t => {
 
 test.serial('Test filter by date range. Filter result include open ended opportunity', async t => {
   const realStore = makeStore(initStore)
-  const opsWithOpenEndDate = [ 
+  const opsWithOpenEndDate = [
     ...ops,
     {
       ...ops[0],
