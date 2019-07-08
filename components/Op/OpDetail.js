@@ -91,8 +91,7 @@ OpDetail.propTypes = {
     imgUrl: PropTypes.any,
     description: PropTypes.string,
     duration: PropTypes.string,
-    status: PropTypes.string,
-    _id: PropTypes.string.isRequired
+    status: PropTypes.string
   })
 }
 

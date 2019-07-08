@@ -10,7 +10,8 @@ const OpportunityRoutes = {
 const OpportunityStatus = {
   DRAFT: 'draft',
   ACTIVE: 'active',
-  COMPLETED: 'completed'
+  COMPLETED: 'completed',
+  CANCELLED: 'cancelled'
 }
 
 const OpportunityFields = {

@@ -26,8 +26,25 @@ const SectionWrapper = styled.div`
   margin: 4rem 0 6rem 0;
 `
 
-const TitleContainer = styled.div`
+const TitleContainer = styled.div``
+
+const PageHeaderContainer = styled.div`
   margin: 4rem 0 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  @media screen and (max-width: 767px) {
+    margin-top: 4rem;
+    grid-template-columns: calc(100vw - 2rem);
+    grid-gap: 0rem;
+  }
+`
+
+const RequestButtonContainer = styled.div`
+  justify-self: end;
+  @media screen and (max-width: 767px) {
+    margin-top: 1rem;
+    justify-self: start;
+  }
 `
 
 function callback (key) {
@@ -42,18 +59,20 @@ class PersonHomePage extends Component {
   mergeOpsList () {
     const myops = this.props.opportunities.data // list of ops I own
     const interests = this.props.interests.data // list of ops I'm volunteering for
-    const volops = interests.map((interest, index) => {
-      if (!interest.opportunity || typeof (interest.opportunity) === 'string') {
-        return null
-      } else {
-        interest.opportunity.interest = {
-          _id: interest._id,
-          status: interest.status,
-          comment: interest.comment
+    const volops = interests
+      .map((interest, index) => {
+        if (!interest.opportunity || typeof interest.opportunity === 'string') {
+          return null
+        } else {
+          interest.opportunity.interest = {
+            _id: interest._id,
+            status: interest.status,
+            comment: interest.comment
+          }
+          return interest.opportunity
         }
-        return interest.opportunity
-      }
-    }).filter(op => op)
+      })
+      .filter(op => op)
     const ops = [...volops, ...myops]
     return ops
   }
@@ -130,26 +149,26 @@ class PersonHomePage extends Component {
         />
       </span>
     )
-    const opAddButton = <OpAdd {...this.props} />
+
     return (
       <FullPage>
-        <TitleContainer>
-          <TextHeadingBlack>
-            {this.props.me.nickname}
-            {/* <FormattedMessage
+        <PageHeaderContainer>
+          <TitleContainer>
+            <TextHeadingBlack>
+              {this.props.me.nickname}
+              {/* <FormattedMessage
             id='home.title'
             defaultMessage='My Stuff'
             description='title on volunteer home page.'
           /> */}
-          </TextHeadingBlack>
-        </TitleContainer>
+            </TextHeadingBlack>
+          </TitleContainer>
+          <RequestButtonContainer>
+            <OpAdd {...this.props} />
+          </RequestButtonContainer>
+        </PageHeaderContainer>
 
-        <Tabs
-          style={shadowStyle}
-          defaultActiveKey='1'
-          onChange={callback}
-          tabBarExtraContent={opAddButton}
-        >
+        <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={opsTab} key='1'>
             <SectionWrapper>
               <SectionTitleWrapper>
