@@ -135,6 +135,10 @@ const regions = [
       'Gore District',
       'Invercargill City'
     ]
+  },
+  {
+    name: 'Online', // special location, i.e. online volunteer opportunities
+    containedTerritories: []
   }
 ]
 
@@ -143,7 +147,22 @@ const territories = regions.map(r => r.containedTerritories).reduce((acc, val) =
   return [...acc, ...val]
 })
 
+const sortedLocations = [
+  ...regions.map(r => r.name),
+  ...territories
+]
+sortedLocations.sort((l1, l2) => {
+  if (l1 < l2) {
+    return -1
+  } else if (l1 > l2) {
+    return 1
+  } else {
+    return 0
+  }
+})
+
 module.exports = {
   regions,
-  territories
+  territories,
+  sortedLocations
 }

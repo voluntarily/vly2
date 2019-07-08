@@ -9,7 +9,6 @@ margin: 0.1rem;
 display: inline-block;
 position: relative;
 
-
 vertical-align: middle;
 font-size: 1.2rem;
 font-weight: 700;
@@ -17,14 +16,13 @@ font-weight: 700;
 border-radius: 0.2rem;
 background-color: #e8e8e8;
 color: black;
-
 `
 
 export function OpDetailTagsDisplay ({ tags }) {
   return (
     <div>
       {tags.map(tag => {
-        return <TagStyle key={tag.tag}>{tag.tag}</TagStyle> // TODO: styling when designs are finalised
+        return <TagStyle key={tag.tag}>{tag.tag}</TagStyle>
       })}
     </div>
   )

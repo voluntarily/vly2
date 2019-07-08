@@ -87,5 +87,5 @@ test('render landing page ', t => {
   t.is(wrapper.find('h1').first().text(), 'volunteer yo—self.')
 
   // there should be a list of ops
-  t.is(wrapper.find('.requestTitle').length, 4)
+  t.is(wrapper.find('.requestTitle').length, ops.length)
 })

@@ -61,7 +61,7 @@ function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-test.only('mount the list with ops', async t => {
+test.serial('mount the list with ops', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -80,7 +80,7 @@ test.only('mount the list with ops', async t => {
   myMock.restore()
 })
 
-test.only('mount the list with ops search with results', async t => {
+test.serial('mount the list with ops search with results', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -99,7 +99,7 @@ test.only('mount the list with ops search with results', async t => {
   myMock.restore()
 })
 
-test.only('mount the list with ops search with no results', async t => {
+test.serial('mount the list with ops search with no results', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -118,7 +118,7 @@ test.only('mount the list with ops search with no results', async t => {
   myMock.restore()
 })
 
-test.only('mount the list with ops query and search', async t => {
+test.serial('mount the list with ops query and search', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -134,5 +134,43 @@ test.only('mount the list with ops query and search', async t => {
   wrapper.update()
   t.is(wrapper.find('OpCard').length, 1) // there are two cards on the screen
   t.truthy(myMock.done())
+  myMock.restore()
+})
+
+test.serial('mount the list with ops search and location', async t => {
+  const realStore = makeStore(initStore)
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/?search=Growing&location=Auckland`
+  myMock.getOnce(api, [ops[0], ops[1]])
+
+  const wrapper = await mountWithIntl(
+    <Provider store={realStore}>
+      <OpListSection search='Growing' location='Auckland' handleShowOp={() => {}} handleDeleteOp={() => {}} />
+    </Provider>
+  )
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
+  t.is(wrapper.find('OpCard').length, 2) // there are two cards on the screen
+  t.truthy(myMock.done()) // ensure location query is added to the url
+  myMock.restore()
+})
+
+test.serial('mount the list with ops location only', async t => {
+  const realStore = makeStore(initStore)
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/?location=Northland`
+  myMock.getOnce(api, [ops[0]])
+
+  const wrapper = await mountWithIntl(
+    <Provider store={realStore}>
+      <OpListSection location='Northland' handleShowOp={() => {}} handleDeleteOp={() => {}} />
+    </Provider>
+  )
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
+  t.is(wrapper.find('OpCard').length, 1) // there are two cards on the screen
+  t.truthy(myMock.done()) // ensure location query is added to the url
   myMock.restore()
 })

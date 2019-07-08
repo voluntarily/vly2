@@ -104,10 +104,7 @@ export class OpUpdatePage extends Component {
     const me = this.props.me
     const existingTags = this.props.tags.data.map(tag => tag.tag)
 
-    const existingLocations = [
-      ...this.props.locations.data[0].regions.map(r => r.name),
-      ...this.props.locations.data[0].territories
-    ]
+    const existingLocations = this.props.locations.data
 
     return (
       <FullPage>
