@@ -113,11 +113,28 @@ test('interested state', t => {
   />)
   t.is(wrapper.find('button').first().text(), 'Withdraw Interest')
   wrapper.find('button').first().simulate('click')
+})
+
+test('completed state', t => {
+  const changeStatus = sinon.fake()
+  const withdraw = sinon.fake()
+
+  const wrapper = mountWithIntl(<RegisterInterestItem
+    interest={interests[4]}
+    onChangeStatus={changeStatus}
+    onWithdraw={withdraw}
+  />)
+  t.is(withdraw.InterestButtonEnabled)
+  //  t.truthy(withdraw.InterestButtonEnabled)
+  // t.is(wrapper.find('button'))
+  // //t.is(wrapper.find('button'))
+  })
+  // wrapper.find('button').first().simulate('click')
   // const popconfirm = wrapper.find('Popconfirm').filter('#WithdrawInterestPopConfirm').first()
   // console.log(popconfirm.html())
 
   // TODO: popconfirm requires a valid event.
   // popconfirm.props().onConfirm()
   // Can't get here until we
-  // t.truthy(withdraw.calledOnce)
-})
+ 
+  
