@@ -357,7 +357,7 @@ class OpDetailForm extends Component {
             <DescriptionContainer>
               <TitleContainer>
                 <TextHeadingBold>
-                  Do you need any specific skills?
+                  Do you need any specific skills? (Optional)
                 </TextHeadingBold>
               </TitleContainer>
               <TextP>
@@ -387,8 +387,7 @@ class OpDetailForm extends Component {
                 <TextHeadingBold>Where and when? (Optional)</TextHeadingBold>
               </TitleContainer>
               <TextP>
-                If you know when or where you need help, it makes it easier to
-                find volunteers.
+                More skilled volunteers will offer to help you if you know when, or where you need help.
               </TextP>
             </DescriptionContainer>
             <InputContainer>
