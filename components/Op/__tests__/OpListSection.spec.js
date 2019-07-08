@@ -61,6 +61,13 @@ const filterDateState = {
   date: ['2019-07-16T08:04:02.793Z'] // Tue, 16 Jul 2019 01:04:02
 }
 
+const dateRangeFilterValue = {
+  date: [
+    '2019-03-02T00:00:00+00:00', // Sat, 02 Mar 2019 00:00:00
+    '2019-03-02T00:00:00+00:00' // Sat, 02 Mar 2019 00:00:00
+  ]
+}
+
 const emptyFilterDateState = {
   date: []
 }
@@ -212,12 +219,7 @@ test.serial('test filter by week is called. No opportunities shown', async t => 
 
 test.serial('Test filter by date range. No opportunities shown', async t => {
   const realStore = makeStore(initStore)
-  const dateRangeFilterValue = {
-    date: [
-      '2019-03-02T00:00:00+00:00', // Sat, 02 Mar 2019 00:00:00
-      '2019-03-02T00:00:00+00:00' // Sat, 02 Mar 2019 00:00:00
-    ]
-  }
+  
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/?search=Growing`
@@ -231,6 +233,39 @@ test.serial('Test filter by date range. No opportunities shown', async t => {
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   t.is(wrapper.find('OpCard').length, 0)
+  t.truthy(myMock.done())
+  myMock.restore()
+})
+
+test.serial('Test filter by date range. Filter result include open ended opportunity', async t => {
+  const realStore = makeStore(initStore)
+  const opsWithOpenEndDate = [ 
+    ...ops,
+    {
+      ...ops[0],
+      date: [
+        {
+          '$date': '2019-05-23T12:26:18.000Z'
+        },
+        null
+      ]
+    }
+  ]
+
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/?search=Growing`
+  myMock.getOnce(api, opsWithOpenEndDate)
+
+  const wrapper = await mountWithIntl(
+    <Provider store={realStore}>
+      <OpListSection search='Growing' location='' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={dateRangeFilterValue} dateFilterType={DatePickerType.DateRange} />
+    </Provider>
+  )
+
+  await sleep(1)
+  wrapper.update()
+  t.is(wrapper.find('OpCard').length, 1)
   t.truthy(myMock.done())
   myMock.restore()
 })
