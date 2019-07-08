@@ -57,8 +57,12 @@ const initStore = {
     data: [ ]
   }
 }
-const filterState = {
-  date: '2019-07-16T08:04:02.793Z' // Tue, 16 Jul 2019 01:04:02
+const filterDateState = {
+  date: ['2019-07-16T08:04:02.793Z'] // Tue, 16 Jul 2019 01:04:02
+}
+
+const emptyFilterDateState = {
+  date: []
 }
 
 function sleep (ms) {
@@ -71,10 +75,9 @@ test.serial('mount the list with ops', async t => {
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/`
   myMock.getOnce(api, ops)
-
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} />
+      <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} filter={emptyFilterDateState} dateFilterType={DatePickerType.IndividualDate} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -89,16 +92,16 @@ test.serial('mount the list with ops search with results', async t => {
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/?search=Growing`
-  myMock.getOnce(api, [ops[0]])
+  myMock.getOnce(api, ops)
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='Growing' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} />
+      <OpListSection search='Growing' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={emptyFilterDateState} dateFilterType={DatePickerType.IndividualDate} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('OpCard').length, 1) // there are two cards on the screen
+  t.is(wrapper.find('OpCard').length, 2) // there are two cards on the screen
   t.truthy(myMock.done())
   myMock.restore()
 })
@@ -112,7 +115,7 @@ test.serial('mount the list with ops search with no results', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='NoSuchItem' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} />
+      <OpListSection search='NoSuchItem' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterDateState} dateFilterType={DatePickerType.IndividualDate} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -131,7 +134,7 @@ test.serial('mount the list with ops query and search', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='100' query={'{\'status\':\'done\'}'} handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} />
+      <OpListSection search='100' query={'{\'status\':\'done\'}'} handleShowOp={() => {}} handleDeleteOp={() => {}} filter={emptyFilterDateState} dateFilterType={DatePickerType.IndividualDate} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -150,7 +153,7 @@ test.serial('test filter by date is called, no op is shown', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='Growing' location='' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterState} dateFilterType={DatePickerType.IndividualDate} />
+      <OpListSection search='Growing' location='' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterDateState} dateFilterType={DatePickerType.IndividualDate} />
     </Provider>
   )
   await sleep(2) // allow asynch fetch to complete
@@ -163,7 +166,7 @@ test.serial('test filter by date is called, no op is shown', async t => {
 test.serial('test filter by month is called. There is 1 OP shown', async t => {
   const realStore = makeStore(initStore)
   const monthFilterValue = {
-    date: ops[0].date[0]
+    date: [ ops[0].date[0] ] // Confusing but basically this will create an array of 1 element from the first element of the ops array
   }
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -198,6 +201,31 @@ test.serial('test filter by week is called. No opportunities shown', async t => 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
       <OpListSection search='Growing' location='' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={monthFilterValue} dateFilterType={DatePickerType.WeekRange} />
+    </Provider>
+  )
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
+  t.is(wrapper.find('OpCard').length, 0)
+  t.truthy(myMock.done())
+  myMock.restore()
+})
+
+test.serial('Test filter by date range. No opportunities shown', async t => {
+  const realStore = makeStore(initStore)
+  const dateRangeFilterValue = {
+    date: [
+      '2019-03-02T00:00:00+00:00', // Sat, 02 Mar 2019 00:00:00
+      '2019-03-02T00:00:00+00:00' // Sat, 02 Mar 2019 00:00:00
+    ]
+  }
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/?search=Growing`
+  myMock.getOnce(api, [ops[0]])
+
+  const wrapper = await mountWithIntl(
+    <Provider store={realStore}>
+      <OpListSection search='Growing' location='' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={dateRangeFilterValue} dateFilterType={DatePickerType.DateRange} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete

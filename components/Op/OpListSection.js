@@ -40,13 +40,11 @@ class OpListSection extends Component {
 
   applyDateFilter = (filter) => {
     if (filter.date.length === 0) return this.props.opportunities.data
-    const momentObject = moment(filter.date[0])
+    const momentLists = filter.date.map(element => moment(element))
     if (!this.props.opportunities.isloading) {
-      if (filter.date.length === 0) return this.props.opportunities.data
-      const filteredData = this.props.opportunities.data.filter(element => this.isDateFilterBetween(momentObject, element.date))
+      const filteredData = this.props.opportunities.data.filter(element => this.isDateFilterBetween(momentLists, element.date))
       return filteredData
     }
-    return this.props.opportunities.data
   }
 
   isDateFilterBetween = (date, opDateArray) => {
@@ -54,23 +52,29 @@ class OpListSection extends Component {
     const startDateOpportunities = moment(opDateArray[0])
     switch (this.props.dateFilterType) {
       case DatePickerType.IndividualDate:
-        return date.isSame(startDateOpportunities, 'day') // This only compare the start date to the filter. Not included things like end date of the opportunity
+        return date[0].isSame(startDateOpportunities, 'day') // This only compare the start date to the filter. Not included things like end date of the opportunity
       case DatePickerType.MonthRange:
-        return moment(date).isSame(opDateArray[0], 'month')
+        return date[0].isSame(opDateArray[0], 'month')
       case DatePickerType.WeekRange:
         // The reason why checking is that if any of the opportunity that is open end then is a valid search result
         // We only check for opportunity that has a specific date range only
         if (this.opportunityHasEndDate(opDateArray[1]) && this.opportunityHasStartDate(opDateArray[0])) {
           const weekOfStartDate = startDateOpportunities.week()
           const weekOfEndDate = moment(opDateArray[1]).week()
-          const weekOfDateFilter = date.week()
+          const weekOfDateFilter = date[0].week()
           return (weekOfDateFilter === weekOfStartDate) && (weekOfEndDate === weekOfDateFilter)
         }
         return true
       case DatePickerType.DateRange:
-        return true
-      default:
-        return true
+        // React will force an update. Since the user has not chose the end date of the date filter yet which this will throw undefined error
+        // The reason for this is because when the user change state from specific date,month or week to date range
+        if (date.length !== 2) return true
+        if (this.opportunityHasEndDate(opDateArray[1] && this.opportunityHasStartDate(opDateArray[0]))) {
+          const startDateFilterBetweenOpportunity = date[0].isSame(startDateOpportunities, 'date')
+          const endDateFilterBetweenOpportunity = date[1].isBetween(startDateOpportunities, moment(opDateArray[1]), 'date')
+          return startDateFilterBetweenOpportunity && endDateFilterBetweenOpportunity
+        }
+        return true // Valid filter result for any open ended opportunity
     }
   }
 
