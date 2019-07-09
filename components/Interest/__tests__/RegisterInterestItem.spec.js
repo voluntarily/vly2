@@ -120,15 +120,42 @@ test('completed state', t => {
   const withdraw = sinon.fake()
 
   const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[4]}
+    interest={interests[1]}
     onChangeStatus={changeStatus}
     onWithdraw={withdraw}
   />)
-  t.is(withdraw.InterestButtonEnabled)
+  t.is((withdraw.InterestButtonEnabled))
+  })
+
+  test('cancelled state', t => {
+    const changeStatus = sinon.fake()
+    const withdraw = sinon.fake()
+  
+    const wrapper = mountWithIntl(<RegisterInterestItem
+      interest={interests[4]}
+      onChangeStatus={changeStatus}
+      onWithdraw={withdraw}
+    />)
+    t.is(withdraw.InterestButtonEnabled)
+    })
+
+    test('invited', t => {
+      const changeStatus = sinon.fake()
+      const withdraw = sinon.fake()
+    
+      const wrapper = mountWithIntl(<RegisterInterestItem
+        interest={interests[4]}
+        onChangeStatus={changeStatus}
+        onWithdraw={withdraw}
+      />)
+      t.is(withdraw.InterestButtonEnabled)
+      })
+
+  ///////////////////////////////////////////////////////////////////////////////////////
   //  t.truthy(withdraw.InterestButtonEnabled)
   // t.is(wrapper.find('button'))
   // //t.is(wrapper.find('button'))
-  })
+
   // wrapper.find('button').first().simulate('click')
   // const popconfirm = wrapper.find('Popconfirm').filter('#WithdrawInterestPopConfirm').first()
   // console.log(popconfirm.html())
