@@ -93,7 +93,7 @@ class BigSearch extends PureComponent {
   }
 
   render () {
-    const { onSearch, search, locations } = this.props
+    const { onSearch, search, locations, onClickDateFilter } = this.props
     const { filterShowing, selectedLocation } = this.state
     return (
     <>
@@ -109,7 +109,7 @@ class BigSearch extends PureComponent {
           />
         </SearchInputContainer>
         <SearchFilterText>Filter by:</SearchFilterText>
-        <FilterItem>Date</FilterItem>
+        <FilterItem onClick={() => onClickDateFilter()}>Date</FilterItem>
         <FilterItem onClick={this.showFilterDetails}>Location</FilterItem>
         <FilterItem>Categories</FilterItem>
         <FilterItem>Impact</FilterItem>
