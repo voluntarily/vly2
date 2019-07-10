@@ -111,8 +111,6 @@ class BigSearch extends PureComponent {
         <SearchFilterText>Filter by:</SearchFilterText>
         <FilterItem onClick={() => onClickDateFilter()}>Date</FilterItem>
         <FilterItem onClick={this.showFilterDetails}>Location</FilterItem>
-        <FilterItem>Categories</FilterItem>
-        <FilterItem>Impact</FilterItem>
       </SearchContainer>
       {filterShowing &&
       <FilterContainer onFilterApplied={this.filterApplied} onCancel={this.cancelFilter}>
