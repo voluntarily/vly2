@@ -6,7 +6,7 @@ import securePage from '../../hocs/securePage'
 import { message, Divider } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
-import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
+import {PageTitle, PageTitleText, PageTitleSub } from '../../components/LandingPageComponents/PageTitle.js'
 const newOp = {
   title: '',
   subtitle: '',
@@ -108,10 +108,10 @@ export class OpUpdatePage extends Component {
 
     return (
       <FullPage>
-        <PageTitle
-          title='Create a request'
-          subtitle='Ask volunteers for assistance with anything related to tech - there are 1,312 volunteers looking for opportunities to help out'
-        />
+        <PageTitle>
+          <PageTitleText>Create a request</PageTitleText>
+          <PageTitleSub>Ask volunteers for assistance with anything related to tech - there are 1,312 volunteers looking for opportunities to help out</PageTitleSub>
+          </PageTitle>
         <Divider />
         <OpDetailForm
           op={op}

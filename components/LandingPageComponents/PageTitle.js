@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Children } from 'react'
 import styled from 'styled-components'
 
 const PageTitleContainer = styled.div`
@@ -22,7 +22,7 @@ const PageTitleContainer = styled.div`
   
 
 `
-const PageTitleText = styled.h1`
+export const PageTitleText = styled.h1`
   font-weight: 900;
   color: black;
   font-size: 3.5rem;
@@ -45,17 +45,16 @@ const PageTitleText = styled.h1`
 
 `
 
-const PageTitleSub = styled.p`
+export const PageTitleSub = styled.p`
   font-size: 1rem;
   font-weight: 400;
   color: #333;
   letter-spacing: -0.02rem;
 `
 
-const PageTitle = ({ title, subtitle, ...props }) => (
+const PageTitle = ( ...props ) => (
   <PageTitleContainer>
-    <PageTitleText>{title}</PageTitleText>
-    <PageTitleSub>{subtitle}</PageTitleSub>
+    {props.children}
   </PageTitleContainer>
 )
 
