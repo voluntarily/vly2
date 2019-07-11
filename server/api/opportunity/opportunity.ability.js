@@ -1,4 +1,4 @@
-const { Subject, OpportunityStatus, OpportunityFields } = require('./opportunity.constants')
+const { OpportunitySubject, OpportunityStatus, OpportunityFields } = require('./opportunity.constants')
 const { Role } = require('../../services/auth/role')
 const { Action } = require('../../services/abilities/ability.constants')
 
@@ -15,34 +15,34 @@ interface Rule {
 */
 
 const anonAbilities = [{
-  Subject,
+  OpportunitySubject,
   action: Action.READ,
   conditions: { status: OpportunityStatus.ACTIVE }
 }, {
-  Subject,
+  OpportunitySubject,
   action: Action.LIST,
   conditions: { status: OpportunityStatus.ACTIVE },
   fields: [OpportunityFields.ID, OpportunityFields.TITLE, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION]
 }, {
-  Subject,
+  OpportunitySubject,
   action: Action.UPDATE,
   inverted: true
 }, {
-  Subject,
+  OpportunitySubject,
   action: Action.DELETE,
   inverted: true
 }, {
-  Subject,
+  OpportunitySubject,
   action: Action.CREATE,
   inverted: true
 }]
 
-const allAbilities = [{ subject, action: Action.READ }, { subject, action: Action.LIST }]
+const allAbilities = [{ OpportunitySubject, action: Action.READ }, { OpportunitySubject, action: Action.LIST }]
 const vpAbilities = allAbilities
-const opAbilities = allAbilities.concat([{ subject, action: Action.CREATE }, { subject, action: Action.UPDATE }])
-const testerAbilities = [{ subject, action: Action.MANAGE }]
-const adminAbilities = [{ subject, action: Action.MANAGE }]
-const orgAdminAbilities = [{ subject, action: Action.MANAGE }]
+const opAbilities = allAbilities.concat([{ OpportunitySubject, action: Action.CREATE }, { OpportunitySubject, action: Action.UPDATE }])
+const testerAbilities = [{ OpportunitySubject, action: Action.MANAGE }]
+const adminAbilities = [{ OpportunitySubject, action: Action.MANAGE }]
+const orgAdminAbilities = [{ OpportunitySubject, action: Action.MANAGE }]
 
 module.exports = {
   [Role.ANON]: anonAbilities,
