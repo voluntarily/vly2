@@ -6,7 +6,11 @@ import securePage from '../../hocs/securePage'
 import { message, Divider } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
-import {PageTitle, PageTitleText, PageTitleSub } from '../../components/LandingPageComponents/PageTitle.js'
+import {
+  PageTitle,
+  PageTitleText,
+  PageTitleSub
+} from '../../components/LandingPageComponents/PageTitle.js'
 const newOp = {
   title: '',
   subtitle: '',
@@ -94,12 +98,14 @@ export class OpUpdatePage extends Component {
     if (updatedOp && updatedOp._id) Router.push(`/ops/${updatedOp._id}`)
   }
   render () {
-    const op = this.props.opExists ? {
-      ...this.props.opportunities.data[0],
-      tags: this.props.opportunities.data[0].tags.map(op => op.tag),
-      startDate: this.props.opportunities.data[0].date[0],
-      endDate: this.props.opportunities.data[0].date[1]
-    } : newOp
+    const op = this.props.opExists
+      ? {
+        ...this.props.opportunities.data[0],
+        tags: this.props.opportunities.data[0].tags.map(op => op.tag),
+        startDate: this.props.opportunities.data[0].date[0],
+        endDate: this.props.opportunities.data[0].date[1]
+      }
+      : newOp
 
     const me = this.props.me
     const existingTags = this.props.tags.data.map(tag => tag.tag)
@@ -110,8 +116,11 @@ export class OpUpdatePage extends Component {
       <FullPage>
         <PageTitle>
           <PageTitleText>Create a request</PageTitleText>
-          <PageTitleSub>Ask volunteers for assistance with anything related to tech - there are 1,312 volunteers looking for opportunities to help out</PageTitleSub>
-          </PageTitle>
+          <PageTitleSub>
+            Ask volunteers for assistance with anything related to tech - there
+            are 1,312 volunteers looking for opportunities to help out
+          </PageTitleSub>
+        </PageTitle>
         <Divider />
         <OpDetailForm
           op={op}

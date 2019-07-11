@@ -321,13 +321,29 @@ class OpDetailForm extends Component {
 
     // Only show error after a field is touched.
     const titleError = isFieldTouched('title') && getFieldError('title')
-
+    const isNewOp = this.props.op._id
     return (
       <div className='OpDetailForm'>
         <PageTitle>
-          <h1>Create a request</h1>
-          <p>Ask volunteers for assistance with anything related to tech - there are 1,312 volunteers looking for opportunities to help out</p>
-          </PageTitle>
+          <h1>
+            {isNewOp ? (
+              <FormattedMessage
+                id='editOp'
+                description='Title for editing Ops'
+              />
+            ) : (
+              <FormattedMessage
+                id='createOp'
+                description='Title for creating Ops'
+              />
+            )}{' '}
+            a request
+          </h1>
+          <p>
+            Ask volunteers for assistance with anything related to tech - there
+            are 1,312 volunteers looking for opportunities to help out
+          </p>
+        </PageTitle>
         <Divider />
         <Form hideRequiredMark colon={false}>
           <FormGrid>
