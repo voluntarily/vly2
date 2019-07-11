@@ -85,7 +85,7 @@ class BigSearch extends PureComponent {
 
   filterApplied = () => {
     // Reason for using set state callback https://stackoverflow.com/questions/42038590/when-to-use-react-setstate-callback
-    this.setState({ filterShowing: !this.state.filterShowing }, () => { 
+    this.setState({ filterShowing: !this.state.filterShowing }, () => {
       this.props.onFilterChange(this.state.selectedLocation)
     })
   }
@@ -96,7 +96,7 @@ class BigSearch extends PureComponent {
   }
 
   render () {
-    const { onSearch, search, locations, onClickDateFilter,dateLabel } = this.props
+    const { onSearch, search, locations, onClickDateFilter, dateLabel } = this.props
     const { filterShowing, selectedLocation } = this.state
     return (
     <>

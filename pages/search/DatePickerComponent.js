@@ -25,11 +25,11 @@ export default function DatePickerComponent (props) {
 /**
  *  Format date value to string date label
  *  Nicer way of formating stuff
- * @param {*} datePickerType 
+ * @param {*} datePickerType
  * @param {*} value
  */
 export const formatDateBaseOn = (datePickerType, value) => {
-  switch(datePickerType) {
+  switch (datePickerType) {
     case DatePickerType.MonthRange:
       return moment(value[0]).format('MM/YYYY')
     case DatePickerType.DateRange:
@@ -39,4 +39,4 @@ export const formatDateBaseOn = (datePickerType, value) => {
     default:
       return `${moment(value[0]).format('DD/MM/YY')}`
   }
-} 
+}
