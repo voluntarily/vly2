@@ -48,8 +48,8 @@ class OpListSection extends Component {
   }
 
   isDateFilterBetween = (date, opDateArray) => {
-    const { hasValue } = this 
-    if (!hasValue(date)) return true // The reason is that if the date filter value is empty all of the ops found is correct for display 
+    const { hasValue } = this
+    if (!hasValue(date)) return true // The reason is that if the date filter value is empty all of the ops found is correct for display
     const startDateOpportunities = moment(opDateArray[0])
     switch (this.props.dateFilterType) {
       case DatePickerType.IndividualDate:
