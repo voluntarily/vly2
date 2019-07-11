@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 
-// custom form components go here
-
 export const FormGrid = styled.div`
   display: grid;
   grid-template-columns: 40fr 60fr;
@@ -51,7 +49,6 @@ export const ShortInputContainer = styled.div`
     width: auto;
   }
 `
-
 export const MediumInputContainer = styled.div`
   width: 35rem;
   @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {

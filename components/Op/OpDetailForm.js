@@ -17,10 +17,8 @@ import {
   ShortInputContainer,
   TitleContainer
 } from '../VTheme/FormStyles'
-
+import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
 const { TextArea } = Input
-
-// end custom form components
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
@@ -50,7 +48,7 @@ class OpDetailForm extends Component {
   setDescription (value) {
     this.props.form.setFieldsValue({ description: value })
   }
-  setImgUrl = (value) => {
+  setImgUrl = value => {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
 
@@ -64,13 +62,21 @@ class OpDetailForm extends Component {
         op.date.push(startDateValue, endDateValue)
         op.title = values.title
         op.subtitle = values.subtitle
-        op.tags = values.tags.map(t => { return ({ tag: t }) })
+        op.tags = values.tags.map(t => {
+          return { tag: t }
+        })
         op.duration = values.duration
         op.location = values.location
         op.description = values.description
         op.imgUrl = values.imgUrl
-        op.status = e.target.name === 'publish' ? OpportunityStatus.ACTIVE : OpportunityStatus.DRAFT
-        op.requestor = (this.props.op.requestor && this.props.op.requestor._id) || this.props.me._id
+
+        op.status =
+          e.target.name === 'publish'
+            ? OpportunityStatus.ACTIVE
+            : OpportunityStatus.DRAFT
+        op.requestor =
+          (this.props.op.requestor && this.props.op.requestor._id) ||
+          this.props.me._id
 
         this.props.onSubmit(this.props.op)
       } else {
@@ -81,7 +87,7 @@ class OpDetailForm extends Component {
 
   changeFormValue = (state, value) => {
     this.setState({
-      [ state ]: value
+      [state]: value
     })
   }
 
@@ -114,7 +120,7 @@ class OpDetailForm extends Component {
   }
 
   render () {
-    const isTest = (process.env.NODE_ENV === 'test')
+    const isTest = process.env.NODE_ENV === 'test'
 
     // get translated labels
     const opTitle = (
@@ -245,9 +251,34 @@ class OpDetailForm extends Component {
 
     // Only show error after a field is touched.
     const titleError = isFieldTouched('title') && getFieldError('title')
-
+    const isNewOp = this.props.op._id
     return (
       <div className='OpDetailForm'>
+        <PageTitle>
+          <h1>
+            {isNewOp ? (
+              <FormattedMessage
+                id='editOp'
+                description='Title for editing Ops'
+              />
+            ) : (
+              <FormattedMessage
+                id='createOp'
+                description='Title for creating Ops'
+              />
+            )}{' '}
+            a request
+          </h1>
+          <p>
+            <FormattedMessage
+              id='opdetail.pagesubtitle'
+              description='subTitle for creating Ops'
+              defaultMessage='Ask volunteers for assistance with anything related to tech - there
+                are (get number) of volunteers looking for opportunities to help out'
+            />
+          </p>
+        </PageTitle>
+        <Divider />
         <Form hideRequiredMark colon={false}>
           <FormGrid>
             <DescriptionContainer>
@@ -284,9 +315,14 @@ class OpDetailForm extends Component {
                 {getFieldDecorator('description', {
                   rules: []
                 })(
-                  isTest
-                    ? <TextArea rows={20} placeholder='All the details about the request. You can use markdown here.' />
-                    : <RichTextEditor onChange={this.setAbout} />
+                  isTest ? (
+                    <TextArea
+                      rows={20}
+                      placeholder='All the details about the request. You can use markdown here.'
+                    />
+                  ) : (
+                    <RichTextEditor onChange={this.setAbout} />
+                  )
                 )}
               </Form.Item>
             </InputContainer>
@@ -327,7 +363,8 @@ class OpDetailForm extends Component {
                 <TextHeadingBold>Where and when? (optional)</TextHeadingBold>
               </TitleContainer>
               <TextP>
-                More skilled volunteers will offer to help you if you know when, or where you need help.
+                More skilled volunteers will offer to help you if you know when,
+                or where you need help.
               </TextP>
             </DescriptionContainer>
             <InputContainer>
@@ -344,20 +381,24 @@ class OpDetailForm extends Component {
                 </Form.Item>
                 <Form.Item label={opStartDate}>
                   {getFieldDecorator('startDate', {})(
-                    <DatePicker showTime
+                    <DatePicker
+                      showTime
                       disabledDate={this.disabledStartDate}
                       format='DD-MM-YYYY HH:mm:ss'
                       onChange={this.onStartDateChange}
-                      style={{ width: '100%' }} />
+                      style={{ width: '100%' }}
+                    />
                   )}
                 </Form.Item>
                 <Form.Item label={opEndDate}>
                   {getFieldDecorator('endDate', {})(
-                    <DatePicker showTime
+                    <DatePicker
+                      showTime
                       disabledDate={this.disabledEndDate}
                       format='DD-MM-YYYY HH:mm:ss'
                       onChange={this.onEndDateChange}
-                      style={{ width: '100%' }} />
+                      style={{ width: '100%' }}
+                    />
                   )}
                 </Form.Item>
               </ShortInputContainer>
@@ -370,9 +411,11 @@ class OpDetailForm extends Component {
                         message: 'A region must be provided'
                       }
                     ]
-                  })(<OpLocationSelector
-                    existingLocations={this.props.existingLocations}
-                  />)}
+                  })(
+                    <OpLocationSelector
+                      existingLocations={this.props.existingLocations}
+                    />
+                  )}
                 </Form.Item>
               </MediumInputContainer>
             </InputContainer>
@@ -389,7 +432,11 @@ class OpDetailForm extends Component {
                 Requests with photos get more responses. If you don't have a
                 photo leave blank and we will provide one based on the category.
               </TextP>
-              <img style={{ width: '50%', float: 'right' }} src={this.props.op.imgUrl} alt='current image' />
+              <img
+                style={{ width: '50%', float: 'right' }}
+                src={this.props.op.imgUrl}
+                alt='current image'
+              />
             </DescriptionContainer>
             <InputContainer>
               <MediumInputContainer>
@@ -477,11 +524,14 @@ OpDetailForm.propTypes = {
     location: PropTypes.string,
     date: PropTypes.array,
     status: PropTypes.string,
+
     // requestor: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.shape({
-      tag: PropTypes.string.isRequired,
-      _id: PropTypes.string
-    }))
+    tags: PropTypes.arrayOf(
+      PropTypes.shape({
+        tag: PropTypes.string.isRequired,
+        _id: PropTypes.string
+      })
+    )
   }),
   me: PropTypes.shape({
     _id: PropTypes.string
@@ -537,11 +587,11 @@ export default Form.create({
       }),
       startDate: Form.createFormField({
         ...props.op.startDate,
-        value: (props.op.startDate != null) ? moment(props.op.startDate) : null
+        value: props.op.startDate != null ? moment(props.op.startDate) : null
       }),
       endDate: Form.createFormField({
         ...props.op.endDate,
-        value: (props.op.endDate != null) ? moment(props.op.endDate) : null
+        value: props.op.endDate != null ? moment(props.op.endDate) : null
       })
     }
   }
