@@ -8,12 +8,13 @@ import objectid from 'objectid'
 import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
 import people from '../server/api/person/__tests__/person.fixture'
 import tags from '../server/api/tag/__tests__/tag.fixture.js'
-import locations from '../server/api/location/locationData'
 import withMockRoute from '../server/util/mockRouter'
 import thunk from 'redux-thunk'
 import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { API_URL } from '../lib/apiCaller'
+
+const locations = ['Auckland, Wellington, Christchurch']
 
 const fetchMock = require('fetch-mock')
 
@@ -62,7 +63,7 @@ test.before('Setup fixtures', (t) => {
         sync: true,
         syncing: false,
         loading: false,
-        data: [ locations ],
+        data: locations,
         request: null
       }
 
@@ -99,9 +100,9 @@ test('send "PUT" request to redux-api when opportunity is cancelled on OpDetailP
 })
 
 test('does not send "PUT" request to redux-api when cancel opportunity button is cancelled on OpDetailPage', t => {
-  const opportunityToCancel = t.context.ops
-  const myMock = makeFetchMock(opportunityToCancel._id)
-  reduxApi.use('fetch', adapterFetch(myMock))
+  // const opportunityToCancel = t.context.ops
+  // const myMock = makeFetchMock(opportunityToCancel._id)
+  // reduxApi.use('fetch', adapterFetch(myMock))
 
   const props = {
     me: t.context.me,
@@ -216,7 +217,7 @@ test('display unavailable opportunity message when opportunity id is invalid on 
         data: []
       },
       tags: { data: tags },
-      locations: { data: [ locations ] }
+      locations: { data: locations }
     }
   )
 
@@ -256,7 +257,7 @@ test('display loading opportunity message when opportunity is loading', t => {
   t.is(wrapper.find('.loader').first().text(), 'Loading...')
 })
 
-test.skip('can create new Op', t => {
+test('can create new Op', t => {
   const opportunityToEdit = t.context.op
   const myMock = makeFetchMock(opportunityToEdit._id)
   myMock.post(API_URL + '/tags/', { body: { status: 200 } })
@@ -264,7 +265,7 @@ test.skip('can create new Op', t => {
   reduxApi.use('fetch', adapterFetch(myMock))
 
   const props = {
-    query: { new: 'new' },
+    isNew: true,
     me: t.context.me,
     dispatch: t.context.mockStore.dispatch
   }
@@ -274,10 +275,10 @@ test.skip('can create new Op', t => {
       <RoutedOpDetailPage {...props} />
     </Provider>
   )
-  console.log(wrapper.html())
+  // console.log(wrapper.html())
   const saveButton = wrapper.find('#saveOpBtn').first()
   t.is(saveButton.text(), 'Save as draft')
-  saveButton.simulate('click')
+  // saveButton.simulate('click')
 
   // console.log(t.context.mockStore.getActions()[0])
   // should switch back to display mode
