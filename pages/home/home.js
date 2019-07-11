@@ -48,7 +48,8 @@ const RequestButtonContainer = styled.div`
 `
 
 function callback (key) {
-  console.log(key)
+  // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
+  // console.log(key)
 }
 
 class PersonHomePage extends Component {
