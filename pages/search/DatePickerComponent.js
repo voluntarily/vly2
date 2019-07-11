@@ -21,3 +21,22 @@ export default function DatePickerComponent (props) {
       return (<DatePicker onChange={date => onDateChange(date)} value={convertedDateValueFromProps} />)
   }
 }
+
+/**
+ *  Format date value to string date label
+ *  Nicer way of formating stuff
+ * @param {*} datePickerType 
+ * @param {*} value
+ */
+export const formatDateBaseOn = (datePickerType, value) => {
+  switch(datePickerType) {
+    case DatePickerType.MonthRange:
+      return moment(value[0]).format('MM/YYYY')
+    case DatePickerType.DateRange:
+      return `${moment(value[0].get('date'))}-${moment(value).format('DD/MM/YY')}`
+    case DatePickerType.WeekRange:
+      return `Week ${moment(value[0]).week()}`
+    default:
+      return `${moment(value[0]).format('DD/MM/YY')}`
+  }
+} 

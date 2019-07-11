@@ -84,7 +84,10 @@ class BigSearch extends PureComponent {
   }
 
   filterApplied = () => {
-    this.props.onFilterChange(this.state.selectedLocation)
+    // Reason for using set state callback https://stackoverflow.com/questions/42038590/when-to-use-react-setstate-callback
+    this.setState({ filterShowing: !this.state.filterShowing }, () => { 
+      this.props.onFilterChange(this.state.selectedLocation)
+    })
   }
 
   cancelFilter = () => {
@@ -93,7 +96,7 @@ class BigSearch extends PureComponent {
   }
 
   render () {
-    const { onSearch, search, locations, onClickDateFilter } = this.props
+    const { onSearch, search, locations, onClickDateFilter,dateLabel } = this.props
     const { filterShowing, selectedLocation } = this.state
     return (
     <>
@@ -109,7 +112,7 @@ class BigSearch extends PureComponent {
           />
         </SearchInputContainer>
         <SearchFilterText>Filter by:</SearchFilterText>
-        <FilterItem onClick={() => onClickDateFilter()}>Date</FilterItem>
+        <FilterItem onClick={() => onClickDateFilter()}>{dateLabel}</FilterItem>
         <FilterItem onClick={this.showFilterDetails}>{ this.state.selectedLocation == null ? 'Location' : this.state.selectedLocation}</FilterItem>
       </SearchContainer>
       {filterShowing &&
@@ -128,9 +131,8 @@ BigSearch.propTypes = {
   onSearch: PropTypes.func.isRequired,
   locations: PropTypes.arrayOf(PropTypes.string).isRequired,
   onClickDateFilter: PropTypes.func.isRequired,
-  onFilterChange: PropTypes.func.isRequired
-  //  showAddOp: PropTypes.bool.isRequired,
-  // dispatch: PropTypes.func.isRequired
+  onFilterChange: PropTypes.func.isRequired,
+  dateLabel: PropTypes.string
 }
 
 export default BigSearch
