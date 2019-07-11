@@ -3,8 +3,7 @@ const Person = require('../person/person')
 const Opportunity = require('../opportunity/opportunity')
 const { config } = require('../../../config/config')
 const { emailPerson } = require('../person/email/emailperson')
-const { InterestFields, InterestStatus } = require('./interest.constants')
-const { Subject: OpportunitySubject } = require('../opportunity/opportunity.constants')
+const { InterestStatus } = require('./interest.constants')
 
 /**
   api/interests -> list all interests
@@ -13,7 +12,7 @@ const { Subject: OpportunitySubject } = require('../opportunity/opportunity.cons
   api/interests?me='personid' -> list all the ops i'm interested in and populate the op out.
  */
 const listInterests = async (req, res) => {
-  let sort = InterestFields.DATE_ADDED // todo sort by date.
+  let sort = 'dateAdded' // todo sort by date.
   let got
   try {
     if (req.query.op) {
@@ -25,7 +24,7 @@ const listInterests = async (req, res) => {
       got = await Interest.find(query).populate({ path: 'person', select: 'nickname name avatar' }).sort(sort).exec()
     } else if (req.query.me) {
       const query = { person: req.query.me }
-      got = await Interest.find(query).populate({ path: OpportunitySubject }).sort(sort).exec()
+      got = await Interest.find(query).populate({ path: 'opportunity' }).sort(sort).exec()
     } else {
       got = await Interest.find().sort(sort).exec()
     }

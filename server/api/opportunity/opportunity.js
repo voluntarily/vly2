@@ -2,16 +2,16 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const idvalidator = require('mongoose-id-validator')
 const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
-const { OpportunitySubject, OpportunityFields, OpportunityStatus } = require('./opportunity.constants')
+const { OpportunityStatus } = require('./opportunity.constants')
 
 const opportunitySchema = new Schema({
-  [OpportunityFields.TITLE]: String, // "Growing in the garden",
-  [OpportunityFields.SUBTITLE]: String, // "Growing digitally in the garden",
-  [OpportunityFields.IMG_URL]: String, // "https://image.flaticon.com/icons/svg/206/206857.svg",
-  [OpportunityFields.DESCRIPTION]: String, // "Project to grow something in the garden",
-  [OpportunityFields.DURATION]: String, // "15 Minutes",
-  [OpportunityFields.LOCATION]: String, // "Newmarket, Auckland",
-  [OpportunityFields.STATUS]: {
+  title: String, // "Growing in the garden",
+  subtitle: String, // "Growing digitally in the garden",
+  imgUrl: String, // "https://image.flaticon.com/icons/svg/206/206857.svg",
+  description: String, // "Project to grow something in the garden",
+  duration: String, // "15 Minutes",
+  location: String, // "Newmarket, Auckland",
+  status: {
     type: String,
     required: true,
     default: OpportunityStatus.DRAFT,
@@ -22,11 +22,11 @@ const opportunitySchema = new Schema({
       OpportunityStatus.CANCELLED
     ]
   },
-  [OpportunityFields.DATE]: [Date],
-  [OpportunityFields.OFFER_ORG]: String,
-  [OpportunityFields.REQUESTOR]: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
-  [OpportunityFields.DATE_ADDED]: { type: 'Date', default: Date.now, required: true },
-  [OpportunityFields.TAGS]: [
+  date: [Date],
+  offerOrg: String,
+  requestor: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
+  dateAdded: { type: 'Date', default: Date.now, required: true },
+  tags: [
     {
       type: Schema.Types.ObjectId, ref: 'Tag'
     }
@@ -37,4 +37,4 @@ opportunitySchema.plugin(idvalidator)
 opportunitySchema.plugin(accessibleRecordsPlugin)
 opportunitySchema.plugin(accessibleFieldsPlugin)
 
-module.exports = mongoose.model(OpportunitySubject, opportunitySchema)
+module.exports = mongoose.model('Opportunity', opportunitySchema)

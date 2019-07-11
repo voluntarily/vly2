@@ -1,15 +1,14 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const idvalidator = require('mongoose-id-validator')
-const { InterestSubject, InterestStatus, InterestFields } = require('./interest.constants')
-const { OpportunitySubject } = require('../opportunity/opportunity.constants')
+const { InterestStatus } = require('./interest.constants')
 
 const interestSchema = new Schema({
 
-  [InterestFields.PERSON]: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
-  [InterestFields.OPPORTUNITY]: { type: Schema.Types.ObjectId, ref: OpportunitySubject, required: true },
-  [InterestFields.COMMENT]: String,
-  [InterestFields.STATUS]: {
+  person: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
+  opportunity: { type: Schema.Types.ObjectId, ref: 'Opportunity', required: true },
+  comment: String,
+  status: {
     type: 'String',
     required: true,
     default: InterestStatus.INTERESTED,
@@ -22,7 +21,7 @@ const interestSchema = new Schema({
       InterestStatus.CANCELLED
     ]
   },
-  [InterestFields.DATE_ADDED]: { type: 'Date', default: Date.now, required: true }
+  dateAdded: { type: 'Date', default: Date.now, required: true }
 })
 
 /*
@@ -51,4 +50,4 @@ const interestSchema = new Schema({
 */
 
 interestSchema.plugin(idvalidator)
-module.exports = mongoose.model(InterestSubject, interestSchema)
+module.exports = mongoose.model('Interest', interestSchema)
