@@ -87,8 +87,6 @@ test('render the detail with op', t => {
       existingLocations={locations}
       existingTags={[]} />
   )
-  // t.log(wrapper)
-  // console.log(wrapper.html())
   t.is(wrapper.find('OpDetailForm').length, 1)
   t.is(wrapper.find('button').length, 3)
   wrapper.find('button').first().simulate('click')

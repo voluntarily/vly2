@@ -1,13 +1,13 @@
-import { Component } from 'react'
+import { Button, message, Popconfirm } from 'antd'
 import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
-import { Button, Popconfirm, message } from 'antd'
-import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
-import publicPage, { FullPage } from '../../hocs/publicPage'
 import Router from 'next/router'
+import { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
+import Loading from '../../components/Loading'
 import OrgDetail from '../../components/Org/OrgDetail'
 import OrgDetailForm from '../../components/Org/OrgDetailForm'
-import Loading from '../../components/Loading'
+import publicPage, { FullPage } from '../../hocs/publicPage'
+import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 
 const blankOrg = {
   name: '',
@@ -75,7 +75,6 @@ class OrgDetailPage extends Component {
     } else {
       res = await this.props.dispatch(reduxApi.actions.organisations.post({}, { body: JSON.stringify(org) }))
       org = res[0]
-      console.log(org)
       Router.replace(`/orgs/${org._id}`)
     }
     this.setState({ editing: false })

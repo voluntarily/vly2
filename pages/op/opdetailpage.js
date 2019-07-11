@@ -172,7 +172,7 @@ export class OpDetailPage extends Component {
           endDate: this.props.opportunities.data[0].date[1]
         }
         organizer = op.requestor
-        isOwner = ((this.props.me || {})._id === organizer._id)
+        isOwner = ((me || {})._id === organizer._id)
       } else { // array must be empty
         // console.log('length', ops.length)
         content = <h2><FormattedMessage id='op.notavailable' defaultMessage='Sorry, this opportunity is not available' description='message on person not found page' /></h2>
