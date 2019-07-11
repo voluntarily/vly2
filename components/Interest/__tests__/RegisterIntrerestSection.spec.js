@@ -6,7 +6,7 @@ import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import RegisterInterestSection from '../RegisterInterestSection';
 
 
-//Initial oppotunity to be added into the test 
+//Initial oppotunity to be added into the test db
 const opid = '5cc903e5f94141437622cea7'
 const ops = [
     {
@@ -24,7 +24,7 @@ const ops = [
 ]
 
 const interestid = '5cc903e5f94141437622cea8'
-const insterest =  [
+const insterests=  [
     {
       _id: interestid,
       person: people[0],

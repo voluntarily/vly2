@@ -148,7 +148,7 @@ test('completed state', t => {
         onChangeStatus={changeStatus}
         onWithdraw={withdraw}
       />)
-      t.is(withdraw.InterestButtonEnabled)
+      t.is(withdraw.InterestButtonEnabled) 
       })
 
   ///////////////////////////////////////////////////////////////////////////////////////
