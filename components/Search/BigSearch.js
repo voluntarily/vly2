@@ -80,7 +80,7 @@ class BigSearch extends PureComponent {
   }
 
   showFilterDetails = () => {
-    this.setState({ filterShowing: true })
+    this.setState({ filterShowing: !this.state.filterShowing })
   }
 
   filterApplied = () => {
@@ -110,7 +110,7 @@ class BigSearch extends PureComponent {
         </SearchInputContainer>
         <SearchFilterText>Filter by:</SearchFilterText>
         <FilterItem onClick={() => onClickDateFilter()}>Date</FilterItem>
-        <FilterItem onClick={this.showFilterDetails}>Location</FilterItem>
+        <FilterItem onClick={this.showFilterDetails}>{ this.state.selectedLocation == null ? 'Location' : this.state.selectedLocation}</FilterItem>
       </SearchContainer>
       {filterShowing &&
       <FilterContainer onFilterApplied={this.filterApplied} onCancel={this.cancelFilter}>
@@ -127,6 +127,7 @@ BigSearch.propTypes = {
   search: PropTypes.string,
   onSearch: PropTypes.func.isRequired,
   locations: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onClickDateFilter: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired
   //  showAddOp: PropTypes.bool.isRequired,
   // dispatch: PropTypes.func.isRequired
