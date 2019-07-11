@@ -187,7 +187,6 @@ test('can Edit the Op', t => {
 
   // should switch into edit mode
   const cancelButton = wrapper.find('#cancelOpBtn').first()
-  console.log(cancelButton.html())
   t.is(cancelButton.text(), 'Cancel')
   cancelButton.simulate('click')
   editButton = wrapper.find('#editOpBtn').first()
@@ -254,7 +253,6 @@ test('display loading opportunity message when opportunity is loading', t => {
       <RoutedOpDetailPage {...props} />
     </Provider>
   )
-  console.log(wrapper.html())
   t.is(wrapper.find('.loader').first().text(), 'Loading...')
 })
 
