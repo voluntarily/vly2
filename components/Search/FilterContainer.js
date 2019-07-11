@@ -21,7 +21,7 @@ const FilterContainer = ({ children, onFilterApplied, onCancel }) => (
         shape='round' >
         <FormattedMessage
           id='op-search-apply-filter'
-          defaultMessage='Filter'
+          defaultMessage='Ok'
           description='Button that applies a filter to search results' />
       </Button>
       <Button

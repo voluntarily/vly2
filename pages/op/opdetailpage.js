@@ -174,7 +174,7 @@ export class OpDetailPage extends Component {
         organizer = op.requestor
         isOwner = ((this.props.me || {})._id === organizer._id)
       } else { // array must be empty
-        console.log('length', ops.length)
+        // console.log('length', ops.length)
         content = <h2><FormattedMessage id='op.notavailable' defaultMessage='Sorry, this opportunity is not available' description='message on person not found page' /></h2>
       }
     }

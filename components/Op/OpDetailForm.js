@@ -142,11 +142,10 @@ class OpDetailForm extends Component {
         op.location = values.location
         op.description = values.description
         op.imgUrl = values.imgUrl
-        op.status =
-          e.target.name === 'publish'
-            ? OpportunityStatus.ACTIVE
-            : OpportunityStatus.DRAFT
-        op.requestor = this.props.me._id
+
+        op.status = e.target.name === 'publish' ? OpportunityStatus.ACTIVE : OpportunityStatus.DRAFT
+        op.requestor = (this.props.op.requestor && this.props.op.requestor._id) || this.props.me._id
+
 
         this.props.onSubmit(this.props.op)
       } else {
@@ -597,13 +596,12 @@ OpDetailForm.propTypes = {
     location: PropTypes.string,
     date: PropTypes.array,
     status: PropTypes.string,
-    requestor: PropTypes.string,
-    tags: PropTypes.arrayOf(
-      PropTypes.shape({
-        tag: PropTypes.string.isRequired,
-        _id: PropTypes.string
-      })
-    )
+
+    // requestor: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.shape({
+      tag: PropTypes.string.isRequired,
+      _id: PropTypes.string
+    }))
   }),
   me: PropTypes.shape({
     _id: PropTypes.string
