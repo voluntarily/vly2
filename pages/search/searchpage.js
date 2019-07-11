@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 import { Modal, Dropdown, Menu, Button } from 'antd'
 import Router from 'next/router'
 import { FormattedMessage } from 'react-intl'
-import DatePickerComponent from './DatePickerComponent'
+import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
 import DatePickerType from '../../components/Op/DatePickerType.constant'
 
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
@@ -77,9 +77,14 @@ export class SearchPage extends Component {
     this.setState({ filterValue: location })
   }
 
+  formateDateValue = () => {
+    if (this.state.filter.date.length === 0) return 'Date'
+    return formatDateBaseOn(this.state.datePickerType, this.state.filter.date)
+  }
+
   render () {
     const { search, filterValue } = this.state
-
+    const dateLabel = this.formateDateValue()
     const existingLocations = this.props.locations.data
 
     const DatePickerOption = (
@@ -102,7 +107,7 @@ export class SearchPage extends Component {
     return (
       <FullPage>
         <TitleSection title={<FormattedMessage defaultMessage={`Search results for "{search}"`} values={{ search }} id='search.title' />} />
-        <BigSearch search={search} onSearch={this.handleSearch} onClickDateFilter={this.handleOpenDatePickperModal} locations={existingLocations} onFilterChange={this.locFilterChanged} />
+        <BigSearch search={search} onSearch={this.handleSearch} dateLabel={dateLabel} onClickDateFilter={this.handleOpenDatePickperModal} locations={existingLocations} onFilterChange={this.locFilterChanged} />
         <Modal title='Pick date' visible={this.state.showDatePickerModal}
           onCancel={() => this.setState({ showDatePickerModal: !this.state.showDatePickerModal })}
           onOk={() => this.setState({ showDatePickerModal: !this.state.showDatePickerModal })}>
