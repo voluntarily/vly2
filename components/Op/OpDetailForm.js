@@ -1,12 +1,13 @@
-/* eslint-disable no-console */
-import React, { Component } from 'react'
-import { Button, Col, Divider, Form, Input, Radio, Row, DatePicker, Tooltip, Icon } from 'antd'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
+import { Button, Col, DatePicker, Divider, Form, Icon, Input, Row, Tooltip } from 'antd'
 import moment from 'moment'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
+import RichTextEditor from '../Editor/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import { TextHeadingBold, TextP, Spacer } from '../VTheme/VTheme'
+import { TextHeadingBold, TextP } from '../VTheme/VTheme'
+import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import OpDetailTagsEditable from './OpDetailTagsEditable'
 import OpLocationSelector from './OpLocationSelector'
 const { TextArea } = Input
@@ -94,15 +95,23 @@ class OpDetailForm extends Component {
       endDateValue: null,
       endOpen: false
     }
+    this.setDescription = this.setDescription.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
   }
 
   componentDidMount () {
     // Call validateFields here to disable the submit button when on a blank form.
     // empty callback supresses a default which prints to the console.
-    this.props.form.validateFields(() => { })
+    this.props.form.validateFields()
     this.setState({ startDateValue: this.props.op.date[0] })
     this.setState({ endDateValue: this.props.op.date[1] })
+  }
+
+  setDescription (value) {
+    this.props.form.setFieldsValue({ description: value })
+  }
+  setImgUrl = (value) => {
+    this.props.form.setFieldsValue({ imgUrl: value })
   }
 
   handleSubmit = e => {
@@ -115,13 +124,13 @@ class OpDetailForm extends Component {
         op.date.push(startDateValue, endDateValue)
         op.title = values.title
         op.subtitle = values.subtitle
-        op.tags = values.tags
+        op.tags = values.tags.map(t => { return ({ tag: t }) })
         op.duration = values.duration
         op.location = values.location
         op.description = values.description
         op.imgUrl = values.imgUrl
-        op.status = values.status
-        op.requestor = this.props.me._id
+        op.status = e.target.name === 'publish' ? OpportunityStatus.ACTIVE : OpportunityStatus.DRAFT
+        op.requestor = (this.props.op.requestor && this.props.op.requestor._id) || this.props.me._id
 
         this.props.onSubmit(this.props.op)
       } else {
@@ -164,13 +173,9 @@ class OpDetailForm extends Component {
     return !firstValue || !secondValue
   }
 
-  setImgUrl = (value) => {
-    this.props.form.setFieldsValue({
-      imgUrl: value
-    })
-  }
-
   render () {
+    const isTest = (process.env.NODE_ENV === 'test')
+
     // get translated labels
     const opTitle = (
       <span>
@@ -206,7 +211,7 @@ class OpDetailForm extends Component {
           description='opportunity Commitment label in OpDetails Form'
         />
         &nbsp;
-        <Tooltip title="Choose something interesting like 'we want to build robots' ">
+        <Tooltip title='How much time overall is likely to be required for the activity?'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -220,7 +225,7 @@ class OpDetailForm extends Component {
           description='opportunity Location label in OpDetails Form'
         />
         &nbsp;
-        <Tooltip title="Choose something interesting like 'we want to build robots' ">
+        <Tooltip title='set the region to help find local volunteers'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -234,7 +239,7 @@ class OpDetailForm extends Component {
           description='opportunity Description label in OpDetails Form'
         />
         &nbsp;
-        <Tooltip title="Choose something interesting like 'we want to build robots' ">
+        <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML or Markdown here.'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -282,19 +287,7 @@ class OpDetailForm extends Component {
         </Tooltip>
       </span>
     )
-    const opStatus = (
-      <span>
-        <FormattedMessage
-          id='opStatus'
-          defaultMessage='Status'
-          description='Draft or published status'
-        />
-        &nbsp;
-        <Tooltip title="Choose something interesting like 'we want to build robots' ">
-          <Icon type='question-circle-o' />
-        </Tooltip>
-      </span>
-    )
+
     const opTags = (
       <FormattedMessage
         id='opTags'
@@ -315,7 +308,7 @@ class OpDetailForm extends Component {
 
     return (
       <div className='OpDetailForm'>
-        <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
+        <Form hideRequiredMark colon={false}>
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -351,10 +344,9 @@ class OpDetailForm extends Component {
                 {getFieldDecorator('description', {
                   rules: []
                 })(
-                  <TextArea
-                    rows={6}
-                    placeholder='All the details about the request. You can use markdown here.'
-                  />
+                  isTest
+                    ? <TextArea rows={20} placeholder='All the details about the request. You can use markdown here.' />
+                    : <RichTextEditor onChange={this.setAbout} />
                 )}
               </Form.Item>
             </InputContainer>
@@ -365,7 +357,7 @@ class OpDetailForm extends Component {
             <DescriptionContainer>
               <TitleContainer>
                 <TextHeadingBold>
-                  Do you need any specific skills?
+                  Do you need any specific skills? (Optional)
                 </TextHeadingBold>
               </TitleContainer>
               <TextP>
@@ -395,8 +387,7 @@ class OpDetailForm extends Component {
                 <TextHeadingBold>Where and when? (Optional)</TextHeadingBold>
               </TitleContainer>
               <TextP>
-                If you know when or where you need help, it makes it easier to
-                find volunteers.
+                More skilled volunteers will offer to help you if you know when, or where you need help.
               </TextP>
             </DescriptionContainer>
             <InputContainer>
@@ -458,6 +449,7 @@ class OpDetailForm extends Component {
                 Requests with photos get more responses. If you don't have a
                 photo leave blank and we will provide one based on the category.
               </TextP>
+              <img style={{ width: '50%', float: 'right' }} src={this.props.op.imgUrl} alt='current image' />
             </DescriptionContainer>
             <InputContainer>
               <MediumInputContainer>
@@ -476,22 +468,17 @@ class OpDetailForm extends Component {
               <TitleContainer>
                 <TextHeadingBold>Confirm request</TextHeadingBold>
               </TitleContainer>
-              <TextP>Users can see active requests</TextP>
+              <TextP>
+                <FormattedMessage
+                  id='op.SaveInstructions'
+                  defaultMessage='Save as Draft will allow you to preview the request while Publish will make it available to everyone to view.'
+                  description='Instructions for save and publish on opportunity details form'
+                />
+              </TextP>
             </DescriptionContainer>
             <InputContainer>
-              <Form.Item label={opStatus}>
-                {getFieldDecorator('status', {
-                  rules: [{ required: true, message: 'status is required' }]
-                })(
-                  <Radio.Group buttonStyle='solid'>
-                    <Radio.Button value='draft'>Draft</Radio.Button>
-                    <Radio.Button value='active'>Active</Radio.Button>
-                    <Radio.Button value='done'>Done</Radio.Button>
-                  </Radio.Group>
-                )}
-              </Form.Item>
-              <Spacer />
               <Button
+                id='cancelOpBtn'
                 type='secondary'
                 htmlType='button'
                 onClick={this.props.onCancel}
@@ -503,14 +490,31 @@ class OpDetailForm extends Component {
                 />
               </Button>
               <Button
-                type='primary'
-                htmlType='submit'
+                id='saveOpBtn'
+                name='save'
+                // htmlType='submit'
+                onClick={this.handleSubmit}
                 disabled={hasErrors(getFieldsError())}
                 style={{ marginLeft: 8 }}
               >
                 <FormattedMessage
-                  id='op.save'
-                  defaultMessage='Save'
+                  id='op.editSaveDraft'
+                  defaultMessage='Save as draft'
+                  description='Label for save as draft button on opportunity details form'
+                />
+              </Button>
+              <Button
+                id='publishOpBtn'
+                name='publish'
+                type='primary'
+                // htmlType='submit'
+                onClick={this.handleSubmit}
+                disabled={hasErrors(getFieldsError())}
+                style={{ marginLeft: 8 }}
+              >
+                <FormattedMessage
+                  id='op.editPublish'
+                  defaultMessage='Publish'
                   description='Label for submit button on opportunity details form'
                 />
               </Button>
@@ -540,8 +544,11 @@ OpDetailForm.propTypes = {
     location: PropTypes.string,
     date: PropTypes.array,
     status: PropTypes.string,
-    requestor: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.string)
+    // requestor: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.shape({
+      tag: PropTypes.string.isRequired,
+      _id: PropTypes.string
+    }))
   }),
   me: PropTypes.shape({
     _id: PropTypes.string
@@ -593,7 +600,7 @@ export default Form.create({
       }),
       tags: Form.createFormField({
         ...props.op.tags,
-        value: props.op.tags
+        value: props.op.tags.map(t => t.tag)
       }),
       startDate: Form.createFormField({
         ...props.op.startDate,

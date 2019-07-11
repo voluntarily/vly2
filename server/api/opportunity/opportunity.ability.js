@@ -6,7 +6,7 @@ const { Action } = require('../../services/abilities/ability.constants')
 // TypeScript definition
 interface Rule {
   actions: string | string[],
-  Subject: string | string[],
+  subject: string | string[],
   conditions?: Object,
   fields?: string[],
   inverted?: boolean, // default is `false`
@@ -37,12 +37,12 @@ const anonAbilities = [{
   inverted: true
 }]
 
-const allAbilities = [{ Subject, action: Action.READ }, { Subject, action: Action.LIST }]
-const vpAbilities = allAbilities.concat([{ Subject, action: Action.CREATE }])
-const opAbilities = allAbilities.concat([{ Subject, action: Action.CREATE }])
-const testerAbilities = [{ Subject, action: Action.MANAGE }]
-const adminAbilities = [{ Subject, action: Action.MANAGE }]
-const orgAdminAbilities = [{ Subject, action: Action.MANAGE }]
+const allAbilities = [{ subject, action: Action.READ }, { subject, action: Action.LIST }]
+const vpAbilities = allAbilities
+const opAbilities = allAbilities.concat([{ subject, action: Action.CREATE }, { subject, action: Action.UPDATE }])
+const testerAbilities = [{ subject, action: Action.MANAGE }]
+const adminAbilities = [{ subject, action: Action.MANAGE }]
+const orgAdminAbilities = [{ subject, action: Action.MANAGE }]
 
 module.exports = {
   [Role.ANON]: anonAbilities,

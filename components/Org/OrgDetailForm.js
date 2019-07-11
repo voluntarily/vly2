@@ -11,23 +11,22 @@ function hasErrors (fieldsError) {
 }
 
 class OrgDetailForm extends Component {
-  state = {
-    about: ''
-  }
   constructor (props) {
     super(props)
-    this.handleChange = this.handleChange.bind(this)
+    this.setAbout = this.setAbout.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
   }
 
   componentDidMount () {
     // To disabled submit button at the beginning.
-    this.setState({ about: this.props.org.about })
     this.props.form.validateFields()
   }
 
-  handleChange (value) {
-    this.setState({ about: value })
+  setAbout (value) {
+    this.props.form.setFieldsValue({ about: value })
+  }
+  setImgUrl = (value) => {
+    this.props.form.setFieldsValue({ imgUrl: value })
   }
 
   handleSubmit = (e) => {
@@ -39,18 +38,12 @@ class OrgDetailForm extends Component {
         // update the rest from the form values.
         org.name = values.name
         org.slug = slug(values.name)
-        org.about = this.state.about
+        org.about = values.about
         org.imgUrl = values.imgUrl
         org.type = values.type
 
         this.props.onSubmit(this.props.org)
       }
-    })
-  }
-
-  setImgUrl = (value) => {
-    this.props.form.setFieldsValue({
-      imgUrl: value
     })
   }
 
@@ -116,7 +109,7 @@ class OrgDetailForm extends Component {
               ]
             })(
               // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
-              <RichTextEditor value={this.state.about} onChange={this.handleChange} />
+              <RichTextEditor onChange={this.setAbout} />
             )}
           </Form.Item>
           <Form.Item label={orgImgUrl}>

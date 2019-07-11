@@ -1,7 +1,10 @@
 const escapeRegex = require('../../util/regexUtil')
 const Opportunity = require('./opportunity')
+const Interest = require('./../interest/interest')
 const Tag = require('./../tag/tag')
 const OpportunityArchive = require('./../opportunity-archive/opportunityArchive')
+const InterestArchive = require('./../interest-archive/interestArchive')
+const { OpportunityStatus } = require('./opportunity.constants')
 const { regions } = require('../location/locationData')
 const { OpportunityFields } = require('./opportunity.constants')
 
@@ -109,13 +112,17 @@ const getOpportunity = async (req, res) => {
 
 const putOpportunity = async (req, res) => {
   try {
-    if (req.body.status === 'done' || req.body.status === 'cancelled') {
+    if (req.body.status === OpportunityStatus.COMPLETED || req.body.status === OpportunityStatus.CANCELLED) {
       await Opportunity.findByIdAndUpdate(req.params._id, { $set: req.body })
-      await archiveOpportunity(req.params._id)
+      const archop = await archiveOpportunity(req.params._id)
+      // TODO: [VP-282] after archiving return a 301 redirect to the archived opportunity
+      // res.redirect(301, `/opsarchive/${archop._id}`)
+      await archiveInterests(req.params._id)
+      res.json(archop)
     } else {
       await Opportunity.findByIdAndUpdate(req.params._id, { $set: req.body })
+      getOpportunity(req, res)
     }
-    res.json(req.body)
   } catch (e) {
     res.status(400).send(e)
   }
@@ -123,11 +130,18 @@ const putOpportunity = async (req, res) => {
 
 const archiveOpportunity = async (id) => {
   let opportunity = await Opportunity.findById(id).exec()
-  let opObject = opportunity.toJSON()
-  const opportunityArchive = new OpportunityArchive(opObject)
-  await opportunityArchive.save()
-  await Opportunity.findByIdAndDelete(id).exec()
+  await new OpportunityArchive(opportunity.toJSON()).save()
+  await Opportunity.deleteOne({ _id: id }).exec()
   return archiveOpportunity
+}
+
+const archiveInterests = async (opId) => {
+  let opportunityInterests = await Interest.find({ opportunity: opId }).exec()
+  let interest
+  for (interest of opportunityInterests) {
+    await new InterestArchive(interest.toJSON()).save()
+    await Interest.deleteOne({ _id: interest._id }).exec()
+  }
 }
 
 module.exports = {
