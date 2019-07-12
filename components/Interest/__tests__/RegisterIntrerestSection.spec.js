@@ -38,46 +38,29 @@ const insterests=  [
       opportunity: ops[0],
       comment: "I'm Andrew",
       status: 'interested'
-    },
-    {
-      _id: interestid,
-      person: people[0],
-      opportunity: ops[0],
-      comment: "I'm Andrew",
-      status: 'invited'
-    },
-    {
-      _id: interestid,
-      person: people[0],
-      opportunity: ops[0],
-      comment: "I'm Andrew",
-      status: 'committed'
-    },
-    {
-      _id: interestid,
-      person: people[0],
-      opportunity: ops[0],
-      comment: "I'm Andrew",
-      status: 'completed'
-      },
-    {
-      _id: interestid,
-      person: people[0],
-      opportunity: ops[0],
-      comment: "I'm Andrew",
-      status: 'cancelled'
-      }
-  ]
-  
-  test('initial state', t => {
-    const changeStatus = sinon.fake()
-    const withdraw = sinon.fake()
-  
-    const wrapper = mountWithIntl(<RegisterInterestSection
-      interest={interests[0]}
-      onChangeStatus={changeStatus}
-      onWithdraw={withdraw}
-    />)
-    t.is(wrapper.find('button').text(), "I'm Interested")
+    }
+   ] 
 
-  })
+   const invitedAndrew = {
+       _id: interestid,
+       person: people[0],
+       opportunity:ops[0],
+       comment:"I'm Andrew",
+       status: 'intrested'
+   }
+   const declinedAndrew = {
+       _id:interestid,
+       person:person[0],
+       opportunity:ops[0],
+       comment: "I'm Andrew",
+       status: 'declined'
+   }
+   const initStore = {
+       interests: {
+           loading:false,
+           data:[]
+       }
+   }
+   //Test the change of status when teacher/Op creator invites  
+   //Test the change of status when teacher/Op creator decline 
+   //test 

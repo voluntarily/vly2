@@ -18,7 +18,7 @@ function getNewInterest (me, op) {
     comment: '',
     status: null,
     dateAdded: Date.now()
-  }
+  }                                       
 }
 
 class RegisterInterestSection extends Component {
