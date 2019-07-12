@@ -1,14 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Link from 'next/link'
 // import { FormattedMessage } from 'react-intl'
 import { Input, Layout } from 'antd'
+import Link from 'next/link'
+import Router from 'next/router'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
-import Router from 'next/router'
-
 import links from './HeaderMenu'
-import { connect } from 'react-redux'
+
 const Search = Input.Search
 
 const Brand = styled.h1`

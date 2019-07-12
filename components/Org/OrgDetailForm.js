@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import { Button, Checkbox, Form, Input } from 'antd'
+import slug from 'limax'
 import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Editor/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import { Button, Checkbox, Form, Input } from 'antd'
-import { FormattedMessage } from 'react-intl'
-import slug from 'limax'
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
