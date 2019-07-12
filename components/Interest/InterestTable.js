@@ -1,10 +1,10 @@
 /* Display a grid of opanisation cards from an [op]
  */
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-import { Avatar, Button, Popconfirm, Table, Checkbox } from 'antd'
+import { Avatar, Button, Checkbox, Popconfirm, Table } from 'antd'
 import Router from 'next/router'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 
 class InterestTable extends Component {
   columns = [

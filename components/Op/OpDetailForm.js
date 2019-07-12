@@ -1,97 +1,24 @@
-import {
-  Button,
-  Col,
-  DatePicker,
-  Divider,
-  Form,
-  Icon,
-  Input,
-  Row,
-  Tooltip
-} from 'antd'
+import { Button, DatePicker, Divider, Form, Icon, Input, Tooltip } from 'antd'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
 import RichTextEditor from '../Editor/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { TextHeadingBold, TextP } from '../VTheme/VTheme'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import OpDetailTagsEditable from './OpDetailTagsEditable'
 import OpLocationSelector from './OpLocationSelector'
+import {
+  DescriptionContainer,
+  FormGrid,
+  InputContainer,
+  MediumInputContainer,
+  ShortInputContainer,
+  TitleContainer
+} from '../VTheme/FormStyles'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
 const { TextArea } = Input
-
-// custom form components go here
-
-const FormGrid = styled.div`
-  display: grid;
-  grid-template-columns: 40fr 60fr;
-
-  @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
-    /* iPhone X */
-    grid-template-columns: calc(100vw - 2rem);
-  }
-`
-
-const DescriptionContainer = styled.div`
-  margin-right: 2rem;
-
-  @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
-    /* iPhone X */
-    margin: initial;
-  }
-` // end descriptionContainer
-
-const TitleContainer = styled.div`
-  margin-bottom: 0.5rem;
-` // end titleContainer
-
-const InputContainer = styled.div`
-  height: auto;
-  margin-left: 2rem;
-  margin-bottom: 2rem;
-  @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
-    /* iPhone X */
-    margin: 1rem 0 0 0;
-  }
-  @media (min-width: 320px) and (max-width: 480px) {
-    /*  ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
-    margin: 1rem 0 0 0;
-  }
-` // end inputContainer
-
-const ShortInputContainer = styled.div`
-  width: 25rem;
-  @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
-    /* iPhone X */
-    width: auto;
-  }
-
-  @media (min-width: 320px) and (max-width: 480px) {
-    /*  ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
-    width: auto;
-  }
-`
-
-const MediumInputContainer = styled.div`
-  width: 35rem;
-  @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
-    /* iPhone X */
-    width: auto;
-  }
-  @media (min-width: 768px) and (max-width: 1024px) {
-    /* #Device = Tablets, Ipads (portrait) #Screen = B/w 768px to 1024px */
-    width: 25rem;
-  }
-  @media (min-width: 320px) and (max-width: 480px) {
-    /*  ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
-    width: auto;
-  }
-`
-
-// end custom form components
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
@@ -343,8 +270,12 @@ class OpDetailForm extends Component {
             a request
           </h1>
           <p>
-            Ask volunteers for assistance with anything related to tech - there
-            are 1,312 volunteers looking for opportunities to help out
+            <FormattedMessage
+              id='opdetail.pagesubtitle'
+              description='subTitle for creating Ops'
+              defaultMessage='Ask volunteers for assistance with anything related to tech - there
+                are (get number) of volunteers looking for opportunities to help out'
+            />
           </p>
         </PageTitle>
         <Divider />
@@ -402,7 +333,7 @@ class OpDetailForm extends Component {
             <DescriptionContainer>
               <TitleContainer>
                 <TextHeadingBold>
-                  Do you need any specific skills? (Optional)
+                  Do you need any specific skills? (optional)
                 </TextHeadingBold>
               </TitleContainer>
               <TextP>
@@ -429,7 +360,7 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Where and when? (Optional)</TextHeadingBold>
+                <TextHeadingBold>Where and when? (optional)</TextHeadingBold>
               </TitleContainer>
               <TextP>
                 More skilled volunteers will offer to help you if you know when,
@@ -495,7 +426,7 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Add an image (Optional)</TextHeadingBold>
+                <TextHeadingBold>Add an image (optional)</TextHeadingBold>
               </TitleContainer>
               <TextP>
                 Requests with photos get more responses. If you don't have a
@@ -577,13 +508,6 @@ class OpDetailForm extends Component {
             </InputContainer>
           </FormGrid>
 
-          <Row>
-            <Col
-              style={{ textAlign: 'right' }}
-              xs={{ span: 24, offset: 0 }}
-              md={{ span: 8, offset: 12 }}
-            />
-          </Row>
         </Form>
       </div>
     )
