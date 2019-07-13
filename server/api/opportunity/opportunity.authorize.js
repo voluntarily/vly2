@@ -38,5 +38,6 @@ const authorizeOpportunityFields = (req, res, next) => {
 
 module.exports = {
   authorizeOpportunityActions,
-  authorizeOpportunityFields
+  authorizeOpportunityFields,
+  convertRequestToAction
 }

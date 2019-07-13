@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
+const idvalidator = require('mongoose-id-validator')
 const Schema = mongoose.Schema
+const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
 const { Role } = require('../../services/auth/role')
 
 // simplified version without Auth
@@ -28,5 +30,9 @@ const personSchema = new Schema({
   },
   dateAdded: { type: 'Date', default: Date.now, required: true }
 })
+
+personSchema.plugin(idvalidator)
+personSchema.plugin(accessibleRecordsPlugin)
+// personSchema.plugin(accessibleFieldsPlugin)
 
 module.exports = mongoose.model('Person', personSchema)

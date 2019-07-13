@@ -10,8 +10,9 @@ module.exports = options => (req, res, next) => {
   glob.sync(pattern).forEach(abilityPath => {
     const ab = require(abilityPath)
     userRoles.forEach(role => {
+      if (ab[role] == null) return
       // TODO: [VP-277] when concat roles we will get duplicates - use set.
-      allRules = allRules.concat(ab[role] || ab[Role.VOLUNTEER_PROVIDER])
+      allRules = allRules.concat(ab[Role.VOLUNTEER_PROVIDER])
     })
   })
   req.ability = new Ability(allRules)
