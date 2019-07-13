@@ -145,7 +145,6 @@ test.serial.only('retrieve archived opportunities', async t => {
   console.log(apiUrl)
   myMock.get(API_URL + '/opportunityArchives/', { body: { archivedOpportunities } })
   reduxApi.use('fetch', adapterFetch(myMock))
-  debugger
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
