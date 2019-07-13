@@ -3,7 +3,7 @@ import slug from 'limax'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import RichTextEditor from '../Editor/RichTextEditor'
+import RichTextEditor from '../FormInputComponents/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 
 function hasErrors (fieldsError) {

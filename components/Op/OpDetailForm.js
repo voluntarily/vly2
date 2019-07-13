@@ -3,11 +3,11 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import RichTextEditor from '../Editor/RichTextEditor'
+import RichTextEditor from '../FormInputComponents/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { TextHeadingBold, TextP } from '../VTheme/VTheme'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
-import OpDetailTagsEditable from './OpDetailTagsEditable'
+import TagInput from '../FormInputComponents/TagInput'
 import OpLocationSelector from './OpLocationSelector'
 import {
   DescriptionContainer,
@@ -348,7 +348,7 @@ class OpDetailForm extends Component {
                   initialValue: [],
                   rules: []
                 })(
-                  <OpDetailTagsEditable
+                  <TagInput
                     existingTags={this.props.existingTags}
                   />
                 )}
