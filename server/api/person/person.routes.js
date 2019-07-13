@@ -3,7 +3,7 @@ const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Person = require('./person')
 const { ensureSanitized, getPersonBy } = require('./person.controller')
-const { SchemaName } = require('./person.authorize')
+const { SchemaName } = require('./person.constants')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 
 module.exports = function (server) {
