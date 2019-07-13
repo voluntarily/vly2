@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import objectid from 'objectid'
 import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
 import people from '../server/api/person/__tests__/person.fixture'
-import archivedOpportunities from '../server/api/opportunity-archive/__tests__/archivedOpportunity.fixture'
+import opportunityArchives from '../server/api/opportunityArchive/__tests__/opportunityArchive.fixture'
 import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import thunk from 'redux-thunk'
@@ -22,8 +22,8 @@ test.before('Setup fixtures', (t) => {
     op.requestor = people[index]._id
   })
   // take ownership of 2nd event and set to done
-  archivedOpportunities[1].requestor = me._id
-  archivedOpportunities[1].status = 'completed'
+  opportunityArchives[1].requestor = me._id
+  opportunityArchives[1].status = 'completed'
 
   // setup list of interests, i'm interested in first 5 ops
   const interestStates = ['interested', 'invited', 'committed', 'declined', 'completed', 'cancelled']
@@ -41,7 +41,7 @@ test.before('Setup fixtures', (t) => {
     me,
     people,
     ops,
-    archivedOpportunities,
+    opportunityArchives,
     interests
   }
 
@@ -70,7 +70,7 @@ test.before('Setup fixtures', (t) => {
         sync: false,
         syncing: false,
         loading: false,
-        data: archivedOpportunities,
+        data: opportunityArchives,
         request: null
       }
     }
@@ -142,14 +142,14 @@ test('retrieve archived opportunities', async t => {
   }
   const { fetchMock } = require('fetch-mock')
   const myMock = fetchMock.sandbox()
-  myMock.get(API_URL + '/opportunityArchives/', { body: { archivedOpportunities } })
+  myMock.get(API_URL + '/opportunityArchives/', { body: { opportunityArchives } })
   reduxApi.use('fetch', adapterFetch(myMock))
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
     </Provider>)
-  const res = await wrapper.find('PersonHomePage').first().instance().getArchivedOpportunities()
+  const res = await wrapper.find('PersonHomePage').first().instance().getOpportunityArchives()
   t.is(res.length, 2)
-  t.is(res[0], archivedOpportunities[0])
-  t.is(res[1], archivedOpportunities[1])
+  t.is(res[0], opportunityArchives[0])
+  t.is(res[1], opportunityArchives[1])
 })
