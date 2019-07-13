@@ -19,32 +19,37 @@ const cardHeading = {
   height: '50px'
 }
 
-const InterestConfirmationCard = ({ organizer, ...props }) => (
-  <React.Fragment>
-    <div style={{ color: 'black' }}>
-      <Paragraph>
-        <FormattedMessage {...interestConfirmation} />
-      </Paragraph>
-    </div>
-    <div>
-      <Card style={{ width: 450, marginTop: 16, borderRadius: 8 }}>
-        <Meta style={cardHeading}
-          avatar={
-            <Avatar src={organizer.avatar} />
-          }
-          title={organizer.name}
-          description={organizer.title}
-        />
-        <div style={{ color: '#6549AA', marginTop: '20px' }}>
-          {/* {console.log(organizer.phone)} */}
-          <Icon type='mail' /><span> {organizer.email}</span><br />
-          {organizer.phone && organizer.phone !== 'undefined' &&
-          <span><Icon type='mobile' /> {organizer.phone}</span>}
-        </div>
-      </Card>
-    </div>
-  </React.Fragment>
-)
+const InterestConfirmationCard = ({ organizer, ...props }) => {
+  const emailHref = 'mailto:' + organizer.email
+
+  return (
+    <React.Fragment>
+      <div style={{ color: 'black' }}>
+        <Paragraph>
+          <FormattedMessage {...interestConfirmation} />
+        </Paragraph>
+      </div>
+      <div>
+        <Card style={{ width: 450, marginTop: 16, borderRadius: 8 }}>
+          <Meta style={cardHeading}
+            avatar={
+              <Avatar src={organizer.avatar} />
+            }
+            title={organizer.name}
+            description={organizer.title}
+          />
+          <div style={{ color: '#6549AA', marginTop: '20px' }}>
+            {/* {console.log(organizer.phone)} */
+            }
+            <Icon type='mail' /><span> <a href={emailHref}>{organizer.email}</a></span><br />
+            {organizer.phone && organizer.phone !== 'undefined' &&
+            <span><Icon type='mobile' /> {organizer.phone}</span>}
+          </div>
+        </Card>
+      </div>
+    </React.Fragment>
+  )
+}
 
 InterestConfirmationCard.propTypes = {
   organizer: PropTypes.shape({
