@@ -1,4 +1,4 @@
-import { Button, Checkbox, Col, Divider, Form, Input, Radio, Row } from 'antd'
+import { Button, Checkbox, Divider, Form, Input, Radio } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -9,7 +9,6 @@ import {
   DescriptionContainer,
   FormGrid,
   InputContainer,
-  MediumInputContainer,
   ShortInputContainer,
   TitleContainer
 } from '../VTheme/FormStyles'
@@ -103,13 +102,7 @@ class PersonDetailForm extends Component {
         description='person Image URL label in personDetails Form'
       />
     )
-    const personGender = (
-      <FormattedMessage
-        id='personGender'
-        defaultMessage='Gender'
-        description='person gender label in personDetails Form'
-      />
-    )
+
     const personRole = (
       <FormattedMessage
         id='personRole'
@@ -139,8 +132,6 @@ class PersonDetailForm extends Component {
       { label: 'Tester', value: 'tester' }
     ]
 
-
-
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
     const isTest = process.env.NODE_ENV === 'test'
@@ -151,11 +142,7 @@ class PersonDetailForm extends Component {
           <h2>Edit your profile</h2>
         </PageTitle>
         <Divider />
-        <Form
-          onSubmit={this.handleSubmit}
-          hideRequiredMark
-          colon={false}
-        >
+        <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -164,25 +151,25 @@ class PersonDetailForm extends Component {
               <TextP>How do we get in touch?</TextP>
             </DescriptionContainer>
             <InputContainer>
-            <ShortInputContainer>
-              <Form.Item
-                label={personName}
-                validateStatus={nameError ? 'error' : ''}
-                help={nameError || ''}
-              >
-                {getFieldDecorator('name', {
-                  rules: [{ required: true, message: 'Name is required' }]
-                })(
-                  <Input placeholder='e.g. Salvador Felipe Jacinto Dalí y Domenech.' />
-                )}
-              </Form.Item>
+              <ShortInputContainer>
+                <Form.Item
+                  label={personName}
+                  validateStatus={nameError ? 'error' : ''}
+                  help={nameError || ''}
+                >
+                  {getFieldDecorator('name', {
+                    rules: [{ required: true, message: 'Name is required' }]
+                  })(
+                    <Input placeholder='e.g. Salvador Felipe Jacinto Dalí y Domenech.' />
+                  )}
+                </Form.Item>
               </ShortInputContainer>
               <ShortInputContainer>
-              <Form.Item label={personnickname}>
-                {getFieldDecorator('nickname', {
-                  rules: []
-                })(<Input placeholder='e.g Dali' />)}
-              </Form.Item>
+                <Form.Item label={personnickname}>
+                  {getFieldDecorator('nickname', {
+                    rules: []
+                  })(<Input placeholder='e.g Dali' />)}
+                </Form.Item>
               </ShortInputContainer>
               <Form.Item label={personAbout}>
                 {getFieldDecorator('about', {
@@ -208,24 +195,24 @@ class PersonDetailForm extends Component {
                 <TextHeadingBold>Contact details</TextHeadingBold>
               </TitleContainer>
               <TextP>
-                How do you want teachers and charities to get in touch with you? Other
-                people can only see this if you let them 🤫
+                How do you want teachers and charities to get in touch with you?
+                Other people can only see this if you let them 🤫
               </TextP>
             </DescriptionContainer>
             <InputContainer>
-            <ShortInputContainer>
-              <Form.Item label={personEmail}>
-                {getFieldDecorator('email', {
-                  rules: []
-                })(<Input placeholder='salvador@dali.com' />)}
-              </Form.Item>
+              <ShortInputContainer>
+                <Form.Item label={personEmail}>
+                  {getFieldDecorator('email', {
+                    rules: []
+                  })(<Input placeholder='salvador@dali.com' />)}
+                </Form.Item>
               </ShortInputContainer>
               <ShortInputContainer>
-              <Form.Item label={personPhone}>
-                {getFieldDecorator('phone', {
-                  rules: []
-                })(<Input placeholder='000 000 0000' />)}
-              </Form.Item>
+                <Form.Item label={personPhone}>
+                  {getFieldDecorator('phone', {
+                    rules: []
+                  })(<Input placeholder='000 000 0000' />)}
+                </Form.Item>
               </ShortInputContainer>
             </InputContainer>
           </FormGrid>
@@ -255,7 +242,8 @@ class PersonDetailForm extends Component {
               <TitleContainer>
                 <TextHeadingBold>Admin section</TextHeadingBold>
               </TitleContainer>
-              <TextP>Please be careful on this part</TextP></DescriptionContainer>
+              <TextP>Please be careful on this part</TextP>
+            </DescriptionContainer>
             <InputContainer>
               {' '}
               <Form.Item label={personRole}>
