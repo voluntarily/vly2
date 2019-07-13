@@ -62,9 +62,7 @@ class OpDetailForm extends Component {
         op.date.push(startDateValue, endDateValue)
         op.title = values.title
         op.subtitle = values.subtitle
-        op.tags = values.tags.map(t => {
-          return { tag: t }
-        })
+        op.tags = values.tags
         op.duration = values.duration
         op.location = values.location
         op.description = values.description
@@ -542,7 +540,10 @@ OpDetailForm.propTypes = {
   }),
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  existingTags: PropTypes.arrayOf(PropTypes.shape({
+    tag: PropTypes.string.isRequired,
+    _id: PropTypes.string
+  })).isRequired,
   existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired
   // dispatch: PropTypes.func.isRequired,
 }
@@ -583,7 +584,7 @@ export default Form.create({
       }),
       tags: Form.createFormField({
         ...props.op.tags,
-        value: props.op.tags.map(t => t.tag)
+        value: props.op.tags
       }),
       startDate: Form.createFormField({
         ...props.op.startDate,

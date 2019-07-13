@@ -1,7 +1,7 @@
 import React from 'react'
 import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
-import OpDetailTagsEditable from '../OpDetailTagsEditable'
+import TagInput from '../TagInput'
 import sinon from 'sinon'
 
 const originalWarn = console.warn
@@ -22,7 +22,7 @@ test('render the op with a few pre-existing tags', t => {
   const secondTag = 'network'
 
   const wrapper = mountWithIntl(
-    <OpDetailTagsEditable value={[firstTag, secondTag]} existingTags={[]} />
+    <TagInput value={[firstTag, secondTag]} existingTags={[]} />
   )
 
   t.is(wrapper.find('.ant-tag').length, 2)
@@ -37,7 +37,7 @@ test('render the op with a few pre-existing tags, and add a tag into the input f
   const inputTag = 'new tag!'
 
   const wrapper = mountWithIntl(
-    <OpDetailTagsEditable value={[firstTag, secondTag]} existingTags={[]} />
+    <TagInput value={[firstTag, secondTag]} existingTags={[]} />
   )
 
   t.is(wrapper.find('.ant-tag').length, 2)
@@ -57,7 +57,7 @@ test('render the op with a few pre-existing tags, and add a tag fully, to re-ren
   const expectedNewValue = [firstTag, secondTag, inputTag]
 
   const wrapper = mountWithIntl(
-    <OpDetailTagsEditable onChange={mockOnChange} value={value} existingTags={[]} />
+    <TagInput onChange={mockOnChange} value={value} existingTags={[]} />
   )
 
   const wrapperInstance = wrapper.instance()
@@ -80,7 +80,7 @@ test('render the op with a few pre-existing tags, and remove a tag from them', t
   const mockOnChange = sinon.spy()
 
   const wrapper = mountWithIntl(
-    <OpDetailTagsEditable onChange={mockOnChange} value={[firstTag, secondTag]} existingTags={[]} />
+    <TagInput onChange={mockOnChange} value={[firstTag, secondTag]} existingTags={[]} />
   )
 
   const wrapperInstance = wrapper.instance()
@@ -97,7 +97,7 @@ test('render when input value doesnt match any existing tags', t => {
   const mockOnChange = sinon.spy()
 
   const wrapper = mountWithIntl(
-    <OpDetailTagsEditable onChange={mockOnChange} value={[]} existingTags={existingTags} />
+    <TagInput onChange={mockOnChange} value={[]} existingTags={existingTags} />
   )
 
   const wrapperInstance = wrapper.instance()
