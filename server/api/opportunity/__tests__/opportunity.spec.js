@@ -440,6 +440,7 @@ test.serial('should return all matching opps within the specified region', async
   const res = await request(server)
     .get(`/api/opportunities?location=${regions[0].name}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
 
@@ -461,6 +462,7 @@ test.serial('should return opps at the specified territory', async t => {
   const res = await request(server)
     .get(`/api/opportunities?location=${regions[0].containedTerritories[1]}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
 
@@ -479,6 +481,7 @@ test.serial('should return opps within the specified region that also match the 
   const res = await request(server)
     .get(`/api/opportunities?search=mentor&location=${regions[0].name}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
 
