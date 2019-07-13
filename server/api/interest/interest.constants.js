@@ -17,7 +17,7 @@ const InterestStatus = {
 }
 
 module.exports = {
-  InterestSubject: 'Interest',
+  SchemaName: 'Interest',
   InterestFields,
   InterestStatus
 }

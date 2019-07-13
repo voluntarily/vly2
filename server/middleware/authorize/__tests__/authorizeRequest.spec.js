@@ -1,18 +1,17 @@
 import test from 'ava'
-import { authorizeOpportunityActions, authorizeOpportunityFields } from '../opportunity.authorize'
-import { SchemaName, OpportunityRoutes, OpportunityFields } from '../opportunity.constants'
+import { authorizeActions, authorizeFields } from '../authorizeRequest'
+import { FakeSchema, SchemaName, Routes, Fields, ConvertRequestToAction } from './authorizeRequest.fixture'
 import MockExpressRequest from 'mock-express-request'
 import MockExpressResponse from 'mock-express-response'
 import { AbilityBuilder } from '@casl/ability'
 import { Action } from '../../../services/abilities/ability.constants'
 import sinon from 'sinon'
-import Opportunity from '../opportunity'
 
-test.serial('Opportunity request rejected if unauthorized', async t => {
+test.serial('Request rejected if unauthorized', async t => {
   const request = new MockExpressRequest({
     method: 'GET',
     route: {
-      path: OpportunityRoutes[Action.LIST]
+      path: Routes[Action.LIST]
     }
   })
   const abilityForUnauthorizedRequest = AbilityBuilder.define((can, cannot) => {
@@ -22,16 +21,16 @@ test.serial('Opportunity request rejected if unauthorized', async t => {
   request.ability = abilityForUnauthorizedRequest
   const response = new MockExpressResponse({ request })
   const next = sinon.fake()
-  authorizeOpportunityActions(request, response, next)
+  authorizeActions(SchemaName, ConvertRequestToAction)(request, response, next)
   t.is(response.statusCode, 403)
   t.is(next.callCount, 0)
 })
 
-test.serial('Opportunity request accepted if authorized', async t => {
+test.serial('Request accepted if authorized', async t => {
   const request = new MockExpressRequest({
     method: 'GET',
     route: {
-      path: OpportunityRoutes[Action.LIST]
+      path: Routes[Action.LIST]
     }
   })
   const abilityForAuthorizedRequest = AbilityBuilder.define(can => {
@@ -41,51 +40,51 @@ test.serial('Opportunity request accepted if authorized', async t => {
   request.ability = abilityForAuthorizedRequest
   const response = new MockExpressResponse({ request })
   const next = sinon.fake()
-  authorizeOpportunityActions(request, response, next)
+  authorizeActions(SchemaName, ConvertRequestToAction)(request, response, next)
   t.is(next.callCount, 1)
 })
 
-test.serial('Only authorized Opportunity fields returned for single get', async t => {
+test.serial('Only authorized fields returned for single get', async t => {
   const expectedTitle = 'foo'
-  const ability = AbilityBuilder.define(can => can(Action.READ, SchemaName, [OpportunityFields.TITLE]))
-  let opportunity = new Opportunity()
-  opportunity.title = expectedTitle
+  const ability = AbilityBuilder.define(can => can(Action.READ, SchemaName, [Fields.TITLE]))
+  let item = new FakeSchema()
+  item.title = expectedTitle
   const request = new MockExpressRequest({
     method: 'GET',
     route: {
-      path: OpportunityRoutes[Action.READ]
+      path: Routes[Action.READ]
     }
   })
   request.ability = ability
   const response = new MockExpressResponse({ request })
-  response.body = opportunity
+  response.body = item
   const next = sinon.fake()
-  authorizeOpportunityFields(request, response, next)
+  authorizeFields(FakeSchema)(request, response, next)
   t.is(response.body.title, expectedTitle)
   t.false(!!response.body.subtitle)
   t.is(next.callCount, 1)
 })
 
-test.serial('Only authorized Opportunity fields returned for list get', async t => {
-  const expectedTitleA = 'foo'
-  const expectedTitleB = 'bar'
-  const ability = AbilityBuilder.define(can => can(Action.READ, SchemaName, [OpportunityFields.TITLE]))
-  let opportunityA = new Opportunity()
-  opportunityA.title = expectedTitleA
-  let opportunityB = new Opportunity()
-  opportunityB.title = expectedTitleB
+test.serial('Only authorized fields returned for list get', async t => {
+  const propA = 'foo'
+  const propB = 'bar'
+  const ability = AbilityBuilder.define(can => can(Action.READ, SchemaName, [Fields.TITLE]))
+  let itemA = new FakeSchema()
+  itemA.title = propA
+  let itemB = new FakeSchema()
+  itemB.title = propB
   const request = new MockExpressRequest({
     method: 'GET',
     route: {
-      path: OpportunityRoutes[Action.LIST]
+      path: Routes[Action.LIST]
     }
   })
   request.ability = ability
   const response = new MockExpressResponse({ request })
-  response.body = [opportunityA, opportunityB]
+  response.body = [itemA, itemB]
   const next = sinon.fake()
-  authorizeOpportunityFields(request, response, next)
+  authorizeFields(FakeSchema)(request, response, next)
   t.is(response.body.length, 2)
-  response.body.forEach(opp => t.true(!!opp.title) && t.false(!!opp.subtitle))
+  response.body.forEach(item => t.true(!!item.title) && t.false(!!item.subtitle))
   t.is(next.callCount, 1)
 })
