@@ -1,17 +1,17 @@
 import { Avatar, Card, Icon, Typography } from 'antd'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
 const { Paragraph } = Typography
 const { Meta } = Card
 // page copy declared here to handle multiple lines
 const interestConfirmation = {
-    id: 'op.added',
-    description: "Confirms interest has been added to a persons activities",
-    defaultMessage: `This opportunity has been added to your activities.
+  id: 'op.added',
+  description: 'Confirms interest has been added to a persons activities',
+  defaultMessage: `This opportunity has been added to your activities.
     If you want to learn more, contact the person below.`
-};
+}
 
 const cardHeading = {
   color: '#000000',
@@ -23,7 +23,7 @@ const InterestConfirmationCard = ({ organizer, ...props }) => (
   <React.Fragment>
     <div style={{ color: 'black' }}>
       <Paragraph>
-        <FormattedMessage {...interestConfirmation}/>
+        <FormattedMessage {...interestConfirmation} />
       </Paragraph>
     </div>
     <div>

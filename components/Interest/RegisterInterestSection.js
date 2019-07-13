@@ -9,7 +9,7 @@ import InterestConfirmationCard from './InterestConfirmationCard'
 
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
 // Helper function to generate a blank interest.
 function getNewInterest (me, op) {
@@ -67,9 +67,9 @@ class RegisterInterestSection extends Component {
           <Loading>
             <p>
               <FormattedMessage
-                id="registerInterest.loading"
-                description="loading message"
-                defaultMessage= "Loading ..."
+                id='registerInterest.loading'
+                description='loading message'
+                defaultMessage='Loading ...'
               />
             </p>
           </Loading>
