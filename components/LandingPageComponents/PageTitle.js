@@ -42,6 +42,11 @@ const PageTitleContainer = styled.div`
       letter-spacing: -0.05rem;
     }
   }
+
+h2 {
+  font-size: 2rem;
+}
+
   p {
     font-size: 1rem;
     font-weight: 400;
