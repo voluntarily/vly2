@@ -7,7 +7,11 @@ import { Provider } from 'react-redux'
 import objectid from 'objectid'
 import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
 import people from '../server/api/person/__tests__/person.fixture'
-
+import archivedOpportunities from '../server/api/opportunity-archive/__tests__/archivedOpportunity.fixture'
+import reduxApi from '../lib/redux/reduxApi'
+import adapterFetch from 'redux-api/lib/adapters/fetch'
+import thunk from 'redux-thunk'
+import { API_URL } from '../lib/apiCaller'
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
   people.map(p => { p._id = objectid().toString() })
@@ -19,7 +23,7 @@ test.before('Setup fixtures', (t) => {
   })
 
   // setup list of interests, i'm interested in first 5 ops
-  const interestStates = [ 'interested', 'invited', 'committed', 'declined', 'completed', 'cancelled' ]
+  const interestStates = ['interested', 'invited', 'committed', 'declined', 'completed', 'cancelled']
   const interests = ops.filter(op => op.requestor !== me._id).map((op, index) => {
     return ({
       _id: objectid().toString(),
@@ -37,7 +41,7 @@ test.before('Setup fixtures', (t) => {
     interests
   }
 
-  t.context.mockStore = configureStore()(
+  t.context.mockStore = configureStore([thunk])(
     {
       session: {
         isAuthenticated: true,
@@ -56,6 +60,13 @@ test.before('Setup fixtures', (t) => {
         syncing: false,
         loading: false,
         data: interests,
+        request: null
+      },
+      opportunityArchives: {
+        sync: false,
+        syncing: false,
+        loading: false,
+        data: archivedOpportunities,
         request: null
       }
     }
@@ -122,4 +133,23 @@ test('render Edit Profile ', t => {
   wrapper.find('.ant-tabs-tab').at(2).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Profile')
   t.is(wrapper.find('Button').first().text(), 'Edit')
+})
+
+test.serial.only('retrieve archived opportunities', async t => {
+  const props = {
+    me: t.context.me
+  }
+  const { fetchMock } = require('fetch-mock')
+  const myMock = fetchMock.sandbox()
+  const apiUrl = API_URL + '/opportunityArchives/'
+  console.log(apiUrl)
+  myMock.get(API_URL + '/opportunityArchives/', { body: { archivedOpportunities } })
+  reduxApi.use('fetch', adapterFetch(myMock))
+  debugger
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <PersonHomePageTest {...props} />
+    </Provider>)
+  const res = await wrapper.find('PersonHomePage').first().instance().getArchivedOpportunities()
+  t.is(res, archivedOpportunities)
 })

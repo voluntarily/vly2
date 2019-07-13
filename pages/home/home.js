@@ -10,7 +10,8 @@ import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import reduxApi, {
   withInterests,
   withPeople,
-  withOps
+  withOps,
+  withOpportunityArchives
 } from '../../lib/redux/reduxApi.js'
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
@@ -55,6 +56,14 @@ function callback (key) {
 class PersonHomePage extends Component {
   state = {
     editProfile: false
+  }
+
+  async getArchivedOpportunities () {
+    debugger
+    await this.props.dispatch(
+      reduxApi.actions.opportunityArchives.get({})
+    )
+    return this.props.opportunityArchives.data
   }
 
   mergeOpsList () {
@@ -247,5 +256,5 @@ class PersonHomePage extends Component {
     )
   }
 }
-export const PersonHomePageTest = withInterests(withOps(PersonHomePage)) // for test
+export const PersonHomePageTest = withInterests(withOps(withOpportunityArchives(PersonHomePage))) // for test
 export default securePage(withPeople(PersonHomePageTest))
