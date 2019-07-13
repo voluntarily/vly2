@@ -194,6 +194,31 @@ test.serial('Should not add an opportunity with invalid tag refs', async t => {
   t.is(null, savedOpportunity)
 })
 
+test.serial('Should correctly add an opportunity with default image', async t => {
+  t.plan(3)
+
+  const res = await request(server)
+    .post('/api/opportunities')
+    .send({
+      title: 'The first 400 metres',
+      subtitle: 'Launching into space step 3',
+      description: 'Project to build a simple rocket that will reach 400m',
+      duration: '4 hours',
+      location: 'Albany, Auckland',
+      status: 'draft',
+      requestor: t.context.people[0]._id
+    })
+    .set('Accept', 'application/json')
+
+  t.is(res.status, 200)
+
+  const savedOpportunity = await Opportunity.findOne({ title: 'The first 400 metres' }).exec()
+  t.is(savedOpportunity.subtitle, 'Launching into space step 3')
+  
+  // opportunity has been given the default image
+  t.is(savedOpportunity.imgUrl, '../../../static/img/opportunity/opportunity.png')
+})
+
 test.serial('Should correctly delete an opportunity', async t => {
   t.plan(2)
 

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const ActivitySchema = new Schema({
   title: String, // "Growing in the garden",
   subtitle: String, // "Growing digitally in the garden",
-  imgUrl: String, // "https://image.flaticon.com/icons/svg/206/206857.svg",
+  imgUrl: { type: 'String', required: true, default: '../../../static/img/activity/activity.png' },
   description: String, // "Project to grow something in the garden",
   duration: String, // "15 Minutes",
   org: { type: Schema.Types.ObjectId, ref: 'Organisation' },

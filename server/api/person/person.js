@@ -12,7 +12,7 @@ const personSchema = new Schema({
   gender: { type: 'String', default: '' }, // whatever they want to write.
   password: { type: 'String' }, // encoded
   language: { type: String, default: 'EN', lowercase: true }, // en, mi, fr etc
-  avatar: String, // url to image
+  avatar: { type: 'String', required: false, default: '../../../static/img/person/person.png' }, // url to image
   role: {
     type: [String],
     required: true,

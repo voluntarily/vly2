@@ -75,7 +75,7 @@ test.serial('Should send correct data when queried against an id', async t => {
 })
 
 test.serial('Should correctly add a person', async t => {
-  t.plan(3)
+  t.plan(4)
 
   const p = {
     name: 'Testy McTestFace',
@@ -108,6 +108,10 @@ test.serial('Should correctly add a person', async t => {
     // can find by email using await
     const savedPerson = await Person.findOne({ email: p.email }).exec()
     t.is(savedPerson.name, p.name)
+
+    // person has been given the default image
+    t.is(savedPerson.avatar, '../../../static/img/person/person.png')
+
   } catch (err) {
     console.log(err)
   }
