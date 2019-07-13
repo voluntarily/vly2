@@ -59,7 +59,6 @@ class PersonHomePage extends Component {
   }
 
   async getArchivedOpportunities () {
-    debugger
     await this.props.dispatch(
       reduxApi.actions.opportunityArchives.get({})
     )
