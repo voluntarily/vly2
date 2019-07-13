@@ -23,28 +23,26 @@ const ActivityNavSubheading = styled.div`
 `
 
 const ActMenu = ({ acts, ...props }) => (
-  <div>
-    <ActivityNavHeading>
-      <Menu
-      style={{ width: 256 }}
-      mode="inline"
-      >
-        <Menu.ItemGroup key="g1" title="Discover">
-          <ActivityNavSubheading>
-            <Menu.Item key="1">Top rated</Menu.Item>
-            <Menu.Item key="2">Top trending</Menu.Item>
-          </ActivityNavSubheading>
-        </Menu.ItemGroup>
-        <Menu.ItemGroup key="g2" title="Categories">
-          <ActivityNavSubheading>
-            <Menu.Item key="3">Science</Menu.Item>
-            <Menu.Item key="4">Programming</Menu.Item>
-            <Menu.Item key="5">Geology</Menu.Item>
-          </ActivityNavSubheading>
-        </Menu.ItemGroup>
-      </Menu>
-    </ActivityNavHeading>
-  </div>
+  <ActivityNavHeading>
+    <Menu
+    style={{ width: 256 }}
+    mode="inline"
+    >
+      <Menu.ItemGroup key="g1" title="Discover">
+        <ActivityNavSubheading>
+          <Menu.Item key="1">Top rated</Menu.Item>
+          <Menu.Item key="2">Top trending</Menu.Item>
+        </ActivityNavSubheading>
+      </Menu.ItemGroup>
+      <Menu.ItemGroup key="g2" title="Categories">
+        <ActivityNavSubheading>
+          <Menu.Item key="3">Science</Menu.Item>
+          <Menu.Item key="4">Programming</Menu.Item>
+          <Menu.Item key="5">Geology</Menu.Item>
+        </ActivityNavSubheading>
+      </Menu.ItemGroup>
+    </Menu>
+  </ActivityNavHeading>
 )
 
 ActMenu.practTypes = {
