@@ -172,11 +172,20 @@ class PersonDetailForm extends Component {
                 )}
               </Form.Item>
               </ShortInputContainer>
+              <ShortInputContainer>
               <Form.Item label={personnickname}>
                 {getFieldDecorator('nickname', {
                   rules: []
                 })(<Input placeholder='e.g Dali' />)}
               </Form.Item>
+              </ShortInputContainer>
+              <ShortInputContainer>
+              <Form.Item label={personGender}>
+                {getFieldDecorator('gender', {
+                  rules: []
+                })(<Input placeholder='write what you want here. ' />)}
+              </Form.Item>
+              </ShortInputContainer>
               <Form.Item label={personAbout}>
                 {getFieldDecorator('about', {
                   rules: []
@@ -191,13 +200,6 @@ class PersonDetailForm extends Component {
                   )
                 )}
               </Form.Item>
-              <ShortInputContainer>
-              <Form.Item label={personGender}>
-                {getFieldDecorator('gender', {
-                  rules: []
-                })(<Input placeholder='write what you want here. ' />)}
-              </Form.Item>
-              </ShortInputContainer>
             </InputContainer>
           </FormGrid>
 
