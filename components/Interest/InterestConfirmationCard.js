@@ -1,10 +1,8 @@
-import React from 'react'
-import { Card, Icon, Avatar, Typography } from 'antd'
-
+import { Avatar, Card, Icon, Typography } from 'antd'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 const { Paragraph } = Typography
-
 const { Meta } = Card
 
 const cardHeading = {

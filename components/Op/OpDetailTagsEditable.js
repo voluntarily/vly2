@@ -1,6 +1,6 @@
-import { Tag, AutoComplete } from 'antd'
-import React from 'react'
+import { AutoComplete, Tag } from 'antd'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 const { Option } = AutoComplete
 

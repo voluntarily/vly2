@@ -1,8 +1,25 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Opportunity = require('./opportunity')
+const { Action } = require('../../services/abilities/ability.constants')
 const { getOpportunities, getOpportunity, putOpportunity } = require('./opportunity.controller')
-const { authorizeOpportunityActions, authorizeOpportunityFields } = require('./opportunity.authorize')
+const { SchemaName, OpportunityRoutes } = require('./opportunity.constants')
+const { authorizeActions, authorizeFields } = require('../../middleware/authorize/authorizeRequest')
+
+const convertRequestToAction = (req) => {
+  switch (req.method) {
+    case 'GET':
+      return req.route.path === OpportunityRoutes[Action.READ] ? Action.READ : Action.LIST
+    case 'POST':
+      return Action.CREATE
+    case 'PUT':
+      return Action.UPDATE
+    case 'DELETE':
+      return Action.DELETE
+    default:
+      return Action.READ
+  }
+}
 
 module.exports = (server) => {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -13,7 +30,7 @@ module.exports = (server) => {
       selectFields: '-__v', // Hide '__v' property
       endResponseInAction: false,
       beforeActions: [{
-        middlewares: [authorizeOpportunityActions]
+        middlewares: [authorizeActions(SchemaName, convertRequestToAction)]
       }],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       actions: {
@@ -22,7 +39,7 @@ module.exports = (server) => {
         update: putOpportunity
       },
       afterActions: [{
-        middlewares: [authorizeOpportunityFields, helpers.formatResponse]
+        middlewares: [authorizeFields(Opportunity), helpers.formatResponse]
       }]
     })
   )

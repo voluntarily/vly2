@@ -1,17 +1,12 @@
-import React from 'react'
+import { Layout } from 'antd'
+import Cookie from 'js-cookie'
 import Head from 'next/head'
 import Router from 'next/router'
-import Cookie from 'js-cookie'
-import {
-  getUserFromServerCookie,
-  getUserFromLocalCookie,
-  parseUserToSession
-} from '../lib/auth/auth'
-import { Layout } from 'antd'
+import React from 'react'
+import styled from 'styled-components'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
-
-import styled from 'styled-components'
+import { getUserFromLocalCookie, getUserFromServerCookie, parseUserToSession } from '../lib/auth/auth'
 import { setSession } from '../lib/redux/actions'
 
 // Dump all the custom elements and responsive scaffolding crap here
