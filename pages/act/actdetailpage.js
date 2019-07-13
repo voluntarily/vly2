@@ -152,7 +152,7 @@ export class ActDetailPage extends Component {
       } else {
         content = <div>
           { canEdit && <Button id='editActBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
-            <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
+            <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
           </Button>}
 
           <ActDetail act={act} />
