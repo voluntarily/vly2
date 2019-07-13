@@ -1,9 +1,17 @@
 import { Avatar, Card, Icon, Typography } from 'antd'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
 
 const { Paragraph } = Typography
 const { Meta } = Card
+// page copy declared here to handle multiple lines
+const interestConfirmation = {
+  id: 'op.added',
+  description: 'Confirms interest has been added to a persons activities',
+  defaultMessage: `This opportunity has been added to your activities.
+    If you want to learn more, contact the person below.`
+}
 
 const cardHeading = {
   color: '#000000',
@@ -11,12 +19,12 @@ const cardHeading = {
   height: '50px'
 }
 
-// BUG: [VP-182] The strings in InterestConfirmationCard  are not in FormattedMessage components.
 const InterestConfirmationCard = ({ organizer, ...props }) => (
   <React.Fragment>
     <div style={{ color: 'black' }}>
-      <Paragraph> This opportunity has been added to your activities. <br />
-        If you want to learn more, contact the person below.</Paragraph>
+      <Paragraph>
+        <FormattedMessage {...interestConfirmation} />
+      </Paragraph>
     </div>
     <div>
       <Card style={{ width: 450, marginTop: 16, borderRadius: 8 }}>
