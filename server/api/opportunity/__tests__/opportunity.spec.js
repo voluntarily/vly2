@@ -9,7 +9,7 @@ import people from '../../person/__tests__/person.fixture'
 import ops from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
-import OpportunityArchive from './../../opportunityArchive/opportunityArchive'
+import archivedOpportunity from './../../archivedOpportunity/archivedOpportunity'
 import { OpportunityStatus } from '../opportunity.constants'
 import Interest from '../../interest/interest'
 import InterestArchive from '../../interest-archive/interestArchive'
@@ -368,7 +368,7 @@ test.serial('Should archive Opportunity when a completed update is sent', async 
     .expect(200)
 
   t.is(res.status, 200)
-  const queriedOpportunity = await OpportunityArchive.findOne({ title: 'Java Robots in the house' }).exec()
+  const queriedOpportunity = await archivedOpportunity.findOne({ title: 'Java Robots in the house' }).exec()
   t.is(queriedOpportunity.status, OpportunityStatus.COMPLETED)
 })
 

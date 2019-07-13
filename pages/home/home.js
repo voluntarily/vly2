@@ -11,7 +11,7 @@ import reduxApi, {
   withInterests,
   withPeople,
   withOps,
-  withOpportunityArchives
+  witharchivedOpportunitys
 } from '../../lib/redux/reduxApi.js'
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
@@ -59,11 +59,11 @@ class PersonHomePage extends Component {
   }
   constructor (props) {
     super(props)
-    this.getArchivedOpportunities = this.getArchivedOpportunities.bind(this)
+    this.getarchivedOpportunitys = this.getarchivedOpportunitys.bind(this)
   }
 
-  getArchivedOpportunities () {
-    return this.props.opportunityArchives.data.filter(
+  getarchivedOpportunitys () {
+    return this.props.archivedOpportunitys.data.filter(
       op => op.status === 'completed' && op.requestor === this.props.me._id
     )
   }
@@ -101,7 +101,7 @@ class PersonHomePage extends Component {
       await Promise.all([
         store.dispatch(reduxApi.actions.opportunities.get(filters)),
         store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
-        store.dispatch(reduxApi.actions.opportunityArchives.get({ requestor: me._id }))
+        store.dispatch(reduxApi.actions.archivedOpportunitys.get({ requestor: me._id }))
       ])
     } catch (err) {
       console.log('error in getting ops', err)
@@ -223,7 +223,7 @@ class PersonHomePage extends Component {
               />
             </h2>
             <OpList
-              ops={this.getArchivedOpportunities()}
+              ops={this.getarchivedOpportunitys()}
             />
             {/* <OpListSection query={myPastfilterString} /> */}
           </TabPane>
@@ -257,5 +257,5 @@ class PersonHomePage extends Component {
     )
   }
 }
-export const PersonHomePageTest = withInterests(withOps(withOpportunityArchives(PersonHomePage))) // for test
+export const PersonHomePageTest = withInterests(withOps(witharchivedOpportunitys(PersonHomePage))) // for test
 export default securePage(withPeople(PersonHomePageTest))

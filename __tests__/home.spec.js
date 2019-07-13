@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import objectid from 'objectid'
 import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
 import people from '../server/api/person/__tests__/person.fixture'
-import opportunityArchives from '../server/api/opportunityArchive/__tests__/opportunityArchive.fixture'
+import archivedOpportunitys from '../server/api/archivedOpportunity/__tests__/archivedOpportunity.fixture'
 import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import thunk from 'redux-thunk'
@@ -22,8 +22,8 @@ test.before('Setup fixtures', (t) => {
     op.requestor = people[index]._id
   })
   // take ownership of 2nd event and set to done
-  opportunityArchives[1].requestor = me._id
-  opportunityArchives[1].status = 'completed'
+  archivedOpportunitys[1].requestor = me._id
+  archivedOpportunitys[1].status = 'completed'
 
   // setup list of interests, i'm interested in first 5 ops
   const interestStates = ['interested', 'invited', 'committed', 'declined', 'completed', 'cancelled']
@@ -41,7 +41,7 @@ test.before('Setup fixtures', (t) => {
     me,
     people,
     ops,
-    opportunityArchives,
+    archivedOpportunitys,
     interests
   }
 
@@ -66,11 +66,11 @@ test.before('Setup fixtures', (t) => {
         data: interests,
         request: null
       },
-      opportunityArchives: {
+      archivedOpportunitys: {
         sync: false,
         syncing: false,
         loading: false,
-        data: opportunityArchives,
+        data: archivedOpportunitys,
         request: null
       }
     }
@@ -142,14 +142,14 @@ test('retrieve archived opportunities', async t => {
   }
   const { fetchMock } = require('fetch-mock')
   const myMock = fetchMock.sandbox()
-  myMock.get(API_URL + '/opportunityArchives/', { body: { opportunityArchives } })
+  myMock.get(API_URL + '/archivedOpportunitys/', { body: { archivedOpportunitys } })
   reduxApi.use('fetch', adapterFetch(myMock))
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
     </Provider>)
-  const res = await wrapper.find('PersonHomePage').first().instance().getOpportunityArchives()
+  const res = await wrapper.find('PersonHomePage').first().instance().getarchivedOpportunitys()
   t.is(res.length, 2)
-  t.is(res[0], opportunityArchives[0])
-  t.is(res[1], opportunityArchives[1])
+  t.is(res[0], archivedOpportunitys[0])
+  t.is(res[1], archivedOpportunitys[1])
 })

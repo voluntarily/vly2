@@ -2,7 +2,7 @@ const escapeRegex = require('../../util/regexUtil')
 const Opportunity = require('./opportunity')
 const Interest = require('./../interest/interest')
 const Tag = require('./../tag/tag')
-const OpportunityArchive = require('./../opportunityArchive/opportunityArchive')
+const archivedOpportunity = require('./../archivedOpportunity/archivedOpportunity')
 const InterestArchive = require('./../interest-archive/interestArchive')
 const { OpportunityStatus } = require('./opportunity.constants')
 const { regions } = require('../location/locationData')
@@ -129,7 +129,7 @@ const putOpportunity = async (req, res) => {
 
 const archiveOpportunity = async (id) => {
   let opportunity = await Opportunity.findById(id).exec()
-  await new OpportunityArchive(opportunity.toJSON()).save()
+  await new archivedOpportunity(opportunity.toJSON()).save()
   await Opportunity.deleteOne({ _id: id }).exec()
   return archiveOpportunity
 }
