@@ -89,16 +89,18 @@ test('render volunteer home page - Active tab', t => {
   t.is(wrapper.find('h1').first().text(), t.context.me.nickname)
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
   t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Active Requests')
-  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 11)
+  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 2)
 })
 
 test('render volunteer home page - History tab', t => {
   const props = {
     me: t.context.me
   }
-  // take ownership of 2nd event and set to done
   t.context.ops[1].requestor = t.context.me._id
   t.context.ops[1].status = 'done'
+  // take ownership of 2nd event and set to done
+  // t.context.archivedOpportunities[1].requestor = t.context.me._id
+  // t.context.archivedOpportunities[1].status = 'completed'
 
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
@@ -135,14 +137,12 @@ test('render Edit Profile ', t => {
   t.is(wrapper.find('Button').first().text(), 'Edit')
 })
 
-test.serial.only('retrieve archived opportunities', async t => {
+test('retrieve archived opportunities', async t => {
   const props = {
     me: t.context.me
   }
   const { fetchMock } = require('fetch-mock')
   const myMock = fetchMock.sandbox()
-  const apiUrl = API_URL + '/opportunityArchives/'
-  console.log(apiUrl)
   myMock.get(API_URL + '/opportunityArchives/', { body: { archivedOpportunities } })
   reduxApi.use('fetch', adapterFetch(myMock))
   const wrapper = mountWithIntl(
