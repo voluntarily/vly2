@@ -2,6 +2,7 @@ const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Activity = require('./activity')
 const { getActivities, getActivity } = require('./activity.controller')
+const initializeTags = require('../../util/initTags')
 
 module.exports = (server) => {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -11,8 +12,10 @@ module.exports = (server) => {
       Model: Activity,
       selectFields: '-__v', // Hide '__v' property
       endResponseInAction: false,
-
-      // beforeActions: [],
+      beforeActions: [{
+        middlewares: [initializeTags],
+        only: ['create', 'update']
+      }],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       actions: {
         list: getActivities,
