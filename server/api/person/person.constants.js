@@ -8,8 +8,21 @@ const PersonRoutes = {
     [Action.UPDATE]: '/api/people/:id',
     [Action.CREATE]: '/api/people'
 }
+const PersonFields = { 
+    ID:'_id',
+    EMAIL: 'email',
+    NICKNAME: 'nickname',
+    ABOUT: 'about',
+    PHONE: 'phone',
+    GENDER: 'gender',
+    LANGUAGE: 'language',
+    AVATAR: 'avatar',
+    ROLE: 'role',
+    STATUS: 'status'
+}
 
 module.exports =  {
     SchemaName,
-    PersonRoutes
+    PersonRoutes,
+    PersonFields
 }

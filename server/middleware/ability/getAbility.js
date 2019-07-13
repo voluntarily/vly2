@@ -12,7 +12,7 @@ module.exports = options => (req, res, next) => {
     userRoles.forEach(role => {
       if (ab[role] == null) return
       // TODO: [VP-277] when concat roles we will get duplicates - use set.
-      allRules = allRules.concat(ab[Role.VOLUNTEER_PROVIDER])
+      allRules = allRules.concat(ab[role])
     })
   })
   req.ability = new Ability(allRules)

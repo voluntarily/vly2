@@ -3,7 +3,8 @@ const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Person = require('./person')
 const { ensureSanitized, getPersonBy } = require('./person.controller')
-const { authorizePersonActions } = require('./person.authorize')
+const { authorizePersonActions, SchemaName } = require('./person.authorize')
+const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 
 module.exports = function (server) {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -15,7 +16,7 @@ module.exports = function (server) {
       endResponseInAction: false,
 
       beforeActions: [
-        { middlewares: [authorizePersonActions,ensureSanitized] }
+        { middlewares: [ ensureSanitized, authorizeActions(SchemaName)] }
 
       ],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)

@@ -1,8 +1,9 @@
 const { Role } = require('../../services/auth/role')
 const { Action } = require('../../services/abilities/ability.constants')
-
+const { PersonFields } = require('./person.constants')
 const SchemaName = 'Person'
 
+// block all api call for non log in user
 const anonAbilities = [{
     SchemaName,
     action: Action.READ,
@@ -20,6 +21,12 @@ const anonAbilities = [{
     action: Action.DELETE,
     inverted: true
 }]
+
+const allAbilities = [{
+    subject: SchemaName,
+    action: Action.READ,
+    //TODO: add field allowed all logged in user to see other basic people info.
+}] 
 
 module.exports = {
     [Role.ANON]: anonAbilities,
