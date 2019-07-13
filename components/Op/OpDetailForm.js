@@ -3,11 +3,11 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import RichTextEditor from '../FormInputComponents/RichTextEditor'
+import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { TextHeadingBold, TextP } from '../VTheme/VTheme'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
-import TagInput from '../FormInputComponents/TagInput'
+import TagInput from '../Form/Input/TagInput'
 import OpLocationSelector from './OpLocationSelector'
 import {
   DescriptionContainer,

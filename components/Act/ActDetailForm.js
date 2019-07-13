@@ -2,10 +2,10 @@ import { Button, Divider, Form, Icon, Input, Tooltip } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import RichTextEditor from '../FormInputComponents/RichTextEditor'
+import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { TextHeadingBold, TextP } from '../VTheme/VTheme'
-import OpDetailTagsEditable from '../Op/OpDetailTagsEditable'
+import OpDetailTagsEditable from '../Form/Input/TagInput'
 
 import {
   DescriptionContainer,
