@@ -21,6 +21,9 @@ test.before('Setup fixtures', (t) => {
     op._id = objectid().toString()
     op.requestor = people[index]._id
   })
+  // take ownership of 2nd event and set to done
+  archivedOpportunities[1].requestor = me._id
+  archivedOpportunities[1].status = 'completed'
 
   // setup list of interests, i'm interested in first 5 ops
   const interestStates = ['interested', 'invited', 'committed', 'declined', 'completed', 'cancelled']
@@ -38,6 +41,7 @@ test.before('Setup fixtures', (t) => {
     me,
     people,
     ops,
+    archivedOpportunities,
     interests
   }
 
@@ -96,11 +100,6 @@ test('render volunteer home page - History tab', t => {
   const props = {
     me: t.context.me
   }
-  t.context.ops[1].requestor = t.context.me._id
-  t.context.ops[1].status = 'done'
-  // take ownership of 2nd event and set to done
-  // t.context.archivedOpportunities[1].requestor = t.context.me._id
-  // t.context.archivedOpportunities[1].status = 'completed'
 
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
@@ -150,5 +149,7 @@ test('retrieve archived opportunities', async t => {
       <PersonHomePageTest {...props} />
     </Provider>)
   const res = await wrapper.find('PersonHomePage').first().instance().getArchivedOpportunities()
-  t.is(res, archivedOpportunities)
+  t.is(res.length, 2)
+  t.is(res[0], archivedOpportunities[0])
+  t.is(res[1], archivedOpportunities[1])
 })
