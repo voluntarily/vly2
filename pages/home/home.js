@@ -11,7 +11,7 @@ import reduxApi, {
   withInterests,
   withPeople,
   withOps,
-  witharchivedOpportunitys
+  withArchivedOpportunitys
 } from '../../lib/redux/reduxApi.js'
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
@@ -59,10 +59,10 @@ class PersonHomePage extends Component {
   }
   constructor (props) {
     super(props)
-    this.getarchivedOpportunitys = this.getarchivedOpportunitys.bind(this)
+    this.getArchivedOpportunitys = this.getArchivedOpportunitys.bind(this)
   }
 
-  getarchivedOpportunitys () {
+  getArchivedOpportunitys () {
     return this.props.archivedOpportunitys.data.filter(
       op => op.status === 'completed' && op.requestor === this.props.me._id
     )
@@ -223,7 +223,7 @@ class PersonHomePage extends Component {
               />
             </h2>
             <OpList
-              ops={this.getarchivedOpportunitys()}
+              ops={this.getArchivedOpportunitys()}
             />
             {/* <OpListSection query={myPastfilterString} /> */}
           </TabPane>
@@ -257,5 +257,5 @@ class PersonHomePage extends Component {
     )
   }
 }
-export const PersonHomePageTest = withInterests(withOps(witharchivedOpportunitys(PersonHomePage))) // for test
+export const PersonHomePageTest = withInterests(withOps(withArchivedOpportunitys(PersonHomePage))) // for test
 export default securePage(withPeople(PersonHomePageTest))
