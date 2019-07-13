@@ -1,4 +1,4 @@
-import { Button, Checkbox, Col, Divider, Form, Input, Radio, Row } from 'antd'
+import { Button, Checkbox, Divider, Form, Input, Radio } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -210,16 +210,20 @@ class PersonDetailForm extends Component {
               <TextP>How do we get in touch?</TextP>
             </DescriptionContainer>
             <InputContainer>
-              <Form.Item label={personEmail}>
-                {getFieldDecorator('email', {
-                  rules: []
-                })(<Input placeholder='salvador@dali.com' />)}
-              </Form.Item>
-              <Form.Item label={personPhone}>
-                {getFieldDecorator('phone', {
-                  rules: []
-                })(<Input placeholder='000 000 0000' />)}
-              </Form.Item>
+              <MediumInputContainer>
+                <Form.Item label={personEmail}>
+                  {getFieldDecorator('email', {
+                    rules: []
+                  })(<Input placeholder='salvador@dali.com' />)}
+                </Form.Item>
+              </MediumInputContainer>
+              <ShortInputContainer>
+                <Form.Item label={personPhone}>
+                  {getFieldDecorator('phone', {
+                    rules: []
+                  })(<Input placeholder='000 000 0000' />)}
+                </Form.Item>
+              </ShortInputContainer>
             </InputContainer>
           </FormGrid>
           <Divider />
