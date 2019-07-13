@@ -3,7 +3,7 @@ const helpers = require('../../services/helpers')
 const Opportunity = require('./opportunity')
 const { getOpportunities, getOpportunity, putOpportunity } = require('./opportunity.controller')
 const { authorizeOpportunityActions, authorizeOpportunityFields } = require('./opportunity.authorize')
-const initializeTags = require('./opportunity.initTags')
+const initializeTags = require('../../util/initTags')
 
 module.exports = (server) => {
   // Docs: https://github.com/ryo718/mongoose-crudify
