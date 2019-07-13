@@ -297,7 +297,6 @@ class PersonDetailForm extends Component {
               </Button>
             </InputContainer>
           </FormGrid>
-
         </Form>
       </div>
     )
