@@ -16,6 +16,7 @@ const blankAct = {
   subtitle: '',
   imgUrl: '',
   duration: '',
+  description: '',
   status: 'draft'
 }
 export class ActDetailPage extends Component {
@@ -54,6 +55,7 @@ export class ActDetailPage extends Component {
       Router.back()
     }
   }
+
   // Called when the user confirms they want to delete an act
   async handleDelete (act) {
     if (!act) return
