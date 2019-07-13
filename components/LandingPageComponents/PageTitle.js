@@ -48,6 +48,12 @@ const PageTitleContainer = styled.div`
     color: #333;
     letter-spacing: -0.02rem;
   }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+
 `
 
 const PageTitle = ({ children }) => (

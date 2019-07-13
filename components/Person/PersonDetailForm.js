@@ -138,17 +138,7 @@ class PersonDetailForm extends Component {
       { label: 'Tester', value: 'tester' }
     ]
 
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 20 },
-        md: { span: 16 }
-      }
-    }
+   
 
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
@@ -159,7 +149,7 @@ class PersonDetailForm extends Component {
         <PageTitle>
           <h2>Edit Your Profile</h2>
         </PageTitle>
-
+      <Divider />
         <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
           <FormGrid>
             <DescriptionContainer>
@@ -169,6 +159,7 @@ class PersonDetailForm extends Component {
               <TextP>Tell people about how awesome you are :)</TextP>
             </DescriptionContainer>
             <InputContainer>
+            <ShortInputContainer>
               <Form.Item
                 label={personName}
                 validateStatus={nameError ? 'error' : ''}
@@ -180,6 +171,7 @@ class PersonDetailForm extends Component {
                   <Input placeholder='e.g. Salvador Felipe Jacinto Dalí y Domenech.' />
                 )}
               </Form.Item>
+              </ShortInputContainer>
               <Form.Item label={personnickname}>
                 {getFieldDecorator('nickname', {
                   rules: []
@@ -199,11 +191,13 @@ class PersonDetailForm extends Component {
                   )
                 )}
               </Form.Item>
+              <ShortInputContainer>
               <Form.Item label={personGender}>
                 {getFieldDecorator('gender', {
                   rules: []
                 })(<Input placeholder='write what you want here. ' />)}
               </Form.Item>
+              </ShortInputContainer>
             </InputContainer>
           </FormGrid>
 
