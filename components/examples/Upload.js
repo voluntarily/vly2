@@ -1,5 +1,5 @@
+import { Button, Icon, message, Upload } from 'antd'
 import { Component } from 'react'
-import { Upload, message, Button, Icon } from 'antd'
 // import { JSDOM } from 'jsdom'
 // const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`)
 // global.window = dom// setting a mock window global object so the upload image component is not complaining

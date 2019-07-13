@@ -1,26 +1,59 @@
-import { Component } from 'react'
-import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
-import { Button, Popconfirm, message, Divider } from 'antd'
-import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import { Button, Divider, message } from 'antd'
 import Router from 'next/router'
-import ActDetail from '../../components/Act/ActDetail'
 import PropTypes from 'prop-types'
+import { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
+import Loading from '../../components/Loading'
+import ActDetail from '../../components/Act/ActDetail'
+import ActDetailForm from '../../components/Act/ActDetailForm'
 import PersonCard from '../../components/Person/PersonCard'
+import publicPage, { FullPage } from '../../hocs/publicPage'
+import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
+import { Role } from '../../server/services/auth/role'
 
+const blankAct = {
+  title: '',
+  subtitle: '',
+  imgUrl: '',
+  duration: '',
+  status: 'draft'
+}
 export class ActDetailPage extends Component {
+  state = {
+    editing: false,
+    text: ''
+  }
+
   static async getInitialProps ({ store, query }) {
     // Get one Act
-    // console.log('getting act details', query)
-    try {
+    const isNew = query && query.new && query.new === 'new'
+    if (isNew) {
+      // console.log('opdetailpage: getInitialProps', isNew)
+      return {
+        isNew: true,
+        actid: null
+      }
+    } else if (query && query.id) {
       await store.dispatch(reduxApi.actions.activities.get(query))
-      // console.log('got acts for id', query, acts)
-    } catch (err) {
-      // console.log('error in getting acts', err)
+      return {
+        isNew: false,
+        actid: query.id
+      }
     }
   }
 
+  componentDidMount () {
+    if (this.props.isNew) {
+      this.setState({ editing: true })
+    }
+  }
+
+  handleCancelEdit = () => {
+    this.setState({ editing: false })
+    if (this.props.isNew) { // return to previous
+      Router.back()
+    }
+  }
   // Called when the user confirms they want to delete an act
   async handleDelete (act) {
     if (!act) return
@@ -31,68 +64,108 @@ export class ActDetailPage extends Component {
     Router.replace(`/acts`)
   }
 
-  // Called when the user starts to delete an act, but then cancels it.
-  handleDeleteCancelled = () => { message.error('Delete Cancelled') }
-
-  render () {
-    let content
-    if (this.props.activities && this.props.activities.data.length === 1) {
-      const act = this.props.activities.data[0]
-      const activityProvider = act.owner
-      const isOwner = ((this.props.me || {})._id === (activityProvider || {})._id)
-      // TODO add condition that when volunteer finished the comment then show activityProvider's contact
-      let isFulfilled = true
-      const activityProviderSection = () => {
-        return (isFulfilled)
-          ? activityProvider &&
-          <div>
-            <h2>
-              <FormattedMessage id='act.details.owner' defaultMessage='Contact' description='Contact details for Activity provider' />
-            </h2>
-            <PersonCard style={{ width: '300px' }} person={activityProvider} />
-          </div>
-          : null
-      }
-      const ownerSection = () => {
-        return (isOwner || (this.props.me && this.props.me.role.includes('admin')))
-          ? <div>
-            {/* These components should only appear if a user is logged in and viewing an op they DID create themselves. */}
-            <div>
-              <Link href={`/acts/${act._id}/edit`} >
-                <Button type='secondary' shape='round' >
-                  <FormattedMessage id='editAct' defaultMessage='Edit' description='Button to edit an activity on ActDetails page' />
-                </Button>
-              </Link>
-                &nbsp;
-              <Popconfirm title='Confirm removal of this activity.' onConfirm={this.handleDeleteOp} onCancel={this.handleDeleteCancelled} okText='Yes' cancelText='No'>
-                <Button type='danger' shape='round' >
-                  <FormattedMessage id='deleteAct' defaultMessage='Remove Activity' description='Button to remove an activity on ActDetails page' />
-                </Button>
-              </Popconfirm>
-              <Divider />
-            </div>
-          </div>
-          : null
-      }
-      // TODO: [VP-161] In register interest section, if person not signed in show Sign In button
-      content =
-        (<div>
-          <ActDetail act={act} />
-          <Divider />
-          {ownerSection()}
-          {activityProviderSection()}
-
-        </div>)
+  async handleSubmit (act) {
+    if (!act) return
+    // Actual data request
+    let res = {}
+    if (act._id) {
+      res = await this.props.dispatch(reduxApi.actions.activities.put({ id: act._id }, { body: JSON.stringify(act) }))
     } else {
-      content =
-        (<div>
-          <h2>Sorry this activity is no longer available</h2>
-          <Link href={'/acts'} ><a>Search for some more</a></Link>
-          <p>or </p>
-          <Link href={'/acts/new'} ><a>create a new activity</a></Link>
-        </div>)
+      res = await this.props.dispatch(reduxApi.actions.activities.post({}, { body: JSON.stringify(act) }))
+      act = res[0]
+      Router.replace(`/acts/${act._id}`)
     }
-    return (<FullPage>{content}</FullPage>)
+    this.setState({ editing: false })
+    message.success('Saved.')
+  }
+
+  handleDeleteCancel = () => { message.error('Delete Cancelled') }
+  render () {
+    const me = this.props.me
+    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
+    const isAdmin = (me && me.role.includes(Role.ADMIN))
+    const isOP = (me && me.role.includes(Role.OPPORTUNITY_PROVIDER))
+    let isOwner = false
+    let content
+    let act
+    let owner
+    if (this.props.isNew) {
+      act = blankAct
+      owner = me
+      isOwner = true
+    } else if (this.props.activities.loading) {
+      content = <Loading><p>Loading details...</p></Loading>
+    } else {
+      const acts = this.props.activities.data
+      if (acts.length === 1) {
+        act = {
+          ...acts[0]
+          // TODO: tags: this.props.activities.data[0].tags.map(act => act.tag),
+        }
+        owner = act.owner
+        isOwner = ((me || {})._id === (owner || {})._id)
+      } else { // array must be empty
+        // console.log('length', acts.length)
+        content = <h2><FormattedMessage id='act.notavailable' defaultMessage='Sorry, this activitiy is not available' description='message on activity not found page' /></h2>
+      }
+    }
+
+    // display permissions
+    const canEdit = (isOwner || isOrgAdmin || isAdmin)
+    const existingTags = this.props.tags.data.map(tag => tag.tag)
+
+    const ownerInfo = () => {
+      // TODO: should this be owner individual or Activity Provider Org
+      return owner &&
+        <div>
+          <h2>
+            <FormattedMessage id='act.ownerInfo' defaultMessage='Created by' description='Title for activity creator card on activity page' />
+          </h2>
+          <PersonCard style={{ width: '300px' }} person={owner} />
+        </div>
+    }
+
+    // button to make an opportunity from an activity
+    const createOpportunitySection = () => {
+      return (
+        // if not signed in then the interested button signs in first
+        isOP && <div>
+          <Button>TODO: Create Opportunity</Button>
+          <Divider />
+        </div>
+      )
+    }
+
+    if (!content) {
+      if (act && this.state.editing) {
+        content = <div>
+          <ActDetailForm
+            act={act}
+            me={me}
+            onSubmit={this.handleSubmit.bind(this, act)}
+            onCancel={this.handleCancelEdit.bind(this)}
+            existingTags={existingTags}
+          />
+        </div>
+      } else {
+        content = <div>
+          { canEdit && <Button id='editActBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
+            <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
+          </Button>}
+
+          <ActDetail act={act} />
+          {ownerInfo()}
+          <Divider />
+          {createOpportunitySection()}
+        </div>
+      }
+    }
+
+    return (
+      <FullPage>
+        {content}
+      </FullPage>
+    )
   }
 }
 
@@ -109,5 +182,5 @@ ActDetailPage.propTypes = {
     id: PropTypes.string.isRequired
   })
 }
-
+export const ActDetailPageWithActs = withActs(ActDetailPage)
 export default publicPage(withActs(ActDetailPage))

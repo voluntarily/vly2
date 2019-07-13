@@ -34,7 +34,7 @@ class Landing extends Component {
             subtitle='You are two clicks away from getting involved with your community'
           />
 
-          <OpListSection store={this.props.store} />
+          <OpListSection store={this.props.store} filter={{ date: '' }} />
           <OpAdd {...this.props} />
         </FullPage>
       </div>

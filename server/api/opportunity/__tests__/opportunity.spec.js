@@ -10,6 +10,9 @@ import ops from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 import OpportunityArchive from './../../opportunity-archive/opportunityArchive'
+import { OpportunityStatus } from '../opportunity.constants'
+import Interest from '../../interest/interest'
+import InterestArchive from '../../interest-archive/interestArchive'
 
 const { regions } = require('../../location/locationData')
 
@@ -112,7 +115,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
     description: 'Project to build a simple rocket that will reach 1000m',
     duration: '4 hours',
     location: 'Albany, Auckland',
-    status: 'draft',
+    status: OpportunityStatus.DRAFT,
     tags: [t.context.tags[0]._id],
     requestor: t.context.people[1]._id
   })
@@ -155,7 +158,7 @@ test.serial('Should correctly add an opportunity with valid tag refs', async t =
       description: 'Project to build a simple rocket that will reach 400m',
       duration: '4 hours',
       location: 'Albany, Auckland',
-      status: 'draft',
+      status: OpportunityStatus.DRAFT,
       tags: tagIds,
       requestor: t.context.people[0]._id
     })
@@ -201,7 +204,7 @@ test.serial('Should correctly delete an opportunity', async t => {
     description: 'Project to build a simple rocket that will reach 1000m',
     duration: '4 hours',
     location: 'Albany, Auckland',
-    status: 'draft',
+    status: OpportunityStatus.DRAFT,
     requestor: t.context.people[0]._id
   })
   await opp.save()
@@ -297,7 +300,7 @@ test.serial('Should return any opportunities with matching tags or title/desc/su
     description: 'Project to build a simple rocket that will reach 1000m',
     duration: '4 hours',
     location: 'Albany, Auckland',
-    status: 'draft',
+    status: OpportunityStatus.DRAFT,
     requestor: t.context.people[0]._id,
     tags: []
   })
@@ -315,7 +318,7 @@ test.serial('Should return any opportunities with matching tags or title/desc/su
   t.is(4, got.length)
 })
 
-test.serial('Should update status of Opportunity when a put request is sent', async t => {
+test.serial('Should update from draft to active', async t => {
   t.plan(2)
 
   const opp = new Opportunity({
@@ -325,21 +328,86 @@ test.serial('Should update status of Opportunity when a put request is sent', as
     description: 'Project to build a simple rocket that will reach 1000m',
     duration: '4 hours',
     location: 'Albany, Auckland',
-    status: 'draft',
+    status: OpportunityStatus.DRAFT,
     requestor: t.context.people[0]._id
   })
 
   await opp.save()
   const res = await request(server)
     .put(`/api/opportunities/${opp._id}`)
-    .send({ status: 'completed' })
+    .send({ status: OpportunityStatus.ACTIVE })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const queriedOpportunity = await Opportunity.findOne({ title: 'Java Robots in the house' }).exec()
+  t.is(queriedOpportunity.status, OpportunityStatus.ACTIVE)
+})
+
+test.serial('Should archive Opportunity when a completed update is sent', async t => {
+  t.plan(2)
+
+  const opp = new Opportunity({
+    title: 'Java Robots in the house',
+    subtitle: 'Launching into space step 4',
+    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+    description: 'Project to build a simple rocket that will reach 1000m',
+    duration: '4 hours',
+    location: 'Albany, Auckland',
+    status: OpportunityStatus.ACTIVE,
+    requestor: t.context.people[0]._id
+  })
+
+  await opp.save()
+  const res = await request(server)
+    .put(`/api/opportunities/${opp._id}`)
+    .send({ status: OpportunityStatus.COMPLETED })
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
 
   t.is(res.status, 200)
   const queriedOpportunity = await OpportunityArchive.findOne({ title: 'Java Robots in the house' }).exec()
-  t.is(queriedOpportunity.status, 'completed')
+  t.is(queriedOpportunity.status, OpportunityStatus.COMPLETED)
+})
+
+test.serial('should archive interests associated with opportunity', async t => {
+  t.plan(3)
+
+  const opp = new Opportunity({
+    title: 'Java Robots in the house',
+    subtitle: 'Launching into space step 4',
+    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+    description: 'Project to build a simple rocket that will reach 1000m',
+    duration: '4 hours',
+    location: 'Albany, Auckland',
+    status: OpportunityStatus.DRAFT,
+    requestor: t.context.people[0]._id
+  })
+
+  await opp.save()
+
+  const interest = new Interest({
+    opportunity: opp._id,
+    status: 'interested',
+    person: t.context.people[1]._id
+  })
+
+  await interest.save()
+
+  const res = await request(server)
+    .put(`/api/opportunities/${opp._id}`)
+    .send({ status: OpportunityStatus.COMPLETED })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const archivedInterest = await InterestArchive.findOne({ _id: interest._id }).exec()
+  t.is(archivedInterest.status, 'interested')
+  const oldInterest = await Interest.findOne({ _id: interest._id }).exec()
+  t.is(oldInterest, null)
 })
 
 test.serial('should return 400 for a bad request', async t => {
@@ -352,7 +420,7 @@ test.serial('should return 400 for a bad request', async t => {
     description: 'Project to build a simple rocket that will reach 1000m',
     duration: '4 hours',
     location: 'Albany, Auckland',
-    status: 'draft',
+    status: OpportunityStatus.DRAFT,
     requestor: t.context.people[0]._id
   })
 
@@ -372,6 +440,7 @@ test.serial('should return all matching opps within the specified region', async
   const res = await request(server)
     .get(`/api/opportunities?location=${regions[0].name}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
 
@@ -393,6 +462,7 @@ test.serial('should return opps at the specified territory', async t => {
   const res = await request(server)
     .get(`/api/opportunities?location=${regions[0].containedTerritories[1]}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
 
@@ -411,6 +481,7 @@ test.serial('should return opps within the specified region that also match the 
   const res = await request(server)
     .get(`/api/opportunities?search=mentor&location=${regions[0].name}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
 

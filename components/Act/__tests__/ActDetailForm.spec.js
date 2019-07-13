@@ -45,7 +45,11 @@ test.after.always(() => {
 
 test('shallow the detail with act', t => {
   const wrapper = shallowWithIntl(
-    <ActDetailForm act={act} onSubmit={() => {}} onCancel={() => {}} />
+    <ActDetailForm
+      act={act}
+      onSubmit={() => {}}
+      onCancel={() => {}}
+      existingTags={[]} />
   )
   // console.log(wrapper.debug())
   t.is(wrapper.find('ActDetailForm').length, 1)
@@ -56,15 +60,18 @@ test('render the detail with act', t => {
   const cancelAct = sinon.spy()
   const me = { _id: '5ccbffff958ff4833ed2188d' }
   const wrapper = mountWithIntl(
-    <ActDetailForm act={act} me={me} onSubmit={submitAct} onCancel={cancelAct} />
+    <ActDetailForm
+      act={act}
+      me={me}
+      onSubmit={submitAct}
+      onCancel={cancelAct}
+      existingTags={[]} />
   )
-  // t.log(wrapper)
-  // console.log(wrapper.html())
   t.is(wrapper.find('ActDetailForm').length, 1)
-  t.is(wrapper.find('button').length, 2)
+  t.is(wrapper.find('button').length, 3)
   wrapper.find('button').first().simulate('click')
   t.truthy(cancelAct.calledOnce)
-  wrapper.find('Form').first().simulate('submit')
+  wrapper.find('button').at(1).simulate('click')
   t.truthy(submitAct.calledOnce)
   t.truthy(submitAct.calledWith(act))
 })
@@ -75,16 +82,21 @@ test.serial('render the detail with new blank act', t => {
   const me = { _id: '5ccbffff958ff4833ed2188d' }
 
   const wrapper = mountWithIntl(
-    <ActDetailForm act={noact} me={me} onSubmit={submitAct} onCancel={cancelAct} />
+    <ActDetailForm
+      act={noact}
+      me={me}
+      onSubmit={submitAct}
+      onCancel={cancelAct}
+      existingTags={[]} />
   )
   t.log(wrapper.first())
   t.is(wrapper.find('ActDetailForm').length, 1)
-  t.is(wrapper.find('button').length, 2)
+  t.is(wrapper.find('button').length, 3)
   wrapper.find('button').first().simulate('click')
   t.truthy(cancelAct.calledOnce)
 
   // can't click submit until fields entered
-  wrapper.find('Form').first().simulate('submit')
+  wrapper.find('button').at(1).simulate('click')
   t.falsy(submitAct.calledOnce)
   wrapper.update()
   // console.log(wrapper.html())
@@ -99,6 +111,6 @@ test.serial('render the detail with new blank act', t => {
   const duration = wrapper.find('input#activity_detail_form_duration').first()
   duration.simulate('change', { target: { value: '10 hours' } })
 
-  wrapper.find('Form').first().simulate('submit')
+  wrapper.find('button').at(1).simulate('click')
   t.truthy(submitAct.calledOnce)
 })

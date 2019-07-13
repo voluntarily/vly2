@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import RichTextEditor from '../Editor/RichTextEditor'
-import { Form, Input, Button, Row, Col, Divider, Radio, Checkbox } from 'antd'
-import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import { Button, Checkbox, Col, Divider, Form, Input, Radio, Row } from 'antd'
 import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
+import RichTextEditor from '../Editor/RichTextEditor'
+import ImageUpload from '../UploadComponent/ImageUploadComponent'
 const { TextArea } = Input
 
 // TODO - only the owner and admins should be able to edit the person record.
