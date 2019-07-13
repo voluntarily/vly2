@@ -138,8 +138,6 @@ class PersonDetailForm extends Component {
       { label: 'Tester', value: 'tester' }
     ]
 
-   
-
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
     const isTest = process.env.NODE_ENV === 'test'
@@ -149,7 +147,7 @@ class PersonDetailForm extends Component {
         <PageTitle>
           <h2>Edit Your Profile</h2>
         </PageTitle>
-      <Divider />
+        <Divider />
         <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
           <FormGrid>
             <DescriptionContainer>
@@ -159,32 +157,32 @@ class PersonDetailForm extends Component {
               <TextP>Tell people about how awesome you are :)</TextP>
             </DescriptionContainer>
             <InputContainer>
-            <ShortInputContainer>
-              <Form.Item
-                label={personName}
-                validateStatus={nameError ? 'error' : ''}
-                help={nameError || ''}
-              >
-                {getFieldDecorator('name', {
-                  rules: [{ required: true, message: 'Name is required' }]
-                })(
-                  <Input placeholder='e.g. Salvador Felipe Jacinto Dalí y Domenech.' />
-                )}
-              </Form.Item>
+              <ShortInputContainer>
+                <Form.Item
+                  label={personName}
+                  validateStatus={nameError ? 'error' : ''}
+                  help={nameError || ''}
+                >
+                  {getFieldDecorator('name', {
+                    rules: [{ required: true, message: 'Name is required' }]
+                  })(
+                    <Input placeholder='e.g. Salvador Felipe Jacinto Dalí y Domenech.' />
+                  )}
+                </Form.Item>
               </ShortInputContainer>
               <ShortInputContainer>
-              <Form.Item label={personnickname}>
-                {getFieldDecorator('nickname', {
-                  rules: []
-                })(<Input placeholder='e.g Dali' />)}
-              </Form.Item>
+                <Form.Item label={personnickname}>
+                  {getFieldDecorator('nickname', {
+                    rules: []
+                  })(<Input placeholder='e.g Dali' />)}
+                </Form.Item>
               </ShortInputContainer>
               <ShortInputContainer>
-              <Form.Item label={personGender}>
-                {getFieldDecorator('gender', {
-                  rules: []
-                })(<Input placeholder='write what you want here. ' />)}
-              </Form.Item>
+                <Form.Item label={personGender}>
+                  {getFieldDecorator('gender', {
+                    rules: []
+                  })(<Input placeholder='write what you want here. ' />)}
+                </Form.Item>
               </ShortInputContainer>
               <Form.Item label={personAbout}>
                 {getFieldDecorator('about', {
@@ -245,6 +243,16 @@ class PersonDetailForm extends Component {
                 })(<Input />)}
                 <ImageUpload setImgUrl={this.setImgUrl} />
               </Form.Item>
+            </InputContainer>
+          </FormGrid>
+          <Divider />
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <TextHeadingBold>Admin Controls</TextHeadingBold>
+              </TitleContainer>
+            </DescriptionContainer>
+            <InputContainer>
               <Form.Item label={personRole}>
                 {getFieldDecorator('role', {
                   rules: [{ required: true, message: 'role is required' }]
