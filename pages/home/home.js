@@ -57,12 +57,15 @@ class PersonHomePage extends Component {
   state = {
     editProfile: false
   }
+  constructor (props) {
+    super(props)
+    this.getArchivedOpportunities = this.getArchivedOpportunities.bind(this)
+  }
 
-  async getArchivedOpportunities () {
-    await this.props.dispatch(
-      reduxApi.actions.opportunityArchives.get({})
+  getArchivedOpportunities () {
+    return this.props.opportunityArchives.data.filter(
+      op => op.status === 'completed' && op.requestor === this.props.me._id
     )
-    return this.props.opportunityArchives.data
   }
 
   mergeOpsList () {
@@ -97,7 +100,8 @@ class PersonHomePage extends Component {
 
       await Promise.all([
         store.dispatch(reduxApi.actions.opportunities.get(filters)),
-        store.dispatch(reduxApi.actions.interests.get({ me: me._id }))
+        store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
+        store.dispatch(reduxApi.actions.opportunityArchives.get({ requestor: me._id }))
       ])
     } catch (err) {
       console.log('error in getting ops', err)
@@ -219,9 +223,7 @@ class PersonHomePage extends Component {
               />
             </h2>
             <OpList
-              ops={ops.filter(
-                op => op.status === 'done' && op.requestor === this.props.me._id
-              )}
+              ops={this.getArchivedOpportunities()}
             />
             {/* <OpListSection query={myPastfilterString} /> */}
           </TabPane>
