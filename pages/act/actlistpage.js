@@ -6,12 +6,19 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 import PropTypes from 'prop-types'
 import ActList from '../../components/Act/ActList'
+import NoResult from './actnoresult'
+import Router from 'next/router'
+const escapeRegex = require('../../server/util/regexUtil')
+// [@TODO] - remove once actual search component is done
+import { Input } from 'antd'
 
 class Acts extends Component {
   static async getInitialProps ({ store, query }) {
     // Get all Acts
     try {
-      const acts = await store.dispatch(reduxApi.actions.activities.get())
+      const acts = await store.dispatch(reduxApi.actions.activities.get({
+        ...query
+      }))
       // console.log('got acts',acts)
       return { acts, query }
     } catch (err) {
@@ -19,7 +26,21 @@ class Acts extends Component {
     }
   }
 
+  handleSearch(value) {
+    value = escapeRegex(value)
+    if (!value) {
+      return false;
+    }
+    Router.push({
+      pathname: '/acts',
+      query: {
+        search: value
+      }
+    })
+  }
+
   render () {
+    const { acts } = this.props
     return (
       <FullPage>
         <h1>
@@ -33,7 +54,20 @@ class Acts extends Component {
           <FormattedMessage id='act.new' defaultMessage='New Activity' description='Button to create a new activity' />
         </a></Link></Button>
         <br /><br />
-        <ActList acts={this.props.acts} />
+        {/* [@TODO] Replace with actual searchbar component */}
+        <Input.Search
+          placeholder="eg: activity"
+          enterButton="Search"
+          size="large"
+          onSearch={this.handleSearch}
+        />
+        {acts.length > 0 ? (
+          <ActList 
+            acts={acts} 
+          />
+        ) : (
+          <NoResult />
+        )}
       </FullPage>
     )
   }
