@@ -166,7 +166,7 @@ class PersonDetailForm extends Component {
               <TitleContainer>
                 <TextHeadingBold>About You</TextHeadingBold>
               </TitleContainer>
-              <TextP>How do we get in touch?</TextP>
+              <TextP>Tell people about how awesome you are :)</TextP>
             </DescriptionContainer>
             <InputContainer>
               <Form.Item
@@ -184,16 +184,6 @@ class PersonDetailForm extends Component {
                 {getFieldDecorator('nickname', {
                   rules: []
                 })(<Input placeholder='e.g Dali' />)}
-              </Form.Item>
-              <Form.Item label={personEmail}>
-                {getFieldDecorator('email', {
-                  rules: []
-                })(<Input placeholder='salvador@dali.com' />)}
-              </Form.Item>
-              <Form.Item label={personPhone}>
-                {getFieldDecorator('phone', {
-                  rules: []
-                })(<Input placeholder='000 000 0000' />)}
               </Form.Item>
               <Form.Item label={personAbout}>
                 {getFieldDecorator('about', {
@@ -217,6 +207,27 @@ class PersonDetailForm extends Component {
             </InputContainer>
           </FormGrid>
 
+          <Divider />
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <TextHeadingBold>Contact Details</TextHeadingBold>
+              </TitleContainer>
+              <TextP>How do we get in touch?</TextP>
+            </DescriptionContainer>
+            <InputContainer>
+              <Form.Item label={personEmail}>
+                {getFieldDecorator('email', {
+                  rules: []
+                })(<Input placeholder='salvador@dali.com' />)}
+              </Form.Item>
+              <Form.Item label={personPhone}>
+                {getFieldDecorator('phone', {
+                  rules: []
+                })(<Input placeholder='000 000 0000' />)}
+              </Form.Item>
+            </InputContainer>
+          </FormGrid>
           <Divider />
           <FormGrid>
             <DescriptionContainer>
@@ -257,40 +268,36 @@ class PersonDetailForm extends Component {
               </Form.Item>
             </InputContainer>
           </FormGrid>
+          <Divider />
           <FormGrid>
-            
-            <Row>
-              <Col
-                style={{ textAlign: 'right' }}
-                xs={{ span: 24, offset: 0 }}
-                md={{ span: 8, offset: 12 }}
+            <DescriptionContainer />
+            <InputContainer>
+              <Button
+                type='secondary'
+                htmlType='button'
+                onClick={this.props.onCancel}
               >
-                <Button
-                  type='secondary'
-                  htmlType='button'
-                  onClick={this.props.onCancel}
-                >
-                  <FormattedMessage
-                    id='cancel'
-                    defaultMessage='Cancel'
-                    description='Label for cancel button on person details form'
-                  />
-                </Button>
-                <Button
-                  type='primary'
-                  htmlType='submit'
-                  disabled={hasErrors(getFieldsError())}
-                  style={{ marginLeft: 8 }}
-                >
-                  <FormattedMessage
-                    id='savePerson'
-                    defaultMessage='Save'
-                    description='Label for submit button on person details form'
-                  />
-                </Button>
-              </Col>
-            </Row>
+                <FormattedMessage
+                  id='cancel'
+                  defaultMessage='Cancel'
+                  description='Label for cancel button on person details form'
+                />
+              </Button>
+              <Button
+                type='primary'
+                htmlType='submit'
+                disabled={hasErrors(getFieldsError())}
+                style={{ marginLeft: 8 }}
+              >
+                <FormattedMessage
+                  id='savePerson'
+                  defaultMessage='Save'
+                  description='Label for submit button on person details form'
+                />
+              </Button>
+            </InputContainer>
           </FormGrid>
+
         </Form>
       </div>
     )
