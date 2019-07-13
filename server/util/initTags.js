@@ -6,7 +6,8 @@ const initializeTags = async (req, res, next) => {
     if (tags) {
       // all tags that don't have an id property need to be created
       const newTags = tags.filter(t => !t._id)
-      const createdTags = await Tag.create(newTags)
+      let createdTags = await Tag.create(newTags)
+      createdTags = createdTags || []
 
       // opportunity controller expects an array of tag ids
       req.body.tags = [

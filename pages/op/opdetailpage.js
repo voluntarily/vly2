@@ -61,33 +61,6 @@ export class OpDetailPage extends Component {
   }
 
   async handleSubmit (op) {
-    // const userTags = op.tags
-    // const dbTags = this.props.tags.data // tags existing in db
-    // const tagIds = [] // user-defined tags converted to their objectids
-    // const newTags = [] // user-defined tag values that aren't in the db
-
-    // // determine which tags need to be added to the database
-    // // based on whether they exist already or not.
-    // userTags.forEach(t => {
-    //   const match = dbTags.find(dbTag => t.tag === dbTag.tag)
-    //   if (match) {
-    //     tagIds.push(match._id)
-    //   } else {
-    //     newTags.push(t)
-    //   }
-    // })
-
-    // // send post requests for each non-existing tag to create them
-    // await this.props.dispatch(
-    //   reduxApi.actions.tags.post({}, { body: JSON.stringify(newTags) })
-    // )
-
-    // // find the ids of all the newly created tags, which are now in props
-    // newTags.forEach(newTag => {
-    //   tagIds.push(this.props.tags.data.find(tag => tag.tag === newTag.tag)._id)
-    // })
-
-    // Actual data request
     let res = {}
     if (op._id) {
       res = await this.props.dispatch(

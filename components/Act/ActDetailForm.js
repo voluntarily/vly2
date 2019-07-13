@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { TextHeadingBold, TextP } from '../VTheme/VTheme'
-import OpDetailTagsEditable from '../Form/Input/TagInput'
+import TagInput from '../Form/Input/TagInput'
 
 import {
   DescriptionContainer,
@@ -55,6 +55,7 @@ class ActDetailForm extends Component {
         act.resource = values.resource
         act.description = values.description
         act.imgUrl = values.imgUrl
+        act.tags = values.tags
         act.status = e.target.name === 'publish' ? 'active' : 'draft'
         // act.owner = (this.props.act.owner && this.props.op.owner._id) || this.props.me._id
         act.owner = this.props.me._id
@@ -223,13 +224,12 @@ class ActDetailForm extends Component {
               </TextP>
             </DescriptionContainer>
             <InputContainer>
-              {/* TODO: Implement Activity Tags */}
               <Form.Item label={actTags}>
                 {getFieldDecorator('tags', {
                   initialValue: [],
                   rules: []
                 })(
-                  <OpDetailTagsEditable
+                  <TagInput
                     existingTags={this.props.existingTags}
                   />
                 )}
@@ -383,6 +383,10 @@ ActDetailForm.propTypes = {
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
   }),
+  existingTags: PropTypes.arrayOf(PropTypes.shape({
+    tag: PropTypes.string.isRequired,
+    _id: PropTypes.string
+  })).isRequired,
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired
   // dispatch: PropTypes.func.isRequired,
@@ -404,7 +408,8 @@ export default Form.create({
       imgUrl: Form.createFormField({ ...props.act.imgUrl, value: props.act.imgUrl }),
       time: Form.createFormField({ ...props.act.time, value: props.act.time }),
       resource: Form.createFormField({ ...props.act.resource, value: props.act.resource }),
-      status: Form.createFormField({ ...props.act.status, value: props.act.status })
+      status: Form.createFormField({ ...props.act.status, value: props.act.status }),
+      tags: Form.createFormField({ ...props.act.tags, value: props.act.tags })
     }
   }
   // onValuesChange (_, values) {

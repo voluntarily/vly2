@@ -48,14 +48,25 @@ const getActivities = async (req, res) => {
 }
 const getActivity = async (req, res) => {
   try {
-    const got = await Activity.findOne(req.params).populate('owner').exec()
+    const got = await Activity.findOne(req.params).populate('owner').populate('tags').exec()
     res.json(got)
   } catch (e) {
     res.status(404).send(e)
   }
 }
 
+const putActivity = async (req, res) => {
+  try {
+    await Activity.findByIdAndUpdate(req.params._id, { $set: req.body })
+    getActivity(req, res)
+  } catch (e) {
+    console.log(e)
+    res.status(500).send(e)
+  }
+}
+
 module.exports = {
   getActivities,
-  getActivity
+  getActivity,
+  putActivity
 }

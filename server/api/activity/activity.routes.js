@@ -1,7 +1,7 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Activity = require('./activity')
-const { getActivities, getActivity } = require('./activity.controller')
+const { getActivities, getActivity, putActivity } = require('./activity.controller')
 const initializeTags = require('../../util/initTags')
 
 module.exports = (server) => {
@@ -19,7 +19,8 @@ module.exports = (server) => {
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       actions: {
         list: getActivities,
-        read: getActivity
+        read: getActivity,
+        update: putActivity
       },
       afterActions: [
         // this is the place to require user be authed.
