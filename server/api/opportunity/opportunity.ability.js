@@ -37,21 +37,21 @@ const anonAbilities = [{
   inverted: true
 }]
 
-const allAbilities = [{ 
-  subject: SchemaName, 
-  action: Action.READ 
-}, { 
-  subject: SchemaName, 
+const allAbilities = [{
+  subject: SchemaName,
+  action: Action.READ
+}, {
+  subject: SchemaName,
   action: Action.LIST
 }]
 
 const vpAbilities = allAbilities
-const opAbilities = allAbilities.concat([{ 
-  subject: SchemaName, 
-  action: Action.CREATE 
-}, { 
-  subject: SchemaName, 
-  action: Action.UPDATE 
+const opAbilities = allAbilities.concat([{
+  subject: SchemaName,
+  action: Action.CREATE
+}, {
+  subject: SchemaName,
+  action: Action.UPDATE
 }])
 const testerAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
 const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]

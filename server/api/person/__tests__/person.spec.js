@@ -47,7 +47,7 @@ test.serial('Should correctly block api people for anonymous', async t => {
     .set('Accept', 'application/json')
     .expect(403)
 
-  t.is(undefined,res.body.length) // Return data response will be undefined for 403 response
+  t.is(undefined, res.body.length) // Return data response will be undefined for 403 response
 })
 
 test.failing('Should send correct data when queried against an id', async t => {

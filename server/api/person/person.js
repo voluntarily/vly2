@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const idvalidator = require('mongoose-id-validator')
 const Schema = mongoose.Schema
-const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
+const { accessibleRecordsPlugin } = require('@casl/mongoose')
 const { Role } = require('../../services/auth/role')
 
 // simplified version without Auth
