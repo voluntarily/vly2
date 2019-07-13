@@ -1,12 +1,12 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
-const OpportunityArchive = require('./opportunityArchive')
+const archivedOpportunity = require('./archivedOpportunity')
 
 module.exports = (server) => {
   server.use(
-    '/api/opportunityArchives',
+    '/api/archivedOpportunitys',
     mongooseCrudify({
-      Model: OpportunityArchive,
+      Model: archivedOpportunity,
       selectFields: '-__v', // Hide '__v' property
       endResponseInAction: false,
 
