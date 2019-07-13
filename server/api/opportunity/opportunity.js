@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 const idvalidator = require('mongoose-id-validator')
 const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
 const { OpportunityStatus } = require('./opportunity.constants')
+const { SchemaName } = require('./opportunity.constants')
 
 const opportunitySchema = new Schema({
   title: String, // "Growing in the garden",
@@ -37,4 +38,4 @@ opportunitySchema.plugin(idvalidator)
 opportunitySchema.plugin(accessibleRecordsPlugin)
 opportunitySchema.plugin(accessibleFieldsPlugin)
 
-module.exports = mongoose.model('Opportunity', opportunitySchema)
+module.exports = mongoose.model(SchemaName, opportunitySchema)

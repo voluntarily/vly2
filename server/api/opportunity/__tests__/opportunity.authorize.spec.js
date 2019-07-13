@@ -1,6 +1,6 @@
 import test from 'ava'
 import { authorizeOpportunityActions, authorizeOpportunityFields } from '../opportunity.authorize'
-import { Subject, OpportunityRoutes } from '../opportunity.constants'
+import { SchemaName, OpportunityRoutes, OpportunityFields } from '../opportunity.constants'
 import MockExpressRequest from 'mock-express-request'
 import MockExpressResponse from 'mock-express-response'
 import { AbilityBuilder } from '@casl/ability'
@@ -16,8 +16,8 @@ test.serial('Opportunity request rejected if unauthorized', async t => {
     }
   })
   const abilityForUnauthorizedRequest = AbilityBuilder.define((can, cannot) => {
-    can(Action.READ, Subject)
-    cannot(Action.LIST, Subject)
+    can(Action.READ, SchemaName)
+    cannot(Action.LIST, SchemaName)
   })
   request.ability = abilityForUnauthorizedRequest
   const response = new MockExpressResponse({ request })
@@ -35,8 +35,8 @@ test.serial('Opportunity request accepted if authorized', async t => {
     }
   })
   const abilityForAuthorizedRequest = AbilityBuilder.define(can => {
-    can(Action.READ, Subject)
-    can(Action.LIST, Subject)
+    can(Action.READ, SchemaName)
+    can(Action.LIST, SchemaName)
   })
   request.ability = abilityForAuthorizedRequest
   const response = new MockExpressResponse({ request })
@@ -47,7 +47,7 @@ test.serial('Opportunity request accepted if authorized', async t => {
 
 test.serial('Only authorized Opportunity fields returned for single get', async t => {
   const expectedTitle = 'foo'
-  const ability = AbilityBuilder.define(can => can(Action.READ, Subject, ['title']))
+  const ability = AbilityBuilder.define(can => can(Action.READ, SchemaName, [OpportunityFields.TITLE]))
   let opportunity = new Opportunity()
   opportunity.title = expectedTitle
   const request = new MockExpressRequest({
@@ -69,7 +69,7 @@ test.serial('Only authorized Opportunity fields returned for single get', async 
 test.serial('Only authorized Opportunity fields returned for list get', async t => {
   const expectedTitleA = 'foo'
   const expectedTitleB = 'bar'
-  const ability = AbilityBuilder.define(can => can(Action.READ, Subject, ['title']))
+  const ability = AbilityBuilder.define(can => can(Action.READ, SchemaName, [OpportunityFields.TITLE]))
   let opportunityA = new Opportunity()
   opportunityA.title = expectedTitleA
   let opportunityB = new Opportunity()

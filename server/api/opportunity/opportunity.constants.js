@@ -31,7 +31,7 @@ const OpportunityFields = {
 }
 
 module.exports = {
-  OpportunitySubject: 'Opportunity',
+  SchemaName: 'Opportunity',
   OpportunityStatus,
   OpportunityFields,
   OpportunityRoutes

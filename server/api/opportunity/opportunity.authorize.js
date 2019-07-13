@@ -1,5 +1,5 @@
 const { Action } = require('../../services/abilities/ability.constants')
-const { Subject, OpportunityRoutes } = require('./opportunity.constants')
+const { SchemaName, OpportunityRoutes } = require('./opportunity.constants')
 const Opportunity = require('./opportunity')
 const pick = require('lodash.pick')
 
@@ -20,7 +20,7 @@ const convertRequestToAction = (req) => {
 
 const authorizeOpportunityActions = (req, res, next) => {
   const action = convertRequestToAction(req)
-  const authorized = req.ability.can(action, Subject)
+  const authorized = req.ability.can(action, SchemaName)
   if (authorized) {
     next()
   } else {

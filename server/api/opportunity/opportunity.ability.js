@@ -1,4 +1,4 @@
-const { OpportunitySubject, OpportunityStatus, OpportunityFields } = require('./opportunity.constants')
+const { SchemaName, OpportunityStatus, OpportunityFields } = require('./opportunity.constants')
 const { Role } = require('../../services/auth/role')
 const { Action } = require('../../services/abilities/ability.constants')
 
@@ -15,34 +15,34 @@ interface Rule {
 */
 
 const anonAbilities = [{
-  OpportunitySubject,
+  subject: SchemaName,
   action: Action.READ,
   conditions: { status: OpportunityStatus.ACTIVE }
 }, {
-  OpportunitySubject,
+  subject: SchemaName,
   action: Action.LIST,
   conditions: { status: OpportunityStatus.ACTIVE },
   fields: [OpportunityFields.ID, OpportunityFields.TITLE, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION]
 }, {
-  OpportunitySubject,
+  subject: SchemaName,
   action: Action.UPDATE,
   inverted: true
 }, {
-  OpportunitySubject,
+  subject: SchemaName,
   action: Action.DELETE,
   inverted: true
 }, {
-  OpportunitySubject,
+  subject: SchemaName,
   action: Action.CREATE,
   inverted: true
 }]
 
-const allAbilities = [{ OpportunitySubject, action: Action.READ }, { OpportunitySubject, action: Action.LIST }]
+const allAbilities = [{ subject: SchemaName, action: Action.READ }, { subject: SchemaName, action: Action.LIST }]
 const vpAbilities = allAbilities
-const opAbilities = allAbilities.concat([{ OpportunitySubject, action: Action.CREATE }, { OpportunitySubject, action: Action.UPDATE }])
-const testerAbilities = [{ OpportunitySubject, action: Action.MANAGE }]
-const adminAbilities = [{ OpportunitySubject, action: Action.MANAGE }]
-const orgAdminAbilities = [{ OpportunitySubject, action: Action.MANAGE }]
+const opAbilities = allAbilities.concat([{ subject: SchemaName, action: Action.CREATE }, { subject: SchemaName, action: Action.UPDATE }])
+const testerAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
+const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
+const orgAdminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
 
 module.exports = {
   [Role.ANON]: anonAbilities,
