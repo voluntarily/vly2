@@ -30,7 +30,7 @@ const SectionWrapper = styled.div`
 const TitleContainer = styled.div``
 
 const PageHeaderContainer = styled.div`
-  margin: 4rem 0 2rem 0;
+  margin: 8rem 0 2rem 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   @media screen and (max-width: 767px) {
