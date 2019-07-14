@@ -66,14 +66,10 @@ export function ActDetail ({ act }) {
           <Spacer />
         </Left>
         <Right>
-<<<<<<< HEAD
-          <img style={{ width: '100%' }} src={img} alt={act.title} />
-=======
           <img style={{ width: '100%' }} src={act.imgUrl} alt={act.title} />
           <TagContainer>
             <TagDisplay tags={act.tags} />
           </TagContainer>
->>>>>>> 4868b728481d5e0fe7d4a85836bf73249c2d4ea1
         </Right>
       </HalfGrid>
     </FullPage>

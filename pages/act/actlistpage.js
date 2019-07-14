@@ -6,6 +6,7 @@ import Link from 'next/link'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 import PropTypes from 'prop-types'
+import NoResult from '../../components/NoResult'
 import ActList from '../../components/Act/ActList'
 import ActMenu from '../../components/Act/ActMenu'
 import NoResult from './actnoresult'
@@ -67,13 +68,23 @@ class Acts extends Component {
             <ActMenu acts={acts}/>
             {acts.length > 0 
               ? (<ActList acts={acts} />) 
-              : (<NoResult />)
+              : (<NoResult
+                  id='act.noresult'
+                  msg='No activities found based on your search criteria'
+                  description='Message shown while no activities found'
+                />
+              )
             }
           </TripleGrid>
           {/* [@TODO] Replace with actual searchbar component */}
 
 
         </GridContainer>
+          <NoResult
+            id='act.noresult'
+            msg='No activities found based on your search criteria'
+            description='Message shown while no activities found'
+          />
       </FullPage>
     )
   }
