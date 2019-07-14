@@ -18,7 +18,7 @@ background-color: #e8e8e8;
 color: black;
 `
 
-export function OpDetailTagsDisplay ({ tags }) {
+export function TagDisplay ({ tags }) {
   return (
     <div>
       {tags.map(tag => {
@@ -28,11 +28,11 @@ export function OpDetailTagsDisplay ({ tags }) {
   )
 }
 
-OpDetailTagsDisplay.propTypes = {
+TagDisplay.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.shape({
     tag: PropTypes.string.isRequired,
     _id: PropTypes.string
   }))
 }
 
-export default OpDetailTagsDisplay
+export default TagDisplay

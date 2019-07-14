@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import { Button } from 'antd'
 import { FullPage } from '../../hocs/publicPage'
 import { HalfGrid, Spacer } from '../VTheme/VTheme'
+import TagDisplay from '../Tags/TagDisplay'
 
 const Left = styled.div``
 
@@ -33,6 +34,10 @@ const ItemP = styled.div`
   opacity: 1;
   color: initial;
   margin-bottom: 1rem;
+  `
+
+const TagContainer = styled.div`
+  margin-top: 0.2rem;
 `
 
 export function ActDetail ({ act }) {
@@ -61,6 +66,9 @@ export function ActDetail ({ act }) {
         </Left>
         <Right>
           <img style={{ width: '100%' }} src={act.imgUrl} alt={act.title} />
+          <TagContainer>
+            <TagDisplay tags={act.tags} />
+          </TagContainer>
         </Right>
       </HalfGrid>
     </FullPage>

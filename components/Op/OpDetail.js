@@ -11,7 +11,7 @@ import sanitize from 'sanitize-html'
 import { Button } from 'antd'
 import { FullPage } from '../../hocs/publicPage'
 import { HalfGrid, Spacer } from '../VTheme/VTheme'
-import OpDetailTagsDisplay from './OpDetailTagsDisplay'
+import TagDisplay from '../Tags/TagDisplay'
 
 const Left = styled.div``
 
@@ -76,7 +76,7 @@ export function OpDetail ({ op }) {
         <Right>
           <img style={{ width: '100%' }} src={op.imgUrl} alt={op.title} />
           <TagContainer>
-            <OpDetailTagsDisplay tags={op.tags} />
+            <TagDisplay tags={op.tags} />
           </TagContainer>
         </Right>
       </HalfGrid>
