@@ -10,6 +10,8 @@ import ActList from '../../components/Act/ActList'
 import ActMenu from '../../components/Act/ActMenu'
 import NoResult from './actnoresult'
 import Router from 'next/router'
+import { TripleGrid, GridContainer } from '../../components/VTheme/VTheme'
+
 const escapeRegex = require('../../server/util/regexUtil')
 
 class Acts extends Component {
@@ -43,32 +45,38 @@ class Acts extends Component {
     const { acts } = this.props
     return (
       <FullPage>
-        <h1>
-          <FormattedMessage
-            id='activities'
-            defaultMessage='Activities'
-            description='Title of page listing activities'
+        <GridContainer>
+          <h1>
+            <FormattedMessage
+              id='activities'
+              defaultMessage='Activities'
+              description='Title of page listing activities'
+            />
+          </h1>
+          <Button shape='round'><Link href='/act/new'><a>
+            <FormattedMessage id='act.new' defaultMessage='New Activity' description='Button to create a new activity' />
+          </a></Link></Button>
+          <br /><br />
+          <Input.Search
+            placeholder='eg: activity'
+            enterButton='Search'
+            size='large'
+            onSearch={this.handleSearch}
           />
-        </h1>
-        <Button shape='round'><Link href='/act/new'><a>
-          <FormattedMessage id='act.new' defaultMessage='New Activity' description='Button to create a new activity' />
-        </a></Link></Button>
-        <br /><br />
-        <ActMenu />
-        {/* [@TODO] Replace with actual searchbar component */}
-        <Input.Search
-          placeholder='eg: activity'
-          enterButton='Search'
-          size='large'
-          onSearch={this.handleSearch}
-        />
-        {acts.length > 0 ? (
-          <ActList
-            acts={acts}
-          />
-        ) : (
-          <NoResult />
-        )}
+          <TripleGrid>
+            <ActMenu />
+            {acts.length > 0 ? (
+            <ActList
+              acts={acts}
+            />
+          ) : (
+            <NoResult />
+          )}
+          </TripleGrid>
+          {/* [@TODO] Replace with actual searchbar component */}
+
+
+        </GridContainer>
       </FullPage>
     )
   }
