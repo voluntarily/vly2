@@ -4,7 +4,7 @@ import { Result, Icon } from 'antd'
 
 const FormattedMsg = () => {
   return (
-    <FormattedMessage 
+    <FormattedMessage
       id='act.noresult'
       defaultMessage='No activities found based on your search criteria'
       description='Message to show when no activities found'

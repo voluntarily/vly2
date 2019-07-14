@@ -25,7 +25,7 @@ class Acts extends Component {
     }
   }
 
-  handleSearch(value) {
+  handleSearch (value) {
     value = escapeRegex(value)
     if (!value) {
       return false
@@ -61,8 +61,8 @@ class Acts extends Component {
           onSearch={this.handleSearch}
         />
         {acts.length > 0 ? (
-          <ActList 
-            acts={acts} 
+          <ActList
+            acts={acts}
           />
         ) : (
           <NoResult />
