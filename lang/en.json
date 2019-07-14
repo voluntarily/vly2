@@ -52,6 +52,8 @@
   "isCancelledSubHeading": "Thank you so much for registering your interest. However, unfortunately this event has been cancelled by the organizer.",
   "registerInterest.loading": "Loading ...",
   "opAdd.new": "New Request",
+  "opCreate": "Create",
+  "opEdit": "Edit",
   "opTitle": "Title",
   "opSubtitle": "Subtitle",
   "opCommitment": "Commitment",
