@@ -1,10 +1,14 @@
 import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
+import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
+import Tag from '../../tag/tag'
 import Activity from '../activity'
 import Person from '../../person/person'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
+import tags from '../../tag/__tests__/tag.fixture'
+
 import acts from './activity.fixture.js'
 
 test.before('before connect to database', async (t) => {
@@ -20,6 +24,7 @@ test.after.always(async (t) => {
 test.beforeEach('connect and add two oppo entries', async (t) => {
   // connect each oppo to a requestor.
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
   acts.map((act, index) => { act.owner = t.context.people[index]._id })
   t.context.activities = await Activity.create(acts).catch((err) => console.log('Unable to create activities', err))
 })
@@ -27,6 +32,7 @@ test.beforeEach('connect and add two oppo entries', async (t) => {
 test.afterEach.always(async () => {
   await Activity.deleteMany()
   await Person.deleteMany()
+  await Tag.deleteMany()
 })
 
 test.serial('verify fixture database has acts', async t => {
@@ -169,4 +175,85 @@ test.serial('Should correctly give activity 2 when searching by "Algorithms"', a
   const got = res.body
   t.is(acts[1].description, got[0].description)
   t.is(1, got.length)
+})
+
+test.serial('Should correctly add an opportunity with tags all having id properties', async t => {
+  t.plan(3)
+
+  const tags = t.context.tags
+
+  const res = await request(server)
+    .post('/api/activities')
+    .send({
+      title: 'The first 400 metres',
+      subtitle: 'Launching into space step 3',
+      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+      description: 'Project to build a simple rocket that will reach 400m',
+      duration: '4 hours',
+      resource: '5 rockets and 6 volunteers',
+      tags: tags,
+      owner: t.context.people[0]._id
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
+  t.is(res.status, 200)
+
+  const savedAct = await Activity.findOne({ title: 'The first 400 metres' }).exec()
+  t.is(savedAct.subtitle, 'Launching into space step 3')
+  t.is(t.context.tags.length, savedAct.tags.length)
+})
+
+test.serial('Should not add an opportunity with invalid tag ids', async t => {
+  await request(server)
+    .post('/api/activities')
+    .send({
+      title: 'The first 400 metres',
+      subtitle: 'Launching into space step 3',
+      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+      description: 'Project to build a simple rocket that will reach 400m',
+      duration: '4 hours',
+      tags: [{ _id: '123456781234567812345678', tag: 'test' }],
+      requestor: t.context.people[0]._id
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
+  const savedAct = await Activity.findOne({ title: 'The first 400 metres' }).exec()
+  t.is(null, savedAct)
+})
+
+test.serial('Should create tags that dont have the _id property', async t => {
+  const tagName = 'noid'
+  const tags = [
+    t.context.tags[0],
+    {
+      tag: tagName
+    }
+  ]
+
+  const existingTag = await Tag.findOne({ tag: tagName })
+  t.is(null, existingTag)
+
+  await request(server)
+    .post('/api/activities')
+    .send({
+      title: 'The first 400 metres',
+      subtitle: 'Launching into space step 3',
+      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+      description: 'Project to build a simple rocket that will reach 400m',
+      duration: '4 hours',
+      tags: tags,
+      requestor: t.context.people[0]._id
+
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
+  const savedTag = await Tag.findOne({ tag: tagName })
+  t.is(tagName, savedTag.tag)
+
+  const savedAct = await Activity.findOne({ title: 'The first 400 metres' }).populate('tags').exec()
+  // ensure the tag has an id
+  t.truthy(savedAct.tags.find(t => t.tag === tagName)._id)
 })

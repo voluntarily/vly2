@@ -1,7 +1,7 @@
 import React from 'react'
 import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
-import TagInput from '../TagInput'
+import TagInput from '../Input/TagInput'
 import sinon from 'sinon'
 
 const originalWarn = console.warn

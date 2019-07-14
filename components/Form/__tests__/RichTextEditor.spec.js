@@ -1,6 +1,6 @@
 import test from 'ava'
 import { shallow, mount } from 'enzyme'
-import RichTextEditor from '../RichTextEditor'
+import RichTextEditor from '../Input/RichTextEditor'
 import sinon from 'sinon'
 
 // Demonstrate that the text editor loads without special needs
