@@ -25,32 +25,36 @@ const TagMenu = styled(Menu)`
 `
 
 const ActMenu = ({ acts, ...props }) => {
-  const tagCounts = {
-    Science: 91312,
-    Programming: 1312,
-    Geology: 1312,
-    Ballet: 1239
+  const actMenuContent = {
+    'Discover': {
+      'Top rated': 132,
+      'Top trending': 150
+    },
+    'Categories': {
+      'Science': 91312,
+      'Programming': 1312,
+      'Geology': 1312,
+      'Ballet': 1239
+    }
   }
-  const discoverSubheadings = {
-    'Top rated': 132,
-    'Top trending': 150
-  }
-  const menuMaker = (subheadings) => {
-    const subheadingTitles = Object.keys(subheadings)
-     return subheadingTitles.map(title => <Menu.ItemGroup className='subheading color'>{title} ({subheadings[title]})</Menu.ItemGroup>)
-  }
+  const menu = Object.entries(actMenuContent).reduce((prev, [heading, subheadings]) => {
+      // Add header
+      prev.push(<Menu.ItemGroup>{heading}</Menu.ItemGroup>)
+
+      Object.entries(subheadings).forEach(([subheading, count]) => {
+        prev.push(<Menu.ItemGroup className='subheading color'>{subheading}</Menu.ItemGroup>);
+      });
+
+      return prev;
+    }, []);
+
   return (
     <TagMenu>
       <Menu
       style={{ width: 256 }}
       mode="inline"
       >
-        <Menu.ItemGroup>Discover</Menu.ItemGroup>
-        {menuMaker(tagCounts)}
-
-        <Menu.ItemGroup>Categories</Menu.ItemGroup>
-        {menuMaker(discoverSubheadings)}
-
+        {menu}
         <Menu.ItemGroup className='color'>More filters</Menu.ItemGroup>
       </Menu>
     </TagMenu>
