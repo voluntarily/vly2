@@ -86,7 +86,6 @@ test('show card for a draft op', t => {
   t.regex(wrapper.find('.requestTitleBig').text(), /DRAFT.*/)
 })
 
-// test.todo('Click the card and see if the link works')
 test('Link on cards in history tab, points to archived Opportunities.', t => {
   const archivedOp = t.context.archivedOp
   const wrapper = mountWithIntl(
