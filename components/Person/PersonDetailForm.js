@@ -2,7 +2,7 @@ import { Button, Checkbox, Divider, Form, Input, Radio } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import RichTextEditor from '../Editor/RichTextEditor'
+import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { TextHeadingBold, TextP } from '../VTheme/VTheme'
 import {
