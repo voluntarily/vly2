@@ -1,5 +1,6 @@
 const Activity = require('./activity')
-
+const Tag = require('../tag/tag')
+const escapeRegex = require('../../util/regexUtil')
 /**
  * Get all orgs
  * @param req
@@ -16,34 +17,54 @@ const getActivities = async (req, res) => {
     sort = req.query.s ? JSON.parse(req.query.s) : sort
     select = req.query.p ? JSON.parse(req.query.p) : select
   } catch (e) {
-    console.log('bad JSON', req.query)
     return res.status(400).send(e)
   }
 
-  if (req.query.search) {
-    const searchExpression = new RegExp(req.query.search, 'i')
-    const searchParams = {
-      $or: [
-        { 'title': searchExpression },
-        { 'subtitle': searchExpression },
-        { 'description': searchExpression },
-        { 'tags.tag': searchExpression }
-      ]
-    }
-
-    query = {
-      $and: [
-        searchParams,
-        query
-      ]
-    }
-  }
-
   try {
-    const got = await Activity.find(query, select).sort(sort).exec()
-    res.json(got)
+    if (req.query.search) {
+      const search = req.query.search.trim()
+      const regexSearch = escapeRegex(search)
+
+      // split around one or more whitespace characters
+      const keywordArray = search.split(/\s+/)
+
+      // case insensitive regex which will find tags matching any of the array values
+      const tagSearchExpression = new RegExp(keywordArray.map(w => escapeRegex(w)).join('|'), 'i')
+
+      // find tag ids to include in the opportunity search
+      const matchingTagIds = await Tag.find({ 'tag': tagSearchExpression }, '_id').exec()
+      const searchExpression = new RegExp(regexSearch, 'i')
+      const searchParams = {
+        $or: [
+          { 'title': searchExpression },
+          { 'subtitle': searchExpression },
+          { 'description': searchExpression }
+        ]
+      }
+
+      // mongoose isn't happy if we provide an empty array as an expression
+      if (matchingTagIds.length > 0) {
+        const tagIdExpression = {
+          $or: matchingTagIds.map(id => ({ 'tags': id }))
+        }
+        searchParams.$or.push(tagIdExpression)
+      }
+      query = {
+        $and: [
+          searchParams,
+          query
+        ]
+      }
+    }
+
+    try {
+      const got = await Activity.find(query, select).sort(sort).exec()
+      res.json(got)
+    } catch (e) {
+      res.status(404).send(e)
+    }
   } catch (e) {
-    res.status(404).send(e)
+    return res.status(500).send(e)
   }
 }
 const getActivity = async (req, res) => {
