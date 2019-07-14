@@ -33,6 +33,11 @@ const ActMenu = ({ acts, ...props }) => {
     Geology: 1312,
     Ballet: 1239
   }
+  const discoverSubheadings = {
+    'Top rated': 132,
+    'Top trending': 150
+  }
+  const discoverCounts = Object.keys(discoverSubheadings)
   const tags = Object.keys(tagCounts)
   return (
     <TagMenu>
@@ -40,13 +45,12 @@ const ActMenu = ({ acts, ...props }) => {
       style={{ width: 256 }}
       mode="inline"
       >
-        <Menu.ItemGroup key="g1">Discover</Menu.ItemGroup>
-        <Menu.ItemGroup key="10" className='subheading color'>Top rated (132)</Menu.ItemGroup>
-        <Menu.ItemGroup key="20" className='subheading color'>Top trending (132)</Menu.ItemGroup>
-      
-        <Menu.ItemGroup key="g2">Categories</Menu.ItemGroup>
-        {tags.map((tag, i) => <Menu.ItemGroup key={i} className='subheading color'>{tag} {tagCounts[tag]}</Menu.ItemGroup>)}
-        <Menu.ItemGroup key="6" className='color'>More filters</Menu.ItemGroup>
+        <Menu.ItemGroup>Discover</Menu.ItemGroup>
+        {discoverCounts.map(d => <Menu.ItemGroup className='subheading color'>{d} ({discoverSubheadings[d]})</Menu.ItemGroup>)}
+
+        <Menu.ItemGroup>Categories</Menu.ItemGroup>
+        {tags.map(tag => <Menu.ItemGroup className='subheading color'>{tag} ({tagCounts[tag]})</Menu.ItemGroup>)}
+        <Menu.ItemGroup className='color'>More filters</Menu.ItemGroup>
       </Menu>
     </TagMenu>
   )
