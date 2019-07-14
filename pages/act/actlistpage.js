@@ -64,7 +64,7 @@ class Acts extends Component {
             onSearch={this.handleSearch}
           />
           <TripleGrid>
-            <ActMenu />
+            <ActMenu acts={acts}/>
             {acts.length > 0 ? (
             <ActList
               acts={acts}
