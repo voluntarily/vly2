@@ -27,6 +27,7 @@ export const FullPage = styled.div`
 margin: 6rem auto;
   width: 80rem;
   overflow: visible;
+  height: auto;
 
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
