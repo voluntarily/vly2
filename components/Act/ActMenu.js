@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import { Menu } from 'antd';
 
-const TagMenu = styled(Menu)`
+const ActivityMenu = styled(Menu)`
   height: 32px;
   width: 240px;
   font-family: Inter;
@@ -50,15 +50,12 @@ const ActMenu = ({ acts, ...props }) => {
     }, [])
 
   return (
-    <TagMenu>
-      <Menu
-      style={{ width: 256 }}
-      mode="inline"
-      >
+    <ActivityMenu>
+      <Menu>
         {renderMenu}
         <Menu.ItemGroup className='color'>More filters</Menu.ItemGroup>
       </Menu>
-    </TagMenu>
+    </ActivityMenu>
   )
 }
 
