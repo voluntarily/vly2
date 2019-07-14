@@ -21,8 +21,8 @@ test.after.always(async (t) => {
   await t.context.memMongo.stop()
 })
 
-test.beforeEach('connect and add two oppo entries', async (t) => {
-  // connect each oppo to a requestor.
+test.beforeEach('connect and add two activity entries', async (t) => {
+  // connect each activity to a requestor.
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
   acts.map((act, index) => { act.owner = t.context.people[index]._id })
@@ -110,6 +110,13 @@ test.serial('Should send correct data when queried against an _id', async t => {
   t.is(res.body.owner.name, person1.name)
 })
 
+test.serial('Should not find invalid _id', async t => {
+  const res = await request(server)
+    .get(`/api/activities/5ce8acae1fbf56001027b254`)
+    .set('Accept', 'application/json')
+  t.is(res.status, 404)
+})
+
 test.serial('Should correctly add an activity', async t => {
   t.plan(2)
 
@@ -141,7 +148,7 @@ test.serial('Should correctly delete an activity', async t => {
     description: 'Project to build a simple rocket that will reach 1000m',
     duration: '4 hours'
   })
-  opp.save()
+  await opp.save()
 
   const res = await request(server)
     .delete(`/api/activities/${opp._id}`)
@@ -177,7 +184,61 @@ test.serial('Should correctly give activity 2 when searching by "Algorithms"', a
   t.is(1, got.length)
 })
 
-test.serial('Should correctly add an opportunity with tags all having id properties', async t => {
+test.serial('Should find no matches', async t => {
+  const res = await request(server)
+    .get('/api/activities?q={"title":"nomatches"}')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  // console.log('got', got)
+  t.is(got.length, 0)
+})
+
+test.serial('Should fail to find - invalid query', async t => {
+  const res = await request(server)
+    .get('/api/activities?s={"invalid":"nomatches"}')
+    .set('Accept', 'application/json')
+    .expect(404)
+  t.is(res.status, 404)
+})
+
+test.serial('Should return any activities with matching tags or title/desc/subtitle', async t => {
+  // assign tags to activities
+  const tags = t.context.tags
+  t.context.activities[2].tags = [tags[0]._id, tags[2]._id]
+  t.context.activities[0].tags = [tags[0]._id]
+  t.context.activities[1].tags = [tags[2]._id]
+
+  await Promise.all([
+    t.context.activities[2].save(),
+    t.context.activities[1].save(),
+    t.context.activities[0].save()
+  ])
+
+  // activity with matching title, but not tags
+  const activity = new Activity({
+    title: 'The first 400 java robots',
+    subtitle: 'Launching java robots into space step 3',
+    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+    description: 'Project to build a simple rocket that will reach 400m',
+    duration: '4 hours',
+    tags: []
+  })
+  await activity.save()
+
+  const res = await request(server)
+    .get(`/api/activities?search=java robots`)
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+
+  // should return the 3 with assigned tags, and the one with matching title
+  t.is(4, got.length)
+})
+
+test.serial('Should correctly add an activity with tags all having id properties', async t => {
   t.plan(3)
 
   const tags = t.context.tags
@@ -204,7 +265,7 @@ test.serial('Should correctly add an opportunity with tags all having id propert
   t.is(t.context.tags.length, savedAct.tags.length)
 })
 
-test.serial('Should not add an opportunity with invalid tag ids', async t => {
+test.serial('Should not add an activity with invalid tag ids', async t => {
   await request(server)
     .post('/api/activities')
     .send({
