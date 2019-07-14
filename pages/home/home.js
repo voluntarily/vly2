@@ -10,7 +10,8 @@ import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import reduxApi, {
   withInterests,
   withPeople,
-  withOps
+  withOps,
+  withArchivedOpportunitys
 } from '../../lib/redux/reduxApi.js'
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
@@ -56,6 +57,16 @@ class PersonHomePage extends Component {
   state = {
     editProfile: false
   }
+  constructor (props) {
+    super(props)
+    this.getArchivedOpportunitys = this.getArchivedOpportunitys.bind(this)
+  }
+
+  getArchivedOpportunitys () {
+    return this.props.archivedOpportunitys.data.filter(
+      op => op.status === 'completed' && op.requestor === this.props.me._id
+    )
+  }
 
   mergeOpsList () {
     const myops = this.props.opportunities.data // list of ops I own
@@ -89,7 +100,8 @@ class PersonHomePage extends Component {
 
       await Promise.all([
         store.dispatch(reduxApi.actions.opportunities.get(filters)),
-        store.dispatch(reduxApi.actions.interests.get({ me: me._id }))
+        store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
+        store.dispatch(reduxApi.actions.archivedOpportunitys.get({ requestor: me._id }))
       ])
     } catch (err) {
       console.log('error in getting ops', err)
@@ -211,9 +223,7 @@ class PersonHomePage extends Component {
               />
             </h2>
             <OpList
-              ops={ops.filter(
-                op => op.status === 'done' && op.requestor === this.props.me._id
-              )}
+              ops={this.getArchivedOpportunitys()}
             />
             {/* <OpListSection query={myPastfilterString} /> */}
           </TabPane>
@@ -247,5 +257,5 @@ class PersonHomePage extends Component {
     )
   }
 }
-export const PersonHomePageTest = withInterests(withOps(PersonHomePage)) // for test
+export const PersonHomePageTest = withInterests(withOps(withArchivedOpportunitys(PersonHomePage))) // for test
 export default securePage(withPeople(PersonHomePageTest))
