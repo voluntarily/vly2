@@ -24,7 +24,7 @@ export const A4 = styled.div`
   }
 `
 export const FullPage = styled.div`
-margin: 0 auto;
+margin: 6rem auto;
   width: 80rem;
   overflow: visible;
 
@@ -35,6 +35,7 @@ margin: 0 auto;
     margin-right: 2rem;
   }
   @media screen and (max-width: 767px) {
+    margin-top: 4rem;
     width: calc(100vw - 2rem);
     margin-left: 1rem;
   }
