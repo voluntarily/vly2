@@ -141,10 +141,10 @@ export class OpDetailPage extends Component {
     await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.COMPLETED }) }))
     // TODO: error handling - see above
     message.success('Opportunity Confimed')
-    Router.replace('/home')
+    Router.replace(`/archivedops/${op._id}`)
   }
 
-  handledCompletedCancelled = () => {
+  handledCompletedCancelled = (op) => {
     message.error('Confirm Cancelled')
   }
 
