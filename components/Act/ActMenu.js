@@ -25,6 +25,7 @@ const ActivityMenu = styled(Menu)`
 `
 
 const ActMenu = ({ acts, ...props }) => {
+  console.log(acts[2].tags[0])
   const actMenu = {
     'Discover': {
       'Top rated': 132,

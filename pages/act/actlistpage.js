@@ -77,14 +77,7 @@ class Acts extends Component {
             }
           </TripleGrid>
           {/* [@TODO] Replace with actual searchbar component */}
-
-
         </GridContainer>
-          <NoResult
-            id='act.noresult'
-            msg='No activities found based on your search criteria'
-            description='Message shown while no activities found'
-          />
       </FullPage>
     )
   }
