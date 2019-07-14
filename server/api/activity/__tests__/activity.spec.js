@@ -140,7 +140,7 @@ test.serial('Should correctly add an activity', async t => {
 test.serial('Should correctly delete an activity', async t => {
   t.plan(2)
 
-  const opp = new Activity({
+  const activity = new Activity({
     _id: '5cc8d60b8b16812b5b3920c3',
     title: 'The first 1000 metres',
     subtitle: 'Launching into space step 4',
@@ -148,15 +148,15 @@ test.serial('Should correctly delete an activity', async t => {
     description: 'Project to build a simple rocket that will reach 1000m',
     duration: '4 hours'
   })
-  await opp.save()
+  await activity.save()
 
   const res = await request(server)
-    .delete(`/api/activities/${opp._id}`)
+    .delete(`/api/activities/${activity._id}`)
     .set('Accept', 'application/json')
 
   t.is(res.status, 200)
 
-  const queriedActivity = await Activity.findOne({ _id: opp._id }).exec()
+  const queriedActivity = await Activity.findOne({ _id: activity._id }).exec()
   t.is(queriedActivity, null)
 })
 
