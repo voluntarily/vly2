@@ -11,9 +11,15 @@ import { Spacer } from '../../components/VTheme/VTheme'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
 import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
+import styled from 'styled-components'
 
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
 const { Item } = Menu
+
+const SearchPageContainer = styled.div`
+  margin-top: 10rem;
+  position: absolute;
+`
 
 export class SearchPage extends Component {
   state = {
@@ -66,8 +72,14 @@ export class SearchPage extends Component {
   handleDateChange = change => {
     // When user clear date picker value it the date value in the state will becom null which is not an array anymore.
     // By checking if the data changed is null then we instead make it an empty array
-    if (change) this.setState({ filter: { ...this.state.filter, date: (Array.isArray(change)) ? change : [change] } })
-    else this.setState({ filter: { ...this.state.fitler, date: [] } })
+    if (change) {
+      this.setState({
+        filter: {
+          ...this.state.filter,
+          date: Array.isArray(change) ? change : [change]
+        }
+      })
+    } else this.setState({ filter: { ...this.state.fitler, date: [] } })
   }
 
   changePickerType = type => {
@@ -89,7 +101,9 @@ export class SearchPage extends Component {
 
     const DatePickerOption = (
       <Menu>
-        <Item onClick={() => this.changePickerType(DatePickerType.IndividualDate)}>
+        <Item
+          onClick={() => this.changePickerType(DatePickerType.IndividualDate)}
+        >
           <p>Date</p>
         </Item>
         <Item onClick={() => this.changePickerType(DatePickerType.WeekRange)}>
@@ -104,21 +118,63 @@ export class SearchPage extends Component {
       </Menu>
     )
 
-    return (<div>
-      <HeaderSearch search={search} onSearch={this.handleSearch} dateLabel={dateLabel} onClickDateFilter={this.handleOpenDatePickperModal} locations={existingLocations} onFilterChange={this.locFilterChanged} />
-      <FullPage>
-        <TitleSection title={<FormattedMessage defaultMessage={`Search results for "{search}"`} values={{ search }} id='search.title' />} />
-        <Modal title='Pick date' visible={this.state.showDatePickerModal}
-          onCancel={() => this.setState({ showDatePickerModal: !this.state.showDatePickerModal })}
-          onOk={() => this.setState({ showDatePickerModal: !this.state.showDatePickerModal })}>
-          <Dropdown overlay={DatePickerOption} placement='bottomCenter'>
-            <Button>{ this.state.datePickerType === '' ? 'Date' : this.state.datePickerType}</Button>
-          </Dropdown>
-          <DatePickerComponent datePickerType={this.state.datePickerType} onDateChange={this.handleDateChange} dateValue={this.state.filter.date} />
-        </Modal>
-        <Spacer />
-        <OpListSection search={search} filter={this.state.filter} dateFilterType={this.state.datePickerType} location={filterValue} />
-      </FullPage>
+    return (
+      <div>
+        <HeaderSearch
+          search={search}
+          onSearch={this.handleSearch}
+          dateLabel={dateLabel}
+          onClickDateFilter={this.handleOpenDatePickperModal}
+          locations={existingLocations}
+          onFilterChange={this.locFilterChanged}
+        />
+        <FullPage>
+          <SearchPageContainer>
+            <TitleSection
+              title={
+                <FormattedMessage
+                  defaultMessage={`Search results for "{search}"`}
+                  values={{ search }}
+                  id='search.title'
+                />
+              }
+            />
+            <Modal
+              title='Pick date'
+              visible={this.state.showDatePickerModal}
+              onCancel={() =>
+                this.setState({
+                  showDatePickerModal: !this.state.showDatePickerModal
+                })
+              }
+              onOk={() =>
+                this.setState({
+                  showDatePickerModal: !this.state.showDatePickerModal
+                })
+              }
+            >
+              <Dropdown overlay={DatePickerOption} placement='bottomCenter'>
+                <Button>
+                  {this.state.datePickerType === ''
+                    ? 'Date'
+                    : this.state.datePickerType}
+                </Button>
+              </Dropdown>
+              <DatePickerComponent
+                datePickerType={this.state.datePickerType}
+                onDateChange={this.handleDateChange}
+                dateValue={this.state.filter.date}
+              />
+            </Modal>
+            <Spacer />
+            <OpListSection
+              search={search}
+              filter={this.state.filter}
+              dateFilterType={this.state.datePickerType}
+              location={filterValue}
+            />
+          </SearchPageContainer>
+        </FullPage>
       </div>
     )
   }
