@@ -36,6 +36,7 @@ const ItemP = styled.div`
 `
 
 export function ActDetail ({ act }) {
+  const img = act.imgUrl || '../../static/missingimage.svg'
   return (
     <FullPage>
       <Spacer />
@@ -60,7 +61,7 @@ export function ActDetail ({ act }) {
           <Spacer />
         </Left>
         <Right>
-          <img style={{ width: '100%' }} src={act.imgUrl} alt={act.title} />
+          <img style={{ width: '100%' }} src={img} alt={act.title} />
         </Right>
       </HalfGrid>
     </FullPage>

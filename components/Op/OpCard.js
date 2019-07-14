@@ -14,7 +14,7 @@ class OpCard extends Component {
     this.size = size
     this.onPress = onPress
     this.getOpPageURL = this.getOpPageURL.bind(this)
-    this.cardImage = op.imgUrl ? op.imgUrl : 'static/missingimage.svg'
+    this.cardImage = op.imgUrl ? op.imgUrl : '../../static/missingimage.svg'
     this.draft = op.status === 'draft' ? 'DRAFT: ' : ''
     this.isArchived = op.status === 'completed' || op.status === 'cancelled'
     this.interestState = op.interest ? ` - ${op.interest.status}` : ''
