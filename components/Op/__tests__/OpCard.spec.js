@@ -61,7 +61,7 @@ test('op card with default image', t => {
   // console.log(wrapper.debug())
   t.is(wrapper.find('.requestContainerSmall').length, 1)
   t.is(wrapper.find('.requestTitleSmall').text(), op.title)
-  t.is(wrapper.find('.requestImgSmall').prop('src'), 'static/missingimage.svg')
+  t.is(wrapper.find('.requestImgSmall').prop('src'), '../../static/missingimage.svg')
 })
 
 test('shallow the big card with op', t => {
