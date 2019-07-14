@@ -7,7 +7,11 @@ import { Provider } from 'react-redux'
 import objectid from 'objectid'
 import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
 import people from '../server/api/person/__tests__/person.fixture'
-
+import archivedOpportunitys from '../server/api/archivedOpportunity/__tests__/archivedOpportunity.fixture'
+import reduxApi from '../lib/redux/reduxApi'
+import adapterFetch from 'redux-api/lib/adapters/fetch'
+import thunk from 'redux-thunk'
+import { API_URL } from '../lib/apiCaller'
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
   people.map(p => { p._id = objectid().toString() })
@@ -17,9 +21,12 @@ test.before('Setup fixtures', (t) => {
     op._id = objectid().toString()
     op.requestor = people[index]._id
   })
+  // take ownership of 2nd event and set to done
+  archivedOpportunitys[1].requestor = me._id
+  archivedOpportunitys[1].status = 'completed'
 
   // setup list of interests, i'm interested in first 5 ops
-  const interestStates = [ 'interested', 'invited', 'committed', 'declined', 'completed', 'cancelled' ]
+  const interestStates = ['interested', 'invited', 'committed', 'declined', 'completed', 'cancelled']
   const interests = ops.filter(op => op.requestor !== me._id).map((op, index) => {
     return ({
       _id: objectid().toString(),
@@ -34,10 +41,11 @@ test.before('Setup fixtures', (t) => {
     me,
     people,
     ops,
+    archivedOpportunitys,
     interests
   }
 
-  t.context.mockStore = configureStore()(
+  t.context.mockStore = configureStore([thunk])(
     {
       session: {
         isAuthenticated: true,
@@ -56,6 +64,13 @@ test.before('Setup fixtures', (t) => {
         syncing: false,
         loading: false,
         data: interests,
+        request: null
+      },
+      archivedOpportunitys: {
+        sync: false,
+        syncing: false,
+        loading: false,
+        data: archivedOpportunitys,
         request: null
       }
     }
@@ -78,16 +93,13 @@ test('render volunteer home page - Active tab', t => {
   t.is(wrapper.find('h1').first().text(), t.context.me.nickname)
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
   t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Active Requests')
-  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 11)
+  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 2)
 })
 
 test('render volunteer home page - History tab', t => {
   const props = {
     me: t.context.me
   }
-  // take ownership of 2nd event and set to done
-  t.context.ops[1].requestor = t.context.me._id
-  t.context.ops[1].status = 'done'
 
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
@@ -122,4 +134,22 @@ test('render Edit Profile ', t => {
   wrapper.find('.ant-tabs-tab').at(2).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Profile')
   t.is(wrapper.find('Button').first().text(), 'Edit')
+})
+
+test('retrieve archived opportunities', async t => {
+  const props = {
+    me: t.context.me
+  }
+  const { fetchMock } = require('fetch-mock')
+  const myMock = fetchMock.sandbox()
+  myMock.get(API_URL + '/archivedOpportunitys/', { body: { archivedOpportunitys } })
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <PersonHomePageTest {...props} />
+    </Provider>)
+  const res = await wrapper.find('PersonHomePage').first().instance().getArchivedOpportunitys()
+  t.is(res.length, 2)
+  t.is(res[0], archivedOpportunitys[0])
+  t.is(res[1], archivedOpportunitys[1])
 })

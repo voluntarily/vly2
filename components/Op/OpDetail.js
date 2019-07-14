@@ -46,7 +46,7 @@ export function OpDetail ({ op }) {
   // Otherwise Markdown will throw error
   const description = op.description == null ? '' : sanitize(op.description, { allowedAttributes: { 'a': ['href', 'style'] } }) // Only href and style attribute is allowed in link tag
   const startDate = op.date[0] ? moment(op.date[0]).format('ddd DD/MM/YY | HH:mm') : 'N/a'
-  const endDate = op.date[1] ? moment(op.date[1]).format('DD-MM-YYYY') : 'Open ended opportunity'
+  const endDate = op.date[1] ? moment(op.date[1]).format('ddd DD/MM/YYYY | HH:mm') : 'Open ended opportunity'
   return (
     <FullPage>
       <Spacer />
