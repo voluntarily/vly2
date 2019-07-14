@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Result, Icon } from 'antd'
@@ -16,10 +15,10 @@ const FormattedMsg = () => {
 const NoResult = () => {
   return (
     <Result
-      icon={<Icon type="frown" theme="twoTone" />}
+      icon={<Icon type='frown' theme='twoTone' />}
       title={<FormattedMsg />}
     />
   )
 }
 
-export default NoResult;
+export default NoResult

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Button } from 'antd'
+// [@TODO] - remove Input once actual search component is done
+import { Button, Input } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import Link from 'next/link'
 import publicPage, { FullPage } from '../../hocs/publicPage'
@@ -9,8 +10,6 @@ import ActList from '../../components/Act/ActList'
 import NoResult from './actnoresult'
 import Router from 'next/router'
 const escapeRegex = require('../../server/util/regexUtil')
-// [@TODO] - remove once actual search component is done
-import { Input } from 'antd'
 
 class Acts extends Component {
   static async getInitialProps ({ store, query }) {
@@ -29,7 +28,7 @@ class Acts extends Component {
   handleSearch(value) {
     value = escapeRegex(value)
     if (!value) {
-      return false;
+      return false
     }
     Router.push({
       pathname: '/acts',
@@ -56,9 +55,9 @@ class Acts extends Component {
         <br /><br />
         {/* [@TODO] Replace with actual searchbar component */}
         <Input.Search
-          placeholder="eg: activity"
-          enterButton="Search"
-          size="large"
+          placeholder='eg: activity'
+          enterButton='Search'
+          size='large'
           onSearch={this.handleSearch}
         />
         {acts.length > 0 ? (
