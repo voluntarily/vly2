@@ -24,8 +24,6 @@ const TagMenu = styled(Menu)`
   }
 `
 
-
-
 const ActMenu = ({ acts, ...props }) => {
   const tagCounts = {
     Science: 91312,
@@ -37,8 +35,10 @@ const ActMenu = ({ acts, ...props }) => {
     'Top rated': 132,
     'Top trending': 150
   }
-  const discoverCounts = Object.keys(discoverSubheadings)
-  const tags = Object.keys(tagCounts)
+  const menuMaker = (subheadings) => {
+    const subheadingTitles = Object.keys(subheadings)
+     return subheadingTitles.map(title => <Menu.ItemGroup className='subheading color'>{title} ({subheadings[title]})</Menu.ItemGroup>)
+  }
   return (
     <TagMenu>
       <Menu
@@ -46,10 +46,11 @@ const ActMenu = ({ acts, ...props }) => {
       mode="inline"
       >
         <Menu.ItemGroup>Discover</Menu.ItemGroup>
-        {discoverCounts.map(d => <Menu.ItemGroup className='subheading color'>{d} ({discoverSubheadings[d]})</Menu.ItemGroup>)}
+        {menuMaker(tagCounts)}
 
         <Menu.ItemGroup>Categories</Menu.ItemGroup>
-        {tags.map(tag => <Menu.ItemGroup className='subheading color'>{tag} ({tagCounts[tag]})</Menu.ItemGroup>)}
+        {menuMaker(discoverSubheadings)}
+
         <Menu.ItemGroup className='color'>More filters</Menu.ItemGroup>
       </Menu>
     </TagMenu>
