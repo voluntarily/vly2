@@ -256,12 +256,12 @@ class OpDetailForm extends Component {
           <h1>
             {isNewOp ? (
               <FormattedMessage
-                id='editOp'
+                id='opEdit'
                 description='Title for editing Ops'
               />
             ) : (
               <FormattedMessage
-                id='createOp'
+                id='opCreate'
                 description='Title for creating Ops'
               />
             )}{' '}
