@@ -37,16 +37,17 @@ const ActMenu = ({ acts, ...props }) => {
       'Ballet': 1239
     }
   }
-  const menu = Object.entries(actMenu).reduce((prev, [heading, subheadings]) => {
-      // Add header
+  const renderMenu = Object.entries(actMenu).reduce((prev, [heading, subheadings]) => {
+      // Add headings
       prev.push(<Menu.ItemGroup>{heading}</Menu.ItemGroup>)
 
+      // Add subheadings
       Object.entries(subheadings).forEach(([subheading, count]) => {
-        prev.push(<Menu.ItemGroup className='subheading color'>{subheading}</Menu.ItemGroup>);
+      prev.push(<Menu.ItemGroup className='subheading color'>{subheading} ({count})</Menu.ItemGroup>);
       });
 
-      return prev;
-    }, []);
+      return prev
+    }, [])
 
   return (
     <TagMenu>
@@ -54,7 +55,7 @@ const ActMenu = ({ acts, ...props }) => {
       style={{ width: 256 }}
       mode="inline"
       >
-        {menu}
+        {renderMenu}
         <Menu.ItemGroup className='color'>More filters</Menu.ItemGroup>
       </Menu>
     </TagMenu>
