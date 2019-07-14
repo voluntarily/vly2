@@ -1,8 +1,4 @@
-/* Display a grid of opanisation cards from an [op]
- */
-import React from 'react'
 import styled from 'styled-components'
-
 import { Menu } from 'antd';
 
 const ActivityMenu = styled(Menu)`
@@ -25,7 +21,8 @@ const ActivityMenu = styled(Menu)`
 `
 
 const ActMenu = ({ acts, ...props }) => {
-  console.log(acts[2].tags[0])
+  // Trying to get tags data:  
+  // console.log(acts[1].tags[0])
   const actMenu = {
     'Discover': {
       'Top rated': 132,

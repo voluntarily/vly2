@@ -9,7 +9,6 @@ import PropTypes from 'prop-types'
 import NoResult from '../../components/NoResult'
 import ActList from '../../components/Act/ActList'
 import ActMenu from '../../components/Act/ActMenu'
-import NoResult from './actnoresult'
 import Router from 'next/router'
 import { TripleGrid, GridContainer } from '../../components/VTheme/VTheme'
 
