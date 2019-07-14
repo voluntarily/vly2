@@ -189,7 +189,7 @@ test.serial('Should find a person by email', async t => {
   t.is(res.body.name, p.name)
 })
 
-test.failing('Should find a person by nickname', async t => {
+test.serial('Should find a person by nickname', async t => {
   t.plan(1)
   const p = {
     name: 'Testy McTestFace',
@@ -205,8 +205,7 @@ test.failing('Should find a person by nickname', async t => {
     .get(`/api/person/by/nickname/${p.nickname}`)
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
-    .expect(200)
-  // console.log(res.body)
+    .expect(200) // For now the tester ability is not proper defined so tester will have the same ability as admin
   t.is(res.body.name, p.name)
 })
 

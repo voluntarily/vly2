@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const idvalidator = require('mongoose-id-validator')
 const Schema = mongoose.Schema
-const { accessibleRecordsPlugin } = require('@casl/mongoose')
+const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
 const { Role } = require('../../services/auth/role')
 
 // simplified version without Auth
@@ -12,7 +12,6 @@ const personSchema = new Schema({
   about: { type: 'String', default: '' }, // person description
   phone: { type: 'String', required: false }, // +64 27 7031007
   gender: { type: 'String', default: '' }, // whatever they want to write.
-  password: { type: 'String' }, // encoded
   language: { type: String, default: 'EN', lowercase: true }, // en, mi, fr etc
   avatar: String, // url to image
   role: {
@@ -32,6 +31,7 @@ const personSchema = new Schema({
 })
 
 personSchema.plugin(idvalidator)
+personSchema.plugin(accessibleFieldsPlugin)
 personSchema.plugin(accessibleRecordsPlugin)
 // personSchema.plugin(accessibleFieldsPlugin)
 

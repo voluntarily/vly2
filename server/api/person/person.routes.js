@@ -16,7 +16,7 @@ module.exports = function (server) {
       endResponseInAction: false,
 
       beforeActions: [
-        { middlewares: [ ensureSanitized, authorizeActions(SchemaName) ] }
+        { middlewares: [ authorizeActions(SchemaName), ensureSanitized ] }
 
       ],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)

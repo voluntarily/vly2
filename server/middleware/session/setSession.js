@@ -21,7 +21,7 @@ const isUrlBlacklisted = url => {
 }
 
 module.exports = async (req, res, next) => {
-  req.session = DEFAULT_SESSION
+  req.session = { ...DEFAULT_SESSION } // Default session object will get mutated after logged in. Deconstructing the objec will only get the attribute of it
   if (!isUrlBlacklisted(req.url) && req.cookies.idToken) {
     try {
       const user = jwtDecode(req.cookies.idToken)
