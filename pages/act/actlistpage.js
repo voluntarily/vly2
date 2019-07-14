@@ -55,7 +55,6 @@ class Acts extends Component {
         </a></Link></Button>
         <br /><br />
         <ActMenu />
-        {/* <ActList acts={this.props.acts} /> */}
         {/* [@TODO] Replace with actual searchbar component */}
         <Input.Search
           placeholder='eg: activity'

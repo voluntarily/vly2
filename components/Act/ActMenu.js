@@ -25,7 +25,7 @@ const TagMenu = styled(Menu)`
 `
 
 const ActMenu = ({ acts, ...props }) => {
-  const actMenuContent = {
+  const actMenu = {
     'Discover': {
       'Top rated': 132,
       'Top trending': 150
@@ -37,7 +37,7 @@ const ActMenu = ({ acts, ...props }) => {
       'Ballet': 1239
     }
   }
-  const menu = Object.entries(actMenuContent).reduce((prev, [heading, subheadings]) => {
+  const menu = Object.entries(actMenu).reduce((prev, [heading, subheadings]) => {
       // Add header
       prev.push(<Menu.ItemGroup>{heading}</Menu.ItemGroup>)
 
