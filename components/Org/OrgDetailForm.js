@@ -1,59 +1,49 @@
-import React, { Component } from 'react'
+import { Button, Checkbox, Form, Input } from 'antd'
+import slug from 'limax'
 import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Editor/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import { Button, Checkbox, Form, Input } from 'antd'
-import { FormattedMessage } from 'react-intl'
-import slug from 'limax'
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
 }
 
 class OrgDetailForm extends Component {
-  state = {
-    about: ''
-  }
   constructor (props) {
     super(props)
-    this.handleChange = this.handleChange.bind(this)
+    this.setAbout = this.setAbout.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
   }
 
   componentDidMount () {
     // To disabled submit button at the beginning.
-    this.setState({ about: this.props.org.about })
     this.props.form.validateFields()
   }
 
-  handleChange (value) {
-    console.log('par', value)
-    this.setState({ about: value })
+  setAbout (value) {
+    this.props.form.setFieldsValue({ about: value })
+  }
+  setImgUrl = (value) => {
+    this.props.form.setFieldsValue({ imgUrl: value })
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // eslint-disable-next-line no-console
-        // console.log('Received values of form: ', values)
         // preserve the id and other values not edited by form.
         const org = this.props.org
         // update the rest from the form values.
         org.name = values.name
         org.slug = slug(values.name)
-        org.about = this.state.about
+        org.about = values.about
         org.imgUrl = values.imgUrl
         org.type = values.type
 
         this.props.onSubmit(this.props.org)
       }
-    })
-  }
-
-  setImgUrl = (value) => {
-    this.props.form.setFieldsValue({
-      imgUrl: value
     })
   }
 
@@ -119,7 +109,7 @@ class OrgDetailForm extends Component {
               ]
             })(
               // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
-              <RichTextEditor value={this.state.about} onChange={this.handleChange} />
+              <RichTextEditor onChange={this.setAbout} />
             )}
           </Form.Item>
           <Form.Item label={orgImgUrl}>

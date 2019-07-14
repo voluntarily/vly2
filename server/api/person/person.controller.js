@@ -19,6 +19,17 @@ function getPersonBy (req, res) {
 }
 
 function ensureSanitized (req, res, next) {
+  const szAbout = {
+    allowedTags: [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+      'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
+      'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe' ],
+    allowedAttributes: {
+      a: [ 'href' ],
+      img: [ 'src' ]
+    },
+    allowedIframeHostnames: ['www.youtube.com']
+  }
+
   // if user puts html in their inputs - remove stuff we don't want.
   // TODO - Also sanitize mongo $ commands. see mongo-sanitize
   const p = req.body
@@ -26,7 +37,7 @@ function ensureSanitized (req, res, next) {
   p.nickname = sanitizeHtml(p.nickname)
   p.phone = (p.phone != null) ? sanitizeHtml(p.phone) : ''
   p.gender = (p.gender != null) ? sanitizeHtml(p.gender) : ''
-  p.about = (p.about != null) ? sanitizeHtml(p.about) : ''
+  p.about = (p.about != null) ? sanitizeHtml(p.about, szAbout) : ''
   req.body = p
   next()
 }

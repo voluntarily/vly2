@@ -15,6 +15,5 @@ test.serial('Should return the correct location data', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
 
-  t.is(locationData.regions.length, res.body.regions.length)
-  t.is(locationData.territories.length, res.body.territories.length)
+  t.is(res.body.length, locationData.territories.length + locationData.regions.length)
 })

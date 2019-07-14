@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Head from 'next/head'
+import { Col, Icon, Row } from 'antd'
 import Markdown from 'markdown-to-jsx'
-import { Icon, Row, Col } from 'antd'
+import Head from 'next/head'
+import PropTypes from 'prop-types'
+import React from 'react'
 import styled from 'styled-components'
 import PersonRoles from './PersonRole'
 
