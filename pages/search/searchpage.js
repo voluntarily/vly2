@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import TitleSection from '../../components/LandingPageComponents/TitleSectionSub'
 import DatePickerType from '../../components/Op/DatePickerType.constant'
 import OpListSection from '../../components/Op/OpListSection'
-import BigSearch from '../../components/Search/BigSearch'
+import HeaderSearch from '../../components/Search/HeaderSearch'
 import { Spacer } from '../../components/VTheme/VTheme'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
@@ -104,10 +104,10 @@ export class SearchPage extends Component {
       </Menu>
     )
 
-    return (
+    return (<div>
+      <HeaderSearch search={search} onSearch={this.handleSearch} dateLabel={dateLabel} onClickDateFilter={this.handleOpenDatePickperModal} locations={existingLocations} onFilterChange={this.locFilterChanged} />
       <FullPage>
         <TitleSection title={<FormattedMessage defaultMessage={`Search results for "{search}"`} values={{ search }} id='search.title' />} />
-        <BigSearch search={search} onSearch={this.handleSearch} dateLabel={dateLabel} onClickDateFilter={this.handleOpenDatePickperModal} locations={existingLocations} onFilterChange={this.locFilterChanged} />
         <Modal title='Pick date' visible={this.state.showDatePickerModal}
           onCancel={() => this.setState({ showDatePickerModal: !this.state.showDatePickerModal })}
           onOk={() => this.setState({ showDatePickerModal: !this.state.showDatePickerModal })}>
@@ -119,6 +119,7 @@ export class SearchPage extends Component {
         <Spacer />
         <OpListSection search={search} filter={this.state.filter} dateFilterType={this.state.datePickerType} location={filterValue} />
       </FullPage>
+      </div>
     )
   }
 }
