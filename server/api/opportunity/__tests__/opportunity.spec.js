@@ -144,10 +144,10 @@ test.serial('Should not find invalid _id', async t => {
   t.is(res.status, 404)
 })
 
-test.serial('Should correctly add an opportunity with valid tag refs', async t => {
+test.serial('Should correctly add an opportunity with tags all having id properties', async t => {
   t.plan(3)
 
-  const tagIds = t.context.tags.map(tag => tag._id)
+  const tags = t.context.tags
 
   const res = await request(server)
     .post('/api/opportunities')
@@ -159,7 +159,7 @@ test.serial('Should correctly add an opportunity with valid tag refs', async t =
       duration: '4 hours',
       location: 'Albany, Auckland',
       status: OpportunityStatus.DRAFT,
-      tags: tagIds,
+      tags: tags,
       requestor: t.context.people[0]._id
     })
     .set('Accept', 'application/json')
@@ -172,7 +172,7 @@ test.serial('Should correctly add an opportunity with valid tag refs', async t =
   t.is(t.context.tags.length, savedOpportunity.tags.length)
 })
 
-test.serial('Should not add an opportunity with invalid tag refs', async t => {
+test.serial('Should not add an opportunity with invalid tag ids', async t => {
   await request(server)
     .post('/api/opportunities')
     .send({
@@ -183,7 +183,7 @@ test.serial('Should not add an opportunity with invalid tag refs', async t => {
       duration: '4 hours',
       location: 'Albany, Auckland',
       status: 'draft',
-      tags: ['123456781234567812345678'],
+      tags: [{ _id: '123456781234567812345678', tag: 'test' }],
       requestor: t.context.people[0]._id
 
     })
@@ -192,6 +192,43 @@ test.serial('Should not add an opportunity with invalid tag refs', async t => {
 
   const savedOpportunity = await Opportunity.findOne({ title: 'The first 400 metres' }).exec()
   t.is(null, savedOpportunity)
+})
+
+test.serial('Should create tags that dont have the _id property', async t => {
+  const tagName = 'noid'
+  const tags = [
+    t.context.tags[0],
+    {
+      tag: tagName
+    }
+  ]
+
+  const existingTag = await Tag.findOne({ tag: tagName })
+  t.is(null, existingTag)
+
+  await request(server)
+    .post('/api/opportunities')
+    .send({
+      title: 'The first 400 metres',
+      subtitle: 'Launching into space step 3',
+      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+      description: 'Project to build a simple rocket that will reach 400m',
+      duration: '4 hours',
+      location: 'Albany, Auckland',
+      status: 'draft',
+      tags: tags,
+      requestor: t.context.people[0]._id
+
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
+  const savedTag = await Tag.findOne({ tag: tagName })
+  t.is(tagName, savedTag.tag)
+
+  const savedOpportunity = await Opportunity.findOne({ title: 'The first 400 metres' }).populate('tags').exec()
+  // ensure the tag has an id
+  t.truthy(savedOpportunity.tags.find(t => t.tag === tagName)._id)
 })
 
 test.serial('Should correctly delete an opportunity', async t => {
