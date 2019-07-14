@@ -6,8 +6,8 @@ import Link from 'next/link'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 import PropTypes from 'prop-types'
+import NoResult from '../../components/NoResult'
 import ActList from '../../components/Act/ActList'
-import NoResult from './actnoresult'
 import Router from 'next/router'
 const escapeRegex = require('../../server/util/regexUtil')
 
@@ -65,7 +65,11 @@ class Acts extends Component {
             acts={acts}
           />
         ) : (
-          <NoResult />
+          <NoResult
+            id='act.noresult'
+            msg='No activities found based on your search criteria'
+            description='Message shown while no activities found'
+          />
         )}
       </FullPage>
     )

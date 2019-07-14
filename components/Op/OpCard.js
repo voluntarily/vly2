@@ -1,38 +1,56 @@
 /*
   Display an activity record in card format with a picture, title, and commitment.
 */
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
 
 // todo if image is not present then use a fallback.
-const OpCard = ({ size, op, onPress, ...props }) => {
-  const cardImage = op.imgUrl ? op.imgUrl : 'static/missingimage.svg'
-  const draft = op.status === 'draft' ? 'DRAFT: ' : ''
-  const interestState = op.interest ? ` - ${op.interest.status}` : ''
-  const startTime = op.date[0] ? moment(op.date[0]).format('ddd DD/MM/YY | HH:mm') : 'No start date'
-  return (
-    <div>
-      <Link href={`/ops/${op._id}`}>
-        <a>
-          <div className={'requestContainer' + size}>
-            <img className={'requestImg' + size} src={cardImage} />
-            <p className={'requestTitle requestTitle' + size}>
-              {draft}
-              {op.title}
-            </p>
-            <p className={'requestDateTime' + size}> 📅 {startTime} </p>
-            <p className={'requestDateTime' + size}>{op.location}</p>
-            <p className={'requestDateTime' + size}>{op.duration}</p>
-            <p className={'requestDescription' + size}>
-              {op.subtitle}
-              <strong>{interestState}</strong>
-            </p>
-          </div>
-        </a>
-      </Link>
-      <style jsx>{`
+class OpCard extends Component {
+  constructor ({ size, op, onPress, ...props }) {
+    super({ size, op, onPress, props })
+    this.op = op
+    this.size = size
+    this.onPress = onPress
+    this.getOpPageURL = this.getOpPageURL.bind(this)
+    this.cardImage = op.imgUrl ? op.imgUrl : '../../static/missingimage.svg'
+    this.draft = op.status === 'draft' ? 'DRAFT: ' : ''
+    this.isArchived = op.status === 'completed' || op.status === 'cancelled'
+    this.interestState = op.interest ? ` - ${op.interest.status}` : ''
+    this.startTime = op.date[0] ? moment(op.date[0]).format('ddd DD/MM/YY | HH:mm') : 'No start date'
+  }
+
+  getOpPageURL () {
+    if (this.isArchived) {
+      return `/archivedops/${this.op._id}`
+    } else {
+      return `/ops/${this.op._id}`
+    }
+  }
+
+  render () {
+    return (
+      <div>
+        <Link id='linkToOpportunity' href={this.getOpPageURL()}>
+          <a>
+            <div className={'requestContainer' + this.size}>
+              <img className={'requestImg' + this.size} src={this.cardImage} />
+              <p className={'requestTitle requestTitle' + this.size}>
+                {this.draft}
+                {this.op.title}
+              </p>
+              <p className={'requestDateTime' + this.size}> 📅 {this.startTime} </p>
+              <p className={'requestDateTime' + this.size}>{this.op.location}</p>
+              <p className={'requestDateTime' + this.size}>{this.op.duration}</p>
+              <p className={'requestDescription' + this.size}>
+                {this.op.subtitle}
+                <strong>{this.interestState}</strong>
+              </p>
+            </div>
+          </a>
+        </Link>
+        <style jsx>{`
         .requestContainerSmall {
           width: 18.5rem;
           letter-spacing: -0.3px;
@@ -183,8 +201,9 @@ const OpCard = ({ size, op, onPress, ...props }) => {
           }
         }
       `}</style>
-    </div>
-  )
+      </div>
+    )
+  }
 }
 
 OpCard.propTypes = {
