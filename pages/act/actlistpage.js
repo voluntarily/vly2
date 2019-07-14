@@ -65,13 +65,10 @@ class Acts extends Component {
           />
           <TripleGrid>
             <ActMenu acts={acts}/>
-            {acts.length > 0 ? (
-            <ActList
-              acts={acts}
-            />
-          ) : (
-            <NoResult />
-          )}
+            {acts.length > 0 
+              ? (<ActList acts={acts} />) 
+              : (<NoResult />)
+            }
           </TripleGrid>
           {/* [@TODO] Replace with actual searchbar component */}
 
