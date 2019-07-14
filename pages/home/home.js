@@ -236,6 +236,7 @@ class PersonHomePage extends Component {
               />
             ) : (
               <div>
+                <PersonDetail person={this.props.me} />
                 <Button
                   style={{ float: 'right' }}
                   type='primary'
@@ -248,7 +249,6 @@ class PersonHomePage extends Component {
                     description='Button to edit an person on PersonDetails page'
                   />
                 </Button>
-                <PersonDetail person={this.props.me} />
               </div>
             )}
           </TabPane>
