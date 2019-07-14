@@ -9,6 +9,7 @@ import InterestConfirmationCard from './InterestConfirmationCard'
 
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
+import { FormattedMessage } from 'react-intl'
 
 // Helper function to generate a blank interest.
 function getNewInterest (me, op) {
@@ -63,7 +64,15 @@ class RegisterInterestSection extends Component {
     if (!this.props.interests) {
       return (
         <section>
-          <Loading><p>Loading ...</p></Loading>
+          <Loading>
+            <p>
+              <FormattedMessage
+                id='registerInterest.loading'
+                description='loading message'
+                defaultMessage='Loading ...'
+              />
+            </p>
+          </Loading>
         </section>)
     } else { // If we have access to the interests section of the Redux store...
       // Get the interest out of the store, if any.
