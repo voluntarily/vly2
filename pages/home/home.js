@@ -59,12 +59,19 @@ class PersonHomePage extends Component {
   }
   constructor (props) {
     super(props)
-    this.getArchivedOpportunitys = this.getArchivedOpportunitys.bind(this)
+    this.getCompletedArchivedOpportunitys = this.getCompletedArchivedOpportunitys.bind(this)
+    this.getCancelledArchivedOpportunitys = this.getCancelledArchivedOpportunitys.bind(this)
   }
 
-  getArchivedOpportunitys () {
+  getCompletedArchivedOpportunitys () {
     return this.props.archivedOpportunitys.data.filter(
       op => op.status === 'completed' && op.requestor === this.props.me._id
+    )
+  }
+
+  getCancelledArchivedOpportunitys () {
+    return this.props.archivedOpportunitys.data.filter(
+      op => op.status === 'cancelled' && op.requestor === this.props.me._id
     )
   }
 
@@ -215,16 +222,20 @@ class PersonHomePage extends Component {
             </SectionWrapper>
           </TabPane>
           <TabPane tab={searchTab} key='2'>
-            <h2>
-              <FormattedMessage
-                id='home.pastOpportunities'
-                defaultMessage='Completed Requests'
-                decription='subtitle on volunteer home page for completed requests and opportunities'
+            <SectionWrapper>
+              <SectionTitleWrapper>
+                <TextHeadingBlack>Completed Requests</TextHeadingBlack>
+              </SectionTitleWrapper>
+              <OpList
+                ops={this.getCompletedArchivedOpportunitys()}
               />
-            </h2>
-            <OpList
-              ops={this.getArchivedOpportunitys()}
-            />
+              <SectionTitleWrapper>
+                <TextHeadingBlack>Cancelled Requests</TextHeadingBlack>
+              </SectionTitleWrapper>
+              <OpList
+                ops={this.getCancelledArchivedOpportunitys()}
+              />
+            </SectionWrapper>
             {/* <OpListSection query={myPastfilterString} /> */}
           </TabPane>
           <TabPane tab={profileTab} key='3'>
