@@ -32,21 +32,22 @@ const allAbilities = [{
 }, {
   subject: SchemaName,
   action: Action.DELETE,
+  inverted: true,
+}, {
+  subject: SchemaName,
+  action: Action.CREATE,
   inverted: true
-}]
+}, {
 
-// const testerAbility = [{
-//   subject: SchemaName,
-//   action: Action.READ,
-//   fields: [
+}
+]
 
-//   ]
-// }]
 
 const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
+
 module.exports = {
   [Role.ANON]: anonAbilities,
-  [Role.VOLUNTEER_PROVIDER]: allAbilities,
+  [Role.VOLUNTEER_PROVIDER]: anonAbilities,
   [Role.OPPORTUNITY_PROVIDER]: anonAbilities,
   [Role.TESTER]: adminAbilities, // Confusing but the wiki is not clear about tester ability
   [Role.ADMIN]: adminAbilities,

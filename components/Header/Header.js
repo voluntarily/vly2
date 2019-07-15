@@ -77,7 +77,7 @@ const getAllowedLinks = isAuthenticated =>
 
 // eslint-disable-next-line no-unused-vars
 const Header = ({ isAuthenticated, ...props }) => (
-  <Layout.Header style={{ position: 'fixed', zIndex: 100000, width: '100%', backgroundColor: 'white', boxShadow: '1px 1px 12px 0 rgba(0, 0, 0, 0.1)' }}>
+  <Layout.Header style={{ position: 'fixed', zIndex: 10, width: '100%', backgroundColor: 'white', boxShadow: '1px 1px 12px 0 rgba(0, 0, 0, 0.1)' }}>
     <MenuGrid>
       <div>
         <Brand className='site-title' />

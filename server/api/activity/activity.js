@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const idvalidator = require('mongoose-id-validator')
+const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
 
 const ActivitySchema = new Schema({
   title: String, // "Growing in the garden",
@@ -29,5 +31,9 @@ const ActivitySchema = new Schema({
   },
   dateAdded: { type: 'Date', default: Date.now, required: true }
 })
+
+ActivitySchema.plugin(idvalidator)
+ActivitySchema.plugin(accessibleRecordsPlugin)
+ActivitySchema.plugin(accessibleFieldsPlugin)
 
 module.exports = mongoose.model('Activity', ActivitySchema)

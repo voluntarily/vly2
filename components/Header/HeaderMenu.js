@@ -2,7 +2,7 @@ export default () => [
   {
     key: 'home',
     href: '/home',
-    text: 'Actions',
+    text: 'Requests',
     authRequired: true
   },
   {

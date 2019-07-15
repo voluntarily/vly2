@@ -5,6 +5,7 @@ const { Action } = require('../../services/abilities/ability.constants')
 const { getOpportunities, getOpportunity, putOpportunity } = require('./opportunity.controller')
 const { SchemaName, OpportunityRoutes } = require('./opportunity.constants')
 const { authorizeActions, authorizeFields } = require('../../middleware/authorize/authorizeRequest')
+const initializeTags = require('../../util/initTags')
 
 const convertRequestToAction = (req) => {
   switch (req.method) {
@@ -31,6 +32,9 @@ module.exports = (server) => {
       endResponseInAction: false,
       beforeActions: [{
         middlewares: [authorizeActions(SchemaName, convertRequestToAction)]
+      }, {
+        middlewares: [initializeTags],
+        only: ['create', 'update']
       }],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       actions: {

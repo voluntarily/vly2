@@ -16,12 +16,29 @@ module.exports = function (server) {
       endResponseInAction: false,
 
       beforeActions: [
-        { middlewares: [ authorizeActions(SchemaName), ensureSanitized ] }
+        { middlewares: [ 
+          (req, res, next) => {
+            console.log('In person middleware before action');
+            console.log(req.session);
+            console.log(req.cookies);
+            console.log('\n\n')
+            next();
+          } ,
+          authorizeActions(SchemaName), 
+          ensureSanitized ] 
+        }
 
       ],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       afterActions: [
-        { middlewares: [helpers.formatResponse] }
+        { middlewares: [
+            (req, res, next) => {
+              console.log('After action in person routes the session has a value of ')
+              console.log(req.session)
+              next()
+            },
+            helpers.formatResponse]
+        }
       ]
     })
   )

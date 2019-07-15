@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import publicPage, { A4 } from '../hocs/publicPage'
 import { Button } from 'antd'
-import RichTextEditor from '../components/Editor/RichTextEditor'
+import RichTextEditor from '../components/Form/Input/RichTextEditor'
 
 class TestEditor extends Component {
   state = {

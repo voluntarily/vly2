@@ -107,7 +107,7 @@ test('render volunteer home page - History tab', t => {
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(1).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'History')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h2').first().text(), 'Completed Requests')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Completed Requests')
   t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 2)
 })
 
@@ -136,7 +136,7 @@ test('render Edit Profile ', t => {
   t.is(wrapper.find('Button').first().text(), 'Edit')
 })
 
-test('retrieve archived opportunities', async t => {
+test('retrieve completed archived opportunities', async t => {
   const props = {
     me: t.context.me
   }
@@ -148,7 +148,7 @@ test('retrieve archived opportunities', async t => {
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
     </Provider>)
-  const res = await wrapper.find('PersonHomePage').first().instance().getArchivedOpportunitys()
+  const res = await wrapper.find('PersonHomePage').first().instance().getCompletedArchivedOpportunitys()
   t.is(res.length, 2)
   t.is(res[0], archivedOpportunitys[0])
   t.is(res[1], archivedOpportunitys[1])

@@ -3,11 +3,11 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import RichTextEditor from '../Editor/RichTextEditor'
+import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { TextHeadingBold, TextP } from '../VTheme/VTheme'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
-import OpDetailTagsEditable from './OpDetailTagsEditable'
+import TagInput from '../Form/Input/TagInput'
 import OpLocationSelector from './OpLocationSelector'
 import {
   DescriptionContainer,
@@ -62,9 +62,7 @@ class OpDetailForm extends Component {
         op.date.push(startDateValue, endDateValue)
         op.title = values.title
         op.subtitle = values.subtitle
-        op.tags = values.tags.map(t => {
-          return { tag: t }
-        })
+        op.tags = values.tags
         op.duration = values.duration
         op.location = values.location
         op.description = values.description
@@ -258,12 +256,12 @@ class OpDetailForm extends Component {
           <h1>
             {isNewOp ? (
               <FormattedMessage
-                id='editOp'
+                id='opEdit'
                 description='Title for editing Ops'
               />
             ) : (
               <FormattedMessage
-                id='createOp'
+                id='opCreate'
                 description='Title for creating Ops'
               />
             )}{' '}
@@ -348,7 +346,7 @@ class OpDetailForm extends Component {
                   initialValue: [],
                   rules: []
                 })(
-                  <OpDetailTagsEditable
+                  <TagInput
                     existingTags={this.props.existingTags}
                   />
                 )}
@@ -542,7 +540,10 @@ OpDetailForm.propTypes = {
   }),
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  existingTags: PropTypes.arrayOf(PropTypes.shape({
+    tag: PropTypes.string.isRequired,
+    _id: PropTypes.string
+  })).isRequired,
   existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired
   // dispatch: PropTypes.func.isRequired,
 }
@@ -583,7 +584,7 @@ export default Form.create({
       }),
       tags: Form.createFormField({
         ...props.op.tags,
-        value: props.op.tags.map(t => t.tag)
+        value: props.op.tags
       }),
       startDate: Form.createFormField({
         ...props.op.startDate,
