@@ -4,7 +4,7 @@ const archivedOpportunity = require('./archivedOpportunity')
 
 module.exports = (server) => {
   server.use(
-    '/api/archivedOpportunitys',
+    '/api/archivedOpportunities',
     mongooseCrudify({
       Model: archivedOpportunity,
       selectFields: '-__v', // Hide '__v' property
