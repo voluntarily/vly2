@@ -27,7 +27,7 @@ const ops = [
         '$date': '2019-05-23T12:26:18.000Z' // Fri, 24 May 2019 00:26:18 NZST
       },
       {
-        '$date': '2019-06-12T04:55:10.014Z' // Wed, 12 Jun 2019 16:55:10 NZST
+        '$date': '2020-06-12T04:55:10.014Z' // Wed, 12 Jun 2019 16:55:10 NZST
       }
     ]
   },
@@ -45,7 +45,7 @@ const ops = [
         '$date': '2019-05-23T12:26:18.000Z' // Fri, 24 May 2019 00:26:18 NZST
       },
       {
-        '$date': '2019-06-12T04:55:10.014Z' // Wed, 12 Jun 2019 16:55:10 NZST
+        '$date': '2020-06-12T04:55:10.014Z' // Wed, 12 Jun 2019 16:55:10 NZST
       }
     ]
   }
@@ -67,11 +67,11 @@ const opsWithOpenEndDate = [
 const initStore = {
   opportunities: {
     loading: false,
-    data: [ ]
+    data: []
   }
 }
 const filterDateState = {
-  date: ['2019-07-16T08:04:02.793Z'] // Tue, 16 Jul 2019 01:04:02
+  date: ['2020-07-16T08:04:02.793Z'] // Tue, 16 Jul 2019 01:04:02
 }
 
 const dateRangeFilterValue = {
@@ -97,7 +97,7 @@ test.serial('mount the list with ops', async t => {
   myMock.getOnce(api, ops)
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} filter={emptyFilterDateState} dateFilterType={DatePickerType.IndividualDate} />
+      <OpListSection handleShowOp={() => { }} handleDeleteOp={() => { }} filter={emptyFilterDateState} dateFilterType={DatePickerType.IndividualDate} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -116,7 +116,7 @@ test.serial('mount the list with ops search with results', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='Growing' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={emptyFilterDateState} dateFilterType={DatePickerType.IndividualDate} />
+      <OpListSection search='Growing' handleShowOp={() => { }} handleDeleteOp={() => { }} filter={emptyFilterDateState} dateFilterType={DatePickerType.IndividualDate} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -135,7 +135,7 @@ test.serial('mount the list with ops search with no results', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='NoSuchItem' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterDateState} dateFilterType={DatePickerType.IndividualDate} />
+      <OpListSection search='NoSuchItem' handleShowOp={() => { }} handleDeleteOp={() => { }} filter={filterDateState} dateFilterType={DatePickerType.IndividualDate} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -154,7 +154,7 @@ test.serial('mount the list with ops query and search', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='100' query={'{\'status\':\'done\'}'} handleShowOp={() => {}} handleDeleteOp={() => {}} filter={emptyFilterDateState} dateFilterType={DatePickerType.IndividualDate} />
+      <OpListSection search='100' query={'{\'status\':\'done\'}'} handleShowOp={() => { }} handleDeleteOp={() => { }} filter={emptyFilterDateState} dateFilterType={DatePickerType.IndividualDate} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -173,7 +173,7 @@ test.serial('test filter by date is called, no op is shown', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='Growing' location='' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterDateState} dateFilterType={DatePickerType.IndividualDate} />
+      <OpListSection search='Growing' location='' handleShowOp={() => { }} handleDeleteOp={() => { }} filter={filterDateState} dateFilterType={DatePickerType.IndividualDate} />
     </Provider>
   )
   await sleep(2) // allow asynch fetch to complete
@@ -186,7 +186,7 @@ test.serial('test filter by date is called, no op is shown', async t => {
 test.serial('test filter by month is called. There is 1 OP shown', async t => {
   const realStore = makeStore(initStore)
   const monthFilterValue = {
-    date: [ ops[0].date[0] ] // Confusing but basically this will create an array of 1 element from the first element of the ops array
+    date: [ops[0].date[0]] // Confusing but basically this will create an array of 1 element from the first element of the ops array
   }
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -195,7 +195,7 @@ test.serial('test filter by month is called. There is 1 OP shown', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='Growing' location='' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={monthFilterValue} dateFilterType={DatePickerType.MonthRange} />
+      <OpListSection search='Growing' location='' handleShowOp={() => { }} handleDeleteOp={() => { }} filter={monthFilterValue} dateFilterType={DatePickerType.MonthRange} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -220,7 +220,7 @@ test.serial('test filter by week is called. No opportunities shown', async t => 
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='Growing' location='' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={monthFilterValue} dateFilterType={DatePickerType.WeekRange} />
+      <OpListSection search='Growing' location='' handleShowOp={() => { }} handleDeleteOp={() => { }} filter={monthFilterValue} dateFilterType={DatePickerType.WeekRange} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -240,7 +240,7 @@ test.serial('Test filter by date range. No opportunities shown', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='Growing' location='' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={dateRangeFilterValue} dateFilterType={DatePickerType.DateRange} />
+      <OpListSection search='Growing' location='' handleShowOp={() => { }} handleDeleteOp={() => { }} filter={dateRangeFilterValue} dateFilterType={DatePickerType.DateRange} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -260,7 +260,7 @@ test.serial('Test filter by date range. Filter result include open ended opportu
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='Growing' location='' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={dateRangeFilterValue} dateFilterType={DatePickerType.DateRange} />
+      <OpListSection search='Growing' location='' handleShowOp={() => { }} handleDeleteOp={() => { }} filter={dateRangeFilterValue} dateFilterType={DatePickerType.DateRange} />
     </Provider>
   )
 
@@ -281,7 +281,7 @@ test.serial('Test filter by week allow to add open end opportunity', async t => 
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <OpListSection search='Growing' location='' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={dateRangeFilterValue} dateFilterType={DatePickerType.WeekRange} />
+      <OpListSection search='Growing' location='' handleShowOp={() => { }} handleDeleteOp={() => { }} filter={dateRangeFilterValue} dateFilterType={DatePickerType.WeekRange} />
     </Provider>
   )
   await sleep(1)

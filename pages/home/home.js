@@ -57,21 +57,15 @@ class PersonHomePage extends Component {
   state = {
     editProfile: false
   }
+
   constructor (props) {
     super(props)
-    this.getCompletedArchivedOpportunitys = this.getCompletedArchivedOpportunitys.bind(this)
-    this.getCancelledArchivedOpportunitys = this.getCancelledArchivedOpportunitys.bind(this)
+    this.getArchivedOpportunityByStatus = this.getArchivedOpportunityByStatus.bind(this)
   }
 
-  getCompletedArchivedOpportunitys () {
+  getArchivedOpportunityByStatus (status) {
     return this.props.archivedOpportunitys.data.filter(
-      op => op.status === 'completed' && op.requestor === this.props.me._id
-    )
-  }
-
-  getCancelledArchivedOpportunitys () {
-    return this.props.archivedOpportunitys.data.filter(
-      op => op.status === 'cancelled' && op.requestor === this.props.me._id
+      op => op.status === status && op.requestor === this.props.me._id
     )
   }
 
@@ -227,13 +221,13 @@ class PersonHomePage extends Component {
                 <TextHeadingBlack>Completed Requests</TextHeadingBlack>
               </SectionTitleWrapper>
               <OpList
-                ops={this.getCompletedArchivedOpportunitys()}
+                ops={this.getArchivedOpportunityByStatus('completed')}
               />
               <SectionTitleWrapper>
                 <TextHeadingBlack>Cancelled Requests</TextHeadingBlack>
               </SectionTitleWrapper>
               <OpList
-                ops={this.getCancelledArchivedOpportunitys()}
+                ops={this.getArchivedOpportunityByStatus('cancelled')}
               />
             </SectionWrapper>
             {/* <OpListSection query={myPastfilterString} /> */}
