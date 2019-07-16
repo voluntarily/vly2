@@ -11,7 +11,7 @@ import reduxApi, {
   withInterests,
   withPeople,
   withOps,
-  withArchivedOpportunitys
+  withArchivedOpportunities
 } from '../../lib/redux/reduxApi.js'
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
@@ -60,7 +60,7 @@ class PersonHomePage extends Component {
 
   constructor (props) {
     super(props)
-    this.getArchivedOpportunityByStatus = this.getArchivedOpportunityByStatus.bind(this)
+      this.getArchivedOpportunityByStatus = this.getArchivedOpportunityByStatus.bind(this)
   }
 
   getArchivedOpportunityByStatus (status) {
@@ -102,7 +102,7 @@ class PersonHomePage extends Component {
       await Promise.all([
         store.dispatch(reduxApi.actions.opportunities.get(filters)),
         store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
-        store.dispatch(reduxApi.actions.archivedOpportunitys.get({ requestor: me._id }))
+        store.dispatch(reduxApi.actions.archivedOpportunities.get({ requestor: me._id }))
       ])
     } catch (err) {
       console.log('error in getting ops', err)
@@ -262,5 +262,5 @@ class PersonHomePage extends Component {
     )
   }
 }
-export const PersonHomePageTest = withInterests(withOps(withArchivedOpportunitys(PersonHomePage))) // for test
+export const PersonHomePageTest = withInterests(withOps(withArchivedOpportunities(PersonHomePage))) // for test
 export default securePage(withPeople(PersonHomePageTest))
