@@ -4,10 +4,10 @@ import { Menu } from 'antd';
 const ActivityMenu = styled(Menu)`
   height: 32px;
   width: 240px;
-  font-family: Inter;
+
   font-size: 24px;
   letter-spacing: -0.3px;
-  line-height: 48px;
+  line-height: 122px;
 
   .subheading {
     font-size: 16px;
@@ -49,7 +49,7 @@ const ActMenu = ({ acts, ...props }) => {
 
   return (
     <ActivityMenu>
-      <Menu>
+      <Menu style={{ width: 280, lineHeight:1.2 }}>
         {renderMenu}
         <Menu.ItemGroup className='color'>More filters</Menu.ItemGroup>
       </Menu>

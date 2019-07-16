@@ -16,7 +16,7 @@ import reduxApi, {
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
 
-import { TextHeadingBlack, TextP } from '../../components/VTheme/VTheme'
+import { TextHeadingBlack, TextP, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
 
 const { TabPane } = Tabs
 
@@ -28,25 +28,6 @@ const SectionWrapper = styled.div`
 `
 
 const TitleContainer = styled.div``
-
-const PageHeaderContainer = styled.div`
-  margin: 8rem 0 2rem 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  @media screen and (max-width: 767px) {
-    margin-top: 4rem;
-    grid-template-columns: calc(100vw - 2rem);
-    grid-gap: 0rem;
-  }
-`
-
-const RequestButtonContainer = styled.div`
-  justify-self: end;
-  @media screen and (max-width: 767px) {
-    margin-top: 1rem;
-    justify-self: start;
-  }
-`
 
 function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable

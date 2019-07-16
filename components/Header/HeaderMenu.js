@@ -6,6 +6,12 @@ export default () => [
     authRequired: true
   },
   {
+    key: 'acts',
+    href: '/acts',
+    text: 'Resources',
+    authRequired: true
+  },
+  {
     key: 'habout',
     text: 'About',
     href: '/about'
