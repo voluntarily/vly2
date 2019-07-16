@@ -1,7 +1,7 @@
 import React from 'react'
 import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
-import OpDetailTagsEditable from '../OpDetailTagsEditable'
+import TagInput from '../Input/TagInput'
 import sinon from 'sinon'
 
 const originalWarn = console.warn
@@ -22,7 +22,7 @@ test('render the op with a few pre-existing tags', t => {
   const secondTag = 'network'
 
   const wrapper = mountWithIntl(
-    <OpDetailTagsEditable value={[firstTag, secondTag]} existingTags={[]} />
+    <TagInput value={[{ tag: firstTag }, { tag: secondTag }]} existingTags={[]} />
   )
 
   t.is(wrapper.find('.ant-tag').length, 2)
@@ -37,7 +37,7 @@ test('render the op with a few pre-existing tags, and add a tag into the input f
   const inputTag = 'new tag!'
 
   const wrapper = mountWithIntl(
-    <OpDetailTagsEditable value={[firstTag, secondTag]} existingTags={[]} />
+    <TagInput value={[{ tag: firstTag }, { tag: secondTag }]} existingTags={[]} />
   )
 
   t.is(wrapper.find('.ant-tag').length, 2)
@@ -53,11 +53,11 @@ test('render the op with a few pre-existing tags, and add a tag fully, to re-ren
   const inputTag = 'new tag!'
 
   const mockOnChange = sinon.spy()
-  const value = [firstTag, secondTag]
-  const expectedNewValue = [firstTag, secondTag, inputTag]
+  const value = [{ tag: firstTag }, { tag: secondTag }]
+  const expectedNewValue = [{ tag: firstTag }, { tag: secondTag }, { tag: inputTag }]
 
   const wrapper = mountWithIntl(
-    <OpDetailTagsEditable onChange={mockOnChange} value={value} existingTags={[]} />
+    <TagInput onChange={mockOnChange} value={value} existingTags={[]} />
   )
 
   const wrapperInstance = wrapper.instance()
@@ -80,7 +80,7 @@ test('render the op with a few pre-existing tags, and remove a tag from them', t
   const mockOnChange = sinon.spy()
 
   const wrapper = mountWithIntl(
-    <OpDetailTagsEditable onChange={mockOnChange} value={[firstTag, secondTag]} existingTags={[]} />
+    <TagInput onChange={mockOnChange} value={[{ tag: firstTag }, { tag: secondTag }]} existingTags={[]} />
   )
 
   const wrapperInstance = wrapper.instance()
@@ -88,16 +88,19 @@ test('render the op with a few pre-existing tags, and remove a tag from them', t
   wrapperInstance.removeTag('network')
 
   t.true(mockOnChange.calledOnce)
-  t.true(mockOnChange.calledWith([ firstTag ]))
+  t.true(mockOnChange.calledWith([ { tag: firstTag } ]))
 })
 
 test('render when input value doesnt match any existing tags', t => {
-  const existingTags = ['JAVA', 'networks'] // case shouldn't matter
+  const existingTags = [
+    { tag: 'JAVA', _id: '123456781234567812345678' },
+    { tag: 'networks', _id: '876543218765432187654321' }
+  ] // case shouldn't matter
   const input = 'ja'
   const mockOnChange = sinon.spy()
 
   const wrapper = mountWithIntl(
-    <OpDetailTagsEditable onChange={mockOnChange} value={[]} existingTags={existingTags} />
+    <TagInput onChange={mockOnChange} value={[]} existingTags={existingTags} />
   )
 
   const wrapperInstance = wrapper.instance()
@@ -108,7 +111,7 @@ test('render when input value doesnt match any existing tags', t => {
   wrapperInstance.handleSearch(input)
 
   t.is(wrapperInstance.state.matchingTags.length, 1)
-  t.is(wrapperInstance.state.matchingTags[0], 'JAVA')
+  t.is(wrapperInstance.state.matchingTags[0].tag, 'JAVA')
 
   // options should be what the user typed, plus any matching tags
   // t.is(wrapper.find('Option').length, 2)

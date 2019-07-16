@@ -10,7 +10,8 @@ import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import reduxApi, {
   withInterests,
   withPeople,
-  withOps
+  withOps,
+  withArchivedOpportunities
 } from '../../lib/redux/reduxApi.js'
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
@@ -29,7 +30,7 @@ const SectionWrapper = styled.div`
 const TitleContainer = styled.div``
 
 const PageHeaderContainer = styled.div`
-  margin: 4rem 0 2rem 0;
+  margin: 8rem 0 2rem 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   @media screen and (max-width: 767px) {
@@ -55,6 +56,23 @@ function callback (key) {
 class PersonHomePage extends Component {
   state = {
     editProfile: false
+  }
+  constructor (props) {
+    super(props)
+    this.getCompletedArchivedOpportunities = this.getCompletedArchivedOpportunities.bind(this)
+    this.getCancelledArchivedOpportunities = this.getCancelledArchivedOpportunities.bind(this)
+  }
+
+  getCompletedArchivedOpportunities () {
+    return this.props.archivedOpportunities.data.filter(
+      op => op.status === 'completed' && op.requestor === this.props.me._id
+    )
+  }
+
+  getCancelledArchivedOpportunities () {
+    return this.props.archivedOpportunities.data.filter(
+      op => op.status === 'cancelled' && op.requestor === this.props.me._id
+    )
   }
 
   mergeOpsList () {
@@ -89,7 +107,8 @@ class PersonHomePage extends Component {
 
       await Promise.all([
         store.dispatch(reduxApi.actions.opportunities.get(filters)),
-        store.dispatch(reduxApi.actions.interests.get({ me: me._id }))
+        store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
+        store.dispatch(reduxApi.actions.archivedOpportunities.get({ requestor: me._id }))
       ])
     } catch (err) {
       console.log('error in getting ops', err)
@@ -203,18 +222,20 @@ class PersonHomePage extends Component {
             </SectionWrapper>
           </TabPane>
           <TabPane tab={searchTab} key='2'>
-            <h2>
-              <FormattedMessage
-                id='home.pastOpportunities'
-                defaultMessage='Completed Requests'
-                decription='subtitle on volunteer home page for completed requests and opportunities'
+            <SectionWrapper>
+              <SectionTitleWrapper>
+                <TextHeadingBlack>Completed Requests</TextHeadingBlack>
+              </SectionTitleWrapper>
+              <OpList
+                ops={this.getCompletedArchivedOpportunities()}
               />
-            </h2>
-            <OpList
-              ops={ops.filter(
-                op => op.status === 'done' && op.requestor === this.props.me._id
-              )}
-            />
+              <SectionTitleWrapper>
+                <TextHeadingBlack>Cancelled Requests</TextHeadingBlack>
+              </SectionTitleWrapper>
+              <OpList
+                ops={this.getCancelledArchivedOpportunities()}
+              />
+            </SectionWrapper>
             {/* <OpListSection query={myPastfilterString} /> */}
           </TabPane>
           <TabPane tab={profileTab} key='3'>
@@ -226,6 +247,7 @@ class PersonHomePage extends Component {
               />
             ) : (
               <div>
+                <PersonDetail person={this.props.me} />
                 <Button
                   style={{ float: 'right' }}
                   type='primary'
@@ -238,7 +260,6 @@ class PersonHomePage extends Component {
                     description='Button to edit an person on PersonDetails page'
                   />
                 </Button>
-                <PersonDetail person={this.props.me} />
               </div>
             )}
           </TabPane>
@@ -247,5 +268,5 @@ class PersonHomePage extends Component {
     )
   }
 }
-export const PersonHomePageTest = withInterests(withOps(PersonHomePage)) // for test
+export const PersonHomePageTest = withInterests(withOps(withArchivedOpportunities(PersonHomePage))) // for test
 export default securePage(withPeople(PersonHomePageTest))

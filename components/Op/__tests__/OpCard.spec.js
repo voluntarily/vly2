@@ -24,6 +24,20 @@ test.before('Setup fixtures', (t) => {
       }
     ]
   }
+  t.context.archivedOp = {
+    _id: '5cc903e5f94141437622cea8',
+    title: '1 Mentor a year 12 business Impact Project',
+    subtitle: 'Help us create a programme connecting business with senior students',
+    imgUrl: 'https://www.tvnz.co.nz/content/dam/images/news/2015/01/26/pacific-island-mentors-with-kelston-high-school-students.jpg.hashed.0d58ef7e.desktop.story.share.jpg',
+    description: 'We want to set up our Connect Ed programme, help us understand how to communication with businesses, build a website and contact group etc.',
+    duration: '12 weeks, 1 hour sessions',
+    location: 'Auckland',
+    status: 'completed',
+    date: [
+      null,
+      null
+    ]
+  }
 })
 
 test('shallow the card with op', t => {
@@ -47,7 +61,7 @@ test('op card with default image', t => {
   // console.log(wrapper.debug())
   t.is(wrapper.find('.requestContainerSmall').length, 1)
   t.is(wrapper.find('.requestTitleSmall').text(), op.title)
-  t.is(wrapper.find('.requestImgSmall').prop('src'), 'static/missingimage.svg')
+  t.is(wrapper.find('.requestImgSmall').prop('src'), '../../static/missingimage.svg')
 })
 
 test('shallow the big card with op', t => {
@@ -72,4 +86,11 @@ test('show card for a draft op', t => {
   t.regex(wrapper.find('.requestTitleBig').text(), /DRAFT.*/)
 })
 
-// test.todo('Click the card and see if the link works')
+test('Link on cards in history tab, points to archived Opportunities.', t => {
+  const archivedOp = t.context.archivedOp
+  const wrapper = mountWithIntl(
+    <OpCard op={archivedOp} />
+  )
+  let archivedOpLink = wrapper.find('#linkToOpportunity').props().href
+  t.is((archivedOpLink), '/archivedops/' + archivedOp._id)
+})

@@ -1,14 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Link from 'next/link'
 // import { FormattedMessage } from 'react-intl'
 import { Input, Layout } from 'antd'
+import Link from 'next/link'
+import Router from 'next/router'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
-import Router from 'next/router'
-
 import links from './HeaderMenu'
-import { connect } from 'react-redux'
+
 const Search = Input.Search
 
 const Brand = styled.h1`
@@ -36,7 +36,7 @@ const Logo = styled.img`
   height: 3rem;
   width: 12rem;
   margin: 0.7rem;
-  margin-top: 0.9rem;
+  margin-top: 0.8rem;
   background-image: url('/static/vlogolong.svg');
   background-repeat: no-repeat;
   background-position: left top;
@@ -52,7 +52,7 @@ const SearchInput = styled(Search)`
   display: inline-block;
   margin-left: 0.5rem;
 
-  box-shadow: 1px 1px 12px 0 rgba(0, 0, 0, 0.2);
+
   padding: 4px;
   border-radius: 4px;
 
@@ -77,7 +77,7 @@ const getAllowedLinks = isAuthenticated =>
 
 // eslint-disable-next-line no-unused-vars
 const Header = ({ isAuthenticated, ...props }) => (
-  <Layout.Header>
+  <Layout.Header style={{ position: 'fixed', zIndex: 10, width: '100%', backgroundColor: 'white', boxShadow: '1px 1px 12px 0 rgba(0, 0, 0, 0.1)' }}>
     <MenuGrid>
       <div>
         <Brand className='site-title' />
