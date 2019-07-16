@@ -91,7 +91,7 @@ test('render volunteer home page - Active tab', t => {
       <PersonHomePageTest {...props} />
     </Provider>)
   t.is(wrapper.find('h1').first().text(), t.context.me.nickname)
-  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
+  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Upcoming requests')
   t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Active Requests')
   t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 2)
 })
@@ -106,7 +106,7 @@ test('render volunteer home page - History tab', t => {
       <PersonHomePageTest {...props} />
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(1).simulate('click')
-  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'History')
+  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Past requests')
   t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Completed Requests')
   t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 2)
 })

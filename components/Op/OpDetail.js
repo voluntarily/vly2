@@ -54,7 +54,7 @@ export function OpDetail ({ op }) {
     ? moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
     : 'Negotiable'
   const endDate = op.date[1]
-    ? "  →  " + "  →  " + moment(op.date[1]).format('h:mmA · ddd DD/MM/YYYY')
+    ? '  →  ' + '  →  ' + moment(op.date[1]).format('h:mmA · ddd DD/MM/YYYY')
     : ' '
   const img = op.imgUrl || '../../static/missingimage.svg'
   return (
