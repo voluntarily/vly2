@@ -71,7 +71,7 @@ const initStore = {
   }
 }
 const filterDateState = {
-  date: ['2019-07-16T08:04:02.793Z'] // Tue, 16 Jul 2019 01:04:02
+  date: ['2019-04-20T12:26:18.000Z', null] // Tue, 16 Jul 2019 01:04:02
 }
 
 const dateRangeFilterValue = {
@@ -169,14 +169,14 @@ test.serial('test filter by date is called, no op is shown', async t => {
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/?search=Growing`
-  myMock.get(api, [ops[0]])
+  myMock.get(api, ops)
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
       <OpListSection search='Growing' location='' handleShowOp={() => {}} handleDeleteOp={() => {}} filter={filterDateState} dateFilterType={DatePickerType.IndividualDate} />
     </Provider>
   )
-  await sleep(2) // allow asynch fetch to complete
+  await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   t.is(wrapper.find('OpCard').length, 0) // there are no cards on the screen
   t.truthy(myMock.done())
