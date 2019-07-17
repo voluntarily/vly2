@@ -87,8 +87,6 @@ export const Grid = styled.div`
     justify-items: center;
   }
 
-  
-
   @media screen and (max-width: 767px) {
     grid-template-columns: calc(100vw - 2rem);
     grid-gap: 0rem;
@@ -107,8 +105,6 @@ export const ActivityGrid = styled.div`
     justify-content: start;
     justify-items: center;
   }
-
-  
 
   @media screen and (max-width: 767px) {
     grid-template-columns: calc(100vw - 2rem);
@@ -133,18 +129,14 @@ export const GridContainer = styled.div`
   position: relative;
 `
 
-
 export const ActivityContainer = styled.div`
-display: grid;
-grid-template-columns: 17.5rem 1fr;
-gap: 2.5rem;
-@media screen and (max-width: 1280px) {
+  display: grid;
+  grid-template-columns: 17.5rem 1fr;
+  gap: 2.5rem;
+  @media screen and (max-width: 1280px) {
     grid-template-columns: calc(100vw - 4rem);
   }
-
-
 `
-
 
 export const GridTestItem = styled.div`
   background-color: pink;
@@ -247,7 +239,7 @@ export const TextPBold = styled.p`
   font-weight: 700;
   color: black;
   font-size: 1rem;
-  
+
   margin: initial;
   @media screen and (max-width: 767px) {
     font-size: 1rem;

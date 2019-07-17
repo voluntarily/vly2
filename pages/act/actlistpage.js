@@ -17,7 +17,8 @@ import {
   GridTestItem,
   PageHeaderContainer,
   TextHeadingBlack,
-  RequestButtonContainer
+  RequestButtonContainer,
+  TextPBold
 } from '../../components/VTheme/VTheme'
 
 const { TabPane } = Tabs
@@ -72,11 +73,13 @@ class Acts extends Component {
     const activityTab = (
       <span>
         <Icon type='experiment' />
-        <FormattedMessage
-          id='act.act'
-          defaultMessage='Activities'
-          description='show opportunities list on volunteer home page'
-        />
+        <strong>
+          <FormattedMessage
+            id='act.act'
+            defaultMessage='Activities'
+            description='show opportunities list on volunteer home page'
+          />
+        </strong>
       </span>
     )
 
@@ -128,7 +131,7 @@ class Acts extends Component {
                     onSearch={this.handleSearch}
                   />
                 </SearchContainer>
-                
+
                 {acts.length > 0 ? (
                   <ActList acts={acts} />
                 ) : (
