@@ -12,6 +12,25 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 ====================================================
 */
 
+export const PageHeaderContainer = styled.div`
+  margin: 8rem 0 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  @media screen and (max-width: 767px) {
+    margin-top: 4rem;
+    grid-template-columns: calc(100vw - 2rem);
+    grid-gap: 0rem;
+  }
+`
+
+export const RequestButtonContainer = styled.div`
+  justify-self: end;
+  @media screen and (max-width: 767px) {
+    margin-top: 1rem;
+    justify-self: start;
+  }
+`
+
 export const SpacerSmall = styled.div`
   height: 0.5rem;
 `
@@ -68,13 +87,30 @@ export const Grid = styled.div`
     justify-items: center;
   }
 
-  
-
   @media screen and (max-width: 767px) {
     grid-template-columns: calc(100vw - 2rem);
     grid-gap: 0rem;
   }
 ` // end grid
+
+export const ActivityGrid = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-columns: 18.5rem 18.5rem 18.5rem;
+  grid-gap: 2rem;
+  overflow: visible;
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    grid-template-columns: repeat(auto-fit, 18.5rem);
+    justify-content: start;
+    justify-items: center;
+  }
+
+  @media screen and (max-width: 767px) {
+    grid-template-columns: calc(100vw - 2rem);
+    grid-gap: 0rem;
+  }
+` // end activitygrid
 
 export const Grid8 = styled.div`
   position: relative;
@@ -91,6 +127,15 @@ export const Grid8 = styled.div`
 
 export const GridContainer = styled.div`
   position: relative;
+`
+
+export const ActivityContainer = styled.div`
+  display: grid;
+  grid-template-columns: 17.5rem 1fr;
+  gap: 2.5rem;
+  @media screen and (max-width: 1280px) {
+    grid-template-columns: calc(100vw - 4rem);
+  }
 `
 
 export const GridTestItem = styled.div`
@@ -194,7 +239,7 @@ export const TextPBold = styled.p`
   font-weight: 700;
   color: black;
   font-size: 1rem;
-  
+
   margin: initial;
   @media screen and (max-width: 767px) {
     font-size: 1rem;
