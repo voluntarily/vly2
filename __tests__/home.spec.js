@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import objectid from 'objectid'
 import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
 import people from '../server/api/person/__tests__/person.fixture'
-import archivedOpportunitys from '../server/api/archivedOpportunity/__tests__/archivedOpportunity.fixture'
+import archivedOpportunities from '../server/api/archivedOpportunity/__tests__/archivedOpportunity.fixture'
 import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import thunk from 'redux-thunk'
@@ -22,8 +22,8 @@ test.before('Setup fixtures', (t) => {
     op.requestor = people[index]._id
   })
   // take ownership of 2nd event and set to done
-  archivedOpportunitys[1].requestor = me._id
-  archivedOpportunitys[1].status = 'completed'
+  archivedOpportunities[1].requestor = me._id
+  archivedOpportunities[1].status = 'completed'
 
   // setup list of interests, i'm interested in first 5 ops
   const interestStates = ['interested', 'invited', 'committed', 'declined', 'completed', 'cancelled']
@@ -41,7 +41,7 @@ test.before('Setup fixtures', (t) => {
     me,
     people,
     ops,
-    archivedOpportunitys,
+    archivedOpportunities,
     interests
   }
 
@@ -66,11 +66,11 @@ test.before('Setup fixtures', (t) => {
         data: interests,
         request: null
       },
-      archivedOpportunitys: {
+      archivedOpportunities: {
         sync: false,
         syncing: false,
         loading: false,
-        data: archivedOpportunitys,
+        data: archivedOpportunities,
         request: null
       }
     }
@@ -91,7 +91,7 @@ test('render volunteer home page - Active tab', t => {
       <PersonHomePageTest {...props} />
     </Provider>)
   t.is(wrapper.find('h1').first().text(), t.context.me.nickname)
-  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
+  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Upcoming requests')
   t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Active Requests')
   t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 2)
 })
@@ -106,8 +106,8 @@ test('render volunteer home page - History tab', t => {
       <PersonHomePageTest {...props} />
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(1).simulate('click')
-  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'History')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h2').first().text(), 'Completed Requests')
+  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Past requests')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Completed Requests')
   t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 2)
 })
 
@@ -136,20 +136,20 @@ test('render Edit Profile ', t => {
   t.is(wrapper.find('Button').first().text(), 'Edit')
 })
 
-test('retrieve archived opportunities', async t => {
+test('retrieve completed archived opportunities', async t => {
   const props = {
     me: t.context.me
   }
   const { fetchMock } = require('fetch-mock')
   const myMock = fetchMock.sandbox()
-  myMock.get(API_URL + '/archivedOpportunitys/', { body: { archivedOpportunitys } })
+  myMock.get(API_URL + '/archivedOpportunities/', { body: { archivedOpportunities } })
   reduxApi.use('fetch', adapterFetch(myMock))
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
     </Provider>)
-  const res = await wrapper.find('PersonHomePage').first().instance().getArchivedOpportunitys()
+  const res = await wrapper.find('PersonHomePage').first().instance().getCompletedArchivedOpportunities()
   t.is(res.length, 2)
-  t.is(res[0], archivedOpportunitys[0])
-  t.is(res[1], archivedOpportunitys[1])
+  t.is(res[0], archivedOpportunities[0])
+  t.is(res[1], archivedOpportunities[1])
 })
