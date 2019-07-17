@@ -138,7 +138,9 @@ export const ActivityContainer = styled.div`
 display: grid;
 grid-template-columns: 17.5rem 1fr;
 gap: 2.5rem;
-
+@media screen and (max-width: 1280px) {
+    grid-template-columns: calc(100vw - 4rem);
+  }
 
 
 `

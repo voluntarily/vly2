@@ -128,7 +128,7 @@ class Acts extends Component {
                     onSearch={this.handleSearch}
                   />
                 </SearchContainer>
-
+                
                 {acts.length > 0 ? (
                   <ActList acts={acts} />
                 ) : (

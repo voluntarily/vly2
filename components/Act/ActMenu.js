@@ -2,12 +2,15 @@ import styled from 'styled-components'
 import { Menu } from 'antd';
 
 const ActivityMenu = styled(Menu)`
+
+
   height: 32px;
   width: 240px;
 
   font-size: 24px;
   letter-spacing: -0.3px;
   line-height: 122px;
+
 
   .subheading {
     font-size: 16px;
@@ -18,6 +21,11 @@ const ActivityMenu = styled(Menu)`
   .color {
     color: #653CAD;
   }
+  @media screen and (max-width: 1280px) {
+    display: none;
+  }
+
+
 `
 
 const ActMenu = ({ acts, ...props }) => {
