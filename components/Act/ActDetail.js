@@ -66,7 +66,7 @@ export function ActDetail ({ act }) {
           <Spacer />
         </Left>
         <Right>
-          <img style={{ width: '100%' }} src={img} alt={act.title} />
+          <img style={{ width: '100%' }} src={act.imgUrl} alt={act.title} />
           <TagContainer>
             <TagDisplay tags={act.tags} />
           </TagContainer>

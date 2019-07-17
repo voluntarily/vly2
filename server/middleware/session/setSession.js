@@ -1,4 +1,5 @@
 const jwtDecode = require('jwt-decode')
+const Cookie = require('js-cookie')
 const Person = require('../../api/person/person')
 
 const DEFAULT_SESSION = {
@@ -20,29 +21,46 @@ const isUrlBlacklisted = url => {
   return blacklisted
 }
 
+
 module.exports = async (req, res, next) => {
   // console.log('Before assigning defualt session req.session has a value of ', req.session)
   // console.log('In set session the value of the cookie is ', req.cookies)
-  req.session = { ...DEFAULT_SESSION } // Default session object will get mutated after logged in. Deconstructing the objec will only get the attribute of it
-  console.log('In set session default session value is ', DEFAULT_SESSION)
-  console.log('In set session req.session has a value of ', req.session)
-  console.log('Before going to the condition if, the value of the request cookies is ', req.cookies.idToken)
-  console.log('The checking result of isURL backlist is ', isUrlBlacklisted(req.url))
-  console.log('\n')
+  req.session = {...DEFAULT_SESSION} // Default session object will get mutated after logged in. Deconstructing the objec will only get the attribute of it
+  
+  if (!req.url.match(/_next/g) && !req.url.match(/static/g)){
+    console.log('\nIn set session middleware ')
+    console.log('The request has url: ', req.path)
+    console.log('There is idToken cookies in the request ? ', req.cookies.idToken != null)
+    // console.log(getUserFromLocalCookie)
+    // Potental solution could be add session into request object payload in personlist page
+    // TODO: learn how to add session object into get method in person list page
+  }
   if (!isUrlBlacklisted(req.url) && req.cookies.idToken) {
     try {
       const user = jwtDecode(req.cookies.idToken)
       req.session.isAuthenticated = true
       req.session.user = user
       req.session.me = await Person.findOne({ email: req.session.user.email }).exec()
-      console.log('There is a cookie from the request and a person is found')
+      if (!req.url.match(/_next/g) && !req.url.match(/static/g)){
+        console.log("\x1b[42m",'Found cookies')
+        console.log("\x1b[0m")
+      }
     } catch (err) {
       console.log(err)
     }
   } else {
-    console.log('No cookie found in the request object')
-    console.log('The request cookie object has a value of ', req.cookies.idToken)
-    console.log('\n')
+    if (!req.url.match(/_next/g) && !req.url.match(/static/g)){
+      console.log("\x1b[41m" ,'No cookie found in the request object')
+      console.log('The request object has cookies idToken value ? ', req.cookies.idToken != null)
+      console.log('The request param  is ', req.params)
+      console.log('Reading cookie from local storage is ' , Cookie.getJSON('user'))
+      console.log('\n')
+      console.log("\x1b[0m")
+    }
+  }
+
+  if (!req.url.match(/_next/g) && !req.url.match(/static/g)){
+    console.log('Going to the next middleware in set session\n')
   }
   next()
 }

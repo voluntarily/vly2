@@ -6,8 +6,15 @@ module.exports = options => (req, res, next) => {
   const rootPath = require('path').join(__dirname, '/../../..')
   const pattern = rootPath + options.searchPattern
   const userRoles = req.session && req.session.me ? req.session.me.role : [Role.ANON]
-  console.log('The call is from get ability')
-  console.log('request session object has a value of ', req.session)
+
+  if(!req.path.match(/_next/g) && !req.path.match(/static/g)){
+    console.log('From get ability request session is authenticated? ', req.session.isAuthenticated)
+    console.log('The request url path is ', req.path)
+    if (req.path.match('/api/people')){
+      console.log('The request object has cookies in the get ability for /api/people request ? ', req.cookies != null)
+      console.log('The request object has session object in the get ability for /api/people request ? ', req.session != null)
+    }
+  }
   let allRules = []
   glob.sync(pattern).forEach(abilityPath => {
     const ab = require(abilityPath)
@@ -17,6 +24,13 @@ module.exports = options => (req, res, next) => {
       allRules = allRules.concat(ab[role])
     })
   })
-  req.ability = new Ability(allRules)
+
+  if(!req.path.match(/_next/g) && !req.path.match(/static/g)){
+    console.log('Finish finding rules')
+    console.log('The rules found is ', allRules)
+    console.log('\n')
+  }
+
+  req.ability = new Ability(allRules) 
   next()
 }

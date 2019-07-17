@@ -71,7 +71,7 @@ const initStore = {
   }
 }
 const filterDateState = {
-  date: ['2019-04-20T12:26:18.000Z',null] // Tue, 16 Jul 2019 01:04:02
+  date: ['2019-04-20T12:26:18.000Z', null] // Tue, 16 Jul 2019 01:04:02
 }
 
 const dateRangeFilterValue = {

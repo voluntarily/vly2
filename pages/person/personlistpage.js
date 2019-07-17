@@ -16,7 +16,10 @@ class PersonListPage extends Component {
   static async getInitialProps ({ store }) {
     // Get all People
     try {
-      await store.dispatch(reduxApi.actions.people.get())
+      console.log('Redux store has info about session value when get init props in person list page', store.getState().session.isAuthenticated)
+      // console.log('The actions for people api is ', reduxApi.actions.people)
+      await store.dispatch(reduxApi.actions.people.get()) // Could be the cause of loosing session
+
     } catch (err) {
       console.log('error in getting people', err)
     }

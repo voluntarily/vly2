@@ -16,7 +16,7 @@ import reduxApi, {
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
 
-import { TextHeadingBlack, TextP } from '../../components/VTheme/VTheme'
+import { TextHeadingBlack, TextP, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
 
 const { TabPane } = Tabs
 
@@ -29,25 +29,6 @@ const SectionWrapper = styled.div`
 
 const TitleContainer = styled.div``
 
-const PageHeaderContainer = styled.div`
-  margin: 8rem 0 2rem 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  @media screen and (max-width: 767px) {
-    margin-top: 4rem;
-    grid-template-columns: calc(100vw - 2rem);
-    grid-gap: 0rem;
-  }
-`
-
-const RequestButtonContainer = styled.div`
-  justify-self: end;
-  @media screen and (max-width: 767px) {
-    margin-top: 1rem;
-    justify-self: start;
-  }
-`
-
 function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
   // console.log(key)
@@ -59,19 +40,12 @@ class PersonHomePage extends Component {
   }
   constructor (props) {
     super(props)
-    this.getCompletedArchivedOpportunities = this.getCompletedArchivedOpportunities.bind(this)
-    this.getCancelledArchivedOpportunities = this.getCancelledArchivedOpportunities.bind(this)
+    this.getArchivedOpportunitiesByStatus = this.getArchivedOpportunitiesByStatus.bind(this)
   }
 
-  getCompletedArchivedOpportunities () {
+  getArchivedOpportunitiesByStatus (status) {
     return this.props.archivedOpportunities.data.filter(
-      op => op.status === 'completed' && op.requestor === this.props.me._id
-    )
-  }
-
-  getCancelledArchivedOpportunities () {
-    return this.props.archivedOpportunities.data.filter(
-      op => op.status === 'cancelled' && op.requestor === this.props.me._id
+      op => op.status === status && op.requestor === this.props.me._id
     )
   }
 
@@ -108,7 +82,9 @@ class PersonHomePage extends Component {
       await Promise.all([
         store.dispatch(reduxApi.actions.opportunities.get(filters)),
         store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
-        store.dispatch(reduxApi.actions.archivedOpportunities.get({ requestor: me._id }))
+        store.dispatch(
+          reduxApi.actions.archivedOpportunities.get({ requestor: me._id })
+        )
       ])
     } catch (err) {
       console.log('error in getting ops', err)
@@ -141,7 +117,7 @@ class PersonHomePage extends Component {
     const ops = this.mergeOpsList()
     const opsTab = (
       <span>
-        <Icon type='schedule' />
+        <Icon type='inbox' />
         <FormattedMessage
           id='home.liveops'
           defaultMessage='Active'
@@ -151,7 +127,7 @@ class PersonHomePage extends Component {
     )
     const searchTab = (
       <span>
-        <Icon type='appstore' />
+        <Icon type='history' />
         <FormattedMessage
           id='home.pastops'
           defaultMessage='History'
@@ -226,47 +202,47 @@ class PersonHomePage extends Component {
               <SectionTitleWrapper>
                 <TextHeadingBlack>Completed Requests</TextHeadingBlack>
               </SectionTitleWrapper>
-              <OpList
-                ops={this.getCompletedArchivedOpportunities()}
-              />
+              <OpList ops={this.getArchivedOpportunitiesByStatus('completed')} />
               <SectionTitleWrapper>
                 <TextHeadingBlack>Cancelled Requests</TextHeadingBlack>
               </SectionTitleWrapper>
-              <OpList
-                ops={this.getCancelledArchivedOpportunities()}
-              />
+              <OpList ops={this.getArchivedOpportunitiesByStatus('cancelled')} />
             </SectionWrapper>
             {/* <OpListSection query={myPastfilterString} /> */}
           </TabPane>
           <TabPane tab={profileTab} key='3'>
-            {this.state.editProfile ? (
-              <PersonDetailForm
-                person={this.props.me}
-                onSubmit={this.handleUpdate.bind(this, this.props.me)}
-                onCancel={this.handleCancel}
-              />
-            ) : (
-              <div>
-                <PersonDetail person={this.props.me} />
-                <Button
-                  style={{ float: 'right' }}
-                  type='primary'
-                  shape='round'
-                  onClick={() => this.setState({ editProfile: true })}
-                >
-                  <FormattedMessage
-                    id='editPerson'
-                    defaultMessage='Edit'
-                    description='Button to edit an person on PersonDetails page'
-                  />
-                </Button>
-              </div>
-            )}
+            <SectionWrapper>
+              {this.state.editProfile ? (
+                <PersonDetailForm
+                  person={this.props.me}
+                  onSubmit={this.handleUpdate.bind(this, this.props.me)}
+                  onCancel={this.handleCancel}
+                />
+              ) : (
+                <div>
+                  <PersonDetail person={this.props.me} />
+                  <Button
+                    style={{ float: 'right' }}
+                    type='primary'
+                    shape='round'
+                    onClick={() => this.setState({ editProfile: true })}
+                  >
+                    <FormattedMessage
+                      id='editPerson'
+                      defaultMessage='Edit'
+                      description='Button to edit an person on PersonDetails page'
+                    />
+                  </Button>
+                </div>
+              )}
+            </SectionWrapper>
           </TabPane>
         </Tabs>
       </FullPage>
     )
   }
 }
-export const PersonHomePageTest = withInterests(withOps(withArchivedOpportunities(PersonHomePage))) // for test
+export const PersonHomePageTest = withInterests(
+  withOps(withArchivedOpportunities(PersonHomePage))
+) // for test
 export default securePage(withPeople(PersonHomePageTest))

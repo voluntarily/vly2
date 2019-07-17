@@ -19,8 +19,9 @@ module.exports = function (server) {
         { middlewares: [ 
           (req, res, next) => {
             console.log('In person middleware before action');
-            console.log(req.session);
-            console.log(req.cookies);
+            console.log('The request in person middleware is ', req.path)
+            console.log('The request session is authenticated ? ',req.session.isAuthenticated);
+            console.log('The idToken cookies is not null ? ', req.cookies.idToken != null);
             console.log('\n\n')
             next();
           } ,
@@ -35,6 +36,7 @@ module.exports = function (server) {
             (req, res, next) => {
               console.log('After action in person routes the session has a value of ')
               console.log(req.session)
+              console.log('\n\n')
               next()
             },
             helpers.formatResponse]

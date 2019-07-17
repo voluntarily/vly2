@@ -5,7 +5,7 @@ const SchemaName = 'Person'
 
 // block all api call for non log in user
 const anonAbilities = [{
-  SchemaName,
+  subject: SchemaName,
   action: Action.CRUD,
   inverted: true
 }]
