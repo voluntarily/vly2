@@ -148,7 +148,7 @@ test('retrieve completed archived opportunities', async t => {
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
     </Provider>)
-  const res = await wrapper.find('PersonHomePage').first().instance().getCompletedArchivedOpportunities()
+  const res = await wrapper.find('PersonHomePage').first().instance().getArchivedOpportunitiesByStatus('completed')
   t.is(res.length, 2)
   t.is(res[0], archivedOpportunities[0])
   t.is(res[1], archivedOpportunities[1])
