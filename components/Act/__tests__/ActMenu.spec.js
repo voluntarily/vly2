@@ -4,7 +4,7 @@ import { renderWithIntl } from '../../../lib/react-intl-test-helper'
 
 import ActMenu from '../ActMenu'
 
-// TO DO: Fix test as it is currently a false positive. 
+// TO DO: Fix test as it is currently a false positive.
 
 test('render the activity menu headers', t => {
   const wrapper = renderWithIntl(<ActMenu />)

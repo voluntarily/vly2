@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ActCard from './ActCard'
 import { FormattedMessage } from 'react-intl'
-import { Grid, ActivityGrid } from '../VTheme/VTheme'
+import { ActivityGrid } from '../VTheme/VTheme'
 
 const ActList = ({ acts, ...props }) => (
   <ActivityGrid>

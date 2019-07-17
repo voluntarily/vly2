@@ -14,11 +14,9 @@ import styled from 'styled-components'
 import {
   GridContainer,
   ActivityContainer,
-  GridTestItem,
   PageHeaderContainer,
   TextHeadingBlack,
-  RequestButtonContainer,
-  TextPBold
+  RequestButtonContainer
 } from '../../components/VTheme/VTheme'
 
 const { TabPane } = Tabs
