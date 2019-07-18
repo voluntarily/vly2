@@ -108,8 +108,7 @@ class Acts extends Component {
             </Button>
           </RequestButtonContainer>
           <p>
-            Find templates that make it easy to bring volunteers into your
-            classroom
+            Find activity templates that make it easy to bring volunteers into your classroom
           </p>
         </PageHeaderContainer>
         {/* <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>

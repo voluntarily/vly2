@@ -2,7 +2,7 @@ export default () => [
   {
     key: 'index',
     href: '/',
-    text: 'Discover',
+    text: 'Explore',
     authRequired: true
   },
   {
