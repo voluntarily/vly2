@@ -1,10 +1,10 @@
-import { Button, Divider, message, Popconfirm } from 'antd'
+import { Button, Divider, message } from 'antd'
 // import Link from 'next/link'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import InterestSection from '../../components/Interest/InterestSection'
+// import InterestSection from '../../components/Interest/InterestSection'
 // import RegisterInterestSection from '../../components/Interest/RegisterInterestSection'
 import OpDetail from '../../components/Op/OpDetail'
 import OpDetailForm from '../../components/Op/OpDetailForm'
@@ -15,6 +15,7 @@ import Loading from '../../components/Loading'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import OpOrganizerInfo from '../../components/Op/OpOrganizerInfo'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
+import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
 
 const blankOp = {
   title: '',
@@ -32,6 +33,12 @@ const blankOp = {
 export class OpDetailPage extends Component {
   state = {
     editing: false
+  }
+
+  constructor (props) {
+    super(props)
+    this.confirmOpportunity = this.confirmOpportunity.bind(this)
+    this.cancelOpportunity = this.cancelOpportunity.bind(this)
   }
 
   static async getInitialProps ({ store, query }) {
@@ -92,31 +99,39 @@ export class OpDetailPage extends Component {
     }
   }
 
-  // Called when the user confirms they want to delete an op
-  async handleCancelOp (op) {
-    if (!op) return
-    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.CANCELLED }) }))
-    // TODO: error handling - how can this fail?
-    message.success('Request Cancelled. ')
-    Router.replace(`/home`)
-  }
+  // // Called when the user confirms they want to delete an op
+  // async handleCancelOp(op) {
+  //   if (!op) return
+  //   await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.CANCELLED }) }))
+  //   // TODO: error handling - how can this fail?
+  //   message.success('Request Cancelled. ')
+  //   Router.replace(`/home`)
+  // }
 
   // Called when the user starts to delete an op, but then cancels it.
-  handleCancelButtonCancelled = () => { message.error('Cancel Request Cancelled') }
+  // handleCancelButtonCancelled = () => { message.error('Cancel Request Cancelled') }
 
-  async handledCompleted (op) {
-    if (!op) return
-    // Data request
-    // TODO: change hard coded 'done' string to a constant.
+  async confirmOpportunity (op) {
     await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.COMPLETED }) }))
-    // TODO: error handling - see above
-    message.success('Opportunity Confimed')
-    Router.replace(`/archivedops/${op._id}`)
   }
 
-  handledCompletedCancelled = (op) => {
-    message.error('Confirm Cancelled')
+  async cancelOpportunity (op) {
+    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.CANCELLED }) }))
   }
+
+  // async handledCompleted (op) {
+  //   if (!op) return
+  //   // Data request
+  //   // TODO: change hard coded 'done' string to a constant.
+  //   await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.COMPLETED }) }))
+  //   // TODO: error handling - see above
+  //   message.success('Opportunity Confimed')
+  //   Router.replace(`/archivedops/${op._id}`)
+  // }
+
+  // handledCompletedCancelled = (op) => {
+  //   message.error('Confirm Cancelled')
+  // }
 
   render () {
     const me = this.props.me
@@ -185,27 +200,27 @@ export class OpDetailPage extends Component {
     //   )
     // }
 
-    /* These components should only appear if a user is logged in and viewing an op they DID create themselves. */
-    const ownerManageInterests = () => {
-      return (canManageInterests &&
-        <div>
-          <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' onConfirm={this.handledCompleted.bind(this, op)} onCancel={this.handledCompletedCancelled} okText='Yes' cancelText='No'>
-            <Button type='primary' shape='round'>
-              <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
-            </Button>
-          </Popconfirm>
-          &nbsp;
-          <Popconfirm id='cancelOpPopConfirm' title='Confirm cancel of this opportunity.' onConfirm={this.handleCancelOp.bind(this, op)} onCancel={this.handleCancelButtonCancelled} okText='Yes' cancelText='No'>
-            <Button type='danger' shape='round' >
-              <FormattedMessage id='cancelOp' defaultMessage='Cancel Request' description='Button to cancel an opportunity on OpDetails page' />
-            </Button>
-          </Popconfirm>
-          <Divider />
+    // /* These components should only appear if a user is logged in and viewing an op they DID create themselves. */
+    // const ownerManageInterests = () => {
+    //   return (canManageInterests &&
+    //     <div>
+    //       <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' onConfirm={this.handledCompleted.bind(this, op)} onCancel={this.handledCompletedCancelled} okText='Yes' cancelText='No'>
+    //         <Button type='primary' shape='round'>
+    //           <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
+    //         </Button>
+    //       </Popconfirm>
+    //       &nbsp;
+    //       <Popconfirm id='cancelOpPopConfirm' title='Confirm cancel of this opportunity.' onConfirm={this.handleCancelOp.bind(this, op)} onCancel={this.handleCancelButtonCancelled} okText='Yes' cancelText='No'>
+    //         <Button type='danger' shape='round' >
+    //           <FormattedMessage id='cancelOp' defaultMessage='Cancel Request' description='Button to cancel an opportunity on OpDetails page' />
+    //         </Button>
+    //       </Popconfirm>
+    //       <Divider />
 
-          <InterestSection opid={op._id} />
-        </div>
-      )
-    }
+    //       <InterestSection opid={op._id} />
+    //     </div>
+    //   )
+    // }
 
     if (!content) {
       if (op && this.state.editing) {
@@ -225,11 +240,25 @@ export class OpDetailPage extends Component {
             <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
           </Button>}
 
-          <OpDetail op={op} />
-          <OpOrganizerInfo organizer={organizer} />
+          <OpDetail
+            op={op}
+          />
+          <OpOrganizerInfo
+            organizer={organizer}
+          />
           <Divider />
-          <OpVolunteerInterestSection isAuthenticated={this.props.isAuthenticated} canRegisterInterest={canRegisterInterest} op={op} me={me._id} />
-          {ownerManageInterests()}
+          <OpVolunteerInterestSection
+            isAuthenticated={this.props.isAuthenticated}
+            canRegisterInterest={canRegisterInterest}
+            op={op}
+            me={me._id}
+          />
+          <OpOwnerManageInterests
+            canManageInterests={canManageInterests}
+            op={op}
+            confirmOpportunity={this.confirmOpportunity}
+            cancelOpportunity={this.cancelOpportunity}
+          />
         </div>
       }
     }
