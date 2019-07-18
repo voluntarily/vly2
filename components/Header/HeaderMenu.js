@@ -18,16 +18,16 @@ export default () => [
     authRequired: true
   },
   {
-    key: 'orgs',
-    href: '/orgs',
-    text: 'Organisations',
-
-  },
-  {
     key: 'habout',
     text: 'About',
     href: '/about',
     anonymousOnly: true
+  },
+  {
+    key: 'orgs',
+    href: '/orgs',
+    text: 'Organisations',
+
   },
   {
     key: 'help',
