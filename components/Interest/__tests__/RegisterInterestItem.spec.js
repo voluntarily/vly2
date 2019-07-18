@@ -56,14 +56,14 @@ const interests = [
     opportunity: ops[0],
     comment: "I'm Andrew",
     status: 'completed'
-    },
+  },
   {
     _id: interestid,
     person: people[0],
     opportunity: ops[0],
     comment: "I'm Andrew",
     status: 'cancelled'
-    }
+  }
 ]
 
 test('initial state', t => {
@@ -125,43 +125,41 @@ test('completed state', t => {
     onWithdraw={withdraw}
   />)
   t.is((withdraw.InterestButtonEnabled))
-  })
+})
 
-  test('cancelled state', t => {
-    const changeStatus = sinon.fake()
-    const withdraw = sinon.fake()
-  
-    const wrapper = mountWithIntl(<RegisterInterestItem
-      interest={interests[4]}
-      onChangeStatus={changeStatus}
-      onWithdraw={withdraw}
-    />)
-    t.is(withdraw.InterestButtonEnabled)
-    })
+test('cancelled state', t => {
+  const changeStatus = sinon.fake()
+  const withdraw = sinon.fake()
 
-    test('invited', t => {
-      const changeStatus = sinon.fake()
-      const withdraw = sinon.fake()
-    
-      const wrapper = mountWithIntl(<RegisterInterestItem
-        interest={interests[4]}
-        onChangeStatus={changeStatus}
-        onWithdraw={withdraw}
-      />)
-      t.is(withdraw.InterestButtonEnabled) 
-      })
+  const wrapper = mountWithIntl(<RegisterInterestItem
+    interest={interests[4]}
+    onChangeStatus={changeStatus}
+    onWithdraw={withdraw}
+  />)
+  t.is(withdraw.InterestButtonEnabled)
+})
 
-  ///////////////////////////////////////////////////////////////////////////////////////
-  //  t.truthy(withdraw.InterestButtonEnabled)
-  // t.is(wrapper.find('button'))
-  // //t.is(wrapper.find('button'))
+test('invited', t => {
+  const changeStatus = sinon.fake()
+  const withdraw = sinon.fake()
 
-  // wrapper.find('button').first().simulate('click')
-  // const popconfirm = wrapper.find('Popconfirm').filter('#WithdrawInterestPopConfirm').first()
-  // console.log(popconfirm.html())
+  const wrapper = mountWithIntl(<RegisterInterestItem
+    interest={interests[4]}
+    onChangeStatus={changeStatus}
+    onWithdraw={withdraw}
+  />)
+  t.is(withdraw.InterestButtonEnabled)
+})
 
-  // TODO: popconfirm requires a valid event.
-  // popconfirm.props().onConfirm()
-  // Can't get here until we
- 
-  
+/// ////////////////////////////////////////////////////////////////////////////////////
+//  t.truthy(withdraw.InterestButtonEnabled)
+// t.is(wrapper.find('button'))
+// //t.is(wrapper.find('button'))
+
+// wrapper.find('button').first().simulate('click')
+// const popconfirm = wrapper.find('Popconfirm').filter('#WithdrawInterestPopConfirm').first()
+// console.log(popconfirm.html())
+
+// TODO: popconfirm requires a valid event.
+// popconfirm.props().onConfirm()
+// Can't get here until we
