@@ -8,11 +8,12 @@ import InterestSection from '../../components/Interest/InterestSection'
 import RegisterInterestSection from '../../components/Interest/RegisterInterestSection'
 import OpDetail from '../../components/Op/OpDetail'
 import OpDetailForm from '../../components/Op/OpDetailForm'
-import PersonCard from '../../components/Person/PersonCard'
+// import PersonCard from '../../components/Person/PersonCard'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import Loading from '../../components/Loading'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
+import OpOrganizerInfo from '../../components/Op/OpOrganizerInfo'
 
 const blankOp = {
   title: '',
@@ -155,15 +156,15 @@ export class OpDetailPage extends Component {
     const existingTags = this.props.tags.data
     const existingLocations = this.props.locations.data
 
-    const organizerInfo = () => {
-      return organizer &&
-        <div>
-          <h2>
-            <FormattedMessage id='organiser' defaultMessage='Requested by' description='Title for organiser card on op details page' />
-          </h2>
-          <PersonCard style={{ width: '300px' }} person={organizer} />
-        </div>
-    }
+    // const organizerInfo = () => {
+    //   return organizer &&
+    //     <div>
+    //       <h2>
+    //         <FormattedMessage id='organiser' defaultMessage='Requested by' description='Title for organiser card on op details page' />
+    //       </h2>
+    //       <PersonCard style={{ width: '300px' }} person={organizer} />
+    //     </div>
+    // }
     const volunteerInterestSection = () => {
       return (
         // if not signed in then the interested button signs in first
@@ -192,7 +193,7 @@ export class OpDetailPage extends Component {
               <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
             </Button>
           </Popconfirm>
-            &nbsp;
+          &nbsp;
           <Popconfirm id='cancelOpPopConfirm' title='Confirm cancel of this opportunity.' onConfirm={this.handleCancelOp.bind(this, op)} onCancel={this.handleCancelButtonCancelled} okText='Yes' cancelText='No'>
             <Button type='danger' shape='round' >
               <FormattedMessage id='cancelOp' defaultMessage='Cancel Request' description='Button to cancel an opportunity on OpDetails page' />
@@ -219,12 +220,12 @@ export class OpDetailPage extends Component {
         </div>
       } else {
         content = <div>
-          { canEdit && <Button id='editOpBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
+          {canEdit && <Button id='editOpBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
             <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
           </Button>}
 
           <OpDetail op={op} />
-          {organizerInfo()}
+          <OpOrganizerInfo organizer={organizer} />
           <Divider />
           {volunteerInterestSection()}
           {ownerManageInterests()}
