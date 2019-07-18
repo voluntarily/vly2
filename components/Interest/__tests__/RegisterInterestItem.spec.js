@@ -139,17 +139,31 @@ test('completed state', t => {
     t.is(withdraw.InterestButtonEnabled)
     })
 
-    test('invited', t => {
-      const changeStatus = sinon.fake()
-      const withdraw = sinon.fake()
-    
-      const wrapper = mountWithIntl(<RegisterInterestItem
-        interest={interests[4]}
-        onChangeStatus={changeStatus}
-        onWithdraw={withdraw}
+    test('declined state' , t => {
+    const changeStatus = sinon.fake()
+    const withdraw = sinon.fake()
+
+    const wrapper = mountWithIntl(<RegisterInterestItem
+      interest={interests[2]}
+      onChangeStatus = {changeStatus}
+      onWithdraw = {withdraw}
       />)
-      t.is(withdraw.InterestButtonEnabled) 
-      })
+      t.is(withdraw.InterestButtonEnabled)
+    })
+
+   test('commited state' , t => {
+     const changeStatus = sinon.fake()
+     const withdraw = sinon.fake()
+
+     const wrapper = mountWithIntl(<RegisterInterestItem
+       interest={interests[2]}
+       onChangeStatus = {changeStatus}
+       onWithdraw = {withdraw}
+       />)
+       t.is(withdraw.InterestButtonEnabled)
+     })
+ 
+
 
   ///////////////////////////////////////////////////////////////////////////////////////
   //  t.truthy(withdraw.InterestButtonEnabled)
