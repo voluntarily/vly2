@@ -30,8 +30,8 @@ margin-bottom: 2rem;
 
 const OrgGrid = styled.div`
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 2.5rem;
+  grid-template-columns: 240px 1fr;
+  gap: 5rem;
 `
 const OrgContainer = styled.div`
   margin-top: 5rem;
@@ -64,7 +64,7 @@ const orgResourcesTab = (
 )
 const orgInstructionTab = (
   <span>
-    <Icon type="smile" />
+    <Icon type="usergroup-add" />
     <FormattedMessage
       id='orgInstruction'
       defaultMessage='Getting Started'

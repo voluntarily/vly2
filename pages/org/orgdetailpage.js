@@ -131,7 +131,7 @@ class OrgDetailPage extends Component {
           { canEdit && <Button type='primary' shape='round' onClick={() => this.setState({ editing: true })} >Edit</Button>}
           <Button shape='round'><Link href='/orgs'><a>
             <FormattedMessage id='showOrgs' defaultMessage='Show All' description='Button to show all organisations' />
-          </a></Link></Button>
+          </a></Link></Button> 
           { canRemove && <Popconfirm title='Confirm removal of this organisation.' onConfirm={this.handleDelete.bind(this, org)} onCancel={this.handleDeleteCancel.bind(this)} okText='Yes' cancelText='No'>
             <Button style={{ float: 'right' }} type='danger' shape='round' >
               <FormattedMessage id='deleteOrg' defaultMessage='Remove Organisation' description='Button to remove an Organisatino on OrgDetails page' />
