@@ -1,11 +1,11 @@
 import { Button, Divider, message, Popconfirm } from 'antd'
-import Link from 'next/link'
+// import Link from 'next/link'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import InterestSection from '../../components/Interest/InterestSection'
-import RegisterInterestSection from '../../components/Interest/RegisterInterestSection'
+// import RegisterInterestSection from '../../components/Interest/RegisterInterestSection'
 import OpDetail from '../../components/Op/OpDetail'
 import OpDetailForm from '../../components/Op/OpDetailForm'
 // import PersonCard from '../../components/Person/PersonCard'
@@ -14,6 +14,7 @@ import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import Loading from '../../components/Loading'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import OpOrganizerInfo from '../../components/Op/OpOrganizerInfo'
+import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 
 const blankOp = {
   title: '',
@@ -165,24 +166,24 @@ export class OpDetailPage extends Component {
     //       <PersonCard style={{ width: '300px' }} person={organizer} />
     //     </div>
     // }
-    const volunteerInterestSection = () => {
-      return (
-        // if not signed in then the interested button signs in first
-        !this.props.isAuthenticated
-          ? <div>
-            <Link href={`/auth/sign-in`} >
-              <Button type='primary' shape='round' >
-                <FormattedMessage id='iminterested-anon' defaultMessage="I'm Interested" description="I'm interested button that leads to sign in page" />
-              </Button>
-            </Link>
-            <Divider />
-          </div>
-          : canRegisterInterest && <div>
-            <RegisterInterestSection op={op} me={this.props.me._id} />
-            <Divider />
-          </div>
-      )
-    }
+    // const volunteerInterestSection = () => {
+    //   return (
+    //     // if not signed in then the interested button signs in first
+    //     !this.props.isAuthenticated
+    //       ? <div>
+    //         <Link href={`/auth/sign-in`} >
+    //           <Button type='primary' shape='round' >
+    //             <FormattedMessage id='iminterested-anon' defaultMessage="I'm Interested" description="I'm interested button that leads to sign in page" />
+    //           </Button>
+    //         </Link>
+    //         <Divider />
+    //       </div>
+    //       : canRegisterInterest && <div>
+    //         <RegisterInterestSection op={op} me={this.props.me._id} />
+    //         <Divider />
+    //       </div>
+    //   )
+    // }
 
     /* These components should only appear if a user is logged in and viewing an op they DID create themselves. */
     const ownerManageInterests = () => {
@@ -227,7 +228,7 @@ export class OpDetailPage extends Component {
           <OpDetail op={op} />
           <OpOrganizerInfo organizer={organizer} />
           <Divider />
-          {volunteerInterestSection()}
+          <OpVolunteerInterestSection isAuthenticated={this.props.isAuthenticated} canRegisterInterest={canRegisterInterest} op={op} me={me._id} />
           {ownerManageInterests()}
         </div>
       }
