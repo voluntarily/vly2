@@ -12,8 +12,10 @@ import {
   GridContainer,
   TextPBold,
   TextH1,
-  SpacerSmall
+  SpacerSmall,
+  Spacer
 } from '../VTheme/VTheme'
+
 
 function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
@@ -21,17 +23,28 @@ function callback (key) {
 }
 var shadowStyle = { overflow: 'visible' }
 const { TabPane } = Tabs
+
+const TitleContainer=styled.div`
+margin-bottom: 2rem;
+`
+
 const OrgGrid = styled.div`
   display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 5rem;
+  grid-template-columns: 280px 1fr;
+  gap: 2.5rem;
 `
 const OrgContainer = styled.div`
   margin-top: 5rem;
 `
+
+const ContactContainer = styled.div`
+margin-top: 0.5rem;
+display: inline-block;
+`
+
 const orgTab = (
   <span>
-
+    <Icon type='info-circle' />
     <FormattedMessage
       id='orgAbout'
       defaultMessage='About'
@@ -41,7 +54,7 @@ const orgTab = (
 )
 const orgResourcesTab = (
   <span>
-
+<Icon type="fire" />
     <FormattedMessage
       id='orgResources'
       defaultMessage='Offers'
@@ -51,7 +64,7 @@ const orgResourcesTab = (
 )
 const orgInstructionTab = (
   <span>
-
+    <Icon type="smile" />
     <FormattedMessage
       id='orgInstruction'
       defaultMessage='Getting Started'
@@ -61,7 +74,7 @@ const orgInstructionTab = (
 )
 const orgMemberTab = (
   <span>
-
+    <Icon type="team" />
     <FormattedMessage
       id='orgMembers'
       defaultMessage='Members'
@@ -83,20 +96,27 @@ const OrgDetail = ({ org, ...props }) => (
           alt={org.name}
         />
         <OrgContainer>
-          <TextPBold>Get in touch:</TextPBold>
+          <TextPBold>Get in touch</TextPBold>
+          <ContactContainer><Icon type='global' />&nbsp;&nbsp;placeholderwebsite.co.nz</ContactContainer>
+          <ContactContainer><Icon type='mail' />&nbsp;&nbsp;placeholder@email.co.nz</ContactContainer>
+          <ContactContainer><Icon type='facebook' />&nbsp;&nbsp;placeholder</ContactContainer>
+          <ContactContainer><Icon type='twitter' />&nbsp;@placeholderTwitter</ContactContainer>
+
         </OrgContainer>
       </GridContainer>
 
       <GridContainer>
+        <TitleContainer>
         <TextH1>{org.name}</TextH1>
-        <SpacerSmall />
+        </TitleContainer>
         <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={orgTab} key='1'>
+            <SpacerSmall />
             <Markdown children={org.about || ''} />
             <OrgType orgType={org.type} />
           </TabPane>
           <TabPane tab={orgResourcesTab} key='2'>
-            <p>aaaa</p>
+
           </TabPane>
           <TabPane tab={orgInstructionTab} key='3'>
             <p>aaaa</p>
