@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // [@TODO] - remove Input once actual search component is done
-import { Button, Input, Tabs, Icon } from 'antd'
+import { Button, Input } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import Link from 'next/link'
 import publicPage, { FullPage } from '../../hocs/publicPage'
@@ -19,7 +19,7 @@ import {
   RequestButtonContainer
 } from '../../components/VTheme/VTheme'
 
-const { TabPane } = Tabs
+// const { TabPane } = Tabs
 
 const escapeRegex = require('../../server/util/regexUtil')
 
@@ -34,10 +34,10 @@ const TabContainer = styled.div`
   margin: 1.5rem 0 0 0;
 `
 
-function callback (key) {
-  // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
-  // console.log(key)
-}
+// function callback (key) {
+//   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
+//   // console.log(key)
+// }
 class Acts extends Component {
   static async getInitialProps ({ store, query }) {
     // Get all Acts
@@ -68,28 +68,28 @@ class Acts extends Component {
   }
 
   render () {
-    const activityTab = (
-      <span>
-        <Icon type='experiment' />
-        <strong>
-          <FormattedMessage
-            id='act.act'
-            defaultMessage='Activities'
-            description='show opportunities list on volunteer home page'
-          />
-        </strong>
-      </span>
-    )
+    // const activityTab = (
+    //   <span>
+    //     <Icon type='experiment' />
+    //     <strong>
+    //       <FormattedMessage
+    //         id='act.act'
+    //         defaultMessage='Activities'
+    //         description='show opportunities list on volunteer home page'
+    //       />
+    //     </strong>
+    //   </span>
+    // )
 
     const { acts } = this.props
-    var shadowStyle = { overflow: 'visible' }
+    // var shadowStyle = { overflow: 'visible' }
     return (
       <FullPage>
         <PageHeaderContainer>
           <TextHeadingBlack>
             <FormattedMessage
               id='resource'
-              defaultMessage='Resources'
+              defaultMessage='Activities'
               description='Title of page listing activities'
             />
           </TextHeadingBlack>
@@ -108,41 +108,40 @@ class Acts extends Component {
             </Button>
           </RequestButtonContainer>
           <p>
-            Find templates that make it easy to bring volunteers into your
-            classroom
+            Find activity templates that make it easy to bring volunteers into your classroom
           </p>
         </PageHeaderContainer>
-        <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
-          <TabPane tab={activityTab} key='1'>
-            <ActivityContainer>
-              <TabContainer>
-                {' '}
-                <ActMenu acts={acts} />
-              </TabContainer>
-              <TabContainer>
-                <SearchContainer>
-                  <p>Search activities</p>
-                  <Input.Search
-                    placeholder='eg: activity'
-                    enterButton='Search'
-                    size='large'
-                    onSearch={this.handleSearch}
-                  />
-                </SearchContainer>
+        {/* <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
+          <TabPane tab={activityTab} key='1'> */}
+        <ActivityContainer>
+          <TabContainer>
+            {' '}
+            <ActMenu acts={acts} />
+          </TabContainer>
+          <TabContainer>
+            <SearchContainer>
+              <p>Search activities</p>
+              <Input.Search
+                placeholder='eg: activity'
+                enterButton='Search'
+                size='large'
+                onSearch={this.handleSearch}
+              />
+            </SearchContainer>
 
-                {acts.length > 0 ? (
-                  <ActList acts={acts} />
-                ) : (
-                  <NoResult
-                    id='act.noresult'
-                    msg='No activities found based on your search criteria'
-                    description='Message shown while no activities found'
-                  />
-                )}
-              </TabContainer>
-            </ActivityContainer>
-          </TabPane>
-        </Tabs>
+            {acts.length > 0 ? (
+              <ActList acts={acts} />
+            ) : (
+              <NoResult
+                id='act.noresult'
+                msg='No activities found based on your search criteria'
+                description='Message shown while no activities found'
+              />
+            )}
+          </TabContainer>
+        </ActivityContainer>
+        {/* </TabPane>
+        </Tabs> */}
         <GridContainer>
           <br />
           <br />

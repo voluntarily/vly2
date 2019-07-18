@@ -43,6 +43,7 @@ const Navigation = ({ items, defaultItem, router, me, ...props }) => {
             size='small'
             src={me && me.avatar}
             icon='user'
+
           />
         </StyledAvatar>
       </Menu.Item>
