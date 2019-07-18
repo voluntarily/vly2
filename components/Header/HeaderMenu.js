@@ -1,10 +1,10 @@
 export default () => [
-  {
-    key: 'index',
-    href: '/',
-    text: 'Explore',
-    authRequired: true
-  },
+  // {
+  //   key: 'index',
+  //   href: '/',
+  //   text: 'Explore',
+  //   authRequired: true
+  // },
   {
     key: 'home',
     href: '/home',
