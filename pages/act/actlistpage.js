@@ -89,7 +89,7 @@ class Acts extends Component {
           <TextHeadingBlack>
             <FormattedMessage
               id='resource'
-              defaultMessage='Resources'
+              defaultMessage='Activities'
               description='Title of page listing activities'
             />
           </TextHeadingBlack>
@@ -112,8 +112,8 @@ class Acts extends Component {
             classroom
           </p>
         </PageHeaderContainer>
-        <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
-          <TabPane tab={activityTab} key='1'>
+        {/* <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
+          <TabPane tab={activityTab} key='1'> */}
             <ActivityContainer>
               <TabContainer>
                 {' '}
@@ -141,8 +141,8 @@ class Acts extends Component {
                 )}
               </TabContainer>
             </ActivityContainer>
-          </TabPane>
-        </Tabs>
+          {/* </TabPane>
+        </Tabs> */}
         <GridContainer>
           <br />
           <br />
