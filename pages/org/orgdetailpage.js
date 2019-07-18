@@ -139,7 +139,6 @@ class OrgDetailPage extends Component {
     }
     return (
       <FullPage>
-        <h1><FormattedMessage defaultMessage='Organisation' id='org.detail.title' /></h1>
         {content}
       </FullPage>
     )
