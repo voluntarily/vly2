@@ -35,6 +35,7 @@ export class OpDetailPage extends Component {
     super(props)
     this.confirmOpportunity = this.confirmOpportunity.bind(this)
     this.cancelOpportunity = this.cancelOpportunity.bind(this)
+    this.isAdmin = this.isAdmin.bind(this)
   }
 
   static async getInitialProps ({ store, query }) {
@@ -103,32 +104,17 @@ export class OpDetailPage extends Component {
     await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.CANCELLED }) }))
   }
 
+  isAdmin () {
+    return this.props.me && this.props.me.role.includes('admin')
+  }
+
   render () {
-    const me = this.props.me
-    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
-    const isAdmin = (me && me.role.includes('admin'))
-    let isOwner = false
-    let op
-    let organizer
-    if (this.props.isNew) {
-      op = blankOp
-      organizer = me
-      isOwner = true
-    } else if (this.props.opportunities.loading) {
-      return (<FullPage><Loading><p>Loading details...</p></Loading></FullPage>)
-    } else {
-      const ops = this.props.opportunities.data
-      if (ops.length === 1) {
-        op = {
-          ...ops[0],
-          // tags: this.props.opportunities.data[0].tags.map(op => op.tag),
-          startDate: this.props.opportunities.data[0].date[0],
-          endDate: this.props.opportunities.data[0].date[1]
-        }
-        organizer = op.requestor
-        isOwner = ((me || {})._id === organizer._id)
-      } else { // array must be empty
-        // console.log('length', ops.length)
+    // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
+    if (!this.props.isNew) {
+      if (this.props.opportunities.loading) {
+        return (<FullPage><Loading><p>Loading details...</p></Loading></FullPage>)
+      }
+      if (this.props.opportunities.data.length !== 1) {
         return (
           <FullPage>
             <h2>
@@ -142,9 +128,29 @@ export class OpDetailPage extends Component {
       }
     }
 
+    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
+    let isOwner = false
+    let op
+    let organizer
+
+    if (this.props.isNew) {
+      op = blankOp
+      organizer = this.props.me
+      isOwner = true
+    } else {
+      op = {
+        ...this.props.opportunities.data[0],
+        // tags: this.props.opportunities.data[0].tags.map(op => op.tag),
+        startDate: this.props.opportunities.data[0].date[0],
+        endDate: this.props.opportunities.data[0].date[1]
+      }
+      organizer = op.requestor
+      isOwner = ((this.props.me || {})._id === organizer._id)
+    }
+
     // display permissions
-    const canEdit = (isOwner || isOrgAdmin || isAdmin)
-    const canManageInterests = (isOwner || isAdmin)
+    const canEdit = (isOwner || isOrgAdmin || this.isAdmin())
+    const canManageInterests = (isOwner || this.isAdmin())
     const canRegisterInterest = (this.props.isAuthenticated && !isOwner)
 
     const existingTags = this.props.tags.data
@@ -155,7 +161,7 @@ export class OpDetailPage extends Component {
         <FullPage>
           <OpDetailForm
             op={op}
-            me={me}
+            me={this.props.me}
             onSubmit={this.handleSubmit.bind(this, op)}
             onCancel={this.handleCancelEdit.bind(this)}
             existingTags={existingTags}
@@ -186,7 +192,7 @@ export class OpDetailPage extends Component {
             isAuthenticated={this.props.isAuthenticated}
             canRegisterInterest={canRegisterInterest}
             op={op}
-            me={me._id}
+            me={this.props.me._id}
           />
           <OpOwnerManageInterests
             canManageInterests={canManageInterests}
