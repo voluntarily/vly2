@@ -1,20 +1,33 @@
 export default () => [
   {
+    key: 'index',
+    href: '/',
+    text: 'Discover',
+    authRequired: true
+  },
+  {
     key: 'home',
     href: '/home',
-    text: 'Requests',
+    text: 'Dashboard',
     authRequired: true
   },
   {
     key: 'acts',
     href: '/acts',
-    text: 'Resources',
+    text: 'Activities',
     authRequired: true
+  },
+  {
+    key: 'orgs',
+    href: '/orgs',
+    text: 'Organisations',
+
   },
   {
     key: 'habout',
     text: 'About',
-    href: '/about'
+    href: '/about',
+    anonymousOnly: true
   },
   {
     key: 'help',
@@ -24,7 +37,13 @@ export default () => [
   {
     key: 'hsignin',
     href: '/auth/sign-in',
-    text: 'Sign In',
+    text: 'Log in',
+    anonymousOnly: true
+  },
+  {
+    key: 'hsignup',
+    href: '/auth/sign-in',
+    text: 'Sign up',
     anonymousOnly: true
   },
   {

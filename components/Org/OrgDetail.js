@@ -91,7 +91,7 @@ const OrgDetail = ({ org, ...props }) => (
     <OrgGrid>
       <GridContainer>
         <img
-          style={{ width: '100%', maxWidth: '240px' }}
+          style={{ width: '100%', maxWidth: '240px', objectFit: 'cover' }}
           src={org.imgUrl}
           alt={org.name}
         />
