@@ -26,7 +26,7 @@ export default () => [
   {
     key: 'orgs',
     href: '/orgs',
-    text: 'Organisations',
+    text: 'Organisations'
 
   },
   {

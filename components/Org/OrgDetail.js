@@ -8,14 +8,11 @@ import Head from 'next/head'
 import styled from 'styled-components'
 import {
   PageHeaderContainer,
-  TextHeadingBlack,
   GridContainer,
   TextPBold,
   TextH1,
-  SpacerSmall,
-  Spacer
+  SpacerSmall
 } from '../VTheme/VTheme'
-
 
 function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
@@ -24,7 +21,7 @@ function callback (key) {
 var shadowStyle = { overflow: 'visible' }
 const { TabPane } = Tabs
 
-const TitleContainer=styled.div`
+const TitleContainer = styled.div`
 margin-bottom: 2rem;
 `
 
@@ -54,7 +51,7 @@ const orgTab = (
 )
 const orgResourcesTab = (
   <span>
-<Icon type="fire" />
+    <Icon type='fire' />
     <FormattedMessage
       id='orgResources'
       defaultMessage='Offers'
@@ -64,7 +61,7 @@ const orgResourcesTab = (
 )
 const orgInstructionTab = (
   <span>
-    <Icon type="usergroup-add" />
+    <Icon type='usergroup-add' />
     <FormattedMessage
       id='orgInstruction'
       defaultMessage='Getting Started'
@@ -74,7 +71,7 @@ const orgInstructionTab = (
 )
 const orgMemberTab = (
   <span>
-    <Icon type="team" />
+    <Icon type='team' />
     <FormattedMessage
       id='orgMembers'
       defaultMessage='Members'
@@ -82,7 +79,6 @@ const orgMemberTab = (
     />
   </span>
 )
-
 
 const OrgDetail = ({ org, ...props }) => (
   <div>
@@ -107,7 +103,7 @@ const OrgDetail = ({ org, ...props }) => (
 
       <GridContainer>
         <TitleContainer>
-        <TextH1>{org.name}</TextH1>
+          <TextH1>{org.name}</TextH1>
         </TitleContainer>
         <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={orgTab} key='1'>
@@ -115,16 +111,14 @@ const OrgDetail = ({ org, ...props }) => (
             <Markdown children={org.about || ''} />
             <OrgType orgType={org.type} />
           </TabPane>
-          <TabPane tab={orgResourcesTab} key='2'>
-
-          </TabPane>
+          <TabPane tab={orgResourcesTab} key='2' />
           <TabPane tab={orgInstructionTab} key='3'>
             <p>aaaa</p>
           </TabPane>
           <TabPane tab={orgMemberTab} key='4'>
             <p>aaaa</p>
           </TabPane>
-          
+
         </Tabs>
       </GridContainer>
     </OrgGrid>
