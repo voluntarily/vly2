@@ -114,6 +114,7 @@ export default Page =>
         <Layout>
           <Head>
             <title>Voluntari.ly</title>
+            <link rel="shortcut icon" href="../static/img/icons/favicon.ico" />
             <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
             <meta charSet='utf-8' />
             <meta
