@@ -1,6 +1,7 @@
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
-import { Col, Row } from 'antd'
+import { Icon, Tabs } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import OrgType from './OrgType'
 import Head from 'next/head'
@@ -10,17 +11,64 @@ import {
   TextHeadingBlack,
   GridContainer,
   TextPBold,
-  TextH1
+  TextH1,
+  SpacerSmall
 } from '../VTheme/VTheme'
+
+function callback (key) {
+  // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
+  // console.log(key)
+}
+var shadowStyle = { overflow: 'visible' }
+const { TabPane } = Tabs
 const OrgGrid = styled.div`
   display: grid;
   grid-template-columns: 240px 1fr;
   gap: 5rem;
 `
-const OrgContainer=styled.div`
-margin-top: 5rem;
-
+const OrgContainer = styled.div`
+  margin-top: 5rem;
 `
+const orgTab = (
+  <span>
+
+    <FormattedMessage
+      id='orgAbout'
+      defaultMessage='About'
+      description='show opportunities list on volunteer home page'
+    />
+  </span>
+)
+const orgResourcesTab = (
+  <span>
+
+    <FormattedMessage
+      id='orgResources'
+      defaultMessage='Offers'
+      description='show opportunities list on volunteer home page'
+    />
+  </span>
+)
+const orgInstructionTab = (
+  <span>
+
+    <FormattedMessage
+      id='orgInstruction'
+      defaultMessage='Getting Started'
+      description='show opportunities list on volunteer home page'
+    />
+  </span>
+)
+const orgMemberTab = (
+  <span>
+
+    <FormattedMessage
+      id='orgMembers'
+      defaultMessage='Members'
+      description='show opportunities list on volunteer home page'
+    />
+  </span>
+)
 
 
 const OrgDetail = ({ org, ...props }) => (
@@ -40,16 +88,26 @@ const OrgDetail = ({ org, ...props }) => (
       </GridContainer>
 
       <GridContainer>
-<TextH1>{org.name}</TextH1>
-
-
-        <OrgType orgType={org.type} />
-
-        <Markdown children={org.about || ''} />
+        <TextH1>{org.name}</TextH1>
+        <SpacerSmall />
+        <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
+          <TabPane tab={orgTab} key='1'>
+            <Markdown children={org.about || ''} />
+            <OrgType orgType={org.type} />
+          </TabPane>
+          <TabPane tab={orgResourcesTab} key='2'>
+            <p>aaaa</p>
+          </TabPane>
+          <TabPane tab={orgInstructionTab} key='3'>
+            <p>aaaa</p>
+          </TabPane>
+          <TabPane tab={orgMemberTab} key='4'>
+            <p>aaaa</p>
+          </TabPane>
+          
+        </Tabs>
       </GridContainer>
     </OrgGrid>
-
-
   </div>
 )
 
