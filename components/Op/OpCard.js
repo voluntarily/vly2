@@ -18,7 +18,8 @@ class OpCard extends Component {
     this.draft = op.status === 'draft' ? 'DRAFT: ' : ''
     this.isArchived = op.status === 'completed' || op.status === 'cancelled'
     this.interestState = op.interest ? ` - ${op.interest.status}` : ''
-    this.startTime = op.date[0] ? moment(op.date[0]).format('ddd DD/MM/YY | HH:mm') : 'Flexible date/time'
+    this.startTime = op.date[0] ? moment(op.date[0]).format('h:mmA | ddd DD/MM/YY') : 'Flexible date/time'
+
   }
 
   getOpPageURL () {
