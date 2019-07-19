@@ -33,7 +33,7 @@ const ops = [
     tags: [],
     status: 'active'
   }
-]
+] ``
 
 const initStore = {
   opportunities: {
@@ -122,3 +122,5 @@ test.serial('mount RegisterInterestSection with op and me', async t => {
   t.truthy(myMock.done())
   myMock.restore()
 })
+
+//showing status 
