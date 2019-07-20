@@ -11,14 +11,18 @@ import { FullPage } from '../../hocs/publicPage'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
 import PersonList from '../../components/Person/PersonList'
+import Cookie from 'js-cookie'
 
 class PersonListPage extends Component {
-  static async getInitialProps ({ store }) {
+  static async getInitialProps ({ store, req }) {
+    let cookies = req ? req.cookies : Cookie.get()
     // Get all People
     try {
-      console.log('Redux store has info about session value when get init props in person list page', store.getState().session.isAuthenticated)
       // console.log('The actions for people api is ', reduxApi.actions.people)
-      await store.dispatch(reduxApi.actions.people.get()) // Could be the cause of loosing session
+      const cookiesStr = JSON.stringify(cookies)
+      await store.dispatch(reduxApi.actions.people.get(undefined, {
+        params: cookiesStr
+      })) // Could be the cause of loosing session
 
     } catch (err) {
       console.log('error in getting people', err)

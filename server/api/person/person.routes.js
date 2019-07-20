@@ -14,33 +14,22 @@ module.exports = function (server) {
       Model: Person,
       selectFields: '-__v', // Hide '__v' property
       endResponseInAction: false,
-
       beforeActions: [
         { middlewares: [ 
-          (req, res, next) => {
-            console.log('In person middleware before action');
-            console.log('The request in person middleware is ', req.path)
-            console.log('The request session is authenticated ? ',req.session.isAuthenticated);
-            console.log('The idToken cookies is not null ? ', req.cookies.idToken != null);
-            console.log('\n\n')
-            next();
-          } ,
-          authorizeActions(SchemaName), 
-          ensureSanitized ] 
-        }
+          (req,res, next) => {
+            console.log('\nBEFORE MONGOOSE CRUDIFY ACTION')
+            console.log('Is there cookie object in header ? ', req.headers.cookie != null)
+            console.log('Is there session object in req ? ', req.session != null)
+            console.log('Is there authorization object in header ? ', req.headers.authorization != null)
 
+            console.log('Req path is ', req.path)
+            next()
+          },
+          authorizeActions(SchemaName), ensureSanitized ] }
       ],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       afterActions: [
-        { middlewares: [
-            (req, res, next) => {
-              console.log('After action in person routes the session has a value of ')
-              console.log(req.session)
-              console.log('\n\n')
-              next()
-            },
-            helpers.formatResponse]
-        }
+        { middlewares: [ helpers.formatResponse] }
       ]
     })
   )

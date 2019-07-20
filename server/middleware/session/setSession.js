@@ -21,46 +21,42 @@ const isUrlBlacklisted = url => {
   return blacklisted
 }
 
+const getCookieString = (req) => {
+  if(req.cookies.idToken != null) { 
+    return req.cookies
+  } else if (req.headers.cookie != null) {
+    let cookieInJSON
+    req.headers.cookie = req.headers.cookie
+    try{
+      cookieInJSON = JSON.parse(req.headers.cookie)
+    } catch(err) {
+      console.log(err)
+      return undefined
+    }
+    return cookieInJSON
+  } else if( req.headers.cookie != null) {
+    console.log('COOKIE')
+  } 
+  return undefined
+}
 
 module.exports = async (req, res, next) => {
-  // console.log('Before assigning defualt session req.session has a value of ', req.session)
-  // console.log('In set session the value of the cookie is ', req.cookies)
   req.session = {...DEFAULT_SESSION} // Default session object will get mutated after logged in. Deconstructing the objec will only get the attribute of it
-  
-  if (!req.url.match(/_next/g) && !req.url.match(/static/g)){
-    console.log('\nIn set session middleware ')
-    console.log('The request has url: ', req.path)
-    console.log('There is idToken cookies in the request ? ', req.cookies.idToken != null)
-    // console.log(getUserFromLocalCookie)
-    // Potental solution could be add session into request object payload in personlist page
-    // TODO: learn how to add session object into get method in person list page
-  }
-  if (!isUrlBlacklisted(req.url) && req.cookies.idToken) {
+  const cookieString = getCookieString(req)
+
+  if ( !isUrlBlacklisted(req.url) && cookieString != null) {
     try {
-      const user = jwtDecode(req.cookies.idToken)
+      const user = jwtDecode(cookieString.idToken)
       req.session.isAuthenticated = true
       req.session.user = user
       req.session.me = await Person.findOne({ email: req.session.user.email }).exec()
-      if (!req.url.match(/_next/g) && !req.url.match(/static/g)){
-        console.log("\x1b[42m",'Found cookies')
-        console.log("\x1b[0m")
-      }
     } catch (err) {
       console.log(err)
     }
-  } else {
-    if (!req.url.match(/_next/g) && !req.url.match(/static/g)){
-      console.log("\x1b[41m" ,'No cookie found in the request object')
-      console.log('The request object has cookies idToken value ? ', req.cookies.idToken != null)
-      console.log('The request param  is ', req.params)
-      console.log('Reading cookie from local storage is ' , Cookie.getJSON('user'))
-      console.log('\n')
-      console.log("\x1b[0m")
-    }
-  }
+  } 
 
-  if (!req.url.match(/_next/g) && !req.url.match(/static/g)){
-    console.log('Going to the next middleware in set session\n')
+  if(!req.path.match(/_next/)){
+    console.log('\nSET session middleware\n')
   }
   next()
 }

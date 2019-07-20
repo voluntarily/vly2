@@ -19,10 +19,6 @@ const defaultConvertRequestToAction = (req) => {
 const authorizeActions = (subject, convertRequestToAction) => (req, res, next) => {
   const action = convertRequestToAction === undefined ? defaultConvertRequestToAction(req) : convertRequestToAction(req)
   const authorized = req.ability.can(action, subject)
-  console.log('Calling from the authorized request')
-  console.log('The quest has a path value of ', req.path)
-  console.log('The request has session value of ', req.session)
-  console.log('The request has cookie of ', req.cookies)
   if (authorized) {
     next()
   } else {

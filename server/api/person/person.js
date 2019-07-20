@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const idvalidator = require('mongoose-id-validator')
 const Schema = mongoose.Schema
+const { SchemaName } = require('./person.constants')
 const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
 const { Role } = require('../../services/auth/role')
 
@@ -35,4 +36,4 @@ personSchema.plugin(idvalidator)
 // personSchema.plugin(accessibleRecordsPlugin)
 // personSchema.plugin(accessibleFieldsPlugin)
 
-module.exports = mongoose.model('Person', personSchema)
+module.exports = mongoose.model(SchemaName, personSchema)
