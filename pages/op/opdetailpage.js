@@ -192,7 +192,7 @@ export class OpDetailPage extends Component {
             isAuthenticated={this.props.isAuthenticated}
             canRegisterInterest={canRegisterInterest}
             op={op}
-            me={this.props.me._id}
+            meID={this.props.me._id}
           />
           <OpOwnerManageInterests
             canManageInterests={canManageInterests}
