@@ -27,7 +27,7 @@ class RegisterInterestSection extends Component {
   // TODO do we need to change this to getInitialProps?
   async componentDidMount () {
     const op = this.props.op
-    const me = this.props.me
+    const me = this.props.meID
     try {
       await this.props.dispatch(reduxApi.actions.interests.get({ id: '', op, me }))
     } catch (err) {
@@ -45,7 +45,6 @@ class RegisterInterestSection extends Component {
       await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
       message.success('Interest updated')
     } else {
-      // console.log('Adding interest')
       await this.props.dispatch(reduxApi.actions.interests.post({}, { body: JSON.stringify(interest) }))
       message.success('Interest added')
     }
@@ -81,7 +80,7 @@ class RegisterInterestSection extends Component {
       if (this.props.interests && this.props.interests.data && this.props.interests.data.length > 0) {
         interest = this.props.interests.data[0]
       } else { // If not, use a blank interest.
-        interest = getNewInterest(this.props.me, this.props.op)
+        interest = getNewInterest(this.props.meID, this.props.op)
       }
 
       return (

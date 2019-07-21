@@ -18,7 +18,7 @@ export default class OpVolunteerInterestSection extends Component {
           <Divider />
         </div>
         : this.props.canRegisterInterest && <div>
-          <RegisterInterestSection op={this.props.op} me={this.props.me._id} />
+          <RegisterInterestSection op={this.props.op} meID={this.props.meID} />
           <Divider />
         </div>
     )
