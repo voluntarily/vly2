@@ -10,7 +10,7 @@ import { FullPage } from '../../hocs/publicPage'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
 import Loading from '../../components/Loading'
-import Cookie from 'js-cookie' 
+import Cookie from 'js-cookie'
 
 const blankPerson = {
   // for new people load the default template doc.
@@ -40,7 +40,7 @@ export class PersonDetailPage extends Component {
     } else if (query && query.id) {
       let cookies = req ? req.cookies : Cookie.get()
       const cookiesStr = JSON.stringify(cookies)
-      await store.dispatch(reduxApi.actions.people.get(query,{
+      await store.dispatch(reduxApi.actions.people.get(query, {
         params: cookiesStr
       }))
       return {

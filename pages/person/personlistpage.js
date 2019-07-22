@@ -18,11 +18,10 @@ class PersonListPage extends Component {
     let cookies = req ? req.cookies : Cookie.get()
     // Get all People
     try {
-      // console.log('The actions for people api is ', reduxApi.actions.people)
       const cookiesStr = JSON.stringify(cookies)
       await store.dispatch(reduxApi.actions.people.get(undefined, {
         params: cookiesStr
-      })) // Could be the cause of loosing session
+      }))
 
     } catch (err) {
       console.log('error in getting people', err)

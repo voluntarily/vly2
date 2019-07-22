@@ -52,7 +52,6 @@ const updateInterest = async (req, res) => {
 
 const createInterest = async (req, res) => {
   const newInterest = new Interest(req.body)
-  console.log('Body of the request is ', req.body)
   newInterest.save(async (err, saved) => {
     if (err) {
       res.status(500).send(err)
@@ -68,7 +67,7 @@ const createInterest = async (req, res) => {
     sendEmailBaseOn('acknowledgeInterest', volunteerID, title, opId)
     sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
     const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
-    // res.json(got)
+    res.json(got)
   })
 }
 

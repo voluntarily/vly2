@@ -1,5 +1,4 @@
 const jwtDecode = require('jwt-decode')
-const Cookie = require('js-cookie')
 const Person = require('../../api/person/person')
 
 const DEFAULT_SESSION = {
@@ -22,29 +21,25 @@ const isUrlBlacklisted = url => {
 }
 
 const getCookieString = (req) => {
-  if(req.cookies.idToken != null) { 
+  if (req.cookies.idToken != null) {
     return req.cookies
   } else if (req.headers.cookie != null) {
     let cookieInJSON
-    req.headers.cookie = req.headers.cookie
-    try{
+    try {
       cookieInJSON = JSON.parse(req.headers.cookie)
-    } catch(err) {
-      console.log(err)
+    } catch (err) {
       return undefined
     }
     return cookieInJSON
-  } else if( req.headers.cookie != null) {
-    console.log('COOKIE')
-  } 
+  }
   return undefined
 }
 
 module.exports = async (req, res, next) => {
-  req.session = {...DEFAULT_SESSION} // Default session object will get mutated after logged in. Deconstructing the objec will only get the attribute of it
+  req.session = { ...DEFAULT_SESSION } // Default session object will get mutated after logged in. Deconstructing the objec will only get the attribute of it
   const cookieString = getCookieString(req)
 
-  if ( !isUrlBlacklisted(req.url) && cookieString != null) {
+  if (!isUrlBlacklisted(req.url) && cookieString != null) {
     try {
       const user = jwtDecode(cookieString.idToken)
       req.session.isAuthenticated = true
@@ -53,10 +48,6 @@ module.exports = async (req, res, next) => {
     } catch (err) {
       console.log(err)
     }
-  } 
-
-  if(!req.path.match(/_next/)){
-    console.log('\nSET session middleware\n')
   }
   next()
 }
