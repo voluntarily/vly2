@@ -22,7 +22,6 @@ class PersonListPage extends Component {
       await store.dispatch(reduxApi.actions.people.get(undefined, {
         params: cookiesStr
       }))
-
     } catch (err) {
       console.log('error in getting people', err)
     }
