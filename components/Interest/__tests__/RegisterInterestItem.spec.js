@@ -183,7 +183,6 @@ test('declined', t => {
     onChangeStatus={changeStatus}
     onWithdraw={withdraw}
   />)
-  console.log(wrapper.html())
   t.is(wrapper.find('h1').first().text(), 'Our apologies')
 })
 // TODO: popconfirm requires a valid event.
