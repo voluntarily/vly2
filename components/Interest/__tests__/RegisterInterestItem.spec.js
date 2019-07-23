@@ -49,6 +49,27 @@ const interests = [
     opportunity: ops[0],
     comment: "I'm Andrew",
     status: 'committed'
+  },
+  {
+    _id: interestid,
+    person: people[0],
+    opportunity: ops[0],
+    comment: "I'm Andrew",
+    status: 'completed'
+  },
+  {
+    _id: interestid,
+    person: people[0],
+    opportunity: ops[0],
+    comment: "I'm Andrew",
+    status: 'cancelled'
+  },
+  {
+    _id: interestid,
+    person: people[0],
+    opportunity: ops[0],
+    comment: "I'm Andrew",
+    status: 'declined'
   }
 
 ]
@@ -100,11 +121,70 @@ test('interested state', t => {
   />)
   t.is(wrapper.find('button').first().text(), 'Withdraw Interest')
   wrapper.find('button').first().simulate('click')
-  // const popconfirm = wrapper.find('Popconfirm').filter('#WithdrawInterestPopConfirm').first()
-  // console.log(popconfirm.html())
-
-  // TODO: popconfirm requires a valid event.
-  // popconfirm.props().onConfirm()
-  // Can't get here until we
-  // t.truthy(withdraw.calledOnce)
 })
+
+test('completed state', t => {
+  const changeStatus = sinon.fake()
+  const withdraw = sinon.fake()
+
+  const wrapper = mountWithIntl(<RegisterInterestItem
+    interest={interests[1]}
+    onChangeStatus={changeStatus}
+    onWithdraw={withdraw}
+  />)
+  t.is(wrapper.find('h1').first().text(), 'Thank you for expressing your interest!')
+})
+
+test('cancelled state', t => {
+  const changeStatus = sinon.fake()
+  const withdraw = sinon.fake()
+
+  const wrapper = mountWithIntl(<RegisterInterestItem
+    interest={interests[4]}
+    onChangeStatus={changeStatus}
+    onWithdraw={withdraw}
+  />)
+  // testing the words that come out
+  t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
+})
+
+test('invited', t => {
+  const changeStatus = sinon.fake()
+  const withdraw = sinon.fake()
+
+  const wrapper = mountWithIntl(<RegisterInterestItem
+    interest={interests[4]}
+    onChangeStatus={changeStatus}
+    onWithdraw={withdraw}
+  />)
+  // console.log(wrapper.html())
+  t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
+})
+
+test('committed', t => {
+  const changeStatus = sinon.fake()
+  const withdraw = sinon.fake()
+
+  const wrapper = mountWithIntl(<RegisterInterestItem
+    interest={interests[2]}
+    onChangeStatus={changeStatus}
+    onWithdraw={withdraw}
+  />)
+  // console.log(wrapper.html())
+  t.is(wrapper.find('h1').first().text(), 'You\'ve been invited to participate!')
+})
+
+test('declined', t => {
+  const changeStatus = sinon.fake()
+  const withdraw = sinon.fake()
+
+  const wrapper = mountWithIntl(<RegisterInterestItem
+    interest={interests[5]}
+    onChangeStatus={changeStatus}
+    onWithdraw={withdraw}
+  />)
+  t.is(wrapper.find('h1').first().text(), 'Our apologies')
+})
+// TODO: popconfirm requires a valid event.
+// popconfirm.props().onConfirm()
+// Can't get here until we
