@@ -136,7 +136,9 @@ test('cancelled state', t => {
     onChangeStatus={changeStatus}
     onWithdraw={withdraw}
   />)
-  t.is(withdraw.InterestButtonEnabled)
+  //testing the words that come out
+  console.log(wrapper.html())
+  t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
 })
 
 test('invited', t => {

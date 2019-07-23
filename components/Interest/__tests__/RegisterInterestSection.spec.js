@@ -33,7 +33,7 @@ const ops = [
     tags: [],
     status: 'active'
   }
-] ``
+] 
 
 const initStore = {
   opportunities: {
