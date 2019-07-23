@@ -60,8 +60,8 @@ test('renders the list with ops to get card coverage', t => {
 
 test('renders the list with no ops', t => {
   const wrapper = renderWithIntl(
-    <OpList handleShowOp={() => {}} handleDeleteOp={() => {}} />
+    <OpList handleShowOp={() => {}} handleDeleteOp={() => {}} ops={[]} />
   )
   t.is(wrapper.find('OpCard').length, 0)
-  t.is(wrapper.find('span').text(), 'No matching opportunities')
+  t.is(wrapper.find('span').text(), '')
 })

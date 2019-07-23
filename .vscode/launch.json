@@ -22,6 +22,20 @@
       "request": "launch",
       "name": "Vly2",
       "program": "${workspaceFolder}/server/server.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "protocol": "inspector",
+      "name": "Vly2 End-toend test",
+      "program": "${workspaceFolder}/node_modules/testcafe/bin/testcafe-with-v8-flag-filter.js",
+      "args": [
+        "chrome",
+        "${relativeFile}"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceRoot}"
     }
   ]
 }
+

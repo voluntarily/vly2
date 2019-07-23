@@ -17,7 +17,8 @@ const blankAct = {
   imgUrl: '',
   duration: '',
   description: '',
-  status: 'draft'
+  status: 'draft',
+  tags: []
 }
 export class ActDetailPage extends Component {
   state = {
@@ -26,6 +27,8 @@ export class ActDetailPage extends Component {
   }
 
   static async getInitialProps ({ store, query }) {
+    await store.dispatch(reduxApi.actions.tags.get())
+
     // Get one Act
     const isNew = query && query.new && query.new === 'new'
     if (isNew) {
@@ -114,7 +117,7 @@ export class ActDetailPage extends Component {
 
     // display permissions
     const canEdit = (isOwner || isOrgAdmin || isAdmin)
-    const existingTags = this.props.tags.data.map(tag => tag.tag)
+    const existingTags = this.props.tags.data
 
     const ownerInfo = () => {
       // TODO: should this be owner individual or Activity Provider Org
