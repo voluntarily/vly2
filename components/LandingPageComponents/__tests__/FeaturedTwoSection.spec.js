@@ -36,7 +36,7 @@ test('shallow the list with ops', t => {
 
 test('renders the list with no ops', t => {
   const wrapper = renderWithIntl(
-    <FeaturedTwoSection handleShowOp={() => {}} handleDeleteOp={() => {}} />
+    <FeaturedTwoSection handleShowOp={() => {}} title='' handleDeleteOp={() => {}} />
   )
   t.is(wrapper.find('OpCard').length, 0)
   t.is(wrapper.find('span').text(), 'No matching opportunities')

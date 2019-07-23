@@ -8,6 +8,7 @@ import OrgDetail from '../../components/Org/OrgDetail'
 import OrgDetailForm from '../../components/Org/OrgDetailForm'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
+import { Spacer } from '../../components/VTheme/VTheme'
 
 const blankOrg = {
   name: '',
@@ -123,10 +124,10 @@ class OrgDetailPage extends Component {
           <OrgDetailForm org={org} onSubmit={this.handleSubmit.bind(this, org)} onCancel={this.handleCancel.bind(this)} />
         </div>
         : <div>
-          { canEdit && <Button style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >Edit</Button>}
 
           <OrgDetail org={org} />
-
+          <Spacer />
+          { canEdit && <Button type='primary' shape='round' onClick={() => this.setState({ editing: true })} >Edit</Button>}
           <Button shape='round'><Link href='/orgs'><a>
             <FormattedMessage id='showOrgs' defaultMessage='Show All' description='Button to show all organisations' />
           </a></Link></Button>
@@ -135,11 +136,11 @@ class OrgDetailPage extends Component {
               <FormattedMessage id='deleteOrg' defaultMessage='Remove Organisation' description='Button to remove an Organisatino on OrgDetails page' />
             </Button>
           </Popconfirm> }
+
         </div>
     }
     return (
       <FullPage>
-        <h1><FormattedMessage defaultMessage='Organisation' id='org.detail.title' /></h1>
         {content}
       </FullPage>
     )

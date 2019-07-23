@@ -4,10 +4,11 @@ import PropTypes from 'prop-types'
 
 const SearchContainer = styled.div`
   position: fixed;
-  z-index: 100;
-  margin-top: 0rem;
+  z-index: 9;
+  margin-top: -2.5rem;
+  top: 6rem;
   width: 100vw;
-  height: 7rem;
+  height: 5rem;
   background: #ffffff;
   box-shadow: 1px 1px 12px 0 rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -22,7 +23,7 @@ const SearchContainer = styled.div`
 const SearchFilterText = styled.p`
   padding-left: 1rem;
   padding-right: 1rem;
-  margin-top: 4.4rem;
+  margin-top: 1.8rem;
   margin-bottom: 0.5rem;
   font-size: 1rem;
   letter-spacing: -0.5px;
@@ -33,7 +34,7 @@ const SearchFilterText = styled.p`
 
 const FilterItem = styled.a`
   float: left;
-  margin-top: 4.4rem;
+  margin-top: 1.8rem;
   margin-right: 0.5rem;
   padding: 0 1rem;
   text-align: center;

@@ -1,5 +1,9 @@
 container:
   image: node:12
+  additional_containers:
+    - name: db
+      image: mongo:latest
+      port: 27017
 
 lint_task:
   node_modules_cache:
@@ -24,10 +28,21 @@ test_task:
     - unset CIRRUS_CI
     - ./node_modules/codecov/bin/codecov --disable=gcov
 
+systemtest_task:
+  node_modules_cache:
+    folder: node_modules
+    fingerprint_script: cat package-lock.json
+    populate_script: MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" MONGOMS_VERSION="4.0.5" MONGOMS_DISABLE_POSTINSTALL=1 npm ci
+  test_script:
+    - apt-get update
+    - apt-get install -y firefox-esr
+    - npm run end-to-end-test
+
 prod_docker_docker_builder:
   only_if: $CIRRUS_BRANCH == 'master'
   depends_on:
     - test
+    - systemtest
     - lint
   env:
     AWS_ACCOUNT_ID: ENCRYPTED[3afae87e49cb7fb6d48c91aad7fdbca95b7bdad59a37ba5e5baa04f9be4bb7dc7b58dff4b44e754e438c21af6e414636]
