@@ -123,10 +123,10 @@ test('completed state', t => {
     interest={interests[1]}
     onChangeStatus={changeStatus}
     onWithdraw={withdraw}
-  />)
-  t.is((withdraw.InterestButtonEnabled))
+  />)                     
+   t.is(wrapper.find('h1').first().text(),'Thank you for expressing your interest!' )
 })
-
+ 
 test('cancelled state', t => {
   const changeStatus = sinon.fake()
   const withdraw = sinon.fake()
@@ -137,7 +137,6 @@ test('cancelled state', t => {
     onWithdraw={withdraw}
   />)
   //testing the words that come out
-  console.log(wrapper.html())
   t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
 })
 
@@ -151,6 +150,19 @@ test('invited', t => {
     onWithdraw={withdraw}
   />)
   t.is(withdraw.InterestButtonEnabled)
+})
+
+test('committed', t => {
+  const changeStatus = sinon.fake()
+  const withdraw = sinon.fake()
+
+  const wrapper = mountWithIntl(<RegisterInterestItem
+    interest={interests[3]}
+    onChangeStatus={changeStatus}
+    onWithdraw={withdraw}
+    />)
+    console.log(wrapper.html())
+    t.is(wrapper.find('h1').first().text(),'hank you so much!')
 })
 
 /// ////////////////////////////////////////////////////////////////////////////////////
