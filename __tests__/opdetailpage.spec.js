@@ -186,7 +186,7 @@ test('can Edit the Op', t => {
   t.is(editButton.text(), 'Edit')
   editButton.simulate('click')
 
-  // should switch into edit mode 
+  // should switch into edit mode
   const cancelButton = wrapper.find('#cancelOpBtn').first()
   t.is(cancelButton.text(), 'Cancel')
   cancelButton.simulate('click')

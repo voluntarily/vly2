@@ -7,7 +7,6 @@ import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import people from '../../../server/api/person/__tests__/person.fixture'
 import { API_URL } from '../../../lib/apiCaller'
-import { T } from 'antd/lib/upload/utils';
 
 const { fetchMock } = require('fetch-mock')
 
@@ -113,8 +112,7 @@ test('mount the InterestSection with two interests', async t => {
   t.is(declinebutton.text(), 'Decline')
   //  console.log(declinebutton.html())
   declinebutton.simulate('click')
-  const popconfirm = wrapper.find('#declineInvitePopConfirm').first()
-  
+
   // // TODO: fix throw of rejected promise at this point
   // popconfirm.props().onConfirm(interests[0])
   // await sleep(1) // allow asynch fetch to complete

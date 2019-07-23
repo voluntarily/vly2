@@ -131,10 +131,10 @@ test('completed state', t => {
     interest={interests[1]}
     onChangeStatus={changeStatus}
     onWithdraw={withdraw}
-  />)                     
-   t.is(wrapper.find('h1').first().text(),'Thank you for expressing your interest!' )
+  />)
+  t.is(wrapper.find('h1').first().text(), 'Thank you for expressing your interest!')
 })
- 
+
 test('cancelled state', t => {
   const changeStatus = sinon.fake()
   const withdraw = sinon.fake()
@@ -144,7 +144,7 @@ test('cancelled state', t => {
     onChangeStatus={changeStatus}
     onWithdraw={withdraw}
   />)
-  //testing the words that come out
+  // testing the words that come out
   t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
 })
 
@@ -157,7 +157,7 @@ test('invited', t => {
     onChangeStatus={changeStatus}
     onWithdraw={withdraw}
   />)
-  //console.log(wrapper.html())
+  // console.log(wrapper.html())
   t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
 })
 
@@ -169,9 +169,9 @@ test('committed', t => {
     interest={interests[2]}
     onChangeStatus={changeStatus}
     onWithdraw={withdraw}
-    />)
-    //console.log(wrapper.html())
-    t.is(wrapper.find('h1').first().text(),'You\'ve been invited to participate!')
+  />)
+  // console.log(wrapper.html())
+  t.is(wrapper.find('h1').first().text(), 'You\'ve been invited to participate!')
 })
 
 test('declined', t => {
@@ -182,9 +182,9 @@ test('declined', t => {
     interest={interests[5]}
     onChangeStatus={changeStatus}
     onWithdraw={withdraw}
-    />)
+  />)
   console.log(wrapper.html())
-  t.is(wrapper.find('h1').first().text(),'Our apologies')
+  t.is(wrapper.find('h1').first().text(), 'Our apologies')
 })
 // TODO: popconfirm requires a valid event.
 // popconfirm.props().onConfirm()
