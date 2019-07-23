@@ -68,7 +68,7 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
     <Provider store={realStore}>
       <RegisterInterestSection
         op={opid}
-        me={meid}
+        meID={meid}
       />
     </Provider>
   )
@@ -109,7 +109,7 @@ test.serial('mount RegisterInterestSection with op and me', async t => {
     <Provider store={realStore}>
       <RegisterInterestSection
         op={opid}
-        me={meid}
+        meID={meid}
       />
     </Provider>
   )
