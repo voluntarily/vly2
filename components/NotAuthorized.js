@@ -3,6 +3,7 @@ import React from 'react'
 // import styled from 'styled-components'
 import { FullPage } from '../hocs/publicPage'
 import { Spacer, TextH1 } from './VTheme/VTheme'
+import Link from 'next/link'
 
 // const Heading = styled.h1`
 //   font-size: 50px;
@@ -47,7 +48,10 @@ export default () => (
         </p>
         <TextH1>
           You don't have access to this page 😅 <br />
-          Try and<a href='/auth/sign-in'> sign in</a> to see it?
+          Try and<Link key={item.href} href={item.href}>
+            sign in 
+          </Link> 
+          to see it?
         </TextH1>
       </center>
     </FullPage>
