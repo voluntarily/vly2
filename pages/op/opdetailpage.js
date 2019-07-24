@@ -13,7 +13,7 @@ import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
 import InterestSection from '../../components/Interest/InterestSection'
 import OpLoadingPage from './oploadingpage'
 import OpUnavalablePage from './opunavailablepage'
-import OpEditPage from './opeditpage';
+import OpEditPage from './opeditpage'
 
 const blankOp = {
   title: '',
@@ -38,6 +38,10 @@ export class OpDetailPage extends Component {
     this.confirmOpportunity = this.confirmOpportunity.bind(this)
     this.cancelOpportunity = this.cancelOpportunity.bind(this)
     this.isAdmin = this.isAdmin.bind(this)
+    this.isOwner = this.isOwner.bind(this)
+    this.canManageInterests = this.canManageInterests.bind(this)
+    this.canRegisterInterest = this.canRegisterInterest.bind(this)
+    this.retrieveOpportunity = this.retrieveOpportunity.bind(this)
   }
 
   static async getInitialProps ({ store, query }) {
@@ -107,6 +111,39 @@ export class OpDetailPage extends Component {
     return this.props.me && this.props.me.role.includes('admin')
   }
 
+  isOwner (op) {
+    return this.props.isNew || this.props.me._id === op.requestor
+  }
+
+  canEdit (op) {
+    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
+    return (this.isOwner(op) || isOrgAdmin || this.isAdmin())
+  }
+
+  canManageInterests (op) {
+    return (this.isOwner(op) || this.isAdmin())
+  }
+
+  canRegisterInterest (op) {
+    return (this.props.isAuthenticated && !this.isOwner(op))
+  }
+
+  retrieveOpportunity () {
+    let op
+    if (this.props.isNew) {
+      op = blankOp
+      op.requestor = this.props.me
+    } else {
+      op = {
+        ...this.props.opportunities.data[0],
+        // tags: this.props.opportunities.data[0].tags.map(op => op.tag),
+        startDate: this.props.opportunities.data[0].date[0],
+        endDate: this.props.opportunities.data[0].date[1]
+      }
+    }
+    return op
+  }
+
   render () {
     // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
     if (!this.props.isNew) {
@@ -118,41 +155,15 @@ export class OpDetailPage extends Component {
       }
     }
 
-    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
-    let isOwner = false
-    let op
-    let organizer
-
-    if (this.props.isNew) {
-      op = blankOp
-      organizer = this.props.me
-      isOwner = true
-    } else {
-      op = {
-        ...this.props.opportunities.data[0],
-        // tags: this.props.opportunities.data[0].tags.map(op => op.tag),
-        startDate: this.props.opportunities.data[0].date[0],
-        endDate: this.props.opportunities.data[0].date[1]
-      }
-      organizer = op.requestor
-      isOwner = ((this.props.me || {})._id === organizer._id)
-    }
-
-    // display permissions
-    const canEdit = (isOwner || isOrgAdmin || this.isAdmin())
-    const canManageInterests = (isOwner || this.isAdmin())
-    const canRegisterInterest = (this.props.isAuthenticated && !isOwner)
-
-    const existingTags = this.props.tags.data
-    const existingLocations = this.props.locations.data
+    let op = this.retrieveOpportunity()
 
     if (op && this.state.editing) {
       return (
         <OpEditPage
           op={op}
           me={this.props.me}
-          existingTags={existingTags}
-          existingLocations={existingLocations}
+          existingTags={this.props.tags.data}
+          existingLocations={this.props.locations.data}
           stopEditing={this.stopEditing.bind(this)}
           updateOpportunity={this.updateOpportunity.bind(this)}
           createOpportunity={this.createOpportunity.bind(this)}
@@ -161,7 +172,7 @@ export class OpDetailPage extends Component {
     } else {
       return (
         <FullPage>
-          {canEdit &&
+          {this.canEdit(op) &&
             <Button
               id='editOpBtn'
               style={{ float: 'right' }}
@@ -175,17 +186,17 @@ export class OpDetailPage extends Component {
             op={op}
           />
           <OpOrganizerInfo
-            organizer={organizer}
+            organizer={op.requestor}
           />
           <Divider />
           <OpVolunteerInterestSection
             isAuthenticated={this.props.isAuthenticated}
-            canRegisterInterest={canRegisterInterest}
+            canRegisterInterest={this.canRegisterInterest(op)}
             op={op}
             meID={this.props.me._id}
           />
           <OpOwnerManageInterests
-            canManageInterests={canManageInterests}
+            canManageInterests={this.canManageInterests(op)}
             op={op}
             confirmOpportunity={this.confirmOpportunity}
             cancelOpportunity={this.cancelOpportunity}
