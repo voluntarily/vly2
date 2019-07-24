@@ -2,7 +2,7 @@ import React from 'react'
 import { FullPage } from '../../hocs/publicPage'
 import { FormattedMessage } from 'react-intl'
 
-export class OpUnavailablePage extends React.Component {
+export default class OpUnavailablePage extends React.Component {
   render () {
     return (<FullPage>
       <h2>

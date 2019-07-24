@@ -1,10 +1,9 @@
-import { Button, Divider, message } from 'antd'
+import { Button, Divider } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import OpDetail from '../../components/Op/OpDetail'
-import OpDetailForm from '../../components/Op/OpDetailForm'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
@@ -14,6 +13,7 @@ import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
 import InterestSection from '../../components/Interest/InterestSection'
 import OpLoadingPage from './oploadingpage'
 import OpUnavalablePage from './opunavailablepage'
+import OpEditPage from './opeditpage';
 
 const blankOp = {
   title: '',
@@ -68,30 +68,27 @@ export class OpDetailPage extends Component {
     }
   }
 
-  async handleSubmit (op) {
-    let res = {}
-    if (op._id) {
-      res = await this.props.dispatch(
-        reduxApi.actions.opportunities.put(
-          { id: op._id },
-          { body: JSON.stringify(op) }
-        )
+  async createOpportunity (op) {
+    const res = await this.props.dispatch(
+      reduxApi.actions.opportunities.put(
+        { id: op._id },
+        { body: JSON.stringify(op) }
       )
-    } else {
-      res = await this.props.dispatch(
-        reduxApi.actions.opportunities.post(
-          {},
-          { body: JSON.stringify(op) }
-        )
-      )
-      op = res[0]
-      Router.replace(`/ops/${op._id}`)
-    }
-    this.setState({ editing: false })
-    message.success('Saved.')
+    )
+    return res[0]
   }
 
-  handleCancelEdit = () => {
+  async updateOpportunity (op) {
+    const res = await this.props.dispatch(
+      reduxApi.actions.opportunities.post(
+        {},
+        { body: JSON.stringify(op) }
+      )
+    )
+    return res[0]
+  }
+
+  stopEditing = () => {
     this.setState({ editing: false })
     if (this.props.isNew) { // return to previous
       Router.back()
@@ -151,16 +148,16 @@ export class OpDetailPage extends Component {
 
     if (op && this.state.editing) {
       return (
-        <FullPage>
-          <OpDetailForm
-            op={op}
-            me={this.props.me}
-            onSubmit={this.handleSubmit.bind(this, op)}
-            onCancel={this.handleCancelEdit.bind(this)}
-            existingTags={existingTags}
-            existingLocations={existingLocations}
-          />
-        </FullPage>)
+        <OpEditPage
+          op={op}
+          me={this.props.me}
+          existingTags={existingTags}
+          existingLocations={existingLocations}
+          stopEditing={this.stopEditing.bind(this)}
+          updateOpportunity={this.updateOpportunity.bind(this)}
+          createOpportunity={this.createOpportunity.bind(this)}
+        />
+      )
     } else {
       return (
         <FullPage>
