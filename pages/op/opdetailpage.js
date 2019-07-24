@@ -13,6 +13,8 @@ import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestS
 import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
 import InterestSection from '../../components/Interest/InterestSection'
 import OpLoadingPage from './oploadingpage'
+import OpUnavalablePage from './opunavailablepage'
+
 const blankOp = {
   title: '',
   subtitle: '',
@@ -115,16 +117,7 @@ export class OpDetailPage extends Component {
         return (<OpLoadingPage />)
       }
       if (this.props.opportunities.data.length !== 1) {
-        return (
-          <FullPage>
-            <h2>
-              <FormattedMessage
-                id='op.notavailable'
-                defaultMessage='Sorry, this opportunity is not available'
-                description='message on person not found page'
-              />
-            </h2>
-          </FullPage>)
+        return (<OpUnavalablePage />)
       }
     }
 
