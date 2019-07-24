@@ -7,13 +7,12 @@ import OpDetail from '../../components/Op/OpDetail'
 import OpDetailForm from '../../components/Op/OpDetailForm'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
-import Loading from '../../components/Loading'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import OpOrganizerInfo from '../../components/Op/OpOrganizerInfo'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
 import InterestSection from '../../components/Interest/InterestSection'
-
+import OpLoadingPage from './oploadingpage'
 const blankOp = {
   title: '',
   subtitle: '',
@@ -113,7 +112,7 @@ export class OpDetailPage extends Component {
     // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
     if (!this.props.isNew) {
       if (this.props.opportunities.loading) {
-        return (<FullPage><Loading><p>Loading details...</p></Loading></FullPage>)
+        return (<OpLoadingPage />)
       }
       if (this.props.opportunities.data.length !== 1) {
         return (
