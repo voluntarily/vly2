@@ -12,6 +12,7 @@ import { OpportunityStatus } from '../../server/api/opportunity/opportunity.cons
 import OpOrganizerInfo from '../../components/Op/OpOrganizerInfo'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
+import InterestSection from '../../components/Interest/InterestSection'
 
 const blankOp = {
   title: '',
@@ -200,6 +201,8 @@ export class OpDetailPage extends Component {
             confirmOpportunity={this.confirmOpportunity}
             cancelOpportunity={this.cancelOpportunity}
           />
+          <Divider />
+          <InterestSection opid={op._id} />
         </FullPage>
       )
     }
