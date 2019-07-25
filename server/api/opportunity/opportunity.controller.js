@@ -103,7 +103,7 @@ const getOpportunity = async (req, res) => {
       .populate('requestor')
       .populate('tags')
       .exec()
-    if (!got) {
+    if (got == null) {
       throw Error()
     }
     res.json(got)
