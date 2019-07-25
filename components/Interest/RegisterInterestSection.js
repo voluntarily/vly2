@@ -27,7 +27,7 @@ class RegisterInterestSection extends Component {
   // TODO do we need to change this to getInitialProps?
   async componentDidMount () {
     const op = this.props.op
-    const me = this.props.me
+    const me = this.props.meID
     try {
       await this.props.dispatch(reduxApi.actions.interests.get({ id: '', op, me }))
     } catch (err) {
@@ -45,7 +45,6 @@ class RegisterInterestSection extends Component {
       await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
       message.success('Interest updated')
     } else {
-      // console.log('Adding interest')
       await this.props.dispatch(reduxApi.actions.interests.post({}, { body: JSON.stringify(interest) }))
       message.success('Interest added')
     }
@@ -61,7 +60,7 @@ class RegisterInterestSection extends Component {
   // Render the component depending on whether we've completed the initial api call, and what information is contained in the store.
   render () {
     // If we haven't finished making the API request to the server yet...
-    if (!this.props.interests) {
+    if (this.props.interests.loading) {
       return (
         <section>
           <Loading>
@@ -78,12 +77,12 @@ class RegisterInterestSection extends Component {
       // Get the interest out of the store, if any.
       let interest = null
 
-      if (this.props.interests && this.props.interests.data && this.props.interests.data.length > 0) {
+      if (this.props.interests.sync && this.props.interests.data.length > 0) {
         interest = this.props.interests.data[0]
       } else { // If not, use a blank interest.
-        interest = getNewInterest(this.props.me, this.props.op)
+        interest = getNewInterest(this.props.meID, this.props.op)
       }
-
+      // console.log(interest)
       return (
         <section>
           <RegisterInterestItem

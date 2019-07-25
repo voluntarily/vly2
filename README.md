@@ -99,13 +99,10 @@ You will need:
 
 ### Start the Containers
 
-    docker-compose docker-compose.yml up -d --build
+    docker-compose up -d --build
 
 Note this may take a few minutes the first time you run it as it will download some images.
 Also once the command returns the services are still starting up so it will be a minute before you can visit the webpage.
-
-Note In order to stop the root folder filling up I moved all the docker files to the Docker Subfolder. You can either run from root using the -f path or cd to the Docker folder and run there.
-
 
 ### You are in.
 * Open your web browser at http://localhost:3122/

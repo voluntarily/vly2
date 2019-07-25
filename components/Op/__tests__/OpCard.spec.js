@@ -89,7 +89,7 @@ test('show card for a draft op', t => {
 test('Link on cards in history tab, points to archived Opportunities.', t => {
   const archivedOp = t.context.archivedOp
   const wrapper = mountWithIntl(
-    <OpCard op={archivedOp} />
+    <OpCard op={archivedOp} size='Small' />
   )
   let archivedOpLink = wrapper.find('#linkToOpportunity').props().href
   t.is((archivedOpLink), '/archivedops/' + archivedOp._id)

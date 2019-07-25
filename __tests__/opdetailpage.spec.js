@@ -27,7 +27,7 @@ test.before('Setup fixtures', (t) => {
   ops.map((op, index) => {
     op._id = objectid().toString()
     op.requestor = me
-    op.tags = [ tags[index], tags[index + 1] ]
+    op.tags = [tags[index], tags[index + 1]]
   })
 
   t.context = {
@@ -136,7 +136,6 @@ test('send "PUT" request to redux-api when opportunity is completed on OpDetailP
       <RoutedOpDetailPage {...props} />
     </Provider>
   )
-
   t.context.mockStore.clearActions()
   wrapper.find('Popconfirm').filter('#completedOpPopConfirm').props().onConfirm({})
   t.is(t.context.mockStore.getActions()[0].type, '@@redux-api@opportunities')
@@ -244,7 +243,7 @@ test('display loading opportunity message when opportunity is loading', t => {
         data: []
       },
       tags: { data: tags },
-      locations: { data: [ locations ] }
+      locations: { data: [locations] }
     }
   )
 
