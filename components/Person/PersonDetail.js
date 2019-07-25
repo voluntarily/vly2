@@ -1,69 +1,86 @@
-import { Col, Icon, Row } from 'antd'
+import { Col, Icon, Row, Divider } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import PersonRoles from './PersonRole'
+import {
+  GridContainer,
+  TextPBold,
+  TextH3,
+  TextSubtitle
+} from '../VTheme/VTheme'
 
-const DL = styled.dl`
+const ProfileGrid = styled.div`
+  display: grid;
+  grid-template-columns: 16rem 1fr;
+  gap: 5rem;
+`
 
-dt {
-  float: left;
-  clear: left;
-  padding: 2px 4px;
-  text-align: right;
-}
-dd {
-  margin: 0;
-  padding: 2px 4px;
-}
+const ProfileImage = styled.img`
+  width: 15rem;
+`
+
+
+
+const DetailItem = styled.div`
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+`
+
+const ListItem = styled.div`
+  background-color: none;
+  min-height: 5rem;
+  margin-bottom: 5rem;
 `
 
 const PersonDetail = ({ person }, ...props) => (
-
-  <Row type='flex' align='top'>
+  <div>
     <Head title={person.nickname} />
-    <Col // these settings put the image first on narrow pages.
-      sm={{ span: 24, order: 1 }}
-      md={{ span: 12, order: 2 }}
-    >
-      <img style={{ margin: '1rem', width: '100%', maxWidth: '300px' }} src={person.avatar} alt={person.nickname} />
-    </Col>
-    <Col
-      sm={{ span: 24, order: 2 }}
-      md={{ span: 12, order: 1 }}
-    >
-      <h1>{person.nickname}</h1>
-      <p>{person.name}</p>
-      <DL>
-        <dt>
-          <Icon type='phone' />
-        </dt>
-        <dd>{person.phone}</dd>
-        <dt>
-          <Icon type='mail' />
-        </dt>
-        <dd>{person.email}</dd>
-        <dt>
-          <Icon type='compass' />
-        </dt>
-        <dd>{person.gender}</dd>
-        <dt>
-          <Icon type='schedule' />
-        </dt>
-        <dd>{person.status ? <Icon type='check' /> : <Icon type='close' />}</dd>
-        <dt>
-          <Icon type='coffee' />
-        </dt>
-        <dd>
-          <PersonRoles roles={person.role} />
-        </dd>
-      </DL>
-      <h3>About</h3>
-      <Markdown children={person.about || ''} />
-    </Col>
-  </Row>
+    <ProfileGrid>
+      <GridContainer>
+        <ProfileImage src={person.avatar} alt={person.nickname} />
+        <DetailItem>
+        <TextH3>{person.name}</TextH3>
+        <TextPBold>{person.org}</TextPBold>
+        </DetailItem>
+        <DetailItem>
+        <a href={`mailto:${person.email}`}>
+          <Icon type='mail' /> {person.email}
+        </a></DetailItem>
+        <DetailItem>
+        <a href={`tel:${person.phone}`}>
+          <Icon type='phone' /> {person.phone}
+        </a>
+        </DetailItem>
+        <p>
+          <Icon type='schedule' />{' '}
+          {person.status ? <Icon type='check' /> : <Icon type='close' />}
+        </p>
+      </GridContainer>
+      <GridContainer>
+        <ListItem>
+          <TextH3>About</TextH3>
+          <Divider />
+          <TextSubtitle>
+            <Markdown children={person.about || ''} />
+          </TextSubtitle>
+        </ListItem>
+        <ListItem>
+          <TextH3>Latest Activities</TextH3>
+          <Divider />
+        </ListItem>
+        <ListItem>
+          <TextH3>Latest Achievements</TextH3>
+          <Divider />
+        </ListItem>
+        <div>
+          <Icon type='coffee' /> <PersonRoles roles={person.role} />
+        </div>
+      </GridContainer>
+    </ProfileGrid>
+  </div>
 )
 
 PersonDetail.propTypes = {
@@ -76,7 +93,15 @@ PersonDetail.propTypes = {
     phone: PropTypes.string,
     gender: PropTypes.string,
     avatar: PropTypes.any,
-    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
+    role: PropTypes.arrayOf(
+      PropTypes.oneOf([
+        'admin',
+        'opportunityProvider',
+        'volunteer',
+        'activityProvider',
+        'tester'
+      ])
+    ),
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])
   }).isRequired
 }
