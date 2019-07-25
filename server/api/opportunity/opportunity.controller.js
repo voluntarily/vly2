@@ -103,6 +103,9 @@ const getOpportunity = async (req, res) => {
       .populate('requestor')
       .populate('tags')
       .exec()
+    if (!got) {
+      throw Error()
+    }
     res.json(got)
   } catch (e) {
     res.status(404).send(e)
