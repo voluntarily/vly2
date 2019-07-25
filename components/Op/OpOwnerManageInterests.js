@@ -1,8 +1,7 @@
 import { Component } from 'react'
-import { Button, Divider, message, Popconfirm } from 'antd'
+import { Button, message, Popconfirm } from 'antd'
 import Router from 'next/router'
 import { FormattedMessage } from 'react-intl'
-import InterestSection from '../Interest/InterestSection'
 
 export default class OpOwnerManageInterests extends Component {
   constructor (props) {
@@ -50,8 +49,6 @@ export default class OpOwnerManageInterests extends Component {
             <FormattedMessage id='cancelOp' defaultMessage='Cancel Request' description='Button to cancel an opportunity on OpDetails page' />
           </Button>
         </Popconfirm>
-        <Divider />
-        <InterestSection opid={this.props.op._id} />
       </div>
     )
   }
