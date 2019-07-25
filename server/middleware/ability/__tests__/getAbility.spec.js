@@ -68,6 +68,6 @@ test.serial('Can get ability for user with invalid role', async t => {
   getAbility({ searchPattern: '/server/middleware/ability/__tests__/getAbility.foo.fixture.js' })(req, res, mockNext)
   t.truthy(req.ability)
   t.false(req.ability.can(Action.UPDATE, 'FOO'))
-  t.true(req.ability.can(Action.DELETE, 'FOO'))
+  t.false(req.ability.can(Action.DELETE, 'FOO'))
   t.false(req.ability.can(Action.MANAGE, 'FOO'))
 })

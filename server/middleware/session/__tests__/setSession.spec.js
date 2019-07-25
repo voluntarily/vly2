@@ -21,7 +21,7 @@ test.beforeEach('connect and add peopl fixture', async () => {
 })
 
 test.serial('Check session set to default when user not logged in', async t => {
-  const req = { url: '/api/foo', cookies: {} }
+  const req = { url: '/api/foo', cookies: {}, headers: { cookie: null } }
   await setSession(req, null, () => { })
   t.deepEqual(req.session, DEFAULT_SESSION)
 })
