@@ -1,30 +1,35 @@
+import { Button, Icon, Input } from 'antd'
+import Router from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
-import Router from 'next/router'
-import { Button, Input, Icon } from 'antd'
 import { TextH1, TextSubtitle } from '../VTheme/VTheme'
 
 const Search = Input.Search
 
 // this is the big container block that holds the container together lol
 const AwesomeHeroContainer = styled.div`
+  margin: auto;
+margin-top: 4rem;
   width: 80rem;
   height: 72rem;
-  margin: auto;
+
   display: grid;
   grid-template-columns: 30rem 50rem;
 
   @media screen and (min-width: 1380px) and (max-width: 1920px) {
+    margin-top: 0rem;
     height: 54rem;
     width: 80rem;
   }
 
   @media screen and (min-width: 1282px) and (max-width: 1380px) {
+    margin-top: 0rem;
     height: 44rem;
     width: calc(100vw - 2rem);
   }
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    margin-top: 0rem;
     height: 44rem;
     width: calc(100vw - 2rem);
   }
@@ -40,6 +45,7 @@ const AwesomeHeroContainer = styled.div`
 
 
   @media screen and (max-width: 768px) {
+    margin-top: 0rem;
     grid-template-columns: 100vw;
     height: auto;
     width: 100vw;

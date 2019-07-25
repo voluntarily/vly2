@@ -3,11 +3,11 @@
   Unlike InterestItem, this one is a Form allowing state changes.
 */
 
-import React, { Component } from 'react'
-import { Button, Col, Popconfirm, Form, Row } from 'antd'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
+import { Button, Col, Form, Popconfirm, Row } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
@@ -134,7 +134,7 @@ class RegisterInterestItem extends Component {
 RegisterInterestItem.propTypes = {
   interest: PropTypes.shape({
     person: PropTypes.any.isRequired,
-    opportunity: PropTypes.object.isRequired,
+    // opportunity: PropTypes.object.isRequired,
     comment: PropTypes.string,
     status: PropTypes.string
   }).isRequired,

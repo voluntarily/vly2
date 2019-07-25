@@ -1,17 +1,12 @@
-import React from 'react'
+import { Layout } from 'antd'
+import Cookie from 'js-cookie'
 import Head from 'next/head'
 import Router from 'next/router'
-import Cookie from 'js-cookie'
-import {
-  getUserFromServerCookie,
-  getUserFromLocalCookie,
-  parseUserToSession
-} from '../lib/auth/auth'
-import { Layout } from 'antd'
+import React from 'react'
+import styled from 'styled-components'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
-
-import styled from 'styled-components'
+import { getUserFromLocalCookie, getUserFromServerCookie, parseUserToSession } from '../lib/auth/auth'
 import { setSession } from '../lib/redux/actions'
 
 // Dump all the custom elements and responsive scaffolding crap here
@@ -29,9 +24,10 @@ export const A4 = styled.div`
   }
 `
 export const FullPage = styled.div`
-margin: 0 auto;
+margin: 6rem auto;
   width: 80rem;
   overflow: visible;
+  height: auto;
 
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
@@ -40,6 +36,7 @@ margin: 0 auto;
     margin-right: 2rem;
   }
   @media screen and (max-width: 767px) {
+    margin-top: 4rem;
     width: calc(100vw - 2rem);
     margin-left: 1rem;
   }
@@ -117,6 +114,7 @@ export default Page =>
         <Layout>
           <Head>
             <title>Voluntari.ly</title>
+            <link rel='shortcut icon' href='../static/img/icons/favicon.ico' />
             <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
             <meta charSet='utf-8' />
             <meta

@@ -1,12 +1,22 @@
-/* eslint-disable no-console */
-import React, { Component } from 'react'
-import { Button, Col, Divider, Form, Input, Radio, Row, DatePicker } from 'antd'
+import { Button, Divider, Form, Icon, Input, Tooltip } from 'antd'
 import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-
+import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import { TextHeadingBold, TextP } from '../VTheme/VTheme'
+import TagInput from '../Form/Input/TagInput'
+
+import {
+  DescriptionContainer,
+  FormGrid,
+  InputContainer,
+  MediumInputContainer,
+  ShortInputContainer,
+  TitleContainer
+} from '../VTheme/FormStyles'
+
 const { TextArea } = Input
-const { RangePicker } = DatePicker
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
@@ -15,6 +25,7 @@ function hasErrors (fieldsError) {
 class ActDetailForm extends Component {
   constructor (props) {
     super(props)
+    this.setDescription = this.setDescription.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
   }
 
@@ -22,6 +33,13 @@ class ActDetailForm extends Component {
     // Call validateFields here to disable the submit button when on a blank form.
     // empty callback supresses a default which prints to the console.
     this.props.form.validateFields(() => { })
+  }
+
+  setDescription (value) {
+    this.props.form.setFieldsValue({ description: value })
+  }
+  setImgUrl = (value) => {
+    this.props.form.setFieldsValue({ imgUrl: value })
   }
 
   handleSubmit = (e) => {
@@ -37,8 +55,11 @@ class ActDetailForm extends Component {
         act.resource = values.resource
         act.description = values.description
         act.imgUrl = values.imgUrl
-        act.status = values.status
+        act.tags = values.tags
+        act.status = e.target.name === 'publish' ? 'active' : 'draft'
+        // act.owner = (this.props.act.owner && this.props.op.owner._id) || this.props.me._id
         act.owner = this.props.me._id
+        // TODO: [VP-305] should the owner of the activity be preserved or set to the last person who edits it?
 
         this.props.onSubmit(this.props.act)
       } else {
@@ -47,192 +68,254 @@ class ActDetailForm extends Component {
     })
   }
 
-  setImgUrl = (value) => {
-    this.props.form.setFieldsValue({
-      imgUrl: value
-    })
-  }
-
   render () {
+    const isTest = (process.env.NODE_ENV === 'test')
+
     // get translated labels
-    const actTitle = (<FormattedMessage id='actTitle' defaultMessage='Title' description='activity Title label in ActDetails Form' />)
-    const actSubtitle = (<FormattedMessage id='actSubtitle' defaultMessage='Subtitle' description='activity Subtitle label in ActDetails Form' />)
-    const actCommitment = (<FormattedMessage id='actCommitment' defaultMessage='Commitment' description='activity Commitment label in ActDetails Form' />)
-    const actResource = (<FormattedMessage id='actResource' defaultMessage='Resource' description='activity Resource label in ActDetails Form' />)
-    const actTime = (<FormattedMessage id='actTime' defaultMessage='Time' description='activity Time label in ActDetails Form' />)
-    const actDescription = (<FormattedMessage id='actDescription' defaultMessage='Description' description='activity Description label in ActDetails Form' />)
-    const actImgUrl = (<FormattedMessage id='actImgUrl' defaultMessage='Image Link' description='activity Image URL label in ActDetails Form' />)
-    const actStatus = (<FormattedMessage id='actStatus' defaultMessage='Status' description='Draft or published status' />)
+    const actTitle = (
+      <span>
+        <FormattedMessage
+          id='actTitle'
+          defaultMessage='Title'
+          description='opportunity Title label in ActDetail Form'
+        />
+        &nbsp;
+        <Tooltip title="Choose something interesting like 'we want to build robots' ">
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+    const actSubtitle = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='actSubtitle'
+          defaultMessage='Subtitle'
+          description='activity Subtitle label in ActDetail Form'
+        />{' '}
+        <Tooltip title="Choose something interesting like 'we want to build robots' ">
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+    const actCommitment = (
+      <span>
+        <FormattedMessage
+          id='actCommitment'
+          defaultMessage='Commitment'
+          description='activity Commitment label in ActDetail Form'
+        />
+        &nbsp;
+        <Tooltip title='How much time overall is likely to be required for the activity?'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+    const actResource = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='actResource'
+          defaultMessage='Resource'
+          description='activity resource label in ActDetail Form'
+        />
+        &nbsp;
+        <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML or Markdown here.'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+    const actDescription = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='actDescription'
+          defaultMessage='Description'
+          description='activity description label in ActDetail Form'
+        />
+        &nbsp;
+        <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML or Markdown here.'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+    const actImgUrl = (
+      <span>
+        <FormattedMessage
+          id='actImgUrl'
+          defaultMessage='Image Link'
+          description='activity Image URL label in ActDetailForm'
+        />
+        &nbsp;
+        <Tooltip title='Choose a picture that illustrates the activity, you can upload a picture or link to something on the Internet, Animated Gifs too.'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+
+    const actTags = (
+      <FormattedMessage
+        id='actTags'
+        defaultMessage='Tags'
+        description='Descriptions of general areas the activity relates to'
+      />
+    )
     const {
       getFieldDecorator, getFieldsError, getFieldError, isFieldTouched
     } = this.props.form
-
-    const timeRangeConfig = {
-      rules: [ {
-        type: 'array'
-        // required: true
-      }]
-    }
-
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 20 },
-        md: { span: 16 }
-      }
-    }
 
     // Only show error after a field is touched.
     const titleError = isFieldTouched('title') && getFieldError('title')
 
     return (
       <div className='ActDetailForm'>
-        <Form
-          {...formItemLayout}
-          onSubmit={this.handleSubmit}
-          hideRequiredMark
-          colon={false}
-        >
-          <Row>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 8 }}
-            >
-              <h2>1. What are you looking for?</h2>
-              <p>Before our skilled volunteers get involved, they need to know how
-                they can help. Add a title and description to your request to attract
-                volunteers
-              </p>
-            </Col>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 16 }}
-            >
-              <Form.Item
-                label={actTitle}
-                validateStatus={titleError ? 'error' : ''}
-                help={titleError || ''}
-              >
-                {getFieldDecorator('title', {
-                  rules: [
-                    { required: true, message: 'Title is required' }
-                  ]
-                })(
-                  <Input placeholder='Title' />
-                )}
-              </Form.Item>
-              <Form.Item label={actSubtitle}>
-                {getFieldDecorator('subtitle', {
-                  rules: [
+        <Form hideRequiredMark colon={false}>
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <TextHeadingBold>Tell everyone about this Activity?</TextHeadingBold>
+              </TitleContainer>
+              <TextP>
+                Attract people to this activitiy with a snappy title, use the subtitle to layout the basic idea.
+              </TextP>
+            </DescriptionContainer>
+            <InputContainer>
+              <ShortInputContainer>
+                <Form.Item
+                  label={actTitle}
+                  validateStatus={titleError ? 'error' : ''}
+                  help={titleError || ''}
+                >
+                  {getFieldDecorator('title', {
+                    rules: [{ required: true, message: 'Title is required' }]
+                  })(<Input placeholder='Title' />)}
+                </Form.Item>
 
-                  ]
-                })(
-                  <Input placeholder='short summary that appears on the listing.' />
-                )}
-              </Form.Item>
+                <Form.Item label={actSubtitle}>
+                  {getFieldDecorator('subtitle', {
+                    rules: []
+                  })(
+                    <Input placeholder='short summary that appears on the listing.' />
+                  )}
+                </Form.Item>
+              </ShortInputContainer>
               <Form.Item label={actDescription}>
                 {getFieldDecorator('description', {
-                  rules: [
-
-                  ]
-                })(
-                  <TextArea rows={20} placeholder='All the details about the request. You can use markdown here.' />
-                )}
-
-              </Form.Item>
-            </Col>
-          </Row>
-          <Divider />
-          <Row>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 8 }}
-            >
-              <h2>2. What resources will be required? (optional)</h2>
-              <p>How much time will be required for this activity?</p>
-              <p>How many people do you need to help? What skills might they require?</p>
-              <p>Do you need a special space or location to work in?</p>
-              <p>Does this activity require special equipment?</p>
-            </Col>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 16 }}
-            >
-              <Form.Item label={actCommitment}>
-                {getFieldDecorator('duration', {
-                  rules: [
-                    { required: true, message: 'Commitment level is required' }
-                  ]
-                })(
-                  <Input placeholder='4 hours' />
-                )}
-              </Form.Item>
-              <Form.Item label={actTime}>
-                {getFieldDecorator('time', timeRangeConfig)(
-                  <RangePicker showTime format='DD-MM-YYYY' />
-                )}
-              </Form.Item>
-              <Form.Item label={actResource}>
-                {getFieldDecorator('resource', {
                   rules: []
                 })(
-                  <Input placeholder='Any resources needed?' />
+                  isTest
+                    ? <TextArea rows={20} placeholder='All the details about the activity, you can use HTML or Markdown here' />
+                    : <RichTextEditor onChange={this.setAbout} />
                 )}
               </Form.Item>
-              {/* TODO: [VP-206] Add activity resource requirement list. */}
-            </Col>
-          </Row>
-          <Divider />
-          <Row>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 8 }}
-            >
-              <h2>3. Illustration? (optional)</h2>
-              <p>Show off your activity
-                Add a photo to illustrate your activity, you can even use animated GIF here.
-              </p>
-            </Col>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 16 }}
-            >
-              <Form.Item label={actImgUrl}>
-                {getFieldDecorator('imgUrl', {
-                  rules: [
+            </InputContainer>
+          </FormGrid>
 
-                  ]
+          <Divider />
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <TextHeadingBold>
+                  What topics and learning outcomes does this activity cover?
+                </TextHeadingBold>
+              </TitleContainer>
+              <TextP>
+                Make this activity searchable by classifying it with subject, age group, and technology keywords.
+              </TextP>
+            </DescriptionContainer>
+            <InputContainer>
+              <Form.Item label={actTags}>
+                {getFieldDecorator('tags', {
+                  initialValue: [],
+                  rules: []
                 })(
-                  <Input />
-                )}
-                <ImageUpload setImgUrl={this.setImgUrl} />
-              </Form.Item>
-              <Form.Item label={actStatus}>
-                {getFieldDecorator('status', {
-                  rules: [
-                    { required: true, message: 'status is required' }
-                  ]
-                })(
-                  <Radio.Group buttonStyle='solid'>
-                    <Radio.Button value='draft'>Draft</Radio.Button>
-                    <Radio.Button value='active'>Active</Radio.Button>
-                    <Radio.Button value='done'>Done</Radio.Button>
-                  </Radio.Group>
+                  <TagInput
+                    existingTags={this.props.existingTags}
+                  />
                 )}
               </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col
-              style={{ textAlign: 'right' }}
-              xs={{ span: 24, offset: 0 }}
-              md={{ span: 8, offset: 12 }}
-            >
+            </InputContainer>
+          </FormGrid>
+          <Divider />
+
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <TextHeadingBold>What resources are required to run this activity?</TextHeadingBold>
+              </TitleContainer>
+              <TextP>
+                What is the time commitment?<br />
+                How many people do you need to help?<br />
+                What skills might they require?<br />
+                Do you need a special space or location to work in?<br />
+                Does this activity require special equipment?
+              </TextP>
+            </DescriptionContainer>
+            <InputContainer>
+              <ShortInputContainer>
+                <Form.Item label={actCommitment}>
+                  {getFieldDecorator('duration', {
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Commitment level is required'
+                      }
+                    ]
+                  })(<Input placeholder='4 hours' />)}
+                </Form.Item>
+                <Form.Item label={actResource}>
+                  {getFieldDecorator('resource')(<Input placeholder='5 people, classroom, projector' />)}
+                </Form.Item>
+              </ShortInputContainer>
+              <ul>
+                <li>TODO: [VP-301] list the number of volunteers required e.g. 1 adult for 5 children, or 20 people</li>
+                <li>TODO: [VP-302] list any equipment required for an activity</li>
+                <li>TODO: [VP-303] list any space requirements for an activity</li>
+              </ul>
+            </InputContainer>
+          </FormGrid>
+          <Divider />
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <TextHeadingBold>Add an image</TextHeadingBold>
+              </TitleContainer>
+              <TextP>
+                Activities with illustrations get more responses. If you don't have a
+                photo click suggest and we can provide one based on the tags.
+              </TextP>
+              <img style={{ width: '50%', float: 'right' }} src={this.props.act.imgUrl} alt='' />
+            </DescriptionContainer>
+            <InputContainer>
+              <MediumInputContainer>
+                <Form.Item label={actImgUrl}>
+                  {getFieldDecorator('imgUrl', {
+                    rules: []
+                  })(<Input />)}
+                  <ImageUpload setImgUrl={this.setImgUrl} />
+                </Form.Item>
+                // TODO: [VP-304] add suggest photo button to ActDetailForm
+              </MediumInputContainer>
+            </InputContainer>
+          </FormGrid>
+          <Divider />
+
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <TextHeadingBold>Save Activity</TextHeadingBold>
+              </TitleContainer>
+              <TextP>
+                <FormattedMessage
+                  id='act.SaveInstructions'
+                  defaultMessage='Save as Draft will allow you to preview the activity while Publish will make it available to everyone to view.'
+                  description='Instructions for save and publish on activity details form'
+                />
+              </TextP>
+            </DescriptionContainer>
+            <InputContainer>
               <Button
+                id='cancelActBtn'
                 type='secondary'
                 htmlType='button'
                 onClick={this.props.onCancel}
@@ -244,19 +327,37 @@ class ActDetailForm extends Component {
                 />
               </Button>
               <Button
-                type='primary'
-                htmlType='submit'
+                id='saveActBtn'
+                name='save'
+                // htmlType='submit'
+                onClick={this.handleSubmit}
                 disabled={hasErrors(getFieldsError())}
                 style={{ marginLeft: 8 }}
               >
                 <FormattedMessage
-                  id='act.save'
-                  defaultMessage='Save'
+                  id='act.editSaveDraft'
+                  defaultMessage='Save as draft'
+                  description='Label for save as draft button on activity details form'
+                />
+              </Button>
+              <Button
+                id='publishActBtn'
+                name='publish'
+                type='primary'
+                // htmlType='submit'
+                onClick={this.handleSubmit}
+                disabled={hasErrors(getFieldsError())}
+                style={{ marginLeft: 8 }}
+              >
+                <FormattedMessage
+                  id='act.editPublish'
+                  defaultMessage='Publish'
                   description='Label for submit button on activity details form'
                 />
               </Button>
-            </Col>
-          </Row>
+            </InputContainer>
+          </FormGrid>
+
         </Form>
       </div>
     )
@@ -282,6 +383,10 @@ ActDetailForm.propTypes = {
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
   }),
+  existingTags: PropTypes.arrayOf(PropTypes.shape({
+    tag: PropTypes.string.isRequired,
+    _id: PropTypes.string
+  })).isRequired,
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired
   // dispatch: PropTypes.func.isRequired,
@@ -303,7 +408,8 @@ export default Form.create({
       imgUrl: Form.createFormField({ ...props.act.imgUrl, value: props.act.imgUrl }),
       time: Form.createFormField({ ...props.act.time, value: props.act.time }),
       resource: Form.createFormField({ ...props.act.resource, value: props.act.resource }),
-      status: Form.createFormField({ ...props.act.status, value: props.act.status })
+      status: Form.createFormField({ ...props.act.status, value: props.act.status }),
+      tags: Form.createFormField({ ...props.act.tags, value: props.act.tags })
     }
   }
   // onValuesChange (_, values) {

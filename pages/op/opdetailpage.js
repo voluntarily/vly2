@@ -1,135 +1,208 @@
-import { Component } from 'react'
-import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
-import { Button, Popconfirm, message, Divider } from 'antd'
-import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import { Button, Divider, message } from 'antd'
 import Router from 'next/router'
-import OpDetail from '../../components/Op/OpDetail'
-import InterestSection from '../../components/Interest/InterestSection'
-import RegisterInterestSection from '../../components/Interest/RegisterInterestSection'
 import PropTypes from 'prop-types'
-import PersonCard from '../../components/Person/PersonCard'
+import { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
+import OpDetail from '../../components/Op/OpDetail'
+import OpDetailForm from '../../components/Op/OpDetailForm'
+import publicPage, { FullPage } from '../../hocs/publicPage'
+import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
+import Loading from '../../components/Loading'
+import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
+import OpOrganizerInfo from '../../components/Op/OpOrganizerInfo'
+import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
+import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
+
+const blankOp = {
+  title: '',
+  subtitle: '',
+  imgUrl: '',
+  duration: '',
+  location: '',
+  status: 'inactive',
+  date: [],
+  startDate: null,
+  endDate: null,
+  tags: []
+}
 
 export class OpDetailPage extends Component {
+  state = {
+    editing: false
+  }
+
+  constructor (props) {
+    super(props)
+    this.confirmOpportunity = this.confirmOpportunity.bind(this)
+    this.cancelOpportunity = this.cancelOpportunity.bind(this)
+    this.isAdmin = this.isAdmin.bind(this)
+  }
+
   static async getInitialProps ({ store, query }) {
-    // Get one Op
-    // console.log('getting op details', query)
-    try {
-      await store.dispatch(reduxApi.actions.opportunities.get(query))
-      // console.log('got ops for id', query, ops)
-    } catch (err) {
-      // console.log('error in getting ops', err)
+    // Get one Org
+    const isNew = query && query.new && query.new === 'new'
+    const opExists = !!(query && query.id) // !! converts to a boolean value
+    // TODO: [VP-280] run get location and tag data requests in parallel
+    await store.dispatch(reduxApi.actions.locations.get())
+    await store.dispatch(reduxApi.actions.tags.get())
+    if (isNew) {
+      return {
+        isNew
+      }
+    } else {
+      if (opExists) {
+        await store.dispatch(reduxApi.actions.opportunities.get(query))
+      }
+      return {
+        isNew,
+        opExists
+      }
     }
   }
 
-  // Called when the user confirms they want to delete an op
-  async handleCancel (op) {
-    // console.log('deleting op', op)
-    if (!op) return
-    // Actual data request
-    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: 'cancelled' }) }))
-    // TODO error handling - how can this fail?
-    message.success('Request Cancelled. ')
-    Router.replace(`/home`)
+  componentDidMount () {
+    if (this.props.isNew) {
+      this.setState({ editing: true })
+    }
   }
 
-  // Called when the user starts to delete an op, but then cancels it.
-  handleCancelButtonCancelled = () => { message.error('Cancel Request Cancelled') }
-
-  async handleConfirm (op) {
-    // console.log('Event Confirmed!!!')
-    if (!op) return
-    // Data request
-    // TODO change hard coded 'done' string to a constant.
-    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: 'done' }) }))
-    // TODO error handling - see above
-    message.success('Opportunity Confimed')
-    Router.replace('/home')
+  async handleSubmit (op) {
+    let res = {}
+    if (op._id) {
+      res = await this.props.dispatch(
+        reduxApi.actions.opportunities.put(
+          { id: op._id },
+          { body: JSON.stringify(op) }
+        )
+      )
+    } else {
+      res = await this.props.dispatch(
+        reduxApi.actions.opportunities.post(
+          {},
+          { body: JSON.stringify(op) }
+        )
+      )
+      op = res[0]
+      Router.replace(`/ops/${op._id}`)
+    }
+    this.setState({ editing: false })
+    message.success('Saved.')
   }
 
-  handleConfirmCancelled = () => {
-    message.error('Confirm Cancelled')
+  handleCancelEdit = () => {
+    this.setState({ editing: false })
+    if (this.props.isNew) { // return to previous
+      Router.back()
+    }
+  }
+
+  async confirmOpportunity (op) {
+    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.COMPLETED }) }))
+  }
+
+  async cancelOpportunity (op) {
+    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.CANCELLED }) }))
+  }
+
+  isAdmin () {
+    return this.props.me && this.props.me.role.includes('admin')
   }
 
   render () {
-    let content
-    if (this.props.opportunities && this.props.opportunities.data.length === 1) {
-      const op = this.props.opportunities.data[0]
-      const organizer = op.requestor
-      const isOwner = ((this.props.me || {})._id === (organizer || {})._id)
-      const organizerInfo = () => {
-        return organizer &&
-          <div>
-            <h2>
-              <FormattedMessage id='organiser' defaultMessage='Requested by' description='Title for organiser card on op details page' />
-            </h2>
-            <PersonCard style={{ width: '300px' }} person={organizer} />
-          </div>
+    // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
+    if (!this.props.isNew) {
+      if (this.props.opportunities.loading) {
+        return (<FullPage><Loading><p>Loading details...</p></Loading></FullPage>)
       }
-      const volunteerInterestSection = () => {
+      if (this.props.opportunities.data.length !== 1) {
         return (
-          !this.props.isAuthenticated
-            ? <div>
-              <Link href={`/auth/sign-in`} >
-                <Button type='primary' shape='round' >
-                  <FormattedMessage id='iminterested-anon' defaultMessage="I'm Interested" description="I'm interested button that leads to sign in page" />
-                </Button>
-              </Link>
-              <Divider />
-            </div>
-            : !isOwner && <div>
-              <RegisterInterestSection op={op} me={this.props.me._id} />
-              <Divider />
-            </div>
-        )
+          <FullPage>
+            <h2>
+              <FormattedMessage
+                id='op.notavailable'
+                defaultMessage='Sorry, this opportunity is not available'
+                description='message on person not found page'
+              />
+            </h2>
+          </FullPage>)
       }
-
-      /* These components should only appear if a user is logged in and viewing an op they DID create themselves. */
-      const ownerManageInterests = () => {
-        return (isOwner || (this.props.me && this.props.me.role.includes('admin'))) &&
-          <div>
-            <Link href={`/ops/${op._id}/edit`} >
-              <Button type='primary' shape='round' >
-                <FormattedMessage id='editOp' defaultMessage='Edit' description='Button to edit an opportunity on OpDetails page' />
-              </Button>
-            </Link>
-              &nbsp;
-            <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' onConfirm={this.handleConfirm.bind(this, op)} onCancel={this.handleConfirmCancelled} okText='Yes' cancelText='No'>
-              <Button type='primary' shape='round'>
-                <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
-              </Button>
-            </Popconfirm>
-              &nbsp;
-            <Popconfirm id='cancelOpPopConfirm' title='Confirm cancel of this opportunity.' onConfirm={this.handleCancel.bind(this, op)} onCancel={this.handleCancelButtonCancelled} okText='Yes' cancelText='No'>
-              <Button type='danger' shape='round' >
-                <FormattedMessage id='cancelOp' defaultMessage='Cancel Request' description='Button to cancel an opportunity on OpDetails page' />
-              </Button>
-            </Popconfirm>
-            <Divider />
-
-            <InterestSection opid={op._id} />
-          </div>
-      }
-      content =
-        (<div>
-          <OpDetail op={op} />
-          {organizerInfo()}
-          <Divider />
-          {volunteerInterestSection()}
-          {ownerManageInterests()}
-
-        </div>)
-    } else {
-      content =
-        (<div>
-          <h2 id='unavailableOpportunityHeader'>Sorry this opportunity is no longer available</h2>
-          <Link href={'/ops'} ><a>Search for some more</a></Link>
-          <p>or </p>
-          <Link href={'/ops/new'} ><a>create a new opportunity</a></Link>
-        </div>)
     }
-    return (<FullPage>{content}</FullPage>)
+
+    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
+    let isOwner = false
+    let op
+    let organizer
+
+    if (this.props.isNew) {
+      op = blankOp
+      organizer = this.props.me
+      isOwner = true
+    } else {
+      op = {
+        ...this.props.opportunities.data[0],
+        // tags: this.props.opportunities.data[0].tags.map(op => op.tag),
+        startDate: this.props.opportunities.data[0].date[0],
+        endDate: this.props.opportunities.data[0].date[1]
+      }
+      organizer = op.requestor
+      isOwner = ((this.props.me || {})._id === organizer._id)
+    }
+
+    // display permissions
+    const canEdit = (isOwner || isOrgAdmin || this.isAdmin())
+    const canManageInterests = (isOwner || this.isAdmin())
+    const canRegisterInterest = (this.props.isAuthenticated && !isOwner)
+
+    const existingTags = this.props.tags.data
+    const existingLocations = this.props.locations.data
+
+    if (op && this.state.editing) {
+      return (
+        <FullPage>
+          <OpDetailForm
+            op={op}
+            me={this.props.me}
+            onSubmit={this.handleSubmit.bind(this, op)}
+            onCancel={this.handleCancelEdit.bind(this)}
+            existingTags={existingTags}
+            existingLocations={existingLocations}
+          />
+        </FullPage>)
+    } else {
+      return (
+        <FullPage>
+          {canEdit &&
+            <Button
+              id='editOpBtn'
+              style={{ float: 'right' }}
+              type='primary'
+              shape='round'
+              onClick={() => this.setState({ editing: true })}>
+              <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
+            </Button>
+          }
+          <OpDetail
+            op={op}
+          />
+          <OpOrganizerInfo
+            organizer={organizer}
+          />
+          <Divider />
+          <OpVolunteerInterestSection
+            isAuthenticated={this.props.isAuthenticated}
+            canRegisterInterest={canRegisterInterest}
+            op={op}
+            meID={this.props.me._id}
+          />
+          <OpOwnerManageInterests
+            canManageInterests={canManageInterests}
+            op={op}
+            confirmOpportunity={this.confirmOpportunity}
+            cancelOpportunity={this.cancelOpportunity}
+          />
+        </FullPage>
+      )
+    }
   }
 }
 
@@ -147,4 +220,5 @@ OpDetailPage.propTypes = {
   })
 }
 
+export const OpDetailPageWithOps = withOps(OpDetailPage)
 export default publicPage(withOps(OpDetailPage))

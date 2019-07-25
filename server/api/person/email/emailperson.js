@@ -8,7 +8,6 @@ const { config } = require('../../../../config/config')
 */
 module.exports.emailPerson = async (person, template, props) => {
   try {
-    console.log('The value from the env has a type of string? ' + config.onlyEmailText)
     const transport = (process.env.NODE_ENV === 'development') ? await getDevelopmentTransport() : await getTransport()
     const email = new Email({
       message: {

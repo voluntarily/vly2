@@ -1,82 +1,158 @@
-import { Component } from 'react'
+import { Button, message, Popconfirm } from 'antd'
 import Link from 'next/link'
+import Router from 'next/router'
+import PropTypes from 'prop-types'
+import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Button, Divider, Popconfirm, message } from 'antd'
-import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
+import PersonDetail from '../../components/Person/PersonDetail'
+import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import { FullPage } from '../../hocs/publicPage'
 import securePage from '../../hocs/securePage'
-import Router from 'next/router'
-import PersonDetail from '../../components/Person/PersonDetail'
-import PropTypes from 'prop-types'
+import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
+import Loading from '../../components/Loading'
+import Cookie from 'js-cookie'
+
+const blankPerson = {
+  // for new people load the default template doc.
+  name: '',
+  nickname: '',
+  about: '',
+  email: '',
+  phone: '',
+  gender: '',
+  avatar: '',
+  role: ['volunteer'],
+  status: 'inactive'
+}
 
 export class PersonDetailPage extends Component {
-  static async getInitialProps ({ store, query }) {
-    // Get one Person
-    // console.log('PersonDetailPage, GetProps', query)
-    try {
-      const people = await store.dispatch(reduxApi.actions.people.get(query))
-      // console.log('got person for id', query, people)
-      return { people, query }
-    } catch (err) {
-      console.log('error in getting people', err)
+  state = {
+    editing: false
+  }
+  static async getInitialProps ({ store, query, req }) {
+    // Get one Org
+    const isNew = query && query.new && query.new === 'new'
+    if (isNew) {
+      return {
+        isNew: true,
+        personid: null
+      }
+    } else if (query && query.id) {
+      let cookies = req ? req.cookies : Cookie.get()
+      const cookiesStr = JSON.stringify(cookies)
+      await store.dispatch(reduxApi.actions.people.get(query, {
+        params: cookiesStr
+      }))
+      return {
+        isNew: false,
+        personid: query.id
+      }
+    }
+  }
+
+  componentDidMount () {
+    if (this.props.isNew) {
+      this.setState({ editing: true })
+    }
+  }
+
+  handleCancel = () => {
+    this.setState({ editing: false })
+    if (this.props.isNew) { // return to previous
+      Router.back()
     }
   }
 
   // TODO: [VP-209] only show person delete button for admins
   async handleDelete (person) {
     if (!person) return
-    // Actual data request
     await this.props.dispatch(reduxApi.actions.people.delete({ id: person._id }))
     // TODO error handling - how can this fail?
     message.success('Deleted. ')
     Router.replace(`/people`)
   }
 
-  cancel = () => { message.error('Delete Cancelled') }
+  async handleSubmit (person) {
+    if (!person) return
+    // Actual data request
+    let res = {}
+    if (person._id) {
+      res = await this.props.dispatch(reduxApi.actions.people.put({ id: person._id }, { body: JSON.stringify(person) }))
+    } else {
+      res = await this.props.dispatch(reduxApi.actions.people.post({}, { body: JSON.stringify(person) }))
+      person = res[0]
+      console.log(person)
+      Router.replace(`/people/${person._id}`)
+    }
+    this.setState({ editing: false })
+    message.success('Saved.')
+  }
+
+  handleDeleteCancel = () => { message.error('Delete Cancelled') }
 
   render () {
-    let content
-    if (this.props.people && this.props.people.length === 1) {
-      const person = this.props.people[0]
-      content =
-        (<div>
-          <PersonDetail person={person} />
-          <Divider />
-          <a href={`mailto:${person.email}`}>
-            <Button type='primary' shape='round' >
-              <FormattedMessage id='contactPerson' defaultMessage='Contact person' description='Button href show interest in an person on PersonDetails page' />
-            </Button>
-          </a>
-          &nbsp;
-          <Link href={`/people/${person._id}/edit`} >
-            <Button type='secondary' shape='round' >
-              <FormattedMessage id='editPerson' defaultMessage='Edit' description='Button to edit an person on PersonDetails page' />
-            </Button>
-          </Link>`
-          &nbsp;
-          <Popconfirm title='Confirm removal of this person.' onConfirm={this.handleDeletePerson} onCancel={this.cancel} okText='Yes' cancelText='No'>
-            <Button type='danger' shape='round' >
-              <FormattedMessage id='deletePerson' defaultMessage='Remove Request' description='Button to remove an person on PersonDetails page' />
-            </Button>
-          </Popconfirm>
-          &nbsp;
-          <Button shape='round' onClick={this.handleVerifyEmail} >
-            <FormattedMessage id='verifyEmail' defaultMessage='Verify email' description='Button to send an email verification to the person on PersonDetails page' />
-          </Button>
-          <br /><small>visible buttons here depend on user role</small>
-        </div>)
+    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
+    const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
+    const canEdit = (isOrgAdmin || isAdmin)
+    const canRemove = isAdmin
+    const showPeopleButton = isAdmin
+
+    let content = ''
+    let person = null
+    if (this.props.people.loading) {
+      content = <Loading><p>Loading details...</p></Loading>
+    } else if (this.props.isNew) {
+      person = blankPerson
     } else {
-      content =
-        (<div>
-          <h2>Sorry this Person is no longer available</h2>
-          <Link href={'/people'} ><a>Search for some more</a></Link>
-          <p>or </p>
-          <Link href={'/people/new'} ><a>create a new person</a></Link>
-          {/* <Link href={'/ops/0/edit'} >create a new person</Link> */}
-          {/* <PersonDetailForm /> */}
-        </div>)
+      const people = this.props.people.data
+      if (people.length === 1) {
+        person = people[0]
+      }
     }
-    return (<FullPage>{content}</FullPage>)
+
+    if (!person) {
+      content = <div>
+        <h2><FormattedMessage id='person.notavailable' defaultMessage='Sorry, this person is not available' description='message on person not found page' /></h2>
+        {showPeopleButton &&
+          <Button shape='round'>
+            <Link href='/people'><a>
+              <FormattedMessage id='showPeople' defaultMessage='Show All' description='Button to show all People' />
+            </a></Link>
+          </Button>}
+        {isAdmin &&
+          <Button shape='round'>
+            <Link href='/person/new'><a>
+              <FormattedMessage id='person.altnew' defaultMessage='New Person' description='Button to create a new person' />
+            </a></Link>
+          </Button>}
+      </div>
+    } else {
+      content = this.state.editing
+        ? <div>
+          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancel.bind(this)} />
+        </div>
+        : <div>
+          { canEdit && <Button style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
+            <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
+          </Button>}
+
+          <PersonDetail person={person} />
+
+          &nbsp;
+          { canRemove && <Popconfirm title='Confirm removal of this person.' onConfirm={this.handleDeletePerson} onCancel={this.cancel} okText='Yes' cancelText='No'>
+            <Button type='danger' shape='round' >
+              <FormattedMessage id='deletePerson' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
+            </Button>
+          </Popconfirm>}
+
+        </div>
+    }
+    return (
+      <FullPage>
+        <h1><FormattedMessage defaultMessage='Person' id='person.detail.title' /></h1>
+        {content}
+      </FullPage>
+    )
   }
 }
 
@@ -98,4 +174,4 @@ PersonDetailPage.propTypes = {
   })
 }
 
-export default securePage(withOps(PersonDetailPage))
+export default securePage(withPeople(PersonDetailPage))

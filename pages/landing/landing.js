@@ -31,10 +31,10 @@ class Landing extends Component {
           <div className='spacer' />
           <TitleSectionSub
             title='Happening Soon'
-            subtitle='You are two clicks away from getting involved with your community'
+            subtitle='You are a few clicks away from getting involved with your community'
           />
 
-          <OpListSection store={this.props.store} />
+          <OpListSection store={this.props.store} filter={{ date: '' }} />
           <OpAdd {...this.props} />
         </FullPage>
       </div>

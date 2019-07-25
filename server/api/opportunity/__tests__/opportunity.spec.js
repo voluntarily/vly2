@@ -8,7 +8,13 @@ import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
 import ops from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
-import OpportunityArchive from './../../opportunity-archive/opportunityArchive'
+import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
+import archivedOpportunity from './../../archivedOpportunity/archivedOpportunity'
+import { OpportunityStatus } from '../opportunity.constants'
+import Interest from '../../interest/interest'
+import InterestArchive from '../../interest-archive/interestArchive'
+
+const { regions } = require('../../location/locationData')
 
 test.before('before connect to database', async (t) => {
   await appReady
@@ -50,11 +56,12 @@ test.serial('Should correctly give count of all Ops sorted by title', async t =>
   const res = await request(server)
     .get('/api/opportunities')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
   // console.log(got)
-  t.is(4, got.length)
+  t.is(ops.length, got.length)
 
   t.is(got[0].title, '1 Mentor a year 12 business Impact Project')
 })
@@ -63,22 +70,24 @@ test.serial('Should correctly give subset of ops matching status', async t => {
   const res = await request(server)
     .get('/api/opportunities?q={"status":"draft"}')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
   // console.log('got', got)
-  t.is(got.length, 2)
+  t.is(got.length, 3)
 })
 
 test.serial('Should correctly select just the names and ids', async t => {
   const res = await request(server)
     .get('/api/opportunities?p={"title": 1}')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
   // console.log('got', got)
-  t.is(got.length, 4)
+  t.is(got.length, ops.length)
   t.is(got[0].status, undefined)
   t.is(got[0].title, '1 Mentor a year 12 business Impact Project')
 })
@@ -87,6 +96,7 @@ test.serial('Should correctly give number of active Opportunities', async t => {
   const res = await request(server)
     .get('/api/opportunities?q={"status": "active"}')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
     // .expect('Content-Length', '2')
@@ -105,7 +115,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
     description: 'Project to build a simple rocket that will reach 1000m',
     duration: '4 hours',
     location: 'Albany, Auckland',
-    status: 'draft',
+    status: OpportunityStatus.DRAFT,
     tags: [t.context.tags[0]._id],
     requestor: t.context.people[1]._id
   })
@@ -115,6 +125,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
   const res = await request(server)
     .get(`/api/opportunities/${opp._id}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 200)
   t.is(res.body.title, opp.title)
 
@@ -129,13 +140,14 @@ test.serial('Should not find invalid _id', async t => {
   const res = await request(server)
     .get(`/api/opportunities/5ce8acae1fbf56001027b254`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 404)
 })
 
-test.serial('Should correctly add an opportunity with valid tag refs', async t => {
+test.serial('Should correctly add an opportunity with tags all having id properties', async t => {
   t.plan(3)
 
-  const tagIds = t.context.tags.map(tag => tag._id)
+  const tags = t.context.tags
 
   const res = await request(server)
     .post('/api/opportunities')
@@ -146,12 +158,12 @@ test.serial('Should correctly add an opportunity with valid tag refs', async t =
       description: 'Project to build a simple rocket that will reach 400m',
       duration: '4 hours',
       location: 'Albany, Auckland',
-      status: 'draft',
-      tags: tagIds,
+      status: OpportunityStatus.DRAFT,
+      tags: tags,
       requestor: t.context.people[0]._id
-
     })
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 200)
 
@@ -160,7 +172,7 @@ test.serial('Should correctly add an opportunity with valid tag refs', async t =
   t.is(t.context.tags.length, savedOpportunity.tags.length)
 })
 
-test.serial('Should not add an opportunity with invalid tag refs', async t => {
+test.serial('Should not add an opportunity with invalid tag ids', async t => {
   await request(server)
     .post('/api/opportunities')
     .send({
@@ -171,14 +183,52 @@ test.serial('Should not add an opportunity with invalid tag refs', async t => {
       duration: '4 hours',
       location: 'Albany, Auckland',
       status: 'draft',
-      tags: ['123456781234567812345678'],
+      tags: [{ _id: '123456781234567812345678', tag: 'test' }],
       requestor: t.context.people[0]._id
 
     })
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   const savedOpportunity = await Opportunity.findOne({ title: 'The first 400 metres' }).exec()
   t.is(null, savedOpportunity)
+})
+
+test.serial('Should create tags that dont have the _id property', async t => {
+  const tagName = 'noid'
+  const tags = [
+    t.context.tags[0],
+    {
+      tag: tagName
+    }
+  ]
+
+  const existingTag = await Tag.findOne({ tag: tagName })
+  t.is(null, existingTag)
+
+  await request(server)
+    .post('/api/opportunities')
+    .send({
+      title: 'The first 400 metres',
+      subtitle: 'Launching into space step 3',
+      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+      description: 'Project to build a simple rocket that will reach 400m',
+      duration: '4 hours',
+      location: 'Albany, Auckland',
+      status: 'draft',
+      tags: tags,
+      requestor: t.context.people[0]._id
+
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
+  const savedTag = await Tag.findOne({ tag: tagName })
+  t.is(tagName, savedTag.tag)
+
+  const savedOpportunity = await Opportunity.findOne({ title: 'The first 400 metres' }).populate('tags').exec()
+  // ensure the tag has an id
+  t.truthy(savedOpportunity.tags.find(t => t.tag === tagName)._id)
 })
 
 test.serial('Should correctly delete an opportunity', async t => {
@@ -191,7 +241,7 @@ test.serial('Should correctly delete an opportunity', async t => {
     description: 'Project to build a simple rocket that will reach 1000m',
     duration: '4 hours',
     location: 'Albany, Auckland',
-    status: 'draft',
+    status: OpportunityStatus.DRAFT,
     requestor: t.context.people[0]._id
   })
   await opp.save()
@@ -199,6 +249,7 @@ test.serial('Should correctly delete an opportunity', async t => {
   const res = await request(server)
     .delete(`/api/opportunities/${opp._id}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 200)
 
@@ -211,6 +262,7 @@ test.serial('Should correctly give opportunity 1 when searching by "Mentor"', as
   const res = await request(server)
     .get('/api/opportunities?search=MeNTor')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -222,6 +274,7 @@ test.serial('Should find no matches', async t => {
   const res = await request(server)
     .get('/api/opportunities?q={"title":"nomatches"}')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -233,6 +286,7 @@ test.serial('Should fail to find - invalid query', async t => {
   const res = await request(server)
     .get('/api/opportunities?s={"invalid":"nomatches"}')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(404)
   t.is(res.status, 404)
 })
@@ -242,6 +296,7 @@ test.serial('Should correctly give opportunity 2 when searching by "Algorithms"'
   const res = await request(server)
     .get('/api/opportunities?search=AlgorithMs')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -253,6 +308,7 @@ test.serial('Should include description in search', async t => {
   const res = await request(server)
     .get('/api/opportunities?search=ROCKEt')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -281,7 +337,7 @@ test.serial('Should return any opportunities with matching tags or title/desc/su
     description: 'Project to build a simple rocket that will reach 1000m',
     duration: '4 hours',
     location: 'Albany, Auckland',
-    status: 'draft',
+    status: OpportunityStatus.DRAFT,
     requestor: t.context.people[0]._id,
     tags: []
   })
@@ -290,6 +346,7 @@ test.serial('Should return any opportunities with matching tags or title/desc/su
   const res = await request(server)
     .get(`/api/opportunities?search=java robots`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -298,7 +355,7 @@ test.serial('Should return any opportunities with matching tags or title/desc/su
   t.is(4, got.length)
 })
 
-test.serial('Should update status of Opportunity when a put request is sent', async t => {
+test.serial('Should update from draft to active', async t => {
   t.plan(2)
 
   const opp = new Opportunity({
@@ -308,20 +365,86 @@ test.serial('Should update status of Opportunity when a put request is sent', as
     description: 'Project to build a simple rocket that will reach 1000m',
     duration: '4 hours',
     location: 'Albany, Auckland',
-    status: 'draft',
+    status: OpportunityStatus.DRAFT,
     requestor: t.context.people[0]._id
   })
 
   await opp.save()
   const res = await request(server)
     .put(`/api/opportunities/${opp._id}`)
-    .send({ status: 'done' })
+    .send({ status: OpportunityStatus.ACTIVE })
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
 
   t.is(res.status, 200)
-  const queriedOpportunity = await OpportunityArchive.findOne({ title: 'Java Robots in the house' }).exec()
-  t.is(queriedOpportunity.status, 'done')
+  const queriedOpportunity = await Opportunity.findOne({ title: 'Java Robots in the house' }).exec()
+  t.is(queriedOpportunity.status, OpportunityStatus.ACTIVE)
+})
+
+test.serial('Should archive Opportunity when a completed update is sent', async t => {
+  t.plan(2)
+
+  const opp = new Opportunity({
+    title: 'Java Robots in the house',
+    subtitle: 'Launching into space step 4',
+    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+    description: 'Project to build a simple rocket that will reach 1000m',
+    duration: '4 hours',
+    location: 'Albany, Auckland',
+    status: OpportunityStatus.ACTIVE,
+    requestor: t.context.people[0]._id
+  })
+
+  await opp.save()
+  const res = await request(server)
+    .put(`/api/opportunities/${opp._id}`)
+    .send({ status: OpportunityStatus.COMPLETED })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const queriedOpportunity = await archivedOpportunity.findOne({ title: 'Java Robots in the house' }).exec()
+  t.is(queriedOpportunity.status, OpportunityStatus.COMPLETED)
+})
+
+test.serial('should archive interests associated with opportunity', async t => {
+  t.plan(3)
+
+  const opp = new Opportunity({
+    title: 'Java Robots in the house',
+    subtitle: 'Launching into space step 4',
+    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+    description: 'Project to build a simple rocket that will reach 1000m',
+    duration: '4 hours',
+    location: 'Albany, Auckland',
+    status: OpportunityStatus.DRAFT,
+    requestor: t.context.people[0]._id
+  })
+
+  await opp.save()
+
+  const interest = new Interest({
+    opportunity: opp._id,
+    status: 'interested',
+    person: t.context.people[1]._id
+  })
+
+  await interest.save()
+
+  const res = await request(server)
+    .put(`/api/opportunities/${opp._id}`)
+    .send({ status: OpportunityStatus.COMPLETED })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const archivedInterest = await InterestArchive.findOne({ _id: interest._id }).exec()
+  t.is(archivedInterest.status, 'interested')
+  const oldInterest = await Interest.findOne({ _id: interest._id }).exec()
+  t.is(oldInterest, null)
 })
 
 test.serial('should return 400 for a bad request', async t => {
@@ -334,7 +457,7 @@ test.serial('should return 400 for a bad request', async t => {
     description: 'Project to build a simple rocket that will reach 1000m',
     duration: '4 hours',
     location: 'Albany, Auckland',
-    status: 'draft',
+    status: OpportunityStatus.DRAFT,
     requestor: t.context.people[0]._id
   })
 
@@ -344,7 +467,73 @@ test.serial('should return 400 for a bad request', async t => {
     .put(`/api/opportunities/${opp._id}`)
     .send({ status: { invalidObject: '' } })
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(400)
 
   t.is(res.status, 400)
+})
+
+test.serial('should return all matching opps within the specified region', async t => {
+  const res = await request(server)
+    .get(`/api/opportunities?location=${regions[0].name}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+    .expect('Content-Type', /json/)
+
+  const got = res.body
+
+  // 1 match for the region, 2 for territories WITHIN the region
+  t.is(got.length, 3)
+
+  const validLocs = [
+    regions[0].name,
+    ...regions[0].containedTerritories
+  ]
+
+  // ensure nothing was retrieved that shouldn't have been
+  t.falsy(got.find(op => !validLocs.includes(op.location)))
+})
+
+test.serial('should return opps at the specified territory', async t => {
+  const res = await request(server)
+    .get(`/api/opportunities?location=${regions[0].containedTerritories[1]}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+    .expect('Content-Type', /json/)
+
+  const got = res.body
+
+  t.is(got.length, 1)
+
+  // ensure nothing was retrieved that shouldn't have been
+  t.falsy(
+    got.find(
+      op => op.location !== regions[0].containedTerritories[1]
+    ))
+})
+
+test.serial('should return opps within the specified region that also match the search term', async t => {
+  const res = await request(server)
+    .get(`/api/opportunities?search=mentor&location=${regions[0].name}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+    .expect('Content-Type', /json/)
+
+  const got = res.body
+
+  t.is(got.length, 1)
+
+  const validLocs = [
+    regions[0].name,
+    ...regions[0].containedTerritories
+  ]
+
+  // ensure nothing was retrieved that shouldn't have been
+  t.falsy(
+    got.find(
+      op => op.title !== ops[0].title || !validLocs.includes(op.location)
+    ))
 })
