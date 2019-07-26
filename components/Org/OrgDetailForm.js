@@ -62,7 +62,6 @@ class OrgDetailForm extends Component {
     const orgContactEmail = <FormattedMessage id='orgContactEmail' defaultMessage='Contact Email' about='contact Email labek in OrgDetails Form' />
     const orgCategory = <FormattedMessage id='orgCategory' defaultMessage='Category' about='school, business or activity provider' />
 
-
     // TODO translate
     const categoryOptions = [
       { label: 'Business', value: 'vp' },
