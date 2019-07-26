@@ -19,21 +19,20 @@ const ProfileGrid = styled.div`
 `
 
 const ProfileImage = styled.img`
-  width: 15rem;
+  width: 100%;
 `
-
-
 
 const DetailItem = styled.div`
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-`
+  `
 
 const ListItem = styled.div`
   background-color: none;
   min-height: 5rem;
   margin-bottom: 5rem;
 `
+
 
 const PersonDetail = ({ person }, ...props) => (
   <div>
