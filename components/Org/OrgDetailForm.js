@@ -28,7 +28,9 @@ class OrgDetailForm extends Component {
   setImgUrl = (value) => {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
-
+  setWebsite = (value) => {
+    this.props.form.setWebsite({ contactEmail: value })
+  }
   setContactEmailUrl = (value) => {
     this.props.form.setFieldsValue({ contactEmail: value })
   }
@@ -57,8 +59,8 @@ class OrgDetailForm extends Component {
     const orgName = <FormattedMessage id='orgName' defaultMessage='Title' about='organisation Title label in OrgDetails Form' />
     const orgAbout = <FormattedMessage id='orgAbout' defaultMessage='About' about='organisation Description label in OrgDetails Form' />
     const orgImgUrl = <FormattedMessage id='orgImgUrl' defaultMessage='Image Link' about='organisation Image URL label in OrgDetails Form' />
-    const orgWebsite = <FormattedMessage id='orgWebsite' defaultMessage='Website' about='organisation website URL' />
-    const orgContactEmail = <FormattedMessage id='orgContactEmail' defaultMessage='Contact Email' about='contact Email labek in OrgDetails Form' />
+    const orgWebsite = <FormattedMessage id='orgWebsite' defaultMessage='Website' about='website label in OrgDetails Form' />
+    const orgContactEmail = <FormattedMessage id='orgContactEmail' defaultMessage='Contact Email' about='contact Email label in OrgDetails Form' />
     const orgCategory = <FormattedMessage id='orgCategory' defaultMessage='Category' about='school, business or activity provider' />
 
     // TODO translate
