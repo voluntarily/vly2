@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
-import OrgType from './OrgType'
+import OrgType from './OrgCategory'
 
 // TODO: [VP-262] show the org category as an icon/badge on the OrgCard
 const OrgCard = ({ org, ...props }) => (

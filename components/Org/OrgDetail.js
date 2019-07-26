@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
 import { Icon, Tabs } from 'antd'
 import Markdown from 'markdown-to-jsx'
-import OrgType from './OrgType'
+import OrgType from './OrgCategory'
 import Head from 'next/head'
 import styled from 'styled-components'
 import {
