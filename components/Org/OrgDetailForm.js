@@ -29,6 +29,10 @@ class OrgDetailForm extends Component {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
 
+  setContactEmailUrl = (value) => {
+    this.props.form.setFieldsValue({ contactEmail: value })
+  }
+
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
@@ -41,6 +45,7 @@ class OrgDetailForm extends Component {
         org.about = values.about
         org.imgUrl = values.imgUrl
         org.type = values.type
+        org.contactEmail = values.contactEmail
 
         this.props.onSubmit(this.props.org)
       }
@@ -52,6 +57,7 @@ class OrgDetailForm extends Component {
     const orgName = <FormattedMessage id='orgName' defaultMessage='Title' about='organisation Title label in OrgDetails Form' />
     const orgAbout = <FormattedMessage id='orgAbout' defaultMessage='About' about='organisation Description label in OrgDetails Form' />
     const orgImgUrl = <FormattedMessage id='orgImgUrl' defaultMessage='Image Link' about='organisation Image URL label in OrgDetails Form' />
+    const orgContactEmail = <FormattedMessage id='orgContactEmail' defaultMessage='Contact Email' about='contact Email labek in OrgDetails Form' />
     const orgType = <FormattedMessage id='orgType' defaultMessage='Type' about='school, business or activity provider' />
 
     // TODO translate
@@ -120,6 +126,16 @@ class OrgDetailForm extends Component {
             )}
             <ImageUpload setImgUrl={this.setImgUrl} />
           </Form.Item>
+          <Form.Item label={contactEmail}>
+            {getFieldDecorator('contactEmail', {
+              rules: [
+
+              ]
+            })(
+              // <TextArea rows={20} placeholder='Enter email address for organisations contact person' />
+              <RichTextEditor onChange={this.setContactEmailUrl} />
+            )}
+          </Form.Item>
           <Form.Item label={orgType}>
             {getFieldDecorator('type', {
               rules: [
@@ -169,6 +185,7 @@ OrgDetailForm.propTypes = {
     about: PropTypes.string,
     type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])),
     imgUrl: PropTypes.string,
+    contactEmail: PropTypes.string,
     _id: PropTypes.string
   }).isRequired,
   form: PropTypes.object,
@@ -191,6 +208,7 @@ export default Form.create({
       name: Form.createFormField({ ...props.org.name, value: props.org.name }),
       about: Form.createFormField({ ...props.org.about, value: props.org.about }),
       imgUrl: Form.createFormField({ ...props.org.imgUrl, value: props.org.imgUrl }),
+      contactEmail: Form.createFormField({ ...props.org.contactEmail, value: props.org.contactEmail }),
       type: Form.createFormField({ ...props.org.type, value: props.org.type })
     }
   },
