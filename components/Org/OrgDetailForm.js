@@ -126,14 +126,14 @@ class OrgDetailForm extends Component {
             )}
             <ImageUpload setImgUrl={this.setImgUrl} />
           </Form.Item>
-          <Form.Item label={contactEmail}>
+          <Form.Item label={orgContactEmail}>
             {getFieldDecorator('contactEmail', {
               rules: [
 
               ]
             })(
               // <TextArea rows={20} placeholder='Enter email address for organisations contact person' />
-              <RichTextEditor onChange={this.setContactEmailUrl} />
+              <Input placeholder='example@gmail.com' />
             )}
           </Form.Item>
           <Form.Item label={orgType}>
