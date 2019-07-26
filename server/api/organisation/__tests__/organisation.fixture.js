@@ -2,38 +2,38 @@ const orgList = [
   {
     name: 'Voluntari.ly Administrators',
     slug: 'vly-admin',
-    type: ['admin'],
+    category: ['admin'],
     about: "Voluntari.ly Administrators have special powers. Contact us to get things done that can't be done any other way"
 
   },
   {
     name: 'OMGTech',
     slug: 'omgtech',
-    type: ['ap', 'vp'],
+    category: ['ap', 'vp'],
     about: 'Awesome content providers'
   },
   {
     name: 'Datacom',
     slug: 'datacom',
-    type: ['vp'],
+    category: ['vp'],
     about: 'some of our most loyal helpers'
   },
   {
     name: 'Spark Ltd',
     slug: 'spark',
-    type: ['vp'],
+    category: ['vp'],
     about: 'more of our most loyal helpers'
   },
   {
     name: 'Westpac Ltd',
     slug: 'westpac',
-    type: ['vp'],
+    category: ['vp'],
     about: 'even more of our most loyal helpers'
   },
   {
     name: 'Albany High School',
     slug: 'albany-high',
-    type: ['op'],
+    category: ['op'],
     about: 'A great place to learn'
   }
 ]

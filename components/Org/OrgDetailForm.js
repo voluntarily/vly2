@@ -40,7 +40,7 @@ class OrgDetailForm extends Component {
         org.slug = slug(values.name)
         org.about = values.about
         org.imgUrl = values.imgUrl
-        org.type = values.type
+        org.category = values.type
 
         this.props.onSubmit(this.props.org)
       }
@@ -52,10 +52,10 @@ class OrgDetailForm extends Component {
     const orgName = <FormattedMessage id='orgName' defaultMessage='Title' about='organisation Title label in OrgDetails Form' />
     const orgAbout = <FormattedMessage id='orgAbout' defaultMessage='About' about='organisation Description label in OrgDetails Form' />
     const orgImgUrl = <FormattedMessage id='orgImgUrl' defaultMessage='Image Link' about='organisation Image URL label in OrgDetails Form' />
-    const orgType = <FormattedMessage id='orgType' defaultMessage='Type' about='school, business or activity provider' />
+    const orgCategory = <FormattedMessage id='orgCategory' defaultMessage='Category' about='school, business or activity provider' />
 
     // TODO translate
-    const typeOptions = [
+    const categoryOptions = [
       { label: 'Business', value: 'vp' },
       { label: 'School', value: 'op' },
       { label: 'Activity provider', value: 'ap' },
@@ -120,14 +120,14 @@ class OrgDetailForm extends Component {
             )}
             <ImageUpload setImgUrl={this.setImgUrl} />
           </Form.Item>
-          <Form.Item label={orgType}>
-            {getFieldDecorator('type', {
+          <Form.Item label={orgCategory}>
+            {getFieldDecorator('category', {
               rules: [
-                { required: true, message: 'type is required' }
+                { required: true, message: 'category is required' }
               ]
             })(
               <Checkbox.Group
-                options={typeOptions}
+                options={categoryOptions}
               />
             )}
           </Form.Item>
@@ -167,7 +167,7 @@ OrgDetailForm.propTypes = {
   org: PropTypes.shape({
     name: PropTypes.string,
     about: PropTypes.string,
-    type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])),
+    category: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])),
     imgUrl: PropTypes.string,
     _id: PropTypes.string
   }).isRequired,
@@ -191,7 +191,7 @@ export default Form.create({
       name: Form.createFormField({ ...props.org.name, value: props.org.name }),
       about: Form.createFormField({ ...props.org.about, value: props.org.about }),
       imgUrl: Form.createFormField({ ...props.org.imgUrl, value: props.org.imgUrl }),
-      type: Form.createFormField({ ...props.org.type, value: props.org.type })
+      category: Form.createFormField({ ...props.org.category, value: props.org.category })
     }
   },
   onValuesChange (_, values) {

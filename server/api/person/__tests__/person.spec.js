@@ -68,7 +68,7 @@ test.failing('Should send correct data when queried against an id', async t => {
     .get(`/api/people/${id}`)
     .set('Accept', 'application/json')
     // .expect('Content-Type', /json/)
-    .expect(403)  
+    .expect(403)
   t.is(res.body.name, p.name)
 })
 
