@@ -8,6 +8,9 @@ const anonAbilities = [{
   subject: SchemaName,
   action: Action.CRUD,
   inverted: true
+}, {
+  subject: SchemaName,
+  action: Action.CREATE
 }]
 
 // const allAbilities = [{
