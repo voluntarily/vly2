@@ -94,7 +94,7 @@ const OrgDetail = ({ org, ...props }) => (
         <OrgContainer>
           <TextPBold>Get in touch</TextPBold>
           {org.website && <ContactContainer><Icon type='global' />&nbsp;&nbsp;{org.website}</ContactContainer>}
-          <ContactContainer><Icon type='mail' />&nbsp;&nbsp;placeholder@email.co.nz</ContactContainer>
+          <ContactContainer><Icon type='mail' />&nbsp;&nbsp;{org.contactEmail}</ContactContainer>
           <ContactContainer><Icon type='facebook' />&nbsp;&nbsp;placeholder</ContactContainer>
           <ContactContainer><Icon type='twitter' />&nbsp;@placeholderTwitter</ContactContainer>
 
@@ -133,6 +133,7 @@ OrgDetail.propTypes = {
       PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
     ).isRequired,
     imgUrl: PropTypes.string,
+    website: PropTypes.string,
     contactEmail: PropTypes.string.isRequired,
     website: PropTypes.string,
     _id: PropTypes.string.isRequired
