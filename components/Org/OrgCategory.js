@@ -1,13 +1,13 @@
 // TODO translate - could just translate message val.
 const OrgCategoryItem = ({ orgCategoryItem }) => {
-  const typeOptions = [
+  const categoryOptions = [
     { label: 'Business', value: 'vp' },
     { label: 'School', value: 'op' },
     { label: 'Activity provider', value: 'ap' },
     { label: 'Agency', value: 'admin' },
     { label: 'Other', value: 'other' }
   ]
-  const item = typeOptions
+  const item = categoryOptions
     .filter(t => t.value === orgCategoryItem)
     .reduce((a, t) => t.label)
 

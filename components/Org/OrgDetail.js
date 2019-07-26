@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
 import { Icon, Tabs } from 'antd'
 import Markdown from 'markdown-to-jsx'
-import OrgType from './OrgCategory'
+import OrgCategory from './OrgCategory'
 import Head from 'next/head'
 import styled from 'styled-components'
 import {
@@ -109,7 +109,7 @@ const OrgDetail = ({ org, ...props }) => (
           <TabPane tab={orgTab} key='1'>
             <SpacerSmall />
             <Markdown children={org.about || ''} />
-            <OrgType orgType={org.category} />
+            <OrgCategory orgCategory={org.category} />
           </TabPane>
           <TabPane tab={orgResourcesTab} key='2' />
           <TabPane tab={orgInstructionTab} key='3'>

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
-import OrgType from './OrgCategory'
+import OrgCategory from './OrgCategory'
 
 // TODO: [VP-262] show the org category as an icon/badge on the OrgCard
 const OrgCard = ({ org, ...props }) => (
@@ -11,7 +11,7 @@ const OrgCard = ({ org, ...props }) => (
         <div className='requestContainer'>
           <img className='requestImg' src={org.imgUrl} />
           <p className='requestTitle'>{org.name}</p>
-          <OrgType orgType={org.category} />
+          <OrgCategory orgCategory={org.category} />
           {/* <p className='requestDateTime'>{org.category}</p> */}
           {/* <p className='requestDescription'>{org.about}</p> */}
         </div>
