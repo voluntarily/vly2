@@ -135,7 +135,6 @@ OrgDetail.propTypes = {
     imgUrl: PropTypes.string,
     website: PropTypes.string,
     contactEmail: PropTypes.string.isRequired,
-    website: PropTypes.string,
     _id: PropTypes.string.isRequired
   }).isRequired
 }
