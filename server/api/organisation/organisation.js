@@ -10,7 +10,7 @@ const organisationSchema = new Schema({
   contactEmail: String,
   contactId: String,
   website: String,
-  type: {
+  category: {
     type: [String],
     required: true,
     default: ['vp'],
