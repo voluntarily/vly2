@@ -52,7 +52,7 @@ class OrgDetailForm extends Component {
     const orgName = <FormattedMessage id='orgName' defaultMessage='Title' about='organisation Title label in OrgDetails Form' />
     const orgAbout = <FormattedMessage id='orgAbout' defaultMessage='About' about='organisation Description label in OrgDetails Form' />
     const orgImgUrl = <FormattedMessage id='orgImgUrl' defaultMessage='Image Link' about='organisation Image URL label in OrgDetails Form' />
-    const orgType = <FormattedMessage id='orgType' defaultMessage='Type' about='school, business or activity provider' />
+    const orgCategory = <FormattedMessage id='orgCategory' defaultMessage='Category' about='school, business or activity provider' />
 
     // TODO translate
     const categoryOptions = [
@@ -120,7 +120,7 @@ class OrgDetailForm extends Component {
             )}
             <ImageUpload setImgUrl={this.setImgUrl} />
           </Form.Item>
-          <Form.Item label={orgType}>
+          <Form.Item label={orgCategory}>
             {getFieldDecorator('category', {
               rules: [
                 { required: true, message: 'category is required' }
