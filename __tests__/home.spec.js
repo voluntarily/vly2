@@ -121,8 +121,8 @@ test('render volunteer home page - Profile tab', t => {
       <PersonHomePageTest {...props} />
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(2).simulate('click')
-  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Profile')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h3').first().text(), t.context.me.name)
+  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Pro
+  t.is(wrapper.find('h3').first().text(), t.context.me.name)
 })
 
 test('render Edit Profile ', t => {
