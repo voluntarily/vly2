@@ -8,7 +8,7 @@ import orgs from './organisation.fixture.js'
 const p = {
   name: 'International Testing Corporation',
   slug: 'test-corp',
-  type: 'vp',
+  category: 'vp',
   about: 'Evil testing empire'
 }
 
@@ -95,9 +95,9 @@ test.serial('Should fail to find - invalid query', async t => {
     .expect(400)
   t.is(res.status, 400)
 })
-test.serial('Should correctly give subset of orgs of type', async t => {
+test.serial('Should correctly give subset of orgs of category', async t => {
   const res = await request(server)
-    .get('/api/organisations?q={"type":"vp"}')
+    .get('/api/organisations?q={"category":"vp"}')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
@@ -106,9 +106,9 @@ test.serial('Should correctly give subset of orgs of type', async t => {
   t.is(got.length, 4)
 })
 
-test.serial('Should correctly give reverse sorted orgs of type', async t => {
+test.serial('Should correctly give reverse sorted orgs of category', async t => {
   const res = await request(server)
-    .get('/api/organisations?q={"type":"vp"}&s="-name"')
+    .get('/api/organisations?q={"category":"vp"}&s="-name"')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
@@ -120,7 +120,7 @@ test.serial('Should correctly give reverse sorted orgs of type', async t => {
 
 test.serial('Should correctly select just the names and ids', async t => {
   const res = await request(server)
-    .get('/api/organisations?q={"type":"vp"}&p={"name": 1}')
+    .get('/api/organisations?q={"category":"vp"}&p={"name": 1}')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)

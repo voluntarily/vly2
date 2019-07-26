@@ -9,7 +9,7 @@ const org = {
   imgUrl: '/static/andrew.jpg',
   about:
     'OMGTech! develops & delivers engaging workshops for both teachers and students on digital technologies and how to explore and invent with them',
-  type: ['vp']
+  category: ['vp']
 }
 
 const props = {
@@ -31,7 +31,7 @@ test('OrgCard renders properly', t => {
   //     .find('p')
   //     .at(1)
   //     .text(),
-  //   org.type.join('')
+  //   org.category.join('')
   // )
 
   // t.is(
