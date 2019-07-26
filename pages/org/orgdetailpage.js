@@ -17,7 +17,7 @@ const blankOrg = {
   contactEmail: '',
   contactId: null,
   website: null,
-  type: ['vp']
+  category: ['vp']
 }
 
 class OrgDetailPage extends Component {
