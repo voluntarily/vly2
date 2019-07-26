@@ -41,6 +41,7 @@ class OrgDetailForm extends Component {
         org.about = values.about
         org.imgUrl = values.imgUrl
         org.type = values.type
+        org.website = values.website
 
         this.props.onSubmit(this.props.org)
       }
@@ -53,6 +54,7 @@ class OrgDetailForm extends Component {
     const orgAbout = <FormattedMessage id='orgAbout' defaultMessage='About' about='organisation Description label in OrgDetails Form' />
     const orgImgUrl = <FormattedMessage id='orgImgUrl' defaultMessage='Image Link' about='organisation Image URL label in OrgDetails Form' />
     const orgType = <FormattedMessage id='orgType' defaultMessage='Type' about='school, business or activity provider' />
+    const orgWebsite = <FormattedMessage id='orgWebsite' defaultMessage='Website' about='organisation website URL' />
 
     // TODO translate
     const typeOptions = [
@@ -120,6 +122,18 @@ class OrgDetailForm extends Component {
             )}
             <ImageUpload setImgUrl={this.setImgUrl} />
           </Form.Item>
+          <Form.Item
+            label={orgWebsite}
+          >
+            {getFieldDecorator('website', {
+              rules: [
+                { pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/,
+                  message: 'Enter valid URL' }
+              ]
+            })(
+              <Input placeholder='Organisation Website' />
+            )}
+          </Form.Item>
           <Form.Item label={orgType}>
             {getFieldDecorator('type', {
               rules: [
@@ -169,6 +183,7 @@ OrgDetailForm.propTypes = {
     about: PropTypes.string,
     type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])),
     imgUrl: PropTypes.string,
+    website: PropTypes.string,
     _id: PropTypes.string
   }).isRequired,
   form: PropTypes.object,
@@ -191,7 +206,8 @@ export default Form.create({
       name: Form.createFormField({ ...props.org.name, value: props.org.name }),
       about: Form.createFormField({ ...props.org.about, value: props.org.about }),
       imgUrl: Form.createFormField({ ...props.org.imgUrl, value: props.org.imgUrl }),
-      type: Form.createFormField({ ...props.org.type, value: props.org.type })
+      type: Form.createFormField({ ...props.org.type, value: props.org.type }),
+      website: Form.createFormField({ ...props.org.website, value: props.org.website })
     }
   },
   onValuesChange (_, values) {
