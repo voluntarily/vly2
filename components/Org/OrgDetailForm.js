@@ -49,7 +49,6 @@ class OrgDetailForm extends Component {
         org.website = values.website
         org.contactEmail = values.contactEmail
         org.category = values.type
-
         this.props.onSubmit(this.props.org)
       }
     })
@@ -130,19 +129,22 @@ class OrgDetailForm extends Component {
             )}
             <ImageUpload setImgUrl={this.setImgUrl} />
           </Form.Item>
-          <Form.Item label={orgWebsite}>
+          <Form.Item
+            label={orgWebsite}
+          >
             {getFieldDecorator('website', {
               rules: [
-
+                { pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/,
+                  message: 'Enter valid URL' }
               ]
             })(
-              <Input placeholder='www.website.co.nz' />
+              <Input placeholder='Organisation Website' />
             )}
           </Form.Item>
+
           <Form.Item label={orgContactEmail}>
             {getFieldDecorator('contactEmail', {
               rules: [
-
               ]
             })(
               // <TextArea rows={20} placeholder='Enter email address for organisations contact person' />
