@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import OrgType from './OrgType'
 
-// TODO: [VP-262] show the org type as an icon/badge on the OrgCard
+// TODO: [VP-262] show the org category as an icon/badge on the OrgCard
 const OrgCard = ({ org, ...props }) => (
   <div>
     <Link href={`/orgs/${org._id}`}>
@@ -11,8 +11,8 @@ const OrgCard = ({ org, ...props }) => (
         <div className='requestContainer'>
           <img className='requestImg' src={org.imgUrl} />
           <p className='requestTitle'>{org.name}</p>
-          <OrgType orgType={org.type} />
-          {/* <p className='requestDateTime'>{org.type}</p> */}
+          <OrgType orgType={org.category} />
+          {/* <p className='requestDateTime'>{org.category}</p> */}
           {/* <p className='requestDescription'>{org.about}</p> */}
         </div>
       </a>
@@ -96,7 +96,7 @@ OrgCard.propTypes = {
     name: PropTypes.string.isRequired,
     about: PropTypes.string.isRequired,
     imgUrl: PropTypes.string.isRequired,
-    type: PropTypes.arrayOf(
+    category: PropTypes.arrayOf(
       PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
     ).isRequired,
     _id: PropTypes.string.isRequired

@@ -109,7 +109,7 @@ const OrgDetail = ({ org, ...props }) => (
           <TabPane tab={orgTab} key='1'>
             <SpacerSmall />
             <Markdown children={org.about || ''} />
-            <OrgType orgType={org.type} />
+            <OrgType orgType={org.category} />
           </TabPane>
           <TabPane tab={orgResourcesTab} key='2' />
           <TabPane tab={orgInstructionTab} key='3'>
@@ -129,7 +129,7 @@ OrgDetail.propTypes = {
   org: PropTypes.shape({
     name: PropTypes.string.isRequired,
     about: PropTypes.string.isRequired,
-    type: PropTypes.arrayOf(
+    category: PropTypes.arrayOf(
       PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
     ).isRequired,
     imgUrl: PropTypes.string,

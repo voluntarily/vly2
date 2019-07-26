@@ -1,5 +1,5 @@
 // TODO translate - could just translate message val.
-const OrgTypeItem = ({ orgTypeItem }) => {
+const OrgCategoryItem = ({ orgCategoryItem }) => {
   const typeOptions = [
     { label: 'Business', value: 'vp' },
     { label: 'School', value: 'op' },
@@ -8,7 +8,7 @@ const OrgTypeItem = ({ orgTypeItem }) => {
     { label: 'Other', value: 'other' }
   ]
   const item = typeOptions
-    .filter(t => t.value === orgTypeItem)
+    .filter(t => t.value === orgCategoryItem)
     .reduce((a, t) => t.label)
 
   return (
@@ -16,6 +16,6 @@ const OrgTypeItem = ({ orgTypeItem }) => {
   )
 }
 
-const OrgType = ({ orgType }) => <ul>{orgType.map((t, index) => <OrgTypeItem key={index} orgTypeItem={t} />)}</ul>
+const OrgCategory = ({ orgCategory }) => <ul>{orgCategory.map((t, index) => <OrgCategoryItem key={index} orgCategoryItem={t} />)}</ul>
 
-export default OrgType
+export default OrgCategory
