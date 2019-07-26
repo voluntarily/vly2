@@ -1,4 +1,4 @@
-import { Col, Icon, Row, Divider } from 'antd'
+import { Icon, Divider } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
@@ -25,14 +25,13 @@ const ProfileImage = styled.img`
 const DetailItem = styled.div`
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-  `
+`
 
 const ListItem = styled.div`
   background-color: none;
   min-height: 5rem;
   margin-bottom: 5rem;
 `
-
 
 const PersonDetail = ({ person }, ...props) => (
   <div>
@@ -41,17 +40,18 @@ const PersonDetail = ({ person }, ...props) => (
       <GridContainer>
         <ProfileImage src={person.avatar} alt={person.nickname} />
         <DetailItem>
-        <TextH3>{person.name}</TextH3>
-        <TextPBold>{person.org}</TextPBold>
+          <TextH3>{person.name}</TextH3>
+          <TextPBold>{person.org}</TextPBold>
         </DetailItem>
         <DetailItem>
-        <a href={`mailto:${person.email}`}>
-          <Icon type='mail' /> {person.email}
-        </a></DetailItem>
+          <a href={`mailto:${person.email}`}>
+            <Icon type='mail' /> {person.email}
+          </a>
+        </DetailItem>
         <DetailItem>
-        <a href={`tel:${person.phone}`}>
-          <Icon type='phone' /> {person.phone}
-        </a>
+          <a href={`tel:${person.phone}`}>
+            <Icon type='phone' /> {person.phone}
+          </a>
         </DetailItem>
         <p>
           <Icon type='schedule' />{' '}
