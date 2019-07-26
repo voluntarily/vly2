@@ -29,6 +29,10 @@ class OrgDetailForm extends Component {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
 
+  setContactEmailUrl = (value) => {
+    this.props.form.setFieldsValue({ contactEmail: value })
+  }
+
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
@@ -40,9 +44,9 @@ class OrgDetailForm extends Component {
         org.slug = slug(values.name)
         org.about = values.about
         org.imgUrl = values.imgUrl
-        org.type = values.type
         org.website = values.website
-
+        org.contactEmail = values.contactEmail
+        org.category = values.type
         this.props.onSubmit(this.props.org)
       }
     })
@@ -53,11 +57,12 @@ class OrgDetailForm extends Component {
     const orgName = <FormattedMessage id='orgName' defaultMessage='Title' about='organisation Title label in OrgDetails Form' />
     const orgAbout = <FormattedMessage id='orgAbout' defaultMessage='About' about='organisation Description label in OrgDetails Form' />
     const orgImgUrl = <FormattedMessage id='orgImgUrl' defaultMessage='Image Link' about='organisation Image URL label in OrgDetails Form' />
-    const orgType = <FormattedMessage id='orgType' defaultMessage='Type' about='school, business or activity provider' />
     const orgWebsite = <FormattedMessage id='orgWebsite' defaultMessage='Website' about='organisation website URL' />
+    const orgContactEmail = <FormattedMessage id='orgContactEmail' defaultMessage='Contact Email' about='contact Email labek in OrgDetails Form' />
+    const orgCategory = <FormattedMessage id='orgCategory' defaultMessage='Category' about='school, business or activity provider' />
 
     // TODO translate
-    const typeOptions = [
+    const categoryOptions = [
       { label: 'Business', value: 'vp' },
       { label: 'School', value: 'op' },
       { label: 'Activity provider', value: 'ap' },
@@ -134,14 +139,24 @@ class OrgDetailForm extends Component {
               <Input placeholder='Organisation Website' />
             )}
           </Form.Item>
-          <Form.Item label={orgType}>
-            {getFieldDecorator('type', {
+
+          <Form.Item label={orgContactEmail}>
+            {getFieldDecorator('contactEmail', {
               rules: [
-                { required: true, message: 'type is required' }
+              ]
+            })(
+              // <TextArea rows={20} placeholder='Enter email address for organisations contact person' />
+              <Input placeholder='example@gmail.com' />
+            )}
+          </Form.Item>
+          <Form.Item label={orgCategory}>
+            {getFieldDecorator('category', {
+              rules: [
+                { required: true, message: 'category is required' }
               ]
             })(
               <Checkbox.Group
-                options={typeOptions}
+                options={categoryOptions}
               />
             )}
           </Form.Item>
@@ -181,9 +196,10 @@ OrgDetailForm.propTypes = {
   org: PropTypes.shape({
     name: PropTypes.string,
     about: PropTypes.string,
-    type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])),
+    category: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])),
     imgUrl: PropTypes.string,
     website: PropTypes.string,
+    contactEmail: PropTypes.string,
     _id: PropTypes.string
   }).isRequired,
   form: PropTypes.object,
@@ -206,8 +222,9 @@ export default Form.create({
       name: Form.createFormField({ ...props.org.name, value: props.org.name }),
       about: Form.createFormField({ ...props.org.about, value: props.org.about }),
       imgUrl: Form.createFormField({ ...props.org.imgUrl, value: props.org.imgUrl }),
-      type: Form.createFormField({ ...props.org.type, value: props.org.type }),
-      website: Form.createFormField({ ...props.org.website, value: props.org.website })
+      website: Form.createFormField({ ...props.org.website, value: props.org.website }),
+      contactEmail: Form.createFormField({ ...props.org.contactEmail, value: props.org.contactEmail }),
+      category: Form.createFormField({ ...props.org.category, value: props.org.category })
     }
   },
   onValuesChange (_, values) {
