@@ -4,6 +4,7 @@ const helpers = require('../../services/helpers')
 const Person = require('./person')
 const { ensureSanitized, getPersonBy } = require('./person.controller')
 const { SchemaName } = require('./person.constants')
+const removeUnauthorizedFields = require('../../services/authorize/removeUnauthorizedFields')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 
 module.exports = function (server) {
@@ -16,7 +17,7 @@ module.exports = function (server) {
       endResponseInAction: false,
       beforeActions: [{ middlewares: [ authorizeActions(SchemaName), ensureSanitized ] }],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
-      afterActions: [{ middlewares: [ helpers.formatResponse ] }]
+      afterActions: [{ middlewares: [ removeUnauthorizedFields(Person), helpers.formatResponse ] }]
     })
   )
 
