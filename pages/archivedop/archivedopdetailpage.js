@@ -59,5 +59,5 @@ class ArchivedOpDetailPage extends OpDetailPage {
     )
   }
 }
-
+export const ArchivedOpDetailPageWithArchivedOps = withArchivedOpportunities(ArchivedOpDetailPage)
 export default publicPage(withArchivedOpportunities(ArchivedOpDetailPage))
