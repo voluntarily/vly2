@@ -1,8 +1,7 @@
 const { Action } = require('../../services/abilities/ability.constants')
-const pick = require('lodash.pick')
 
-const defaultConvertRequestToAction = (req) => {
-  switch (req.method) {
+const defaultConvertRequestToAction = (method) => {
+  switch (method) {
     case 'GET':
       return Action.READ
     case 'POST':
@@ -17,7 +16,7 @@ const defaultConvertRequestToAction = (req) => {
 }
 
 const authorizeActions = (subject, convertRequestToAction) => (req, res, next) => {
-  const action = convertRequestToAction === undefined ? defaultConvertRequestToAction(req) : convertRequestToAction(req)
+  const action = convertRequestToAction === undefined ? defaultConvertRequestToAction(req.method) : convertRequestToAction(req)
   const authorized = req.ability.can(action, subject)
   if (authorized) {
     next()
@@ -26,15 +25,7 @@ const authorizeActions = (subject, convertRequestToAction) => (req, res, next) =
   }
 }
 
-const authorizeFields = (Schema) => (req, res, next) => {
-  var authorizedFields = Schema.accessibleFieldsBy(req.ability)
-  res.data = Array.isArray(res.body)
-    ? res.body.map(item => pick(item, authorizedFields))
-    : pick(res.body, authorizedFields)
-  next()
-}
-
 module.exports = {
   authorizeActions,
-  authorizeFields
+  defaultConvertRequestToAction
 }
