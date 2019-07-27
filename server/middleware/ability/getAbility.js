@@ -1,6 +1,6 @@
 const glob = require('glob')
 const { Ability } = require('@casl/ability')
-const { Role } = require('../../services/auth/role')
+const { Role } = require('../../services/authorize/role')
 
 module.exports = options => (req, res, next) => {
   const rootPath = require('path').join(__dirname, '/../../..')

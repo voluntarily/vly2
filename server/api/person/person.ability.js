@@ -1,4 +1,4 @@
-const { Role } = require('../../services/auth/role')
+const { Role } = require('../../services/authorize/role')
 const { Action } = require('../../services/abilities/ability.constants')
 // const { PersonFields } = require('./person.constants')
 const SchemaName = 'Person'
