@@ -382,9 +382,9 @@ class OpDetailForm extends Component {
                     <DatePicker
                       showTime
                       disabledDate={(current) => {
-                        return moment().add(-1, 'days')  >= current ||
-                             moment().add(1, 'year')  <= current;
-                        }}
+                        return moment().add(-1, 'days') >= current ||
+                             moment().add(1, 'year') <= current
+                      }}
                       format='DD-MM-YYYY HH:mm:ss'
                       onChange={this.onStartDateChange}
                       style={{ width: '100%' }}
