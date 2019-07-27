@@ -14,54 +14,58 @@ interface Rule {
 }
 */
 
-const anonAbilities = [{
-  subject: SchemaName,
-  action: Action.READ,
-  conditions: { status: OpportunityStatus.ACTIVE }
-}, {
-  subject: SchemaName,
-  action: Action.LIST,
-  conditions: { status: OpportunityStatus.ACTIVE },
-  fields: [OpportunityFields.ID, OpportunityFields.TITLE, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION]
-}, {
-  subject: SchemaName,
-  action: Action.UPDATE,
-  inverted: true
-}, {
-  subject: SchemaName,
-  action: Action.DELETE,
-  inverted: true
-}, {
-  subject: SchemaName,
-  action: Action.CREATE,
-  inverted: true
-}]
+const ruleBuilder = session => {
+  const anonAbilities = [{
+    subject: SchemaName,
+    action: Action.READ,
+    conditions: { status: OpportunityStatus.ACTIVE }
+  }, {
+    subject: SchemaName,
+    action: Action.LIST,
+    conditions: { status: OpportunityStatus.ACTIVE },
+    fields: [OpportunityFields.ID, OpportunityFields.TITLE, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION]
+  }, {
+    subject: SchemaName,
+    action: Action.UPDATE,
+    inverted: true
+  }, {
+    subject: SchemaName,
+    action: Action.DELETE,
+    inverted: true
+  }, {
+    subject: SchemaName,
+    action: Action.CREATE,
+    inverted: true
+  }]
 
-const allAbilities = [{
-  subject: SchemaName,
-  action: Action.READ
-}, {
-  subject: SchemaName,
-  action: Action.LIST
-}]
+  const allAbilities = [{
+    subject: SchemaName,
+    action: Action.READ
+  }, {
+    subject: SchemaName,
+    action: Action.LIST
+  }]
 
-const vpAbilities = allAbilities
-const opAbilities = allAbilities.concat([{
-  subject: SchemaName,
-  action: Action.CREATE
-}, {
-  subject: SchemaName,
-  action: Action.UPDATE
-}])
-const testerAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
-const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
-const orgAdminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
+  const vpAbilities = allAbilities
+  const opAbilities = allAbilities.concat([{
+    subject: SchemaName,
+    action: Action.CREATE
+  }, {
+    subject: SchemaName,
+    action: Action.UPDATE
+  }])
+  const testerAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
+  const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
+  const orgAdminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
 
-module.exports = {
-  [Role.ANON]: anonAbilities,
-  [Role.VOLUNTEER_PROVIDER]: vpAbilities,
-  [Role.OPPORTUNITY_PROVIDER]: opAbilities,
-  [Role.TESTER]: testerAbilities,
-  [Role.ADMIN]: adminAbilities,
-  [Role.ORG_ADMIN]: orgAdminAbilities
+  return {
+    [Role.ANON]: anonAbilities,
+    [Role.VOLUNTEER_PROVIDER]: vpAbilities,
+    [Role.OPPORTUNITY_PROVIDER]: opAbilities,
+    [Role.TESTER]: testerAbilities,
+    [Role.ADMIN]: adminAbilities,
+    [Role.ORG_ADMIN]: orgAdminAbilities
+  }
 }
+
+module.exports = ruleBuilder
