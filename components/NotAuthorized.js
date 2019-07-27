@@ -48,9 +48,8 @@ export default () => (
         </p>
         <TextH1>
           You don't have access to this page 😅 <br />
-          Try and<Link key={item.href} href={item.href}>
+          Try and<a href='/auth/sign-in'> sign in</a>
             sign in 
-          </Link> 
           to see it?
         </TextH1>
       </center>
