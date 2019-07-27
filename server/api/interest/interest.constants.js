@@ -1,8 +1,8 @@
 const InterestFields = {
   ID: '_id',
-  COMMENT: 'title',
-  STATUS: 'subtitle',
-  DATE_ADDED: 'imgUrl',
+  COMMENT: 'comment',
+  STATUS: 'status',
+  DATE_ADDED: 'dateAdded',
   PERSON: 'person',
   OPPORTUNITY: 'opportunity'
 }
