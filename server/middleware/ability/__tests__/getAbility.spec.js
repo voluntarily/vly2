@@ -1,7 +1,7 @@
 import test from 'ava'
 import getAbility from '../getAbility'
 import { Action } from '../../../services/abilities/ability.constants'
-import { Role } from '../../../services/auth/role'
+import { Role } from '../../../services/authorize/role'
 
 test.beforeEach(t => {
   t.context.REQ_AUTHENTICATED_TEMPLATE = {

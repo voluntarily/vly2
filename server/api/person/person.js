@@ -3,7 +3,7 @@ const idvalidator = require('mongoose-id-validator')
 const Schema = mongoose.Schema
 const { SchemaName } = require('./person.constants')
 // const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
-const { Role } = require('../../services/auth/role')
+const { Role } = require('../../services/authorize/role')
 
 // simplified version without Auth
 const personSchema = new Schema({
