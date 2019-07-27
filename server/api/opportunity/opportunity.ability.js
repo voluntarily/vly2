@@ -1,5 +1,5 @@
 const { SchemaName, OpportunityStatus, OpportunityFields } = require('./opportunity.constants')
-const { Role } = require('../../services/auth/role')
+const { Role } = require('../../services/authorize/role')
 const { Action } = require('../../services/abilities/ability.constants')
 
 /*

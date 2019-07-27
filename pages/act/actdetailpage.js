@@ -9,7 +9,7 @@ import ActDetailForm from '../../components/Act/ActDetailForm'
 import PersonCard from '../../components/Person/PersonCard'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
-import { Role } from '../../server/services/auth/role'
+import { Role } from '../../server/services/authorize/role'
 
 const blankAct = {
   title: '',
