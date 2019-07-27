@@ -8,6 +8,7 @@ import PersonRoles from './PersonRole'
 import {
   GridContainer,
   TextPBold,
+  TextH1,
   TextH3,
   TextSubtitle
 } from '../VTheme/VTheme'
@@ -40,10 +41,6 @@ const PersonDetail = ({ person }, ...props) => (
       <GridContainer>
         <ProfileImage src={person.avatar} alt={person.nickname} />
         <DetailItem>
-          <TextH3>{person.name}</TextH3>
-          <TextPBold>{person.org}</TextPBold>
-        </DetailItem>
-        <DetailItem>
           <a href={`mailto:${person.email}`}>
             <Icon type='mail' /> {person.email}
           </a>
@@ -60,7 +57,8 @@ const PersonDetail = ({ person }, ...props) => (
       </GridContainer>
       <GridContainer>
         <ListItem>
-          <TextH3>About</TextH3>
+          <TextH1>{person.name}</TextH1>
+          <TextPBold>{person.org}</TextPBold>
           <Divider />
           <TextSubtitle>
             <Markdown children={person.about || ''} />
