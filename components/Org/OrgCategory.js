@@ -8,11 +8,11 @@ const OrgCategoryItem = ({ orgCategoryItem }) => {
     { label: 'Other', value: 'other' }
   ]
   const item = categoryOptions
-    .filter(t => t.value === orgCategoryItem)
-    .reduce((a, t) => t.label)
+    .filter(category => category.value === orgCategoryItem)
+    .reduce((category) => category.label)
 
   return (
-    <li> {item ? item.label : 'unknown'}</li>
+    <li> {item.label}</li>
   )
 }
 
