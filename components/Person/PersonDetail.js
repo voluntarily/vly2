@@ -19,7 +19,6 @@ dd {
   padding: 2px 4px;
 }
 `
-
 const PersonDetail = ({ person }, ...props) => (
 
   <Row type='flex' align='top'>
@@ -48,7 +47,10 @@ const PersonDetail = ({ person }, ...props) => (
         <dt>
           <Icon type='compass' />
         </dt>
-        <dd>{person.gender}</dd>
+        <dt>
+          <Icon type='user' />
+        </dt>
+        <dd>{person.pronoun}</dd>
         <dt>
           <Icon type='schedule' />
         </dt>
@@ -74,7 +76,7 @@ PersonDetail.propTypes = {
     about: PropTypes.string,
     email: PropTypes.string.isRequired,
     phone: PropTypes.string,
-    gender: PropTypes.string,
+    pronoun: PropTypes.string,
     avatar: PropTypes.any,
     role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])
