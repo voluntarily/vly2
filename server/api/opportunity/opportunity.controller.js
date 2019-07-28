@@ -65,6 +65,29 @@ const getOpportunities = async (req, res) => {
       }
     }
 
+    const personParams = {
+      $and: [
+        { 'status': OpportunityStatus.DRAFT }
+        // { 'requestor': query.requestor }// this is incorrect: query.requestor is undefined
+      ]
+    }
+
+    // console.log('requestor check: ', query)
+
+    const publishedParams = {
+      $or: [
+        { 'status': OpportunityStatus.ACTIVE },
+        personParams
+      ]
+    }
+
+    query = {
+      $and: [
+        publishedParams,
+        query
+      ]
+    }
+
     const locFilter = req.query.location
     if (locFilter) {
       const region = regions.find(r => r.name === locFilter)
