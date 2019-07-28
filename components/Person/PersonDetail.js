@@ -17,6 +17,17 @@ const ProfileGrid = styled.div`
   display: grid;
   grid-template-columns: 16rem 1fr;
   gap: 5rem;
+
+  @media screen and (max-width: 767px) {
+    grid-template-columns: calc(100vw - 2rem);
+  }
+
+  @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
+    /* iPhone X */
+    grid-template-columns: calc(100vw - 2rem);
+  }
+
+
 `
 
 const ProfileImage = styled.img`
@@ -31,7 +42,7 @@ const DetailItem = styled.div`
 const ListItem = styled.div`
   background-color: none;
   min-height: 5rem;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
 `
 
 const PersonDetail = ({ person }, ...props) => (
@@ -41,28 +52,38 @@ const PersonDetail = ({ person }, ...props) => (
       <GridContainer>
         <ProfileImage src={person.avatar} alt={person.nickname} />
         <DetailItem>
-          <a href={`mailto:${person.email}`}>
-            <Icon type='mail' /> {person.email}
-          </a>
-        </DetailItem>
-        <DetailItem>
-          <a href={`tel:${person.phone}`}>
-            <Icon type='phone' /> {person.phone}
-          </a>
-        </DetailItem>
-        <p>
-          <Icon type='schedule' />{' '}
-          {person.status ? <Icon type='check' /> : <Icon type='close' />}
-        </p>
+              <Icon type='history' /> 312 ops completed
+          </DetailItem>
+          <DetailItem>
+              <Icon type='safety' /> School Safe
+          </DetailItem>
       </GridContainer>
       <GridContainer>
         <ListItem>
-          <TextH1>{person.name}</TextH1>
+          <TextH1>
+            {person.name}&nbsp;&nbsp;
+            {person.status ? <Icon type='safety-certificate' theme='filled' style={{ color: '#1da1f2' }} /> : <Icon type='close-circle' />}
+          </TextH1>
           <TextPBold>{person.org}</TextPBold>
           <Divider />
           <TextSubtitle>
             <Markdown children={person.about || ''} />
           </TextSubtitle>
+
+          <DetailItem>
+            <TextSubtitle>
+            <a href={`mailto:${person.email}`}>
+              <Icon type='mail' /> {person.email}
+            </a>
+            </TextSubtitle>
+          </DetailItem>
+          <DetailItem>
+            <TextSubtitle>
+            <a href={`tel:${person.phone}`}>
+              <Icon type='phone' /> {person.phone}
+            </a>
+            </TextSubtitle>
+          </DetailItem>
         </ListItem>
         <ListItem>
           <TextH3>Latest Activities</TextH3>
