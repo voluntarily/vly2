@@ -48,6 +48,12 @@ const ruleBuilder = session => {
   }, {
     subject: SchemaName,
     action: Action.CREATE
+  }, {
+    subject: SchemaName,
+    action: Action.UPDATE,
+    conditions: {
+      _id: userID
+    }
   }]
 
   const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
