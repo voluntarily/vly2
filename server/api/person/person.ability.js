@@ -64,6 +64,8 @@ const ruleBuilder = session => {
     [Role.OPPORTUNITY_PROVIDER]: allAbilities,
     [Role.TESTER]: adminAbilities, // Confusing but the wiki is not clear about tester ability
     [Role.ADMIN]: adminAbilities,
+    [Role.ACTIVITY_PROVIDER]: allAbilities,
+    [Role.ALL]: allAbilities,
     [Role.ORG_ADMIN]: adminAbilities
   }
 }
