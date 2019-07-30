@@ -2,6 +2,9 @@
 
 This guide covers some recommended ways to get yourself set up for development on the Voluntarily Platform
 Refer to OS-specific guides for your machine to get started. 
+* If you get stuck with errors anywhere in the process, write down what the error says, and try googling parts of the error to solve it
+* If you are still stuck, ask for help in the gitter channel - [Gitter Chatroom](https://gitter.im/voluntarily/community "Chatroom")
+* When you find a solution, please write down what you did to solve it, and post it on the [Voluntarily Wiki](https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/16 "Wiki")
 
 
 ## Windows
