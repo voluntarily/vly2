@@ -41,16 +41,16 @@ Refer to OS-specific guides for your machine to get started.
 5. Install MongoDB on your machine if you don't have it by opening a terminal and running ```brew install mongodb```
 6. Create a db directory for mongodb ```sudo mkdir -p /data/db```
 7. Make sure permissions are set correctly for the directory 
-  1. ```sudo chmod 0755 /data/db```
-  2. ```sudo chown $USER /data/db```
-  3. Install Visual Studio Code on your machine if you don't have it https://code.visualstudio.com/
-  4. Clone the voluntarily repo https://github.com/voluntarily/vly2
-  5. If you're a new user and you downloaded visual studio code, follow the instructions below:
-   1. Open up a terminal in visual studio
-   2. Make sure the terminal is set to bash
-   3. Find your way to a folder you want to put the files in
-   4. Run the following command from the terminal (git clone https://github.com/voluntarily/vly2.git)
-   5. Create a new terminal window, and run the ```npm install``` command
+      1. ```sudo chmod 0755 /data/db```
+      2. ```sudo chown $USER /data/db```
+8. Install Visual Studio Code on your machine if you don't have it https://code.visualstudio.com/
+9. Clone the voluntarily repo https://github.com/voluntarily/vly2
+10. If you're a new user and you downloaded visual studio code, follow the instructions below:
+    1. Open up a terminal in visual studio
+    2. Make sure the terminal is set to bash
+    3. Find your way to a folder you want to put the files in
+    4. Run the following command from the terminal (git clone https://github.com/voluntarily/vly2.git)
+    5. Create a new terminal window, and run the ```npm install``` command
 
 ### Running a dev server
 1. Create a new terminal window, and run the ```mongod``` command
