@@ -26,13 +26,11 @@ Find out more about the project at the [Website](http://voluntari.ly) and then..
 
 # How to build it
 
-Voluntari.ly is based on the [MERN (MongoDB, Express, React+Redux, Node)](http://mern.io/) software stack but also uses next.js to keep things clean and simple.
-
-and everything should work out of the box. There are two choices:
+Voluntarily is based on the [MERN (MongoDB, Express, React+Redux, Node)](http://mern.io/) software stack but also uses next.js to keep things clean and simple. Everything should work out of the box. There are two choices:
 
 1. install NodeJS and MongoDB and run locally - [See here for detailed instructions](https://github.com/voluntarily/vly2/blob/master/docs/gettingstarted.md "Instructions")
 
-2. install Docker and run in a container.
+2. install Docker and run in a container - [See here for detailed instructions](https://github.com/voluntarily/vly2/blob/master/docs/Docker.md "Instructions")
 
 ### Available Commands
 
@@ -54,37 +52,4 @@ Once you see the message "Voluntari.ly is running on port: 3122! Be Awesome!" th
 If you see the message "Please make sure Mongodb is installed and running!"  then go back and start mongod.
 
 Press control+C to exit the node application.
-
-
-
-## Install Docker and run in a container.
-You can use this option if you quickly want to see what the application looks like.
-
-You will need:
-* [Docker](https://docs.docker.com/get-started/)
-
-### Get the source code
-
-    git clone https://github.com/voluntarily/vly2.git
-    cd vly2
-    npm install
-
-### Start the Containers
-
-    docker-compose up -d --build
-
-Note this may take a few minutes the first time you run it as it will download some images.
-Also once the command returns the services are still starting up so it will be a minute before you can visit the webpage.
-
-### You are in.
-* Open your web browser at http://localhost:3122/
-
-You will now be able to see the voluntari.ly application (if not then ask for help on our [Gitter](https://gitter.im/voluntarily/community) channel.
-
-### Stopping
-To halt the containers run:
-
-    docker-compose down
-
-More information at [Using Docker and Docker Compose](https://voluntarily.atlassian.net/wiki/spaces/VP/pages/9044043/Using+Docker+and+Docker+Compose)
 
