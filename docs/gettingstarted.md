@@ -1,5 +1,7 @@
 # Getting Started
 
+ **Warning - this might not be easy if this is your first time using git, node.js, and working with code - errors might show up while following steps and googling answers to problems will probably be required.** 
+
 This guide covers some recommended ways to get yourself set up for development on the Voluntarily Platform
 Refer to OS-specific guides for your machine to get started. 
 * If you get stuck with errors anywhere in the process, write down what the error says, and try googling parts of the error to solve it
