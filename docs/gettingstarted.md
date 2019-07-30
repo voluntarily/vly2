@@ -7,7 +7,7 @@ Refer to OS-specific guides for your machine to get started.
 ## Windows
 ========================================
 
-###Setup
+### Setup
 	1. Install Node.js on your machine if you don't have it https://nodejs.org/en/
 	2. Install MongoDB community server on your machine if you don't have it https://www.mongodb.com/download-center/community
 	3. Install Visual Studio Code on your machine if you don't have it https://code.visualstudio.com/
