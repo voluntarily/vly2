@@ -1,11 +1,11 @@
 # Getting Started
-===
+
 This guide covers some recommended ways to get yourself set up for development on the Voluntarily Platform
 Refer to OS-specific guides for your machine to get started. 
 
 
 ## Windows
-========================================
+
 
 ### Setup
 1. Install Node.js on your machine if you don't have it https://nodejs.org/en/
@@ -30,7 +30,7 @@ Refer to OS-specific guides for your machine to get started.
 
 
 ## Mac
-========================================
+
 
 ### Setup
 
@@ -61,7 +61,7 @@ Refer to OS-specific guides for your machine to get started.
 
 
 ## Linux
-========================================
+
 
 ### Setup
 
