@@ -1,6 +1,6 @@
 # Getting Started
 
-<div style="color: red;"> **Warning - this might not be easy if this is your first time using git, node.js, and working with code - errors might show up while following steps and googling answers to problems will probably be required.** </div>
+**Warning - this might not be easy if this is your first time using git, node.js, and working with code - errors might show up while following steps and googling answers to problems will probably be required.**
 
 This guide covers some recommended ways to get yourself set up for development on the Voluntarily Platform
 Refer to OS-specific guides for your machine to get started. 
