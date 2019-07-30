@@ -123,7 +123,7 @@ const AboutSection = () => (
       <a href='/educators' target='_blank'>
         <PersonaContainer>
           <Image src='/static/img/teacherCard.png' />
-          <Title>Educators</Title>
+          <Title>Teachers</Title>
           <Text>
             Get the help of skilled volunteers to bring tech to your teaching.
           </Text>
@@ -133,7 +133,7 @@ const AboutSection = () => (
       <a href='/charities' target='_blank'>
         <PersonaContainer>
           <Image src='/static/img/contentCard.png' />
-          <Title>Charities</Title>
+          <Title>Content Providers</Title>
           <Text>We help you get more people involved with your movement.</Text>
           <Button>Learn More</Button>
         </PersonaContainer>
