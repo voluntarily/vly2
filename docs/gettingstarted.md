@@ -1,10 +1,10 @@
-#Getting Started
+# Getting Started
 ===
 This guide covers some recommended ways to get yourself set up for development on the Voluntarily Platform
 Refer to OS-specific guides for your machine to get started. 
 
 
-##Windows
+## Windows
 ========================================
 
 ###Setup
@@ -19,7 +19,7 @@ Refer to OS-specific guides for your machine to get started.
 			iv. Run the following command from the terminal (git clone https://github.com/voluntarily/vly2.git)
 			v. Create a new terminal window, and run the npm install command
 
-###Running a dev server
+### Running a dev server
 	1. Create a new terminal window, and run the mongod command
 	2. Create a new terminal window, and run the npm run dev command
 	3. That's it! You can check your server is running by opening a browser and trying to visit http://localhost:3122
@@ -29,10 +29,10 @@ Refer to OS-specific guides for your machine to get started.
 			
 
 
-##Mac
+## Mac
 ========================================
 
-###Setup
+### Setup
 
 	1. Install Homebrew https://brew.sh/
 	2. Make sure it's running correctly by running the `brew doctor` command
@@ -52,7 +52,7 @@ Refer to OS-specific guides for your machine to get started.
 			iv. Run the following command from the terminal (git clone https://github.com/voluntarily/vly2.git)
 			v. Create a new terminal window, and run the npm install command
 
-###Running a dev server
+### Running a dev server
 	1. Create a new terminal window, and run the mongod command
 	2. Create a new terminal window, and run the npm run dev command
 	3. That's it! You can check your server is running by opening a browser and trying to visit http://localhost:3122
@@ -60,10 +60,10 @@ Refer to OS-specific guides for your machine to get started.
 
 
 
-##Linux
+## Linux
 ========================================
 
-###Setup
+### Setup
 
 	1. Install Node.js on your machine if you don't have it by opening a terminal and running apt-get install node
 	2. Install MongoDB on your machine if you don't have it by opening a terminal and running brew install mongodb
@@ -79,7 +79,7 @@ Refer to OS-specific guides for your machine to get started.
 			iii. Find your way to a folder you want to put the files in
 			iv. Run the following command from the terminal (git clone https://github.com/voluntarily/vly2.git)
 
-###Running a dev server
+### Running a dev server
 	1. Create a new terminal window, and run the npm install command
 	2. Create a new terminal window, and run the mongod command
 	3. Create a new terminal window, and run the npm run dev command
