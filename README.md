@@ -16,8 +16,8 @@ You don't need permission to help - its open.
 This is an open source project and you are welcome to contribute at any level you feel comfortable.
 Find out more about the project at the [Website](http://voluntari.ly) and then...
 
-1. Say hi or ask questions in the gitter chat room above
-2. email team@voluntari.ly to tell us about yourself
+1. Say hello, or ask questions in the [Gitter Chatroom](https://gitter.im/voluntarily/community "Chatroom")
+2. email team@voluntari.ly and tell us about yourself
 3. [Start Reading documentation](https://voluntarily.atlassian.net/wiki/spaces/VP/overview)
 4. Build the code - below
 5. Add yourself to the CONTRIBUTORS file, check it in and send us a pull request - see this ticket [VP-82](https://voluntarily.atlassian.net/browse/VP-82)
@@ -30,39 +30,9 @@ Voluntari.ly is based on the [MERN (MongoDB, Express, React+Redux, Node)](http:/
 
 and everything should work out of the box. There are two choices:
 
-1. install NodeJS and MongoDB and run locally.
+1. install NodeJS and MongoDB and run locally - [See here for detailed instructions](https://github.com/voluntarily/vly2/blob/master/docs/gettingstarted.md "Instructions")
+
 2. install Docker and run in a container.
-
-## Install NodeJS and MongoDB and run locally.
-
-### Prerequisites
-You will need:
-* [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-You may already have it. Verify with `git --version`
-
-* [nodejs](https://nodejs.org/en/download/).
-Verify this with `node -v` which should return a current version. e.g. v11.12.0
-
-You will also need to be connected to the Internet and be prepared for some downloads. (sometimes corporate firewalls make this difficult - go get a coffee and use theirs.)
-
-* [MongoDB](https://docs.mongodb.com/manual/installation/)
-or setup a [free account in the cloud](https://cloud.mongodb.com) - but if you do this you will need to change the `MONGO_URL=mongodb://localhost:27017/vly-test` connection string in your environment or in package.json to point at your cloud URL.
-
-For mac users `brew install mongodb` should be all you need to do.
-
-* start the mongodb service
-
-For mac users: `mongod`
-
-For windows users: Run command prompt as adminstrator, then run `net start mongodb`
-
-### Get the Voluntari.ly source code
-
-    git clone https://github.com/voluntarily/vly2.git
-    cd vly2
-    npm install
-
-npm install may take several minutes as it pulls in all the dependent packages.
 
 ### Available Commands
 
@@ -84,6 +54,8 @@ Once you see the message "Voluntari.ly is running on port: 3122! Be Awesome!" th
 If you see the message "Please make sure Mongodb is installed and running!"  then go back and start mongod.
 
 Press control+C to exit the node application.
+
+
 
 ## Install Docker and run in a container.
 You can use this option if you quickly want to see what the application looks like.

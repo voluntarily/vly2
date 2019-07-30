@@ -22,7 +22,7 @@ Refer to OS-specific guides for your machine to get started.
     5. Create a new terminal window, and run the ```npm install``` command
 
 ### Running a dev server
-1. Create a new terminal window, and run the ```mongod``` command
+1. Create a new terminal window, and run the ```net start mongodb``` command
 2. Create a new terminal window, and run the ```npm run dev``` command
 3. That's it! You can check your server is running by opening a browser and trying to visit http://localhost:3122
 4. Try making some changes to the components or pages - thanks to hot reloading any chances you make and save instantly appear on the site 			
