@@ -214,7 +214,7 @@ const ItemIcon = styled.img`
   margin-bottom: 0.5rem;
 ` // end itemIcon
 
-export class Charity extends Component {
+export class ContentProvider extends Component {
   render () {
     return (
       <div>
@@ -437,4 +437,4 @@ export class Charity extends Component {
   }
 }
 
-export default publicPage(Charity)
+export default publicPage(ContentProvider)
