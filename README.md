@@ -10,7 +10,7 @@
 
 Support education and innovation in New Zealand Schools with industry experts and volunteers in the classrooms
 
-# How to join the Voluntari.ly community
+# How to join the Voluntarily community
 You don't need permission to help - its open.
 
 This is an open source project and you are welcome to contribute at any level you feel comfortable.
@@ -47,7 +47,7 @@ Voluntarily is based on the [MERN (MongoDB, Express, React+Redux, Node)](http://
 6. `npm run lint` - runs standard to check for lint errors ( npm run fix to fix lint errors )
 
 
-Once you see the message "Voluntari.ly is running on port: 3122! Be Awesome!" then you can open your browser at http://localhost:3122.
+Once you see the message "Voluntarily is running on port: 3122! Be Awesome!" then you can open your browser at http://localhost:3122.
 
 If you see the message "Please make sure Mongodb is installed and running!"  then go back and start mongod.
 
