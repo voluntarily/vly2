@@ -4,7 +4,7 @@ const Opportunity = require('./opportunity')
 const { Action } = require('../../services/abilities/ability.constants')
 const { getOpportunities, getOpportunity, putOpportunity } = require('./opportunity.controller')
 const { SchemaName, OpportunityRoutes } = require('./opportunity.constants')
-const { authorizeActions, authorizeFields } = require('../../middleware/authorize/authorizeRequest')
+const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 const initializeTags = require('../../util/initTags')
 
 const convertRequestToAction = (req) => {
@@ -43,7 +43,7 @@ module.exports = (server) => {
         update: putOpportunity
       },
       afterActions: [{
-        middlewares: [authorizeFields(Opportunity), helpers.formatResponse]
+        middlewares: [helpers.formatResponse]
       }]
     })
   )

@@ -17,6 +17,8 @@ const blankOrg = {
   contactEmail: '',
   contactId: null,
   website: null,
+  facebook: null,
+  twitter: null,
   category: ['vp']
 }
 

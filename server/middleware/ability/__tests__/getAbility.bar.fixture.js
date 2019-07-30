@@ -1,4 +1,4 @@
-import { Role } from '../../../services/auth/role'
+import { Role } from '../../../services/authorize/role'
 import { Action } from '../../../services/abilities/ability.constants'
 
 const subject = 'BAR'

@@ -48,7 +48,7 @@ class PersonDetailForm extends Component {
         person.nickname = values.nickname
         person.email = values.email
         person.phone = values.phone
-        person.gender = values.gender
+        person.pronoun = values.pronoun
         person.about = values.about
         person.avatar = values.avatar
         person.role = values.role
@@ -72,6 +72,14 @@ class PersonDetailForm extends Component {
         id='personnickname'
         defaultMessage='Nickname'
         description='person nickname label in personDetails Form'
+      />
+    )
+
+    const personPronoun = (
+      <FormattedMessage
+        id='personPronoun'
+        defaultMessage='Pronoun'
+        description='person pronoun label in personDetails Form'
       />
     )
     const personEmail = (
@@ -169,6 +177,13 @@ class PersonDetailForm extends Component {
                   {getFieldDecorator('nickname', {
                     rules: []
                   })(<Input placeholder='e.g Dali' />)}
+                </Form.Item>
+              </ShortInputContainer>
+              <ShortInputContainer>
+                <Form.Item label={personPronoun}>
+                  {getFieldDecorator('pronoun', {
+                    rules: []
+                  })(<Input placeholder='e.g. she/her, he/him, they/them' />)}
                 </Form.Item>
               </ShortInputContainer>
               <Form.Item label={personAbout}>
@@ -308,7 +323,7 @@ PersonDetailForm.propTypes = {
     about: PropTypes.string,
     email: PropTypes.string,
     phone: PropTypes.string,
-    gender: PropTypes.string,
+    pronoun: PropTypes.string,
     avatar: PropTypes.any,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
@@ -358,9 +373,9 @@ export default Form.create({
         ...props.person.phone,
         value: props.person.phone
       }),
-      gender: Form.createFormField({
-        ...props.person.gender,
-        value: props.person.gender
+      pronoun: Form.createFormField({
+        ...props.person.pronoun,
+        value: props.person.pronoun
       }),
       avatar: Form.createFormField({
         ...props.person.avatar,
