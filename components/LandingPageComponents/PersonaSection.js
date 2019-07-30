@@ -120,7 +120,7 @@ const AboutSection = () => (
           <Button>Learn More</Button>
         </PersonaContainer>
       </a>
-      <a href='/educators' target='_blank'>
+      <a href='/teachers' target='_blank'>
         <PersonaContainer>
           <Image src='/static/img/teacherCard.png' />
           <Title>Teachers</Title>
@@ -130,7 +130,7 @@ const AboutSection = () => (
           <Button>Learn More</Button>
         </PersonaContainer>
       </a>
-      <a href='/charities' target='_blank'>
+      <a href='/content' target='_blank'>
         <PersonaContainer>
           <Image src='/static/img/contentCard.png' />
           <Title>Content Providers</Title>
