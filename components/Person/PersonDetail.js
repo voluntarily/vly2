@@ -61,7 +61,6 @@ const ListItem = styled.div`
   min-height: 5rem;
   margin-bottom: 3rem;
 `
-
 const PersonDetail = ({ person }, ...props) => (
   <ProfileGrid>
     <GridContainer>
@@ -98,13 +97,11 @@ const PersonDetail = ({ person }, ...props) => (
           </a>
         </TextPBold>
         <SpacerSmall />
-
         <TextPBold>
           <a href={`tel:${person.phone}`}>
             <Icon type='phone' /> {person.phone}
           </a>
         </TextPBold>
-
       </ListItem>
       <DetailItemMobile>
         <p>        <Icon type='history' /> 312 ops completed</p>
@@ -126,6 +123,7 @@ const PersonDetail = ({ person }, ...props) => (
       </div>
     </GridContainer>
   </ProfileGrid>
+  
 )
 
 PersonDetail.propTypes = {
@@ -136,7 +134,7 @@ PersonDetail.propTypes = {
     about: PropTypes.string,
     email: PropTypes.string.isRequired,
     phone: PropTypes.string,
-    gender: PropTypes.string,
+    pronoun: PropTypes.string,
     avatar: PropTypes.any,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([

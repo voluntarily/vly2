@@ -11,7 +11,7 @@ const orgs = [
     imgUrl: 'http://example.com/example.jpg',
     slug: 'hello-omgtech',
     about: 'Awesome Activity Provider',
-    type: ['ap']
+    category: ['ap']
   },
   {
     _id: 'f34gb2bh24b24b3',
@@ -19,7 +19,7 @@ const orgs = [
     imgUrl: 'http://example.com/example2.jpg',
     slug: 'hi-datacom',
     about: "All dogs bark 'mern!'",
-    type: ['vp']
+    category: ['vp']
   },
   {
     _id: 'f34gb2bh24b2b4',
@@ -27,7 +27,7 @@ const orgs = [
     imgUrl: 'http://example.com/example3.jpg',
     slug: 'voluntari-ly',
     about: 'Everything Provider',
-    type: ['vp', 'op', 'admin']
+    category: ['vp', 'op', 'admin']
   }
 ]
 

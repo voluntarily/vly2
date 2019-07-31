@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const idvalidator = require('mongoose-id-validator')
+const { InterestStatus } = require('./interest.constants')
 
 const interestSchema = new Schema({
 
@@ -10,14 +11,14 @@ const interestSchema = new Schema({
   status: {
     type: 'String',
     required: true,
-    default: 'interested',
+    default: InterestStatus.INTERESTED,
     enum: [
-      'interested',
-      'invited',
-      'committed',
-      'declined',
-      'completed',
-      'cancelled'
+      InterestStatus.INTERESTED,
+      InterestStatus.INVITED,
+      InterestStatus.COMMITTED,
+      InterestStatus.DECLINED,
+      InterestStatus.COMPLETED,
+      InterestStatus.CANCELLED
     ]
   },
   dateAdded: { type: 'Date', default: Date.now, required: true }

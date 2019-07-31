@@ -8,8 +8,9 @@ import moment from 'moment'
 
 // todo if image is not present then use a fallback.
 class OpCard extends Component {
-  constructor ({ size, op, onPress, ...props }) {
-    super({ size, op, onPress, props })
+  constructor (props) {
+    super(props)
+    const { size, op, onPress } = props
     this.op = op
     this.size = size
     this.onPress = onPress

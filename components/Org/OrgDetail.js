@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
 import { Icon, Tabs } from 'antd'
 import Markdown from 'markdown-to-jsx'
-import OrgType from './OrgType'
+import OrgCategory from './OrgCategory'
 import Head from 'next/head'
 import styled from 'styled-components'
 import {
@@ -93,10 +93,10 @@ const OrgDetail = ({ org, ...props }) => (
         />
         <OrgContainer>
           <TextPBold>Get in touch</TextPBold>
-          <ContactContainer><Icon type='global' />&nbsp;&nbsp;placeholderwebsite.co.nz</ContactContainer>
-          <ContactContainer><Icon type='mail' />&nbsp;&nbsp;placeholder@email.co.nz</ContactContainer>
-          <ContactContainer><Icon type='facebook' />&nbsp;&nbsp;placeholder</ContactContainer>
-          <ContactContainer><Icon type='twitter' />&nbsp;@placeholderTwitter</ContactContainer>
+          {org.website && <ContactContainer><Icon type='global' />&nbsp;&nbsp;{org.website}</ContactContainer>}
+          <ContactContainer><Icon type='mail' />&nbsp;&nbsp;{org.contactEmail}</ContactContainer>
+          {org.facebook && <ContactContainer><Icon type='facebook' />&nbsp;&nbsp;{org.facebook}</ContactContainer>}
+          {org.twitter && <ContactContainer><Icon type='twitter' />&nbsp;{org.twitter}</ContactContainer>}
 
         </OrgContainer>
       </GridContainer>
@@ -109,7 +109,7 @@ const OrgDetail = ({ org, ...props }) => (
           <TabPane tab={orgTab} key='1'>
             <SpacerSmall />
             <Markdown children={org.about || ''} />
-            <OrgType orgType={org.type} />
+            <OrgCategory orgCategory={org.category} />
           </TabPane>
           <TabPane tab={orgResourcesTab} key='2' />
           <TabPane tab={orgInstructionTab} key='3'>
@@ -129,10 +129,14 @@ OrgDetail.propTypes = {
   org: PropTypes.shape({
     name: PropTypes.string.isRequired,
     about: PropTypes.string.isRequired,
-    type: PropTypes.arrayOf(
+    category: PropTypes.arrayOf(
       PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
     ).isRequired,
     imgUrl: PropTypes.string,
+    website: PropTypes.string,
+    contactEmail: PropTypes.string.isRequired,
+    facebook: PropTypes.string,
+    twitter: PropTypes.string,
     _id: PropTypes.string.isRequired
   }).isRequired
 }
