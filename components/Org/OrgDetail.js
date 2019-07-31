@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Icon, Tabs } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import OrgCategory from './OrgCategory'
+import MemberSection from '../Member/MemberSection'
 import Head from 'next/head'
 import styled from 'styled-components'
 import {
@@ -116,7 +117,7 @@ const OrgDetail = ({ org, ...props }) => (
             <p>aaaa</p>
           </TabPane>
           <TabPane tab={orgMemberTab} key='4'>
-            <p>aaaa</p>
+            <MemberSection orgid={org._id} />
           </TabPane>
 
         </Tabs>

@@ -8,6 +8,7 @@ const MemberFields = {
 }
 
 const MemberStatus = {
+  NONE: 'none',
   FOLLOWER: 'follower',
   JOINER: 'joiner',
   MEMBER: 'member',
