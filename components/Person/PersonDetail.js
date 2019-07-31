@@ -123,7 +123,7 @@ const PersonDetail = ({ person }, ...props) => (
       </div>
     </GridContainer>
   </ProfileGrid>
-  
+
 )
 
 PersonDetail.propTypes = {
