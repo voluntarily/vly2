@@ -16,7 +16,12 @@ import reduxApi, {
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
 
-import { TextHeadingBlack, TextP, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
+import {
+  TextHeadingBlack,
+  TextP,
+  PageHeaderContainer,
+  RequestButtonContainer
+} from '../../components/VTheme/VTheme'
 
 const { TabPane } = Tabs
 
@@ -40,7 +45,9 @@ class PersonHomePage extends Component {
   }
   constructor (props) {
     super(props)
-    this.getArchivedOpportunitiesByStatus = this.getArchivedOpportunitiesByStatus.bind(this)
+    this.getArchivedOpportunitiesByStatus = this.getArchivedOpportunitiesByStatus.bind(
+      this
+    )
   }
 
   getArchivedOpportunitiesByStatus (status) {
@@ -203,11 +210,15 @@ class PersonHomePage extends Component {
               <SectionTitleWrapper>
                 <TextHeadingBlack>Completed Requests</TextHeadingBlack>
               </SectionTitleWrapper>
-              <OpList ops={this.getArchivedOpportunitiesByStatus('completed')} />
+              <OpList
+                ops={this.getArchivedOpportunitiesByStatus('completed')}
+              />
               <SectionTitleWrapper>
                 <TextHeadingBlack>Cancelled Requests</TextHeadingBlack>
               </SectionTitleWrapper>
-              <OpList ops={this.getArchivedOpportunitiesByStatus('cancelled')} />
+              <OpList
+                ops={this.getArchivedOpportunitiesByStatus('cancelled')}
+              />
             </SectionWrapper>
             {/* <OpListSection query={myPastfilterString} /> */}
           </TabPane>
