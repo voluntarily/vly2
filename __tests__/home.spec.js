@@ -122,7 +122,8 @@ test('render volunteer home page - Profile tab', t => {
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(2).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Profile')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), t.context.me.nickname)
+  const tab3 = wrapper.find('TabPane').at(2)
+  t.is(tab3.find('h1').first().text(), t.context.me.name)
 })
 
 test('render Edit Profile ', t => {
