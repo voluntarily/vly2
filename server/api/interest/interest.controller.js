@@ -54,7 +54,7 @@ const createInterest = async (req, res) => {
   const newInterest = new Interest(req.body)
   newInterest.save(async (err, saved) => {
     if (err) {
-      res.status(500).send(err)
+      return res.status(500).send(err)
     }
     const volunteerID = req.body.person
     const { opportunity } = req.body
