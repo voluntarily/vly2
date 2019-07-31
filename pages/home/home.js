@@ -5,6 +5,7 @@ import { FullPage } from '../../hocs/publicPage'
 import securePage from '../../hocs/securePage'
 import OpList from '../../components/Op/OpList'
 import OpAdd from '../../components/Op/OpAdd'
+import OpRecommendations from '../../components/Op/OpRecommendations'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import reduxApi, {
@@ -88,6 +89,7 @@ class PersonHomePage extends Component {
 
       await Promise.all([
         store.dispatch(reduxApi.actions.opportunities.get(filters)),
+        store.dispatch(reduxApi.actions.locations.get()),
         store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
         store.dispatch(
           reduxApi.actions.archivedOpportunities.get({ requestor: me._id })
@@ -203,6 +205,20 @@ class PersonHomePage extends Component {
               </SectionTitleWrapper>
               {/* // TODO: [VP-208] list of things volunteers can do on home page */}
               <NextActionBlock />
+            </SectionWrapper>
+            <SectionWrapper>
+              <SectionTitleWrapper>
+                <TextHeadingBlack><FormattedMessage
+                  id='home.recommendedOpportunities'
+                  defaultMessage='Recommended for you'
+                  decription='subtitle on volunteer home page for recommended opportunities'
+                />
+                  <TextP>
+                  Here are some opportunities we think you might like
+                </TextP>
+                </TextHeadingBlack>
+              </SectionTitleWrapper>
+              <OpRecommendations me={this.props.me} ops={this.props.opportunities.data} locations={this.props.locations.data} />
             </SectionWrapper>
           </TabPane>
           <TabPane tab={searchTab} key='2'>
