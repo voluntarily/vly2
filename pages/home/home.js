@@ -89,7 +89,7 @@ class PersonHomePage extends Component {
 
       await Promise.all([
         store.dispatch(reduxApi.actions.opportunities.get(filters)),
-        store.dispatch(reduxApi.actions.locations.get()),
+        store.dispatch(reduxApi.actions.locations.get({ withRelationships: true })),
         store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
         store.dispatch(
           reduxApi.actions.archivedOpportunities.get({ requestor: me._id })
@@ -213,9 +213,9 @@ class PersonHomePage extends Component {
                   defaultMessage='Recommended for you'
                   decription='subtitle on volunteer home page for recommended opportunities'
                 />
-                  <TextP>
+                <TextP>
                   Here are some opportunities we think you might like
-                </TextP>
+                  </TextP>
                 </TextHeadingBlack>
               </SectionTitleWrapper>
               <OpRecommendations me={this.props.me} ops={this.props.opportunities.data} locations={this.props.locations.data} />
