@@ -80,7 +80,7 @@ const getOpportunities = async (req, res) => {
         ]
       }
     }
-    console.log('getOpportunities', req.query, query)
+    // console.log('getOpportunities', req.query, query)
 
     try {
       const got = await Opportunity
