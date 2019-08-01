@@ -15,7 +15,8 @@ const sanitizeHtml = require('sanitize-html')
  * @returns void
  */
 const getOpportunities = async (req, res) => {
-  let query = {} // { status: 'active' }
+  // limit to Active ops unless one of the params overrides
+  let query = { 'status': OpportunityStatus.ACTIVE }
   let sort = 'title'
   let select = {}
 
@@ -66,29 +67,6 @@ const getOpportunities = async (req, res) => {
       }
     }
 
-    // const personParams = {
-    //   $and: [
-    //     { 'status': OpportunityStatus.DRAFT }
-    //     // { 'requestor': query.requestor }// this is incorrect: query.requestor is undefined
-    //   ]
-    // }
-
-    // console.log('requestor check: ', query)
-
-    const publishedParams = {
-      $or: [
-        { 'status': OpportunityStatus.ACTIVE }
-        // personParams
-      ]
-    }
-
-    query = {
-      $and: [
-        publishedParams,
-        query
-      ]
-    }
-
     const locFilter = req.query.location
     if (locFilter) {
       const region = regions.find(r => r.name === locFilter)
@@ -102,6 +80,7 @@ const getOpportunities = async (req, res) => {
         ]
       }
     }
+    console.log('getOpportunities', req.query, query)
 
     try {
       const got = await Opportunity
@@ -115,6 +94,7 @@ const getOpportunities = async (req, res) => {
       return res.status(404).send(e)
     }
   } catch (e) {
+    console.log('getOpportunities error:', e)
     return res.status(500).send(e)
   }
 }
