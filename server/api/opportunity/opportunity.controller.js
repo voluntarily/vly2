@@ -164,20 +164,14 @@ function ensureSanitized (req, res, next) {
   }
 
   const op = req.body
-  if(op.title)
-    op.title = sanitizeHtml(op.title)
-  if(op.subtitle)
-    op.subtitle = sanitizeHtml(op.subtitle)
-  if(op.imgUrl)
-    op.imgUrl = sanitizeHtml(op.imgUrl)
-  if(op.description)
-    op.description = sanitizeHtml(op.description, descriptionOptions)
-  if(op.duration)
-    op.duration = sanitizeHtml(op.duration)
-  if(op.location)
-    op.location = sanitizeHtml(op.location)
-  if(op.offerOrg)
-    op.offerOrg = sanitizeHtml(op.offerOrg)
+  if (op.title) { op.title = sanitizeHtml(op.title) }
+  if (op.subtitle) { op.subtitle = sanitizeHtml(op.subtitle) }
+  if (op.imgUrl) { op.imgUrl = sanitizeHtml(op.imgUrl) }
+  if (op.description) { op.description = sanitizeHtml(op.description, descriptionOptions) }
+  if (op.duration) { op.duration = sanitizeHtml(op.duration) }
+  if (op.location) { op.location = sanitizeHtml(op.location) }
+  if (op.offerOrg) { op.offerOrg = sanitizeHtml(op.offerOrg) }
+  req.body = op
   next()
 }
 
