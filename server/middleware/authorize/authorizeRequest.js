@@ -15,8 +15,8 @@ const defaultConvertRequestToAction = (method) => {
   }
 }
 
-const authorizeActions = (subject, convertRequestToAction) => (req, res, next) => {
-  const action = convertRequestToAction === undefined ? defaultConvertRequestToAction(req.method) : convertRequestToAction(req)
+const authorizeActions = (subject, convertRequestToAction = defaultConvertRequestToAction) => (req, res, next) => {
+  const action = convertRequestToAction(req.method)
   const authorized = req.ability.can(action, subject)
   if (authorized) {
     next()

@@ -81,7 +81,6 @@ export class PersonDetailPage extends Component {
     } else {
       res = await this.props.dispatch(reduxApi.actions.people.post({}, { body: JSON.stringify(person) }))
       person = res[0]
-      console.log(person)
       Router.replace(`/people/${person._id}`)
     }
     this.setState({ editing: false })
