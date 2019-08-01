@@ -66,19 +66,19 @@ const getOpportunities = async (req, res) => {
       }
     }
 
-    const personParams = {
-      $and: [
-        { 'status': OpportunityStatus.DRAFT }
-        // { 'requestor': query.requestor }// this is incorrect: query.requestor is undefined
-      ]
-    }
+    // const personParams = {
+    //   $and: [
+    //     { 'status': OpportunityStatus.DRAFT }
+    //     // { 'requestor': query.requestor }// this is incorrect: query.requestor is undefined
+    //   ]
+    // }
 
     // console.log('requestor check: ', query)
 
     const publishedParams = {
       $or: [
-        { 'status': OpportunityStatus.ACTIVE },
-        personParams
+        { 'status': OpportunityStatus.ACTIVE }
+        // personParams
       ]
     }
 
