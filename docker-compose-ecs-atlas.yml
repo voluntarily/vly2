@@ -7,7 +7,6 @@ services:
     environment:
       APP_URL: https://alpha.voluntarily.nz
       NODE_ENV: production
-      MONGODB_URI: mongodb+srv://vly-client:ZhF3BUDiwpy8C3xK@cluster0-kwmsu.mongodb.net/vly2-alpha?retryWrites=true
 
 
 
