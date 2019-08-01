@@ -52,7 +52,7 @@ test.serial('verify fixture database has ops', async t => {
   t.is(q && q.duration, '2 hours')
 })
 
-test.serial('Should correctly give count of all Ops sorted by title', async t => {
+test.serial('Should correctly give count of all active Ops sorted by title', async t => {
   const res = await request(server)
     .get('/api/opportunities')
     .set('Accept', 'application/json')
@@ -61,7 +61,7 @@ test.serial('Should correctly give count of all Ops sorted by title', async t =>
     .expect('Content-Type', /json/)
   const got = res.body
   // console.log(got)
-  t.is(ops.length, got.length)
+  t.is(2, got.length)
 
   t.is(got[0].title, '1 Mentor a year 12 business Impact Project')
 })
@@ -87,7 +87,6 @@ test.serial('Should correctly select just the names and ids', async t => {
     .expect('Content-Type', /json/)
   const got = res.body
   // console.log('got', got)
-  t.is(got.length, ops.length)
   t.is(got[0].status, undefined)
   t.is(got[0].title, '1 Mentor a year 12 business Impact Project')
 })
@@ -182,7 +181,7 @@ test.serial('Should not add an opportunity with invalid tag ids', async t => {
       description: 'Project to build a simple rocket that will reach 400m',
       duration: '4 hours',
       location: 'Albany, Auckland',
-      status: 'draft',
+      status: OpportunityStatus.DRAFT,
       tags: [{ _id: '123456781234567812345678', tag: 'test' }],
       requestor: t.context.people[0]._id
 
@@ -215,7 +214,7 @@ test.serial('Should create tags that dont have the _id property', async t => {
       description: 'Project to build a simple rocket that will reach 400m',
       duration: '4 hours',
       location: 'Albany, Auckland',
-      status: 'draft',
+      status: OpportunityStatus.DRAFT,
       tags: tags,
       requestor: t.context.people[0]._id
 
@@ -306,13 +305,13 @@ test.serial('Should correctly give opportunity 2 when searching by "Algorithms"'
 
 test.serial('Should include description in search', async t => {
   const res = await request(server)
-    .get('/api/opportunities?search=ROCKEt')
+    .get('/api/opportunities?search=innovation')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(ops[3].description, got[0].description)
+  t.is(ops[1].description, got[0].description)
   t.is(1, got.length)
 })
 
@@ -352,7 +351,7 @@ test.serial('Should return any opportunities with matching tags or title/desc/su
   const got = res.body
 
   // should return the 3 with assigned tags, and the one with matching title
-  t.is(4, got.length)
+  t.is(2, got.length)
 })
 
 test.serial('Should update from draft to active', async t => {
@@ -475,7 +474,7 @@ test.serial('should return 400 for a bad request', async t => {
 
 test.serial('should return all matching opps within the specified region', async t => {
   const res = await request(server)
-    .get(`/api/opportunities?location=${regions[0].name}`)
+    .get(`/api/opportunities?q={}&location=${regions[0].name}`)
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
@@ -484,7 +483,7 @@ test.serial('should return all matching opps within the specified region', async
   const got = res.body
 
   // 1 match for the region, 2 for territories WITHIN the region
-  t.is(got.length, 3)
+  t.is(got.length, 4)
 
   const validLocs = [
     regions[0].name,
