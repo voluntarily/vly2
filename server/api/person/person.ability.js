@@ -23,13 +23,11 @@ const ruleBuilder = session => {
       PersonFields.ID,
       PersonFields.NICKNAME,
       PersonFields.LANGUAGE,
+      PersonFields.NAME,
       PersonFields.STATUS,
       PersonFields.AVATAR,
       PersonFields.ABOUT
-    ],
-    conditions: {
-      _id: userID
-    }
+    ]
   }, {
     subject: SchemaName,
     action: Action.LIST,
@@ -39,6 +37,7 @@ const ruleBuilder = session => {
       PersonFields.LANGUAGE,
       PersonFields.STATUS,
       PersonFields.AVATAR,
+      PersonFields.NAME,
       PersonFields.ABOUT
     ]
   }, {
