@@ -12,6 +12,7 @@ const PersonFields = {
   ID: '_id',
   EMAIL: 'email',
   NICKNAME: 'nickname',
+  NAME: 'name',
   ABOUT: 'about',
   PHONE: 'phone',
   GENDER: 'gender',
