@@ -1,5 +1,8 @@
 const Person = require('./person')
 const sanitizeHtml = require('sanitize-html')
+const Role = require('../../services/authorize/role')
+const pick = require('lodash.pick')
+const { Ability } = require('@casl/ability')
 
 /**
  * Get all orgs
@@ -8,14 +11,58 @@ const sanitizeHtml = require('sanitize-html')
  * @returns void
  */
 function getPersonBy (req, res) {
+console.log('FROM GET PERSON BY')
+  console.log(req.path)
   const query = { [req.params.by]: req.params.value }
   Person.findOne(query).exec((_err, got) => {
     if (!got) { // person does not exist
       return res.status(404).send({ error: 'person not found' })
     }
-    // console.log('getPersonBy ', got)
     res.json(got)
   })
+}
+
+async function updatePersonDetail(req,res) {
+  if(userAllowedToUpdate(req)){
+    res.sendStatus(200)
+  } else {
+    res.sendStatus(403)
+  }  
+}
+
+function userAllowedToUpdate(req){
+  return userIsTheSamePerson(req) || userIsAdmin(req)
+}
+
+function userIsTheSamePerson(req){
+  const userIDFromSession = req.session.me._id.toString()
+  const { _id: userIDToUpdate } = req.body
+  const idFromConditionRules = getIDConditionInRule(req.ability.rules)
+  // console.log(idFromConditionRules.toString())
+  return (userIDToUpdate === userIDFromSession) && (userIDFromSession === req.params._id) && (idFromConditionRules.toString() === userIDFromSession) 
+}
+
+function getIDConditionInRule(rawRules) {
+  const ruleObjectKey = Object.keys(rawRules)
+  
+  const conditionSet = new Set()
+
+  ruleObjectKey.forEach(rule => {
+    const individualRules = rawRules[rule]
+    const individualRulesKey = Object.keys(individualRules)
+    if(individualRulesKey.includes('conditions')){
+      const condition = individualRules['conditions']
+      if(!conditionSet.has(condition)) conditionSet.add(condition)
+    }
+ })
+
+ const conditionInvoleID = [...conditionSet].filter(element => element._id != null)
+ return conditionInvoleID[0]._id // There should not be duplicate condition with different ID
+}
+
+function userIsAdmin(req){
+  const userRoles = req.session.me.role.toString()
+  return userRoles.includes(Role.ADMIN)
 }
 
 function ensureSanitized (req, res, next) {
@@ -23,7 +70,7 @@ function ensureSanitized (req, res, next) {
     allowedTags: [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
       'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
       'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe' ],
-    allowedAttributes: {
+    allowedAttributes: {  
       a: [ 'href' ],
       img: [ 'src' ]
     },
@@ -42,33 +89,9 @@ function ensureSanitized (req, res, next) {
   next()
 }
 
-// HOW TO EMAIL A PERSON
-// const { emailPerson } = require('./email/emailperson')
-// function verifyEmailPerson (req, res) {
-//   console.log('verifyEmailPerson', req.params)
-//   if (!req.params.id) {
-//     res.status(400).send() // bad request
-//   }
-//   Person.findOne({ _id: req.params.id }).exec((err, person) => {
-//     if (err) {
-//       res.status(500).send(err)
-//       return
-//     }
-//     if (!person) {
-//       // not found
-//       res.status(404).send()
-//       return
-//     }
-
-//     emailPerson(person, 'verify', { token: 'ABCDEF123456' }).then(
-//       () => {
-//         res.status(200).end()
-//       }
-//     )
-//   })
-// }
 
 module.exports = {
   ensureSanitized,
-  getPersonBy
+  getPersonBy,
+  updatePersonDetail
 }
