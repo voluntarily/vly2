@@ -28,7 +28,7 @@ const ruleBuilder = session => {
       PersonFields.ABOUT
     ],
     conditions: {
-      user: userID
+      _id: userID
     }
   }, {
     subject: SchemaName,
