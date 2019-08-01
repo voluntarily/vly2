@@ -15,7 +15,7 @@ const ruleBuilder = session => {
     action: Action.CREATE
   }]
 
-  const userID = session.isAuthenticated ? session.me._id : undefined
+  const userID = session.me ? session.me._id : undefined
   const allAbilities = [{
     subject: SchemaName,
     action: Action.READ,
@@ -26,7 +26,8 @@ const ruleBuilder = session => {
       PersonFields.NAME,
       PersonFields.STATUS,
       PersonFields.AVATAR,
-      PersonFields.ABOUT
+      PersonFields.ABOUT,
+      PersonFields.ROLE
     ]
   }, {
     subject: SchemaName,
@@ -38,6 +39,7 @@ const ruleBuilder = session => {
       PersonFields.STATUS,
       PersonFields.AVATAR,
       PersonFields.NAME,
+      PersonFields.ROLE,
       PersonFields.ABOUT
     ]
   }, {
