@@ -2,7 +2,7 @@ import { Component } from 'react'
 import { Button, Divider, message, Popconfirm } from 'antd'
 import Router from 'next/router'
 import { FormattedMessage } from 'react-intl'
-import InterestSection from '../Interest/InterestSection'
+import InterestSection from '../../components/Interest/InterestSection'
 
 export default class OpOwnerManageInterests extends Component {
   constructor (props) {
@@ -38,7 +38,7 @@ export default class OpOwnerManageInterests extends Component {
   render () {
     return (
       this.props.canManageInterests &&
-      <div>
+      <section>
         <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' onConfirm={this.handledCompleted} onCancel={this.handledCompletedCancelled} okText='Yes' cancelText='No'>
           <Button type='primary' shape='round'>
             <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
@@ -52,7 +52,7 @@ export default class OpOwnerManageInterests extends Component {
         </Popconfirm>
         <Divider />
         <InterestSection opid={this.props.op._id} />
-      </div>
+      </section>
     )
   }
 }

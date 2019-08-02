@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
+const idvalidator = require('mongoose-id-validator')
 const Schema = mongoose.Schema
-const { Role } = require('../../services/auth/role')
+const { SchemaName } = require('./person.constants')
+const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
+const { Role } = require('../../services/authorize/role')
 
 // simplified version without Auth
 const personSchema = new Schema({
@@ -10,7 +13,6 @@ const personSchema = new Schema({
   about: { type: 'String', default: '' }, // person description
   phone: { type: 'String', required: false }, // +64 27 7031007
   gender: { type: 'String', default: '' }, // whatever they want to write.
-  password: { type: 'String' }, // encoded
   language: { type: String, default: 'EN', lowercase: true }, // en, mi, fr etc
   avatar: String, // url to image
   role: {
@@ -29,4 +31,9 @@ const personSchema = new Schema({
   dateAdded: { type: 'Date', default: Date.now, required: true }
 })
 
-module.exports = mongoose.model('Person', personSchema)
+personSchema.plugin(idvalidator)
+personSchema.plugin(accessibleFieldsPlugin)
+personSchema.plugin(accessibleRecordsPlugin)
+// personSchema.plugin(accessibleFieldsPlugin)
+
+module.exports = mongoose.model(SchemaName, personSchema)

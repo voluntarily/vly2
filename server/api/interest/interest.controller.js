@@ -3,6 +3,7 @@ const Person = require('../person/person')
 const Opportunity = require('../opportunity/opportunity')
 const { config } = require('../../../config/config')
 const { emailPerson } = require('../person/email/emailperson')
+const { InterestStatus } = require('./interest.constants')
 
 /**
   api/interests -> list all interests
@@ -53,7 +54,7 @@ const createInterest = async (req, res) => {
   const newInterest = new Interest(req.body)
   newInterest.save(async (err, saved) => {
     if (err) {
-      res.status(500).send(err)
+      return res.status(500).send(err)
     }
     const volunteerID = req.body.person
     const { opportunity } = req.body
@@ -74,10 +75,10 @@ const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
   const { _id } = volunteer
   const { requestor, title } = opportunity
   const opID = opportunity._id
-  if (interestStatus === 'invited' || interestStatus === 'declined') {
+  if (interestStatus === InterestStatus.INVITED || interestStatus === InterestStatus.DECLINED) {
     // send email to volunteer only
     sendEmailBaseOn(interestStatus, _id, title, opID) // The _id in here is the volunteer id
-  } else if (interestStatus === 'committed') {
+  } else if (interestStatus === InterestStatus.COMMITTED) {
     // send email to requestor only
     sendEmailBaseOn(interestStatus, requestor, title, opID)
   }

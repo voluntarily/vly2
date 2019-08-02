@@ -1,69 +1,129 @@
-import { Col, Icon, Row } from 'antd'
+import { Divider, Icon } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import PersonRoles from './PersonRole'
+import {
+  GridContainer,
+  TextPBold,
+  TextH1,
+  TextH3,
+  SpacerSmall,
+  Spacer
+} from '../VTheme/VTheme'
 
-const DL = styled.dl`
+const ProfileGrid = styled.div`
+  display: grid;
+  grid-template-columns: 16rem 1fr;
+  gap: 5rem;
 
-dt {
-  float: left;
-  clear: left;
-  padding: 2px 4px;
-  text-align: right;
-}
-dd {
-  margin: 0;
-  padding: 2px 4px;
-}
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    grid-template-columns: 16rem 1fr;
+    gap: 5rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    grid-template-columns: calc(100vw - 2rem);
+  }
+
+  @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
+    /* iPhone X */
+    grid-template-columns: calc(100vw - 2rem);
+  }
 `
 
-const PersonDetail = ({ person }, ...props) => (
+const ProfileImage = styled.img`
+  width: 100%;
+`
 
-  <Row type='flex' align='top'>
-    <Head title={person.nickname} />
-    <Col // these settings put the image first on narrow pages.
-      sm={{ span: 24, order: 1 }}
-      md={{ span: 12, order: 2 }}
-    >
-      <img style={{ margin: '1rem', width: '100%', maxWidth: '300px' }} src={person.avatar} alt={person.nickname} />
-    </Col>
-    <Col
-      sm={{ span: 24, order: 2 }}
-      md={{ span: 12, order: 1 }}
-    >
-      <h1>{person.nickname}</h1>
-      <p>{person.name}</p>
-      <DL>
-        <dt>
-          <Icon type='phone' />
-        </dt>
-        <dd>{person.phone}</dd>
-        <dt>
-          <Icon type='mail' />
-        </dt>
-        <dd>{person.email}</dd>
-        <dt>
-          <Icon type='compass' />
-        </dt>
-        <dd>{person.gender}</dd>
-        <dt>
-          <Icon type='schedule' />
-        </dt>
-        <dd>{person.status ? <Icon type='check' /> : <Icon type='close' />}</dd>
-        <dt>
-          <Icon type='coffee' />
-        </dt>
-        <dd>
-          <PersonRoles roles={person.role} />
-        </dd>
-      </DL>
-      <h3>About</h3>
-      <Markdown children={person.about || ''} />
-    </Col>
-  </Row>
+const DetailItem = styled.div`
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+`
+const DetailItemMobile = styled.div`
+  display: none;
+
+  @media screen and (max-width: 767px) {
+    display: initial;
+    margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+  }
+`
+
+const ListItem = styled.div`
+  background-color: none;
+  min-height: 5rem;
+  margin-bottom: 3rem;
+`
+const PersonDetail = ({ person }, ...props) => (
+  <ProfileGrid>
+    <GridContainer>
+      <Head title={person.nickname} />
+      <ProfileImage src={person.avatar} alt={person.nickname} />
+      <DetailItem>
+        <Icon type='history' /> 312 ops completed
+      </DetailItem>
+      <DetailItem>
+        <Icon type='safety' /> School Safe
+      </DetailItem>
+    </GridContainer>
+    <GridContainer>
+      <ListItem>
+        <TextH1>
+          {person.name}
+          {person.status ? (
+            <Icon
+              type='safety-certificate'
+              theme='filled'
+              style={{ color: '#1da1f2' }}
+            />
+          ) : (
+            <Icon type='close-circle' />
+          )}
+        </TextH1>
+        <TextPBold>{person.org}</TextPBold>
+        <Divider />
+        <Markdown children={person.about || ''} />
+
+        <TextPBold>
+          <a href={`mailto:${person.email}`}>
+            <Icon type='mail' /> {person.email}
+          </a>
+        </TextPBold>
+        <SpacerSmall />
+        <TextPBold>
+          <a href={`tel:${person.phone}`}>
+            <Icon type='phone' /> {person.phone}
+          </a>
+        </TextPBold>
+      </ListItem>
+      <DetailItemMobile>
+        <p>        <Icon type='history' /> 312 ops completed</p>
+      </DetailItemMobile>
+      <DetailItemMobile>
+        <p> <Icon type='safety' /> School Safe</p>
+      </DetailItemMobile>
+      <Spacer />
+      <ListItem>
+        <TextH3>Latest Activities</TextH3>
+        <Divider />
+      </ListItem>
+      <ListItem>
+        <TextH3>Latest Achievements</TextH3>
+        <Divider />
+      </ListItem>
+      <div>
+        <Icon type='coffee' /> <PersonRoles roles={person.role} />
+      </div>
+    </GridContainer>
+  </ProfileGrid>
+
 )
 
 PersonDetail.propTypes = {
@@ -74,9 +134,17 @@ PersonDetail.propTypes = {
     about: PropTypes.string,
     email: PropTypes.string.isRequired,
     phone: PropTypes.string,
-    gender: PropTypes.string,
+    pronoun: PropTypes.string,
     avatar: PropTypes.any,
-    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
+    role: PropTypes.arrayOf(
+      PropTypes.oneOf([
+        'admin',
+        'opportunityProvider',
+        'volunteer',
+        'activityProvider',
+        'tester'
+      ])
+    ),
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])
   }).isRequired
 }

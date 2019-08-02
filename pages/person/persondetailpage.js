@@ -10,6 +10,7 @@ import { FullPage } from '../../hocs/publicPage'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
 import Loading from '../../components/Loading'
+import Cookie from 'js-cookie'
 
 const blankPerson = {
   // for new people load the default template doc.
@@ -28,7 +29,7 @@ export class PersonDetailPage extends Component {
   state = {
     editing: false
   }
-  static async getInitialProps ({ store, query }) {
+  static async getInitialProps ({ store, query, req }) {
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     if (isNew) {
@@ -37,7 +38,11 @@ export class PersonDetailPage extends Component {
         personid: null
       }
     } else if (query && query.id) {
-      await store.dispatch(reduxApi.actions.people.get(query))
+      let cookies = req ? req.cookies : Cookie.get()
+      const cookiesStr = JSON.stringify(cookies)
+      await store.dispatch(reduxApi.actions.people.get(query, {
+        params: cookiesStr
+      }))
       return {
         isNew: false,
         personid: query.id
@@ -76,7 +81,6 @@ export class PersonDetailPage extends Component {
     } else {
       res = await this.props.dispatch(reduxApi.actions.people.post({}, { body: JSON.stringify(person) }))
       person = res[0]
-      console.log(person)
       Router.replace(`/people/${person._id}`)
     }
     this.setState({ editing: false })

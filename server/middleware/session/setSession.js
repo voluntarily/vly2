@@ -20,11 +20,28 @@ const isUrlBlacklisted = url => {
   return blacklisted
 }
 
-module.exports = async (req, res, next) => {
-  req.session = DEFAULT_SESSION
-  if (!isUrlBlacklisted(req.url) && req.cookies.idToken) {
+const getCookieString = (req) => {
+  if (req.cookies.idToken != null) {
+    return req.cookies
+  } else if (req.headers.cookie != null) {
+    let cookieInJSON
     try {
-      const user = jwtDecode(req.cookies.idToken)
+      cookieInJSON = JSON.parse(req.headers.cookie)
+    } catch (err) {
+      return undefined
+    }
+    return cookieInJSON
+  }
+  return undefined
+}
+
+module.exports = async (req, res, next) => {
+  req.session = { ...DEFAULT_SESSION } // Default session object will get mutated after logged in. Deconstructing the objec will only get the attribute of it
+  const cookieString = getCookieString(req)
+
+  if (!isUrlBlacklisted(req.url) && cookieString != null) {
+    try {
+      const user = jwtDecode(cookieString.idToken)
       req.session.isAuthenticated = true
       req.session.user = user
       req.session.me = await Person.findOne({ email: req.session.user.email }).exec()
