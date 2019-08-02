@@ -6,6 +6,7 @@ const ArchivedOpportunity = require('./../archivedOpportunity/archivedOpportunit
 const InterestArchive = require('./../interest-archive/interestArchive')
 const { OpportunityStatus } = require('./opportunity.constants')
 const { regions } = require('../location/locationData')
+const sanitizeHtml = require('sanitize-html')
 
 /**
  * Get all orgs
@@ -14,7 +15,8 @@ const { regions } = require('../location/locationData')
  * @returns void
  */
 const getOpportunities = async (req, res) => {
-  let query = {} // { status: 'active' }
+  // limit to Active ops unless one of the params overrides
+  let query = { 'status': OpportunityStatus.ACTIVE }
   let sort = 'title'
   let select = {}
 
@@ -78,6 +80,7 @@ const getOpportunities = async (req, res) => {
         ]
       }
     }
+    // console.log('getOpportunities', req.query, query)
 
     try {
       const got = await Opportunity
@@ -91,6 +94,7 @@ const getOpportunities = async (req, res) => {
       return res.status(404).send(e)
     }
   } catch (e) {
+    console.log('getOpportunities error:', e)
     return res.status(500).send(e)
   }
 }
@@ -146,7 +150,36 @@ const archiveInterests = async (opId) => {
   }
 }
 
+function ensureSanitized (req, res, next) {
+  const descriptionOptions = {
+    allowedTags: [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+      'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
+      'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe' ],
+    allowedAttributes: {
+      a: [ 'href' ],
+      img: [ 'src' ],
+      iframe: [ 'width', 'height', 'src' ]
+    },
+    allowedIframeHostnames: ['www.youtube.com'],
+    // Should prevent any iframes using something other than https for their src.
+    allowedSchemesByTag: { iframe: ['https'] },
+    allowProtocolRelative: false
+  }
+
+  const op = req.body
+  if (op.title) { op.title = sanitizeHtml(op.title) }
+  if (op.subtitle) { op.subtitle = sanitizeHtml(op.subtitle) }
+  if (op.imgUrl) { op.imgUrl = sanitizeHtml(op.imgUrl) }
+  if (op.description) { op.description = sanitizeHtml(op.description, descriptionOptions) }
+  if (op.duration) { op.duration = sanitizeHtml(op.duration) }
+  if (op.location) { op.location = sanitizeHtml(op.location) }
+  if (op.offerOrg) { op.offerOrg = sanitizeHtml(op.offerOrg) }
+  req.body = op
+  next()
+}
+
 module.exports = {
+  ensureSanitized,
   getOpportunities,
   getOpportunity,
   putOpportunity

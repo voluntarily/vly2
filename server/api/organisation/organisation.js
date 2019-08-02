@@ -10,6 +10,8 @@ const organisationSchema = new Schema({
   contactEmail: String,
   contactId: String,
   website: String,
+  facebook: String,
+  twitter: String,
   category: {
     type: [String],
     required: true,

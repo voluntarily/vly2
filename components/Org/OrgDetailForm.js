@@ -202,6 +202,8 @@ OrgDetailForm.propTypes = {
     imgUrl: PropTypes.string,
     website: PropTypes.string,
     contactEmail: PropTypes.string,
+    facebook: PropTypes.string,
+    twitter: PropTypes.string,
     _id: PropTypes.string
   }).isRequired,
   form: PropTypes.object,
@@ -226,6 +228,8 @@ export default Form.create({
       imgUrl: Form.createFormField({ ...props.org.imgUrl, value: props.org.imgUrl }),
       website: Form.createFormField({ ...props.org.website, value: props.org.website }),
       contactEmail: Form.createFormField({ ...props.org.contactEmail, value: props.org.contactEmail }),
+      facebook: Form.createFormField({ ...props.org.facebook, value: props.org.facebook }),
+      twitter: Form.createFormField({ ...props.org.twitter, value: props.org.twitter }),
       category: Form.createFormField({ ...props.org.category, value: props.org.category })
     }
   },

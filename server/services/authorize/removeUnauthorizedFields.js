@@ -1,10 +1,17 @@
 const pick = require('lodash.pick')
+const { defaultConvertRequestToAction } = require('../../middleware/authorize/authorizeRequest')
 
-const removeUnauthorizedFields = (responseData, Schema, ability, action) => {
-  const authorizedFields = Schema.accessibleFieldsBy(ability, action)
-  return Array.isArray(responseData)
-    ? responseData.map(item => pick(item, authorizedFields))
-    : pick(responseData, authorizedFields)
+const removeUnauthorizedFields = (Schema) => (req, res, next) => {
+  const action = defaultConvertRequestToAction(req.method)
+  const authorizedFields = Schema.accessibleFieldsBy(req.ability, action)
+  Array.isArray(req.crudify.result)
+    ? req.crudify.result = req.crudify.result.map(eachResult => pick(eachResult, authorizedFields))
+    : req.crudify.result = pick(req.crudify.result, authorizedFields)
+
+  // return Array.isArray(responseData)
+  //   ? responseData.map(item => pick(item, authorizedFields))
+  //   : pick(responseData, authorizedFields)
+  next()
 }
 
 module.exports = removeUnauthorizedFields

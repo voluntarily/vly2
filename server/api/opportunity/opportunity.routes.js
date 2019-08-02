@@ -2,7 +2,7 @@ const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Opportunity = require('./opportunity')
 const { Action } = require('../../services/abilities/ability.constants')
-const { getOpportunities, getOpportunity, putOpportunity } = require('./opportunity.controller')
+const { ensureSanitized, getOpportunities, getOpportunity, putOpportunity } = require('./opportunity.controller')
 const { SchemaName, OpportunityRoutes } = require('./opportunity.constants')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 const initializeTags = require('../../util/initTags')
@@ -31,7 +31,7 @@ module.exports = (server) => {
       selectFields: '-__v', // Hide '__v' property
       endResponseInAction: false,
       beforeActions: [{
-        middlewares: [authorizeActions(SchemaName, convertRequestToAction)]
+        middlewares: [authorizeActions(SchemaName, convertRequestToAction), ensureSanitized]
       }, {
         middlewares: [initializeTags],
         only: ['create', 'update']

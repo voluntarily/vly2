@@ -10,7 +10,9 @@ const org = {
   about:
     'OMGTech! develops & delivers engaging workshops for both teachers and students on digital technologies and how to explore and invent with them',
   category: ['vp'],
-  website: 'omg.com'
+  website: 'omg.com',
+  facebook: 'OMGTech',
+  twitter: '@OMGTech'
 }
 
 const props = {
