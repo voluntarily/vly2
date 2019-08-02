@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { TextHeadingSubtitle, TextP } from '../VTheme/VTheme'
+import { TextHeadingSubtitle } from '../VTheme/VTheme'
 import OpList from './OpList'
 
 class OpRecommendations extends React.Component {
   render () {
     // const location = this.props.me.location // TODO: verify this works when "me" has location added
-    const location = 'Rotorua District'
+    const location = 'Waikato'
     const regionToMatch = this.props.locations.find(loc => {
       return loc.name === location || loc.containedTerritories.includes(location)
     })
@@ -15,10 +15,27 @@ class OpRecommendations extends React.Component {
       return o.location === regionToMatch.name ||
       regionToMatch.containedTerritories.includes(o.location)
     })
+
+    // if user has specified a territory, we should show the exact matches first, because we know
+    // they are closest to the user.
+    const userIsInTerritory = regionToMatch.name !== location
+    console.log(filteredOps)
+    if (userIsInTerritory) {
+      filteredOps.sort((a, b) => {
+        if (a.location === location && b.location !== location) {
+          return -1
+        } else if (b.location === location && a.location !== location) {
+          return 1
+        } else {
+          return 0 // we don't care about the ordering if the location isn't matching
+        }
+      })
+    }
+
     return (
       <div>
         <TextHeadingSubtitle>Nearby opportunities</TextHeadingSubtitle>
-        { filteredOps.length > 0 ? <OpList ops={filteredOps} /> : <TextP>No nearby opportunities</TextP> }
+        <OpList ops={filteredOps} />
       </div>
     )
   }
