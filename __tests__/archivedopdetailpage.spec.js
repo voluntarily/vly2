@@ -53,7 +53,7 @@ test.before('Setup fixtures', (t) => {
   )
 })
 
-test('archivedOpDetailPage should have OpDetail component', t => {
+test('archivedOpDetailPage should have an OpDetail component', t => {
   const props = {
     me: t.context.me,
     dispatch: t.context.mockStore.dispatch
@@ -71,4 +71,44 @@ test('archivedOpDetailPage should have OpDetail component', t => {
   )
 
   t.is(wrapper.find('OpDetail').length, 1)
+})
+
+test('archivedOpDetailPage should have an OpOrganizerInfo component', t => {
+  const props = {
+    me: t.context.me,
+    dispatch: t.context.mockStore.dispatch
+  }
+
+  const RoutedArchivedOpDetailPage = withMockRoute(ArchivedOpDetailPageWithArchivedOps)
+  const myMock = fetchMock.sandbox()
+  myMock.get(API_URL + '/archivedOpportunities/' + archivedOpportunities[1]._id, { body: { status: 200 } })
+
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <RoutedArchivedOpDetailPage {...props} />
+    </Provider>
+  )
+
+  t.is(wrapper.find('OpOrganizerInfo').length, 1)
+})
+
+test('archivedOpDetailPage should have an InterestSection component', t => {
+  const props = {
+    me: t.context.me,
+    dispatch: t.context.mockStore.dispatch
+  }
+
+  const RoutedArchivedOpDetailPage = withMockRoute(ArchivedOpDetailPageWithArchivedOps)
+  const myMock = fetchMock.sandbox()
+  myMock.get(API_URL + '/archivedOpportunities/' + archivedOpportunities[1]._id, { body: { status: 200 } })
+
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <RoutedArchivedOpDetailPage {...props} />
+    </Provider>
+  )
+
+  t.is(wrapper.find('InterestSection').length, 1)
 })
