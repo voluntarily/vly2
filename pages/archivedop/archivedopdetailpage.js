@@ -23,9 +23,6 @@ export class ArchivedOpDetailPage extends OpDetailPage {
     await store.dispatch(reduxApi.actions.locations.get())
     await store.dispatch(reduxApi.actions.tags.get())
     await store.dispatch(reduxApi.actions.archivedOpportunities.get(query))
-    console.log(store.getState().archivedOpportunities)
-    console.log(query)
-    return {}
   }
 
   retrieveOpportunity () {
