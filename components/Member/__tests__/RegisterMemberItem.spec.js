@@ -2,20 +2,26 @@ import RegisterMemberItem from '../RegisterMemberItem'
 import test from 'ava'
 import sinon from 'sinon'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
-import { members } from './member.fixture.js'
-console.log(members)
-// Initial opportunities added into test db
-// const opid = '5cc903e5f94141437622cea7'
-// const memberid = '5cc903e5f94141437622cea8'
+import fixture from './member.fixture.js'
+import { MemberStatus } from '../../../server/api/member/member.constants'
+
+test.before('Setup fixtures', fixture)
 
 test('initial state', t => {
   const changeStatus = sinon.fake()
-
+  const member = {
+    _id: '1',
+    person: t.context.me,
+    organisation: t.context.orgs[1],
+    validation: '',
+    status: MemberStatus.NONE
+  }
   const wrapper = mountWithIntl(<RegisterMemberItem
-    member={members[0]}
+    member={member}
     onChangeStatus={changeStatus}
   />)
-  t.is(wrapper.find('button').text(), 'Follow')
+  t.is(wrapper.find('button').first().text(), 'Follow')
+  t.is(wrapper.find('button').at(1).text(), 'Join')
 
   // // click button and get form
   // wrapper.find('button').simulate('click')

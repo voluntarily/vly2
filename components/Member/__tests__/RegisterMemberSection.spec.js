@@ -7,7 +7,10 @@ import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 
 import { API_URL } from '../../../lib/apiCaller'
-import people from '../../../server/api/person/__tests__/person.fixture'
+import fixture from './member.fixture.js'
+import { MemberStatus } from '../../../server/api/member/member.constants'
+
+test.before('Setup fixtures', fixture)
 
 const { fetchMock } = require('fetch-mock')
 
@@ -15,59 +18,33 @@ function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-// Initial oppotunity to be added into the test db
-people[0]._id = '5cc903e5f94141437622cea0' // volunteer
-people[1]._id = '5cc903e5f94141437622cea1' // requestor
-const meid = people[0]._id
-const opid = '5cc903e5f94141437622cea7'
-const ops = [
-  {
-    _id: opid,
-    title: 'Growing in the garden',
-    subtitle: 'Growing digitally in the garden',
-    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
-    description: 'Project to grow something in the garden',
-    duration: '15 Minutes',
-    location: 'Newmarket, Auckland',
-    requestor: people[1],
-    tags: [],
-    status: 'active'
-  }
-]
-
-const initStore = {
-  opportunities: {
-    loading: false,
-    data: ops
-  },
-  members: {
-    loading: false,
-    data: []
-  }
+const initStore = t => {
+  return ({
+    organisations: {
+      loading: false,
+      data: t.context.orgs
+    },
+    members: {
+      loading: false,
+      data: []
+    }
+  })
 }
-
-const members = [
-  {
-    _id: '5cc903e5f94141437622ceaa',
-    person: people[0],
-    organisation: ops[0],
-    validation: "I'm Membered",
-    status: 'membered'
-  }
-]
 
 test.serial('mount RegisterMemberSection with with no existing member', async t => {
   //   console.log(people[0])
-  const realStore = makeStore(initStore)
+  const orgid = t.context.organisations[1]._id
+  const meid = t.context.me._id
+  const realStore = makeStore(initStore(t))
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
-  const getmymembers = `${API_URL}/members/?op=${opid}&me=${meid}`
+  const getmymembers = `${API_URL}/members/?org=${orgid}&me=${meid}`
   myMock.getOnce(getmymembers, [])
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
       <RegisterMemberSection
-        op={opid}
+        org={orgid}
         meID={meid}
       />
     </Provider>
@@ -102,13 +79,13 @@ test.serial('mount RegisterMemberSection with op and me', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
-  const getmymembers = `${API_URL}/members/?op=${opid}&me=${meid}`
+  const getmymembers = `${API_URL}/members/?op=${orgid}&me=${meid}`
   myMock.getOnce(getmymembers, members[0])
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
       <RegisterMemberSection
-        op={opid}
+        op={orgid}
         meID={meid}
       />
     </Provider>
