@@ -7,7 +7,8 @@ import OpOrganizerInfo from '../../components/Op/OpOrganizerInfo'
 import InterestSection from '../../components/Interest/InterestSection' // TODO Introduce archived interest section
 import { Divider } from 'antd'
 import reduxApi, { withArchivedOpportunities } from '../../lib/redux/reduxApi.js'
-class ArchivedOpDetailPage extends OpDetailPage {
+
+export class ArchivedOpDetailPage extends OpDetailPage {
   constructor (props) {
     super(props)
     this.retrieveOpportunity = this.retrieveOpportunity.bind(this)
@@ -22,6 +23,9 @@ class ArchivedOpDetailPage extends OpDetailPage {
     await store.dispatch(reduxApi.actions.locations.get())
     await store.dispatch(reduxApi.actions.tags.get())
     await store.dispatch(reduxApi.actions.archivedOpportunities.get(query))
+    console.log(store.getState().archivedOpportunities)
+    console.log(query)
+    return {}
   }
 
   retrieveOpportunity () {
