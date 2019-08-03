@@ -1,6 +1,6 @@
 import { OpDetailPage } from '../op/opdetailpage'
 import OpLoadingPage from '../op/oploadingpage'
-import OpUnavalablePage from '../op/opunavailablepage'
+import OpUnavailablePage from '../op/opunavailablepage'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import OpDetail from '../../components/Op/OpDetail'
 import OpOrganizerInfo from '../../components/Op/OpOrganizerInfo'
@@ -41,7 +41,7 @@ export class ArchivedOpDetailPage extends OpDetailPage {
         return (<OpLoadingPage />)
       }
       if (this.props.archivedOpportunities.data.length !== 1) {
-        return (<OpUnavalablePage />)
+        return (<OpUnavailablePage />)
       }
     }
 
