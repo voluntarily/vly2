@@ -6,7 +6,7 @@ import OpList from './OpList'
 class OpRecommendations extends React.Component {
   render () {
     // const location = this.props.me.location // TODO: verify this works when "me" has location added
-    const location = 'Waikato'
+    const location = this.props.me.location || 'Waikato'
     const regionToMatch = this.props.locations.find(loc => {
       return loc.name === location || loc.containedTerritories.includes(location)
     })
@@ -19,7 +19,6 @@ class OpRecommendations extends React.Component {
     // if user has specified a territory, we should show the exact matches first, because we know
     // they are closest to the user.
     const userIsInTerritory = regionToMatch.name !== location
-    console.log(filteredOps)
     if (userIsInTerritory) {
       filteredOps.sort((a, b) => {
         if (a.location === location && b.location !== location) {
@@ -43,7 +42,7 @@ class OpRecommendations extends React.Component {
 
 OpRecommendations.propTypes = {
   me: PropTypes.object.isRequired,
-  attributes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  // attributes: PropTypes.arrayOf(PropTypes.string).isRequired,
   ops: PropTypes.array.isRequired,
   locations: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
