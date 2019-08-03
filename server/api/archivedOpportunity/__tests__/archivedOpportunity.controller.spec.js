@@ -9,6 +9,7 @@ import archivedOps from './archivedOpportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
 import ArchiveOpportunity from '../archivedOpportunity'
 import request from 'supertest'
+import objectid from 'objectid'
 
 test.before('before connect to database', async (t) => {
   await appReady
@@ -56,4 +57,14 @@ test.serial('Should send correct data when queried against an _id', async t => {
 
   // verify tag was populated out
   t.is(res.body.tags[0].tag, t.context.tags[0].tag)
+})
+
+test.serial('Should return 404 when archivedOpportunity not found', async t => {
+  t.plan(1)
+
+  const res = await request(server)
+    // Incorrect Opp ID
+    .get(`/api/archivedOpportunities/${objectid()}`)
+    .set('Accept', 'application/json')
+  t.is(res.status, 404)
 })
