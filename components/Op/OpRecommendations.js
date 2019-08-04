@@ -6,12 +6,12 @@ import OpList from './OpList'
 class OpRecommendations extends React.Component {
   render () {
     // const location = this.props.me.location // TODO: verify this works when "me" has location added
-    const location = this.props.me.location || 'Waikato'
-    const regionToMatch = this.props.locations.find(loc => {
+    const location = this.props.me.location || 'No location'
+    const regionToMatch = (location === 'No location') ? '' : this.props.locations.find(loc => {
       return loc.name === location || loc.containedTerritories.includes(location)
     })
 
-    const filteredOps = this.props.ops.filter(o => {
+    const filteredOps = (location === 'No location') ? [] : this.props.ops.filter(o => {
       return o.location === regionToMatch.name ||
       regionToMatch.containedTerritories.includes(o.location)
     })
@@ -31,12 +31,13 @@ class OpRecommendations extends React.Component {
       })
     }
 
-    return (
-      <div>
-        <TextHeadingSubtitle>Nearby opportunities</TextHeadingSubtitle>
-        <OpList ops={filteredOps} />
-      </div>
-    )
+    return (filteredOps.length === 0)
+      ? <div /> : (
+        <div>
+          <TextHeadingSubtitle>Nearby opportunities</TextHeadingSubtitle>
+          <OpList ops={filteredOps} />
+        </div>
+      )
   }
 }
 

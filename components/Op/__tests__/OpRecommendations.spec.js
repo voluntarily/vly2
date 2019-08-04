@@ -66,3 +66,74 @@ test('ensure closest location is shown first', t => {
   // since north shore city is closest to the user, should be shown first
   t.is(opCardProps.op, fakeOps[2])
 })
+
+test('ensure user without location renders properly', t => {
+  const me = {}
+
+  const fakeRegions = [
+    {
+      name: 'Auckland',
+      containedTerritories: ['North Shore City', 'Central Auckland', 'West Auckland']
+    }
+  ]
+
+  const fakeOps = [
+    {
+      ...ops[0],
+      location: 'Auckland'
+    },
+    {
+      ...ops[1],
+      location: 'West Auckland'
+    },
+    {
+      ...ops[2],
+      location: 'North Shore City'
+    }
+  ]
+
+  const wrapper = mountWithIntl(<OpRecommendations locations={fakeRegions} me={me} ops={fakeOps} />)
+
+  t.is(wrapper.find('OpList').length, 0)
+})
+
+test('ensure user without any matching location renders properly', t => {
+  const me = {
+    location: 'North Shore City'
+  }
+
+  const fakeRegions = [
+    {
+      name: 'Auckland',
+      containedTerritories: ['North Shore City', 'Central Auckland', 'West Auckland']
+    },
+    {
+      name: 'Otago',
+      containedTerritories: [
+        'Central Otago District',
+        'Queenstown-Lakes District',
+        'Dunedin City',
+        'Clutha District'
+      ]
+    }
+  ]
+
+  const fakeOps = [
+    {
+      ...ops[0],
+      location: 'Central Otago District'
+    },
+    {
+      ...ops[1],
+      location: 'Queenstown-Lakes District'
+    },
+    {
+      ...ops[2],
+      location: 'Dunedin City'
+    }
+  ]
+
+  const wrapper = mountWithIntl(<OpRecommendations locations={fakeRegions} me={me} ops={fakeOps} />)
+
+  t.is(wrapper.find('OpList').length, 0)
+})
