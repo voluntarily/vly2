@@ -102,6 +102,12 @@ const PersonDetail = ({ person }, ...props) => (
             <Icon type='phone' /> {person.phone}
           </a>
         </TextPBold>
+        <SpacerSmall />
+        <TextPBold>
+          <a>
+            <Icon type='compass' /> {person.location}
+          </a>
+        </TextPBold>
       </ListItem>
       <DetailItemMobile>
         <p>        <Icon type='history' /> 312 ops completed</p>
@@ -132,6 +138,7 @@ PersonDetail.propTypes = {
     name: PropTypes.string.isRequired,
     nickname: PropTypes.string,
     about: PropTypes.string,
+    location: PropTypes.string,
     email: PropTypes.string.isRequired,
     phone: PropTypes.string,
     pronoun: PropTypes.string,
