@@ -213,12 +213,12 @@ class PersonHomePage extends Component {
                   defaultMessage='Recommended for you'
                   decription='subtitle on volunteer home page for recommended opportunities'
                 />
-                <TextP>
+                  <TextP>
                   Here are some opportunities we think you might like
-                  </TextP>
+                </TextP>
                 </TextHeadingBlack>
               </SectionTitleWrapper>
-              <OpRecommendations me={this.props.me} ops={this.props.opportunities.data} locations={this.props.locations.data} />
+              <OpRecommendations me={this.props.me} ops={this.props.opportunities.data} locations={this.props.locations.data[0].regions} />
             </SectionWrapper>
           </TabPane>
           <TabPane tab={searchTab} key='2'>
@@ -243,6 +243,7 @@ class PersonHomePage extends Component {
               {this.state.editProfile ? (
                 <PersonDetailForm
                   person={this.props.me}
+                  locations={this.props.locations.data[0].locations}
                   onSubmit={this.handleUpdate.bind(this, this.props.me)}
                   onCancel={this.handleCancel}
                 />
