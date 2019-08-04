@@ -219,12 +219,7 @@ class PersonDetailForm extends Component {
               </Form.Item>
               <Form.Item label={personLocation}>
                 {getFieldDecorator('location', {
-                  rules: [
-                    {
-                      required: true,
-                      message: 'A region must be provided'
-                    }
-                  ]
+                  rules: []
                 })(
                   <LocationSelector
                     existingLocations={this.props.locations}
