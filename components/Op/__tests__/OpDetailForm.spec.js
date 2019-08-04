@@ -137,7 +137,7 @@ test('render the detail with new blank op', t => {
     .simulate('keydown', { which: 'a' })
     .simulate('change', { target: { value: 'My new value' } })
 
-  const locationInput = wrapper.find('OpLocationSelector').first()
+  const locationInput = wrapper.find('LocationSelector').first()
   locationInput.props().onChange('Auckland')
 
   wrapper.update()

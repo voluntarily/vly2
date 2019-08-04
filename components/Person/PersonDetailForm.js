@@ -13,7 +13,7 @@ import {
   TitleContainer
 } from '../VTheme/FormStyles'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
-import OpLocationSelector from '../Op/OpLocationSelector.js'
+import LocationSelector from '../Form/Input/LocationSelector'
 
 const { TextArea } = Input
 
@@ -226,7 +226,7 @@ class PersonDetailForm extends Component {
                     }
                   ]
                 })(
-                  <OpLocationSelector
+                  <LocationSelector
                     existingLocations={this.props.locations}
                   />
                 )}
