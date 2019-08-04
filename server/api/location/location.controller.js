@@ -2,7 +2,8 @@ const { sortedLocations, regions } = require('./locationData')
 
 const getLocations = function (req, res) {
   if (req.query.withRelationships) {
-    res.json(regions)
+    const regionsAndLocations = { regions: regions, locations: sortedLocations }
+    res.json(regionsAndLocations)
   } else {
     res.json(sortedLocations)
   }
