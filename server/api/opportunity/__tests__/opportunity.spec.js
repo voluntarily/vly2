@@ -536,3 +536,107 @@ test.serial('should return opps within the specified region that also match the 
       op => op.title !== ops[0].title || !validLocs.includes(op.location)
     ))
 })
+
+test.serial('should permit titles with special characters', async t => {
+  const res = await request(server)
+    .post('/api/opportunities/')
+    .send({
+      // Testing some special chars. Stray < and > always get encoded to &lt; and &gt; by sanitizeHtml().
+      title: 'Lego Robots " / % ^ ( ) * @ #',
+      subtitle: 'Lego Mindstorms EV3',
+      description: 'Building with Lego Mindstorms EV3.',
+      location: 'Wellington City',
+      status: OpportunityStatus.ACTIVE,
+      requestor: t.context.people[0]._id
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const queriedOpp = await Opportunity.findOne({ subtitle: 'Lego Mindstorms EV3' }).exec()
+  //
+  t.is(queriedOpp.title, 'Lego Robots " / % ^ ( ) * @ #')
+})
+
+test.serial('should permit descriptions with special characters', async t => {
+  const res = await request(server)
+    .post('/api/opportunities/')
+    .send({
+      title: 'Lego Robots',
+      // Testing some special chars. Stray < and > always get encoded to &lt; and &gt; by sanitizeHtml().
+      description: 'Build and program Lego robots. " / % ^ ( ) * @ #',
+      location: 'Wellington City',
+      status: OpportunityStatus.ACTIVE,
+      requestor: t.context.people[0]._id
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const queriedOpp = await Opportunity.findOne({ title: 'Lego Robots' })
+  t.is(queriedOpp.description, 'Build and program Lego robots. " / % ^ ( ) * @ #')
+})
+
+test.serial('should strip script tags and contents from title', async t => {
+  const res = await request(server)
+    .post('/api/opportunities/')
+    .send({
+      title: 'Lego Robots<script>var xhr = new XMLHttpRequest();</script>',
+      subtitle: 'Build and program Lego robots with Mindstorms EV3.',
+      description: '-',
+      location: 'Wellington City',
+      status: OpportunityStatus.ACTIVE,
+      requestor: t.context.people[0]._id
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const queriedOpp = await Opportunity.findOne({ subtitle: 'Build and program Lego robots with Mindstorms EV3.' }).exec()
+  t.is(queriedOpp.title, 'Lego Robots')
+})
+
+test.serial('should strip "color:blue" and "font-size:2em" from style attribute', async t => {
+  const res = await request(server)
+    .post('/api/opportunities')
+    .send({
+      title: 'Lego Robots',
+      description: '<span style="color:blue; font-size:2em;">Build</span> and program <span style="color:rgb(250,0,0)">Lego</span> robots.',
+      location: 'Wellington City',
+      status: OpportunityStatus.ACTIVE,
+      requestor: t.context.people[0]._id
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const queriedOpp = await Opportunity.findOne({ title: 'Lego Robots' }).exec()
+  t.is(queriedOpp.description, '<span>Build</span> and program <span style="color:rgb(250,0,0)">Lego</span> robots.')
+})
+
+test.serial('should allow iframes from youtube only, and allow height, src and width attributes', async t => {
+  const res = await request(server)
+    .post('/api/opportunities')
+    .send({
+      title: 'Lego Robots',
+      description: '<p>Build and program Lego robots.</p>' +
+        '<p><iframe width="560" height="315" src="https://www.youtube.com/embed/wLupj65qJHg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>' +
+        '<p><iframe width="560" height="315" src="https://www.youtuberepeater.com/embed/wLupj65qJHg"></iframe></p>',
+      location: 'Wellington City',
+      status: OpportunityStatus.ACTIVE,
+      requestor: t.context.people[0]._id
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const queriedOpp = await Opportunity.findOne({ title: 'Lego Robots' }).exec()
+  t.is(queriedOpp.description, '<p>Build and program Lego robots.</p>' +
+    '<p><iframe width="560" height="315" src="https://www.youtube.com/embed/wLupj65qJHg"></iframe></p>' +
+    '<p><iframe width="560" height="315"></iframe></p>')
+})
