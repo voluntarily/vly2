@@ -4,7 +4,7 @@ import { Select } from 'antd'
 
 const { Option } = Select
 
-class OpLocationSelector extends React.Component {
+class LocationSelector extends React.Component {
   render () {
     const { existingLocations, onChange, value, width } = this.props
     const children = existingLocations.map(location => <Option key={location}>{location}</Option>)
@@ -22,11 +22,11 @@ class OpLocationSelector extends React.Component {
   }
 }
 
-OpLocationSelector.propTypes = {
+LocationSelector.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired,
   width: PropTypes.string
 }
 
-export default OpLocationSelector
+export default LocationSelector
