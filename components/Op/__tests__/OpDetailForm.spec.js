@@ -5,7 +5,7 @@ import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-hel
 import OpDetailForm from '../OpDetailForm'
 import sinon from 'sinon'
 
-const locations = ['Auckland, Wellington, Christchurch']
+const { sortedLocations, regions } = require('../../../server/api/location/locationData')
 
 // Initial opportunities
 const op = {
@@ -67,7 +67,7 @@ test('shallow the detail with op', t => {
       op={op}
       onSubmit={() => {}}
       onCancel={() => {}}
-      existingLocations={locations}
+      existingLocations={sortedLocations}
       existingTags={[]} />
   )
   // console.log(wrapper.debug())
@@ -84,7 +84,7 @@ test('render the detail with op', t => {
       me={me}
       onSubmit={submitOp}
       onCancel={cancelOp}
-      existingLocations={locations}
+      existingLocations={sortedLocations}
       existingTags={[]} />
   )
   t.is(wrapper.find('OpDetailForm').length, 1)
@@ -111,7 +111,7 @@ test('render the detail with new blank op', t => {
       me={me}
       onSubmit={submitOp}
       onCancel={cancelOp}
-      existingLocations={locations}
+      existingLocations={sortedLocations}
       existingTags={[]} />
   )
   t.log(wrapper.first())
