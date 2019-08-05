@@ -16,7 +16,7 @@ export class ArchivedOpDetailPage extends OpDetailPage {
 
   static async getInitialProps ({ store, query }) {
     // If no id is supplied
-    if (!(query && query._id)) {
+    if (!(query && query.id)) {
       return
     }
     // TODO: [VP-280] run get location and tag data requests in parallel
