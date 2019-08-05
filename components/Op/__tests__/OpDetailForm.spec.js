@@ -5,7 +5,7 @@ import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-hel
 import OpDetailForm from '../OpDetailForm'
 import sinon from 'sinon'
 
-const { sortedLocations, regions } = require('../../../server/api/location/locationData')
+const { sortedLocations } = require('../../../server/api/location/locationData')
 
 // Initial opportunities
 const op = {

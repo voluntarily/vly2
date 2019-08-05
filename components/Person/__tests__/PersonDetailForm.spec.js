@@ -8,15 +8,7 @@ import PersonDetailForm from '../PersonDetailForm'
 import sinon from 'sinon'
 import people from '../../../server/api/person/__tests__/person.fixture'
 
-const { sortedLocations, regions } = require('../../../server/api/location/locationData')
-const locations = {
-  data: [
-    {
-      regions: regions,
-      locations: sortedLocations
-    }
-  ]
-}
+const { sortedLocations } = require('../../../server/api/location/locationData')
 
 test.before('Setup People fixtures', (t) => {
   // not using mongo or server here so faking ids
