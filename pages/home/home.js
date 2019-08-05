@@ -208,14 +208,19 @@ class PersonHomePage extends Component {
             </SectionWrapper>
             <SectionWrapper>
               <SectionTitleWrapper>
-                <TextHeadingBlack><FormattedMessage
-                  id='home.recommendedOpportunities'
-                  defaultMessage='Recommended for you'
-                  decription='subtitle on volunteer home page for recommended opportunities'
-                />
+                <TextHeadingBlack>
+                  <FormattedMessage
+                    id='home.recommendedOpportunities'
+                    defaultMessage='Recommended for you'
+                    decription='Title on volunteer home page for recommended opportunities'
+                  />
                   <TextP>
-                  Here are some opportunities we think you might like
-                </TextP>
+                    <FormattedMessage
+                      id='home.recommendedOpportunitiesP'
+                      defaultMessage='Here are some opportunities we think you might like'
+                      decription='Subtitle on volunteer home page for recommended opportunities'
+                    />
+                  </TextP>
                 </TextHeadingBlack>
               </SectionTitleWrapper>
               <OpRecommendations me={this.props.me} ops={this.props.opportunities.data} locations={this.props.locations.data[0].regions} />
