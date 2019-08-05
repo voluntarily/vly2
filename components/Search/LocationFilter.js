@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import OpLocationSelector from '../Op/OpLocationSelector'
+import LocationSelector from '../Form/Input/LocationSelector'
 import { TextPBold } from '../VTheme/VTheme'
 import './locationFilterStyles.less'
 
@@ -17,7 +17,7 @@ class LocationFilter extends React.Component {
             description='Text that describes what the location filter does'
           />
         </TextPBold>
-        <OpLocationSelector
+        <LocationSelector
           existingLocations={locations}
           value={selectedLocation}
           onChange={onLocationSelected}
