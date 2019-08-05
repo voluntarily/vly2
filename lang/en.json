@@ -80,6 +80,7 @@
   "personEmail": "Email",
   "personPhone": "Phone",
   "personAbout": "About you",
+  "personLocation": "Location",
   "personAvatar": "Image Link",
   "personGender": "Gender",
   "personRole": "Role",

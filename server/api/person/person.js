@@ -11,6 +11,7 @@ const personSchema = new Schema({
   email: { type: 'String', index: true, unique: true, required: true }, // person@example.com
   nickname: { type: 'String', default: '' }, // how we should address you - eg. Andrew
   about: { type: 'String', default: '' }, // person description
+  location: { type: 'String', default: '' },
   phone: { type: 'String', required: false }, // +64 27 7031007
   gender: { type: 'String', default: '' }, // whatever they want to write.
   language: { type: String, default: 'EN', lowercase: true }, // en, mi, fr etc
