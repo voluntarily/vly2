@@ -97,24 +97,19 @@ MemberTable.propTypes = {
 const buttonStates = member => {
   return [
     {
-      buttonEnabled: member.status === MemberStatus.FOLLOWER,
-      label: <FormattedMessage id='member.invite' defaultMessage='Invite' description='Button allowing orgAdmin to invite a new org member' />,
-      action: 'invite'
-    },
-    {
-      buttonEnabled: (member.status === MemberStatus.JOINER) || (member.status === MemberStatus.EXMEMBER),
+      buttonEnabled: (member.status === MemberStatus.FOLLOWER) || (member.status === MemberStatus.JOINER) || (member.status === MemberStatus.EXMEMBER),
       label: <FormattedMessage id='member.add' defaultMessage='Add' description='Button allowing orgAdmin to Add a new org member' />,
       action: 'add'
-    },
-    {
-      buttonEnabled: member.status === MemberStatus.MEMBER,
-      label: <FormattedMessage id='member.remove' defaultMessage='Remove' description='Button allowing orgAdmin to Remove an org member' />,
-      action: 'remove'
     },
     {
       buttonEnabled: member.status === MemberStatus.JOINER,
       label: <FormattedMessage id='member.reject' defaultMessage='Reject' description='Button allowing orgAdmin to Reject a member application' />,
       action: 'reject'
+    },
+    {
+      buttonEnabled: member.status === MemberStatus.MEMBER,
+      label: <FormattedMessage id='member.remove' defaultMessage='Remove' description='Button allowing orgAdmin to Remove an org member' />,
+      action: 'remove'
     }
   ]
 }

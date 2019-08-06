@@ -95,7 +95,7 @@ const OrgDetail = ({ org, ...props }) => (
         <OrgContainer>
           <TextPBold>Get in touch</TextPBold>
           {org.website && <ContactContainer><Icon type='global' />&nbsp;&nbsp;{org.website}</ContactContainer>}
-          <ContactContainer><Icon type='mail' />&nbsp;&nbsp;{org.contactEmail}</ContactContainer>
+          {org.contactEmail && <ContactContainer><Icon type='mail' />&nbsp;&nbsp;{org.contactEmail}</ContactContainer>}
           {org.facebook && <ContactContainer><Icon type='facebook' />&nbsp;&nbsp;{org.facebook}</ContactContainer>}
           {org.twitter && <ContactContainer><Icon type='twitter' />&nbsp;{org.twitter}</ContactContainer>}
 
@@ -135,7 +135,7 @@ OrgDetail.propTypes = {
     ).isRequired,
     imgUrl: PropTypes.string,
     website: PropTypes.string,
-    contactEmail: PropTypes.string.isRequired,
+    contactEmail: PropTypes.string,
     facebook: PropTypes.string,
     twitter: PropTypes.string,
     _id: PropTypes.string.isRequired

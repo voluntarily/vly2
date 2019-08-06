@@ -18,7 +18,7 @@ const fixture = (t) => {
     .map((org, index) => {
       return ({
         _id: objectid().toString(),
-        person: me._id,
+        person: me,
         organisation: org,
         validation: `${index}: ${me.nickname} follows ${org.name}`,
         status: MemberStatus.FOLLOWER

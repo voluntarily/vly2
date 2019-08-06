@@ -139,7 +139,7 @@ function getOptions (member) {
   switch (member.status) {
     case MemberStatus.FOLLOWER:
       options.followButtonEnabled = true
-      options.followButtonText = <FormattedMessage id='member.unfollow.button' defaultMessage='Stop following' description='Button for volunteer to stop following an organisation' />
+      options.followButtonText = <FormattedMessage id='member.unfollow.button' defaultMessage='Unfollow' description='Button for volunteer to stop following an organisation' />
       break
     case MemberStatus.JOINER:
       options.showValidation = false
@@ -147,7 +147,7 @@ function getOptions (member) {
       break
     case MemberStatus.MEMBER:
       options.followButtonEnabled = false
-      options.joinButtonText = <FormattedMessage id='member.canceljoin.button' defaultMessage='Cancel Join' description='Button for volunteer to cancel join an organisation' />
+      options.joinButtonText = <FormattedMessage id='member.canceljoin.button' defaultMessage='Leave' description='Button for volunteer to cancel join an organisation' />
       break
   }
 

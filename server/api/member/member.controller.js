@@ -12,21 +12,21 @@ const Organisation = require('../organisation/organisation')
   api/members?me='personid' -> list all the orgs i'm membered in and populate the org out.
  */
 const listMembers = async (req, res) => {
-  let sort = 'dateAdded' // todo sort by date.
+  let sort = 'status'
   let got
   try {
-    if (req.query.org) {
+    if (req.query.orgid) {
       // an org is asking for a list of members/followers
-      const query = { organisation: req.query.org }
-      if (req.query.me) {
+      const query = { organisation: req.query.orgid }
+      if (req.query.meid) {
         // a person is asking for their relationship with an org
-        query.person = req.query.me
+        query.person = req.query.meid
       }
       // Return enough info for a personCard
       got = await Member.find(query).populate({ path: 'person', select: 'nickname name avatar' }).sort(sort).exec()
-    } else if (req.query.me) {
+    } else if (req.query.meid) {
       // a person is asking for the orgs they follow or are members of
-      const query = { person: req.query.me }
+      const query = { person: req.query.meid }
       // return info for an orgCard
       got = await Member.find(query).populate({ path: 'organisation', select: 'name imgURL' }).sort(sort).exec()
     } else {

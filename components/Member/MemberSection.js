@@ -26,7 +26,6 @@ class MemberSection extends Component {
 
   async handleMembershipChange (member, action) {
     switch (action) {
-      case 'invite':
       case 'add':
         member.status = MemberStatus.MEMBER
         break
@@ -41,12 +40,8 @@ class MemberSection extends Component {
   }
 
   render () {
-    if (!(this.props.members && this.props.members.data)) {
-      return (
-        <section>
-          <Loading />
-        </section>
-      )
+    if (this.props.members.loading) {
+      return (<Loading />)
     } else {
       return (
         <section>
