@@ -67,11 +67,11 @@ test.serial('Should give number of Members', async t => {
   t.deepEqual(4, res.body.length)
 })
 
-test.serial('Should give number of Members for an org', async t => {
+test.only('Should give number of Members for an org', async t => {
   const orgid = t.context.orgs[1]._id
 
   const res = await request(server)
-    .get(`/api/members?org=${orgid}`)
+    .get(`/api/members?orgid=${orgid}`)
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200)
@@ -83,7 +83,7 @@ test.serial('Should give a list of orgs for a person', async t => {
   const personid = t.context.people[1]._id
 
   const res = await request(server)
-    .get(`/api/members?me=${personid}`)
+    .get(`/api/members?meid=${personid}`)
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200)
@@ -99,7 +99,7 @@ test.serial('Should give a specific membership for a person in org', async t => 
   const orgid = t.context.orgs[1]._id
 
   const res = await request(server)
-    .get(`/api/members?me=${personid}&org=${orgid}`)
+    .get(`/api/members?meid=${personid}&orgid=${orgid}`)
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200)

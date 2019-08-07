@@ -97,12 +97,12 @@ MemberTable.propTypes = {
 const buttonStates = member => {
   return [
     {
-      buttonEnabled: (member.status === MemberStatus.FOLLOWER) || (member.status === MemberStatus.JOINER) || (member.status === MemberStatus.EXMEMBER),
+      buttonEnabled: [MemberStatus.FOLLOWER, MemberStatus.JOINER, MemberStatus.VALIDATOR, MemberStatus.EXMEMBER].includes(member.status),
       label: <FormattedMessage id='member.add' defaultMessage='Add' description='Button allowing orgAdmin to Add a new org member' />,
       action: 'add'
     },
     {
-      buttonEnabled: member.status === MemberStatus.JOINER,
+      buttonEnabled: [MemberStatus.JOINER, MemberStatus.VALIDATOR].includes(member.status),
       label: <FormattedMessage id='member.reject' defaultMessage='Reject' description='Button allowing orgAdmin to Reject a member application' />,
       action: 'reject'
     },

@@ -45,7 +45,7 @@ test.serial('followers can become members ', async t => {
   t.is(wrapper.find('tbody tr').length, 3)
   t.regex(wrapper.find('tbody tr td').at(1).text(), /avowkind/)
 
-  // test invite button
+  // test Add button
   t.is(wrapper.find('tbody tr td').at(3).text(), MemberStatus.FOLLOWER)
   myMock.restore()
   const member = orgMembers[0]
@@ -110,5 +110,3 @@ test.serial('joiners can become members ', async t => {
   t.is(wrapper.find('tbody tr').at(1).find('td').at(3).text(), MemberStatus.FOLLOWER)
   myMock.restore()
 })
-
-

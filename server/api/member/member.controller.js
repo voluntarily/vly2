@@ -41,11 +41,13 @@ const listMembers = async (req, res) => {
 
 const updateMember = async (req, res) => {
   try {
-    await Member.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
+    console.log('updateMember', req.body)
+    await Member.updateOne({ _id: req.body._id }, { $set: { status: req.body.status, validation: req.body.validation } }).exec()
     const { organisation } = req.body // person in here is the volunteer-- quite not good naming here
     Organisation.findById(organisation, (err, organisationFound) => {
       if (err) console.log(err, organisationFound)
       else {
+        // TODO: [VP-436] notify the person of their status change in the organisation
         // const { organisation, status, person } = req.body // person in here is the volunteer-- quite not good naming here
         // notify the person of their status change in the organisation
         // processStatusToSendEmail(status, organisationFound, person)
