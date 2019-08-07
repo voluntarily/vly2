@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Icon, Tabs } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import OrgCategory from './OrgCategory'
+import MemberSection from '../Member/MemberSection'
 import Head from 'next/head'
 import styled from 'styled-components'
 import {
@@ -94,7 +95,7 @@ const OrgDetail = ({ org, ...props }) => (
         <OrgContainer>
           <TextPBold>Get in touch</TextPBold>
           {org.website && <ContactContainer><Icon type='global' />&nbsp;&nbsp;{org.website}</ContactContainer>}
-          <ContactContainer><Icon type='mail' />&nbsp;&nbsp;{org.contactEmail}</ContactContainer>
+          {org.contactEmail && <ContactContainer><Icon type='mail' />&nbsp;&nbsp;{org.contactEmail}</ContactContainer>}
           {org.facebook && <ContactContainer><Icon type='facebook' />&nbsp;&nbsp;{org.facebook}</ContactContainer>}
           {org.twitter && <ContactContainer><Icon type='twitter' />&nbsp;{org.twitter}</ContactContainer>}
 
@@ -116,7 +117,7 @@ const OrgDetail = ({ org, ...props }) => (
             <p>aaaa</p>
           </TabPane>
           <TabPane tab={orgMemberTab} key='4'>
-            <p>aaaa</p>
+            <MemberSection orgid={org._id} />
           </TabPane>
 
         </Tabs>
@@ -134,7 +135,7 @@ OrgDetail.propTypes = {
     ).isRequired,
     imgUrl: PropTypes.string,
     website: PropTypes.string,
-    contactEmail: PropTypes.string.isRequired,
+    contactEmail: PropTypes.string,
     facebook: PropTypes.string,
     twitter: PropTypes.string,
     _id: PropTypes.string.isRequired

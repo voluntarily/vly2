@@ -34,7 +34,7 @@ test('OrgDetail renders properly', t => {
     wrapper
       .find('svg')
       .length,
-    10
+    9
   )
 })
 
@@ -49,6 +49,6 @@ test('OrgDetail renders properly 2', t => {
     wrapper
       .find('svg')
       .length,
-    9
+    8
   )
 })
