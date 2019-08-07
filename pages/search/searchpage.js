@@ -12,6 +12,8 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
 import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
 import styled from 'styled-components'
+import FilterContainer from '../../components/Search/FilterContainer'
+import LocationFilter from '../../components/Search/LocationFilter'
 
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
 const { Item } = Menu
@@ -26,6 +28,13 @@ const SearchPageContainer = styled.div`
     margin-top: 12rem;
   }
 `
+
+const LOCATION_FILTER_NAME = 'location'
+const DATE_FILTER_NAME = 'date'
+
+function filterVisibilityName (filterName) {
+  return `${filterName}FilterVisible`
+}
 
 export class SearchPage extends Component {
   state = {
@@ -56,7 +65,15 @@ export class SearchPage extends Component {
     }
   }
 
-  handleOpenDatePickperModal = () => {
+  openFilter = (filterName) => {
+    this.setState({ [filterVisibilityName(filterName)]: true })
+  }
+
+  closeFilter = (filterName) => {
+    this.setState({ [filterVisibilityName(filterName)]: false })
+  }
+
+  handleOpenDatePickerModal = () => {
     this.setState({ showDatePickerModal: !this.state.showDatePickerModal })
   }
 
@@ -130,9 +147,9 @@ export class SearchPage extends Component {
           search={search}
           onSearch={this.handleSearch}
           dateLabel={dateLabel}
-          onClickDateFilter={this.handleOpenDatePickperModal}
           locations={existingLocations}
-          onFilterChange={this.locFilterChanged}
+          onFilterOpened={this.openFilter}
+          filterNames={[DATE_FILTER_NAME, LOCATION_FILTER_NAME]}
         />
         <FullPage>
           <SearchPageContainer>
@@ -145,17 +162,28 @@ export class SearchPage extends Component {
                 />
               }
             />
+            <FilterContainer
+              onClose={this.closeFilter}
+              filterName={LOCATION_FILTER_NAME}
+              onFilterApplied={(a, b) => {
+                console.log(a)
+                console.log(b)
+              }}
+              onFilterRemoved={(a) => console.log(a)}
+              isShowing={this.state[filterVisibilityName(LOCATION_FILTER_NAME)]}>
+              <LocationFilter locations={existingLocations} />
+            </FilterContainer>
             <Modal
               title='Pick date'
-              visible={this.state.showDatePickerModal}
+              visible={this.state[filterVisibilityName(DATE_FILTER_NAME)]}
               onCancel={() =>
                 this.setState({
-                  showDatePickerModal: !this.state.showDatePickerModal
+                  [filterVisibilityName(DATE_FILTER_NAME)]: false
                 })
               }
               onOk={() =>
                 this.setState({
-                  showDatePickerModal: !this.state.showDatePickerModal
+                  [filterVisibilityName(DATE_FILTER_NAME)]: true
                 })
               }
             >
