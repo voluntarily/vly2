@@ -17,6 +17,7 @@ const blankPerson = {
   name: '',
   nickname: '',
   about: '',
+  location: '',
   email: '',
   phone: '',
   gender: '',
@@ -32,6 +33,7 @@ export class PersonDetailPage extends Component {
   static async getInitialProps ({ store, query, req }) {
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
+    await store.dispatch(reduxApi.actions.locations.get())
     if (isNew) {
       return {
         isNew: true,
@@ -81,7 +83,6 @@ export class PersonDetailPage extends Component {
     } else {
       res = await this.props.dispatch(reduxApi.actions.people.post({}, { body: JSON.stringify(person) }))
       person = res[0]
-      console.log(person)
       Router.replace(`/people/${person._id}`)
     }
     this.setState({ editing: false })
@@ -162,6 +163,7 @@ PersonDetailPage.propTypes = {
     name: PropTypes.string,
     nickname: PropTypes.string,
     about: PropTypes.string,
+    location: PropTypes.string,
     email: PropTypes.string,
     phone: PropTypes.string,
     gender: PropTypes.string,
