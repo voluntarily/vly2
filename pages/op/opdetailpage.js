@@ -45,7 +45,7 @@ export class OpDetailPage extends Component {
 
   static async getInitialProps ({ store, query }) {
     // Get one Org
-    const isNew = query && query.new && query.new === 'new'
+    const isNew = query && query.new == null && query.new === 'new'
     const opExists = !!(query && query.id) // !! converts to a boolean value
     // TODO: [VP-280] run get location and tag data requests in parallel
     await store.dispatch(reduxApi.actions.locations.get())
