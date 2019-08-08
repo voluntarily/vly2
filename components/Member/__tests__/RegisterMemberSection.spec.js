@@ -152,7 +152,6 @@ test.serial('RegisterMemberSection as a Member', async t => {
     </Provider>
   )
   // before api completes the loading spinner should show.
-  t.is(wrapper.find('.loader').first().text(), 'Loading...')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // we should see "Follow" button
