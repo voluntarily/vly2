@@ -1,7 +1,7 @@
 import React from 'react'
 import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
-import OpLocationSelector from '../OpLocationSelector'
+import LocationSelector from '../Input/LocationSelector'
 import sinon from 'sinon'
 const originalWarn = console.warn
 
@@ -21,7 +21,7 @@ test('render the location component, with pre-existing location', t => {
   const mockOnChange = sinon.spy()
 
   const wrapper = mountWithIntl(
-    <OpLocationSelector value={'Auckland'} onChange={mockOnChange} existingLocations={existingLocations} />
+    <LocationSelector value={'Auckland'} onChange={mockOnChange} existingLocations={existingLocations} />
   )
 
   t.true(wrapper.html().includes('Auckland'))
@@ -33,7 +33,7 @@ test('render the location component, with an example input search', t => {
   const mockOnChange = sinon.spy()
 
   const wrapper = mountWithIntl(
-    <OpLocationSelector value={'Auckland'} onChange={mockOnChange} existingLocations={existingLocations} />
+    <LocationSelector value={'Auckland'} onChange={mockOnChange} existingLocations={existingLocations} />
   )
 
   wrapper.find('input').simulate('change', { target: { value: inputSearch } })

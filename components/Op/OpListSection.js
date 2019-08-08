@@ -41,7 +41,7 @@ class OpListSection extends Component {
   applyDateFilter = (filter) => {
     if (filter.date.length === 0) return this.props.opportunities.data
     const momentLists = filter.date.map(element => moment(element))
-    if (!this.props.opportunities.isloading) {
+    if (!this.props.opportunities.loading) {
       const filteredData = this.props.opportunities.data.filter(element => this.isDateFilterBetween(momentLists, element.date))
       return filteredData
     }
