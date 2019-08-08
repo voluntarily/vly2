@@ -17,8 +17,7 @@ interface Rule {
 const ruleBuilder = session => {
   const anonAbilities = [{
     subject: SchemaName,
-    action: Action.READ,
-    conditions: { status: OpportunityStatus.ACTIVE }
+    action: Action.READ
   }, {
     subject: SchemaName,
     action: Action.LIST,
