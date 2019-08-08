@@ -13,7 +13,6 @@ import RegisterMemberItem from './RegisterMemberItem'
 import { message } from 'antd'
 
 import reduxApi, { withMembers } from '../../lib/redux/reduxApi'
-import Loading from '../Loading'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import styled from 'styled-components'
 
