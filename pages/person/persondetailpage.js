@@ -42,6 +42,7 @@ export class PersonDetailPage extends Component {
     } else if (query && query.id) {
       let cookies = req ? req.cookies : Cookie.get()
       const cookiesStr = JSON.stringify(cookies)
+      query.session = store.getState().session
       await store.dispatch(reduxApi.actions.people.get(query, {
         params: cookiesStr
       }))
