@@ -11,9 +11,11 @@ import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import reduxApi, {
   withInterests,
   withPeople,
+  withMembers,
   withOps,
   withArchivedOpportunities
 } from '../../lib/redux/reduxApi.js'
+import { MemberStatus } from '../../server/api/member/member.constants'
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
 
@@ -91,6 +93,7 @@ class PersonHomePage extends Component {
         store.dispatch(reduxApi.actions.opportunities.get(filters)),
         store.dispatch(reduxApi.actions.locations.get({ withRelationships: true })),
         store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
+        store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
         store.dispatch(
           reduxApi.actions.archivedOpportunities.get({ requestor: me._id })
         )
@@ -123,6 +126,10 @@ class PersonHomePage extends Component {
 
   render () {
     var shadowStyle = { overflow: 'visible' }
+    if (this.props.members.sync && this.props.members.data.length > 0) {
+      this.props.me.orgMembership = this.props.members.data.filter(m => m.status === MemberStatus.MEMBER)
+      this.props.me.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
+    }
     const ops = this.mergeOpsList()
     const opsTab = (
       <span>
@@ -276,7 +283,7 @@ class PersonHomePage extends Component {
     )
   }
 }
-export const PersonHomePageTest = withInterests(
-  withOps(withArchivedOpportunities(PersonHomePage))
+export const PersonHomePageTest = withMembers(withInterests(
+  withOps(withArchivedOpportunities(PersonHomePage)))
 ) // for test
 export default securePage(withPeople(PersonHomePageTest))
