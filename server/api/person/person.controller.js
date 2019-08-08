@@ -1,7 +1,6 @@
 const Person = require('./person')
 const sanitizeHtml = require('sanitize-html')
-const Role = require('../../services/authorize/role')
-
+const Action = require('../../services/abilities/ability.constants')
 /**
  * Get all orgs
  * @param req
@@ -9,8 +8,6 @@ const Role = require('../../services/authorize/role')
  * @returns void
  */
 function getPersonBy (req, res) {
-  console.log('FROM GET PERSON BY')
-  console.log(req.path)
   const query = { [req.params.by]: req.params.value }
   Person.findOne(query).exec((_err, got) => {
     if (!got) { // person does not exist
@@ -20,47 +17,17 @@ function getPersonBy (req, res) {
   })
 }
 
-async function updatePersonDetail (req, res) {
-  if (userAllowedToUpdate(req)) {
-    res.sendStatus(200)
-  } else {
-    res.sendStatus(403)
-  }
-}
-
-function userAllowedToUpdate (req) {
-  return userIsTheSamePerson(req) || userIsAdmin(req)
-}
-
-function userIsTheSamePerson (req) {
-  const userIDFromSession = req.session.me._id.toString()
-  const { _id: userIDToUpdate } = req.body
-  const idFromConditionRules = getIDConditionInRule(req.ability.rules)
-  // console.log(idFromConditionRules.toString())
-  return (userIDToUpdate === userIDFromSession) && (userIDFromSession === req.params._id) && (idFromConditionRules.toString() === userIDFromSession)
-}
-
-function getIDConditionInRule (rawRules) {
-  const ruleObjectKey = Object.keys(rawRules)
-
-  const conditionSet = new Set()
-
-  ruleObjectKey.forEach(rule => {
-    const individualRules = rawRules[rule]
-    const individualRulesKey = Object.keys(individualRules)
-    if (individualRulesKey.includes('conditions')) {
-      const condition = individualRules['conditions']
-      if (!conditionSet.has(condition)) conditionSet.add(condition)
+async function updatePersonDetail (req, res, next) {
+  console.log(req)
+    const { ability: userAbility } = req
+    const userID = req.body._id
+    const resultUpdate = await Person.accessibleBy(userAbility,Action.UPDATE).updateOne({ _id: userID }, req.body)
+    if( resultUpdate.n === 1){
+      req.crudify.result = req.body
+      next()
+    } else{
+      res.sendStatus(403)
     }
-  })
-
-  const conditionInvoleID = [...conditionSet].filter(element => element._id != null)
-  return conditionInvoleID[0]._id // There should not be duplicate condition with different ID
-}
-
-function userIsAdmin (req) {
-  const userRoles = req.session.me.role.toString()
-  return userRoles.includes(Role.ADMIN)
 }
 
 function ensureSanitized (req, res, next) {
