@@ -50,8 +50,6 @@ test.serial('RegisterMemberSection follow and unfollow', async t => {
       />
     </Provider>
   )
-  // before api completes the loading spinner should show.
-  t.is(wrapper.find('.loader').first().text(), 'Loading...')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // we should see "Follow" button
@@ -95,7 +93,6 @@ test.serial('RegisterMemberSection join and validate', async t => {
     </Provider>
   )
   // before api completes the loading spinner should show.
-  t.is(wrapper.find('.loader').first().text(), 'Loading...')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // we should see "Follow" button
