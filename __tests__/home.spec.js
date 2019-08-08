@@ -68,6 +68,13 @@ test.before('Setup fixtures', (t) => {
         data: interests,
         request: null
       },
+      members: {
+        sync: false,
+        syncing: false,
+        loading: false,
+        data: [],
+        request: null
+      },
       archivedOpportunities: {
         sync: false,
         syncing: false,
