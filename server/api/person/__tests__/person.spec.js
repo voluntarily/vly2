@@ -2,6 +2,7 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Person from '../person'
+
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../__tests__/person.fixture'
 
@@ -129,8 +130,8 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
   t.is(savedPerson.phone, '1234ABCD')
 })
 
-test.failing('Should load a person into the db and delete them via the api', async t => {
-  t.plan(2)
+test.serial('Should load a person into the db but block access and delete them via the api', async t => {
+  t.plan(4)
   const p = {
     name: 'Testy McTestFace',
     nickname: 'Testy',
@@ -143,24 +144,24 @@ test.failing('Should load a person into the db and delete them via the api', asy
   await person.save()
   const id = person._id
 
-  // check person is there.
   const res = await request(server)
     .get(`/api/people/${id}`)
     .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200)
+    .expect(403)
 
-  t.is(res.body.name, p.name)
+  t.is(res.body.name, undefined)
 
   // delete the record
   await request(server)
     .delete(`/api/people/${person._id}`)
     .set('Accept', 'application/json')
-    .expect(200)
+    .expect(403)
 
-  // check person is gone
+  // check person is still in the database
   const queriedPerson = await Person.findOne({ email: p.email }).exec()
-  t.is(queriedPerson, null)
+  t.is(queriedPerson.name, p.name)
+  t.is(queriedPerson.email, p.email)
+  t.is(queriedPerson.phone, p.phone)
 })
 
 test.serial('Should find a person by email', async t => {
@@ -213,7 +214,6 @@ test.serial('Should find no person', async t => {
     .get(`/api/person/by/email/not_a_real_email@voluntari.ly`)
     .set('Accept', 'application/json')
     .expect(404)
-  // console.log(res.body)
   t.is(res.body.error, 'person not found')
 })
 
