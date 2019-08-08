@@ -52,6 +52,7 @@ class RegisterMemberSection extends Component {
     /* NOTE: this dispatch does not use await,
       we can let the data update in the background and the table
       will fill in once the data is available
+      so display must check sync
     */
   }
 
@@ -93,13 +94,12 @@ class RegisterMemberSection extends Component {
   // Render the component depending on whether we've completed the initial api call, and what information is contained in the store.
   render () {
     // If we haven't finished making the API request to the server yet...
-    if (this.props.members.loading) {
-      return (<Loading />)
-    } else { // If we have access to the members section of the Redux store...
+    if (this.props.members.sync) {
+      // If we have access to the members section of the Redux store...
       // Get the member out of the store, if any.
       let member = null
 
-      if (this.props.members.sync && this.props.members.data.length > 0) {
+      if (this.props.members.data.length > 0) {
         const matches = this.props.members.data.filter(m => m.person._id === this.props.meid)
         member = matches.length && matches[0]
       }
@@ -115,6 +115,8 @@ class RegisterMemberSection extends Component {
           />
         </RegisterButtonBox>
       )
+    } else {
+      return (<br />)
     }
   }
 }
