@@ -18,7 +18,6 @@ function getPersonBy (req, res) {
 }
 
 async function updatePersonDetail (req, res, next) {
-  console.log(req)
     const { ability: userAbility } = req
     const userID = req.body._id
     const resultUpdate = await Person.accessibleBy(userAbility,Action.UPDATE).updateOne({ _id: userID }, req.body)
