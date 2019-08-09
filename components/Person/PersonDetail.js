@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import PersonRoles from './PersonRole'
+import { FormattedMessage } from 'react-intl'
+import MemberUl from '../Member/MemberUl'
 import {
   GridContainer,
   TextPBold,
@@ -72,6 +74,16 @@ const PersonDetail = ({ person }, ...props) => (
       <DetailItem>
         <Icon type='safety' /> School Safe
       </DetailItem>
+      { person.orgMembership &&
+        <DetailItem>
+          <h3><FormattedMessage id='person.memberof' defaultMessage='Member of' description='Header for list of orgs I belong to' /></h3>
+          <MemberUl members={person.orgMembership} />
+        </DetailItem>}
+      { person.orgFollowership &&
+        <DetailItem>
+          <h3><FormattedMessage id='person.following' defaultMessage='Following' description='Header for list of orgs I follow' /></h3>
+          <MemberUl members={person.orgFollowership} />
+        </DetailItem>}
     </GridContainer>
     <GridContainer>
       <ListItem>
