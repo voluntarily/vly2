@@ -39,7 +39,7 @@ const interests = people.map(person => ({
 const TestInterestPage = ({ ...props }) => (
   <FullPage>
     <Head>
-      <title>Voluntari.ly Test Interests</title>
+      <title>Voluntarily Test Interests</title>
     </Head>
 
     <h1>People Interested in a Specific Op </h1>
