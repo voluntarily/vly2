@@ -48,8 +48,7 @@ class HeaderSearch extends PureComponent {
       <SearchContainer>
         <SearchFilterText>Filter by:</SearchFilterText>
         {filterNames.map(filter => <FilterItem onClick={() => onFilterOpened(filter)}>
-          {/* TODO: capitalise first letter */}
-          {filter}
+          {`${filter.charAt(0).toUpperCase()}${filter.slice(1)}`}
         </FilterItem>)}
       </SearchContainer>
     )
