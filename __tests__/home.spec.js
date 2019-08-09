@@ -171,3 +171,29 @@ test('retrieve completed archived opportunities', async t => {
   t.is(res[0], archivedOpportunities[0])
   t.is(res[1], archivedOpportunities[1])
 })
+
+test('only recommend ops that werent requested by the current user', async t => {
+  const props = {
+    me: { ...t.context.me, _id: t.context.people[0]._id }
+  }
+
+  const mockOps = [ ...ops ]
+  mockOps.forEach(op => {
+    op.requestor = t.context.people[0]._id
+  })
+  mockOps[0].requestor = t.context.people[1]._id
+  mockOps[1].requestor = t.context.people[1]._id
+
+  const { fetchMock } = require('fetch-mock')
+  const myMock = fetchMock.sandbox()
+  myMock.get(API_URL + '/opportunities/', { body: { mockOps } })
+  reduxApi.use('fetch', adapterFetch(myMock))
+
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <PersonHomePageTest {...props} />
+    </Provider>)
+  const recommendedOps = await wrapper.find('OpRecommendations').first().instance().props.ops
+
+  t.is(recommendedOps.length, 2) // only locations not requested by me
+})

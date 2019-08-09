@@ -83,14 +83,8 @@ class PersonHomePage extends Component {
   static async getInitialProps ({ store }) {
     try {
       const me = store.getState().session.me
-      const requestor = { requestor: me._id }
-      const filters = {
-        q: JSON.stringify(requestor)
-        // s: date
-      }
-
       await Promise.all([
-        store.dispatch(reduxApi.actions.opportunities.get(filters)),
+        store.dispatch(reduxApi.actions.opportunities.get()),
         store.dispatch(reduxApi.actions.locations.get({ withRelationships: true })),
         store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
         store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
@@ -130,7 +124,10 @@ class PersonHomePage extends Component {
       this.props.me.orgMembership = this.props.members.data.filter(m => m.status === MemberStatus.MEMBER)
       this.props.me.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
     }
-    const ops = this.mergeOpsList()
+
+    const allOps = this.mergeOpsList()
+    const myOps = allOps.filter(op => op.requestor === this.props.me._id)
+
     const opsTab = (
       <span>
         <Icon type='inbox' />
@@ -193,9 +190,9 @@ class PersonHomePage extends Component {
                   />
                 </TextHeadingBlack>
               </SectionTitleWrapper>
-              {ops && (
+              {myOps && (
                 <OpList
-                  ops={ops.filter(op =>
+                  ops={myOps.filter(op =>
                     ['active', 'draft'].includes(op.status)
                   )}
                 />
@@ -230,7 +227,11 @@ class PersonHomePage extends Component {
                   </TextP>
                 </TextHeadingBlack>
               </SectionTitleWrapper>
-              <OpRecommendations me={this.props.me} ops={this.props.opportunities.data} locations={this.props.locations.data[0].regions} />
+              <OpRecommendations
+                me={this.props.me}
+                // don't recommend me ops I have requested
+                ops={this.props.opportunities.data.filter(op => op.requestor !== this.props.me._id)}
+                locations={this.props.locations.data[0].regions} />
             </SectionWrapper>
           </TabPane>
           <TabPane tab={searchTab} key='2'>
