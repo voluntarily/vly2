@@ -92,6 +92,8 @@ const OrgDetail = ({ org, ...props }) => (
           src={org.imgUrl}
           alt={org.name}
         />
+        <OrgCategory orgCategory={org.category} />
+
         <OrgContainer>
           <TextPBold>Get in touch</TextPBold>
           {org.website && <ContactContainer><Icon type='global' />&nbsp;&nbsp;{org.website}</ContactContainer>}
@@ -110,7 +112,6 @@ const OrgDetail = ({ org, ...props }) => (
           <TabPane tab={orgTab} key='1'>
             <SpacerSmall />
             <Markdown children={org.about || ''} />
-            <OrgCategory orgCategory={org.category} />
           </TabPane>
           <TabPane tab={orgResourcesTab} key='2' />
           <TabPane tab={orgInstructionTab} key='3'>

@@ -8,9 +8,10 @@ import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import { FullPage } from '../../hocs/publicPage'
 import securePage from '../../hocs/securePage'
-import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
+import reduxApi, { withPeople, withMembers } from '../../lib/redux/reduxApi.js'
 import Loading from '../../components/Loading'
 import Cookie from 'js-cookie'
+import { MemberStatus } from '../../server/api/member/member.constants'
 
 const blankPerson = {
   // for new people load the default template doc.
@@ -40,12 +41,15 @@ export class PersonDetailPage extends Component {
         personid: null
       }
     } else if (query && query.id) {
+      const meid = query.id
       let cookies = req ? req.cookies : Cookie.get()
       const cookiesStr = JSON.stringify(cookies)
       query.session = store.getState().session
       await store.dispatch(reduxApi.actions.people.get(query, {
         params: cookiesStr
       }))
+      await store.dispatch(reduxApi.actions.members.get({ meid }))
+
       return {
         isNew: false,
         personid: query.id
@@ -102,7 +106,7 @@ export class PersonDetailPage extends Component {
     let content = ''
     let person = null
     if (this.props.people.loading) {
-      content = <Loading><p>Loading details...</p></Loading>
+      content = <Loading />
     } else if (this.props.isNew) {
       person = blankPerson
     } else {
@@ -112,6 +116,9 @@ export class PersonDetailPage extends Component {
       }
     }
 
+    if (this.props.members.sync && this.props.members.data.length > 0) {
+      person.orgMembership = this.props.members.data.filter(m => m.status === MemberStatus.MEMBER)
+    }
     if (!person) {
       content = <div>
         <h2><FormattedMessage id='person.notavailable' defaultMessage='Sorry, this person is not available' description='message on person not found page' /></h2>
@@ -177,4 +184,4 @@ PersonDetailPage.propTypes = {
   })
 }
 
-export default securePage(withPeople(PersonDetailPage))
+export default securePage(withMembers(withPeople(PersonDetailPage)))
