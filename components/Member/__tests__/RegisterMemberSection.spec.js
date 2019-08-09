@@ -31,16 +31,17 @@ const initStore = t => {
 test.before('Setup fixtures', t => {
   fixture(t)
   t.context.realStore = makeStore(initStore(t))
-  t.context.myMock = fetchMock.sandbox()
-  t.context.myMock.config.overwriteRoutes = false
-  reduxApi.use('fetch', adapterFetch(t.context.myMock))
+  t.context.fetchMock = fetchMock.sandbox()
+  t.context.fetchMock.config.overwriteRoutes = false
+  reduxApi.use('fetch', adapterFetch(t.context.fetchMock))
 })
 
 test.serial('RegisterMemberSection follow and unfollow', async t => {
   const members = t.context.members
+  const followers = t.context.members.filter(m => m.status === MemberStatus.FOLLOWER)
   const orgid = t.context.orgs[1]._id
   const meid = t.context.me._id
-  t.context.myMock.getOnce(`${API_URL}/members/?orgid=${orgid}&meid=${meid}`, [])
+  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}&meid=${meid}`, [])
 
   const wrapper = await mountWithIntl(
     <Provider store={t.context.realStore}>
@@ -56,7 +57,12 @@ test.serial('RegisterMemberSection follow and unfollow', async t => {
   t.is(wrapper.find('button').first().text(), 'Follow')
 
   // setup response to click on follow
-  t.context.myMock.postOnce(`${API_URL}/members/`, members[0])
+  const newMember = {
+    person: meid,
+    organisation: orgid,
+    status: MemberStatus.FOLLOWER
+  }
+  t.context.fetchMock.postOnce(`${API_URL}/members/`, newMember)
   wrapper.find('button').first().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
@@ -67,22 +73,22 @@ test.serial('RegisterMemberSection follow and unfollow', async t => {
   // setup response to click on unfollow
   const response = members[0]
   response.status = MemberStatus.NONE
-  t.context.myMock.putOnce(`${API_URL}/members/${response._id}`, members[0])
+  t.context.fetchMock.putOnce(`${API_URL}/members/${response._id}`, members[0])
   wrapper.find('button').first().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
 
   // Status is now NONE, button should be follow.
   t.is(wrapper.find('button').first().text(), 'Follow')
-  t.truthy(t.context.myMock.done())
-  t.context.myMock.restore()
+  t.truthy(t.context.fetchMock.done())
+  t.context.fetchMock.restore()
 })
 
 test.serial('RegisterMemberSection join and validate', async t => {
   const members = t.context.members
   const orgid = t.context.orgs[1]._id
   const meid = t.context.me._id
-  t.context.myMock.getOnce(`${API_URL}/members/?orgid=${orgid}&meid=${meid}`, [])
+  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}&meid=${meid}`, [])
 
   const wrapper = await mountWithIntl(
     <Provider store={t.context.realStore}>
@@ -101,7 +107,7 @@ test.serial('RegisterMemberSection join and validate', async t => {
   // setup response to click on follow
   const response = members[0]
   response.status = MemberStatus.JOINER
-  t.context.myMock.postOnce(`${API_URL}/members/`, response)
+  t.context.fetchMock.postOnce(`${API_URL}/members/`, response)
   wrapper.find('button').last().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
@@ -113,7 +119,7 @@ test.serial('RegisterMemberSection join and validate', async t => {
   // Fill in validation code
   response.status = MemberStatus.VALIDATOR
   // myMock.restore()
-  t.context.myMock.putOnce(`${API_URL}/members/${response._id}`, response)
+  t.context.fetchMock.putOnce(`${API_URL}/members/${response._id}`, response)
   wrapper.find('input').first().simulate('change', { target: { value: 'My Validation' } })
   wrapper.find('button').first().simulate('click')
   await sleep(1) // allow asynch fetch to complete
@@ -123,22 +129,22 @@ test.serial('RegisterMemberSection join and validate', async t => {
 
   // Cancel Join - returns to follower
   response.status = MemberStatus.FOLLOWER
-  //  t.context.myMock.restore()
-  t.context.myMock.putOnce(`${API_URL}/members/${response._id}`, response)
+  //  t.context.fetchMock.restore()
+  t.context.fetchMock.putOnce(`${API_URL}/members/${response._id}`, response)
   wrapper.find('button').first().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // Status is now validator, button should be Join
   t.is(wrapper.find('button').last().text(), 'Join')
-  t.truthy(t.context.myMock.done())
-  t.context.myMock.restore()
+  t.truthy(t.context.fetchMock.done())
+  t.context.fetchMock.restore()
 })
 
 test.serial('RegisterMemberSection as a Member', async t => {
   const members = t.context.members
   const orgid = t.context.orgs[1]._id
   const meid = t.context.me._id
-  t.context.myMock.getOnce(`${API_URL}/members/?orgid=${orgid}&meid=${meid}`, [])
+  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}&meid=${meid}`, [])
 
   const wrapper = await mountWithIntl(
     <Provider store={t.context.realStore}>
@@ -157,7 +163,7 @@ test.serial('RegisterMemberSection as a Member', async t => {
   // setup response to click on follow
   const response = members[0]
   response.status = MemberStatus.MEMBER
-  t.context.myMock.postOnce(`${API_URL}/members/`, response)
+  t.context.fetchMock.postOnce(`${API_URL}/members/`, response)
   wrapper.find('button').last().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
@@ -166,12 +172,12 @@ test.serial('RegisterMemberSection as a Member', async t => {
   t.is(wrapper.find('button').first().text(), 'Leave Organisation')
   // setup response to click leave
   response.status = MemberStatus.NONE
-  t.context.myMock.putOnce(`${API_URL}/members/${response._id}`, response)
+  t.context.fetchMock.putOnce(`${API_URL}/members/${response._id}`, response)
   wrapper.find('button').first().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   t.is(wrapper.find('button').first().text(), 'Follow')
 
-  t.truthy(t.context.myMock.done())
-  t.context.myMock.restore()
+  t.truthy(t.context.fetchMock.done())
+  t.context.fetchMock.restore()
 })

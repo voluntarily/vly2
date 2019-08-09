@@ -127,7 +127,7 @@ class PersonHomePage extends Component {
   render () {
     var shadowStyle = { overflow: 'visible' }
     if (this.props.members.sync && this.props.members.data.length > 0) {
-      this.props.me.orgMembership = this.props.members.data.filter(m => m.status === MemberStatus.MEMBER)
+      this.props.me.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
       this.props.me.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
     }
     const ops = this.mergeOpsList()

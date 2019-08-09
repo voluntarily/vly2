@@ -23,7 +23,7 @@ const listMembers = async (req, res) => {
         query.person = req.query.meid
       }
       // Return enough info for a personCard
-      got = await Member.find(query).populate({ path: 'person', select: 'nickname name avatar' }).sort(sort).exec()
+      got = await Member.find(query).populate({ path: 'person', select: 'nickname name avatar email' }).sort(sort).exec()
     } else if (req.query.meid) {
       // a person is asking for the orgs they follow or are members of
       const query = { person: req.query.meid }
@@ -41,7 +41,6 @@ const listMembers = async (req, res) => {
 
 const updateMember = async (req, res) => {
   try {
-    console.log('updateMember', req.body)
     await Member.updateOne({ _id: req.body._id }, { $set: { status: req.body.status, validation: req.body.validation } }).exec()
     const { organisation } = req.body // person in here is the volunteer-- quite not good naming here
     Organisation.findById(organisation, (err, organisationFound) => {

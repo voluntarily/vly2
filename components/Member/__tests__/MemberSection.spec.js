@@ -11,102 +11,143 @@ import { MemberStatus } from '../../../server/api/member/member.constants'
 
 const { fetchMock } = require('fetch-mock')
 
-test.before('Setup fixtures', fixture)
-
-const initStore = {
-  members: {
-    loading: false,
-    data: [ ]
-  }
+const MTF = {
+  ID: 0,
+  NAME: 1,
+  STATUS: 2,
+  ACTION: 3
 }
+
+test.before('Setup fixtures', t => {
+  fixture(t)
+
+  const initStore = {
+    members: {
+      loading: false,
+      data: [ ]
+    },
+    session: {
+      me: t.context.people[0]
+    }
+  }
+  t.context.store = makeStore(initStore)
+  t.context.fetchMock = fetchMock.sandbox()
+  t.context.fetchMock.config.overwriteRoutes = false
+  reduxApi.use('fetch', adapterFetch(t.context.fetchMock))
+})
 
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-test.serial('followers can become members ', async t => {
+test.serial('followers can become members and then be removed', async t => {
   const members = t.context.members
-  const orgid = t.context.members[0].organisation._id
+  const orgid = t.context.orgs[4]._id
   const orgMembers = members.filter(member => member.organisation._id === orgid)
-  const realStore = makeStore(initStore)
-  const myMock = fetchMock.sandbox()
-  reduxApi.use('fetch', adapterFetch(myMock))
 
-  myMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, orgMembers)
+  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, orgMembers)
 
   const wrapper = await mountWithIntl(
-    <Provider store={realStore}>
+    <Provider store={t.context.store}>
       <MemberSection orgid={orgid} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('h2').text(), 'Organisation Members and Followers') // there are two cards on the screen
-  t.is(wrapper.find('tbody tr').length, 3)
-  t.regex(wrapper.find('tbody tr td').at(1).text(), /avowkind/)
+
+  let membersSection = wrapper.find('section').at(1)
+  t.regex(membersSection.find('h2').first().text(), /Members/)
+  // there should be one member initally
+  t.is(membersSection.find('tbody tr').length, 1)
+
+  let followersSection = wrapper.find('section').at(2)
+  t.regex(followersSection.find('h2').first().text(), /Followers/)
+  // there should be one row for each person in the fixture except for the admin
+  t.is(followersSection.find('tbody tr').length, t.context.people.length - 1)
+
+  let firstFollowerRow = followersSection.find('tbody tr').first()
+
+  const orgFollowers = orgMembers.filter(member => member.status === MemberStatus.FOLLOWER)
+  let firstFollower = orgFollowers[0]
+
+  t.is(firstFollowerRow.find('td').at(MTF.NAME).text(), firstFollower.person.nickname)
+  t.is(firstFollowerRow.find('td').at(MTF.STATUS).text(), MemberStatus.FOLLOWER)
 
   // test Add button
-  t.is(wrapper.find('tbody tr td').at(3).text(), MemberStatus.FOLLOWER)
-  myMock.restore()
-  const member = orgMembers[0]
-  member.status = MemberStatus.MEMBER
-  myMock.putOnce(`${API_URL}/members/${orgMembers[0]._id}`, members)
+  t.context.fetchMock.restore()
+  const newfirstFollower = Object.assign({}, firstFollower)
+  newfirstFollower.status = MemberStatus.MEMBER
+  t.context.fetchMock.putOnce(`${API_URL}/members/${firstFollower._id}`, newfirstFollower)
 
-  const addButton = wrapper.find('tbody tr').first().find('button').first()
+  const addButton = firstFollowerRow.find('button').first()
   t.is(addButton.text(), 'Add')
   addButton.simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('tbody tr td').at(3).text(), MemberStatus.MEMBER)
 
-  // test Remove button
-  const removeButton = wrapper.find('tbody tr').first().find('button').first()
+  // first follower should no longer be in the table, moved to the Members table
+  followersSection = wrapper.find('section').at(2)
+  firstFollowerRow = followersSection.find('tbody tr').first()
+
+  t.is(firstFollowerRow.find('td').at(MTF.STATUS).text(), MemberStatus.FOLLOWER)
+  t.is(firstFollowerRow.find('td').at(MTF.NAME).text(), orgFollowers[1].person.nickname)
+
+  // there should now be 2 members and Dali should be the second one
+  membersSection = wrapper.find('section').at(1)
+  t.is(membersSection.find('tbody tr').length, 2)
+  const member2 = membersSection.find('tbody tr').at(1)
+  t.is(member2.find('td').at(MTF.NAME).text(), firstFollower.person.nickname)
+
+  // // test Remove button
+  const removeButton = member2.find('button').first()
   t.is(removeButton.text(), 'Remove')
-  member.status = MemberStatus.EXMEMBER
-  myMock.restore()
-  myMock.putOnce(`${API_URL}/members/${members[0]._id}`, member)
+  const newMember2 = Object.assign({}, firstFollower)
+  newMember2.status = MemberStatus.EXMEMBER
+  t.context.fetchMock.restore()
+  t.context.fetchMock.putOnce(`${API_URL}/members/${firstFollower._id}`, newMember2)
   removeButton.simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('tbody tr td').at(3).text(), MemberStatus.EXMEMBER)
 
-  myMock.restore()
+  // person has gone from both members and followers section.
+  // As an EXMEMBER is not a FOLLOWER by default
+  membersSection = wrapper.find('section').at(1)
+  t.is(membersSection.find('tbody tr').length, 1)
+
+  followersSection = wrapper.find('section').at(2)
+  t.is(followersSection.find('tbody tr').length, t.context.people.length - 2)
+
+  t.truthy(t.context.fetchMock.done())
+  t.context.fetchMock.restore()
 })
 
-test.serial('joiners can become members ', async t => {
+test.only('joiners can become members ', async t => {
   const members = t.context.members
-  const orgid = t.context.members[0].organisation._id
+  const orgid = t.context.orgs[5]._id
   const orgMembers = members.filter(member => member.organisation._id === orgid)
-  const realStore = makeStore(initStore)
-  const myMock = fetchMock.sandbox()
-  reduxApi.use('fetch', adapterFetch(myMock))
-  orgMembers[1].status = MemberStatus.JOINER
-  myMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, orgMembers)
+
+  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, orgMembers)
 
   const wrapper = await mountWithIntl(
-    <Provider store={realStore}>
+    <Provider store={t.context.store}>
       <MemberSection orgid={orgid} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
+  let membersSection = wrapper.find('section').at(1)
+  t.regex(membersSection.find('h2').first().text(), /Members/)
+  // there should be 2 member initally
+  t.is(membersSection.find('tbody tr').length, 2)
 
-  // test Reject button
-  const joiner = wrapper.find('tbody tr').at(1)
+  let joinersSection = wrapper.find('section').at(0)
+  t.regex(joinersSection.find('h2').first().text(), /Joiners/)
+  // there should be one joiner and one validator
+  t.is(joinersSection.find('tbody tr').length, 2)
+  let firstJoinerRow = joinersSection.find('tbody tr').first()
+  const orgjoiners = orgMembers.filter(member => member.status === MemberStatus.JOINER)
+  let firstJoiner = orgjoiners[0]
 
-  t.regex(joiner.find('td').at(1).text(), /Dali/)
-  t.is(joiner.find('td').at(3).text(), MemberStatus.JOINER)
-
-  const rejectButton = wrapper.find('tbody tr').at(1).find('button').last()
-  t.is(rejectButton.text(), 'Reject')
-
-  const dali = orgMembers[1]
-  dali.status = MemberStatus.FOLLOWER
-  myMock.restore()
-  myMock.putOnce(`${API_URL}/members/${dali._id}`, dali)
-  rejectButton.simulate('click')
-  await sleep(1) // allow asynch fetch to complete
-  wrapper.update()
-  t.is(wrapper.find('tbody tr').at(1).find('td').at(3).text(), MemberStatus.FOLLOWER)
-  myMock.restore()
+  t.is(firstJoinerRow.find('td').at(MTF.NAME).text(), firstJoiner.person.nickname)
+  t.is(firstJoinerRow.find('td').at(MTF.STATUS).text(), MemberStatus.JOINER)
 })
