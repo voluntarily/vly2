@@ -8,7 +8,7 @@ import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { TextHeadingBold, TextP } from '../VTheme/VTheme'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import TagInput from '../Form/Input/TagInput'
-import OpLocationSelector from './OpLocationSelector'
+import LocationSelector from '../Form/Input/LocationSelector'
 import {
   DescriptionContainer,
   FormGrid,
@@ -413,7 +413,7 @@ class OpDetailForm extends Component {
                       }
                     ]
                   })(
-                    <OpLocationSelector
+                    <LocationSelector
                       existingLocations={this.props.existingLocations}
                     />
                   )}

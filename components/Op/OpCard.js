@@ -35,7 +35,7 @@ class OpCard extends Component {
   render () {
     return (
       <div>
-        <Link id='linkToOpportunity' href={this.getOpPageURL()}>
+        <Link href={this.getOpPageURL()}>
           <a>
             <div className={'requestContainer' + this.size}>
               <img className={'requestImg' + this.size} src={this.cardImage} />

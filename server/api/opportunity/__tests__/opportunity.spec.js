@@ -52,7 +52,7 @@ test.serial('verify fixture database has ops', async t => {
   t.is(q && q.duration, '2 hours')
 })
 
-test.serial('Should correctly give count of all Ops sorted by title', async t => {
+test.serial('Should correctly give count of all active Ops sorted by title', async t => {
   const res = await request(server)
     .get('/api/opportunities')
     .set('Accept', 'application/json')
@@ -61,7 +61,7 @@ test.serial('Should correctly give count of all Ops sorted by title', async t =>
     .expect('Content-Type', /json/)
   const got = res.body
   // console.log(got)
-  t.is(ops.length, got.length)
+  t.is(2, got.length)
 
   t.is(got[0].title, '1 Mentor a year 12 business Impact Project')
 })
@@ -87,7 +87,6 @@ test.serial('Should correctly select just the names and ids', async t => {
     .expect('Content-Type', /json/)
   const got = res.body
   // console.log('got', got)
-  t.is(got.length, ops.length)
   t.is(got[0].status, undefined)
   t.is(got[0].title, '1 Mentor a year 12 business Impact Project')
 })
@@ -182,7 +181,7 @@ test.serial('Should not add an opportunity with invalid tag ids', async t => {
       description: 'Project to build a simple rocket that will reach 400m',
       duration: '4 hours',
       location: 'Albany, Auckland',
-      status: 'draft',
+      status: OpportunityStatus.DRAFT,
       tags: [{ _id: '123456781234567812345678', tag: 'test' }],
       requestor: t.context.people[0]._id
 
@@ -215,7 +214,7 @@ test.serial('Should create tags that dont have the _id property', async t => {
       description: 'Project to build a simple rocket that will reach 400m',
       duration: '4 hours',
       location: 'Albany, Auckland',
-      status: 'draft',
+      status: OpportunityStatus.DRAFT,
       tags: tags,
       requestor: t.context.people[0]._id
 
@@ -306,13 +305,13 @@ test.serial('Should correctly give opportunity 2 when searching by "Algorithms"'
 
 test.serial('Should include description in search', async t => {
   const res = await request(server)
-    .get('/api/opportunities?search=ROCKEt')
+    .get('/api/opportunities?search=innovation')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(ops[3].description, got[0].description)
+  t.is(ops[1].description, got[0].description)
   t.is(1, got.length)
 })
 
@@ -352,7 +351,7 @@ test.serial('Should return any opportunities with matching tags or title/desc/su
   const got = res.body
 
   // should return the 3 with assigned tags, and the one with matching title
-  t.is(4, got.length)
+  t.is(2, got.length)
 })
 
 test.serial('Should update from draft to active', async t => {
@@ -475,7 +474,7 @@ test.serial('should return 400 for a bad request', async t => {
 
 test.serial('should return all matching opps within the specified region', async t => {
   const res = await request(server)
-    .get(`/api/opportunities?location=${regions[0].name}`)
+    .get(`/api/opportunities?q={}&location=${regions[0].name}`)
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
@@ -484,7 +483,7 @@ test.serial('should return all matching opps within the specified region', async
   const got = res.body
 
   // 1 match for the region, 2 for territories WITHIN the region
-  t.is(got.length, 3)
+  t.is(got.length, 4)
 
   const validLocs = [
     regions[0].name,
@@ -536,4 +535,108 @@ test.serial('should return opps within the specified region that also match the 
     got.find(
       op => op.title !== ops[0].title || !validLocs.includes(op.location)
     ))
+})
+
+test.serial('should permit titles with special characters', async t => {
+  const res = await request(server)
+    .post('/api/opportunities/')
+    .send({
+      // Testing some special chars. Stray < and > always get encoded to &lt; and &gt; by sanitizeHtml().
+      title: 'Lego Robots " / % ^ ( ) * @ #',
+      subtitle: 'Lego Mindstorms EV3',
+      description: 'Building with Lego Mindstorms EV3.',
+      location: 'Wellington City',
+      status: OpportunityStatus.ACTIVE,
+      requestor: t.context.people[0]._id
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const queriedOpp = await Opportunity.findOne({ subtitle: 'Lego Mindstorms EV3' }).exec()
+  //
+  t.is(queriedOpp.title, 'Lego Robots " / % ^ ( ) * @ #')
+})
+
+test.serial('should permit descriptions with special characters', async t => {
+  const res = await request(server)
+    .post('/api/opportunities/')
+    .send({
+      title: 'Lego Robots',
+      // Testing some special chars. Stray < and > always get encoded to &lt; and &gt; by sanitizeHtml().
+      description: 'Build and program Lego robots. " / % ^ ( ) * @ #',
+      location: 'Wellington City',
+      status: OpportunityStatus.ACTIVE,
+      requestor: t.context.people[0]._id
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const queriedOpp = await Opportunity.findOne({ title: 'Lego Robots' })
+  t.is(queriedOpp.description, 'Build and program Lego robots. " / % ^ ( ) * @ #')
+})
+
+test.serial('should strip script tags and contents from title', async t => {
+  const res = await request(server)
+    .post('/api/opportunities/')
+    .send({
+      title: 'Lego Robots<script>var xhr = new XMLHttpRequest();</script>',
+      subtitle: 'Build and program Lego robots with Mindstorms EV3.',
+      description: '-',
+      location: 'Wellington City',
+      status: OpportunityStatus.ACTIVE,
+      requestor: t.context.people[0]._id
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const queriedOpp = await Opportunity.findOne({ subtitle: 'Build and program Lego robots with Mindstorms EV3.' }).exec()
+  t.is(queriedOpp.title, 'Lego Robots')
+})
+
+test.serial('should strip "color:blue" and "font-size:2em" from style attribute', async t => {
+  const res = await request(server)
+    .post('/api/opportunities')
+    .send({
+      title: 'Lego Robots',
+      description: '<span style="color:blue; font-size:2em;">Build</span> and program <span style="color:rgb(250,0,0)">Lego</span> robots.',
+      location: 'Wellington City',
+      status: OpportunityStatus.ACTIVE,
+      requestor: t.context.people[0]._id
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const queriedOpp = await Opportunity.findOne({ title: 'Lego Robots' }).exec()
+  t.is(queriedOpp.description, '<span>Build</span> and program <span style="color:rgb(250,0,0)">Lego</span> robots.')
+})
+
+test.serial('should allow iframes from youtube only, and allow height, src and width attributes', async t => {
+  const res = await request(server)
+    .post('/api/opportunities')
+    .send({
+      title: 'Lego Robots',
+      description: '<p>Build and program Lego robots.</p>' +
+        '<p><iframe width="560" height="315" src="https://www.youtube.com/embed/wLupj65qJHg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>' +
+        '<p><iframe width="560" height="315" src="https://www.youtuberepeater.com/embed/wLupj65qJHg"></iframe></p>',
+      location: 'Wellington City',
+      status: OpportunityStatus.ACTIVE,
+      requestor: t.context.people[0]._id
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const queriedOpp = await Opportunity.findOne({ title: 'Lego Robots' }).exec()
+  t.is(queriedOpp.description, '<p>Build and program Lego robots.</p>' +
+    '<p><iframe width="560" height="315" src="https://www.youtube.com/embed/wLupj65qJHg"></iframe></p>' +
+    '<p><iframe width="560" height="315"></iframe></p>')
 })

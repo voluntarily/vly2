@@ -214,7 +214,7 @@ const ItemIcon = styled.img`
   margin-bottom: 0.5rem;
 ` // end itemIcon
 
-export class Educator extends Component {
+export class Teacher extends Component {
   render () {
     return (
       <div>
@@ -437,4 +437,4 @@ export class Educator extends Component {
   }
 }
 
-export default publicPage(Educator)
+export default publicPage(Teacher)

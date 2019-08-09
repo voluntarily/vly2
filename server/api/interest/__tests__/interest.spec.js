@@ -98,7 +98,7 @@ test.serial('Should return 404 code when queried non existing interest', async t
   t.is(res.status, expectedResponseStatus)
 })
 
-test.skip(
+test.serial(
   'Should not add an invalid interest where referenced person or opp is not in DB',
   async t => {
     const newInterest = new Interest({

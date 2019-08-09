@@ -1,4 +1,4 @@
-import { Button, Checkbox, Divider, Form, Input, Radio } from 'antd'
+import { Button, Checkbox, Divider, Form, Input, Radio, Icon, Tooltip } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -13,6 +13,7 @@ import {
   TitleContainer
 } from '../VTheme/FormStyles'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
+import LocationSelector from '../Form/Input/LocationSelector'
 
 const { TextArea } = Input
 
@@ -48,8 +49,9 @@ class PersonDetailForm extends Component {
         person.nickname = values.nickname
         person.email = values.email
         person.phone = values.phone
-        person.gender = values.gender
+        person.pronoun = values.pronoun
         person.about = values.about
+        person.location = values.location
         person.avatar = values.avatar
         person.role = values.role
         person.status = values.status
@@ -72,6 +74,14 @@ class PersonDetailForm extends Component {
         id='personnickname'
         defaultMessage='Nickname'
         description='person nickname label in personDetails Form'
+      />
+    )
+
+    const personPronoun = (
+      <FormattedMessage
+        id='personPronoun'
+        defaultMessage='Pronoun'
+        description='person pronoun label in personDetails Form'
       />
     )
     const personEmail = (
@@ -117,6 +127,21 @@ class PersonDetailForm extends Component {
         description='active or retired status'
       />
     )
+    const personLocation = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='personLocation'
+          defaultMessage='Where are you based'
+          description='Person Location label in PersonDetails Form'
+        />
+        &nbsp;
+        <Tooltip title='Set your location to help find local opportunities'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+
     const {
       getFieldDecorator,
       getFieldsError,
@@ -171,6 +196,13 @@ class PersonDetailForm extends Component {
                   })(<Input placeholder='e.g Dali' />)}
                 </Form.Item>
               </ShortInputContainer>
+              <ShortInputContainer>
+                <Form.Item label={personPronoun}>
+                  {getFieldDecorator('pronoun', {
+                    rules: []
+                  })(<Input placeholder='e.g. she/her, he/him, they/them' />)}
+                </Form.Item>
+              </ShortInputContainer>
               <Form.Item label={personAbout}>
                 {getFieldDecorator('about', {
                   rules: []
@@ -183,6 +215,15 @@ class PersonDetailForm extends Component {
                   ) : (
                     <RichTextEditor onChange={this.setAbout} />
                   )
+                )}
+              </Form.Item>
+              <Form.Item label={personLocation}>
+                {getFieldDecorator('location', {
+                  rules: []
+                })(
+                  <LocationSelector
+                    existingLocations={this.props.locations}
+                  />
                 )}
               </Form.Item>
             </InputContainer>
@@ -306,9 +347,10 @@ PersonDetailForm.propTypes = {
     name: PropTypes.string,
     nickname: PropTypes.string,
     about: PropTypes.string,
+    location: PropTypes.string,
     email: PropTypes.string,
     phone: PropTypes.string,
-    gender: PropTypes.string,
+    pronoun: PropTypes.string,
     avatar: PropTypes.any,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
@@ -326,7 +368,8 @@ PersonDetailForm.propTypes = {
     cuid: PropTypes.string.isRequired
   }),
   onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired
+  onCancel: PropTypes.func.isRequired,
+  locations: PropTypes.arrayOf(PropTypes.string)
   // dispatch: PropTypes.func.isRequired,
 }
 
@@ -350,6 +393,10 @@ export default Form.create({
         ...props.person.about,
         value: props.person.about
       }),
+      location: Form.createFormField({
+        ...props.person.location,
+        value: props.person.location
+      }),
       email: Form.createFormField({
         ...props.person.email,
         value: props.person.email
@@ -358,9 +405,9 @@ export default Form.create({
         ...props.person.phone,
         value: props.person.phone
       }),
-      gender: Form.createFormField({
-        ...props.person.gender,
-        value: props.person.gender
+      pronoun: Form.createFormField({
+        ...props.person.pronoun,
+        value: props.person.pronoun
       }),
       avatar: Form.createFormField({
         ...props.person.avatar,

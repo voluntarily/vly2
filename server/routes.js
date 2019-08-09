@@ -17,6 +17,8 @@ module.exports = routes()
   .add('op', '/ops/:id', 'op/opdetailpage')
   .add('opnew', '/op/:new', 'op/opdetailpage')
   .add('opsection', '/op/section', 'op/oplistsection')
+  // Archived Opportunities
+  .add('archivedops', '/archivedops/:id', 'archivedop/archivedopdetailpage')
   // People
   .add('people', '/people', 'person/personlistpage')
   .add('person', '/people/:id', 'person/persondetailpage')

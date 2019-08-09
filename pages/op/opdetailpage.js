@@ -10,9 +10,8 @@ import { OpportunityStatus } from '../../server/api/opportunity/opportunity.cons
 import OpOrganizerInfo from '../../components/Op/OpOrganizerInfo'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
-import InterestSection from '../../components/Interest/InterestSection'
 import OpLoadingPage from './oploadingpage'
-import OpUnavalablePage from './opunavailablepage'
+import OpUnavailablePage from './opunavailablepage'
 import OpEditPage from './opeditpage'
 
 const blankOp = {
@@ -57,6 +56,7 @@ export class OpDetailPage extends Component {
       }
     } else {
       if (opExists) {
+        query.session = store.getState().session //  Inject session with query that restricted api access
         await store.dispatch(reduxApi.actions.opportunities.get(query))
       }
       return {
@@ -112,7 +112,7 @@ export class OpDetailPage extends Component {
   }
 
   isOwner (op) {
-    return this.props.isNew || this.props.me._id === op.requestor
+    return this.props.isNew || this.props.me._id === op.requestor._id
   }
 
   canEdit (op) {
@@ -151,7 +151,7 @@ export class OpDetailPage extends Component {
         return (<OpLoadingPage />)
       }
       if (this.props.opportunities.data.length !== 1) {
-        return (<OpUnavalablePage />)
+        return (<OpUnavailablePage />)
       }
     }
 
@@ -182,12 +182,8 @@ export class OpDetailPage extends Component {
               <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
             </Button>
           }
-          <OpDetail
-            op={op}
-          />
-          <OpOrganizerInfo
-            organizer={op.requestor}
-          />
+          <OpDetail op={op} />
+          <OpOrganizerInfo organizer={op.requestor} />
           <Divider />
           <OpVolunteerInterestSection
             isAuthenticated={this.props.isAuthenticated}
@@ -201,8 +197,6 @@ export class OpDetailPage extends Component {
             confirmOpportunity={this.confirmOpportunity}
             cancelOpportunity={this.cancelOpportunity}
           />
-          <Divider />
-          <InterestSection opid={op._id} />
         </FullPage>
       )
     }

@@ -39,7 +39,7 @@ test.serial('filter is initially hidden and is shown when location clicked', t =
       onFilterChange={() => {}} />
   )
 
-  t.is(wrapper.find('OpLocationSelector').length, 0)
+  t.is(wrapper.find('LocationSelector').length, 0)
 
   const filterItems = wrapper.find('a')
   filterItems.forEach(w => {
@@ -48,7 +48,7 @@ test.serial('filter is initially hidden and is shown when location clicked', t =
     }
   })
 
-  t.is(wrapper.find('OpLocationSelector').length, 1)
+  t.is(wrapper.find('LocationSelector').length, 1)
 })
 
 test.serial('filter is hidden when cancel clicked', t => {
@@ -64,12 +64,12 @@ test.serial('filter is hidden when cancel clicked', t => {
   wrapper.instance().setState({ filterShowing: true })
   wrapper.update()
 
-  t.is(wrapper.find('OpLocationSelector').length, 1)
+  t.is(wrapper.find('LocationSelector').length, 1)
 
   // select cancel button
   wrapper.find('.filter-details-btn-container .ant-btn-secondary').simulate('click')
 
-  t.is(wrapper.find('OpLocationSelector').length, 0)
+  t.is(wrapper.find('LocationSelector').length, 0)
 })
 
 test.serial('on search callback called when search is confirmed', t => {
@@ -103,7 +103,7 @@ test.serial('filter callback called when filter is changed', async t => {
   wrapper.update()
 
   // select auckland
-  wrapper.find('OpLocationSelector').first().props().onChange('Auckland')
+  wrapper.find('LocationSelector').first().props().onChange('Auckland')
   wrapper.update()
 
   // select filter button
