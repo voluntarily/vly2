@@ -12,6 +12,7 @@ const memberSchema = new Schema({
     default: MemberStatus.FOLLOWER,
     required: true,
     enum: [
+      MemberStatus.NONE,
       MemberStatus.FOLLOWER,
       MemberStatus.JOINER,
       MemberStatus.MEMBER,
