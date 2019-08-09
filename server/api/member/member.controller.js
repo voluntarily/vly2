@@ -28,7 +28,7 @@ const listMembers = async (req, res) => {
       // a person is asking for the orgs they follow or are members of
       const query = { person: req.query.meid }
       // return info for an orgCard
-      got = await Member.find(query).populate({ path: 'organisation', select: 'name imgURL' }).sort(sort).exec()
+      got = await Member.find(query).populate({ path: 'organisation', select: 'name imgUrl' }).sort(sort).exec()
     } else {
       // list all relationships
       got = await Member.find().sort(sort).exec()
