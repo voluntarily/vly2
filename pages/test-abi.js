@@ -8,7 +8,7 @@ const org = {
   slug: 'hello-omgtech',
   imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbLLySM6USjl8xKaZJXdvTD08jW9jphCLSNXUW-kVDmPb7j8wC',
   about: 'OMGTech! develops & delivers engaging workshops for both teachers and students on digital technologies and how to explore and invent with them',
-  category: ['ap', 'vp']
+  category: ['ap', 'vp', 'admin']
 }
 
 const mycat = ['ap', 'vp', 'admin']

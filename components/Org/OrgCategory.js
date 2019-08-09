@@ -2,7 +2,6 @@ import { Icon } from 'antd'
 import styled from 'styled-components'
 
 const HorUl = styled.ul`
-  background-color: yellow;
   margin:0;
   padding:0;
 
