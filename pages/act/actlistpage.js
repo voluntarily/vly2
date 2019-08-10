@@ -18,6 +18,7 @@ import {
   TextHeadingBlack,
   RequestButtonContainer
 } from '../../components/VTheme/VTheme'
+import { Helmet } from 'react-helmet'
 
 // const { TabPane } = Tabs
 
@@ -85,6 +86,9 @@ class Acts extends Component {
     // var shadowStyle = { overflow: 'visible' }
     return (
       <FullPage>
+        <Helmet>
+          <title>Voluntarily - Activities</title>
+        </Helmet>
         <PageHeaderContainer>
           <TextHeadingBlack>
             <FormattedMessage

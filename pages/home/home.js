@@ -166,12 +166,12 @@ class PersonHomePage extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Voluntarily Dashboard</title>
+          <title>Voluntarily - Dashboard</title>
         </Helmet>
         <PageHeaderContainer>
           <TitleContainer>
             <TextHeadingBlack>
-              {this.props.me.nickname}'s Requestsx
+              {this.props.me.nickname}'s Requests
               {/* <FormattedMessage
             id='home.title'
             defaultMessage='My Stuff'
