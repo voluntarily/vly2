@@ -10,58 +10,89 @@ const fixture = (t) => {
   // setup list of organisations, I am owner for the first one
   orgs.map((org, index) => {
     org._id = objectid().toString()
-    org.orgAdmin = people[index]._id
   })
 
-  const members = orgs
-    .filter(org => org.orgAdmin !== me._id)
-    .map((org, index) => {
+  // Person 0 is OrgAdmin for every organisation
+  let members = orgs.map((org, index) => {
+    return ({
+      _id: objectid().toString(),
+      person: me,
+      organisation: org,
+      status: MemberStatus.ORGADMIN
+    })
+  })
+
+  // // Person 1 follows every organisation
+  // const follower = people[1]
+  // members = members.concat(orgs.map((org, index) => {
+  //   return ({
+  //     _id: objectid().toString(),
+  //     person: follower,
+  //     organisation: org,
+  //     status: MemberStatus.FOLLOWER
+  //   })
+  // }))
+
+  // everyone is a member of org 3
+  members = members.concat(people.map((person, index) => {
+    return ({
+      _id: objectid().toString(),
+      person: person,
+      organisation: orgs[3],
+      status: MemberStatus.MEMBER
+    })
+  }))
+
+  // everyone except me is a follower of org 4
+  members = members.concat(people
+    .filter(p => p._id !== me._id)
+    .map((person, index) => {
       return ({
         _id: objectid().toString(),
-        person: me,
-        organisation: org,
-        validation: `${index}: ${me.nickname} follows ${org.name}`,
+        person: person,
+        organisation: orgs[4],
         status: MemberStatus.FOLLOWER
       })
-    })
+    }))
 
-  const extraMembers = [
+  members = members.concat([
     {
       _id: objectid().toString(),
       person: people[0],
-      organisation: orgs[0],
-      validation: 'test follower',
-      status: MemberStatus.FOLLOWER
+      organisation: orgs[5],
+      validation: 'test joiner',
+      status: MemberStatus.JOINER
     },
     // person 1 is member of two orgs
     // org 1 has two members
     {
       _id: objectid().toString(),
       person: people[1],
-      organisation: orgs[0],
-      validation: 'test member 1',
-      status: MemberStatus.JOINER
+      organisation: orgs[5],
+      validation: 'test VALIDATOR',
+      status: MemberStatus.VALIDATOR
     },
     {
       _id: objectid().toString(),
-      person: people[1],
-      organisation: orgs[1],
-      validation: 'test member 1',
+      person: people[2],
+      organisation: orgs[5],
+      validation: 'test member',
       status: MemberStatus.MEMBER
     },
     {
       _id: objectid().toString(),
       person: people[3],
-      organisation: orgs[1],
-      validation: 'test member 3',
+      organisation: orgs[5],
+      validation: 'test EXMEMBER',
       status: MemberStatus.EXMEMBER
     }
-  ]
+  ])
+
   t.context = {
     me,
     people,
     orgs,
-    members: members.concat(extraMembers)
+    members
   }
 }
 
