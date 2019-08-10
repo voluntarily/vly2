@@ -130,7 +130,7 @@ const buttonStates = member => {
       action: 'makeadmin'
     },
     {
-      buttonEnabled: member.status === MemberStatus.ORGADMIN,
+      buttonEnabled: (member.status === MemberStatus.ORGADMIN) && !member.isMe,
       label: <FormattedMessage id='member.unadmin' defaultMessage='Cancel Admin' description='Button allowing orgAdmin to return an admin back to normal member' />,
       action: 'add'
     }

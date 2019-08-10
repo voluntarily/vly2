@@ -8,6 +8,7 @@ import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { API_URL } from '../../../lib/apiCaller'
 import fixture from './member.fixture.js'
 import { MemberStatus } from '../../../server/api/member/member.constants'
+import objectid from 'objectid'
 
 const { fetchMock } = require('fetch-mock')
 
@@ -18,10 +19,12 @@ function sleep (ms) {
 const initStore = t => {
   return ({
     organisations: {
+      sync: false,
       loading: false,
       data: t.context.orgs
     },
     members: {
+      sync: false,
       loading: false,
       data: []
     }
@@ -37,8 +40,6 @@ test.before('Setup fixtures', t => {
 })
 
 test.serial('RegisterMemberSection follow and unfollow', async t => {
-  const members = t.context.members
-  const followers = t.context.members.filter(m => m.status === MemberStatus.FOLLOWER)
   const orgid = t.context.orgs[1]._id
   const meid = t.context.me._id
   t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}&meid=${meid}`, [])
@@ -55,30 +56,35 @@ test.serial('RegisterMemberSection follow and unfollow', async t => {
   wrapper.update()
   // we should see "Follow" button
   t.is(wrapper.find('button').first().text(), 'Follow')
+  // console.log(t.context.realStore.getState().members.data)
 
   // setup response to click on follow
   const newMember = {
-    person: meid,
+    _id: objectid().toString(),
+    person: t.context.me,
     organisation: orgid,
     status: MemberStatus.FOLLOWER
   }
-  t.context.fetchMock.postOnce(`${API_URL}/members/`, newMember)
+  t.context.fetchMock.postOnce(`${API_URL}/members/`, [newMember])
   wrapper.find('button').first().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
+  const newMemberResult = t.context.realStore.getState().members.data[0]
+  t.deepEqual(newMember, newMemberResult)
+  // console.log(t.context.realStore.getState().members.data)
 
   // Status is now follower, button should be unfollow.
   t.is(wrapper.find('button').first().text(), 'Unfollow')
 
   // setup response to click on unfollow
-  const response = members[0]
-  response.status = MemberStatus.NONE
-  t.context.fetchMock.putOnce(`${API_URL}/members/${response._id}`, members[0])
+  newMember.status = MemberStatus.NONE
+  t.context.fetchMock.putOnce(`${API_URL}/members/${newMember._id}`, newMember)
   wrapper.find('button').first().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
 
   // Status is now NONE, button should be follow.
+  t.deepEqual(newMember, t.context.realStore.getState().members.data[0])
   t.is(wrapper.find('button').first().text(), 'Follow')
   t.truthy(t.context.fetchMock.done())
   t.context.fetchMock.restore()
@@ -101,7 +107,7 @@ test.serial('RegisterMemberSection join and validate', async t => {
   // before api completes the loading spinner should show.
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  // we should see "Follow" button
+  // we should see "Join" button
   t.is(wrapper.find('button').last().text(), 'Join')
 
   // setup response to click on follow

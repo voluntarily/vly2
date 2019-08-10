@@ -34,7 +34,7 @@ const UnbulletedUl = styled.ul`
 `
 const MemberUl = ({ members }) =>
   <UnbulletedUl>
-    {members.map((member,index) => <OrgLi key={index} org={member.organisation} status={member.status} />)}
+    {members.map((member, index) => <OrgLi key={index} org={member.organisation} status={member.status} />)}
   </UnbulletedUl>
 
 MemberUl.propTypes = {

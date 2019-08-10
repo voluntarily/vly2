@@ -74,7 +74,6 @@ test.serial('followers can become members and then be removed', async t => {
   t.is(firstFollowerRow.find('td').at(MTF.STATUS).text(), MemberStatus.FOLLOWER)
 
   // test Add button
-  t.context.fetchMock.restore()
   const newfirstFollower = Object.assign({}, firstFollower)
   newfirstFollower.status = MemberStatus.MEMBER
   t.context.fetchMock.putOnce(`${API_URL}/members/${firstFollower._id}`, newfirstFollower)
@@ -98,12 +97,11 @@ test.serial('followers can become members and then be removed', async t => {
   const member2 = membersSection.find('tbody tr').at(1)
   t.is(member2.find('td').at(MTF.NAME).text(), firstFollower.person.nickname)
 
-  // // test Remove button
+  // test Remove button
   const removeButton = member2.find('button').first()
   t.is(removeButton.text(), 'Remove')
   const newMember2 = Object.assign({}, firstFollower)
   newMember2.status = MemberStatus.EXMEMBER
-  t.context.fetchMock.restore()
   t.context.fetchMock.putOnce(`${API_URL}/members/${firstFollower._id}`, newMember2)
   removeButton.simulate('click')
   await sleep(1) // allow asynch fetch to complete
@@ -121,7 +119,7 @@ test.serial('followers can become members and then be removed', async t => {
   t.context.fetchMock.restore()
 })
 
-test.only('joiners can become members ', async t => {
+test.serial('joiners can become members ', async t => {
   const members = t.context.members
   const orgid = t.context.orgs[5]._id
   const orgMembers = members.filter(member => member.organisation._id === orgid)
@@ -135,14 +133,16 @@ test.only('joiners can become members ', async t => {
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
+
+  // there should be 2 member initally
   let membersSection = wrapper.find('section').at(1)
   t.regex(membersSection.find('h2').first().text(), /Members/)
-  // there should be 2 member initally
-  t.is(membersSection.find('tbody tr').length, 2)
+  const memberCount = membersSection.find('tbody tr').length
+  t.is(memberCount, 2)
 
+  // there should be one joiner and one validator
   let joinersSection = wrapper.find('section').at(0)
   t.regex(joinersSection.find('h2').first().text(), /Joiners/)
-  // there should be one joiner and one validator
   t.is(joinersSection.find('tbody tr').length, 2)
   let firstJoinerRow = joinersSection.find('tbody tr').first()
   const orgjoiners = orgMembers.filter(member => member.status === MemberStatus.JOINER)
@@ -150,4 +150,101 @@ test.only('joiners can become members ', async t => {
 
   t.is(firstJoinerRow.find('td').at(MTF.NAME).text(), firstJoiner.person.nickname)
   t.is(firstJoinerRow.find('td').at(MTF.STATUS).text(), MemberStatus.JOINER)
+
+  // test Add button
+  const newfirstJoiner = Object.assign({}, firstJoiner)
+  newfirstJoiner.status = MemberStatus.MEMBER
+  t.context.fetchMock.putOnce(`${API_URL}/members/${firstJoiner._id}`, newfirstJoiner)
+
+  const addButton = firstJoinerRow.find('button').first()
+  t.is(addButton.text(), 'Add')
+  addButton.simulate('click')
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
+
+  // there should now be 3 members
+  membersSection = wrapper.find('section').at(1)
+  t.is(membersSection.find('tbody tr').length, memberCount + 1)
+  const member2 = membersSection.find('tbody tr').at(1)
+  t.is(member2.find('td').at(MTF.NAME).text(), firstJoiner.person.nickname)
+
+  // one joiner left
+  joinersSection = wrapper.find('section').at(0)
+  t.is(joinersSection.find('tbody tr').length, 1)// check the remaining joiner
+  firstJoinerRow = joinersSection.find('tbody tr').first()
+  const orgValidators = orgMembers.filter(member => member.status === MemberStatus.VALIDATOR)
+  let firstValidator = orgValidators[0]
+
+  t.is(firstJoinerRow.find('td').at(MTF.NAME).text(), firstValidator.person.nickname)
+  t.is(firstJoinerRow.find('td').at(MTF.STATUS).text(), MemberStatus.VALIDATOR)
+
+  // test Reject button
+  const newfirstValidator = Object.assign({}, firstValidator)
+  newfirstValidator.status = MemberStatus.NONE
+  t.context.fetchMock.putOnce(`${API_URL}/members/${firstValidator._id}`, newfirstValidator)
+
+  const rejectButton = firstJoinerRow.find('button').last()
+  t.is(rejectButton.text(), 'Reject')
+  rejectButton.simulate('click')
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
+
+  // check length of joiners table now
+  joinersSection = wrapper.find('section').at(0)
+  t.is(joinersSection.find('tbody tr').length, 0)
+  // check members table unchanged
+  membersSection = wrapper.find('section').at(1)
+  t.is(membersSection.find('tbody tr').length, memberCount + 1)
+  t.truthy(t.context.fetchMock.done())
+  t.context.fetchMock.restore()
 })
+
+test.serial('members can become admins ', async t => {
+  const members = t.context.members
+  const orgid = t.context.orgs[5]._id
+  const orgMembers = members.filter(member => member.organisation._id === orgid)
+  let trueMembers = orgMembers.filter(member => [MemberStatus.MEMBER].includes(member.status))
+  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, orgMembers)
+
+  const wrapper = await mountWithIntl(
+    <Provider store={t.context.store}>
+      <MemberSection orgid={orgid} />
+    </Provider>
+  )
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
+
+  // there should be 2 members initally
+  let membersSection = wrapper.find('section').at(1)
+  t.regex(membersSection.find('h2').first().text(), /Members/)
+  t.is(membersSection.find('tbody tr').length, 2)
+
+  // check orgAdmin can't change own state
+  let memberRow1 = membersSection.find('tbody tr').at(0)
+  t.is(memberRow1.find('td').at(MTF.STATUS).text(), MemberStatus.ORGADMIN)
+  t.is(memberRow1.find('button').length, 0)
+
+  let memberRow2 = membersSection.find('tbody tr').at(1)
+  t.is(memberRow2.find('td').at(MTF.STATUS).text(), MemberStatus.MEMBER)
+
+  let firstMember = trueMembers[0]
+  t.is(memberRow2.find('td').at(MTF.NAME).text(), firstMember.person.nickname)
+
+  // test Make Admin button
+  const adminButton = memberRow2.find('button').last()
+  t.is(adminButton.text(), 'Make Admin')
+  const newOrgAdmin = Object.assign({}, firstMember)
+  newOrgAdmin.status = MemberStatus.ORGADMIN
+  t.context.fetchMock.putOnce(`${API_URL}/members/${firstMember._id}`, newOrgAdmin)
+  adminButton.simulate('click')
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
+  // console.log(t.context.store.getState().members.data)
+
+  // check status change
+  membersSection = wrapper.find('section').at(1)
+  memberRow2 = membersSection.find('tbody tr').at(1)
+  t.is(memberRow2.find('td').at(MTF.STATUS).text(), MemberStatus.ORGADMIN)
+})
+
+// TODO: [VP-448] Add Separate set of tests for when logged in user is a joiner, member, follower etc

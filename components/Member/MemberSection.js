@@ -53,6 +53,7 @@ class MemberSection extends Component {
     // check if I am in the members list
     // TODO: [VP-440] members ability I am orgadmin then I get all members list, else I get just my own membership status
     let myMembership = this.props.members.data.find(m => m.person._id === meid)
+    myMembership.isMe = true
 
     // group membership status
     const memberOrAdmin = m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)
@@ -63,10 +64,9 @@ class MemberSection extends Component {
     // OrgAdmins see Member Table
     let orgAdminSection = ''
     if (myMembership.status === MemberStatus.ORGADMIN) {
-      const membersExceptMe = this.props.members.data.filter(m => (m.person._id !== this.props.meid) && memberOrAdmin(m))
+      const members = this.props.members.data.filter(memberOrAdmin)
       const followers = this.props.members.data.filter(follower)
       const joiners = this.props.members.data.filter(joinerOrValidator)
-
       orgAdminSection =
         <div>
           <SubSection>
@@ -89,7 +89,7 @@ class MemberSection extends Component {
             /></h2>
 
             <MemberTable
-              members={membersExceptMe}
+              members={members}
               onMembershipChange={this.handleMembershipChange.bind(this)}
             />
           </SubSection>
