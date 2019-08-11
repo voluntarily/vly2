@@ -14,8 +14,8 @@ const HorUl = styled.ul`
 // TODO translate - could just translate message val.
 const OrgCategoryItem = ({ orgCategoryItem }) => {
   const categoryOptions = [
-    { label: <Icon type='read' />, value: 'vp' },
-    { label: <Icon type='book' />, value: 'op' },
+    { label: <Icon type='bank' />, value: 'vp' },
+    { label: <Icon type='read' />, value: 'op' },
     { label: <Icon type='thunderbolt' />, value: 'ap' },
     { label: <Icon type='team' />, value: 'admin' },
     { label: <Icon type='question-circle' />, value: 'other' }
