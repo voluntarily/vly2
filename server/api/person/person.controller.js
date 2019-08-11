@@ -18,15 +18,15 @@ function getPersonBy (req, res) {
 }
 
 async function updatePersonDetail (req, res, next) {
-    const { ability: userAbility } = req
-    const userID = req.body._id
-    const resultUpdate = await Person.accessibleBy(userAbility,Action.UPDATE).updateOne({ _id: userID }, req.body)
-    if( resultUpdate.n === 1){
-      req.crudify.result = req.body
-      next()
-    } else{
-      res.sendStatus(403)
-    }
+  const { ability: userAbility } = req
+  const userID = req.body._id
+  const resultUpdate = await Person.accessibleBy(userAbility, Action.UPDATE).updateOne({ _id: userID }, req.body)
+  if (resultUpdate.n === 1) {
+    req.crudify.result = req.body
+    next()
+  } else {
+    res.sendStatus(403)
+  }
 }
 
 function ensureSanitized (req, res, next) {

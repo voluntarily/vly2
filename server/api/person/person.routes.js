@@ -15,7 +15,7 @@ module.exports = function (server) {
       Model: Person,
       selectFields: '-__v', // Hide '__v' property
       endResponseInAction: false,
-      actions:{
+      actions: {
         update: updatePersonDetail
       },
       beforeActions: [{ middlewares: [ authorizeActions(SchemaName), ensureSanitized ] }],
