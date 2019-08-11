@@ -20,13 +20,18 @@ function getPersonBy (req, res) {
 async function updatePersonDetail (req, res, next) {
   const { ability: userAbility } = req
   const userID = req.body._id
-  const resultUpdate = await Person.accessibleBy(userAbility, Action.UPDATE).updateOne({ _id: userID }, req.body)
-  if (resultUpdate.n === 1) {
-    req.crudify.result = req.body
-    next()
-  } else {
-    res.sendStatus(403)
+  let resultUpdate
+  try {
+    resultUpdate = await Person.accessibleBy(userAbility, Action.UPDATE).updateOne({ _id: userID }, req.body)
+  } catch (e) {
+    return res.sendStatus(400) // 400 error for any bad request body. This also prevent error to propagate and crash server
   }
+
+  if (resultUpdate.n === 0) {
+    return res.sendStatus(404)
+  }
+  req.crudify.result = req.body
+  next()
 }
 
 function ensureSanitized (req, res, next) {
