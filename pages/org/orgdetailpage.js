@@ -1,4 +1,4 @@
-import { Button, message, Popconfirm } from 'antd'
+import { Button, Divider, message, Popconfirm } from 'antd'
 import Link from 'next/link'
 import Router from 'next/router'
 import { Component } from 'react'
@@ -127,9 +127,9 @@ class OrgDetailPage extends Component {
           <OrgDetailForm org={org} onSubmit={this.handleSubmit.bind(this, org)} onCancel={this.handleCancel.bind(this)} />
         </div>
         : <div>
-          <OrgDetail org={org} />
+          <OrgDetail org={org} meid={this.props.me._id} />
           <Spacer />
-
+          <Divider />
           <div style={{ float: 'right' }}>
             <Button shape='round'><Link href='/orgs'><a>
               <FormattedMessage id='showOrgs' defaultMessage='Show All' description='Button to show all organisations' />

@@ -47,7 +47,7 @@ function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-test.only('mount the list with acts', async t => {
+test('mount the list with acts', async t => {
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/activities/`

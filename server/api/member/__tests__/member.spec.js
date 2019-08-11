@@ -67,7 +67,7 @@ test.serial('Should give number of Members', async t => {
   t.deepEqual(4, res.body.length)
 })
 
-test.only('Should give number of Members for an org', async t => {
+test.serial('Should give number of Members for an org', async t => {
   const orgid = t.context.orgs[1]._id
 
   const res = await request(server)
