@@ -48,7 +48,7 @@ class OrgDetailForm extends Component {
         org.imgUrl = values.imgUrl
         org.website = values.website
         org.contactEmail = values.contactEmail
-        org.category = values.type
+        org.category = values.category
         this.props.onSubmit(this.props.org)
       }
     })
