@@ -1,6 +1,6 @@
 const Person = require('./person')
 const sanitizeHtml = require('sanitize-html')
-
+const Action = require('../../services/abilities/ability.constants')
 /**
  * Get all orgs
  * @param req
@@ -13,9 +13,25 @@ function getPersonBy (req, res) {
     if (!got) { // person does not exist
       return res.status(404).send({ error: 'person not found' })
     }
-    // console.log('getPersonBy ', got)
     res.json(got)
   })
+}
+
+async function updatePersonDetail (req, res, next) {
+  const { ability: userAbility } = req
+  const userID = req.body._id
+  let resultUpdate
+  try {
+    resultUpdate = await Person.accessibleBy(userAbility, Action.UPDATE).updateOne({ _id: userID }, req.body)
+  } catch (e) {
+    return res.sendStatus(400) // 400 error for any bad request body. This also prevent error to propagate and crash server
+  }
+
+  if (resultUpdate.n === 0) {
+    return res.sendStatus(404)
+  }
+  req.crudify.result = req.body
+  next()
 }
 
 function ensureSanitized (req, res, next) {
@@ -42,33 +58,8 @@ function ensureSanitized (req, res, next) {
   next()
 }
 
-// HOW TO EMAIL A PERSON
-// const { emailPerson } = require('./email/emailperson')
-// function verifyEmailPerson (req, res) {
-//   console.log('verifyEmailPerson', req.params)
-//   if (!req.params.id) {
-//     res.status(400).send() // bad request
-//   }
-//   Person.findOne({ _id: req.params.id }).exec((err, person) => {
-//     if (err) {
-//       res.status(500).send(err)
-//       return
-//     }
-//     if (!person) {
-//       // not found
-//       res.status(404).send()
-//       return
-//     }
-
-//     emailPerson(person, 'verify', { token: 'ABCDEF123456' }).then(
-//       () => {
-//         res.status(200).end()
-//       }
-//     )
-//   })
-// }
-
 module.exports = {
   ensureSanitized,
-  getPersonBy
+  getPersonBy,
+  updatePersonDetail
 }
