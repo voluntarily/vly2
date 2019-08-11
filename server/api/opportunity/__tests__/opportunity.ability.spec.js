@@ -37,7 +37,7 @@ test.serial('Anonymous users should receive 200 from GET by ID endpoint', async 
   t.is(200, res.status)
 })
 
-test.failing('Anonymous users should receive 404 from GET by ID endpoint if draft', async t => {
+test.serial('Anonymous users should receive 404 from GET by ID endpoint if draft', async t => {
   const res = await request(server)
     .get(`/api/opportunities/${t.context.opportunities.filter(op => op.status === OpportunityStatus.DRAFT)[0]._id}`)
     .set('Accept', 'application/json')

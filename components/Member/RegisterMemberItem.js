@@ -91,6 +91,9 @@ class RegisterMemberItem extends Component {
           action: 'leave'
         }]
         break
+      case MemberStatus.ORGADMIN:
+        options.btns = []
+        break
     }
 
     return options

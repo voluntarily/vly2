@@ -50,26 +50,26 @@ const orgTab = (
     />
   </span>
 )
-const orgResourcesTab = (
-  <span>
-    <Icon type='fire' />
-    <FormattedMessage
-      id='orgResources'
-      defaultMessage='Offers'
-      description='show opportunities list on volunteer home page'
-    />
-  </span>
-)
-const orgInstructionTab = (
-  <span>
-    <Icon type='usergroup-add' />
-    <FormattedMessage
-      id='orgInstruction'
-      defaultMessage='Getting Started'
-      description='show opportunities list on volunteer home page'
-    />
-  </span>
-)
+// const orgResourcesTab = (
+//   <span>
+//     <Icon type='fire' />
+//     <FormattedMessage
+//       id='orgResources'
+//       defaultMessage='Offers'
+//       description='show opportunities list on volunteer home page'
+//     />
+//   </span>
+// )
+// const orgInstructionTab = (
+//   <span>
+//     <Icon type='usergroup-add' />
+//     <FormattedMessage
+//       id='orgInstruction'
+//       defaultMessage='Getting Started'
+//       description='show opportunities list on volunteer home page'
+//     />
+//   </span>
+// )
 const orgMemberTab = (
   <span>
     <Icon type='team' />
@@ -83,7 +83,7 @@ const orgMemberTab = (
 
 const OrgDetail = ({ org, ...props }) => (
   <div>
-    <Head title={org.title} />
+    <Head><title>{org.name}</title></Head>
     <PageHeaderContainer />
     <OrgGrid>
       <GridContainer>
@@ -92,6 +92,8 @@ const OrgDetail = ({ org, ...props }) => (
           src={org.imgUrl}
           alt={org.name}
         />
+        <OrgCategory orgCategory={org.category} />
+
         <OrgContainer>
           <TextPBold>Get in touch</TextPBold>
           {org.website && <ContactContainer><Icon type='global' />&nbsp;&nbsp;{org.website}</ContactContainer>}
@@ -110,12 +112,9 @@ const OrgDetail = ({ org, ...props }) => (
           <TabPane tab={orgTab} key='1'>
             <SpacerSmall />
             <Markdown children={org.about || ''} />
-            <OrgCategory orgCategory={org.category} />
           </TabPane>
-          <TabPane tab={orgResourcesTab} key='2' />
-          <TabPane tab={orgInstructionTab} key='3'>
-            <p>aaaa</p>
-          </TabPane>
+          {/* <TabPane tab={orgResourcesTab} key='2' /> */}
+          {/* <TabPane tab={orgInstructionTab} key='3' /> */}
           <TabPane tab={orgMemberTab} key='4'>
             <MemberSection orgid={org._id} />
           </TabPane>
@@ -127,6 +126,7 @@ const OrgDetail = ({ org, ...props }) => (
 )
 
 OrgDetail.propTypes = {
+  meid: PropTypes.string.isRequired,
   org: PropTypes.shape({
     name: PropTypes.string.isRequired,
     about: PropTypes.string.isRequired,
