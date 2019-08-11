@@ -13,7 +13,8 @@ const MemberStatus = {
   JOINER: 'joiner', // person has requested to join the org
   VALIDATOR: 'validator', // person has submitted validation information
   MEMBER: 'member', // person is a member of the organisation
-  EXMEMBER: 'exmember' // person has left the organisation
+  EXMEMBER: 'exmember', // person has left the organisation
+  ORGADMIN: 'orgadmin' // person can manage other members
 }
 
 module.exports = {

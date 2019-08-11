@@ -7,7 +7,6 @@ const organisationSchema = new Schema({
   about: { type: 'String' },
   // TODO: [VP-146] make required and provide a default image in the static folder.
   imgUrl: String,
-  orgAdmin: { type: Schema.Types.ObjectId, ref: 'Person', required: false },
   contactEmail: String, //  TODO: replace with orgAdmin
   contactId: String,
   website: String,

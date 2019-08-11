@@ -5,6 +5,14 @@ const Organisation = require('../organisation/organisation')
 // const { emailPerson } = require('../person/email/emailperson')
 // const { MemberStatus } = require('./member.constants')
 
+/* get a single member record with org and person populated out */
+const getMemberbyId = id => {
+  return Member.findOne({ _id: id })
+    .populate({ path: 'person', select: 'nickname name avatar email' })
+    .populate({ path: 'organisation', select: 'name imgUrl' })
+    .exec()
+}
+
 /**
   api/members -> list all members
   api/members?org='orgid' -> lists all members associated with orgid.
@@ -23,7 +31,7 @@ const listMembers = async (req, res) => {
         query.person = req.query.meid
       }
       // Return enough info for a personCard
-      got = await Member.find(query).populate({ path: 'person', select: 'nickname name avatar' }).sort(sort).exec()
+      got = await Member.find(query).populate({ path: 'person', select: 'nickname name avatar email' }).sort(sort).exec()
     } else if (req.query.meid) {
       // a person is asking for the orgs they follow or are members of
       const query = { person: req.query.meid }
@@ -40,8 +48,8 @@ const listMembers = async (req, res) => {
 }
 
 const updateMember = async (req, res) => {
+  // console.log('updateMember', req.body)
   try {
-    console.log('updateMember', req.body)
     await Member.updateOne({ _id: req.body._id }, { $set: { status: req.body.status, validation: req.body.validation } }).exec()
     const { organisation } = req.body // person in here is the volunteer-- quite not good naming here
     Organisation.findById(organisation, (err, organisationFound) => {
@@ -53,13 +61,18 @@ const updateMember = async (req, res) => {
         // processStatusToSendEmail(status, organisationFound, person)
       }
     })
-    res.json(req.body)
+    const got = await getMemberbyId(req.body._id)
+    // console.log('updateMember', got)
+
+    res.json(got)
   } catch (err) {
     res.status(404).send(err)
   }
 }
 
 const createMember = async (req, res) => {
+  // console.log('createMember', req.body)
+
   const newMember = new Member(req.body)
   newMember.save(async (err, saved) => {
     if (err) {
@@ -78,7 +91,8 @@ const createMember = async (req, res) => {
     // // sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
 
     // return the member record with the org name filled in.
-    const got = await Member.findOne({ _id: saved._id }).populate({ path: 'organisation', select: 'name' }).exec()
+    const got = await getMemberbyId(newMember._id)
+    // console.log('createMember', got)
     res.json(got)
   })
 }

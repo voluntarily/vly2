@@ -1,6 +1,6 @@
 import test from 'ava'
 import OrgDetail from '../OrgDetail'
-import { mount } from 'enzyme'
+import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 
 const org = {
   _id: 'f34gb2bh24b24b2',
@@ -15,12 +15,14 @@ const org = {
   twitter: '@OMGTech'
 }
 
+const meid = '12345678'
 const props = {
-  org
+  org,
+  meid
 }
 
 test('OrgDetail renders properly', t => {
-  const wrapper = mount(<OrgDetail {...props} />)
+  const wrapper = mountWithIntl(<OrgDetail {...props} />)
 
   t.is(
     wrapper
@@ -34,21 +36,22 @@ test('OrgDetail renders properly', t => {
     wrapper
       .find('svg')
       .length,
-    9
+    7
   )
 })
 
 const props2 = {
-  org: { ...org, website: null }
+  org: { ...org, website: null },
+  meid
 }
 
 test('OrgDetail renders properly 2', t => {
-  const wrapper = mount(<OrgDetail {...props2} />)
+  const wrapper = mountWithIntl(<OrgDetail {...props2} />)
 
   t.is(
     wrapper
       .find('svg')
       .length,
-    8
+    6
   )
 })

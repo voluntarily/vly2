@@ -45,7 +45,7 @@ export function ActDetail ({ act }) {
   return (
     <FullPage>
       <Spacer />
-      <Head>title = {act.title}</Head>
+      <Head><title>{act.title}</title></Head>
       <HalfGrid>
         <Left>
           <TitleFont>{act.title}</TitleFont>
