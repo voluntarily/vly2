@@ -5,6 +5,14 @@ const Organisation = require('../organisation/organisation')
 // const { emailPerson } = require('../person/email/emailperson')
 // const { MemberStatus } = require('./member.constants')
 
+/* get a single member record with org and person populated out */
+const getMemberbyId = id => {
+  return Member.findOne({ _id: id })
+    .populate({ path: 'person', select: 'nickname name avatar email' })
+    .populate({ path: 'organisation', select: 'name imgUrl' })
+    .exec()
+}
+
 /**
   api/members -> list all members
   api/members?org='orgid' -> lists all members associated with orgid.
@@ -12,23 +20,23 @@ const Organisation = require('../organisation/organisation')
   api/members?me='personid' -> list all the orgs i'm membered in and populate the org out.
  */
 const listMembers = async (req, res) => {
-  let sort = 'dateAdded' // todo sort by date.
+  let sort = 'status'
   let got
   try {
-    if (req.query.org) {
+    if (req.query.orgid) {
       // an org is asking for a list of members/followers
-      const query = { organisation: req.query.org }
-      if (req.query.me) {
+      const query = { organisation: req.query.orgid }
+      if (req.query.meid) {
         // a person is asking for their relationship with an org
-        query.person = req.query.me
+        query.person = req.query.meid
       }
       // Return enough info for a personCard
-      got = await Member.find(query).populate({ path: 'person', select: 'nickname name avatar' }).sort(sort).exec()
-    } else if (req.query.me) {
+      got = await Member.find(query).populate({ path: 'person', select: 'nickname name avatar email' }).sort(sort).exec()
+    } else if (req.query.meid) {
       // a person is asking for the orgs they follow or are members of
-      const query = { person: req.query.me }
+      const query = { person: req.query.meid }
       // return info for an orgCard
-      got = await Member.find(query).populate({ path: 'organisation', select: 'name imgURL' }).sort(sort).exec()
+      got = await Member.find(query).populate({ path: 'organisation', select: 'name imgUrl' }).sort(sort).exec()
     } else {
       // list all relationships
       got = await Member.find().sort(sort).exec()
@@ -40,24 +48,31 @@ const listMembers = async (req, res) => {
 }
 
 const updateMember = async (req, res) => {
+  // console.log('updateMember', req.body)
   try {
-    await Member.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
+    await Member.updateOne({ _id: req.body._id }, { $set: { status: req.body.status, validation: req.body.validation } }).exec()
     const { organisation } = req.body // person in here is the volunteer-- quite not good naming here
     Organisation.findById(organisation, (err, organisationFound) => {
       if (err) console.log(err, organisationFound)
       else {
+        // TODO: [VP-436] notify the person of their status change in the organisation
         // const { organisation, status, person } = req.body // person in here is the volunteer-- quite not good naming here
         // notify the person of their status change in the organisation
         // processStatusToSendEmail(status, organisationFound, person)
       }
     })
-    res.json(req.body)
+    const got = await getMemberbyId(req.body._id)
+    // console.log('updateMember', got)
+
+    res.json(got)
   } catch (err) {
     res.status(404).send(err)
   }
 }
 
 const createMember = async (req, res) => {
+  // console.log('createMember', req.body)
+
   const newMember = new Member(req.body)
   newMember.save(async (err, saved) => {
     if (err) {
@@ -76,7 +91,8 @@ const createMember = async (req, res) => {
     // // sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
 
     // return the member record with the org name filled in.
-    const got = await Member.findOne({ _id: saved._id }).populate({ path: 'organisation', select: 'name' }).exec()
+    const got = await getMemberbyId(newMember._id)
+    // console.log('createMember', got)
     res.json(got)
   })
 }

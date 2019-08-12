@@ -113,7 +113,7 @@ export default Page =>
       return (
         <Layout>
           <Head>
-            <title>Voluntari.ly</title>
+            <title>Voluntarily</title>
             <link rel='shortcut icon' href='../static/img/icons/favicon.ico' />
             <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
             <meta charSet='utf-8' />

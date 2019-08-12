@@ -1,4 +1,4 @@
-import { Button, Checkbox, Divider, Form, Input, Radio } from 'antd'
+import { Button, Checkbox, Divider, Form, Input, Radio, Icon, Tooltip } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -13,6 +13,7 @@ import {
   TitleContainer
 } from '../VTheme/FormStyles'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
+import LocationSelector from '../Form/Input/LocationSelector'
 
 const { TextArea } = Input
 
@@ -50,6 +51,7 @@ class PersonDetailForm extends Component {
         person.phone = values.phone
         person.pronoun = values.pronoun
         person.about = values.about
+        person.location = values.location
         person.avatar = values.avatar
         person.role = values.role
         person.status = values.status
@@ -125,6 +127,21 @@ class PersonDetailForm extends Component {
         description='active or retired status'
       />
     )
+    const personLocation = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='personLocation'
+          defaultMessage='Where are you based'
+          description='Person Location label in PersonDetails Form'
+        />
+        &nbsp;
+        <Tooltip title='Set your location to help find local opportunities'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+
     const {
       getFieldDecorator,
       getFieldsError,
@@ -198,6 +215,15 @@ class PersonDetailForm extends Component {
                   ) : (
                     <RichTextEditor onChange={this.setAbout} />
                   )
+                )}
+              </Form.Item>
+              <Form.Item label={personLocation}>
+                {getFieldDecorator('location', {
+                  rules: []
+                })(
+                  <LocationSelector
+                    existingLocations={this.props.locations}
+                  />
                 )}
               </Form.Item>
             </InputContainer>
@@ -321,6 +347,7 @@ PersonDetailForm.propTypes = {
     name: PropTypes.string,
     nickname: PropTypes.string,
     about: PropTypes.string,
+    location: PropTypes.string,
     email: PropTypes.string,
     phone: PropTypes.string,
     pronoun: PropTypes.string,
@@ -341,7 +368,8 @@ PersonDetailForm.propTypes = {
     cuid: PropTypes.string.isRequired
   }),
   onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired
+  onCancel: PropTypes.func.isRequired,
+  locations: PropTypes.arrayOf(PropTypes.string)
   // dispatch: PropTypes.func.isRequired,
 }
 
@@ -364,6 +392,10 @@ export default Form.create({
       about: Form.createFormField({
         ...props.person.about,
         value: props.person.about
+      }),
+      location: Form.createFormField({
+        ...props.person.location,
+        value: props.person.location
       }),
       email: Form.createFormField({
         ...props.person.email,

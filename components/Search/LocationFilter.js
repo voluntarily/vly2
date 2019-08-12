@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import OpLocationSelector from '../Op/OpLocationSelector'
+import LocationSelector from '../Form/Input/LocationSelector'
 import { TextPBold } from '../VTheme/VTheme'
 import './locationFilterStyles.less'
 
 class LocationFilter extends React.Component {
   render () {
-    const { locations, onLocationSelected, selectedLocation } = this.props
+    const { locations, onChange, value } = this.props
     return (
       <div className='location-filter-container'>
         <TextPBold>
@@ -17,11 +17,11 @@ class LocationFilter extends React.Component {
             description='Text that describes what the location filter does'
           />
         </TextPBold>
-        <OpLocationSelector
+        <LocationSelector
           existingLocations={locations}
-          value={selectedLocation}
-          onChange={onLocationSelected}
-          width='33%'
+          value={value}
+          onChange={onChange}
+          width='100%'
         />
       </div>
     )
@@ -30,8 +30,8 @@ class LocationFilter extends React.Component {
 
 LocationFilter.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.string),
-  selectedLocation: PropTypes.string,
-  onLocationSelected: PropTypes.func.isRequired
+  value: PropTypes.string,
+  onChange: PropTypes.func
 }
 
 export default LocationFilter

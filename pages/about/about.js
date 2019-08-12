@@ -69,9 +69,7 @@ class About extends Component {
 
     return (
       <FullPage>
-        <Head>
-          <title>Voluntari.ly - About</title>
-        </Head>
+        <Head><title>Voluntarily - About</title></Head>
         <Spacer />
         <Spacer />
         <AboutSection>

@@ -152,17 +152,30 @@ const archiveInterests = async (opId) => {
 
 function ensureSanitized (req, res, next) {
   const descriptionOptions = {
-    allowedTags: [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
-      'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
-      'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe' ],
+    allowedTags: [ 'a', 'b', 'br', 'caption', 'code', 'div', 'blockquote', 'em',
+      'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'iframe', 'img', 'li', 'ol',
+      'p', 'pre', 's', 'span', 'strike', 'strong', 'table', 'tbody', 'td', 'th',
+      'thead', 'tr', 'u', 'ul' ],
     allowedAttributes: {
       a: [ 'href' ],
+      iframe: [ 'height', 'src', 'width' ],
       img: [ 'src' ],
-      iframe: [ 'width', 'height', 'src' ]
+      pre: [ 'spellcheck' ],
+      span: [ 'style' ]
     },
-    allowedIframeHostnames: ['www.youtube.com'],
+    allowedClasses: {
+      '*': [ 'ql-align-center', 'ql-align-right', 'ql-align-justify', 'ql-syntax' ]
+    },
+    allowedStyles: {
+      span: {
+        // permits values for color and background-color CSS properties that look like 'rgb(230,0,50)'
+        'color': [ /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/ ],
+        'background-color': [ /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/ ]
+      }
+    },
+    allowedIframeHostnames: [ 'www.youtube.com' ],
     // Should prevent any iframes using something other than https for their src.
-    allowedSchemesByTag: { iframe: ['https'] },
+    allowedSchemesByTag: { iframe: [ 'https' ] },
     allowProtocolRelative: false
   }
 

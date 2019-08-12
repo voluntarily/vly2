@@ -44,6 +44,7 @@ const TagContainer = styled.div`
 export function OpDetail ({ op }) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
+  // BUG: [VP-435] sanitize OpDetail description is filtering out the Rich Text.
   const description =
     op.description == null
       ? ''
@@ -60,7 +61,7 @@ export function OpDetail ({ op }) {
   return (
     <FullPage>
       <Spacer />
-      <Head>title = {op.title}</Head>
+      <Head><title>{op.title}</title></Head>
       <HalfGrid>
         <Left>
           <TitleFont>{op.title}</TitleFont>

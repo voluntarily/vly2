@@ -12,6 +12,8 @@ import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import thunk from 'redux-thunk'
 import { API_URL } from '../lib/apiCaller'
+const { sortedLocations, regions } = require('../server/api/location/locationData')
+
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
   people.map(p => { p._id = objectid().toString() })
@@ -66,12 +68,27 @@ test.before('Setup fixtures', (t) => {
         data: interests,
         request: null
       },
+      members: {
+        sync: false,
+        syncing: false,
+        loading: false,
+        data: [],
+        request: null
+      },
       archivedOpportunities: {
         sync: false,
         syncing: false,
         loading: false,
         data: archivedOpportunities,
         request: null
+      },
+      locations: {
+        data: [
+          {
+            regions: regions,
+            locations: sortedLocations
+          }
+        ]
       }
     }
   )

@@ -56,6 +56,7 @@ export class OpDetailPage extends Component {
       }
     } else {
       if (opExists) {
+        query.session = store.getState().session //  Inject session with query that restricted api access
         await store.dispatch(reduxApi.actions.opportunities.get(query))
       }
       return {

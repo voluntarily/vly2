@@ -5,14 +5,17 @@ import { FullPage } from '../../hocs/publicPage'
 import securePage from '../../hocs/securePage'
 import OpList from '../../components/Op/OpList'
 import OpAdd from '../../components/Op/OpAdd'
+import OpRecommendations from '../../components/Op/OpRecommendations'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import reduxApi, {
   withInterests,
   withPeople,
+  withMembers,
   withOps,
   withArchivedOpportunities
 } from '../../lib/redux/reduxApi.js'
+import { MemberStatus } from '../../server/api/member/member.constants'
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
 
@@ -88,7 +91,9 @@ class PersonHomePage extends Component {
 
       await Promise.all([
         store.dispatch(reduxApi.actions.opportunities.get(filters)),
+        store.dispatch(reduxApi.actions.locations.get({ withRelationships: true })),
         store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
+        store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
         store.dispatch(
           reduxApi.actions.archivedOpportunities.get({ requestor: me._id })
         )
@@ -121,6 +126,10 @@ class PersonHomePage extends Component {
 
   render () {
     var shadowStyle = { overflow: 'visible' }
+    if (this.props.members.sync && this.props.members.data.length > 0) {
+      this.props.me.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
+      this.props.me.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
+    }
     const ops = this.mergeOpsList()
     const opsTab = (
       <span>
@@ -204,6 +213,25 @@ class PersonHomePage extends Component {
               {/* // TODO: [VP-208] list of things volunteers can do on home page */}
               <NextActionBlock />
             </SectionWrapper>
+            <SectionWrapper>
+              <SectionTitleWrapper>
+                <TextHeadingBlack>
+                  <FormattedMessage
+                    id='home.recommendedOpportunities'
+                    defaultMessage='Recommended for you'
+                    decription='Title on volunteer home page for recommended opportunities'
+                  />
+                  <TextP>
+                    <FormattedMessage
+                      id='home.recommendedOpportunitiesP'
+                      defaultMessage='Here are some opportunities we think you might like'
+                      decription='Subtitle on volunteer home page for recommended opportunities'
+                    />
+                  </TextP>
+                </TextHeadingBlack>
+              </SectionTitleWrapper>
+              <OpRecommendations me={this.props.me} ops={this.props.opportunities.data} locations={this.props.locations.data[0].regions} />
+            </SectionWrapper>
           </TabPane>
           <TabPane tab={searchTab} key='2'>
             <SectionWrapper>
@@ -227,6 +255,7 @@ class PersonHomePage extends Component {
               {this.state.editProfile ? (
                 <PersonDetailForm
                   person={this.props.me}
+                  locations={this.props.locations.data[0].locations}
                   onSubmit={this.handleUpdate.bind(this, this.props.me)}
                   onCancel={this.handleCancel}
                 />
@@ -254,7 +283,7 @@ class PersonHomePage extends Component {
     )
   }
 }
-export const PersonHomePageTest = withInterests(
-  withOps(withArchivedOpportunities(PersonHomePage))
+export const PersonHomePageTest = withMembers(withInterests(
+  withOps(withArchivedOpportunities(PersonHomePage)))
 ) // for test
 export default securePage(withPeople(PersonHomePageTest))
