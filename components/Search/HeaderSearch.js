@@ -43,12 +43,13 @@ const FilterItem = styled.a`
 
 class HeaderSearch extends PureComponent {
   render () {
-    const { onClickDateFilter } = this.props
+    const { filterNames, onFilterOpened } = this.props
     return (
       <SearchContainer>
         <SearchFilterText>Filter by:</SearchFilterText>
-        <FilterItem onClick={e => onClickDateFilter()}>Date</FilterItem>
-        <FilterItem>Location</FilterItem>
+        {filterNames.map(filter => <FilterItem onClick={() => onFilterOpened(filter)}>
+          {`${filter.charAt(0).toUpperCase()}${filter.slice(1)}`}
+        </FilterItem>)}
       </SearchContainer>
     )
   }
@@ -61,7 +62,9 @@ HeaderSearch.propTypes = {
     PropTypes.shape({
       query: PropTypes.string
     })
-  )
+  ),
+  filterNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onFilterOpened: PropTypes.func.isRequired
   //  showAddOp: PropTypes.bool.isRequired,
   // dispatch: PropTypes.func.isRequired
 }
