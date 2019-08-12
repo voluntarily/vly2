@@ -18,6 +18,7 @@ import {
 } from '../../components/VTheme/VTheme'
 import { Button, Divider } from 'antd'
 import TitleSection from '../../components/LandingPageComponents/TitleSection'
+import { Helmet } from 'react-helmet'
 
 const GridContainer = styled.div`
   position: relative;
@@ -219,6 +220,9 @@ export class Business extends Component {
     return (
       <div>
         <FullPage>
+        <Helmet>
+          <title>Voluntarily - Business</title>
+        </Helmet>
           <HeroContainer>
             <HalfGrid>
               <GridContainer>

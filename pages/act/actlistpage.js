@@ -87,7 +87,7 @@ class Acts extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Voluntarily - Activities</title>
+          <title>Voluntarily - Activities List</title>
         </Helmet>
         <PageHeaderContainer>
           <TextHeadingBlack>

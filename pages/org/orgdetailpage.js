@@ -10,6 +10,7 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 import { Spacer } from '../../components/VTheme/VTheme'
 import RegisterMemberSection from '../../components/Member/RegisterMemberSection'
+import { Helmet } from 'react-helmet'
 
 const blankOrg = {
   name: '',
@@ -29,7 +30,7 @@ class OrgDetailPage extends Component {
     text: ''
   }
 
-  static async getInitialProps ({ store, query }) {
+  static async getInitialProps({ store, query }) {
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     if (isNew) {
@@ -48,7 +49,7 @@ class OrgDetailPage extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     if (this.props.isNew) {
       this.setState({ editing: true })
     }
@@ -61,7 +62,7 @@ class OrgDetailPage extends Component {
     }
   }
 
-  async handleDelete (org) {
+  async handleDelete(org) {
     if (!org) return
     // Actual data request
     await this.props.dispatch(reduxApi.actions.organisations.delete({ id: org._id }))
@@ -70,7 +71,7 @@ class OrgDetailPage extends Component {
     Router.replace(`/orgs`)
   }
 
-  async handleSubmit (org) {
+  async handleSubmit(org) {
     if (!org) return
     // Actual data request
     let res = {}
@@ -87,7 +88,7 @@ class OrgDetailPage extends Component {
 
   handleDeleteCancel = () => { message.error('Delete Cancelled') }
 
-  render () {
+  render() {
     // TODO: [VP-274] identify if current person is an org Admin for this organisation
     const isOrgAdmin = false
     const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
@@ -134,12 +135,12 @@ class OrgDetailPage extends Component {
             <Button shape='round'><Link href='/orgs'><a>
               <FormattedMessage id='showOrgs' defaultMessage='Show All' description='Button to show all organisations' />
             </a></Link></Button>
-            { canEdit && <Button type='primary' shape='round' onClick={() => this.setState({ editing: true })} >Edit</Button>}
-            { canRemove && <Popconfirm title='Confirm removal of this organisation.' onConfirm={this.handleDelete.bind(this, org)} onCancel={this.handleDeleteCancel.bind(this)} okText='Yes' cancelText='No'>
+            {canEdit && <Button type='primary' shape='round' onClick={() => this.setState({ editing: true })} >Edit</Button>}
+            {canRemove && <Popconfirm title='Confirm removal of this organisation.' onConfirm={this.handleDelete.bind(this, org)} onCancel={this.handleDeleteCancel.bind(this)} okText='Yes' cancelText='No'>
               <Button style={{ float: 'right' }} type='danger' shape='round' >
                 <FormattedMessage id='deleteOrg' defaultMessage='Remove Organisation' description='Button to remove an Organisatino on OrgDetails page' />
               </Button>
-            </Popconfirm> }
+            </Popconfirm>}
 
           </div>
           <RegisterMemberSection orgid={org._id} meid={this.props.me._id} />
@@ -147,6 +148,9 @@ class OrgDetailPage extends Component {
     }
     return (
       <FullPage>
+        <Helmet>
+          <title>Voluntarily - Organisation Details</title>
+        </Helmet>
         {content}
       </FullPage>
     )

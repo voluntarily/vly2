@@ -14,6 +14,7 @@ import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
 import styled from 'styled-components'
 import FilterContainer from '../../components/Search/FilterContainer'
 import LocationFilter from '../../components/Search/LocationFilter'
+import { Helmet } from 'react-helmet'
 
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
 const { Item } = Menu
@@ -32,11 +33,11 @@ const SearchPageContainer = styled.div`
 const LOCATION_FILTER_NAME = 'location'
 const DATE_FILTER_NAME = 'date'
 
-function filterVisibilityName (filterName) {
+function filterVisibilityName(filterName) {
   return `${filterName}FilterVisible`
 }
 
-function filterValueName (filterName) {
+function filterValueName(filterName) {
   return `${filterName}FilterValue`
 }
 
@@ -50,18 +51,18 @@ export class SearchPage extends Component {
     }
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state.search = props.search
   }
 
-  static getDerivedStateFromProps ({ search }) {
+  static getDerivedStateFromProps({ search }) {
     return {
       search
     }
   }
 
-  static async getInitialProps ({ store, query: { search } }) {
+  static async getInitialProps({ store, query: { search } }) {
     await store.dispatch(reduxApi.actions.locations.get())
     return {
       search
@@ -125,7 +126,7 @@ export class SearchPage extends Component {
     return formatDateBaseOn(this.state.datePickerType, this.state.filter.date)
   }
 
-  render () {
+  render() {
     const { search } = this.state
     const dateLabel = this.formateDateValue()
     const existingLocations = this.props.locations.data
@@ -160,6 +161,9 @@ export class SearchPage extends Component {
           filterNames={[DATE_FILTER_NAME, LOCATION_FILTER_NAME]}
         />
         <FullPage>
+          <Helmet>
+            <title>Voluntarily - Search Results</title>
+          </Helmet>
           <SearchPageContainer>
             <TitleSection
               title={

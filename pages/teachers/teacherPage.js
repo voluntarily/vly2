@@ -18,6 +18,7 @@ import {
 } from '../../components/VTheme/VTheme'
 import { Button, Divider } from 'antd'
 import TitleSection from '../../components/LandingPageComponents/TitleSection'
+import { Helmet } from 'react-helmet'
 
 const GridContainer = styled.div`
   position: relative;
@@ -215,10 +216,13 @@ const ItemIcon = styled.img`
 ` // end itemIcon
 
 export class Teacher extends Component {
-  render () {
+  render() {
     return (
       <div>
         <FullPage>
+          <Helmet>
+            <title>Voluntarily - for Teachers</title>
+          </Helmet>
           <HeroContainer>
             <HalfGrid>
               <GridContainer>
@@ -421,7 +425,7 @@ export class Teacher extends Component {
               <TextHeading>Contact us</TextHeading>
               <SpacerSmall />
               <TextP>
-              Want to get more involved in the project? Get in touch below.
+                Want to get more involved in the project? Get in touch below.
               </TextP>
               <br />
               <a>business@voluntari.ly</a>

@@ -12,6 +12,7 @@ import reduxApi, { withPeople, withMembers } from '../../lib/redux/reduxApi.js'
 import Loading from '../../components/Loading'
 import Cookie from 'js-cookie'
 import { MemberStatus } from '../../server/api/member/member.constants'
+import { Helmet } from 'react-helmet'
 
 const blankPerson = {
   // for new people load the default template doc.
@@ -31,7 +32,7 @@ export class PersonDetailPage extends Component {
   state = {
     editing: false
   }
-  static async getInitialProps ({ store, query, req }) {
+  static async getInitialProps({ store, query, req }) {
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     await store.dispatch(reduxApi.actions.locations.get())
@@ -57,7 +58,7 @@ export class PersonDetailPage extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     if (this.props.isNew) {
       this.setState({ editing: true })
     }
@@ -71,7 +72,7 @@ export class PersonDetailPage extends Component {
   }
 
   // TODO: [VP-209] only show person delete button for admins
-  async handleDelete (person) {
+  async handleDelete(person) {
     if (!person) return
     await this.props.dispatch(reduxApi.actions.people.delete({ id: person._id }))
     // TODO error handling - how can this fail?
@@ -79,7 +80,7 @@ export class PersonDetailPage extends Component {
     Router.replace(`/people`)
   }
 
-  async handleSubmit (person) {
+  async handleSubmit(person) {
     if (!person) return
     // Actual data request
     let res = {}
@@ -96,7 +97,7 @@ export class PersonDetailPage extends Component {
 
   handleDeleteCancel = () => { message.error('Delete Cancelled') }
 
-  render () {
+  render() {
     const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
     const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
     const canEdit = (isOrgAdmin || isAdmin)
@@ -141,14 +142,14 @@ export class PersonDetailPage extends Component {
           <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancel.bind(this)} />
         </div>
         : <div>
-          { canEdit && <Button style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
+          {canEdit && <Button style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
             <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
           </Button>}
 
           <PersonDetail person={person} />
 
           &nbsp;
-          { canRemove && <Popconfirm title='Confirm removal of this person.' onConfirm={this.handleDeletePerson} onCancel={this.cancel} okText='Yes' cancelText='No'>
+          {canRemove && <Popconfirm title='Confirm removal of this person.' onConfirm={this.handleDeletePerson} onCancel={this.cancel} okText='Yes' cancelText='No'>
             <Button type='danger' shape='round' >
               <FormattedMessage id='deletePerson' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
             </Button>
@@ -158,6 +159,9 @@ export class PersonDetailPage extends Component {
     }
     return (
       <FullPage>
+        <Helmet>
+          <title>Voluntarily - Person Details</title>
+        </Helmet>
         <h1><FormattedMessage defaultMessage='Person' id='person.detail.title' /></h1>
         {content}
       </FullPage>
