@@ -49,7 +49,7 @@ const UserProp = ({ loggedUser }) =>
 
 const TestPage = ({ ...props }) =>
   <A4>
-    <Head><title>Voluntari.ly Tests</title></Head>
+    <Head><title>Voluntarily Tests</title></Head>
     <h1>Tests</h1>
     <Greet />
     <Hello name='Andrew' surname='watkins' />

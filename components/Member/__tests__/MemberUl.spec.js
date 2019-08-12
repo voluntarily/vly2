@@ -14,14 +14,14 @@ test('show orgs for person 0', t => {
   const myid = t.context.people[0]._id
   const members = t.context.members.filter(m => m.person._id === myid)
   const wrapper = mountWithIntl(<MemberUl members={members} />)
-  t.is(wrapper.find('li').length, 6)
-  t.is(wrapper.find('li').first().text(), '  OMGTech')
+  t.is(wrapper.find('li').length, 8)
+  t.regex(wrapper.find('li').first().text(), /Administrators/)
 })
 
 test('show orgs for person 1', t => {
   const myid = t.context.people[1]._id
   const members = t.context.members.filter(m => m.person._id === myid)
   const wrapper = mountWithIntl(<MemberUl members={members} />)
-  t.is(wrapper.find('li').length, 2)
-  t.is(wrapper.find('li').first().text(), '  Voluntari.ly Administrators')
+  t.is(wrapper.find('li').length, 3)
+  t.regex(wrapper.find('li').first().text(), /Spark Ltd/)
 })
