@@ -1,0 +1,86 @@
+import test from 'ava'
+import request from 'supertest'
+import { server, appReady } from '../../../server'
+import Opportunity from '../opportunity'
+import Tag from '../../tag/tag'
+import Person from '../../person/person'
+import MemoryMongo from '../../../util/test-memory-mongo'
+import people from '../../person/__tests__/person.fixture'
+import ops from './opportunity.fixture.js'
+import tags from '../../tag/__tests__/tag.fixture'
+import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
+
+const { regions } = require('../../location/locationData')
+
+test.before('before connect to database', async (t) => {
+  await appReady
+  t.context.memMongo = new MemoryMongo()
+  await t.context.memMongo.start()
+})
+
+test.after.always(async (t) => {
+  await t.context.memMongo.stop()
+})
+
+test.beforeEach('connect and add two oppo entries', async (t) => {
+  // connect each oppo to a requestor.
+  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
+  ops.map((op, index) => { op.requestor = t.context.people[index]._id })
+  t.context.opportunities = await Opportunity.create(ops).catch((err) => console.log('Unable to create opportunities', err))
+})
+
+test.afterEach.always(async () => {
+  await Opportunity.deleteMany()
+  await Person.deleteMany()
+  await Tag.deleteMany()
+})
+
+test.serial('Should correctly give count of all active Ops sorted by title', async t => {
+  t.context.people[0].location = regions[0].containedTerritories[0]
+  await t.context.people[0].save()
+
+  t.context.opportunities.forEach((op, index) => {
+    op.location = regions[1].name // not my location
+    op.requestor = t.context.people[1]._id // not me
+  })
+
+  const me = t.context.people[0]._id
+  const numMatchingOps = 3
+
+  // matches location but was requested by me
+  t.context.opportunities[0].location = regions[0].name
+  t.context.opportunities[0].requestor = me
+
+  // matches location
+  t.context.opportunities[1].location = regions[0].containedTerritories[0]
+  t.context.opportunities[2].location = regions[0].containedTerritories[1]
+  t.context.opportunities[3].location = regions[0].name
+
+  t.context.opportunities.forEach(async op => {
+    await op.save()
+  })
+
+  const res = await request(server)
+    .get(`/api/opportunities/recommended?me=${me}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+
+  // ensure all matches returned
+  t.is(got.basedOnLocation.length, numMatchingOps)
+
+  // ensure matches are ranked (i.e. closest match first)
+  t.is(got.basedOnLocation[0].location, regions[0].containedTerritories[0])
+})
+
+test.serial('Should return bad request when specified person does not exist in db', async t => {
+  const res = await request(server)
+    .get(`/api/opportunities/recommended?me=999999999999999999999999`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
+  t.is(res.status, 400)
+})
