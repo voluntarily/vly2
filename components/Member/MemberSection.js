@@ -53,18 +53,25 @@ class MemberSection extends Component {
     // check if I am in the members list
     // TODO: [VP-440] members ability I am orgadmin then I get all members list, else I get just my own membership status
     let myMembership = this.props.members.data.find(m => m.person._id === meid)
-    myMembership.isMe = true
+    if (myMembership) {
+      myMembership.isMe = true
+    } else {
+      myMembership = {
+        isMe: false,
+        status: MemberStatus.NONE
+      }
+    }
 
     // group membership status
-    const memberOrAdmin = m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)
+    const memberOrOrgAdmin = m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)
     const joinerOrValidator = m => [MemberStatus.VALIDATOR, MemberStatus.JOINER].includes(m.status)
     const follower = m => [MemberStatus.FOLLOWER].includes(m.status)
-    const nonMember = m => !myMembership || [MemberStatus.NONE, MemberStatus.EXMEMBER].includes(m.status)
+    const nonMember = m => !myMembership.isMe || [MemberStatus.NONE, MemberStatus.EXMEMBER].includes(m.status)
 
     // OrgAdmins see Member Table
     let orgAdminSection = ''
-    if (myMembership.status === MemberStatus.ORGADMIN) {
-      const members = this.props.members.data.filter(memberOrAdmin)
+    if ((myMembership.status === MemberStatus.ORGADMIN) || this.props.isAdmin) {
+      const members = this.props.members.data.filter(memberOrOrgAdmin)
       const followers = this.props.members.data.filter(follower)
       const joiners = this.props.members.data.filter(joinerOrValidator)
       orgAdminSection =
@@ -128,7 +135,7 @@ class MemberSection extends Component {
 
     // full Members see instructions
     let memberInfoSection = ''
-    if (memberOrAdmin(myMembership)) {
+    if (memberOrOrgAdmin(myMembership)) {
       memberInfoSection =
         <section>
           <h2><FormattedMessage
@@ -198,7 +205,8 @@ MemberSection.propTypes = {
 
 // Warning me will be {} if not signed in and role will be undefined.
 const mapStateToProps = store => ({
-  me: store.session.me
+  me: store.session.me,
+  isAdmin: store.session.me.role && store.session.me.role.includes('admin')
 })
 
 const MemberSectionWithMe = connect(
