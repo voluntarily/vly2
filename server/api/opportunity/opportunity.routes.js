@@ -2,7 +2,13 @@ const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Opportunity = require('./opportunity')
 const { Action } = require('../../services/abilities/ability.constants')
-const { ensureSanitized, getOpportunities, getOpportunity, putOpportunity } = require('./opportunity.controller')
+const {
+  ensureSanitized,
+  getOpportunities,
+  getOpportunity,
+  putOpportunity,
+  getOpportunityRecommendations
+} = require('./opportunity.controller')
 const { SchemaName, OpportunityRoutes } = require('./opportunity.constants')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 const initializeTags = require('../../util/initTags')
@@ -24,6 +30,7 @@ const convertRequestToAction = (req) => {
 
 module.exports = (server) => {
   // Docs: https://github.com/ryo718/mongoose-crudify
+  server.get('/api/opportunities/recommended', getOpportunityRecommendations)
   server.use(
     '/api/opportunities',
     mongooseCrudify({
