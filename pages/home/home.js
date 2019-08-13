@@ -165,7 +165,6 @@ class PersonHomePage extends Component {
         />
       </span>
     )
-
     return (
       <FullPage>
         <PageHeaderContainer>

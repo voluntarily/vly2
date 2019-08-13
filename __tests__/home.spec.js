@@ -39,12 +39,18 @@ test.before('Setup fixtures', (t) => {
     })
   })
 
+  const recommendedOps = {
+    basedOnLocation: ops,
+    basedOnSkills: []
+  }
+
   t.context = {
     me,
     people,
     ops,
     archivedOpportunities,
-    interests
+    interests,
+    recommendedOps
   }
 
   t.context.mockStore = configureStore([thunk])(
@@ -82,6 +88,13 @@ test.before('Setup fixtures', (t) => {
         data: archivedOpportunities,
         request: null
       },
+      recommendedOps: {
+        sync: false,
+        syncing: false,
+        loading: false,
+        data: [recommendedOps],
+        request: null
+      },
       locations: {
         data: [
           {
@@ -98,7 +111,7 @@ test.after.always(() => {
 
 })
 
-test('render volunteer home page - Active tab', t => {
+test.serial('render volunteer home page - Active tab', t => {
   const props = {
     me: t.context.me
   }
@@ -113,7 +126,7 @@ test('render volunteer home page - Active tab', t => {
   t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 2)
 })
 
-test('render volunteer home page - History tab', t => {
+test.serial('render volunteer home page - History tab', t => {
   const props = {
     me: t.context.me
   }
@@ -128,7 +141,7 @@ test('render volunteer home page - History tab', t => {
   t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 2)
 })
 
-test('render volunteer home page - Profile tab', t => {
+test.serial('render volunteer home page - Profile tab', t => {
   const props = {
     me: t.context.me
   }
@@ -143,7 +156,7 @@ test('render volunteer home page - Profile tab', t => {
   t.is(tab3.find('h1').first().text(), t.context.me.name)
 })
 
-test('render Edit Profile ', t => {
+test.serial('render Edit Profile ', t => {
   const props = { me: t.context.me }
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
@@ -154,7 +167,7 @@ test('render Edit Profile ', t => {
   t.is(wrapper.find('Button').first().text(), 'Edit')
 })
 
-test('retrieve completed archived opportunities', async t => {
+test.serial('retrieve completed archived opportunities', async t => {
   const props = {
     me: t.context.me
   }
@@ -172,28 +185,16 @@ test('retrieve completed archived opportunities', async t => {
   t.is(res[1], archivedOpportunities[1])
 })
 
-test('only recommend ops that werent requested by the current user', async t => {
+test.only('ensure oprecommendations is passed recommended ops retrieved from server', async t => {
   const props = {
-    me: { ...t.context.me, _id: t.context.people[0]._id }
+    me: t.context.me
   }
-
-  const mockOps = [ ...ops ]
-  mockOps.forEach(op => {
-    op.requestor = t.context.people[0]._id
-  })
-  mockOps[0].requestor = t.context.people[1]._id
-  mockOps[1].requestor = t.context.people[1]._id
-
-  const { fetchMock } = require('fetch-mock')
-  const myMock = fetchMock.sandbox()
-  myMock.get(API_URL + '/opportunities/', { body: { mockOps } })
-  reduxApi.use('fetch', adapterFetch(myMock))
 
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
     </Provider>)
-  const recommendedOps = await wrapper.find('OpRecommendations').first().instance().props.ops
+  const recommendedOps = await wrapper.find('OpRecommendations').first().instance().props.recommendedOps
 
-  t.is(recommendedOps.length, 2) // only locations not requested by me
+  t.is(recommendedOps, t.context.recommendedOps)
 })
