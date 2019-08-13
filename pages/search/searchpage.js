@@ -12,6 +12,8 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
 import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
 import styled from 'styled-components'
+import FilterContainer from '../../components/Search/FilterContainer'
+import LocationFilter from '../../components/Search/LocationFilter'
 
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
 const { Item } = Menu
@@ -27,6 +29,17 @@ const SearchPageContainer = styled.div`
   }
 `
 
+const LOCATION_FILTER_NAME = 'location'
+const DATE_FILTER_NAME = 'date'
+
+function filterVisibilityName (filterName) {
+  return `${filterName}FilterVisible`
+}
+
+function filterValueName (filterName) {
+  return `${filterName}FilterValue`
+}
+
 export class SearchPage extends Component {
   state = {
     search: null,
@@ -34,8 +47,7 @@ export class SearchPage extends Component {
     showDatePickerModal: false,
     filter: {
       date: []
-    },
-    filterValue: null
+    }
   }
 
   constructor (props) {
@@ -56,7 +68,23 @@ export class SearchPage extends Component {
     }
   }
 
-  handleOpenDatePickperModal = () => {
+  openFilter = (filterName) => {
+    this.setState({ [filterVisibilityName(filterName)]: true })
+  }
+
+  closeFilter = (filterName) => {
+    this.setState({ [filterVisibilityName(filterName)]: false })
+  }
+
+  applyFilter = (filterName, value) => {
+    this.setState({ [filterValueName(filterName)]: value })
+  }
+
+  removeFilter = (filterName) => {
+    this.setState({ [filterValueName(filterName)]: null })
+  }
+
+  handleOpenDatePickerModal = () => {
     this.setState({ showDatePickerModal: !this.state.showDatePickerModal })
   }
 
@@ -91,9 +119,6 @@ export class SearchPage extends Component {
   changePickerType = type => {
     this.setState({ datePickerType: type })
   }
-  locFilterChanged = location => {
-    this.setState({ filterValue: location })
-  }
 
   formateDateValue = () => {
     if (this.state.filter.date.length === 0) return 'Date'
@@ -101,7 +126,7 @@ export class SearchPage extends Component {
   }
 
   render () {
-    const { search, filterValue } = this.state
+    const { search } = this.state
     const dateLabel = this.formateDateValue()
     const existingLocations = this.props.locations.data
 
@@ -130,9 +155,9 @@ export class SearchPage extends Component {
           search={search}
           onSearch={this.handleSearch}
           dateLabel={dateLabel}
-          onClickDateFilter={this.handleOpenDatePickperModal}
           locations={existingLocations}
-          onFilterChange={this.locFilterChanged}
+          onFilterOpened={this.openFilter}
+          filterNames={[DATE_FILTER_NAME, LOCATION_FILTER_NAME]}
         />
         <FullPage>
           <SearchPageContainer>
@@ -145,17 +170,27 @@ export class SearchPage extends Component {
                 />
               }
             />
+            <FilterContainer
+              onClose={this.closeFilter}
+              filterName={LOCATION_FILTER_NAME}
+              onFilterApplied={this.applyFilter}
+              onFilterRemoved={this.removeFilter}
+              isShowing={this.state[filterVisibilityName(LOCATION_FILTER_NAME)]}>
+              <LocationFilter locations={existingLocations} />
+            </FilterContainer>
+            {/* TODO: VP-445 modify date picker to use filter container (like with location). This will
+             help reduce the complexity of this page component */}
             <Modal
               title='Pick date'
-              visible={this.state.showDatePickerModal}
+              visible={this.state[filterVisibilityName(DATE_FILTER_NAME)]}
               onCancel={() =>
                 this.setState({
-                  showDatePickerModal: !this.state.showDatePickerModal
+                  [filterVisibilityName(DATE_FILTER_NAME)]: false
                 })
               }
               onOk={() =>
                 this.setState({
-                  showDatePickerModal: !this.state.showDatePickerModal
+                  [filterVisibilityName(DATE_FILTER_NAME)]: true
                 })
               }
             >
@@ -177,7 +212,7 @@ export class SearchPage extends Component {
               search={search}
               filter={this.state.filter}
               dateFilterType={this.state.datePickerType}
-              location={filterValue}
+              location={this.state[filterValueName(LOCATION_FILTER_NAME)]}
             />
           </SearchPageContainer>
         </FullPage>
