@@ -52,6 +52,7 @@ class MemberSection extends Component {
     }
     const org = this.props.org
     const meid = this.props.me._id
+    if (!org.info) { org.info = {} }
     // check if I am in the members list
     // TODO: [VP-440] members ability I am orgadmin then I get all members list, else I get just my own membership status
     let myMembership = this.props.members.data.find(m => m.person._id === meid)
@@ -127,7 +128,7 @@ class MemberSection extends Component {
             defaultMessage='Information for new members'
             description='label for follower table on org detail page'
           /></h2>
-          <Markdown children={(org.info && org.info.joiners) || ''} />
+          <Markdown children={org.info.joiners || ''} />
         </section>
     }
 
@@ -141,7 +142,7 @@ class MemberSection extends Component {
             defaultMessage='Information for members'
             description='label for org info for members detail page'
           /></h2>
-          <Markdown children={(org.info && org.info.members) || ''} />
+          <Markdown children={org.info.members || ''} />
         </section>
     }
 
@@ -155,7 +156,7 @@ class MemberSection extends Component {
             defaultMessage='Information for followers'
             description='label for org info for followers detail page'
           /></h2>
-          <Markdown children={(org.info && org.info.followers) || ''} />
+          <Markdown children={org.info.followers || ''} />
         </section>
     }
 
@@ -168,7 +169,7 @@ class MemberSection extends Component {
             defaultMessage='About Joining'
             description='message to non members on the org members tab'
           /></h2>
-          <Markdown children={(org.info && org.info.outsiders) || ''} />
+          <Markdown children={org.info.outsiders || ''} />
         </section>
     }
     return (
