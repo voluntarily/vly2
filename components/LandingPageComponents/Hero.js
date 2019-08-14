@@ -226,10 +226,6 @@ const SearchBox = styled.div`
 // end right hand copy and CTA side
 
 const handleSearch = search => {
-  console.log('The search value is ', search)
-  // if (!search) {
-  //   return false
-  // }
   Router.push({
     pathname: '/search',
     query: {
