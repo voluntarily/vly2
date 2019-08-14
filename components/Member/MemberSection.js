@@ -12,6 +12,7 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import Markdown from 'markdown-to-jsx'
 
 const SubSection = styled.section`
   margin-bottom: 2.0rem;
@@ -20,7 +21,7 @@ const SubSection = styled.section`
 class MemberSection extends Component {
   componentDidMount () {
     // Get all members and followers of the organisation
-    const orgid = this.props.orgid
+    const orgid = this.props.org._id
     this.props.dispatch(reduxApi.actions.members.get({ orgid: orgid }))
   }
 
@@ -49,7 +50,9 @@ class MemberSection extends Component {
     if (!this.props.members.sync) {
       return <Loading />
     }
+    const org = this.props.org
     const meid = this.props.me._id
+    if (!org.info) { org.info = {} }
     // check if I am in the members list
     // TODO: [VP-440] members ability I am orgadmin then I get all members list, else I get just my own membership status
     let myMembership = this.props.members.data.find(m => m.person._id === meid)
@@ -125,11 +128,7 @@ class MemberSection extends Component {
             defaultMessage='Information for new members'
             description='label for follower table on org detail page'
           /></h2>
-          <p>
-            {/* // TODO: [VP-442] org info for joiners in data record and in MemberSection */}
-            Placeholder - information for people joining this organisation.
-            should come from the organisation record.
-          </p>
+          <Markdown children={org.info.joiners || ''} />
         </section>
     }
 
@@ -143,11 +142,7 @@ class MemberSection extends Component {
             defaultMessage='Information for members'
             description='label for org info for members detail page'
           /></h2>
-          <p>
-            {/* // TODO: [VP-443] org info for members in data record and in MemberSection */}
-            Placeholder - information for people belonging to this organisation.
-            should come from the organisation record.
-          </p>
+          <Markdown children={org.info.members || ''} />
         </section>
     }
 
@@ -161,11 +156,7 @@ class MemberSection extends Component {
             defaultMessage='Information for followers'
             description='label for org info for followers detail page'
           /></h2>
-          <p>
-            {/* // TODO: [VP-443] org info for members in data record and in MemberSection */}
-            Placeholder - information for people belonging to this organisation.
-            should come from the organisation record.
-          </p>
+          <Markdown children={org.info.followers || ''} />
         </section>
     }
 
@@ -178,12 +169,7 @@ class MemberSection extends Component {
             defaultMessage='About Joining'
             description='message to non members on the org members tab'
           /></h2>
-
-          <p>
-            {/* // TODO: [VP-444] org info for non members in data record and in MemberSection */}
-            Placeholder - information for people not members of this organisation.
-            should come from the organisation record.
-          </p>
+          <Markdown children={org.info.outsiders || ''} />
         </section>
     }
     return (
