@@ -13,7 +13,8 @@ import reduxApi, {
   withPeople,
   withMembers,
   withOps,
-  withArchivedOpportunities
+  withArchivedOpportunities,
+  withRecommendedOps
 } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import NextActionBlock from '../../components/Action/NextActionBlock'
@@ -96,7 +97,8 @@ class PersonHomePage extends Component {
         store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
         store.dispatch(
           reduxApi.actions.archivedOpportunities.get({ requestor: me._id })
-        )
+        ),
+        store.dispatch(reduxApi.actions.recommendedOps.get({ me: me._id }))
       ])
     } catch (err) {
       console.log('error in getting ops', err)
@@ -130,7 +132,9 @@ class PersonHomePage extends Component {
       this.props.me.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
       this.props.me.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
     }
+
     const ops = this.mergeOpsList()
+
     const opsTab = (
       <span>
         <Icon type='inbox' />
@@ -161,7 +165,6 @@ class PersonHomePage extends Component {
         />
       </span>
     )
-
     return (
       <FullPage>
         <PageHeaderContainer>
@@ -230,7 +233,8 @@ class PersonHomePage extends Component {
                   </TextP>
                 </TextHeadingBlack>
               </SectionTitleWrapper>
-              <OpRecommendations me={this.props.me} ops={this.props.opportunities.data} locations={this.props.locations.data[0].regions} />
+              <OpRecommendations
+                recommendedOps={this.props.recommendedOps.data[0]} />
             </SectionWrapper>
           </TabPane>
           <TabPane tab={searchTab} key='2'>
@@ -283,7 +287,7 @@ class PersonHomePage extends Component {
     )
   }
 }
-export const PersonHomePageTest = withMembers(withInterests(
-  withOps(withArchivedOpportunities(PersonHomePage)))
+export const PersonHomePageTest = withRecommendedOps(withMembers(withInterests(
+  withOps(withArchivedOpportunities(PersonHomePage))))
 ) // for test
 export default securePage(withPeople(PersonHomePageTest))
