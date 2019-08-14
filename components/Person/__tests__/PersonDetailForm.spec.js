@@ -3,6 +3,7 @@ import test from 'ava'
 // import { JSDOM } from 'jsdom'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
 import objectid from 'objectid'
+import tagList from '../../../server/api/tag/__tests__/tag.fixture'
 
 import PersonDetailForm from '../PersonDetailForm'
 import sinon from 'sinon'
@@ -37,7 +38,7 @@ test.after.always(() => {
 
 test('shallow the detail with person', t => {
   const wrapper = shallowWithIntl(
-    <PersonDetailForm person={t.context.me} locations={sortedLocations} onSubmit={() => {}} onCancel={() => {}} />
+    <PersonDetailForm person={t.context.me} existingTags={tagList} locations={sortedLocations} onSubmit={() => {}} onCancel={() => {}} />
   )
   t.is(wrapper.find('PersonDetailForm').length, 1)
 })
@@ -47,7 +48,7 @@ test('render the detail with op', t => {
   const cancelOp = sinon.spy()
 
   const wrapper = mountWithIntl(
-    <PersonDetailForm person={t.context.me} locations={sortedLocations} onSubmit={submitOp} onCancel={cancelOp} />
+    <PersonDetailForm person={t.context.me} existingTags={tagList} locations={sortedLocations} onSubmit={submitOp} onCancel={cancelOp} />
   )
   t.log(wrapper)
   // console.log(wrapper.html())
@@ -55,6 +56,7 @@ test('render the detail with op', t => {
   locationInput.props().onChange('Auckland')
 
   t.is(wrapper.find('PersonDetailForm').length, 1)
+  t.is(wrapper.find('TagInput').length, 1)
   t.is(wrapper.find('button').length, 2)
   wrapper.find('button').first().simulate('click')
   t.truthy(cancelOp.calledOnce)

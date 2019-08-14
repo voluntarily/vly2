@@ -12,7 +12,8 @@ const people = [
     ],
     'status': 'active',
     'avatar': 'https://avatars2.githubusercontent.com/u/1596437?v=4',
-    'phone': '+64 027 7031007'
+    'phone': '+64 027 7031007',
+    'tags': []
   },
   {
     'nickname': 'Dali',
@@ -28,7 +29,8 @@ const people = [
     'name': 'Salvador Domingo Felipe Jacinto Dalí i Domènech, 1st Marquis of Dalí de Púbol ',
     'email': 'salvador@voluntari.ly',
     'phone': '000 000 0000',
-    'avatar': 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg'
+    'avatar': 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg',
+    'tags': []
   },
   {
     'name': 'Testy A McTestface',
@@ -40,7 +42,8 @@ const people = [
     'gender': 'male',
     'avatar': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     'role': ['tester', 'volunteer'],
-    'status': 'active'
+    'status': 'active',
+    'tags': []
   },
   {
     'name': 'Testy B McTestface',
@@ -52,7 +55,8 @@ const people = [
     'gender': 'female',
     'avatar': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     'role': ['tester', 'volunteer'],
-    'status': 'active'
+    'status': 'active',
+    'tags': []
   },
   {
     'name': 'Testy C McTestface',
@@ -64,7 +68,8 @@ const people = [
     'gender': 'non binary',
     'avatar': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     'role': ['tester', 'volunteer'],
-    'status': 'active'
+    'status': 'active',
+    'tags': []
   },
   {
     'name': 'Testy D McTestface',
@@ -76,7 +81,8 @@ const people = [
     'gender': 'robot',
     'avatar': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     'role': ['tester', 'volunteer'],
-    'status': 'active'
+    'status': 'active',
+    'tags': []
   },
   {
     'name': 'Testy E McTestface',
@@ -88,7 +94,8 @@ const people = [
     'gender': 'tester',
     'avatar': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     'role': ['tester', 'volunteer'],
-    'status': 'active'
+    'status': 'active',
+    'tags': []
   },
   {
     'name': 'Testy F McTestface',
@@ -100,7 +107,8 @@ const people = [
     'gender': 'Tane',
     'avatar': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     'role': ['tester', 'volunteer'],
-    'status': 'active'
+    'status': 'active',
+    'tags': []
   }
 ]
 
