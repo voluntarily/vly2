@@ -5,7 +5,9 @@ const getLocations = function (req, res) {
     const regionsAndLocations = { regions: regions, locations: sortedLocations }
     res.json(regionsAndLocations)
   } else {
-    res.json(sortedLocations)
+    let returnLocation = sortedLocations.filter(element => element !== 'Online')
+    returnLocation.unshift('Online')
+    res.json(returnLocation)
   }
 }
 
