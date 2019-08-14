@@ -111,12 +111,12 @@ const OrgDetail = ({ org, ...props }) => (
         <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={orgTab} key='1'>
             <SpacerSmall />
-            <Markdown children={org.about || ''} />
+            <Markdown children={(org.info && org.info.about) || ''} />
           </TabPane>
           {/* <TabPane tab={orgResourcesTab} key='2' /> */}
           {/* <TabPane tab={orgInstructionTab} key='3' /> */}
           <TabPane tab={orgMemberTab} key='4'>
-            <MemberSection orgid={org._id} />
+            <MemberSection org={org} />
           </TabPane>
 
         </Tabs>
@@ -129,7 +129,13 @@ OrgDetail.propTypes = {
   meid: PropTypes.string.isRequired,
   org: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    about: PropTypes.string.isRequired,
+    info: PropTypes.shape({
+      about: PropTypes.string.isRequired,
+      followers: PropTypes.string,
+      joiners: PropTypes.string,
+      members: PropTypes.string,
+      outsiders: PropTypes.string
+    }),
     category: PropTypes.arrayOf(
       PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
     ).isRequired,

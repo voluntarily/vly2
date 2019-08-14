@@ -25,12 +25,13 @@ class RichTextEditor extends React.Component {
       toolbar: toolbarOptions
     }
     const Quill = this.quill
+    // TODO: [VP-450] set initial height of the text edit box to be about 3 lines.
     if (Quill && !isTest) {
       return (
         <div>
           <Quill
             style={{ lineHeight: '21px' }}
-            placeholder='Communicate'
+            // placeholder='Communicate'
             modules={modules}
             defaultValue={this.props.value} onChange={this.props.onChange}
           />
