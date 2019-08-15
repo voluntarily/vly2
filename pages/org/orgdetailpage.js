@@ -134,12 +134,12 @@ class OrgDetailPage extends Component {
             <Button shape='round'><Link href='/orgs'><a>
               <FormattedMessage id='showOrgs' defaultMessage='Show All' description='Button to show all organisations' />
             </a></Link></Button>
-            { canEdit && <Button type='primary' shape='round' onClick={() => this.setState({ editing: true })} >Edit</Button>}
-            { canRemove && <Popconfirm title='Confirm removal of this organisation.' onConfirm={this.handleDelete.bind(this, org)} onCancel={this.handleDeleteCancel.bind(this)} okText='Yes' cancelText='No'>
+            {canEdit && <Button type='primary' shape='round' onClick={() => this.setState({ editing: true })} >Edit</Button>}
+            {canRemove && <Popconfirm title='Confirm removal of this organisation.' onConfirm={this.handleDelete.bind(this, org)} onCancel={this.handleDeleteCancel.bind(this)} okText='Yes' cancelText='No'>
               <Button style={{ float: 'right' }} type='danger' shape='round' >
                 <FormattedMessage id='deleteOrg' defaultMessage='Remove Organisation' description='Button to remove an Organisatino on OrgDetails page' />
               </Button>
-            </Popconfirm> }
+            </Popconfirm>}
 
           </div>
           <RegisterMemberSection orgid={org._id} meid={this.props.me._id} />

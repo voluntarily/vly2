@@ -19,6 +19,7 @@ import reduxApi, {
 import { MemberStatus } from '../../server/api/member/member.constants'
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
+import { Helmet } from 'react-helmet'
 
 import {
   TextHeadingBlack,
@@ -167,6 +168,9 @@ class PersonHomePage extends Component {
     )
     return (
       <FullPage>
+        <Helmet>
+          <title>Voluntarily - Dashboard</title>
+        </Helmet>
         <PageHeaderContainer>
           <TitleContainer>
             <TextHeadingBlack>

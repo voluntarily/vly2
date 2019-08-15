@@ -61,7 +61,7 @@ export function OpDetail ({ op }) {
   return (
     <FullPage>
       <Spacer />
-      <Head><title>{op.title}</title></Head>
+      <Head><title>Voluntarily - {op.title}</title></Head>
       <HalfGrid>
         <Left>
           <TitleFont>{op.title}</TitleFont>
