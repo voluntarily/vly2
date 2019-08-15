@@ -216,7 +216,7 @@ const ItemIcon = styled.img`
 ` // end itemIcon
 
 export class Teacher extends Component {
-  render() {
+  render () {
     return (
       <div>
         <FullPage>

@@ -11,7 +11,7 @@ import { Spacer } from '../../components/VTheme/VTheme'
 import { Helmet } from 'react-helmet'
 
 class Landing extends Component {
-  render() {
+  render () {
     return (
       <div>
         <Hero />

@@ -6,7 +6,7 @@ import Router from 'next/router'
 import { message } from 'antd'
 
 export default class OpEditPage extends React.Component {
-  async handleSubmit(op) {
+  async handleSubmit (op) {
     if (op._id) {
       op = await this.props.createOpportunity(op)
     } else {
@@ -17,7 +17,7 @@ export default class OpEditPage extends React.Component {
     message.success('Saved.')
   }
 
-  render() {
+  render () {
     return (
       <FullPage>
         <OpDetailForm

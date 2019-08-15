@@ -9,7 +9,7 @@ import { PageHeaderContainer, TextHeadingBlack, RequestButtonContainer } from '.
 import { Helmet } from 'react-helmet'
 
 class OrgListPage extends Component {
-  static async getInitialProps({ store, query }) {
+  static async getInitialProps ({ store, query }) {
     // Get all OrgListPage
     try {
       // TODO: [VP-451] Minimise org list download by only getting OrgCard required information using select.
@@ -19,7 +19,7 @@ class OrgListPage extends Component {
     }
   }
 
-  render() {
+  render () {
     const orgs = this.props.organisations.data
     const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
     return (

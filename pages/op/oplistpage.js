@@ -9,7 +9,7 @@ import OpList from '../../components/Op/OpList'
 import { Helmet } from 'react-helmet'
 
 class Ops extends Component {
-  static async getInitialProps({ store, query }) {
+  static async getInitialProps ({ store, query }) {
     // Get all Ops
     try {
       const ops = await store.dispatch(reduxApi.actions.opportunities.get())
@@ -20,7 +20,7 @@ class Ops extends Component {
     }
   }
 
-  render() {
+  render () {
     return (
       <FullPage>
         <Helmet>

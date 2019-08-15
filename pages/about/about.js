@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Head from 'next/head'
 import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
 import { Button } from 'antd'

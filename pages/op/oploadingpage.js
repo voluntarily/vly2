@@ -4,7 +4,7 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 
 export default class OpLoadingPage extends React.Component {
-  render() {
+  render () {
     return (
       <FullPage>
         <Helmet>

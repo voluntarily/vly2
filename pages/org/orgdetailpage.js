@@ -29,7 +29,7 @@ class OrgDetailPage extends Component {
     text: ''
   }
 
-  static async getInitialProps({ store, query }) {
+  static async getInitialProps ({ store, query }) {
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     if (isNew) {
@@ -48,7 +48,7 @@ class OrgDetailPage extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if (this.props.isNew) {
       this.setState({ editing: true })
     }
@@ -61,7 +61,7 @@ class OrgDetailPage extends Component {
     }
   }
 
-  async handleDelete(org) {
+  async handleDelete (org) {
     if (!org) return
     // Actual data request
     await this.props.dispatch(reduxApi.actions.organisations.delete({ id: org._id }))
@@ -70,7 +70,7 @@ class OrgDetailPage extends Component {
     Router.replace(`/orgs`)
   }
 
-  async handleSubmit(org) {
+  async handleSubmit (org) {
     if (!org) return
     // Actual data request
     let res = {}
@@ -87,7 +87,7 @@ class OrgDetailPage extends Component {
 
   handleDeleteCancel = () => { message.error('Delete Cancelled') }
 
-  render() {
+  render () {
     // TODO: [VP-274] identify if current person is an org Admin for this organisation
     const isOrgAdmin = false
     const isAdmin = (this.props.me && this.props.me.role.includes('admin'))

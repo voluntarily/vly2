@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import { Helmet } from 'react-helmet'
 
 export default class OpUnavailablePage extends React.Component {
-  render() {
+  render () {
     return (
       <FullPage>
         <Helmet>

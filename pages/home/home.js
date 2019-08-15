@@ -19,7 +19,7 @@ import reduxApi, {
 import { MemberStatus } from '../../server/api/member/member.constants'
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet'
 
 import {
   TextHeadingBlack,

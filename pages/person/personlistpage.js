@@ -15,7 +15,7 @@ import Cookie from 'js-cookie'
 import { Helmet } from 'react-helmet'
 
 class PersonListPage extends Component {
-  static async getInitialProps({ store, req }) {
+  static async getInitialProps ({ store, req }) {
     let cookies = req ? req.cookies : Cookie.get()
     // Get all People
     try {
@@ -28,7 +28,7 @@ class PersonListPage extends Component {
     }
   }
 
-  render() {
+  render () {
     const people = this.props.people.data
     return (
       <FullPage>

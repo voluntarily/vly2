@@ -32,7 +32,7 @@ export class PersonDetailPage extends Component {
   state = {
     editing: false
   }
-  static async getInitialProps({ store, query, req }) {
+  static async getInitialProps ({ store, query, req }) {
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     await store.dispatch(reduxApi.actions.locations.get())
@@ -58,7 +58,7 @@ export class PersonDetailPage extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if (this.props.isNew) {
       this.setState({ editing: true })
     }
@@ -72,7 +72,7 @@ export class PersonDetailPage extends Component {
   }
 
   // TODO: [VP-209] only show person delete button for admins
-  async handleDelete(person) {
+  async handleDelete (person) {
     if (!person) return
     await this.props.dispatch(reduxApi.actions.people.delete({ id: person._id }))
     // TODO error handling - how can this fail?
@@ -80,7 +80,7 @@ export class PersonDetailPage extends Component {
     Router.replace(`/people`)
   }
 
-  async handleSubmit(person) {
+  async handleSubmit (person) {
     if (!person) return
     // Actual data request
     let res = {}
@@ -97,7 +97,7 @@ export class PersonDetailPage extends Component {
 
   handleDeleteCancel = () => { message.error('Delete Cancelled') }
 
-  render() {
+  render () {
     const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
     const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
     const canEdit = (isOrgAdmin || isAdmin)

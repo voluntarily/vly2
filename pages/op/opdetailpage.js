@@ -32,7 +32,7 @@ export class OpDetailPage extends Component {
     editing: false
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.confirmOpportunity = this.confirmOpportunity.bind(this)
     this.cancelOpportunity = this.cancelOpportunity.bind(this)
@@ -43,7 +43,7 @@ export class OpDetailPage extends Component {
     this.retrieveOpportunity = this.retrieveOpportunity.bind(this)
   }
 
-  static async getInitialProps({ store, query }) {
+  static async getInitialProps ({ store, query }) {
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     const opExists = !!(query && query.id) // !! converts to a boolean value
@@ -66,13 +66,13 @@ export class OpDetailPage extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if (this.props.isNew) {
       this.setState({ editing: true })
     }
   }
 
-  async createOpportunity(op) {
+  async createOpportunity (op) {
     const res = await this.props.dispatch(
       reduxApi.actions.opportunities.put(
         { id: op._id },
@@ -82,7 +82,7 @@ export class OpDetailPage extends Component {
     return res[0]
   }
 
-  async updateOpportunity(op) {
+  async updateOpportunity (op) {
     const res = await this.props.dispatch(
       reduxApi.actions.opportunities.post(
         {},
@@ -99,36 +99,36 @@ export class OpDetailPage extends Component {
     }
   }
 
-  async confirmOpportunity(op) {
+  async confirmOpportunity (op) {
     await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.COMPLETED }) }))
   }
 
-  async cancelOpportunity(op) {
+  async cancelOpportunity (op) {
     await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.CANCELLED }) }))
   }
 
-  isAdmin() {
+  isAdmin () {
     return this.props.me && this.props.me.role.includes('admin')
   }
 
-  isOwner(op) {
+  isOwner (op) {
     return this.props.isNew || this.props.me._id === op.requestor._id
   }
 
-  canEdit(op) {
+  canEdit (op) {
     const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
     return (this.isOwner(op) || isOrgAdmin || this.isAdmin())
   }
 
-  canManageInterests(op) {
+  canManageInterests (op) {
     return (this.isOwner(op) || this.isAdmin())
   }
 
-  canRegisterInterest(op) {
+  canRegisterInterest (op) {
     return (this.props.isAuthenticated && !this.isOwner(op))
   }
 
-  retrieveOpportunity() {
+  retrieveOpportunity () {
     let op
     if (this.props.isNew) {
       op = blankOp
@@ -144,7 +144,7 @@ export class OpDetailPage extends Component {
     return op
   }
 
-  render() {
+  render () {
     // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
     if (!this.props.isNew) {
       if (this.props.opportunities.loading) {

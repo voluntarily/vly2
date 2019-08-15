@@ -220,9 +220,9 @@ export class ContentProvider extends Component {
     return (
       <div>
         <FullPage>
-        <Helmet>
-          <title>Voluntarily - Business</title>
-        </Helmet>
+          <Helmet>
+            <title>Voluntarily - Business</title>
+          </Helmet>
           <HeroContainer>
             <HalfGrid>
               <GridContainer>
