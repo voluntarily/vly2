@@ -10,7 +10,6 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 import { Spacer } from '../../components/VTheme/VTheme'
 import RegisterMemberSection from '../../components/Member/RegisterMemberSection'
-import { Helmet } from 'react-helmet'
 
 const blankOrg = {
   name: '',
@@ -148,9 +147,6 @@ class OrgDetailPage extends Component {
     }
     return (
       <FullPage>
-        <Helmet>
-          <title>Voluntarily - Organisation Details</title>
-        </Helmet>
         {content}
       </FullPage>
     )

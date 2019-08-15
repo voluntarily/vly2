@@ -13,7 +13,6 @@ import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
 import OpLoadingPage from './oploadingpage'
 import OpUnavailablePage from './opunavailablepage'
 import OpEditPage from './opeditpage'
-import { Helmet } from 'react-helmet'
 
 const blankOp = {
   title: '',
@@ -173,9 +172,6 @@ export class OpDetailPage extends Component {
     } else {
       return (
         <FullPage>
-          <Helmet>
-            <title>Voluntarily - Opportunity Detail</title>
-          </Helmet>
           {this.canEdit(op) &&
             <Button
               id='editOpBtn'

@@ -4,7 +4,6 @@ import OpDetailForm from '../../components/Op/OpDetailForm'
 import PropTypes from 'prop-types'
 import Router from 'next/router'
 import { message } from 'antd'
-import { Helmet } from 'react-helmet'
 
 export default class OpEditPage extends React.Component {
   async handleSubmit(op) {
@@ -21,9 +20,6 @@ export default class OpEditPage extends React.Component {
   render() {
     return (
       <FullPage>
-        <Helmet>
-          <title>Voluntarily - Opportunity Detail</title>
-        </Helmet>
         <OpDetailForm
           op={this.props.op}
           me={this.props.me}
