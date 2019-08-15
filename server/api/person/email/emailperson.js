@@ -35,7 +35,8 @@ module.exports.emailPerson = async (person, template, props) => {
     return await email.send({
       template: path.join(__dirname, template),
       message: {
-        to: person.email
+        to: person.email,
+        attachments: props.attachment ? props.attachment : null
       },
       locals: {
         person,

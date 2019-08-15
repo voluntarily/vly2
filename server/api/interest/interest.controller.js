@@ -4,6 +4,8 @@ const Opportunity = require('../opportunity/opportunity')
 const { config } = require('../../../config/config')
 const { emailPerson } = require('../person/email/emailperson')
 const { InterestStatus } = require('./interest.constants')
+const ical = require('ical-generator')
+const moment = require('moment')
 
 /**
   api/interests -> list all interests
@@ -36,7 +38,7 @@ const listInterests = async (req, res) => {
 
 const updateInterest = async (req, res) => {
   try {
-    await Interest.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
+    // await Interest.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
     const { opportunity, status, person } = req.body // person in here is the volunteer-- quite not good naming here
     Opportunity.findById(opportunity, (err, opportunityFound) => {
       if (err) console.log(err)
@@ -75,13 +77,51 @@ const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
   const { _id } = volunteer
   const { requestor, title } = opportunity
   const opID = opportunity._id
-  if (interestStatus === InterestStatus.INVITED || interestStatus === InterestStatus.DECLINED) {
+
+  let icalString
+  if (isEvent1DayOnly(opportunity)) {
+    const calendar = ical({
+      prodId: { company: 'voluntarily', product: 'Invitation' },
+      domain: 'voluntarily.nz',
+      name: 'Welcome'
+    })
+    calendar.createEvent({
+      start: moment(opportunity.date[0]),
+      end: moment(opportunity.date[0]).add(1, 'hour'),
+      timestamp: moment(),
+      summary: `Voluntarily event: ${opportunity.title}`,
+      description: `${opportunity.description}`,
+      organizer: 'Voluntarily <team@voluntari.ly>'
+    })
+
+    icalString = calendar.toString()
+  }
+
+  if (interestStatus === InterestStatus.INVITED) {
+    const emailProps = {
+      send: true,
+      attachment: [{
+        filename: 'invitation.ics',
+        content: icalString
+      }]
+    }
+    sendEmailWithAttachment(volunteer._id, InterestStatus.INVITED, emailProps)
+  } else if (interestStatus === InterestStatus.DECLINED) {
     // send email to volunteer only
     sendEmailBaseOn(interestStatus, _id, title, opID) // The _id in here is the volunteer id
   } else if (interestStatus === InterestStatus.COMMITTED) {
     // send email to requestor only
     sendEmailBaseOn(interestStatus, requestor, title, opID)
   }
+}
+
+const isEvent1DayOnly = (opportunity) => {
+  return opportunity.date[1] == null
+}
+
+const sendEmailWithAttachment = async (personId, status, emailProps) => {
+  const receiver = await Person.findById(personId).exec()
+  emailPerson(receiver, status, emailProps)
 }
 
 /**
