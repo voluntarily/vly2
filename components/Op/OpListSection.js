@@ -17,25 +17,25 @@ import DatePickerType from './DatePickerType.constant'
 
 // TODO: [VP-131] use redux instead of local state.
 class OpListSection extends Component {
-  loadData (search, location, query) {
+  async loadData (search, location, query) {
     // Get all Ops
-    // try {
-    const filters = {}
+    try {
+      const filters = {}
 
-    if (search) {
-      filters.search = search
-    }
-    if (location) {
-      filters.location = location
-    }
-    if (query) {
-      filters.q = query
-    }
+      if (search) {
+        filters.search = search
+      }
+      if (location) {
+        filters.location = location
+      }
+      if (query) {
+        filters.q = query
+      }
 
-    return this.props.dispatch(reduxApi.actions.opportunities.get(filters))
-    // } catch (err) {
-    //   // console.log('error in getting ops', err)
-    // }
+      return await this.props.dispatch(reduxApi.actions.opportunities.get(filters))
+    } catch (err) {
+      // console.log('error in getting ops', err)
+    }
   }
 
   applyDateFilter = (filter) => {
@@ -81,24 +81,29 @@ class OpListSection extends Component {
 
   hasValue = (value) => { return value != null }
 
-  componentDidUpdate (prevProps) {
+  async componentDidUpdate (prevProps) {
     if (prevProps.search !== this.props.search ||
       prevProps.location !== this.props.location ||
       prevProps.query !== this.props.query) {
-      this.loadData(this.props.search, this.props.location, this.props.query)
+      await this.loadData(this.props.search, this.props.location, this.props.query)
     }
   }
 
-  componentDidMount () {
-    this.loadData(this.props.search, this.props.location, this.props.query)
+  async componentDidMount () {
+    await this.loadData(this.props.search, this.props.location, this.props.query)
   }
 
   render () {
     const opData = this.applyDateFilter(this.props.filter)
     if (this.props.opportunities.loading) {
-      return (<Loading />)
+      return (<section>
+        <Loading><p>Loading opportunities...</p></Loading>
+
+      </section>)
     } else {
-      return (<OpList ops={opData} />)
+      return (<section>
+        <OpList ops={opData} />
+      </section>)
     }
   }
 }
