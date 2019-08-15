@@ -42,14 +42,15 @@ function sleep (ms) {
 
 test.serial('followers can become members and then be removed', async t => {
   const members = t.context.members
-  const orgid = t.context.orgs[4]._id
+  const org = t.context.orgs[4]
+  const orgid = org._id
   const orgMembers = members.filter(member => member.organisation._id === orgid)
 
   t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, orgMembers)
 
   const wrapper = await mountWithIntl(
     <Provider store={t.context.store}>
-      <MemberSection orgid={orgid} />
+      <MemberSection org={org} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -121,14 +122,15 @@ test.serial('followers can become members and then be removed', async t => {
 
 test.serial('joiners can become members ', async t => {
   const members = t.context.members
-  const orgid = t.context.orgs[5]._id
+  const org = t.context.orgs[5]
+  const orgid = org._id
   const orgMembers = members.filter(member => member.organisation._id === orgid)
 
   t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, orgMembers)
 
   const wrapper = await mountWithIntl(
     <Provider store={t.context.store}>
-      <MemberSection orgid={orgid} />
+      <MemberSection org={org} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -201,14 +203,15 @@ test.serial('joiners can become members ', async t => {
 
 test.serial('members can become admins ', async t => {
   const members = t.context.members
-  const orgid = t.context.orgs[5]._id
+  const org = t.context.orgs[5]
+  const orgid = org._id
   const orgMembers = members.filter(member => member.organisation._id === orgid)
   let trueMembers = orgMembers.filter(member => [MemberStatus.MEMBER].includes(member.status))
   t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, orgMembers)
 
   const wrapper = await mountWithIntl(
     <Provider store={t.context.store}>
-      <MemberSection orgid={orgid} />
+      <MemberSection org={org} />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
