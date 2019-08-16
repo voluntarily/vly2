@@ -91,6 +91,8 @@ class PersonHomePage extends Component {
         // s: date
       }
 
+      await store.dispatch(reduxApi.actions.tags.get())
+
       await Promise.all([
         store.dispatch(reduxApi.actions.opportunities.get(filters)),
         store.dispatch(reduxApi.actions.locations.get({ withRelationships: true })),
@@ -263,6 +265,7 @@ class PersonHomePage extends Component {
               {this.state.editProfile ? (
                 <PersonDetailForm
                   person={this.props.me}
+                  existingTags={this.props.tags.data}
                   locations={this.props.locations.data[0].locations}
                   onSubmit={this.handleUpdate.bind(this, this.props.me)}
                   onCancel={this.handleCancel}

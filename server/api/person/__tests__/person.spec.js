@@ -56,7 +56,8 @@ test.failing('Should send correct data when queried against an id', async t => {
     nickname: 'Testy',
     phone: '123 456789',
     email: 'query@omgtech.co.nz',
-    role: ['tester']
+    role: ['tester'],
+    tags: []
   }
 
   const person = new Person(p)
@@ -80,7 +81,8 @@ test.serial('Should correctly add a person', async t => {
     phone: '123 456789',
     email: 'addy@omgtech.co.nz',
     gender: 'binary',
-    role: ['tester']
+    role: ['tester'],
+    tags: []
   }
 
   const res = await request(server)
@@ -117,7 +119,8 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
     phone: "1234<img src=x onerror=alert('img') />ABCD", // should remove img
     email: 'bobby@omgtech.co.nz', // ok
     gender: "console.log('hello world')", // ok
-    role: ['tester']
+    role: ['tester'],
+    tags: []
   }
 
   await request(server)
@@ -138,7 +141,8 @@ test.serial('Should load a person into the db but block access and delete them v
     phone: '123 456789',
     email: 'loady@omgtech.co.nz',
     gender: 'binary',
-    role: ['tester']
+    role: ['tester'],
+    tags: []
   }
   const person = new Person(p)
   await person.save()
@@ -171,7 +175,8 @@ test.serial('Should find a person by email', async t => {
     nickname: 'Testy',
     phone: '123 456789',
     email: 'unique_email@voluntari.ly',
-    role: ['tester']
+    role: ['tester'],
+    tags: []
   }
 
   const person = new Person(p)
@@ -194,7 +199,8 @@ test.serial('Should find a person by nickname', async t => {
     nickname: 'Testy',
     phone: '123 456789',
     email: 'Testy555@voluntari.ly',
-    role: ['tester']
+    role: ['tester'],
+    tags: []
   }
 
   const person = new Person(p)
@@ -223,7 +229,8 @@ test.serial('Should correctly handle missing inputs', async t => {
     nickname: 'Testy',
     phone: '123 456789',
     // email: 'Testy555@voluntari.ly', <- explicity remove email
-    role: ['tester']
+    role: ['tester'],
+    tags: []
   }
   try {
     const res = await request(server)

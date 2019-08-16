@@ -14,6 +14,7 @@ import {
 } from '../VTheme/FormStyles'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
 import LocationSelector from '../Form/Input/LocationSelector'
+import TagInput from '../Form/Input/TagInput'
 
 const { TextArea } = Input
 
@@ -52,6 +53,7 @@ class PersonDetailForm extends Component {
         person.pronoun = values.pronoun
         person.about = values.about
         person.location = values.location
+        person.tags = values.tags
         person.avatar = values.avatar
         person.role = values.role
         person.status = values.status
@@ -142,6 +144,14 @@ class PersonDetailForm extends Component {
       </span>
     )
 
+    const personTags = (
+      <FormattedMessage
+        id='personTags'
+        defaultMessage='Tags'
+        description='Descriptions of general areas the person has skills in'
+      />
+    )
+
     const {
       getFieldDecorator,
       getFieldsError,
@@ -223,6 +233,34 @@ class PersonDetailForm extends Component {
                 })(
                   <LocationSelector
                     existingLocations={this.props.locations}
+                  />
+                )}
+              </Form.Item>
+            </InputContainer>
+          </FormGrid>
+          <Divider />
+
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <TextHeadingBold>
+                  Do you have any specific skills? (optional)
+                </TextHeadingBold>
+              </TitleContainer>
+              <TextP>
+                Do you have skills in any specific categories
+                like programming, electronics, or robots? Enter them here to
+                make it easier for us to recommend suitable opportunities for you.
+              </TextP>
+            </DescriptionContainer>
+            <InputContainer>
+              <Form.Item label={personTags}>
+                {getFieldDecorator('tags', {
+                  initialValue: [],
+                  rules: []
+                })(
+                  <TagInput
+                    existingTags={this.props.existingTags}
                   />
                 )}
               </Form.Item>
@@ -369,7 +407,11 @@ PersonDetailForm.propTypes = {
   }),
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  locations: PropTypes.arrayOf(PropTypes.string)
+  locations: PropTypes.arrayOf(PropTypes.string),
+  existingTags: PropTypes.arrayOf(PropTypes.shape({
+    tag: PropTypes.string.isRequired,
+    _id: PropTypes.string
+  })).isRequired
   // dispatch: PropTypes.func.isRequired,
 }
 
@@ -420,6 +462,10 @@ export default Form.create({
       status: Form.createFormField({
         ...props.person.status,
         value: props.person.status
+      }),
+      tags: Form.createFormField({
+        ...props.person.tags,
+        value: props.person.tags
       })
     }
   },
