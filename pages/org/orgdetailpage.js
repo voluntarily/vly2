@@ -97,7 +97,7 @@ class OrgDetailPage extends Component {
     let content = ''
     let org = null
     if (this.props.organisations.loading) {
-      content = <Loading><p>Loading details...</p></Loading>
+      content = <Loading />
     } else if (this.props.isNew) {
       org = blankOrg
     } else {
@@ -142,7 +142,7 @@ class OrgDetailPage extends Component {
             </Popconfirm>}
 
           </div>
-          <RegisterMemberSection orgid={org._id} meid={this.props.me._id} />
+          {this.props.isAuthenticated && <RegisterMemberSection orgid={org._id} meid={this.props.me._id} />}
         </div>
     }
     return (
@@ -150,7 +150,7 @@ class OrgDetailPage extends Component {
         {content}
       </FullPage>
     )
-  };
+  }
 }
 
 export default publicPage(withOrgs(OrgDetailPage))
