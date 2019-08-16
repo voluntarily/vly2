@@ -14,6 +14,7 @@ import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
 import styled from 'styled-components'
 import FilterContainer from '../../components/Search/FilterContainer'
 import LocationFilter from '../../components/Search/LocationFilter'
+import { Helmet } from 'react-helmet'
 
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
 const { Item } = Menu
@@ -160,6 +161,9 @@ export class SearchPage extends Component {
           filterNames={[DATE_FILTER_NAME, LOCATION_FILTER_NAME]}
         />
         <FullPage>
+          <Helmet>
+            <title>Voluntarily - Search Results</title>
+          </Helmet>
           <SearchPageContainer>
             <TitleSection
               title={

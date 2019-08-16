@@ -83,7 +83,7 @@ const orgMemberTab = (
 
 const OrgDetail = ({ org, ...props }) => (
   <div>
-    <Head><title>{org.name}</title></Head>
+    <Head><title>Voluntarily - {org.name}</title></Head>
     <PageHeaderContainer />
     <OrgGrid>
       <GridContainer>
