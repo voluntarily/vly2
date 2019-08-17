@@ -23,7 +23,7 @@ class RegisterInterestItem extends Component {
   }
 
   componentDidMount () {
-    this.props.form.validateFieldss()
+    this.props.form.validateFields()
   }
 
   handleChangeStateButtonClicked (e) {
