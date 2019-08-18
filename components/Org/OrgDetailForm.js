@@ -44,7 +44,11 @@ class OrgDetailForm extends Component {
         // update the rest from the form values.
         org.name = values.name
         org.slug = slug(values.name)
-        org.about = values.about
+        org.info.about = values.about
+        org.info.followers = values.followers
+        org.info.joiners = values.joiners
+        org.info.members = values.members
+        org.info.outsiders = values.outsiders
         org.imgUrl = values.imgUrl
         org.website = values.website
         org.contactEmail = values.contactEmail
@@ -57,11 +61,16 @@ class OrgDetailForm extends Component {
   render () {
     // get translated labels
     const orgName = <FormattedMessage id='orgName' defaultMessage='Title' about='organisation Title label in OrgDetails Form' />
-    const orgAbout = <FormattedMessage id='orgAbout' defaultMessage='About' about='organisation Description label in OrgDetails Form' />
     const orgImgUrl = <FormattedMessage id='orgImgUrl' defaultMessage='Image Link' about='organisation Image URL label in OrgDetails Form' />
     const orgWebsite = <FormattedMessage id='orgWebsite' defaultMessage='Website' about='website label in OrgDetails Form' />
     const orgContactEmail = <FormattedMessage id='orgContactEmail' defaultMessage='Contact Email' about='contact Email label in OrgDetails Form' />
     const orgCategory = <FormattedMessage id='orgCategory' defaultMessage='Category' about='school, business or activity provider' />
+
+    const orgAbout = <FormattedMessage id='orgAbout' defaultMessage='About' about='organisation Description label in OrgDetails Form' />
+    const orgInfoFollowers = <FormattedMessage id='orgInfoFollowers' defaultMessage='Followers' about='organisation Description label in OrgDetails Form' />
+    const orgInfoJoiners = <FormattedMessage id='orgInfoJoiners' defaultMessage='Joiners' about='organisation Description label in OrgDetails Form' />
+    const orgInfoMembers = <FormattedMessage id='orgInfoMembers' defaultMessage='Members' about='organisation Description label in OrgDetails Form' />
+    const orgInfoOutsiders = <FormattedMessage id='orgInfoOutsiders' defaultMessage='Outsiders' about='organisation Description label in OrgDetails Form' />
 
     // TODO translate
     const categoryOptions = [
@@ -162,6 +171,46 @@ class OrgDetailForm extends Component {
               />
             )}
           </Form.Item>
+          <Form.Item label={orgInfoFollowers}>
+            {getFieldDecorator('followers', {
+              rules: [
+
+              ]
+            })(
+              // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+              <RichTextEditor onChange={this.setInfoFollowers} />
+            )}
+          </Form.Item>
+          <Form.Item label={orgInfoJoiners}>
+            {getFieldDecorator('joiners', {
+              rules: [
+
+              ]
+            })(
+              // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+              <RichTextEditor onChange={this.setInfoJoiners} />
+            )}
+          </Form.Item>
+          <Form.Item label={orgInfoMembers}>
+            {getFieldDecorator('members', {
+              rules: [
+
+              ]
+            })(
+              // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+              <RichTextEditor onChange={this.setInfoMembers} />
+            )}
+          </Form.Item>
+          <Form.Item label={orgInfoOutsiders}>
+            {getFieldDecorator('outsiders', {
+              rules: [
+
+              ]
+            })(
+              // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+              <RichTextEditor onChange={this.setInfoOutsiders} />
+            )}
+          </Form.Item>
           <Button
             type='secondary'
             htmlType='button'
@@ -197,7 +246,13 @@ class OrgDetailForm extends Component {
 OrgDetailForm.propTypes = {
   org: PropTypes.shape({
     name: PropTypes.string,
-    about: PropTypes.string,
+    info: PropTypes.shape({
+      about: PropTypes.string.isRequired,
+      followers: PropTypes.string,
+      joiners: PropTypes.string,
+      members: PropTypes.string,
+      outsiders: PropTypes.string
+    }),
     category: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])),
     imgUrl: PropTypes.string,
     website: PropTypes.string,
@@ -222,15 +277,21 @@ export default Form.create({
     // props.onChange(changedFields);
   },
   mapPropsToFields (props) {
+    const org = props.org
+    if (!org.info) { org.info = {} }
     return {
-      name: Form.createFormField({ ...props.org.name, value: props.org.name }),
-      about: Form.createFormField({ ...props.org.about, value: props.org.about }),
-      imgUrl: Form.createFormField({ ...props.org.imgUrl, value: props.org.imgUrl }),
-      website: Form.createFormField({ ...props.org.website, value: props.org.website }),
-      contactEmail: Form.createFormField({ ...props.org.contactEmail, value: props.org.contactEmail }),
-      facebook: Form.createFormField({ ...props.org.facebook, value: props.org.facebook }),
-      twitter: Form.createFormField({ ...props.org.twitter, value: props.org.twitter }),
-      category: Form.createFormField({ ...props.org.category, value: props.org.category })
+      name: Form.createFormField({ ...org.name, value: org.name }),
+      about: Form.createFormField({ ...org.info.about, value: org.info.about }),
+      followers: Form.createFormField({ ...org.info.followers, value: org.info.followers }),
+      joiners: Form.createFormField({ ...org.info.joiners, value: org.info.joiners }),
+      members: Form.createFormField({ ...org.info.members, value: org.info.members }),
+      outsiders: Form.createFormField({ ...org.info.outsiders, value: org.info.outsiders }),
+      imgUrl: Form.createFormField({ ...org.imgUrl, value: org.imgUrl }),
+      website: Form.createFormField({ ...org.website, value: org.website }),
+      contactEmail: Form.createFormField({ ...org.contactEmail, value: org.contactEmail }),
+      facebook: Form.createFormField({ ...org.facebook, value: org.facebook }),
+      twitter: Form.createFormField({ ...org.twitter, value: org.twitter }),
+      category: Form.createFormField({ ...org.category, value: org.category })
     }
   },
   onValuesChange (_, values) {

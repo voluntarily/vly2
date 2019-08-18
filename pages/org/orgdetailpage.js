@@ -10,6 +10,7 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 import { Spacer } from '../../components/VTheme/VTheme'
 import RegisterMemberSection from '../../components/Member/RegisterMemberSection'
+import { MemberStatus } from '../../server/api/member/member.constants'
 
 const blankOrg = {
   name: '',
@@ -33,14 +34,16 @@ class OrgDetailPage extends Component {
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     if (isNew) {
-      // console.log('opdetailpage: getInitialProps', isNew)
-
       return {
         isNew: true,
         orgid: null
       }
     } else if (query && query.id) {
       await store.dispatch(reduxApi.actions.organisations.get(query))
+      if (store.getState().session.isAuthenticated) {
+        const meid = store.getState().session.me._id
+        await store.dispatch(reduxApi.actions.members.get({ orgid: query.id, meid: meid }))
+      }
       return {
         isNew: false,
         orgid: query.id
@@ -89,7 +92,7 @@ class OrgDetailPage extends Component {
 
   render () {
     // TODO: [VP-274] identify if current person is an org Admin for this organisation
-    const isOrgAdmin = false
+    const isOrgAdmin = this.props.members.data.length && (this.props.members.data[0].status === MemberStatus.ORGADMIN)
     const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
     const canEdit = (isOrgAdmin || isAdmin)
     const canRemove = isAdmin
@@ -97,7 +100,7 @@ class OrgDetailPage extends Component {
     let content = ''
     let org = null
     if (this.props.organisations.loading) {
-      content = <Loading><p>Loading details...</p></Loading>
+      content = <Loading />
     } else if (this.props.isNew) {
       org = blankOrg
     } else {
@@ -134,15 +137,15 @@ class OrgDetailPage extends Component {
             <Button shape='round'><Link href='/orgs'><a>
               <FormattedMessage id='showOrgs' defaultMessage='Show All' description='Button to show all organisations' />
             </a></Link></Button>
-            { canEdit && <Button type='primary' shape='round' onClick={() => this.setState({ editing: true })} >Edit</Button>}
-            { canRemove && <Popconfirm title='Confirm removal of this organisation.' onConfirm={this.handleDelete.bind(this, org)} onCancel={this.handleDeleteCancel.bind(this)} okText='Yes' cancelText='No'>
+            {canEdit && <Button type='primary' shape='round' onClick={() => this.setState({ editing: true })} >Edit</Button>}
+            {canRemove && <Popconfirm title='Confirm removal of this organisation.' onConfirm={this.handleDelete.bind(this, org)} onCancel={this.handleDeleteCancel.bind(this)} okText='Yes' cancelText='No'>
               <Button style={{ float: 'right' }} type='danger' shape='round' >
                 <FormattedMessage id='deleteOrg' defaultMessage='Remove Organisation' description='Button to remove an Organisatino on OrgDetails page' />
               </Button>
-            </Popconfirm> }
+            </Popconfirm>}
 
           </div>
-          <RegisterMemberSection orgid={org._id} meid={this.props.me._id} />
+          {this.props.isAuthenticated && <RegisterMemberSection orgid={org._id} meid={this.props.me._id} />}
         </div>
     }
     return (
@@ -150,7 +153,7 @@ class OrgDetailPage extends Component {
         {content}
       </FullPage>
     )
-  };
+  }
 }
 
 export default publicPage(withOrgs(OrgDetailPage))

@@ -12,6 +12,7 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import Markdown from 'markdown-to-jsx'
 
 const SubSection = styled.section`
   margin-bottom: 2.0rem;
@@ -20,7 +21,7 @@ const SubSection = styled.section`
 class MemberSection extends Component {
   componentDidMount () {
     // Get all members and followers of the organisation
-    const orgid = this.props.orgid
+    const orgid = this.props.org._id
     this.props.dispatch(reduxApi.actions.members.get({ orgid: orgid }))
   }
 
@@ -49,22 +50,31 @@ class MemberSection extends Component {
     if (!this.props.members.sync) {
       return <Loading />
     }
+    const org = this.props.org
     const meid = this.props.me._id
+    if (!org.info) { org.info = {} }
     // check if I am in the members list
     // TODO: [VP-440] members ability I am orgadmin then I get all members list, else I get just my own membership status
     let myMembership = this.props.members.data.find(m => m.person._id === meid)
-    myMembership.isMe = true
+    if (myMembership) {
+      myMembership.isMe = true
+    } else {
+      myMembership = {
+        isMe: false,
+        status: MemberStatus.NONE
+      }
+    }
 
     // group membership status
-    const memberOrAdmin = m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)
+    const memberOrOrgAdmin = m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)
     const joinerOrValidator = m => [MemberStatus.VALIDATOR, MemberStatus.JOINER].includes(m.status)
     const follower = m => [MemberStatus.FOLLOWER].includes(m.status)
-    const nonMember = m => !myMembership || [MemberStatus.NONE, MemberStatus.EXMEMBER].includes(m.status)
+    const nonMember = m => !myMembership.isMe || [MemberStatus.NONE, MemberStatus.EXMEMBER].includes(m.status)
 
     // OrgAdmins see Member Table
     let orgAdminSection = ''
-    if (myMembership.status === MemberStatus.ORGADMIN) {
-      const members = this.props.members.data.filter(memberOrAdmin)
+    if ((myMembership.status === MemberStatus.ORGADMIN) || this.props.isAdmin) {
+      const members = this.props.members.data.filter(memberOrOrgAdmin)
       const followers = this.props.members.data.filter(follower)
       const joiners = this.props.members.data.filter(joinerOrValidator)
       orgAdminSection =
@@ -118,17 +128,13 @@ class MemberSection extends Component {
             defaultMessage='Information for new members'
             description='label for follower table on org detail page'
           /></h2>
-          <p>
-            {/* // TODO: [VP-442] org info for joiners in data record and in MemberSection */}
-            Placeholder - information for people joining this organisation.
-            should come from the organisation record.
-          </p>
+          <Markdown children={org.info.joiners || ''} />
         </section>
     }
 
     // full Members see instructions
     let memberInfoSection = ''
-    if (memberOrAdmin(myMembership)) {
+    if (memberOrOrgAdmin(myMembership)) {
       memberInfoSection =
         <section>
           <h2><FormattedMessage
@@ -136,11 +142,7 @@ class MemberSection extends Component {
             defaultMessage='Information for members'
             description='label for org info for members detail page'
           /></h2>
-          <p>
-            {/* // TODO: [VP-443] org info for members in data record and in MemberSection */}
-            Placeholder - information for people belonging to this organisation.
-            should come from the organisation record.
-          </p>
+          <Markdown children={org.info.members || ''} />
         </section>
     }
 
@@ -154,11 +156,7 @@ class MemberSection extends Component {
             defaultMessage='Information for followers'
             description='label for org info for followers detail page'
           /></h2>
-          <p>
-            {/* // TODO: [VP-443] org info for members in data record and in MemberSection */}
-            Placeholder - information for people belonging to this organisation.
-            should come from the organisation record.
-          </p>
+          <Markdown children={org.info.followers || ''} />
         </section>
     }
 
@@ -171,12 +169,7 @@ class MemberSection extends Component {
             defaultMessage='About Joining'
             description='message to non members on the org members tab'
           /></h2>
-
-          <p>
-            {/* // TODO: [VP-444] org info for non members in data record and in MemberSection */}
-            Placeholder - information for people not members of this organisation.
-            should come from the organisation record.
-          </p>
+          <Markdown children={org.info.outsiders || ''} />
         </section>
     }
     return (
@@ -198,7 +191,8 @@ MemberSection.propTypes = {
 
 // Warning me will be {} if not signed in and role will be undefined.
 const mapStateToProps = store => ({
-  me: store.session.me
+  me: store.session.me,
+  isAdmin: store.session.me.role && store.session.me.role.includes('admin')
 })
 
 const MemberSectionWithMe = connect(

@@ -1,0 +1,20 @@
+#!/bin/bash
+MY_DIR=$( dirname "${BASH_SOURCE[0]}" )
+
+# Get a docker login and run it
+source ${MY_DIR}/login-singapore
+
+# pull latest alpha image
+docker pull 585172581592.dkr.ecr.ap-southeast-1.amazonaws.com/vly2-alpha:master
+
+# retag
+docker image tag 585172581592.dkr.ecr.ap-southeast-1.amazonaws.com/vly2-alpha:master 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-beta:master
+
+# login to signapore
+source ${MY_DIR}/login-sydney
+
+# push the new image
+docker push 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-beta:master
+
+# restart
+aws ecs update-service --service vly2-beta --cluster vly-beta --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50 --force-new-deployment 

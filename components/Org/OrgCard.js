@@ -12,8 +12,6 @@ const OrgCard = ({ org, ...props }) => (
           <img className='requestImg' src={org.imgUrl} />
           <p className='requestTitle'>{org.name}</p>
           <OrgCategory orgCategory={org.category} />
-          {/* <p className='requestDateTime'>{org.category}</p> */}
-          {/* <p className='requestDescription'>{org.about}</p> */}
         </div>
       </a>
     </Link>
@@ -94,7 +92,6 @@ const OrgCard = ({ org, ...props }) => (
 OrgCard.propTypes = {
   org: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    about: PropTypes.string.isRequired,
     imgUrl: PropTypes.string.isRequired,
     category: PropTypes.arrayOf(
       PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])

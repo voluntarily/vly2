@@ -18,6 +18,13 @@ const organisationSchema = new Schema({
     default: ['vp'],
     enum: ['admin', 'vp', 'op', 'ap', 'other']
   },
+  info: {
+    about: String,
+    followers: String,
+    joiners: String,
+    members: String,
+    outsiders: String
+  },
   dateAdded: { type: 'Date', default: Date.now, required: true }
 })
 

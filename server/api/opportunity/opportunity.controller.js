@@ -2,6 +2,7 @@ const escapeRegex = require('../../util/regexUtil')
 const Opportunity = require('./opportunity')
 const Interest = require('./../interest/interest')
 const Tag = require('./../tag/tag')
+const Person = require('./../person/person')
 const ArchivedOpportunity = require('./../archivedOpportunity/archivedOpportunity')
 const InterestArchive = require('./../interest-archive/interestArchive')
 const { OpportunityStatus } = require('./opportunity.constants')
@@ -95,6 +96,53 @@ const getOpportunities = async (req, res) => {
     }
   } catch (e) {
     console.log('getOpportunities error:', e)
+    return res.status(500).send(e)
+  }
+}
+
+const getOpportunityRecommendations = async (req, res) => {
+  const meId = req.query.me
+  if (!meId) {
+    return res.status(400).send('Must include "me" parameter')
+  }
+
+  try {
+    const me = await Person.findById(meId)
+    if (!me) {
+      return res.status(400).send('Could not find the specified user')
+    }
+
+    const regionToMatch = regions.find(loc => {
+      return loc.name === me.location || loc.containedTerritories.includes(me.location)
+    })
+
+    let locationOps
+    if (regionToMatch) {
+      locationOps = await Opportunity.find({
+        location: { $in: [regionToMatch.name, ...regionToMatch.containedTerritories] },
+        requestor: { $ne: meId }
+      })
+
+      // if user has specified a territory, we should show the exact matches first, because we know
+      // they are closest to the user.
+      const userIsInTerritory = regionToMatch.name !== me.location
+      if (userIsInTerritory) {
+        locationOps.sort((a, b) => {
+          if (a.location === me.location && b.location !== me.location) {
+            return -1
+          } else if (b.location === me.location && a.location !== me.location) {
+            return 1
+          } else {
+            return 0 // we don't care about the ordering if the location isn't matching
+          }
+        })
+      }
+    } else {
+      locationOps = []
+    }
+
+    return res.json({ basedOnLocation: locationOps.slice(0, 10), basedOnSkills: 'todo' })
+  } catch (e) {
     return res.status(500).send(e)
   }
 }
@@ -195,5 +243,6 @@ module.exports = {
   ensureSanitized,
   getOpportunities,
   getOpportunity,
-  putOpportunity
+  putOpportunity,
+  getOpportunityRecommendations
 }

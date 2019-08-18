@@ -9,7 +9,7 @@ const Action = require('../../services/abilities/ability.constants')
  */
 function getPersonBy (req, res) {
   const query = { [req.params.by]: req.params.value }
-  Person.findOne(query).exec((_err, got) => {
+  Person.findOne(query).populate('tags').exec((_err, got) => {
     if (!got) { // person does not exist
       return res.status(404).send({ error: 'person not found' })
     }
