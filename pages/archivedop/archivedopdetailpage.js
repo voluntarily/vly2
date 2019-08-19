@@ -7,6 +7,7 @@ import OpOrganizerInfo from '../../components/Op/OpOrganizerInfo'
 import InterestSection from '../../components/Interest/InterestSection' // TODO Introduce archived interest section
 import { Divider } from 'antd'
 import reduxApi, { withArchivedOpportunities } from '../../lib/redux/reduxApi.js'
+import { Helmet } from 'react-helmet'
 
 export class ArchivedOpDetailPage extends OpDetailPage {
   constructor (props) {
@@ -48,6 +49,9 @@ export class ArchivedOpDetailPage extends OpDetailPage {
     let op = this.retrieveOpportunity()
     return (
       <FullPage>
+        <Helmet>
+          <title>Voluntarily - Archived Opportunity Details</title>
+        </Helmet>
         <OpDetail
           op={op}
         />

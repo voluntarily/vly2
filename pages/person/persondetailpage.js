@@ -12,6 +12,7 @@ import reduxApi, { withPeople, withMembers } from '../../lib/redux/reduxApi.js'
 import Loading from '../../components/Loading'
 import Cookie from 'js-cookie'
 import { MemberStatus } from '../../server/api/member/member.constants'
+import { Helmet } from 'react-helmet'
 
 const blankPerson = {
   // for new people load the default template doc.
@@ -141,14 +142,14 @@ export class PersonDetailPage extends Component {
           <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancel.bind(this)} />
         </div>
         : <div>
-          { canEdit && <Button style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
+          {canEdit && <Button style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
             <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
           </Button>}
 
           <PersonDetail person={person} />
 
           &nbsp;
-          { canRemove && <Popconfirm title='Confirm removal of this person.' onConfirm={this.handleDeletePerson} onCancel={this.cancel} okText='Yes' cancelText='No'>
+          {canRemove && <Popconfirm title='Confirm removal of this person.' onConfirm={this.handleDeletePerson} onCancel={this.cancel} okText='Yes' cancelText='No'>
             <Button type='danger' shape='round' >
               <FormattedMessage id='deletePerson' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
             </Button>
@@ -158,6 +159,9 @@ export class PersonDetailPage extends Component {
     }
     return (
       <FullPage>
+        <Helmet>
+          <title>Voluntarily - Person Details</title>
+        </Helmet>
         <h1><FormattedMessage defaultMessage='Person' id='person.detail.title' /></h1>
         {content}
       </FullPage>

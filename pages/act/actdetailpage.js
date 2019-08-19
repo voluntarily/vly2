@@ -10,6 +10,7 @@ import PersonCard from '../../components/Person/PersonCard'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 import { Role } from '../../server/services/authorize/role'
+import { Helmet } from 'react-helmet'
 
 const blankAct = {
   title: '',
@@ -168,6 +169,9 @@ export class ActDetailPage extends Component {
 
     return (
       <FullPage>
+        <Helmet>
+          <title>Voluntarily - Activity Detail</title>
+        </Helmet>
         {content}
       </FullPage>
     )

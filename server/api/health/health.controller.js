@@ -1,20 +1,18 @@
 /**
  * Get system health and ask questions
  */
-const config = require('../../../config/config')
-
-// TODO get the version number or build number here
-const greet = 'Hello from Voluntari.ly V0.0.2'
+const config = require('../../../config/config').config
 
 // check a bunch of things here like whether the db is connected and responding.
 // any depended upon api services
 const getHealth = (req, res) => {
   const result = {
-    message: greet,
+    message: `${config.appName} (${process.env.REVISION || 'local_build'}) running on ${config.appUrl}/ Be Awesome`,
     health: 'OK',
     params: req.params,
     query: req.query,
-    config: req.params.param1 === 'config' && config.config
+    app_url: process.env.APP_URL,
+    config: req.params.param1 === 'config' && config
   }
   return res.status(200).json(result)
 }

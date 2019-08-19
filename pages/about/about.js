@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Head from 'next/head'
 import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
 import { Button } from 'antd'
@@ -9,6 +8,7 @@ import withIntl from '../../lib/withIntl'
 import publicPage, { FullPage } from '../../hocs/publicPage'
 import { Spacer } from '../../components/VTheme/VTheme'
 import AboutCTA from '../../components/About/AboutCTA.js'
+import { Helmet } from 'react-helmet'
 const getText = locale => {
   switch (locale) {
     case 'mi': {
@@ -69,7 +69,9 @@ class About extends Component {
 
     return (
       <FullPage>
-        <Head><title>Voluntarily - About</title></Head>
+        <Helmet>
+          <title>Voluntarily - Home</title>
+        </Helmet>
         <Spacer />
         <Spacer />
         <AboutSection>

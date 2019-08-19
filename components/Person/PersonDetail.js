@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import PersonRoles from './PersonRole'
+import TagDisplay from '../Tags/TagDisplay'
 import { FormattedMessage } from 'react-intl'
 import MemberUl from '../Member/MemberUl'
 import {
@@ -120,6 +121,12 @@ const PersonDetail = ({ person }, ...props) => (
             <Icon type='compass' /> {person.location}
           </a>
         </TextPBold>
+        <TextPBold>
+          <a>
+            <Icon type='tags' />
+          </a>
+        </TextPBold>
+        <TagDisplay tags={person.tags} />
       </ListItem>
       <DetailItemMobile>
         <p>        <Icon type='history' /> 312 ops completed</p>
@@ -164,7 +171,13 @@ PersonDetail.propTypes = {
         'tester'
       ])
     ),
-    status: PropTypes.oneOf(['active', 'inactive', 'hold'])
+    status: PropTypes.oneOf(['active', 'inactive', 'hold']),
+    tags: PropTypes.arrayOf(
+      PropTypes.shape({
+        tag: PropTypes.string.isRequired,
+        _id: PropTypes.string
+      })
+    )
   }).isRequired
 }
 
