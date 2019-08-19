@@ -85,13 +85,17 @@ const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
     })
     let durationStringInISO = convertDurationStringToISO(opportunity.duration)
     const duration = moment.duration(durationStringInISO).isValid() ? moment.duration(durationStringInISO) : moment(0, 'second')
-    calendar.createEvent({
+    const event = calendar.createEvent({
       start: moment(opportunity.date[0]),
       end: moment(opportunity.date[0]).add(duration),
       timestamp: moment(),
       summary: `Voluntarily event: ${opportunity.title}`,
       description: `${opportunity.description}`,
       organizer: 'Voluntarily <team@voluntari.ly>'
+    })
+    event.createAlarm({
+      type: 'display',
+      trigger: moment.duration(1, 'hour') // Trigger alarm before event 1 hour
     })
 
     icalString = calendar.toString()
@@ -104,7 +108,7 @@ const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
         filename: 'invitation.ics',
         content: icalString
       }]
-    } 
+    }
     sendEmailWithAttachment(volunteer._id, InterestStatus.INVITED, emailProps)
   } else if (interestStatus === InterestStatus.DECLINED) {
     // send email to volunteer only

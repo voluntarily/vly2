@@ -28,7 +28,7 @@ const person = new Person({
 
 const opportunity = new Opportunity({
   _id: '5cc8d60b8b16812b5b392321',
-  date:[
+  date: [
     '2019-08-19T04:44:26+0000'
   ],
   title: 'Self driving model cars ',
