@@ -41,10 +41,8 @@ const updateInterest = async (req, res) => {
     // await Interest.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
     const { opportunity, status, person } = req.body // person in here is the volunteer-- quite not good naming here
     Opportunity.findById(opportunity, (err, opportunityFound) => {
-      if (err) console.log(err)
-      else {
-        processStatusToSendEmail(status, opportunityFound, person)
-      }
+      if (err) throw err
+      else processStatusToSendEmail(status, opportunityFound, person)
     })
     res.json(req.body)
   } catch (err) {
@@ -85,9 +83,11 @@ const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
       domain: 'voluntarily.nz',
       name: 'Welcome'
     })
+    let durationStringInISO = convertDurationStringToISO(opportunity.duration)
+    const duration = moment.duration(durationStringInISO).isValid() ? moment.duration(durationStringInISO) : moment(0, 'second')
     calendar.createEvent({
       start: moment(opportunity.date[0]),
-      end: moment(opportunity.date[0]).add(1, 'hour'),
+      end: moment(opportunity.date[0]).add(duration),
       timestamp: moment(),
       summary: `Voluntarily event: ${opportunity.title}`,
       description: `${opportunity.description}`,
@@ -104,7 +104,7 @@ const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
         filename: 'invitation.ics',
         content: icalString
       }]
-    }
+    } 
     sendEmailWithAttachment(volunteer._id, InterestStatus.INVITED, emailProps)
   } else if (interestStatus === InterestStatus.DECLINED) {
     // send email to volunteer only
@@ -116,7 +116,13 @@ const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
 }
 
 const isEvent1DayOnly = (opportunity) => {
-  return opportunity.date[1] == null
+  return opportunity.date[1] == null && opportunity.date[0] != null
+}
+
+const convertDurationStringToISO = (durationString) => {
+  let filteredOutCharacter = durationString.replace(/[^mhy/\d]/g, '')
+  filteredOutCharacter = filteredOutCharacter.toUpperCase()
+  return `PT${filteredOutCharacter}` // ISO string for duration start with PT character first
 }
 
 const sendEmailWithAttachment = async (personId, status, emailProps) => {
@@ -153,24 +159,6 @@ const sendEmailBaseOn = async (status, personID, opportunityTitle, opId, volunte
 // 2 ->Invited
 // 3 ->Declined
 // 4 ->Commited
-
-// async function maybeInnovativelyDestructivelySendEmailPossibly (volunteerId, organizerId, prevStatus, currentStatus, modifier) {
-//   if (modifier == 'volunteer') {
-//     if (currentStatus == 'interested') { // A volunteer just clicked "interested"
-//       console.log('A volunteer just clicked "interested"')
-//     } else if (currentStatus == 'committed') { // A volunteer accepts an invitation
-//       console.log('A volunteer accepts an invitation')
-//     }
-//   } else {
-//     if (currentStatus == 'interested') { // An organizer just withdrew an invite
-//       console.log('An organizer just withdrew an invite')
-//     } else if (currentStatus == 'invited') { // An organizer just sent an invite
-//       console.log('An organizer just sent an invite')
-//     } else if (currentStatus == 'declined') { // An organizer just declined someone
-//       console.log('An organizer just declined someone')
-//     }
-//   }
-// }
 
 module.exports = {
   listInterests,
