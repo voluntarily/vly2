@@ -42,7 +42,7 @@ const getSkillsRecommendations = async (me) => {
     const tagIdExpression = {
       $or: tagsToMatch.map(id => ({ 'tags': id }))
     }
-    const opsWithMatchingTags = await Opportunity.find(tagIdExpression)
+    const opsWithMatchingTags = await Opportunity.find({ ...tagIdExpression, requestor: { $ne: me._id } })
     const opsWithCounts = []
 
     opsWithMatchingTags.forEach(op => {
@@ -60,7 +60,7 @@ const getSkillsRecommendations = async (me) => {
       return b.count - a.count
     })
 
-    return opsWithCounts.map(op => op.op)
+    return opsWithCounts.map(op => op.op).slice(0, 10)
   } else {
     return []
   }
