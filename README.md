@@ -14,15 +14,15 @@ Support education and innovation in New Zealand Schools with industry experts an
 You don't need permission to help - its open.
 
 This is an open source project and you are welcome to contribute at any level you feel comfortable.
-Find out more about the project at the [Website](http://voluntari.ly) and then...
+Find out more about the project at the [Website](http://voluntarily.nz) and then...
 
 1. Say hello, or ask questions in the [Gitter Chatroom](https://gitter.im/voluntarily/community "Chatroom")
-2. email team@voluntari.ly and tell us about yourself
+2. email team@voluntarily.nz and tell us about yourself
 3. [Start Reading documentation](https://voluntarily.atlassian.net/wiki/spaces/VP/overview)
 4. Build the code - below
 5. Add yourself to the CONTRIBUTORS file, check it in and send us a pull request - see this ticket [VP-82](https://voluntarily.atlassian.net/browse/VP-82)
 6. Come along to a Drop in Wednesday Afternoon or after work social at our [Auckland office](https://goo.gl/maps/fEtq6mdpz446iXVQA)
-7. Come along to one of our developer events - see http://voluntari.ly for the latest details.
+7. Come along to one of our developer events - see http://voluntarily.nz for the latest details.
 
 # How to build it
 

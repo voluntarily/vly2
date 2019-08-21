@@ -1,3 +1,5 @@
+
+require('dotenv').config()
 const appName = 'Voluntarily NZ'
 const databaseName = 'vly2'
 const serverPort = process.env.PORT || 3122

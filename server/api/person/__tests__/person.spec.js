@@ -32,7 +32,7 @@ test.serial('verify fixture database has people', async t => {
   const andrew = await Person.findOne({ email: 'andrew@groat.nz' })
   t.is(andrew.nickname, 'avowkind')
 
-  const dali = await Person.findOne({ email: 'salvador@voluntari.ly' })
+  const dali = await Person.findOne({ email: 'salvador@voluntarily.nz' })
   t.is(dali.nickname, 'Dali')
 
   await Person.find().then((p) => {
@@ -174,7 +174,7 @@ test.serial('Should find a person by email', async t => {
     name: 'Testy McTestFace',
     nickname: 'Testy',
     phone: '123 456789',
-    email: 'unique_email@voluntari.ly',
+    email: 'unique_email@voluntarily.nz',
     role: ['tester'],
     tags: []
   }
@@ -198,7 +198,7 @@ test.serial('Should find a person by nickname', async t => {
     name: 'Testy McTestFace',
     nickname: 'Testy',
     phone: '123 456789',
-    email: 'Testy555@voluntari.ly',
+    email: 'Testy555@voluntarily.nz',
     role: ['tester'],
     tags: []
   }
@@ -217,7 +217,7 @@ test.serial('Should find no person', async t => {
   t.plan(1)
 
   const res = await request(server)
-    .get(`/api/person/by/email/not_a_real_email@voluntari.ly`)
+    .get(`/api/person/by/email/not_a_real_email@voluntarily.nz`)
     .set('Accept', 'application/json')
     .expect(404)
   t.is(res.body.error, 'person not found')
@@ -228,7 +228,7 @@ test.serial('Should correctly handle missing inputs', async t => {
     name: 'Testy McTestFace',
     nickname: 'Testy',
     phone: '123 456789',
-    // email: 'Testy555@voluntari.ly', <- explicity remove email
+    // email: 'Testy555@voluntarily.nz', <- explicity remove email
     role: ['tester'],
     tags: []
   }
