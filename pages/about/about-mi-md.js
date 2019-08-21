@@ -30,12 +30,12 @@ We are always looking for more developers to join the open source development of
 ## Volunteers 
 We're looking for volunteers of all types - If you’re keen to get involved fill in the form below saying what you want to do and we’ll get back in touch with you asap :)
 
-<Button href="https://voluntari.ly/become-a-volunteer">Become a Volunter</Button>
+<Button href="https://voluntarily.nz/become-a-volunteer">Become a Volunter</Button>
 
 ----
 
 ## Sponsorship 
-Donations and long term support will allow us to get voluntari.ly working sooner and be more effective in the lives of NZ young people
+Donations and long term support will allow us to get voluntarily.nz working sooner and be more effective in the lives of NZ young people
 
 <Button href="https://secure.squarespace.com/checkout/donate?donatePageId=5becd3d770a6adb0fa3e7b28">Donate</Button>
 
