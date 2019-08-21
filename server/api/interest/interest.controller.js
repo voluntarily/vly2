@@ -39,7 +39,7 @@ const listInterests = async (req, res) => {
 
 const updateInterest = async (req, res) => {
   try {
-    // await Interest.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
+    await Interest.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
     const { opportunity, status, person } = req.body // person in here is the volunteer-- quite not good naming here
     Opportunity.findById(opportunity, (err, opportunityFound) => {
       if (err) throw err
