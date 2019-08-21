@@ -5,6 +5,7 @@ const { config } = require('../../../config/config')
 const { emailPerson } = require('../person/email/emailperson')
 const { InterestStatus } = require('./interest.constants')
 const ical = require('ical-generator')
+const htmlSanitizer = require('sanitize-html')
 const moment = require('moment')
 
 /**
@@ -77,30 +78,16 @@ const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
   const opID = opportunity._id
 
   let icalString
+  const calendar = ical({
+    prodId: { company: 'voluntarily', product: 'Invitation' },
+    domain: 'voluntarily.nz',
+    name: 'Welcome'
+  })
   if (isEvent1DayOnly(opportunity)) {
-    const calendar = ical({
-      prodId: { company: 'voluntarily', product: 'Invitation' },
-      domain: 'voluntarily.nz',
-      name: 'Welcome'
-    })
-    let durationStringInISO = convertDurationStringToISO(opportunity.duration)
-    const duration = moment.duration(durationStringInISO).isValid() ? moment.duration(durationStringInISO) : moment(0, 'second')
-    const event = calendar.createEvent({
-      start: moment(opportunity.date[0]),
-      end: moment(opportunity.date[0]).add(duration),
-      timestamp: moment(),
-      summary: `Voluntarily event: ${opportunity.title}`,
-      description: `${opportunity.description}`,
-      organizer: 'Voluntarily <team@voluntari.ly>'
-    })
-    event.createAlarm({
-      type: 'display',
-      trigger: moment.duration(1, 'hour') // Trigger alarm before event 1 hour
-    })
-
-    icalString = calendar.toString()
+    addEventToIcalCalendar(calendar, opportunity)
   }
 
+  icalString = calendar.toString()
   if (interestStatus === InterestStatus.INVITED) {
     const emailProps = {
       send: true,
@@ -121,6 +108,28 @@ const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
 
 const isEvent1DayOnly = (opportunity) => {
   return opportunity.date[1] == null && opportunity.date[0] != null
+}
+
+const addEventToIcalCalendar = (icalCalendar, opportunity) => {
+  let durationStringInISO = convertDurationStringToISO(opportunity.duration)
+  const duration = moment.duration(durationStringInISO).isValid() ? moment.duration(durationStringInISO) : moment(0, 'second')
+  const cleanEventDescription = htmlSanitizer(opportunity.description, {
+    allowedTags: [],
+    allowedAttributes: {}
+  })
+  const event = icalCalendar.createEvent({
+    start: moment(opportunity.date[0]),
+    end: moment(opportunity.date[0]).add(duration),
+    timestamp: moment(),
+    summary: `Voluntarily event: ${opportunity.title}`,
+    description: `${cleanEventDescription}`,
+    url: `${config.appUrl}/ops/${opportunity._id}`,
+    organizer: 'Voluntarily <team@voluntari.ly>'
+  })
+  event.createAlarm({
+    type: 'display',
+    trigger: moment.duration(1, 'hour') // Trigger alarm before event 1 hour
+  })
 }
 
 const convertDurationStringToISO = (durationString) => {
