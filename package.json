@@ -34,6 +34,7 @@
     "antd": "^3.20.3",
     "atom": "^1.1.0",
     "auth0-js": "^9.11.2",
+    "aws-sdk": "^2.515.0",
     "babel-plugin-import": "^1.12.0",
     "babel-plugin-react-intl": "^3.5.1",
     "babel-plugin-styled-components": "^1.10.6",
