@@ -9,7 +9,7 @@ test.after.always(() => {
   fsExtra.emptyDirSync('./static/upload-test')
 })
 
-test('can return image from static folder', async t => {
+test.serial('can return image from static folder', async t => {
   await appReady
   const res = await request(server)
     .get('/static/img/194px-Testcard_F.jpg')
@@ -28,7 +28,7 @@ const sendImageToAPI = (path, filename) => {
     .send(JSON.stringify({ image: file, file: filename }))
 }
 
-test('Should upload a small file', async t => {
+test.only('Should upload a small file', async t => {
   await appReady
   const res = await sendImageToAPI(__dirname, '194px-Testcard_F.jpg')
     .expect(200)
@@ -46,7 +46,7 @@ test('Should upload a small file', async t => {
   t.is(img.body.length, 15185)
 })
 
-test('Should fail to upload', async t => {
+test.serial('Should fail to upload', async t => {
   await appReady
   const res = await request(server)
     .post('/api/images')

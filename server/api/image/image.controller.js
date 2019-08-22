@@ -19,7 +19,7 @@ const imageController = async (req, res) => {
       message: 'OK',
       imageUrl: filename
     }
-    if (process.NODE_ENV !== 'test') {
+    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production') {
       result.imageUrl = await cloudUploadService(req.body)
     }
     fs.writeFile(fqp, ImageBuffer, (err) => {
