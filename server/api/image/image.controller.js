@@ -1,8 +1,9 @@
 const fs = require('fs')
 const cuid = require('cuid')
 const slug = require('slug')
+const { cloudUploadService } = require('./cloudImageUpload')
 // any depended upon api services
-const imageController = (req, res) => {
+const imageController = async (req, res) => {
   try {
     const ImageBin = req.body.image
     const ImageBuffer = Buffer.from(ImageBin, 'binary')
@@ -11,7 +12,6 @@ const imageController = (req, res) => {
     const uploadUrl = `/static/upload${(process.env.NODE_ENV === 'test') ? '-test' : ''}`
     const uploadPath = `.${uploadUrl}`
     !fs.existsSync(uploadPath) && fs.mkdirSync(uploadPath)
-
     const filename = `${uploadUrl}/${uniqueID}-${slug(req.body.file)}`
     const fqp = `.${filename}`
     const result = {
@@ -19,13 +19,16 @@ const imageController = (req, res) => {
       message: 'OK',
       imageUrl: filename
     }
+    if (process.NODE_ENV !== 'test') {
+      result.imageUrl = await cloudUploadService(req.body)
+    }
     fs.writeFile(fqp, ImageBuffer, (err) => {
       (err)
         ? res.status(500).json('Could not save the image')
         : res.status(result.status).json(result)
     })
   } catch (e) {
-    // console.log(e)
+    console.log(e)
     res.status(400).send({ error: 'Bad Request' })
   }
 }
