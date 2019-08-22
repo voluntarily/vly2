@@ -66,7 +66,7 @@ const appReady = app.prepare().then(() => {
     req.localeDataScript = getLocaleDataScript(req.locale)
     // req.messages = dev ? {} : getMessages(req.locale)
     req.messages = getMessages(req.locale)
-    req.messages.revision = process.env.REVISION
+    req.messages.revision = process.env.REVISION || 'local_build'
     next()
   })
 
@@ -98,7 +98,7 @@ const appReady = app.prepare().then(() => {
 
   // Start server
   if (process.env.NODE_ENV !== 'test') {
-    server.listen(config.serverPort, () => console.log(`${config.appName} running on ${config.appUrl}/ Be Awesome`))
+    server.listen(config.serverPort, () => console.log(`${config.appName} (${process.env.REVISION || 'local_build'}) running on ${config.appUrl}/ Be Awesome`))
   }
 })
 

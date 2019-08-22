@@ -29,7 +29,12 @@ const personSchema = new Schema({
     default: 'active',
     enum: ['active', 'inactive', 'hold']
   },
-  dateAdded: { type: 'Date', default: Date.now, required: true }
+  dateAdded: { type: 'Date', default: Date.now, required: true },
+  tags: [
+    {
+      type: Schema.Types.ObjectId, ref: 'Tag'
+    }
+  ]
 })
 
 personSchema.plugin(idvalidator)

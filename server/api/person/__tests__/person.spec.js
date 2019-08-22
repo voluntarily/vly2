@@ -32,7 +32,7 @@ test.serial('verify fixture database has people', async t => {
   const andrew = await Person.findOne({ email: 'andrew@groat.nz' })
   t.is(andrew.nickname, 'avowkind')
 
-  const dali = await Person.findOne({ email: 'salvador@voluntari.ly' })
+  const dali = await Person.findOne({ email: 'salvador@voluntarily.nz' })
   t.is(dali.nickname, 'Dali')
 
   await Person.find().then((p) => {
@@ -56,7 +56,8 @@ test.failing('Should send correct data when queried against an id', async t => {
     nickname: 'Testy',
     phone: '123 456789',
     email: 'query@omgtech.co.nz',
-    role: ['tester']
+    role: ['tester'],
+    tags: []
   }
 
   const person = new Person(p)
@@ -80,7 +81,8 @@ test.serial('Should correctly add a person', async t => {
     phone: '123 456789',
     email: 'addy@omgtech.co.nz',
     gender: 'binary',
-    role: ['tester']
+    role: ['tester'],
+    tags: []
   }
 
   const res = await request(server)
@@ -117,7 +119,8 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
     phone: "1234<img src=x onerror=alert('img') />ABCD", // should remove img
     email: 'bobby@omgtech.co.nz', // ok
     gender: "console.log('hello world')", // ok
-    role: ['tester']
+    role: ['tester'],
+    tags: []
   }
 
   await request(server)
@@ -138,7 +141,8 @@ test.serial('Should load a person into the db but block access and delete them v
     phone: '123 456789',
     email: 'loady@omgtech.co.nz',
     gender: 'binary',
-    role: ['tester']
+    role: ['tester'],
+    tags: []
   }
   const person = new Person(p)
   await person.save()
@@ -170,8 +174,9 @@ test.serial('Should find a person by email', async t => {
     name: 'Testy McTestFace',
     nickname: 'Testy',
     phone: '123 456789',
-    email: 'unique_email@voluntari.ly',
-    role: ['tester']
+    email: 'unique_email@voluntarily.nz',
+    role: ['tester'],
+    tags: []
   }
 
   const person = new Person(p)
@@ -193,8 +198,9 @@ test.serial('Should find a person by nickname', async t => {
     name: 'Testy McTestFace',
     nickname: 'Testy',
     phone: '123 456789',
-    email: 'Testy555@voluntari.ly',
-    role: ['tester']
+    email: 'Testy555@voluntarily.nz',
+    role: ['tester'],
+    tags: []
   }
 
   const person = new Person(p)
@@ -211,7 +217,7 @@ test.serial('Should find no person', async t => {
   t.plan(1)
 
   const res = await request(server)
-    .get(`/api/person/by/email/not_a_real_email@voluntari.ly`)
+    .get(`/api/person/by/email/not_a_real_email@voluntarily.nz`)
     .set('Accept', 'application/json')
     .expect(404)
   t.is(res.body.error, 'person not found')
@@ -222,8 +228,9 @@ test.serial('Should correctly handle missing inputs', async t => {
     name: 'Testy McTestFace',
     nickname: 'Testy',
     phone: '123 456789',
-    // email: 'Testy555@voluntari.ly', <- explicity remove email
-    role: ['tester']
+    // email: 'Testy555@voluntarily.nz', <- explicity remove email
+    role: ['tester'],
+    tags: []
   }
   try {
     const res = await request(server)

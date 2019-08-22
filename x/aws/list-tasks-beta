@@ -1,0 +1,1 @@
+aws ecs list-tasks --service vly2-beta --cluster vly-beta

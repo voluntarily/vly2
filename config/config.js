@@ -1,4 +1,5 @@
-const appName = 'Voluntari.ly'
+
+const appName = 'Voluntarily NZ'
 const databaseName = 'vly2'
 const serverPort = process.env.PORT || 3122
 
@@ -36,7 +37,7 @@ const completeConfig = {
   },
 
   production: {
-    appUrl: process.env.APP_URL || `https://alpha.voluntarily.nz/`
+    appUrl: process.env.APP_URL
   }
 
 }

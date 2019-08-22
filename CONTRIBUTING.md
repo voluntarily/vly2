@@ -2,10 +2,10 @@
 
 ## Show Interest
 We ask that you let us know you are interested in the project by 
-* emailing kiaora@voluntari.ly
+* emailing kiaora@voluntarily.nz
 * joining the gitter chat and saying hi. https://gitter.im/voluntarily/community 
 * If you are in Auckland NZ then visit us on Drop in Wednesdays at 48 Emily Place.
-* please sign up for one of our working bees or hacker events - see voluntari.ly home page for details.
+* please sign up for one of our working bees or hacker events - see voluntarily.nz home page for details.
   * we will have regular events in Auckland, Wellington, Christchurch and other locations.
 * Talk to your employers about support the project with developer volunteer days. 
 

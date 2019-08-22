@@ -18,6 +18,7 @@ import {
 } from '../../components/VTheme/VTheme'
 import { Button, Divider } from 'antd'
 import TitleSection from '../../components/LandingPageComponents/TitleSection'
+import { Helmet } from 'react-helmet'
 
 const GridContainer = styled.div`
   position: relative;
@@ -219,6 +220,9 @@ export class ContentProvider extends Component {
     return (
       <div>
         <FullPage>
+          <Helmet>
+            <title>Voluntarily - Business</title>
+          </Helmet>
           <HeroContainer>
             <HalfGrid>
               <GridContainer>
@@ -424,7 +428,7 @@ export class ContentProvider extends Component {
               Want to get more involved in the project? Get in touch below.
               </TextP>
               <br />
-              <a>business@voluntari.ly</a>
+              <a>business@voluntarily.nz</a>
               <br />
               <br />
               <a>+64-9-123-4567</a>

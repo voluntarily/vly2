@@ -6,6 +6,7 @@ import publicPage, { FullPage } from '../../hocs/publicPage'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import PropTypes from 'prop-types'
 import OpList from '../../components/Op/OpList'
+import { Helmet } from 'react-helmet'
 
 class Ops extends Component {
   static async getInitialProps ({ store, query }) {
@@ -22,6 +23,9 @@ class Ops extends Component {
   render () {
     return (
       <FullPage>
+        <Helmet>
+          <title>Voluntarily - Opportunities List</title>
+        </Helmet>
         <h1>
           <FormattedMessage
             id='opportunities'
