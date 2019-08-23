@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const PersonCard = ({ person, ...props }) => (
   <div>
-    <Link href={`/people/${person._id}`} >
+    <Link href={`/auth/sign-in`} >
       <a>
         <div className='personContainer'>
           <img className='personImg' src={person.avatar} />
