@@ -35,7 +35,7 @@ function listPeople (req, res) {
     sort = req.query.s ? JSON.parse(req.query.s) : sort
     select = req.query.p ? JSON.parse(req.query.p) : {}
 
-    Person.find(query, select).sort(sort)
+    Person.find(query, select).populate('tags').sort(sort)
       .then(got => {
         res.json(got)
       })
