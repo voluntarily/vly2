@@ -49,6 +49,7 @@ test.serial('Should correctly block GET method for api people for anonymous', as
   t.is(undefined, res.body.length) // Return data response will be undefined for 403 response
 })
 
+// FIXME: must test get and list person calls with signed in user
 test.failing('Should send correct data when queried against an id', async t => {
   t.plan(1)
   const p = {
