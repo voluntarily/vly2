@@ -1,0 +1,178 @@
+openapi: 3.0.0
+info:
+  title: voluntarily api
+  version: '1.0'
+  contact:
+    name: Andrew Watkins
+    url: voluntarily.nz
+    email: andrew@voluntarily.nz
+  license:
+    name: MPL 2.0
+  description: 'Allows the creation and access to voluntarily resources such as people, opportunities, activities etc.'
+servers:
+  - url: 'http://localhost:3122'
+    description: development
+  - url: 'https://alpha.voluntarily.nz'
+    description: alpha
+  - url: 'https://beta.voluntarily.nz'
+    description: beta
+  - url: 'https://voluntarily.nz'
+    description: production
+paths:
+  '/api/people/{personId}':
+    parameters:
+      name: personId
+      in: path
+      required: true
+      type: string
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/person.v1.yaml
+              examples: {}
+      description: A volunteer or other person on the platform. Full list of people only available to admins. Otherwise via a search or members list
+      requestBody: {}
+    post:
+      summary: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/person.v1.yaml
+      description: Create a new Person
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../common/models/person.v1.yaml
+        description: ''
+    put:
+      summary: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/person.v1.yaml
+      description: |
+        Update a person record
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../common/models/person.v1.yaml
+    delete:
+      summary: ''
+      responses:
+        '200':
+          description: OK
+      description: Remove a person
+  '/api/opportunities/{opportunityId}':
+    parameters:
+      name: opportunityId
+      in: path
+      required: true
+      type: string
+    get:
+      summary: 'List opportunities,'
+      tags: &ref_0 []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/opportunity.v1.yaml
+      description: >
+        get a list of matching opportunities, query params are json encoded Mongo
+        DB specs
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: q
+          description: 'MongoDB Query - select matching opportunity  '
+        - schema:
+            type: string
+          in: query
+          name: s
+          description: sort order
+        - schema:
+            type: string
+          in: query
+          name: p
+          description: 'product - select fields  '
+        - schema:
+            type: string
+          in: query
+          name: search
+          description: search tokens
+        - schema:
+            type: string
+          in: query
+          name: location
+          description: region or city
+    post:
+      summary: Create Opportunity
+      tags: *ref_0
+      responses: {}
+    put:
+      summary: Update Opportunity
+      tags: *ref_0
+      responses: {}
+  '/api/organisations/{orgId}':
+    parameters:
+      name: orgId
+      in: path
+      required: true
+      type: string
+    get:
+      summary: 'List orgs,'
+      tags: &ref_1 []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/organisation.v1.yaml
+      description: List organisations or get single organisation
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: q
+          description: |
+            selection query
+        - schema:
+            type: string
+          in: query
+          name: s
+          description: |
+            sort order
+        - schema:
+            type: string
+          in: query
+          name: p
+          description: product fields
+    post:
+      summary: Create Org
+      tags: *ref_1
+      responses: {}
+    put:
+      summary: Update Org
+      tags: *ref_1
+      responses: {}
+components:
+  schemas: {}
+  securitySchemes: {}

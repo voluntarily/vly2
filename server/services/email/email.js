@@ -32,7 +32,7 @@ const getDevelopmentTransport = () =>
 
 // Use AWS SMTP service
 // for ses-smtp-user.20190425-160307
-// from must be andrew@voluntari.ly
+// from must be andrew@voluntarily.nz
 // to must be registered emails until we get out of the sandbox
 const getTransportSES = () =>
   nodemailer.createTransport({

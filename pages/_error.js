@@ -69,7 +69,7 @@ class ErrorPage extends React.Component {
                 defaultMessage="The page you are looking for is not here. We have looked everywhere but it doesn't seem to exist. Perhaps it just hasn't been built yet."
               />
               &nbsp;
-              <a href='https://voluntari.ly/get-involved'>
+              <a href='https://voluntarily.nz/get-involved'>
                 <FormattedMessage
                   id='error.pagenotfound.contribute'
                   defaultMessage='If you can write code you can help fix that by becoming a contributor to the project.'

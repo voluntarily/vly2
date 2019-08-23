@@ -24,7 +24,7 @@ const people = [
     ],
     'status': 'active',
     'name': 'Salvador Domingo Felipe Jacinto Dalí i Domènech, 1st Marquis of Dalí de Púbol ',
-    'email': 'salvador@voluntari.ly',
+    'email': 'salvador@voluntarily.nz',
     'phone': '000 000 0000',
     'avatar': 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg'
   },
