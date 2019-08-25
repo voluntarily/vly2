@@ -29,7 +29,7 @@ Note In order to stop the root folder filling up I moved all the docker files to
 ### You are in.
 * Open your web browser at http://localhost:3122/
 
-You will now be able to see the voluntari.ly application (if not then ask for help on our [![gitter](https://badges.gitter.im/voluntarily/vly2.svg)](https://gitter.im/voluntarily/vly2?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) channel.
+You will now be able to see the voluntarily.nz application (if not then ask for help on our [![gitter](https://badges.gitter.im/voluntarily/vly2.svg)](https://gitter.im/voluntarily/vly2?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) channel.
 
 ### Stopping
 To halt the containers run:

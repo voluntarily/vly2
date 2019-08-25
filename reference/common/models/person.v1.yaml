@@ -1,0 +1,99 @@
+title: Person
+type: object
+description: 'A person in the system, contact details and profile  '
+x-examples:
+  Dali:
+    _id: 5ccbffff958ff4833ed2188d
+    nickname: Dali
+    about: >-
+      Salvador Domingo Felipe Jacinto Dalí i Domènech, 1st Marquis of Dalí de
+      Púbol (11 May 1904 – 23 January 1989), known professionally as Salvador
+      Dalí (/ˈdɑːli, dɑːˈli/;[1][2] Catalan: [səlβəˈðo ðəˈli]; Spanish:
+      [salβaˈðoɾ ðaˈli]), was a prominent Spanish surrealist born in Figueres,
+      Catalonia, Spain.
+    gender: Mostly Male
+    language: en
+    role:
+      - volunteer
+      - activityProvider
+    status: active
+    name: 'Salvador Domingo Felipe Jacinto Dalí i Domènech, 1st Marquis of Dalí de Púbol '
+    email: salvador@voluntarily.nz
+    phone: 000 000 0000
+    avatar: 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg'
+  example-2: {}
+properties:
+  _id:
+    type: string
+  name:
+    type: string
+    description: 'Long full name, suitable for putting into forms'
+    example: 'Salvador Domingo Felipe Jacinto Dalí i Domènech, 1st Marquis of Dalí de Púbol '
+  email:
+    type: string
+    format: email
+    example: person@example.com
+    description: |-
+      primary contact email for the person
+      is the unique identifier for the person
+      Used for notifications
+  nickname:
+    type: string
+    example: dali
+    description: 'short name or handle, used in summary pages and chats.'
+  about:
+    type: string
+    description: what person wants others to know about themselves. Profile page
+  location:
+    type: string
+    description: city or region. (not address) used to promote local offerings
+  phone:
+    type: string
+    example: +64 (0) 27 555 0000
+    description: 'main contact phone number, not advertised but available in an emergency'
+  pronoun:
+    type: string
+    example: they/them/their
+    description: 'gender identity related pronouns - how the person should be addressed in third and possesive person forms. e.g he/him/his, she/her/hers etc.'
+  language:
+    type: string
+  avatar:
+    type: string
+    format: uri
+    example: 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg'
+    description: reference to an image that represents the person - usually their face.
+  role:
+    type: array
+    default: volunteer
+    enum:
+      - volunteer
+      - opportunityProvider
+      - activityProvider
+      - resourceProvider
+      - tester
+      - admin
+      - orgAdmin
+    example: volunteer
+    items:
+      type: string
+  status:
+    type: string
+    default: active
+    enum:
+      - active
+      - inactive
+      - hold
+    example: active
+    description: |
+      used to indicate person's overall availability
+  dateAdded:
+    type: string
+    default: Date.now
+    format: date-time
+    description: |
+      date of record creation
+required:
+  - name
+  - email
+  - status
+  - dateAdded

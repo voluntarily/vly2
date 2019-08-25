@@ -51,6 +51,8 @@ class OrgDetailForm extends Component {
         org.info.outsiders = values.outsiders
         org.imgUrl = values.imgUrl
         org.website = values.website
+        org.twitter = values.twitter
+        org.facebook = values.facebook
         org.contactEmail = values.contactEmail
         org.category = values.category
         this.props.onSubmit(this.props.org)
@@ -98,7 +100,6 @@ class OrgDetailForm extends Component {
 
     // Only show error after a field is touched.
     const orgNameError = isFieldTouched('name') && getFieldError('name')
-
     return (
       <div className='OrgDetailForm'>
         <Form
@@ -138,6 +139,15 @@ class OrgDetailForm extends Component {
             )}
             <ImageUpload setImgUrl={this.setImgUrl} />
           </Form.Item>
+          <Form.Item label={orgContactEmail}>
+            {getFieldDecorator('contactEmail', {
+              rules: [
+              ]
+            })(
+              // <TextArea rows={20} placeholder='Enter email address for organisations contact person' />
+              <Input placeholder='example@gmail.com' />
+            )}
+          </Form.Item>
           <Form.Item
             label={orgWebsite}
           >
@@ -150,14 +160,18 @@ class OrgDetailForm extends Component {
               <Input placeholder='Organisation Website' />
             )}
           </Form.Item>
-
-          <Form.Item label={orgContactEmail}>
-            {getFieldDecorator('contactEmail', {
+          <Form.Item label='Facebook'>
+            {getFieldDecorator('facebook', {
               rules: [
               ]
             })(
-              // <TextArea rows={20} placeholder='Enter email address for organisations contact person' />
-              <Input placeholder='example@gmail.com' />
+              <Input addonBefore='https://www.facebook.com/' />
+            )}
+          </Form.Item>
+          <Form.Item label='Twitter'>
+            {getFieldDecorator('twitter', {
+            })(
+              <Input addonBefore='@' />
             )}
           </Form.Item>
           <Form.Item label={orgCategory}>

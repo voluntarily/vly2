@@ -11,7 +11,7 @@ module.exports.emailPerson = async (person, template, props) => {
     const transport = (process.env.NODE_ENV === 'development') ? await getDevelopmentTransport() : await getTransport()
     const email = new Email({
       message: {
-        from: 'andrew@voluntari.ly'
+        from: 'andrew@voluntarily.nz'
       },
       // uncomment below to send emails in development/test env:
       send: true,
@@ -35,7 +35,8 @@ module.exports.emailPerson = async (person, template, props) => {
     return await email.send({
       template: path.join(__dirname, template),
       message: {
-        to: person.email
+        to: person.email,
+        attachments: props.attachment ? props.attachment : null
       },
       locals: {
         person,
