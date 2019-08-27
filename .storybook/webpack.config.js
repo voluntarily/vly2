@@ -1,18 +1,41 @@
 const path = require('path');
 
-// Export a function. Accept the base config as the only param.
 module.exports = async ({ config, mode }) => {
-  // `mode` has a value of 'DEVELOPMENT' or 'PRODUCTION'
-  // You can change the configuration based on that.
-  // 'PRODUCTION' is used when building the static version of storybook.
 
-  // Make whatever fine-grained changes you need
   config.module.rules.push({
-    test: /\.scss$/,
-    use: ['style-loader', 'css-loader', 'sass-loader'],
-    include: path.resolve(__dirname, '../'),
+      loader: 'babel-loader',
+      exclude: /node_modules/,
+      test: /\.(js|jsx)$/,
+      options: {
+          presets: ['@babel/react'],
+          plugins: [
+              ['import', {
+                libraryName: 'antd',
+                libraryDirectory: 'es',
+                style: true
+              }]
+          ]
+      },
   });
 
-  // Return the altered config
+  config.module.rules.push({
+      test: /\.less$/,
+      loaders: [
+          'style-loader',
+          'css-loader',
+          {
+              loader: 'less-loader',
+              options: {
+                  modifyVars: {'@primary-color': '#f00'},
+                  javascriptEnabled: true
+              }
+          }
+      ],
+      include: [
+        path.resolve(__dirname, '../src'),
+        /[\\/]node_modules[\\/].*antd/
+      ]
+  });
+
   return config;
 };
