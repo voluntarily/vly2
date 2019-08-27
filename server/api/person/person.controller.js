@@ -7,7 +7,7 @@ This is a convenience function usually used to call
 /api/person/by/email/person@example.com  but can be used for other fields
 */
 function getPersonBy (req, res) {
-  console.log('getPersonBy', req.params)
+  // console.log('getPersonBy', req.params)
   let query
   if (req.params.by) {
     query = { [req.params.by]: req.params.value }
