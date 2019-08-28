@@ -1,8 +1,7 @@
 import React from 'react'
 
 import { storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
-import { linkTo } from '@storybook/addon-links'
+
 import styled from 'styled-components'
 
 import {
@@ -31,23 +30,22 @@ import { Divider } from 'antd'
 storiesOf('Welcome', module)
   .add('Getting Started', () => (
     <StoryIntroContainer>
-      <TextH1>Welcome!</TextH1>
-      <TextSubtitle>This is the Voluntarily Component Library 🥳🥳🥳</TextSubtitle>
-      <Divider/>
-      <TextSubtitle>All frontend development for the Voluntarily Platform starts here. Browse the components we use on the left, and tinker with them here without the risk of breaking anything 😂<br/> Open_Sauce (or open source) contributions are welcome, and enjoy yourself while you're here :) <br/>
-      <li><a href="https://github.com/voluntarily/vly2" target="_blank">See the repo here</a></li>
-      <li><a href="https://github.com/voluntarily/vly2" target="_blank">Get Started with Mac</a></li>
-      <li><a href="https://github.com/voluntarily/vly2" target="_blank">Get Started with Windows</a></li>
-      <li><a href="https://github.com/voluntarily/vly2" target="_blank">Get Started with Linux</a></li>
+      <TextH1> 🥳 Welcome 🥳</TextH1>
+      <TextSubtitle>This is the Voluntarily Component Library </TextSubtitle>
+      <Divider />
+      <TextSubtitle>All frontend development for the Voluntarily Platform starts here. Browse the components we use on the left, and tinker with them here without the risk of breaking anything 😂<br /> Open-Sauce (or Open Source) contributions are welcome, and enjoy yourself while you're here :) <br /><br />
+        <li><a href='https://github.com/voluntarily/vly2' target='_blank'> 🎒 See the repo here</a></li>
+        <li><a href='https://github.com/voluntarily/vly2/blob/master/docs/gettingstarted.md' target='_blank'>💻 Get Started with Windows, Mac, or Linux</a></li>
+
       </TextSubtitle>
-      
+
     </StoryIntroContainer>
   ))
   .add('Typography', () => (
     <StoryIntroContainer>
       <TextH1>Text Styles</TextH1>
       <TextSubtitle>How we do text and typography on the platform</TextSubtitle>
-      <Divider/>
+      <Divider />
       <TextSubtitle>Hero Title Text</TextSubtitle>
       <TextBigTitle>I am a hero title. </TextBigTitle>
       <TextPBold>Notes</TextPBold>
@@ -422,7 +420,7 @@ storiesOf('Welcome', module)
         that scales down on mobile.
         <br /> This is inspired by the{' '}
         <a href='https://bbc.github.io/gel-grid/'>BBC GEL Grid system</a>, but
-        isn't as strict or comprehensive.
+        isn't as strict or comprehensive...   Yet.
       </TextSubtitle>
       <br />
       <Divider />

@@ -4,9 +4,7 @@ import { storiesOf } from '@storybook/react'
 import OpCard from './OpCard'
 import OpList from './OpList'
 import moment from 'moment'
-import { StoryIntroContainer } from '../VTheme/VStoryTheme';
-
-
+import { StoryIntroContainer } from '../VTheme/VStoryTheme'
 
 const opList = [
   {
@@ -82,11 +80,9 @@ const opList = [
   }
 ]
 
-
-
 const todayDate = moment().toDate()
 
-//for OpCard
+// for OpCard
 const demoOp = {
   imgUrl: 'https://media.giphy.com/media/ZjUjG4xgRiSOc/giphy-downsized.gif',
   title: 'This is a test title',
@@ -96,22 +92,18 @@ const demoOp = {
   _id: '1'
 }
 
-
-
-
-
 storiesOf('Opportunity Cards', module)
-.add('Default Small', () => (
-  <StoryIntroContainer>
-  <OpCard size='Small' op={demoOp} key='1' />
-  </StoryIntroContainer>
-
-))
-.add('Default Small List', () => (
-<div>
-<StoryIntroContainer>
-    <OpList ops={opList}></OpList>
+  .add('Default Small', () => (
+    <StoryIntroContainer>
+      <OpCard size='Small' op={demoOp} key='1' />
     </StoryIntroContainer>
-    
+
+  ))
+  .add('Default Small List', () => (
+    <div>
+      <StoryIntroContainer>
+        <OpList ops={opList} />
+      </StoryIntroContainer>
+
     </div>
-))
+  ))
