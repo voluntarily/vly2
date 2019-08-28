@@ -306,7 +306,7 @@ export const TextHeadingSubtitle = styled.p`
 ` // end TextHeadingSubtitle
 export const BigQuote = styled.h2`
   font-size: 3rem;
-  letter-spacing: -0.2rem;
+  letter-spacing: -0.05rem;
   font-weight: 300;
   font-style: italic;
   margin-bottom: 0.5rem;
