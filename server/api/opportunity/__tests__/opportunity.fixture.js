@@ -8,7 +8,6 @@ const opList = [
     imgUrl: 'https://www.tvnz.co.nz/content/dam/images/news/2015/01/26/pacific-island-mentors-with-kelston-high-school-students.jpg.hashed.0d58ef7e.desktop.story.share.jpg',
     description: 'We want to set up our Connect Ed programme, help us understand how to communication with businesses, build a website and contact group etc.',
     duration: '12 weeks, 1 hour sessions',
-    offerOrg: 'Albany High School',
     location: regions[0].name,
     status: OpportunityStatus.ACTIVE,
     tags: [ ],

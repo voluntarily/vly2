@@ -3,6 +3,7 @@ const orgList = [
     name: 'Voluntarily Administrators',
     slug: 'vly-admin',
     category: ['admin'],
+    imgUrl: 'https://example.com/image1',
     info: {
       about: 'Industry in the classroom.',
       members: 'You are a member of Voluntarily.',
@@ -15,6 +16,7 @@ const orgList = [
     name: 'OMGTech',
     slug: 'omgtech',
     category: ['ap', 'vp'],
+    imgUrl: 'https://example.com/image2',
     info: {
       about: 'Awesome content providers'
     }
@@ -23,12 +25,14 @@ const orgList = [
     name: 'Datacom',
     slug: 'datacom',
     category: ['vp'],
+    imgUrl: 'https://example.com/image3',
     info: { about: 'some of our most loyal helpers' }
   },
   {
     name: 'Spark Ltd',
     slug: 'spark',
     category: ['vp'],
+    imgUrl: 'https://example.com/image4',
     info: { about: 'more of our most loyal helpers' }
   },
   {

@@ -85,9 +85,9 @@ const OrgDetail = ({ org, ...props }) => (
           {org.website &&
             <ContactContainer>
               <Icon type='global' />&nbsp;&nbsp;
-              <Link href={org.website}>
+              <Link href={org.website}><a>
                 {org.website}
-              </Link>
+              </a></Link>
             </ContactContainer>}
           {org.contactEmail && <ContactContainer><Icon type='mail' />&nbsp;&nbsp;{org.contactEmail}</ContactContainer>}
           <ButtonGroup size='large' >
