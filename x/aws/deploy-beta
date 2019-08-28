@@ -17,4 +17,4 @@ source ${MY_DIR}/login-sydney
 docker push 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-beta:master
 
 # restart
-aws ecs update-service --service vly2-beta --cluster vly-beta --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50 --force-new-deployment 
+aws ecs update-service --service voluntarily-beta-service --cluster vly-beta --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50 --force-new-deployment 

@@ -40,7 +40,7 @@ Set up automated processes that make life easy for contributors, especially give
 ----
 
 ## Current state
-* http://alpha.voluntari.ly = docker container on Amazon Elastic Container Service (ECS)
+* http://alpha.voluntarily.nz = docker container on Amazon Elastic Container Service (ECS)
   * Pushed from Andrew's laptop.  He holds the keys.
   * Uses docker-compose in vly1
   

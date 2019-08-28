@@ -428,7 +428,7 @@ export class ContentProvider extends Component {
               Want to get more involved in the project? Get in touch below.
               </TextP>
               <br />
-              <a>business@voluntari.ly</a>
+              <a>business@voluntarily.nz</a>
               <br />
               <br />
               <a>+64-9-123-4567</a>

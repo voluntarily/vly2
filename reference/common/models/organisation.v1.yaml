@@ -1,0 +1,51 @@
+title: Organisation
+type: object
+x-examples:
+  example-1: {}
+properties:
+  id:
+    type: string
+  name:
+    type: string
+  slug:
+    type: string
+  about:
+    type: string
+  imgUrl:
+    type: string
+  contactEmail:
+    type: string
+  contactId:
+    type: string
+  website:
+    type: string
+  facebook:
+    type: string
+  twitter:
+    type: string
+  category:
+    type: array
+    enum:
+      - admin
+      - vp
+      - op
+      - ap
+      - other
+    items:
+      type: string
+  info:
+    type: object
+    properties:
+      about:
+        type: string
+      followers:
+        type: string
+      joiners:
+        type: string
+      members:
+        type: string
+      outsiders:
+        type: string
+  dateAdded:
+    type: string
+    format: date-time
