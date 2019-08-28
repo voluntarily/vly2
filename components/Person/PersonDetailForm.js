@@ -38,7 +38,7 @@ class PersonDetailForm extends Component {
   }
 
   setImgUrl = value => {
-    this.props.form.setFieldsValue({ avatar: value })
+    this.props.form.setFieldsValue({ imgUrl: value })
   }
 
   handleSubmit = e => {
@@ -54,7 +54,7 @@ class PersonDetailForm extends Component {
         person.about = values.about
         person.location = values.location
         person.tags = values.tags
-        person.avatar = values.avatar
+        person.imgUrl = values.imgUrl
         person.role = values.role
         person.status = values.status
         this.props.onSubmit(this.props.person)
@@ -304,7 +304,7 @@ class PersonDetailForm extends Component {
             </DescriptionContainer>
             <InputContainer>
               <Form.Item label={personAvatar}>
-                {getFieldDecorator('avatar', {
+                {getFieldDecorator('imgUrl', {
                   rules: [
                     {
                       /* { type: 'url', message: 'a URL is required' } */
@@ -389,7 +389,7 @@ PersonDetailForm.propTypes = {
     email: PropTypes.string,
     phone: PropTypes.string,
     pronoun: PropTypes.string,
-    avatar: PropTypes.any,
+    imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
         'admin',
@@ -451,9 +451,9 @@ export default Form.create({
         ...props.person.pronoun,
         value: props.person.pronoun
       }),
-      avatar: Form.createFormField({
-        ...props.person.avatar,
-        value: props.person.avatar
+      imgUrl: Form.createFormField({
+        ...props.person.imgUrl,
+        value: props.person.imgUrl
       }),
       role: Form.createFormField({
         ...props.person.role,

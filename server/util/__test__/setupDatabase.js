@@ -33,7 +33,7 @@ export const initDB = async t => {
 //         //   _id: objectID.generate(),
 //         //   person: people[k].name,
 //         //   opportunity: op._id,
-//         //   comment: `${people[k].nickname} is interested in ${op.title}`,
+//         //   comment: `${people[k].nickname} is interested in ${op.name}`,
 //         //   status: interestedStatus
 //         // })
 //       }

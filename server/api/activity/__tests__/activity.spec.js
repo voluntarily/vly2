@@ -43,11 +43,11 @@ test.serial('verify fixture database has acts', async t => {
   t.is(t.context.activities.length, p.length)
 
   // can find by things
-  const q = await Activity.findOne({ title: '4 The first 100 metres' })
+  const q = await Activity.findOne({ name: '4 The first 100 metres' })
   t.is(q && q.duration, '2 hours')
 })
 
-test.serial('Should correctly give count of all acts sorted by title', async t => {
+test.serial('Should correctly give count of all acts sorted by name', async t => {
   const res = await request(server)
     .get('/api/activities')
     .set('Accept', 'application/json')
@@ -57,7 +57,7 @@ test.serial('Should correctly give count of all acts sorted by title', async t =
   // console.log(got)
   t.is(4, got.length)
 
-  t.is(got[0].title, acts[0].title)
+  t.is(got[0].name, acts[0].name)
 })
 
 test.serial('Should correctly give subset of acts matching status', async t => {
@@ -73,7 +73,7 @@ test.serial('Should correctly give subset of acts matching status', async t => {
 
 test.serial('Should correctly select just the titles and ids', async t => {
   const res = await request(server)
-    .get('/api/activities?p={"title": 1}')
+    .get('/api/activities?p={"name": 1}')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
@@ -81,7 +81,7 @@ test.serial('Should correctly select just the titles and ids', async t => {
   // console.log('got', got)
   t.is(got.length, 4)
   t.is(got[0].status, undefined)
-  t.is(got[0].title, acts[0].title)
+  t.is(got[0].name, acts[0].name)
 })
 
 test.serial('Should correctly give number of active activities', async t => {
@@ -105,7 +105,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
     .get(`/api/activities/${act1._id}`)
     .set('Accept', 'application/json')
     .expect(200)
-  t.is(res.body.title, act1.title)
+  t.is(res.body.name, act1.name)
   // verify owner was populated out
   t.is(res.body.owner.name, person1.name)
 })
@@ -123,7 +123,7 @@ test.serial('Should correctly add an activity', async t => {
   const res = await request(server)
     .post('/api/activities')
     .send({
-      title: 'The first 400 metres',
+      name: 'The first 400 metres',
       subtitle: 'Launching into space step 3',
       imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
       description: 'Project to build a simple rocket that will reach 400m',
@@ -133,7 +133,7 @@ test.serial('Should correctly add an activity', async t => {
 
   t.is(res.status, 200)
 
-  const savedActivity = await Activity.findOne({ title: 'The first 400 metres' }).exec()
+  const savedActivity = await Activity.findOne({ name: 'The first 400 metres' }).exec()
   t.is(savedActivity.subtitle, 'Launching into space step 3')
 })
 
@@ -142,7 +142,7 @@ test.serial('Should correctly delete an activity', async t => {
 
   const activity = new Activity({
     _id: '5cc8d60b8b16812b5b3920c3',
-    title: 'The first 1000 metres',
+    name: 'The first 1000 metres',
     subtitle: 'Launching into space step 4',
     imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
     description: 'Project to build a simple rocket that will reach 1000m',
@@ -160,7 +160,7 @@ test.serial('Should correctly delete an activity', async t => {
   t.is(queriedActivity, null)
 })
 
-// Searching by something in the title (case insensitive)
+// Searching by something in the name (case insensitive)
 test.serial('Should correctly give activity 3 when searching by "garden"', async t => {
   const res = await request(server)
     .get('/api/activities?search=GarDen')
@@ -168,7 +168,7 @@ test.serial('Should correctly give activity 3 when searching by "garden"', async
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(acts[2].title, got[0].title)
+  t.is(acts[2].name, got[0].name)
   t.is(1, got.length)
 })
 
@@ -186,7 +186,7 @@ test.serial('Should correctly give activity 2 when searching by "Algorithms"', a
 
 test.serial('Should find no matches', async t => {
   const res = await request(server)
-    .get('/api/activities?q={"title":"nomatches"}')
+    .get('/api/activities?q={"name":"nomatches"}')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
@@ -203,7 +203,7 @@ test.serial('Should fail to find - invalid query', async t => {
   t.is(res.status, 404)
 })
 
-test.serial('Should return any activities with matching tags or title/desc/subtitle', async t => {
+test.serial('Should return any activities with matching tags or name/desc/subtitle', async t => {
   // assign tags to activities
   const tags = t.context.tags
   t.context.activities[2].tags = [tags[0]._id, tags[2]._id]
@@ -216,9 +216,9 @@ test.serial('Should return any activities with matching tags or title/desc/subti
     t.context.activities[0].save()
   ])
 
-  // activity with matching title, but not tags
+  // activity with matching name, but not tags
   const activity = new Activity({
-    title: 'The first 400 java robots',
+    name: 'The first 400 java robots',
     subtitle: 'Launching java robots into space step 3',
     imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
     description: 'Project to build a simple rocket that will reach 400m',
@@ -234,7 +234,7 @@ test.serial('Should return any activities with matching tags or title/desc/subti
     .expect('Content-Type', /json/)
   const got = res.body
 
-  // should return the 3 with assigned tags, and the one with matching title
+  // should return the 3 with assigned tags, and the one with matching name
   t.is(4, got.length)
 })
 
@@ -246,7 +246,7 @@ test.serial('Should correctly add an activity with tags all having id properties
   const res = await request(server)
     .post('/api/activities')
     .send({
-      title: 'The first 400 metres',
+      name: 'The first 400 metres',
       subtitle: 'Launching into space step 3',
       imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
       description: 'Project to build a simple rocket that will reach 400m',
@@ -260,7 +260,7 @@ test.serial('Should correctly add an activity with tags all having id properties
 
   t.is(res.status, 200)
 
-  const savedAct = await Activity.findOne({ title: 'The first 400 metres' }).exec()
+  const savedAct = await Activity.findOne({ name: 'The first 400 metres' }).exec()
   t.is(savedAct.subtitle, 'Launching into space step 3')
   t.is(t.context.tags.length, savedAct.tags.length)
 })
@@ -269,7 +269,7 @@ test.serial('Should not add an activity with invalid tag ids', async t => {
   await request(server)
     .post('/api/activities')
     .send({
-      title: 'The first 400 metres',
+      name: 'The first 400 metres',
       subtitle: 'Launching into space step 3',
       imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
       description: 'Project to build a simple rocket that will reach 400m',
@@ -280,7 +280,7 @@ test.serial('Should not add an activity with invalid tag ids', async t => {
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
 
-  const savedAct = await Activity.findOne({ title: 'The first 400 metres' }).exec()
+  const savedAct = await Activity.findOne({ name: 'The first 400 metres' }).exec()
   t.is(null, savedAct)
 })
 
@@ -299,7 +299,7 @@ test.serial('Should create tags that dont have the _id property', async t => {
   await request(server)
     .post('/api/activities')
     .send({
-      title: 'The first 400 metres',
+      name: 'The first 400 metres',
       subtitle: 'Launching into space step 3',
       imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
       description: 'Project to build a simple rocket that will reach 400m',
@@ -314,7 +314,7 @@ test.serial('Should create tags that dont have the _id property', async t => {
   const savedTag = await Tag.findOne({ tag: tagName })
   t.is(tagName, savedTag.tag)
 
-  const savedAct = await Activity.findOne({ title: 'The first 400 metres' }).populate('tags').exec()
+  const savedAct = await Activity.findOne({ name: 'The first 400 metres' }).populate('tags').exec()
   // ensure the tag has an id
   t.truthy(savedAct.tags.find(t => t.tag === tagName)._id)
 })

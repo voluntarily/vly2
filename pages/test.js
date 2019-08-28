@@ -31,7 +31,7 @@ const person = {
   email: 'testy@voluntar.ly',
   phone: '027 444 5555',
   gender: 'rather not say',
-  avatar: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
+  imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
   role: ['tester', 'volunteer'],
   status: 'active',
   title: 'Awesome Human at OMGTech',

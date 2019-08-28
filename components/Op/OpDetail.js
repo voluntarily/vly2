@@ -56,10 +56,10 @@ export function OpDetail ({ op }) {
   return (
     <FullPage>
       <Spacer />
-      <Head><title>Voluntarily - {op.title}</title></Head>
+      <Head><title>Voluntarily - {op.name}</title></Head>
       <HalfGrid>
         <Left>
-          <TitleFont>{op.title}</TitleFont>
+          <TitleFont>{op.name}</TitleFont>
           <ItemListing>
             ⏱&nbsp;<strong>Duration:</strong>&nbsp;&nbsp;&nbsp;
             {sanitize(op.duration)}
@@ -92,7 +92,7 @@ export function OpDetail ({ op }) {
           <Spacer />
         </Left>
         <Right>
-          <img style={{ width: '100%' }} src={img} alt={op.title} />
+          <img style={{ width: '100%' }} src={img} alt={op.name} />
           <TagContainer>
             <TagDisplay tags={op.tags} />
           </TagContainer>
@@ -104,7 +104,7 @@ export function OpDetail ({ op }) {
 
 OpDetail.propTypes = {
   op: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     description: PropTypes.string,

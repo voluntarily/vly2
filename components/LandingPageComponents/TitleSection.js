@@ -10,7 +10,7 @@ const TitleContainer = styled.div`
   
 `
 
-const TitleSection = ({ title, ...props }) => (
+const TitleSection = ({ name, ...props }) => (
   <TitleContainer>
     <TextHeadingBlack>{title}</TextHeadingBlack>
   </TitleContainer>

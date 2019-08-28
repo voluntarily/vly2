@@ -1,19 +1,25 @@
 import React from 'react'
-
 import { storiesOf } from '@storybook/react'
-import OpCard from './OpCard'
-import OpList from './OpList'
-import moment from 'moment'
-import { StoryIntroContainer } from '../VTheme/VStoryTheme'
+import IdLine from './IdLine'
+import { StoryIntroContainer } from './VStoryTheme'
 
-const opList = [
+const ops = [
   {
     name: '1 Mentor a year 12 business Impact Project',
     subtitle: 'Help us create a programme connecting business with senior students',
     imgUrl: 'https://www.tvnz.co.nz/content/dam/images/news/2015/01/26/pacific-island-mentors-with-kelston-high-school-students.jpg.hashed.0d58ef7e.desktop.story.share.jpg',
     description: 'We want to set up our Connect Ed programme, help us understand how to communication with businesses, build a website and contact group etc.',
     duration: '12 weeks, 1 hour sessions',
-    offerOrg: 'Albany High School',
+    offerOrg: {
+      _id: 'not-set',
+      name: 'Albany High School',
+      imgUrl: 'http://www.ashs.school.nz/images/logo.png'
+    },
+    requestor: {
+      _id: 'not-set',
+      name: 'Testy McTestface',
+      imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png'
+    },
     location: 'Wellington',
     status: 'active',
     tags: [ ],
@@ -29,6 +35,16 @@ const opList = [
     description: '# NZTA Innovation Centre\n \n We have 6 model cars with sensors for vision, proximity etc, \n controlled by Arduinos teach them to solve \n 4 challenges - move, follow a line, avoid obstacles, \n get to a destination etc. \n \n ## We need:\n * Open space with room for the test tracks - e.g a school hall\n * teams of 5 students\n * on adult helper per team, should be able to follow instructions and understand a little C++\n \n ## Learning outcomes:\n * programming a remote device\n * simple coding\n * algorithmic thinking\n * problem solving.\n \n',
     duration: '4 hours',
     location: 'Ruakaka',
+    offerOrg: {
+      _id: 'not-set',
+      name: 'Albany High School',
+      imgUrl: 'http://www.ashs.school.nz/images/logo.png'
+    },
+    requestor: {
+      _id: 'not-set',
+      name: 'Testy McTestface',
+      imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png'
+    },
     status: 'active',
     tags: [ ],
     date: [
@@ -43,6 +59,16 @@ const opList = [
     description: 'Project to grow something in the garden',
     duration: '15 Minutes',
     location: 'Auckland',
+    offerOrg: {
+      _id: 'not-set',
+      name: 'Albany High School',
+      imgUrl: 'http://www.ashs.school.nz/images/logo.png'
+    },
+    requestor: {
+      _id: 'not-set',
+      name: 'Testy McTestface',
+      imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png'
+    },
     status: 'active',
     tags: [ ],
     date: [
@@ -58,6 +84,16 @@ const opList = [
     duration: '2 hours',
     location: 'Hamilton',
     status: 'active',
+    offerOrg: {
+      _id: 'not-set',
+      name: 'Albany High School',
+      imgUrl: 'http://www.ashs.school.nz/images/logo.png'
+    },
+    requestor: {
+      _id: 'not-set',
+      name: 'Testy McTestface',
+      imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png'
+    },
     tags: [ ],
     date: [
       null,
@@ -71,6 +107,16 @@ const opList = [
     description: 'Attempting to go where no man has gone before',
     duration: '2 days',
     location: 'Auckland',
+    offerOrg: {
+      _id: 'not-set',
+      name: 'Albany High School',
+      imgUrl: 'http://www.ashs.school.nz/images/logo.png'
+    },
+    requestor: {
+      _id: 'not-set',
+      name: 'Testy McTestface',
+      imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png'
+    },
     status: 'active',
     tags: [ ],
     date: [
@@ -80,30 +126,13 @@ const opList = [
   }
 ]
 
-const todayDate = moment().toDate()
-
-// for OpCard
-const demoOp = {
-  imgUrl: 'https://media.giphy.com/media/ZjUjG4xgRiSOc/giphy-downsized.gif',
-  name: 'This is a test name',
-  subtitle: 'test subtitle',
-  duration: 'test duration',
-  date: [todayDate],
-  _id: '1'
-}
-
-storiesOf('Opportunity Cards', module)
-  .add('Default Small', () => (
+storiesOf('Minor Components', module)
+  .add('IdLine Opportunity', () => (
     <StoryIntroContainer>
-      <OpCard size='Small' op={demoOp} key='1' />
+      <p>Single line link to an opportunity organisation</p>
+      <IdLine item={ops[0].offerOrg} type='organisation' />
+      <br /><br />
+      <p>Single line link to an opportunity requestor</p>
+      <IdLine item={ops[0].requestor} type='person' />
     </StoryIntroContainer>
-
-  ))
-  .add('Default Small List', () => (
-    <div>
-      <StoryIntroContainer>
-        <OpList ops={opList} />
-      </StoryIntroContainer>
-
-    </div>
   ))

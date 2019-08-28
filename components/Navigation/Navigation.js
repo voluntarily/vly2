@@ -11,7 +11,7 @@ const StyledMenu = styled(Menu)`
 const StyledAvatar = styled(Avatar)`
   background-color: #fff;
 
-  .ant-avatar > i {
+  .ant-imgUrl > i {
     margin-right: 0px;
   }
 `
@@ -41,7 +41,7 @@ const Navigation = ({ items, defaultItem, router, me, ...props }) => {
         <StyledAvatar>
           <Avatar
             size='small'
-            src={me && me.avatar}
+            src={me && me.imgUrl}
             icon='user'
 
           />

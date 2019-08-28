@@ -68,7 +68,7 @@ const PersonDetail = ({ person }, ...props) => (
   <ProfileGrid>
     <GridContainer>
       <Head title={person.nickname} />
-      <ProfileImage src={person.avatar} alt={person.nickname} />
+      <ProfileImage src={person.imgUrl} alt={person.nickname} />
       <DetailItem>
         <Icon type='history' /> 312 ops completed
       </DetailItem>
@@ -161,7 +161,7 @@ PersonDetail.propTypes = {
     email: PropTypes.string.isRequired,
     phone: PropTypes.string,
     pronoun: PropTypes.string,
-    avatar: PropTypes.any,
+    imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
         'admin',

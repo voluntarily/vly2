@@ -11,7 +11,7 @@ const people = [
       'admin'
     ],
     'status': 'active',
-    'avatar': 'https://avatars2.githubusercontent.com/u/1596437?v=4',
+    'imgUrl': 'https://avatars2.githubusercontent.com/u/1596437?v=4',
     'phone': '+64 027 7031007',
     'tags': []
   },
@@ -29,7 +29,7 @@ const people = [
     'name': 'Salvador Domingo Felipe Jacinto Dalí i Domènech, 1st Marquis of Dalí de Púbol ',
     'email': 'salvador@voluntarily.nz',
     'phone': '000 000 0000',
-    'avatar': 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg',
+    'imgUrl': 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg',
     'tags': []
   },
   {
@@ -40,7 +40,7 @@ const people = [
     'email': 'atesty@voluntar.ly',
     'phone': '027 444 5553',
     'gender': 'male',
-    'avatar': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
+    'imgUrl': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     'role': ['tester', 'volunteer'],
     'status': 'active',
     'tags': []
@@ -53,7 +53,7 @@ const people = [
     'email': 'btesty@voluntar.ly',
     'phone': '027 444 5554',
     'gender': 'female',
-    'avatar': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
+    'imgUrl': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     'role': ['tester', 'volunteer'],
     'status': 'active',
     'tags': []
@@ -66,7 +66,7 @@ const people = [
     'email': 'ctesty@voluntar.ly',
     'phone': '027 444 5555',
     'gender': 'non binary',
-    'avatar': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
+    'imgUrl': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     'role': ['tester', 'volunteer'],
     'status': 'active',
     'tags': []
@@ -79,7 +79,7 @@ const people = [
     'email': 'dtesty@voluntar.ly',
     'phone': '027 444 5556',
     'gender': 'robot',
-    'avatar': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
+    'imgUrl': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     'role': ['tester', 'volunteer'],
     'status': 'active',
     'tags': []
@@ -92,7 +92,7 @@ const people = [
     'email': 'etesty@voluntar.ly',
     'phone': '027 444 5557',
     'gender': 'tester',
-    'avatar': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
+    'imgUrl': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     'role': ['tester', 'volunteer'],
     'status': 'active',
     'tags': []
@@ -105,7 +105,7 @@ const people = [
     'email': 'ftesty@voluntar.ly',
     'phone': '027 444 5558',
     'gender': 'Tane',
-    'avatar': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
+    'imgUrl': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     'role': ['tester', 'volunteer'],
     'status': 'active',
     'tags': []

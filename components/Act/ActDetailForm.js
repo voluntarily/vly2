@@ -49,7 +49,7 @@ class ActDetailForm extends Component {
       if (!err) {
         const act = this.props.act
         act.time = values.time
-        act.title = values.title
+        act.name = values.name
         act.subtitle = values.subtitle
         act.duration = values.duration
         act.resource = values.resource
@@ -165,7 +165,7 @@ class ActDetailForm extends Component {
     } = this.props.form
 
     // Only show error after a field is touched.
-    const titleError = isFieldTouched('title') && getFieldError('title')
+    const titleError = isFieldTouched('name') && getFieldError('name')
 
     return (
       <div className='ActDetailForm'>
@@ -176,7 +176,7 @@ class ActDetailForm extends Component {
                 <TextHeadingBold>Tell everyone about this Activity?</TextHeadingBold>
               </TitleContainer>
               <TextP>
-                Attract people to this activitiy with a snappy title, use the subtitle to layout the basic idea.
+                Attract people to this activitiy with a snappy name, use the subtitle to layout the basic idea.
               </TextP>
             </DescriptionContainer>
             <InputContainer>
@@ -186,7 +186,7 @@ class ActDetailForm extends Component {
                   validateStatus={titleError ? 'error' : ''}
                   help={titleError || ''}
                 >
-                  {getFieldDecorator('title', {
+                  {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'Title is required' }]
                   })(<Input placeholder='Title' />)}
                 </Form.Item>
@@ -367,7 +367,7 @@ class ActDetailForm extends Component {
 ActDetailForm.propTypes = {
   act: PropTypes.shape({
     _id: PropTypes.string,
-    title: PropTypes.string,
+    name: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.string,
     resource: PropTypes.string,
@@ -400,7 +400,7 @@ export default Form.create({
   },
   mapPropsToFields (props) {
     return {
-      title: Form.createFormField({ ...props.act.title, value: props.act.title }),
+      name: Form.createFormField({ ...props.act.name, value: props.act.name }),
       subtitle: Form.createFormField({ ...props.act.subtitle, value: props.act.subtitle }),
       description: Form.createFormField({ ...props.act.description, value: props.act.description }),
       duration: Form.createFormField({ ...props.act.duration, value: props.act.duration }),

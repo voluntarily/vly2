@@ -35,7 +35,7 @@ export default class OpEditPage extends React.Component {
 OpEditPage.propTypes = {
   op: PropTypes.shape({
     _id: PropTypes.string,
-    title: PropTypes.string,
+    name: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.string,
     duration: PropTypes.string,

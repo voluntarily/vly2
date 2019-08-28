@@ -25,7 +25,7 @@ test.before('Setup fixtures', (t) => {
       _id: objectid().toString(),
       person: me._id,
       opportunity: op,
-      comment: `${index}: ${me.nickname} is interested in ${op.title}`,
+      comment: `${index}: ${me.nickname} is interested in ${op.name}`,
       status: index < interestStates.length ? interestStates[index] : 'interested'
     })
   })

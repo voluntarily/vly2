@@ -10,7 +10,7 @@ const { sortedLocations } = require('../../../server/api/location/locationData')
 // Initial opportunities
 const op = {
   _id: '5cc903e5f94141437622cea7',
-  title: 'Growing in the garden',
+  name: 'Growing in the garden',
   subtitle: 'Growing digitally in the garden',
   imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
   description: 'Project to grow something in the garden',
@@ -31,7 +31,7 @@ const op = {
 }
 
 const noop = {
-  title: '',
+  name: '',
   subtitle: '',
   imgUrl: '',
   description: '',
@@ -130,10 +130,10 @@ test('render the detail with new blank op', t => {
   t.falsy(submitOp.calledOnce)
   wrapper.update()
   // console.log(wrapper.html())
-  // find title field.
-  const title = wrapper.find('input#opportunity_detail_form_title').first()
-  // title.node.value = 'Test'
-  title
+  // find name field.
+  const name = wrapper.find('input#opportunity_detail_form_name').first()
+  // name.node.value = 'Test'
+  name
     .simulate('keydown', { which: 'a' })
     .simulate('change', { target: { value: 'My new value' } })
 

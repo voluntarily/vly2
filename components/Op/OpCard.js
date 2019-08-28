@@ -1,5 +1,5 @@
 /*
-  Display an activity record in card format with a picture, title, and commitment.
+  Display an activity record in card format with a picture, name, and commitment.
 */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
@@ -41,7 +41,7 @@ class OpCard extends Component {
               <img className={'requestImg' + this.size} src={this.cardImage} />
               <p className={'requestTitle requestTitle' + this.size}>
                 {this.draft}
-                {this.op.title}
+                {this.op.name}
               </p>
               <p className={'requestDateTime' + this.size}>
                 {' '}
@@ -224,7 +224,7 @@ class OpCard extends Component {
 OpCard.propTypes = {
   size: PropTypes.string.isRequired,
   op: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     duration: PropTypes.string,

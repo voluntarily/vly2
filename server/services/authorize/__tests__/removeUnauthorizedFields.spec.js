@@ -9,10 +9,10 @@ test.serial('Only authorized fields returned for single get', async t => {
   const expectedTitle = 'foo'
   const nextMiddleware = sinon.fake()
   const mockDataObject = {
-    title: expectedTitle,
+    name: expectedTitle,
     subtitle: 'This should be filtered out'
   }
-  const ability = AbilityBuilder.define(can => can(Action.READ, SchemaName, [Fields.TITLE]))
+  const ability = AbilityBuilder.define(can => can(Action.READ, SchemaName, [Fields.NAME]))
 
   const mockRequestObject = {
     ability: ability,
@@ -25,7 +25,7 @@ test.serial('Only authorized fields returned for single get', async t => {
   removeUnauthorizedFields(FakeSchema)(mockRequestObject, {}, nextMiddleware)
   t.assert(nextMiddleware.called)
   t.is(Object.keys(mockRequestObject.crudify.result).length, 1)
-  t.is(mockRequestObject.crudify.result.title, expectedTitle)
+  t.is(mockRequestObject.crudify.result.name, expectedTitle)
 })
 
 test.serial('Only authorized fields returned for list get', async t => {
@@ -33,13 +33,13 @@ test.serial('Only authorized fields returned for list get', async t => {
   const expectedTitleB = 'bar'
   const nextMiddleware = sinon.fake()
   const mongooseCrudifyResult = [{
-    title: expectedTitleA,
+    name: expectedTitleA,
     subtitle: 'This subtitle will be filtered out'
   }, {
-    title: expectedTitleB,
+    name: expectedTitleB,
     subtitle: 'This subtitle will be filtered out'
   }]
-  const ability = AbilityBuilder.define(can => can(Action.READ, SchemaName, [Fields.TITLE]))
+  const ability = AbilityBuilder.define(can => can(Action.READ, SchemaName, [Fields.NAME]))
   const mockRequestObject = {
     method: 'GET',
     ability: ability,
@@ -51,5 +51,5 @@ test.serial('Only authorized fields returned for list get', async t => {
   removeUnauthorizedFields(FakeSchema)(mockRequestObject, {}, nextMiddleware)
   t.assert(nextMiddleware.called)
   t.assert(Array.isArray(mockRequestObject.crudify.result))
-  mockRequestObject.crudify.result.forEach(item => t.true(item.hasOwnProperty(Fields.TITLE)) && t.false(item.hasOwnProperty(Fields.SUBTITLE)))
+  mockRequestObject.crudify.result.forEach(item => t.true(item.hasOwnProperty(Fields.NAME)) && t.false(item.hasOwnProperty(Fields.SUBTITLE)))
 })

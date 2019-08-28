@@ -15,7 +15,7 @@ import OpUnavailablePage from './opunavailablepage'
 import OpEditPage from './opeditpage'
 
 const blankOp = {
-  title: '',
+  name: '',
   subtitle: '',
   imgUrl: '',
   duration: '',
@@ -205,7 +205,7 @@ export class OpDetailPage extends Component {
 
 OpDetailPage.propTypes = {
   op: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     duration: PropTypes.string,
