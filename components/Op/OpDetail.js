@@ -45,12 +45,7 @@ export function OpDetail ({ op }) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
   // BUG: [VP-435] sanitize OpDetail description is filtering out the Rich Text.
-  const description =
-    op.description == null
-      ? ''
-      : sanitize(op.description, {
-        allowedAttributes: { a: ['href', 'style'] }
-      }) // Only href and style attribute is allowed in link tag
+  const description = op.description || ''
   const startDate = op.date[0]
     ? moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
     : 'Negotiable'
