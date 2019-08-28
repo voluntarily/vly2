@@ -210,18 +210,6 @@ class PersonHomePage extends Component {
                 />
               )}
             </SectionWrapper>
-
-            <SectionWrapper>
-              <SectionTitleWrapper>
-                <TextHeadingBlack>Getting Started</TextHeadingBlack>
-                <TextP>
-                  To start volunteering on Voluntarily, here are a few things we
-                  recommend doing:
-                </TextP>
-              </SectionTitleWrapper>
-              {/* // TODO: [VP-208] list of things volunteers can do on home page */}
-              <NextActionBlock />
-            </SectionWrapper>
             <SectionWrapper>
               <SectionTitleWrapper>
                 <TextHeadingBlack>
@@ -242,6 +230,18 @@ class PersonHomePage extends Component {
               <OpRecommendations
                 recommendedOps={this.props.recommendedOps.data[0]} />
             </SectionWrapper>
+            <SectionWrapper>
+              <SectionTitleWrapper>
+                <TextHeadingBlack>Getting Started</TextHeadingBlack>
+                <TextP>
+                  To start volunteering on Voluntarily, here are a few things we
+                  recommend doing:
+                </TextP>
+              </SectionTitleWrapper>
+              {/* // TODO: [VP-208] list of things volunteers can do on home page */}
+              <NextActionBlock />
+            </SectionWrapper>
+
           </TabPane>
           <TabPane tab={searchTab} key='2'>
             <SectionWrapper>
