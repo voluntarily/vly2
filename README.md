@@ -46,6 +46,8 @@ Voluntarily is based on the [MERN (MongoDB, Express, React+Redux, Node)](http://
 
 6. `npm run lint` - runs standard to check for lint errors ( npm run fix to fix lint errors )
 
+7. `npm run storybook` - starts the Storybook Component Library
+
 
 Once you see the message "Voluntarily is running on port: 3122! Be Awesome!" then you can open your browser at http://localhost:3122.
 
