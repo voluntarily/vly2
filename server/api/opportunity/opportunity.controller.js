@@ -89,6 +89,8 @@ const getOpportunities = async (req, res) => {
         .accessibleBy(req.ability)
         .find(query)
         .select(select)
+        .populate('requestor', 'name nickname avatar')
+        .populate('offerOrg', 'name imgUrl category')
         .sort(sort)
         .exec()
       res.json(got)
@@ -127,7 +129,8 @@ const getOpportunity = async (req, res) => {
     const got = await Opportunity
       .accessibleBy(req.ability)
       .findOne(req.params)
-      .populate('requestor')
+      .populate('requestor', 'name nickname avatar')
+      .populate('offerOrg', 'name imgUrl category')
       .populate('tags')
       .exec()
     if (got == null) {

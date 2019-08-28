@@ -1,12 +1,14 @@
 import test from 'ava'
 import request from 'supertest'
+import MemoryMongo from '../../../util/test-memory-mongo'
 import { server, appReady } from '../../../server'
 import Opportunity from '../opportunity'
 import Tag from '../../tag/tag'
 import Person from '../../person/person'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import Organisation from '../../organisation/organisation'
 import people from '../../person/__tests__/person.fixture'
 import ops from './opportunity.fixture.js'
+import orgs from '../../organisation/__tests__/organisation.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 import archivedOpportunity from './../../archivedOpportunity/archivedOpportunity'
@@ -29,8 +31,12 @@ test.after.always(async (t) => {
 test.beforeEach('connect and add two oppo entries', async (t) => {
   // connect each oppo to a requestor.
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create orgs: ${err}`)
   t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
-  ops.map((op, index) => { op.requestor = t.context.people[index]._id })
+  ops.map((op, index) => {
+    op.requestor = t.context.people[index]._id
+    op.offerOrg = t.context.orgs[1]._id
+  })
   t.context.opportunities = await Opportunity.create(ops).catch((err) => console.log('Unable to create opportunities', err))
 })
 
@@ -76,6 +82,9 @@ test.serial('Should correctly give subset of ops matching status', async t => {
   const got = res.body
   // console.log('got', got)
   t.is(got.length, 3)
+  // check requestor has been populated
+  t.is(got[0].requestor.nickname, t.context.people[2].nickname)
+  t.is(got[1].offerOrg.name, t.context.orgs[1].name)
 })
 
 test.serial('Should correctly select just the names and ids', async t => {
@@ -101,7 +110,7 @@ test.serial('Should correctly give number of active Opportunities', async t => {
     // .expect('Content-Length', '2')
   const got = res.body
 
-  t.deepEqual(2, got.length)
+  t.is(2, got.length)
 })
 
 test.serial('Should send correct data when queried against an _id', async t => {
