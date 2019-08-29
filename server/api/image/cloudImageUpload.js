@@ -9,11 +9,12 @@ const cloudUploadService = async (imageObject) => {
     secretAccessKey: config.AWS_ACCESS_KEY_SECRET
   })
   const imageBuffer = Buffer.from(imageBase64, 'binary')
-
+  const imageKey = process.env.NODE_ENV === 'test' ? `unitTest/${Date.now()}-${filename}` : `${Date.now()}-${filename}`
   const params = {
     Bucket: `${config.S3_BUCKET_NAME}`,
     Body: imageBuffer,
-    Key: `${Date.now()}-${filename}`
+    Key: imageKey,
+    ACL: 'public-read'
   }
   const s3 = new AWS.S3()
   let result

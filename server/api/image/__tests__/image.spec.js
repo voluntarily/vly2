@@ -34,16 +34,18 @@ test.only('Should upload a small file', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   // console.log(res)
-  t.regex(res.body.imageUrl, /.*194px-testcard_f.jpg/)
+  t.regex(res.body.imageUrl, /-194px-testcard_f[.]jpg/i)
 
-  // get the image back from server
-  const img = await request(server)
-    .get(res.body.imageUrl)
-    .set('Accept', 'image')
-    .expect(200)
-    .expect('Content-Type', /image/)
+  // get the image back from server only if testing with local uploading storage
+  if (!res.body.imageUrl.match(/https:\/\/alpha-voluntarily-images.s3/gm)) {
+    const img = await request(server)
+      .get(res.body.imageUrl)
+      .set('Accept', 'image')
+      .expect(200)
+      .expect('Content-Type', /image/)
 
-  t.is(img.body.length, 15185)
+    t.is(img.body.length, 15185)
+  }
 })
 
 test.serial('Should fail to upload', async t => {

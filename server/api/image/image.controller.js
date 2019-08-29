@@ -1,6 +1,7 @@
 const fs = require('fs')
 const cuid = require('cuid')
 const slug = require('slug')
+const { config } = require('../../../config/config')
 const { cloudUploadService } = require('./cloudImageUpload')
 // any depended upon api services
 const imageController = async (req, res) => {
@@ -19,17 +20,17 @@ const imageController = async (req, res) => {
       message: 'OK',
       imageUrl: filename
     }
-    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production') {
+    if (config.AWS_ACCESS_KEY && config.AWS_ACCESS_KEY_SECRET) {
       result.imageUrl = await cloudUploadService(req.body)
+    } else {
+      fs.writeFile(fqp, ImageBuffer, (err) => {
+        if (err) throw err
+      })
     }
-    fs.writeFile(fqp, ImageBuffer, (err) => {
-      (err)
-        ? res.status(500).json('Could not save the image')
-        : res.status(result.status).json(result)
-    })
+    res.status(200).json(result)
   } catch (e) {
     console.log(e)
-    res.status(400).send({ error: 'Bad Request' })
+    res.status(400).send({ error: 'Could not upload image' })
   }
 }
 
