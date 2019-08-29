@@ -28,7 +28,7 @@ const sendImageToAPI = (path, filename) => {
     .send(JSON.stringify({ image: file, file: filename }))
 }
 
-test.only('Should upload a small file', async t => {
+test.serial('Should upload a small file', async t => {
   await appReady
   const res = await sendImageToAPI(__dirname, '194px-Testcard_F.jpg')
     .expect(200)
