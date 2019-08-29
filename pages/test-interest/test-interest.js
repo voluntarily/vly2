@@ -9,7 +9,7 @@ import { Divider } from 'antd'
 
 const opportunity = {
   _id: '5cc8d60b8b16812b5b392321',
-  title: 'Self driving model cars ',
+  name: 'Self driving model cars ',
   subtitle: 'using algorithmns to follow lines and avoid obstacles',
   imgUrl:
     'http://www.plaz-tech.com/wp-content/plugins/wp-easycart-data/products/pics1/Arduino%20Car%202_8ab5dd38f1e3f6f05ad244f1e5e74529.jpg',

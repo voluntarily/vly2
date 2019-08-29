@@ -52,7 +52,7 @@ class InterestSection extends Component {
         <section>
           <h2>
             <FormattedMessage
-              id='interestSection.title'
+              id='interestSection.name'
               defaultMessage='Interested Volunteers'
               description='label for interest table on op detail page'
             /></h2>

@@ -24,7 +24,7 @@ const PageHeader = () => (
   <ItemContainer>
     <TextHeadingBlack>
       <FormattedMessage
-        id='home.title'
+        id='home.name'
         defaultMessage='My Stuff'
         description='title on volunteer home page.'
       />

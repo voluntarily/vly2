@@ -6,7 +6,7 @@
   "email": "andrew@voluntar.ly",
   "phone": "027 7031007",
   "gender": "Male",
-  "avatar": "https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png",
+  "imgUrl": "https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png",
   "role": ["admin", "volunteer"],
   "status": "active"
 }

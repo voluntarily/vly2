@@ -7,7 +7,7 @@ export default [
     email: 'atesty@voluntar.ly',
     phone: '027 444 5555',
     gender: 'rather not say',
-    avatar:
+    imgUrl:
       'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer'],
     status: 'active'
@@ -20,7 +20,7 @@ export default [
     email: 'btesty@voluntar.ly',
     phone: '027 444 5554',
     gender: 'rather not say',
-    avatar:
+    imgUrl:
       'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer'],
     status: 'active'
@@ -33,7 +33,7 @@ export default [
     email: 'ctesty@voluntar.ly',
     phone: '027 444 5556',
     gender: 'rather not say',
-    avatar:
+    imgUrl:
       'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer'],
     status: 'active'
@@ -46,7 +46,7 @@ export default [
     email: 'dtesty@voluntar.ly',
     phone: '027 444 5557',
     gender: 'rather not say',
-    avatar:
+    imgUrl:
       'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer'],
     status: 'active'
@@ -59,7 +59,7 @@ export default [
     email: 'ftesty@voluntar.ly',
     phone: '027 444 5558',
     gender: 'rather not say',
-    avatar:
+    imgUrl:
       'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer'],
     status: 'active'
@@ -72,7 +72,7 @@ export default [
     email: 'ftesty@voluntar.ly',
     phone: '027 444 5559',
     gender: 'rather not say',
-    avatar:
+    imgUrl:
       'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer'],
     status: 'active'

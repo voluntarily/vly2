@@ -23,7 +23,7 @@ const opid = '5cc903e5f94141437622cea7'
 const ops = [
   {
     _id: opid,
-    title: 'Growing in the garden',
+    name: 'Growing in the garden',
     subtitle: 'Growing digitally in the garden',
     imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
     description: 'Project to grow something in the garden',

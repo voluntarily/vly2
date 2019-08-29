@@ -1,10 +1,11 @@
 /*
-  Display an activity record in card format with a picture, title, and commitment.
+  Display an activity record in card format with a picture, name, and commitment.
 */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
+import IdLine from '../VTheme/IdLine'
 
 // todo if image is not present then use a fallback.
 class OpCard extends Component {
@@ -35,31 +36,35 @@ class OpCard extends Component {
   render () {
     return (
       <div>
-        <Link href={this.getOpPageURL()}>
-          <a>
-            <div className={'requestContainer' + this.size}>
-              <img className={'requestImg' + this.size} src={this.cardImage} />
-              <p className={'requestTitle requestTitle' + this.size}>
+        <div className={`requestContainer${this.size}`}>
+          <Link href={this.getOpPageURL()}>
+            <a>
+              <img className={`requestImg${this.size}`} src={this.cardImage} />
+              <p className={`requestTitle requestTitle${this.size}`}>
                 {this.draft}
-                {this.op.title}
+                {this.op.name}
               </p>
-              <p className={'requestDateTime' + this.size}>
+              <p className={`requestDateTime${this.size}`}>
                 {' '}
                 📅 {this.startTime}{' '}
               </p>
-              <p className={'requestDateTime' + this.size}>
+              <p className={`requestDateTime${this.size}`}>
                 {this.op.location}
               </p>
-              <p className={'requestDateTime' + this.size}>
+              <p className={`requestDateTime${this.size}`}>
                 {this.op.duration}
               </p>
-              <p className={'requestDescription' + this.size}>
+              <p className={`requestDescription${this.size}`}>
                 {this.op.subtitle}
                 <strong>{this.interestState}</strong>
               </p>
-            </div>
-          </a>
-        </Link>
+            </a>
+          </Link>
+          { this.op.offerOrg
+            ? <IdLine item={this.op.offerOrg} path='organisation' />
+            : <IdLine item={this.op.requestor} path='person' />}
+        </div>
+
         <style jsx>{`
           a {
             text-decoration: none;
@@ -224,7 +229,7 @@ class OpCard extends Component {
 OpCard.propTypes = {
   size: PropTypes.string.isRequired,
   op: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     duration: PropTypes.string,

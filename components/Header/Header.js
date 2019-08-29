@@ -80,7 +80,7 @@ const Header = ({ isAuthenticated, ...props }) => (
   <Layout.Header style={{ position: 'fixed', zIndex: 10, width: '100%', backgroundColor: 'white', boxShadow: '1px 1px 12px 0 rgba(0, 0, 0, 0.1)' }}>
     <MenuGrid>
       <div>
-        <Brand className='site-title' />
+        <Brand className='site-name' />
         <SearchInput
           // size='small'
           placeholder='Search for cool ways to help out'

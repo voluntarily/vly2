@@ -73,7 +73,7 @@ test.serial('Should call next middleware when record is found', async t => {
       'admin'
     ],
     'status': 'active',
-    'avatar': 'https://avatars2.githubusercontent.com/u/1596437?v=4',
+    'imgUrl': 'https://avatars2.githubusercontent.com/u/1596437?v=4',
     'phone': '+64 027 7031007'
   }
   request.ability = ability
