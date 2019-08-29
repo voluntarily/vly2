@@ -25,8 +25,10 @@ const getModel = name => {
     case 'Activity': return Activity
     case 'Person': return Person
     case 'Interest': return Interest
+    case 'Tag': return Tag
   }
 }
+
 /*
   DB Action Endpoint is used to perform some Database admin activities
 */
@@ -46,13 +48,15 @@ const dbAction = (req, res) => {
       if (model) {
         forall(model, async item => {
           console.log('item', item)
-          if (item.title && !item.name) {
+          if (item.title) {
             item.name = item.title
+            delete item.title
             console.log(item)
             await item.save()
           }
           if (item.avatar) {
             item.imgUrl = item.avatar
+            delete item.avatar
             await item.save()
           }
         })
