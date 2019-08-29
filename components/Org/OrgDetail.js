@@ -1,9 +1,10 @@
 import React from 'react'
+import { Button, Icon, Tabs } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
-import { Icon, Tabs } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import OrgCategory from './OrgCategory'
+import Link from 'next/link'
 import MemberSection from '../Member/MemberSection'
 import Head from 'next/head'
 import styled from 'styled-components'
@@ -14,6 +15,7 @@ import {
   TextH1,
   SpacerSmall
 } from '../VTheme/VTheme'
+const ButtonGroup = Button.Group
 
 function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
@@ -36,8 +38,11 @@ const OrgContainer = styled.div`
 `
 
 const ContactContainer = styled.div`
-margin-top: 0.5rem;
-display: inline-block;
+  margin-top: 0.5rem;
+`
+const SocialButton = styled(Button)`
+  margin-top: 0.5rem;
+  font-size: 2rem !important;
 `
 
 const orgTab = (
@@ -50,26 +55,7 @@ const orgTab = (
     />
   </span>
 )
-// const orgResourcesTab = (
-//   <span>
-//     <Icon type='fire' />
-//     <FormattedMessage
-//       id='orgResources'
-//       defaultMessage='Offers'
-//       description='show opportunities list on volunteer home page'
-//     />
-//   </span>
-// )
-// const orgInstructionTab = (
-//   <span>
-//     <Icon type='usergroup-add' />
-//     <FormattedMessage
-//       id='orgInstruction'
-//       defaultMessage='Getting Started'
-//       description='show opportunities list on volunteer home page'
-//     />
-//   </span>
-// )
+
 const orgMemberTab = (
   <span>
     <Icon type='team' />
@@ -96,11 +82,18 @@ const OrgDetail = ({ org, ...props }) => (
 
         <OrgContainer>
           <TextPBold>Get in touch</TextPBold>
-          {org.website && <ContactContainer><Icon type='global' />&nbsp;&nbsp;{org.website}</ContactContainer>}
+          {org.website &&
+            <ContactContainer>
+              <Icon type='global' />&nbsp;&nbsp;
+              <Link href={org.website}><a>
+                {org.website}
+              </a></Link>
+            </ContactContainer>}
           {org.contactEmail && <ContactContainer><Icon type='mail' />&nbsp;&nbsp;{org.contactEmail}</ContactContainer>}
-          {org.facebook && <ContactContainer><Icon type='facebook' />&nbsp;&nbsp;{org.facebook}</ContactContainer>}
-          {org.twitter && <ContactContainer><Icon type='twitter' />&nbsp;{org.twitter}</ContactContainer>}
-
+          <ButtonGroup size='large' >
+            {org.facebook && <SocialButton type='link' href={`https://www.facebook.com/${org.facebook}`} target='_blank' icon='facebook' />}
+            {org.twitter && <SocialButton type='link' href={`https://www.twitter.com/${org.twitter}`} target='_blank' icon='twitter' />}
+          </ButtonGroup>
         </OrgContainer>
       </GridContainer>
 

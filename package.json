@@ -19,13 +19,16 @@
     "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "docker-test:build": "docker build -t vly-test:latest -f Dockerfile-test . ",
     "docker-test": "npm run docker-test:build && docker run vly-test:latest ",
-    "remote": "APP_URL=http://$(ifconfig | grep -A 1 ‘en0’ | tail -1 | cut -d ' ' -f 2):3122 nodemon -w server -w package.json server/server.js"
+    "remote": "APP_URL=http://$(ifconfig | grep -A 1 ‘en0’ | tail -1 | cut -d ' ' -f 2):3122 nodemon -w server -w package.json server/server.js",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@babel/core": "^7.5.4",
     "@babel/polyfill": "^7.4.4",
     "@casl/ability": "^3.1.2",
     "@casl/mongoose": "^2.3.1",
+    "@storybook/addon-knobs": "^5.1.11",
     "@uppy/core": "^1.1.0",
     "@uppy/react": "^1.1.0",
     "@zeit/next-less": "^1.0.1",
@@ -88,9 +91,14 @@
   },
   "devDependencies": {
     "@babel/register": "^7.4.4",
+    "@storybook/addon-actions": "^5.1.11",
+    "@storybook/addon-links": "^5.1.11",
+    "@storybook/addons": "^5.1.11",
+    "@storybook/react": "^5.1.11",
     "ava": "^2.2.0",
     "axios": "^0.19.0",
     "babel-eslint": "^10.0.2",
+    "babel-loader": "^8.0.6",
     "codecov": "^3.5.0",
     "cross-env": "^5.2.0",
     "enzyme": "^3.10.0",

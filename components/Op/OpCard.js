@@ -61,11 +61,16 @@ class OpCard extends Component {
           </a>
         </Link>
         <style jsx>{`
+          a {
+            text-decoration: none;
+          }
+
           .requestContainerSmall {
             width: 18.5rem;
             letter-spacing: -0.3px;
             line-height: 24px;
             margin-bottom: 0px;
+            
           }
 
           .requestContainerSmall :hover {
@@ -99,6 +104,7 @@ class OpCard extends Component {
           }
 
           .requestTitle {
+            
             margin-top: 0.3rem;
             margin-bottom: 0px;
             vertical-align: middle;
@@ -133,6 +139,7 @@ class OpCard extends Component {
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+            margin-block-start: 0;
           }
 
           .requestDateTimeBig {
@@ -161,6 +168,7 @@ class OpCard extends Component {
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+            margin-block-start: 0;
           }
 
           .requestDescriptionBig {

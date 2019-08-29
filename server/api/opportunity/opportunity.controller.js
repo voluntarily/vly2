@@ -8,6 +8,7 @@ const InterestArchive = require('./../interest-archive/interestArchive')
 const { OpportunityStatus } = require('./opportunity.constants')
 const { regions } = require('../location/locationData')
 const sanitizeHtml = require('sanitize-html')
+const { getLocationRecommendations, getSkillsRecommendations } = require('./opportunity.util')
 
 /**
  * Get all orgs
@@ -88,6 +89,8 @@ const getOpportunities = async (req, res) => {
         .accessibleBy(req.ability)
         .find(query)
         .select(select)
+        .populate('requestor', 'name nickname avatar')
+        .populate('offerOrg', 'name imgUrl category')
         .sort(sort)
         .exec()
       res.json(got)
@@ -112,36 +115,10 @@ const getOpportunityRecommendations = async (req, res) => {
       return res.status(400).send('Could not find the specified user')
     }
 
-    const regionToMatch = regions.find(loc => {
-      return loc.name === me.location || loc.containedTerritories.includes(me.location)
-    })
+    const locationOps = await getLocationRecommendations(me)
+    const skillsOps = await getSkillsRecommendations(me)
 
-    let locationOps
-    if (regionToMatch) {
-      locationOps = await Opportunity.find({
-        location: { $in: [regionToMatch.name, ...regionToMatch.containedTerritories] },
-        requestor: { $ne: meId }
-      })
-
-      // if user has specified a territory, we should show the exact matches first, because we know
-      // they are closest to the user.
-      const userIsInTerritory = regionToMatch.name !== me.location
-      if (userIsInTerritory) {
-        locationOps.sort((a, b) => {
-          if (a.location === me.location && b.location !== me.location) {
-            return -1
-          } else if (b.location === me.location && a.location !== me.location) {
-            return 1
-          } else {
-            return 0 // we don't care about the ordering if the location isn't matching
-          }
-        })
-      }
-    } else {
-      locationOps = []
-    }
-
-    return res.json({ basedOnLocation: locationOps.slice(0, 10), basedOnSkills: 'todo' })
+    return res.json({ basedOnLocation: locationOps, basedOnSkills: skillsOps })
   } catch (e) {
     return res.status(500).send(e)
   }
@@ -152,7 +129,8 @@ const getOpportunity = async (req, res) => {
     const got = await Opportunity
       .accessibleBy(req.ability)
       .findOne(req.params)
-      .populate('requestor')
+      .populate('requestor', 'name nickname avatar')
+      .populate('offerOrg', 'name imgUrl category')
       .populate('tags')
       .exec()
     if (got == null) {

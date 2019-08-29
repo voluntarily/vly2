@@ -36,7 +36,7 @@ test.afterEach.always(async () => {
   await Tag.deleteMany()
 })
 
-test.serial('Should correctly give count of all active Ops sorted by title', async t => {
+test.serial('Op recommendations based on location should include those nearby and not requested by me', async t => {
   t.context.people[0].location = regions[0].containedTerritories[0]
   await t.context.people[0].save()
 
@@ -74,6 +74,76 @@ test.serial('Should correctly give count of all active Ops sorted by title', asy
 
   // ensure matches are ranked (i.e. closest match first)
   t.is(got.basedOnLocation[0].location, regions[0].containedTerritories[0])
+})
+
+test.serial('Ops recommended based on skills should match at least one of my skills and be ranked', async t => {
+  // set my tags as all tags but the first one in the db
+  t.context.people[0].tags = t.context.tags.map(t => t._id).slice(1)
+  await t.context.people[0].save()
+  const me = t.context.people[0]._id
+
+  const ops = t.context.opportunities
+  ops.forEach((op) => {
+    op.tags = []
+    op.requestor = t.context.people[1]._id // not me
+  })
+
+  const numMatchingOps = 3
+
+  // matches but was requested by me (so shouldn't be included)
+  ops[0].tags = t.context.tags.map(t => t._id)
+  ops[0].requestor = me
+
+  // contains matches (in order of most to least)
+  ops[1].tags = t.context.tags.map(t => t._id).slice(0)
+  ops[2].tags = t.context.tags.map(t => t._id).slice(2)
+  ops[3].tags = t.context.tags.map(t => t._id).slice(3)
+
+  ops.forEach(async op => {
+    await op.save()
+  })
+
+  const res = await request(server)
+    .get(`/api/opportunities/recommended?me=${me}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+
+  // ensure all matches returned
+  t.is(got.basedOnSkills.length, numMatchingOps)
+
+  // ensure matches are ranked (i.e. closest match first)
+  t.is(got.basedOnSkills[0]._id, ops[1]._id.toString())
+  t.is(got.basedOnSkills[1]._id, ops[2]._id.toString())
+  t.is(got.basedOnSkills[2]._id, ops[3]._id.toString())
+})
+
+test.serial('When I havent provided any skills, nothing should be recommended', async t => {
+  t.context.people[0].tags = []
+  await t.context.people[0].save()
+  const me = t.context.people[0]._id
+
+  const ops = t.context.opportunities
+  ops.forEach((op) => {
+    op.tags = t.context.tags.map(t => t._id)
+    op.requestor = t.context.people[1]._id // not me
+  })
+
+  ops.forEach(async op => {
+    await op.save()
+  })
+
+  const res = await request(server)
+    .get(`/api/opportunities/recommended?me=${me}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+
+  t.is(got.basedOnSkills.length, 0)
 })
 
 test.serial('Should return bad request when specified person does not exist in db', async t => {

@@ -6,13 +6,20 @@ import OpList from './OpList'
 class OpRecommendations extends React.Component {
   render () {
     const { recommendedOps } = this.props
-    return (recommendedOps.basedOnLocation.length === 0)
-      ? <div /> : (
-        <div>
-          <TextHeadingSubtitle>Nearby opportunities</TextHeadingSubtitle>
-          <OpList ops={recommendedOps.basedOnLocation} />
-        </div>
-      )
+    return (
+    <>
+      {recommendedOps.basedOnLocation.length !== 0 &&
+      <div>
+        <TextHeadingSubtitle>Nearby opportunities</TextHeadingSubtitle>
+        <OpList ops={recommendedOps.basedOnLocation} />
+      </div>}
+
+      {recommendedOps.basedOnSkills.length !== 0 &&
+      <div>
+        <TextHeadingSubtitle>Based on your skills</TextHeadingSubtitle>
+        <OpList ops={recommendedOps.basedOnSkills} />
+      </div>}
+    </>)
   }
 }
 
