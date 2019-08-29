@@ -14,7 +14,7 @@ const config = require('../../../config/config').config
   /api/health/config - prints the current config file and env vars.
 */
 const getHealth = (req, res) => {
-  if (req.param1 === 'log') {
+  if (req.params.param1 === 'log') {
     console.log(req.query.msg)
   }
   const result = {

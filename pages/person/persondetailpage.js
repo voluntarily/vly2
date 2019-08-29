@@ -23,7 +23,7 @@ const blankPerson = {
   email: '',
   phone: '',
   gender: '',
-  avatar: '',
+  imgUrl: '',
   role: ['volunteer'],
   status: 'inactive'
 }
@@ -179,7 +179,7 @@ PersonDetailPage.propTypes = {
     email: PropTypes.string,
     phone: PropTypes.string,
     gender: PropTypes.string,
-    avatar: PropTypes.any,
+    imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])
   }),

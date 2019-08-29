@@ -6,50 +6,9 @@ import { Provider } from 'react-redux'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import DatePickerType from '../DatePickerType.constant'
-
 import { API_URL } from '../../../lib/apiCaller'
-
+import ops from './Op.fixture'
 const { fetchMock } = require('fetch-mock')
-
-// Initial opportunities added into test db
-const ops = [
-  {
-    _id: '5cc903e5f94141437622cea7',
-    title: 'Growing in the garden',
-    subtitle: 'Growing digitally in the garden',
-    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
-    description: 'Project to grow something in the garden',
-    duration: '15 Minutes',
-    location: 'Newmarket, Auckland',
-    status: 'draft',
-    date: [
-      {
-        '$date': '2019-05-23T12:26:18.000Z' // Fri, 24 May 2019 00:26:18 NZST
-      },
-      {
-        '$date': '2019-06-12T04:55:10.014Z' // Wed, 12 Jun 2019 16:55:10 NZST
-      }
-    ]
-  },
-  {
-    _id: '5cc903e5f94141437622ce87',
-    title: 'The first 100 metres',
-    subtitle: 'Launching into space',
-    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
-    description: 'Project to build a simple rocket that will reach 100m',
-    duration: '2 hours',
-    location: 'Albany, Auckland',
-    status: 'done',
-    date: [
-      {
-        '$date': '2019-05-23T12:26:18.000Z' // Fri, 24 May 2019 00:26:18 NZST
-      },
-      {
-        '$date': '2019-06-12T04:55:10.014Z' // Wed, 12 Jun 2019 16:55:10 NZST
-      }
-    ]
-  }
-]
 
 const opsWithOpenEndDate = [
   ...ops,
@@ -71,7 +30,7 @@ const initStore = {
   }
 }
 const filterDateState = {
-  date: ['2019-04-20T12:26:18.000Z', null] // Tue, 16 Jul 2019 01:04:02
+  date: ['2019-03-20T12:26:18.000Z', null] // Tue, 16 Jul 2019 01:04:02
 }
 
 const dateRangeFilterValue = {
@@ -102,7 +61,7 @@ test.serial('mount the list with ops', async t => {
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('OpCard').length, 2) // there are two cards on the screen
+  t.is(wrapper.find('OpCard').length, 5) // there are five cards on the screen
   t.truthy(myMock.done())
   myMock.restore()
 })
@@ -121,7 +80,7 @@ test.serial('mount the list with ops search with results', async t => {
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('OpCard').length, 2) // there are two cards on the screen
+  t.is(wrapper.find('OpCard').length, 5) // there are two cards on the screen
   t.truthy(myMock.done())
   myMock.restore()
 })
@@ -225,7 +184,7 @@ test.serial('test filter by week is called. No opportunities shown', async t => 
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('OpCard').length, 0)
+  t.is(wrapper.find('OpCard').length, 1)
   t.truthy(myMock.done())
   myMock.restore()
 })
@@ -245,7 +204,7 @@ test.serial('Test filter by date range. No opportunities shown', async t => {
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('OpCard').length, 0)
+  t.is(wrapper.find('OpCard').length, 1)
   t.truthy(myMock.done())
   myMock.restore()
 })
@@ -266,7 +225,7 @@ test.serial('Test filter by date range. Filter result include open ended opportu
 
   await sleep(1)
   wrapper.update()
-  t.is(wrapper.find('OpCard').length, 1)
+  t.is(wrapper.find('OpCard').length, 3)
   t.truthy(myMock.done())
   myMock.restore()
 })
@@ -286,7 +245,7 @@ test.serial('Test filter by week allow to add open end opportunity', async t => 
   )
   await sleep(1)
   wrapper.update()
-  t.is(wrapper.find('OpCard').length, 1) // The week value not match the available date range in the ops array. Only the open end will match
+  t.is(wrapper.find('OpCard').length, 3) // The week value not match the available date range in the ops array. Only the open end will match
   t.truthy(myMock.done())
   myMock.restore()
 })

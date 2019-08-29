@@ -16,7 +16,7 @@ class InterestTable extends Component {
       }
     },
     { title: 'Name',
-      key: 'avatar',
+      key: 'imgUrl',
       render: (text, record) => {
         return (
           <span>
@@ -24,7 +24,7 @@ class InterestTable extends Component {
               size='large'
               shape='square'
               onClick={() => Router.push(`/people/${record.person._id}`)}
-              src={record.person.avatar}
+              src={record.person.imgUrl}
               icon='user'
             />&nbsp;&nbsp;
             {record.person.nickname}

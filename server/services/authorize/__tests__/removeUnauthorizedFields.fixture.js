@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 const { accessibleFieldsPlugin } = require('@casl/mongoose')
 const schemaName = 'Foo'
 const fooSchema = new Schema({
-  title: String,
+  name: String,
   subtitle: String
 })
 
@@ -11,7 +11,7 @@ fooSchema.plugin(accessibleFieldsPlugin)
 
 const Fields = {
   ID: '_id',
-  TITLE: 'title',
+  NAME: 'name',
   SUBTITLE: 'subtitle'
 }
 

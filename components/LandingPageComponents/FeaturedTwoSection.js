@@ -31,7 +31,7 @@ FeaturedTwoSection.propTypes = {
   subtitle: PropTypes.string.isRequired,
   ops: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       subtitle: PropTypes.string,
       imgUrl: PropTypes.any,
       duration: PropTypes.string

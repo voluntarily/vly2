@@ -7,7 +7,7 @@ import FeaturedTwoSection from '../FeaturedTwoSection'
 const ops = [
   {
     _id: '5cc903e5f94141437622cea7',
-    title: 'Growing in the garden',
+    name: 'Growing in the garden',
     subtitle: 'Growing digitally in the garden',
     imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
     description: 'Project to grow something in the garden',
@@ -17,7 +17,7 @@ const ops = [
   },
   {
     _id: '5cc903e5f94141437622ce87',
-    title: 'The first 100 metres',
+    name: 'The first 100 metres',
     subtitle: 'Launching into space',
     imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
     description: 'Project to build a simple rocket that will reach 100m',

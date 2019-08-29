@@ -7,7 +7,7 @@ import ActDetail from '../ActDetail'
 // Initial activities
 const act = {
   _id: '5cc903e5f94141437622cea7',
-  title: 'Growing in the garden',
+  name: 'Growing in the garden',
   subtitle: 'Growing digitally in the garden',
   imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
   description: 'Project to grow something in the garden',
@@ -21,7 +21,7 @@ test('render the detail with act', t => {
   const wrapper = renderWithIntl(<ActDetail act={act} onPress={() => {}} />)
   // console.log(wrapper.html())
   t.truthy(wrapper.find('Head'))
-  t.is(wrapper.find('h1').text(), act.title)
+  t.is(wrapper.find('h1').text(), act.name)
 })
 
 // test.todo('verify markdown in description is rendered')

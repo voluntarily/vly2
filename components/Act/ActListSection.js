@@ -56,7 +56,7 @@ class ActListSection extends Component {
 
 ActListSection.propTypes = {
   acts: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequire,
+    name: PropTypes.string.isRequire,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     description: PropTypes.string,

@@ -24,7 +24,7 @@ const listInterests = async (req, res) => {
         query.person = req.query.me
       }
       // Return the nickname in person field
-      got = await Interest.find(query).populate({ path: 'person', select: 'nickname name avatar' }).sort(sort).exec()
+      got = await Interest.find(query).populate({ path: 'person', select: 'nickname name imgUrl' }).sort(sort).exec()
     } else if (req.query.me) {
       const query = { person: req.query.me }
       got = await Interest.find(query).populate({ path: 'opportunity' }).sort(sort).exec()
@@ -59,14 +59,14 @@ const createInterest = async (req, res) => {
     }
     const volunteerID = req.body.person
     const { opportunity } = req.body
-    const { title } = opportunity
+    const { name } = opportunity
     const { requestor } = req.body.opportunity
     const opId = opportunity._id
     const { comment } = req.body
     requestor.volunteerComment = comment
 
-    sendEmailBaseOn('acknowledgeInterest', volunteerID, title, opId)
-    sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
+    sendEmailBaseOn('acknowledgeInterest', volunteerID, name, opId)
+    sendEmailBaseOn('RequestorNotificationEmail', requestor._id, name, opId, comment)
     const got = await Interest.findOne({ _id: saved._id }).populate({ path: 'person', select: 'nickname' }).exec()
     res.json(got)
   })
@@ -74,7 +74,7 @@ const createInterest = async (req, res) => {
 
 const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
   const { _id } = volunteer
-  const { requestor, title } = opportunity
+  const { requestor, name } = opportunity
   const opID = opportunity._id
 
   let icalString
@@ -99,10 +99,10 @@ const processStatusToSendEmail = (interestStatus, opportunity, volunteer) => {
     sendEmailWithAttachment(volunteer._id, InterestStatus.INVITED, emailProps)
   } else if (interestStatus === InterestStatus.DECLINED) {
     // send email to volunteer only
-    sendEmailBaseOn(interestStatus, _id, title, opID) // The _id in here is the volunteer id
+    sendEmailBaseOn(interestStatus, _id, name, opID) // The _id in here is the volunteer id
   } else if (interestStatus === InterestStatus.COMMITTED) {
     // send email to requestor only
-    sendEmailBaseOn(interestStatus, requestor, title, opID)
+    sendEmailBaseOn(interestStatus, requestor, name, opID)
   }
 }
 
@@ -121,7 +121,7 @@ const addEventToIcalCalendar = (icalCalendar, opportunity) => {
     start: moment(opportunity.date[0]),
     end: moment(opportunity.date[0]).add(duration),
     timestamp: moment(),
-    summary: `Voluntarily event: ${opportunity.title}`,
+    summary: `Voluntarily event: ${opportunity.name}`,
     description: `${cleanEventDescription}`,
     url: `${config.appUrl}/ops/${opportunity._id}`,
     organizer: 'Voluntarily <team@voluntari.ly>'

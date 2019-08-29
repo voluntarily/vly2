@@ -160,7 +160,7 @@ class Acts extends Component {
 Acts.propTypes = {
   acts: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       subtitle: PropTypes.string,
       imgUrl: PropTypes.any,
       description: PropTypes.string,

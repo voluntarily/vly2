@@ -20,7 +20,7 @@ x-examples:
     name: 'Salvador Domingo Felipe Jacinto Dalí i Domènech, 1st Marquis of Dalí de Púbol '
     email: salvador@voluntarily.nz
     phone: 000 000 0000
-    avatar: 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg'
+    imgUrl: 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg'
   example-2: {}
 properties:
   _id:
@@ -57,7 +57,7 @@ properties:
     description: 'gender identity related pronouns - how the person should be addressed in third and possesive person forms. e.g he/him/his, she/her/hers etc.'
   language:
     type: string
-  avatar:
+  imgUrl:
     type: string
     format: uri
     example: 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg'

@@ -17,7 +17,7 @@ class MemberTable extends Component {
     //   }
     // },
     { title: 'Name',
-      key: 'avatar',
+      key: 'imgUrl',
       // sorter: (a, b, sortOrder) => sortOrder === 'ascend' ? ('' + a.name).localeCompare(b.name) : ('' + b.name).localeCompare(a.name),
       // sortDirections: ['ascend', 'descend'],
       // defaultSortOrder: 'ascend',
@@ -29,7 +29,7 @@ class MemberTable extends Component {
               size='large'
               shape='square'
               onClick={() => Router.push(`/people/${record.person._id}`)}
-              src={record.person.avatar}
+              src={record.person.imgUrl}
               icon='user'
             />
             {record.person.nickname}

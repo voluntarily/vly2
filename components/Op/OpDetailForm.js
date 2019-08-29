@@ -60,7 +60,7 @@ class OpDetailForm extends Component {
         const { startDateValue, endDateValue } = this.state
         op.date = [] // Dirty work around to not change schema
         op.date.push(startDateValue, endDateValue)
-        op.title = values.title
+        op.name = values.name
         op.subtitle = values.subtitle
         op.tags = values.tags
         op.duration = values.duration
@@ -248,7 +248,7 @@ class OpDetailForm extends Component {
     } = this.props.form
 
     // Only show error after a field is touched.
-    const titleError = isFieldTouched('title') && getFieldError('title')
+    const nameError = isFieldTouched('name') && getFieldError('name')
     const isNewOp = this.props.op._id
     return (
       <div className='OpDetailForm'>
@@ -293,12 +293,12 @@ class OpDetailForm extends Component {
               <ShortInputContainer>
                 <Form.Item
                   label={opTitle}
-                  validateStatus={titleError ? 'error' : ''}
-                  help={titleError || ''}
+                  validateStatus={nameError ? 'error' : ''}
+                  help={nameError || ''}
                 >
-                  {getFieldDecorator('title', {
-                    rules: [{ required: true, message: 'Title is required' }]
-                  })(<Input placeholder='Title' />)}
+                  {getFieldDecorator('name', {
+                    rules: [{ required: true, message: 'name is required' }]
+                  })(<Input placeholder='name' />)}
                 </Form.Item>
 
                 <Form.Item label={opSubtitle}>
@@ -518,7 +518,7 @@ class OpDetailForm extends Component {
 OpDetailForm.propTypes = {
   op: PropTypes.shape({
     _id: PropTypes.string,
-    title: PropTypes.string,
+    name: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.string,
     duration: PropTypes.string,
@@ -559,7 +559,7 @@ export default Form.create({
   },
   mapPropsToFields (props) {
     return {
-      title: Form.createFormField({ ...props.op.title, value: props.op.title }),
+      name: Form.createFormField({ ...props.op.name, value: props.op.name }),
 
       subtitle: Form.createFormField({
         ...props.op.subtitle,

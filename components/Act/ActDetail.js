@@ -45,10 +45,10 @@ export function ActDetail ({ act }) {
   return (
     <FullPage>
       <Spacer />
-      <Head><title>{act.title}</title></Head>
+      <Head><title>{act.name}</title></Head>
       <HalfGrid>
         <Left>
-          <TitleFont>{act.title}</TitleFont>
+          <TitleFont>{act.name}</TitleFont>
           <ItemListing>⏱&nbsp;{act.duration}</ItemListing>
           // TODO: [VP-204] add organisation and contact
           <ItemListing>📝&nbsp;{act.status}</ItemListing>
@@ -66,7 +66,7 @@ export function ActDetail ({ act }) {
           <Spacer />
         </Left>
         <Right>
-          <img style={{ width: '100%' }} src={act.imgUrl} alt={act.title} />
+          <img style={{ width: '100%' }} src={act.imgUrl} alt={act.name} />
           <TagContainer>
             <TagDisplay tags={act.tags} />
           </TagContainer>
@@ -78,7 +78,7 @@ export function ActDetail ({ act }) {
 
 ActDetail.propTypes = {
   act: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     description: PropTypes.string,

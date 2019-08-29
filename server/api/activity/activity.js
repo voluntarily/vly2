@@ -4,7 +4,8 @@ const idvalidator = require('mongoose-id-validator')
 const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
 
 const ActivitySchema = new Schema({
-  title: String, // "Growing in the garden",
+  name: String, // "Growing in the garden",
+  title: String, // deprecated - use name instead
   subtitle: String, // "Growing digitally in the garden",
   imgUrl: String, // "https://image.flaticon.com/icons/svg/206/206857.svg",
   description: String, // "Project to grow something in the garden",

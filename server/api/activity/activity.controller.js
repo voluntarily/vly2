@@ -9,7 +9,7 @@ const escapeRegex = require('../../util/regexUtil')
  */
 const getActivities = async (req, res) => {
   let query = {} // { status: 'active' }
-  let sort = 'title'
+  let sort = 'name'
   let select = {}
 
   try {
@@ -36,7 +36,7 @@ const getActivities = async (req, res) => {
       const searchExpression = new RegExp(regexSearch, 'i')
       const searchParams = {
         $or: [
-          { 'title': searchExpression },
+          { 'name': searchExpression },
           { 'subtitle': searchExpression },
           { 'description': searchExpression }
         ]

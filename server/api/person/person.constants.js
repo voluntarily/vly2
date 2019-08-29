@@ -17,7 +17,7 @@ const PersonFields = {
   PHONE: 'phone',
   GENDER: 'gender',
   LANGUAGE: 'language',
-  AVATAR: 'avatar',
+  AVATAR: 'imgUrl',
   ROLE: 'role',
   STATUS: 'status'
 }

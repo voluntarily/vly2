@@ -19,7 +19,7 @@ const { getLocationRecommendations, getSkillsRecommendations } = require('./oppo
 const getOpportunities = async (req, res) => {
   // limit to Active ops unless one of the params overrides
   let query = { 'status': OpportunityStatus.ACTIVE }
-  let sort = 'title'
+  let sort = 'name'
   let select = {}
 
   try {
@@ -47,7 +47,7 @@ const getOpportunities = async (req, res) => {
       const searchExpression = new RegExp(regexSearch, 'i')
       const searchParams = {
         $or: [
-          { 'title': searchExpression },
+          { 'name': searchExpression },
           { 'subtitle': searchExpression },
           { 'description': searchExpression }
         ]
@@ -89,7 +89,7 @@ const getOpportunities = async (req, res) => {
         .accessibleBy(req.ability)
         .find(query)
         .select(select)
-        .populate('requestor', 'name nickname avatar')
+        .populate('requestor', 'name nickname imgUrl')
         .populate('offerOrg', 'name imgUrl category')
         .sort(sort)
         .exec()
@@ -129,7 +129,7 @@ const getOpportunity = async (req, res) => {
     const got = await Opportunity
       .accessibleBy(req.ability)
       .findOne(req.params)
-      .populate('requestor', 'name nickname avatar')
+      .populate('requestor', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl category')
       .populate('tags')
       .exec()
@@ -206,7 +206,7 @@ function ensureSanitized (req, res, next) {
   }
 
   const op = req.body
-  if (op.title) { op.title = sanitizeHtml(op.title) }
+  if (op.name) { op.name = sanitizeHtml(op.name) }
   if (op.subtitle) { op.subtitle = sanitizeHtml(op.subtitle) }
   if (op.imgUrl) { op.imgUrl = sanitizeHtml(op.imgUrl) }
   if (op.description) { op.description = sanitizeHtml(op.description, descriptionOptions) }
