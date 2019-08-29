@@ -13,7 +13,18 @@ storiesOf('Opportunity Cards', module)
     </StoryIntroContainer>
 
   ))
+  .add('Small OpCard with open date', () => (
+    <StoryIntroContainer>
+      <OpCard size='Small' op={ops[1]} key='1' />
+    </StoryIntroContainer>
 
+  ))
+  .add('Small OpCard with start/end date', () => (
+    <StoryIntroContainer>
+      <OpCard size='Small' op={ops[3]} key='1' />
+    </StoryIntroContainer>
+
+  ))
   .add('Big OpCard', () => (
     <StoryIntroContainer>
       <OpCard size='Big' op={ops[0]} key='2' />
