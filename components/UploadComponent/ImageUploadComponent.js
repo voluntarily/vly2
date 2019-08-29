@@ -25,7 +25,6 @@ class ImageUpload extends Component {
       },
       meta: {}
     })
-
     this.onUpload = this.onUpload.bind(this)
     this.uppy.on('file-removed', (e) => { this.props.setImgUrl('') })
     this.uppy.addUploader(this.onUpload)

@@ -37,7 +37,7 @@ test.only('Should upload a small file', async t => {
   t.regex(res.body.imageUrl, /-194px-testcard_f[.]jpg/i)
 
   // get the image back from server only if testing with local uploading storage
-  if (!res.body.imageUrl.match(/https:\/\/alpha-voluntarily-images.s3/gm)) {
+  if (!res.body.imageUrl.match(/https:\/\//gm)) {
     const img = await request(server)
       .get(res.body.imageUrl)
       .set('Accept', 'image')

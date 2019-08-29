@@ -4,7 +4,7 @@ const slug = require('slug')
 const { config } = require('../../../config/config')
 const { cloudUploadService } = require('./cloudImageUpload')
 // any depended upon api services
-const imageController = async (req, res) => {
+const uploadImage = async (req, res) => {
   try {
     const ImageBin = req.body.image
     const ImageBuffer = Buffer.from(ImageBin, 'binary')
@@ -20,7 +20,7 @@ const imageController = async (req, res) => {
       message: 'OK',
       imageUrl: filename
     }
-    if (config.AWS_ACCESS_KEY && config.AWS_ACCESS_KEY_SECRET) {
+    if (config.AWS_ACCESS_KEY_ID && config.AWS_SECRET_ACCESS_KEY) {
       result.imageUrl = await cloudUploadService(req.body)
     } else {
       fs.writeFile(fqp, ImageBuffer, (err) => {
@@ -34,4 +34,6 @@ const imageController = async (req, res) => {
   }
 }
 
-module.exports = imageController
+module.exports = {
+  uploadImage
+}

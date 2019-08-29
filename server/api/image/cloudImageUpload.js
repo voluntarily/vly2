@@ -5,13 +5,15 @@ const { config } = require('../../../config/config')
 const cloudUploadService = async (imageObject) => {
   const { image: imageBase64, file: filename } = imageObject
   AWS.config.update({
-    accessKeyId: config.AWS_ACCESS_KEY,
-    secretAccessKey: config.AWS_ACCESS_KEY_SECRET
+    accessKeyId: config.AWS_ACCESS_KEY_ID,
+    secretAccessKey: config.AWS_SECRET_ACCESS_KEY
   })
   const imageBuffer = Buffer.from(imageBase64, 'binary')
   const imageKey = process.env.NODE_ENV === 'test' ? `unitTest/${Date.now()}-${filename}` : `${Date.now()}-${filename}`
+  let bucketName = config.appUrl.replace(/^(https?|ftp|http):\/\//g, '')
+  if (bucketName.match(/localhost/g)) bucketName = 'localhost'
   const params = {
-    Bucket: `${config.S3_BUCKET_NAME}`,
+    Bucket: `${bucketName}.images`,
     Body: imageBuffer,
     Key: imageKey,
     ACL: 'public-read'
