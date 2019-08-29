@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Head from 'next/head'
 import { Divider } from 'antd'
-import publicPage, { A4 } from '../hocs/publicPage'
+import publicPage from '../hocs/publicPage'
 import { Hello, Greet } from '../components/examples/Hello'
 import LessStyled from '../components/examples/LessStyled'
 import AntdType from '../components/examples/AntdType'
@@ -13,6 +13,7 @@ import PersonDetail from '../components/Person/PersonDetail'
 import RoutePush, { RouteBack, RouteReplace } from '../components/examples/RoutePush'
 import ConfirmationCard from '../components/Interest/InterestConfirmationCard'
 import Uploader from '../components/examples/Upload'
+import { A4 } from '../VTheme/VTheme'
 
 const org = {
   _id: 'f34gb2bh24b24b2',

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Button, Icon, message, Tabs } from 'antd'
-import { FullPage } from '../../hocs/publicPage'
 import securePage from '../../hocs/securePage'
 import OpList from '../../components/Op/OpList'
 import OpAdd from '../../components/Op/OpAdd'
@@ -22,6 +21,7 @@ import styled from 'styled-components'
 import { Helmet } from 'react-helmet'
 
 import {
+  FullPage,
   TextHeadingBlack,
   TextP,
   PageHeaderContainer,

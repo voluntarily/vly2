@@ -7,9 +7,9 @@ import PropTypes from 'prop-types'
 import { Container } from 'next/app'
 import { withRouter } from 'next/router'
 import { FormattedMessage } from 'react-intl'
-import publicPage, { FullPage } from '../hocs/publicPage'
-import { Spacer } from '../components/VTheme/VTheme'
+import { FullPage, Spacer } from '../components/VTheme/VTheme'
 import styled from 'styled-components'
+import publicPage from '../hocs/publicPage'
 
 const BugImage = styled.img`
   width: 5rem;

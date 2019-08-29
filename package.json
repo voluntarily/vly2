@@ -176,7 +176,8 @@
       "server/util/test-memory-mongo.js",
       "lib/react-intl-test*.js",
       "server/config.js",
-      "components/examples/**/*.js"
+      "components/examples/**/*.js",
+      "server/api/db/db.controller.js"
     ],
     "reporter": [
       "lcov",

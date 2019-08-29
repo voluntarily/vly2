@@ -1,7 +1,7 @@
-import { FullPage } from '../../hocs/publicPage'
 import Loading from '../../components/Loading'
 import React from 'react'
 import { Helmet } from 'react-helmet'
+import { FullPage } from '../../components/VTheme/VTheme'
 
 export default class OpLoadingPage extends React.Component {
   render () {

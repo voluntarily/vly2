@@ -7,8 +7,7 @@ import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
 
 import { Button } from 'antd'
-import { FullPage } from '../../hocs/publicPage'
-import { HalfGrid, Spacer } from '../VTheme/VTheme'
+import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
 import TagDisplay from '../Tags/TagDisplay'
 
 const Left = styled.div``

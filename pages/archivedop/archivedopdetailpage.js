@@ -1,9 +1,10 @@
 import { OpDetailPage } from '../op/opdetailpage'
 import OpLoadingPage from '../op/oploadingpage'
 import OpUnavailablePage from '../op/opunavailablepage'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import publicPage from '../../hocs/publicPage'
+import { FullPage } from '../../components/VTheme/VTheme'
+
 import OpDetail from '../../components/Op/OpDetail'
-import OpOrganizerInfo from '../../components/Op/OpOrganizerInfo'
 import InterestSection from '../../components/Interest/InterestSection' // TODO Introduce archived interest section
 import { Divider } from 'antd'
 import reduxApi, { withArchivedOpportunities } from '../../lib/redux/reduxApi.js'
@@ -54,9 +55,6 @@ export class ArchivedOpDetailPage extends OpDetailPage {
         </Helmet>
         <OpDetail
           op={op}
-        />
-        <OpOrganizerInfo
-          organizer={op.requestor}
         />
         <Divider />
         <InterestSection opid={op._id} />

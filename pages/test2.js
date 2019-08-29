@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Button } from 'antd'
-
-import publicPage, { FullPage } from '../hocs/publicPage'
+import publicPage from '../hocs/publicPage'
 import TitleSectionSub from '../components/LandingPageComponents/TitleSectionSub'
+import { FullPage } from '../../components/VTheme/VTheme'
 
 const FullPage2Grid = styled.div`
   width: 100vw;

@@ -9,9 +9,9 @@ import moment from 'moment'
 import sanitize from 'sanitize-html'
 
 import { Button } from 'antd'
-import { FullPage } from '../../hocs/publicPage'
-import { HalfGrid, Spacer } from '../VTheme/VTheme'
+import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
 import TagDisplay from '../Tags/TagDisplay'
+import IdLine from '../VTheme/IdLine'
 
 const Left = styled.div``
 
@@ -76,9 +76,9 @@ export function OpDetail ({ op }) {
             📝&nbsp;<strong>Status:</strong>&nbsp;&nbsp;&nbsp;
             {sanitize(op.status)}
           </ItemListing>
-
+          <ItemListing><IdLine item={op.offerOrg} path='organisation' /></ItemListing>
+          <ItemListing><IdLine item={op.requestor} path='person' /></ItemListing>
           <Spacer />
-
           <ItemP>
             <Markdown
               children={description}

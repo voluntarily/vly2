@@ -4,15 +4,15 @@ import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import OpDetail from '../../components/Op/OpDetail'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import publicPage from '../../hocs/publicPage'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
-import OpOrganizerInfo from '../../components/Op/OpOrganizerInfo'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
 import OpLoadingPage from './oploadingpage'
 import OpUnavailablePage from './opunavailablepage'
 import OpEditPage from './opeditpage'
+import { FullPage } from '../../components/VTheme/VTheme'
 
 const blankOp = {
   name: '',
@@ -183,7 +183,6 @@ export class OpDetailPage extends Component {
             </Button>
           }
           <OpDetail op={op} />
-          <OpOrganizerInfo organizer={op.requestor} />
           <Divider />
           <OpVolunteerInterestSection
             isAuthenticated={this.props.isAuthenticated}

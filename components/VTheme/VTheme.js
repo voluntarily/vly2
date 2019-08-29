@@ -345,3 +345,38 @@ Need the form ones as well soon as we create other forms on top of the OpDetailF
 
 ====================================================
 */
+export const A4 = styled.div`
+  margin: 3em;
+  padding-bottom: 4em;
+  max-width: 50em;
+  margin-left: auto;
+  margin-right: auto;
+  @media (max-width: 600px) {
+    .div {
+      margin: 0 3em;
+    }
+  }
+`
+export const FullPage = styled.div`
+margin: 6rem auto;
+  width: 80rem;
+  overflow: visible;
+  height: auto;
+
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    width: calc(100vw - 4rem);
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  @media screen and (max-width: 767px) {
+    margin-top: 4rem;
+    width: calc(100vw - 2rem);
+    margin-left: 1rem;
+  }
+` // end fullpage
+
+export const FillWindow = styled.div`
+    min-height: calc(100vh - 220px);
+  }
+` // END AWESOME CSS DUMP

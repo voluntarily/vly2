@@ -99,7 +99,7 @@ test('should have a date', t => {
   t.is(wrapper.find('img').last().prop('src'), op.requestor.imgUrl)
 
   // should have a real date
-  t.is(wrapper.find('.requestDateTimeSmall').first().text(), ' 📅 12:00AM | Thu 29/08/19 ')
+  t.is(wrapper.find('.requestDateTimeSmall').first().text(), ' 📅 12:26AM | Fri 24/05/19 ')
 })
 
 test('something interested in', t => {

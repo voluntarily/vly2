@@ -1,6 +1,6 @@
 // import Link from 'next/link'
 import Head from 'next/head'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import publicPage from '../../hocs/publicPage'
 import MemberItem from '../../components/Member/MemberItem'
 import MemberTable from '../../components/Member/MemberTable'
 import MemberSection from '../../components/Member/MemberSection'
@@ -8,6 +8,7 @@ import RegisterMemberItem from '../../components/Member/RegisterMemberItem'
 import people from '../../server/api/person/__tests__/person.fixture'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import { MemberStatus } from '../../server/api/member/member.constants'
+import { FullPage } from '../../components/VTheme/VTheme'
 
 import { Divider } from 'antd'
 

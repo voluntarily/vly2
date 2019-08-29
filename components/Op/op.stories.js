@@ -2,6 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import OpCard from './OpCard'
 import OpList from './OpList'
+import OpDetail from './OpDetail'
 import { StoryIntroContainer } from '../VTheme/VStoryTheme'
 import ops from './__tests__/Op.fixture'
 
@@ -15,7 +16,7 @@ storiesOf('Opportunity Cards', module)
 
   .add('Big OpCard', () => (
     <StoryIntroContainer>
-      <OpCard size='Big' op={ops[0]} key='1' />
+      <OpCard size='Big' op={ops[0]} key='2' />
     </StoryIntroContainer>
 
   ))
@@ -26,4 +27,10 @@ storiesOf('Opportunity Cards', module)
       </StoryIntroContainer>
 
     </div>
+  ))
+  .add('OpDetail', () => (
+    <StoryIntroContainer>
+      <OpDetail op={ops[0]} onPress={() => {}} />
+    </StoryIntroContainer>
+
   ))

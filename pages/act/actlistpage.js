@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Button, Input } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import Link from 'next/link'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import publicPage from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 import PropTypes from 'prop-types'
 import NoResult from '../../components/NoResult'
@@ -12,6 +12,7 @@ import ActMenu from '../../components/Act/ActMenu'
 import Router from 'next/router'
 import styled from 'styled-components'
 import {
+  FullPage,
   GridContainer,
   ActivityContainer,
   PageHeaderContainer,
