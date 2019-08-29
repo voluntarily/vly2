@@ -4,7 +4,7 @@ const { config } = require('../config/config')
 fixture`Getting Started` // eslint-disable-line no-undef
   .page`http://localhost:${config.serverPort}/`
   .beforeEach(async () => {
-    await waitForReact()
+    await waitForReact(30000)
   })
 
 test('Test we can search from landing page', async t => { // eslint-disable-line no-undef
