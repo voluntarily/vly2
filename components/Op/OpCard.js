@@ -1,71 +1,61 @@
 /*
   Display an activity record in card format with a picture, name, and commitment.
 */
-import React, { Component } from 'react'
+// import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
 import IdLine from '../VTheme/IdLine'
 
+const getOpPageURL = (isArchived, opid) => {
+  if (isArchived) {
+    return `/archivedops/${opid}`
+  } else {
+    return `/ops/${opid}`
+  }
+}
 // todo if image is not present then use a fallback.
-class OpCard extends Component {
-  constructor (props) {
-    super(props)
-    const { size, op, onPress } = props
-    this.op = op
-    this.size = size
-    this.onPress = onPress
-    this.getOpPageURL = this.getOpPageURL.bind(this)
-    this.cardImage = op.imgUrl ? op.imgUrl : '../../static/missingimage.svg'
-    this.draft = op.status === 'draft' ? 'DRAFT: ' : ''
-    this.isArchived = op.status === 'completed' || op.status === 'cancelled'
-    this.interestState = op.interest ? ` - ${op.interest.status}` : ''
-    this.startTime = op.date[0]
-      ? moment(op.date[0]).format('h:mmA | ddd DD/MM/YY')
-      : 'Flexible date/time'
-  }
+const OpCard = ({ size, op }) => {
+  const cardImage = op.imgUrl ? op.imgUrl : '../../static/missingimage.svg'
+  const draft = op.status === 'draft' ? 'DRAFT: ' : ''
+  const isArchived = op.status === 'completed' || op.status === 'cancelled'
+  const interestState = op.interest ? ` - ${op.interest.status}` : ''
+  const startTime = op.date[0]
+    ? moment(op.date[0]).format('h:mmA | ddd DD/MM/YY')
+    : 'Flexible date/time'
 
-  getOpPageURL () {
-    if (this.isArchived) {
-      return `/archivedops/${this.op._id}`
-    } else {
-      return `/ops/${this.op._id}`
-    }
-  }
+  return (
+    <div>
+      <div className={`requestContainer${size}`}>
+        <Link href={getOpPageURL(isArchived, op._id)}>
+          <a>
+            <img className={`requestImg${size}`} src={cardImage} />
+            <p className={`requestTitle requestTitle${size}`}>
+              {draft}
+              {op.name}
+            </p>
+            <p className={`requestDateTime${size}`}>
+              {' '}
+                📅 {startTime}{' '}
+            </p>
+            <p className={`requestDateTime${size}`}>
+              {op.location}
+            </p>
+            <p className={`requestDateTime${size}`}>
+              {op.duration}
+            </p>
+            <p className={`requestDescription${size}`}>
+              {op.subtitle}
+              <strong>{interestState}</strong>
+            </p>
+          </a>
+        </Link>
+        { op.offerOrg
+          ? <IdLine item={op.offerOrg} path='organisation' />
+          : <IdLine item={op.requestor} path='person' />}
+      </div>
 
-  render () {
-    return (
-      <div>
-        <div className={`requestContainer${this.size}`}>
-          <Link href={this.getOpPageURL()}>
-            <a>
-              <img className={`requestImg${this.size}`} src={this.cardImage} />
-              <p className={`requestTitle requestTitle${this.size}`}>
-                {this.draft}
-                {this.op.name}
-              </p>
-              <p className={`requestDateTime${this.size}`}>
-                {' '}
-                📅 {this.startTime}{' '}
-              </p>
-              <p className={`requestDateTime${this.size}`}>
-                {this.op.location}
-              </p>
-              <p className={`requestDateTime${this.size}`}>
-                {this.op.duration}
-              </p>
-              <p className={`requestDescription${this.size}`}>
-                {this.op.subtitle}
-                <strong>{this.interestState}</strong>
-              </p>
-            </a>
-          </Link>
-          { this.op.offerOrg
-            ? <IdLine item={this.op.offerOrg} path='organisation' />
-            : <IdLine item={this.op.requestor} path='person' />}
-        </div>
-
-        <style jsx>{`
+      <style jsx>{`
           a {
             text-decoration: none;
           }
@@ -221,9 +211,8 @@ class OpCard extends Component {
             }
           }
         `}</style>
-      </div>
-    )
-  }
+    </div>
+  )
 }
 
 OpCard.propTypes = {
@@ -234,8 +223,7 @@ OpCard.propTypes = {
     imgUrl: PropTypes.any,
     duration: PropTypes.string,
     _id: PropTypes.string.isRequired
-  }),
-  onPress: PropTypes.func
+  })
 }
 
 export default OpCard

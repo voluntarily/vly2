@@ -5,32 +5,27 @@ import OpList from './OpList'
 import OpDetail from './OpDetail'
 import { StoryIntroContainer } from '../VTheme/VStoryTheme'
 import ops from './__tests__/Op.fixture'
+import { withKnobs, text, number, radios, optionsKnob as options } from '@storybook/addon-knobs'
+
+const groupId = 'GROUP-ID1'
+
+const Com = (props) => <div>{props.value}</div>
 
 storiesOf('Opportunity Cards', module)
-  .add('Small OpCard', () => (
-    <StoryIntroContainer>
-      <OpCard size='Small' op={ops[0]} key='1' />
-    </StoryIntroContainer>
+  .addDecorator(withKnobs)
+  .add('OpCard', () => {
+    const value = number('Opportunity #', 0, { range: true, min: 0, max: ops.length, step: 1 }, groupId)
+    const size = radios('Size', ['Small', 'Big'], 'Small', groupId)
 
-  ))
-  .add('Small OpCard with open date', () => (
-    <StoryIntroContainer>
-      <OpCard size='Small' op={ops[1]} key='1' />
-    </StoryIntroContainer>
+    return (
+      <StoryIntroContainer>
+        <OpCard size={size} op={ops[value]} />
+        <br /><hr /><br />
+        <pre>{JSON.stringify(ops[value], null, 2)}</pre>
+      </StoryIntroContainer>
 
-  ))
-  .add('Small OpCard with start/end date', () => (
-    <StoryIntroContainer>
-      <OpCard size='Small' op={ops[3]} key='1' />
-    </StoryIntroContainer>
-
-  ))
-  .add('Big OpCard', () => (
-    <StoryIntroContainer>
-      <OpCard size='Big' op={ops[0]} key='2' />
-    </StoryIntroContainer>
-
-  ))
+    )
+  })
   .add('OpList', () => (
     <div>
       <StoryIntroContainer>
