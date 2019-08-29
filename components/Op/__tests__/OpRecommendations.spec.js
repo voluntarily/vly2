@@ -1,9 +1,9 @@
 import React from 'react'
 import test from 'ava'
 import OpRecommendations from '../OpRecommendations'
+import ops from './Op.fixture'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 const originalWarn = console.warn
-const ops = require('../../../server/api/opportunity/__tests__/opportunity.fixture')
 
 test.before('before test silence async-validator', () => {
   console.warn = (...args) => {

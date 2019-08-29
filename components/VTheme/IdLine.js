@@ -12,21 +12,28 @@ import Link from 'next/link'
   }
   type = orgaanisation, person, activity
 */
-const IdLine = ({ item, type }) =>
-  <Link href={`/${type}/${item._id}`}><a>
-    <Avatar
-      size='small'
-      shape='square'
-      src={item.imgUrl}
-      icon='team'
-    />&nbsp;&nbsp;
-    {item.name}&nbsp;
-  </a></Link>
+const IdLine = ({ item, path }) =>
+  item
+    ? <Link href={`/${path}/${item._id}`}>
+      <a style={{ display: 'block' }} >
+        <Avatar
+          size='small'
+          shape='square'
+          src={item.imgUrl}
+          icon='team'
+        />
+        <span style={{ marginLeft: '1em' }}>{item.name}</span>
+      </a>
+    </Link>
+    : null
 
 IdLine.propTypes = {
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  imgUrl: PropTypes.string.isRequired
+  item: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    imgUrl: PropTypes.string.isRequired
+  }),
+  path: PropTypes.string
 }
 
 export default IdLine
