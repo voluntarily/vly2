@@ -1,32 +1,18 @@
-import React, { Component } from 'react'
-import { FormattedMessage } from 'react-intl'
 import { Button, Icon, message, Tabs } from 'antd'
-import securePage from '../../hocs/securePage'
-import OpList from '../../components/Op/OpList'
+import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
+import { FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
+import NextActionBlock from '../../components/Action/NextActionBlock'
 import OpAdd from '../../components/Op/OpAdd'
+import OpList from '../../components/Op/OpList'
 import OpRecommendations from '../../components/Op/OpRecommendations'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
-import reduxApi, {
-  withInterests,
-  withPeople,
-  withMembers,
-  withOps,
-  withArchivedOpportunities,
-  withRecommendedOps
-} from '../../lib/redux/reduxApi.js'
+import { FullPage, PageHeaderContainer, RequestButtonContainer, TextHeadingBlack, TextP } from '../../components/VTheme/VTheme'
+import securePage from '../../hocs/securePage'
+import reduxApi, { withArchivedOpportunities, withInterests, withMembers, withOps, withPeople, withRecommendedOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
-import NextActionBlock from '../../components/Action/NextActionBlock'
-import styled from 'styled-components'
-import { Helmet } from 'react-helmet'
-
-import {
-  FullPage,
-  TextHeadingBlack,
-  TextP,
-  PageHeaderContainer,
-  RequestButtonContainer
-} from '../../components/VTheme/VTheme'
 
 const { TabPane } = Tabs
 

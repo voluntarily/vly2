@@ -3,21 +3,15 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import RichTextEditor from '../Form/Input/RichTextEditor'
-import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import { TextHeadingBold, TextP } from '../VTheme/VTheme'
-import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
-import TagInput from '../Form/Input/TagInput'
-import LocationSelector from '../Form/Input/LocationSelector'
-import {
-  DescriptionContainer,
-  FormGrid,
-  InputContainer,
-  MediumInputContainer,
-  ShortInputContainer,
-  TitleContainer
-} from '../VTheme/FormStyles'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
+import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
+import LocationSelector from '../Form/Input/LocationSelector'
+import RichTextEditor from '../Form/Input/RichTextEditor'
+import TagInput from '../Form/Input/TagInput'
+import OrgSelector from '../Org/OrgSelector'
+import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, ShortInputContainer, TitleContainer } from '../VTheme/FormStyles'
+import { TextHeadingBold, TextP } from '../VTheme/VTheme'
 const { TextArea } = Input
 
 function hasErrors (fieldsError) {
@@ -33,7 +27,7 @@ class OpDetailForm extends Component {
       endDateValue: null,
       endOpen: false
     }
-    this.setDescription = this.setDescription.bind(this)
+    // this.setDescription = this.setDescription.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
   }
 
@@ -45,15 +39,13 @@ class OpDetailForm extends Component {
     this.setState({ endDateValue: this.props.op.date[1] })
   }
 
-  setDescription (value) {
-    this.props.form.setFieldsValue({ description: value })
-  }
   setImgUrl = value => {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
 
   handleSubmit = e => {
     e.preventDefault()
+
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const op = this.props.op
@@ -65,6 +57,7 @@ class OpDetailForm extends Component {
         op.tags = values.tags
         op.duration = values.duration
         op.location = values.location
+        op.offerOrg = values.offerOrg && values.offerOrg.key
         op.description = values.description
         op.imgUrl = values.imgUrl
 
@@ -174,6 +167,20 @@ class OpDetailForm extends Component {
         </Tooltip>
       </span>
     )
+    const opOrganisation = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='opOrganisation'
+          defaultMessage='Offer Organisation'
+          description='label for Organisation offering the opportunity'
+        />
+        &nbsp;
+        <Tooltip title='Which organisation is this opportunity for?'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
     const opDescription = (
       <span>
         {' '}
@@ -250,6 +257,9 @@ class OpDetailForm extends Component {
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
     const isNewOp = this.props.op._id
+    const orgMembership = this.props.me.orgMembership &&
+      this.props.me.orgMembership.map(member => member.organisation)
+
     return (
       <div className='OpDetailForm'>
         <PageTitle>
@@ -319,10 +329,15 @@ class OpDetailForm extends Component {
                       placeholder='All the details about the request. You can use markdown here.'
                     />
                   ) : (
-                    <RichTextEditor onChange={this.setAbout} />
+                    <RichTextEditor />
                   )
                 )}
               </Form.Item>
+              {orgMembership && <Form.Item label={opOrganisation}>
+                {getFieldDecorator('offerOrg')(
+                  <OrgSelector orgs={orgMembership} />
+                )}
+              </Form.Item>}
             </InputContainer>
           </FormGrid>
 
@@ -419,6 +434,7 @@ class OpDetailForm extends Component {
                   )}
                 </Form.Item>
               </MediumInputContainer>
+
             </InputContainer>
           </FormGrid>
 
@@ -523,6 +539,9 @@ OpDetailForm.propTypes = {
     imgUrl: PropTypes.string,
     duration: PropTypes.string,
     location: PropTypes.string,
+    offerOrg: PropTypes.shape({
+      _id: PropTypes.string
+    }),
     date: PropTypes.array,
     status: PropTypes.string,
 
@@ -535,7 +554,11 @@ OpDetailForm.propTypes = {
     )
   }),
   me: PropTypes.shape({
-    _id: PropTypes.string
+    _id: PropTypes.string,
+    orgMembership: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.string
+    }))
   }),
   form: PropTypes.object,
   params: PropTypes.shape({
@@ -576,6 +599,10 @@ export default Form.create({
       location: Form.createFormField({
         ...props.op.location,
         value: props.op.location
+      }),
+      offerOrg: Form.createFormField({
+        ...props.op.offerOrg,
+        value: { key: props.op.offerOrg ? props.op.offerOrg._id : '' }
       }),
       imgUrl: Form.createFormField({
         ...props.op.imgUrl,
