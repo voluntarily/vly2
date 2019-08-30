@@ -66,7 +66,7 @@ object-fit: cover;
 `
 
 const orgTab = (
-  <span>
+  <span style={{fontSize: '1.2rem', fontWeight: 'bold'}}>
     <Icon type='info-circle' />
     <FormattedMessage
       id='orgAbout'
@@ -77,7 +77,7 @@ const orgTab = (
 )
 
 const orgMemberTab = (
-  <span>
+  <span style={{fontSize: '1.2rem', fontWeight: 'bold'}}>
     <Icon type='team' />
     <FormattedMessage
       id='orgMembers'
@@ -99,7 +99,13 @@ const OrgDetail = ({ org, ...props }) => (
            <TitleContainer>
           <TextH1>{org.name}</TextH1>
           <TextSubtitle>Tech Business in New Zealand</TextSubtitle>
-        <TextSubtitle>westpac.co.nz</TextSubtitle>
+        <TextSubtitle>{org.website &&
+            <ContactContainer>
+              
+              <Link href={org.website}><a>
+                {org.website}
+              </a></Link>
+            </ContactContainer>}</TextSubtitle>
         <ButtonContainer>
         <Button
 
@@ -140,13 +146,7 @@ const OrgDetail = ({ org, ...props }) => (
 
         <OrgContainer>
        
-          {org.website &&
-            <ContactContainer>
-              <Icon type='global' />&nbsp;&nbsp;
-              <Link href={org.website}><a>
-                {org.website}
-              </a></Link>
-            </ContactContainer>}
+          
           {org.contactEmail && <ContactContainer><Icon type='mail' />&nbsp;&nbsp;{org.contactEmail}</ContactContainer>}
           <ButtonGroup size='large' >
             {org.facebook && <SocialButton type='link' href={`https://www.facebook.com/${org.facebook}`} target='_blank' icon='facebook' />}
