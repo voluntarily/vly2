@@ -1,9 +1,7 @@
 const Opportunity = require('../opportunity/opportunity')
-const Interest = require('./../interest/interest')
-const Tag = require('./../tag/tag')
-const Person = require('./../person/person')
-const Organisation = require('./../organisation/organisation')
-const Activity = require('./../activity/activity')
+const Person = require('../person/person')
+const Organisation = require('../organisation/organisation')
+const Activity = require('../activity/activity')
 
 const forall = (model, action) => {
   var cursor = model.find().cursor()
@@ -24,13 +22,14 @@ const getModel = name => {
     case 'Opportunity': return Opportunity
     case 'Activity': return Activity
     case 'Person': return Person
-    case 'Interest': return Interest
-    case 'Tag': return Tag
   }
 }
 
 /*
   DB Action Endpoint is used to perform some Database admin activities
+  Note - because this is a tool for updating the database when the schema changes
+  the code does not form part of the main applicaiton and is thus excluded from
+  test coverage
 */
 const dbAction = (req, res) => {
   switch (req.params.action) {
@@ -47,11 +46,9 @@ const dbAction = (req, res) => {
       const model = getModel(req.query.e)
       if (model) {
         forall(model, async item => {
-          console.log('item', item)
           if (item.title) {
             item.name = item.title
             delete item.title
-            console.log(item)
             await item.save()
           }
           if (item.avatar) {
@@ -65,11 +62,14 @@ const dbAction = (req, res) => {
     }
   }
   const result = {
-    message: `DB Action ${req.action}`,
+    message: `DB Action ${req.params.action}`,
     params: req.params,
     query: req.query
   }
   return res.status(200).json(result)
 }
 
-module.exports = dbAction
+module.exports = {
+  dbAction,
+  getModel
+}

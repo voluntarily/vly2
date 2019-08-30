@@ -5,10 +5,11 @@ import { Button } from 'antd'
 import aboutEn from './about-en-md.js'
 import aboutMi from './about-mi-md.js'
 import withIntl from '../../lib/withIntl'
-import publicPage, { FullPage } from '../../hocs/publicPage'
-import { Spacer } from '../../components/VTheme/VTheme'
+import { FullPage, Spacer } from '../../components/VTheme/VTheme'
 import AboutCTA from '../../components/About/AboutCTA.js'
 import { Helmet } from 'react-helmet'
+import publicPage from '../../hocs/publicPage'
+
 const getText = locale => {
   switch (locale) {
     case 'mi': {

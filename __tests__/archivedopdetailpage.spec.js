@@ -74,27 +74,6 @@ test('archivedOpDetailPage should have an OpDetail component', t => {
   t.is(wrapper.find('OpDetail').length, 1)
 })
 
-test('archivedOpDetailPage should have an OpOrganizerInfo component', t => {
-  const props = {
-    me: t.context.me,
-    dispatch: t.context.mockStore.dispatch
-  }
-
-  const RoutedArchivedOpDetailPage = withMockRoute(ArchivedOpDetailPageWithArchivedOps)
-  const myMock = fetchMock.sandbox()
-  myMock.get(API_URL + '/archivedOpportunities/' + archivedOpportunities[1]._id, { body: { status: 200 } })
-  myMock.get(API_URL + '/interests/?op=' + archivedOpportunities[1]._id, { body: { status: 200 } })
-
-  reduxApi.use('fetch', adapterFetch(myMock))
-  const wrapper = mountWithIntl(
-    <Provider store={t.context.mockStore} query={{ _id: archivedOpportunities[1]._id }}>
-      <RoutedArchivedOpDetailPage {...props} />
-    </Provider>
-  )
-
-  t.is(wrapper.find('OpOrganizerInfo').length, 1)
-})
-
 test('archivedOpDetailPage should have an InterestSection component', t => {
   const props = {
     me: t.context.me,

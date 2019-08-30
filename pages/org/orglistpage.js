@@ -2,10 +2,10 @@ import { Component } from 'react'
 import { Button, Divider } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import Link from 'next/link'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import publicPage from '../../hocs/publicPage'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 import OrgList from '../../components/Org/OrgList'
-import { PageHeaderContainer, TextHeadingBlack, RequestButtonContainer } from '../../components/VTheme/VTheme'
+import { FullPage, PageHeaderContainer, TextHeadingBlack, RequestButtonContainer } from '../../components/VTheme/VTheme'
 import { Helmet } from 'react-helmet'
 
 class OrgListPage extends Component {

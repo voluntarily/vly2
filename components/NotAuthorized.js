@@ -1,8 +1,7 @@
 import React from 'react'
 // import Link from 'next/link'
 // import styled from 'styled-components'
-import { FullPage } from '../hocs/publicPage'
-import { Spacer, TextH1 } from './VTheme/VTheme'
+import { FullPage, Spacer, TextH1 } from './VTheme/VTheme'
 
 // const Heading = styled.h1`
 //   font-size: 50px;

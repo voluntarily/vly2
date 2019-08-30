@@ -12,22 +12,15 @@ const offerOrg = {
   imgUrl: 'https://files.list.co.uk/images/2009/02/19/623atpiccap2.jpg'
 }
 
-const date = [
-  {
-    '$date': '2019-05-23T12:26:18.000Z' // Fri, 24 May 2019 00:26:18 NZST
-  },
-  {
-    '$date': '2019-06-12T04:55:10.014Z' // Wed, 12 Jun 2019 16:55:10 NZST
-  }
-]
-
 const noDate = [ ]
-
 const openDate = [
-  {
-    '$date': '2019-05-23T12:26:18.000Z' // Fri, 24 May 2019 00:26:18 NZST
-  }
+  '2019-05-23T12:26:18.000Z' // Fri, 24 May 2019 00:26:18 NZST
 ]
+const date = [
+  '2019-05-23T12:26:18.000Z', // Fri, 24 May 2019 00:26:18 NZST
+  '2019-06-12T04:55:10.014Z' // Wed, 12 Jun 2019 16:55:10 NZST
+]
+
 export default [
   {
     _id: cuid(),

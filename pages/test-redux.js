@@ -1,4 +1,4 @@
-import { A4 } from '../hocs/publicPage'
+import { A4 } from '../VTheme/VTheme'
 import LocalStateTest from '../components/testredux/LocalStateTest.js'
 import ReduxStoreTest from '../components/testredux/ReduxStoreTest'
 import ReduxAsyncTest from '../components/testredux/ReduxAsyncTest'
