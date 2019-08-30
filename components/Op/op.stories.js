@@ -5,11 +5,9 @@ import OpList from './OpList'
 import OpDetail from './OpDetail'
 import { StoryIntroContainer } from '../VTheme/VStoryTheme'
 import ops from './__tests__/Op.fixture'
-import { withKnobs, text, number, radios, optionsKnob as options } from '@storybook/addon-knobs'
+import { withKnobs, number, radios } from '@storybook/addon-knobs'
 
 const groupId = 'GROUP-ID1'
-
-const Com = (props) => <div>{props.value}</div>
 
 storiesOf('Opportunity Cards', module)
   .addDecorator(withKnobs)
