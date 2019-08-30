@@ -57,7 +57,7 @@ class OpDetailForm extends Component {
         op.tags = values.tags
         op.duration = values.duration
         op.location = values.location
-        op.offerOrg = values.offerOrg.key
+        op.offerOrg = values.offerOrg && values.offerOrg.key
         op.description = values.description
         op.imgUrl = values.imgUrl
 
