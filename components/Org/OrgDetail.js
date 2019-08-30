@@ -13,7 +13,9 @@ import {
   GridContainer,
   TextPBold,
   TextH1,
-  SpacerSmall
+  SpacerSmall,
+  FullPage,
+  TextSubtitle
 } from '../VTheme/VTheme'
 const ButtonGroup = Button.Group
 
@@ -21,11 +23,13 @@ function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
   // console.log(key)
 }
-var shadowStyle = { overflow: 'visible' }
+var shadowStyle = { overflow: 'visible', textAlign: 'center' }
 const { TabPane } = Tabs
 
 const TitleContainer = styled.div`
-margin-bottom: 2rem;
+margin: 1rem auto;
+width: 100%;
+text-align: center;
 `
 
 const OrgGrid = styled.div`
@@ -35,6 +39,8 @@ const OrgGrid = styled.div`
 `
 const OrgContainer = styled.div`
   margin-top: 5rem;
+  display: flex;
+
 `
 
 const ContactContainer = styled.div`
@@ -43,6 +49,20 @@ const ContactContainer = styled.div`
 const SocialButton = styled(Button)`
   margin-top: 0.5rem;
   font-size: 2rem !important;
+`
+
+const ButtonContainer = styled.div`
+margin-top: 1rem;
+`
+
+const ProfileHeaderContainer = styled.div`
+margin: 0 auto;
+position: relative;
+`
+const ProfileImage = styled.img`
+margin: 0 calc(50% - 100px);
+width: 200px; 
+object-fit: cover;
 `
 
 const orgTab = (
@@ -68,20 +88,58 @@ const orgMemberTab = (
 )
 
 const OrgDetail = ({ org, ...props }) => (
-  <div>
+  <FullPage>
     <Head><title>Voluntarily - {org.name}</title></Head>
     <PageHeaderContainer />
-    <OrgGrid>
-      <GridContainer>
-        <img
-          style={{ width: '100%', maxWidth: '240px', objectFit: 'cover' }}
+    <ProfileHeaderContainer>
+        <ProfileImage
           src={org.imgUrl}
           alt={org.name}
         />
+           <TitleContainer>
+          <TextH1>{org.name}</TextH1>
+          <TextSubtitle>Tech Business in New Zealand</TextSubtitle>
+        <TextSubtitle>westpac.co.nz</TextSubtitle>
+        <ButtonContainer>
+        <Button
+
+        icon='notification'
+        type='primary'
+        shape='round'
+        size='large'
+        >Follow</Button>
+        </ButtonContainer>
+        </TitleContainer>
+
+
+        <OrgContainer>
+          
+     
+        </OrgContainer>
+      </ProfileHeaderContainer>
+      <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
+          <TabPane tab={orgTab} key='1'>
+            <SpacerSmall />
+            <Markdown children={(org.info && org.info.about) || ''} />
+          </TabPane>
+          {/* <TabPane tab={orgResourcesTab} key='2' /> */}
+          {/* <TabPane tab={orgInstructionTab} key='3' /> */}
+          <TabPane tab={orgMemberTab} key='4'>
+            <MemberSection org={org} />
+          </TabPane>
+
+        </Tabs>
+
+
+    
+    <OrgGrid>
+      <ProfileHeaderContainer>
+  
+        
         <OrgCategory orgCategory={org.category} />
 
         <OrgContainer>
-          <TextPBold>Get in touch</TextPBold>
+       
           {org.website &&
             <ContactContainer>
               <Icon type='global' />&nbsp;&nbsp;
@@ -95,27 +153,16 @@ const OrgDetail = ({ org, ...props }) => (
             {org.twitter && <SocialButton type='link' href={`https://www.twitter.com/${org.twitter}`} target='_blank' icon='twitter' />}
           </ButtonGroup>
         </OrgContainer>
-      </GridContainer>
+      </ProfileHeaderContainer>
 
       <GridContainer>
         <TitleContainer>
-          <TextH1>{org.name}</TextH1>
-        </TitleContainer>
-        <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
-          <TabPane tab={orgTab} key='1'>
-            <SpacerSmall />
-            <Markdown children={(org.info && org.info.about) || ''} />
-          </TabPane>
-          {/* <TabPane tab={orgResourcesTab} key='2' /> */}
-          {/* <TabPane tab={orgInstructionTab} key='3' /> */}
-          <TabPane tab={orgMemberTab} key='4'>
-            <MemberSection org={org} />
-          </TabPane>
 
-        </Tabs>
+        </TitleContainer>
+        
       </GridContainer>
     </OrgGrid>
-  </div>
+  </FullPage>
 )
 
 OrgDetail.propTypes = {
