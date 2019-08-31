@@ -184,7 +184,6 @@ export const TextH1 = styled.h1`
 
   @media screen and (max-width: 768px) {
     font-size: 2rem;
-    width: 90vw;
     margin-right: initial;
     letter-spacing: -0.03em;
     line-height: 3rem;
