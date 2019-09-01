@@ -1,20 +1,21 @@
-<h1> Pull Request Template </h1>
-<p> Please check that your Ticket number and ticket description is clearly printed on the PR title </p>
-<p> For eg: VP-123 This is how you do it fam 
-
-<h2> Proposed Changes? </h2>
-<p>1.</p>
-<p>2.</p>
-<p>3.</p>
+# Pull Request Template (VP-123)
+=====
+Please check that your ticket number and ticket description is included in the PR title 😀
 
 
-<h2> Additiona Info. </h2>
-<p>1.</p>
-<p>2.</p>
-<p>3.</p>
+## Proposed Changes? 🤔
+1. 
+2. 
+3. 
 
-<h2>Screenshoots</h2>
+## Additional Info.🧐
+
+
+## Screenshots 📷
  
- Original                                |           Updated
- :--------------------------------------:|:--------------------------------:
- ** original **                          | ** updated **  
+### Original
+=====
+
+
+### Updated
+=====
