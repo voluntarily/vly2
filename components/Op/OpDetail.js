@@ -8,8 +8,8 @@ import styled from 'styled-components'
 import moment from 'moment'
 import sanitize from 'sanitize-html'
 
-import { Button } from 'antd'
-import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
+import { Button, Divider } from 'antd'
+import { FullPage, HalfGrid, Spacer, P, PBold } from '../VTheme/VTheme'
 import TagDisplay from '../Tags/TagDisplay'
 import IdLine from '../VTheme/IdLine'
 
@@ -76,8 +76,10 @@ export function OpDetail ({ op }) {
             📝&nbsp;<strong>Status:</strong>&nbsp;&nbsp;&nbsp;
             {sanitize(op.status)}
           </ItemListing>
-          <ItemListing><IdLine item={op.offerOrg} path='organisation' /></ItemListing>
+          <Divider />
+          <ItemListing><PBold>Requested by:</PBold><IdLine item={op.offerOrg} path='organisation' /></ItemListing>
           <ItemListing><IdLine item={op.requestor} path='person' /></ItemListing>
+          <Divider />
           <Spacer />
           <ItemP>
             <Markdown
