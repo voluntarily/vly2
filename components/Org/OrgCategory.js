@@ -9,6 +9,7 @@ const HorUl = styled.ul`
     display: inline;
     padding-right: 1em;
   }
+  
 `
 
 const OrgCategoryItem = ({ orgCategoryItem }) => {

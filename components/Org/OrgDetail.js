@@ -11,9 +11,10 @@ import styled from 'styled-components'
 import {
   PageHeaderContainer,
   GridContainer,
-  TextPBold,
-  TextH1,
-  SpacerSmall
+  PBold,
+  H1,
+  FullPage,
+  H4
 } from '../VTheme/VTheme'
 const ButtonGroup = Button.Group
 
@@ -21,20 +22,13 @@ function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
   // console.log(key)
 }
-var shadowStyle = { overflow: 'visible' }
+var shadowStyle = { overflow: 'visible', textAlign: 'center' }
 const { TabPane } = Tabs
 
 const TitleContainer = styled.div`
-margin-bottom: 2rem;
-`
-
-const OrgGrid = styled.div`
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 5rem;
-`
-const OrgContainer = styled.div`
-  margin-top: 5rem;
+  margin: 1rem auto 3.5rem auto;
+  width: 100%;
+  text-align: center;
 `
 
 const ContactContainer = styled.div`
@@ -45,8 +39,30 @@ const SocialButton = styled(Button)`
   font-size: 2rem !important;
 `
 
+const ButtonContainer = styled.div`
+  margin-top: 1rem;
+`
+
+const ProfileHeaderContainer = styled.div`
+  margin: 0 auto;
+  position: relative;
+`
+const ProfileImage = styled.img`
+  margin: 0 calc(50% - 100px);
+  width: 200px;
+  object-fit: cover;
+`
+
+const AboutContainer = styled.div`
+  text-align: left;
+  width: 50rem;
+  margin: 4rem auto;
+  overflow: hidden;
+
+`
+
 const orgTab = (
-  <span>
+  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
     <Icon type='info-circle' />
     <FormattedMessage
       id='orgAbout'
@@ -55,7 +71,7 @@ const orgTab = (
 )
 
 const orgMemberTab = (
-  <span>
+  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
     <Icon type='team' />
     <FormattedMessage
       id='orgMembers'
@@ -65,55 +81,92 @@ const orgMemberTab = (
   </span>
 )
 
+const orgInstructionTab = (
+  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+    <Icon type='info-circle' />
+    <FormattedMessage
+      id='orgInstructions'
+      defaultMessage='Getting Started'
+      description='show opportunities list on volunteer home page'
+    />
+  </span>
+)
+
 const OrgDetail = ({ org, ...props }) => (
-  <div>
-    <Head><title>Voluntarily - {org.name}</title></Head>
+  <FullPage>
+    <Head>
+      <title>Voluntarily - {org.name}</title>
+    </Head>
     <PageHeaderContainer />
-    <OrgGrid>
-      <GridContainer>
-        <img
-          style={{ width: '100%', maxWidth: '240px', objectFit: 'cover' }}
-          src={org.imgUrl}
-          alt={org.name}
-        />
-        <OrgCategory orgCategory={org.category} />
-
-        <OrgContainer>
-          <TextPBold>Get in touch</TextPBold>
-          {org.website &&
+    <ProfileHeaderContainer>
+      <ProfileImage src={org.imgUrl} alt={org.name} />
+      <TitleContainer>
+        <H1>{org.name}</H1>
+        <H4>Business • New Zealand</H4>
+        <H4>
+          {org.website && (
             <ContactContainer>
-              <Icon type='global' />&nbsp;&nbsp;
-              <Link href={org.website}><a>
-                {org.website}
-              </a></Link>
-            </ContactContainer>}
-          {org.contactEmail && <ContactContainer><Icon type='mail' />&nbsp;&nbsp;{org.contactEmail}</ContactContainer>}
-          <ButtonGroup size='large' >
-            {org.facebook && <SocialButton type='link' href={`https://www.facebook.com/${org.facebook}`} target='_blank' icon='facebook' />}
-            {org.twitter && <SocialButton type='link' href={`https://www.twitter.com/${org.twitter}`} target='_blank' icon='twitter' />}
+              <Link target='_blank' href={org.website}>
+                <a target='_blank'>{org.website}</a>
+              </Link>
+            </ContactContainer>
+          )}
+        </H4>
+        <ButtonContainer>
+          <Button icon='notification' type='primary' shape='round' size='large'>
+            Follow
+          </Button>
+        </ButtonContainer>
+      </TitleContainer>
+    </ProfileHeaderContainer>
+    <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
+      <TabPane tab={orgTab} key='1'>
+        <AboutContainer>
+          <Markdown children={(org.info && org.info.about) || ''} />
+          <OrgCategory orgCategory={org.category} />
+          <br />
+          <PBold>Social:</PBold>
+          <ButtonGroup size='medium'>
+            {org.contactEmail && (
+              <SocialButton
+                type='link'
+                href={`mailto:${org.contactEmail}`}
+                target='_blank'
+                icon='mail'
+              />
+            )}
+            {org.facebook && (
+              <SocialButton
+                type='link'
+                href={`https://www.facebook.com/${org.facebook}`}
+                target='_blank'
+                icon='facebook'
+              />
+            )}
+            {org.twitter && (
+              <SocialButton
+                type='link'
+                href={`https://www.twitter.com/${org.twitter}`}
+                target='_blank'
+                icon='twitter'
+              />
+            )}
           </ButtonGroup>
-        </OrgContainer>
-      </GridContainer>
+        </AboutContainer>
+      </TabPane>
+      {/* <TabPane tab={orgResourcesTab} key='2' /> */}
+      <TabPane tab={orgInstructionTab} key='3' />
+      <TabPane tab={orgMemberTab} key='4'>
+        <MemberSection org={org} />
+      </TabPane>
+    </Tabs>
 
-      <GridContainer>
-        <TitleContainer>
-          <TextH1>{org.name}</TextH1>
-        </TitleContainer>
-        <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
-          <TabPane tab={orgTab} key='1'>
-            <SpacerSmall />
-            <Markdown children={(org.info && org.info.about) || ''} />
-          </TabPane>
-          {/* <TabPane tab={orgResourcesTab} key='2' /> */}
-          {/* <TabPane tab={orgInstructionTab} key='3' /> */}
-          <TabPane tab={orgMemberTab} key='4'>
-            <MemberSection org={org} />
-          </TabPane>
+    <ProfileHeaderContainer />
 
-        </Tabs>
-      </GridContainer>
-    </OrgGrid>
-  </div>
+    <GridContainer>
+      <TitleContainer />
+    </GridContainer>
+  </FullPage>
 )
 
 OrgDetail.propTypes = {

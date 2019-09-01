@@ -2,7 +2,7 @@ import { Button, Icon, Input } from 'antd'
 import Router from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
-import { TextH1, TextSubtitle } from '../VTheme/VTheme'
+import { H1, H4 } from '../VTheme/VTheme'
 
 const Search = Input.Search
 
@@ -250,12 +250,12 @@ const Hero = ({ ...props }) => (
       </AwesomeVideo>
     </HeroLeft>
     <HeroRight>
-      <TextH1>volunteer yo—self.</TextH1>
-      <TextSubtitle>
+      <H1>volunteer yo—self.</H1>
+      <H4>
         Find awesome ways to volunteer your skills.
         <br />
         Help your community do epic things.
-      </TextSubtitle>
+      </H4>
       <SearchBox>
         <Search
           placeholder="try 'building robots'"

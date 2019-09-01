@@ -6,14 +6,13 @@ import styled from 'styled-components'
 
 import {
   TextBigTitle,
-  TextH1,
-  TextSubtitle,
-  TextPBold,
-  TextP,
-  TextH3,
-  TextHeading,
-  TextHeadingBold,
-  TextHeadingBlack,
+  H1,
+  H4,
+  PBold,
+  P,
+  H3,
+  H3Bold,
+  H3Black,
   BigQuote,
   BigQuoteAuthor,
   Grid
@@ -30,72 +29,76 @@ import { Divider } from 'antd'
 storiesOf('Welcome', module)
   .add('Getting Started', () => (
     <StoryIntroContainer>
-      <TextH1> 🥳 Welcome 🥳</TextH1>
-      <TextSubtitle>This is the Voluntarily Component Library </TextSubtitle>
+      <H1> 🥳 Welcome 🥳</H1>
+      <H4>This is the Voluntarily Component Library </H4>
       <Divider />
-      <TextSubtitle>All frontend development for the Voluntarily Platform starts here. Browse the components we use on the left, and tinker with them here without the risk of breaking anything 😂<br /> Open-Sauce (or Open Source) contributions are welcome, and enjoy yourself while you're here :) <br /><br />
+      <H4>All frontend development for the Voluntarily Platform starts here. Browse the components we use on the left, and tinker with them here without the risk of breaking anything 😂<br /> Open-Sauce (or Open Source) contributions are welcome, and enjoy yourself while you're here :) <br /><br />
         <li><a href='https://github.com/voluntarily/vly2' target='_blank'> 🎒 See the repo here</a></li>
         <li><a href='https://github.com/voluntarily/vly2/blob/master/docs/gettingstarted.md' target='_blank'>💻 Get Started with Windows, Mac, or Linux</a></li>
 
-      </TextSubtitle>
+      </H4>
 
     </StoryIntroContainer>
   ))
   .add('Typography', () => (
     <StoryIntroContainer>
-      <TextH1>Text Styles</TextH1>
-      <TextSubtitle>How we do text and typography on the platform</TextSubtitle>
+      <H1>Text Styles</H1>
+      <H4>How we do text and typography on the platform</H4>
       <Divider />
-      <TextSubtitle>Hero Title Text</TextSubtitle>
-      <TextBigTitle>I am a hero title. </TextBigTitle>
-      <TextPBold>Notes</TextPBold>
-      <TextP>
+      <H4>Hero Title Text</H4>
+      <TextBigTitle>I am a hero title.</TextBigTitle>
+      <PBold>Notes</PBold>
+      <P>
         I only get used on the landing and marketing pages atm. Use me very
         sparringly.
-      </TextP>
+      </P>
       <br />
-      <TextPBold>Code</TextPBold>
+      <PBold>Code</PBold>
       <code>{TextHeroText}</code>
       <Divider />
-      <TextSubtitle>H1 Text</TextSubtitle>
-      <TextH1>I am a H1 heading. Page titles use me</TextH1>
-      <TextPBold>Code</TextPBold>
+      <H4>H1 Text - Page Titles</H4>
+      <H1>I am a H1 heading.</H1>
+      <PBold>Notes</PBold>
+      <P>
+        I am used on page titles
+      </P>
+      <br />
+      <PBold>Code</PBold>
       <code>{TextH1Text}</code>
       <Divider />
-      <TextSubtitle>Subtitle Text</TextSubtitle>
-      <TextSubtitle>
-        I am subtitle text usually used underneath h1 and hero title text
-      </TextSubtitle>
+      <H4>H3 Text Heading Black</H4> <br />
+      <H3Black>I am a H3 Text Heading Black</H3Black>
       <br />
-      <TextPBold>Code</TextPBold>
-      <code>{SubtitleText}</code>
-      <Divider />
-      <TextSubtitle>H4 Text Heading Black</TextSubtitle> <br />
-      <TextHeadingBlack>I am a H4 Text Heading Black</TextHeadingBlack>
+      <PBold>Notes</PBold>
+      <P>
+        I usually get used on component titles ie: a card set on the landing page  or list of recommendations in your dash
+      </P>
       <br />
-      <TextPBold>Code</TextPBold>
+      <PBold>Code</PBold>
       <code>{TextH4BlackText}</code>
       <Divider />
-      <TextSubtitle>H4 Text Heading Bold</TextSubtitle> <br />
-      <TextHeadingBold>I am a H4 Text Heading</TextHeadingBold>
+      <H4>H3 Text Heading Bold</H4> <br />
+      <H3Bold>I am a H3 Text Heading Bold</H3Bold>
       <br />
-      <TextPBold>Code</TextPBold>
+      <PBold>Code</PBold>
       <code>{TextH4BoldText}</code>
       <Divider />
-      <TextSubtitle>H4 Text Heading</TextSubtitle> <br />
-      <TextHeading>I am a H4 Text Heading</TextHeading>
+      <H4>H3 Text Heading</H4> <br />
+      <H3>I am a H3 Text Heading</H3>
       <br />
-      <TextPBold>Code</TextPBold>
+      <PBold>Code</PBold>
       <code>{TextH4Text}</code>
       <Divider />
-      {/* <TextSubtitle>H5 Heading</TextSubtitle>
-      <TextH3>I am a H5 Heading</TextH3>
+      <H4>H4</H4>
+      <H4>
+        I am H4 subtitle text usually used underneath h1 and hero title text
+      </H4>
       <br />
-      <TextPBold>Code</TextPBold>
+      <PBold>Code</PBold>
       <code>{SubtitleText}</code>
-      <Divider /> */}
-      <TextSubtitle>P Bold Body Text</TextSubtitle> <br />
-      <TextPBold>
+      <Divider />
+      <H4>P Bold Body Text</H4> <br />
+      <PBold>
         I am P Bold Body Text. Benchmarking, say/do ratio, benchmarking, EBITDA
         - all are competing for the attention of stakeholders. Going forward,
         the key to enterprise content management is recalibration. The critical
@@ -104,13 +107,13 @@ storiesOf('Welcome', module)
         balance. Value propositions challenge us to benchmark the portfolio. The
         hybridation credibly influences the disruptors ensuring a solid
         profitability.
-      </TextPBold>
+      </PBold>
       <br />
-      <TextPBold>Code</TextPBold>
+      <PBold>Code</PBold>
       <code>{TextPBoldText}</code>
       <Divider />
-      <TextSubtitle>P Body Text</TextSubtitle> <br />
-      <TextP>
+      <H4>P Body Text</H4> <br />
+      <P>
         I am P Body Text. Benchmarking, say/do ratio, benchmarking, EBITDA - all
         are competing for the attention of stakeholders. Going forward, the key
         to enterprise content management is recalibration. The critical and
@@ -119,12 +122,12 @@ storiesOf('Welcome', module)
         Value propositions challenge us to benchmark the portfolio. The
         hybridation credibly influences the disruptors ensuring a solid
         profitability.
-      </TextP>
+      </P>
       <br />
-      <TextPBold>Code</TextPBold>
+      <PBold>Code</PBold>
       <code>{TextPText}</code>
       <Divider />
-      <TextSubtitle>Quote Block</TextSubtitle> <br />
+      <H4>Quote Block</H4> <br />
       <BigQuote>
         &ldquo;The game is all about disintermediation, operating model, image,
         pre-plan, and architecture - not concept, Organizational Intelligence,
@@ -132,7 +135,7 @@ storiesOf('Welcome', module)
       </BigQuote>
       <BigQuoteAuthor>— Legitimate Business Human</BigQuoteAuthor>
       <br />
-      <TextPBold>Quote</TextPBold>
+      <PBold>Quote</PBold>
       <code>
         {TextQuoteA}
         <br />
@@ -143,292 +146,292 @@ storiesOf('Welcome', module)
   ))
   .add('Colors', () => (
     <StoryIntroContainer>
-      <TextH1>Color Guide</TextH1>
-      <TextSubtitle>
+      <H1>Color Guide</H1>
+      <H4>
         These are the color palettes that we use on the Voluntarily platform.
         Inspired by Material Design
-      </TextSubtitle>
+      </H4>
       <Divider />
-      <TextH3>Primary Colors</TextH3>
+      <H3>Primary Colors</H3>
       <ColorGrid>
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#653CAD' }} />
-          <TextHeadingBold>#653CAD</TextHeadingBold>
-          <TextP>
+          <H3Bold>#653CAD</H3Bold>
+          <P>
             Purple - for links, buttons and all things clicky. Use me sparingly.
-          </TextP>
+          </P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#F35627' }} />
-          <TextHeadingBold>#F35627</TextHeadingBold>
-          <TextP>Orange - for illustrations and guides</TextP>
+          <H3Bold>#F35627</H3Bold>
+          <P>Orange - for illustrations and guides</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#222222' }} />
-          <TextHeadingBold>#222222</TextHeadingBold>
-          <TextP>Grays - for drop shadows and splitter components</TextP>
+          <H3Bold>#222222</H3Bold>
+          <P>Grays - for drop shadows and splitter components</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#F44336' }} />
-          <TextHeadingBold>#F44336</TextHeadingBold>
-          <TextP>
+          <H3Bold>#F44336</H3Bold>
+          <P>
             Red - for Alerts and when things to terribly wrong - Use me
             sparingly.
-          </TextP>
+          </P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#36F482' }} />
-          <TextHeadingBold>#36F482</TextHeadingBold>
-          <TextP>
+          <H3Bold>#36F482</H3Bold>
+          <P>
             Green - for success states and checks in lists - Use me sparingly.
-          </TextP>
+          </P>
         </ColorContainer>
       </ColorGrid>
 
       <Divider />
-      <TextH3>Text Colors</TextH3>
+      <H3>Text Colors</H3>
       <ColorGrid>
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#000000' }} />
-          <TextHeadingBold>#000000</TextHeadingBold>
-          <TextP>Black - used for most text</TextP>
+          <H3Bold>#000000</H3Bold>
+          <P>Black - used for most text</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#222222' }} />
-          <TextHeadingBold>#222222</TextHeadingBold>
-          <TextP>Gray - used for secondary text</TextP>
+          <H3Bold>#222222</H3Bold>
+          <P>Gray - used for secondary text</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch
             style={{ backgroundColor: '#ffffff', border: '1px solid grey' }}
           />
-          <TextHeadingBold>#ffffff</TextHeadingBold>
-          <TextP>White - used for button text</TextP>
+          <H3Bold>#ffffff</H3Bold>
+          <P>White - used for button text</P>
         </ColorContainer>
       </ColorGrid>
 
       <Divider />
-      <TextH3>Awesomesauce Purple</TextH3>
-      <TextP>
+      <H3>Awesomesauce Purple</H3>
+      <P>
         Used for links, buttons and their respective states like hover, after,
         disabled, etc
-      </TextP>
+      </P>
       <ColorGrid>
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#EAE2F8' }} />
-          <TextHeadingBold>#EAE2F8</TextHeadingBold>
-          <TextP>Purple - 50</TextP>
+          <H3Bold>#EAE2F8</H3Bold>
+          <P>Purple - 50</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#CFBCF2' }} />
-          <TextHeadingBold>#CFBCF2</TextHeadingBold>
-          <TextP>Purple - 100</TextP>
+          <H3Bold>#CFBCF2</H3Bold>
+          <P>Purple - 100</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#A081D9' }} />
-          <TextHeadingBold>#A081D9</TextHeadingBold>
-          <TextP>Purple - 200</TextP>
+          <H3Bold>#A081D9</H3Bold>
+          <P>Purple - 200</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#8663C7' }} />
-          <TextHeadingBold>#8663C7</TextHeadingBold>
-          <TextP>Purple - 300</TextP>
+          <H3Bold>#8663C7</H3Bold>
+          <P>Purple - 300</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#724BB7' }} />
-          <TextHeadingBold>#724BB7</TextHeadingBold>
-          <TextP>Purple - 400</TextP>
+          <H3Bold>#724BB7</H3Bold>
+          <P>Purple - 400</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#653CAD' }} />
-          <TextHeadingBold>#653CAD</TextHeadingBold>
-          <TextP>Purple - 500 Primary</TextP>
+          <H3Bold>#653CAD</H3Bold>
+          <P>Purple - 500 Primary</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#51279B' }} />
-          <TextHeadingBold>#51279B</TextHeadingBold>
-          <TextP>Purple - 600</TextP>
+          <H3Bold>#51279B</H3Bold>
+          <P>Purple - 600</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#421987' }} />
-          <TextHeadingBold>#421987</TextHeadingBold>
-          <TextP>Purple - 700</TextP>
+          <H3Bold>#421987</H3Bold>
+          <P>Purple - 700</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#34126F' }} />
-          <TextHeadingBold>#34126F</TextHeadingBold>
-          <TextP>Purple - 800</TextP>
+          <H3Bold>#34126F</H3Bold>
+          <P>Purple - 800</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#240754' }} />
-          <TextHeadingBold>#240754</TextHeadingBold>
-          <TextP>Purple - 900</TextP>
+          <H3Bold>#240754</H3Bold>
+          <P>Purple - 900</P>
         </ColorContainer>
       </ColorGrid>
 
       <Divider />
-      <TextH3>Annoying Orange</TextH3>
-      <TextP>Used for illustrations and tutorial / onboarding components</TextP>
+      <H3>Annoying Orange</H3>
+      <P>Used for illustrations and tutorial / onboarding components</P>
       <ColorGrid>
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#FFE8D9' }} />
-          <TextHeadingBold>#FFE8D9</TextHeadingBold>
-          <TextP>Orange - 50</TextP>
+          <H3Bold>#FFE8D9</H3Bold>
+          <P>Orange - 50</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#FFD0B5' }} />
-          <TextHeadingBold>#FFD0B5</TextHeadingBold>
-          <TextP>Orange - 100</TextP>
+          <H3Bold>#FFD0B5</H3Bold>
+          <P>Orange - 100</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#FFB088' }} />
-          <TextHeadingBold>#FFB088</TextHeadingBold>
-          <TextP>Orange - 200</TextP>
+          <H3Bold>#FFB088</H3Bold>
+          <P>Orange - 200</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#FF9466' }} />
-          <TextHeadingBold>#FF9466</TextHeadingBold>
-          <TextP>Orange - 300</TextP>
+          <H3Bold>#FF9466</H3Bold>
+          <P>Orange - 300</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#F9703E' }} />
-          <TextHeadingBold>#F9703E</TextHeadingBold>
-          <TextP>Orange - 400</TextP>
+          <H3Bold>#F9703E</H3Bold>
+          <P>Orange - 400</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#F35627' }} />
-          <TextHeadingBold>#F35627</TextHeadingBold>
-          <TextP>Orange - 500 Primary</TextP>
+          <H3Bold>#F35627</H3Bold>
+          <P>Orange - 500 Primary</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#DE3A11' }} />
-          <TextHeadingBold>#DE3A11</TextHeadingBold>
-          <TextP>Orange - 600</TextP>
+          <H3Bold>#DE3A11</H3Bold>
+          <P>Orange - 600</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#C52707' }} />
-          <TextHeadingBold>#C52707</TextHeadingBold>
-          <TextP>Orange - 700</TextP>
+          <H3Bold>#C52707</H3Bold>
+          <P>Orange - 700</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#AD1D06' }} />
-          <TextHeadingBold>#AD1D06</TextHeadingBold>
-          <TextP>Orange - 800</TextP>
+          <H3Bold>#AD1D06</H3Bold>
+          <P>Orange - 800</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#841003' }} />
-          <TextHeadingBold>#841003</TextHeadingBold>
-          <TextP>Orange - 900</TextP>
+          <H3Bold>#841003</H3Bold>
+          <P>Orange - 900</P>
         </ColorContainer>
       </ColorGrid>
 
       <Divider />
-      <TextH3>Gilded Grays</TextH3>
-      <TextP>Used for drop shadows and background elements like dividers</TextP>
+      <H3>Gilded Grays</H3>
+      <P>Used for drop shadows and background elements like dividers</P>
       <ColorGrid>
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#F7F7F7' }} />
-          <TextHeadingBold>#F7F7F7</TextHeadingBold>
-          <TextP>Gray - 50</TextP>
+          <H3Bold>#F7F7F7</H3Bold>
+          <P>Gray - 50</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#E1E1E1' }} />
-          <TextHeadingBold>#E1E1E1</TextHeadingBold>
-          <TextP>Gray - 100</TextP>
+          <H3Bold>#E1E1E1</H3Bold>
+          <P>Gray - 100</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#CFCFCF' }} />
-          <TextHeadingBold>#CFCFCF</TextHeadingBold>
-          <TextP>Gray - 200</TextP>
+          <H3Bold>#CFCFCF</H3Bold>
+          <P>Gray - 200</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#B1B1B1' }} />
-          <TextHeadingBold>#B1B1B1</TextHeadingBold>
-          <TextP>Gray - 300</TextP>
+          <H3Bold>#B1B1B1</H3Bold>
+          <P>Gray - 300</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#9E9E9E' }} />
-          <TextHeadingBold>#9E9E9E</TextHeadingBold>
-          <TextP>Gray - 400</TextP>
+          <H3Bold>#9E9E9E</H3Bold>
+          <P>Gray - 400</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#7E7E7E' }} />
-          <TextHeadingBold>#7E7E7E</TextHeadingBold>
-          <TextP>Gray - 500 Primary</TextP>
+          <H3Bold>#7E7E7E</H3Bold>
+          <P>Gray - 500 Primary</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#626262' }} />
-          <TextHeadingBold>#626262</TextHeadingBold>
-          <TextP>Gray - 600</TextP>
+          <H3Bold>#626262</H3Bold>
+          <P>Gray - 600</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#515151' }} />
-          <TextHeadingBold>#515151</TextHeadingBold>
-          <TextP>Gray - 700</TextP>
+          <H3Bold>#515151</H3Bold>
+          <P>Gray - 700</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#3B3B3B' }} />
-          <TextHeadingBold>#3B3B3B</TextHeadingBold>
-          <TextP>Gray - 800</TextP>
+          <H3Bold>#3B3B3B</H3Bold>
+          <P>Gray - 800</P>
         </ColorContainer>
 
         <ColorContainer>
           <ColorSwatch style={{ backgroundColor: '#222222' }} />
-          <TextHeadingBold>#222222</TextHeadingBold>
-          <TextP>Gray - 900</TextP>
+          <H3Bold>#222222</H3Bold>
+          <P>Gray - 900</P>
         </ColorContainer>
       </ColorGrid>
     </StoryIntroContainer>
   ))
   .add('Grids', () => (
     <StoryIntroContainer>
-      <TextH1>Grid System Guide</TextH1>  <br />
-      <TextSubtitle>
+      <H1>Grid System Guide</H1>  <br />
+      <H4>
         Most of the Voluntarily Platform fits within a 1280-pixel wide container
         that scales down on mobile.
         <br /> This is inspired by the{' '}
         <a href='https://bbc.github.io/gel-grid/'>BBC GEL Grid system</a>, but
         isn't as strict or comprehensive...   Yet.
-      </TextSubtitle>
+      </H4>
       <br />
       <Divider />
       <TestWidthItem />
       <Divider />
-      <TextSubtitle>
+      <H4>
        Our default grid uses a 4 column track as well, and this scales down based on available width.
-      </TextSubtitle>
+      </H4>
       <br />
       <br />
       <Grid><TestWidthItem /><TestWidthItem /><TestWidthItem /><TestWidthItem /><TestWidthItem /><TestWidthItem /><TestWidthItem /><TestWidthItem /></Grid>
@@ -443,13 +446,13 @@ const TestWidthItem = styled.div`
 `
 
 const TextHeroText = '<TextBigTitle>I am a hero title</TextBigTitle>'
-const TextH1Text = '<TextH1>I am a h1 heading</TextH1>'
-const SubtitleText = '<TextSubtitle>I am subtitle text</TextSubtitle>'
-const TextH4Text = '<TextH4>I am H4 Text</TextH4>'
-const TextH4BoldText = '<TextH4Bold>I am H4 Text Bold</TextH4Bold>'
-const TextH4BlackText = '<TextH4Black>I am H4 Text Black</TextH4Black>'
-const TextPBoldText = '<TextPBold>I am P Text</TextPBold>'
-const TextPText = '<TextP>I am P Text</TextP>'
+const TextH1Text = '<H1>I am a h1 heading</H1>'
+const SubtitleText = '<H4>I am subtitle text</H4>'
+const TextH4Text = '<H3>I am H3 Text</H3>'
+const TextH4BoldText = '<H3Bold>I am H3 Text Bold</H3Bold>'
+const TextH4BlackText = '<H3Black>I am H3 Text Black</H3Black>'
+const TextPBoldText = '<PBold>I am P Text</PBold>'
+const TextPText = '<P>I am P Text</P>'
 const TextQuoteA =
   '<BigQuote>  &ldquo; Super-inspirational quote &rdquo;  </BigQuote>'
 const TextQuoteB =

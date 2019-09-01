@@ -29,14 +29,14 @@ test('OrgDetail renders properly', t => {
       .find('p')
       .at(0)
       .text(),
-    'Get in touch'
+    'Social:'
   )
 
   t.is(
     wrapper
       .find('svg')
       .length,
-    8
+    9
   )
 })
 
@@ -52,6 +52,6 @@ test('OrgDetail renders properly 2', t => {
     wrapper
       .find('svg')
       .length,
-    7
+    9
   )
 })

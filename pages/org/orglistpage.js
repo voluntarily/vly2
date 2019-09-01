@@ -5,7 +5,7 @@ import Link from 'next/link'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 import OrgList from '../../components/Org/OrgList'
-import { FullPage, PageHeaderContainer, TextHeadingBlack, RequestButtonContainer } from '../../components/VTheme/VTheme'
+import { FullPage, PageHeaderContainer, H3Black, RequestButtonContainer } from '../../components/VTheme/VTheme'
 import { Helmet } from 'react-helmet'
 
 class OrgListPage extends Component {
@@ -28,9 +28,9 @@ class OrgListPage extends Component {
           <title>Voluntarily - Organisation List</title>
         </Helmet>
         <PageHeaderContainer>
-          <TextHeadingBlack><FormattedMessage
+          <H3Black><FormattedMessage
             defaultMessage='Organisations'
-            id='org.list.heading' /></TextHeadingBlack>
+            id='org.list.heading' /></H3Black>
           <RequestButtonContainer> {isAdmin && <Button type='primary' size='large' shape='round'><Link href='/org/new'><a>
             <FormattedMessage id='org.new' defaultMessage='New Organisation' description='Button to create a new organisation' />
           </a></Link></Button>}</RequestButtonContainer><p>Check out organisations doing social good on the Voluntarily platform</p>

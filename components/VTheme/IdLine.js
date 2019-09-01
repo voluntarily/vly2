@@ -15,9 +15,9 @@ import Link from 'next/link'
 const IdLine = ({ item, path }) =>
   item
     ? <Link href={`/${path}/${item._id}`}>
-      <a style={{ display: 'block' }} >
+      <a style={{ display: 'block', margin: '0' }} >
         <Avatar
-          size='small'
+          size={32}
           shape='square'
           src={item.imgUrl}
           icon='team'

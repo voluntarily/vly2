@@ -1,7 +1,7 @@
 import React from 'react'
 // import Link from 'next/link'
 // import styled from 'styled-components'
-import { FullPage, Spacer, TextH1 } from './VTheme/VTheme'
+import { FullPage, Spacer, H1 } from './VTheme/VTheme'
 
 // const Heading = styled.h1`
 //   font-size: 50px;
@@ -44,10 +44,10 @@ export default () => (
         <p>
           <a href='https://giphy.com/gifs/catvidfest-no-grumpy-cat-vPN3zK9dNL236' />
         </p>
-        <TextH1>
+        <H1>
           You don't have access to this page 😅 <br />
           Try and<a href='/auth/sign-in'> sign in</a> to see it?
-        </TextH1>
+        </H1>
       </center>
     </FullPage>
   </div>
