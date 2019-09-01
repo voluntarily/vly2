@@ -1,7 +1,5 @@
 import { Icon } from 'antd'
 import styled from 'styled-components'
-import { P } from '../VTheme/VTheme'
-
 
 const HorUl = styled.ul`
   margin:0;

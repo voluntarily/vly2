@@ -61,12 +61,6 @@ const AboutContainer = styled.div`
 
 `
 
-
-const OrgContactGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-`
-
 const orgTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
     <Icon type='info-circle' />
