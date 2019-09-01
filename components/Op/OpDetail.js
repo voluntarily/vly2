@@ -9,7 +9,7 @@ import moment from 'moment'
 import sanitize from 'sanitize-html'
 
 import { Button, Divider } from 'antd'
-import { FullPage, HalfGrid, Spacer, PBold } from '../VTheme/VTheme'
+import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
 import TagDisplay from '../Tags/TagDisplay'
 import IdLine from '../VTheme/IdLine'
 

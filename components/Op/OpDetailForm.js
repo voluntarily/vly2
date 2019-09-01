@@ -11,9 +11,6 @@ import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { H3Bold, P } from '../VTheme/VTheme'
-import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
-import TagInput from '../Form/Input/TagInput'
-import LocationSelector from '../Form/Input/LocationSelector'
 import {
   DescriptionContainer,
   FormGrid,
@@ -22,7 +19,7 @@ import {
   ShortInputContainer,
   TitleContainer
 } from '../VTheme/FormStyles'
-import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
+
 const { TextArea } = Input
 
 function hasErrors (fieldsError) {
@@ -268,7 +265,8 @@ class OpDetailForm extends Component {
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
     const isNewOp = this.props.op._id
-    const orgMembership = this.props.me.orgMembership &&
+    const orgMembership =
+      this.props.me.orgMembership &&
       this.props.me.orgMembership.map(member => member.organisation)
 
     return (
@@ -344,11 +342,13 @@ class OpDetailForm extends Component {
                   )
                 )}
               </Form.Item>
-              {orgMembership && <Form.Item label={opOrganisation}>
-                {getFieldDecorator('offerOrg')(
-                  <OrgSelector orgs={orgMembership} />
-                )}
-              </Form.Item>}
+              {orgMembership && (
+                <Form.Item label={opOrganisation}>
+                  {getFieldDecorator('offerOrg')(
+                    <OrgSelector orgs={orgMembership} />
+                  )}
+                </Form.Item>
+              )}
             </InputContainer>
           </FormGrid>
 
@@ -356,9 +356,7 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>
-                  Do you need any specific skills? (optional)
-                </H3Bold>
+                <H3Bold>Do you need any specific skills? (optional)</H3Bold>
               </TitleContainer>
               <P>
                 Does what you're asking for fit into any specific categories
@@ -371,11 +369,7 @@ class OpDetailForm extends Component {
                 {getFieldDecorator('tags', {
                   initialValue: [],
                   rules: []
-                })(
-                  <TagInput
-                    existingTags={this.props.existingTags}
-                  />
-                )}
+                })(<TagInput existingTags={this.props.existingTags} />)}
               </Form.Item>
             </InputContainer>
           </FormGrid>
@@ -407,9 +401,11 @@ class OpDetailForm extends Component {
                   {getFieldDecorator('startDate', {})(
                     <DatePicker
                       showTime
-                      disabledDate={(current) => {
-                        return moment().add(-1, 'days') >= current ||
-                             moment().add(1, 'year') <= current
+                      disabledDate={current => {
+                        return (
+                          moment().add(-1, 'days') >= current ||
+                          moment().add(1, 'year') <= current
+                        )
                       }}
                       format='DD-MM-YYYY HH:mm:ss'
                       onChange={this.onStartDateChange}
@@ -445,7 +441,6 @@ class OpDetailForm extends Component {
                   )}
                 </Form.Item>
               </MediumInputContainer>
-
             </InputContainer>
           </FormGrid>
 
@@ -535,7 +530,6 @@ class OpDetailForm extends Component {
               </Button>
             </InputContainer>
           </FormGrid>
-
         </Form>
       </div>
     )
@@ -566,10 +560,12 @@ OpDetailForm.propTypes = {
   }),
   me: PropTypes.shape({
     _id: PropTypes.string,
-    orgMembership: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string
-    }))
+    orgMembership: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string,
+        name: PropTypes.string
+      })
+    )
   }),
   form: PropTypes.object,
   params: PropTypes.shape({
@@ -577,10 +573,12 @@ OpDetailForm.propTypes = {
   }),
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  existingTags: PropTypes.arrayOf(PropTypes.shape({
-    tag: PropTypes.string.isRequired,
-    _id: PropTypes.string
-  })).isRequired,
+  existingTags: PropTypes.arrayOf(
+    PropTypes.shape({
+      tag: PropTypes.string.isRequired,
+      _id: PropTypes.string
+    })
+  ).isRequired,
   existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired
   // dispatch: PropTypes.func.isRequired,
 }

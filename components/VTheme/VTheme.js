@@ -362,5 +362,5 @@ export const FullPage = styled.div`
 ` // end fullpage
 
 export const FillWindow = styled.div`
-    min-height: calc(100vh - 220px);
+  min-height: calc(100vh - 220px);
 ` // END AWESOME CSS DUMP
