@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import { TextHeadingBold, TextP } from '../VTheme/VTheme'
+import { H3Bold, P } from '../VTheme/VTheme'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import TagInput from '../Form/Input/TagInput'
 import LocationSelector from '../Form/Input/LocationSelector'
@@ -281,13 +281,13 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>What are you looking for?</TextHeadingBold>
+                <H3Bold>What are you looking for?</H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 Before our skilled volunteers get involved, they need to know
                 how they can help. Add a title and description that tell
                 volunteers how they can help you.
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -330,15 +330,15 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>
+                <H3Bold>
                   Do you need any specific skills? (optional)
-                </TextHeadingBold>
+                </H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 Does what you're asking for fit into any specific categories
                 like programming, electronics, or robots? Enter them here to
                 make it easier for volunteers to find you.
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <Form.Item label={opTags}>
@@ -358,12 +358,12 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Where and when? (optional)</TextHeadingBold>
+                <H3Bold>Where and when? (optional)</H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 More skilled volunteers will offer to help you if you know when,
                 or where you need help.
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -427,12 +427,12 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Add an image (optional)</TextHeadingBold>
+                <H3Bold>Add an image (optional)</H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 Requests with photos get more responses. If you don't have a
                 photo leave blank and we will provide one based on the category.
-              </TextP>
+              </P>
               <img
                 style={{ width: '50%', float: 'right' }}
                 src={this.props.op.imgUrl}
@@ -454,15 +454,15 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Confirm request</TextHeadingBold>
+                <H3Bold>Confirm request</H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 <FormattedMessage
                   id='op.SaveInstructions'
                   defaultMessage='Save as Draft will allow you to preview the request while Publish will make it available to everyone to view.'
                   description='Instructions for save and publish on opportunity details form'
                 />
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <Button

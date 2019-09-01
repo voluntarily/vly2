@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { TextHeadingSubtitle } from '../VTheme/VTheme'
+import { H5 } from '../VTheme/VTheme'
 import OpList from './OpList'
 
 class OpRecommendations extends React.Component {
@@ -10,13 +10,13 @@ class OpRecommendations extends React.Component {
     <>
       {recommendedOps.basedOnLocation.length !== 0 &&
       <div>
-        <TextHeadingSubtitle>Nearby opportunities</TextHeadingSubtitle>
+        <H5>Nearby opportunities</H5>
         <OpList ops={recommendedOps.basedOnLocation} />
       </div>}
 
       {recommendedOps.basedOnSkills.length !== 0 &&
       <div>
-        <TextHeadingSubtitle>Based on your skills</TextHeadingSubtitle>
+        <H5>Based on your skills</H5>
         <OpList ops={recommendedOps.basedOnSkills} />
       </div>}
     </>)

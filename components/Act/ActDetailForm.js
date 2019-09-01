@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import { TextHeadingBold, TextP } from '../VTheme/VTheme'
+import { H3Bold, P } from '../VTheme/VTheme'
 import TagInput from '../Form/Input/TagInput'
 
 import {
@@ -173,11 +173,11 @@ class ActDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Tell everyone about this Activity?</TextHeadingBold>
+                <H3Bold>Tell everyone about this Activity?</H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 Attract people to this activitiy with a snappy name, use the subtitle to layout the basic idea.
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -215,13 +215,13 @@ class ActDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>
+                <H3Bold>
                   What topics and learning outcomes does this activity cover?
-                </TextHeadingBold>
+                </H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 Make this activity searchable by classifying it with subject, age group, and technology keywords.
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <Form.Item label={actTags}>
@@ -241,15 +241,15 @@ class ActDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>What resources are required to run this activity?</TextHeadingBold>
+                <H3Bold>What resources are required to run this activity?</H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 What is the time commitment?<br />
                 How many people do you need to help?<br />
                 What skills might they require?<br />
                 Do you need a special space or location to work in?<br />
                 Does this activity require special equipment?
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -278,12 +278,12 @@ class ActDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Add an image</TextHeadingBold>
+                <H3Bold>Add an image</H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 Activities with illustrations get more responses. If you don't have a
                 photo click suggest and we can provide one based on the tags.
-              </TextP>
+              </P>
               <img style={{ width: '50%', float: 'right' }} src={this.props.act.imgUrl} alt='' />
             </DescriptionContainer>
             <InputContainer>
@@ -303,15 +303,15 @@ class ActDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Save Activity</TextHeadingBold>
+                <H3Bold>Save Activity</H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 <FormattedMessage
                   id='act.SaveInstructions'
                   defaultMessage='Save as Draft will allow you to preview the activity while Publish will make it available to everyone to view.'
                   description='Instructions for save and publish on activity details form'
                 />
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <Button

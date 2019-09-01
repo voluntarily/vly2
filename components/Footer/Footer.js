@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import Navigation from '../Navigation/Navigation'
 import links from './FooterMenu'
-import { Grid, Spacer, TextP } from '../VTheme/VTheme'
+import { Grid, Spacer, P } from '../VTheme/VTheme'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
@@ -86,7 +86,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
     <FooterContainer>
       <FooterLogo src='../../static/vlogo.svg' />
       <FooterText>
-        <TextP>
+        <P>
           <FormattedMessage
             id='footer.credit'
             defaultMessage='Voluntarily is an awesome open source project run by the'
@@ -95,8 +95,8 @@ const Footer = ({ isAuthenticated, ...props }) => (
           <a href='https://www.pamfergusson.org.nz/' target='_blank'>
             Pam Fergusson Charitable Trust
           </a>
-        </TextP>
-        <TextP>
+        </P>
+        <P>
           <FormattedMessage
             id='version'
             defaultMessage='Version'
@@ -107,7 +107,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
             defaultMessage='local-build'
             description='Source code revision, auto generalted.'
           />
-        </TextP>
+        </P>
 
       </FooterText>
       <Spacer />

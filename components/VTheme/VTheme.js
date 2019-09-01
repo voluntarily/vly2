@@ -157,17 +157,20 @@ I have done a terrible example so far, but will aim to fix usage soon
 export const TextBigTitle = styled.h1`
   font-weight: 900;
   font-size: 6rem;
+  line-height: 1;
+  letter-spacing: 0.03rem
 
   @media screen and (max-width: 767px) {
     font-size: 3rem;
   }
 ` // end TextBigTitle
 
-export const TextH1 = styled.h1`
+
+export const H1 = styled.h1`
   color: black;
   font-size: 3.5rem;
   font-weight: 900;
-  letter-spacing: -0.15rem;
+  letter-spacing: -0.1rem;
   line-height: 1.5;
   margin-bottom: 0px;
   margin-top: 0px;
@@ -188,64 +191,10 @@ export const TextH1 = styled.h1`
     letter-spacing: -0.03em;
     line-height: 3rem;
   }
-` // End TextH1
+` // End H1
 
-export const TextSubtitle = styled.p`
-  letter-spacing: -0.3px;
-  font-size: 1.5rem;
-  color: #000;
-  margin-bottom: 0;
 
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    letter-spacing: -0.06rem;
-    font-size: 1.5rem;
-  }
-  @media screen and (max-width: 768px) {
-    width: 90vw;
-    font-size: 1rem;
-  }
-` // TextSubtitle
-
-export const TextH3 = styled.h3`
-  letter-spacing: -0.3px;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #000;
-  margin-bottom: 0;
-
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    letter-spacing: -0.06rem;
-    font-size: 1.5rem;
-  }
-  @media screen and (max-width: 768px) {
-    width: 90vw;
-    font-size: 1rem;
-  }
-` // TextH3
-
-export const TextP = styled.p`
-  font-weight: 400;
-  color: black;
-  font-size: 1rem;
-  margin: initial;
-  letter-spacing: -0.03rem;
-  @media screen and (max-width: 767px) {
-    font-size: 1rem;
-  }
-` // end TextP
-
-export const TextPBold = styled.p`
-  font-weight: 700;
-  color: black;
-  font-size: 1rem;
-
-  margin: initial;
-  @media screen and (max-width: 767px) {
-    font-size: 1rem;
-  }
-` // end TextBold
-
-export const TextHeading = styled.p`
+export const H3 = styled.h3`
   font-size: 2rem;
   font-weight: 400;
   letter-spacing: -0.04em;
@@ -264,18 +213,8 @@ export const TextHeading = styled.p`
   }
 ` // end TextHeading
 
-export const TextHeadingBlack = styled.h1`
-  font-size: 2rem;
-  letter-spacing: 0px;
-  font-weight: 900;
-  line-height: 40px;
-  margin: initial;
-  @media screen and (max-width: 767px) {
-    font-size: 2rem;
-  }
-` // end TextHeadingBlack
 
-export const TextHeadingBold = styled.p`
+export const H3Bold = styled.h3`
   font-size: 2rem;
   letter-spacing: -1.4px;
   font-weight: 700;
@@ -293,16 +232,70 @@ export const TextHeadingBold = styled.p`
     font-size: 1rem;
     letter-spacing: -0.8px;
   }
-` // end TextHeadingBold
+` // end H3Bold
 
-export const TextHeadingSubtitle = styled.p`
+
+
+export const H3Black = styled.h3`
+  font-size: 2rem;
+  letter-spacing: -1px;
+  font-weight: 900;
+  line-height: 40px;
+  margin: initial;
+  @media screen and (max-width: 767px) {
+    font-size: 2rem;
+  }
+` // end H3Black
+
+
+export const H4 = styled.h4`
+  letter-spacing: -0.3px;
+  font-size: 1.5rem;
+  color: #000;
+  margin-bottom: 0;
+
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    letter-spacing: -0.06rem;
+    font-size: 1.5rem;
+  }
+  @media screen and (max-width: 768px) {
+    width: 90vw;
+    font-size: 1rem;
+  }
+` // H4
+
+export const H5 = styled.h5`
   line-height: 2;
   font-size: 1.1rem;
+  color: #333;
   letter-spacing: -0.2px;
   @media screen and (max-width: 768px) {
     line-height: 1.5;
   }
-` // end TextHeadingSubtitle
+` // end H5
+
+export const P = styled.p`
+  font-weight: 400;
+  color: black;
+  font-size: 1rem;
+  margin: initial;
+  letter-spacing: -0.03rem;
+  @media screen and (max-width: 767px) {
+    font-size: 1rem;
+  }
+` // end P
+
+export const PBold = styled.p`
+  font-weight: 700;
+  color: black;
+  font-size: 1rem;
+
+  margin: initial;
+  @media screen and (max-width: 767px) {
+    font-size: 1rem;
+  }
+` // end PBold
+
 export const BigQuote = styled.h2`
   font-size: 3rem;
   letter-spacing: -0.05rem;

@@ -11,12 +11,12 @@ import styled from 'styled-components'
 import {
   PageHeaderContainer,
   GridContainer,
-  TextPBold,
-  TextH1,
-  TextHeadingBlack,
+  PBold,
+  H1,
+  H3Black,
   SpacerSmall,
   FullPage,
-  TextSubtitle
+  H4
 } from '../VTheme/VTheme'
 const ButtonGroup = Button.Group
 
@@ -110,17 +110,17 @@ const OrgDetail = ({ org, ...props }) => (
     <ProfileHeaderContainer>
       <ProfileImage src={org.imgUrl} alt={org.name} />
       <TitleContainer>
-        <TextH1>{org.name}</TextH1>
-        <TextSubtitle>Business • New Zealand</TextSubtitle>
-        <TextSubtitle>
+        <H1>{org.name}</H1>
+        <H4>Business • New Zealand</H4>
+        <H4>
           {org.website && (
             <ContactContainer>
-              <Link  target='_blank' href={org.website}>
+              <Link target='_blank' href={org.website}>
                 <a target='_blank'>{org.website}</a>
               </Link>
             </ContactContainer>
           )}
-        </TextSubtitle>
+        </H4>
         <ButtonContainer>
           <Button icon='notification' type='primary' shape='round' size='large'>
             Follow
@@ -134,9 +134,9 @@ const OrgDetail = ({ org, ...props }) => (
           <Markdown children={(org.info && org.info.about) || ''} />
           <OrgCategory orgCategory={org.category} />
           <br />
-<TextPBold>Social:</TextPBold>
+          <PBold>Social:</PBold>
           <ButtonGroup size='medium'>
-          {org.contactEmail && (
+            {org.contactEmail && (
               <SocialButton
                 type='link'
                 href={`mailto:${org.contactEmail}`}

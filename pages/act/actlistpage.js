@@ -16,7 +16,7 @@ import {
   GridContainer,
   ActivityContainer,
   PageHeaderContainer,
-  TextHeadingBlack,
+  H3Black,
   RequestButtonContainer
 } from '../../components/VTheme/VTheme'
 import { Helmet } from 'react-helmet'
@@ -91,13 +91,13 @@ class Acts extends Component {
           <title>Voluntarily - Activities List</title>
         </Helmet>
         <PageHeaderContainer>
-          <TextHeadingBlack>
+          <H3Black>
             <FormattedMessage
               id='resource'
               defaultMessage='Activities'
               description='Title of page listing activities'
             />
-          </TextHeadingBlack>
+          </H3Black>
 
           <RequestButtonContainer>
             <Button type='primary' shape='round' size='large'>

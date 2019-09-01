@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import { TextHeadingBold, TextP } from '../VTheme/VTheme'
+import { H3Bold, P } from '../VTheme/VTheme'
 import {
   DescriptionContainer,
   FormGrid,
@@ -181,9 +181,9 @@ class PersonDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>About you</TextHeadingBold>
+                <H3Bold>About you</H3Bold>
               </TitleContainer>
-              <TextP>How do we get in touch?</TextP>
+              <P>How do we get in touch?</P>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -243,15 +243,15 @@ class PersonDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>
+                <H3Bold>
                   Do you have any specific skills? (optional)
-                </TextHeadingBold>
+                </H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 Do you have skills in any specific categories
                 like programming, electronics, or robots? Enter them here to
                 make it easier for us to recommend suitable opportunities for you.
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <Form.Item label={personTags}>
@@ -271,12 +271,12 @@ class PersonDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Contact details</TextHeadingBold>
+                <H3Bold>Contact details</H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 How do you want teachers and charities to get in touch with you?
                 Other people can only see this if you let them 🤫
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -299,7 +299,7 @@ class PersonDetailForm extends Component {
 
           <FormGrid>
             <DescriptionContainer>
-              <TextHeadingBold>Avatar (optional)</TextHeadingBold>
+              <H3Bold>Avatar (optional)</H3Bold>
               <p>Help people to recognise you or reflect your character.</p>
             </DescriptionContainer>
             <InputContainer>
@@ -319,9 +319,9 @@ class PersonDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Admin section</TextHeadingBold>
+                <H3Bold>Admin section</H3Bold>
               </TitleContainer>
-              <TextP>Please be careful on this part</TextP>
+              <P>Please be careful on this part</P>
             </DescriptionContainer>
             <InputContainer>
               {' '}

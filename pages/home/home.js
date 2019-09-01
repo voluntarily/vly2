@@ -22,8 +22,8 @@ import { Helmet } from 'react-helmet'
 
 import {
   FullPage,
-  TextHeadingBlack,
-  TextP,
+  H3Black,
+  P,
   PageHeaderContainer,
   RequestButtonContainer
 } from '../../components/VTheme/VTheme'
@@ -175,14 +175,14 @@ class PersonHomePage extends Component {
         </Helmet>
         <PageHeaderContainer>
           <TitleContainer>
-            <TextHeadingBlack>
+            <H3Black>
               {this.props.me.nickname}'s Requests
               {/* <FormattedMessage
             id='home.title'
             defaultMessage='My Stuff'
             description='title on volunteer home page.'
           /> */}
-            </TextHeadingBlack>
+            </H3Black>
           </TitleContainer>
           <RequestButtonContainer>
             <OpAdd {...this.props} />
@@ -194,13 +194,13 @@ class PersonHomePage extends Component {
           <TabPane tab={opsTab} key='1'>
             <SectionWrapper>
               <SectionTitleWrapper>
-                <TextHeadingBlack>
+                <H3Black>
                   <FormattedMessage
                     id='home.liveOpportunities'
                     defaultMessage='Active Requests'
                     decription='subtitle on volunteer home page for active requests and opportunities'
                   />
-                </TextHeadingBlack>
+                </H3Black>
               </SectionTitleWrapper>
               {ops && (
                 <OpList
@@ -212,31 +212,31 @@ class PersonHomePage extends Component {
             </SectionWrapper>
             <SectionWrapper>
               <SectionTitleWrapper>
-                <TextHeadingBlack>
+                <H3Black>
                   <FormattedMessage
                     id='home.recommendedOpportunities'
                     defaultMessage='Recommended for you'
                     decription='Title on volunteer home page for recommended opportunities'
                   />
-                  <TextP>
+                  <P>
                     <FormattedMessage
                       id='home.recommendedOpportunitiesP'
                       defaultMessage='Here are some opportunities we think you might like'
                       decription='Subtitle on volunteer home page for recommended opportunities'
                     />
-                  </TextP>
-                </TextHeadingBlack>
+                  </P>
+                </H3Black>
               </SectionTitleWrapper>
               <OpRecommendations
                 recommendedOps={this.props.recommendedOps.data[0]} />
             </SectionWrapper>
             <SectionWrapper>
               <SectionTitleWrapper>
-                <TextHeadingBlack>Getting Started</TextHeadingBlack>
-                <TextP>
+                <H3Black>Getting Started</H3Black>
+                <P>
                   To start volunteering on Voluntarily, here are a few things we
                   recommend doing:
-                </TextP>
+                </P>
               </SectionTitleWrapper>
               {/* // TODO: [VP-208] list of things volunteers can do on home page */}
               <NextActionBlock />
@@ -246,13 +246,13 @@ class PersonHomePage extends Component {
           <TabPane tab={searchTab} key='2'>
             <SectionWrapper>
               <SectionTitleWrapper>
-                <TextHeadingBlack>Completed Requests</TextHeadingBlack>
+                <H3Black>Completed Requests</H3Black>
               </SectionTitleWrapper>
               <OpList
                 ops={this.getArchivedOpportunitiesByStatus('completed')}
               />
               <SectionTitleWrapper>
-                <TextHeadingBlack>Cancelled Requests</TextHeadingBlack>
+                <H3Black>Cancelled Requests</H3Black>
               </SectionTitleWrapper>
               <OpList
                 ops={this.getArchivedOpportunitiesByStatus('cancelled')}
