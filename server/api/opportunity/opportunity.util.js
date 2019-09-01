@@ -8,10 +8,13 @@ const getLocationRecommendations = async (me) => {
 
   let locationOps
   if (regionToMatch) {
-    locationOps = await Opportunity.find({
-      location: { $in: [regionToMatch.name, ...regionToMatch.containedTerritories] },
-      requestor: { $ne: me._id }
-    })
+    locationOps = await Opportunity
+      .find({
+        location: { $in: [regionToMatch.name, ...regionToMatch.containedTerritories] },
+        requestor: { $ne: me._id }
+      })
+      .populate('requestor', 'name nickname imgUrl')
+      .populate('offerOrg', 'name imgUrl category')
 
     // if user has specified a territory, we should show the exact matches first, because we know
     // they are closest to the user.
@@ -42,7 +45,10 @@ const getSkillsRecommendations = async (me) => {
     const tagIdExpression = {
       $or: tagsToMatch.map(id => ({ 'tags': id }))
     }
-    const opsWithMatchingTags = await Opportunity.find({ ...tagIdExpression, requestor: { $ne: me._id } })
+    const opsWithMatchingTags = await Opportunity
+      .find({ ...tagIdExpression, requestor: { $ne: me._id } })
+      .populate('requestor', 'name nickname imgUrl')
+      .populate('offerOrg', 'name imgUrl category')
     const opsWithCounts = []
 
     opsWithMatchingTags.forEach(op => {

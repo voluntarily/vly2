@@ -56,11 +56,8 @@ class MemberSection extends Component {
     // check if I am in the members list
     // TODO: [VP-440] members ability I am orgadmin then I get all members list, else I get just my own membership status
     let myMembership = this.props.members.data.find(m => m.person._id === meid)
-    if (myMembership) {
-      myMembership.isMe = true
-    } else {
+    if (!myMembership) {
       myMembership = {
-        isMe: false,
         status: MemberStatus.NONE
       }
     }
@@ -69,7 +66,7 @@ class MemberSection extends Component {
     const memberOrOrgAdmin = m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)
     const joinerOrValidator = m => [MemberStatus.VALIDATOR, MemberStatus.JOINER].includes(m.status)
     const follower = m => [MemberStatus.FOLLOWER].includes(m.status)
-    const nonMember = m => !myMembership.isMe || [MemberStatus.NONE, MemberStatus.EXMEMBER].includes(m.status)
+    const nonMember = m => [MemberStatus.NONE, MemberStatus.EXMEMBER].includes(m.status)
 
     // OrgAdmins see Member Table
     let orgAdminSection = ''
@@ -89,6 +86,7 @@ class MemberSection extends Component {
             <MemberTable
               members={joiners}
               onMembershipChange={this.handleMembershipChange.bind(this)}
+              meid={meid}
             />
           </SubSection>
           <SubSection>
@@ -101,6 +99,7 @@ class MemberSection extends Component {
             <MemberTable
               members={members}
               onMembershipChange={this.handleMembershipChange.bind(this)}
+              meid={meid}
             />
           </SubSection>
 
@@ -114,6 +113,7 @@ class MemberSection extends Component {
             <MemberTable
               members={followers}
               onMembershipChange={this.handleMembershipChange.bind(this)}
+              meid={meid}
             />
           </SubSection>
         </div>

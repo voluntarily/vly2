@@ -66,8 +66,6 @@ const orgTab = (
     <Icon type='info-circle' />
     <FormattedMessage
       id='orgAbout'
-      defaultMessage='About'
-      description='show opportunities list on volunteer home page'
     />
   </span>
 )

@@ -77,8 +77,8 @@ export function OpDetail ({ op }) {
             {sanitize(op.status)}
           </ItemListing>
           <Divider />
-          <ItemListing><PBold>Requested by:</PBold><IdLine item={op.offerOrg} path='organisation' /></ItemListing>
-          <ItemListing><IdLine item={op.requestor} path='person' /></ItemListing>
+          {op.offerOrg && <ItemListing><IdLine item={op.offerOrg} path='organisation' /></ItemListing>}
+          {op.requestor && <ItemListing><IdLine item={op.requestor} path='person' /></ItemListing>}
           <Divider />
           <Spacer />
           <ItemP>

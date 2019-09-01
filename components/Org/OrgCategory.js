@@ -12,7 +12,6 @@ const HorUl = styled.ul`
   
 `
 
-// TODO translate - could just translate message val.
 const OrgCategoryItem = ({ orgCategoryItem }) => {
   const categoryOptions = [
     { label: <Icon type='bank' />, value: 'vp' },
@@ -30,6 +29,9 @@ const OrgCategoryItem = ({ orgCategoryItem }) => {
   )
 }
 
-const OrgCategory = ({ orgCategory }) => <HorUl>{orgCategory.map((t, index) => <OrgCategoryItem key={index} orgCategoryItem={t} />)}</HorUl>
+const OrgCategory = ({ orgCategory }) =>
+  <HorUl>
+    {orgCategory.map((t, index) => <OrgCategoryItem key={index} orgCategoryItem={t} />)}
+  </HorUl>
 
 export default OrgCategory

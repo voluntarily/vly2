@@ -30,8 +30,8 @@ const IdLine = ({ item, path }) =>
 IdLine.propTypes = {
   item: PropTypes.shape({
     _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    imgUrl: PropTypes.string.isRequired
+    name: PropTypes.string,
+    imgUrl: PropTypes.string
   }),
   path: PropTypes.string
 }
