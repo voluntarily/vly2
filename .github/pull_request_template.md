@@ -1,5 +1,5 @@
 # Pull Request Template (VP-123)
-=====
+
 Please check that your ticket number and ticket description is included in the PR title 😀
 
 
