@@ -13,8 +13,6 @@ import {
   GridContainer,
   PBold,
   H1,
-  H3Black,
-  SpacerSmall,
   FullPage,
   H4
 } from '../VTheme/VTheme'
@@ -59,9 +57,10 @@ const AboutContainer = styled.div`
   text-align: left;
   width: 50rem;
   margin: 4rem auto;
+  overflow: hidden;
+
 `
 
-const TagContainer = styled.div``
 
 const OrgContactGrid = styled.div`
   display: grid;

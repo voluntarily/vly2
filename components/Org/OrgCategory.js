@@ -1,5 +1,7 @@
 import { Icon } from 'antd'
 import styled from 'styled-components'
+import { P } from '../VTheme/VTheme'
+
 
 const HorUl = styled.ul`
   margin:0;
@@ -9,6 +11,7 @@ const HorUl = styled.ul`
     display: inline;
     padding-right: 1em;
   }
+  
 `
 
 // TODO translate - could just translate message val.

@@ -165,7 +165,6 @@ export const TextBigTitle = styled.h1`
   }
 ` // end TextBigTitle
 
-
 export const H1 = styled.h1`
   color: black;
   font-size: 3.5rem;
@@ -193,7 +192,6 @@ export const H1 = styled.h1`
   }
 ` // End H1
 
-
 export const H3 = styled.h3`
   font-size: 2rem;
   font-weight: 400;
@@ -212,7 +210,6 @@ export const H3 = styled.h3`
     letter-spacing: -0.02em;
   }
 ` // end TextHeading
-
 
 export const H3Bold = styled.h3`
   font-size: 2rem;
@@ -234,8 +231,6 @@ export const H3Bold = styled.h3`
   }
 ` // end H3Bold
 
-
-
 export const H3Black = styled.h3`
   font-size: 2rem;
   letter-spacing: -1px;
@@ -246,7 +241,6 @@ export const H3Black = styled.h3`
     font-size: 2rem;
   }
 ` // end H3Black
-
 
 export const H4 = styled.h4`
   letter-spacing: -0.3px;
