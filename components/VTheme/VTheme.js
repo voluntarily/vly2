@@ -158,7 +158,7 @@ export const TextBigTitle = styled.h1`
   font-weight: 900;
   font-size: 6rem;
   line-height: 1;
-  letter-spacing: 0.03rem
+  letter-spacing: 0.03rem;
 
   @media screen and (max-width: 767px) {
     font-size: 3rem;
@@ -344,11 +344,10 @@ export const A4 = styled.div`
   }
 `
 export const FullPage = styled.div`
-margin: 6rem auto;
+  margin: 6rem auto;
   width: 80rem;
   overflow: visible;
   height: auto;
-
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
     width: calc(100vw - 4rem);
@@ -364,5 +363,4 @@ margin: 6rem auto;
 
 export const FillWindow = styled.div`
     min-height: calc(100vh - 220px);
-  }
 ` // END AWESOME CSS DUMP
