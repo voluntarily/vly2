@@ -59,7 +59,7 @@ class MemberTable extends Component {
       title: 'Action',
       key: 'action',
       render: (text, record) => {
-        const options = buttonStates(record)
+        const options = buttonStates(record, this.props.meid)
         return (
           <div>
             {options.map(btn => {
@@ -97,7 +97,8 @@ class MemberTable extends Component {
 
 MemberTable.propTypes = {
   onMembershipChange: PropTypes.func.isRequired,
-  members: PropTypes.array
+  members: PropTypes.array,
+  meid: PropTypes.string
 }
 
 /* Button State options
@@ -107,7 +108,7 @@ MemberTable.propTypes = {
   EXMEMBER: OrgAdmin can confirm or reject membership
   ORGADMIN: OrgAdmin can make normal member again
 */
-const buttonStates = member => {
+const buttonStates = (member, meid) => {
   return [
     {
       buttonEnabled: [MemberStatus.FOLLOWER, MemberStatus.JOINER, MemberStatus.VALIDATOR, MemberStatus.EXMEMBER].includes(member.status),
@@ -130,7 +131,7 @@ const buttonStates = member => {
       action: 'makeadmin'
     },
     {
-      buttonEnabled: (member.status === MemberStatus.ORGADMIN) && !member.isMe,
+      buttonEnabled: (member.status === MemberStatus.ORGADMIN) && (member.person._id !== meid),
       label: <FormattedMessage id='member.unadmin' defaultMessage='Cancel Admin' description='Button allowing orgAdmin to return an admin back to normal member' />,
       action: 'add'
     }
