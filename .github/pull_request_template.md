@@ -10,12 +10,11 @@ Please check that your ticket number and ticket description is included in the P
 
 ## Additional Info.🧐
 
+Any additional info goes here
 
 ## Screenshots 📷
  
 ### Original
-=====
 
 
 ### Updated
-=====
