@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Avatar, Divider } from 'antd'
+import { Avatar } from 'antd'
 import Link from 'next/link'
 
 /*
