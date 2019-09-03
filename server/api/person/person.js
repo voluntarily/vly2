@@ -15,7 +15,8 @@ const personSchema = new Schema({
   phone: { type: 'String', required: false }, // +64 27 7031007
   gender: { type: 'String', default: '' }, // whatever they want to write.
   language: { type: String, default: 'EN', lowercase: true }, // en, mi, fr etc
-  avatar: String, // url to image
+  imgUrl: { type: 'String', default: '' }, // url to image
+  avatar: { type: 'String', default: '' }, // deprecated use imgUrl
   role: {
     type: [String],
     required: true,

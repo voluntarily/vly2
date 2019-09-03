@@ -8,7 +8,7 @@ const Organisation = require('../organisation/organisation')
 /* get a single member record with org and person populated out */
 const getMemberbyId = id => {
   return Member.findOne({ _id: id })
-    .populate({ path: 'person', select: 'nickname name avatar email' })
+    .populate({ path: 'person', select: 'nickname name imgUrl email' })
     .populate({ path: 'organisation', select: 'name imgUrl' })
     .exec()
 }
@@ -31,7 +31,7 @@ const listMembers = async (req, res) => {
         query.person = req.query.meid
       }
       // Return enough info for a personCard
-      got = await Member.find(query).populate({ path: 'person', select: 'nickname name avatar email' }).sort(sort).exec()
+      got = await Member.find(query).populate({ path: 'person', select: 'nickname name imgUrl email' }).sort(sort).exec()
     } else if (req.query.meid) {
       // a person is asking for the orgs they follow or are members of
       const query = { person: req.query.meid }
@@ -82,13 +82,13 @@ const createMember = async (req, res) => {
     // TODO: [VP-424] email new members or followers of an organisation
     // const volunteerID = req.body.person
     // const { organisation } = req.body
-    // const { title } = organisation
+    // const { name } = organisation
     // const { requestor } = req.body.organisation
     // const orgId = organisation._id
     // const { validation } = req.body
     // requestor.volunteerComment = validation
-    // // sendEmailBaseOn('acknowledgeMember', volunteerID, title, opId)
-    // // sendEmailBaseOn('RequestorNotificationEmail', requestor._id, title, opId, comment)
+    // // sendEmailBaseOn('acknowledgeMember', volunteerID, name, opId)
+    // // sendEmailBaseOn('RequestorNotificationEmail', requestor._id, name, opId, comment)
 
     // return the member record with the org name filled in.
     const got = await getMemberbyId(newMember._id)
@@ -99,14 +99,14 @@ const createMember = async (req, res) => {
 
 // const processStatusToSendEmail = (memberStatus, organisation, volunteer) => {
 //   const { _id } = volunteer
-//   const { requestor, title } = organisation
+//   const { requestor, name } = organisation
 //   const opID = organisation._id
 //   if (memberStatus === MemberStatus.INVITED || memberStatus === MemberStatus.DECLINED) {
 //     // send email to volunteer only
-//     sendEmailBaseOn(memberStatus, _id, title, opID) // The _id in here is the volunteer id
+//     sendEmailBaseOn(memberStatus, _id, name, opID) // The _id in here is the volunteer id
 //   } else if (memberStatus === MemberStatus.COMMITTED) {
 //     // send email to requestor only
-//     sendEmailBaseOn(memberStatus, requestor, title, opID)
+//     sendEmailBaseOn(memberStatus, requestor, name, opID)
 //   }
 // }
 

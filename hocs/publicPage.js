@@ -3,66 +3,13 @@ import Cookie from 'js-cookie'
 import Head from 'next/head'
 import Router from 'next/router'
 import React from 'react'
-import styled from 'styled-components'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 import { getUserFromLocalCookie, getUserFromServerCookie, parseUserToSession } from '../lib/auth/auth'
 import { setSession } from '../lib/redux/actions'
-
+import { FillWindow } from '../components/VTheme/VTheme'
 // Dump all the custom elements and responsive scaffolding crap here
 // BEGIN AWESOME DUMP OF CSS-ISH GOODNESS
-export const A4 = styled.div`
-  margin: 3em;
-  padding-bottom: 4em;
-  max-width: 50em;
-  margin-left: auto;
-  margin-right: auto;
-  @media (max-width: 600px) {
-    .div {
-      margin: 0 3em;
-    }
-  }
-`
-export const FullPage = styled.div`
-margin: 6rem auto;
-  width: 80rem;
-  overflow: visible;
-  height: auto;
-
-
-  @media screen and (min-width: 768px) and (max-width: 1280px) {
-    width: calc(100vw - 4rem);
-    margin-left: 2rem;
-    margin-right: 2rem;
-  }
-  @media screen and (max-width: 767px) {
-    margin-top: 4rem;
-    width: calc(100vw - 2rem);
-    margin-left: 1rem;
-  }
-` // end fullpage
-export const Grid = styled.div`
-  position: relative;
-  display: grid;
-  grid-template-columns: 18.5rem 18.5rem 18.5rem 18.5rem;
-  grid-gap: 2rem;
-
-  @media screen and (min-width: 768px) and (max-width: 1280px) {
-    grid-template-columns: repeat(auto-fit, 18.5rem);
-    justify-content: start;
-    justify-items: center;
-  }
-
-  @media screen and (max-width: 767px) {
-    grid-template-columns: calc(100vw - 2rem);
-    grid-gap: 0rem;
-  }
-` // end grid
-
-export const FillWindow = styled.div`
-    min-height: calc(100vh - 220px);
-  }
-` // END AWESOME CSS DUMP
 
 export default Page =>
   class DefaultPage extends React.Component {

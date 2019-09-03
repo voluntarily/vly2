@@ -8,7 +8,7 @@ const PersonCard = ({ person, ...props }) => (
     <Link href={`/people/${person._id}`} >
       <a>
         <div className='personContainer'>
-          <img className='personImg' src={person.avatar} />
+          <img className='personImg' src={person.imgUrl} />
           <p className='personTitle'>{person.nickname}</p>
           <p className='personName'>{person.name}</p>
         </div>
@@ -58,7 +58,7 @@ PersonCard.propTypes = {
   person: PropTypes.shape({
     name: PropTypes.string.isRequired,
     nickname: PropTypes.string.isRequired,
-    avatar: PropTypes.string,
+    imgUrl: PropTypes.string,
     _id: PropTypes.string.isRequired
   }).isRequired
 }

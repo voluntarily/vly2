@@ -17,7 +17,7 @@ test('Should setup and send test email', async t => {
   t.plan(3)
   const transport = await getTransportTest()
   const info = await transport.sendMail({
-    from: 'no-reply@voluntari.ly', // sender address
+    from: 'no-reply@voluntarily.nz', // sender address
     to: 'bar@example.com, baz@example.com', // list of receivers
     subject: 'Email Verification ✔', // Subject line
     text: 'Click on the link below to validate your email', // plain text body
@@ -31,13 +31,16 @@ test('Should setup and send test email', async t => {
 
 /* This test sends actual emails via AWS. so do not use
  unless you want to verify the AWS settings
+ to do so add these lines to .env
+ SMTP_ID=<aws ses id>
+ SMTP_PWD=<aws ses password>
  */
 // eslint-disable-next-line ava/no-skip-test
 test.skip('send test email via AWS SMTP', async t => {
   t.plan(3)
   const transport = await getTransportSES()
   const info = await transport.sendMail({
-    from: 'andrew@voluntari.ly', // sender address
+    from: 'andrew@voluntarily.nz', // sender address
     to: 'andrew@omgtech.co.nz', // list of receivers
     subject: 'Email Verification ✔', // Subject line
     text: 'This is a test email from the email.spec.js test', // plain text body

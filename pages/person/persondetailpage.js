@@ -6,7 +6,7 @@ import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
-import { FullPage } from '../../hocs/publicPage'
+import { FullPage } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withPeople, withMembers } from '../../lib/redux/reduxApi.js'
 import Loading from '../../components/Loading'
@@ -23,7 +23,7 @@ const blankPerson = {
   email: '',
   phone: '',
   gender: '',
-  avatar: '',
+  imgUrl: '',
   role: ['volunteer'],
   status: 'inactive'
 }
@@ -179,7 +179,7 @@ PersonDetailPage.propTypes = {
     email: PropTypes.string,
     phone: PropTypes.string,
     gender: PropTypes.string,
-    avatar: PropTypes.any,
+    imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])
   }),

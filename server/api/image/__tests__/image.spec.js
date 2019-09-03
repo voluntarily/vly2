@@ -9,7 +9,7 @@ test.after.always(() => {
   fsExtra.emptyDirSync('./static/upload-test')
 })
 
-test('can return image from static folder', async t => {
+test.serial('can return image from static folder', async t => {
   await appReady
   const res = await request(server)
     .get('/static/img/194px-Testcard_F.jpg')
@@ -28,25 +28,27 @@ const sendImageToAPI = (path, filename) => {
     .send(JSON.stringify({ image: file, file: filename }))
 }
 
-test('Should upload a small file', async t => {
+test.serial('Should upload a small file', async t => {
   await appReady
   const res = await sendImageToAPI(__dirname, '194px-Testcard_F.jpg')
     .expect(200)
     .expect('Content-Type', /json/)
   // console.log(res)
-  t.regex(res.body.imageUrl, /.*194px-testcard_f.jpg/)
+  t.regex(res.body.imageUrl, /-194px-testcard_f[.]jpg/i)
 
-  // get the image back from server
-  const img = await request(server)
-    .get(res.body.imageUrl)
-    .set('Accept', 'image')
-    .expect(200)
-    .expect('Content-Type', /image/)
+  // get the image back from server only if testing with local uploading storage
+  if (!res.body.imageUrl.match(/https:\/\//gm)) {
+    const img = await request(server)
+      .get(res.body.imageUrl)
+      .set('Accept', 'image')
+      .expect(200)
+      .expect('Content-Type', /image/)
 
-  t.is(img.body.length, 15185)
+    t.is(img.body.length, 15185)
+  }
 })
 
-test('Should fail to upload', async t => {
+test.serial('Should fail to upload', async t => {
   await appReady
   const res = await request(server)
     .post('/api/images')

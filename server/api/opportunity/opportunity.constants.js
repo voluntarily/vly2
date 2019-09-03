@@ -16,7 +16,7 @@ const OpportunityStatus = {
 
 const OpportunityFields = {
   ID: '_id',
-  TITLE: 'title',
+  NAME: 'name',
   SUBTITLE: 'subtitle',
   IMG_URL: 'imgUrl',
   DESCRIPTION: 'description',

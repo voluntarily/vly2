@@ -1,5 +1,5 @@
 /*
-  Display an activity record in card format with a picture, title, and commitment.
+  Display an activity record in card format with a picture, name, and commitment.
 */
 import React from 'react'
 import PropTypes from 'prop-types'

@@ -9,7 +9,7 @@ import sinon from 'sinon'
 
 const act = {
   _id: '5cc903e5f94141437622cea7',
-  title: 'Growing in the garden',
+  name: 'Growing in the garden',
   subtitle: 'Growing digitally in the garden',
   imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
   description: 'Project to grow something in the garden',
@@ -18,7 +18,7 @@ const act = {
 }
 
 const noact = {
-  title: '',
+  name: '',
   subtitle: '',
   imgUrl: '',
   description: '',
@@ -100,10 +100,10 @@ test.serial('render the detail with new blank act', t => {
   t.falsy(submitAct.calledOnce)
   wrapper.update()
   // console.log(wrapper.html())
-  // find title field.
-  const title = wrapper.find('input#activity_detail_form_title').first()
-  // title.node.value = 'Test'
-  title
+  // find name field.
+  const name = wrapper.find('input#activity_detail_form_name').first()
+  // name.node.value = 'Test'
+  name
     .simulate('keydown', { which: 'a' })
     .simulate('change', { target: { value: 'My new value' } })
   wrapper.update()

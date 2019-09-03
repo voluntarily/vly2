@@ -11,11 +11,11 @@ position: relative;
 
 vertical-align: middle;
 font-size: 1.2rem;
-font-weight: 700;
+font-weight: 500;
 
 border-radius: 0.2rem;
 background-color: #e8e8e8;
-color: black;
+color: #666;
 `
 
 export function TagDisplay ({ tags }) {

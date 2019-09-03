@@ -10,9 +10,10 @@ import { FormattedMessage } from 'react-intl'
 import MemberUl from '../Member/MemberUl'
 import {
   GridContainer,
-  TextPBold,
-  TextH1,
-  TextH3,
+  PBold,
+  H1,
+
+  H3Bold,
   SpacerSmall,
   Spacer
 } from '../VTheme/VTheme'
@@ -68,7 +69,7 @@ const PersonDetail = ({ person }, ...props) => (
   <ProfileGrid>
     <GridContainer>
       <Head title={person.nickname} />
-      <ProfileImage src={person.avatar} alt={person.nickname} />
+      <ProfileImage src={person.imgUrl} alt={person.nickname} />
       <DetailItem>
         <Icon type='history' /> 312 ops completed
       </DetailItem>
@@ -88,7 +89,7 @@ const PersonDetail = ({ person }, ...props) => (
     </GridContainer>
     <GridContainer>
       <ListItem>
-        <TextH1>
+        <H1>
           {person.name}
           {person.status ? (
             <Icon
@@ -99,33 +100,33 @@ const PersonDetail = ({ person }, ...props) => (
           ) : (
             <Icon type='close-circle' />
           )}
-        </TextH1>
-        <TextPBold>{person.org}</TextPBold>
+        </H1>
+        <PBold>{person.org}</PBold>
         <Divider />
         <Markdown children={person.about || ''} />
 
-        <TextPBold>
+        <PBold>
           <a href={`mailto:${person.email}`}>
             <Icon type='mail' /> {person.email}
           </a>
-        </TextPBold>
+        </PBold>
         <SpacerSmall />
-        <TextPBold>
+        <PBold>
           <a href={`tel:${person.phone}`}>
             <Icon type='phone' /> {person.phone}
           </a>
-        </TextPBold>
+        </PBold>
         <SpacerSmall />
-        <TextPBold>
+        <PBold>
           <a>
             <Icon type='compass' /> {person.location}
           </a>
-        </TextPBold>
-        <TextPBold>
+        </PBold>
+        <PBold>
           <a>
             <Icon type='tags' />
           </a>
-        </TextPBold>
+        </PBold>
         <TagDisplay tags={person.tags} />
       </ListItem>
       <DetailItemMobile>
@@ -136,11 +137,11 @@ const PersonDetail = ({ person }, ...props) => (
       </DetailItemMobile>
       <Spacer />
       <ListItem>
-        <TextH3>Latest Activities</TextH3>
+        <H3Bold>Latest Activities</H3Bold>
         <Divider />
       </ListItem>
       <ListItem>
-        <TextH3>Latest Achievements</TextH3>
+        <H3Bold>Latest Achievements</H3Bold>
         <Divider />
       </ListItem>
       <div>
@@ -161,7 +162,7 @@ PersonDetail.propTypes = {
     email: PropTypes.string.isRequired,
     phone: PropTypes.string,
     pronoun: PropTypes.string,
-    avatar: PropTypes.any,
+    imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
         'admin',

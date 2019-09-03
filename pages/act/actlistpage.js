@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Button, Input } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import Link from 'next/link'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import publicPage from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 import PropTypes from 'prop-types'
 import NoResult from '../../components/NoResult'
@@ -12,10 +12,11 @@ import ActMenu from '../../components/Act/ActMenu'
 import Router from 'next/router'
 import styled from 'styled-components'
 import {
+  FullPage,
   GridContainer,
   ActivityContainer,
   PageHeaderContainer,
-  TextHeadingBlack,
+  H3Black,
   RequestButtonContainer
 } from '../../components/VTheme/VTheme'
 import { Helmet } from 'react-helmet'
@@ -90,13 +91,13 @@ class Acts extends Component {
           <title>Voluntarily - Activities List</title>
         </Helmet>
         <PageHeaderContainer>
-          <TextHeadingBlack>
+          <H3Black>
             <FormattedMessage
               id='resource'
               defaultMessage='Activities'
               description='Title of page listing activities'
             />
-          </TextHeadingBlack>
+          </H3Black>
 
           <RequestButtonContainer>
             <Button type='primary' shape='round' size='large'>
@@ -160,7 +161,7 @@ class Acts extends Component {
 Acts.propTypes = {
   acts: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       subtitle: PropTypes.string,
       imgUrl: PropTypes.any,
       description: PropTypes.string,

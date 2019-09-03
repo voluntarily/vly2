@@ -1,7 +1,7 @@
 import { Icon, Menu } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import { SpacerSmall, TextHeadingBlack } from '../VTheme/VTheme'
+import { SpacerSmall, H3Black } from '../VTheme/VTheme'
 
 const ItemContainer = styled.div``
 
@@ -22,13 +22,13 @@ background-color: #e3e3e3;
 
 const PageHeader = () => (
   <ItemContainer>
-    <TextHeadingBlack>
+    <H3Black>
       <FormattedMessage
-        id='home.title'
+        id='home.name'
         defaultMessage='My Stuff'
         description='title on volunteer home page.'
       />
-    </TextHeadingBlack>
+    </H3Black>
     <SpacerSmall />
     <SpacerSmall />
     <SpacerSmall />

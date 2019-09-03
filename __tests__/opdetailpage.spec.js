@@ -16,6 +16,26 @@ import { API_URL } from '../lib/apiCaller'
 
 const locations = ['Auckland, Wellington, Christchurch']
 
+const orgMembership = [
+  {
+    _id: '5d4a40522733ea205d7c198a',
+    status: 'orgadmin',
+    person: '5ce78c62233f9c8771da046f',
+    organisation: {
+      _id: '5cc5f90b5368944bbb8ab91d',
+      name: 'Voluntarily NZ'
+    }
+  },
+  {
+    _id: '5d4b59f82bc0267ba2777417',
+    status: 'member',
+    person: '5ce78c62233f9c8771da046f',
+    organisation: {
+      _id: '5cc3ddf1b4c8c08e421a060e',
+      name: 'Datacom'
+    }
+  }
+]
 const fetchMock = require('fetch-mock')
 
 test.before('Setup fixtures', (t) => {
@@ -64,6 +84,13 @@ test.before('Setup fixtures', (t) => {
         syncing: false,
         loading: false,
         data: locations,
+        request: null
+      },
+      members: {
+        sync: true,
+        syncing: false,
+        loading: false,
+        data: orgMembership,
         request: null
       }
 

@@ -4,18 +4,19 @@ import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import OpDetail from '../../components/Op/OpDetail'
-import publicPage, { FullPage } from '../../hocs/publicPage'
-import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
+import publicPage from '../../hocs/publicPage'
+import reduxApi, { withOps, withMembers } from '../../lib/redux/reduxApi.js'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
-import OpOrganizerInfo from '../../components/Op/OpOrganizerInfo'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
 import OpLoadingPage from './oploadingpage'
 import OpUnavailablePage from './opunavailablepage'
 import OpEditPage from './opeditpage'
+import { FullPage } from '../../components/VTheme/VTheme'
+import { MemberStatus } from '../../server/api/member/member.constants'
 
 const blankOp = {
-  title: '',
+  name: '',
   subtitle: '',
   imgUrl: '',
   duration: '',
@@ -44,12 +45,17 @@ export class OpDetailPage extends Component {
   }
 
   static async getInitialProps ({ store, query }) {
+    const me = store.getState().session.me
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     const opExists = !!(query && query.id) // !! converts to a boolean value
     // TODO: [VP-280] run get location and tag data requests in parallel
-    await store.dispatch(reduxApi.actions.locations.get())
-    await store.dispatch(reduxApi.actions.tags.get())
+    await Promise.all([
+      store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
+      store.dispatch(reduxApi.actions.locations.get()),
+      store.dispatch(reduxApi.actions.tags.get())
+    ])
+
     if (isNew) {
       return {
         isNew
@@ -129,10 +135,21 @@ export class OpDetailPage extends Component {
   }
 
   retrieveOpportunity () {
+    if (this.props.members.sync && this.props.members.data.length > 0 && this.props.me) {
+      this.props.me.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
+    }
+
     let op
     if (this.props.isNew) {
       op = blankOp
       op.requestor = this.props.me
+
+      // set init offerOrg to first membership result
+      if (this.props.me.orgMembership && this.props.me.orgMembership.length > 0) {
+        op.offerOrg = {
+          _id: this.props.me.orgMembership[0].organisation._id
+        }
+      }
     } else {
       op = {
         ...this.props.opportunities.data[0],
@@ -183,7 +200,6 @@ export class OpDetailPage extends Component {
             </Button>
           }
           <OpDetail op={op} />
-          <OpOrganizerInfo organizer={op.requestor} />
           <Divider />
           <OpVolunteerInterestSection
             isAuthenticated={this.props.isAuthenticated}
@@ -205,7 +221,7 @@ export class OpDetailPage extends Component {
 
 OpDetailPage.propTypes = {
   op: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     duration: PropTypes.string,
@@ -217,5 +233,5 @@ OpDetailPage.propTypes = {
   })
 }
 
-export const OpDetailPageWithOps = withOps(OpDetailPage)
-export default publicPage(withOps(OpDetailPage))
+export const OpDetailPageWithOps = withMembers(withOps(OpDetailPage))
+export default publicPage(withMembers(withOps(OpDetailPage)))

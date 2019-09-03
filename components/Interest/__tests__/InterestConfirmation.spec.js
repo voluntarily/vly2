@@ -11,7 +11,7 @@ test('render confirmation card', t => {
     nickname: 'Testy',
     email: 'testy@voluntar.ly',
     phone: '027 444 5555',
-    avatar: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
+    imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer']
   }
 
@@ -28,7 +28,7 @@ test('render confirmation card no number', t => {
     nickname: 'Testy',
     phone: '',
     email: 'testy@voluntar.ly',
-    avatar: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
+    imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer']
   }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { FullPage } from '../../hocs/publicPage'
+import { FullPage } from '../../components/VTheme/VTheme'
 import OpDetailForm from '../../components/Op/OpDetailForm'
 import PropTypes from 'prop-types'
 import Router from 'next/router'
@@ -35,7 +35,7 @@ export default class OpEditPage extends React.Component {
 OpEditPage.propTypes = {
   op: PropTypes.shape({
     _id: PropTypes.string,
-    title: PropTypes.string,
+    name: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.string,
     duration: PropTypes.string,

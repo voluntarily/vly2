@@ -20,7 +20,7 @@ const person = new Person({
   phone: '027 444 5555',
   gender: 'rather not say',
   password: 'A43C1257802AF34895aDDDE',
-  avatar:
+  imgUrl:
     'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
   role: ['tester', 'volunteer'],
   status: 'active'
@@ -28,7 +28,10 @@ const person = new Person({
 
 const opportunity = new Opportunity({
   _id: '5cc8d60b8b16812b5b392321',
-  title: 'Self driving model cars ',
+  date: [
+    '2019-08-19T04:44:26+0000'
+  ],
+  name: 'Self driving model cars ',
   subtitle: 'using algorithmns to follow lines and avoid obstacles',
   imgUrl:
     'http://www.plaz-tech.com/wp-content/plugins/wp-easycart-data/products/pics1/Arduino%20Car%202_8ab5dd38f1e3f6f05ad244f1e5e74529.jpg',

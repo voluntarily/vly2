@@ -1,5 +1,5 @@
 import React from 'react'
-import { FullPage } from '../../hocs/publicPage'
+import { FullPage } from '../../components/VTheme/VTheme'
 import { FormattedMessage } from 'react-intl'
 import { Helmet } from 'react-helmet'
 

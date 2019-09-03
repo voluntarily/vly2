@@ -1,20 +1,48 @@
 const Person = require('./person')
 const sanitizeHtml = require('sanitize-html')
 const Action = require('../../services/abilities/ability.constants')
-/**
- * Get all orgs
- * @param req
- * @param res
- * @returns void
- */
+
+/* find a single person by searching for a key field.
+This is a convenience function usually used to call
+/api/person/by/email/person@example.com  but can be used for other fields
+*/
 function getPersonBy (req, res) {
-  const query = { [req.params.by]: req.params.value }
+  // console.log('getPersonBy', req.params)
+  let query
+  if (req.params.by) {
+    query = { [req.params.by]: req.params.value }
+  } else {
+    query = req.params
+  }
+
   Person.findOne(query).populate('tags').exec((_err, got) => {
     if (!got) { // person does not exist
       return res.status(404).send({ error: 'person not found' })
     }
     res.json(got)
   })
+}
+
+/* return a list of people matching the search criteria
+  if no params given then show all permitted.
+*/
+function listPeople (req, res) {
+  let query = {}
+  let sort = 'nickname'
+  let select = ''
+  try {
+    query = req.query.q ? JSON.parse(req.query.q) : {}
+    sort = req.query.s ? JSON.parse(req.query.s) : sort
+    select = req.query.p ? JSON.parse(req.query.p) : {}
+
+    Person.find(query, select).populate('tags').sort(sort)
+      .then(got => {
+        res.json(got)
+      })
+  } catch (e) {
+    console.log('Bad request', req.query)
+    return res.status(400).send(e)
+  }
 }
 
 async function updatePersonDetail (req, res, next) {
@@ -60,6 +88,7 @@ function ensureSanitized (req, res, next) {
 
 module.exports = {
   ensureSanitized,
+  listPeople,
   getPersonBy,
   updatePersonDetail
 }

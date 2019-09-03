@@ -1,3 +1,4 @@
+
 const appName = 'Voluntarily NZ'
 const databaseName = 'vly2'
 const serverPort = process.env.PORT || 3122
@@ -21,7 +22,9 @@ const completeConfig = {
     apiVersion: 'v1',
     SMTP_ID: process.env.SMTP_ID || '',
     SMTP_PWD: process.env.SMTP_PWD || '',
-    onlyEmailText: process.env.TEXT_ONLY_EMAIL === 'true'
+    onlyEmailText: process.env.TEXT_ONLY_EMAIL === 'true',
+    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY
   },
 
   development: {

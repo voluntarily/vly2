@@ -11,7 +11,7 @@ function PersonListItem (props) {
     <div className={styles['single-person']}>
       <h3>
         <Link to={`/people/${props.person.cuid}`} >
-          {props.person.name}
+          <a>{props.person.name}</a>
         </Link>
       </h3>
       <p className={styles['person-email']}><FormattedMessage id='personEmail' /> {props.person.email}</p>
@@ -30,7 +30,7 @@ PersonListItem.propTypes = {
     name: PropTypes.string.isRequired,
     nickname: PropTypes.string,
     email: PropTypes.string.isRequired,
-    avatar: PropTypes.any,
+    imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])
   }).isRequired

@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import publicPage from '../../hocs/publicPage'
 import {
+  FullPage,
   HalfGrid,
   Spacer,
-  TextH1,
+  H1,
   TripleGrid,
-  TextHeading,
-  TextHeadingBold,
-  TextP,
-  TextPBold,
+  H3,
+  H3Bold,
+  P,
+  PBold,
   SpacerSmall,
-  TextSubtitle,
+  H4,
   BigQuote,
   BigQuoteAuthor
 
@@ -227,13 +228,13 @@ export class Business extends Component {
             <HalfGrid>
               <GridContainer>
                 <TextMiniTitle>Voluntarily for Business</TextMiniTitle>
-                <TextH1>Do more social good in your community</TextH1>
-                <TextSubtitle>
+                <H1>Do more social good in your community</H1>
+                <H4>
 
                   Launch gas-powered rockets from rural schools. <br />
                   Get your staff building robots that shoot lazors. <br />
                   Make video games with no prior experience.
-                </TextSubtitle>
+                </H4>
                 <ButtonContainer>
                   <Button type='primary'>Sign up</Button>&nbsp;&nbsp;
                   <Button>Learn more</Button>
@@ -246,15 +247,15 @@ export class Business extends Component {
           </HeroContainer>
           <SectionContainer>
             <AboutImage src='./static/test2.png' />
-            <TextHeadingBold>
+            <H3Bold>
               Enable your staff to become role models for future innovators.
-            </TextHeadingBold>
-            <TextHeading>
+            </H3Bold>
+            <H3>
               We help facilitate and automate your corporate social
               responsibility initiatives. Get your staff to teach kids robotics
               by playing maze games and having a good time. See the impact your
               initiatives and resources have on the local community.
-            </TextHeading>
+            </H3>
           </SectionContainer>
           <SectionContainer>
             <TitleSection title='We are working with' />
@@ -274,12 +275,12 @@ export class Business extends Component {
               </GridContainer>
               <GridContainer>
                 <AboutListContainer>
-                  <TextHeadingBold>Identify talent early</TextHeadingBold>
-                  <TextHeading>
+                  <H3Bold>Identify talent early</H3Bold>
+                  <H3>
                     By deploying staff into schools to train students and
                     teachers, you get first pick of the next generation of
                     talent
-                  </TextHeading>
+                  </H3>
                 </AboutListContainer>
               </GridContainer>
             </HalfGrid>
@@ -292,14 +293,14 @@ export class Business extends Component {
               </GridContainer>
               <GridContainer>
                 <AboutListContainer>
-                  <TextHeadingBold>
+                  <H3Bold>
                     Great for employee engagement
-                  </TextHeadingBold>
-                  <TextHeading>
+                  </H3Bold>
+                  <H3>
                     By deploying staff into schools to train students and
                     teachers, you get first pick of the next generation of
                     talent
-                  </TextHeading>
+                  </H3>
                 </AboutListContainer>
               </GridContainer>
             </HalfGrid>
@@ -309,12 +310,12 @@ export class Business extends Component {
             <HalfGrid>
               <GridContainer>
               <AboutListContainer>
-                  <TextHeadingBold>Great for employee engagement</TextHeadingBold>
-                  <TextHeading>
+                  <H3Bold>Great for employee engagement</H3Bold>
+                  <H3>
                     By deploying staff into schools to train students and
                     teachers, you get first pick of the next generation of
                     talent
-                  </TextHeading>
+                  </H3>
                 </AboutListContainer>
               </GridContainer>
               <GridContainer>
@@ -330,15 +331,15 @@ export class Business extends Component {
               </GridContainer>
               <GridContainer>
                 <AboutListContainer>
-                  <TextHeadingBold>
+                  <H3Bold>
                     A cheaper way to automate and track your CSR and PR
                     initiatives
-                  </TextHeadingBold>
-                  <TextHeading>
+                  </H3Bold>
+                  <H3>
                     If you have a corporate volunteer day programme, we can make
                     it cheaper to run, and give you hard stats your social
                     impact
-                  </TextHeading>
+                  </H3>
                 </AboutListContainer>
               </GridContainer>
             </HalfGrid>
@@ -359,51 +360,51 @@ export class Business extends Component {
           <TripleGrid>
             <ItemContainer>
               <ItemIcon src='./static/img/icons/search.svg' />
-              <TextPBold>Volunteering Management</TextPBold>
-              <TextP>
+              <PBold>Volunteering Management</PBold>
+              <P>
                 V provides you and your staff with an easy way to find schools
                 and charities that need help with tech.{' '}
-              </TextP>
+              </P>
             </ItemContainer>
             <ItemContainer>
               <ItemIcon src='./static/img/icons/search.svg' />
-              <TextPBold>Impact reporting</TextPBold>
-              <TextP>
+              <PBold>Impact reporting</PBold>
+              <P>
                 V measures the impact your actions have on New Zealand. See how
                 your business ranks in social impact on our leaderboard.
-              </TextP>
+              </P>
             </ItemContainer>
             <ItemContainer>
               <ItemIcon src='./static/img/icons/search.svg' />
-              <TextPBold>HR system integration</TextPBold>
-              <TextP>
+              <PBold>HR system integration</PBold>
+              <P>
                 V supports single sign on, so you don't have to remember extra
                 credentials if you're a large corp
-              </TextP>
+              </P>
             </ItemContainer>
             <ItemContainer>
               <ItemIcon src='./static/img/icons/search.svg' />
-              <TextPBold>Automated police vetting</TextPBold>
-              <TextP>
+              <PBold>Automated police vetting</PBold>
+              <P>
                 V provides you and your staff with an easy way to find schools
                 and charities that need help with tech.
-              </TextP>
+              </P>
             </ItemContainer>
             <ItemContainer>
               <ItemIcon src='./static/img/icons/search.svg' />
-              <TextPBold>Cause Targeting</TextPBold>
-              <TextP>
+              <PBold>Cause Targeting</PBold>
+              <P>
                 Our systems enable you to target specific causes you want to
                 support
-              </TextP>
+              </P>
             </ItemContainer>
             <ItemContainer>
               <ItemIcon src='./static/img/icons/search.svg' />
-              <TextPBold>Integration</TextPBold>
-              <TextP>
+              <PBold>Integration</PBold>
+              <P>
                 V supports single sign on, so you don't have to remember extra
                 credentials if you're a large corp
-              </TextP>
+              </P>
             </ItemContainer>
           </TripleGrid>
           <Spacer />
@@ -412,9 +413,9 @@ export class Business extends Component {
           <TitleSection title='How to get involved' />
           <HalfGrid>
             <ItemContainer>
-              <TextHeading>Sign up for updates</TextHeading>
+              <H3>Sign up for updates</H3>
               <SpacerSmall />
-              <TextP>Voluntarily is currently in beta and will launch soon.</TextP>
+              <P>Voluntarily is currently in beta and will launch soon.</P>
               <ButtonContainer>
                 <Button type='primary' size='large'>
                   Sign up
@@ -422,13 +423,13 @@ export class Business extends Component {
               </ButtonContainer>
             </ItemContainer>
             <ItemContainer>
-              <TextHeading>Contact us</TextHeading>
+              <H3>Contact us</H3>
               <SpacerSmall />
-              <TextP>
+              <P>
               Want to get more involved in the project? Get in touch below.
-              </TextP>
+              </P>
               <br />
-              <a>business@voluntari.ly</a>
+              <a>business@voluntarily.nz</a>
               <br />
               <br />
               <a>+64-9-123-4567</a>

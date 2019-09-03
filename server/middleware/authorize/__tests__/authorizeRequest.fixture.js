@@ -4,7 +4,7 @@ const { accessibleFieldsPlugin } = require('@casl/mongoose')
 const { Action } = require('../../../services/abilities/ability.constants')
 const schemaName = 'Foo'
 const fooSchema = new Schema({
-  title: String,
+  name: String,
   subtitle: String
 })
 
@@ -19,7 +19,7 @@ const Routes = {
 
 const Fields = {
   ID: '_id',
-  TITLE: 'title',
+  NAME: 'name',
   SUBTITLE: 'subtitle'
 }
 

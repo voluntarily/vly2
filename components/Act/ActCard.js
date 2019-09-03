@@ -1,5 +1,5 @@
 /*
-  Display an activity record in card format with a picture, title, and commitment.
+  Display an activity record in card format with a picture, name, and commitment.
 */
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -14,7 +14,7 @@ const ActCard = ({ act, onPress, ...props }) => {
         <a>
           <div className='requestContainer'>
             <img className='requestImg' src={cardImage} />
-            <p className='requestTitle'>{act.title}</p>
+            <p className='requestTitle'>{act.name}</p>
             <p className='requestDateTime'>{act.duration}</p>
             <p className='requestDescription'>{act.subtitle}</p>
           </div>
@@ -96,7 +96,7 @@ const ActCard = ({ act, onPress, ...props }) => {
 
 ActCard.propTypes = {
   act: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     duration: PropTypes.string,

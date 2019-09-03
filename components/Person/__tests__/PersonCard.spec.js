@@ -7,7 +7,7 @@ const person = {
   _id: objectid().toString(),
   name: 'Testy McTestface',
   nickname: 'Testy',
-  avatar: 'http://example.com/example.jpg'
+  imgUrl: 'http://example.com/example.jpg'
 }
 
 test('PersonCard renders properly', t => {

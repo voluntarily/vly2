@@ -88,7 +88,7 @@ const AwesomeCard = ({ op, onPress, ...props }) => (
 
 AwesomeCard.propTypes = {
   op: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     duration: PropTypes.string,

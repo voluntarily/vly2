@@ -8,10 +8,10 @@ import styled from 'styled-components'
 import moment from 'moment'
 import sanitize from 'sanitize-html'
 
-import { Button } from 'antd'
-import { FullPage } from '../../hocs/publicPage'
-import { HalfGrid, Spacer } from '../VTheme/VTheme'
+import { Button, Divider } from 'antd'
+import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
 import TagDisplay from '../Tags/TagDisplay'
+import IdLine from '../VTheme/IdLine'
 
 const Left = styled.div``
 
@@ -45,12 +45,7 @@ export function OpDetail ({ op }) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
   // BUG: [VP-435] sanitize OpDetail description is filtering out the Rich Text.
-  const description =
-    op.description == null
-      ? ''
-      : sanitize(op.description, {
-        allowedAttributes: { a: ['href', 'style'] }
-      }) // Only href and style attribute is allowed in link tag
+  const description = op.description || ''
   const startDate = op.date[0]
     ? moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
     : 'Negotiable'
@@ -61,10 +56,10 @@ export function OpDetail ({ op }) {
   return (
     <FullPage>
       <Spacer />
-      <Head><title>Voluntarily - {op.title}</title></Head>
+      <Head><title>Voluntarily - {op.name}</title></Head>
       <HalfGrid>
         <Left>
-          <TitleFont>{op.title}</TitleFont>
+          <TitleFont>{op.name}</TitleFont>
           <ItemListing>
             ⏱&nbsp;<strong>Duration:</strong>&nbsp;&nbsp;&nbsp;
             {sanitize(op.duration)}
@@ -81,9 +76,11 @@ export function OpDetail ({ op }) {
             📝&nbsp;<strong>Status:</strong>&nbsp;&nbsp;&nbsp;
             {sanitize(op.status)}
           </ItemListing>
-
+          <Divider />
+          {op.offerOrg && <ItemListing><IdLine item={op.offerOrg} path='organisation' /></ItemListing>}
+          {op.requestor && <ItemListing><IdLine item={op.requestor} path='person' /></ItemListing>}
+          <Divider />
           <Spacer />
-
           <ItemP>
             <Markdown
               children={description}
@@ -97,7 +94,7 @@ export function OpDetail ({ op }) {
           <Spacer />
         </Left>
         <Right>
-          <img style={{ width: '100%' }} src={img} alt={op.title} />
+          <img style={{ width: '100%' }} src={img} alt={op.name} />
           <TagContainer>
             <TagDisplay tags={op.tags} />
           </TagContainer>
@@ -109,7 +106,7 @@ export function OpDetail ({ op }) {
 
 OpDetail.propTypes = {
   op: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     description: PropTypes.string,

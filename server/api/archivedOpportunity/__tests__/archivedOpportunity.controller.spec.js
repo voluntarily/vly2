@@ -33,7 +33,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
   t.plan(4)
 
   const opp = new ArchiveOpportunity({
-    title: 'The first 1000 metres',
+    name: 'The first 1000 metres',
     subtitle: 'Launching into space step 4',
     imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
     description: 'Project to build a simple rocket that will reach 1000m',
@@ -50,7 +50,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
     .get(`/api/archivedOpportunities/${opp._id}`)
     .set('Accept', 'application/json')
   t.is(res.status, 200)
-  t.is(res.body.title, opp.title)
+  t.is(res.body.name, opp.name)
 
   // verify requestor was populated out
   t.is(res.body.requestor.name, person1.name)

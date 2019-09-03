@@ -32,11 +32,11 @@ const InterestConfirmationCard = ({ organizer, ...props }) => {
       <div>
         <Card style={{ width: 450, marginTop: 16, borderRadius: 8 }}>
           <Meta style={cardHeading}
-            avatar={
-              <Avatar src={organizer.avatar} />
+            imgUrl={
+              <Avatar src={organizer.imgUrl} />
             }
-            title={organizer.name}
-            description={organizer.title}
+            name={organizer.name}
+            description={organizer.name}
           />
           <div style={{ color: '#6549AA', marginTop: '20px' }}>
             {/* {console.log(organizer.phone)} */
@@ -54,7 +54,7 @@ const InterestConfirmationCard = ({ organizer, ...props }) => {
 InterestConfirmationCard.propTypes = {
   organizer: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    avatar: PropTypes.string
+    imgUrl: PropTypes.string
   }).isRequired
 }
 

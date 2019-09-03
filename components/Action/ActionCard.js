@@ -51,11 +51,11 @@ letter-spacing: -0.3px;
 margin: 0 1rem 1rem 1rem;
 ` // ActionCardDescription
 
-const ActionCard = ({ image, title, description, link, ...props }) => (
+const ActionCard = ({ image, name, description, link, ...props }) => (
 
   <CardContainer href={link} target='_blank'>
     <CardImage src={image} />
-    <CardTitle>{title}</CardTitle>
+    <CardTitle>{name}</CardTitle>
     <CardDescription>{description}</CardDescription>
   </CardContainer>
 

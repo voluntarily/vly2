@@ -1,29 +1,22 @@
-import React, { Component } from 'react'
-import { FormattedMessage } from 'react-intl'
 import { Button, Icon, message, Tabs } from 'antd'
-import { FullPage } from '../../hocs/publicPage'
-import securePage from '../../hocs/securePage'
-import OpList from '../../components/Op/OpList'
+import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
+import { FormattedMessage } from 'react-intl'
 import OpAdd from '../../components/Op/OpAdd'
+import OpList from '../../components/Op/OpList'
 import OpRecommendations from '../../components/Op/OpRecommendations'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
-import reduxApi, {
-  withInterests,
-  withPeople,
-  withMembers,
-  withOps,
-  withArchivedOpportunities,
-  withRecommendedOps
-} from '../../lib/redux/reduxApi.js'
+import securePage from '../../hocs/securePage'
+import reduxApi, { withArchivedOpportunities, withInterests, withMembers, withOps, withPeople, withRecommendedOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import NextActionBlock from '../../components/Action/NextActionBlock'
 import styled from 'styled-components'
-import { Helmet } from 'react-helmet'
 
 import {
-  TextHeadingBlack,
-  TextP,
+  FullPage,
+  H3Black,
+  P,
   PageHeaderContainer,
   RequestButtonContainer
 } from '../../components/VTheme/VTheme'
@@ -175,14 +168,14 @@ class PersonHomePage extends Component {
         </Helmet>
         <PageHeaderContainer>
           <TitleContainer>
-            <TextHeadingBlack>
+            <H3Black>
               {this.props.me.nickname}'s Requests
               {/* <FormattedMessage
             id='home.title'
             defaultMessage='My Stuff'
             description='title on volunteer home page.'
           /> */}
-            </TextHeadingBlack>
+            </H3Black>
           </TitleContainer>
           <RequestButtonContainer>
             <OpAdd {...this.props} />
@@ -194,13 +187,13 @@ class PersonHomePage extends Component {
           <TabPane tab={opsTab} key='1'>
             <SectionWrapper>
               <SectionTitleWrapper>
-                <TextHeadingBlack>
+                <H3Black>
                   <FormattedMessage
                     id='home.liveOpportunities'
                     defaultMessage='Active Requests'
                     decription='subtitle on volunteer home page for active requests and opportunities'
                   />
-                </TextHeadingBlack>
+                </H3Black>
               </SectionTitleWrapper>
               {ops && (
                 <OpList
@@ -210,49 +203,49 @@ class PersonHomePage extends Component {
                 />
               )}
             </SectionWrapper>
-
             <SectionWrapper>
               <SectionTitleWrapper>
-                <TextHeadingBlack>Getting Started</TextHeadingBlack>
-                <TextP>
-                  To start volunteering on Voluntarily, here are a few things we
-                  recommend doing:
-                </TextP>
-              </SectionTitleWrapper>
-              {/* // TODO: [VP-208] list of things volunteers can do on home page */}
-              <NextActionBlock />
-            </SectionWrapper>
-            <SectionWrapper>
-              <SectionTitleWrapper>
-                <TextHeadingBlack>
+                <H3Black>
                   <FormattedMessage
                     id='home.recommendedOpportunities'
                     defaultMessage='Recommended for you'
                     decription='Title on volunteer home page for recommended opportunities'
                   />
-                  <TextP>
+                  <P>
                     <FormattedMessage
                       id='home.recommendedOpportunitiesP'
                       defaultMessage='Here are some opportunities we think you might like'
                       decription='Subtitle on volunteer home page for recommended opportunities'
                     />
-                  </TextP>
-                </TextHeadingBlack>
+                  </P>
+                </H3Black>
               </SectionTitleWrapper>
               <OpRecommendations
                 recommendedOps={this.props.recommendedOps.data[0]} />
             </SectionWrapper>
+            <SectionWrapper>
+              <SectionTitleWrapper>
+                <H3Black>Getting Started</H3Black>
+                <P>
+                  To start volunteering on Voluntarily, here are a few things we
+                  recommend doing:
+                </P>
+              </SectionTitleWrapper>
+              {/* // TODO: [VP-208] list of things volunteers can do on home page */}
+              <NextActionBlock />
+            </SectionWrapper>
+
           </TabPane>
           <TabPane tab={searchTab} key='2'>
             <SectionWrapper>
               <SectionTitleWrapper>
-                <TextHeadingBlack>Completed Requests</TextHeadingBlack>
+                <H3Black>Completed Requests</H3Black>
               </SectionTitleWrapper>
               <OpList
                 ops={this.getArchivedOpportunitiesByStatus('completed')}
               />
               <SectionTitleWrapper>
-                <TextHeadingBlack>Cancelled Requests</TextHeadingBlack>
+                <H3Black>Cancelled Requests</H3Black>
               </SectionTitleWrapper>
               <OpList
                 ops={this.getArchivedOpportunitiesByStatus('cancelled')}
