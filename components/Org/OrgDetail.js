@@ -54,7 +54,7 @@ const ProfileContainer = styled.div`
     width: calc(100% - 2rem);
     margin: initial;
   }
-  }
+
 `
 const ProfileContentContainer = styled.div`
   width: 80rem;

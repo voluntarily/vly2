@@ -23,7 +23,7 @@ test('shallow the card with op', t => {
   t.is(wrapper.find('.requestContainerSmall').length, 1)
   t.is(wrapper.find('.requestTitleSmall').text(), op.name)
   t.is(wrapper.find('.requestImgSmall').prop('src'), op.imgUrl)
-  t.regex(wrapper.find('.requestDateTimeSmall').first().text(), /Flexible date/)
+  t.regex(wrapper.find('.requestDateTimeSmall').first().text(), /🏫 /)
   t.truthy(wrapper.find('.requestContainerSmall').first().html().includes(op.location))
 })
 
@@ -98,7 +98,7 @@ test('should have a date', t => {
   // should should requestor instead
   t.is(wrapper.find('img').last().prop('src'), op.requestor.imgUrl)
 
-  // should have a real date
+  // should have a real location
   t.regex(wrapper.find('.requestDateTimeSmall').first().text(), / 📅 /)
 })
 

@@ -20,7 +20,7 @@ const OpCard = ({ size, op }) => {
   const draft = op.status === 'draft' ? 'DRAFT: ' : ''
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
   const interestState = op.interest ? ` - ${op.interest.status}` : ''
-  const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA | ddd DD/MM/YY') : ''
+  const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA - ddd DD/MM/YY') : ''
   const startLocation = op.location ? '🏫 ' + op.location : ''
   const startDuration = op.duration ? '⏱ ' + op.duration : ''
   return (
@@ -33,8 +33,8 @@ const OpCard = ({ size, op }) => {
               {draft}
               {op.name}
             </p>
-            <p className={`requestDateTime${size}`}> {startTime} </p>
             <p className={`requestDateTime${size}`}> {startLocation}</p>
+            <p className={`requestDateTime${size}`}> {startTime} </p>
             <p className={`requestDateTime${size}`}> {startDuration}</p>
             <p className={`requestDescription${size}`}>
               {op.subtitle}
