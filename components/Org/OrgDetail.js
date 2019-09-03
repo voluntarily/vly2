@@ -10,7 +10,6 @@ import Head from 'next/head'
 import styled from 'styled-components'
 import {
   PageHeaderContainer,
-  GridContainer,
   PBold,
   H1,
   FullPage,
@@ -22,7 +21,7 @@ function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
   // console.log(key)
 }
-var shadowStyle = { overflow: 'visible', textAlign: 'center'}
+var shadowStyle = { overflow: 'visible', textAlign: 'center' }
 const { TabPane } = Tabs
 
 const TitleContainer = styled.div`
