@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
 import IdLine from '../VTheme/IdLine'
-import { Divider } from 'antd'
 
 const getOpPageURL = (isArchived, opid) => {
   if (isArchived) {
@@ -21,9 +20,9 @@ const OpCard = ({ size, op }) => {
   const draft = op.status === 'draft' ? 'DRAFT: ' : ''
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
   const interestState = op.interest ? ` - ${op.interest.status}` : ''
-  const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA | ddd DD/MM/YY') : ""
-  const startLocation = op.location ? "🏫 " + op.location : ""
-  const startDuration = op.duration ? "⏱ " + op.duration : ""
+  const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA | ddd DD/MM/YY') : ''
+  const startLocation = op.location ? '🏫 ' + op.location : ''
+  const startDuration = op.duration ? '⏱ ' + op.duration : ''
   return (
     <div>
       <div className={`requestContainer${size}`}>
