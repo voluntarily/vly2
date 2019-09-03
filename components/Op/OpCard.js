@@ -21,8 +21,8 @@ const OpCard = ({ size, op }) => {
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
   const interestState = op.interest ? ` - ${op.interest.status}` : ''
   const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA - ddd DD/MM/YY') : ''
-  const startLocation = op.location ? '🏫 ' + op.location : ''
-  const startDuration = op.duration ? '⏱ ' + op.duration : ''
+  const startLocation = op.location ? `🏫 ${op.location}` : ''
+  const startDuration = op.duration ? `⏱ ${op.duration}` : ''
   return (
     <div>
       <div className={`requestContainer${size}`}>

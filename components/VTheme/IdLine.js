@@ -28,18 +28,18 @@ const IdLine = ({ item, path }) =>
   item
     ? <Link href={`/${path}/${item._id}`}>
       <a style={{ display: 'block', margin: '0' }} >
-      <IDGrid>
-        <Avatar
-          style={{ marginTop: '0.5rem' }}
-          size={32}
-          shape='square'
-          src={item.imgUrl}
-          icon='team'
-        />
-        <IDItems>
-        {item.name}<br />
+        <IDGrid>
+          <Avatar
+            style={{ marginTop: '0.5rem' }}
+            size={32}
+            shape='square'
+            src={item.imgUrl}
+            icon='team'
+          />
+          <IDItems>
+            {item.name}<br />
         Legitimate Organization
-        </IDItems>
+          </IDItems>
         </IDGrid>
       </a>
     </Link>
