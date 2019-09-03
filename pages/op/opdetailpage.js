@@ -135,7 +135,7 @@ export class OpDetailPage extends Component {
   }
 
   retrieveOpportunity () {
-    if (this.props.members.sync && this.props.members.data.length > 0) {
+    if (this.props.members.sync && this.props.members.data.length > 0 && this.props.me) {
       this.props.me.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
     }
 
