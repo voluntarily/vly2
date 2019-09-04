@@ -24,7 +24,7 @@ export default Page =>
           session = await parseUserToSession(loggedUser, cookies)
           ctx.store.dispatch(setSession(session))
         } catch (err) {
-          console.error()
+          console.error('PublicPage error parsing user session: ', err)
         }
       }
 

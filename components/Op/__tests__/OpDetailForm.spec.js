@@ -70,7 +70,6 @@ test('shallow the detail with op', t => {
       existingLocations={sortedLocations}
       existingTags={[]} />
   )
-  // console.log(wrapper.debug())
   t.is(wrapper.find('OpDetailForm').length, 1)
 })
 
@@ -129,7 +128,6 @@ test('render the detail with new blank op', t => {
   wrapper.find('Form').first().simulate('submit')
   t.falsy(submitOp.calledOnce)
   wrapper.update()
-  // console.log(wrapper.html())
   // find name field.
   const name = wrapper.find('input#opportunity_detail_form_name').first()
   // name.node.value = 'Test'
