@@ -20,7 +20,7 @@ const blankOp = {
   subtitle: '',
   imgUrl: '',
   duration: '',
-  location: '',
+  location: 'Online',
   status: 'inactive',
   date: [],
   startDate: null,
