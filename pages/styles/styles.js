@@ -1,5 +1,4 @@
 import { FullPage } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
 
 const Styles = () =>
   <FullPage>
