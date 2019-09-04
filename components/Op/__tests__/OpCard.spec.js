@@ -82,22 +82,11 @@ test('Link on cards in history tab, points to archived Opportunities.', t => {
   t.is((archivedOpLink), '/archivedops/' + archivedOp._id)
 })
 
-test(' should be ok with no offerOrg', t => {
-  const op = t.context.ops[4]
-  const wrapper = mountWithIntl(
-    <OpCard op={op} size='Small' />
-  )
-  // should should requestor instead
-  t.is(wrapper.find('img').last().prop('src'), op.requestor.imgUrl)
-})
-
 test('should have a date', t => {
   const op = t.context.ops[4]
   const wrapper = mountWithIntl(
     <OpCard op={op} size='Small' />
   )
-  // should should requestor instead
-  t.is(wrapper.find('img').last().prop('src'), op.requestor.imgUrl)
 
   // should have a real location
   t.is(wrapper.find('.requestDateTimeSmall').first().text(), ` 🏫 ${op.location}`)
