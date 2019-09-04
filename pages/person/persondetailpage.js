@@ -46,10 +46,15 @@ export class PersonDetailPage extends Component {
       let cookies = req ? req.cookies : Cookie.get()
       const cookiesStr = JSON.stringify(cookies)
       query.session = store.getState().session
-      await store.dispatch(reduxApi.actions.people.get(query, {
-        params: cookiesStr
-      }))
-      await store.dispatch(reduxApi.actions.members.get({ meid }))
+      try {
+        await store.dispatch(reduxApi.actions.people.get(query, {
+          params: cookiesStr
+        }))
+        await store.dispatch(reduxApi.actions.members.get({ meid }))
+      } catch (err) {
+        // this can return a 403 forbidden if not signed in
+        console.log('Error in persondetailpage:', err)
+      }
 
       return {
         isNew: false,
@@ -98,7 +103,7 @@ export class PersonDetailPage extends Component {
   handleDeleteCancel = () => { message.error('Delete Cancelled') }
 
   render () {
-    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
+    const isOrgAdmin = false // TODO: [VP-473] is this person an admin for the org that person belongs to.
     const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
     const canEdit = (isOrgAdmin || isAdmin)
     const canRemove = isAdmin
