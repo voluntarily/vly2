@@ -41,7 +41,6 @@ const OpCard = ({ size, op }) => {
             </p>
           </a>
         </Link>
-
       </div>
 
       <style jsx>{`
