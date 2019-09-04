@@ -1,20 +1,14 @@
-import { Button, Checkbox, Divider, Form, Input, Radio, Icon, Tooltip } from 'antd'
+import { Button, Checkbox, Divider, Form, Icon, Input, Radio, Tooltip } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import RichTextEditor from '../Form/Input/RichTextEditor'
-import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import { H3Bold, P } from '../VTheme/VTheme'
-import {
-  DescriptionContainer,
-  FormGrid,
-  InputContainer,
-  ShortInputContainer,
-  TitleContainer
-} from '../VTheme/FormStyles'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
 import LocationSelector from '../Form/Input/LocationSelector'
+import RichTextEditor from '../Form/Input/RichTextEditor'
 import TagInput from '../Form/Input/TagInput'
+import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import { DescriptionContainer, FormGrid, InputContainer, ShortInputContainer, TitleContainer } from '../VTheme/FormStyles'
+import { H3Bold, P } from '../VTheme/VTheme'
 
 const { TextArea } = Input
 

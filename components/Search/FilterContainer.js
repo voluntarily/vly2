@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import { Modal } from 'antd'
+import PropTypes from 'prop-types'
+import React from 'react'
 import './filterContainerStyles.less'
 
 // reusable component for displaying filter input components and details (passed in as children)

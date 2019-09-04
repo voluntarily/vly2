@@ -1,11 +1,11 @@
 /*
   Display an activity record in card format with a picture, name, and commitment.
 */
-import React from 'react'
-import PropTypes from 'prop-types'
-import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
 import { Button } from 'antd'
+import Link from 'next/link'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 
 // todo if image is not present then use a fallback.

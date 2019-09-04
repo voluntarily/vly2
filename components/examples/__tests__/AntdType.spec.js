@@ -1,6 +1,6 @@
 import test from 'ava'
+import { mount, shallow } from 'enzyme'
 import AntdType from '../AntdType'
-import { shallow, mount } from 'enzyme'
 
 test('renders shallow', t => {
   const wrapper = shallow(

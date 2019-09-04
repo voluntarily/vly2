@@ -114,7 +114,7 @@ test.serial('mount RegisterInterestSection with op and me', async t => {
     </Provider>
   )
   // before api completes the loading spinner should show.
-  t.is(wrapper.find('.loader').first().text(), 'Loading...')
+  t.is(wrapper.find('img').prop('src'), '/static/loading.svg')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // once loading completed should the thank you note

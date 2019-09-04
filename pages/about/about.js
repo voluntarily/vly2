@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
-import Markdown from 'markdown-to-jsx'
-import styled from 'styled-components'
 import { Button } from 'antd'
+import Markdown from 'markdown-to-jsx'
+import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
+import styled from 'styled-components'
+import AboutCTA from '../../components/About/AboutCTA.js'
+import { FullPage, Spacer } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
+import withIntl from '../../lib/withIntl'
 import aboutEn from './about-en-md.js'
 import aboutMi from './about-mi-md.js'
-import withIntl from '../../lib/withIntl'
-import { FullPage, Spacer } from '../../components/VTheme/VTheme'
-import AboutCTA from '../../components/About/AboutCTA.js'
-import { Helmet } from 'react-helmet'
-import publicPage from '../../hocs/publicPage'
 
 const getText = locale => {
   switch (locale) {

@@ -10,15 +10,8 @@ import RichTextEditor from '../Form/Input/RichTextEditor'
 import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, ShortInputContainer, TitleContainer } from '../VTheme/FormStyles'
 import { H3Bold, P } from '../VTheme/VTheme'
-import {
-  DescriptionContainer,
-  FormGrid,
-  InputContainer,
-  MediumInputContainer,
-  ShortInputContainer,
-  TitleContainer
-} from '../VTheme/FormStyles'
 
 const { TextArea } = Input
 
