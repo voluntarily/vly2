@@ -277,11 +277,13 @@ class OpDetailForm extends Component {
               <FormattedMessage
                 id='opEdit'
                 description='Title for editing Ops'
+                defaultMessage='Edit'
               />
             ) : (
               <FormattedMessage
                 id='opCreate'
                 description='Title for creating Ops'
+                defaultMessage='Create'
               />
             )}{' '}
             a request
