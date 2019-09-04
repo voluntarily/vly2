@@ -72,8 +72,6 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
       />
     </Provider>
   )
-  // before api completes the loading spinner should show.
-  t.is(wrapper.find('.loader').first().text(), 'Loading...')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // we should see "i'm interested"
