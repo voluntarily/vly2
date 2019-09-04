@@ -10,11 +10,11 @@ import Head from 'next/head'
 import styled from 'styled-components'
 import {
   PageHeaderContainer,
-  GridContainer,
   PBold,
-  H1,
   FullPage,
-  H4
+  H4,
+  H5,
+  H3Bold
 } from '../VTheme/VTheme'
 const ButtonGroup = Button.Group
 
@@ -32,7 +32,7 @@ const TitleContainer = styled.div`
 `
 
 const ContactContainer = styled.div`
-  margin-top: 0.5rem;
+  margin-top: 0rem;
 `
 const SocialButton = styled(Button)`
   margin-top: 0.5rem;
@@ -43,10 +43,37 @@ const ButtonContainer = styled.div`
   margin-top: 1rem;
 `
 
-const ProfileHeaderContainer = styled.div`
+const ProfileContainer = styled.div`
   margin: 0 auto;
   position: relative;
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    width: calc(100% - 4rem);
+    margin: initial;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: calc(100% - 2rem);
+    margin: initial;
+  }
+
 `
+const ProfileContentContainer = styled.div`
+  width: 80rem;
+  margin: 4rem auto;
+  overflow: hidden;
+
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    width: calc(100% - 4rem);
+    margin: initial;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: calc(100% - 2rem);
+    margin: initial;
+  }
+`
+
 const ProfileImage = styled.img`
   margin: 0 calc(50% - 100px);
   width: 200px;
@@ -58,15 +85,21 @@ const AboutContainer = styled.div`
   width: 50rem;
   margin: 4rem auto;
   overflow: hidden;
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    width: calc(100% - 4rem);
+    margin: initial;
+  }
 
+  @media screen and (max-width: 767px) {
+    width: calc(100% - 2rem);
+    margin: initial;
+  }
 `
 
 const orgTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
     <Icon type='info-circle' />
-    <FormattedMessage
-      id='orgAbout'
-    />
+    <FormattedMessage id='orgAbout' />
   </span>
 )
 
@@ -98,12 +131,12 @@ const OrgDetail = ({ org, ...props }) => (
       <title>Voluntarily - {org.name}</title>
     </Head>
     <PageHeaderContainer />
-    <ProfileHeaderContainer>
+    <ProfileContainer>
       <ProfileImage src={org.imgUrl} alt={org.name} />
       <TitleContainer>
-        <H1>{org.name}</H1>
+        <H3Bold>{org.name}</H3Bold>
         <H4>Business • New Zealand</H4>
-        <H4>
+        <H5>
           {org.website && (
             <ContactContainer>
               <Link target='_blank' href={org.website}>
@@ -111,61 +144,57 @@ const OrgDetail = ({ org, ...props }) => (
               </Link>
             </ContactContainer>
           )}
-        </H4>
+        </H5>
         <ButtonContainer>
           <Button icon='notification' type='primary' shape='round' size='large'>
             Follow
           </Button>
         </ButtonContainer>
       </TitleContainer>
-    </ProfileHeaderContainer>
-    <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
-      <TabPane tab={orgTab} key='1'>
-        <AboutContainer>
-          <Markdown children={(org.info && org.info.about) || ''} />
-          <OrgCategory orgCategory={org.category} />
-          <br />
-          <PBold>Social:</PBold>
-          <ButtonGroup size='medium'>
-            {org.contactEmail && (
-              <SocialButton
-                type='link'
-                href={`mailto:${org.contactEmail}`}
-                target='_blank'
-                icon='mail'
-              />
-            )}
-            {org.facebook && (
-              <SocialButton
-                type='link'
-                href={`https://www.facebook.com/${org.facebook}`}
-                target='_blank'
-                icon='facebook'
-              />
-            )}
-            {org.twitter && (
-              <SocialButton
-                type='link'
-                href={`https://www.twitter.com/${org.twitter}`}
-                target='_blank'
-                icon='twitter'
-              />
-            )}
-          </ButtonGroup>
-        </AboutContainer>
-      </TabPane>
-      {/* <TabPane tab={orgResourcesTab} key='2' /> */}
-      <TabPane tab={orgInstructionTab} key='3' />
-      <TabPane tab={orgMemberTab} key='4'>
-        <MemberSection org={org} />
-      </TabPane>
-    </Tabs>
-
-    <ProfileHeaderContainer />
-
-    <GridContainer>
-      <TitleContainer />
-    </GridContainer>
+    </ProfileContainer>
+    <ProfileContentContainer>
+      <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
+        <TabPane tab={orgTab} key='1'>
+          <AboutContainer>
+            <Markdown children={(org.info && org.info.about) || ''} />
+            <OrgCategory orgCategory={org.category} />
+            <br />
+            <PBold>Social:</PBold>
+            <ButtonGroup size='medium'>
+              {org.contactEmail && (
+                <SocialButton
+                  type='link'
+                  href={`mailto:${org.contactEmail}`}
+                  target='_blank'
+                  icon='mail'
+                />
+              )}
+              {org.facebook && (
+                <SocialButton
+                  type='link'
+                  href={`https://www.facebook.com/${org.facebook}`}
+                  target='_blank'
+                  icon='facebook'
+                />
+              )}
+              {org.twitter && (
+                <SocialButton
+                  type='link'
+                  href={`https://www.twitter.com/${org.twitter}`}
+                  target='_blank'
+                  icon='twitter'
+                />
+              )}
+            </ButtonGroup>
+          </AboutContainer>
+        </TabPane>
+        {/* <TabPane tab={orgResourcesTab} key='2' /> */}
+        <TabPane tab={orgInstructionTab} key='3' />
+        <TabPane tab={orgMemberTab} key='4'>
+          <MemberSection org={org} />
+        </TabPane>
+      </Tabs>
+    </ProfileContentContainer>
   </FullPage>
 )
 
