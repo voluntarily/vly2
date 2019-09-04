@@ -5,7 +5,6 @@
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
-import IdLine from '../VTheme/IdLine'
 
 const getOpPageURL = (isArchived, opid) => {
   if (isArchived) {
@@ -42,11 +41,7 @@ const OpCard = ({ size, op }) => {
             </p>
           </a>
         </Link>
-        {op.offerOrg ? (
-          <IdLine item={op.offerOrg} path='organisation' />
-        ) : (
-          <IdLine item={op.requestor} path='person' />
-        )}
+
       </div>
 
       <style jsx>{`

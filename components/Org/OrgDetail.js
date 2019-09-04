@@ -11,9 +11,10 @@ import styled from 'styled-components'
 import {
   PageHeaderContainer,
   PBold,
-  H1,
   FullPage,
-  H4
+  H4,
+  H5,
+  H3Bold
 } from '../VTheme/VTheme'
 const ButtonGroup = Button.Group
 
@@ -31,7 +32,7 @@ const TitleContainer = styled.div`
 `
 
 const ContactContainer = styled.div`
-  margin-top: 0.5rem;
+  margin-top: 0rem;
 `
 const SocialButton = styled(Button)`
   margin-top: 0.5rem;
@@ -133,9 +134,9 @@ const OrgDetail = ({ org, ...props }) => (
     <ProfileContainer>
       <ProfileImage src={org.imgUrl} alt={org.name} />
       <TitleContainer>
-        <H1>{org.name}</H1>
+        <H3Bold>{org.name}</H3Bold>
         <H4>Business • New Zealand</H4>
-        <H4>
+        <H5>
           {org.website && (
             <ContactContainer>
               <Link target='_blank' href={org.website}>
@@ -143,7 +144,7 @@ const OrgDetail = ({ org, ...props }) => (
               </Link>
             </ContactContainer>
           )}
-        </H4>
+        </H5>
         <ButtonContainer>
           <Button icon='notification' type='primary' shape='round' size='large'>
             Follow
