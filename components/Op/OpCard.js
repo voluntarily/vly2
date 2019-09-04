@@ -51,8 +51,8 @@ const OpCard = ({ size, op }) => {
           </a>
         </Link>
         { op.offerOrg
-          ? <IdLine item={op.offerOrg} path='organisation' />
-          : <IdLine item={op.requestor} path='person' />}
+          ? <IdLine item={op.offerOrg} path='orgs' />
+          : <IdLine item={op.requestor} path='people' />}
       </div>
 
       <style jsx>{`
