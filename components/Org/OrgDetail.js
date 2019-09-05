@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
 import Markdown from 'markdown-to-jsx'
 import OrgCategory from './OrgCategory'
-import Link from 'next/link'
+
 import MemberSection from '../Member/MemberSection'
 import Head from 'next/head'
 import styled from 'styled-components'
@@ -13,7 +13,6 @@ import {
   PBold,
   FullPage,
   H4,
-  H5,
   H3Bold
 } from '../VTheme/VTheme'
 const ButtonGroup = Button.Group
@@ -31,16 +30,9 @@ const TitleContainer = styled.div`
   text-align: center;
 `
 
-const ContactContainer = styled.div`
-  margin-top: 0rem;
-`
 const SocialButton = styled(Button)`
   margin-top: 0.5rem;
   font-size: 2rem !important;
-`
-
-const ButtonContainer = styled.div`
-  margin-top: 1rem;
 `
 
 const ProfileContainer = styled.div`
@@ -55,13 +47,11 @@ const ProfileContainer = styled.div`
     width: calc(100% - 2rem);
     margin: initial;
   }
-
 `
 const ProfileContentContainer = styled.div`
   width: 80rem;
   margin: 4rem auto;
   overflow: hidden;
-
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
     width: calc(100% - 4rem);
@@ -135,21 +125,7 @@ const OrgDetail = ({ org, ...props }) => (
       <ProfileImage src={org.imgUrl} alt={org.name} />
       <TitleContainer>
         <H3Bold>{org.name}</H3Bold>
-        <H4>Business • New Zealand</H4>
-        <H5>
-          {org.website && (
-            <ContactContainer>
-              <Link target='_blank' href={org.website}>
-                <a target='_blank'>{org.website}</a>
-              </Link>
-            </ContactContainer>
-          )}
-        </H5>
-        <ButtonContainer>
-          <Button icon='notification' type='primary' shape='round' size='large'>
-            Follow
-          </Button>
-        </ButtonContainer>
+        <H4> Charity</H4>
       </TitleContainer>
     </ProfileContainer>
     <ProfileContentContainer>
@@ -161,6 +137,14 @@ const OrgDetail = ({ org, ...props }) => (
             <br />
             <PBold>Social:</PBold>
             <ButtonGroup size='medium'>
+              {org.website && (
+                <SocialButton
+                  type='link'
+                  href={`https://${org.website}`}
+                  target='_blank'
+                  icon='global'
+                />
+              )}
               {org.contactEmail && (
                 <SocialButton
                   type='link'

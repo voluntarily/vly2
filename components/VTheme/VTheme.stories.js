@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react'
 import IdLine from './IdLine'
 import { StoryIntroContainer } from './VStoryTheme'
 import ops from '../Op/__tests__/Op.fixture'
-import { Button, Radio, Icon, Divider } from 'antd'
-import { H1, H4 } from './VTheme';
+import { Button, Icon, Divider } from 'antd'
+import { H1, H4 } from './VTheme'
 
 storiesOf('Minor Components', module)
   .add('IdLine Opportunity', () => (
@@ -20,11 +20,9 @@ storiesOf('Minor Components', module)
 
   .add('Buttons', () => (
     <StoryIntroContainer>
-
-<H1>Buttons</H1>
+      <H1>Buttons</H1>
       <H4>How we use buttons from the antd library on the platform</H4>
       <Divider />
-
       <br />
       <Button type='primary' size='large'>
         Primary
