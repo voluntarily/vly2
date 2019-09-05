@@ -1,12 +1,12 @@
-import { Component } from 'react'
 import { Button, Divider } from 'antd'
-import { FormattedMessage } from 'react-intl'
 import Link from 'next/link'
+import { Component } from 'react'
+import { Helmet } from 'react-helmet'
+import { FormattedMessage } from 'react-intl'
+import OrgList from '../../components/Org/OrgList'
+import { FullPage, H3Black, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
-import OrgList from '../../components/Org/OrgList'
-import { FullPage, PageHeaderContainer, H3Black, RequestButtonContainer } from '../../components/VTheme/VTheme'
-import { Helmet } from 'react-helmet'
 
 class OrgListPage extends Component {
   static async getInitialProps ({ store, query }) {

@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import { Avatar, Icon } from 'antd'
-import styled from 'styled-components'
 import Link from 'next/link'
+import PropTypes from 'prop-types'
+import React from 'react'
+import styled from 'styled-components'
 import { MemberStatus } from '../../server/api/member/member.constants'
 
 /*

@@ -15,18 +15,16 @@ test.before('before connect to database', async (t) => {
   await appReady
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
-})
 
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
-})
-
-test.beforeEach('connect and add two oppo entries', async (t) => {
   // connect each oppo to a requestor.
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
   archivedOps.map((op, index) => { op.requestor = t.context.people[index]._id })
   t.context.opportunities = await ArchiveOpportunity.create(archivedOps).catch((err) => console.log('Unable to create opportunities', err))
+})
+
+test.after.always(async (t) => {
+  await t.context.memMongo.stop()
 })
 
 test.serial('Should send correct data when queried against an _id', async t => {

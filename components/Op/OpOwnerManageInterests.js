@@ -1,6 +1,6 @@
-import { Component } from 'react'
 import { Button, Divider, message, Popconfirm } from 'antd'
 import Router from 'next/router'
+import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import InterestSection from '../../components/Interest/InterestSection'
 

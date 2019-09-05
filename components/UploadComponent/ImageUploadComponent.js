@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
 import { message } from 'antd'
+import React, { Component } from 'react'
 import callApi from '../../lib/apiCaller'
 import './imageuploader.less'
 

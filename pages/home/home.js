@@ -2,24 +2,17 @@ import { Button, Icon, message, Tabs } from 'antd'
 import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
+import NextActionBlock from '../../components/Action/NextActionBlock'
 import OpAdd from '../../components/Op/OpAdd'
 import OpList from '../../components/Op/OpList'
 import OpRecommendations from '../../components/Op/OpRecommendations'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
+import { FullPage, H3Black, P, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withArchivedOpportunities, withInterests, withMembers, withOps, withPeople, withRecommendedOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
-import NextActionBlock from '../../components/Action/NextActionBlock'
-import styled from 'styled-components'
-
-import {
-  FullPage,
-  H3Black,
-  P,
-  PageHeaderContainer,
-  RequestButtonContainer
-} from '../../components/VTheme/VTheme'
 
 const { TabPane } = Tabs
 

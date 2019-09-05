@@ -8,13 +8,12 @@
   if the
   If no member exists, it will allow one to be created. If one does exist, it will allow it to be updated or cancelled.
 */
-import React, { Component } from 'react'
-import RegisterMemberItem from './RegisterMemberItem'
 import { message } from 'antd'
-
+import React, { Component } from 'react'
+import styled from 'styled-components'
 import reduxApi, { withMembers } from '../../lib/redux/reduxApi'
 import { MemberStatus } from '../../server/api/member/member.constants'
-import styled from 'styled-components'
+import RegisterMemberItem from './RegisterMemberItem'
 
 // Helper function to generate a blank member.
 const getNewMember = (me, org) => {

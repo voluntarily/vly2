@@ -21,10 +21,10 @@ test.before('Setup fixtures', (t) => {
   // setup list of opportunities, I am owner for the first one
   ops.map((op, index) => {
     op._id = objectid().toString()
-    op.requestor = people[index]._id
+    op.requestor = people[index]
   })
   // take ownership of 2nd event and set to done
-  archivedOpportunities[1].requestor = me._id
+  archivedOpportunities[1].requestor = me
   archivedOpportunities[1].status = 'completed'
 
   // setup list of interests, i'm interested in first 5 ops
