@@ -26,7 +26,10 @@ module.exports = async ({ config, mode }) => {
           {
               loader: 'less-loader',
               options: {
-                  modifyVars: {'@primary-color': '#f00'},
+                  modifyVars: {
+                      'primary-color': '#6549AA',
+                      'font-family' : 'Inter, -apple-system, Helvetica, Arial, sans-serif'
+                    },
                   javascriptEnabled: true
               }
           }
