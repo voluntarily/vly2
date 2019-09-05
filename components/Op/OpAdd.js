@@ -1,11 +1,11 @@
 /*
   New Opportunity Button
 */
-import React from 'react'
-import PropTypes from 'prop-types'
-import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
 import { Button } from 'antd'
+import Link from 'next/link'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 
 const OpAdd = ({ roles, ...props }) => {

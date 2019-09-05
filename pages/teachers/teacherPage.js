@@ -1,25 +1,10 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
-import publicPage from '../../hocs/publicPage'
-import {
-  FullPage,
-  HalfGrid,
-  Spacer,
-  H1,
-  TripleGrid,
-  H3,
-  H3Bold,
-  P,
-  PBold,
-  SpacerSmall,
-  H4,
-  BigQuote,
-  BigQuoteAuthor
-
-} from '../../components/VTheme/VTheme'
 import { Button, Divider } from 'antd'
-import TitleSection from '../../components/LandingPageComponents/TitleSection'
+import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
+import styled from 'styled-components'
+import TitleSection from '../../components/LandingPageComponents/TitleSection'
+import { BigQuote, BigQuoteAuthor, FullPage, H1, H3, H3Bold, H4, HalfGrid, P, PBold, Spacer, SpacerSmall, TripleGrid } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
 
 const GridContainer = styled.div`
   position: relative;

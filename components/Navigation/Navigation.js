@@ -1,8 +1,8 @@
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
+import { Avatar, Menu } from 'antd'
 import Link from 'next/link'
 import { withRouter } from 'next/router'
-import { Avatar, Menu } from 'antd'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 const StyledMenu = styled(Menu)`
   font-weight: bold;

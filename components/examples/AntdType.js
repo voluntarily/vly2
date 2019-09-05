@@ -1,7 +1,7 @@
 /* AntD Typography Test
 */
-import React from 'react'
 import { Typography } from 'antd'
+import React from 'react'
 
 const { Paragraph, Title } = Typography
 
