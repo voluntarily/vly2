@@ -3,6 +3,7 @@ import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
+import Loading from '../../components/Loading'
 import OpDetail from '../../components/Op/OpDetail'
 import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
@@ -12,7 +13,6 @@ import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import OpEditPage from './opeditpage'
-import OpLoadingPage from './oploadingpage'
 import OpUnavailablePage from './opunavailablepage'
 
 const blankOp = {
@@ -165,7 +165,7 @@ export class OpDetailPage extends Component {
     // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
     if (!this.props.isNew) {
       if (this.props.opportunities.loading) {
-        return (<OpLoadingPage />)
+        return (<Loading />)
       }
       if (this.props.opportunities.data.length !== 1) {
         return (<OpUnavailablePage />)
