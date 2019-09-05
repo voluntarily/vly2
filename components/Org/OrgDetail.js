@@ -1,13 +1,12 @@
 import { Button, Icon, Tabs } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import Head from 'next/head'
-import Link from 'next/link'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberSection from '../Member/MemberSection'
-import { FullPage, H3Bold, H4, H5, PageHeaderContainer, PBold } from '../VTheme/VTheme'
+import { FullPage, H3Bold, H4, PageHeaderContainer, PBold } from '../VTheme/VTheme'
 import OrgCategory from './OrgCategory'
 const ButtonGroup = Button.Group
 
