@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import TagDisplay from '../Tags/TagDisplay'
 import IdLine from '../VTheme/IdLine'
 import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
- 
+
 const Left = styled.div``
 
 const Right = styled.div``
