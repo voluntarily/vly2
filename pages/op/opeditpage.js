@@ -11,9 +11,8 @@ export default class OpEditPage extends React.Component {
       op = await this.props.createOpportunity(op)
     } else {
       op = await this.props.updateOpportunity(op)
-      Router.replace(`/ops/${op._id}`)
     }
-    this.props.stopEditing()
+    Router.replace(`/ops/${op._id}`)
     message.success('Saved.')
   }
 
