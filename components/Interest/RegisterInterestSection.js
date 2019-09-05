@@ -2,14 +2,13 @@
   Smart component. For the given op id and person id, it displays that person's interest in that op.
   If no interest exists, it will allow one to be created. If one does exist, it will allow it to be updated or cancelled.
 */
-import React, { Component } from 'react'
-import RegisterInterestItem from './RegisterInterestItem'
 import { message } from 'antd'
-import InterestConfirmationCard from './InterestConfirmationCard'
-
+import React, { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
-import { FormattedMessage } from 'react-intl'
+import InterestConfirmationCard from './InterestConfirmationCard'
+import RegisterInterestItem from './RegisterInterestItem'
 
 // Helper function to generate a blank interest.
 function getNewInterest (me, op) {

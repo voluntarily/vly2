@@ -1,18 +1,18 @@
 import { Button, message, Popconfirm } from 'antd'
+import Cookie from 'js-cookie'
 import Link from 'next/link'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
+import Loading from '../../components/Loading'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import { FullPage } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
-import reduxApi, { withPeople, withMembers } from '../../lib/redux/reduxApi.js'
-import Loading from '../../components/Loading'
-import Cookie from 'js-cookie'
+import reduxApi, { withMembers, withPeople } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
-import { Helmet } from 'react-helmet'
 
 const blankPerson = {
   // for new people load the default template doc.

@@ -3,17 +3,16 @@
   results in simple vertical list
   Entry - people menu item.
 */
-import React, { Component } from 'react'
 import { Button } from 'antd'
+import Cookie from 'js-cookie'
 import Link from 'next/link'
+import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
+import PersonList from '../../components/Person/PersonList'
 import { FullPage } from '../../components/VTheme/VTheme'
-
 import securePage from '../../hocs/securePage'
 import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
-import PersonList from '../../components/Person/PersonList'
-import Cookie from 'js-cookie'
-import { Helmet } from 'react-helmet'
 
 class PersonListPage extends Component {
   static async getInitialProps ({ store, req }) {

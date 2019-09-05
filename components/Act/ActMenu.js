@@ -1,5 +1,5 @@
-import styled from 'styled-components'
 import { Menu } from 'antd'
+import styled from 'styled-components'
 
 const ActivityMenu = styled(Menu)`
   height: 32px;

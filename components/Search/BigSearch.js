@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import React, { PureComponent } from 'react'
 import { Input } from 'antd'
 import PropTypes from 'prop-types'
+import React, { PureComponent } from 'react'
+import styled from 'styled-components'
 import FilterContainer from './FilterContainer'
 import LocationFilter from './LocationFilter'
 

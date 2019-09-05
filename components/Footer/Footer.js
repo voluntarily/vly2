@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Navigation from '../Navigation/Navigation'
-import links from './FooterMenu'
-import { Grid, Spacer, P } from '../VTheme/VTheme'
-import styled from 'styled-components'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+import Navigation from '../Navigation/Navigation'
+import { Grid, P, Spacer } from '../VTheme/VTheme'
+import links from './FooterMenu'
 
 const getAllowedLinks = isAuthenticated =>
   links()

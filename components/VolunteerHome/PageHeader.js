@@ -1,7 +1,7 @@
 import { Icon, Menu } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import { SpacerSmall, H3Black } from '../VTheme/VTheme'
+import { H3Black, SpacerSmall } from '../VTheme/VTheme'
 
 const ItemContainer = styled.div``
 
