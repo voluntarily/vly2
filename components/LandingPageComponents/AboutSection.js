@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
-import { FormattedMessage } from 'react-intl'
 import { Button } from 'antd'
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
 import { HalfGrid } from '../VTheme/VTheme'
 
 const AboutLeft = styled.div`

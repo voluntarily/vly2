@@ -1,12 +1,12 @@
 // import Link from 'next/link'
-import Head from 'next/head'
-import publicPage from '../../hocs/publicPage'
-import InterestItem from '../../components/Interest/InterestItem'
-import InterestTable from '../../components/Interest/InterestTable'
-import InterestSection from '../../components/Interest/InterestSection'
-import people from './testy.people'
 import { Divider } from 'antd'
+import Head from 'next/head'
+import InterestItem from '../../components/Interest/InterestItem'
+import InterestSection from '../../components/Interest/InterestSection'
+import InterestTable from '../../components/Interest/InterestTable'
 import { FullPage } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
+import people from './testy.people'
 
 const opportunity = {
   _id: '5cc8d60b8b16812b5b392321',

@@ -1,20 +1,14 @@
-import React from 'react'
 import { Button, Icon, Tabs } from 'antd'
-import { FormattedMessage } from 'react-intl'
-import PropTypes from 'prop-types'
 import Markdown from 'markdown-to-jsx'
-import OrgCategory from './OrgCategory'
-
-import MemberSection from '../Member/MemberSection'
 import Head from 'next/head'
+import Link from 'next/link'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import {
-  PageHeaderContainer,
-  PBold,
-  FullPage,
-  H4,
-  H3Bold
-} from '../VTheme/VTheme'
+import MemberSection from '../Member/MemberSection'
+import { FullPage, H3Bold, H4, H5, PageHeaderContainer, PBold } from '../VTheme/VTheme'
+import OrgCategory from './OrgCategory'
 const ButtonGroup = Button.Group
 
 function callback (key) {
@@ -183,7 +177,6 @@ const OrgDetail = ({ org, ...props }) => (
 )
 
 OrgDetail.propTypes = {
-  meid: PropTypes.string.isRequired,
   org: PropTypes.shape({
     name: PropTypes.string.isRequired,
     info: PropTypes.shape({

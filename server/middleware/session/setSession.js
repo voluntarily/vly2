@@ -39,7 +39,7 @@ const hasSessionInQueryRequest = (req) => {
   return req.query != null && req.query.session != null
 }
 
-module.exports = async (req, res, next) => {
+const setSession = async (req, res, next) => {
   req.session = { ...DEFAULT_SESSION } // Default session object will get mutated after logged in. Deconstructing the objec will only get the attribute of it
   const cookie = getCookie(req)
 
@@ -47,15 +47,17 @@ module.exports = async (req, res, next) => {
     req.session = req.query.session
   }
 
-  if (!isUrlBlacklisted(req.url) && cookie != null) {
+  if (!isUrlBlacklisted(req.url) && cookie && cookie.idToken) {
     try {
       const user = jwtDecode(cookie.idToken)
       req.session.isAuthenticated = true
       req.session.user = user
       req.session.me = await Person.findOne({ email: req.session.user.email }).exec()
     } catch (err) {
-      console.log(err)
+      console.error('setSession', err)
     }
   }
   next()
 }
+
+module.exports = setSession

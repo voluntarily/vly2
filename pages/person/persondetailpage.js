@@ -1,18 +1,18 @@
 import { Button, message, Popconfirm } from 'antd'
+import Cookie from 'js-cookie'
 import Link from 'next/link'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
+import Loading from '../../components/Loading'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import { FullPage } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
-import reduxApi, { withPeople, withMembers } from '../../lib/redux/reduxApi.js'
-import Loading from '../../components/Loading'
-import Cookie from 'js-cookie'
+import reduxApi, { withMembers, withPeople } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
-import { Helmet } from 'react-helmet'
 
 const blankPerson = {
   // for new people load the default template doc.
@@ -46,10 +46,15 @@ export class PersonDetailPage extends Component {
       let cookies = req ? req.cookies : Cookie.get()
       const cookiesStr = JSON.stringify(cookies)
       query.session = store.getState().session
-      await store.dispatch(reduxApi.actions.people.get(query, {
-        params: cookiesStr
-      }))
-      await store.dispatch(reduxApi.actions.members.get({ meid }))
+      try {
+        await store.dispatch(reduxApi.actions.people.get(query, {
+          params: cookiesStr
+        }))
+        await store.dispatch(reduxApi.actions.members.get({ meid }))
+      } catch (err) {
+        // this can return a 403 forbidden if not signed in
+        console.log('Error in persondetailpage:', err)
+      }
 
       return {
         isNew: false,
@@ -98,7 +103,7 @@ export class PersonDetailPage extends Component {
   handleDeleteCancel = () => { message.error('Delete Cancelled') }
 
   render () {
-    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
+    const isOrgAdmin = false // TODO: [VP-473] is this person an admin for the org that person belongs to.
     const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
     const canEdit = (isOrgAdmin || isAdmin)
     const canRemove = isAdmin
