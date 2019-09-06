@@ -117,7 +117,7 @@ test('archivedOpDetailPage should display OpUnavalablePage when no opportunity c
   t.is(wrapper.find('OpUnavailablePage').length, 1)
 })
 
-test('archivedOpDetailPage should display OpLoadingPage when no opportunity can be retrieved', t => {
+test('archivedOpDetailPage should display Loading spinner when loading', t => {
   let myStore = { ...t.context.mockStore }
   myStore.getState().archivedOpportunities.loading = true
 
@@ -136,5 +136,5 @@ test('archivedOpDetailPage should display OpLoadingPage when no opportunity can 
       <RoutedArchivedOpDetailPage {...props} />
     </Provider>
   )
-  t.is(wrapper.find('OpLoadingPage').length, 1)
+  t.is(wrapper.find('img').prop('src'), '/static/loading.svg')
 })

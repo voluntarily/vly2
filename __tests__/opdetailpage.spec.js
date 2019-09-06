@@ -280,7 +280,7 @@ test('display loading opportunity message when opportunity is loading', t => {
       <RoutedOpDetailPage {...props} />
     </Provider>
   )
-  t.is(wrapper.find('.loader').first().text(), 'Loading...')
+  t.is(wrapper.find('img').prop('src'), '/static/loading.svg')
 })
 
 test('can create new Op', t => {

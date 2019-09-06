@@ -1,8 +1,8 @@
+import { Button } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 // import { FormattedMessage } from 'react-intl'
 import { Grid } from '../VTheme/VTheme'
-import { Button } from 'antd'
 
 const PersonaBox = styled.div`
   margin-bottom: 8rem;

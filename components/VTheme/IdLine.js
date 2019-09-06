@@ -1,8 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import { Avatar } from 'antd'
 import Link from 'next/link'
-
+import PropTypes from 'prop-types'
+import React from 'react'
 /*
   Display any entity that has a name and imgUrl
   Clicks through to the resource + id
@@ -12,9 +11,10 @@ import Link from 'next/link'
   }
   type = orgaanisation, person, activity
 */
+
 const IdLine = ({ item, path }) =>
-  item
-    ? <Link href={`/${path}/${item._id}`}>
+  item &&
+    <Link href={`/${path}/${item._id}`}>
       <a style={{ display: 'block', margin: '0' }} >
         <Avatar
           size={32}
@@ -25,7 +25,6 @@ const IdLine = ({ item, path }) =>
         <span style={{ marginLeft: '1em' }}>{item.name}</span>
       </a>
     </Link>
-    : null
 
 IdLine.propTypes = {
   item: PropTypes.shape({

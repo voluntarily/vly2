@@ -1,3 +1,4 @@
+import '../assets/voluntarily.less'
 import React from 'react'
 import App, { Container } from 'next/app'
 import { IntlProvider, addLocaleData } from 'react-intl'

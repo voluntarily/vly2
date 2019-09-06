@@ -1,17 +1,16 @@
 /* Dumb React component Shows contents of an opportunity
  */
-import React from 'react'
-import PropTypes from 'prop-types'
-import Head from 'next/head'
-import Markdown from 'markdown-to-jsx'
-import styled from 'styled-components'
-import moment from 'moment'
-import sanitize from 'sanitize-html'
-
 import { Button, Divider } from 'antd'
-import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
+import Markdown from 'markdown-to-jsx'
+import moment from 'moment'
+import Head from 'next/head'
+import PropTypes from 'prop-types'
+import React from 'react'
+import sanitize from 'sanitize-html'
+import styled from 'styled-components'
 import TagDisplay from '../Tags/TagDisplay'
 import IdLine from '../VTheme/IdLine'
+import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
 
 const Left = styled.div``
 
@@ -77,8 +76,8 @@ export function OpDetail ({ op }) {
             {sanitize(op.status)}
           </ItemListing>
           <Divider />
-          {op.offerOrg && <ItemListing><IdLine item={op.offerOrg} path='organisation' /></ItemListing>}
-          {op.requestor && <ItemListing><IdLine item={op.requestor} path='person' /></ItemListing>}
+          {op.offerOrg && <ItemListing><IdLine item={op.offerOrg} path='orgs' /></ItemListing>}
+          {op.requestor && <ItemListing><IdLine item={op.requestor} path='people' /></ItemListing>}
           <Divider />
           <Spacer />
           <ItemP>
