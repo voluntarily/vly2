@@ -10,7 +10,7 @@ import sanitize from 'sanitize-html'
 import styled from 'styled-components'
 import TagDisplay from '../Tags/TagDisplay'
 import IdLine from '../VTheme/IdLine'
-import { FullPage, HalfGrid, Spacer, PBold, H3Black } from '../VTheme/VTheme'
+import { FullPage, HalfGrid, Spacer, H3Black } from '../VTheme/VTheme'
 
 const Left = styled.div`
   overflow: hidden;
@@ -55,7 +55,7 @@ export function OpDetail ({ op }) {
     ? moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
     : 'Negotiable'
   const endDate = op.date[1]
-    ? '  →  ' + '  →  ' + moment(op.date[1]).format('h:mmA · ddd DD/MM/YYYY')
+    ? '  →  ' + moment(op.date[1]).format('h:mmA · ddd DD/MM/YYYY')
     : ' '
   const img = op.imgUrl || '../../static/missingimage.svg'
   return (

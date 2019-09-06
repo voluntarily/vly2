@@ -161,14 +161,14 @@ class PersonHomePage extends Component {
         </Helmet>
         <PageHeaderContainer>
           <TitleContainer>
-            <H3Black>
+            <h1>
               {this.props.me.nickname}'s Requests
               {/* <FormattedMessage
             id='home.title'
             defaultMessage='My Stuff'
             description='title on volunteer home page.'
           /> */}
-            </H3Black>
+            </h1>
           </TitleContainer>
           <RequestButtonContainer>
             <OpAdd {...this.props} />
