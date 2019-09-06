@@ -10,32 +10,38 @@ import sanitize from 'sanitize-html'
 import styled from 'styled-components'
 import TagDisplay from '../Tags/TagDisplay'
 import IdLine from '../VTheme/IdLine'
-import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
+import { FullPage, HalfGrid, Spacer, PBold, H3Black } from '../VTheme/VTheme'
 
-const Left = styled.div``
+const Left = styled.div`
+  overflow: hidden;
+`
 
 const Right = styled.div``
 
-const TitleFont = styled.h1`
-  font-weight: 900;
-  font-size: 2rem;
-  letter-spacing: -0.02rem;
+const ItemContainer = styled.div`
+margin: 1.5rem 0 1rem 0;
 `
+
 const ItemListing = styled.p`
   font-weight: 500;
   font-size: 1rem;
   opacity: 1;
   color: initial;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
 `
-const ItemP = styled.div`
-  letter-spacing: -0.02rem;
-  font-weight: 400;
-  font-size: 1rem;
-  opacity: 1;
-  color: initial;
-  margin-bottom: 1rem;
+
+const ContentContainer = styled.div`
+  margin: 4rem auto ;
+  width: 50rem;
+  @media screen and (max-width: 767px) {
+    width: calc(100% - 2rem);
+  }
+
+  img {
+    width: 100%;
+  }
 `
+
 const TagContainer = styled.div`
   margin-top: 0.2rem;
 `
@@ -55,10 +61,13 @@ export function OpDetail ({ op }) {
   return (
     <FullPage>
       <Spacer />
-      <Head><title>Voluntarily - {op.name}</title></Head>
+      <Head>
+        <title>Voluntarily - {op.name}</title>
+      </Head>
       <HalfGrid>
-        <Left>
-          <TitleFont>{op.name}</TitleFont>
+      <Left>
+          <H3Black>{op.name}</H3Black>
+          <ItemContainer>
           <ItemListing>
             ⏱&nbsp;<strong>Duration:</strong>&nbsp;&nbsp;&nbsp;
             {sanitize(op.duration)}
@@ -75,22 +84,29 @@ export function OpDetail ({ op }) {
             📝&nbsp;<strong>Status:</strong>&nbsp;&nbsp;&nbsp;
             {sanitize(op.status)}
           </ItemListing>
+          </ItemContainer>
           <Divider />
-          {op.offerOrg && <ItemListing><IdLine item={op.offerOrg} path='orgs' /></ItemListing>}
-          {op.requestor && <ItemListing><IdLine item={op.requestor} path='people' /></ItemListing>}
+          {op.offerOrg && (
+            <ItemListing>
+              <IdLine item={op.offerOrg} path='orgs' />
+            </ItemListing>
+          )}
+          {op.requestor && (
+            <ItemListing>
+              <IdLine item={op.requestor} path='people' />
+            </ItemListing>
+          )}
           <Divider />
-          <Spacer />
-          <ItemP>
-            <Markdown
-              children={description}
-              options={{
-                overrides: {
-                  Button: { component: Button }
-                }
-              }}
-            />
-          </ItemP>
-          <Spacer />
+  
+        <Markdown
+          style={{ width: '100%' }}
+          children={description}
+          options={{
+            overrides: {
+              Button: { component: Button }
+            }
+          }}
+        />
         </Left>
         <Right>
           <img style={{ width: '100%' }} src={img} alt={op.name} />
@@ -98,7 +114,12 @@ export function OpDetail ({ op }) {
             <TagDisplay tags={op.tags} />
           </TagContainer>
         </Right>
+
       </HalfGrid>
+
+
+
+
     </FullPage>
   )
 }
