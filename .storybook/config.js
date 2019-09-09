@@ -1,6 +1,5 @@
 import { configure, addParameters } from '@storybook/react';
 import vStoryTheme from './vStoryTheme';
-import '../assets/voluntarily.less';
 addParameters({
   options: {
     theme: vStoryTheme,

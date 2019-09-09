@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = async ({ config, mode }) => {
+module.exports = async ({ config, mode, defaultConfig }) => {
 
   config.module.rules.push({
       loader: 'babel-loader',
@@ -23,6 +23,7 @@ module.exports = async ({ config, mode }) => {
       loaders: [
           'style-loader',
           'css-loader',
+          
           {
               loader: 'less-loader',
               options: {
@@ -39,6 +40,8 @@ module.exports = async ({ config, mode }) => {
         /[\\/]node_modules[\\/].*antd/
       ]
   });
+
+
 
   return config;
 };
