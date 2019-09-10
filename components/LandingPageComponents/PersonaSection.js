@@ -1,7 +1,6 @@
 import { Button } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
-// import { FormattedMessage } from 'react-intl'
 import { Grid } from '../VTheme/VTheme'
 
 const PersonaBox = styled.div`

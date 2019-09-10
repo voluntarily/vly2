@@ -412,7 +412,5 @@ export default Form.create({
       tags: Form.createFormField({ ...props.act.tags, value: props.act.tags })
     }
   }
-  // onValuesChange (_, values) {
-  //   console.log('onValuesChange', values)
-  // }
+
 })(ActDetailForm)

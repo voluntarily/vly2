@@ -134,7 +134,6 @@ class RegisterInterestItem extends Component {
 RegisterInterestItem.propTypes = {
   interest: PropTypes.shape({
     person: PropTypes.any.isRequired,
-    // opportunity: PropTypes.object.isRequired,
     comment: PropTypes.string,
     status: PropTypes.string
   }).isRequired,
@@ -147,7 +146,6 @@ RegisterInterestItem.propTypes = {
 export default Form.create({
   name: 'register_interest_form',
   onFieldsChange (props, changedFields) {
-    // console.log('onFieldsChange', changedFields)
     // props.onChange(changedFields);
   },
   mapPropsToFields (props) {

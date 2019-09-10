@@ -9,18 +9,8 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 
 class MemberTable extends Component {
   columns = [
-    // {
-    //   title: '',
-    //   key: 'isSelected',
-    //   render: (text, record) => {
-    //     return <Checkbox value='selected' />
-    //   }
-    // },
     { title: 'Name',
       key: 'imgUrl',
-      // sorter: (a, b, sortOrder) => sortOrder === 'ascend' ? ('' + a.name).localeCompare(b.name) : ('' + b.name).localeCompare(a.name),
-      // sortDirections: ['ascend', 'descend'],
-      // defaultSortOrder: 'ascend',
       render: (text, record) => {
         return (
           <span>
@@ -37,23 +27,10 @@ class MemberTable extends Component {
         )
       }
     },
-    // {
-    //   title: 'Validation',
-    //   dataIndex: 'validation',
-    //   key: 'validation'
-    // },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status'
-      // sorter: (a, b, sortOrder) => {
-      //   console.log(a, b, sortOrder)
-      //   const order = (sortOrder === 'ascend') ? ('' + a.status).localeCompare(b.status) : ('' + b.status).localeCompare(a.status)
-      //   console.log(order)
-      //   return order
-      // },
-      // sortDirections: ['ascend', 'descend'],
-      // defaultSortOrder: 'ascend'
     },
     {
       title: 'Action',

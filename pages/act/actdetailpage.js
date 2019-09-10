@@ -34,7 +34,6 @@ export class ActDetailPage extends Component {
     // Get one Act
     const isNew = query && query.new && query.new === 'new'
     if (isNew) {
-      // console.log('opdetailpage: getInitialProps', isNew)
       return {
         isNew: true,
         actid: null

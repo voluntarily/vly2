@@ -7,10 +7,6 @@ const removeUnauthorizedFields = (Schema) => (req, res, next) => {
   Array.isArray(req.crudify.result)
     ? req.crudify.result = req.crudify.result.map(eachResult => pick(eachResult, authorizedFields))
     : req.crudify.result = pick(req.crudify.result, authorizedFields)
-
-  // return Array.isArray(responseData)
-  //   ? responseData.map(item => pick(item, authorizedFields))
-  //   : pick(responseData, authorizedFields)
   next()
 }
 
