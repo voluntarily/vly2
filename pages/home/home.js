@@ -179,7 +179,7 @@ class PersonHomePage extends Component {
               {/* // TODO: [VP-208] list of things volunteers can do on home page */}
               <NextActionBlock />
             </SectionWrapper>
-                {
+            {
               this.props.opportunities.data.length !== 0 && (
                 <SectionWrapper>
                   <SectionTitleWrapper>
