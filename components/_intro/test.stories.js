@@ -4,13 +4,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { StoryIntroContainer } from '../VTheme/VStoryTheme'
 import { H1,H3Black, P } from '../VTheme/VTheme'
+import ConfirmDetails from '../Welcome/ConfirmDetails'
 
 storiesOf('Test Components', module)
   .add('Confirm details', () => (
-    <StoryIntroContainer>
-      <H3Black>Confirm your details</H3Black>
-      <P>Check your details are correct :)</P>
-      
-      <Divider />
-    </StoryIntroContainer>
+  <ConfirmDetails />
   ))

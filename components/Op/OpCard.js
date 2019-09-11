@@ -49,6 +49,7 @@ const OpCard = ({ size, op }) => {
         }
 
         .requestContainerSmall {
+          -webkit-transition: all 0.28s;
           width: 18.5rem;
           letter-spacing: -0.3px;
           line-height: 24px;
@@ -56,10 +57,10 @@ const OpCard = ({ size, op }) => {
         }
 
         .requestContainerSmall :hover {
-          -webkit-transition: all 0.3s;
+          -webkit-transition: all 0.28s;
           transition: all 0.3s;
-
-          transform: scale(1.04);
+          box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
+          transform: scale(1.1);
         }
 
         .requestContainerBig {
