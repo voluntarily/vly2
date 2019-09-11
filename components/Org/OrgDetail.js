@@ -12,7 +12,6 @@ const ButtonGroup = Button.Group
 
 function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
-  // console.log(key)
 }
 var shadowStyle = { overflow: 'visible', textAlign: 'center' }
 const { TabPane } = Tabs
