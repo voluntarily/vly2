@@ -24,7 +24,9 @@ const completeConfig = {
     SMTP_PWD: process.env.SMTP_PWD || '',
     onlyEmailText: process.env.TEXT_ONLY_EMAIL === 'true',
     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
-    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY
+    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+    BADGER_USERNAME: process.env.BADGER_USERNAME || '',
+    BADGER_PASSWORD: process.env.BADGER_PASSWORD
   },
 
   development: {
