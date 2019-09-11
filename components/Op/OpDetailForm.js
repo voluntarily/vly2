@@ -28,7 +28,7 @@ class OpDetailForm extends Component {
       endDateValue: null,
       endOpen: false
     }
-    // this.setDescription = this.setDescription.bind(this)
+    // this.setDescriptin = this.setDescription.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
   }
 
@@ -497,7 +497,6 @@ class OpDetailForm extends Component {
               <Button
                 id='saveOpBtn'
                 name='save'
-                // htmlType='submit'
                 onClick={this.handleSubmit}
                 disabled={hasErrors(getFieldsError())}
                 style={{ marginLeft: 8 }}
@@ -512,7 +511,6 @@ class OpDetailForm extends Component {
                 id='publishOpBtn'
                 name='publish'
                 type='primary'
-                // htmlType='submit'
                 onClick={this.handleSubmit}
                 disabled={hasErrors(getFieldsError())}
                 style={{ marginLeft: 8 }}
@@ -581,7 +579,6 @@ OpDetailForm.propTypes = {
 export default Form.create({
   name: 'opportunity_detail_form',
   onFieldsChange (props, changedFields) {
-    // console.log('onFieldsChange', changedFields)
     // props.onChange(changedFields);
   },
   mapPropsToFields (props) {

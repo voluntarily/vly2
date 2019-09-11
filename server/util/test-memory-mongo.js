@@ -18,7 +18,6 @@ class MemoryMongo {
 
   async start () {
     this.mongoUri = await this.mms.getConnectionString()
-    // console.log('Test mongodb connecting to:', this.mongoUri)
     const mongooseOpts = {
       // options for mongoose 4.11.3 and above
       useNewUrlParser: true,
@@ -29,9 +28,7 @@ class MemoryMongo {
 
   async stop () {
     try {
-      // await mongoose.disconnect()
       this.connection = null
-      // console.log('test mongodb disconnected', this.mongoUri)
       await this.mms.stop()
       this.mms = null
     } catch (err) {

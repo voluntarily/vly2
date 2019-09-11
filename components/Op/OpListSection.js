@@ -15,7 +15,6 @@ import moment from 'moment'
 import Loading from '../../components/Loading'
 import DatePickerType from './DatePickerType.constant'
 
-// TODO: [VP-131] use redux instead of local state.
 class OpListSection extends Component {
   async loadData (search, location, query) {
     // Get all Ops

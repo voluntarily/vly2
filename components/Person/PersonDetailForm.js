@@ -412,7 +412,6 @@ PersonDetailForm.propTypes = {
 export default Form.create({
   name: 'person_detail_form',
   onFieldsChange (props, changedFields) {
-    // console.log('onFieldsChange', changedFields)
     // props.onChange(changedFields);
   },
   mapPropsToFields (props) {

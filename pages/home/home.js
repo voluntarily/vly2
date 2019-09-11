@@ -161,14 +161,9 @@ class PersonHomePage extends Component {
         </Helmet>
         <PageHeaderContainer>
           <TitleContainer>
-            <h1>
+            <H3Black>
               {this.props.me.nickname}'s Requests
-              {/* <FormattedMessage
-            id='home.title'
-            defaultMessage='My Stuff'
-            description='title on volunteer home page.'
-          /> */}
-            </h1>
+            </H3Black>
           </TitleContainer>
           <RequestButtonContainer>
             <OpAdd {...this.props} />
@@ -178,29 +173,36 @@ class PersonHomePage extends Component {
 
         <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={opsTab} key='1'>
+
             <SectionWrapper>
 
               {/* // TODO: [VP-208] list of things volunteers can do on home page */}
               <NextActionBlock />
             </SectionWrapper>
-            <SectionWrapper>
-              <SectionTitleWrapper>
-                <H3Black>
-                  <FormattedMessage
-                    id='home.liveOpportunities'
-                    defaultMessage='Active Requests'
-                    decription='subtitle on volunteer home page for active requests and opportunities'
-                  />
-                </H3Black>
-              </SectionTitleWrapper>
-              {ops && (
-                <OpList
-                  ops={ops.filter(op =>
-                    ['active', 'draft'].includes(op.status)
+                {
+              this.props.opportunities.data.length !== 0 && (
+                <SectionWrapper>
+                  <SectionTitleWrapper>
+                    <H3Black>
+                      <FormattedMessage
+                        id='home.liveOpportunities'
+                        defaultMessage='Active Requests'
+                        decription='subtitle on volunteer home page for active requests and opportunities'
+                      />
+                    </H3Black>
+                  </SectionTitleWrapper>
+                  {ops && (
+                    <OpList
+                      ops={ops.filter(op =>
+                        ['active', 'draft'].includes(op.status)
+                      )}
+                    />
+
                   )}
-                />
-              )}
-            </SectionWrapper>
+                </SectionWrapper>
+              )
+            }
+
             <SectionWrapper>
               <SectionTitleWrapper>
                 <H3Black>
@@ -238,7 +240,6 @@ class PersonHomePage extends Component {
                 ops={this.getArchivedOpportunitiesByStatus('cancelled')}
               />
             </SectionWrapper>
-            {/* <OpListSection query={myPastfilterString} /> */}
           </TabPane>
           <TabPane tab={profileTab} key='3'>
             <SectionWrapper>

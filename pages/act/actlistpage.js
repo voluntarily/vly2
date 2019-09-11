@@ -31,7 +31,6 @@ const TabContainer = styled.div`
 
 // function callback (key) {
 //   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
-//   // console.log(key)
 // }
 class Acts extends Component {
   static async getInitialProps ({ store, query }) {
@@ -63,21 +62,7 @@ class Acts extends Component {
   }
 
   render () {
-    // const activityTab = (
-    //   <span>
-    //     <Icon type='experiment' />
-    //     <strong>
-    //       <FormattedMessage
-    //         id='act.act'
-    //         defaultMessage='Activities'
-    //         description='show opportunities list on volunteer home page'
-    //       />
-    //     </strong>
-    //   </span>
-    // )
-
     const { acts } = this.props
-    // var shadowStyle = { overflow: 'visible' }
     return (
       <FullPage>
         <Helmet>
