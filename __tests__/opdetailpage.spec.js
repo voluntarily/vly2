@@ -218,7 +218,7 @@ test('can Edit the Op', t => {
   cancelButton.simulate('click')
   editButton = wrapper.find('#editOpBtn').first()
   t.is(editButton.text(), 'Edit')
-  t.is(wrapper.find('h1').first().text(), '2 Self driving model cars')
+  t.is(wrapper.find('h1').first().text(), 'NZTA Innovation Centre')
   editButton.simulate('click')
   const saveButton = wrapper.find('#saveOpBtn').first()
   t.is(saveButton.text(), 'Save as draft')

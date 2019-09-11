@@ -10,32 +10,26 @@ import sanitize from 'sanitize-html'
 import styled from 'styled-components'
 import TagDisplay from '../Tags/TagDisplay'
 import IdLine from '../VTheme/IdLine'
-import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
+import { FullPage, HalfGrid, Spacer, H3Black } from '../VTheme/VTheme'
 
-const Left = styled.div``
+const Left = styled.div`
+  overflow: hidden;
+`
 
 const Right = styled.div``
 
-const TitleFont = styled.h1`
-  font-weight: 900;
-  font-size: 2rem;
-  letter-spacing: -0.02rem;
+const ItemContainer = styled.div`
+margin: 1.5rem 0 1rem 0;
 `
+
 const ItemListing = styled.p`
   font-weight: 500;
   font-size: 1rem;
   opacity: 1;
   color: initial;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
 `
-const ItemP = styled.div`
-  letter-spacing: -0.02rem;
-  font-weight: 400;
-  font-size: 1rem;
-  opacity: 1;
-  color: initial;
-  margin-bottom: 1rem;
-`
+
 const TagContainer = styled.div`
   margin-top: 0.2rem;
 `
@@ -48,48 +42,58 @@ export function OpDetail ({ op }) {
     ? moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
     : 'Negotiable'
   const endDate = op.date[1]
-    ? '  →  ' + '  →  ' + moment(op.date[1]).format('h:mmA · ddd DD/MM/YYYY')
+    ? '  →  ' + moment(op.date[1]).format('h:mmA · ddd DD/MM/YYYY')
     : ' '
   const img = op.imgUrl || '../../static/missingimage.svg'
   return (
     <FullPage>
       <Spacer />
-      <Head><title>Voluntarily - {op.name}</title></Head>
+      <Head>
+        <title>Voluntarily - {op.name}</title>
+      </Head>
       <HalfGrid>
         <Left>
-          <TitleFont>{op.name}</TitleFont>
-          <ItemListing>
+          <H3Black>{op.name}</H3Black>
+          <ItemContainer>
+            <ItemListing>
             ⏱&nbsp;<strong>Duration:</strong>&nbsp;&nbsp;&nbsp;
-            {sanitize(op.duration)}
-          </ItemListing>
-          <ItemListing>
+              {sanitize(op.duration)}
+            </ItemListing>
+            <ItemListing>
             🗓&nbsp;<strong>Date:</strong>&nbsp;&nbsp;&nbsp; {startDate}{' '}
-            {endDate}
-          </ItemListing>
-          <ItemListing>
+              {endDate}
+            </ItemListing>
+            <ItemListing>
             🏫&nbsp;<strong>Location:</strong>&nbsp;&nbsp;&nbsp;
-            {sanitize(op.location)}
-          </ItemListing>
-          <ItemListing>
+              {sanitize(op.location)}
+            </ItemListing>
+            <ItemListing>
             📝&nbsp;<strong>Status:</strong>&nbsp;&nbsp;&nbsp;
-            {sanitize(op.status)}
-          </ItemListing>
+              {sanitize(op.status)}
+            </ItemListing>
+          </ItemContainer>
           <Divider />
-          {op.offerOrg && <ItemListing><IdLine item={op.offerOrg} path='orgs' /></ItemListing>}
-          {op.requestor && <ItemListing><IdLine item={op.requestor} path='people' /></ItemListing>}
+          {op.offerOrg && (
+            <ItemListing>
+              <IdLine item={op.offerOrg} path='orgs' />
+            </ItemListing>
+          )}
+          {op.requestor && (
+            <ItemListing>
+              <IdLine item={op.requestor} path='people' />
+            </ItemListing>
+          )}
           <Divider />
-          <Spacer />
-          <ItemP>
-            <Markdown
-              children={description}
-              options={{
-                overrides: {
-                  Button: { component: Button }
-                }
-              }}
-            />
-          </ItemP>
-          <Spacer />
+
+          <Markdown
+            style={{ width: '100%' }}
+            children={description}
+            options={{
+              overrides: {
+                Button: { component: Button }
+              }
+            }}
+          />
         </Left>
         <Right>
           <img style={{ width: '100%' }} src={img} alt={op.name} />
@@ -97,7 +101,9 @@ export function OpDetail ({ op }) {
             <TagDisplay tags={op.tags} />
           </TagContainer>
         </Right>
+
       </HalfGrid>
+
     </FullPage>
   )
 }

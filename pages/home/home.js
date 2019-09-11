@@ -173,6 +173,12 @@ class PersonHomePage extends Component {
 
         <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={opsTab} key='1'>
+
+            <SectionWrapper>
+
+              {/* // TODO: [VP-208] list of things volunteers can do on home page */}
+              <NextActionBlock />
+            </SectionWrapper>
             {
               this.props.opportunities.data.length !== 0 && (
                 <SectionWrapper>
@@ -191,10 +197,12 @@ class PersonHomePage extends Component {
                         ['active', 'draft'].includes(op.status)
                       )}
                     />
+
                   )}
                 </SectionWrapper>
               )
             }
+
             <SectionWrapper>
               <SectionTitleWrapper>
                 <H3Black>
@@ -214,17 +222,6 @@ class PersonHomePage extends Component {
               </SectionTitleWrapper>
               <OpRecommendations
                 recommendedOps={this.props.recommendedOps.data[0]} />
-            </SectionWrapper>
-            <SectionWrapper>
-              <SectionTitleWrapper>
-                <H3Black>Getting Started</H3Black>
-                <P>
-                  To start volunteering on Voluntarily, here are a few things we
-                  recommend doing:
-                </P>
-              </SectionTitleWrapper>
-              {/* // TODO: [VP-208] list of things volunteers can do on home page */}
-              <NextActionBlock />
             </SectionWrapper>
 
           </TabPane>
