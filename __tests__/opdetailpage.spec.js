@@ -311,7 +311,7 @@ test('can create new Op', t => {
   // console.log(wrapper.html())
 })
 
-test.only('page loads when user is not signed in but does not show edit', t => {
+test('page loads when user is not signed in but does not show edit', t => {
   const props = {
     me: null,
     dispatch: t.context.mockStore.dispatch
