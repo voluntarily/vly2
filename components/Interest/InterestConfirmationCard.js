@@ -39,8 +39,6 @@ const InterestConfirmationCard = ({ organizer, ...props }) => {
             description={organizer.name}
           />
           <div style={{ color: '#6549AA', marginTop: '20px' }}>
-            {/* {console.log(organizer.phone)} */
-            }
             <Icon type='mail' /><span> <a href={emailHref}>{organizer.email}</a></span><br />
             {organizer.phone && organizer.phone !== 'undefined' &&
             <span><Icon type='mobile' /> {organizer.phone}</span>}

@@ -6,8 +6,6 @@ import { H3Black } from '../VTheme/VTheme'
 const TitleContainer = styled.div`
   margin-top: 4rem;
   height: 5rem;
-
-  
 `
 
 const TitleSection = ({ title, ...props }) => (

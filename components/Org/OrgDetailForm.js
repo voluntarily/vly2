@@ -287,7 +287,6 @@ OrgDetailForm.propTypes = {
 export default Form.create({
   name: 'organisation_detail_form',
   onFieldsChange (props, changedFields) {
-    // console.log('onFieldsChange', changedFields)
     // props.onChange(changedFields);
   },
   mapPropsToFields (props) {

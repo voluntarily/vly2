@@ -10,22 +10,12 @@ const BlockContainer = styled.div`` // BlockContainer
 const NextActionBlock = ({ ...props }) => (
   <BlockContainer>
     <Grid>
-      {/* <ActionCard
-        image='./static/img/actions/seeCommitment.png'
-        name='See your commitment'
-        description='You have signed up for X EVENT at Y LOCATION'
-      /> */}
       <ActionCard
         image='./static/img/actions/discoverActs.png'
         name='Find someone to help'
         description='Teachers are asking for your help. There are many ways to get involved in your community'
         link='../search'
       />
-      {/* <ActionCard
-        image='./static/img/actions/ident.png'
-        name='Verify your identity'
-        description='Some activities can only be seen once you verify your identity.'
-      /> */}
       <ActionCard
         image='./static/img/actions/tryTemplates.png'
         name='Contribute to the platform'

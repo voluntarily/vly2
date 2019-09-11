@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import OrgCategory from './OrgCategory'
 
-// TODO: [VP-262] show the org category as an icon/badge on the OrgCard
 const OrgCard = ({ org, ...props }) => (
   <div>
     <Link href={`/orgs/${org._id}`}>

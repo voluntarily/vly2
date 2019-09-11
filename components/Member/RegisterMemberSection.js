@@ -79,11 +79,9 @@ class RegisterMemberSection extends Component {
     }
 
     if (member._id) {
-      // console.log('Modifying member', member)
       await this.props.dispatch(reduxApi.actions.members.put({ id: member._id }, { body: JSON.stringify(member) }))
       message.success('Updated')
     } else {
-      // console.log('Adding member', member)
       await this.props.dispatch(reduxApi.actions.members.post({}, { body: JSON.stringify(member) }))
       message.success('Added')
     }
@@ -91,7 +89,6 @@ class RegisterMemberSection extends Component {
 
   // Render the component depending on whether we've completed the initial api call, and what information is contained in the store.
   render () {
-    // console.log('RegisterMemberSection.Render', this.props.members)
     // If we haven't finished making the API request to the server yet...
     if (this.props.members.sync) {
       // If we have access to the members section of the Redux store...
@@ -105,7 +102,6 @@ class RegisterMemberSection extends Component {
       if (!member) {
         member = getNewMember(this.props.meid, this.props.orgid)
       }
-      // console.log(member)
       return (
         <RegisterButtonBox>
           <RegisterMemberItem

@@ -20,10 +20,6 @@ class Landing extends Component {
             <title>Voluntarily - Welcome</title>
           </Helmet>
           <Spacer />
-          {/* <AboutSection
-            title='Support Innovation in the classroom.'
-            subtitle='Voluntarily connects you with classrooms to teach science, technology, engineering, entrepreneurship, arts, and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content.'
-          /> */}
           <div className='spacer' />
           <TitleSectionSub
             title='Who we help'

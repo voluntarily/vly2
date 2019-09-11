@@ -157,7 +157,6 @@ RegisterMemberItem.propTypes = {
 export default Form.create({
   name: 'register_member_form',
   onFieldsChange (props, changedFields) {
-    // console.log('onFieldsChange', changedFields)
     // props.onChange(changedFields);
   },
   mapPropsToFields (props) {

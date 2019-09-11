@@ -15,7 +15,6 @@ export async function connectDB() {
 }
 
 export async function dropDB() {
-  // await mongoose.connection.db.dropDatabase()
   await mongoose.disconnect()
     .catch(() => 'Unable to reset test database')
 }
