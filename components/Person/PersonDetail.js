@@ -83,7 +83,7 @@ const PersonDetail = ({ person }, ...props) => (
       <ListItem>
         <H1>
           {person.name}
-          {person.status ? (
+          {/* {person.status ? (
             <Icon
               type='safety-certificate'
               theme='filled'
@@ -91,7 +91,7 @@ const PersonDetail = ({ person }, ...props) => (
             />
           ) : (
             <Icon type='close-circle' />
-          )}
+          )} */}
         </H1>
         <PBold>{person.org}</PBold>
         <Divider />
