@@ -49,32 +49,62 @@ const OpCard = ({ size, op }) => {
         }
 
         .requestContainerSmall {
-          -webkit-transition: all 0.28s;
+          -webkit-transition: all 0.2s;
           width: 18.5rem;
           letter-spacing: -0.3px;
           line-height: 24px;
-          margin-bottom: 0px;
+          padding-bottom: 1rem;
         }
 
-        .requestContainerSmall :hover {
-          -webkit-transition: all 0.28s;
+        .requestContainerSmall:hover {
+          -webkit-transition: all 0.2s;
           transition: all 0.3s;
           box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
           transform: scale(1.1);
+          border-radius: 8px;
+        }
+
+        .requestContainerSmall:hover .requestTitleSmall {
+          -webkit-transition: all 0.2s;
+          transform: scale(0.9091);
+
+
+        }
+
+
+        .requestContainerSmall:hover .requestDateTimeSmall {
+          -webkit-transition: all 0.2s;
+          transform: scale(0.9091);
+          font-weight: bold;
+
+        }
+
+
+        .requestContainerSmall:hover .requestDescriptionSmall {
+          -webkit-transition: all 0.2s;
+          transform: scale(0.9091);
+
+        }
+        .requestContainerSmall:hover .requestImgSmall {
+          -webkit-transition: all 0.2s;
+          border-radius: 8px 8px 0 0;
+      
         }
 
         .requestContainerBig {
-          width: 38rem;
+
           letter-spacing: -0.3px;
           line-height: 24px;
           margin-bottom: 4rem;
         }
 
         .requestImgSmall {
+          -webkit-transition: all 0.2s;
           width: 100%;
           height: 10rem;
           background-color: rgba(0, 0, 0, 0);
           object-fit: cover;
+          overflow: hidden;
           object-position: center;
         }
 
@@ -100,6 +130,7 @@ const OpCard = ({ size, op }) => {
         }
 
         .requestTitleSmall {
+          -webkit-transition: all 0.28s;
           font-weight: 700;
           font-size: 20px;
           line-height: 1.4;
@@ -126,6 +157,7 @@ const OpCard = ({ size, op }) => {
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
           margin-block-start: 0;
+          -webkit-transition: all 0.28s;
         }
 
         .requestDateTimeBig {
@@ -144,6 +176,7 @@ const OpCard = ({ size, op }) => {
         }
 
         .requestDescriptionSmall {
+          -webkit-transition: all 0.28s;
           vertical-align: top;
           font-weight: 400;
           font-size: 16px;
@@ -156,6 +189,7 @@ const OpCard = ({ size, op }) => {
           -webkit-box-orient: vertical;
           margin-block-start: 0;
           margin-top: 8px;
+    
         }
 
         .requestDescriptionBig {
