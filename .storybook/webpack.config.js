@@ -37,7 +37,10 @@ module.exports = async ({ config, mode, defaultConfig }) => {
       ],
       include: [
         path.resolve(__dirname, '../src'),
-        /[\\/]node_modules[\\/].*antd/
+        /[\\/]node_modules[\\/].*antd/,
+        path.resolve(__dirname, '../assets')
+        
+
       ]
   });
 
