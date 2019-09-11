@@ -118,7 +118,7 @@ export class OpDetailPage extends Component {
   }
 
   isOwner (op) {
-    return this.props.isNew || (this.props.me && this.props.me._id === op.requestor._id)
+    return this.props.isNew || (this.props.me && op.requestor && this.props.me._id === op.requestor._id)
   }
 
   canEdit (op) {
