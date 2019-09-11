@@ -178,7 +178,7 @@ class PersonHomePage extends Component {
 
         <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={opsTab} key='1'>
-          <SectionWrapper>
+            <SectionWrapper>
 
               {/* // TODO: [VP-208] list of things volunteers can do on home page */}
               <NextActionBlock />
@@ -221,7 +221,6 @@ class PersonHomePage extends Component {
               <OpRecommendations
                 recommendedOps={this.props.recommendedOps.data[0]} />
             </SectionWrapper>
-
 
           </TabPane>
           <TabPane tab={searchTab} key='2'>

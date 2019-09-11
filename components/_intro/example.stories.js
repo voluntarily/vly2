@@ -1,7 +1,6 @@
 import { storiesOf } from '@storybook/react'
 import { Divider } from 'antd'
 import React from 'react'
-import styled from 'styled-components'
 import { StoryIntroContainer } from '../VTheme/VStoryTheme'
 import { H1, H3, P } from '../VTheme/VTheme'
 

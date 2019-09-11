@@ -30,18 +30,6 @@ const ItemListing = styled.p`
   margin-bottom: 0.3rem;
 `
 
-const ContentContainer = styled.div`
-  margin: 4rem auto ;
-  width: 50rem;
-  @media screen and (max-width: 767px) {
-    width: calc(100% - 2rem);
-  }
-
-  img {
-    width: 100%;
-  }
-`
-
 const TagContainer = styled.div`
   margin-top: 0.2rem;
 `
@@ -65,25 +53,25 @@ export function OpDetail ({ op }) {
         <title>Voluntarily - {op.name}</title>
       </Head>
       <HalfGrid>
-      <Left>
+        <Left>
           <H3Black>{op.name}</H3Black>
           <ItemContainer>
-          <ItemListing>
+            <ItemListing>
             ⏱&nbsp;<strong>Duration:</strong>&nbsp;&nbsp;&nbsp;
-            {sanitize(op.duration)}
-          </ItemListing>
-          <ItemListing>
+              {sanitize(op.duration)}
+            </ItemListing>
+            <ItemListing>
             🗓&nbsp;<strong>Date:</strong>&nbsp;&nbsp;&nbsp; {startDate}{' '}
-            {endDate}
-          </ItemListing>
-          <ItemListing>
+              {endDate}
+            </ItemListing>
+            <ItemListing>
             🏫&nbsp;<strong>Location:</strong>&nbsp;&nbsp;&nbsp;
-            {sanitize(op.location)}
-          </ItemListing>
-          <ItemListing>
+              {sanitize(op.location)}
+            </ItemListing>
+            <ItemListing>
             📝&nbsp;<strong>Status:</strong>&nbsp;&nbsp;&nbsp;
-            {sanitize(op.status)}
-          </ItemListing>
+              {sanitize(op.status)}
+            </ItemListing>
           </ItemContainer>
           <Divider />
           {op.offerOrg && (
@@ -97,16 +85,16 @@ export function OpDetail ({ op }) {
             </ItemListing>
           )}
           <Divider />
-  
-        <Markdown
-          style={{ width: '100%' }}
-          children={description}
-          options={{
-            overrides: {
-              Button: { component: Button }
-            }
-          }}
-        />
+
+          <Markdown
+            style={{ width: '100%' }}
+            children={description}
+            options={{
+              overrides: {
+                Button: { component: Button }
+              }
+            }}
+          />
         </Left>
         <Right>
           <img style={{ width: '100%' }} src={img} alt={op.name} />
@@ -116,9 +104,6 @@ export function OpDetail ({ op }) {
         </Right>
 
       </HalfGrid>
-
-
-
 
     </FullPage>
   )

@@ -13,7 +13,7 @@ const SectionTitleWrapper = styled.div`
 
 const NextActionBlock = ({ ...props }) => (
   <BlockContainer>
-        <SectionTitleWrapper>
+    <SectionTitleWrapper>
       <H3Black>Getting Started</H3Black>
       <P>
         To start volunteering on Voluntarily, here are a few things we recommend
