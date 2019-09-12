@@ -58,44 +58,42 @@ test.before('Setup fixtures', (t) => {
     tags
   }
 
-  t.context.mockStore = configureStore([thunk])(
-    {
-      session: {
-        isAuthenticated: true,
-        user: { nickname: me.nickname },
-        me
-      },
-      opportunities: {
-        sync: true,
-        syncing: false,
-        loading: false,
-        data: [ops[1]],
-        request: null
-      },
-      tags: {
-        sync: true,
-        syncing: false,
-        loading: false,
-        data: tags,
-        request: null
-      },
-      locations: {
-        sync: true,
-        syncing: false,
-        loading: false,
-        data: locations,
-        request: null
-      },
-      members: {
-        sync: true,
-        syncing: false,
-        loading: false,
-        data: orgMembership,
-        request: null
-      }
-
+  t.context.defaultstore = {
+    session: {
+      isAuthenticated: true,
+      user: { nickname: me.nickname },
+      me
+    },
+    opportunities: {
+      sync: true,
+      syncing: false,
+      loading: false,
+      data: [ops[1]],
+      request: null
+    },
+    tags: {
+      sync: true,
+      syncing: false,
+      loading: false,
+      data: tags,
+      request: null
+    },
+    locations: {
+      sync: true,
+      syncing: false,
+      loading: false,
+      data: locations,
+      request: null
+    },
+    members: {
+      sync: true,
+      syncing: false,
+      loading: false,
+      data: orgMembership,
+      request: null
     }
-  )
+  }
+  t.context.mockStore = configureStore([thunk])(t.context.defaultstore)
 })
 
 function makeFetchMock (opportunityId) {
@@ -309,4 +307,40 @@ test('can create new Op', t => {
   // console.log(t.context.mockStore.getActions()[0])
   // should switch back to display mode
   // console.log(wrapper.html())
+})
+
+test('page loads when user is not signed in but does not show edit VP-499', t => {
+  const props = {
+    me: null,
+    dispatch: t.context.mockStore.dispatch
+  }
+  const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <RoutedOpDetailPage {...props} />
+    </Provider>
+  )
+
+  t.falsy(wrapper.find('#editOpBtn').length)
+})
+
+test('page loads when op does not have a valid requestor VP-499', t => {
+  const op2 = t.context.ops[2]
+  op2.requestor = null
+  const store = t.context.defaultstore
+  store.opportunities.data = [op2]
+  const mockStore = configureStore([thunk])(store)
+  const props = {
+    me: t.context.me,
+    dispatch: mockStore.dispatch
+  }
+
+  const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)
+  const wrapper = mountWithIntl(
+    <Provider store={mockStore}>
+      <RoutedOpDetailPage {...props} />
+    </Provider>
+  )
+
+  t.truthy(wrapper.find('#editOpBtn').length)
 })

@@ -118,7 +118,7 @@ export class OpDetailPage extends Component {
   }
 
   isOwner (op) {
-    return this.props.isNew || this.props.me._id === op.requestor._id
+    return this.props.isNew || (this.props.me && op.requestor && this.props.me._id === op.requestor._id)
   }
 
   canEdit (op) {
@@ -205,7 +205,7 @@ export class OpDetailPage extends Component {
             isAuthenticated={this.props.isAuthenticated}
             canRegisterInterest={this.canRegisterInterest(op)}
             op={op}
-            meID={this.props.me._id}
+            meID={this.props.me && this.props.me._id}
           />
           <OpOwnerManageInterests
             canManageInterests={this.canManageInterests(op)}

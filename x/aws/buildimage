@@ -14,7 +14,8 @@ source ${MY_DIR}/login-singapore
 REVISION=`git describe --always --dirty`
 
 # build the docker image
-docker build --target production --build-arg BUILD_REVISION=${REVISION} \
+docker build --target production \
+    --build-arg BUILD_REVISION=${REVISION} \
     --build-arg BUILD_APP_URL=${APP_URL} \
     --build-arg BUILD_AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
     --build-arg BUILD_AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
