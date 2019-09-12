@@ -78,3 +78,55 @@ The body of the response is in the format bellow:
 }
 ```
 
+2. How do I issue new badge to user by API https://api.badgr.io/v2/badgeclasses/:ID_OF_YOUR_BADGE/assertions
+The body of the request could be something simple like bellow 
+```javascript
+{
+  "recipient": {
+    "identity": "String", 
+    "type": "email", //could be email, URL or even phonen number
+    "hashed": true
+  }
+}
+```
+
+Send a POST request to 
+When the backend issue a new request the result of the POST request would be in the JSON format bellow if success
+
+
+```javascript
+{
+    "status": {
+        "description": "ok",
+        "success": true
+    },
+    "result": [
+        {
+            "entityType": "Assertion",
+            "entityId": "Unique identifier for this Assertionw",
+            "openBadgeId": "URL STRING",
+            "createdAt": "ISO8601 timestamp",
+            "createdBy": "BadgeUser who created the Assertion in ID",
+            "badgeclass": "BadgeClass that issued this Assertion in ID hash value",
+            "badgeclassOpenBadgeId": "URL of the BadgeClass to award",
+            "issuer": "aSBVfm84SMiF0c16O9jCOA",
+            "issuerOpenBadgeId": "URL to issuer ",
+            "image": "URL Image of the badge",
+            "recipient": {
+                "identity": "sha256$cc37fd25e8687b0c8adbd743f7e43997a0d5eb279b5eea11b7d5787f7b0f5842",
+                "hashed": true, 
+                "type": "email", // It could be email 
+                "plaintextIdentity": "String",
+                "salt": "String" // this only shows if the hashed option enabled
+            },
+            "issuedOn": "ISO8601 timestamp",
+            "narrative": null,
+            "evidence": [],
+            "revoked": false,
+            "revocationReason": null,
+            "expires": null,
+            "extensions": {}
+        }
+    ]
+}
+```
