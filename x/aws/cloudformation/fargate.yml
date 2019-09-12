@@ -108,7 +108,7 @@ Resources:
   ECSCluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: !Join ['-', [!Ref 'StackName', 'ECSCluster']]
+      ClusterName: !Join ['-', [!Ref 'ServiceName', 'ECSCluster']]
 
   # Setup networking resources for the public subnets. Containers
   # in the public subnets have public IP addresses and the routing table
@@ -178,7 +178,7 @@ Resources:
     Properties:
       ServiceName: !Ref 'ServiceName'
       Cluster:
-          !Join ['-', [!Ref 'StackName', 'ECSCluster']]
+          !Join ['-', [!Ref 'ServiceName', 'ECSCluster']]
       LaunchType: FARGATE
       DeploymentConfiguration:
         MaximumPercent: 200
