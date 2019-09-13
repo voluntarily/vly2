@@ -1,25 +1,18 @@
-import React, { Component } from 'react'
 // [@TODO] - remove Input once actual search component is done
 import { Button, Input } from 'antd'
-import { FormattedMessage } from 'react-intl'
 import Link from 'next/link'
-import publicPage from '../../hocs/publicPage'
-import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
+import Router from 'next/router'
 import PropTypes from 'prop-types'
-import NoResult from '../../components/NoResult'
+import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
+import { FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
 import ActList from '../../components/Act/ActList'
 import ActMenu from '../../components/Act/ActMenu'
-import Router from 'next/router'
-import styled from 'styled-components'
-import {
-  FullPage,
-  GridContainer,
-  ActivityContainer,
-  PageHeaderContainer,
-  H3Black,
-  RequestButtonContainer
-} from '../../components/VTheme/VTheme'
-import { Helmet } from 'react-helmet'
+import NoResult from '../../components/NoResult'
+import { ActivityContainer, FullPage, GridContainer, H3Black, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
+import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 
 // const { TabPane } = Tabs
 
@@ -38,7 +31,6 @@ const TabContainer = styled.div`
 
 // function callback (key) {
 //   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
-//   // console.log(key)
 // }
 class Acts extends Component {
   static async getInitialProps ({ store, query }) {
@@ -70,21 +62,7 @@ class Acts extends Component {
   }
 
   render () {
-    // const activityTab = (
-    //   <span>
-    //     <Icon type='experiment' />
-    //     <strong>
-    //       <FormattedMessage
-    //         id='act.act'
-    //         defaultMessage='Activities'
-    //         description='show opportunities list on volunteer home page'
-    //       />
-    //     </strong>
-    //   </span>
-    // )
-
     const { acts } = this.props
-    // var shadowStyle = { overflow: 'visible' }
     return (
       <FullPage>
         <Helmet>

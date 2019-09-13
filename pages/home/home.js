@@ -2,24 +2,17 @@ import { Button, Icon, message, Tabs } from 'antd'
 import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
+import NextActionBlock from '../../components/Action/NextActionBlock'
 import OpAdd from '../../components/Op/OpAdd'
 import OpList from '../../components/Op/OpList'
 import OpRecommendations from '../../components/Op/OpRecommendations'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
+import { FullPage, H3Black, P, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withArchivedOpportunities, withInterests, withMembers, withOps, withPeople, withRecommendedOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
-import NextActionBlock from '../../components/Action/NextActionBlock'
-import styled from 'styled-components'
-
-import {
-  FullPage,
-  H3Black,
-  P,
-  PageHeaderContainer,
-  RequestButtonContainer
-} from '../../components/VTheme/VTheme'
 
 const { TabPane } = Tabs
 
@@ -170,11 +163,6 @@ class PersonHomePage extends Component {
           <TitleContainer>
             <H3Black>
               {this.props.me.nickname}'s Requests
-              {/* <FormattedMessage
-            id='home.title'
-            defaultMessage='My Stuff'
-            description='title on volunteer home page.'
-          /> */}
             </H3Black>
           </TitleContainer>
           <RequestButtonContainer>
@@ -185,24 +173,36 @@ class PersonHomePage extends Component {
 
         <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={opsTab} key='1'>
+
             <SectionWrapper>
-              <SectionTitleWrapper>
-                <H3Black>
-                  <FormattedMessage
-                    id='home.liveOpportunities'
-                    defaultMessage='Active Requests'
-                    decription='subtitle on volunteer home page for active requests and opportunities'
-                  />
-                </H3Black>
-              </SectionTitleWrapper>
-              {ops && (
-                <OpList
-                  ops={ops.filter(op =>
-                    ['active', 'draft'].includes(op.status)
-                  )}
-                />
-              )}
+
+              {/* // TODO: [VP-208] list of things volunteers can do on home page */}
+              <NextActionBlock />
             </SectionWrapper>
+            {
+              this.props.opportunities.data.length !== 0 && (
+                <SectionWrapper>
+                  <SectionTitleWrapper>
+                    <H3Black>
+                      <FormattedMessage
+                        id='home.liveOpportunities'
+                        defaultMessage='Active Requests'
+                        decription='subtitle on volunteer home page for active requests and opportunities'
+                      />
+                    </H3Black>
+                  </SectionTitleWrapper>
+                  {ops && (
+                    <OpList
+                      ops={ops.filter(op =>
+                        ['active', 'draft'].includes(op.status)
+                      )}
+                    />
+
+                  )}
+                </SectionWrapper>
+              )
+            }
+
             <SectionWrapper>
               <SectionTitleWrapper>
                 <H3Black>
@@ -223,17 +223,6 @@ class PersonHomePage extends Component {
               <OpRecommendations
                 recommendedOps={this.props.recommendedOps.data[0]} />
             </SectionWrapper>
-            <SectionWrapper>
-              <SectionTitleWrapper>
-                <H3Black>Getting Started</H3Black>
-                <P>
-                  To start volunteering on Voluntarily, here are a few things we
-                  recommend doing:
-                </P>
-              </SectionTitleWrapper>
-              {/* // TODO: [VP-208] list of things volunteers can do on home page */}
-              <NextActionBlock />
-            </SectionWrapper>
 
           </TabPane>
           <TabPane tab={searchTab} key='2'>
@@ -251,7 +240,6 @@ class PersonHomePage extends Component {
                 ops={this.getArchivedOpportunitiesByStatus('cancelled')}
               />
             </SectionWrapper>
-            {/* <OpListSection query={myPastfilterString} /> */}
           </TabPane>
           <TabPane tab={profileTab} key='3'>
             <SectionWrapper>

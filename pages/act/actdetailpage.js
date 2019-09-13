@@ -2,17 +2,16 @@ import { Button, Divider, message } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
-import Loading from '../../components/Loading'
 import ActDetail from '../../components/Act/ActDetail'
 import ActDetailForm from '../../components/Act/ActDetailForm'
+import Loading from '../../components/Loading'
 import PersonCard from '../../components/Person/PersonCard'
-import publicPage from '../../hocs/publicPage'
 import { FullPage } from '../../components/VTheme/VTheme'
-
+import publicPage from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 import { Role } from '../../server/services/authorize/role'
-import { Helmet } from 'react-helmet'
 
 const blankAct = {
   title: '',
@@ -35,7 +34,6 @@ export class ActDetailPage extends Component {
     // Get one Act
     const isNew = query && query.new && query.new === 'new'
     if (isNew) {
-      // console.log('opdetailpage: getInitialProps', isNew)
       return {
         isNew: true,
         actid: null

@@ -1,14 +1,13 @@
 /* Dumb React component Shows contents of an activity
  */
-import React from 'react'
-import PropTypes from 'prop-types'
-import Head from 'next/head'
-import Markdown from 'markdown-to-jsx'
-import styled from 'styled-components'
-
 import { Button } from 'antd'
-import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
+import Markdown from 'markdown-to-jsx'
+import Head from 'next/head'
+import PropTypes from 'prop-types'
+import React from 'react'
+import styled from 'styled-components'
 import TagDisplay from '../Tags/TagDisplay'
+import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
 
 const Left = styled.div``
 
@@ -65,7 +64,7 @@ export function ActDetail ({ act }) {
           <Spacer />
         </Left>
         <Right>
-          <img style={{ width: '100%' }} src={act.imgUrl} alt={act.name} />
+          <img style={{ width: '100%' }} src={img} alt={act.name} />
           <TagContainer>
             <TagDisplay tags={act.tags} />
           </TagContainer>

@@ -17,9 +17,8 @@ test.before('Setup fixtures', (t) => {
 
 test('render the detail with op', t => {
   const wrapper = renderWithIntl(<OpDetail op={t.context.op} onPress={() => {}} />)
-  console.log(wrapper.html())
   t.truthy(wrapper.find('Head'))
-  t.is(wrapper.find('h1').text(), t.context.op.name)
+  t.is(wrapper.find('h3').text(), t.context.op.name)
 })
 
 // test.todo('verify markdown in description is rendered')

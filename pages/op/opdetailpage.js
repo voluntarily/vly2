@@ -3,24 +3,24 @@ import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
+import Loading from '../../components/Loading'
 import OpDetail from '../../components/Op/OpDetail'
-import publicPage from '../../hocs/publicPage'
-import reduxApi, { withOps, withMembers } from '../../lib/redux/reduxApi.js'
-import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
-import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
-import OpLoadingPage from './oploadingpage'
-import OpUnavailablePage from './opunavailablepage'
-import OpEditPage from './opeditpage'
+import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import { FullPage } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
+import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
+import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
+import OpEditPage from './opeditpage'
+import OpUnavailablePage from './opunavailablepage'
 
 const blankOp = {
   name: '',
   subtitle: '',
   imgUrl: '',
   duration: '',
-  location: '',
+  location: 'Online',
   status: 'inactive',
   date: [],
   startDate: null,
@@ -118,7 +118,7 @@ export class OpDetailPage extends Component {
   }
 
   isOwner (op) {
-    return this.props.isNew || this.props.me._id === op.requestor._id
+    return this.props.isNew || (this.props.me && op.requestor && this.props.me._id === op.requestor._id)
   }
 
   canEdit (op) {
@@ -165,7 +165,7 @@ export class OpDetailPage extends Component {
     // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
     if (!this.props.isNew) {
       if (this.props.opportunities.loading) {
-        return (<OpLoadingPage />)
+        return (<Loading />)
       }
       if (this.props.opportunities.data.length !== 1) {
         return (<OpUnavailablePage />)
@@ -205,7 +205,7 @@ export class OpDetailPage extends Component {
             isAuthenticated={this.props.isAuthenticated}
             canRegisterInterest={this.canRegisterInterest(op)}
             op={op}
-            meID={this.props.me._id}
+            meID={this.props.me && this.props.me._id}
           />
           <OpOwnerManageInterests
             canManageInterests={this.canManageInterests(op)}

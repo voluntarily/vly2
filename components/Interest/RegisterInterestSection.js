@@ -2,14 +2,13 @@
   Smart component. For the given op id and person id, it displays that person's interest in that op.
   If no interest exists, it will allow one to be created. If one does exist, it will allow it to be updated or cancelled.
 */
-import React, { Component } from 'react'
-import RegisterInterestItem from './RegisterInterestItem'
 import { message } from 'antd'
-import InterestConfirmationCard from './InterestConfirmationCard'
-
+import React, { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
-import { FormattedMessage } from 'react-intl'
+import InterestConfirmationCard from './InterestConfirmationCard'
+import RegisterInterestItem from './RegisterInterestItem'
 
 // Helper function to generate a blank interest.
 function getNewInterest (me, op) {
@@ -37,11 +36,9 @@ class RegisterInterestSection extends Component {
 
   // When the button is clicked to advance the interest status, make an appropriate api call.
   async handleChangeStatus (interest) {
-    // const prevStatus = interest.status
     interest.status = getNextStatus(interest)
 
     if (interest._id) {
-      // console.log('Modifying interest')
       await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
       message.success('Interest updated')
     } else {
@@ -52,7 +49,6 @@ class RegisterInterestSection extends Component {
 
   // When the button is clicked to withdraw interest, make an appropriate api call.
   async handleWithdraw (interest) {
-    // console.log('Deleting interest ', interest)
     await this.props.dispatch(reduxApi.actions.interests.delete({ id: interest._id }))
     message.success('Interest deleted')
   }
@@ -82,7 +78,6 @@ class RegisterInterestSection extends Component {
       } else { // If not, use a blank interest.
         interest = getNewInterest(this.props.meID, this.props.op)
       }
-      // console.log(interest)
       return (
         <section>
           <RegisterInterestItem

@@ -82,9 +82,7 @@ const Header = ({ isAuthenticated, ...props }) => (
       <div>
         <Brand className='site-name' />
         <SearchInput
-          // size='small'
           placeholder='Search for cool ways to help out'
-          // enterButton='Search'
           onSearch={handleSearch}
         />
       </div>

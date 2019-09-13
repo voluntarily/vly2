@@ -3,20 +3,12 @@ import Markdown from 'markdown-to-jsx'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
-import PersonRoles from './PersonRole'
-import TagDisplay from '../Tags/TagDisplay'
 import { FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
-import {
-  GridContainer,
-  PBold,
-  H1,
-
-  H3Bold,
-  SpacerSmall,
-  Spacer
-} from '../VTheme/VTheme'
+import TagDisplay from '../Tags/TagDisplay'
+import { GridContainer, H1, H3Bold, PBold, Spacer, SpacerSmall } from '../VTheme/VTheme'
+import PersonRoles from './PersonRole'
 
 const ProfileGrid = styled.div`
   display: grid;
@@ -91,7 +83,7 @@ const PersonDetail = ({ person }, ...props) => (
       <ListItem>
         <H1>
           {person.name}
-          {person.status ? (
+          {/* {person.status ? (
             <Icon
               type='safety-certificate'
               theme='filled'
@@ -99,7 +91,7 @@ const PersonDetail = ({ person }, ...props) => (
             />
           ) : (
             <Icon type='close-circle' />
-          )}
+          )} */}
         </H1>
         <PBold>{person.org}</PBold>
         <Divider />

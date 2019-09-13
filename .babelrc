@@ -18,12 +18,12 @@
     }
   },
   "plugins": [
-    [
-      "import", {
-        "libraryName": "antd",
-        "style": true
-      },
-    ],
+    // [
+    //   "import", {
+    //     "libraryName": "antd",
+    //     "style": "css"
+    //   },
+    // ],
     [ "babel-plugin-styled-components",
       {
         "ssr": true,

@@ -1,14 +1,13 @@
-import { OpDetailPage } from '../op/opdetailpage'
-import OpLoadingPage from '../op/oploadingpage'
-import OpUnavailablePage from '../op/opunavailablepage'
-import publicPage from '../../hocs/publicPage'
-import { FullPage } from '../../components/VTheme/VTheme'
-
-import OpDetail from '../../components/Op/OpDetail'
-import InterestSection from '../../components/Interest/InterestSection' // TODO Introduce archived interest section
 import { Divider } from 'antd'
-import reduxApi, { withArchivedOpportunities } from '../../lib/redux/reduxApi.js'
 import { Helmet } from 'react-helmet'
+import InterestSection from '../../components/Interest/InterestSection' // TODO Introduce archived interest section
+import OpDetail from '../../components/Op/OpDetail'
+import { FullPage } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
+import reduxApi, { withArchivedOpportunities } from '../../lib/redux/reduxApi.js'
+import { OpDetailPage } from '../op/opdetailpage'
+import Loading from '../../components/Loading'
+import OpUnavailablePage from '../op/opunavailablepage'
 
 export class ArchivedOpDetailPage extends OpDetailPage {
   constructor (props) {
@@ -40,7 +39,7 @@ export class ArchivedOpDetailPage extends OpDetailPage {
     // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
     if (!this.props.isNew) {
       if (this.props.archivedOpportunities.loading) {
-        return (<OpLoadingPage />)
+        return (<Loading />)
       }
       if (this.props.archivedOpportunities.data.length !== 1) {
         return (<OpUnavailablePage />)

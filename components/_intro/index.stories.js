@@ -1,30 +1,9 @@
-import React from 'react'
-
 import { storiesOf } from '@storybook/react'
-
-import styled from 'styled-components'
-
-import {
-  TextBigTitle,
-  H1,
-  H4,
-  PBold,
-  P,
-  H3,
-  H3Bold,
-  H3Black,
-  BigQuote,
-  BigQuoteAuthor,
-  Grid
-} from '../VTheme/VTheme'
-import {
-  StoryIntroContainer,
-  ColorGrid,
-  ColorContainer,
-  ColorSwatch
-} from '../VTheme/VStoryTheme'
-
 import { Divider } from 'antd'
+import React from 'react'
+import styled from 'styled-components'
+import { ColorContainer, ColorGrid, ColorSwatch, StoryIntroContainer } from '../VTheme/VStoryTheme'
+import { BigQuote, BigQuoteAuthor, Grid, H1, H3, H3Black, H3Bold, H4, P, PBold, TextBigTitle } from '../VTheme/VTheme'
 
 storiesOf('Welcome', module)
   .add('Getting Started', () => (

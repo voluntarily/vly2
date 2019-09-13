@@ -1,6 +1,6 @@
-import { Component } from 'react'
-import Link from 'next/link'
 import { Button, Divider } from 'antd'
+import Link from 'next/link'
+import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RegisterInterestSection from '../Interest/RegisterInterestSection'
 

@@ -1,9 +1,9 @@
-import React from 'react'
-import { FullPage } from '../../components/VTheme/VTheme'
-import OpDetailForm from '../../components/Op/OpDetailForm'
-import PropTypes from 'prop-types'
-import Router from 'next/router'
 import { message } from 'antd'
+import Router from 'next/router'
+import PropTypes from 'prop-types'
+import React from 'react'
+import OpDetailForm from '../../components/Op/OpDetailForm'
+import { FullPage } from '../../components/VTheme/VTheme'
 
 export default class OpEditPage extends React.Component {
   async handleSubmit (op) {
@@ -11,9 +11,8 @@ export default class OpEditPage extends React.Component {
       op = await this.props.createOpportunity(op)
     } else {
       op = await this.props.updateOpportunity(op)
-      Router.replace(`/ops/${op._id}`)
     }
-    this.props.stopEditing()
+    Router.replace(`/ops/${op._id}`)
     message.success('Saved.')
   }
 

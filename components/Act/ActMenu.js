@@ -1,5 +1,5 @@
-import styled from 'styled-components'
 import { Menu } from 'antd'
+import styled from 'styled-components'
 
 const ActivityMenu = styled(Menu)`
   height: 32px;
@@ -24,8 +24,6 @@ const ActivityMenu = styled(Menu)`
 `
 
 const ActMenu = ({ acts, ...props }) => {
-  // Trying to get tags data:
-  // console.log(acts[1].tags[0])
   const actMenu = {
     Discover: {
       'Top rated': 132,

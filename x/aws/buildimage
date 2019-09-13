@@ -14,7 +14,14 @@ source ${MY_DIR}/login-singapore
 REVISION=`git describe --always --dirty`
 
 # build the docker image
-docker build --target production --build-arg BUILD_REVISION=${REVISION} --build-arg BUILD_APP_URL=${APP_URL} --build-arg BUILD_SMTP_ID=${SMTP_ID} --build-arg BUILD_SMTP_PWD=${SMTP_PWD} --tag voluntarily/vly2:${ESCAPED_TAG_VERSION} .
+docker build --target production \
+    --build-arg BUILD_REVISION=${REVISION} \
+    --build-arg BUILD_APP_URL=${APP_URL} \
+    --build-arg BUILD_AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+    --build-arg BUILD_AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+    --build-arg BUILD_SMTP_ID=${SMTP_ID} \
+    --build-arg BUILD_SMTP_PWD=${SMTP_PWD} \
+    --tag voluntarily/vly2:${ESCAPED_TAG_VERSION} .
 
 # tag the image
 UPSTREAM_TAG=585172581592.dkr.ecr.ap-southeast-1.amazonaws.com/vly2-alpha:${ESCAPED_TAG_VERSION}

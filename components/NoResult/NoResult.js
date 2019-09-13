@@ -1,7 +1,7 @@
+import { Icon, Result } from 'antd'
+import PropTypes from 'prop-types'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Result, Icon } from 'antd'
-import PropTypes from 'prop-types'
 
 function NoResult (props) {
   const {

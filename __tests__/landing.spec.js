@@ -15,7 +15,7 @@ test.before('Setup fixtures', (t) => {
   // setup list of opportunities, I am owner for the first one
   ops.map((op, index) => {
     op._id = objectid().toString()
-    op.requestor = people[index]._id
+    op.requestor = people[index]
   })
 
   // setup list of interests, i'm interested in first 5 ops

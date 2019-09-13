@@ -1,8 +1,7 @@
-import TitleSectionSub from '../LandingPageComponents/TitleSectionSub'
-import styled from 'styled-components'
 import { Button } from 'antd'
-
 import { FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
+import TitleSectionSub from '../LandingPageComponents/TitleSectionSub'
 import { TripleGrid } from '../VTheme/VTheme'
 
 // cardcontainer

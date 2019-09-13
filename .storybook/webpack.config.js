@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = async ({ config, mode }) => {
+module.exports = async ({ config, mode, defaultConfig }) => {
 
   config.module.rules.push({
       loader: 'babel-loader',
@@ -23,19 +23,29 @@ module.exports = async ({ config, mode }) => {
       loaders: [
           'style-loader',
           'css-loader',
+          
           {
               loader: 'less-loader',
               options: {
-                  modifyVars: {'@primary-color': '#f00'},
+                  modifyVars: {
+                      'primary-color': '#6549AA',
+                      'font-family' : 'Inter, -apple-system, Helvetica, Arial, sans-serif'
+                    },
                   javascriptEnabled: true
               }
           }
       ],
       include: [
         path.resolve(__dirname, '../src'),
-        /[\\/]node_modules[\\/].*antd/
+        /[\\/]node_modules[\\/].*antd/,
+        path.resolve(__dirname, '../assets'),
+        path.resolve(__dirname, '../components'),
+        
+
       ]
   });
+
+
 
   return config;
 };

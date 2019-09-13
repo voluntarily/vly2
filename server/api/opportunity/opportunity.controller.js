@@ -134,6 +134,8 @@ const getOpportunity = async (req, res) => {
       .populate('tags')
       .exec()
     if (got == null) {
+      // BUG: [VP-478] populate tags with many tags can cause a 507 Insufficient Space error.
+      // Also this error message is not helpful.  Catch and do something useful
       throw Error()
     }
     res.json(got)
