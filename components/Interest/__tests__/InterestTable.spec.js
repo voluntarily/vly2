@@ -15,7 +15,20 @@ test('InterestTable renders properly', t => {
       comment: 'Test Comment',
       status: 'Test Status',
       _id: '11223344'
-    }]}
+    },{
+      person: { nickname: 'Test Name2' },
+      opportunity: 'Test Opportunity2',
+      comment: 'Test Comment2',
+      status: 'Test Status2',
+      _id: '11223345'
+    },{
+      person: { nickname: 'Test Name3' },
+      opportunity: 'Test Opportunity3',
+      comment: 'Test Comment3',
+      status: 'Test Status3',
+      _id: '11223346'
+    }
+  ]}
   />)
 
   // Confirm table headers

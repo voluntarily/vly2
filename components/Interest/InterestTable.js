@@ -7,6 +7,9 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 
 class InterestTable extends Component {
+  componentDidMount(){
+    console.log('this.props.interests', this.props.interests, this.columns)
+  }
   columns = [
     {
       title: 'Selected',
@@ -17,6 +20,7 @@ class InterestTable extends Component {
     },
     { title: 'Name',
       key: 'imgUrl',
+      sorter: (a, b) => a.person.nickname.length - b.person.nickname.length,
       render: (text, record) => {
         return (
           <span>
@@ -40,7 +44,34 @@ class InterestTable extends Component {
     {
       title: 'Status',
       dataIndex: 'status',
-      key: 'status'
+      key: 'status',
+      sorter: (a, b) => a.status.length - b.status.length,
+      filters: [
+        {
+          text: 'interested',
+          value: 'interested',
+        },
+        {
+          text: 'invited',
+          value: 'invited',
+        },
+        {
+          text: 'committed',
+          value: 'committed',
+        },
+        {
+          text: 'declined',
+          value: 'declined',
+        },
+        {
+          text: 'completed',
+          value: 'completed',
+        },
+        {
+          text: 'cancelled',
+          value: 'cancelled',
+        },
+      ],  
     },
     {
       title: 'Action',
@@ -93,6 +124,10 @@ class InterestTable extends Component {
     this.props.onWithdrawInvite(interest)
   }
 
+  onChange = (pagination, filters, sorter)=> {
+    console.log('params', pagination, filters, sorter);
+  }
+
   render () {
     return (
       <Table
@@ -100,6 +135,7 @@ class InterestTable extends Component {
         dataSource={this.props.interests}
         rowKey='_id'
         pagination={false}
+        onChange={this.onChange}
       />
     )
   }
