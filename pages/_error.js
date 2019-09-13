@@ -34,12 +34,12 @@ const BugContainer = styled.div`
 `
 
 class ErrorPage extends React.Component {
-  static getInitialProps({ res, xhr }) {
+  static getInitialProps ({ res, xhr }) {
     const errorCode = res ? res.statusCode : xhr ? xhr.status : null
     return { errorCode }
   }
 
-  render() {
+  render () {
     var response
 
     switch (this.props.errorCode) {
