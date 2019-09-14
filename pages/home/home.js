@@ -102,10 +102,14 @@ class PersonHomePage extends Component {
     if (!person) return
     // Actual data request
     let res = {}
+
+    const role = this.sortRoleByPower(person)
+    const personData = { ...person, role }
+    console.log(personData)
     res = await this.props.dispatch(
       reduxApi.actions.people.put(
-        { id: person._id },
-        { body: JSON.stringify(person) }
+        { id: personData._id },
+        { body: JSON.stringify(personData) }
       )
     )
 
@@ -115,6 +119,13 @@ class PersonHomePage extends Component {
     this.setState({ editProfile: false })
   }
 
+  sortRoleByPower = ({ role }) => {
+    if (role.includes('admin')) {
+      role = role.filter(element => { return element !== 'admin' })
+      role.push('admin')
+    }
+    return role
+  }
   render () {
     var shadowStyle = { overflow: 'visible' }
     if (this.props.members.sync && this.props.members.data.length > 0) {
