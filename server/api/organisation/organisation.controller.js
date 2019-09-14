@@ -42,8 +42,7 @@ const getOrganisations = async (req, res) => {
       const searchParams = {
         $or: [
           { 'name': searchExpression },
-          { 'subtitle': searchExpression },
-          { 'description': searchExpression }
+          { 'slug': searchExpression }
         ]
       }
 
