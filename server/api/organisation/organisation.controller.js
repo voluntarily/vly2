@@ -1,6 +1,6 @@
 const Organisation = require('./organisation')
-const Tag = require('../tag/tag')
-const escapeRegex = require('../../util/regexUtil')
+// const Tag = require('../tag/tag')
+// const escapeRegex = require('../../util/regexUtil')
 
 // import slug from 'limax'
 // import sanitizeHtml from 'sanitize-html'
