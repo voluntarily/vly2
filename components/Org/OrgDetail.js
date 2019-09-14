@@ -133,32 +133,36 @@ const OrgDetail = ({ org, ...props }) => (
                 <SocialButton
                   type='link'
                   href={`https://${org.website}`}
-                  target='_blank'
                   icon='global'
+                  target='_blank'
+                  rel='noopener noreferrer'
                 />
               )}
               {org.contactEmail && (
                 <SocialButton
                   type='link'
                   href={`mailto:${org.contactEmail}`}
-                  target='_blank'
                   icon='mail'
+                  target='_blank'
+                  rel='noopener noreferrer'
                 />
               )}
               {org.facebook && (
                 <SocialButton
                   type='link'
                   href={`https://www.facebook.com/${org.facebook}`}
-                  target='_blank'
                   icon='facebook'
+                  target='_blank'
+                  rel='noopener noreferrer'
                 />
               )}
               {org.twitter && (
                 <SocialButton
                   type='link'
                   href={`https://www.twitter.com/${org.twitter}`}
-                  target='_blank'
                   icon='twitter'
+                  target='_blank'
+                  rel='noopener noreferrer'
                 />
               )}
             </ButtonGroup>

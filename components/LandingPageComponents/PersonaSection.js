@@ -108,7 +108,7 @@ font-size: 1rem;
 const AboutSection = () => (
   <PersonaBox>
     <Grid>
-      <a href='/about' target='_blank'>
+      <a href='/about' target='_blank' rel='noopener noreferrer'>
         <PersonaContainer>
           <Image src='/static/img/volunteerCard.png' />
           <Title>Volunteers</Title>
@@ -119,7 +119,7 @@ const AboutSection = () => (
           <Button>Learn More</Button>
         </PersonaContainer>
       </a>
-      <a href='/teachers' target='_blank'>
+      <a href='/teachers' target='_blank' rel='noopener noreferrer'>
         <PersonaContainer>
           <Image src='/static/img/teacherCard.png' />
           <Title>Teachers</Title>
@@ -129,7 +129,7 @@ const AboutSection = () => (
           <Button>Learn More</Button>
         </PersonaContainer>
       </a>
-      <a href='/content' target='_blank'>
+      <a href='/content' target='_blank' rel='noopener noreferrer'>
         <PersonaContainer>
           <Image src='/static/img/contentCard.png' />
           <Title>Content Providers</Title>
@@ -137,7 +137,7 @@ const AboutSection = () => (
           <Button>Learn More</Button>
         </PersonaContainer>
       </a>
-      <a href='/business' target='_blank'>
+      <a href='/business' target='_blank' rel='noopener noreferrer'>
         <PersonaContainer>
           <Image src='/static/img/businessCard.png' />
           <Title>Businesses</Title>
