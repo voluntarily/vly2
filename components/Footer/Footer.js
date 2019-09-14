@@ -82,7 +82,16 @@ const MenuItem = styled.a`
 `
 
 const Footer = ({ isAuthenticated, ...props }) => (
+
   <FooterBackground>
+    <script type='text/javascript' src='https://voluntarily.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-t2deah/b/11/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=2e085869' />
+    <script type='text/javascript' async src='https://www.googletagmanager.com/gtag/js?id=UA-141212194-1' />
+    <script type='text/javascript' dangerouslySetInnerHTML={{
+      __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-141212194-1'); ` }} />
     <FooterContainer>
       <FooterLogo src='../../static/vlogo.svg' />
       <FooterText>
@@ -201,8 +210,8 @@ const Footer = ({ isAuthenticated, ...props }) => (
       </Grid>
       <Spacer />
     </FooterContainer>
-    { props.isAdmin &&
-      <Navigation items={getAllowedLinks(isAuthenticated)} {...props} /> }
+    {props.isAdmin &&
+      <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />}
   </FooterBackground>
 )
 
