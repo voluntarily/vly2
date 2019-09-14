@@ -2,13 +2,18 @@ import React from 'react'
 import Button from 'antd/lib/button'
 import { Spacer } from '../VTheme/VTheme'
 
-const exportMembers = (members) => {
+const createCsv = (members) => {
   let membersCsv = 'data:text/csv;charset=utf-8,'
   membersCsv += 'Name,Email,Phone,Role,Date_Added\n'
   membersCsv += members.map(member => (
     `${member.person.name},${member.person.email},${member.person.phone},${member.status},${member.dateAdded}`
   )).join('\n')
-  triggerDownload(membersCsv)
+  return membersCsv
+}
+
+const exportMembers = (members) => {
+  const csv = createCsv(members)
+  triggerDownload(csv)
 }
 
 const triggerDownload = (data) => {
