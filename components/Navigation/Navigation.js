@@ -38,7 +38,7 @@ const Navigation = ({ items, defaultItem, router, me, ...props }) => {
       ))}
       <Menu.Item>
         <StyledAvatar>
-          <Link href={'people/' + me._id}>
+          <Link href={me && me._id ? `/people/${me._id}` : 'auth/sign-in'}>
             <Avatar
               size='small'
               src={me && me.imgUrl}
