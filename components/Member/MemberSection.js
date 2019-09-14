@@ -13,6 +13,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Markdown from 'markdown-to-jsx'
+import MemberExport from './MemberExport'
 
 const SubSection = styled.section`
   margin-bottom: 2.0rem;
@@ -101,6 +102,7 @@ class MemberSection extends Component {
               onMembershipChange={this.handleMembershipChange.bind(this)}
               meid={meid}
             />
+            <MemberExport members={this.props.members.data} />
           </SubSection>
 
           <SubSection>
