@@ -20,5 +20,5 @@ test('render 200', t => {
 
 test('render 500', t => {
   const wrapper = mountWithIntl(<ErrorPageTest router={router} url='/404' errorCode={E500} />)
-  t.regex(wrapper.find('h1').first().text(), /Sorry, there was a problem/)
+  t.regex(wrapper.find('h2').first().text(), /Sorry, there was a problem/)
 })
