@@ -102,7 +102,6 @@ class MemberSection extends Component {
               onMembershipChange={this.handleMembershipChange.bind(this)}
               meid={meid}
             />
-            <MemberExport members={this.props.members.data} />
           </SubSection>
 
           <SubSection>
@@ -174,10 +173,20 @@ class MemberSection extends Component {
           <Markdown children={org.info.outsiders || ''} />
         </section>
     }
+
+    let memberExportSection = ''
+    if (myMembership.status === MemberStatus.ORGADMIN || this.props.isAdmin) {
+      memberExportSection =
+      <section>
+        <MemberExport members={this.props.members.data} />
+      </section>
+    }
+
     return (
       <div>
         {orgAdminSection}
         {followerInfoSection}
+        {memberExportSection}
         {memberInfoSection}
         {joinerInfoSection}
         {nonMemberInfoSection}
