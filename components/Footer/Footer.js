@@ -92,7 +92,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
             defaultMessage='Voluntarily is an awesome open source project run by the'
             description='line in the footer that says we are supported by PFCT.'
           />&nbsp;
-          <a href='https://www.pamfergusson.org.nz/' target='_blank'>
+          <a href='https://www.pamfergusson.org.nz/' target='_blank' rel='noopener noreferrer'>
             Pam Fergusson Charitable Trust
           </a>
         </P>
@@ -140,13 +140,14 @@ const Footer = ({ isAuthenticated, ...props }) => (
 
         <FooterGridItem>
           <FooterGridItemTitle>Social</FooterGridItemTitle>
-          <MenuItem href='http://twitter.com/voluntarilyhq' target='_blank'>
+          <MenuItem href='http://twitter.com/voluntarilyhq' target='_blank' rel='noopener noreferrer'>
             Twitter
           </MenuItem>
           <br />
           <MenuItem
             href='https://www.linkedin.com/groups/13709208/'
             target='_blank'
+            rel='noopener noreferrer'
           >
             LinkedIn
           </MenuItem>
@@ -154,6 +155,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
           <MenuItem
             href='https://www.youtube.com/channel/UCEDwH63ojQSq-S8us3iRZAA'
             target='_blank'
+            rel='noopener noreferrer'
           >
             Youtube
           </MenuItem>
@@ -161,6 +163,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
           <MenuItem
             href='https://www.facebook.com/voluntarilyAotearoa/'
             target='_blank'
+            rel='noopener noreferrer'
           >
             Facebook
           </MenuItem>
@@ -168,6 +171,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
           <MenuItem
             href='https://www.messenger.com/t/voluntarilyAotearoa'
             target='_blank'
+            rel='noopener noreferrer'
           >
             Messenger
           </MenuItem>
@@ -175,6 +179,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
           <MenuItem
             href='https://www.instagram.com/voluntarilyhq/'
             target='_blank'
+            rel='noopener noreferrer'
           >
             Instagram
           </MenuItem>
@@ -185,11 +190,11 @@ const Footer = ({ isAuthenticated, ...props }) => (
           <FooterGridItemTitle>Project</FooterGridItemTitle>
           <MenuItem href='/about'>About us</MenuItem>
           <br />
-          <MenuItem href='https://github.com/voluntarily/vly2' target='_blank'>
+          <MenuItem href='https://github.com/voluntarily/vly2' target='_blank' rel='noopener noreferrer'>
             Github Repo
           </MenuItem>
           <br />
-          <MenuItem href='https://voluntarily.atlassian.net/wiki' target='_blank'>
+          <MenuItem href='https://voluntarily.atlassian.net/wiki' target='_blank' rel='noopener noreferrer'>
             Developer resources
           </MenuItem>
           <br />
@@ -201,8 +206,8 @@ const Footer = ({ isAuthenticated, ...props }) => (
       </Grid>
       <Spacer />
     </FooterContainer>
-    { props.isAdmin &&
-      <Navigation items={getAllowedLinks(isAuthenticated)} {...props} /> }
+    {props.isAdmin &&
+      <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />}
   </FooterBackground>
 )
 
