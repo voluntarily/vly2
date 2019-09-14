@@ -38,12 +38,12 @@ const Navigation = ({ items, defaultItem, router, me, ...props }) => {
       ))}
       <Menu.Item>
         <StyledAvatar>
-        <Link href={"people/" + me._id}>
-          <Avatar
-            size='small'
-            src={me && me.imgUrl}
-            icon='user'
-          />
+          <Link href={'people/' + me._id}>
+            <Avatar
+              size='small'
+              src={me && me.imgUrl}
+              icon='user'
+            />
           </Link>
         </StyledAvatar>
       </Menu.Item>
