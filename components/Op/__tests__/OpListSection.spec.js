@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import { mountWithIntl } from '../../../lib/react-intl-test-helper'
+import { shallowWithIntl, mountWithIntl } from '../../../lib/react-intl-test-helper'
 import OpListSection from '../OpListSection'
 import { Provider } from 'react-redux'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
@@ -8,6 +8,10 @@ import adapterFetch from 'redux-api/lib/adapters/fetch'
 import DatePickerType from '../DatePickerType.constant'
 import { API_URL } from '../../../lib/apiCaller'
 import ops from './Op.fixture'
+import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
+import { InterestStatus } from '../../../server/api/interest/interest.constants'
+
 const { fetchMock } = require('fetch-mock')
 
 const opsWithOpenEndDate = [
@@ -247,5 +251,27 @@ test.serial('Test filter by week allow to add open end opportunity', async t => 
   wrapper.update()
   t.is(wrapper.find('OpCard').length, 3) // The week value not match the available date range in the ops array. Only the open end will match
   t.truthy(myMock.done())
+  myMock.restore()
+})
+
+test.only('OpListSection should pass list of users interests to the opList', async t => {
+  initStore.opportunities.data = opsWithOpenEndDate
+  initStore.interests = [{
+    opportunity: opsWithOpenEndDate[0],
+    status: InterestStatus.INTERESTED
+  }]
+  const mockStore = configureStore([thunk])(initStore)
+
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/`
+  myMock.getOnce(api, initStore.opportunities.data)
+
+  const wrapper = await mountWithIntl(
+    <Provider store={mockStore}>
+      <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} filter={emptyFilterDateState} dateFilterType={DatePickerType.WeekRange} />
+    </Provider>
+  )
+  t.is(wrapper.find('OpList').first().props().interests, initStore.interests)
   myMock.restore()
 })
