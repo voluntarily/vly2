@@ -1,0 +1,29 @@
+import MemberExport,{ createCsv } from '../MemberExport'
+import React from 'react'
+import test from 'ava'
+import { mount } from 'enzyme'
+
+test('MemberExport button renders properly', t => {
+  const wrapper = mount(<MemberExport />)
+  t.true(wrapper.find('Button').exists()) 
+  t.is(wrapper.find('Button').first().text(),'Export Members')
+})
+
+test('createCsv formats properly', async t => {
+  const testMember = [
+    {
+      dateAdded: '12345',
+      status: 'member',
+      person: {
+        name: 'Jared',
+        email: 'jared@jared.com',
+        phone: '12345678'
+      }
+    }
+  ]
+  const csv = createCsv(testMember)
+
+  const expected = 'data:text/csv;charset=utf-8,Name,Email,Phone,Role,Date_Added\nJared,jared@jared.com,12345678,member,12345'
+
+  t.assert(csv === expected)
+})

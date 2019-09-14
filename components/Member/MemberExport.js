@@ -2,7 +2,7 @@ import React from 'react'
 import Button from 'antd/lib/button'
 import { Spacer } from '../VTheme/VTheme'
 
-const createCsv = (members) => {
+export const createCsv = (members) => {
   let membersCsv = 'data:text/csv;charset=utf-8,'
   membersCsv += 'Name,Email,Phone,Role,Date_Added\n'
   membersCsv += members.map(member => (
