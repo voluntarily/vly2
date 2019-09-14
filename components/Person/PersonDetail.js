@@ -52,6 +52,10 @@ const DetailItemMobile = styled.div`
   }
 `
 
+const StyledIcon = styled(Icon)`
+  margin-right: 0.5rem;
+`
+
 const ListItem = styled.div`
   background-color: none;
   min-height: 5rem;
@@ -99,24 +103,43 @@ const PersonDetail = ({ person }, ...props) => (
 
         <PBold>
           <a href={`mailto:${person.email}`}>
-            <Icon type='mail' /> {person.email}
+            <StyledIcon type='mail' /> {person.email}
           </a>
         </PBold>
         <SpacerSmall />
         <PBold>
           <a href={`tel:${person.phone}`}>
-            <Icon type='phone' /> {person.phone}
+            <StyledIcon type='phone' /> {person.phone}
+          </a>
+        </PBold>
+        <SpacerSmall />
+        <PBold>
+          <a href={person.website} target='_blank' >
+            <StyledIcon type='global' /> {person.website}
+          </a>
+        </PBold>
+        <SpacerSmall />
+        <PBold>
+          <a href={`https://www.facebook.com/${person.facebook}`} target='_blank' >
+            <StyledIcon type='facebook' /> {person.facebook}
+          </a>
+        </PBold>
+        <SpacerSmall />
+        <PBold>
+          <a href={`https://www.twitter.com/${person.twitter}`} target='_blank' >
+            <StyledIcon type='twitter' /> {person.twitter}
           </a>
         </PBold>
         <SpacerSmall />
         <PBold>
           <a>
-            <Icon type='compass' /> {person.location}
+            <StyledIcon type='compass' /> {person.location}
           </a>
         </PBold>
+        <SpacerSmall />
         <PBold>
           <a>
-            <Icon type='tags' />
+            <StyledIcon type='tags' />
           </a>
         </PBold>
         <TagDisplay tags={person.tags} />
@@ -153,6 +176,9 @@ PersonDetail.propTypes = {
     location: PropTypes.string,
     email: PropTypes.string.isRequired,
     phone: PropTypes.string,
+    facebook: PropTypes.string,
+    twitter: PropTypes.string,
+    website: PropTypes.string,
     pronoun: PropTypes.string,
     imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(
