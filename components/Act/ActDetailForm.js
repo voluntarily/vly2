@@ -44,6 +44,7 @@ class ActDetailForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
+    window.scrollTo(0, 0);
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
