@@ -28,21 +28,21 @@ import { H3Bold, P } from '../VTheme/VTheme'
 const { TextArea } = Input
 
 // TODO - only the owner and admins should be able to edit the person record.
-function hasErrors(fieldsError) {
+function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
 }
 
 class PersonDetailForm extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.setAbout = this.setAbout.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
   }
-  componentDidMount() {
+  componentDidMount () {
     // To disabled submit button at the beginning.
     this.props.form.validateFields()
   }
-  setAbout(value) {
+  setAbout (value) {
     this.props.form.setFieldsValue({ about: value })
   }
 
@@ -74,7 +74,7 @@ class PersonDetailForm extends Component {
     })
   }
 
-  render() {
+  render () {
     // get translated labels
     const personName = (
       <FormattedMessage
@@ -465,10 +465,10 @@ PersonDetailForm.propTypes = {
 
 export default Form.create({
   name: 'person_detail_form',
-  onFieldsChange(props, changedFields) {
+  onFieldsChange (props, changedFields) {
     // props.onChange(changedFields);
   },
-  mapPropsToFields(props) {
+  mapPropsToFields (props) {
     return {
       name: Form.createFormField({
         ...props.person.name,
@@ -528,7 +528,7 @@ export default Form.create({
       })
     }
   },
-  onValuesChange(_, values) {
+  onValuesChange (_, values) {
     // console.log('onValuesChange', values)
   }
 })(PersonDetailForm)
