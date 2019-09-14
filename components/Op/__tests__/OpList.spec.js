@@ -2,7 +2,7 @@ import React from 'react'
 import test from 'ava'
 import { shallowWithIntl, renderWithIntl } from '../../../lib/react-intl-test-helper'
 import OpList from '../OpList'
-
+import { InterestStatus } from '../../../server/api/interest/interest.constants'
 // Initial opportunities added into test db
 const ops = [
   {
@@ -64,4 +64,11 @@ test('renders the list with no ops', t => {
   )
   t.is(wrapper.find('OpCard').length, 0)
   t.is(wrapper.find('span').text(), '')
+})
+
+test('should display interests when passed to opList', t => {
+  const wrapper = shallowWithIntl(
+    <OpList ops={[ops[0]]} handleShowOp={() => {}} handleDeleteOp={() => {}} interests={[{ opportunity: ops[0]._id, status: InterestStatus.INTERESTED }]} />
+  )
+  t.is(wrapper.find('OpCard').first().props().interestStatus, InterestStatus.INTERESTED)
 })
