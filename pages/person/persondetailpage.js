@@ -143,11 +143,14 @@ export class PersonDetailPage extends Component {
             </a></Link>
           </Button>}
         {isAdmin &&
-          <Button shape='round'>
-            <Link href='/person/new'><a>
-              <FormattedMessage id='person.altnew' defaultMessage='New Person' description='Button to create a new person' />
-            </a></Link>
-          </Button>}
+          <>
+            <Button shape='round'>
+              <Link href='/person/new'><a>
+                <FormattedMessage id='person.altnew' defaultMessage='New Person' description='Button to create a new person' />
+              </a></Link>
+            </Button>
+
+          </>}
       </div>
     } else {
       content = this.state.editing
