@@ -71,14 +71,14 @@ const AboutCTA = () => (
             defaultMessage='Keen to join the build of the platform? Find us on Github and Gitter. All skill levels are welcome.'
           />
         </CTADescription>
-        <Button href='https://gitter.im/voluntarily/community' target='_blank'>
+        <Button href='https://gitter.im/voluntarily/community' target='_blank' rel='noopener noreferrer'>
           <FormattedMessage
             id='cta.dev.chat'
             description='call to action for developers to enter the chatroom'
             defaultMessage='Dev Chatroom'
           />
         </Button>&nbsp;&nbsp;
-        <Button href='https://github.com/voluntarily/vly2' target='_blank'>
+        <Button href='https://github.com/voluntarily/vly2' target='_blank' rel='noopener noreferrer'>
           {' '}
           <FormattedMessage
             id='cta.dev.repository'
@@ -104,7 +104,7 @@ const AboutCTA = () => (
           things, join the channel on Gitter.'
           />
         </CTADescription>
-        <Button href='https://gitter.im/voluntarily/Volunteers' target='_blank'>
+        <Button href='https://gitter.im/voluntarily/Volunteers' target='_blank' rel='noopener noreferrer'>
           <FormattedMessage
             id='cta.volunteer.chat'
             description='call to action for volunteers to enter the chatroom'
@@ -131,6 +131,7 @@ const AboutCTA = () => (
         <Button
           href='https://secure.squarespace.com/checkout/donate?donatePageId=5becd3d770a6adb0fa3e7b28'
           target='_blank'
+          rel='noopener noreferrer'
         >
           <FormattedMessage
             id='cta.sponsor.donate'
