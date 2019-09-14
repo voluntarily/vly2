@@ -1,4 +1,13 @@
-import { Button, Checkbox, Divider, Form, Icon, Input, Radio, Tooltip } from 'antd'
+import {
+  Button,
+  Checkbox,
+  Divider,
+  Form,
+  Icon,
+  Input,
+  Radio,
+  Tooltip
+} from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -7,7 +16,13 @@ import LocationSelector from '../Form/Input/LocationSelector'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import TagInput from '../Form/Input/TagInput'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import { DescriptionContainer, FormGrid, InputContainer, ShortInputContainer, TitleContainer } from '../VTheme/FormStyles'
+import {
+  DescriptionContainer,
+  FormGrid,
+  InputContainer,
+  ShortInputContainer,
+  TitleContainer
+} from '../VTheme/FormStyles'
 import { H3Bold, P } from '../VTheme/VTheme'
 
 const { TextArea } = Input
@@ -49,6 +64,9 @@ class PersonDetailForm extends Component {
         person.location = values.location
         person.tags = values.tags
         person.imgUrl = values.imgUrl
+        person.website = values.website
+        person.twitter = values.twitter
+        person.facebook = values.facebook
         person.role = values.role
         person.status = values.status
         this.props.onSubmit(this.props.person)
@@ -99,6 +117,27 @@ class PersonDetailForm extends Component {
         id='personAbout'
         defaultMessage='About you'
         description='person about label in personDetails Form'
+      />
+    )
+    const personWebSite = (
+      <FormattedMessage
+        id='personWebsite'
+        defaultMessage='Website'
+        description='person website label in personDetails Form'
+      />
+    )
+    const personFacebook = (
+      <FormattedMessage
+        id='personFacebook'
+        defaultMessage='Facebook'
+        description='person facebook label in personDetails Form'
+      />
+    )
+    const personTwitter = (
+      <FormattedMessage
+        id='personTwitter'
+        defaultMessage='Twitter'
+        description='person twitter label in personDetails Form'
       />
     )
     const personAvatar = (
@@ -207,6 +246,24 @@ class PersonDetailForm extends Component {
                   })(<Input placeholder='e.g. she/her, he/him, they/them' />)}
                 </Form.Item>
               </ShortInputContainer>
+              <Form.Item label={personWebSite}>
+                {getFieldDecorator('website', {
+                  rules: [
+                    {
+                      pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/,
+                      message: 'Enter valid URL'
+                    }
+                  ]
+                })(<Input placeholder='Website' />)}
+              </Form.Item>
+              <Form.Item label={personFacebook}>
+                {getFieldDecorator('facebook', {
+                  rules: []
+                })(<Input addonBefore='https://www.facebook.com/' />)}
+              </Form.Item>
+              <Form.Item label={personTwitter}>
+                {getFieldDecorator('twitter', {})(<Input addonBefore='@' />)}
+              </Form.Item>
               <Form.Item label={personAbout}>
                 {getFieldDecorator('about', {
                   rules: []
@@ -225,9 +282,7 @@ class PersonDetailForm extends Component {
                 {getFieldDecorator('location', {
                   rules: []
                 })(
-                  <LocationSelector
-                    existingLocations={this.props.locations}
-                  />
+                  <LocationSelector existingLocations={this.props.locations} />
                 )}
               </Form.Item>
             </InputContainer>
@@ -237,14 +292,12 @@ class PersonDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>
-                  Do you have any specific skills? (optional)
-                </H3Bold>
+                <H3Bold>Do you have any specific skills? (optional)</H3Bold>
               </TitleContainer>
               <P>
-                Do you have skills in any specific categories
-                like programming, electronics, or robots? Enter them here to
-                make it easier for us to recommend suitable opportunities for you.
+                Do you have skills in any specific categories like programming,
+                electronics, or robots? Enter them here to make it easier for us
+                to recommend suitable opportunities for you.
               </P>
             </DescriptionContainer>
             <InputContainer>
@@ -252,11 +305,7 @@ class PersonDetailForm extends Component {
                 {getFieldDecorator('tags', {
                   initialValue: [],
                   rules: []
-                })(
-                  <TagInput
-                    existingTags={this.props.existingTags}
-                  />
-                )}
+                })(<TagInput existingTags={this.props.existingTags} />)}
               </Form.Item>
             </InputContainer>
           </FormGrid>
@@ -382,6 +431,9 @@ PersonDetailForm.propTypes = {
     location: PropTypes.string,
     email: PropTypes.string,
     phone: PropTypes.string,
+    facebook: PropTypes.string,
+    twitter: PropTypes.string,
+    website: PropTypes.string,
     pronoun: PropTypes.string,
     imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(
@@ -402,10 +454,12 @@ PersonDetailForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   locations: PropTypes.arrayOf(PropTypes.string),
-  existingTags: PropTypes.arrayOf(PropTypes.shape({
-    tag: PropTypes.string.isRequired,
-    _id: PropTypes.string
-  })).isRequired
+  existingTags: PropTypes.arrayOf(
+    PropTypes.shape({
+      tag: PropTypes.string.isRequired,
+      _id: PropTypes.string
+    })
+  ).isRequired
   // dispatch: PropTypes.func.isRequired,
 }
 
@@ -447,6 +501,18 @@ export default Form.create({
       imgUrl: Form.createFormField({
         ...props.person.imgUrl,
         value: props.person.imgUrl
+      }),
+      facebook: Form.createFormField({
+        ...props.person.facebook,
+        value: props.person.facebook
+      }),
+      twitter: Form.createFormField({
+        ...props.person.twitter,
+        value: props.person.twitter
+      }),
+      website: Form.createFormField({
+        ...props.person.website,
+        value: props.person.website
       }),
       role: Form.createFormField({
         ...props.person.role,
