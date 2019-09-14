@@ -36,7 +36,7 @@ const OpCard = ({ size, op, interestStatus }) => {
             <p className={`requestDateTime${size}`}> {startDuration}</p>
             <p className={`requestDescription${size}`}>
               {op.subtitle}
-              <strong>{' - ' + interestStatus}</strong>
+              { interestStatus && <strong id='interestStatus' >{' - ' + interestStatus}</strong> }
             </p>
           </a>
         </Link>
