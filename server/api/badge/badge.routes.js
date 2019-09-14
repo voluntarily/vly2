@@ -1,5 +1,7 @@
-const { issueNewBadge } = require('./badge.controller')
+const { issueNewBadge, listAllBadge, listUserBadge } = require('./badge.controller')
 
 module.exports = (server) => {
-  server.post('/api/badge/:badgeName', issueNewBadge)
+  server.get('/api/badges', listAllBadge)
+  server.post('/api/badge/:badgeID', issueNewBadge)
+  server.get('/api/badge/:user', listUserBadge)
 }
