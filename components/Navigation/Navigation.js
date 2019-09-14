@@ -20,7 +20,6 @@ const Navigation = ({ items, defaultItem, router, me, ...props }) => {
   // TODO next js get the location is different?
   // const activeItem = router && router.pathname ? router.pathname.slice(1) : defaultItem
   const activeItem = router.pathname.slice(1)
-  console.log(me)
   return (
     <StyledMenu
       theme='light'
