@@ -96,3 +96,12 @@ test('should display that a requestor is interested', t => {
   // should find interested status
   t.is(wrapper.find('strong').last().text(), ' - interested')
 })
+
+test('should not display that a requester is interest if no interestStatus is passed', t => {
+  const op = t.context.ops[2]
+  const wrapper = mountWithIntl(
+    <OpCard op={op} size='Small' />
+  )
+  // should find interested status
+  t.is(wrapper.find('strong').last().text(), '')
+})
