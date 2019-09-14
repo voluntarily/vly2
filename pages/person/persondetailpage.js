@@ -24,6 +24,9 @@ const blankPerson = {
   phone: '',
   gender: '',
   imgUrl: '',
+  website: null,
+  facebook: null,
+  twitter: null,
   role: ['volunteer'],
   status: 'inactive'
 }
