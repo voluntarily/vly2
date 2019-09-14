@@ -1,8 +1,13 @@
 import React from 'react'
-import { Button } from 'antd/lib/radio'
+import Button from 'antd/lib/button'
+import { Spacer } from '../VTheme/VTheme'
 
 const exportMembers = (members) => {
-  const membersCsv = 'data:text/csv;charset=utf-8,' + members.map(member => (`${member.person.name}`))
+  let membersCsv = 'data:text/csv;charset=utf-8,'
+  membersCsv += 'Name,Email,Phone,Role,Date_Added\n'
+  membersCsv += members.map(member => (
+    `${member.person.name},${member.person.email},${member.person.phone},${member.status},${member.dateAdded}`
+  )).join('\n')
   triggerDownload(membersCsv)
 }
 
@@ -15,7 +20,10 @@ const triggerDownload = (data) => {
 
 const MemberExport = ({ members }) => {
   return (
-    <Button onClick={() => { exportMembers(members) } }>Export Members</Button>
+    <>
+    <Button shape='round' onClick={() => { exportMembers(members) } }>Export Members</Button>
+    <Spacer/>
+    </>
   )
 }
 
