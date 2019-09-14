@@ -88,10 +88,10 @@ test('should have a date', t => {
   t.is(wrapper.find('.requestDateTimeSmall').first().text(), ` 🏫 ${op.location}`)
 })
 
-test('something interested in', t => {
+test('should display that a requestor is interested', t => {
   const op = t.context.ops[2]
   const wrapper = mountWithIntl(
-    <OpCard op={op} size='Small' />
+    <OpCard op={op} size='Small' interestStatus='interested' />
   )
   // should find interested status
   t.is(wrapper.find('strong').last().text(), ' - interested')

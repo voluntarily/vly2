@@ -61,7 +61,6 @@ export default [
     status: 'active',
     requestor,
     offerOrg,
-    interest: { status: 'interested' },
     tags: [ ],
     date
   },
