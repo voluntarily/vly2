@@ -18,11 +18,9 @@ const PersonFields = {
   GENDER: 'gender',
   LANGUAGE: 'language',
   AVATAR: 'imgUrl',
-  FACEBOOK: 'facebook',
-  WEBSITE: 'website',
-  TWITTER: 'twitter',
   ROLE: 'role',
-  STATUS: 'status'
+  STATUS: 'status',
+  PRONOUN: 'pronoun'
 }
 
 module.exports = {

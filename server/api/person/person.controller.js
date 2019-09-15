@@ -54,7 +54,6 @@ async function updatePersonDetail (req, res, next) {
   } catch (e) {
     return res.sendStatus(400) // 400 error for any bad request body. This also prevent error to propagate and crash server
   }
-
   if (resultUpdate.n === 0) {
     return res.sendStatus(404)
   }
