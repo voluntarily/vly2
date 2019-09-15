@@ -12,8 +12,8 @@ storiesOf('Welcome', module)
       <H4>This is the Voluntarily Component Library </H4>
       <Divider />
       <H4>All frontend development for the Voluntarily Platform starts here. Browse the components we use on the left, and tinker with them here without the risk of breaking anything 😂<br /> Open-Sauce (or Open Source) contributions are welcome, and enjoy yourself while you're here :) <br /><br />
-        <li><a href='https://github.com/voluntarily/vly2' target='_blank'> 🎒 See the repo here</a></li>
-        <li><a href='https://github.com/voluntarily/vly2/blob/master/docs/gettingstarted.md' target='_blank'>💻 Get Started with Windows, Mac, or Linux</a></li>
+        <li><a href='https://github.com/voluntarily/vly2' target='_blank' rel='noopener noreferrer'> 🎒 See the repo here</a></li>
+        <li><a href='https://github.com/voluntarily/vly2/blob/master/docs/gettingstarted.md' target='_blank' rel='noopener noreferrer'>💻 Get Started with Windows, Mac, or Linux</a></li>
 
       </H4>
 
@@ -409,7 +409,7 @@ storiesOf('Welcome', module)
       <TestWidthItem />
       <Divider />
       <H4>
-       Our default grid uses a 4 column track as well, and this scales down based on available width.
+        Our default grid uses a 4 column track as well, and this scales down based on available width.
       </H4>
       <br />
       <br />

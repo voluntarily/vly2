@@ -55,7 +55,7 @@ margin: 0 1rem 1rem 1rem;
 
 const ActionCard = ({ image, name, description, link, ...props }) => (
 
-  <CardContainer href={link} target='_blank'>
+  <CardContainer href={link} target='_blank' rel='noopener noreferrer'>
     <CardImage src={image} />
     <CardTitle>{name}</CardTitle>
     <CardDescription>{description}</CardDescription>

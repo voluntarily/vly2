@@ -20,7 +20,6 @@ const Navigation = ({ items, defaultItem, router, me, ...props }) => {
   // TODO next js get the location is different?
   // const activeItem = router && router.pathname ? router.pathname.slice(1) : defaultItem
   const activeItem = router.pathname.slice(1)
-
   return (
     <StyledMenu
       theme='light'
@@ -39,12 +38,13 @@ const Navigation = ({ items, defaultItem, router, me, ...props }) => {
       ))}
       <Menu.Item>
         <StyledAvatar>
-          <Avatar
-            size='small'
-            src={me && me.imgUrl}
-            icon='user'
-
-          />
+          <Link href={me && me._id ? `/people/${me._id}` : 'auth/sign-in'}>
+            <Avatar
+              size='small'
+              src={me && me.imgUrl}
+              icon='user'
+            />
+          </Link>
         </StyledAvatar>
       </Menu.Item>
     </StyledMenu>
