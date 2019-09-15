@@ -3,8 +3,18 @@ const Person = require('../person/person')
 const Organisation = require('../organisation/organisation')
 const Activity = require('../activity/activity')
 const cuid = require('cuid')
-const optitle = ['A Quest for soldering irons', 'An opportunity modified', 'Are you Pacifica and working in the Healthcare field at the moment??',
-  'Basics of 3D printing', 'Coding camp', 'Dev Meeting', 'Explain quantum entanglement to me', 'Need a developer']
+const optitle = ['A Quest for soldering irons',
+  'An opportunity modified',
+  'Basics of 3D printing',
+  'Coding camp',
+  'Dev Meeting',
+  'Need a developer',
+  'How to make robots',
+  'Learn programming in 30 days',
+  'Lets build a webpage',
+  'Lets eat python',
+  'Teaching student how to program']
+
 const forall = (model, action) => {
   var cursor = model.find().cursor()
 
@@ -39,7 +49,8 @@ const createPerson = async (p) => {
       role: ['volunteer', 'activityProvider'],
       status: 'active',
       avatar: 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg',
-      phone: '0542554815'
+      phone: '0542554815',
+      dateAdded: Date.now()
     }
     count += 1
     await Person.create(person).catch((err) => `unable to create people: ${console.log(err)}`)
@@ -47,13 +58,12 @@ const createPerson = async (p) => {
 }
 
 const createOpportunity = async (op) => {
-  let count = 0
   try {
     const person = await Person.find({}).exec()
     const orgs = await Organisation.find({}).exec()
     for (let i = 0; i < op; i++) {
       const ops = {
-        title: optitle[Math.floor(optitle.length * Math.random())],
+        name: optitle[Math.floor(Math.random() * optitle.length)],
         subtitle: 'Help us to learn how to code',
         imgUrl: 'https://leaderonomics.com/wp-content/uploads/2017/04/1807658-1-600x470.jpg',
         description: 'code... code...',
@@ -61,10 +71,9 @@ const createOpportunity = async (op) => {
         offerOrg: orgs._id,
         location: 'Auckland',
         status: 'active',
-        requestor: person[count]._id,
+        requestor: person[Math.floor(Math.random() * person.length)]._id,
         date: [null, null]
       }
-      count += 1
       await Opportunity.create(ops).catch((err) => `unable to create people: ${console.log(err)}`)
     }
   } catch (err) {
