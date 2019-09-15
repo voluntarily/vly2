@@ -1,4 +1,4 @@
-import { Button, Checkbox, Divider, Form, Icon, Input, Radio, Tooltip } from 'antd'
+import { Button, Checkbox, Divider, Form, Icon, Input, Radio, Tooltip, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -218,6 +218,59 @@ class PersonDetailForm extends Component {
                     rules: []
                   })(<Input placeholder='e.g Dali' />)}
                 </Form.Item>
+              </ShortInputContainer>
+              <ShortInputContainer>
+                {/* <div>
+                  <Form.Item label='test form' layout='inline' width='50%' >
+                    {getFieldDecorator('pronoun_full', { rules: [] })(
+                      <Input placeholder={this.props.person.pronoun.object} size='small' />
+                    )
+                    }
+                  </Form.Item>
+                  <Form.Item label='test form' layout='inline' width='50%' >
+                    {getFieldDecorator('pronoun_full', {
+                      rules: []
+                    })(
+                      <Input placeholder='hello' size='small' />
+                    )}
+                  </Form.Item>
+                </div> */}
+                {/* <Form.Item label='test form' layout='inline' >
+                  {getFieldDecorator('pronoun_full', {
+                    rules: []
+                  })(
+                    <Input placeholder={this.props.person.pronoun.object} size='small' />
+                  )}
+                </Form.Item> */}
+                <Row>
+                  <Col span='8'>
+                    <Form.Item label='test form' layout='inline' style={{ width: '100%', marginRight: 0 }} >
+                      {getFieldDecorator('pronoun_full', {
+                        rules: []
+                      })(
+                        <Input placeholder={this.props.person.pronoun.object} />
+                      )}
+                    </Form.Item>
+                  </Col>
+                  <Col span='8'>
+                    <Form.Item label='test form' layout='inline' >
+                      {getFieldDecorator('pronoun_full', {
+                        rules: []
+                      })(
+                        <Input placeholder={this.props.person.pronoun.object} />
+                      )}
+                    </Form.Item>
+                  </Col>
+                  <Col span='8'>
+                    <Form.Item label='test form' layout='inline' >
+                      {getFieldDecorator('pronoun_full', {
+                        rules: []
+                      })(
+                        <Input placeholder={this.props.person.pronoun.object} />
+                      )}
+                    </Form.Item>
+                  </Col>
+                </Row>
               </ShortInputContainer>
               <ShortInputContainer>
                 <Form.Item label={personPronounSubject}>
@@ -468,6 +521,10 @@ export default Form.create({
       phone: Form.createFormField({
         ...props.person.phone,
         value: props.person.phone
+      }),
+      pronoun_full: Form.createFormField({
+        ...props.person.pronoun,
+        value: props.person.pronoun ? (`${props.person.pronoun.object} ${props.person.pronoun.subject} ${props.person.pronoun.possessive} `) : ''
       }),
       pronoun_subject: Form.createFormField({
         ...props.person.pronoun,
