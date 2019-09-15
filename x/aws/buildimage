@@ -11,7 +11,7 @@ ESCAPED_TAG_VERSION=${IMAGE_TAG_VERSION//\//-}
 # Get a docker login and run it
 source ${MY_DIR}/login-singapore
 
-REVISION=`git describe --always --dirty`" "`date -u +%Y%m%dT%H%M%SZ`
+REVISION=`git describe --always --dirty`"_"`date -u +%Y%m%dT%H%M%SZ`
 
 # build the docker image
 docker build --target production \
