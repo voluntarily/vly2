@@ -25,7 +25,6 @@ class InterestTable extends Component {
   }
 
   onChange = (pagination, filters, sorter)=> {
-    console.log('params', pagination, filters, sorter);
     this.setState({
       filteredInfo: filters,
       sortedInfo: sorter,
