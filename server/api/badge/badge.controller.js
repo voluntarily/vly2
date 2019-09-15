@@ -3,20 +3,7 @@ const Badge = require('./badge')
 require('es6-promise').polyfill()
 const fetch = require('isomorphic-fetch')
 
-const requestorNotAdmind = (ability) => {
-  const hasAbility = ability != null
-  return hasAbility
-}
-
-const requestValid = ({ ability, session }) => {
-  if (!session.isAuthenticated || requestorNotAdmind(ability)) {
-    return false
-  }
-  return true
-}
-
 const issueNewBadge = async (req, res) => {
-  if (!requestValid(req)) return res.sendStatus(403)
   const { BADGER_PASSWORD, BADGER_USERNAME } = config
   if (!BADGER_PASSWORD && !BADGER_USERNAME) {
     return res.json({ 'message': 'Internal server error' }).status(500)
@@ -26,9 +13,7 @@ const issueNewBadge = async (req, res) => {
   })
   const { badgeID } = req.params
   const { email, _id } = req.body
-  // HhIer_mgTtahY6TRT22L5A
   const badgrData = await badgrRes.json()
-  console.log(badgrData)
   const accessToken = badgrData.access_token
   const body = {
     'recipient': {
@@ -52,7 +37,6 @@ const issueNewBadge = async (req, res) => {
 
 const insertIntoDatabase = async (result, id) => {
   const newBadgeIssue = result[0]
-  console.log(newBadgeIssue)
   const { entityType, image, badgeclass, issuer, issuerOpenBadgeId, createdAt, issuedOn, badgeclassOpenBadgeId, entityId } = newBadgeIssue
   const newBadge = {
     entityType,

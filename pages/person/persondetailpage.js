@@ -9,6 +9,7 @@ import { FormattedMessage } from 'react-intl'
 import Loading from '../../components/Loading'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
+import {IssueBadgeButton } from '../../components/IssueBadge/issueBadge'
 import { FullPage } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withMembers, withPeople, withLocations } from '../../lib/redux/reduxApi.js'
@@ -149,7 +150,6 @@ export class PersonDetailPage extends Component {
                 <FormattedMessage id='person.altnew' defaultMessage='New Person' description='Button to create a new person' />
               </a></Link>
             </Button>
-
           </>}
       </div>
     } else {
@@ -168,6 +168,9 @@ export class PersonDetailPage extends Component {
               <FormattedMessage id='deletePerson' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
             </Button>
           </Popconfirm>}
+          {
+            isAdmin && <IssueBadgeButton person={this.props.people.data[0]} />
+          }
 
         </>
     }
