@@ -76,26 +76,11 @@ class PersonDetailForm extends Component {
         description='person nickname label in personDetails Form'
       />
     )
-
-    const personPronounSubject = (
+    const personPronoun = (
       <FormattedMessage
-        id='personPronounSubject'
-        defaultMessage='Pronoun Subject'
-        description='person subject pronoun label in personDetails Form'
-      />
-    )
-    const personPronounObject = (
-      <FormattedMessage
-        id='personPronounObject'
-        defaultMessage='Pronoun Object'
-        description='person object pronoun label in personDetails Form'
-      />
-    )
-    const personPronounPossessive = (
-      <FormattedMessage
-        id='personPronounPossessive'
-        defaultMessage='Pronoun Possessive'
-        description='person possessive pronoun label in personDetails Form'
+        id='personPronoun'
+        defaultMessage='Pronoun'
+        description='person pronoun label in personDetails Form'
       />
     )
     const personEmail = (
@@ -219,74 +204,34 @@ class PersonDetailForm extends Component {
                 </Form.Item>
               </ShortInputContainer>
               <ShortInputContainer>
-                {/* <div>
-                  <Form.Item label='test form' layout='inline' width='50%' >
-                    {getFieldDecorator('pronoun_full', { rules: [] })(
-                      <Input placeholder={this.props.person.pronoun.object} size='small' />
-                    )
-                    }
-                  </Form.Item>
-                  <Form.Item label='test form' layout='inline' width='50%' >
-                    {getFieldDecorator('pronoun_full', {
-                      rules: []
-                    })(
-                      <Input placeholder='hello' size='small' />
-                    )}
-                  </Form.Item>
-                </div> */}
-                {/* <Form.Item label='test form' layout='inline' >
-                  {getFieldDecorator('pronoun_full', {
-                    rules: []
-                  })(
-                    <Input placeholder={this.props.person.pronoun.object} size='small' />
-                  )}
-                </Form.Item> */}
+              <Row>
+                  <Col span='8'>
+                  <label>{personPronoun}</label>
+                  </Col>
+                  </Row>
                 <Row>
                   <Col span='8'>
-                    <Form.Item label='test form' layout='inline' style={{ width: '100%', marginRight: 0 }} >
-                      {getFieldDecorator('pronoun_full', {
-                        rules: []
-                      })(
-                        <Input placeholder={this.props.person.pronoun.object} />
-                      )}
+                    <Form.Item layout='inline' style={{ width: '100%', marginRight: 0 }} >
+                    {getFieldDecorator('pronoun_subject', {
+                    rules: []
+                    })(<Input placeholder='they' />)}
                     </Form.Item>
                   </Col>
                   <Col span='8'>
-                    <Form.Item label='test form' layout='inline' >
-                      {getFieldDecorator('pronoun_full', {
-                        rules: []
-                      })(
-                        <Input placeholder={this.props.person.pronoun.object} />
-                      )}
+                    <Form.Item layout='inline' >
+                    {getFieldDecorator('pronoun_object', {
+                    rules: []
+                    })(<Input placeholder='them' />)}
                     </Form.Item>
                   </Col>
                   <Col span='8'>
-                    <Form.Item label='test form' layout='inline' >
-                      {getFieldDecorator('pronoun_full', {
-                        rules: []
-                      })(
-                        <Input placeholder={this.props.person.pronoun.object} />
-                      )}
+                    <Form.Item layout='inline' >
+                    {getFieldDecorator('pronoun_possessive', {
+                    rules: []
+                    })(<Input placeholder='theirs' />)}
                     </Form.Item>
                   </Col>
                 </Row>
-              </ShortInputContainer>
-              <ShortInputContainer>
-                <Form.Item label={personPronounSubject}>
-                  {getFieldDecorator('pronoun_subject', {
-                    rules: []
-                  })(<Input placeholder='they' />)}
-                </Form.Item>
-                <Form.Item label={personPronounObject}>
-                  {getFieldDecorator('pronoun_object', {
-                    rules: []
-                  })(<Input placeholder='them' />)}
-                </Form.Item>
-                <Form.Item label={personPronounPossessive}>
-                  {getFieldDecorator('pronoun_possessive', {
-                    rules: []
-                  })(<Input placeholder='theirs' />)}
-                </Form.Item>
               </ShortInputContainer>
               <Form.Item label={personAbout}>
                 {getFieldDecorator('about', {
