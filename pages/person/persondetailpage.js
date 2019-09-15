@@ -11,7 +11,7 @@ import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import { FullPage } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
-import reduxApi, { withMembers, withPeople, withLocations } from '../../lib/redux/reduxApi.js'
+import reduxApi, { withMembers, withPeople } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 
 const blankPerson = {
@@ -23,10 +23,12 @@ const blankPerson = {
   email: '',
   phone: '',
   gender: '',
+  pronoun: {
+    'subject': '',
+    'object': '',
+    'possessive': ''
+  },
   imgUrl: '',
-  website: null,
-  facebook: null,
-  twitter: null,
   role: ['volunteer'],
   status: 'inactive'
 }
@@ -147,7 +149,7 @@ export class PersonDetailPage extends Component {
     } else {
       content = this.state.editing
         ? <div>
-          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancel.bind(this)} locations={this.props.locations.data} />
+          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancel.bind(this)} />
         </div>
         : <div>
           {canEdit && <Button style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
@@ -187,6 +189,7 @@ PersonDetailPage.propTypes = {
     email: PropTypes.string,
     phone: PropTypes.string,
     gender: PropTypes.string,
+    pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])
@@ -196,4 +199,4 @@ PersonDetailPage.propTypes = {
   })
 }
 
-export default securePage(withMembers(withPeople(withLocations(PersonDetailPage))))
+export default securePage(withMembers(withPeople(PersonDetailPage)))
