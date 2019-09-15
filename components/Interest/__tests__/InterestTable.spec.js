@@ -15,7 +15,8 @@ test('InterestTable renders properly', t => {
       comment: 'Test Comment',
       status: 'Test Status',
       _id: '11223344'
-    }]}
+    }
+    ]}
   />)
 
   // Confirm table headers
