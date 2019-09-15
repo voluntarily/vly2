@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { withPeople } from '../../lib/redux/reduxApi'
 import { config } from '../../config/config'
+import styled from 'styled-components'
+
+const BadgeWrapper = styled.div`
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`
+
+const Badge = styled.div`
+  margin: 10px;
+`
 
 const getBadgeData = async ({ _id }, setUserBadge) => {
   const response = await window.fetch(`${config.appUrl}/api/badge/${_id}`)
@@ -9,25 +20,27 @@ const getBadgeData = async ({ _id }, setUserBadge) => {
 }
 
 function PersonBadge ({ person }) {
-  const [userBadge, setUserBadge] = useState([{}])
+  const [userBadge, setUserBadge] = useState(null)
   useEffect(() => {
     getBadgeData(person, setUserBadge)
   }, [person])
 
-  return (
-    <div>
+  // TODO: Replace badge._id with badge.name in <Badge title> and <img alt>
+  return userBadge ? (
+    <BadgeWrapper>
       {
-        userBadge.map((badge, key) => {
+        userBadge.map((badge) => {
+          console.log(badge)
           return (
-            <blockquote key={key} class='badgr-badge'>
+            <Badge key={badge._id} class='badgr-badge' title={badge._id}>
               <a href={`https://api.badgr.io/public/assertions/${badge.entityId}`} target='_blank'>
-                <img width='60px' height='60px' src={`${badge.badgeclassOpenBadgeId}/image?type=png`} />
+                <img width='60px' height='60px' alt={`${badge._id} badge`} src={`${badge.badgeclassOpenBadgeId}/image?type=png`} />
               </a>
-            </blockquote>)
+            </Badge>)
         })
       }
-    </div>
-  )
+    </BadgeWrapper>
+  ) : null
 }
 
 export const PersonBadgeSection = PersonBadge
