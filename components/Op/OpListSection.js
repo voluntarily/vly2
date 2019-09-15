@@ -10,7 +10,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import OpList from '../../components/Op/OpList'
-import reduxApi, { withOps } from '../../lib/redux/reduxApi'
+import reduxApi, { withOps, withInterests } from '../../lib/redux/reduxApi'
 import moment from 'moment'
 import Loading from '../../components/Loading'
 import DatePickerType from './DatePickerType.constant'
@@ -106,7 +106,7 @@ class OpListSection extends Component {
       </section>)
     } else {
       return (<section>
-        <OpList ops={opData} />
+        <OpList ops={opData} interests={this.props.interests && this.props.interests.data} />
       </section>)
     }
   }
@@ -129,4 +129,4 @@ OpListSection.propTypes = {
 }
 
 export const OpListSectionTest = OpListSection
-export default withOps(OpListSection)
+export default withInterests(withOps(OpListSection))

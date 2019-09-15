@@ -256,10 +256,11 @@ test.serial('Test filter by week allow to add open end opportunity', async t => 
 
 test.serial('OpListSection should pass list of users interests to the opList', async t => {
   initStore.opportunities.data = opsWithOpenEndDate
-  initStore.interests = [{
+  initStore.interests = { data: [{
     opportunity: opsWithOpenEndDate[0],
     status: InterestStatus.INTERESTED
-  }]
+  }] }
+
   const mockStore = configureStore([thunk])(initStore)
 
   const myMock = fetchMock.sandbox()
@@ -269,10 +270,10 @@ test.serial('OpListSection should pass list of users interests to the opList', a
 
   const wrapper = await mountWithIntl(
     <Provider store={mockStore}>
-      <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} filter={emptyFilterDateState} dateFilterType={DatePickerType.WeekRange} />
+      <OpListSection store={mockStore} handleShowOp={() => {}} handleDeleteOp={() => {}} filter={emptyFilterDateState} dateFilterType={DatePickerType.WeekRange} />
     </Provider>
   )
-  t.is(wrapper.find('OpList').first().props().interests, initStore.interests)
+  t.is(wrapper.find('OpList').first().props().interests, initStore.interests.data)
   myMock.restore()
 })
 
