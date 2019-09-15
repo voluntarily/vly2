@@ -77,6 +77,19 @@ test.serial('Should correctly give subset of orgs matching slug', async t => {
   t.is(got.length, 1)
 })
 
+test.only('Should correctly give a list with only name field', async t => {
+  const res = await request(server)
+    .get('/api/organisations?q={"name":"ABC teste 1"}&p={name: 1}')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  // console.log('got', got)
+  t.is(got.length, 1)
+  t.is(got[0].name, "ABC teste 1")
+  t.is(got[0].about, null)
+})
+
 test.serial('Should find no matches', async t => {
   const res = await request(server)
     .get('/api/organisations?q={"slug":"nomatches"}')

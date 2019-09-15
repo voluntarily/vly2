@@ -13,7 +13,14 @@ class OrgListPage extends Component {
     // Get all OrgListPage
     try {
       // TODO: [VP-451] Minimise org list download by only getting OrgCard required information using select.
-      await store.dispatch(reduxApi.actions.organisations.get())
+      const select = {
+        name: 1,
+        imgUrl: 1,
+        about: 1,
+        category: 1
+      }
+      const pselect = { p: select }
+      await store.dispatch(reduxApi.actions.organisations.get(pselect))
     } catch (err) {
       console.log('error in getting orgs', err)
     }

@@ -11,12 +11,14 @@ const Organisation = require('./organisation')
 function getOrganisations (req, res) {
   let query = {}
   let sort = 'name'
-  let select = ''
-  try {
-    query = req.query.q ? JSON.parse(req.query.q) : {}
-    sort = req.query.s ? JSON.parse(req.query.s) : 'name'
-    select = req.query.p ? JSON.parse(req.query.p) : {}
+  let select = {}
 
+  try {
+    console.log(req.query)
+    query = req.query.q ? JSON.parse(req.query.q) : query
+    sort = req.query.s ? JSON.parse(req.query.s) : sort
+    select = req.query.p ? req.query.p : select
+    console.log('select', select)
     Organisation.find(query, select).sort(sort)
       .then(got => {
         res.json(got)
