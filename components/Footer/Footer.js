@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
 import { Grid, P, Spacer } from '../VTheme/VTheme'
 import links from './FooterMenu'
+import WomensRefuge from './WomensRefuge.js'
 
 const getAllowedLinks = isAuthenticated =>
   links()
@@ -29,7 +30,6 @@ const FooterContainer = styled.div`
     width: 100vw;
   }
 `
-
 const FooterLogo = styled.img`
   margin-top: 2rem;
   width: 2.5rem;
@@ -214,9 +214,10 @@ const Footer = ({ isAuthenticated, ...props }) => (
         </FooterGridItem>
       </Grid>
       <Spacer />
+      <WomensRefuge />
     </FooterContainer>
-    {props.isAdmin &&
-      <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />}
+    { props.isAdmin &&
+      <Navigation items={getAllowedLinks(isAuthenticated)} {...props} /> }
   </FooterBackground>
 )
 

@@ -56,6 +56,7 @@ export default class IntlDocument extends Document {
             }}
           />
           <NextScript />
+
         </body>
       </html>
     )

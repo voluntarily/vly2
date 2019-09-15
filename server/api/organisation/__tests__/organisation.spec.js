@@ -92,6 +92,14 @@ test.serial('Should fail to find - invalid query', async t => {
   const res = await request(server)
     .get('/api/organisations?s={"invalid":"nomatches"}')
     .set('Accept', 'application/json')
+    .expect(404)
+  t.is(res.status, 404)
+})
+
+test.serial('Should fail to find - Bad request ', async t => {
+  const res = await request(server)
+    .get('/api/organisations?s={this is not json}')
+    .set('Accept', 'application/json')
     .expect(400)
   t.is(res.status, 400)
 })
@@ -117,6 +125,20 @@ test.serial('Should correctly give reverse sorted orgs of category', async t => 
   t.is(got.length, 4)
   t.is(got[0].slug, 'westpac')
 })
+
+// Searching for something in the subtitle (case insensitive)
+// [VP-508] Add searching for orgs by category, name and tags
+// test.serial('Should correctly give opportunity 2 when searching by "helpers"', async t => {
+//   const res = await request(server)
+//     .get('/api/opportunities?search=HeLPErs')
+//     .set('Accept', 'application/json')
+//     .expect(200)
+//     .expect('Content-Type', /json/)
+//   const got = res.body
+//   console.log(got)
+//   // t.is(orgs[1].name, got[0].name)
+//   t.is(2, got.length)
+// })
 
 test.serial('Should correctly select just the names and ids', async t => {
   const res = await request(server)
