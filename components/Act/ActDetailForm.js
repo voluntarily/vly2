@@ -60,7 +60,7 @@ class ActDetailForm extends Component {
         // act.owner = (this.props.act.owner && this.props.op.owner._id) || this.props.me._id
         act.owner = this.props.me._id
         // TODO: [VP-305] should the owner of the activity be preserved or set to the last person who edits it?
-
+        window.scrollTo(0, 0)
         this.props.onSubmit(this.props.act)
       } else {
         // console.log('field validation error:', err)
