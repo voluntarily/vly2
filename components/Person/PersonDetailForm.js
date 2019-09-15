@@ -204,31 +204,31 @@ class PersonDetailForm extends Component {
                 </Form.Item>
               </ShortInputContainer>
               <ShortInputContainer>
-              <Row>
+                <Row>
                   <Col span='8'>
-                  <label>{personPronoun}</label>
+                    <label>{personPronoun}</label>
                   </Col>
-                  </Row>
+                </Row>
                 <Row>
                   <Col span='8'>
                     <Form.Item layout='inline' style={{ width: '100%', marginRight: 0 }} >
-                    {getFieldDecorator('pronoun_subject', {
-                    rules: []
-                    })(<Input placeholder='they' />)}
+                      {getFieldDecorator('pronoun_subject', {
+                        rules: []
+                      })(<Input placeholder='they' />)}
                     </Form.Item>
                   </Col>
                   <Col span='8'>
                     <Form.Item layout='inline' >
-                    {getFieldDecorator('pronoun_object', {
-                    rules: []
-                    })(<Input placeholder='them' />)}
+                      {getFieldDecorator('pronoun_object', {
+                        rules: []
+                      })(<Input placeholder='them' />)}
                     </Form.Item>
                   </Col>
                   <Col span='8'>
                     <Form.Item layout='inline' >
-                    {getFieldDecorator('pronoun_possessive', {
-                    rules: []
-                    })(<Input placeholder='theirs' />)}
+                      {getFieldDecorator('pronoun_possessive', {
+                        rules: []
+                      })(<Input placeholder='theirs' />)}
                     </Form.Item>
                   </Col>
                 </Row>
