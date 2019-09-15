@@ -30,7 +30,12 @@ class OpListSection extends Component {
       if (query) {
         filters.q = query
       }
-
+      if (this.props.store && this.props.store.getState().session) {
+        const me = this.props.store.getState().session.me
+        if (me) {
+          await this.props.dispatch(reduxApi.actions.interests.get({ me: me }))
+        }
+      }
       return await this.props.dispatch(reduxApi.actions.opportunities.get(filters))
     } catch (err) {
       // console.log('error in getting ops', err)

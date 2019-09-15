@@ -290,7 +290,7 @@ test.serial('OpListSection should call interests api', async t => {
 
   await mountWithIntl(
     <Provider store={mockStore}>
-      <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} filter={emptyFilterDateState} dateFilterType={DatePickerType.WeekRange} />
+      <OpListSection store={mockStore} handleShowOp={() => {}} handleDeleteOp={() => {}} filter={emptyFilterDateState} dateFilterType={DatePickerType.WeekRange} />
     </Provider>
   )
 
