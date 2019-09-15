@@ -215,7 +215,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
       </Grid>
       <Spacer />
       <WomensRefuge />
-    </FooterContainer>   
+    </FooterContainer>
     { props.isAdmin &&
       <Navigation items={getAllowedLinks(isAuthenticated)} {...props} /> }
   </FooterBackground>

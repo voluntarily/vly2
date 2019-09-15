@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const ShieldSiteLogo = styled.img`
@@ -15,24 +15,25 @@ const ShieldSiteLogo = styled.img`
 `
 
 class WomensRefuge extends React.Component {
-    
-    componentDidMount () {
-        const frameName = new ds07o6pcmkorn({
-            openElementId: "#WomensRefuge-id"
-        });
-        frameName.init();
-    }
+  componentDidMount () {
+    /* eslint-disable no-undef */
+    /* eslint-disable new-cap */
+    const frameName = new ds07o6pcmkorn({
+      openElementId: '#WomensRefuge-id'
+    })
+    frameName.init()
+  }
 
-    render () {
-      return (
-        <React.Fragment>
-        <script src="https://d3f5l8ze0o4j2m.cloudfront.net/m87/k33spt.js"></script>
-        <a className = "WomensRefuge-class" id="WomensRefuge-id">
-            <ShieldSiteLogo src="../../static/womens_refuge.png"/>
+  render () {
+    return (
+      <React.Fragment>
+        <script src='https://d3f5l8ze0o4j2m.cloudfront.net/m87/k33spt.js' />
+        <a className='WomensRefuge-class' id='WomensRefuge-id'>
+          <ShieldSiteLogo src='../../static/womens_refuge.png' />
         </a>
       </React.Fragment>
-      )
-    }
+    )
+  }
 }
 
 export default WomensRefuge
