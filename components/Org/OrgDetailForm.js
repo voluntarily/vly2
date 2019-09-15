@@ -37,7 +37,6 @@ class OrgDetailForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // preserve the id and other values not edited by form.
