@@ -470,16 +470,16 @@ export default Form.create({
         value: props.person.phone
       }),
       pronoun_subject: Form.createFormField({
-        ...props.person.pronoun.subject,
-        value: props.person.pronoun.subject
+        ...props.person.pronoun,
+        value: props.person.pronoun ? props.person.pronoun.object:''
       }),
       pronoun_object: Form.createFormField({
-        ...props.person.pronoun.object,
-        value: props.person.pronoun.object
+        ...props.person.pronoun,
+        value: props.person.pronoun? props.person.pronoun.subject:''
       }),
       pronoun_possessive: Form.createFormField({
-        ...props.person.pronoun.possessive,
-        value: props.person.pronoun.possessive
+        ...props.person.pronoun,
+        value: props.person.pronoun? props.person.pronoun.possessive:''
       }),
       imgUrl: Form.createFormField({
         ...props.person.imgUrl,
