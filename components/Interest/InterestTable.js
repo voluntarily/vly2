@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl'
 class InterestTable extends Component {
   state = {
     filteredInfo: {},
-    sortedInfo: {},
+    sortedInfo: {}
   }
 
   handleInviteButtonClicked (interest) {
@@ -24,17 +24,17 @@ class InterestTable extends Component {
     this.props.onWithdrawInvite(interest)
   }
 
-  onChange = (pagination, filters, sorter)=> {
+  onChange = (pagination, filters, sorter) => {
     this.setState({
       filteredInfo: filters,
-      sortedInfo: sorter,
-    });
+      sortedInfo: sorter
+    })
   }
 
   render () {
-    let { sortedInfo, filteredInfo } = this.state;
-    sortedInfo = sortedInfo || {};
-    filteredInfo = filteredInfo || {};
+    let { sortedInfo, filteredInfo } = this.state
+    sortedInfo = sortedInfo || {}
+    filteredInfo = filteredInfo || {}
     const columns = [
       {
         title: 'Selected',
@@ -79,10 +79,10 @@ class InterestTable extends Component {
           { text: 'committed', value: 'committed' },
           { text: 'declined', value: 'declined' },
           { text: 'completed', value: 'completed' },
-          { text: 'cancelled', value: 'cancelled' },
-        ],  
+          { text: 'cancelled', value: 'cancelled' }
+        ],
         filteredValue: filteredInfo.status || null,
-        onFilter: (value, record) => record.status.includes(value),
+        onFilter: (value, record) => record.status.includes(value)
       },
       {
         title: 'Action',
@@ -90,12 +90,12 @@ class InterestTable extends Component {
         render: (text, record) => {
           const options = getEnabledButtons(record)
           let withdrawInviteText = <FormattedMessage id='withdrawVolunteerInvite' defaultMessage='Withdraw Invite' description='Button allowing event organizer to withdraw a invite already issued to an interested volunteer' />
-  
+
           // Needed? Or is declining the end of the road?
           if (options.withdrawInviteButtonEnabled && !options.declineButtonEnabled && !options.inviteButtonEnabled) {
             withdrawInviteText = <FormattedMessage id='undeclineInvite' defaultMessage='Undecline Invite' description='Button allowing event organizer to "un-decline" a previously declined invite' />
           }
-  
+
           return (
             <div>
               {options.inviteButtonEnabled ? <span>

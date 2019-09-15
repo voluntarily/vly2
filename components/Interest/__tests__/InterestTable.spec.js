@@ -16,7 +16,7 @@ test('InterestTable renders properly', t => {
       status: 'Test Status',
       _id: '11223344'
     }
-  ]}
+    ]}
   />)
 
   // Confirm table headers
