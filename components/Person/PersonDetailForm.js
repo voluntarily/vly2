@@ -69,6 +69,8 @@ class PersonDetailForm extends Component {
         person.facebook = values.facebook
         person.role = values.role
         person.status = values.status
+        
+        window.scrollTo(0, 0)
         this.props.onSubmit(this.props.person)
       }
     })

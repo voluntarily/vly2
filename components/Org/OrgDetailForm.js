@@ -37,7 +37,6 @@ class OrgDetailForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    window.scrollTo(0, 0)
     
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -57,6 +56,8 @@ class OrgDetailForm extends Component {
         org.facebook = values.facebook
         org.contactEmail = values.contactEmail
         org.category = values.category
+
+        window.scrollTo(0, 0)
         this.props.onSubmit(this.props.org)
       }
     })
