@@ -1,12 +1,12 @@
-import MemberExport,{ createCsv } from '../MemberExport'
+import MemberExport, { createCsv } from '../MemberExport'
 import React from 'react'
 import test from 'ava'
-import { mount } from 'enzyme'
+import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 
 test('MemberExport button renders properly', t => {
-  const wrapper = mount(<MemberExport />)
-  t.true(wrapper.find('Button').exists()) 
-  t.is(wrapper.find('Button').first().text(),'Export Members')
+  const wrapper = mountWithIntl(<MemberExport />)
+  t.true(wrapper.find('Button').exists())
+  t.is(wrapper.find('Button').first().text(), 'Export Members')
 })
 
 test('createCsv formats properly', async t => {

@@ -177,9 +177,9 @@ class MemberSection extends Component {
     let memberExportSection = ''
     if (myMembership.status === MemberStatus.ORGADMIN || this.props.isAdmin) {
       memberExportSection =
-      <section>
-        <MemberExport members={this.props.members.data} />
-      </section>
+        <section>
+          <MemberExport members={this.props.members.data} />
+        </section>
     }
 
     return (
