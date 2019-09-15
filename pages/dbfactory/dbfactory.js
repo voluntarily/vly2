@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Button, message } from 'antd'
-// import axios from 'axios'
-import fetch from 'isomorphic-fetch'
+// import fetch from 'isomorphic-fetch'
 import publicPage from '../../hocs/publicPage'
 import TitleSection from '../../components/LandingPageComponents/TitleSection'
+import callApi from '../../lib/apiCaller'
+import { FullPage } from '../../components/VTheme/VTheme'
 export class DBfactory extends Component {
   constructor (props) {
     super(props)
@@ -15,33 +16,15 @@ export class DBfactory extends Component {
       [event.target.name]: event.target.value
     })
   }
-  apicallHandler = () => {
-    const API_URL = process.env.VLY_URL || 'http://localhost:3122'
-    const URL = `${API_URL}/api/db/initdb?people=${this.state.people}&ops=${this.state.ops}`
-    let headers = {
-      'content-type': 'application/json'
-    }
-    fetch(URL, {
-      headers: headers,
-      method: 'POST'
-    })
-      .then((res) => {
+  apicallHandler = async () => {
+    const URL = callApi(`db/initdb?people=${this.state.people}&ops=${this.state.ops}`)
+      .then(res => {
         console.log(res)
-        if (res.status === 200) {
-          message.success(`successfully generated ${this.state.people} people & ${this.state.ops} opportunity record`)
-        }
-        // if (res.status === 200 && this.state.people === null) {
-        //   console.log('no people')
-        // }
-        // if (res.status === 200 && this.state.ops === null) {
-        //   console.log('no ops')
-        // }
-        // if (this.state.ops === null) {
-        //   console.log('no ops')
-        // }
-      }
-      )
+        message.success(`successfully generated ${this.state.people} people & ${this.state.ops} opportunity record`)
+      })
+      .then()
       .catch(err => console.log(err))
+    return URL
   }
   render () {
     const divtextbox = {
@@ -49,9 +32,10 @@ export class DBfactory extends Component {
       marginLeft: 'auto',
       marginRight: 'auto'
     }
-    const span = {
-      marginLeft: '30%',
-      marginRight: '30%'
+    const generatebutton = {
+      width: '100px',
+      marginLeft: 'auto',
+      marginRight: 'auto'
     }
     const divcenter = {
       margin: 'auto',
@@ -60,28 +44,25 @@ export class DBfactory extends Component {
       padding: '10px'
     }
     return (
-      <div className='ant-row ant-form-item' style={divcenter}>
-        <div className='ant-form-item-control'>
-          <div className='ant-col ant-form-item-control-wrapper'>
+      <FullPage>
+        <div className='ant-row ant-form-item' style={divcenter}>
+          <div className='ant-form-item-control'>
 
-            <div style={divcenter}>
-              <TitleSection title='To generate random people and opportunities data' />
-              <div style={divtextbox}>
-                <span className='ant-form-item-children'>People &nbsp;</span>
-                <input className='ant-input' type='text' name='people' onChange={this.queryHandler} value={this.state.people} /><br />
-                <span className='ant-form-item-children'>Opportunity &nbsp;</span>
-                <input className='ant-input' type='text' name='ops' onChange={this.queryHandler} value={this.state.ops} /><br />
-              </div>
-
-            </div>
+            <TitleSection title='Use the below fields to generate random people and opportunities data' />
             <div style={divtextbox}>
+              <span className='ant-form-item-children'>People &nbsp;</span>
+              <input className='ant-input' type='text' name='people' onChange={this.queryHandler} value={this.state.people} /><br />
+              <span className='ant-form-item-children'>Opportunity &nbsp;</span>
+              <input className='ant-input' type='text' name='ops' onChange={this.queryHandler} value={this.state.ops} /><br />
+            &nbsp;
+            </div>
+            <div style={generatebutton}>
               <Button className='ant-btn ant-btn-primary' onClick={this.apicallHandler}>Generate</Button>
             </div>
+
           </div>
-
         </div>
-      </div>
-
+      </FullPage>
     )
   }
 }
@@ -116,3 +97,22 @@ export default publicPage(DBfactory)
 //   }).catch(err => {
 //     console.log(err)
 //   })
+// const URL = `${API_URL}/db/initdb?people=${this.state.people}&ops=${this.state.ops}`
+// let headers = {
+//   'content-type': 'application/json'
+// }
+// fetch(URL, {
+//   headers: headers,
+//   method: 'POST'
+// })
+//   .then((res) => {
+//     console.log(res)
+//     if (res.status === 200) {
+//       message.success(`successfully generated ${this.state.people} people & ${this.state.ops} opportunity record`)
+//     }
+//   }
+//   )
+//   .catch(err => console.log(err))
+
+// const API_URL = process.env.VLY_URL || 'http://localhost:3122'
+// const URL = `https://alpha.voluntari.ly/api/db/initdb?people=${this.state.people}&ops=${this.state.ops}`
