@@ -254,7 +254,7 @@ test.serial('Test filter by week allow to add open end opportunity', async t => 
   myMock.restore()
 })
 
-test.only('OpListSection should pass list of users interests to the opList', async t => {
+test.serial('OpListSection should pass list of users interests to the opList', async t => {
   initStore.opportunities.data = opsWithOpenEndDate
   initStore.interests = [{
     opportunity: opsWithOpenEndDate[0],
@@ -273,5 +273,27 @@ test.only('OpListSection should pass list of users interests to the opList', asy
     </Provider>
   )
   t.is(wrapper.find('OpList').first().props().interests, initStore.interests)
+  myMock.restore()
+})
+
+test.serial('OpListSection should call interests api', async t => {
+  initStore.opportunities.data = opsWithOpenEndDate
+  initStore.session = {
+    me: '123456'
+  }
+  const mockStore = configureStore([thunk])(initStore)
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/`
+  myMock.getOnce(api, initStore.opportunities.data)
+  myMock.getOnce(`${API_URL}/interests?me=${initStore.session.me}`, {})
+
+  await mountWithIntl(
+    <Provider store={mockStore}>
+      <OpListSection handleShowOp={() => {}} handleDeleteOp={() => {}} filter={emptyFilterDateState} dateFilterType={DatePickerType.WeekRange} />
+    </Provider>
+  )
+
+  t.is(mockStore.getActions().filter((x) => x.type === '@@redux-api@interests').length, 1)
   myMock.restore()
 })
