@@ -40,7 +40,7 @@ const createPerson = async (p) => {
   let count = 1
   while (count <= p) {
     const person = {
-      name: `Testy ${cuid()}`,
+      name: `Testy ${cuid()} this is a test and jsutatestandtesttestetstetstwste`,
       nickname: 'T',
       email: `testy${cuid()}@gmail.com`,
       about: 'tester',
@@ -48,7 +48,7 @@ const createPerson = async (p) => {
       language: 'English',
       role: ['volunteer', 'activityProvider'],
       status: 'active',
-      avatar: 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg',
+      imgUrl: 'https://image.freepik.com/free-vector/web-programmer_23-2147502079.jpg',
       phone: '0542554815',
       dateAdded: Date.now()
     }
