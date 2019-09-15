@@ -40,7 +40,7 @@ const createPerson = async (p) => {
   let count = 1
   while (count <= p) {
     const person = {
-      name: `Testy ${cuid()} this is a test and jsutatestandtesttestetstetstwste`,
+      name: `Testy ${cuid()}`,
       nickname: 'T',
       email: `testy${cuid()}@gmail.com`,
       about: 'tester',
@@ -150,16 +150,3 @@ module.exports = {
   getModel,
   dbfactory
 }
-
-// const createOrgs = async () => {
-//   const orgs = {
-//     name: 'Albany high school',
-//     slug: 'charity',
-//     about: 'amazing school',
-//     imageUrl: 'http://www.ashs.school.nz/images/logo.png',
-//     contactEmail: 'albany@highschool.com',
-//     category: 'op',
-//     date: Date.now()
-//   }
-//   await Organisation.create(orgs).catch((err) => `unable to create people: ${console.log(err)}`)
-// }
