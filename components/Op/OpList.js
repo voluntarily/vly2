@@ -8,7 +8,7 @@ import { Grid } from '../VTheme/VTheme'
 
 const filterInterestsToOp = (op) => {
   return (interest) => {
-    return (op._id === interest.opportunity)
+    return (op._id === interest.opportunity._id)
   }
 }
 
