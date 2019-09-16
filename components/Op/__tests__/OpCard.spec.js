@@ -94,7 +94,7 @@ test('should display that a requestor is interested', t => {
     <OpCard op={op} size='Small' interestStatus='interested' />
   )
   // should find interested status
-  t.is(wrapper.find('#interestStatus').last().text(), ' - interested')
+  t.is(wrapper.find('#interestStatus').last().text(), 'Interested')
 })
 
 test('should not display that a requester is interest if no interestStatus is passed', t => {

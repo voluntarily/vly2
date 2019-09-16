@@ -26,7 +26,11 @@ const OpCard = ({ size, op, interestStatus }) => {
       <div className={`requestContainer${size}`}>
         <Link href={getOpPageURL(isArchived, op._id)}>
           <a>
-            <img className={`requestImg${size}`} src={cardImage} />
+            <div>
+              { interestStatus && <i id='interestStatus' >{interestStatus.charAt(0).toUpperCase() + interestStatus.slice(1)}</i> }
+              <img className={`requestImg${size}`} src={cardImage} />
+            </div>
+            
             <p className={`requestTitle requestTitle${size}`}>
               {draft}
               {op.name}
@@ -36,13 +40,17 @@ const OpCard = ({ size, op, interestStatus }) => {
             <p className={`requestDateTime${size}`}> {startDuration}</p>
             <p className={`requestDescription${size}`}>
               {op.subtitle}
-              { interestStatus && <strong id='interestStatus' >{' - ' + interestStatus}</strong> }
             </p>
           </a>
         </Link>
       </div>
 
       <style jsx>{`
+        #interestStatus {
+          margin-left: 10px;
+          margin-top: 10px;
+          position: absolute;
+        }
         a {
           text-decoration: none;
         }
