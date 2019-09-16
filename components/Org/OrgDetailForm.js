@@ -55,6 +55,8 @@ class OrgDetailForm extends Component {
         org.facebook = values.facebook
         org.contactEmail = values.contactEmail
         org.category = values.category
+
+        window.scrollTo(0, 0)
         this.props.onSubmit(this.props.org)
       }
     })
