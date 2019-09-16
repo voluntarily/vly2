@@ -17,14 +17,26 @@ const getHealth = (req, res) => {
   if (req.params.param1 === 'log') {
     console.log(req.query.msg)
   }
-  const result = {
-    message: `${config.appName} (${process.env.REVISION || 'local_build'}) running on ${config.appUrl}/ Be Awesome`,
-    health: 'OK',
-    params: req.params,
-    query: req.query,
-    app_url: process.env.APP_URL,
-    config: req.params.param1 === 'config' && config
+  let result
+  if (req.params.param1 === 'config' && req.ability.can('manage', 'Person')) {
+    result = {
+      message: `${config.appName} (${process.env.REVISION || 'local_build'}) running on ${config.appUrl}/ Be Awesome`,
+      health: 'OK',
+      params: req.params,
+      query: req.query,
+      app_url: process.env.APP_URL,
+      config: req.params.param1 === 'config' && config
+    }
+  } else {
+    result = {
+      message: `${config.appName} (${process.env.REVISION || 'local_build'}) running on ${config.appUrl}/ Be Awesome`,
+      health: 'OK',
+      params: req.params,
+      query: req.query,
+      app_url: process.env.APP_URL
+    }
   }
+
   return res.status(200).json(result)
 }
 

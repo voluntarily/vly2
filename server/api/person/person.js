@@ -2,7 +2,10 @@ const mongoose = require('mongoose')
 const idvalidator = require('mongoose-id-validator')
 const Schema = mongoose.Schema
 const { SchemaName } = require('./person.constants')
-const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
+const {
+  accessibleRecordsPlugin,
+  accessibleFieldsPlugin
+} = require('@casl/mongoose')
 const { Role } = require('../../services/authorize/role')
 
 // simplified version without Auth
@@ -17,11 +20,22 @@ const personSchema = new Schema({
   language: { type: String, default: 'EN', lowercase: true }, // en, mi, fr etc
   imgUrl: { type: 'String', default: '' }, // url to image
   avatar: { type: 'String', default: '' }, // deprecated use imgUrl
+  website: { type: 'String', required: false },
+  facebook: { type: 'String', required: false },
+  twitter: { type: 'String', required: false },
   role: {
     type: [String],
     required: true,
     default: [Role.VOLUNTEER_PROVIDER],
-    enum: [Role.ADMIN, Role.ORG_ADMIN, Role.OPPORTUNITY_PROVIDER, Role.VOLUNTEER_PROVIDER, Role.ACTIVITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER]
+    enum: [
+      Role.ADMIN,
+      Role.ORG_ADMIN,
+      Role.OPPORTUNITY_PROVIDER,
+      Role.VOLUNTEER_PROVIDER,
+      Role.ACTIVITY_PROVIDER,
+      Role.RESOURCE_PROVIDER,
+      Role.TESTER
+    ]
   },
   // used to indicate whether people show up in searches.
   status: {
@@ -33,7 +47,8 @@ const personSchema = new Schema({
   dateAdded: { type: 'Date', default: Date.now, required: true },
   tags: [
     {
-      type: Schema.Types.ObjectId, ref: 'Tag'
+      type: Schema.Types.ObjectId,
+      ref: 'Tag'
     }
   ]
 })
