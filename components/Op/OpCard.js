@@ -30,7 +30,7 @@ const OpCard = ({ size, op, interestStatus }) => {
               { interestStatus && <i id='interestStatus' >{interestStatus.charAt(0).toUpperCase() + interestStatus.slice(1)}</i> }
               <img className={`requestImg${size}`} src={cardImage} />
             </div>
-            
+
             <p className={`requestTitle requestTitle${size}`}>
               {draft}
               {op.name}
