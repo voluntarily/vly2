@@ -9,6 +9,7 @@ import MemberUl from '../Member/MemberUl'
 import TagDisplay from '../Tags/TagDisplay'
 import { GridContainer, H1, H3Bold, PBold, Spacer, SpacerSmall } from '../VTheme/VTheme'
 import PersonRoles from './PersonRole'
+import PersonPronouns from './PersonPronoun'
 
 const ProfileGrid = styled.div`
   display: grid;
@@ -57,6 +58,14 @@ const ListItem = styled.div`
   min-height: 5rem;
   margin-bottom: 3rem;
 `
+const personPronoun = (
+  <FormattedMessage
+    id='personPronoun'
+    defaultMessage='Pronoun'
+    description='person pronoun label in personDetails Form'
+  />
+)
+
 const PersonDetail = ({ person }, ...props) => (
   <ProfileGrid>
     <GridContainer>
@@ -81,18 +90,7 @@ const PersonDetail = ({ person }, ...props) => (
     </GridContainer>
     <GridContainer>
       <ListItem>
-        <H1>
-          {person.name}
-          {/* {person.status ? (
-            <Icon
-              type='safety-certificate'
-              theme='filled'
-              style={{ color: '#1da1f2' }}
-            />
-          ) : (
-            <Icon type='close-circle' />
-          )} */}
-        </H1>
+        <H1>{person.name}</H1>
         <PBold>{person.org}</PBold>
         <Divider />
         <Markdown children={person.about || ''} />
@@ -121,6 +119,8 @@ const PersonDetail = ({ person }, ...props) => (
         </PBold>
         <TagDisplay tags={person.tags} />
       </ListItem>
+      <SpacerSmall />
+      <DetailItem><PersonPronouns message={personPronoun} pronoun={person.pronoun} /></DetailItem>
       <DetailItemMobile>
         <p>        <Icon type='history' /> 312 ops completed</p>
       </DetailItemMobile>
