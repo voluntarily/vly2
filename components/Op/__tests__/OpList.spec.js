@@ -67,8 +67,12 @@ test('renders the list with no ops', t => {
 })
 
 test('should display interests when passed to opList', t => {
+  const interests = [{
+    opportunity: ops[0],
+    status: InterestStatus.INTERESTED
+  }]
   const wrapper = shallowWithIntl(
-    <OpList ops={[ops[0]]} handleShowOp={() => {}} handleDeleteOp={() => {}} interests={[{ opportunity: ops[0]._id, status: InterestStatus.INTERESTED }]} />
+    <OpList ops={[ops[0]]} handleShowOp={() => {}} handleDeleteOp={() => {}} interests={interests} />
   )
   t.is(wrapper.find('OpCard').first().props().interestStatus, InterestStatus.INTERESTED)
 })
