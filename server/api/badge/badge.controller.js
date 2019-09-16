@@ -1,16 +1,18 @@
 const { config } = require('../../../config/config')
 const Badge = require('./badge')
 require('es6-promise').polyfill()
-const fetch = require('isomorphic-fetch')
+require('isomorphic-fetch')
 
+const { fetch } = global
 const issueNewBadge = async (req, res) => {
   const { BADGER_PASSWORD, BADGER_USERNAME } = config
-  if (!BADGER_PASSWORD && !BADGER_USERNAME) {
+  if ((!BADGER_PASSWORD && !BADGER_USERNAME) && process.env.NODE_ENV !== 'test') {
     return res.json({ 'message': 'Internal server error' }).status(500)
   }
   const badgrRes = await fetch(`https://api.badgr.io/o/token?username=${BADGER_USERNAME}&password=${BADGER_PASSWORD}`, {
     method: 'POST'
   })
+  console.log(badgrRes)
   const { badgeID } = req.params
   const { email, _id } = req.body
   const badgrData = await badgrRes.json()

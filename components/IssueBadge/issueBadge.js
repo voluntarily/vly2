@@ -37,16 +37,16 @@ function IssueBadge ({ person }) {
     Router.push(`${config.appUrl}/people/${_id}`)
   }
   return (
-      <div>
-        <Button onClick={() => setModalVisible(!modalVisible)}>Issue Badge</Button>
-        <Modal
-          title='Select badge to issue to this person'
-          visible={modalVisible}
-          onOk={handleOk}
-          onCancel={() => setModalVisible(false)}>
-          <BadgeList badgeList={data} setBadgeChosen={setBadgeChosen} />
-        </Modal>
-      </div>
+    <div>
+      <Button onClick={() => setModalVisible(!modalVisible)}>Issue Badge</Button>
+      <Modal
+        title='Select badge to issue to this person'
+        visible={modalVisible}
+        onOk={handleOk}
+        onCancel={() => setModalVisible(false)}>
+        <BadgeList badgeList={data} setBadgeChosen={setBadgeChosen} />
+      </Modal>
+    </div>
   )
 }
 
@@ -56,13 +56,13 @@ function BadgeList ({ badgeList, setBadgeChosen }) {
     setBadgeChosen(badgeChoosen)
   }
   return (
-      <Select placeholder='Please select' style={{ width: '100%' }} onChange={handleOptionChange}>
-          {
-              badgeList.map((badge, key) => {
-                  return (<Option key={key} >{badge.name}</Option>)
-              })
-          }
-      </Select>
+    <Select placeholder='Please select' style={{ width: '100%' }} onChange={handleOptionChange}>
+      {
+        badgeList.map((badge, key) => {
+          return (<Option key={key} >{badge.name}</Option>)
+        })
+      }
+    </Select>
   )
 }
 
