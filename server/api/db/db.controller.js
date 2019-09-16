@@ -48,7 +48,7 @@ const createPerson = async (p) => {
       language: 'English',
       role: ['volunteer', 'activityProvider'],
       status: 'active',
-      avatar: 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg',
+      imgUrl: 'https://image.freepik.com/free-vector/web-programmer_23-2147502079.jpg',
       phone: '0542554815',
       dateAdded: Date.now()
     }
@@ -150,16 +150,3 @@ module.exports = {
   getModel,
   dbfactory
 }
-
-// const createOrgs = async () => {
-//   const orgs = {
-//     name: 'Albany high school',
-//     slug: 'charity',
-//     about: 'amazing school',
-//     imageUrl: 'http://www.ashs.school.nz/images/logo.png',
-//     contactEmail: 'albany@highschool.com',
-//     category: 'op',
-//     date: Date.now()
-//   }
-//   await Organisation.create(orgs).catch((err) => `unable to create people: ${console.log(err)}`)
-// }

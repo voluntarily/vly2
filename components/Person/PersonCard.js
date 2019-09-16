@@ -47,6 +47,15 @@ const PersonCard = ({ person, ...props }) => (
       .personTitle :hover {
         color: #6549aa;
       }
+      .personName {
+        overflow: hidden;
+        text-overflow: ellipsis; 
+        word-wrap: break-word;
+        display: inline;
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+      }
       
 
     `}</style>
