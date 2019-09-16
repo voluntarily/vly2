@@ -14,7 +14,6 @@ import reduxApi, { withOps, withInterests } from '../../lib/redux/reduxApi'
 import moment from 'moment'
 import Loading from '../../components/Loading'
 import DatePickerType from './DatePickerType.constant'
-
 class OpListSection extends Component {
   async loadData (search, location, query) {
     // Get all Ops
@@ -30,10 +29,9 @@ class OpListSection extends Component {
       if (query) {
         filters.q = query
       }
-      if (this.props.store && this.props.store.getState().session) {
-        const me = this.props.store.getState().session.me
-        if (me) {
-          await this.props.dispatch(reduxApi.actions.interests.get({ me: me }))
+      if (this.props.me) {
+        if (this.props.me) {
+          await this.props.dispatch(reduxApi.actions.interests.get({ me: this.props.me._id }))
         }
       }
       return await this.props.dispatch(reduxApi.actions.opportunities.get(filters))

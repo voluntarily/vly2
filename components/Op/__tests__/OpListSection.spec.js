@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import { shallowWithIntl, mountWithIntl } from '../../../lib/react-intl-test-helper'
+import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import OpListSection from '../OpListSection'
 import { Provider } from 'react-redux'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
@@ -279,19 +279,17 @@ test.serial('OpListSection should pass list of users interests to the opList', a
 
 test.serial('OpListSection should call interests api', async t => {
   initStore.opportunities.data = opsWithOpenEndDate
-  initStore.session = {
-    me: '123456'
-  }
+  const me = { _id: '123456' }
   const mockStore = configureStore([thunk])(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/`
   myMock.getOnce(api, initStore.opportunities.data)
-  myMock.getOnce(`${API_URL}/interests?me=${initStore.session.me}`, {})
+  myMock.getOnce(`${API_URL}/interests?me=${me}`, {})
 
   await mountWithIntl(
     <Provider store={mockStore}>
-      <OpListSection store={mockStore} handleShowOp={() => {}} handleDeleteOp={() => {}} filter={emptyFilterDateState} dateFilterType={DatePickerType.WeekRange} />
+      <OpListSection me={me} handleShowOp={() => {}} handleDeleteOp={() => {}} filter={emptyFilterDateState} dateFilterType={DatePickerType.WeekRange} />
     </Provider>
   )
 
