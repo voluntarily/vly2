@@ -11,7 +11,7 @@ import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import { FullPage } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
-import reduxApi, { withMembers, withPeople } from '../../lib/redux/reduxApi.js'
+import reduxApi, { withMembers, withPeople, withLocations } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 
 const blankPerson = {
@@ -29,6 +29,9 @@ const blankPerson = {
     'possessive': ''
   },
   imgUrl: '',
+  website: null,
+  facebook: null,
+  twitter: null,
   role: ['volunteer'],
   status: 'inactive'
 }
@@ -149,7 +152,7 @@ export class PersonDetailPage extends Component {
     } else {
       content = this.state.editing
         ? <div>
-          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancel.bind(this)} />
+          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancel.bind(this)} locations={this.props.locations.data} />
         </div>
         : <div>
           {canEdit && <Button style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
@@ -199,4 +202,4 @@ PersonDetailPage.propTypes = {
   })
 }
 
-export default securePage(withMembers(withPeople(PersonDetailPage)))
+export default securePage(withMembers(withPeople(withLocations(PersonDetailPage))))
