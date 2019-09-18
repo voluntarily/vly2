@@ -38,7 +38,7 @@ function IssueBadge ({ person }) {
   }
   return (
     <div>
-      <Button onClick={() => setModalVisible(!modalVisible)}>Issue Badge</Button>
+      <Button onClick={() => setModalVisible(!modalVisible)} shape='round'>Issue Badge</Button>
       <Modal
         title='Select badge to issue to this person'
         visible={modalVisible}

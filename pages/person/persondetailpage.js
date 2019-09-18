@@ -168,6 +168,7 @@ export class PersonDetailPage extends Component {
               <FormattedMessage id='deletePerson' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
             </Button>
           </Popconfirm>}
+          &nbsp;
           {
             isAdmin && <IssueBadgeButton person={this.props.people.data[0]} />
           }
