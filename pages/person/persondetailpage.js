@@ -23,6 +23,11 @@ const blankPerson = {
   email: '',
   phone: '',
   gender: '',
+  pronoun: {
+    'subject': '',
+    'object': '',
+    'possessive': ''
+  },
   imgUrl: '',
   website: null,
   facebook: null,
@@ -146,11 +151,9 @@ export class PersonDetailPage extends Component {
       </div>
     } else {
       content = this.state.editing
-        ? <div>
-          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancel.bind(this)} locations={this.props.locations.data} />
-        </div>
-        : <div>
-          {canEdit && <Button style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
+        ? <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancel.bind(this)} locations={this.props.locations.data} />
+        : <>
+          {canEdit && <Button style={{ float: 'right' }} type='secondary' shape='round' onClick={() => this.setState({ editing: true })} >
             <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
           </Button>}
 
@@ -163,14 +166,13 @@ export class PersonDetailPage extends Component {
             </Button>
           </Popconfirm>}
 
-        </div>
+        </>
     }
     return (
       <FullPage>
         <Helmet>
           <title>Voluntarily - Person Details</title>
         </Helmet>
-        <h1><FormattedMessage defaultMessage='Person' id='person.detail.title' /></h1>
         {content}
       </FullPage>
     )
@@ -187,6 +189,7 @@ PersonDetailPage.propTypes = {
     email: PropTypes.string,
     phone: PropTypes.string,
     gender: PropTypes.string,
+    pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
     status: PropTypes.oneOf(['active', 'inactive', 'hold'])
