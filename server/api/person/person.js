@@ -17,7 +17,7 @@ const personSchema = new Schema({
   location: { type: 'String', default: '' },
   phone: { type: 'String', required: false }, // +64 27 7031007
   gender: { type: 'String', default: '' }, // whatever they want to write.
-  pronoun: { type: 'Object', default: { subject: '', object: '', possessive: '' } },
+  pronoun: { type: 'Object', default: { subject: 'they', object: 'them', possessive: 'their' } },
   language: { type: 'String', default: 'EN', lowercase: true }, // en, mi, fr etc
   imgUrl: { type: 'String', default: '' }, // url to image
   avatar: { type: 'String', default: '' }, // deprecated use imgUrl
