@@ -1,17 +1,7 @@
-import {
-  Button,
-  Checkbox,
-  Divider,
-  Form,
-  Icon,
-  Input,
-  Radio,
-  Tooltip
-} from 'antd'
+import { Button, Checkbox, Divider, Form, Icon, Input, Radio, Tooltip, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
 import LocationSelector from '../Form/Input/LocationSelector'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import TagInput from '../Form/Input/TagInput'
@@ -59,7 +49,11 @@ class PersonDetailForm extends Component {
         person.nickname = values.nickname
         person.email = values.email
         person.phone = values.phone
-        person.pronoun = values.pronoun
+        person.pronoun = {
+          subject: values.pronoun_subject,
+          object: values.pronoun_object,
+          possessive: values.pronoun_possessive
+        }
         person.about = values.about
         person.location = values.location
         person.tags = values.tags
@@ -69,6 +63,7 @@ class PersonDetailForm extends Component {
         person.facebook = values.facebook
         person.role = values.role
         person.status = values.status
+        window.scrollTo(0, 0)
         this.props.onSubmit(this.props.person)
       }
     })
@@ -94,7 +89,7 @@ class PersonDetailForm extends Component {
     const personPronoun = (
       <FormattedMessage
         id='personPronoun'
-        defaultMessage='Pronoun'
+        defaultMessage='Pronoun (subject/object/possessive)'
         description='person pronoun label in personDetails Form'
       />
     )
@@ -206,10 +201,6 @@ class PersonDetailForm extends Component {
 
     return (
       <div className='PersonDetailForm'>
-        <PageTitle>
-          <h2>Edit your profile</h2>
-        </PageTitle>
-        <Divider />
         <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
           <FormGrid>
             <DescriptionContainer>
@@ -240,11 +231,34 @@ class PersonDetailForm extends Component {
                 </Form.Item>
               </ShortInputContainer>
               <ShortInputContainer>
-                <Form.Item label={personPronoun}>
-                  {getFieldDecorator('pronoun', {
-                    rules: []
-                  })(<Input placeholder='e.g. she/her, he/him, they/them' />)}
-                </Form.Item>
+                <Row>
+                  <Col span='24'>
+                    <label>{personPronoun}</label>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span='8'>
+                    <Form.Item layout='inline' style={{ width: '100%', marginRight: 0 }} >
+                      {getFieldDecorator('pronoun_subject', {
+                        rules: []
+                      })(<Input placeholder='they' />)}
+                    </Form.Item>
+                  </Col>
+                  <Col span='8'>
+                    <Form.Item layout='inline' >
+                      {getFieldDecorator('pronoun_object', {
+                        rules: []
+                      })(<Input placeholder='them' />)}
+                    </Form.Item>
+                  </Col>
+                  <Col span='8'>
+                    <Form.Item layout='inline' >
+                      {getFieldDecorator('pronoun_possessive', {
+                        rules: []
+                      })(<Input placeholder='theirs' />)}
+                    </Form.Item>
+                  </Col>
+                </Row>
               </ShortInputContainer>
               <Form.Item label={personWebSite}>
                 {getFieldDecorator('website', {
@@ -434,7 +448,7 @@ PersonDetailForm.propTypes = {
     facebook: PropTypes.string,
     twitter: PropTypes.string,
     website: PropTypes.string,
-    pronoun: PropTypes.string,
+    pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
@@ -494,9 +508,17 @@ export default Form.create({
         ...props.person.phone,
         value: props.person.phone
       }),
-      pronoun: Form.createFormField({
+      pronoun_subject: Form.createFormField({
         ...props.person.pronoun,
-        value: props.person.pronoun
+        value: props.person.pronoun ? props.person.pronoun.subject : ''
+      }),
+      pronoun_object: Form.createFormField({
+        ...props.person.pronoun,
+        value: props.person.pronoun ? props.person.pronoun.object : ''
+      }),
+      pronoun_possessive: Form.createFormField({
+        ...props.person.pronoun,
+        value: props.person.pronoun ? props.person.pronoun.possessive : ''
       }),
       imgUrl: Form.createFormField({
         ...props.person.imgUrl,
@@ -529,6 +551,5 @@ export default Form.create({
     }
   },
   onValuesChange (_, values) {
-    // console.log('onValuesChange', values)
   }
 })(PersonDetailForm)

@@ -66,6 +66,7 @@ const people = [
     'email': 'ctesty@voluntar.ly',
     'phone': '027 444 5555',
     'gender': 'non binary',
+    'pronoun': { 'subject': 'they', 'object': 'them', 'possesive': 'ȁǹy' },
     'imgUrl': 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     'role': ['tester', 'volunteer'],
     'status': 'active',
