@@ -69,7 +69,7 @@ const insertNewBageIntoDatabase = async (result, id) => {
 const listAllBadge = async (req, res) => {
   let accessToken
   try {
-    accessToken =  await getToken()
+    accessToken = await getToken()
   } catch (e) {
     return res.json({ message: 'Badge system currently unavailable' }).sendStatus(500)
   }
