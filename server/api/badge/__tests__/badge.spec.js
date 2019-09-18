@@ -2,8 +2,8 @@ import test from 'ava'
 import { fetchMock } from 'fetch-mock'
 import MockExpressRequest from 'mock-express-request'
 import MockExpressResponse from 'mock-express-response'
-import { issueNewBadge } from '../badge.controller'
-
+import { issueNewBadge, listAllBadge } from '../badge.controller'
+import badges from './badges.fixture'
 const expectedBadgeResult = {
   'entityType': 'Assertion',
   'entityId': 'WDVAtNTfT_S8JuO-u8rVEw',
@@ -32,7 +32,7 @@ const expectedBadgeResult = {
 }
 
 test.serial('Test request issue badge return information about badge', async t => {
-  let mockFetch = fetchMock.sandbox()
+  const mockFetch = fetchMock.sandbox()
     .get('*', 200)
     .post('begin:https://api.badgr.io/o/token', {
       body: {
@@ -65,4 +65,27 @@ test.serial('Test request issue badge return information about badge', async t =
   const expectedStatusCode = 200
   t.assert(expectedStatusCode === mockRes.statusCode, 'Status code should be 200 OK')
   t.deepEqual(responseData.result, expectedBadgeResult)
+})
+
+test.only('Success fully query all badge available ', async t => {
+  const serverMock = fetchMock.sandbox()
+    .get('begin:https://api.badgr.io/v2/badgeclasses', {
+      body: {
+        result: badges
+      }
+    })
+    .post('begin:https://api.badgr.io/o/token', {
+      body: {
+        access_token: 'Dummy Token'
+      }
+    })
+  global.fetch = serverMock
+
+  const mockReq = new MockExpressRequest()
+  const mockRes = new MockExpressResponse()
+
+  await listAllBadge(mockReq, mockRes)
+
+  const responseFromServer = mockRes._getJSON()
+  t.deepEqual(badges, responseFromServer)
 })

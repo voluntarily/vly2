@@ -86,12 +86,6 @@ const listAllBadge = async (req, res) => {
 
 const listUserBadge = async (req, res) => {
   const { user } = req.params
-  const { BADGER_PASSWORD, BADGER_USERNAME } = config
-  const badgrRes = await fetch(`https://api.badgr.io/o/token?username=${BADGER_USERNAME}&password=${BADGER_PASSWORD}`, {
-    method: 'POST'
-  })
-  const badgrData = await badgrRes.json()
-  console.log(badgrData)
   const badgeResponse = await Badge.find({ person: user })
   if (badgeResponse == null) return res.json([]).status(200)
   return res.json(badgeResponse)
