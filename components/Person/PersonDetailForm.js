@@ -2,7 +2,6 @@ import { Button, Checkbox, Divider, Form, Icon, Input, Radio, Tooltip, Row, Col 
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
 import LocationSelector from '../Form/Input/LocationSelector'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import TagInput from '../Form/Input/TagInput'

@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
 import TagDisplay from '../Tags/TagDisplay'
-import { GridContainer, H1, H3Bold, Spacer } from '../VTheme/VTheme'
+import { GridContainer, H1, H3Bold } from '../VTheme/VTheme'
 import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
 
