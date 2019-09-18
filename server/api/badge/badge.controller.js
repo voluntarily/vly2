@@ -20,11 +20,11 @@ const getToken = async () => {
 const issueNewBadge = async (req, res) => {
   const { badgeID } = req.params
   const { email, _id } = req.body
-  let accessToken 
-  
-  try { 
-    accessToken = getToken()
-  } catch(e) {
+  let accessToken
+
+  try {
+    accessToken = await getToken()
+  } catch (e) {
     return res.json({ message: 'Internal Server error, badge functionality is not available' }).sendStatus(500)
   }
 
@@ -69,9 +69,9 @@ const insertNewBageIntoDatabase = async (result, id) => {
 const listAllBadge = async (req, res) => {
   let accessToken
   try {
-    accessToken = getToken()
+    accessToken =  await getToken()
   } catch (e) {
-    return res.json({ message: 'Badge system currently unavailable'}).sendStatus(500)
+    return res.json({ message: 'Badge system currently unavailable' }).sendStatus(500)
   }
   const badgeListResponse = await fetch('https://api.badgr.io/v2/badgeclasses', {
     method: 'GET',

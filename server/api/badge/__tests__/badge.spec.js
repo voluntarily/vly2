@@ -66,5 +66,3 @@ test.serial('Test request issue badge return information about badge', async t =
   t.assert(expectedStatusCode === mockRes.statusCode, 'Status code should be 200 OK')
   t.deepEqual(responseData.result, expectedBadgeResult)
 })
-
-
