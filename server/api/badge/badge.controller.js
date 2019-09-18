@@ -1,22 +1,33 @@
+require('isomorphic-fetch') /* global fetch */
 const { config } = require('../../../config/config')
 const Badge = require('./badge')
-require('es6-promise').polyfill()
-require('isomorphic-fetch')
 
-const { fetch } = global
-const issueNewBadge = async (req, res) => {
+const getToken = async () => {
   const { BADGER_PASSWORD, BADGER_USERNAME } = config
   if ((!BADGER_PASSWORD && !BADGER_USERNAME) && process.env.NODE_ENV !== 'test') {
-    return res.json({ 'message': 'Internal server error' }).status(500)
+    throw new Error()
   }
-  const badgrRes = await fetch(`https://api.badgr.io/o/token?username=${BADGER_USERNAME}&password=${BADGER_PASSWORD}`, {
-    method: 'POST'
+  const badgrResponse = await fetch(`https://api.badgr.io/o/token?username=${BADGER_USERNAME}&password=${BADGER_PASSWORD}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
   })
-  console.log(badgrRes)
+  const badgrData = await badgrResponse.json()
+  return badgrData.access_token
+}
+
+const issueNewBadge = async (req, res) => {
   const { badgeID } = req.params
   const { email, _id } = req.body
-  const badgrData = await badgrRes.json()
-  const accessToken = badgrData.access_token
+  let accessToken 
+  
+  try { 
+    accessToken = getToken()
+  } catch(e) {
+    return res.json({ message: 'Internal Server error, badge functionality is not available' }).sendStatus(500)
+  }
+
   const body = {
     'recipient': {
       'identity': `${email}`,
@@ -33,11 +44,11 @@ const issueNewBadge = async (req, res) => {
     }
   })
   const data = await response.json()
-  await insertIntoDatabase(data.result, _id)
+  process.env.NODE_ENV !== 'test' && await insertNewBageIntoDatabase(data.result, _id)
   return res.json(data)
 }
 
-const insertIntoDatabase = async (result, id) => {
+const insertNewBageIntoDatabase = async (result, id) => {
   const newBadgeIssue = result[0]
   const { entityType, image, badgeclass, issuer, issuerOpenBadgeId, createdAt, issuedOn, badgeclassOpenBadgeId, entityId } = newBadgeIssue
   const newBadge = {
@@ -56,15 +67,12 @@ const insertIntoDatabase = async (result, id) => {
 }
 
 const listAllBadge = async (req, res) => {
-  const { BADGER_PASSWORD, BADGER_USERNAME } = config
-  if (!BADGER_PASSWORD && !BADGER_USERNAME) {
-    return res.json({ 'message': 'Internal server error' }).status(500)
+  let accessToken
+  try {
+    accessToken = getToken()
+  } catch (e) {
+    return res.json({ message: 'Badge system currently unavailable'}).sendStatus(500)
   }
-  const badgrRes = await fetch(`https://api.badgr.io/o/token?username=${BADGER_USERNAME}&password=${BADGER_PASSWORD}`, {
-    method: 'POST'
-  })
-  const badgrData = await badgrRes.json()
-  const accessToken = badgrData['access_token']
   const badgeListResponse = await fetch('https://api.badgr.io/v2/badgeclasses', {
     method: 'GET',
     headers: {
