@@ -71,7 +71,6 @@ const PersonUl = styled.ul`
     -webkit-columns: 2;
     -moz-columns: 2;
   }
-
 `
 
 const PersonDetail = ({ person }, ...props) => (
@@ -146,20 +145,24 @@ const PersonDetail = ({ person }, ...props) => (
             <StyledIcon type='coffee' />
             <PersonRoles roles={person.role} />
           </li>
-          <li>
-            <StyledIcon type='tags' />
-            <TagDisplay tags={person.tags} />
-          </li>
+
         </PersonUl>
       </InfoSection>
-
+      <InfoSection>
+        <H3Bold>
+          <FormattedMessage
+            defaultMessage='Interests and Skills'
+            id='person.skills.title'
+            description='subheading for tags on person details page' />
+        </H3Bold>
+        <TagDisplay tags={person.tags} />
+      </InfoSection>
       <DetailItemMobile>
         <p><Icon type='history' /> </p>
       </DetailItemMobile>
       <DetailItemMobile>
         <p><Icon type='safety' /> </p>
       </DetailItemMobile>
-      <Spacer />
       <InfoSection>
         <H3Bold>Latest Activities</H3Bold>
         <Divider />

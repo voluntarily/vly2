@@ -90,7 +90,7 @@ class PersonDetailForm extends Component {
     const personPronoun = (
       <FormattedMessage
         id='personPronoun'
-        defaultMessage='Pronoun'
+        defaultMessage='Pronoun (subject/object/possessive)'
         description='person pronoun label in personDetails Form'
       />
     )
@@ -202,10 +202,6 @@ class PersonDetailForm extends Component {
 
     return (
       <div className='PersonDetailForm'>
-        <PageTitle>
-          <h2>Edit your profile</h2>
-        </PageTitle>
-        <Divider />
         <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
           <FormGrid>
             <DescriptionContainer>
@@ -237,7 +233,7 @@ class PersonDetailForm extends Component {
               </ShortInputContainer>
               <ShortInputContainer>
                 <Row>
-                  <Col span='8'>
+                  <Col span='24'>
                     <label>{personPronoun}</label>
                   </Col>
                 </Row>
@@ -513,17 +509,13 @@ export default Form.create({
         ...props.person.phone,
         value: props.person.phone
       }),
-      pronoun_full: Form.createFormField({
-        ...props.person.pronoun,
-        value: props.person.pronoun ? (`${props.person.pronoun.object} ${props.person.pronoun.subject} ${props.person.pronoun.possessive} `) : ''
-      }),
       pronoun_subject: Form.createFormField({
         ...props.person.pronoun,
-        value: props.person.pronoun ? props.person.pronoun.object : ''
+        value: props.person.pronoun ? props.person.pronoun.subject : ''
       }),
       pronoun_object: Form.createFormField({
         ...props.person.pronoun,
-        value: props.person.pronoun ? props.person.pronoun.subject : ''
+        value: props.person.pronoun ? props.person.pronoun.object : ''
       }),
       pronoun_possessive: Form.createFormField({
         ...props.person.pronoun,
