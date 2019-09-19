@@ -16,11 +16,11 @@ const getOrganisations = async (req, res) => {
   let query = {} // { status: 'active' }
   let sort = 'name'
   let select = {}
-
+  console.log(req.query)
   try {
     query = req.query.q ? JSON.parse(req.query.q) : query
     sort = req.query.s ? JSON.parse(req.query.s) : sort
-    select = req.query.p ? req.query.p : select
+    select = req.query.p ? JSON.parse(req.query.p) : select
   } catch (e) {
     return res.status(400).send(e)
   }
