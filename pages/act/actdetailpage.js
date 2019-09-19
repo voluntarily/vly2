@@ -136,7 +136,11 @@ export class ActDetailPage extends Component {
       return (
         // if not signed in then the interested button signs in first
         isOP && <div>
-          <Button>TODO: Create Opportunity</Button>
+          <Button href={`/op/new?act=${act._id}`} >
+            <FormattedMessage id='act.createOpportunityBtn'
+              defaultMessage='Create Opportunity'
+              description='Button to create an opportunity from an activity' />
+          </Button>
           <Divider />
         </div>
       )
