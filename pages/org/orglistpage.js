@@ -12,8 +12,8 @@ class OrgListPage extends Component {
   static async getInitialProps ({ store, query }) {
     // Get all OrgListPage
     try {
-      // TODO: [VP-451] Minimise org list download by only getting OrgCard required information using select.
-      await store.dispatch(reduxApi.actions.organisations.get())
+      const select = { p: 'name imgUrl category' }
+      await store.dispatch(reduxApi.actions.organisations.get(select))
     } catch (err) {
       console.log('error in getting orgs', err)
     }
