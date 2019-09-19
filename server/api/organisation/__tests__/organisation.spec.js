@@ -155,20 +155,15 @@ test.serial('Should correctly give reverse sorted orgs of category', async t => 
 // })
 
 const queryString = params => Object.keys(params).map((key) => {
-  return encodeURIComponent(key) + '=' + encodeURIComponent(JSON.stringify(params[key]))
+  return key + '=' + params[key]
 }).join('&')
 
-test.only('Should correctly select just the names and ids', async t => {
-  const select = {
-    name: 1,
-    imgUrl: 1,
-    category: 1
-  }
+test.serial('Should correctly select just the names and ids', async t => {
   const query = {
-    q: { category: 'vp' },
-    p: select
+    q: JSON.stringify({ category: 'vp' }),
+    p: 'name imgUrl category'
   }
-
+  console.log(queryString(query))
   const res = await request(server)
     .get(`/api/organisations?${queryString(query)}`)
     .set('Accept', 'application/json')

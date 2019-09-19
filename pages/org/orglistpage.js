@@ -8,21 +8,12 @@ import { FullPage, H3Black, PageHeaderContainer, RequestButtonContainer } from '
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 
-const queryString = params => Object.keys(params).map((key) => {
-  return encodeURIComponent(key) + '=' + encodeURIComponent(JSON.stringify(params[key]))
-}).join('&')
-
 class OrgListPage extends Component {
   static async getInitialProps ({ store, query }) {
     // Get all OrgListPage
     try {
-      const select = {
-        name: 1,
-        imgUrl: 1,
-        category: 1
-      }
-      const pselect = { p: select }
-      await store.dispatch(reduxApi.actions.organisations.get(queryString(pselect)))
+      const select = { p: 'name imgUrl category' }
+      await store.dispatch(reduxApi.actions.organisations.get(select))
     } catch (err) {
       console.log('error in getting orgs', err)
     }
