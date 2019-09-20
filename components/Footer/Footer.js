@@ -42,7 +42,6 @@ const FooterLogo = styled.img`
   }
 `
 
-
 const FooterText = styled.div`
   letter-spacing: -0.4px;
   font-size: 1rem;
