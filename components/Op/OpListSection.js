@@ -16,7 +16,7 @@ import Loading from '../../components/Loading'
 import DatePickerType from './DatePickerType.constant'
 
 class OpListSection extends Component {
-  async loadData (search, location, query) {
+  async loadData (search, location, query, org) {
     // Get all Ops
     try {
       const filters = {}
@@ -30,7 +30,6 @@ class OpListSection extends Component {
       if (query) {
         filters.q = query
       }
-
       return await this.props.dispatch(reduxApi.actions.opportunities.get(filters))
     } catch (err) {
       // console.log('error in getting ops', err)
@@ -38,11 +37,25 @@ class OpListSection extends Component {
   }
 
   applyDateFilter = (filter) => {
+    if (!filter) {
+      return this.props.opportunities.data
+    }
     if (filter.date.length === 0) return this.props.opportunities.data
     const momentLists = filter.date.map(element => moment(element))
     if (!this.props.opportunities.loading) {
       const filteredData = this.props.opportunities.data.filter(element => this.isDateFilterBetween(momentLists, element.date))
       return filteredData
+    }
+  }
+
+  appltOrganizationFilter = (opDataFilteredByDate, org) => {
+    if (!org) {
+      return opDataFilteredByDate
+    } else {
+      if (!this.props.opportunities.loading) {
+        const filteredData = opDataFilteredByDate.filter(m => (m.offerOrg) && (m.offerOrg._id = org))
+        return filteredData
+      }
     }
   }
 
@@ -83,17 +96,19 @@ class OpListSection extends Component {
   async componentDidUpdate (prevProps) {
     if (prevProps.search !== this.props.search ||
       prevProps.location !== this.props.location ||
-      prevProps.query !== this.props.query) {
-      await this.loadData(this.props.search, this.props.location, this.props.query)
+      prevProps.query !== this.props.query ||
+      prevProps.org !== this.props.org) {
+      await this.loadData(this.props.search, this.props.location, this.props.query, this.props.org)
     }
   }
 
   async componentDidMount () {
-    await this.loadData(this.props.search, this.props.location, this.props.query)
+    await this.loadData(this.props.search, this.props.location, this.props.query, this.props.org)
   }
 
   render () {
-    const opData = this.applyDateFilter(this.props.filter)
+    const opDataFilteredByDate = this.applyDateFilter(this.props.filter)
+    const opData = this.appltOrganizationFilter(opDataFilteredByDate, this.props.org)
     if (this.props.opportunities.loading) {
       return (<section>
         <Loading><p>Loading opportunities...</p></Loading>
@@ -120,7 +135,8 @@ OpListSection.propTypes = {
   dispatch: PropTypes.func.isRequired,
   query: PropTypes.string,
   search: PropTypes.string,
-  location: PropTypes.string
+  location: PropTypes.string,
+  org: PropTypes.string
 }
 
 export const OpListSectionTest = OpListSection
