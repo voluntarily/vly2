@@ -112,11 +112,11 @@ const Footer = ({ isAuthenticated, ...props }) => (
             description='Source coder version label.'
           />:&nbsp;
           <FormattedMessage
-            id='revision' // this id=revision is coming from server.js ln 70
+            id='revision' // set in server.js
             defaultMessage='local-build'
             description='Source code revision, auto generated.'
           >
-            {txt => <a href={'https://github.com/voluntarily/vly2/commit/' + txt.substring(0, 8)} target='_blank'>{txt}</a> }
+            {txt => <a href={'https://github.com/voluntarily/vly2/commit/' + txt.split(/[ \- _ ]+/)[0]} target='_blank'>{txt}</a> }
           </FormattedMessage>
         </P>
 
