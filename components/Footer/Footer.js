@@ -137,13 +137,13 @@ const Footer = ({ isAuthenticated, ...props }) => (
 
         <FooterGridItem>
           <FooterGridItemTitle>Resources</FooterGridItemTitle>
-          <MenuItem>Getting started</MenuItem>
+          <MenuItem href='/about'>Getting started</MenuItem>
           <br />
-          <MenuItem>Blog</MenuItem>
+          <MenuItem href="https://voluntarily.nz/blog" target='_blank' rel='noopener noreferrer'>Blog</MenuItem>
           <br />
-          <MenuItem>Help centre</MenuItem>
+          <MenuItem href="https://voluntarily.atlassian.net/servicedesk/customer/portals" target='_blank' rel='noopener noreferrer'>Help centre</MenuItem>
           <br />
-          <MenuItem>Contact Support</MenuItem>
+          <MenuItem href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/12' target='_blank' rel='noopener noreferrer'>Contact Support</MenuItem>
           <br />
         </FooterGridItem>
 
@@ -206,10 +206,6 @@ const Footer = ({ isAuthenticated, ...props }) => (
           <MenuItem href='https://voluntarily.atlassian.net/wiki' target='_blank' rel='noopener noreferrer'>
             Developer resources
           </MenuItem>
-          <br />
-          <MenuItem>Jobs</MenuItem>
-          <br />
-          <MenuItem>Legal</MenuItem>
 
         </FooterGridItem>
       </Grid>
