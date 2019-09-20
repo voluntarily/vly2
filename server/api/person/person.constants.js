@@ -22,7 +22,8 @@ const PersonFields = {
   WEBSITE: 'website',
   TWITTER: 'twitter',
   ROLE: 'role',
-  STATUS: 'status'
+  STATUS: 'status',
+  PRONOUN: 'pronoun'
 }
 
 module.exports = {

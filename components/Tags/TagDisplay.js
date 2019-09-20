@@ -20,11 +20,11 @@ color: #666;
 
 export function TagDisplay ({ tags }) {
   return (
-    <div>
+    <span>
       {tags.map(tag => {
         return <TagStyle key={tag.tag}>{tag.tag}</TagStyle>
       })}
-    </div>
+    </span>
   )
 }
 

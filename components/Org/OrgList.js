@@ -18,7 +18,6 @@ OrgList.propTypes = {
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       imgUrl: PropTypes.string,
-      about: PropTypes.string.isRequired,
       category: PropTypes.arrayOf(
         PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
       ).isRequired,

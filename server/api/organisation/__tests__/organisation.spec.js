@@ -77,6 +77,20 @@ test.serial('Should correctly give subset of orgs matching slug', async t => {
   t.is(got.length, 1)
 })
 
+// test.only('Should correctly give a list with only name field', async t => {
+//   const nameOrganisation = "OMGTech";
+//   //p={"name": 1"} when applied on url, json is undefined
+//   const res = await request(server)
+//     .get('/api/organisations?q={"name":"' + nameOrganisation + '"}&p={"name": "1"}')
+//     .set('Accept', 'application/json')
+//     .expect(200)
+//     .expect('Content-Type', /json/)
+//   const got = res.body
+//   console.log('got', got[0].name)
+//   t.is(got[0].name, nameOrganisation)
+//   t.is(got[0].about, null)
+// })
+
 test.serial('Should find no matches', async t => {
   const res = await request(server)
     .get('/api/organisations?q={"slug":"nomatches"}')
@@ -140,14 +154,22 @@ test.serial('Should correctly give reverse sorted orgs of category', async t => 
 //   t.is(2, got.length)
 // })
 
+const queryString = params => Object.keys(params).map((key) => {
+  return key + '=' + params[key]
+}).join('&')
+
 test.serial('Should correctly select just the names and ids', async t => {
+  const query = {
+    q: JSON.stringify({ category: 'vp' }),
+    p: 'name imgUrl category'
+  }
+  console.log(queryString(query))
   const res = await request(server)
-    .get('/api/organisations?q={"category":"vp"}&p={"name": 1}')
+    .get(`/api/organisations?${queryString(query)}`)
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 4)
   t.is(got[0].slug, undefined)
   t.is(got[0].name, 'Datacom')

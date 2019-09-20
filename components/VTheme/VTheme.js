@@ -363,4 +363,86 @@ export const FullPage = styled.div`
 
 export const FillWindow = styled.div`
   min-height: calc(100vh - 220px);
-` // END AWESOME CSS DUMP
+`
+/* Styled Card - an image followed by a title and some content
+*/
+export const Card = styled.figure`
+
+-webkit-transition: all 0.28s;
+padding-bottom: 1rem;
+
+a { text-decoration: none; }
+
+figcaption {
+  -webkit-transition: all 0.2s;
+}
+
+:hover {
+  transition: all 0.3s;
+  box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
+  transform: scale(1.1);
+  border-radius: 8px;
+  h1 {
+    color: #6549aa;
+  }
+  img {
+    border-radius: 8px 8px 0 0;
+  }
+  figcaption {
+    transform: scale(0.9091);
+  }
+}
+
+h1 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  vertical-align: middle;
+  color: #000;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  -webkit-transition: all 0.28s;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.4;
+  -webkit-line-clamp: 3;
+
+}
+
+img {
+  -webkit-transition: all 0.2s;
+  width: 100%;
+  height: 10rem;
+  background-color: rgba(0, 0, 0, 0);
+  object-fit: cover;
+  overflow: hidden;
+  object-position: center;
+}
+
+time {
+  vertical-align: middle;
+  margin-bottom: 0px;
+  font-weight: 500;
+  font-size: 16px;
+  color: #585858;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  margin-block-start: 0;
+}
+
+@media screen and (max-width: 768px) {
+  width: calc(100vw - 2rem);
+  margin-bottom: 1.5rem;
+
+  img {
+    height: 12rem;
+  }
+
+}
+`
