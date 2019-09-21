@@ -27,3 +27,12 @@ test('createCsv formats properly', async t => {
 
   t.assert(csv === expected)
 })
+
+test('Click ExportMembers button', t => {
+  const wrapper = mountWithIntl(<MemberExport />)
+  t.true(wrapper.find('Button').exists())
+
+  let downloadButton = wrapper.find('Button').first()
+  t.is(downloadButton.text(), 'Export Members')
+  downloadButton.simulate('click')
+})
