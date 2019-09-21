@@ -16,7 +16,7 @@ import Loading from '../../components/Loading'
 import DatePickerType from './DatePickerType.constant'
 
 class OpListSection extends Component {
-  async loadData (search, location, query, org) {
+  async loadData (search, location, query) {
     // Get all Ops
     try {
       const filters = {}
@@ -47,13 +47,16 @@ class OpListSection extends Component {
       return filteredData
     }
   }
-
-  appltOrganizationFilter = (opDataFilteredByDate, org) => {
+  /**
+   * This method use in organization detail page
+   * to filter opportunities offered by specific organization
+   */
+  appltOrganizationFilter = (opData, org) => {
     if (!org) {
-      return opDataFilteredByDate
+      return opData
     } else {
       if (!this.props.opportunities.loading) {
-        const filteredData = opDataFilteredByDate.filter(m => (m.offerOrg) && (m.offerOrg._id = org))
+        const filteredData = opData.filter(m => (m.offerOrg) && (m.offerOrg._id = org))
         return filteredData
       }
     }
@@ -96,14 +99,13 @@ class OpListSection extends Component {
   async componentDidUpdate (prevProps) {
     if (prevProps.search !== this.props.search ||
       prevProps.location !== this.props.location ||
-      prevProps.query !== this.props.query ||
-      prevProps.org !== this.props.org) {
-      await this.loadData(this.props.search, this.props.location, this.props.query, this.props.org)
+      prevProps.query !== this.props.query) {
+      await this.loadData(this.props.search, this.props.location, this.props.query)
     }
   }
 
   async componentDidMount () {
-    await this.loadData(this.props.search, this.props.location, this.props.query, this.props.org)
+    await this.loadData(this.props.search, this.props.location, this.props.query)
   }
 
   render () {
