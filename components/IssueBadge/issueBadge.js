@@ -1,15 +1,13 @@
+/* global fetch */
 import React, { useState, useEffect } from 'react'
+import 'isomorphic-fetch'
 import Router from 'next/router'
 import { Button, Modal, Select } from 'antd'
 import { config } from '../../config/config'
 
 const { Option } = Select
 
-const setAvailableBadgeData = async (setBadge) => {
-  const response = await window.fetch(`${config.appUrl}/api/badges`)
-  const data = await response.json()
-  setBadge(data)
-}
+export const IssueBadgeButton = IssueBadge
 
 function IssueBadge ({ person }) {
   const [modalVisible, setModalVisible] = useState(false)
@@ -20,21 +18,9 @@ function IssueBadge ({ person }) {
   }, [person])
 
   const handleOk = async () => {
-    const { _id, email } = person
-    const body = {
-      _id,
-      email
-    }
     const { entityId } = currentBadgeChosen
-    await window.fetch(`${config.appUrl}/api/badge/${entityId}`, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    sendIssuingBadgeRequest(person, entityId)
     setModalVisible(false)
-    Router.push(`${config.appUrl}/people/${_id}`)
   }
   return (
     <div>
@@ -66,4 +52,23 @@ function BadgeList ({ badgeList, setBadgeChosen }) {
   )
 }
 
-export const IssueBadgeButton = IssueBadge
+const setAvailableBadgeData = async (setBadge) => {
+  const response = await fetch(`${config.appUrl}/api/badges`)
+  const data = await response.json()
+  setBadge(data)
+}
+
+const sendIssuingBadgeRequest = async ({ _id, email }, badgeId) => {
+  const body = {
+    _id,
+    email
+  }
+  await fetch(`${config.appUrl}/api/badge/${badgeId}`, {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  Router.push(`${config.appUrl}/people/${_id}`)
+}
