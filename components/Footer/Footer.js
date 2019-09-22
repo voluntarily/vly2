@@ -260,7 +260,6 @@ const Footer = ({ isAuthenticated, ...props }) => (
     {props.isAdmin && (
       <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
     )}
-
   </FooterBackground>
 )
 
