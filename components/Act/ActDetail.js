@@ -50,6 +50,7 @@ export function ActDetail ({ act }) {
           <ItemListing>⏱&nbsp;{act.duration}</ItemListing>
           // TODO: [VP-204] add organisation and contact
           <ItemListing>📝&nbsp;{act.status}</ItemListing>
+          <ItemListing>Volunteers required: {act.volunteers}</ItemListing>
           <Spacer />
           <ItemP>
             <Markdown
@@ -80,6 +81,7 @@ ActDetail.propTypes = {
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     description: PropTypes.string,
+    volunteers: PropTypes.number,
     status: PropTypes.string,
     _id: PropTypes.string.isRequired
   })
