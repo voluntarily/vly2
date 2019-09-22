@@ -11,6 +11,7 @@ import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import { IssueBadgeButton } from '../../components/IssueBadge/issueBadge'
 import { FullPage } from '../../components/VTheme/VTheme'
+import { config } from '../../config/config'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withMembers, withPeople, withLocations } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
@@ -170,7 +171,7 @@ export class PersonDetailPage extends Component {
           </Popconfirm>}
           &nbsp;
           {
-            isAdmin && <IssueBadgeButton person={this.props.people.data[0]} />
+            (isAdmin && config.BADGER_USERNAME) && <IssueBadgeButton person={this.props.people.data[0]} />
           }
 
         </>
