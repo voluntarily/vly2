@@ -50,27 +50,47 @@ test.serial('Should correctly block GET method for api people for anonymous', as
 })
 
 // FIXME: must test get and list person calls with signed in user
-test.failing('Should send correct data when queried against an id', async t => {
-  t.plan(1)
+test.serial('Should send correct person when queried against an id', async t => {
+  t.plan(3)
   const p = {
-    name: 'Testy McTestFace',
-    nickname: 'Testy',
-    phone: '123 456789',
-    email: 'query@omgtech.co.nz',
-    role: ['tester'],
+    name: 'Testy C McTestface',
+    nickname: 'C Testy',
+    about: 'Tester',
+    location: 'Waikato District',
+    email: 'z.testy@voluntar.ly',
+    phone: '027 444 5555',
+    gender: 'non binary',
+    pronoun: { 'subject': 'they', 'object': 'them', 'possesive': 'ȁǹy' },
+    imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
+    role: ['tester', 'volunteer'],
+    status: 'active',
     tags: []
   }
 
   const person = new Person(p)
-  await person.save()
-  const id = person._id
+  const res1 = await request(server)
+    .post('/api/people')
+    .send(person)
+    .set('Accept', 'application/json')
+    .expect(200)
 
+  const pObj = JSON.parse(res1.res.text)
+  const id = pObj._id
+
+  await Person.findById(id).then((result) => {
+    t.deepEqual(person._id, result._id)
+    t.deepEqual(person.pronoun, result.pronoun)
+    t.deepEqual(person.name, result.name)
+  })
+  /* console.log(id)
+  TODO: this should be change to add authorized user and retrieve person through server api
   const res = await request(server)
     .get(`/api/people/${id}`)
     .set('Accept', 'application/json')
-    // .expect('Content-Type', /json/)
     .expect(403)
+  console.log(res.body)
   t.is(res.body.name, p.name)
+  */
 })
 
 test.serial('Should correctly add a person', async t => {
@@ -114,12 +134,14 @@ test.serial('Should correctly add a person', async t => {
 })
 
 test.serial('Should correctly add a person and sanitise inputs', async t => {
+  t.plan(6)
   const p = {
     name: 'Bobby; DROP TABLES', // is allowed
     nickname: '<b>SQLINJECTOR</b>',
     phone: "1234<img src=x onerror=alert('img') />ABCD", // should remove img
     email: 'bobby@omgtech.co.nz', // ok
     gender: "console.log('hello world')", // ok
+    pronoun: { 'subject': 'they', 'object': 'them', 'possesive': 'ȁǹy' }, // ok
     role: ['tester'],
     tags: []
   }
@@ -131,7 +153,12 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
     .expect(200)
 
   const savedPerson = await Person.findOne({ email: p.email }).exec()
-  t.is(savedPerson.phone, '1234ABCD')
+  t.deepEqual('1234ABCD', savedPerson.phone)
+  t.deepEqual('Bobby; DROP TABLES', savedPerson.name)
+  t.deepEqual(p.nickname, savedPerson.nickname)
+  t.deepEqual(p.email, savedPerson.email)
+  t.deepEqual(p.gender, savedPerson.gender)
+  t.deepEqual(p.pronoun, savedPerson.pronoun)
 })
 
 test.serial('Should load a person into the db but block access and delete them via the api', async t => {

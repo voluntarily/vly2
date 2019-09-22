@@ -7,40 +7,13 @@ const org = {
   name: 'OMGTech',
   slug: 'hello-omgtech',
   imgUrl: '/static/andrew.jpg',
-  about:
-    'OMGTech! develops & delivers engaging workshops for both teachers and students on digital technologies and how to explore and invent with them',
-  category: ['vp']
+  category: ['vp', 'ap']
 }
 
-const props = {
-  org
-}
-
-test('OrgCard renders properly', t => {
-  const wrapper = mount(<OrgCard {...props} />)
-  // console.log(wrapper.find('p').at(1).text())
-  t.is(
-    wrapper
-      .find('p')
-      .at(0)
-      .text(),
-    org.name
-  )
-  // t.is(
-  //   wrapper
-  //     .find('p')
-  //     .at(1)
-  //     .text(),
-  //   org.category.join('')
-  // )
-
-  // t.is(
-  //   wrapper
-  //     .find('p')
-  //     .at(2)
-  //     .text(),
-  //   org.about
-  // )
-
-  // t.deepEqual(wrapper.prop('org'), props.org);
+test('OrgCard has image, title and category icon', t => {
+  const wrapper = mount(<OrgCard org={org} />)
+  t.is(wrapper.find('h1').first().text(), org.name)
+  t.is(wrapper.find('img').first().prop('src'), org.imgUrl)
+  t.truthy(wrapper.find('i').first().hasClass('anticon-bank'))
+  t.truthy(wrapper.find('i').last().hasClass('anticon-thunderbolt'))
 })

@@ -7,8 +7,9 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
 import TagDisplay from '../Tags/TagDisplay'
-import { GridContainer, H1, H3Bold, PBold, Spacer, SpacerSmall } from '../VTheme/VTheme'
+import { GridContainer, H1, H3Bold } from '../VTheme/VTheme'
 import PersonRoles from './PersonRole'
+import PersonPronouns from './PersonPronoun'
 
 const ProfileGrid = styled.div`
   display: grid;
@@ -52,21 +53,36 @@ const DetailItemMobile = styled.div`
   }
 `
 
-const ListItem = styled.div`
+const StyledIcon = styled(Icon)`
+  margin-right: 0.5rem;
+`
+
+const InfoSection = styled.div`
   background-color: none;
   min-height: 5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 `
+const PersonUl = styled.ul`
+  list-style: none;
+  padding:0;
+  margin:0;
+  @media screen and (min-width: 767px) {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+  }
+`
+
 const PersonDetail = ({ person }, ...props) => (
   <ProfileGrid>
-    <GridContainer>
+    <GridContainer> {/* Left Sidebar */}
       <Head title={person.nickname} />
       <ProfileImage src={person.imgUrl} alt={person.nickname} />
       <DetailItem>
-        <Icon type='history' /> 312 ops completed
+        <Icon type='history' />
       </DetailItem>
       <DetailItem>
-        <Icon type='safety' /> School Safe
+        <Icon type='safety' />
       </DetailItem>
       { person.orgMembership &&
         <DetailItem>
@@ -79,66 +95,83 @@ const PersonDetail = ({ person }, ...props) => (
           <MemberUl members={person.orgFollowership} />
         </DetailItem>}
     </GridContainer>
-    <GridContainer>
-      <ListItem>
-        <H1>
-          {person.name}
-          {/* {person.status ? (
-            <Icon
-              type='safety-certificate'
-              theme='filled'
-              style={{ color: '#1da1f2' }}
-            />
-          ) : (
-            <Icon type='close-circle' />
-          )} */}
-        </H1>
-        <PBold>{person.org}</PBold>
+    <GridContainer> {/* Main Workspace */}
+      <InfoSection>
+        <H1>{person.name}</H1>
         <Divider />
         <Markdown children={person.about || ''} />
+      </InfoSection>
+      <InfoSection>
+        <PersonUl>
+          <li>
+            <a href={`mailto:${person.email}`}>
+              <StyledIcon type='mail' />
+              {person.email}
+            </a>
+          </li>
+          <li>
+            <a href={`tel:${person.phone}`}>
+              <StyledIcon type='phone' />
+              {person.phone}
+            </a>
+          </li>
+          <li>
+            <a href={person.website} target='_blank' >
+              <StyledIcon type='global' />
+              {person.website}
+            </a>
+          </li>
+          <li>
+            <a href={`https://www.facebook.com/${person.facebook}`} target='_blank' >
+              <StyledIcon type='facebook' />
+              {person.facebook}
+            </a>
+          </li>
+          <li>
+            <a href={`https://www.twitter.com/${person.twitter}`} target='_blank' >
+              <StyledIcon type='twitter' />
+              {person.twitter}
+            </a>
+          </li>
+          <li>
+            <StyledIcon type='compass' />
+            {person.location}
+          </li>
+          <li>
+            <StyledIcon type='idcard' />
+            <PersonPronouns pronoun={person.pronoun} />
+          </li>
+          <li>
+            <StyledIcon type='coffee' />
+            <PersonRoles roles={person.role} />
+          </li>
 
-        <PBold>
-          <a href={`mailto:${person.email}`}>
-            <Icon type='mail' /> {person.email}
-          </a>
-        </PBold>
-        <SpacerSmall />
-        <PBold>
-          <a href={`tel:${person.phone}`}>
-            <Icon type='phone' /> {person.phone}
-          </a>
-        </PBold>
-        <SpacerSmall />
-        <PBold>
-          <a>
-            <Icon type='compass' /> {person.location}
-          </a>
-        </PBold>
-        <PBold>
-          <a>
-            <Icon type='tags' />
-          </a>
-        </PBold>
+        </PersonUl>
+      </InfoSection>
+      <InfoSection>
+        <H3Bold>
+          <FormattedMessage
+            defaultMessage='Interests and Skills'
+            id='person.skills.title'
+            description='subheading for tags on person details page' />
+        </H3Bold>
         <TagDisplay tags={person.tags} />
-      </ListItem>
+      </InfoSection>
       <DetailItemMobile>
-        <p>        <Icon type='history' /> 312 ops completed</p>
+        <p><Icon type='history' /> </p>
       </DetailItemMobile>
       <DetailItemMobile>
-        <p> <Icon type='safety' /> School Safe</p>
+        <p><Icon type='safety' /> </p>
       </DetailItemMobile>
-      <Spacer />
-      <ListItem>
+      <InfoSection>
         <H3Bold>Latest Activities</H3Bold>
         <Divider />
-      </ListItem>
-      <ListItem>
+      </InfoSection>
+      <InfoSection>
         <H3Bold>Latest Achievements</H3Bold>
         <Divider />
-      </ListItem>
-      <div>
-        <Icon type='coffee' /> <PersonRoles roles={person.role} />
-      </div>
+      </InfoSection>
+
     </GridContainer>
   </ProfileGrid>
 
@@ -153,7 +186,10 @@ PersonDetail.propTypes = {
     location: PropTypes.string,
     email: PropTypes.string.isRequired,
     phone: PropTypes.string,
-    pronoun: PropTypes.string,
+    facebook: PropTypes.string,
+    twitter: PropTypes.string,
+    website: PropTypes.string,
+    pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([

@@ -27,7 +27,8 @@ const ruleBuilder = session => {
       PersonFields.STATUS,
       PersonFields.AVATAR,
       PersonFields.ABOUT,
-      PersonFields.ROLE
+      PersonFields.ROLE,
+      PersonFields.PRONOUN
     ]
   }, {
     subject: SchemaName,
@@ -40,7 +41,8 @@ const ruleBuilder = session => {
       PersonFields.AVATAR,
       PersonFields.NAME,
       PersonFields.ROLE,
-      PersonFields.ABOUT
+      PersonFields.ABOUT,
+      PersonFields.PRONOUN
     ]
   }, {
     subject: SchemaName,
