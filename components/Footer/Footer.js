@@ -82,16 +82,26 @@ const MenuItem = styled.a`
 `
 
 const Footer = ({ isAuthenticated, ...props }) => (
-
   <FooterBackground>
-    <script type='text/javascript' src='https://voluntarily.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-t2deah/b/11/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=2e085869' />
-    <script type='text/javascript' async src='https://www.googletagmanager.com/gtag/js?id=UA-141212194-1' />
-    <script type='text/javascript' dangerouslySetInnerHTML={{
-      __html: `
+    <script
+      type='text/javascript'
+      src='https://voluntarily.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-t2deah/b/11/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=2e085869'
+    />
+    <script
+      type='text/javascript'
+      async
+      src='https://www.googletagmanager.com/gtag/js?id=UA-141212194-1'
+    />
+    <script
+      type='text/javascript'
+      dangerouslySetInnerHTML={{
+        __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'UA-141212194-1'); ` }} />
+            gtag('config', 'UA-141212194-1'); `
+      }}
+    />
     <FooterContainer>
       <FooterLogo src='../../static/vlogo.svg' />
       <FooterText>
@@ -100,8 +110,13 @@ const Footer = ({ isAuthenticated, ...props }) => (
             id='footer.credit'
             defaultMessage='Voluntarily is an awesome open source project run by the'
             description='line in the footer that says we are supported by PFCT.'
-          />&nbsp;
-          <a href='https://www.pamfergusson.org.nz/' target='_blank' rel='noopener noreferrer'>
+          />
+          &nbsp;
+          <a
+            href='https://www.pamfergusson.org.nz/'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             Pam Fergusson Charitable Trust
           </a>
         </P>
@@ -110,14 +125,14 @@ const Footer = ({ isAuthenticated, ...props }) => (
             id='version'
             defaultMessage='Version'
             description='Source coder version label.'
-          />:&nbsp;
+          />
+          :&nbsp;
           <FormattedMessage
             id='revision'
             defaultMessage='local-build'
             description='Source code revision, auto generalted.'
           />
         </P>
-
       </FooterText>
       <Spacer />
       <Grid>
@@ -137,19 +152,41 @@ const Footer = ({ isAuthenticated, ...props }) => (
 
         <FooterGridItem>
           <FooterGridItemTitle>Resources</FooterGridItemTitle>
-          <MenuItem>Getting started</MenuItem>
+          <MenuItem href='/about'>Getting started</MenuItem>
           <br />
-          <MenuItem>Blog</MenuItem>
+          <MenuItem
+            href='https://voluntarily.nz/blog'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Blog
+          </MenuItem>
           <br />
-          <MenuItem>Help centre</MenuItem>
+          <MenuItem
+            href='https://voluntarily.atlassian.net/servicedesk/customer/portals'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Help centre
+          </MenuItem>
           <br />
-          <MenuItem>Contact Support</MenuItem>
+          <MenuItem
+            href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/12'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Contact Support
+          </MenuItem>
           <br />
         </FooterGridItem>
 
         <FooterGridItem>
           <FooterGridItemTitle>Social</FooterGridItemTitle>
-          <MenuItem href='http://twitter.com/voluntarilyhq' target='_blank' rel='noopener noreferrer'>
+          <MenuItem
+            href='http://twitter.com/voluntarilyhq'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             Twitter
           </MenuItem>
           <br />
@@ -199,25 +236,30 @@ const Footer = ({ isAuthenticated, ...props }) => (
           <FooterGridItemTitle>Project</FooterGridItemTitle>
           <MenuItem href='/about'>About us</MenuItem>
           <br />
-          <MenuItem href='https://github.com/voluntarily/vly2' target='_blank' rel='noopener noreferrer'>
+          <MenuItem
+            href='https://github.com/voluntarily/vly2'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             Github Repo
           </MenuItem>
           <br />
-          <MenuItem href='https://voluntarily.atlassian.net/wiki' target='_blank' rel='noopener noreferrer'>
+          <MenuItem
+            href='https://voluntarily.atlassian.net/wiki'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             Developer resources
           </MenuItem>
-          <br />
-          <MenuItem>Jobs</MenuItem>
-          <br />
-          <MenuItem>Legal</MenuItem>
-
         </FooterGridItem>
       </Grid>
       <Spacer />
       <WomensRefuge />
     </FooterContainer>
-    { props.isAdmin &&
-      <Navigation items={getAllowedLinks(isAuthenticated)} {...props} /> }
+
+    {props.isAdmin && (
+      <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
+    )}
   </FooterBackground>
 )
 
@@ -230,6 +272,4 @@ const mapStateToProps = store => ({
   isAdmin: store.session.me.role && store.session.me.role.includes('admin')
 })
 
-export default connect(
-  mapStateToProps
-)(Footer)
+export default connect(mapStateToProps)(Footer)
