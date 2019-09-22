@@ -25,6 +25,7 @@ const opportunitySchema = new Schema({
     ]
   },
   date: [Date],
+  fromActivity: { type: Schema.Types.ObjectId, ref: 'Activity', required: false },
   offerOrg: { type: Schema.Types.ObjectId, ref: 'Organisation', required: false },
   requestor: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
   dateAdded: { type: 'Date', default: Date.now, required: true },
