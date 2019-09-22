@@ -26,6 +26,7 @@ const OpportunityFields = {
   DATE: 'date',
   OFFER_ORG: 'offerOrg',
   REQUESTOR: 'requestor',
+  FROM_ACTIVITY: 'fromActivity',
   DATE_ADDED: 'dateAdded',
   TAGS: 'tags'
 }

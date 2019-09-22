@@ -45,11 +45,11 @@ export class OpDetailPage extends Component {
   }
 
   static async getInitialProps ({ store, query }) {
+    // console('getInitialProps: OpDetailPage', store, query)
     const me = store.getState().session.me
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     const opExists = !!(query && query.id) // !! converts to a boolean value
-    // TODO: [VP-280] run get location and tag data requests in parallel
     await Promise.all([
       store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
       store.dispatch(reduxApi.actions.locations.get()),
@@ -57,8 +57,13 @@ export class OpDetailPage extends Component {
     ])
 
     if (isNew) {
+      // if there is an act parameter then get the activity and create initial op.
+      if (query.act) {
+        await store.dispatch(reduxApi.actions.activities.get({ id: query.act }))
+      }
       return {
-        isNew
+        isNew,
+        actid: query.act
       }
     } else {
       if (opExists) {
@@ -142,6 +147,21 @@ export class OpDetailPage extends Component {
     let op
     if (this.props.isNew) {
       op = blankOp
+
+      // init from activity if provided
+      if (this.props.actid) {
+        const act = this.props.activities.data[0]
+        op = {
+          ...blankOp,
+          name: act.name,
+          subtitle: act.subtitle,
+          description: act.description,
+          imgUrl: act.imgUrl,
+          duration: act.duration,
+          tags: act.tags,
+          fromActivity: act._id
+        }
+      }
       op.requestor = this.props.me
 
       // set init offerOrg to first membership result
@@ -174,7 +194,7 @@ export class OpDetailPage extends Component {
 
     let op = this.retrieveOpportunity()
 
-    if (op && this.state.editing) {
+    if ((op && this.state.editing)) {
       return (
         <OpEditPage
           op={op}
@@ -187,7 +207,7 @@ export class OpDetailPage extends Component {
         />
       )
     } else {
-      return (
+      return (!this.props.isNew &&
         <FullPage>
           {this.canEdit(op) &&
             <Button

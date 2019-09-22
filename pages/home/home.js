@@ -264,10 +264,9 @@ class PersonHomePage extends Component {
                 />
               ) : (
                 <div>
-                  <PersonDetail person={this.props.me} />
                   <Button
                     style={{ float: 'right' }}
-                    type='primary'
+                    type='secondary'
                     shape='round'
                     onClick={() => this.setState({ editProfile: true })}
                   >
@@ -277,6 +276,7 @@ class PersonHomePage extends Component {
                       description='Button to edit an person on PersonDetails page'
                     />
                   </Button>
+                  <PersonDetail person={this.props.me} />
                 </div>
               )}
             </SectionWrapper>

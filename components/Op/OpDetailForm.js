@@ -46,7 +46,6 @@ class OpDetailForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const op = this.props.op
@@ -537,9 +536,12 @@ OpDetailForm.propTypes = {
     imgUrl: PropTypes.string,
     duration: PropTypes.string,
     location: PropTypes.string,
-    offerOrg: PropTypes.shape({
-      _id: PropTypes.string
-    }),
+    offerOrg: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        _id: PropTypes.string
+      })
+    ]),
     date: PropTypes.array,
     status: PropTypes.string,
 

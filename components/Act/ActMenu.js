@@ -1,5 +1,6 @@
 import { Menu } from 'antd'
 import styled from 'styled-components'
+import cuid from 'cuid'
 
 const ActivityMenu = styled(Menu)`
   height: 32px;
@@ -39,12 +40,12 @@ const ActMenu = ({ acts, ...props }) => {
   const renderMenu = Object.entries(actMenu).reduce(
     (prev, [heading, subheadings]) => {
       // Add headings
-      prev.push(<Menu.ItemGroup>{heading}</Menu.ItemGroup>)
+      prev.push(<Menu.ItemGroup key={cuid()}>{heading}</Menu.ItemGroup>)
 
       // Add subheadings
       Object.entries(subheadings).forEach(([subheading, count]) => {
         prev.push(
-          <Menu.ItemGroup className='subheading color'>
+          <Menu.ItemGroup key={cuid()} className='subheading color'>
             {subheading} ({count})
           </Menu.ItemGroup>
         )
