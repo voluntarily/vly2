@@ -136,7 +136,7 @@ const OrgDetail = ({ org, ...props }) => (
               {org.website && (
                 <SocialButton
                   type='link'
-                  href={`https://${org.website}`}
+                  href={`${org.website}`}
                   icon='global'
                   target='_blank'
                   rel='noopener noreferrer'
