@@ -5,6 +5,7 @@ import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import Loading from '../../components/Loading'
 import RegisterMemberSection from '../../components/Member/RegisterMemberSection'
+import OpListSection from '../../components/Op/OpListSection'
 import OrgDetail from '../../components/Org/OrgDetail'
 import OrgDetailForm from '../../components/Org/OrgDetailForm'
 import { FullPage, Spacer } from '../../components/VTheme/VTheme'
@@ -23,7 +24,6 @@ const blankOrg = {
   twitter: null,
   category: ['vp']
 }
-
 class OrgDetailPage extends Component {
   state = {
     editing: false,
@@ -131,6 +131,7 @@ class OrgDetailPage extends Component {
         </div>
         : <div>
           <OrgDetail org={org} meid={this.props.me._id} />
+          <OpListSection org={org._id} />
           <Spacer />
           <Divider />
           <div style={{ float: 'right' }}>
