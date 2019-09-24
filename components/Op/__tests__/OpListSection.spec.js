@@ -7,7 +7,7 @@ import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import DatePickerType from '../DatePickerType.constant'
 import { API_URL } from '../../../lib/apiCaller'
-import ops from './Op.fixture'
+import ops, { orgActionWhizzyFelt, orgOmgTech } from './Op.fixture'
 const { fetchMock } = require('fetch-mock')
 
 const opsWithOpenEndDate = [
@@ -66,9 +66,9 @@ test.serial('mount the list with ops', async t => {
   myMock.restore()
 })
 
-test.serial('mount the list with org should filtered ops offered by that organization', async t => {
-  const org = ops[0].offerOrg._id
-
+test.serial('mount the list for Action Whizzy Felt should filtered three ops offered by that organization', async t => {
+  t.plan(2)
+  const org = orgActionWhizzyFelt._id
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -81,11 +81,30 @@ test.serial('mount the list with org should filtered ops offered by that organiz
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('OpCard').length, 4) // there are only four  cards for org
+  t.is(wrapper.find('OpCard').length, 3) // there are only four  cards for org
   t.truthy(myMock.done())
   myMock.restore()
 })
 
+test.serial('mount the list for OMGTech should filtered one ops offered by that organization', async t => {
+  t.plan(2)
+  const org = orgOmgTech._id
+  const realStore = makeStore(initStore)
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/`
+  myMock.getOnce(api, ops)
+  const wrapper = await mountWithIntl(
+    <Provider store={realStore}>
+      <OpListSection org={org} />
+    </Provider>
+  )
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
+  t.is(wrapper.find('OpCard').length, 1) // there are only four  cards for org
+  t.truthy(myMock.done())
+  myMock.restore()
+})
 test.serial('mount the list with ops search with results', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
