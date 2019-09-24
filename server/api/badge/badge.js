@@ -16,7 +16,7 @@ const Badge = new Schema({
   },
   image: {
     type: String,
-    defualt: ''
+    default: ''
   },
   badgeclass: {
     type: String,
