@@ -1,4 +1,4 @@
-import { Button, Divider, message } from 'antd'
+import { Button, message } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
@@ -135,10 +135,12 @@ export class ActDetailPage extends Component {
     const createOpportunitySection = () => {
       return (
         // if not signed in then the interested button signs in first
-        isOP && <div>
-          <Button>TODO: Create Opportunity</Button>
-          <Divider />
-        </div>
+        isOP &&
+          <Button style={{ float: 'right' }} type='primary' shape='round' href={`/op/new?act=${act._id}`} >
+            <FormattedMessage id='act.createOpportunityBtn'
+              defaultMessage='Create new request from this Activity'
+              description='Button to create an opportunity from an activity' />
+          </Button>
       )
     }
 
@@ -155,14 +157,12 @@ export class ActDetailPage extends Component {
         </div>
       } else {
         content = <div>
+          {createOpportunitySection()}
           { canEdit && <Button id='editActBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
             <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
           </Button>}
-
           <ActDetail act={act} />
           {ownerInfo()}
-          <Divider />
-          {createOpportunitySection()}
         </div>
       }
     }

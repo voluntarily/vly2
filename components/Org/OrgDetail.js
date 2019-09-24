@@ -6,7 +6,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberSection from '../Member/MemberSection'
-import { FullPage, H3Bold, H4, PageHeaderContainer, PBold } from '../VTheme/VTheme'
+import { FullPage, H3Bold, PageHeaderContainer, PBold } from '../VTheme/VTheme'
 import OrgCategory from './OrgCategory'
 const ButtonGroup = Button.Group
 
@@ -117,7 +117,6 @@ const OrgDetail = ({ org, ...props }) => (
       <ProfileImage src={org.imgUrl} alt={org.name} />
       <TitleContainer>
         <H3Bold>{org.name}</H3Bold>
-        <H4> Charity</H4>
       </TitleContainer>
     </ProfileContainer>
     <ProfileContentContainer>
@@ -127,7 +126,12 @@ const OrgDetail = ({ org, ...props }) => (
             <Markdown children={(org.info && org.info.about) || ''} />
             <OrgCategory orgCategory={org.category} />
             <br />
-            <PBold>Social:</PBold>
+            <PBold><FormattedMessage
+              id='orgdetail.social.label'
+              defaultMessage='Social:'
+              description='Label for social media links on organisation details'
+            />
+            </PBold>
             <ButtonGroup size='medium'>
               {org.website && (
                 <SocialButton
