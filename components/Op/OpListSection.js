@@ -56,7 +56,7 @@ class OpListSection extends Component {
       return opData
     } else {
       if (!this.props.opportunities.loading) {
-        const filteredData = opData.filter(m => (m.offerOrg) && (m.offerOrg._id = org))
+        const filteredData = opData.filter(m => (m.offerOrg) && (m.offerOrg._id === org))
         return filteredData
       }
     }
