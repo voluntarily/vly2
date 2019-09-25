@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { config } from '../../config/config'
+import apiCaller from '../../lib/apiCaller'
 import styled from 'styled-components'
 
 const BadgeWrapper = styled.div`
@@ -14,7 +14,7 @@ const Badge = styled.div`
 `
 
 const getBadgeData = async ({ _id }, setUserBadge) => {
-  const response = await window.fetch(`${config.appUrl}/api/badge/${_id}`)
+  const response = await apiCaller(`badge/${_id}`, 'Get')
   const data = await response.json()
   setUserBadge(data)
 }
@@ -30,7 +30,6 @@ function PersonBadge ({ person }) {
     <BadgeWrapper>
       {
         userBadge.map((badge) => {
-          console.log(badge)
           return (
             <Badge key={badge._id} class='badgr-badge' title={badge._id}>
               <a href={`https://api.badgr.io/public/assertions/${badge.entityId}`} target='_blank'>

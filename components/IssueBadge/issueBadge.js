@@ -1,6 +1,6 @@
 /* global fetch */
 import React, { useState, useEffect } from 'react'
-import 'isomorphic-fetch'
+import apiCaller from '../../lib/apiCaller'
 import Router from 'next/router'
 import { Button, Modal, Select } from 'antd'
 import { config } from '../../config/config'
@@ -63,12 +63,6 @@ const sendIssuingBadgeRequest = async ({ _id, email }, badgeId) => {
     _id,
     email
   }
-  await fetch(`${config.appUrl}/api/badge/${badgeId}`, {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
+  await apiCaller(`badge/${badgeId}`, 'POST', body)
   Router.push(`${config.appUrl}/people/${_id}`)
 }
