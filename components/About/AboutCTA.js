@@ -75,7 +75,7 @@ const AboutCTA = () => (
           <FormattedMessage
             id='cta.dev.chat'
             description='call to action for developers to enter the chatroom'
-            defaultMessage='Dev Chatroom'
+            defaultMessage='Developer Chatroom'
           />
         </Button>&nbsp;&nbsp;
         <Button href='https://github.com/voluntarily/vly2' target='_blank' rel='noopener noreferrer'>

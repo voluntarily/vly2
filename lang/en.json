@@ -1,7 +1,7 @@
 {
   "cta.title.dev": "Developers",
   "cta.description.dev": "Keen to join the build of the platform? Find us on Github and Gitter. All skill levels are welcome.",
-  "cta.dev.chat": "Dev Chatroom",
+  "cta.dev.chat": "Developer Chatroom",
   "cta.dev.repository": "Github Repository",
   "cta.title.volunteer": "Volunteers",
   "cta.description.volunteer": "If you’re keen to get involved in volunteer operations and help run\n          things, join the channel on Gitter.",
@@ -34,7 +34,7 @@
   "registerInterestHideForm": "Cancel",
   "getInvolvedHeading": "How do you want to get involved?",
   "getInvolvedSubHeading": "Type in how you want to get involved, and an organizer will get in touch with you :)",
-  "getInvolvedButton": "Get Involved!",
+  "getInvolvedButton": "Get Involved",
   "registerInterestShowForm": "I'm Interested",
   "isInterestedHeading": "Thank you for expressing your interest!",
   "isInterestedSubHeading": "The organizer will be in touch shortly :)",
