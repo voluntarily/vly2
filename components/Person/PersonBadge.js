@@ -23,7 +23,6 @@ function PersonBadge ({ person }) {
   useEffect(() => {
     getBadgeData(person, setUserBadge)
   }, [person])
-
   // TODO: Replace badge._id with badge.name in <Badge title> and <img alt>
   return userBadge ? (
     <BadgeWrapper>
