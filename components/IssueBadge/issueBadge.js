@@ -1,8 +1,7 @@
-/* global fetch */
 import React, { useState, useEffect } from 'react'
-import apiCaller from '../../lib/apiCaller'
 import Router from 'next/router'
 import { Button, Modal, Select } from 'antd'
+import callApi from '../../lib/apiCaller'
 import { config } from '../../config/config'
 
 const { Option } = Select
@@ -53,8 +52,7 @@ function BadgeList ({ badgeList, setBadgeChosen }) {
 }
 
 const setAvailableBadgeData = async (setBadge) => {
-  const response = await fetch(`${config.appUrl}/api/badges`)
-  const data = await response.json()
+  const data = await callApi(`badg  es`)
   setBadge(data)
 }
 
@@ -63,6 +61,6 @@ const sendIssuingBadgeRequest = async ({ _id, email }, badgeId) => {
     _id,
     email
   }
-  await apiCaller(`badge/${badgeId}`, 'POST', body)
+  await callApi(`badge/${badgeId}`, 'POST', body)
   Router.push(`${config.appUrl}/people/${_id}`)
 }
