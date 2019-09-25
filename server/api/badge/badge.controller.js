@@ -3,11 +3,11 @@ const { config } = require('../../../config/config')
 const Badge = require('./badge')
 
 const getToken = async () => {
-  const { BADGER_PASSWORD, BADGER_USERNAME } = config
-  if ((!BADGER_PASSWORD && !BADGER_USERNAME) && process.env.NODE_ENV !== 'test') {
+  const { BADGR_PASSWORD, BADGR_USERNAME } = config
+  if ((!BADGR_PASSWORD && !BADGR_USERNAME) && process.env.NODE_ENV !== 'test') {
     throw new Error()
   }
-  const badgrResponse = await fetch(`https://api.badgr.io/o/token?username=${BADGER_USERNAME}&password=${BADGER_PASSWORD}`, {
+  const badgrResponse = await fetch(`https://api.badgr.io/o/token?username=${BADGR_USERNAME}&password=${BADGR_PASSWORD}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
