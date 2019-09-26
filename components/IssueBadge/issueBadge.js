@@ -52,7 +52,7 @@ function BadgeList ({ badgeList, setBadgeChosen }) {
 }
 
 const setAvailableBadgeData = async (setBadge) => {
-  const data = await callApi(`badg  es`)
+  const data = await callApi(`badges`)
   setBadge(data)
 }
 
