@@ -12,6 +12,7 @@ const person = {
 
 test('PersonCard renders properly', t => {
   const wrapper = render(<PersonCard person={person} />)
-  t.is(wrapper.find('.personTitle').first().text(), person.nickname)
-  t.is(wrapper.find('.personName').first().text(), person.name)
+  t.is(wrapper.find('h1').first().text(), person.nickname)
+  t.is(wrapper.find('img').first().prop('src'), person.imgUrl)
+  t.is(wrapper.find('p').first().text(), person.name)
 })
