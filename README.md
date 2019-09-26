@@ -28,7 +28,8 @@ Find out more about the project at the [Website](http://voluntarily.nz) and then
 
 Voluntarily is based on the [MERN (MongoDB, Express, React+Redux, Node)](http://mern.io/) software stack but also uses next.js to keep things clean and simple. Everything should work out of the box. There are two choices:
 
-1. install NodeJS and MongoDB and run locally - [See here for detailed instructions](https://github.com/voluntarily/vly2/blob/master/docs/gettingstarted.md "Instructions")
+1. install NodeJS and MongoDB and run locally - [See here for detailed instructions](
+   "Instructions")
 
 2. install Docker and run in a container - [See here for detailed instructions](https://github.com/voluntarily/vly2/blob/master/docs/Docker.md "Instructions")
 
@@ -54,4 +55,30 @@ Once you see the message "Voluntarily is running on port: 3122! Be Awesome!" the
 If you see the message "Please make sure Mongodb is installed and running!"  then go back and start mongod.
 
 Press control+C to exit the node application.
+
+#####################Running End to End Tests###################
+
+cd e2e_tests
+
+npm i @wdio/selenium-standalone-service --save 
+
+npx codeceptjs run --plugins allure      
+
+allure serve output
+
+############### Set Up ################################ 
+
+//Refer https://codecept.io/basics
+
+npm install codeceptjs webdriverio --save-dev  
+
+npx codeceptjs init 
+
+npx codeceptjs landingPageTest 
+
+
+
+npx codeceptjs run --plugins allure      
+
+allure serve output    
 
