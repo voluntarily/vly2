@@ -3,11 +3,11 @@ const { config } = require('../../../config/config')
 const Badge = require('./badge')
 
 const getToken = async () => {
-  const { BADGR_PASSWORD, BADGR_USERNAME } = config
+  const { BADGR_PASSWORD, BADGR_USERNAME, BADGR_API } = config
   if ((!BADGR_PASSWORD && !BADGR_USERNAME) && process.env.NODE_ENV !== 'test') {
     throw new Error()
   }
-  const badgrResponse = await fetch(`https://api.badgr.io/o/token?username=${BADGR_USERNAME}&password=${BADGR_PASSWORD}`, {
+  const badgrResponse = await fetch(`${BADGR_API}/o/token?username=${BADGR_USERNAME}&password=${BADGR_PASSWORD}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -21,6 +21,7 @@ const issueNewBadge = async (req, res) => {
   const { badgeID } = req.params
   const { email, _id } = req.body
   let accessToken
+  const { BADGR_API } = config
 
   try {
     accessToken = await getToken()
@@ -35,7 +36,7 @@ const issueNewBadge = async (req, res) => {
       'hashed': true
     }
   }
-  const response = await fetch(`https://api.badgr.io/v2/badgeclasses/${badgeID}/assertions`, {
+  const response = await fetch(`${BADGR_API}/v2/badgeclasses/${badgeID}/assertions`, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
@@ -67,13 +68,14 @@ const insertNewBageIntoDatabase = async (result, id) => {
 }
 
 const listAllBadge = async (req, res) => {
+  const { BADGR_API } = config
   let accessToken
   try {
     accessToken = await getToken()
   } catch (e) {
     return res.json({ message: 'Badge system currently unavailable' }).sendStatus(500)
   }
-  const badgeListResponse = await fetch('https://api.badgr.io/v2/badgeclasses', {
+  const badgeListResponse = await fetch(`${BADGR_API}/v2/badgeclasses`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${accessToken}`

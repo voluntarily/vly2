@@ -3,17 +3,20 @@ import { fetchMock } from 'fetch-mock'
 import MockExpressRequest from 'mock-express-request'
 import MockExpressResponse from 'mock-express-response'
 import { issueNewBadge, listAllBadge } from '../badge.controller'
+import { config } from '../../../../config/config'
 import badges from './badges.fixture'
+const { BADGR_API } = config
+
 const expectedBadgeResult = {
   'entityType': 'Assertion',
   'entityId': 'WDVAtNTfT_S8JuO-u8rVEw',
-  'openBadgeId': 'https://api.badgr.io/public/assertions/WDVAtNTfT_S8JuO-u8rVEw',
+  'openBadgeId': `${BADGR_API}/public/assertions/WDVAtNTfT_S8JuO-u8rVEw`,
   'createdAt': '2019-09-12T04:33:37.129885Z',
   'createdBy': 'ZR_9B1v2S2OHJ9UoFIs5vw',
   'badgeclass': 'HhIer_mgTtahY6TRT22L5A',
-  'badgeclassOpenBadgeId': 'https://api.badgr.io/public/badges/HhIer_mgTtahY6TRT22L5A',
+  'badgeclassOpenBadgeId': `${BADGR_API}/public/badges/HhIer_mgTtahY6TRT22L5A`,
   'issuer': 'aSBVfm84SMiF0c16O9jCOA',
-  'issuerOpenBadgeId': 'https://api.badgr.io/public/issuers/aSBVfm84SMiF0c16O9jCOA',
+  'issuerOpenBadgeId': `${BADGR_API}/public/issuers/aSBVfm84SMiF0c16O9jCOA`,
   'image': 'https://media.badgr.io/uploads/badges/assertion-WDVAtNTfT_S8JuO-u8rVEw.png',
   'recipient': {
     'identity': 'sha256$cc37fd25e8687b0c8adbd743f7e43997a0d5eb279b5eea11b7d5787f7b0f5842',
@@ -34,12 +37,12 @@ const expectedBadgeResult = {
 test.serial('Test request issue badge return information about badge', async t => {
   const mockFetch = fetchMock.sandbox()
     .get('*', 200)
-    .post('begin:https://api.badgr.io/o/token', {
+    .post(`begin:${BADGR_API}/o/token`, {
       body: {
         access_token: 'asodjhfsiuh'
       }
     })
-    .post('begin:https://api.badgr.io/v2/badgeclasses', {
+    .post(`begin:${BADGR_API}/v2/badgeclasses`, {
       body: {
         result: expectedBadgeResult
       }
@@ -67,14 +70,15 @@ test.serial('Test request issue badge return information about badge', async t =
   t.deepEqual(responseData.result, expectedBadgeResult)
 })
 
-test.only('Success fully query all badge available ', async t => {
+test.serial('Successfully query all badge available ', async t => {
+  const { BADGR_API } = config
   const serverMock = fetchMock.sandbox()
-    .get('begin:https://api.badgr.io/v2/badgeclasses', {
+    .get(`begin:${BADGR_API}/v2/badgeclasses`, {
       body: {
         result: badges
       }
     })
-    .post('begin:https://api.badgr.io/o/token', {
+    .post(`begin:${BADGR_API}/o/token`, {
       body: {
         access_token: 'Dummy Token'
       }

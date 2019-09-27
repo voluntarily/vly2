@@ -26,7 +26,8 @@ const completeConfig = {
     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
     BADGR_USERNAME: process.env.BADGR_USERNAME,
-    BADGR_PASSWORD: process.env.BADGR_PASSWORD
+    BADGR_PASSWORD: process.env.BADGR_PASSWORD,
+    BADGR_API: process.env.BADGR_API || 'https://api.au.badgr.io'
   },
 
   development: {
