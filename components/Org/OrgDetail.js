@@ -62,7 +62,7 @@ const ProfileImage = styled.img`
   object-fit: cover;
 `
 
-const AboutContainer = styled.div`
+const TabContainer = styled.div`
   text-align: left;
   width: 50rem;
   margin: 4rem auto;
@@ -122,7 +122,7 @@ const OrgDetail = ({ org, ...props }) => (
     <ProfileContentContainer>
       <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
         <TabPane tab={orgTab} key='1'>
-          <AboutContainer>
+          <TabContainer>
             <Markdown children={(org.info && org.info.about) || ''} />
             <OrgCategory orgCategory={org.category} />
             <br />
@@ -170,12 +170,14 @@ const OrgDetail = ({ org, ...props }) => (
                 />
               )}
             </ButtonGroup>
-          </AboutContainer>
+          </TabContainer>
         </TabPane>
         {/* <TabPane tab={orgResourcesTab} key='2' /> */}
         {/* // TODO: [VP-554] move the OpList for this org from the parent page to a tab  */}
         <TabPane tab={orgInstructionTab} key='3' >
+          <TabContainer>
           <Markdown children={(org.info && org.info.instructions) || ''} />
+          </TabContainer>
         </TabPane>
         <TabPane tab={orgMemberTab} key='4'>
           <MemberSection org={org} />
