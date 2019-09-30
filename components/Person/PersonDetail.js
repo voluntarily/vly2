@@ -10,6 +10,7 @@ import TagDisplay from '../Tags/TagDisplay'
 import { GridContainer, H1, H3Bold } from '../VTheme/VTheme'
 import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
+import { PersonBadgeSection } from './PersonBadge'
 
 const ProfileGrid = styled.div`
   display: grid;
@@ -169,6 +170,7 @@ const PersonDetail = ({ person }, ...props) => (
       </InfoSection>
       <InfoSection>
         <H3Bold>Latest Achievements</H3Bold>
+        <PersonBadgeSection person={person} />
         <Divider />
       </InfoSection>
 
