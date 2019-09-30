@@ -126,11 +126,12 @@ const OrgDetail = ({ org, ...props }) => (
             <Markdown children={(org.info && org.info.about) || ''} />
             <OrgCategory orgCategory={org.category} />
             <br />
-            <PBold><FormattedMessage
-              id='orgdetail.social.label'
-              defaultMessage='Social:'
-              description='Label for social media links on organisation details'
-            />
+            <PBold>
+              <FormattedMessage
+                id='orgdetail.social.label'
+                defaultMessage='Social:'
+                description='Label for social media links on organisation details'
+              />
             </PBold>
             <ButtonGroup size='medium'>
               {org.website && (
@@ -174,9 +175,9 @@ const OrgDetail = ({ org, ...props }) => (
         </TabPane>
         {/* <TabPane tab={orgResourcesTab} key='2' /> */}
         {/* // TODO: [VP-554] move the OpList for this org from the parent page to a tab  */}
-        <TabPane tab={orgInstructionTab} key='3' >
+        <TabPane tab={orgInstructionTab} key='3'>
           <TabContainer>
-          <Markdown children={(org.info && org.info.instructions) || ''} />
+            <Markdown children={(org.info && org.info.instructions) || ''} />
           </TabContainer>
         </TabPane>
         <TabPane tab={orgMemberTab} key='4'>
