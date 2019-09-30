@@ -307,7 +307,7 @@ class ActDetailForm extends Component {
                 </Form.Item>
                 <Form.Item label={actResource}>
                   {getFieldDecorator('resource')(<Input placeholder='5 people, classroom, projector' />)}
-                </Form.Item>            
+                </Form.Item>
                 <Form.Item>
                   <Radio name='volunteer' value='option1' checked={this.state.option1} onClick={this.actRadio.bind(this, 'option1')}>Total number of volunteers required</Radio>
                   {getFieldDecorator('totalVolunteerRequired')(<Input name='resourceinput1' onChange={this.change}
