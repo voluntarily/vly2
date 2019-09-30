@@ -56,8 +56,18 @@ async function updatePersonDetail (req, res, next) {
   if (resultUpdate.n === 0) {
     return res.sendStatus(404)
   }
-  req.crudify.result = req.body
-  next()
+  // make sure we return the updated person, with tags fully populated
+  return new Promise(function (resolve, reject) {
+    Person.findOne({ _id: userID }).populate('tags').lean().exec((_err, got) => {
+      if (!got) { // person does not exist
+        res.status(404).send({ error: 'person not found' })
+      } else {
+        req.crudify.result = got
+        next()
+      }
+      resolve()
+    })
+  })
 }
 
 function ensureSanitized (req, res, next) {

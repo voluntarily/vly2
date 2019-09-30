@@ -116,3 +116,22 @@ test('render when input value doesnt match any existing tags', t => {
   // options should be what the user typed, plus any matching tags
   // t.is(wrapper.find('Option').length, 2)
 })
+
+test('search when there are no existing tags', t => {
+  const existingTags = undefined
+  const input = 'ja'
+  const mockOnChange = sinon.spy()
+
+  const wrapper = mountWithIntl(
+    <TagInput onChange={mockOnChange} value={[]} existingTags={existingTags} />
+  )
+
+  const wrapperInstance = wrapper.instance()
+
+  t.is(wrapper.find('Option').length, 0)
+  t.is(wrapperInstance.state.matchingTags.length, 0)
+
+  wrapperInstance.handleSearch(input)
+
+  t.is(wrapperInstance.state.matchingTags.length, 0)
+})

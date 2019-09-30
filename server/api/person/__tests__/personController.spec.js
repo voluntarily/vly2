@@ -9,6 +9,15 @@ import { updatePersonDetail } from '../person.controller'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../__tests__/person.fixture'
 
+const getSubset = (reference, subject) => {
+  return Object.keys(subject)
+    .filter(key => Object.keys(reference).includes(key))
+    .reduce((obj, key) => {
+      obj[key] = subject[key]
+      return obj
+    }, {})
+}
+
 test.before('before connect to database', async (t) => {
   await appReady
   t.context.memMongo = new MemoryMongo()
@@ -67,7 +76,7 @@ test.serial('Should call next middleware when record is found', async t => {
     'about': 'Voluntari.ly Product Lead',
     'location': 'Auckland',
     'gender': 'male',
-    'language': 'EN',
+    'language': 'en',
     'role': [
       'admin'
     ],
@@ -83,5 +92,9 @@ test.serial('Should call next middleware when record is found', async t => {
   response.sendStatus = (status) => { fakeSendStatus() }
   await updatePersonDetail(request, response, nextMiddleware)
   t.is(1, nextMiddleware.callCount)
-  t.deepEqual(request.crudify.result, request.body)
+
+  // check the result has tags attribute added
+  request.body['tags'] = []
+
+  t.deepEqual(getSubset(request.body, request.crudify.result), request.body)
 })
