@@ -75,12 +75,6 @@ class ActDetailForm extends Component {
       })
       // console.log(this.state.volunteerPerStudent)
     }
-
-    // this.setState({
-    //   // [event.target.name]: event.target.value
-    //   totalVolunteerRequired: event.target.value,
-    //   volunteerPerStudent: event.target.value
-    // })
   }
   setDescription (value) {
     this.props.form.setFieldsValue({ description: value })
@@ -91,9 +85,6 @@ class ActDetailForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    if (!this.state.input1Disabled) {
-      console.log('input enabled')
-    }
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const act = this.props.act
@@ -316,23 +307,7 @@ class ActDetailForm extends Component {
                 </Form.Item>
                 <Form.Item label={actResource}>
                   {getFieldDecorator('resource')(<Input placeholder='5 people, classroom, projector' />)}
-                </Form.Item>
-                {/* <Form.Item>
-                  <Radio.Group buttonStyle='solid'>
-                    <Radio onClick={this.actRadio.bind(this, 1)} name='integer' value='integer'>Total number of volunteers required</Radio>
-                    <Form.Item>
-                      {getFieldDecorator('totalVolunteerRequired')(<Input name='resourceinput1' onChange={this.change}
-                        disabled={this.state.input1Disabled} placeholder='Select from 1 to 100' />)}
-                    </Form.Item>
-                    <Radio onClick={this.actRadio.bind(this, 2)} name='fraction' value='fraction'>Volunteer required per student</Radio>
-                    <Form.Item>
-
-                      {getFieldDecorator('volunteerPerStudent')(<Input name='resourceinput2' onChange={this.change}
-                        disabled={this.state.input2Disabled} placeholder='Specify the number of students' />)}
-                    </Form.Item>
-
-                  </Radio.Group>
-                </Form.Item> */}
+                </Form.Item>            
                 <Form.Item>
                   <Radio name='volunteer' value='option1' checked={this.state.option1} onClick={this.actRadio.bind(this, 'option1')}>Total number of volunteers required</Radio>
                   {getFieldDecorator('totalVolunteerRequired')(<Input name='resourceinput1' onChange={this.change}

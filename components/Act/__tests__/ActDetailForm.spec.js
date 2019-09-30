@@ -155,34 +155,3 @@ test.serial('render the detail with new blank act', t => {
   wrapper.find('button').at(1).simulate('click')
   t.truthy(submitAct.calledOnce)
 })
-
-// radioButton.at(0).simulate('change', { target: { value: 'option1' } })
-//   // wrapper.find('Radio').first().simulate('change', { target: { value: 'option1' } })
-//   // wrapper.find('input#activity_detail_form_totalVolunteerRequired').first()
-//   //   .simulate('change', { target: { value: 5 } })
-//   input1.simulate('change', { target: { value: 10 } })
-//   console.log(radioButton.at(0).html().includes('option1'))
-//   console.log(input1.html())
-//   // wrapper.update()
-//   wrapper.find('button').first().simulate('click')
-//   t.truthy(cancelAct.calledOnce)
-//   wrapper.find('button').at(1).simulate('click')
-//   t.truthy(submitAct.called)
-//   console.log(act.volunteers)
-
-//   // t.truthy(submitAct.calledOnce)
-//   t.regex(act.volunteers.toString(), /^\d+$/)
-
-//   // radioButton.at(1).simulate('click')
-//   // input2.simulate('change', { target: { value: 10 } })
-//   // console.log(radioButton.at(1).html())
-//   // console.log(input2.html())
-
-//   // // input2.instance().value = 10
-//   // // input2.simulate('change')
-
-//   // wrapper.find('button').first().simulate('click')
-//   // t.truthy(cancelAct.calledOnce)
-//   // wrapper.find('button').at(1).simulate('click')
-//   // // t.truthy(submitAct.calledOnce)
-//   // console.log(act)
