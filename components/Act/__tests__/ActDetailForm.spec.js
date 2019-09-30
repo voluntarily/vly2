@@ -5,6 +5,7 @@ import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-hel
 
 import ActDetailForm from '../ActDetailForm'
 import sinon from 'sinon'
+// import { wrap } from 'module'
 // Initial activities
 
 const act = {
@@ -14,7 +15,8 @@ const act = {
   imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
   description: 'Project to grow something in the garden',
   duration: '15 Minutes',
-  status: 'draft'
+  status: 'draft',
+  volunteers: 2
 }
 
 const noact = {
@@ -23,9 +25,9 @@ const noact = {
   imgUrl: '',
   description: '',
   duration: '',
-  status: 'draft'
+  status: 'draft',
+  volunteers: null
 }
-
 // const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p`)
 // global.window = dom// setting a mock window global object so the upload image component is not complaining
 // global.SVGElement = Array
@@ -76,6 +78,45 @@ test('render the detail with act', t => {
   t.truthy(submitAct.calledWith(act))
 })
 
+test('toggle radio buttons', async t => {
+  const submitAct = sinon.spy()
+  const cancelAct = sinon.spy()
+  const radioAct = sinon.spy()
+  const volunteerInputAct = sinon.spy()
+  // const inputField1 = sinon.spy()
+  const wrapper = mountWithIntl(
+    <ActDetailForm
+      act={act}
+      onClick={radioAct}
+      onChange={volunteerInputAct}
+      onSubmit={submitAct}
+      onCancel={cancelAct}
+      existingTags={[]}
+    />
+  )
+  t.is(wrapper.find('ActDetailForm').length, 1)
+  t.is(wrapper.find('button').length, 3)
+  t.is(wrapper.find('Radio').length, 2)
+
+  const radioButton = wrapper.find('Radio')
+  const input1 = wrapper.find('input#activity_detail_form_totalVolunteerRequired').first()
+  const input2 = wrapper.find('input#activity_detail_form_volunteerPerStudent').first()
+
+  radioButton.at(0).props().onClick({ target: { value: 'option1' } })
+  input1.props().onChange({ target: { name: 'resourceinput1', value: 10 } })
+  // console.log(act.volunteers)
+  wrapper.find('button').at(1).simulate('click')
+  t.is(act.volunteers, 10)
+  t.regex(act.volunteers.toString(), /^\d+$/)
+  // console.log(act.volunteers)
+  radioButton.at(1).props().onClick({ target: { value: 'option2' } })
+  input2.props().onChange({ target: { name: 'resourceinput2', value: 5 } })
+  // console.log(act.volunteers)
+  wrapper.find('button').at(1).simulate('click')
+  t.is(act.volunteers, 5)
+  // console.log(act.volunteers)
+})
+
 test.serial('render the detail with new blank act', t => {
   const submitAct = sinon.spy()
   const cancelAct = sinon.spy()
@@ -114,3 +155,34 @@ test.serial('render the detail with new blank act', t => {
   wrapper.find('button').at(1).simulate('click')
   t.truthy(submitAct.calledOnce)
 })
+
+// radioButton.at(0).simulate('change', { target: { value: 'option1' } })
+//   // wrapper.find('Radio').first().simulate('change', { target: { value: 'option1' } })
+//   // wrapper.find('input#activity_detail_form_totalVolunteerRequired').first()
+//   //   .simulate('change', { target: { value: 5 } })
+//   input1.simulate('change', { target: { value: 10 } })
+//   console.log(radioButton.at(0).html().includes('option1'))
+//   console.log(input1.html())
+//   // wrapper.update()
+//   wrapper.find('button').first().simulate('click')
+//   t.truthy(cancelAct.calledOnce)
+//   wrapper.find('button').at(1).simulate('click')
+//   t.truthy(submitAct.called)
+//   console.log(act.volunteers)
+
+//   // t.truthy(submitAct.calledOnce)
+//   t.regex(act.volunteers.toString(), /^\d+$/)
+
+//   // radioButton.at(1).simulate('click')
+//   // input2.simulate('change', { target: { value: 10 } })
+//   // console.log(radioButton.at(1).html())
+//   // console.log(input2.html())
+
+//   // // input2.instance().value = 10
+//   // // input2.simulate('change')
+
+//   // wrapper.find('button').first().simulate('click')
+//   // t.truthy(cancelAct.calledOnce)
+//   // wrapper.find('button').at(1).simulate('click')
+//   // // t.truthy(submitAct.calledOnce)
+//   // console.log(act)

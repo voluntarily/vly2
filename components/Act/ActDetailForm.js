@@ -15,7 +15,6 @@ import {
   ShortInputContainer,
   TitleContainer
 } from '../VTheme/FormStyles'
-import FormItem from 'antd/lib/form/FormItem'
 
 const { TextArea } = Input
 
@@ -26,16 +25,16 @@ function hasErrors (fieldsError) {
 class ActDetailForm extends Component {
   constructor (props) {
     super(props)
-    this.setDescription = this.setDescription.bind(this)
-    this.setImgUrl = this.setImgUrl.bind(this)
     this.state = {
-      input1Enabled: false,
-      input2Enabled: true,
-      radioCheck1: true,
-      radioCheck2: false,
+      input1Disabled: true,
+      input2Disabled: true,
+      option1: false,
+      option2: false,
       totalVolunteerRequired: 1,
       volunteerPerStudent: 1
     }
+    this.setDescription = this.setDescription.bind(this)
+    this.setImgUrl = this.setImgUrl.bind(this)
     this.change = this.change.bind(this)
   }
 
@@ -45,28 +44,43 @@ class ActDetailForm extends Component {
     this.props.form.validateFields(() => { })
   }
   actRadio = (event) => {
-    if (event === 2) {
+    if (event === 'option1') {
       this.setState({
-        input1Enabled: true,
-        input2Enabled: false,
-        radioCheck1: false,
-        radioCheck2: true
+        input1Disabled: false,
+        input2Disabled: true,
+        option1: true,
+        option2: false
       })
-    } else {
+      console.log('Radio 1 working')
+    } else if (event === 'option2') {
       this.setState({
-        input1Enabled: false,
-        input2Enabled: true,
-        radioCheck2: false,
-        radioCheck1: true
+        input2Disabled: false,
+        input1Disabled: true,
+        option1: false,
+        option2: true
       })
+      console.log('Radio 2 working')
     }
   }
   change = (event) => {
-    this.setState({
-      // [event.target.name]: event.target.value,
-      totalVolunteerRequired: event.target.value,
-      volunteerPerStudent: event.target.value
-    })
+    const textname = event.target.name
+    if (textname === 'resourceinput1') {
+      this.setState({
+        totalVolunteerRequired: event.target.value
+      })
+      // console.log(this.state.totalVolunteerRequired)
+    } else if (textname === 'resourceinput2') {
+      this.setState({
+        volunteerPerStudent: event.target.value
+      })
+      // console.log(this.state.volunteerPerStudent)
+    }
+
+    // this.setState({
+    //   // [event.target.name]: event.target.value
+    //   totalVolunteerRequired: event.target.value,
+    //   volunteerPerStudent: event.target.value
+    // })
   }
   setDescription (value) {
     this.props.form.setFieldsValue({ description: value })
@@ -77,7 +91,9 @@ class ActDetailForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-
+    if (!this.state.input1Disabled) {
+      console.log('input enabled')
+    }
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const act = this.props.act
@@ -86,7 +102,7 @@ class ActDetailForm extends Component {
         act.subtitle = values.subtitle
         act.duration = values.duration
         act.resource = values.resource
-        act.volunteers = this.state.totalVolunteerRequired || this.state.volunteerPerStudent
+        act.volunteers = !this.state.input1Disabled ? this.state.totalVolunteerRequired : this.state.volunteerPerStudent
         act.description = values.description
         act.imgUrl = values.imgUrl
         act.tags = values.tags
@@ -158,26 +174,6 @@ class ActDetailForm extends Component {
         <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML or Markdown here.'>
           <Icon type='question-circle-o' />
         </Tooltip>
-      </span>
-    )
-    const actResource1 = (
-      <span>
-        {' '}
-        <FormattedMessage
-          id='actResource1'
-          defaultMessage='Total number of volunteers required'
-          description='A text field in actDetail form'
-        />
-      </span>
-    )
-    const actResource2 = (
-      <span>
-        {' '}
-        <FormattedMessage
-          id='actResource2'
-          defaultMessage='Number of volunteers per student'
-          description='A text field in actDetail form'
-        />
       </span>
     )
     const actDescription = (
@@ -321,21 +317,32 @@ class ActDetailForm extends Component {
                 <Form.Item label={actResource}>
                   {getFieldDecorator('resource')(<Input placeholder='5 people, classroom, projector' />)}
                 </Form.Item>
+                {/* <Form.Item>
+                  <Radio.Group buttonStyle='solid'>
+                    <Radio onClick={this.actRadio.bind(this, 1)} name='integer' value='integer'>Total number of volunteers required</Radio>
+                    <Form.Item>
+                      {getFieldDecorator('totalVolunteerRequired')(<Input name='resourceinput1' onChange={this.change}
+                        disabled={this.state.input1Disabled} placeholder='Select from 1 to 100' />)}
+                    </Form.Item>
+                    <Radio onClick={this.actRadio.bind(this, 2)} name='fraction' value='fraction'>Volunteer required per student</Radio>
+                    <Form.Item>
 
-                <FormItem label={actResource1} >
-                  <Radio onClick={() => this.actRadio(1)} name='radio1' checked={this.state.radioCheck1}>
-                    {getFieldDecorator('totalVolunteerRequired')(<Input name='resourceinput1' onChange={this.change}
-                      disabled={this.state.input1Enabled} placeholder='Select from 1 to 100' />)}
-                  </Radio>
-                </FormItem>
-                <FormItem label={actResource2}>
-                  <Radio onClick={() => this.actRadio(2)} name='radio2' checked={this.state.radioCheck2}>
-                    {getFieldDecorator('volunteerPerStudent')(<Input name='resourceinput2' onChange={this.change}
-                      disabled={this.state.input2Enabled} placeholder='Specify the number of students' />)}
+                      {getFieldDecorator('volunteerPerStudent')(<Input name='resourceinput2' onChange={this.change}
+                        disabled={this.state.input2Disabled} placeholder='Specify the number of students' />)}
+                    </Form.Item>
 
-                  </Radio>
-                </FormItem>
-
+                  </Radio.Group>
+                </Form.Item> */}
+                <Form.Item>
+                  <Radio name='volunteer' value='option1' checked={this.state.option1} onClick={this.actRadio.bind(this, 'option1')}>Total number of volunteers required</Radio>
+                  {getFieldDecorator('totalVolunteerRequired')(<Input name='resourceinput1' onChange={this.change}
+                    disabled={this.state.input1Disabled} placeholder='Select from 1 to 100' />)}
+                </Form.Item>
+                <Form.Item>
+                  <Radio name='volunteer' value='option2' checked={this.state.option2} onClick={this.actRadio.bind(this, 'option2')}>Number of volunteer required per student</Radio>
+                  {getFieldDecorator('volunteerPerStudent')(<Input name='resourceinput2' onChange={this.change}
+                    disabled={this.state.input2Disabled} placeholder='Specify the number of students' />)}
+                </Form.Item>
               </ShortInputContainer>
             </InputContainer>
           </FormGrid>
