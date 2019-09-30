@@ -8,6 +8,7 @@ import React from 'react'
 import styled from 'styled-components'
 import TagDisplay from '../Tags/TagDisplay'
 import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
+import { FormattedMessage } from 'react-intl'
 
 const Left = styled.div``
 
@@ -50,7 +51,13 @@ export function ActDetail ({ act }) {
           <ItemListing>⏱&nbsp;{act.duration}</ItemListing>
           // TODO: [VP-204] add organisation and contact
           <ItemListing>📝&nbsp;{act.status}</ItemListing>
-          <ItemListing>Volunteers required: {act.volunteers}</ItemListing>
+          <ItemListing>
+            <FormattedMessage
+              id='act.detail.volunteersrequired'
+              defaultMessage='Volunteers required:'
+              description='label for number of volunteers required'
+            />
+            {act.volunteers}</ItemListing>
           <Spacer />
           <ItemP>
             <Markdown

@@ -283,7 +283,13 @@ class ActDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>What resources are required to run this activity?</H3Bold>
+                <H3Bold>
+                  <FormattedMessage
+                    id='act.detail.resourcessection'
+                    defaultMessage='What resources are required to run this activity?'
+                    description='heading for resources section on act detail form.'
+                  />
+                </H3Bold>
               </TitleContainer>
               <P>
                 What is the time commitment?<br />
@@ -309,12 +315,24 @@ class ActDetailForm extends Component {
                   {getFieldDecorator('resource')(<Input placeholder='5 people, classroom, projector' />)}
                 </Form.Item>
                 <Form.Item>
-                  <Radio name='volunteer' value='option1' checked={this.state.option1} onClick={this.actRadio.bind(this, 'option1')}>Total number of volunteers required</Radio>
+                  <Radio name='volunteer' value='option1' checked={this.state.option1} onClick={this.actRadio.bind(this, 'option1')}>
+                    <FormattedMessage
+                      id='act.detail.volunteercount'
+                      defaultMessage='Total number of volunteers required'
+                      description='label for field volunteer numbers required'
+                    />
+                  </Radio>
                   {getFieldDecorator('totalVolunteerRequired')(<Input name='resourceinput1' onChange={this.change}
                     disabled={this.state.input1Disabled} placeholder='Select from 1 to 100' />)}
                 </Form.Item>
                 <Form.Item>
-                  <Radio name='volunteer' value='option2' checked={this.state.option2} onClick={this.actRadio.bind(this, 'option2')}>Number of volunteer required per student</Radio>
+                  <Radio name='volunteer' value='option2' checked={this.state.option2} onClick={this.actRadio.bind(this, 'option2')}>
+                    <FormattedMessage
+                      id='act.detail.volunteerratio'
+                      defaultMessage='Number of students per volunteer'
+                      description='label for field number of students per volunteer'
+                    />
+                  </Radio>
                   {getFieldDecorator('volunteerPerStudent')(<Input name='resourceinput2' onChange={this.change}
                     disabled={this.state.input2Disabled} placeholder='Specify the number of students' />)}
                 </Form.Item>
