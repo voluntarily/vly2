@@ -136,7 +136,7 @@ const OrgDetail = ({ org, ...props }) => (
               {org.website && (
                 <SocialButton
                   type='link'
-                  href={`https://${org.website}`}
+                  href={`${org.website}`}
                   icon='global'
                   target='_blank'
                   rel='noopener noreferrer'
@@ -173,7 +173,10 @@ const OrgDetail = ({ org, ...props }) => (
           </AboutContainer>
         </TabPane>
         {/* <TabPane tab={orgResourcesTab} key='2' /> */}
-        <TabPane tab={orgInstructionTab} key='3' />
+        {/* // TODO: [VP-554] move the OpList for this org from the parent page to a tab  */}
+        <TabPane tab={orgInstructionTab} key='3' >
+          <Markdown children={(org.info && org.info.instructions) || ''} />
+        </TabPane>
         <TabPane tab={orgMemberTab} key='4'>
           <MemberSection org={org} />
         </TabPane>

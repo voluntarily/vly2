@@ -20,6 +20,7 @@ const organisationSchema = new Schema({
   },
   info: {
     about: String,
+    instructions: String,
     followers: String,
     joiners: String,
     members: String,
