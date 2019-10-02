@@ -10,6 +10,7 @@ export const IssueBadgeButton = IssueBadge
 
 function IssueBadge ({ person }) {
   const [modalVisible, setModalVisible] = useState(false)
+  const [modalButtonIsLoading, setModalButtonLoading] = useState(false)
   const [data, setBadge] = useState([{}])
   const [currentBadgeChosen, setBadgeChosen] = useState({})
   useEffect(() => {
@@ -17,9 +18,11 @@ function IssueBadge ({ person }) {
   }, [person])
 
   const handleOk = async () => {
+    setModalButtonLoading(!modalButtonIsLoading)
     const { entityId } = currentBadgeChosen
-    sendIssuingBadgeRequest(person, entityId)
+    await sendIssuingBadgeRequest(person, entityId)
     setModalVisible(false)
+    setModalButtonLoading(!modalButtonIsLoading)
   }
   return (
     <div>
@@ -28,6 +31,7 @@ function IssueBadge ({ person }) {
         title='Select badge to issue to this person'
         visible={modalVisible}
         onOk={handleOk}
+        confirmLoading={modalButtonIsLoading}
         onCancel={() => setModalVisible(false)}>
         <BadgeList badgeList={data} setBadgeChosen={setBadgeChosen} />
       </Modal>

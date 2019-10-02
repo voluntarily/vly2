@@ -73,7 +73,7 @@ const listAllBadge = async (req, res) => {
   try {
     accessToken = await getToken()
   } catch (e) {
-    return res.json({ message: 'Badge system currently unavailable' }).sendStatus(500)
+    return res.status(500).json({ message: 'Badge system currently unavailable' })
   }
   const badgeListResponse = await fetch(`${BADGR_API}/v2/badgeclasses`, {
     method: 'GET',
