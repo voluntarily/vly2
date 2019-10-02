@@ -5,13 +5,21 @@ const requestor = {
   name: 'Testy McTestface',
   imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png'
 }
-
-const offerOrg = {
+export const orgActionWhizzyFelt = {
   _id: cuid(),
   name: 'Action Whizzy Felt',
   imgUrl: 'https://files.list.co.uk/images/2009/02/19/623atpiccap2.jpg'
 }
-
+export const orgOmgTech = {
+  _id: cuid(),
+  name: 'OMGTech',
+  slug: 'omgtech',
+  category: ['ap', 'vp'],
+  imgUrl: 'https://images.squarespace-cdn.com/content/556e9677e4b099ded4a2e757/1488844920526-ZGL78IXEPYARVWLL778H/OMGTECH.png?content-type=image%2Fpng',
+  info: {
+    about: 'Awesome content providers'
+  }
+}
 const noDate = [ ]
 const openDate = [
   '2019-05-23T12:26:18.000Z' // Fri, 24 May 2019 00:26:18 NZST
@@ -32,7 +40,7 @@ export default [
     location: 'Wellington',
     status: 'active',
     requestor,
-    offerOrg,
+    offerOrg: orgActionWhizzyFelt,
     tags: [ ],
     date: noDate
   },
@@ -46,7 +54,7 @@ export default [
     location: 'Ruakaka',
     status: 'active',
     requestor,
-    offerOrg,
+    offerOrg: orgOmgTech,
     tags: [ ],
     date: openDate
   },
@@ -60,7 +68,7 @@ export default [
     location: 'Auckland',
     status: 'active',
     requestor,
-    offerOrg,
+    offerOrg: orgActionWhizzyFelt,
     interest: { status: 'interested' },
     tags: [ ],
     date
@@ -74,7 +82,7 @@ export default [
     duration: '2 hours',
     location: 'Hamilton',
     // this has no requestor
-    offerOrg,
+    offerOrg: orgActionWhizzyFelt,
     status: 'active',
     tags: [ ],
     date

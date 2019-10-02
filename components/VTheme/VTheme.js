@@ -415,9 +415,10 @@ h1 {
 img {
   -webkit-transition: all 0.2s;
   width: 100%;
-  height: 10rem;
+  height: auto;
+  max-height: 10rem;
   background-color: rgba(0, 0, 0, 0);
-  object-fit: cover;
+  object-fit: scale-down;
   overflow: hidden;
   object-position: center;
 }
