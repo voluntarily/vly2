@@ -45,7 +45,7 @@ const issueNewBadge = async (req, res) => {
     }
   })
   const data = await response.json()
-  process.env.NODE_ENV !== 'test' && await insertNewBageIntoDatabase(data.result, _id)
+  await insertNewBageIntoDatabase(data.result, _id)
   return res.json(data)
 }
 
@@ -64,7 +64,7 @@ const insertNewBageIntoDatabase = async (result, id) => {
     issuedOn,
     issuerOpenBadgeId
   }
-  Badge.insertMany(newBadge)
+  await Badge.insertMany(newBadge)
 }
 
 const listAllBadge = async (req, res) => {
