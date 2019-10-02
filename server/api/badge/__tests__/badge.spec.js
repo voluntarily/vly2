@@ -11,7 +11,7 @@ import people from '../../person/__tests__/person.fixture'
 import badges from './badges.fixture'
 const { BADGR_API } = config
 
-const expectedBadgeResult =[ {
+const expectedBadgeResult = [ {
   'entityType': 'Assertion',
   'entityId': 'WDVAtNTfT_S8JuO-u8rVEw',
   'openBadgeId': `${BADGR_API}/public/assertions/WDVAtNTfT_S8JuO-u8rVEw`,
@@ -151,4 +151,3 @@ test.serial('Issue badge saved new badge record to database', async t => {
   const noBadgeIssuedTotal = await Badge.countDocuments()
   t.is(noBadgeIssuedTotal, 1)
 })
-
