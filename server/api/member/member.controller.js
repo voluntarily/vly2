@@ -9,7 +9,7 @@ const Organisation = require('../organisation/organisation')
 const getMemberbyId = id => {
   return Member.findOne({ _id: id })
     .populate({ path: 'person', select: 'nickname name imgUrl email' })
-    .populate({ path: 'organisation', select: 'name imgUrl' })
+    .populate({ path: 'organisation', select: 'name imgUrl category' })
     .exec()
 }
 
@@ -36,7 +36,7 @@ const listMembers = async (req, res) => {
       // a person is asking for the orgs they follow or are members of
       const query = { person: req.query.meid }
       // return info for an orgCard
-      got = await Member.find(query).populate({ path: 'organisation', select: 'name imgUrl' }).sort(sort).exec()
+      got = await Member.find(query).populate({ path: 'organisation', select: 'name imgUrl category' }).sort(sort).exec()
     } else {
       // list all relationships
       got = await Member.find().sort(sort).exec()
