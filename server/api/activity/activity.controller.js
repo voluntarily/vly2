@@ -69,7 +69,11 @@ const getActivities = async (req, res) => {
 }
 const getActivity = async (req, res) => {
   try {
-    const got = await Activity.findOne(req.params).populate('owner').populate('tags').exec()
+    const got = await Activity.findOne(req.params)
+      .populate('owner', 'name nickname imgUrl')
+      .populate('offerOrg', 'name imgUrl category')
+      .populate('tags')
+      .exec()
     res.json(got)
   } catch (e) {
     res.status(404).send(e)
