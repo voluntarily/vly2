@@ -4,10 +4,14 @@ import MockExpressRequest from 'mock-express-request'
 import MockExpressResponse from 'mock-express-response'
 import { issueNewBadge, listAllBadge } from '../badge.controller'
 import { config } from '../../../../config/config'
+import Badge from '../badge'
+import MemoryMongo from '../../../util/test-memory-mongo'
+import Person from '../../person/person'
+import people from '../../person/__tests__/person.fixture'
 import badges from './badges.fixture'
 const { BADGR_API } = config
 
-const expectedBadgeResult = {
+const expectedBadgeResult =[ {
   'entityType': 'Assertion',
   'entityId': 'WDVAtNTfT_S8JuO-u8rVEw',
   'openBadgeId': `${BADGR_API}/public/assertions/WDVAtNTfT_S8JuO-u8rVEw`,
@@ -32,7 +36,25 @@ const expectedBadgeResult = {
   'revocationReason': null,
   'expires': null,
   'extensions': {}
-}
+}]
+
+test.before('Create a mock database and connect to it ', async t => {
+  t.context.memMongo = new MemoryMongo()
+  await t.context.memMongo.start()
+})
+
+test.beforeEach('connect and add people fixture', async () => {
+  await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+})
+
+test.after.always(async t => {
+  await t.context.memMongo.stop()
+})
+
+test.afterEach.always(async () => {
+  await Badge.deleteMany()
+  await Person.deleteMany()
+})
 
 test.serial('Test request issue badge return information about badge', async t => {
   const mockFetch = fetchMock.sandbox()
@@ -56,9 +78,10 @@ test.serial('Test request issue badge return information about badge', async t =
     me: {},
     user: {}
   }
+  const andrew = await Person.findOne({ email: 'andrew@groat.nz' })
   mockReq.body = {
     email: 'Testing@gmail.com',
-    _id: 'Anothertest'
+    _id: `${andrew._id}`
   }
   mockReq.params = {
     badgeID: 'Maklsjdfad'
@@ -93,3 +116,39 @@ test.serial('Successfully query all badge available ', async t => {
   const responseFromServer = mockRes._getJSON()
   t.deepEqual(badges, responseFromServer)
 })
+
+test.serial('Issue badge saved new badge record to database', async t => {
+  const mockFetch = fetchMock.sandbox()
+    .get('*', 200)
+    .post(`begin:${BADGR_API}/o/token`, {
+      body: {
+        access_token: 'asodjhfsiuh'
+      }
+    })
+    .post(`begin:${BADGR_API}/v2/badgeclasses`, {
+      body: {
+        result: expectedBadgeResult
+      }
+    })
+  global.fetch = mockFetch
+
+  const mockReq = new MockExpressRequest()
+  const mockRes = new MockExpressResponse()
+  mockReq.session = {
+    isAuthenticated: false,
+    me: {},
+    user: {}
+  }
+  const andrew = await Person.findOne({ email: 'andrew@groat.nz' })
+  mockReq.body = {
+    email: 'Testing@gmail.com',
+    _id: `${andrew._id}`
+  }
+  mockReq.params = {
+    badgeID: 'Maklsjdfad'
+  }
+  await issueNewBadge(mockReq, mockRes)
+  const noBadgeIssuedTotal = await Badge.countDocuments()
+  t.is(noBadgeIssuedTotal, 1)
+})
+
