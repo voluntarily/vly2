@@ -8,7 +8,7 @@ import { FullPage, Spacer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import withIntl from '../../lib/withIntl'
 import aboutEn from './about-en-md.js'
-import aboutMi from './about-mi-md.js'
+import aboutMi from './terminfo-en-md.js/index.js'
 
 const getText = locale => {
   switch (locale) {
