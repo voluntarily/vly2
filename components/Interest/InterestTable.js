@@ -40,13 +40,13 @@ class InterestTable extends Component {
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
     const columns = [
-      {
-        title: "Selected",
-        key: "isSelected",
-        render: (text, record) => {
-          return <Checkbox value="selected" />;
-        }
-      },
+      // {
+      //   title: "Selected",
+      //   key: "isSelected",
+      //   render: (text, record) => {
+      //     return <Checkbox value="selected" />;
+      //   }
+      // },
       {
         title: "Name",
         key: "imgUrl",
@@ -178,6 +178,19 @@ class InterestTable extends Component {
         }
       }
     ];
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.log(
+          `selectedRowKeys: ${selectedRowKeys}`,
+          "selectedRows: ",
+          selectedRows
+        );
+      }
+      // getCheckboxProps: record => ({
+      //   disabled: record.name === "Disabled User", // Column configuration not to be checked
+      //   name: record.name
+      // })
+    };
     return (
       <Table
         columns={columns}
@@ -185,6 +198,7 @@ class InterestTable extends Component {
         rowKey="_id"
         pagination={false}
         onChange={this.onChange}
+        rowSelection={rowSelection}
       />
     );
   }
