@@ -66,5 +66,5 @@ const sendIssuingBadgeRequest = async ({ _id, email }, badgeId) => {
     email
   }
   await callApi(`badge/${badgeId}`, 'POST', body)
-  Router.push(`${config.appUrl}/people/${_id}`)
+  Router.push(`/people/${_id}`)
 }
