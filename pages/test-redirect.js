@@ -3,7 +3,6 @@ import Router from 'next/router'
 import publicPage from '../hocs/publicPage'
 import Loading from '../components/Loading'
 class TestRedirect extends React.Component {
-
   wait (ms) {
     return new Promise((resolve, reject) => {
       setTimeout(() => { resolve() }, ms)
