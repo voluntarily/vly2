@@ -20,7 +20,7 @@ test.before('before connect to database', async (t) => {
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
   archivedOps.map((op, index) => { op.requestor = t.context.people[index]._id })
-  t.context.opportunities = await ArchiveOpportunity.create(archivedOps).catch((err) => console.log('Unable to create opportunities', err))
+  t.context.opportunities = await ArchiveOpportunity.create(archivedOps).catch((err) => console.error('Unable to create opportunities', err))
 })
 
 test.after.always(async (t) => {

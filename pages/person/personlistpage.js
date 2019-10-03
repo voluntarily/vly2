@@ -24,7 +24,7 @@ class PersonListPage extends Component {
         params: cookiesStr
       }))
     } catch (err) {
-      console.log('error in getting people', err)
+      console.error('error in getting people', err)
     }
   }
 

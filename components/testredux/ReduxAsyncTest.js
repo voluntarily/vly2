@@ -31,7 +31,6 @@ const initialState = {
 }
 
 export const HealthReducer = (state = initialState, action) => {
-  // console.log('ReduxAsyncTestReducer', action)
   switch (action.type) {
     case ADD_HEALTH:
       return { ...action.health }
@@ -69,7 +68,6 @@ const mapStateToProps = store => ({
 
 // longer version
 // const mapStateToProps = (store) => {
-//   console.log(store)
 //   return ({
 //     health: store.health,
 //     name: store.rst.name

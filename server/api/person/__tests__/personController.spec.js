@@ -12,7 +12,6 @@ import people from '../__tests__/person.fixture'
 test.before('before connect to database', async (t) => {
   await appReady
   t.context.memMongo = new MemoryMongo()
-  // console.log('App ready')
   await t.context.memMongo.start()
 })
 

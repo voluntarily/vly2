@@ -221,15 +221,11 @@ test('can Edit the Op', t => {
   cancelButton.simulate('click')
   editButton = wrapper.find('#editOpBtn').first()
   t.is(editButton.text(), 'Edit')
-  t.is(wrapper.find('h1').first().text(), 'NZTA Innovation Centre')
+  t.is(wrapper.find('h1').first().text(), opportunityToEdit.name)
   editButton.simulate('click')
   const saveButton = wrapper.find('#saveOpBtn').first()
   t.is(saveButton.text(), 'Save as draft')
   saveButton.simulate('click')
-
-  // console.log(t.context.mockStore.getActions()[0])
-  // should switch back to display mode
-  // console.log(wrapper.html())
 })
 
 test('display unavailable opportunity message when opportunity id is invalid on OpDetailPage', t => {
@@ -308,14 +304,9 @@ test('can create new Op from blank', t => {
       <RoutedOpDetailPage {...props} />
     </Provider>
   )
-  // console.log(wrapper.html())
   const saveButton = wrapper.find('#saveOpBtn').first()
   t.is(saveButton.text(), 'Save as draft')
   // saveButton.simulate('click')
-
-  // console.log(t.context.mockStore.getActions()[0])
-  // should switch back to display mode
-  // console.log(wrapper.html())
 })
 
 test('can cancel new Op from blank', t => {
@@ -336,7 +327,6 @@ test('can cancel new Op from blank', t => {
       <RoutedOpDetailPage {...props} />
     </Provider>
   )
-  // console.log(wrapper.html())
   const saveButton = wrapper.find('#saveOpBtn').first()
   t.is(saveButton.text(), 'Save as draft')
   const cancelButton = wrapper.find('#cancelOpBtn').first()

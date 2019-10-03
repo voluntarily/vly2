@@ -1,57 +1,31 @@
 /* Dumb React component Shows contents of an activity
  */
-import { Button } from 'antd'
+import { Button, Divider } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
 import TagDisplay from '../Tags/TagDisplay'
-import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
-
-const Left = styled.div``
-
-const Right = styled.div``
-
-const TitleFont = styled.h1`
-  font-weight: 900;
-  font-size: 2rem;
-  letter-spacing: -0.02rem;
-`
-const ItemListing = styled.p`
-  font-weight: 500;
-  font-size: 1rem;
-  opacity: 1;
-  color: initial;
-  margin-bottom: 0.2rem;
-`
-const ItemP = styled.div`
-  letter-spacing: -0.02rem;
-  font-weight: 400;
-  font-size: 1rem;
-  opacity: 1;
-  color: initial;
-  margin-bottom: 1rem;
-  `
-
-const TagContainer = styled.div`
-  margin-top: 0.2rem;
-`
+import { HalfGrid, Spacer } from '../VTheme/VTheme'
+import { Left, Right, ItemContainer, ItemDescription, TagContainer, ItemDuration, ItemStatus, ItemIdLine } from '../VTheme/ItemList'
 
 export function ActDetail ({ act }) {
   const img = act.imgUrl || '../../static/missingimage.svg'
   return (
-    <FullPage>
-      <Spacer />
+    <>
       <Head><title>{act.name}</title></Head>
       <HalfGrid>
         <Left>
-          <TitleFont>{act.name}</TitleFont>
-          <ItemListing>⏱&nbsp;{act.duration}</ItemListing>
-          // TODO: [VP-204] add organisation and contact
-          <ItemListing>📝&nbsp;{act.status}</ItemListing>
-          <Spacer />
-          <ItemP>
+          <h1>{act.name}</h1>
+          <ItemContainer>
+            <ItemDuration duration={act.duration} />
+            <ItemStatus status={act.status} />
+            <Divider />
+            <ItemIdLine item={act.offerOrg} path='orgs' />
+            <ItemIdLine item={act.owner} path='people' />
+          </ItemContainer>
+          <Divider />
+          <ItemDescription>
             <Markdown
               children={act.description}
               options={{
@@ -60,17 +34,18 @@ export function ActDetail ({ act }) {
                 }
               }}
             />
-          </ItemP>
+          </ItemDescription>
           <Spacer />
         </Left>
         <Right>
+          <Spacer />
           <img style={{ width: '100%' }} src={img} alt={act.name} />
           <TagContainer>
             <TagDisplay tags={act.tags} />
           </TagContainer>
         </Right>
       </HalfGrid>
-    </FullPage>
+    </>
   )
 }
 

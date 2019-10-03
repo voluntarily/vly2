@@ -27,7 +27,6 @@ const TitleContainer = styled.div``
 
 function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
-  // console.log(key)
 }
 
 class PersonHomePage extends Component {
@@ -90,7 +89,7 @@ class PersonHomePage extends Component {
         store.dispatch(reduxApi.actions.recommendedOps.get({ me: me._id }))
       ])
     } catch (err) {
-      console.log('error in getting ops', err)
+      console.error('error in getting ops', err)
     }
   }
 
@@ -105,7 +104,6 @@ class PersonHomePage extends Component {
 
     const role = this.sortRoleByPower(person)
     const personData = { ...person, role }
-    console.log(personData)
     res = await this.props.dispatch(
       reduxApi.actions.people.put(
         { id: personData._id },

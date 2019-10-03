@@ -242,7 +242,6 @@ test.serial('members can become admins ', async t => {
   adminButton.simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  // console.log(t.context.store.getState().members.data)
 
   // check status change
   membersSection = wrapper.find('section').at(1)

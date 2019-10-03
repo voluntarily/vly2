@@ -13,8 +13,8 @@ import React from 'react'
 */
 
 const IdLine = ({ item, path }) =>
-  item &&
-    <Link href={`/${path}/${item._id}`}>
+  item
+    ? <Link href={`/${path}/${item._id}`}>
       <a style={{ display: 'block', margin: '0' }} >
         <Avatar
           size={32}
@@ -25,6 +25,7 @@ const IdLine = ({ item, path }) =>
         <span style={{ marginLeft: '1em' }}>{item.name}</span>
       </a>
     </Link>
+    : ''
 
 IdLine.propTypes = {
   item: PropTypes.shape({

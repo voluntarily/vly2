@@ -42,7 +42,7 @@ const members = [
 ]
 const orgid = '1'
 const handleMembershipChange = (member, action) => {
-  console.log(member.person.nickname, action)
+  console.error(member.person.nickname, action)
 }
 const TestMemberPage = ({ ...props }) => (
   <FullPage>

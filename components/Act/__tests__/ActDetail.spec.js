@@ -19,7 +19,6 @@ const act = {
 
 test('render the detail with act', t => {
   const wrapper = renderWithIntl(<ActDetail act={act} onPress={() => {}} />)
-  // console.log(wrapper.html())
   t.truthy(wrapper.find('Head'))
   t.is(wrapper.find('h1').text(), act.name)
 })

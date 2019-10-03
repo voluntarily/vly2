@@ -33,7 +33,6 @@ const _res = `
 test('shallow properly', t => {
   // with shallow we end up with a string to validate but no functionality.
   const wrapper = shallow(<LocalStateTest />)
-  // console.log(wrapper.debug())
   t.truthy(wrapper.find('Hello[name="World"]').first())
   t.truthy(wrapper.find('input#editname').first().exists())
 })
@@ -54,5 +53,4 @@ test('can input text and see result', t => {
 
   // Hello class updates with the new text
   t.is(wrapper.find('h2').text(), 'Hello, Andrew')
-  // console.log(wrapper.html())
 })

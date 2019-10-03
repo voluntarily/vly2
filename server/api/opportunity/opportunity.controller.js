@@ -82,7 +82,6 @@ const getOpportunities = async (req, res) => {
         ]
       }
     }
-    // console.log('getOpportunities', req.query, query)
 
     try {
       const got = await Opportunity
@@ -98,7 +97,7 @@ const getOpportunities = async (req, res) => {
       return res.status(404).send(e)
     }
   } catch (e) {
-    console.log('getOpportunities error:', e)
+    console.error('getOpportunities error:', e)
     return res.status(500).send(e)
   }
 }

@@ -57,7 +57,6 @@ const interests = [
 ]
 
 test.serial('mount RegisterInterestSection with with no existing interest', async t => {
-  //   console.log(people[0])
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -96,7 +95,6 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
 })
 
 test.serial('mount RegisterInterestSection with op and me', async t => {
-  //   console.log(people[0])
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))

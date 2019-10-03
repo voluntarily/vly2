@@ -7,7 +7,6 @@ This is a convenience function usually used to call
 /api/person/by/email/person@example.com  but can be used for other fields
 */
 function getPersonBy (req, res) {
-  // console.log('getPersonBy', req.params)
   let query
   if (req.params.by) {
     query = { [req.params.by]: req.params.value }
@@ -40,7 +39,7 @@ function listPeople (req, res) {
         res.json(got)
       })
   } catch (e) {
-    console.log('Bad request', req.query)
+    console.error('Bad request', req.query)
     return res.status(400).send(e)
   }
 }

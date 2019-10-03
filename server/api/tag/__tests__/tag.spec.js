@@ -16,7 +16,7 @@ test.after.always(async (t) => {
 })
 
 test.beforeEach('connect and add tag entries', async (t) => {
-  t.context.tags = await Tag.create(tags).catch((err) => console.log('Unable to create tags', err))
+  t.context.tags = await Tag.create(tags).catch((err) => console.error('Unable to create tags', err))
 })
 
 test.afterEach.always(async () => {

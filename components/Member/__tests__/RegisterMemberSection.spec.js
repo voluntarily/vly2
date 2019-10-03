@@ -56,7 +56,6 @@ test.serial('RegisterMemberSection follow and unfollow', async t => {
   wrapper.update()
   // we should see "Follow" button
   t.is(wrapper.find('button').first().text(), 'Follow')
-  // console.log(t.context.realStore.getState().members.data)
 
   // setup response to click on follow
   const newMember = {
@@ -71,7 +70,6 @@ test.serial('RegisterMemberSection follow and unfollow', async t => {
   wrapper.update()
   const newMemberResult = t.context.realStore.getState().members.data[0]
   t.deepEqual(newMember, newMemberResult)
-  // console.log(t.context.realStore.getState().members.data)
 
   // Status is now follower, button should be unfollow.
   t.is(wrapper.find('button').first().text(), 'Unfollow')
