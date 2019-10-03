@@ -11,10 +11,10 @@ export const IssueBadgeButton = IssueBadge
 function IssueBadge ({ person }) {
   const [modalVisible, setModalVisible] = useState(false)
   const [modalButtonIsLoading, setModalButtonLoading] = useState(false)
-  const [data, setBadge] = useState([{}])
+  const [badgeList, setBadgeList] = useState([{}])
   const [currentBadgeChosen, setBadgeChosen] = useState({})
   useEffect(() => {
-    setAvailableBadgeData(setBadge)
+    setAvailableBadgeData(setBadgeList)
   }, [person])
 
   const handleOk = async () => {
@@ -33,7 +33,7 @@ function IssueBadge ({ person }) {
         onOk={handleOk}
         confirmLoading={modalButtonIsLoading}
         onCancel={() => setModalVisible(false)}>
-        <BadgeList badgeList={data} setBadgeChosen={setBadgeChosen} />
+        <BadgeList badgeList={badgeList} setBadgeChosen={setBadgeChosen} />
       </Modal>
     </div>
   )
@@ -55,9 +55,9 @@ function BadgeList ({ badgeList, setBadgeChosen }) {
   )
 }
 
-const setAvailableBadgeData = async (setBadge) => {
-  const data = await callApi(`badges`)
-  setBadge(data)
+const setAvailableBadgeData = async (setBadgeList) => {
+  const badgeList = await callApi(`badges`)
+  setBadgeList(badgeList)
 }
 
 const sendIssuingBadgeRequest = async ({ _id, email }, badgeId) => {
