@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import Router from 'next/router'
 import { Button, Modal, Select } from 'antd'
 import callApi from '../../lib/apiCaller'
-import { config } from '../../config/config'
 
 const { Option } = Select
 
