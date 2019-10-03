@@ -89,11 +89,11 @@ const PersonDetail = ({ person }, ...props) => (
           <h3><FormattedMessage id='person.following' defaultMessage='Following' description='Header for list of orgs I follow' /></h3>
           <MemberUl members={person.orgFollowership} />
         </DetailItem>}
-        <DetailItem>
-          <H4>Latest Achievements</H4>
-          <Divider />
-          <PersonBadgeSection person={person} />
-        </DetailItem>
+      <DetailItem>
+        <H4>Latest Achievements</H4>
+        <Divider />
+        <PersonBadgeSection person={person} />
+      </DetailItem>
     </GridContainer>
     <GridContainer> {/* Main Workspace */}
       <InfoSection>
