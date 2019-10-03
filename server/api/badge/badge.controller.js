@@ -28,7 +28,8 @@ const issueNewBadge = async (req, res) => {
   try {
     accessToken = await getToken()
   } catch (e) {
-    return res.json({ message: 'Internal Server error, badge functionality is not available' }).sendStatus(500)
+    return res.status(503)
+      .json({ message: 'Badge system currently unavailable' })
   }
 
   const body = {
@@ -75,7 +76,7 @@ const listAllBadge = async (req, res) => {
   try {
     accessToken = await getToken()
   } catch (e) {
-    return res.status(500).json({ message: 'Badge system currently unavailable' })
+    return res.status(503).json({ message: 'Badge system currently unavailable' })
   }
   const badgeListResponse = await fetch(`${BADGR_API}/v2/badgeclasses`, {
     method: 'GET',
