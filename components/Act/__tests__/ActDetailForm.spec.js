@@ -92,7 +92,6 @@ test('shallow the detail with act', t => {
       onCancel={() => {}}
       existingTags={[]} />
   )
-  // console.log(wrapper.debug())
   t.is(wrapper.find('ActDetailForm').length, 1)
 })
 

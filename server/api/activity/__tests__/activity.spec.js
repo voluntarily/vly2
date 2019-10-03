@@ -33,7 +33,7 @@ test.beforeEach('connect and add two activity entries', async (t) => {
     act.offerOrg = t.context.orgs[index]._id
   })
 
-  t.context.activities = await Activity.create(acts).catch((err) => console.log('Unable to create activities', err))
+  t.context.activities = await Activity.create(acts).catch((err) => console.error('Unable to create activities', err))
 })
 
 test.afterEach.always(async () => {
@@ -61,7 +61,6 @@ test.serial('Should correctly give count of all acts sorted by name', async t =>
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log(got)
   t.is(4, got.length)
 
   t.is(got[0].name, acts[0].name)
@@ -83,7 +82,6 @@ test.serial('Should correctly give subset of acts matching status', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 2)
 })
 
@@ -94,7 +92,6 @@ test.serial('Should correctly select just the titles and ids', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 4)
   t.is(got[0].status, undefined)
   t.is(got[0].name, acts[0].name)
@@ -207,7 +204,6 @@ test.serial('Should find no matches', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 0)
 })
 

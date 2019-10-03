@@ -36,7 +36,7 @@ class RegisterInterestItem extends Component {
 
         this.props.onChangeStatus(interest)
       } else {
-        // console.log(err)
+        // console.error(err)
       }
     })
   }

@@ -71,7 +71,7 @@ class OpDetailForm extends Component {
 
         this.props.onSubmit(this.props.op)
       } else {
-        // console.log('field validation error:', err)
+        console.error('field validation error:', err)
       }
     })
   }
@@ -629,7 +629,5 @@ export default Form.create({
       })
     }
   }
-  // onValuesChange (_, values) {
-  //   console.log('onValuesChange', values)
-  // }
+
 })(OpDetailForm)

@@ -27,7 +27,7 @@ test.beforeEach('connect and add two oppo entries', async (t) => {
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
   ops.map((op, index) => { op.requestor = t.context.people[index]._id })
-  t.context.opportunities = await Opportunity.create(ops).catch((err) => console.log('Unable to create opportunities', err))
+  t.context.opportunities = await Opportunity.create(ops).catch((err) => console.error('Unable to create opportunities', err))
 })
 
 test.afterEach.always(async () => {

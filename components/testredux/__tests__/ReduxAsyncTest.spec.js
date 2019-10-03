@@ -38,9 +38,7 @@ const initStore = {
 }
 
 test.beforeEach('create a store', async t => {
-  // console.log('creating people')
   t.context.realStore = createStore(reducers, initStore, applyMiddleware(thunk))
-  // console.log('creating people done')
 })
 
 test.afterEach.always(async t => {
@@ -87,7 +85,6 @@ test.serial('mount, render add input and save', async t => {
       <ReduxAsyncTest />
     </Provider>
   )
-  // console.log('realstore state', realStore.getState())
   t.is(t.context.realStore.getState().health.health, 'Unknown')
   // now click the save button.
   await wrapper
@@ -97,12 +94,10 @@ test.serial('mount, render add input and save', async t => {
 
   // TODO find out how to wait for the callback on the click handler to complete,
   await sleep(10)
-  // console.log(await realStore.getState())
   t.is(await t.context.realStore.getState().health.health, 'OK')
   // Hello class updates with the new text
   wrapper.update()
 
-  // console.log(wrapper.html())
   t.is(
     wrapper
       .find('p')

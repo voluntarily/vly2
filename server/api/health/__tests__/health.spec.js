@@ -23,7 +23,6 @@ test('Should respond to parameter check', async t => {
     .expect('Content-Type', /json/)
 
   const health = res.body
-  // console.log(health)
   t.is(health.health, 'OK')
   t.is(health.params.param1, 'test1')
 })

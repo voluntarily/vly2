@@ -140,7 +140,6 @@ export class ActDetailPage extends Component {
         owner = act.owner
         isOwner = ((me || {})._id === (owner || {})._id)
       } else { // array must be empty
-        // console.log('length', acts.length)
         content = <h2><FormattedMessage id='act.notavailable' defaultMessage='Sorry, this activitiy is not available' description='message on activity not found page' /></h2>
       }
     }

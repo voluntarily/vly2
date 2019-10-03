@@ -17,7 +17,7 @@ const initializeTags = async (req, res, next) => {
     }
     next()
   } catch (e) {
-    console.log(e)
+    console.error(e)
     res.status(500).send(e)
   }
 }

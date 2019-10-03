@@ -316,8 +316,5 @@ export default Form.create({
       twitter: Form.createFormField({ ...org.twitter, value: org.twitter }),
       category: Form.createFormField({ ...org.category, value: org.category })
     }
-  },
-  onValuesChange (_, values) {
-    // console.log('onValuesChange', values)
   }
 })(OrgDetailForm)

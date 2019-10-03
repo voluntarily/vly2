@@ -48,12 +48,11 @@ const listMembers = async (req, res) => {
 }
 
 const updateMember = async (req, res) => {
-  // console.log('updateMember', req.body)
   try {
     await Member.updateOne({ _id: req.body._id }, { $set: { status: req.body.status, validation: req.body.validation } }).exec()
     const { organisation } = req.body // person in here is the volunteer-- quite not good naming here
     Organisation.findById(organisation, (err, organisationFound) => {
-      if (err) console.log(err, organisationFound)
+      if (err) console.error(err, organisationFound)
       else {
         // TODO: [VP-436] notify the person of their status change in the organisation
         // const { organisation, status, person } = req.body // person in here is the volunteer-- quite not good naming here
@@ -62,7 +61,6 @@ const updateMember = async (req, res) => {
       }
     })
     const got = await getMemberbyId(req.body._id)
-    // console.log('updateMember', got)
 
     res.json(got)
   } catch (err) {
@@ -71,8 +69,6 @@ const updateMember = async (req, res) => {
 }
 
 const createMember = async (req, res) => {
-  // console.log('createMember', req.body)
-
   const newMember = new Member(req.body)
   newMember.save(async (err, saved) => {
     if (err) {
@@ -92,7 +88,6 @@ const createMember = async (req, res) => {
 
     // return the member record with the org name filled in.
     const got = await getMemberbyId(newMember._id)
-    // console.log('createMember', got)
     res.json(got)
   })
 }
@@ -121,7 +116,7 @@ const createMember = async (req, res) => {
 // const sendEmailBaseOn = async (status, personID, organisationTitle, opId, volunteerComment = '') => {
 //   let opUrl = `${config.appUrl + '/ops/' + opId}`
 //   await Person.findById(personID, (err, person) => {
-//     if (err) console.log(err)
+//     if (err) console.error(err)
 //     else {
 //       const emailProps = {
 //         send: true

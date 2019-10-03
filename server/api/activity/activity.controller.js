@@ -85,7 +85,7 @@ const putActivity = async (req, res) => {
     await Activity.findByIdAndUpdate(req.params._id, { $set: req.body })
     getActivity(req, res)
   } catch (e) {
-    console.log(e)
+    console.error(e)
     res.status(500).send(e)
   }
 }
