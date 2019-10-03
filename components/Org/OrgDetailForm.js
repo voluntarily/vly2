@@ -157,7 +157,7 @@ class OrgDetailForm extends Component {
                   message: 'Enter valid URL' }
               ]
             })(
-              <Input placeholder='Organisation Website' />
+              <Input placeholder='https://example.com' />
             )}
           </Form.Item>
           <Form.Item label='Facebook'>
