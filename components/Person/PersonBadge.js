@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import apiCaller from '../../lib/apiCaller'
 import styled from 'styled-components'
+import { config } from '../../config/config'
 
 const BadgeWrapper = styled.div`
     margin-top: 10px;
@@ -30,7 +31,7 @@ function PersonBadge ({ person }) {
         userBadge.map((badge) => {
           return (
             <Badge key={badge._id} title={badge._id}>
-              <a href={`https://api.badgr.io/public/assertions/${badge.entityId}`} target='_blank'>
+              <a href={`${config.BADGR_API}/public/assertions/${badge.entityId}`} target='_blank'>
                 <img width='60px' height='60px' alt={`${badge._id} badge`} src={`${badge.badgeclassOpenBadgeId}/image?type=png`} />
               </a>
             </Badge>)

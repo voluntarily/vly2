@@ -1,5 +1,6 @@
 require('isomorphic-fetch') /* global fetch */
 const { config } = require('../../../config/config')
+const queryString = require('querystring')
 const Badge = require('./badge')
 
 const getToken = async () => {
@@ -7,7 +8,8 @@ const getToken = async () => {
   if ((!BADGR_PASSWORD && !BADGR_USERNAME) && process.env.NODE_ENV !== 'test') {
     throw new Error()
   }
-  const badgrResponse = await fetch(`${BADGR_API}/o/token?username=${BADGR_USERNAME}&password=${BADGR_PASSWORD}`, {
+  const escapedEmailURL = queryString.escape(BADGR_USERNAME)
+  const badgrResponse = await fetch(`${BADGR_API}/o/token?username=${escapedEmailURL}&password=${BADGR_PASSWORD}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -26,7 +28,8 @@ const issueNewBadge = async (req, res) => {
   try {
     accessToken = await getToken()
   } catch (e) {
-    return res.json({ message: 'Internal Server error, badge functionality is not available' }).sendStatus(500)
+    return res.status(503)
+      .json({ message: 'Badge system currently unavailable' })
   }
 
   const body = {
@@ -45,7 +48,7 @@ const issueNewBadge = async (req, res) => {
     }
   })
   const data = await response.json()
-  process.env.NODE_ENV !== 'test' && await insertNewBageIntoDatabase(data.result, _id)
+  await insertNewBageIntoDatabase(data.result, _id)
   return res.json(data)
 }
 
@@ -64,7 +67,7 @@ const insertNewBageIntoDatabase = async (result, id) => {
     issuedOn,
     issuerOpenBadgeId
   }
-  Badge.insertMany(newBadge)
+  await Badge.insertMany(newBadge)
 }
 
 const listAllBadge = async (req, res) => {
@@ -73,7 +76,7 @@ const listAllBadge = async (req, res) => {
   try {
     accessToken = await getToken()
   } catch (e) {
-    return res.json({ message: 'Badge system currently unavailable' }).sendStatus(500)
+    return res.status(503).json({ message: 'Badge system currently unavailable' })
   }
   const badgeListResponse = await fetch(`${BADGR_API}/v2/badgeclasses`, {
     method: 'GET',
