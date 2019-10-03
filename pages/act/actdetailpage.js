@@ -10,8 +10,9 @@ import Loading from '../../components/Loading'
 import PersonCard from '../../components/Person/PersonCard'
 import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
-import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
+import reduxApi, { withActs, withMembers } from '../../lib/redux/reduxApi.js'
 import { Role } from '../../server/services/authorize/role'
+import { MemberStatus } from '../../server/api/member/member.constants'
 
 const blankAct = {
   title: '',
@@ -29,19 +30,27 @@ export class ActDetailPage extends Component {
   }
 
   static async getInitialProps ({ store, query }) {
-    await store.dispatch(reduxApi.actions.tags.get())
-
-    // Get one Act
+    const me = store.getState().session.me
     const isNew = query && query.new && query.new === 'new'
+    const actExists = !!(query && query.id) // !! converts to a boolean value
+    await Promise.all([
+      store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
+      store.dispatch(reduxApi.actions.tags.get())
+    ])
+
     if (isNew) {
       return {
-        isNew: true,
+        isNew,
         actid: null
       }
-    } else if (query && query.id) {
-      await store.dispatch(reduxApi.actions.activities.get(query))
+    } else {
+      if (actExists) {
+        query.session = store.getState().session //  Inject session with query that restricted api access
+        await store.dispatch(reduxApi.actions.activities.get(query))
+      }
       return {
-        isNew: false,
+        isNew,
+        actExists,
         actid: query.id
       }
     }
@@ -86,11 +95,25 @@ export class ActDetailPage extends Component {
   }
 
   handleDeleteCancel = () => { message.error('Delete Cancelled') }
+
   render () {
     const me = this.props.me
     const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
     const isAdmin = (me && me.role.includes(Role.ADMIN))
     const isOP = (me && me.role.includes(Role.OPPORTUNITY_PROVIDER))
+
+    // get membership list for owner
+    if (me &&
+        this.props.members.sync &&
+        this.props.members.data.length > 0 &&
+        this.props.members) {
+      console.log(this.props.members.data)
+      me.orgMembership = this.props.members.data.filter(
+        m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status) &&
+          m.organisation.category.includes('ap')
+      )
+    }
+
     let isOwner = false
     let content
     let act
@@ -99,8 +122,14 @@ export class ActDetailPage extends Component {
       act = blankAct
       owner = me
       isOwner = true
+      // set init offerOrg to first membership result
+      if (me.orgMembership && me.orgMembership.length > 0) {
+        act.offerOrg = {
+          _id: me.orgMembership[0].organisation._id
+        }
+      }
     } else if (this.props.activities.loading) {
-      content = <Loading><p>Loading details...</p></Loading>
+      content = <Loading />
     } else {
       const acts = this.props.activities.data
       if (acts.length === 1) {
@@ -111,7 +140,6 @@ export class ActDetailPage extends Component {
         owner = act.owner
         isOwner = ((me || {})._id === (owner || {})._id)
       } else { // array must be empty
-        // console.log('length', acts.length)
         content = <h2><FormattedMessage id='act.notavailable' defaultMessage='Sorry, this activitiy is not available' description='message on activity not found page' /></h2>
       }
     }
@@ -191,5 +219,5 @@ ActDetailPage.propTypes = {
     id: PropTypes.string.isRequired
   })
 }
-export const ActDetailPageWithActs = withActs(ActDetailPage)
-export default publicPage(withActs(ActDetailPage))
+export const ActDetailPageWithActs = withMembers(withActs(ActDetailPage))
+export default publicPage(withMembers(withActs(ActDetailPage)))

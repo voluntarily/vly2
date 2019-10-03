@@ -15,7 +15,7 @@ class OrgListPage extends Component {
       const select = { p: 'name imgUrl category' }
       await store.dispatch(reduxApi.actions.organisations.get(select))
     } catch (err) {
-      console.log('error in getting orgs', err)
+      console.error('error in getting orgs', err)
     }
   }
 

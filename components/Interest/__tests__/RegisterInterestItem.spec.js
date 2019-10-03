@@ -157,7 +157,6 @@ test('invited', t => {
     onChangeStatus={changeStatus}
     onWithdraw={withdraw}
   />)
-  // console.log(wrapper.html())
   t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
 })
 
@@ -170,7 +169,6 @@ test('committed', t => {
     onChangeStatus={changeStatus}
     onWithdraw={withdraw}
   />)
-  // console.log(wrapper.html())
   t.is(wrapper.find('h1').first().text(), 'You\'ve been invited to participate!')
 })
 

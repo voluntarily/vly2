@@ -32,7 +32,7 @@ class OpListSection extends Component {
       }
       return await this.props.dispatch(reduxApi.actions.opportunities.get(filters))
     } catch (err) {
-      // console.log('error in getting ops', err)
+      console.error('error in getting ops', err)
     }
   }
 

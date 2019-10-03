@@ -154,7 +154,7 @@ const sendEmailWithAttachment = async (personId, status, emailProps) => {
 const sendEmailBaseOn = async (status, personID, opportunityTitle, opId, volunteerComment = '') => {
   let opUrl = `${config.appUrl + '/ops/' + opId}`
   await Person.findById(personID, (err, person) => {
-    if (err) console.log(err)
+    if (err) console.error(err)
     else {
       const emailProps = {
         send: true

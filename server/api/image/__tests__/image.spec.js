@@ -33,7 +33,6 @@ test.serial('Should upload a small file', async t => {
   const res = await sendImageToAPI(__dirname, '194px-Testcard_F.jpg')
     .expect(200)
     .expect('Content-Type', /json/)
-  // console.log(res)
   t.regex(res.body.imageUrl, /-194px-testcard_f[.]jpg/i)
 
   // get the image back from server only if testing with local uploading storage

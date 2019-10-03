@@ -73,7 +73,6 @@ test.serial('Should correctly give subset of orgs matching slug', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 1)
 })
 
@@ -86,7 +85,7 @@ test.serial('Should correctly give subset of orgs matching slug', async t => {
 //     .expect(200)
 //     .expect('Content-Type', /json/)
 //   const got = res.body
-//   console.log('got', got[0].name)
+//   ('got', got[0].name)
 //   t.is(got[0].name, nameOrganisation)
 //   t.is(got[0].about, null)
 // })
@@ -98,7 +97,6 @@ test.serial('Should find no matches', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 0)
 })
 
@@ -124,7 +122,6 @@ test.serial('Should correctly give subset of orgs of category', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 4)
 })
 
@@ -135,7 +132,6 @@ test.serial('Should correctly give reverse sorted orgs of category', async t => 
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 4)
   t.is(got[0].slug, 'westpac')
 })
@@ -149,7 +145,7 @@ test.serial('Should correctly give reverse sorted orgs of category', async t => 
 //     .expect(200)
 //     .expect('Content-Type', /json/)
 //   const got = res.body
-//   console.log(got)
+//   (got)
 //   // t.is(orgs[1].name, got[0].name)
 //   t.is(2, got.length)
 // })
@@ -163,7 +159,6 @@ test.serial('Should correctly select just the names and ids', async t => {
     q: JSON.stringify({ category: 'vp' }),
     p: 'name imgUrl category'
   }
-  console.log(queryString(query))
   const res = await request(server)
     .get(`/api/organisations?${queryString(query)}`)
     .set('Accept', 'application/json')
@@ -204,7 +199,6 @@ test.serial('Should correctly add a organisation', async t => {
   // can find by id
     const id = res.body._id
     await Organisation.findById(id).then((organisation) => {
-    // console.log('findById:', organisation)
       t.is(id, organisation._id.toString())
     })
 
@@ -217,7 +211,7 @@ test.serial('Should correctly add a organisation', async t => {
     const saved = await Organisation.findOne({ slug: p.slug }).exec()
     t.is(saved.name, p.name)
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 })
 
