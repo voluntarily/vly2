@@ -1,5 +1,6 @@
 require('isomorphic-fetch') /* global fetch */
 const { config } = require('../../../config/config')
+const queryString = require('querystring')
 const Badge = require('./badge')
 
 const getToken = async () => {
@@ -7,7 +8,8 @@ const getToken = async () => {
   if ((!BADGR_PASSWORD && !BADGR_USERNAME) && process.env.NODE_ENV !== 'test') {
     throw new Error()
   }
-  const badgrResponse = await fetch(`${BADGR_API}/o/token?username=${BADGR_USERNAME}&password=${BADGR_PASSWORD}`, {
+  const escapedEmailURL = queryString.escape(BADGR_USERNAME)
+  const badgrResponse = await fetch(`${BADGR_API}/o/token?username=${escapedEmailURL}&password=${BADGR_PASSWORD}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
