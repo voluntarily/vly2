@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import Router from 'next/router'
 import { Button, Modal, Select } from 'antd'
 import callApi from '../../lib/apiCaller'
-import { config } from '../../config/config'
 
 const { Option } = Select
 
@@ -66,5 +65,5 @@ const sendIssuingBadgeRequest = async ({ _id, email }, badgeId) => {
     email
   }
   await callApi(`badge/${badgeId}`, 'POST', body)
-  Router.push(`${config.appUrl}/people/${_id}`)
+  Router.push(`/people/${_id}`)
 }
