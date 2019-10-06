@@ -24,6 +24,10 @@ const ActivitySchema = new Schema({
       type: Schema.Types.ObjectId, ref: 'Tag'
     }
   ],
+  equipment: {
+    type: [String],
+    default: []
+  },
   status: {
     type: 'String',
     required: true,
