@@ -71,7 +71,7 @@ class term extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Voluntarily - Home</title>
+          <title>Voluntarily- Terms and Conditions</title>
         </Helmet>
         <Spacer />
         <Spacer />
