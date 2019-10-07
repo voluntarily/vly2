@@ -5,6 +5,5 @@ import { mountWithIntl } from '../lib/react-intl-test-helper'
 
 test('render english', t => {
   const wrapper = mountWithIntl(<AboutTest />)
-  // console.log(wrapper.html())
   t.is(wrapper.find('h1').first().text(), 'Hello! You have stumbled upon an awesome open-source project.')
 })

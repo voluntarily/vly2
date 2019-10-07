@@ -157,7 +157,7 @@ class OrgDetailForm extends Component {
                   message: 'Enter valid URL' }
               ]
             })(
-              <Input placeholder='Organisation Website' />
+              <Input placeholder='https://example.com' />
             )}
           </Form.Item>
           <Form.Item label='Facebook'>
@@ -316,8 +316,5 @@ export default Form.create({
       twitter: Form.createFormField({ ...org.twitter, value: org.twitter }),
       category: Form.createFormField({ ...org.category, value: org.category })
     }
-  },
-  onValuesChange (_, values) {
-    // console.log('onValuesChange', values)
   }
 })(OrgDetailForm)

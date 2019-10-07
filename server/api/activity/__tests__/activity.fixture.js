@@ -21,6 +21,7 @@ const actList = [
     imgUrl: 'https://c.pxhere.com/photos/84/ac/garden_water_sprinkler_soil_lettuce_grow_agriculture_floral-561591.jpg!d',
     description: 'Project to grow something in the garden',
     duration: '15 Minutes',
+    equipment: ['item one', 'item two', 'item three'],
     status: 'draft'
   },
   {
@@ -29,6 +30,7 @@ const actList = [
     imgUrl: 'https://images.sunlive.co.nz/images/170705-st-marys-school-rockets1.jpg',
     description: 'Project to build a simple rocket that will reach 100m',
     duration: '2 hours',
+    equipment: ['single item'],
     status: 'draft'
   }
 ]

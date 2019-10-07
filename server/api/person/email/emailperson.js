@@ -31,7 +31,6 @@ module.exports.emailPerson = async (person, template, props) => {
       textOnly: config.onlyEmailText, // The value onlyEmailText has a Boolean type not string
       transport
     })
-    // console.log('email props ', props)
     return await email.send({
       template: path.join(__dirname, template),
       message: {

@@ -20,7 +20,6 @@ test('shallow the card with act', t => {
   const wrapper = shallowWithIntl(
     <ActCard act={act} onPress={() => {}} />
   )
-  // console.log(wrapper.debug())
   t.is(wrapper.find('.requestContainer').length, 1)
   t.is(wrapper.find('.requestTitle').text(), act.name)
 })

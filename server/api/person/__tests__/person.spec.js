@@ -9,7 +9,6 @@ import people from '../__tests__/person.fixture'
 test.before('before connect to database', async (t) => {
   await appReady
   t.context.memMongo = new MemoryMongo()
-  // console.log('App ready')
   await t.context.memMongo.start()
 })
 
@@ -82,13 +81,12 @@ test.serial('Should send correct person when queried against an id', async t => 
     t.deepEqual(person.pronoun, result.pronoun)
     t.deepEqual(person.name, result.name)
   })
-  /* console.log(id)
+  /*
   TODO: this should be change to add authorized user and retrieve person through server api
   const res = await request(server)
     .get(`/api/people/${id}`)
     .set('Accept', 'application/json')
     .expect(403)
-  console.log(res.body)
   t.is(res.body.name, p.name)
   */
 })
@@ -116,7 +114,6 @@ test.serial('Should correctly add a person', async t => {
   // can find by id
     const id = res.body._id
     await Person.findById(id).then((person) => {
-    // console.log('findById:', person)
       t.is(id, person._id.toString())
     })
 
@@ -129,7 +126,7 @@ test.serial('Should correctly add a person', async t => {
     const savedPerson = await Person.findOne({ email: p.email }).exec()
     t.is(savedPerson.name, p.name)
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 })
 
@@ -210,13 +207,11 @@ test.serial('Should find a person by email', async t => {
   const person = new Person(p)
   await person.save()
   const email = p.email
-  // console.log('asking for ', `/api/people/email/${email}`)
   const res = await request(server)
     .get(`/api/person/by/email/${email}`)
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200)
-  // console.log(res.body)
   t.is(res.body.name, p.name)
 })
 
@@ -266,10 +261,9 @@ test.serial('Should correctly handle missing inputs', async t => {
       .send(p)
       .set('Accept', 'application/json')
       .expect(200)
-    // console.log(res.body)
     t.is(res.body.message, 'Person validation failed: email: Path `email` is required.')
     t.is(res.body.name, 'ValidationError')
   } catch (err) {
-    console.log('api/people', err)
+    console.error('api/people', err)
   }
 })

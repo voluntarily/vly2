@@ -37,7 +37,7 @@ test.beforeEach('connect and add two oppo entries', async (t) => {
     op.requestor = t.context.people[index]._id
     op.offerOrg = t.context.orgs[1]._id
   })
-  t.context.opportunities = await Opportunity.create(ops).catch((err) => console.log('Unable to create opportunities', err))
+  t.context.opportunities = await Opportunity.create(ops).catch((err) => console.error('Unable to create opportunities', err))
 })
 
 test.afterEach.always(async () => {
@@ -66,7 +66,6 @@ test.serial('Should correctly give count of all active Ops sorted by name', asyn
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log(got)
   t.is(2, got.length)
 
   t.is(got[0].name, '1 Mentor a year 12 business Impact Project')
@@ -80,7 +79,6 @@ test.serial('Should correctly give subset of ops matching status', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 3)
   // check requestor has been populated
   t.is(got[0].requestor.nickname, t.context.people[2].nickname)
@@ -95,7 +93,6 @@ test.serial('Should correctly select just the names and ids', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got[0].status, undefined)
   t.is(got[0].name, '1 Mentor a year 12 business Impact Project')
 })
@@ -286,7 +283,6 @@ test.serial('Should find no matches', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 0)
 })
 

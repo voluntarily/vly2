@@ -1,7 +1,7 @@
 const { Action } = require('../../services/abilities/ability.constants')
 
-const defaultConvertRequestToAction = (method) => {
-  switch (method) {
+const defaultConvertRequestToAction = (req) => {
+  switch (req.method) {
     case 'GET':
       return Action.READ
     case 'POST':
@@ -16,7 +16,7 @@ const defaultConvertRequestToAction = (method) => {
 }
 
 const authorizeActions = (subject, convertRequestToAction = defaultConvertRequestToAction) => (req, res, next) => {
-  const action = convertRequestToAction(req.method)
+  const action = convertRequestToAction(req)
   const authorized = req.ability.can(action, subject)
   if (authorized) {
     next()

@@ -4,14 +4,14 @@ import people from './test.database.fixture'
 import Person from '../../api/person/person'
 
 export const personCreate = async t => {
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${console.log(err)}`)
+  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${console.error(err)}`)
 }
 
 const opportunityCreate = async t => {
   ops.map((op, index) => {
     op.requestor = t.context.people[index]._id
   })
-  t.context.ops = await Opportunity.create(ops).catch((err) => `Unable to create ops: ${console.log(err)}`)
+  t.context.ops = await Opportunity.create(ops).catch((err) => `Unable to create ops: ${console.error(err)}`)
 
   // replace the requestor id with the actual person
   t.context.ops.map((op, index) => {
