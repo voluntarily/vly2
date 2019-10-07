@@ -197,7 +197,7 @@ test.serial('Should correctly give activity 2 when searching by "Algorithms"', a
   t.is(1, got.length)
 })
 
-test.only('Should correctly give activity 1 when searching by Organization', async t => {
+test.serial('Should correctly give activity 1 when searching by Organisation', async t => {
   const res = await request(server)
     .get('/api/activities?search=OMGTech')
     .set('Accept', 'application/json')
@@ -205,17 +205,6 @@ test.only('Should correctly give activity 1 when searching by Organization', asy
     .expect('Content-Type', /json/)
   const got = res.body
   t.is(acts[0].name, got[0].name)
-  t.is(1, got.length)
-})
-
-test.serial('Should correctly give activity 1 when searching by Tags', async t => {
-  const res = await request(server)
-    .get('/api/activities?search=tag01')
-    .set('Accept', 'application/json')
-    .expect(200)
-    .expect('Content-Type', /json/)
-  const got = res.body
-  t.is(acts[1].name, got[0].name)
   t.is(1, got.length)
 })
 

@@ -1,16 +1,4 @@
 import cuid from 'cuid'
-const tags = [ {
-  _id: cuid(),
-  tag: 'tag01'
-},
-{
-  _id: cuid(),
-  tag: 'tag02'
-},
-{
-  _id: cuid(),
-  tag: 'tag03'
-}]
 const orgOmgTech = {
   _id: cuid(),
   name: 'OMGTech',
@@ -43,8 +31,7 @@ const actList = [
     description: '# NZTA Innovation Centre\n \n We have 6 model cars with sensors for vision, proximity etc, \n controlled by Arduinos teach them to solve \n 4 challenges - move, follow a line, avoid obstacles, \n get to a destination etc. \n \n ## We need:\n * Open space with room for the test tracks - e.g a school hall\n * teams of 5 students\n * on adult helper per team, should be able to follow instructions and understand a little C++\n \n ## Learning outcomes:\n * programming a remote device\n * simple coding\n * algorithmic thinking\n * problem solving.\n \n',
     duration: '4 hours',
     status: 'active',
-    offerOrg: orgActionWhizzyFelt,
-    tags: tags
+    offerOrg: orgActionWhizzyFelt
   },
   {
     name: '5 Going to the moon',
