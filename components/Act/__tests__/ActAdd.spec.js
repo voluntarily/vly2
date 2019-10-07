@@ -4,6 +4,7 @@ import ActAdd from '../ActAdd'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
+import { Role } from '../../server/services/authorize/role.js'
 
 const mockStore = configureStore()(
   {
@@ -26,7 +27,7 @@ test('render the opadd as null if not activity-provider role', t => {
 })
 
 test('render the opadd correctly if  activityProvider role', t => {
-  mockStore.getState().session.me.role = ['activityProvider']
+  mockStore.getState().session.me.role = [Role.ACTIVITY_PROVIDER]
   const wrapper = mountWithIntl(
     <Provider store={mockStore}>
       <ActAdd store={mockStore} />
