@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 
 // todo if image is not present then use a fallback.
 const ActAdd = ({ roles, ...props }) => {
-  if (roles && roles.includes('activity-provider')) {
+  if (roles && roles.includes('activityProvider')) {
     return (
       <Link href={'/act/new'}>
         <Button type='primary' shape='round' size='large'>

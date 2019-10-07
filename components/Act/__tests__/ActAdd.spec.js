@@ -25,8 +25,8 @@ test('render the opadd as null if not activity-provider role', t => {
   t.falsy(wrapper.find('button').exists())
 })
 
-test('render the opadd correctly if activity-provider role', t => {
-  mockStore.getState().session.me.role = ['activity-provider']
+test('render the opadd correctly if  activityProvider role', t => {
+  mockStore.getState().session.me.role = ['activityProvider']
   const wrapper = mountWithIntl(
     <Provider store={mockStore}>
       <ActAdd store={mockStore} />
