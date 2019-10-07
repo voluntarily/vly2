@@ -4,7 +4,7 @@ import ActAdd from '../ActAdd'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
-import { Role } from '../../server/services/authorize/role.js'
+import { Role } from '../../../server/services/authorize/role.js'
 
 const mockStore = configureStore()(
   {
