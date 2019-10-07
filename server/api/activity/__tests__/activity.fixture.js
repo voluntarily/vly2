@@ -1,6 +1,17 @@
 import cuid from 'cuid'
-
-export const orgOmgTech = {
+const tags = [ {
+  _id: cuid(),
+  tag: 'tag01'
+},
+{
+  _id: cuid(),
+  tag: 'tag02'
+},
+{
+  _id: cuid(),
+  tag: 'tag03'
+}]
+const orgOmgTech = {
   _id: cuid(),
   name: 'OMGTech',
   slug: 'omgtech',
@@ -10,7 +21,7 @@ export const orgOmgTech = {
     about: 'Awesome content providers'
   }
 }
-export const orgActionWhizzyFelt = {
+const orgActionWhizzyFelt = {
   _id: cuid(),
   name: 'Action Whizzy Felt',
   imgUrl: 'https://files.list.co.uk/images/2009/02/19/623atpiccap2.jpg'
@@ -32,7 +43,8 @@ const actList = [
     description: '# NZTA Innovation Centre\n \n We have 6 model cars with sensors for vision, proximity etc, \n controlled by Arduinos teach them to solve \n 4 challenges - move, follow a line, avoid obstacles, \n get to a destination etc. \n \n ## We need:\n * Open space with room for the test tracks - e.g a school hall\n * teams of 5 students\n * on adult helper per team, should be able to follow instructions and understand a little C++\n \n ## Learning outcomes:\n * programming a remote device\n * simple coding\n * algorithmic thinking\n * problem solving.\n \n',
     duration: '4 hours',
     status: 'active',
-    offerOrg: orgActionWhizzyFelt
+    offerOrg: orgActionWhizzyFelt,
+    tags: tags
   },
   {
     name: '5 Going to the moon',

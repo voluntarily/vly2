@@ -204,7 +204,18 @@ test.only('Should correctly give activity 1 when searching by Organization', asy
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(acts[1].description, got[0].description)
+  t.is(acts[0].name, got[0].name)
+  t.is(1, got.length)
+})
+
+test.only('Should correctly give activity 1 when searching by Tags', async t => {
+  const res = await request(server)
+    .get('/api/activities?search=tag01')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  t.is(acts[1].name, got[0].name)
   t.is(1, got.length)
 })
 
