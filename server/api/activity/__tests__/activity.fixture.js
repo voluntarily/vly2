@@ -1,16 +1,8 @@
 import cuid from 'cuid'
-const tags = [ {
+const tag1 = {
   _id: cuid(),
   tag: 'tag01'
-},
-{
-  _id: cuid(),
-  tag: 'tag02'
-},
-{
-  _id: cuid(),
-  tag: 'tag03'
-}]
+}
 const orgOmgTech = {
   _id: cuid(),
   name: 'OMGTech',
@@ -44,7 +36,7 @@ const actList = [
     duration: '4 hours',
     status: 'active',
     offerOrg: orgActionWhizzyFelt,
-    tags: tags
+    tags: [tag1]
   },
   {
     name: '5 Going to the moon',
