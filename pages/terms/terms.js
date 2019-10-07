@@ -17,7 +17,7 @@ const getText = locale => {
     }
     case 'fr': {
       return termMi()
-    } 
+    }
   }
   return termEn()
 }
