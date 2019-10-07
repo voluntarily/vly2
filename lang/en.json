@@ -60,6 +60,7 @@
   "memberSection.followerInfoTitle": "Information for followers",
   "memberSection.notMember": "About Joining",
   "member.add": "Add",
+  "member.exportCsv": "Export Members",
   "member.reject": "Reject",
   "member.remove": "Remove",
   "member.makeadmin": "Make Admin",

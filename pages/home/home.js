@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import NextActionBlock from '../../components/Action/NextActionBlock'
+import ActAdd from '../../components/Act/ActAdd'
 import OpAdd from '../../components/Op/OpAdd'
 import OpList from '../../components/Op/OpList'
 import OpRecommendations from '../../components/Op/OpRecommendations'
@@ -176,6 +177,7 @@ class PersonHomePage extends Component {
           </TitleContainer>
           <RequestButtonContainer>
             <OpAdd {...this.props} />
+            <ActAdd {...this.props} />
           </RequestButtonContainer>
           <p>See the requests you have signed up for here</p>
         </PageHeaderContainer>

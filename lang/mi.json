@@ -6,6 +6,7 @@
   "error.pagenotfound.contribute": "Mena ka taea e koe te tuhi pukapuka, ka taea e koe te whakatika i tera ma te whakauru ki te kaupapa.",
   "error.servererror.title": "Aroha mai. He raruraru",
   "error.servererror.description": "Aroha mai, he raruraru kaore e taea te whakaoti i tenei mahi. Kua tukua e matou te kapa kia mohio ai ratou ka whakatika. Na inaianei ka ngana ki te whakaora i te whārangi, ki te hoki ki te whārangi o mua",
+  "member.exportCsv": "Export Members (Te Reo)",
   "opcard.commitment": "commitment",
   "op.commitment": "commitment",
   "opTitle": "Title",
