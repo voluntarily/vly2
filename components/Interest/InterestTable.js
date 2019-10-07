@@ -192,14 +192,14 @@ class InterestTable extends Component {
       // })
     };
     return (
-      <Table
-        columns={columns}
-        dataSource={this.props.interests}
-        rowKey="_id"
-        pagination={false}
-        onChange={this.onChange}
-        rowSelection={rowSelection}
-      />
+        <Table
+          columns={columns}
+          dataSource={this.props.interests}
+          rowKey="_id"
+          pagination={false}
+          onChange={this.onChange}
+          rowSelection={rowSelection}
+        />
     );
   }
 }
