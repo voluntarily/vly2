@@ -345,7 +345,7 @@ test.serial('will populate out the org id with name and img', async t => {
 })
 
 // Test Equipment list
-test.only('Should correctly add and retrieve an activity with some equipment', async t => {
+test.serial('Should correctly add and retrieve an activity with some equipment', async t => {
   const res = await request(server)
     .post('/api/activities')
     .send({
