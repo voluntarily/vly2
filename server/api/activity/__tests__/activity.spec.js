@@ -208,7 +208,7 @@ test.only('Should correctly give activity 1 when searching by Organization', asy
   t.is(1, got.length)
 })
 
-test.only('Should correctly give activity 1 when searching by Tags', async t => {
+test.serial('Should correctly give activity 1 when searching by Tags', async t => {
   const res = await request(server)
     .get('/api/activities?search=tag01')
     .set('Accept', 'application/json')

@@ -107,7 +107,6 @@ export class ActDetailPage extends Component {
         this.props.members.sync &&
         this.props.members.data.length > 0 &&
         this.props.members) {
-      console.log(this.props.members.data)
       me.orgMembership = this.props.members.data.filter(
         m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status) &&
           m.organisation.category.includes('ap')
