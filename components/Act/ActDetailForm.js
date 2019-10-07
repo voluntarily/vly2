@@ -45,6 +45,11 @@ class ActDetailForm extends Component {
     // Call validateFields here to disable the submit button when on a blank form.
     // empty callback supresses a default which prints to the console.
     this.props.form.validateFields(() => { })
+    if (this.props.act.volunteers < 1) {
+      this.actRadio('option2')
+    } else {
+      this.actRadio('option1')
+    }
   }
   actRadio = (event) => {
     if (event === 'option1') {
@@ -528,6 +533,15 @@ ActDetailForm.propTypes = {
 export default Form.create({
   name: 'activity_detail_form',
   mapPropsToFields (props) {
+    let totalVolunteerRequired
+    let volunteerPerStudent
+    if (props.act.volunteers >= 1) {
+      totalVolunteerRequired = props.act.volunteers
+      // console.log(totalVolunteerRequired)
+    } else if (props.act.volunteers < 1) {
+      volunteerPerStudent = Math.round(1 / props.act.volunteers)
+      // console.log(volunteerPerStudent)
+    }
     return {
       name: Form.createFormField({ ...props.act.name, value: props.act.name }),
       subtitle: Form.createFormField({ ...props.act.subtitle, value: props.act.subtitle }),
@@ -544,8 +558,8 @@ export default Form.create({
       status: Form.createFormField({ ...props.act.status, value: props.act.status }),
       tags: Form.createFormField({ ...props.act.tags, value: props.act.tags }),
       // TODO: set these values correctly from the act.volunteers value.
-      totalVolunteerRequired: Form.createFormField({ ...props.act.totalVolunteerRequired, value: props.act.totalVolunteerRequired }),
-      volunteerPerStudent: Form.createFormField({ ...props.act.volunteerPerStudent, value: props.act.volunteerPerStudent })
+      totalVolunteerRequired: Form.createFormField({ ...totalVolunteerRequired, value: totalVolunteerRequired }),
+      volunteerPerStudent: Form.createFormField({ ...volunteerPerStudent, value: volunteerPerStudent })
 
     }
   }
