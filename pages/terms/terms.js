@@ -22,7 +22,7 @@ const getText = locale => {
   return termEn()
 }
 
-const AboutSection = styled.div`
+const TermsSection = styled.div`
   width: 72rem;
   margin: 0 0;
 
@@ -64,7 +64,7 @@ const AboutSection = styled.div`
   }
 `
 
-class term extends Component {
+class Terms extends Component {
   render () {
     const terms = getText(this.props.intl.locale)
 
@@ -75,7 +75,7 @@ class term extends Component {
         </Helmet>
         <Spacer />
         <Spacer />
-        <AboutSection>
+        <TermsSection>
           <Markdown
             children={terms}
             options={{
@@ -84,7 +84,7 @@ class term extends Component {
               }
             }}
           />
-        </AboutSection>
+        </TermsSection>
         <AboutCTA />
 
         <style jsx>{`
@@ -103,6 +103,6 @@ class term extends Component {
   }
 }
 
-export const termsTest = terms // for test
+export const TermsTest = Terms // for test
 
-export default publicPage(withIntl(terms))
+export default publicPage(withIntl(Terms))
