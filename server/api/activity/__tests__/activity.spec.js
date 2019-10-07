@@ -106,7 +106,7 @@ test.serial('Should correctly give number of active activities', async t => {
     // .expect('Content-Length', '2')
   const got = res.body
 
-  t.deepEqual(2, got.length)
+  t.deepEqual(3, got.length)
 })
 
 test.serial('Should send correct data when queried against an _id', async t => {
@@ -189,6 +189,17 @@ test.serial('Should correctly give activity 3 when searching by "garden"', async
 test.serial('Should correctly give activity 2 when searching by "Algorithms"', async t => {
   const res = await request(server)
     .get('/api/activities?search=AlgorithMs')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  t.is(acts[1].description, got[0].description)
+  t.is(1, got.length)
+})
+
+test.only('Should correctly give activity 1 when searching by Organization', async t => {
+  const res = await request(server)
+    .get('/api/activities?search=OMGTech')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
