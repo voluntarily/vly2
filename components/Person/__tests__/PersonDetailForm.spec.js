@@ -50,8 +50,6 @@ test('render the detail with op', t => {
   const wrapper = mountWithIntl(
     <PersonDetailForm person={t.context.me} existingTags={tagList} locations={sortedLocations} onSubmit={submitOp} onCancel={cancelOp} />
   )
-  t.log(wrapper)
-  // console.log(wrapper.html())
   const locationInput = wrapper.find('LocationSelector').first()
   locationInput.props().onChange('Auckland')
 

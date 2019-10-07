@@ -47,8 +47,6 @@ test('render the detail with op', t => {
   const wrapper = mountWithIntl(
     <OrgDetailForm org={t.context.org} onSubmit={submitOp} onCancel={cancelOp} />
   )
-  t.log(wrapper)
-  // console.log(wrapper.html())
   t.is(wrapper.find('OrgDetailForm').length, 1)
   t.is(wrapper.find('button').length, 2)
   wrapper.find('button').first().simulate('click')

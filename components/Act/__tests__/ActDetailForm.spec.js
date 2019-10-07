@@ -1,21 +1,15 @@
 import React from 'react'
 import test from 'ava'
-// import { JSDOM } from 'jsdom'
+import orgs from '../../../server/api/organisation/__tests__/organisation.fixture'
+import people from '../../../server/api/person/__tests__/person.fixture'
+import tagList from '../../../server/api/tag/__tests__/tag.fixture'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
-
+import objectid from 'objectid'
 import ActDetailForm from '../ActDetailForm'
 import sinon from 'sinon'
-// Initial activities
+import { MemberStatus } from '../../../server/api/member/member.constants'
 
-const act = {
-  _id: '5cc903e5f94141437622cea7',
-  name: 'Growing in the garden',
-  subtitle: 'Growing digitally in the garden',
-  imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
-  description: 'Project to grow something in the garden',
-  duration: '15 Minutes',
-  status: 'draft'
-}
+// Initial activities
 
 const noact = {
   name: '',
@@ -23,7 +17,8 @@ const noact = {
   imgUrl: '',
   description: '',
   duration: '',
-  status: 'draft'
+  status: 'draft',
+  tags: []
 }
 
 // const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p`)
@@ -39,6 +34,52 @@ test.before('before test silence async-validator', () => {
   }
 })
 
+test.before('Setup Organisations fixtures', (t) => {
+  // not using mongo or server here so faking ids
+  people.map(p => { p._id = objectid().toString() })
+  const me = people[0]
+
+  // two orgs are aps
+  orgs.map(p => { p._id = objectid().toString() })
+  const org = orgs[0]
+
+  // fake my membership
+  const members = [
+    {
+      person: me._id,
+      organisation: orgs[0],
+      status: MemberStatus.MEMBER
+    },
+    {
+      person: me._id,
+      organisation: orgs[1],
+      status: MemberStatus.MEMBER
+    }
+  ]
+  me.orgMembership = members
+
+  const act = {
+    _id: '5cc903e5f94141437622cea7',
+    name: 'Growing in the garden',
+    subtitle: 'Growing digitally in the garden',
+    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+    description: 'Project to grow something in the garden',
+    duration: '15 Minutes',
+    status: 'draft',
+    tags: tagList,
+    owner: me._id,
+    offerOrg: orgs[0]
+  }
+
+  t.context = {
+    me,
+    act,
+    org,
+    orgs,
+    members
+  }
+})
+
 test.after.always(() => {
   console.warn = orginalWarn
 })
@@ -46,19 +87,19 @@ test.after.always(() => {
 test('shallow the detail with act', t => {
   const wrapper = shallowWithIntl(
     <ActDetailForm
-      act={act}
+      act={t.context.act}
       onSubmit={() => {}}
       onCancel={() => {}}
       existingTags={[]} />
   )
-  // console.log(wrapper.debug())
   t.is(wrapper.find('ActDetailForm').length, 1)
 })
 
 test('render the detail with act', t => {
+  const act = t.context.act
   const submitAct = sinon.spy()
   const cancelAct = sinon.spy()
-  const me = { _id: '5ccbffff958ff4833ed2188d' }
+  const me = t.context.me
   const wrapper = mountWithIntl(
     <ActDetailForm
       act={act}
@@ -71,12 +112,20 @@ test('render the detail with act', t => {
   t.is(wrapper.find('button').length, 3)
   wrapper.find('button').first().simulate('click')
   t.truthy(cancelAct.calledOnce)
-  wrapper.find('button').at(1).simulate('click')
+  wrapper.find('button').at(2).simulate('click')
   t.truthy(submitAct.calledOnce)
   t.truthy(submitAct.calledWith(act))
+
+  // clear the title to see an error message
+  const name = wrapper.find('input#activity_detail_form_name').first()
+  // name.node.value = 'Test'
+  name
+    .simulate('change', { target: { value: '' } })
+  wrapper.update()
+  t.is(wrapper.find('.ant-form-explain').first().text(), 'Title is required')
 })
 
-test.serial('render the detail with new blank act', t => {
+test('render the detail with new blank act', t => {
   const submitAct = sinon.spy()
   const cancelAct = sinon.spy()
   const me = { _id: '5ccbffff958ff4833ed2188d' }
@@ -89,7 +138,6 @@ test.serial('render the detail with new blank act', t => {
       onCancel={cancelAct}
       existingTags={[]} />
   )
-  t.log(wrapper.first())
   t.is(wrapper.find('ActDetailForm').length, 1)
   t.is(wrapper.find('button').length, 3)
   wrapper.find('button').first().simulate('click')
@@ -99,7 +147,7 @@ test.serial('render the detail with new blank act', t => {
   wrapper.find('button').at(1).simulate('click')
   t.falsy(submitAct.calledOnce)
   wrapper.update()
-  // console.log(wrapper.html())
+  // should see title is required
   // find name field.
   const name = wrapper.find('input#activity_detail_form_name').first()
   // name.node.value = 'Test'
@@ -111,6 +159,14 @@ test.serial('render the detail with new blank act', t => {
   const duration = wrapper.find('input#activity_detail_form_duration').first()
   duration.simulate('change', { target: { value: '10 hours' } })
 
+  // fake select an image
+  const testImg = 'https://example.com/img/banana.jpeg'
+  const imgUpload = wrapper.find('ImageUpload').first()
+  imgUpload.props().setImgUrl(testImg)
+
+  // save the resulting activity
   wrapper.find('button').at(1).simulate('click')
   t.truthy(submitAct.calledOnce)
+  const actResult = submitAct.args[0][0]
+  t.is(actResult.imgUrl, testImg)
 })

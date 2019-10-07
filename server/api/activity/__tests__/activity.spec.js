@@ -5,8 +5,10 @@ import { jwtData } from '../../../middleware/session/__tests__/setSession.fixtur
 import Tag from '../../tag/tag'
 import Activity from '../activity'
 import Person from '../../person/person'
+import Organisation from '../../organisation/organisation'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
+import orgs from '../../organisation/__tests__/organisation.fixture'
 import tags from '../../tag/__tests__/tag.fixture'
 
 import acts from './activity.fixture.js'
@@ -22,11 +24,16 @@ test.after.always(async (t) => {
 })
 
 test.beforeEach('connect and add two activity entries', async (t) => {
-  // connect each activity to a requestor.
+  // connect each activity to an owner and org
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create organisations: ${err}`)
   t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
-  acts.map((act, index) => { act.owner = t.context.people[index]._id })
-  t.context.activities = await Activity.create(acts).catch((err) => console.log('Unable to create activities', err))
+  acts.map((act, index) => {
+    act.owner = t.context.people[index]._id
+    act.offerOrg = t.context.orgs[index]._id
+  })
+
+  t.context.activities = await Activity.create(acts).catch((err) => console.error('Unable to create activities', err))
 })
 
 test.afterEach.always(async () => {
@@ -54,10 +61,18 @@ test.serial('Should correctly give count of all acts sorted by name', async t =>
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log(got)
   t.is(4, got.length)
 
   t.is(got[0].name, acts[0].name)
+})
+
+test.serial('Get an invalid activity id', async t => {
+  const res = await request(server)
+    .get(`/api/activities/${t.context.people[0]._id}`)
+    .set('Accept', 'application/json')
+    .expect(404)
+    // .expect('Content-Type', /json/)
+  t.is(res.status, 404)
 })
 
 test.serial('Should correctly give subset of acts matching status', async t => {
@@ -67,7 +82,6 @@ test.serial('Should correctly give subset of acts matching status', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 2)
 })
 
@@ -78,7 +92,6 @@ test.serial('Should correctly select just the titles and ids', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 4)
   t.is(got[0].status, undefined)
   t.is(got[0].name, acts[0].name)
@@ -191,7 +204,6 @@ test.serial('Should find no matches', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 0)
 })
 
@@ -215,7 +227,6 @@ test.serial('Should return any activities with matching tags or name/desc/subtit
     t.context.activities[1].save(),
     t.context.activities[0].save()
   ])
-
   // activity with matching name, but not tags
   const activity = new Activity({
     name: 'The first 400 java robots',
@@ -317,4 +328,39 @@ test.serial('Should create tags that dont have the _id property', async t => {
   const savedAct = await Activity.findOne({ name: 'The first 400 metres' }).populate('tags').exec()
   // ensure the tag has an id
   t.truthy(savedAct.tags.find(t => t.tag === tagName)._id)
+})
+
+// populate
+test.serial('will populate out the org id with name and img', async t => {
+  const act = t.context.activities[0]
+  const res = await request(server)
+    .get(`/api/activities/${act._id}`)
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  t.is(got.name, act.name)
+  t.is(got.offerOrg.name, t.context.orgs[0].name)
+  t.is(got.owner.name, t.context.people[0].name)
+})
+
+// Test Equipment list
+test.serial('Should correctly add and retrieve an activity with some equipment', async t => {
+  const res = await request(server)
+    .post('/api/activities')
+    .send({
+      name: 'We need three things',
+      subtitle: 'to succeed in life',
+      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+      description: 'Project to build a simple rocket that will reach 400m',
+      duration: '4 hours',
+      equipment: ['wishbone', 'backbone', 'funnybone']
+    })
+    .set('Accept', 'application/json')
+
+  t.is(res.status, 200)
+
+  const savedActivity = await Activity.findOne({ name: 'We need three things' }).exec()
+  t.is(savedActivity.subtitle, 'to succeed in life')
+  t.truthy(savedActivity.equipment.includes('backbone'))
 })

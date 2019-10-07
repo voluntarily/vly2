@@ -62,7 +62,7 @@ export class PersonDetailPage extends Component {
         await store.dispatch(reduxApi.actions.members.get({ meid }))
       } catch (err) {
         // this can return a 403 forbidden if not signed in
-        console.log('Error in persondetailpage:', err)
+        console.error('Error in persondetailpage:', err)
       }
 
       return {
