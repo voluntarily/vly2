@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 export default () => `
-# Welcome to Voluntarily.
+<h1>Welcome to Voluntarily.</h1>
 
 These terms and conditions outline the rules and regulations for the use of Voluntarily's Website.
 <br/><br/>

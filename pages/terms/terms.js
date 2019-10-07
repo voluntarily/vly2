@@ -103,6 +103,6 @@ class term extends Component {
   }
 }
 
-export const termsTest = term // for test
+export const termsTest = terms // for test
 
-export default publicPage(withIntl(term))
+export default publicPage(withIntl(terms))
