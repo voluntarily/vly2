@@ -13,6 +13,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Markdown from 'markdown-to-jsx'
+import MemberExport from './MemberExport'
 
 const SubSection = styled.section`
   margin-bottom: 2.0rem;
@@ -172,10 +173,20 @@ class MemberSection extends Component {
           <Markdown children={org.info.outsiders || ''} />
         </section>
     }
+
+    let memberExportSection = ''
+    if (myMembership.status === MemberStatus.ORGADMIN || this.props.isAdmin) {
+      memberExportSection =
+        <section>
+          <MemberExport members={this.props.members.data} />
+        </section>
+    }
+
     return (
       <div>
         {orgAdminSection}
         {followerInfoSection}
+        {memberExportSection}
         {memberInfoSection}
         {joinerInfoSection}
         {nonMemberInfoSection}
