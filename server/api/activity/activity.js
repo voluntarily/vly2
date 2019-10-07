@@ -17,7 +17,8 @@ const ActivitySchema = new Schema({
     default: ''
   },
   volunteers: {
-    type: Number
+    type: Number,
+    default: 1
   },
   time: {
     type: [Date]

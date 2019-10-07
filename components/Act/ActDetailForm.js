@@ -92,7 +92,7 @@ class ActDetailForm extends Component {
         act.subtitle = values.subtitle
         act.duration = values.duration
         act.resource = values.resource
-        act.volunteers = !this.state.input1Disabled ? this.state.totalVolunteerRequired : this.state.volunteerPerStudent
+        act.volunteers = !this.state.input1Disabled ? this.state.totalVolunteerRequired : (1 / this.state.volunteerPerStudent)
         act.description = values.description
         act.offerOrg = values.offerOrg && values.offerOrg.key
         act.imgUrl = values.imgUrl
@@ -541,10 +541,12 @@ export default Form.create({
       imgUrl: Form.createFormField({ ...props.act.imgUrl, value: props.act.imgUrl }),
       time: Form.createFormField({ ...props.act.time, value: props.act.time }),
       resource: Form.createFormField({ ...props.act.resource, value: props.act.resource }),
-      totalVolunteerRequired: Form.createFormField({ ...props.act.totalVolunteerRequired, value: props.act.totalVolunteerRequired }),
-      volunteerPerStudent: Form.createFormField({ ...props.act.volunteerPerStudent, value: props.act.volunteerPerStudent }),
       status: Form.createFormField({ ...props.act.status, value: props.act.status }),
-      tags: Form.createFormField({ ...props.act.tags, value: props.act.tags })
+      tags: Form.createFormField({ ...props.act.tags, value: props.act.tags }),
+      // TODO: set these values correctly from the act.volunteers value.
+      totalVolunteerRequired: Form.createFormField({ ...props.act.totalVolunteerRequired, value: props.act.totalVolunteerRequired }),
+      volunteerPerStudent: Form.createFormField({ ...props.act.volunteerPerStudent, value: props.act.volunteerPerStudent })
+
     }
   }
 

@@ -16,7 +16,7 @@ const noact = {
   description: '',
   duration: '',
   status: 'draft',
-  volunteers: null
+  volunteers: 1,
   tags: []
 }
 // const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p`)
@@ -74,7 +74,8 @@ test.before('Setup Organisations fixtures', (t) => {
     act,
     org,
     orgs,
-    members
+    members,
+    people
   }
 })
 
@@ -131,12 +132,13 @@ test('toggle radio buttons', async t => {
   // const inputField1 = sinon.spy()
   const wrapper = mountWithIntl(
     <ActDetailForm
-      act={act}
+      act={t.context.act}
       onClick={radioAct}
       onChange={volunteerInputAct}
       onSubmit={submitAct}
       onCancel={cancelAct}
       existingTags={[]}
+      me={t.context.me}
     />
   )
   t.is(wrapper.find('ActDetailForm').length, 1)
@@ -151,14 +153,14 @@ test('toggle radio buttons', async t => {
   input1.props().onChange({ target: { name: 'resourceinput1', value: 10 } })
   // console.log(act.volunteers)
   wrapper.find('button').at(1).simulate('click')
-  t.is(act.volunteers, 10)
-  t.regex(act.volunteers.toString(), /^\d+$/)
+  t.is(t.context.act.volunteers, 10)
+  t.regex(t.context.act.volunteers.toString(), /^\d+$/)
   // console.log(act.volunteers)
   radioButton.at(1).props().onClick({ target: { value: 'option2' } })
   input2.props().onChange({ target: { name: 'resourceinput2', value: 5 } })
   // console.log(act.volunteers)
   wrapper.find('button').at(1).simulate('click')
-  t.is(act.volunteers, 5)
+  t.is(t.context.act.volunteers, 0.2)
   // console.log(act.volunteers)
 })
 

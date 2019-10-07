@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
 import { HalfGrid, Spacer } from '../VTheme/VTheme'
-import { Left, Right, ItemContainer, ItemDescription, TagContainer, ItemListing, ItemDuration, ItemStatus, ItemIdLine } from '../VTheme/ItemList'
+import { Left, Right, ItemContainer, ItemDescription, TagContainer, ItemVolunteers, ItemDuration, ItemStatus, ItemIdLine } from '../VTheme/ItemList'
 
 export function ActDetail ({ act }) {
   const img = act.imgUrl || '../../static/missingimage.svg'
@@ -21,15 +21,7 @@ export function ActDetail ({ act }) {
           <ItemContainer>
             <ItemDuration duration={act.duration} />
             <ItemStatus status={act.status} />
-            <ItemListing>
-              <FormattedMessage
-                id='act.detail.volunteersrequired'
-                defaultMessage='Volunteers required:'
-                description='label for number of volunteers required'
-              />
-              {act.volunteers}
-            </ItemListing>
-
+            <ItemVolunteers volunteers={act.volunteers} />
             <Divider />
             <ItemIdLine item={act.offerOrg} path='orgs' />
             <ItemIdLine item={act.owner} path='people' />
