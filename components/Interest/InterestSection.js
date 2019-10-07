@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl'
 
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
-
+import { Dropdown, Icon } from 'antd';
 class InterestSection extends Component {
   async componentDidMount () {
     // Get all interests
@@ -54,7 +54,11 @@ class InterestSection extends Component {
               defaultMessage='Interested Volunteers'
               description='label for interest table on op detail page'
             /></h2>
-
+          <Dropdown>
+            <a className="ant-dropdown-link" href="#">
+              Group Actions <Icon type="down" />
+            </a>
+          </Dropdown>
           <InterestTable
             checkboxEnabled
             interests={this.props.interests.data}
