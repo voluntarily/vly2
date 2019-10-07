@@ -343,3 +343,24 @@ test.serial('will populate out the org id with name and img', async t => {
   t.is(got.offerOrg.name, t.context.orgs[0].name)
   t.is(got.owner.name, t.context.people[0].name)
 })
+
+// Test Equipment list
+test.serial('Should correctly add and retrieve an activity with some equipment', async t => {
+  const res = await request(server)
+    .post('/api/activities')
+    .send({
+      name: 'We need three things',
+      subtitle: 'to succeed in life',
+      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+      description: 'Project to build a simple rocket that will reach 400m',
+      duration: '4 hours',
+      equipment: ['wishbone', 'backbone', 'funnybone']
+    })
+    .set('Accept', 'application/json')
+
+  t.is(res.status, 200)
+
+  const savedActivity = await Activity.findOne({ name: 'We need three things' }).exec()
+  t.is(savedActivity.subtitle, 'to succeed in life')
+  t.truthy(savedActivity.equipment.includes('backbone'))
+})
