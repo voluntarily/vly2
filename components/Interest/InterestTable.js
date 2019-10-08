@@ -17,22 +17,22 @@ class InterestTable extends Component {
     console.log(props);
   }
   
-  handleInviteButtonClicked(interest) {
+  async handleInviteButtonClicked(interest) {
     if(interest.length > 0) {
-      interest.map( interest => this.props.onInvite(interest))
+      for (let interest of interest) await this.props.onInvite(interest)
     } else this.props.onInvite(interest);
   }
 
-  handleDeclineButtonClicked(interest) {
+  async handleDeclineButtonClicked(interest) {
     if(interest.length > 0) {
-      interest.map( interest => this.props.onInvite(interest))
-    } else  this.props.onDecline(interest);
+      for (let interest of interest) await this.props.onDecline(interest)
+    } else this.props.onDecline(interest);
   }
 
-  handleWithdrawInviteButtonClicked(interest) {
+  async handleWithdrawInviteButtonClicked(interest) {
     if(interest.length > 0) {
-      interest.map( interest => this.props.onInvite(interest))
-    } else  this.props.onWithdrawInvite(interest);
+      for (let interest of interest) await this.props.onWithdrawInvite(interest)
+    } else this.props.onWithdrawInvite(interest);
   }
 
   onChange = (pagination, filters, sorter) => {
