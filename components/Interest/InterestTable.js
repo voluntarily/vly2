@@ -11,21 +11,28 @@ class InterestTable extends Component {
     super(props);
     this.state = {
       filteredInfo: {},
-      sortedInfo: {}
+      sortedInfo: {},
+      selectedRows: [], 
     };
     console.log(props);
   }
-
+  
   handleInviteButtonClicked(interest) {
-    this.props.onInvite(interest);
+    if(interest.length > 0) {
+      interest.map( interest => this.props.onInvite(interest))
+    } else this.props.onInvite(interest);
   }
 
   handleDeclineButtonClicked(interest) {
-    this.props.onDecline(interest);
+    if(interest.length > 0) {
+      interest.map( interest => this.props.onInvite(interest))
+    } else  this.props.onDecline(interest);
   }
 
   handleWithdrawInviteButtonClicked(interest) {
-    this.props.onWithdrawInvite(interest);
+    if(interest.length > 0) {
+      interest.map( interest => this.props.onInvite(interest))
+    } else  this.props.onWithdrawInvite(interest);
   }
 
   onChange = (pagination, filters, sorter) => {
@@ -33,10 +40,19 @@ class InterestTable extends Component {
       filteredInfo: filters,
       sortedInfo: sorter
     });
+    // console.log(this.state);
+  };
+
+  onSelectChange = (selectedRowKeys, selectedRows) => {
+    // console.log(
+    //   `selectedRowKeys: ${selectedRowKeys}`,
+    //   "selectedRows: ",selectedRows);
+    this.setState({ selectedRowKeys, selectedRows });
   };
 
   render() {
-    let { sortedInfo, filteredInfo } = this.state;
+    let { sortedInfo, filteredInfo, selectedRows } = this.state;
+    
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
     const columns = [
@@ -179,13 +195,8 @@ class InterestTable extends Component {
       }
     ];
     const rowSelection = {
-      onChange: (selectedRowKeys, selectedRows) => {
-        console.log(
-          `selectedRowKeys: ${selectedRowKeys}`,
-          "selectedRows: ",
-          selectedRows
-        );
-      }
+      // selectedRowKeys,
+      onChange: this.onSelectChange,
       // getCheckboxProps: record => ({
       //   disabled: record.name === "Disabled User", // Column configuration not to be checked
       //   name: record.name
@@ -197,18 +208,18 @@ class InterestTable extends Component {
     const menu = (
       <Menu>
         <Menu.Item>
-          <a onClick={this.handleInviteButtonClicked}>
+          <a onClick={() => this.handleInviteButtonClicked(selectedRows)}>
             Invite
           </a>
         </Menu.Item>
         <Menu.Item>
-          <a onClick={this.handleDeclineButtonClicked}>
-           Decline
+          <a onClick={() => this.handleWithdrawInviteButtonClicked(selectedRows)}>
+            Withdraw Invite
           </a>
         </Menu.Item>
         <Menu.Item>
-          <a onClick={this.handleWithdrawInviteButtonClicked}>
-            Withdraw Invite
+          <a onClick={() => this.handleDeclineButtonClicked(selectedRows)}>
+           Decline
           </a>
         </Menu.Item>
       </Menu>
