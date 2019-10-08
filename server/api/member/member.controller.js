@@ -31,7 +31,7 @@ const listMembers = async (req, res) => {
         query.person = req.query.meid
       }
       // Return enough info for a personCard
-      got = await Member.find(query).populate({ path: 'person', select: 'nickname name imgUrl email' }).sort(sort).exec()
+      got = await Member.find(query).populate({ path: 'person', select: 'nickname name imgUrl email phone' }).sort(sort).exec()
     } else if (req.query.meid) {
       // a person is asking for the orgs they follow or are members of
       const query = { person: req.query.meid }
