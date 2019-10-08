@@ -1,5 +1,5 @@
 const InterestArchive = require('./interestArchive')
-const ArchivedOpportunity = require('../archivedOpportunity/archivedOpportunity')
+// const ArchivedOpportunity = require('../archivedOpportunity/archivedOpportunity')
 
 /**
   api/interestsArchived -> list all interests
