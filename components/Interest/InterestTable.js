@@ -1,6 +1,6 @@
 /* Display a grid of opanisation cards from an [op]
  */
-import { Avatar, Button, Checkbox, Popconfirm, Table } from "antd";
+import { Avatar, Button, Checkbox, Popconfirm, Table, Dropdown, Icon, Menu } from "antd";
 import Router from "next/router";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
@@ -191,7 +191,35 @@ class InterestTable extends Component {
       //   name: record.name
       // })
     };
+    
+
+    // here is group actions dropdown menu
+    const menu = (
+      <Menu>
+        <Menu.Item>
+          <a onClick={this.handleInviteButtonClicked}>
+            Invite
+          </a>
+        </Menu.Item>
+        <Menu.Item>
+          <a onClick={this.handleDeclineButtonClicked}>
+           Decline
+          </a>
+        </Menu.Item>
+        <Menu.Item>
+          <a onClick={this.handleWithdrawInviteButtonClicked}>
+            Withdraw Invite
+          </a>
+        </Menu.Item>
+      </Menu>
+    );
     return (
+      <React.Fragment>
+        <Dropdown overlay={menu}>
+          <a className="ant-dropdown-link">
+            Group Actions <Icon type="down" />
+          </a>
+        </Dropdown>
         <Table
           columns={columns}
           dataSource={this.props.interests}
@@ -200,6 +228,7 @@ class InterestTable extends Component {
           onChange={this.onChange}
           rowSelection={rowSelection}
         />
+      </React.Fragment>
     );
   }
 }
