@@ -11,6 +11,7 @@ const act = {
   subtitle: 'Growing digitally in the garden',
   imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
   description: 'Project to grow something in the garden',
+  volunteers: 1,
   duration: '15 Minutes',
   location: 'Newmarket, Auckland',
   status: 'draft',
@@ -23,4 +24,9 @@ test('render the detail with act', t => {
   t.is(wrapper.find('h1').text(), act.name)
 })
 
+// test('render correct message based on TotalVolunteerRequired or volunteerPerStudent', t => {
+//   const wrapper = renderWithIntl(<ActDetail act={act} onPress={() => {}} />)
+//   t.truthy(wrapper.find('ItemVolunteers'))
+//   t.is(wrapper.find('ItemVolunteers').first().text(), act.volunteers)
+// })
 // test.todo('verify markdown in description is rendered')

@@ -124,7 +124,7 @@ test('render the detail with act', t => {
   t.is(wrapper.find('.ant-form-explain').first().text(), 'Title is required')
 })
 
-test('toggle radio buttons', async t => {
+test('toggle radio buttons', t => {
   const submitAct = sinon.spy()
   const cancelAct = sinon.spy()
   const radioAct = sinon.spy()
@@ -155,15 +155,97 @@ test('toggle radio buttons', async t => {
   wrapper.find('button').at(1).simulate('click')
   t.is(t.context.act.volunteers, 10)
   t.regex(t.context.act.volunteers.toString(), /^\d+$/)
-  // console.log(act.volunteers)
+  // console.log(t.context.act.volunteers)
   radioButton.at(1).props().onClick({ target: { value: 'option2' } })
   input2.props().onChange({ target: { name: 'resourceinput2', value: 5 } })
   // console.log(act.volunteers)
   wrapper.find('button').at(1).simulate('click')
   t.is(t.context.act.volunteers, 0.2)
-  // console.log(act.volunteers)
+  // console.log(t.context.act.volunteers)
+})
+test('componentDidMount - set volunteer to 0.2', t => {
+  const submitAct = sinon.spy()
+  const cancelAct = sinon.spy()
+  const radioAct = sinon.spy()
+  const volunteerInputAct = sinon.spy()
+  // // const inputField1 = sinon.spy()
+  // t.context.act = {
+  //   volunteers: 0.2
+  // }
+  t.context.act.volunteers = 0.2
+  // console.log(t.context.act.volunteers)
+  const wrapper = mountWithIntl(
+    <ActDetailForm
+      act={t.context.act}
+      onClick={radioAct}
+      onChange={volunteerInputAct}
+      onSubmit={submitAct}
+      onCancel={cancelAct}
+      existingTags={[]}
+      me={t.context.me}
+    />
+  )
+  const comdidmount = sinon.spy(wrapper.instance(), 'componentDidMount')
+  wrapper.instance().componentDidMount()
+  t.truthy(comdidmount.calledOnce)
+
+  // const comdidmount = sinon.spy(ActDetailForm.prototype, 'componentDidMount')
+  // wrapper.instance().componentDidMount()
+  // t.truthy(comdidmount.calledOnce)
+})
+test('componentDidMount - set volunteer to 10', t => {
+  const submitAct = sinon.spy()
+  const cancelAct = sinon.spy()
+  const radioAct = sinon.spy()
+  const volunteerInputAct = sinon.spy()
+  // // const inputField1 = sinon.spy()
+  // t.context.act = {
+  //   volunteers: 0.2
+  // }
+  t.context.act.volunteers = 10
+  // console.log(t.context.act.volunteers)
+  const wrapper = mountWithIntl(
+    <ActDetailForm
+      act={t.context.act}
+      onClick={radioAct}
+      onChange={volunteerInputAct}
+      onSubmit={submitAct}
+      onCancel={cancelAct}
+      existingTags={[]}
+      me={t.context.me}
+    />
+  )
+  const comdidmount = sinon.spy(wrapper.instance(), 'componentDidMount')
+  wrapper.instance().componentDidMount()
+  t.truthy(comdidmount.calledOnce)
 })
 
+test('componentDidMount - set volunteer to 0', t => {
+  const submitAct = sinon.spy()
+  const cancelAct = sinon.spy()
+  const radioAct = sinon.spy()
+  const volunteerInputAct = sinon.spy()
+  // // const inputField1 = sinon.spy()
+  // t.context.act = {
+  //   volunteers: 0.2
+  // }
+  t.context.act.volunteers = 0
+  // console.log(t.context.act.volunteers)
+  const wrapper = mountWithIntl(
+    <ActDetailForm
+      act={t.context.act}
+      onClick={radioAct}
+      onChange={volunteerInputAct}
+      onSubmit={submitAct}
+      onCancel={cancelAct}
+      existingTags={[]}
+      me={t.context.me}
+    />
+  )
+  const comdidmount = sinon.spy(wrapper.instance(), 'componentDidMount')
+  wrapper.instance().componentDidMount()
+  t.truthy(comdidmount.calledOnce)
+})
 test('render the detail with new blank act', t => {
   const submitAct = sinon.spy()
   const cancelAct = sinon.spy()

@@ -42,13 +42,19 @@ class ActDetailForm extends Component {
   }
 
   componentDidMount () {
+    console.log('comp did mount called', this.props.act.volunteers)
     // Call validateFields here to disable the submit button when on a blank form.
     // empty callback supresses a default which prints to the console.
     this.props.form.validateFields(() => { })
+    if (this.props.act.volunteers === 0) {
+      this.actRadio('option1')
+    } else
     if (this.props.act.volunteers < 1) {
       this.actRadio('option2')
+      console.log(this.props.act.volunteers, 'option2')
     } else {
       this.actRadio('option1')
+      console.log(this.props.act.volunteers, 'option1')
     }
   }
   actRadio = (event) => {
@@ -59,13 +65,15 @@ class ActDetailForm extends Component {
         option1: true,
         option2: false
       })
-    } else if (event === 'option2') {
+      // console.log('radio1 working')
+    } else {
       this.setState({
         input2Disabled: false,
         input1Disabled: true,
         option1: false,
         option2: true
       })
+      // console.log('radio2 working')
     }
   }
   change = (event) => {
@@ -75,7 +83,7 @@ class ActDetailForm extends Component {
         totalVolunteerRequired: event.target.value
       })
       // console.log(this.state.totalVolunteerRequired)
-    } else if (textname === 'resourceinput2') {
+    } else {
       this.setState({
         volunteerPerStudent: event.target.value
       })
@@ -535,7 +543,9 @@ export default Form.create({
   mapPropsToFields (props) {
     let totalVolunteerRequired
     let volunteerPerStudent
-    if (props.act.volunteers >= 1) {
+    if (props.act.volunteers === 0) {
+      totalVolunteerRequired = 0
+    } else if (props.act.volunteers >= 1) {
       totalVolunteerRequired = props.act.volunteers
       // console.log(totalVolunteerRequired)
     } else if (props.act.volunteers < 1) {
