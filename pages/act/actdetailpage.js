@@ -147,17 +147,6 @@ export class ActDetailPage extends Component {
     const canEdit = (isOwner || isOrgAdmin || isAdmin)
     const existingTags = this.props.tags.data
 
-    const ownerInfo = () => {
-      // TODO: should this be owner individual or Activity Provider Org
-      return owner &&
-        <div>
-          <h2>
-            <FormattedMessage id='act.ownerInfo' defaultMessage='Created by' description='Title for activity creator card on activity page' />
-          </h2>
-          <PersonCard style={{ width: '300px' }} person={owner} />
-        </div>
-    }
-
     // button to make an opportunity from an activity
     const createOpportunitySection = () => {
       return (
@@ -189,7 +178,6 @@ export class ActDetailPage extends Component {
             <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
           </Button>}
           <ActDetail act={act} />
-          {ownerInfo()}
         </div>
       }
     }
