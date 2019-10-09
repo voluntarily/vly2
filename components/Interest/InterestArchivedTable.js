@@ -1,6 +1,6 @@
 /* Display a grid of opanisation cards from an [op]
  */
-import { Avatar, Button, Checkbox, Popconfirm, Table } from 'antd'
+import { Avatar, Button, Checkbox, Table } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
