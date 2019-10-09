@@ -92,11 +92,10 @@ class InterestArchivedTable extends Component {
           return (
             <div>
               {options.declineButtonEnabled ? <span>
-                <Popconfirm id='declineInvitePopConfirm' title='Are you sure?' onConfirm={this.handleDeclineButtonClicked.bind(this, record)} okText='Yes' cancelText='No'>
-                  <Button type='danger' shape='round'>
-                    <FormattedMessage id='declineVolunteer' defaultMessage='Decline' description='Button allowing event organizer to decline an interested volunteer' />
-                  </Button>
-                </Popconfirm>
+                <Button type='danger' shape='round'>
+                  <FormattedMessage id='markPresent' defaultMessage='Attended'
+                    description='Button allowing event organizer to decline an interested volunteer' />
+                </Button>
               </span> : null}
             </div>
           )
