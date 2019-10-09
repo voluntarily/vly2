@@ -193,7 +193,7 @@ test.serial('Should load a person into the db but block access and delete them v
   t.is(queriedPerson.phone, p.phone)
 })
 
-test.serial('Should find a person by email', async t => {
+test.serial('Should be block to find a person by email when not authorized', async t => {
   t.plan(1)
   const p = {
     name: 'Testy McTestFace',
@@ -212,10 +212,10 @@ test.serial('Should find a person by email', async t => {
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200)
-  t.is(res.body.name, p.name)
+  t.is(res.body.name, undefined)
 })
 
-test.serial('Should find a person by nickname', async t => {
+test.serial('Should be block to find a person by nickname when not authorized', async t => {
   t.plan(1)
   const p = {
     name: 'Testy McTestFace',
@@ -232,8 +232,8 @@ test.serial('Should find a person by nickname', async t => {
     .get(`/api/person/by/nickname/${p.nickname}`)
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
-    .expect(200) // For now the tester ability is not proper defined so tester will have the same ability as admin
-  t.is(res.body.name, p.name)
+    .expect(200)
+  t.is(res.body.name, undefined)
 })
 
 test.serial('Should find no person', async t => {
