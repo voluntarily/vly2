@@ -30,10 +30,7 @@ module.exports = function (server) {
         update: updatePersonDetail
       },
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
-      afterActions: [{ middlewares: [ (req, res, next) => {
-        console.log('Called')
-        next()
-      }, removeUnauthorizedFields(Person), helpers.formatResponse ] }]
+      afterActions: [{ middlewares: [ removeUnauthorizedFields(Person), helpers.formatResponse ] }]
     })
   )
 
