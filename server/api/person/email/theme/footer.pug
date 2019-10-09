@@ -1,6 +1,6 @@
 table(width="100%")
   tr
-    td(bgcolor="#0" align="center")
+    td(align="center")
       table(width="100%" align="center")
         tr
           td(style="padding: 20px 0px 20px 0px;")
@@ -9,12 +9,8 @@ table(width="100%")
                 td(align="center" valign="middle" style="font-size: 12px; line-height: 18px; color:#aaaaaa;")
                   span(class="appleFooter") 
                     block footer
-                      a( href="http://www.pamfergusson.co.nz/") VOLUNTARILY IS AN INITIATIVE RUN BY THE PAM FERGUSSON CHARITABLE TRUST
-                      br
-                  //- a(class="original-only"  style="text-decoration: none;")
-                  //-   block unsubscribe
-                  //-     span Unsubscribe
-                  //- span(class="original-only" style="font-size: 12px; color: #444444;") &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                  //- a(class="original-only"  style="text-decoration: none;")
-                  //-   block viewinbrowser
-                  //-     span View this email in your browser
+                      p Voluntarily is an initiative run by the 
+                        a( href="http://www.pamfergusson.co.nz/") Pam Fergusson Charitable Trust
+                      span This email was sent to #{person.email}. You're receiving this email because you expressed interest in Voluntarily Opportunities. 
+                      span If you'd rather not see us in your inbox in the future, please set your 
+                        a(href=person.href) profile to inactive.
