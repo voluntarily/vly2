@@ -54,11 +54,11 @@ function removeField (request, queryResult) {
   let filteredResult
   if (isArray(queryResult)) {
     filteredResult = queryResult.map(eachResult => pick(eachResult, authorizedFields))
-  } 
-  if (me != null) {
-      filteredResult = queryResult._id.toString() === me._id.toString() ? me : pick(queryResult, authorizedFields)
   }
-  return {}
+  if (me != null) {
+    filteredResult = queryResult._id.toString() === me._id.toString() ? me : pick(queryResult, authorizedFields)
+  }
+  return filteredResult
 }
 
 async function updatePersonDetail (req, res, next) {
