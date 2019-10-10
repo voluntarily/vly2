@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://i.imgur.com/aFjiS0u.png">
 </p>
- 
+
 # vly2
 [![Gitter](https://badges.gitter.im/voluntarily/community.svg)](https://gitter.im/voluntarily/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Build Status](https://api.cirrus-ci.com/github/voluntarily/vly2.svg)](https://cirrus-ci.com/github/voluntarily/vly2)
@@ -53,5 +53,5 @@ Once you see the message "Voluntarily is running on port: 3122! Be Awesome!" the
 
 If you see the message "Please make sure Mongodb is installed and running!"  then go back and start mongod.
 
-Press control+C to exit the node application.
+Press `ctrl + c` to exit the node application.
 
