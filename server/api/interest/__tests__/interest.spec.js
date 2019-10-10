@@ -64,6 +64,66 @@ test.serial('Should correctly give number of Interests', async t => {
   t.deepEqual(res.body.length, t.context.interests.length)
 })
 
+test.serial('Should find interests matching the op', async t => {
+  t.plan(3)
+  const opid = t.context.ops[1]._id
+  const res = await request(server)
+    .get(`/api/interests?op=${opid}`)
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200)
+  t.is(res.status, 200)
+  t.is(res.body.length, 1)
+  // when asking for interests by opportunity we are not interested in getting another copy of the op.
+  t.is(res.body[0].opportunity, opid.toString())
+})
+
+test.serial('Should find interests matching a person', async t => {
+  t.plan(3)
+  const personid = t.context.people[2]._id
+  const res = await request(server)
+    .get(`/api/interests?me=${personid}`)
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+  t.is(res.status, 200)
+  t.is(res.body.length, 1)
+  // when asking for interests by opportunity we are not interested in getting another copy of the op.
+  t.is(res.body[0].person, personid.toString())
+})
+
+test.serial('Should find interests matching an op + person', async t => {
+  t.plan(3)
+  const opid = t.context.ops[1]._id
+  const personid = t.context.people[3]._id
+  const res = await request(server)
+    .get(`/api/interests?me=${personid}&op=${opid}`)
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+  t.is(res.status, 200)
+  t.is(res.body.length, 1)
+  // when asking for interests by opportunity we are not interested in getting another copy of the op.
+  t.is(res.body[0].person._id, personid.toString())
+})
+test.serial('Should not find interests matching an op + wrong person', async t => {
+  t.plan(2)
+  const opid = t.context.ops[1]._id
+  const personid = t.context.people[2]._id
+  const res = await request(server)
+    .get(`/api/interests?me=${personid}&op=${opid}`)
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+  t.is(res.status, 200)
+  t.is(res.body.length, 0)
+})
+
+test.serial('Should 404 on invalid op search', async t => {
+  const res = await request(server)
+    .get(`/api/interests?op=rubbish`)
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+  t.is(res.status, 404)
+})
+
 test.serial('Should send correct data when queried against a _id', async t => {
   const interest = t.context.interests[0]
   const res = await request(server)
@@ -132,6 +192,7 @@ test.serial('Should correctly add a valid interest', async t => {
 })
 
 test.serial('Should update the interest state from interested to invited', async t => {
+  // interests 2 has a single date - so should trigger a calendar event to be attached
   const interest = t.context.interests[2]
   const reqData = {
     _id: interest._id,
@@ -162,6 +223,22 @@ test.serial('Should update the interest state from invited to committed', async 
   t.is(res.body.status, 'committed')
 })
 
+test.serial('Should update the interest state from to declined', async t => {
+  // interests 2 has a single date - so should trigger a calendar event to be attached
+  const interest = t.context.interests[4]
+  const reqData = {
+    _id: interest._id,
+    status: 'declined'
+  }
+
+  const res = await request(server)
+    .put(`/api/interests/${interest._id}`)
+    .send(reqData)
+    .set('Accept', 'application/json')
+  t.is(res.status, 200)
+  t.is(res.body.status, 'declined')
+})
+
 test.serial('Should correctly delete an interest', async t => {
   t.plan(2)
   const me = t.context.me
@@ -185,4 +262,18 @@ test.serial('Should correctly delete an interest', async t => {
     _id: newInterest._id
   }).exec()
   t.is(null, queriedInterest)
+})
+
+test.serial('Should get 404 updating an interest with invalid id', async t => {
+  const interest = t.context.interests[4]
+  const reqData = {
+    _id: '5d2905d9a792f000114a557b',
+    status: 'invited'
+  }
+
+  const res = await request(server)
+    .put(`/api/interests/${interest._id}`)
+    .send(reqData)
+    .set('Accept', 'application/json')
+  t.is(res.status, 404)
 })

@@ -32,6 +32,7 @@ const listInterests = async (req, res) => {
     }
     res.json(got)
   } catch (err) {
+    // console.error(err)
     res.status(404).send(err)
   }
 }
@@ -40,7 +41,7 @@ const getInterestDetail = async (interestID) => {
   // Get the interest and populate out key information needed for emailing
   const interestDetail = await Interest.findById(interestID)
     .populate({ path: 'person', select: 'nickname name email pronoun language' })
-    .populate({ path: 'opportunity', select: 'name requestor imgUrl date' })
+    .populate({ path: 'opportunity', select: 'name requestor imgUrl date duration' })
     .exec()
 
   const requestorDetail = await Person.findById(interestDetail.opportunity.requestor, 'name nickname email imgUrl')
@@ -72,7 +73,7 @@ const updateInterest = async (req, res) => {
     processStatusToSendEmail(interestDetail.status, interestDetail)
     res.json(interestDetail)
   } catch (err) {
-    console.error(err)
+    // console.error(err)
     res.status(404).send(err)
   }
 }
@@ -150,18 +151,14 @@ const convertDurationStringToISO = (durationString) => {
  * @param {object} interest populated out interest with person and op.
  * @param {object} props extra properties such as attachment
  */
-const sendInterestedEmail = async (template, to, interest, props = {}) => {
+const sendInterestedEmail = async (template, to, interest, props) => {
   const op = interest.opportunity
-  try {
-    await emailPerson(template, to, {
-      send: true,
-      op,
-      from: op.requestor,
-      ...props
-    })
-  } catch (err) {
-    console.error('sendInterestedEmail', err)
-  }
+  await emailPerson(template, to, {
+    send: true,
+    op,
+    from: op.requestor,
+    ...props
+  })
 }
 
 module.exports = {
