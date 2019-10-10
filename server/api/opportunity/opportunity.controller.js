@@ -19,7 +19,7 @@ const { getLocationRecommendations, getSkillsRecommendations } = require('./oppo
 const getOpportunities = async (req, res) => {
   // limit to Active ops unless one of the params overrides
   let query = { 'status': OpportunityStatus.ACTIVE }
-  let sort = 'name'
+  let sort = 'date'
   let select = {}
 
   try {

@@ -16,6 +16,7 @@ const optitle = [
   'Lets eat python',
   'Teaching student how to program'
 ];
+
 const oplocation = [
   'Auckland',
   'Wellington',
@@ -25,7 +26,8 @@ const oplocation = [
   'Matamata',
   'Hawkes Bay',
   'Queenstown',
-]
+];
+
 const opduration = [
   '2 Hours (Flexible)',
   '6 hours',
@@ -33,12 +35,11 @@ const opduration = [
   '3 hours',
   '45 minutes',
   '2-3 hours'
-]
+];
 
 
 const forall = (model, action) => {
   var cursor = model.find().cursor()
-
   // Execute the each command, triggers for each document
   cursor.eachAsync(item => {
     action(item)
