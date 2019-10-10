@@ -188,10 +188,6 @@ test('componentDidMount - set volunteer to 0.2', t => {
   const comdidmount = sinon.spy(wrapper.instance(), 'componentDidMount')
   wrapper.instance().componentDidMount()
   t.truthy(comdidmount.calledOnce)
-
-  // const comdidmount = sinon.spy(ActDetailForm.prototype, 'componentDidMount')
-  // wrapper.instance().componentDidMount()
-  // t.truthy(comdidmount.calledOnce)
 })
 test('componentDidMount - set volunteer to 10', t => {
   const submitAct = sinon.spy()
