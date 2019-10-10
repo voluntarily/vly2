@@ -4,23 +4,23 @@ const path = require('path')
 const { config } = require('../../../../config/config')
 /*
   format and send a email to the given address
-  @person the target of the email
+  @to {person Object} the target of the email
   @template the template to format html
   @props includes details of the opportunity, requestor etc
 */
-module.exports.emailPerson = async (person, template, props, renderOnly = false) => {
+module.exports.emailPerson = async (template, to, props, renderOnly = false) => {
   try {
     const transport = (process.env.NODE_ENV === 'development') ? await getDevelopmentTransport() : await getTransport()
     const email = new Email({
       message: {
-        from: 'andrew@voluntarily.nz'
+        from: 'no-reply@voluntarily.nz'
       },
       // uncomment below to send emails in development/test env:
-      send: true,
+      send: false,
       subjectPrefix: config.env === 'production' ? false : `[${config.env.toUpperCase()}] `,
 
       // Comment the line below to see preview email
-      preview: true,
+      preview: false,
       textOnly: config.onlyEmailText, // The value onlyEmailText has a Boolean type not string
       transport
     })
@@ -28,7 +28,7 @@ module.exports.emailPerson = async (person, template, props, renderOnly = false)
       return await email.render(
         path.join(__dirname, template + '/html'),
         {
-          person,
+          to,
           ...props
         }
       )
@@ -36,11 +36,11 @@ module.exports.emailPerson = async (person, template, props, renderOnly = false)
       return await email.send({
         template: path.join(__dirname, template),
         message: {
-          to: person.email,
+          to: to.email,
           attachments: props.attachment ? props.attachment : null
         },
         locals: {
-          person,
+          to,
           ...props
         }
       })

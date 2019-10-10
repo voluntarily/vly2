@@ -1,3 +1,8 @@
+//- expects locals of {
+//-   to: person receiving email
+//-   from: person sending email - the op requestor
+//-   op: the opportunity
+//- }
 extends ../theme/layout.pug
 
 block tagline
@@ -7,14 +12,14 @@ block copybig
   a( href=op.href) #{op.name} 
 
 block copy
-  p Kia ora #{person.nickname},
-  p On behalf of #{me.name} and the Voluntarily team, we would like to thank you for expressing interest in this opportunity.
+  p Kia ora #{to.nickname},
+  p On behalf of #{from.name} and the Voluntarily team, we would like to thank you for expressing interest in this opportunity.
   p Your contribution is super valuable to us. We will process your interest and be in touch shortly.
   p In the mean time you can get prepared for volunteering by working through the queued activities on your profile
   
 
 block copybutton
-  a(href=person.href class='mobile-button') My Profile
+  a(href=to.href class='mobile-button') My Profile
   span &nbsp; 
   a(href=op.href class='mobile-button') My Opportunity
    

@@ -40,10 +40,10 @@ test.before('Setup fixtures', (t) => {
 test.serial('Send acknowledgeInterest email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
-    me: t.context.me,
+    from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson(t.context.to, 'acknowledgeInterest', props)
+  const info = await emailPerson('acknowledgeInterest', t.context.to, props)
 
   // these pass if send is enabled
   t.true(info.accepted[0] === t.context.to.email)
@@ -51,13 +51,13 @@ test.serial('Send acknowledgeInterest email to person', async t => {
   t.regex(info.response, /250.*/, info.response)
 })
 
-test('render acknowledgeInterest email to person', async t => {
+test.serial('render acknowledgeInterest email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
-    me: t.context.me,
+    from: t.context.me,
     op: t.context.op
   }
-  const html = await emailPerson(t.context.to, 'acknowledgeInterest', props, true)
+  const html = await emailPerson('acknowledgeInterest', t.context.to, props, true)
   const document = (new JSDOM(html)).window.document
   t.truthy(getByText(document, 'Help make a difference'))
   t.truthy(getByText(document, t.context.op.name))
