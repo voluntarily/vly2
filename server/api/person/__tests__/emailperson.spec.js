@@ -44,11 +44,11 @@ test.serial('Send acknowledgeInterest email to person', async t => {
     op: t.context.op
   }
   const info = await emailPerson('acknowledgeInterest', t.context.to, props)
-
   // these pass if send is enabled
   t.true(info.accepted[0] === t.context.to.email)
   t.true(info.rejected.length === 0)
   t.regex(info.response, /250.*/, info.response)
+  t.regex(info.originalMessage.subject, /Confirming your interest/)
 })
 
 test.serial('render acknowledgeInterest email to person', async t => {
