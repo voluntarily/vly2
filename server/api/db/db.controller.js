@@ -72,13 +72,17 @@ const createOpportunity = async (op) => {
         location: 'Auckland',
         status: 'active',
         requestor: person[Math.floor(Math.random() * person.length)]._id,
-        date: [null, null]
+        date: createRandomDate(new Date(2019, 1, 1), new Date(2020, 1, 1))
       }
       await Opportunity.create(ops).catch((err) => `unable to create people: ${console.log(err)}`)
     }
   } catch (err) {
     console.log(err)
   }
+}
+
+const createRandomDate = (start, end) => {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
 
 const GetRandomPersonID = async () => {
