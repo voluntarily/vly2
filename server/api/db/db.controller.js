@@ -3,7 +3,8 @@ const Person = require('../person/person')
 const Organisation = require('../organisation/organisation')
 const Activity = require('../activity/activity')
 const cuid = require('cuid')
-const optitle = ['A Quest for soldering irons',
+const optitle = [
+  'A Quest for soldering irons',
   'An opportunity modified',
   'Basics of 3D printing',
   'Coding camp',
@@ -13,7 +14,27 @@ const optitle = ['A Quest for soldering irons',
   'Learn programming in 30 days',
   'Lets build a webpage',
   'Lets eat python',
-  'Teaching student how to program']
+  'Teaching student how to program'
+];
+const oplocation = [
+  'Auckland',
+  'Wellington',
+  'Hamilton',
+  'Christchurch',
+  'Dunedin',
+  'Matamata',
+  'Hawkes Bay',
+  'Queenstown',
+]
+const opduration = [
+  '2 Hours (Flexible)',
+  '6 hours',
+  '1 hour',
+  '3 hours',
+  '45 minutes',
+  '2-3 hours'
+]
+
 
 const forall = (model, action) => {
   var cursor = model.find().cursor()
@@ -65,11 +86,11 @@ const createOpportunity = async (op) => {
       const ops = {
         name: optitle[Math.floor(Math.random() * optitle.length)],
         subtitle: 'Help us to learn how to code',
-        imgUrl: 'https://leaderonomics.com/wp-content/uploads/2017/04/1807658-1-600x470.jpg',
+        imgUrl: 'https://picsum.photos/id/' + [Math.round(Math.random() * 50)] + '/200/300',
         description: 'code... code...',
-        duration: '4 weeks, 2 hour session',
+        duration: opduration[Math.floor(Math.random() * opduration.length)],
         offerOrg: orgs._id,
-        location: 'Auckland',
+        location: oplocation[Math.floor(Math.random() * oplocation.length)],
         status: 'active',
         requestor: person[Math.floor(Math.random() * person.length)]._id,
         date: createRandomDate(new Date(2019, 1, 1), new Date(2020, 1, 1))
