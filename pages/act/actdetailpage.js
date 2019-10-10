@@ -106,7 +106,6 @@ export class ActDetailPage extends Component {
         this.props.members.sync &&
         this.props.members.data.length > 0 &&
         this.props.members) {
-      console.log(this.props.members.data)
       me.orgMembership = this.props.members.data.filter(
         m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status) &&
           m.organisation.category.includes('ap')
@@ -146,7 +145,7 @@ export class ActDetailPage extends Component {
     // display permissions
     const canEdit = (isOwner || isOrgAdmin || isAdmin)
     const existingTags = this.props.tags.data
-    console.log('editing:', this.state.editing)
+
     // button to make an opportunity from an activity
     const createOpportunitySection = () => {
       return (
@@ -180,7 +179,8 @@ export class ActDetailPage extends Component {
               onClick={() => this.setState({ editing: true })} >
               <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
             </Button>}
-          <Spacer />
+          <
+/>
           <ActDetail act={act} />
         </div>
       }
