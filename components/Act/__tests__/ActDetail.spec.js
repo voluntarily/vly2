@@ -1,7 +1,7 @@
 import React from 'react'
 import test from 'ava'
 import { renderWithIntl } from '../../../lib/react-intl-test-helper'
-
+import { ItemVolunteers } from '../../VTheme/ItemList'
 import ActDetail from '../ActDetail'
 
 // Initial activities
@@ -24,9 +24,8 @@ test('render the detail with act', t => {
   t.is(wrapper.find('h1').text(), act.name)
 })
 
-// test('render correct message based on TotalVolunteerRequired or volunteerPerStudent', t => {
-//   const wrapper = renderWithIntl(<ActDetail act={act} onPress={() => {}} />)
-//   t.truthy(wrapper.find('ItemVolunteers'))
-//   t.is(wrapper.find('ItemVolunteers').first().text(), act.volunteers)
-// })
-// test.todo('verify markdown in description is rendered')
+test('render Volunteers per student properly if the value is < 1', t => {
+  const wrapper = renderWithIntl(<ItemVolunteers volunteers={0.2} type='act' />)
+  t.is(wrapper.find('span').first().text(), 'Volunteers per student:')
+  console.log(wrapper.find('span').first().text())
+})
