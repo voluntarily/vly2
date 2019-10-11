@@ -179,8 +179,7 @@ export class ActDetailPage extends Component {
               onClick={() => this.setState({ editing: true })} >
               <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
             </Button>}
-          <
-/>
+          <Spacer />
           <ActDetail act={act} />
         </div>
       }
