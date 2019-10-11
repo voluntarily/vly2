@@ -63,3 +63,60 @@ test.serial('render acknowledgeInterest email to person', async t => {
   t.truthy(getByText(document, t.context.op.name))
   t.truthy(getByText(document, `Kia ora ${t.context.to.nickname},`))
 })
+
+test.serial('Send invited email to person', async t => {
+  const props = {
+    send: true, // when true email is actually sent
+    from: t.context.me,
+    op: t.context.op
+  }
+  const info = await emailPerson('invited', t.context.to, props)
+  // these pass if send is enabled
+  t.true(info.accepted[0] === t.context.to.email)
+  t.true(info.rejected.length === 0)
+  t.regex(info.response, /250.*/, info.response)
+  t.regex(info.originalMessage.subject, /You're invited to/)
+})
+
+test.serial('Send committed email to person', async t => {
+  const props = {
+    send: true, // when true email is actually sent
+    from: t.context.me,
+    op: t.context.op
+  }
+  const info = await emailPerson('committed', t.context.to, props)
+  // these pass if send is enabled
+  t.true(info.accepted[0] === t.context.to.email)
+  t.true(info.rejected.length === 0)
+  t.regex(info.response, /250.*/, info.response)
+  t.regex(info.originalMessage.subject, /just committed to/)
+})
+
+test.serial('Send declined email to volunteer', async t => {
+  const props = {
+    send: true, // when true email is actually sent
+    from: t.context.me,
+    op: t.context.op
+  }
+  const info = await emailPerson('declined', t.context.to, props)
+  // these pass if send is enabled
+  t.true(info.accepted[0] === t.context.to.email)
+  t.true(info.rejected.length === 0)
+  t.regex(info.response, /250.*/, info.response)
+  t.regex(info.originalMessage.subject, /update on/)
+})
+
+test.serial('Send person interested email to requestor', async t => {
+  const props = {
+    send: true, // when true email is actually sent
+    from: t.context.me,
+    op: t.context.op,
+    comment: 'All your base belong to us'
+  }
+  const info = await emailPerson('interested', t.context.to, props)
+  // these pass if send is enabled
+  t.true(info.accepted[0] === t.context.to.email)
+  t.true(info.rejected.length === 0)
+  t.regex(info.response, /250.*/, info.response)
+  t.regex(info.originalMessage.subject, /is interested in/)
+})
