@@ -9,9 +9,16 @@ import { FullPage, Spacer } from '../../components/VTheme/VTheme'
 // import bigimage from './landing-page-bg.jpg'
 // import schoolsactivity from './schoolsactivity.png'
 import { Helmet } from 'react-helmet'
+import moment from 'moment'
 
 class Landing extends Component {
-  render () {
+  render() {
+
+    // Setting the Landing page to get the next 3 months of opportunities
+    const today = moment().startOf('day');
+    const monthsToGet = 3
+    const futureDate = moment().add(monthsToGet, 'M');
+    console.log(today);
     return (
       <div>
         <Hero />
@@ -31,8 +38,16 @@ class Landing extends Component {
             title='Happening Soon'
             subtitle='You are a few clicks away from getting involved with your community'
           />
-
-          <OpListSection store={this.props.store} filter={{ date: '' }} />
+          <OpListSection
+            store={this.props.store}
+            filter={{
+              date: [
+                today,
+                futureDate
+              ]
+            }}
+            dateFilterType={'Date Range'}
+          />
           <OpAdd {...this.props} />
         </FullPage>
       </div>
