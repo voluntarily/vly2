@@ -1,6 +1,4 @@
-/* Display a grid of opanisation cards from an [op]
- */
-import { Avatar, Button, Checkbox, Table } from 'antd'
+import { Avatar, Button, Table } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
@@ -12,16 +10,12 @@ class InterestArchivedTable extends Component {
     sortedInfo: {}
   }
 
-  handleInviteButtonClicked (interest) {
-    this.props.onInvite(interest)
+  handlePresentButtonClicked (interest) {
+    this.props.onPresent(interest)
   }
 
-  handleDeclineButtonClicked (interest) {
-    this.props.onDecline(interest)
-  }
-
-  handleWithdrawInviteButtonClicked (interest) {
-    this.props.onWithdrawInvite(interest)
+  handleAbsentButtonClicked (interest) {
+    this.props.onAbsent(interest)
   }
 
   onChange = (pagination, filters, sorter) => {
@@ -36,15 +30,8 @@ class InterestArchivedTable extends Component {
     sortedInfo = sortedInfo || {}
     filteredInfo = filteredInfo || {}
     const columns = [
-      {
-        title: 'Selected',
-        key: 'isSelected',
-        render: (text, record) => {
-          return <Checkbox value='selected' />
-        }
-      },
       { title: 'Name',
-        key: 'imgUrl',
+        key: 'name',
         sorter: (a, b) => a.person.nickname.length - b.person.nickname.length,
         sortOrder: sortedInfo.columnKey === 'imgUrl' && sortedInfo.order,
         render: (text, record) => {
@@ -74,6 +61,8 @@ class InterestArchivedTable extends Component {
         sorter: (a, b) => a.status.length - b.status.length,
         sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
         filters: [
+          { text: 'attended', value: 'attended' },
+          { text: 'not attended', value: 'not attended' },
           { text: 'interested', value: 'interested' },
           { text: 'invited', value: 'invited' },
           { text: 'committed', value: 'committed' },
@@ -91,12 +80,18 @@ class InterestArchivedTable extends Component {
           const options = getEnabledButtons(record)
           return (
             <div>
-              {options.declineButtonEnabled ? <span>
-                <Button type='danger' shape='round'>
+              {options.attendedButtonEnabled && <span>
+                <Button type='danger' shape='round' onClick={this.handlePresentButtonClicked.bind(this, record)}>
                   <FormattedMessage id='markPresent' defaultMessage='Attended'
-                    description='Button allowing event organizer to decline an interested volunteer' />
+                    description='Button allowing event organizer to mark the volunteer as attended' />
                 </Button>
-              </span> : null}
+              </span> }
+              {options.notAttendedButtonEnabled && <span>
+                <Button type='danger' shape='round' onClick={this.handleAbsentButtonClicked.bind(this, record)}>
+                  <FormattedMessage id='markAbsent' defaultMessage='Not Attended'
+                    description='Button allowing event organizer to mark the volunteer as not attended' />
+                </Button>
+              </span>}
             </div>
           )
         }
@@ -115,13 +110,15 @@ class InterestArchivedTable extends Component {
 }
 
 InterestArchivedTable.propTypes = {
-  onDecline: PropTypes.func.isRequired,
+  onPresent: PropTypes.func.isRequired,
+  onAbsent: PropTypes.func.isRequired,
   interests: PropTypes.array
 }
 
 function getEnabledButtons (interest) {
   return {
-    declineButtonEnabled: true
+    attendedButtonEnabled: interest.status !== 'attended',
+    notAttendedButtonEnabled: interest.status !== 'not attended'
   }
 }
 

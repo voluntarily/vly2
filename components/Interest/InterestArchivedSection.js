@@ -21,8 +21,13 @@ class InterestArchivedSection extends Component {
     }
   }
 
-  async handleDecline (interest) {
-    interest.status = 'declined'
+  async markAsPresent (interest) {
+    interest.status = 'attended'
+    await this.props.dispatch(reduxApi.actions.interestsArchived.put({ id: interest._id }, { body: JSON.stringify(interest) }))
+  }
+
+  async markAsAbsent (interest) {
+    interest.status = 'not attended'
     await this.props.dispatch(reduxApi.actions.interestsArchived.put({ id: interest._id }, { body: JSON.stringify(interest) }))
   }
 
@@ -45,9 +50,9 @@ class InterestArchivedSection extends Component {
               description='label for interest table on op detail page'
             /></h2>
           <InterestArchivedTable
-            checkboxEnabled
             interests={this.props.interestsArchived.data}
-            onDecline={this.handleDecline.bind(this)} />
+            onPresent={this.markAsPresent.bind(this)}
+            onAbsent={this.markAsAbsent.bind(this)} />
         </section>
       )
     }
