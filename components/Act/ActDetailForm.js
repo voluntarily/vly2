@@ -381,7 +381,7 @@ class ActDetailForm extends Component {
                 <Form.Item>
                   <Radio name='volunteer' value='option2' checked={this.state.option2} onClick={this.actRadio.bind(this, 'option2')}>
                     <FormattedMessage
-                      id='act.detail.volunteerratio'
+                      id='act.detailform.volunteerratio'
                       defaultMessage='Number of students per volunteer'
                       description='label for field number of students per volunteer'
                     />
