@@ -58,7 +58,7 @@ const createInterest = async (req, res) => {
 
     const interestDetail = await getInterestDetail(newInterest._id)
     sendInterestedEmail('acknowledgeInterest', interestDetail.person, interestDetail)
-    sendInterestedEmail('RequestorNotificationEmail', interestDetail.opportunity.requestor, interestDetail)
+    sendInterestedEmail('interested', interestDetail.opportunity.requestor, interestDetail)
     res.json(interestDetail)
   } catch (err) {
   // console.log(err)
