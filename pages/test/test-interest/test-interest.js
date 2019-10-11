@@ -1,11 +1,11 @@
 // import Link from 'next/link'
 import { Divider } from 'antd'
 import Head from 'next/head'
-import InterestItem from '../../components/Interest/InterestItem'
-import InterestSection from '../../components/Interest/InterestSection'
-import InterestTable from '../../components/Interest/InterestTable'
-import { FullPage } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+import InterestItem from '../../../components/Interest/InterestItem'
+import InterestSection from '../../../components/Interest/InterestSection'
+import InterestTable from '../../../components/Interest/InterestTable'
+import { FullPage } from '../../../components/VTheme/VTheme'
+import publicPage from '../../../hocs/publicPage'
 import people from './testy.people'
 
 const opportunity = {
