@@ -250,12 +250,20 @@ const Footer = ({ isAuthenticated, ...props }) => (
             rel='noopener noreferrer'
           >
             Developer resources
+            Terms and Conditions()
           </MenuItem>
         </FooterGridItem>
       </Grid>
       <Spacer />
       <WomensRefuge />
     </FooterContainer>
+          <MenuItem
+            href='https://voluntarily.atlassian.net/wiki'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+          </MenuItem>
+  
 
     {props.isAdmin && (
       <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
