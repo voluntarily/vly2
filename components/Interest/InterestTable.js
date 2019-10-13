@@ -14,12 +14,23 @@ class InterestTable extends Component {
       sortedInfo: {},
       selectedRows: [], 
     };
-    console.log(props);
+    // console.log(props);
   }
   
-  async handleInviteButtonClicked(interest) {
-    if(interest.length > 0) {
-      for (let interest of interest) await this.props.onInvite(interest)
+  handleInviteButtonClicked(interest) {
+    // console.log(Array.isArray(interest))
+    if(Array.isArray(interest)) {
+      // for (let interest of interest) await this.props.onInvite(interest)
+      Promise.all(interest.map( async row => {
+        console.log(row);
+        await this.props.onInvite(row);
+      }))
+      .then(res => {
+        console.log('Array of results', res)
+      })
+      .catch(err => {
+        console.error(err)
+      })
     } else this.props.onInvite(interest);
   }
 
@@ -51,6 +62,7 @@ class InterestTable extends Component {
   };
 
   render() {
+    // console.log(this);
     let { sortedInfo, filteredInfo, selectedRows } = this.state;
     
     sortedInfo = sortedInfo || {};
@@ -141,6 +153,7 @@ class InterestTable extends Component {
                   <Button
                     type="primary"
                     shape="round"
+                    // onClick={this.handleInviteButtonClicked.bind(this, record)}
                     onClick={this.handleInviteButtonClicked.bind(this, record)}
                   >
                     <FormattedMessage
@@ -208,17 +221,17 @@ class InterestTable extends Component {
     const menu = (
       <Menu>
         <Menu.Item>
-          <a onClick={() => this.handleInviteButtonClicked(selectedRows)}>
+          <a onClick={this.handleInviteButtonClicked.bind(this,selectedRows)}>
             Invite
           </a>
         </Menu.Item>
         <Menu.Item>
-          <a onClick={() => this.handleWithdrawInviteButtonClicked(selectedRows)}>
+          <a onClick={this.handleWithdrawInviteButtonClicked.bind(this,selectedRows)}>
             Withdraw Invite
           </a>
         </Menu.Item>
         <Menu.Item>
-          <a onClick={() => this.handleDeclineButtonClicked(selectedRows)}>
+          <a onClick={this.handleDeclineButtonClicked.bind(this,selectedRows)}>
            Decline
           </a>
         </Menu.Item>

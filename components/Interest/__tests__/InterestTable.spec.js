@@ -20,7 +20,7 @@ test('InterestTable renders properly', t => {
   />)
 
   // Confirm table headers
-  t.is(wrapper.find('th').at(0).text(), 'Selected')
+  // t.is(wrapper.find('th').at(0).text(), 'Selected')
   t.is(wrapper.find('th').at(1).text(), 'Name')
   t.is(wrapper.find('th').at(2).text(), 'Comment')
   t.is(wrapper.find('th').at(3).text(), 'Status')
