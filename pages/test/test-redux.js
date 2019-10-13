@@ -1,7 +1,7 @@
-import { A4 } from '../components/VTheme/VTheme'
-import LocalStateTest from '../components/testredux/LocalStateTest.js'
-import ReduxStoreTest from '../components/testredux/ReduxStoreTest'
-import ReduxAsyncTest from '../components/testredux/ReduxAsyncTest'
+import { A4 } from '../../components/VTheme/VTheme'
+import LocalStateTest from '../../components/testredux/LocalStateTest.js'
+import ReduxStoreTest from '../../components/testredux/ReduxStoreTest'
+import ReduxAsyncTest from '../../components/testredux/ReduxAsyncTest'
 const Section = (props) =>
   <section>
     <h1>{props.title}</h1>

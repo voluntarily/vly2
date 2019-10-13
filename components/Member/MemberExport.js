@@ -32,7 +32,7 @@ const MemberExport = ({ members }) => {
       <Button shape='round' onClick={() => { exportMembers(members) }}>
         <FormattedMessage
           id='member.exportCsv'
-          defaultMessage='Export Members (Default Message)'
+          defaultMessage='Export Members'
           description='Use the local equivalent of export members.'
         />
       </Button>
