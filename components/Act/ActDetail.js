@@ -20,9 +20,9 @@ export function ActDetail ({ act }) {
           <h1>{act.name}</h1>
           <ItemContainer>
             <ItemDuration duration={act.duration} />
-            <ItemStatus status={act.status} />
             <ItemVolunteers volunteers={act.volunteers} />
             <ItemSpace space={act.space} />
+            <ItemStatus status={act.status} />
             <Divider />
             <ItemIdLine item={act.offerOrg} path='orgs' />
             <ItemIdLine item={act.owner} path='people' />
