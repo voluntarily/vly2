@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 export default () => `
-<h1>Awaiting final copy</h1>
 <h1>Welcome to Voluntarily.</h1>
+<h1>Awaiting final copy</h1>
 
 These terms and conditions outline the rules and regulations for the use of Voluntarily's Website.
 <br/><br/>

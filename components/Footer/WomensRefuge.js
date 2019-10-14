@@ -19,6 +19,7 @@ class WomensRefuge extends React.Component {
     /* eslint-disable no-undef */
     /* eslint-disable new-cap */
     const frameName = new ds07o6pcmkorn({
+      // FIXME: [VP-574] script id will break whenever the womans refuge site is redeployed.
       openElementId: '#WomensRefuge-id'
     })
     frameName.init()
