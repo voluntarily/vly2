@@ -1,7 +1,7 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const InterestArchive = require('./interestArchive')
-const { listInterests } = require('./interestArchive.controller')
+const { listInterests, updateInterest } = require('./interestArchive.controller')
 
 module.exports = server => {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -12,7 +12,8 @@ module.exports = server => {
       selectFields: '-__v', // Hide '__v' property
       endResponseInAction: false,
       actions: {
-        list: listInterests
+        list: listInterests,
+        update: updateInterest
       },
       afterActions: [
         // this is the place to require user be authed.

@@ -1,5 +1,4 @@
 const InterestArchive = require('./interestArchive')
-// const ArchivedOpportunity = require('../archivedOpportunity/archivedOpportunity')
 
 /**
   api/interestsArchived -> list all interests
@@ -20,6 +19,16 @@ const listInterests = async (req, res) => {
   }
 }
 
+const updateInterest = async (req, res) => {
+  try {
+    await InterestArchive.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
+    res.json(req.body)
+  } catch (err) {
+    res.status(404).send(err)
+  }
+}
+
 module.exports = {
-  listInterests
+  listInterests,
+  updateInterest
 }
