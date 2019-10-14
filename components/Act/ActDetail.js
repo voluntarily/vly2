@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
 import { HalfGrid, Spacer } from '../VTheme/VTheme'
-import { Left, Right, ItemContainer, ItemDescription, TagContainer, ItemDuration, ItemStatus, ItemIdLine } from '../VTheme/ItemList'
+import { Left, Right, ItemContainer, ItemDescription, TagContainer, ItemVolunteers, ItemDuration, ItemStatus, ItemIdLine } from '../VTheme/ItemList'
 
 export function ActDetail ({ act }) {
   const img = act.imgUrl || '../../static/missingimage.svg'
@@ -16,10 +16,12 @@ export function ActDetail ({ act }) {
       <Head><title>{act.name}</title></Head>
       <HalfGrid>
         <Left>
+
           <h1>{act.name}</h1>
           <ItemContainer>
             <ItemDuration duration={act.duration} />
             <ItemStatus status={act.status} />
+            <ItemVolunteers volunteers={act.volunteers} />
             <Divider />
             <ItemIdLine item={act.offerOrg} path='orgs' />
             <ItemIdLine item={act.owner} path='people' />
@@ -55,6 +57,7 @@ ActDetail.propTypes = {
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     description: PropTypes.string,
+    volunteers: PropTypes.number,
     status: PropTypes.string,
     _id: PropTypes.string.isRequired
   })

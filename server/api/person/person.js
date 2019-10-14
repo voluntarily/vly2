@@ -46,6 +46,7 @@ const personSchema = new Schema({
     enum: ['active', 'inactive', 'hold']
   },
   dateAdded: { type: 'Date', default: Date.now, required: true },
+  href: String,
   tags: [
     {
       type: Schema.Types.ObjectId,

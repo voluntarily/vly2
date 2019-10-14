@@ -26,8 +26,8 @@ const opList = [
     status: OpportunityStatus.ACTIVE,
     tags: [ ],
     date: [
-      null,
-      null
+      '2019-07-30T09:00:00.000Z',
+      '2019-07-30T16:00:00.000Z'
     ]
   },
   {
@@ -35,12 +35,12 @@ const opList = [
     subtitle: 'Growing digitally in the garden',
     imgUrl: 'https://c.pxhere.com/photos/84/ac/garden_water_sprinkler_soil_lettuce_grow_agriculture_floral-561591.jpg!d',
     description: 'Project to grow something in the garden',
-    duration: '15 Minutes',
+    duration: '6 hours',
     location: regions[0].containedTerritories[1],
     status: OpportunityStatus.DRAFT,
     tags: [ ],
     date: [
-      null,
+      '2020-07-30T09:00:00.000Z',
       null
     ]
   },

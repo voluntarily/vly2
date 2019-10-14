@@ -94,3 +94,39 @@ export const ItemLocation = ({ location }) =>
       {sanitize(location)}
     </ItemListing>
     : ''
+
+export const ItemVolunteers = ({ volunteers }) => {
+  if (!volunteers) return ''
+
+  if (volunteers >= 1) {
+    return (
+      <ItemListing>
+        🙋&nbsp;
+        <strong>
+          <FormattedMessage
+            id='act.detail.volunteersrequired'
+            defaultMessage='Volunteers:'
+            description='label for number of volunteers required'
+          />
+        </strong>
+        &nbsp;&nbsp;&nbsp;{volunteers}
+      </ItemListing>
+    )
+  } else if (volunteers < 1) {
+    return (
+      <ItemListing>
+        🙋&nbsp;
+        <strong>
+          <FormattedMessage
+            id='act.detail.volunteerratio'
+            defaultMessage='Volunteers per student:'
+            description='label for number of volunteers required per student'
+          />
+        </strong>
+        &nbsp;&nbsp;&nbsp;{Math.round(1 / volunteers)}
+      </ItemListing>
+    )
+  }
+
+  return ''
+}

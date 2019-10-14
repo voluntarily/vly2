@@ -76,58 +76,11 @@ const createMember = async (req, res) => {
     }
 
     // TODO: [VP-424] email new members or followers of an organisation
-    // const volunteerID = req.body.person
-    // const { organisation } = req.body
-    // const { name } = organisation
-    // const { requestor } = req.body.organisation
-    // const orgId = organisation._id
-    // const { validation } = req.body
-    // requestor.volunteerComment = validation
-    // // sendEmailBaseOn('acknowledgeMember', volunteerID, name, opId)
-    // // sendEmailBaseOn('RequestorNotificationEmail', requestor._id, name, opId, comment)
-
     // return the member record with the org name filled in.
     const got = await getMemberbyId(newMember._id)
     res.json(got)
   })
 }
-
-// const processStatusToSendEmail = (memberStatus, organisation, volunteer) => {
-//   const { _id } = volunteer
-//   const { requestor, name } = organisation
-//   const opID = organisation._id
-//   if (memberStatus === MemberStatus.INVITED || memberStatus === MemberStatus.DECLINED) {
-//     // send email to volunteer only
-//     sendEmailBaseOn(memberStatus, _id, name, opID) // The _id in here is the volunteer id
-//   } else if (memberStatus === MemberStatus.COMMITTED) {
-//     // send email to requestor only
-//     sendEmailBaseOn(memberStatus, requestor, name, opID)
-//   }
-// }
-
-/**
- * This will be easier to add more status without having too much if. All we need is add another folder in email template folder and the status will reference to that folder
- * @param {string} status status will be used to indicate which email template to use
- * @param {string} personID so we can find the email of that person
- * @param {string} organisationTitle Just making the email content clearer
- * @param {string} opId To construct url that link to the organisation
- * @param {string} volunteerCommment (optional) This is only for requestor notification email only,default is empty string
- */
-// const sendEmailBaseOn = async (status, personID, organisationTitle, opId, volunteerComment = '') => {
-//   let opUrl = `${config.appUrl + '/ops/' + opId}`
-//   await Person.findById(personID, (err, person) => {
-//     if (err) console.error(err)
-//     else {
-//       const emailProps = {
-//         send: true
-//       }
-//       person.opUrl = opUrl
-//       person.volunteerEvent = organisationTitle
-//       person.volunteerComment = volunteerComment
-//       emailPerson(person, status, emailProps)
-//     }
-//   })
-// }
 
 module.exports = {
   listMembers,
