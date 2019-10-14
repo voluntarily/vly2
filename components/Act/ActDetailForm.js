@@ -42,7 +42,6 @@ class ActDetailForm extends Component {
   }
 
   componentDidMount () {
-    console.log('comp did mount called', this.props.act.volunteers)
     // Call validateFields here to disable the submit button when on a blank form.
     // empty callback supresses a default which prints to the console.
     this.props.form.validateFields(() => { })
@@ -51,10 +50,8 @@ class ActDetailForm extends Component {
     } else
     if (this.props.act.volunteers < 1) {
       this.actRadio('option2')
-      console.log(this.props.act.volunteers, 'option2')
     } else {
       this.actRadio('option1')
-      console.log(this.props.act.volunteers, 'option1')
     }
   }
   actRadio = (event) => {
@@ -65,7 +62,6 @@ class ActDetailForm extends Component {
         option1: true,
         option2: false
       })
-      // console.log('radio1 working')
     } else {
       this.setState({
         input2Disabled: false,
@@ -73,7 +69,6 @@ class ActDetailForm extends Component {
         option1: false,
         option2: true
       })
-      // console.log('radio2 working')
     }
   }
   change = (event) => {
@@ -82,12 +77,10 @@ class ActDetailForm extends Component {
       this.setState({
         totalVolunteerRequired: event.target.value
       })
-      // console.log(this.state.totalVolunteerRequired)
     } else {
       this.setState({
         volunteerPerStudent: event.target.value
       })
-      // console.log(this.state.volunteerPerStudent)
     }
   }
 
@@ -106,6 +99,7 @@ class ActDetailForm extends Component {
         act.duration = values.duration
         act.resource = values.resource
         act.volunteers = !this.state.input1Disabled ? this.state.totalVolunteerRequired : (1 / this.state.volunteerPerStudent)
+        act.space = values.space
         act.description = values.description
         act.offerOrg = values.offerOrg && values.offerOrg.key
         act.imgUrl = values.imgUrl
@@ -172,6 +166,20 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML or Markdown here.'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+    const actSpace = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='actSpace'
+          defaultMessage='Space Requirement'
+          description='activity space label in ActDetail Form'
+        />
+        &nbsp;
+        <Tooltip title='How much space is required to run an activity? Indoor or Outdoor activity?'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -389,6 +397,9 @@ class ActDetailForm extends Component {
                   {getFieldDecorator('volunteerPerStudent')(<Input name='resourceinput2' onChange={this.change}
                     disabled={this.state.input2Disabled} placeholder='Specify the number of students' />)}
                 </Form.Item>
+                <Form.Item label={actSpace}>
+                  {getFieldDecorator('space')(<Input name='space' placeholder='40 sqm' />)}
+                </Form.Item>
               </ShortInputContainer>
             </InputContainer>
           </FormGrid>
@@ -505,6 +516,7 @@ ActDetailForm.propTypes = {
     imgUrl: PropTypes.string,
     resource: PropTypes.string,
     volunteers: PropTypes.number,
+    space: PropTypes.string,
     time: PropTypes.Array,
     duration: PropTypes.string,
     status: PropTypes.string,
@@ -567,9 +579,9 @@ export default Form.create({
       resource: Form.createFormField({ ...props.act.resource, value: props.act.resource }),
       status: Form.createFormField({ ...props.act.status, value: props.act.status }),
       tags: Form.createFormField({ ...props.act.tags, value: props.act.tags }),
-      // TODO: set these values correctly from the act.volunteers value.
       totalVolunteerRequired: Form.createFormField({ ...totalVolunteerRequired, value: totalVolunteerRequired }),
-      volunteerPerStudent: Form.createFormField({ ...volunteerPerStudent, value: volunteerPerStudent })
+      volunteerPerStudent: Form.createFormField({ ...volunteerPerStudent, value: volunteerPerStudent }),
+      space: Form.createFormField({ ...props.act.space, value: props.act.space })
 
     }
   }
