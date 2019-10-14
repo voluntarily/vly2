@@ -20,6 +20,10 @@ const ActivitySchema = new Schema({
     type: Number,
     default: 1
   },
+  space: {
+    type: String,
+    default: ''
+  },
   time: {
     type: [Date]
   },
