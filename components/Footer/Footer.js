@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
 import { Grid, P, Spacer } from '../VTheme/VTheme'
 import links from './FooterMenu'
-import WomensRefuge from './WomensRefuge.js'
+// import WomensRefuge from './WomensRefuge.js'
 
 const getAllowedLinks = isAuthenticated =>
   links()
@@ -262,14 +262,13 @@ const Footer = ({ isAuthenticated, ...props }) => (
         </FooterGridItem>
       </Grid>
       <Spacer />
-      <WomensRefuge />
+      {/* <WomensRefuge /> */}
     </FooterContainer>
     <MenuItem
       href='https://voluntarily.atlassian.net/wiki'
       target='_blank'
       rel='noopener noreferrer'
-    >
-    </MenuItem>
+    />
     {props.isAdmin && (
       <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
     )}
