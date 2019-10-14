@@ -250,7 +250,14 @@ const Footer = ({ isAuthenticated, ...props }) => (
             rel='noopener noreferrer'
           >
             Developer resources
-            Terms and Conditions()
+          </MenuItem>
+          <br />
+          <MenuItem
+            href='/terms'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Terms and Conditions
           </MenuItem>
         </FooterGridItem>
       </Grid>
@@ -263,7 +270,6 @@ const Footer = ({ isAuthenticated, ...props }) => (
             rel='noopener noreferrer'
           >
           </MenuItem>
-  
 
     {props.isAdmin && (
       <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
