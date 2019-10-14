@@ -16,7 +16,6 @@ const InterestStatus = {
 const interestArchiveSchema = new Schema({
   ...Interest.schema.obj,
   opportunity: { type: Schema.Types.ObjectId, ref: 'archivedOpportunity', required: true },
-  attended: { type: Boolean, default: false, required: true },
   status: {
     type: 'String',
     required: true,
