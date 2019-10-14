@@ -264,13 +264,12 @@ const Footer = ({ isAuthenticated, ...props }) => (
       <Spacer />
       <WomensRefuge />
     </FooterContainer>
-          <MenuItem
-            href='https://voluntarily.atlassian.net/wiki'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-          </MenuItem>
-
+    <MenuItem
+      href='https://voluntarily.atlassian.net/wiki'
+      target='_blank'
+      rel='noopener noreferrer'
+    >
+    </MenuItem>
     {props.isAdmin && (
       <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
     )}
