@@ -12,36 +12,28 @@ class InterestTable extends Component {
     this.state = {
       filteredInfo: {},
       sortedInfo: {},
-      selectedRows: [], 
+      filterSelectedRows: [], 
     };
     // console.log(props);
   }
   
-  handleInviteButtonClicked(interest) {
-    // console.log(Array.isArray(interest))
+ async handleInviteButtonClicked(interest) {
     if(Array.isArray(interest)) {
-      // for (let interest of interest) await this.props.onInvite(interest)
-      Promise.all(interest.map( async row => {
-        console.log(row);
-        await this.props.onInvite(row);
-      }))
-      .then(res => {
-        console.log('Array of results', res)
-      })
-      .catch(err => {
-        console.error(err)
-      })
-    } else this.props.onInvite(interest);
+      console.log("interest", interest)
+      await Promise.all(interest.map( async row => await this.props.onInvite(row)))
+    } else {
+      await this.props.onInvite(interest);
+    }
   }
 
   async handleDeclineButtonClicked(interest) {
-    if(interest.length > 0) {
+    if(Array.isArray(interest)) {
       for (let interest of interest) await this.props.onDecline(interest)
     } else this.props.onDecline(interest);
   }
 
   async handleWithdrawInviteButtonClicked(interest) {
-    if(interest.length > 0) {
+    if(Array.isArray(interest)) {
       for (let interest of interest) await this.props.onWithdrawInvite(interest)
     } else this.props.onWithdrawInvite(interest);
   }
@@ -58,12 +50,15 @@ class InterestTable extends Component {
     // console.log(
     //   `selectedRowKeys: ${selectedRowKeys}`,
     //   "selectedRows: ",selectedRows);
-    this.setState({ selectedRowKeys, selectedRows });
+    // const initialStatus = selectedRows[0].status;
+    // const filterSelectedRows = selectedRows.filter( selectedRow => selectedRow.status === initialStatus);
+    const filterSelectedRows = selectedRows;
+    this.setState({ selectedRowKeys, filterSelectedRows });
   };
 
   render() {
     // console.log(this);
-    let { sortedInfo, filteredInfo, selectedRows } = this.state;
+    let { sortedInfo, filteredInfo, filterSelectedRows } = this.state;
     
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
@@ -218,20 +213,20 @@ class InterestTable extends Component {
     
 
     // here is group actions dropdown menu
-    const menu = (
+    const menu =(
       <Menu>
         <Menu.Item>
-          <a onClick={this.handleInviteButtonClicked.bind(this,selectedRows)}>
+          <a onClick={this.handleInviteButtonClicked.bind(this,filterSelectedRows)}>
             Invite
           </a>
         </Menu.Item>
         <Menu.Item>
-          <a onClick={this.handleWithdrawInviteButtonClicked.bind(this,selectedRows)}>
+          <a onClick={this.handleWithdrawInviteButtonClicked.bind(this,filterSelectedRows)}>
             Withdraw Invite
           </a>
         </Menu.Item>
         <Menu.Item>
-          <a onClick={this.handleDeclineButtonClicked.bind(this,selectedRows)}>
+          <a onClick={this.handleDeclineButtonClicked.bind(this,filterSelectedRows)}>
            Decline
           </a>
         </Menu.Item>
