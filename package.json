@@ -21,7 +21,8 @@
     "docker-test": "npm run docker-test:build && docker run vly-test:latest ",
     "remote": "APP_URL=http://$(ifconfig | grep -A 1 ‘en0’ | tail -1 | cut -d ' ' -f 2):3122 nodemon -w server -w package.json server/server.js",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "mongo": "mongod --dbpath ./data"
   },
   "dependencies": {
     "@babel/core": "^7.5.4",

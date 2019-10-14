@@ -132,13 +132,15 @@ export const ItemVolunteers = ({ volunteers }) => {
 }
 
 export const ItemSpace = ({ space }) =>
-  <ItemListing>
-    &nbsp;
-    <strong>
-      <FormattedMessage
-        id='act.detail.space'
-        defaultMessage='Space Required:'
-        description='label for space requirement'
-      />
-    </strong>&nbsp;&nbsp;&nbsp;{space}
-  </ItemListing>
+  space
+    ? <ItemListing>
+    🐘&nbsp;
+      <strong>
+        <FormattedMessage
+          id='act.detail.space'
+          defaultMessage='Space:'
+          description='label for space requirement'
+        />
+      </strong>&nbsp;&nbsp;&nbsp;{space}
+    </ItemListing>
+    : ''

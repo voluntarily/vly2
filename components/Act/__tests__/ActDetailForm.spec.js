@@ -19,9 +19,7 @@ const noact = {
   volunteers: 1,
   tags: []
 }
-// const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p`)
-// global.window = dom// setting a mock window global object so the upload image component is not complaining
-// global.SVGElement = Array
+
 // Suppress console warning messages from async validator as they mess up the test output
 const orginalWarn = console.warn
 
