@@ -15,7 +15,6 @@ class InterestTable extends Component {
   }
 
   async handleInviteButtonClicked (interest) {
-    console.log('interest', interest)
     if (Array.isArray(interest)) {
       for (const row of interest) await this.props.onInvite(row)
     } else {
@@ -24,7 +23,6 @@ class InterestTable extends Component {
   }
 
   async handleDeclineButtonClicked (interest) {
-    console.log('interest', interest)
     if (Array.isArray(interest)) {
       for (const row of interest) await this.props.onDecline(row)
     } else {
@@ -33,7 +31,6 @@ class InterestTable extends Component {
   }
 
   async handleWithdrawInviteButtonClicked (interest) {
-    console.log('handleWithdrawInviteButtonClicked', interest)
     if (Array.isArray(interest)) {
       for (const row of interest) await this.props.onDecline(row)
     } else {
@@ -54,7 +51,6 @@ class InterestTable extends Component {
 
   render () {
     let { sortedInfo, filteredInfo, selectedRows } = this.state
-    console.log('render', selectedRows)
     sortedInfo = sortedInfo || {}
     filteredInfo = filteredInfo || {}
     const columns = [
