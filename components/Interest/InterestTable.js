@@ -10,9 +10,8 @@ class InterestTable extends Component {
     this.state = {
       filteredInfo: {},
       sortedInfo: {},
-      filterSelectedRows: []
+      selectedRows: []
     }
-    // console.log(props);
   }
 
   async handleInviteButtonClicked (interest) {
@@ -34,7 +33,7 @@ class InterestTable extends Component {
   }
 
   async handleWithdrawInviteButtonClicked (interest) {
-    console.log('interest', interest)
+    console.log('handleWithdrawInviteButtonClicked', interest)
     if (Array.isArray(interest)) {
       for (const row of interest) await this.props.onDecline(row)
     } else {
@@ -47,23 +46,15 @@ class InterestTable extends Component {
       filteredInfo: filters,
       sortedInfo: sorter
     })
-    // console.log(this.state);
   };
 
   onSelectChange = (selectedRowKeys, selectedRows) => {
-    // console.log(
-    //   `selectedRowKeys: ${selectedRowKeys}`,
-    //   "selectedRows: ",selectedRows);
-    // const initialStatus = selectedRows[0].status;
-    // const filterSelectedRows = selectedRows.filter( selectedRow => selectedRow.status === initialStatus);
-    const filterSelectedRows = selectedRows
-    this.setState({ selectedRowKeys, filterSelectedRows })
+    this.setState({ selectedRowKeys, selectedRows })
   };
 
   render () {
-    // console.log(this);
-    let { sortedInfo, filteredInfo, filterSelectedRows } = this.state
-
+    let { sortedInfo, filteredInfo, selectedRows } = this.state
+    console.log('render', selectedRows)
     sortedInfo = sortedInfo || {}
     filteredInfo = filteredInfo || {}
     const columns = [
@@ -215,24 +206,31 @@ class InterestTable extends Component {
       // })
     }
 
-    // here is group actions dropdown menu
+    // put all selected rows' status together to form a selectedStatus array
+    const selectedStatus = selectedRows.map(row => row.status)
     const menu = (
       <Menu>
-        <Menu.Item>
-          <a onClick={this.handleInviteButtonClicked.bind(this, filterSelectedRows)}>
-            Invite
-          </a>
-        </Menu.Item>
-        <Menu.Item>
-          <a onClick={this.handleWithdrawInviteButtonClicked.bind(this, filterSelectedRows)}>
-            Withdraw Invite
-          </a>
-        </Menu.Item>
-        <Menu.Item>
-          <a onClick={this.handleDeclineButtonClicked.bind(this, filterSelectedRows)}>
-           Decline
-          </a>
-        </Menu.Item>
+        {selectedStatus.every(status => status === 'interested') && (
+          <Menu.Item>
+            <a onClick={this.handleInviteButtonClicked.bind(this, selectedRows)}>
+              Invite
+            </a>
+          </Menu.Item>
+        )}
+        {selectedStatus.every(status => status === 'invited') && (
+          <Menu.Item>
+            <a onClick={this.handleWithdrawInviteButtonClicked.bind(this, selectedRows)}>
+              Withdraw Invite
+            </a>
+          </Menu.Item>
+        )}
+        {!selectedStatus.includes('declined') && (
+          <Menu.Item>
+            <a onClick={this.handleDeclineButtonClicked.bind(this, selectedRows)}>
+              Decline
+            </a>
+          </Menu.Item>
+        )}
       </Menu>
     )
     return (
