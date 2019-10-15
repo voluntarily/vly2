@@ -8,7 +8,7 @@ import InterestTable from './InterestTable'
 import { FormattedMessage } from 'react-intl'
 
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
-import Loading from '../Loading';
+import Loading from '../Loading'
 class InterestSection extends Component {
   async componentDidMount () {
     // Get all interests
@@ -53,7 +53,7 @@ class InterestSection extends Component {
               defaultMessage='Interested Volunteers'
               description='label for interest table on op detail page'
             /></h2>
-      
+
           <InterestTable
             checkboxEnabled
             interests={this.props.interests.data}

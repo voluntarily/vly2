@@ -16,25 +16,27 @@ class InterestTable extends Component {
   }
 
   async handleInviteButtonClicked (interest) {
+    console.log('interest', interest)
     if (Array.isArray(interest)) {
-      console.log('interest', interest)
-      Promise.all(interest.map(row => this.props.onInvite(row)))
+      for (const row of interest) await this.props.onInvite(row)
     } else {
       this.props.onInvite(interest)
     }
   }
 
   async handleDeclineButtonClicked (interest) {
+    console.log('interest', interest)
     if (Array.isArray(interest)) {
-      Promise.all(interest.map(row => this.props.onDecline(row)))
+      for (const row of interest) await this.props.onDecline(row)
     } else {
       this.props.onDecline(interest)
     }
   }
 
   async handleWithdrawInviteButtonClicked (interest) {
+    console.log('interest', interest)
     if (Array.isArray(interest)) {
-      Promise.all(interest.map(row => this.props.onWithdrawInvite(row)))
+      for (const row of interest) await this.props.onDecline(row)
     } else {
       this.props.onWithdrawInvite(interest)
     }
