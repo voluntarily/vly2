@@ -60,7 +60,7 @@ class InterestArchivedSection extends Component {
   }
 }
 InterestArchivedSection.propTypes = {
-    opid: PropTypes.string.isRequired
+  opid: PropTypes.string.isRequired
 }
 
 export const InterestArchivedSectionTest = InterestArchivedSection

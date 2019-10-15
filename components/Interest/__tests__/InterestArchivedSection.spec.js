@@ -112,17 +112,15 @@ test.serial('mount the InterestSection with two interests', async t => {
   t.is(wrapper.find('tbody tr td').at(2).text().trim(), 'not attended')
 })
 
-
 test.serial('mount the InterestSection without opid', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
-  let interest
   myMock.getOnce(`${API_URL}/interestsArchived/?`, 404)
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
       <InterestArchivedSection />
     </Provider>
   )
-  t.is(wrapper.find('p').text(), 'No Data')   
+  t.is(wrapper.find('p').text(), 'No Data')
 })
