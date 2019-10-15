@@ -22,7 +22,7 @@ class InterestTable extends Component {
       console.log("interest", interest)
       await Promise.all(interest.map( async row => await this.props.onInvite(row)))
     } else {
-      await this.props.onInvite(interest);
+      this.props.onInvite(interest);
     }
   }
 
