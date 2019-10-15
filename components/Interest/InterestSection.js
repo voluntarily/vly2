@@ -8,7 +8,7 @@ import InterestTable from './InterestTable'
 import { FormattedMessage } from 'react-intl'
 
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
-import Loading from '../Loading';
+import Loading from '../Loading'
 class InterestSection extends Component {
   async componentDidMount () {
     // Get all interests
@@ -36,12 +36,10 @@ class InterestSection extends Component {
   }
 
   render () {
-    if (!(this.props.interests && this.props.interests.data)) {
+    if (!this.props.interests.sync) {
       return (
         <section>
-          <Loading>
-            <p>Loading interested volunteers...</p>
-          </Loading>
+          <Loading />
         </section>
       )
     } else {
