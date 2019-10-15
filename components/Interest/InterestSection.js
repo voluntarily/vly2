@@ -36,12 +36,10 @@ class InterestSection extends Component {
   }
 
   render () {
-    if (!(this.props.interests && this.props.interests.data)) {
+    if (!this.props.interests || !this.props.interests.sync) {
       return (
         <section>
-          <Loading>
-            <p>Loading interested volunteers...</p>
-          </Loading>
+          <Loading />
         </section>
       )
     } else {
