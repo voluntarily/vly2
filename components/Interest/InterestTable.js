@@ -27,7 +27,7 @@ class InterestTable extends Component {
   async handleDeclineButtonClicked (interest) {
     if (Array.isArray(interest)) {
       Promise.all(interest.map(row => this.props.onDecline(row)))
-    } else { 
+    } else {
       this.props.onDecline(interest)
     }
   }
