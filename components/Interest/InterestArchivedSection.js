@@ -6,6 +6,7 @@
 import React, { Component } from 'react'
 import InterestArchivedTable from './InterestArchivedTable'
 import { FormattedMessage } from 'react-intl'
+import PropTypes from 'prop-types'
 
 import reduxApi, { withInterestsArchived } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
@@ -57,6 +58,9 @@ class InterestArchivedSection extends Component {
       )
     }
   }
+}
+InterestArchivedSection.propTypes = {
+    opid: PropTypes.string.isRequired
 }
 
 export const InterestArchivedSectionTest = InterestArchivedSection
