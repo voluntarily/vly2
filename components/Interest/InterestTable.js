@@ -17,7 +17,7 @@ class InterestTable extends Component {
 
   async handleInviteButtonClicked (interest) {
     if (Array.isArray(interest)) {
-      for (let row of interest) await this.props.onDecline(row)
+      for (let row of interest) await this.props.onInvite(row)
     } else {
       this.props.onInvite(interest)
     }
