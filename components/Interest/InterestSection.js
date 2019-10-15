@@ -36,7 +36,7 @@ class InterestSection extends Component {
   }
 
   render () {
-    if (!this.props.interests.sync) {
+    if (!this.props.interests || !this.props.interests.sync) {
       return (
         <section>
           <Loading />
