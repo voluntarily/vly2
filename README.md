@@ -56,29 +56,17 @@ If you see the message "Please make sure Mongodb is installed and running!"  the
 
 Press control+C to exit the node application.
 
-#####################Running End to End Tests###################
+#######################Running BDD Tests#########################
 
-cd e2e_tests
-
-npm i @wdio/selenium-standalone-service --save 
-
-npx codeceptjs run --plugins allure      
-
+cd systemtest
+npx codeceptjs run --grep "@smoke" --plugins allure   
 allure serve output
 
-############### Set Up ################################ 
-
-//Refer https://codecept.io/basics
-
-npm install codeceptjs webdriverio --save-dev  
-
-npx codeceptjs init 
-
-npx codeceptjs landingPageTest 
 
 
+############### BDD Set Up ################################ 
 
-npx codeceptjs run --plugins allure      
+//Refer https://codecept.io/bdd
 
-allure serve output    
+
 
