@@ -68,7 +68,7 @@ export const EquipmentList = ({ equipment }) =>
       id='itemlist.equipment'
       defaultMessage='Equipment:'
       description='Equipment label for acts and ops'
-    />&nbsp;&nbsp;&nbsp;
+    />
     <ul>
       {equipment.map(item => <li>{item}</li>)}
     </ul>
