@@ -16,6 +16,14 @@ const ActivitySchema = new Schema({
     type: String,
     default: ''
   },
+  volunteers: {
+    type: Number,
+    default: 1
+  },
+  space: {
+    type: String,
+    default: ''
+  },
   time: {
     type: [Date]
   },

@@ -31,6 +31,8 @@ test.beforeEach('connect and add two activity entries', async (t) => {
   acts.map((act, index) => {
     act.owner = t.context.people[index]._id
     act.offerOrg = t.context.orgs[index]._id
+    // each act has two consecutive tags from the list
+    act.tags = [ t.context.tags[index]._id, t.context.tags[index + 1]._id ]
   })
 
   t.context.activities = await Activity.create(acts).catch((err) => console.error('Unable to create activities', err))
@@ -61,7 +63,7 @@ test.serial('Should correctly give count of all acts sorted by name', async t =>
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(4, got.length)
+  t.is(t.context.activities.length, got.length)
 
   t.is(got[0].name, acts[0].name)
 })
@@ -92,7 +94,7 @@ test.serial('Should correctly select just the titles and ids', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(got.length, 4)
+  t.is(got.length, t.context.activities.length)
   t.is(got[0].status, undefined)
   t.is(got[0].name, acts[0].name)
 })
@@ -106,7 +108,7 @@ test.serial('Should correctly give number of active activities', async t => {
     // .expect('Content-Length', '2')
   const got = res.body
 
-  t.deepEqual(2, got.length)
+  t.deepEqual(3, got.length)
 })
 
 test.serial('Should send correct data when queried against an _id', async t => {
@@ -181,8 +183,8 @@ test.serial('Should correctly give activity 3 when searching by "garden"', async
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(acts[2].name, got[0].name)
   t.is(1, got.length)
+  t.is(acts[3].name, got[0].name)
 })
 
 // Searching for something in the description (case insensitive)
@@ -195,6 +197,30 @@ test.serial('Should correctly give activity 2 when searching by "Algorithms"', a
   const got = res.body
   t.is(acts[1].description, got[0].description)
   t.is(1, got.length)
+})
+
+test.serial('Should correctly give activity 1 when searching by Organization', async t => {
+  const targetOrg = t.context.orgs[1].name // OMGTech
+  const res = await request(server)
+    .get(`/api/activities?search=${targetOrg}`)
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  t.is(got[0].name, t.context.activities[1].name)
+  t.is(1, got.length)
+})
+
+test.serial('Should correctly give 2 activities when searching by Tags', async t => {
+  const res = await request(server)
+    .get(`/api/activities?search=${t.context.tags[2].tag}`)
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  t.is(got.length, 2)
+  t.is(got[0].name, acts[1].name)
+  t.is(got[1].name, acts[2].name)
 })
 
 test.serial('Should find no matches', async t => {
