@@ -10,11 +10,13 @@ module.exports = options => (req, res, next) => {
   glob.sync(pattern).forEach(abilityRuleBuilderPath => {
     const ruleBuilder = require(abilityRuleBuilderPath)
     const rules = ruleBuilder(req.session)
-    userRoles.forEach(role => {
-      if (rules[role] == null) return
-      // TODO: [VP-277] when concat roles we will get duplicates - use set.
-      allRules = allRules.concat(rules[role])
-    })
+    for (const role of userRoles) {
+      if (rules[role] == null) continue
+      if (role) {
+        allRules = allRules.concat(rules[role])
+      }
+      if (role === 'admin') break
+    }
   })
   req.ability = new Ability(allRules)
   next()
