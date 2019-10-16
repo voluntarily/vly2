@@ -5,6 +5,7 @@ const SchemaName = 'Person'
 
 // WIKI rules : https://voluntarily.atlassian.net/wiki/spaces/VP/pages/18677761/API+Access+Security+Rules
 const ruleBuilder = session => {
+  // https://github.com/stalniy/casl/issues/229
   // block all api call for non log in user
   const anonAbilities = [{
     subject: SchemaName,
@@ -67,7 +68,6 @@ const ruleBuilder = session => {
     [Role.ANON]: anonAbilities,
     [Role.VOLUNTEER_PROVIDER]: allAbilities,
     [Role.OPPORTUNITY_PROVIDER]: allAbilities,
-    [Role.TESTER]: adminAbilities, // Confusing but the wiki is not clear about tester ability
     [Role.ADMIN]: adminAbilities,
     [Role.ACTIVITY_PROVIDER]: allAbilities,
     [Role.ALL]: allAbilities,

@@ -1,5 +1,4 @@
 const Person = require('./person')
-const { isArray } = require('lodash')
 const pick = require('lodash.pick')
 const sanitizeHtml = require('sanitize-html')
 const Action = require('../../services/abilities/ability.constants')
@@ -21,6 +20,7 @@ function getPersonBy (req, res) {
     if (!got) { // person does not exist
       return res.status(404).send({ error: 'person not found' })
     }
+
     res.json(removeField(req, got))
   })
 }
@@ -28,7 +28,7 @@ function getPersonBy (req, res) {
 /* return a list of people matching the search criteria
   if no params given then show all permitted.
 */
-function listPeople (req, res) {
+function listPeople (req, res, next) {
   let query = {}
   let sort = 'nickname'
   let select = ''
@@ -39,7 +39,8 @@ function listPeople (req, res) {
 
     Person.find(query, select).sort(sort)
       .then(got => {
-        res.json(removeField(req, got))
+        req.crudify = { result: got }
+        next()
       })
   } catch (e) {
     console.error('Bad request', req.query)
@@ -52,9 +53,6 @@ function removeField (request, queryResult) {
   const { me } = request.session
   const authorizedFields = Person.accessibleFieldsBy(request.ability, action)
   let filteredResult
-  if (isArray(queryResult)) {
-    filteredResult = queryResult.map(eachResult => pick(eachResult, authorizedFields))
-  }
   if (me != null) {
     filteredResult = queryResult._id.toString() === me._id.toString() ? me : pick(queryResult, authorizedFields)
   }
