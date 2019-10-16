@@ -58,6 +58,5 @@ const personSchema = new Schema({
 personSchema.plugin(idvalidator)
 personSchema.plugin(accessibleFieldsPlugin)
 personSchema.plugin(accessibleRecordsPlugin)
-// personSchema.plugin(accessibleFieldsPlugin)
 
 module.exports = mongoose.model(SchemaName, personSchema)
