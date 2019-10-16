@@ -77,16 +77,19 @@ test('Can remove item', t => {
 })
 
 test('Values are persisted back to the form', t => {
+    // Create a form with 1 item that we can type into
     const form = mockForm(['']);
 
     const wrapper = shallowWithIntl(
         <DynamicFieldSet form={form} field="test" />
     );
 
+    // Type "BBQ" into the input box and raise the change event
     const firstInput = wrapper.find('Input');
     firstInput.instance.value = 'BBQ';
     firstInput.simulate('change', { target: firstInput.instance });
 
+    // Ensure the value was listened for and stored back onto the associated form
     t.is(form.getFieldValue().length, 1);
     t.is(form.getFieldValue()[0], 'BBQ');
 })
