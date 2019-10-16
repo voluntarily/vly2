@@ -7,10 +7,11 @@ const RemoveItemButton = styled.button`
   background: none;
   border: none;
   width: 32px;
+  margin-left: 6px;
   cursor: pointer;
 `;
 const ItemInputWithDelete = styled(Input)`
-  width: calc(100% - 32px);
+  width: calc(100% - 38px);
 `;
 
 export class DynamicFieldSet extends React.Component {
