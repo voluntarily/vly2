@@ -22,7 +22,7 @@ test('No items', t => {
         <DynamicFieldSet form={form} field="test" />
     );
 
-    t.is(wrapper.find('Form.Item').length, 0)
+    t.is(wrapper.find('Input').length, 0)
 })
 
 test('One item', t => {
@@ -44,7 +44,7 @@ test('Can add item', t => {
 
     t.is(wrapper.find('Input').length, 0)
     
-    wrapper.find('Button').first().simulate('click');
+    wrapper.find('.ant-btn-primary').first().simulate('click');
     wrapper.setProps({}); // Trigger render (note: .update() does not work)
 
     t.is(wrapper.find('Input').length, 1)
@@ -61,8 +61,8 @@ test('Can remove item', t => {
     t.is(wrapper.find('Input').length, 0)
     
     // Add two items
-    wrapper.find('Button').first().simulate('click',);
-    wrapper.find('Button').first().simulate('click');
+    wrapper.find('.ant-btn-primary').first().simulate('click');
+    wrapper.find('.ant-btn-primary').first().simulate('click');
     wrapper.setProps({}); // Trigger render (note: .update() does not work)
 
     // Ensure there are two delete buttons
