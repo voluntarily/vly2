@@ -174,7 +174,6 @@ class ActDetailForm extends Component {
     )
     const actEquipment = (
       <span>
-        {' '}
         <FormattedMessage
           id='actEquipment'
           defaultMessage='Equipment'
