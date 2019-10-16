@@ -16,13 +16,14 @@ const ItemInputWithDelete = styled(Input)`
 
 export class DynamicFieldSet extends React.Component {
   /**
+   * Gets the set of field values from the associated form.
    * @returns {string[]} The list of values.
    */
   getValues() {
     return this.props.form.getFieldValue(this.props.field);
   }
   /**
-   * 
+   * Sets the set of field values on the associated form.
    * @param {string[]} values The set of values.
    */
   setValues(values) {
