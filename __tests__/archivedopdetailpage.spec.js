@@ -62,7 +62,7 @@ test('archivedOpDetailPage should have an OpDetail component', t => {
   const RoutedArchivedOpDetailPage = withMockRoute(ArchivedOpDetailPageWithArchivedOps)
   const myMock = fetchMock.sandbox()
   myMock.get(API_URL + '/archivedOpportunities/' + archivedOpportunities[1]._id, { body: { status: 200 } })
-  myMock.get(API_URL + '/interests/?op=' + archivedOpportunities[1]._id, { body: { status: 200 } })
+  myMock.get(API_URL + '/interestsArchived/?op=' + archivedOpportunities[1]._id, { body: { status: 200 } })
 
   reduxApi.use('fetch', adapterFetch(myMock))
   const wrapper = mountWithIntl(
@@ -83,7 +83,7 @@ test('archivedOpDetailPage should have an InterestSection component', t => {
   const RoutedArchivedOpDetailPage = withMockRoute(ArchivedOpDetailPageWithArchivedOps)
   const myMock = fetchMock.sandbox()
   myMock.get(API_URL + '/archivedOpportunities/' + archivedOpportunities[1]._id, { body: { status: 200 } })
-  myMock.get(API_URL + '/interests/?op=' + archivedOpportunities[1]._id, { body: { status: 200 } })
+  myMock.get(API_URL + '/interestsArchived/?op=' + archivedOpportunities[1]._id, { body: { status: 200 } })
 
   reduxApi.use('fetch', adapterFetch(myMock))
   const wrapper = mountWithIntl(
@@ -92,7 +92,7 @@ test('archivedOpDetailPage should have an InterestSection component', t => {
     </Provider>
   )
 
-  t.is(wrapper.find('InterestSection').length, 1)
+  t.is(wrapper.find('InterestArchivedSection').length, 1)
 })
 
 test('archivedOpDetailPage should display OpUnavalablePage when no opportunity can be retrieved', t => {

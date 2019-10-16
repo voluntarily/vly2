@@ -1,6 +1,6 @@
 import { Divider } from 'antd'
 import { Helmet } from 'react-helmet'
-import InterestSection from '../../components/Interest/InterestSection' // TODO Introduce archived interest section
+import InterestArchivedSection from '../../components/Interest/InterestArchivedSection'
 import OpDetail from '../../components/Op/OpDetail'
 import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
@@ -29,7 +29,6 @@ export class ArchivedOpDetailPage extends OpDetailPage {
   retrieveOpportunity () {
     return {
       ...this.props.archivedOpportunities.data[0],
-      // tags: this.props.opportunities.data[0].tags.map(op => op.tag),
       startDate: this.props.archivedOpportunities.data[0].date[0],
       endDate: this.props.archivedOpportunities.data[0].date[1]
     }
@@ -56,7 +55,7 @@ export class ArchivedOpDetailPage extends OpDetailPage {
           op={op}
         />
         <Divider />
-        <InterestSection opid={op._id} />
+        <InterestArchivedSection opid={op._id} />
       </FullPage>
     )
   }
