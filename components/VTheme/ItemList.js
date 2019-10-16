@@ -62,6 +62,18 @@ export const ItemStatus = ({ status }) =>
     {sanitize(status)}
   </ItemListing>
 
+export const EquipmentList = ({ equipment }) =>
+  <ItemListing>
+    <FormattedMessage
+      id='itemlist.equipment'
+      defaultMessage='Equipment:'
+      description='Equipment label for acts and ops'
+    />&nbsp;&nbsp;&nbsp;
+    <ul>
+      {equipment.map(item => <li>{item}</li>)}
+    </ul>
+  </ItemListing>
+
 export const ItemIdLine = ({ item, path }) =>
   <ItemListing>
     <IdLine item={item} path={path} />

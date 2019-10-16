@@ -7,6 +7,7 @@ import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { H3Bold, P } from '../VTheme/VTheme'
 import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
+import { DynamicFieldSet } from '../DynamicFieldSet/DynamicFieldSet'
 
 import {
   DescriptionContainer,
@@ -100,6 +101,7 @@ class ActDetailForm extends Component {
         act.resource = values.resource
         act.volunteers = !this.state.input1Disabled ? this.state.totalVolunteerRequired : (1 / this.state.volunteerPerStudent)
         act.space = values.space
+        act.equipment = values.equipment;
         act.description = values.description
         act.offerOrg = values.offerOrg && values.offerOrg.key
         act.imgUrl = values.imgUrl
@@ -166,6 +168,20 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML or Markdown here.'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+    const actEquipment = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='actEquipment'
+          defaultMessage='Equipment'
+          description='activity equipment label in ActDetail Form'
+        />
+        &nbsp;
+        <Tooltip title='Make a list of any equipment or materials needed for this activity.'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -403,7 +419,48 @@ class ActDetailForm extends Component {
               </ShortInputContainer>
             </InputContainer>
           </FormGrid>
+
+          <Divider/>
+
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <H3Bold>
+                  <FormattedMessage
+                    id='actDetailForm.addEquipment.title'
+                    defaultMessage='Do you need any equipment or materials for this opportunity? (Optional)'
+                    description='subtitle for add equipment section in act detail form'
+                  />
+                </H3Bold>
+              </TitleContainer>
+              <P>
+                <FormattedMessage
+                  id='actDetailForm.addEquipment.instructions'
+                  defaultMessage="Let volunteers and businesses know what you need to make the opportunity happen."
+                  description='instructions to add equipment in act detail form'
+                />
+              </P>
+            </DescriptionContainer>
+            <InputContainer>
+              <MediumInputContainer>
+                <Form.Item label={actEquipment}>
+                  <DynamicFieldSet form={this.props.form}
+                    field="equipment"
+                    placeholder={'Equipment description'}
+                    validationMessage={
+                      <FormattedMessage
+                        id='actDetailForm.addEquipment.validationMessage'
+                        defaultMessage={`Add an equipment or remove field`}
+                      />
+                    }
+                    addItemText="Add equipment" />
+                </Form.Item>
+              </MediumInputContainer>
+            </InputContainer>
+          </FormGrid>
+
           <Divider />
+          
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -517,6 +574,7 @@ ActDetailForm.propTypes = {
     resource: PropTypes.string,
     volunteers: PropTypes.number,
     space: PropTypes.string,
+    equipment: PropTypes.Array,
     time: PropTypes.Array,
     duration: PropTypes.string,
     status: PropTypes.string,
@@ -581,8 +639,8 @@ export default Form.create({
       tags: Form.createFormField({ ...props.act.tags, value: props.act.tags }),
       totalVolunteerRequired: Form.createFormField({ ...totalVolunteerRequired, value: totalVolunteerRequired }),
       volunteerPerStudent: Form.createFormField({ ...volunteerPerStudent, value: volunteerPerStudent }),
-      space: Form.createFormField({ ...props.act.space, value: props.act.space })
-
+      space: Form.createFormField({ ...props.act.space, value: props.act.space }),
+      equipment: Form.createFormField({...props.act.equipment, value: props.act.equipment })
     }
   }
 
