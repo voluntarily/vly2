@@ -1,0 +1,17 @@
+extends ../theme/layout.pug
+block tagline
+  span There's some interest
+  
+block copybig
+  a( href=op.href) #{op.name} 
+
+block copy
+  p Kia ora #{to.nickname},
+  p #{from.name} just expressed interest in your opportunity with comment "#{comment}"
+  p Review them on the opportunity page and send them an invite if they match your requirements.
+  p Ngā mihi, Voluntarily.nz
+
+block copybutton
+  a(href=op.href class='mobile-button') Opportunity
+  span &nbsp; 
+  a(href=to.href class='mobile-button') Profile

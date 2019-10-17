@@ -16,11 +16,9 @@ const personSchema = new Schema({
   about: { type: 'String', default: '' }, // person description
   location: { type: 'String', default: '' },
   phone: { type: 'String', required: false }, // +64 27 7031007
-  gender: { type: 'String', default: '' }, // whatever they want to write.
+  imgUrl: { type: 'String', default: '/static/img/person/person.png' }, // url to image
   pronoun: { type: 'Object', default: { subject: 'they', object: 'them', possessive: 'their' } },
   language: { type: 'String', default: 'EN', lowercase: true }, // en, mi, fr etc
-  imgUrl: { type: 'String', default: '' }, // url to image
-  avatar: { type: 'String', default: '' }, // deprecated use imgUrl
   website: { type: 'String', required: false },
   facebook: { type: 'String', required: false },
   twitter: { type: 'String', required: false },
@@ -46,6 +44,7 @@ const personSchema = new Schema({
     enum: ['active', 'inactive', 'hold']
   },
   dateAdded: { type: 'Date', default: Date.now, required: true },
+  href: String,
   tags: [
     {
       type: Schema.Types.ObjectId,

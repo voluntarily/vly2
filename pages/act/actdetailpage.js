@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl'
 import ActDetail from '../../components/Act/ActDetail'
 import ActDetailForm from '../../components/Act/ActDetailForm'
 import Loading from '../../components/Loading'
-import { FullPage } from '../../components/VTheme/VTheme'
+import { FullPage, Spacer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withActs, withMembers } from '../../lib/redux/reduxApi.js'
 import { Role } from '../../server/services/authorize/role'
@@ -173,9 +173,13 @@ export class ActDetailPage extends Component {
       } else {
         content = <div>
           {createOpportunitySection()}
-          { canEdit && <Button id='editActBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
-            <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
-          </Button>}
+          { canEdit &&
+            <Button id='editActBtn' style={{ float: 'right' }}
+              type='primary' shape='round'
+              onClick={() => this.setState({ editing: true })} >
+              <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
+            </Button>}
+          <Spacer />
           <ActDetail act={act} />
         </div>
       }

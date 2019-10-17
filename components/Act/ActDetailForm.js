@@ -1,4 +1,4 @@
-import { Button, Divider, Form, Icon, Input, Tooltip } from 'antd'
+import { Button, Divider, Form, Icon, Input, Tooltip, Radio } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -28,13 +28,60 @@ const isTest = (process.env.NODE_ENV === 'test')
 class ActDetailForm extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      input1Disabled: true,
+      input2Disabled: true,
+      option1: false,
+      option2: false,
+      totalVolunteerRequired: 1,
+      volunteerPerStudent: 1
+    }
+
     this.setImgUrl = this.setImgUrl.bind(this)
+    this.change = this.change.bind(this)
   }
 
   componentDidMount () {
     // Call validateFields here to disable the submit button when on a blank form.
     // empty callback supresses a default which prints to the console.
     this.props.form.validateFields(() => { })
+    if (this.props.act.volunteers === 0) {
+      this.actRadio('option1')
+    } else
+    if (this.props.act.volunteers < 1) {
+      this.actRadio('option2')
+    } else {
+      this.actRadio('option1')
+    }
+  }
+  actRadio = (event) => {
+    if (event === 'option1') {
+      this.setState({
+        input1Disabled: false,
+        input2Disabled: true,
+        option1: true,
+        option2: false
+      })
+    } else {
+      this.setState({
+        input2Disabled: false,
+        input1Disabled: true,
+        option1: false,
+        option2: true
+      })
+    }
+  }
+  change = (event) => {
+    const textname = event.target.name
+    if (textname === 'resourceinput1') {
+      this.setState({
+        totalVolunteerRequired: event.target.value
+      })
+    } else {
+      this.setState({
+        volunteerPerStudent: event.target.value
+      })
+    }
   }
 
   setImgUrl = (value) => {
@@ -43,7 +90,6 @@ class ActDetailForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const act = this.props.act
@@ -52,6 +98,8 @@ class ActDetailForm extends Component {
         act.subtitle = values.subtitle
         act.duration = values.duration
         act.resource = values.resource
+        act.volunteers = !this.state.input1Disabled ? this.state.totalVolunteerRequired : (1 / this.state.volunteerPerStudent)
+        act.space = values.space
         act.description = values.description
         act.offerOrg = values.offerOrg && values.offerOrg.key
         act.imgUrl = values.imgUrl
@@ -107,6 +155,7 @@ class ActDetailForm extends Component {
         </Tooltip>
       </span>
     )
+
     const actResource = (
       <span>
         {' '}
@@ -117,6 +166,20 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML or Markdown here.'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+    const actSpace = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='actSpace'
+          defaultMessage='Space Requirement'
+          description='activity space label in ActDetail Form'
+        />
+        &nbsp;
+        <Tooltip title='How much space is required to run an activity? Indoor or Outdoor activity?'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -284,7 +347,6 @@ class ActDetailForm extends Component {
                     description='section subtitle on actdetail form for resources'
                   />
                 </H3Bold>
-
               </TitleContainer>
               <P>
                 <FormattedMessage
@@ -313,12 +375,32 @@ class ActDetailForm extends Component {
                 <Form.Item label={actResource}>
                   {getFieldDecorator('resource')(<Input placeholder='5 people, classroom, projector' />)}
                 </Form.Item>
+                <Form.Item>
+                  <Radio name='volunteer' value='option1' checked={this.state.option1} onClick={this.actRadio.bind(this, 'option1')}>
+                    <FormattedMessage
+                      id='act.detail.volunteercount'
+                      defaultMessage='Total number of volunteers required'
+                      description='label for field volunteer numbers required'
+                    />
+                  </Radio>
+                  {getFieldDecorator('totalVolunteerRequired')(<Input name='resourceinput1' onChange={this.change}
+                    disabled={this.state.input1Disabled} placeholder='Select from 1 to 100' />)}
+                </Form.Item>
+                <Form.Item>
+                  <Radio name='volunteer' value='option2' checked={this.state.option2} onClick={this.actRadio.bind(this, 'option2')}>
+                    <FormattedMessage
+                      id='act.detailform.volunteerratio'
+                      defaultMessage='Number of students per volunteer'
+                      description='label for field number of students per volunteer'
+                    />
+                  </Radio>
+                  {getFieldDecorator('volunteerPerStudent')(<Input name='resourceinput2' onChange={this.change}
+                    disabled={this.state.input2Disabled} placeholder='Specify the number of students' />)}
+                </Form.Item>
+                <Form.Item label={actSpace}>
+                  {getFieldDecorator('space')(<Input name='space' placeholder='40 sqm' />)}
+                </Form.Item>
               </ShortInputContainer>
-              <ul>
-                <li>TODO: [VP-301] list the number of volunteers required e.g. 1 adult for 5 children, or 20 people</li>
-                <li>TODO: [VP-302] list any equipment required for an activity</li>
-                <li>TODO: [VP-303] list any space requirements for an activity</li>
-              </ul>
             </InputContainer>
           </FormGrid>
           <Divider />
@@ -433,6 +515,8 @@ ActDetailForm.propTypes = {
     subtitle: PropTypes.string,
     imgUrl: PropTypes.string,
     resource: PropTypes.string,
+    volunteers: PropTypes.number,
+    space: PropTypes.string,
     time: PropTypes.Array,
     duration: PropTypes.string,
     status: PropTypes.string,
@@ -469,6 +553,17 @@ ActDetailForm.propTypes = {
 export default Form.create({
   name: 'activity_detail_form',
   mapPropsToFields (props) {
+    let totalVolunteerRequired
+    let volunteerPerStudent
+    if (props.act.volunteers === 0) {
+      totalVolunteerRequired = 0
+    } else if (props.act.volunteers >= 1) {
+      totalVolunteerRequired = props.act.volunteers
+      // console.log(totalVolunteerRequired)
+    } else if (props.act.volunteers < 1) {
+      volunteerPerStudent = Math.round(1 / props.act.volunteers)
+      // console.log(volunteerPerStudent)
+    }
     return {
       name: Form.createFormField({ ...props.act.name, value: props.act.name }),
       subtitle: Form.createFormField({ ...props.act.subtitle, value: props.act.subtitle }),
@@ -483,7 +578,11 @@ export default Form.create({
       time: Form.createFormField({ ...props.act.time, value: props.act.time }),
       resource: Form.createFormField({ ...props.act.resource, value: props.act.resource }),
       status: Form.createFormField({ ...props.act.status, value: props.act.status }),
-      tags: Form.createFormField({ ...props.act.tags, value: props.act.tags })
+      tags: Form.createFormField({ ...props.act.tags, value: props.act.tags }),
+      totalVolunteerRequired: Form.createFormField({ ...totalVolunteerRequired, value: totalVolunteerRequired }),
+      volunteerPerStudent: Form.createFormField({ ...volunteerPerStudent, value: volunteerPerStudent }),
+      space: Form.createFormField({ ...props.act.space, value: props.act.space })
+
     }
   }
 

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
 import { Grid, P, Spacer } from '../VTheme/VTheme'
 import links from './FooterMenu'
-import WomensRefuge from './WomensRefuge.js'
+// import WomensRefuge from './WomensRefuge.js'
 
 const getAllowedLinks = isAuthenticated =>
   links()
@@ -128,10 +128,12 @@ const Footer = ({ isAuthenticated, ...props }) => (
           />
           :&nbsp;
           <FormattedMessage
-            id='revision'
+            id='revision' // set in server.js
             defaultMessage='local-build'
-            description='Source code revision, auto generalted.'
-          />
+            description='Source code revision, auto generated.'
+          >
+            {txt => <a href={'https://github.com/voluntarily/vly2/commit/' + txt.split(/[ \- _ ]+/)[0]} target='_blank'>{txt}</a> }
+          </FormattedMessage>
         </P>
       </FooterText>
       <Spacer />
@@ -251,12 +253,24 @@ const Footer = ({ isAuthenticated, ...props }) => (
           >
             Developer resources
           </MenuItem>
+          <br />
+          <MenuItem
+            href='/terms'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Terms and Conditions
+          </MenuItem>
         </FooterGridItem>
       </Grid>
       <Spacer />
-      <WomensRefuge />
+      {/* <WomensRefuge /> */}
     </FooterContainer>
-
+    <MenuItem
+      href='https://voluntarily.atlassian.net/wiki'
+      target='_blank'
+      rel='noopener noreferrer'
+    />
     {props.isAdmin && (
       <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
     )}

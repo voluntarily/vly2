@@ -8,6 +8,7 @@ const completeConfig = {
   default: {
     appName,
     serverPort,
+    env: process.env.NODE_ENV || 'development',
     databaseUrl: process.env.MONGODB_URI || `mongodb://localhost/${databaseName}`,
     jsonOptions: {
       headers: {

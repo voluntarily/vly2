@@ -9,7 +9,7 @@ const opportunitySchema = new Schema({
   name: String, // "Growing in the garden",
   title: String, // deprecated - use name instead
   subtitle: String, // "Growing digitally in the garden",
-  imgUrl: String, // "https://image.flaticon.com/icons/svg/206/206857.svg",
+  imgUrl: { type: 'String', required: false, default: '/static/img/opportunity/opportunity.png' }, // "https://image.flaticon.com/icons/svg/206/206857.svg",
   description: String, // "Project to grow something in the garden",
   duration: String, // "15 Minutes",
   location: String, // "Newmarket, Auckland",
@@ -29,6 +29,7 @@ const opportunitySchema = new Schema({
   offerOrg: { type: Schema.Types.ObjectId, ref: 'Organisation', required: false },
   requestor: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
   dateAdded: { type: 'Date', default: Date.now, required: true },
+  href: String,
   tags: [
     {
       type: Schema.Types.ObjectId, ref: 'Tag'

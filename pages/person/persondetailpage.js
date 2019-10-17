@@ -29,12 +29,13 @@ const blankPerson = {
     'object': '',
     'possessive': ''
   },
-  imgUrl: '',
+  imgUrl: '/static/img/person/person.png',
   website: null,
   facebook: null,
   twitter: null,
   role: ['volunteer'],
-  status: 'inactive'
+  status: 'inactive',
+  tags: []
 }
 
 export class PersonDetailPage extends Component {
