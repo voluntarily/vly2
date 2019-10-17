@@ -7,7 +7,7 @@ const ActivitySchema = new Schema({
   name: String, // "Growing in the garden",
   title: String, // deprecated - use name instead
   subtitle: String, // "Growing digitally in the garden",
-  imgUrl: String, // "https://image.flaticon.com/icons/svg/206/206857.svg",
+  imgUrl: { type: 'String', required: true, default: '../../../static/img/activity/activity.png' },
   description: String, // "Project to grow something in the garden",
   duration: String, // "15 Minutes",
   offerOrg: { type: Schema.Types.ObjectId, ref: 'Organisation' },

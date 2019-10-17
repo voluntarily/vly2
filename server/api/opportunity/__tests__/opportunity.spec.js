@@ -199,6 +199,32 @@ test.serial('Should not add an opportunity with invalid tag ids', async t => {
   t.is(null, savedOpportunity)
 })
 
+test.serial('Should correctly add an opportunity with default image', async t => {
+  t.plan(3)
+  const op = {
+    name: 'The last 2000 metres',
+    subtitle: 'Launching into space step 5',
+    description: 'Project to build a simple rocket that will reach 400m',
+    duration: '4 hours',
+    location: 'Albany, Auckland',
+    status: OpportunityStatus.DRAFT,
+    tags: t.context.tags,
+    requestor: t.context.people[0]._id
+  }
+
+  const res = await request(server)
+    .post('/api/opportunities')
+    .send(op)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
+  t.is(res.status, 200)
+
+  const savedOpportunity = await Opportunity.findOne({ name: op.name }).exec()
+  t.is(savedOpportunity.subtitle, 'Launching into space step 5')
+  t.is(savedOpportunity.imgUrl, '/static/img/opportunity/opportunity.png')
+})
+
 test.serial('Should create tags that dont have the _id property', async t => {
   const tagName = 'noid'
   const tags = [

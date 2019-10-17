@@ -186,8 +186,8 @@ test.serial('Should send correct data when queried against an id', async t => {
   t.is(res.body.name, p.name)
 })
 
-test.serial('Should correctly add a organisation', async t => {
-  t.plan(3)
+test.serial('Should correctly add an organisation', async t => {
+  t.plan(4)
 
   const res = await request(server)
     .post('/api/organisations')
@@ -210,6 +210,9 @@ test.serial('Should correctly add a organisation', async t => {
     // can find by email using await
     const saved = await Organisation.findOne({ slug: p.slug }).exec()
     t.is(saved.name, p.name)
+
+    // organisation has been given the default image
+    t.is(saved.imgUrl, '/static/img/organisation/organisation.png')
   } catch (err) {
     console.error(err)
   }

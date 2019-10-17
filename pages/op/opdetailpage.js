@@ -18,7 +18,7 @@ import OpUnavailablePage from './opunavailablepage'
 const blankOp = {
   name: '',
   subtitle: '',
-  imgUrl: '',
+  imgUrl: '/static/img/opportunity/opportunity.png',
   duration: '',
   location: 'Online',
   status: 'inactive',
