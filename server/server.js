@@ -66,7 +66,9 @@ const appReady = app.prepare().then(() => {
     req.localeDataScript = getLocaleDataScript(req.locale)
     // req.messages = dev ? {} : getMessages(req.locale)
     req.messages = getMessages(req.locale)
-    req.messages.revision = process.env.REVISION || 'local_build'
+    const { gitDescribeSync } = require('git-describe')
+    const gitInfo = gitDescribeSync()
+    req.messages.revision = process.env.REVISION || gitInfo.raw
     next()
   })
 
