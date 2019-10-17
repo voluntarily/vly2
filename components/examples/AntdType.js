@@ -1,19 +1,14 @@
 /* AntD Typography Test
 */
-import React from 'react'
 import { Typography } from 'antd'
+import React from 'react'
 
 const { Paragraph, Title } = Typography
 
 class AntdType extends React.Component {
   state = {
     str: 'This is an editable text.'
-  };
-
-  // onChange = (str) => {
-  //   console.log('Content change:', str);
-  //   this.setState({ str });
-  // };
+  }
 
   render () {
     return (

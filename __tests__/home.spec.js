@@ -7,6 +7,12 @@ import { Provider } from 'react-redux'
 import objectid from 'objectid'
 import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
 import people from '../server/api/person/__tests__/person.fixture'
+import archivedOpportunities from '../server/api/archivedOpportunity/__tests__/archivedOpportunity.fixture'
+import reduxApi from '../lib/redux/reduxApi'
+import adapterFetch from 'redux-api/lib/adapters/fetch'
+import thunk from 'redux-thunk'
+import { API_URL } from '../lib/apiCaller'
+const { sortedLocations, regions } = require('../server/api/location/locationData')
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
@@ -15,29 +21,39 @@ test.before('Setup fixtures', (t) => {
   // setup list of opportunities, I am owner for the first one
   ops.map((op, index) => {
     op._id = objectid().toString()
-    op.requestor = people[index]._id
+    op.requestor = people[index]
   })
+  // take ownership of 2nd event and set to done
+  archivedOpportunities[1].requestor = me
+  archivedOpportunities[1].status = 'completed'
 
   // setup list of interests, i'm interested in first 5 ops
-  const interestStates = [ 'interested', 'invited', 'committed', 'declined', 'completed', 'cancelled' ]
+  const interestStates = ['interested', 'invited', 'committed', 'declined', 'completed', 'cancelled']
   const interests = ops.filter(op => op.requestor !== me._id).map((op, index) => {
     return ({
       _id: objectid().toString(),
       person: me._id,
       opportunity: op,
-      comment: `${index}: ${me.nickname} is interested in ${op.title}`,
+      comment: `${index}: ${me.nickname} is interested in ${op.name}`,
       status: index < interestStates.length ? interestStates[index] : 'interested'
     })
   })
+
+  const recommendedOps = {
+    basedOnLocation: ops,
+    basedOnSkills: []
+  }
 
   t.context = {
     me,
     people,
     ops,
-    interests
+    archivedOpportunities,
+    interests,
+    recommendedOps
   }
 
-  t.context.mockStore = configureStore()(
+  t.context.mockStore = configureStore([thunk])(
     {
       session: {
         isAuthenticated: true,
@@ -57,6 +73,35 @@ test.before('Setup fixtures', (t) => {
         loading: false,
         data: interests,
         request: null
+      },
+      members: {
+        sync: false,
+        syncing: false,
+        loading: false,
+        data: [],
+        request: null
+      },
+      archivedOpportunities: {
+        sync: false,
+        syncing: false,
+        loading: false,
+        data: archivedOpportunities,
+        request: null
+      },
+      recommendedOps: {
+        sync: false,
+        syncing: false,
+        loading: false,
+        data: [recommendedOps],
+        request: null
+      },
+      locations: {
+        data: [
+          {
+            regions: regions,
+            locations: sortedLocations
+          }
+        ]
       }
     }
   )
@@ -66,7 +111,7 @@ test.after.always(() => {
 
 })
 
-test('render volunteer home page - Active tab', t => {
+test.serial('render volunteer home page - Active tab', t => {
   const props = {
     me: t.context.me
   }
@@ -75,31 +120,28 @@ test('render volunteer home page - Active tab', t => {
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
     </Provider>)
-  t.is(wrapper.find('h1').first().text(), t.context.me.nickname)
-  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
+  t.is(wrapper.find('h1').first().text(), t.context.me.nickname + "'s Requests")
+  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Upcoming requests')
   t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Active Requests')
-  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 11)
+  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 2)
 })
 
-test('render volunteer home page - History tab', t => {
+test.serial('render volunteer home page - History tab', t => {
   const props = {
     me: t.context.me
   }
-  // take ownership of 2nd event and set to done
-  t.context.ops[1].requestor = t.context.me._id
-  t.context.ops[1].status = 'done'
 
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(1).simulate('click')
-  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'History')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h2').first().text(), 'Completed Requests')
+  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Past requests')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Completed Requests')
   t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 2)
 })
 
-test('render volunteer home page - Profile tab', t => {
+test.serial('render volunteer home page - Profile tab', t => {
   const props = {
     me: t.context.me
   }
@@ -110,10 +152,11 @@ test('render volunteer home page - Profile tab', t => {
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(2).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Profile')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), t.context.me.nickname)
+  const tab3 = wrapper.find('TabPane').at(2)
+  t.is(tab3.find('h1').first().text(), t.context.me.name)
 })
 
-test('render Edit Profile ', t => {
+test.serial('render Edit Profile ', t => {
   const props = { me: t.context.me }
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
@@ -122,4 +165,36 @@ test('render Edit Profile ', t => {
   wrapper.find('.ant-tabs-tab').at(2).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Profile')
   t.is(wrapper.find('Button').first().text(), 'Edit')
+})
+
+test.serial('retrieve completed archived opportunities', async t => {
+  const props = {
+    me: t.context.me
+  }
+  const { fetchMock } = require('fetch-mock')
+  const myMock = fetchMock.sandbox()
+  myMock.get(API_URL + '/archivedOpportunities/', { body: { archivedOpportunities } })
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <PersonHomePageTest {...props} />
+    </Provider>)
+  const res = await wrapper.find('PersonHomePage').first().instance().getArchivedOpportunitiesByStatus('completed')
+  t.is(res.length, 2)
+  t.is(res[0], archivedOpportunities[0])
+  t.is(res[1], archivedOpportunities[1])
+})
+
+test.only('ensure oprecommendations is passed recommended ops retrieved from server', async t => {
+  const props = {
+    me: t.context.me
+  }
+
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <PersonHomePageTest {...props} />
+    </Provider>)
+  const recommendedOps = await wrapper.find('OpRecommendations').first().instance().props.recommendedOps
+
+  t.is(recommendedOps, t.context.recommendedOps)
 })

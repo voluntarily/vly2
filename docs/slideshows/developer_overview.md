@@ -54,11 +54,11 @@ with the help of engaging content supplied by New Zealand’s leading innovators
 ### You don't need permission!
 
 This is an open source project and you are welcome to contribute at any level you feel comfortable.
-Find out more about the project at the [Voluntari.ly website](http://voluntari.ly) and then...
+Find out more about the project at the [Voluntari.ly website](http://voluntarily.nz) and then...
 
 ---
 ## Places
-* Info: http://voluntari.ly blog and events
+* Info: http://voluntarily.nz blog and events
 * Chat: https://gitter.im/voluntarily/community
 * Docs: https://voluntarily.atlassian.net
 * Code: https://github.com/voluntarily

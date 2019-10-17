@@ -6,7 +6,6 @@ const getTransportTest = () => {
   // Only needed if you don't have a real mail account for testing
   return nodemailer.createTestAccount()
     .then(testAccount => {
-      // console.log('Created test account ', testAccount)
       return nodemailer.createTransport({
         host: 'smtp.ethereal.email',
         port: 587,
@@ -32,7 +31,7 @@ const getDevelopmentTransport = () =>
 
 // Use AWS SMTP service
 // for ses-smtp-user.20190425-160307
-// from must be andrew@voluntari.ly
+// from must be andrew@voluntarily.nz
 // to must be registered emails until we get out of the sandbox
 const getTransportSES = () =>
   nodemailer.createTransport({

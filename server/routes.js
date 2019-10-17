@@ -17,6 +17,8 @@ module.exports = routes()
   .add('op', '/ops/:id', 'op/opdetailpage')
   .add('opnew', '/op/:new', 'op/opdetailpage')
   .add('opsection', '/op/section', 'op/oplistsection')
+  // Archived Opportunities
+  .add('archivedops', '/archivedops/:id', 'archivedop/archivedopdetailpage')
   // People
   .add('people', '/people', 'person/personlistpage')
   .add('person', '/people/:id', 'person/persondetailpage')
@@ -25,7 +27,6 @@ module.exports = routes()
   // Activities
   .add('acts', '/acts', 'act/actlistpage')
   .add('act', '/acts/:id', 'act/actdetailpage')
-  .add('actedit', '/acts/:id/edit', 'act/actupdatepage')
-  .add('actnew', '/act/new', 'act/actupdatepage')
-  .add('actsection', '/act/section', 'act/actlistsection')
+  .add('actnew', '/act/:new', 'act/actdetailpage')
+  // .add('actsection', '/act/section', 'act/actlistsection')
 // Usage inside Page.getInitialProps (req = { pathname, asPath, query } = { pathname: '/', asPath: '/about', query: { slug: 'about' } })

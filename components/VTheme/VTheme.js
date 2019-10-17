@@ -12,6 +12,25 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 ====================================================
 */
 
+export const PageHeaderContainer = styled.div`
+  margin: 8rem 0 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  @media screen and (max-width: 767px) {
+    margin-top: 4rem;
+    grid-template-columns: calc(100vw - 2rem);
+    grid-gap: 0rem;
+  }
+`
+
+export const RequestButtonContainer = styled.div`
+  justify-self: end;
+  @media screen and (max-width: 767px) {
+    margin-top: 1rem;
+    justify-self: start;
+  }
+`
+
 export const SpacerSmall = styled.div`
   height: 0.5rem;
 `
@@ -68,13 +87,30 @@ export const Grid = styled.div`
     justify-items: center;
   }
 
-  
-
   @media screen and (max-width: 767px) {
     grid-template-columns: calc(100vw - 2rem);
     grid-gap: 0rem;
   }
 ` // end grid
+
+export const ActivityGrid = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-columns: 18.5rem 18.5rem 18.5rem;
+  grid-gap: 2rem;
+  overflow: visible;
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    grid-template-columns: repeat(auto-fit, 18.5rem);
+    justify-content: start;
+    justify-items: center;
+  }
+
+  @media screen and (max-width: 767px) {
+    grid-template-columns: calc(100vw - 2rem);
+    grid-gap: 0rem;
+  }
+` // end activitygrid
 
 export const Grid8 = styled.div`
   position: relative;
@@ -91,6 +127,15 @@ export const Grid8 = styled.div`
 
 export const GridContainer = styled.div`
   position: relative;
+`
+
+export const ActivityContainer = styled.div`
+  display: grid;
+  grid-template-columns: 17.5rem 1fr;
+  gap: 2.5rem;
+  @media screen and (max-width: 1280px) {
+    grid-template-columns: calc(100vw - 4rem);
+  }
 `
 
 export const GridTestItem = styled.div`
@@ -112,17 +157,19 @@ I have done a terrible example so far, but will aim to fix usage soon
 export const TextBigTitle = styled.h1`
   font-weight: 900;
   font-size: 6rem;
+  line-height: 1;
+  letter-spacing: 0.03rem;
 
   @media screen and (max-width: 767px) {
     font-size: 3rem;
   }
 ` // end TextBigTitle
 
-export const TextH1 = styled.h1`
+export const H1 = styled.h1`
   color: black;
   font-size: 3.5rem;
   font-weight: 900;
-  letter-spacing: -0.15rem;
+  letter-spacing: -0.1rem;
   line-height: 1.5;
   margin-bottom: 0px;
   margin-top: 0px;
@@ -139,69 +186,13 @@ export const TextH1 = styled.h1`
 
   @media screen and (max-width: 768px) {
     font-size: 2rem;
-    width: 90vw;
     margin-right: initial;
     letter-spacing: -0.03em;
     line-height: 3rem;
   }
-` // End TextH1
+` // End H1
 
-export const TextSubtitle = styled.p`
-  letter-spacing: -0.3px;
-  font-size: 1.5rem;
-  color: #000;
-  margin-bottom: 0;
-
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    letter-spacing: -0.06rem;
-    font-size: 1.5rem;
-  }
-  @media screen and (max-width: 768px) {
-    width: 90vw;
-    font-size: 1rem;
-  }
-` // TextSubtitle
-
-export const TextH3 = styled.h3`
-  letter-spacing: -0.3px;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #000;
-  margin-bottom: 0;
-
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    letter-spacing: -0.06rem;
-    font-size: 1.5rem;
-  }
-  @media screen and (max-width: 768px) {
-    width: 90vw;
-    font-size: 1rem;
-  }
-` // TextH3
-
-export const TextP = styled.p`
-  font-weight: 400;
-  color: black;
-  font-size: 1rem;
-  margin: initial;
-  letter-spacing: -0.03rem;
-  @media screen and (max-width: 767px) {
-    font-size: 1rem;
-  }
-` // end TextP
-
-export const TextPBold = styled.p`
-  font-weight: 700;
-  color: black;
-  font-size: 1rem;
-  
-  margin: initial;
-  @media screen and (max-width: 767px) {
-    font-size: 1rem;
-  }
-` // end TextBold
-
-export const TextHeading = styled.p`
+export const H3 = styled.h3`
   font-size: 2rem;
   font-weight: 400;
   letter-spacing: -0.04em;
@@ -220,18 +211,7 @@ export const TextHeading = styled.p`
   }
 ` // end TextHeading
 
-export const TextHeadingBlack = styled.h1`
-  font-size: 2rem;
-  letter-spacing: 0px;
-  font-weight: 900;
-  line-height: 40px;
-  margin: initial;
-  @media screen and (max-width: 767px) {
-    font-size: 2rem;
-  }
-` // end TextHeadingBlack
-
-export const TextHeadingBold = styled.p`
+export const H3Bold = styled.h3`
   font-size: 2rem;
   letter-spacing: -1.4px;
   font-weight: 700;
@@ -249,19 +229,70 @@ export const TextHeadingBold = styled.p`
     font-size: 1rem;
     letter-spacing: -0.8px;
   }
-` // end TextHeadingBold
+` // end H3Bold
 
-export const TextHeadingSubtitle = styled.p`
+export const H3Black = styled.h3`
+  font-size: 2rem;
+  letter-spacing: -1px;
+  font-weight: 900;
+  line-height: 40px;
+  margin: initial;
+  @media screen and (max-width: 767px) {
+    font-size: 2rem;
+  }
+` // end H3Black
+
+export const H4 = styled.h4`
+  letter-spacing: -0.3px;
+  font-size: 1.5rem;
+  color: #000;
+  margin-bottom: 0;
+
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    letter-spacing: -0.06rem;
+    font-size: 1.5rem;
+  }
+  @media screen and (max-width: 768px) {
+    width: 90vw;
+    font-size: 1rem;
+  }
+` // H4
+
+export const H5 = styled.h5`
   line-height: 2;
   font-size: 1.1rem;
+  color: #333;
   letter-spacing: -0.2px;
   @media screen and (max-width: 768px) {
     line-height: 1.5;
   }
-` // end TextHeadingSubtitle
+` // end H5
+
+export const P = styled.p`
+  font-weight: 400;
+  color: black;
+  font-size: 1rem;
+  margin: initial;
+  letter-spacing: -0.03rem;
+  @media screen and (max-width: 767px) {
+    font-size: 1rem;
+  }
+` // end P
+
+export const PBold = styled.p`
+  font-weight: 700;
+  color: black;
+  font-size: 1rem;
+
+  margin: initial;
+  @media screen and (max-width: 767px) {
+    font-size: 1rem;
+  }
+` // end PBold
+
 export const BigQuote = styled.h2`
   font-size: 3rem;
-  letter-spacing: -0.2rem;
+  letter-spacing: -0.05rem;
   font-weight: 300;
   font-style: italic;
   margin-bottom: 0.5rem;
@@ -300,3 +331,119 @@ Need the form ones as well soon as we create other forms on top of the OpDetailF
 
 ====================================================
 */
+export const A4 = styled.div`
+  margin: 3em;
+  padding-bottom: 4em;
+  max-width: 50em;
+  margin-left: auto;
+  margin-right: auto;
+  @media (max-width: 600px) {
+    .div {
+      margin: 0 3em;
+    }
+  }
+`
+export const FullPage = styled.div`
+  margin: 6rem auto;
+  width: 80rem;
+  overflow: visible;
+  height: auto;
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    width: calc(100vw - 4rem);
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  @media screen and (max-width: 767px) {
+    margin-top: 4rem;
+    width: calc(100vw - 2rem);
+    margin-left: 1rem;
+  }
+` // end fullpage
+
+export const FillWindow = styled.div`
+  min-height: calc(100vh - 220px);
+`
+/* Styled Card - an image followed by a title and some content
+*/
+export const Card = styled.figure`
+
+-webkit-transition: all 0.28s;
+padding-bottom: 1rem;
+
+a { text-decoration: none; }
+
+figcaption {
+  -webkit-transition: all 0.2s;
+}
+
+:hover {
+  transition: all 0.3s;
+  box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
+  transform: scale(1.1);
+  border-radius: 8px;
+  h1 {
+    color: #6549aa;
+  }
+  img {
+    border-radius: 8px 8px 0 0;
+  }
+  figcaption {
+    transform: scale(0.9091);
+  }
+}
+
+h1 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  vertical-align: middle;
+  color: #000;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  -webkit-transition: all 0.28s;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.4;
+  -webkit-line-clamp: 3;
+
+}
+
+img {
+  -webkit-transition: all 0.2s;
+  width: 100%;
+  height: auto;
+  max-height: 10rem;
+  background-color: rgba(0, 0, 0, 0);
+  object-fit: scale-down;
+  overflow: hidden;
+  object-position: center;
+}
+
+time {
+  vertical-align: middle;
+  margin-bottom: 0px;
+  font-weight: 500;
+  font-size: 16px;
+  color: #585858;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  margin-block-start: 0;
+}
+
+@media screen and (max-width: 768px) {
+  width: calc(100vw - 2rem);
+  margin-bottom: 1.5rem;
+
+  img {
+    height: 12rem;
+  }
+
+}
+`

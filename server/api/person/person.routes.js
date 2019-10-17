@@ -2,7 +2,11 @@ const mongooseCrudify = require('mongoose-crudify')
 
 const helpers = require('../../services/helpers')
 const Person = require('./person')
-const { ensureSanitized, getPersonBy } = require('./person.controller')
+const { ensureSanitized, listPeople, getPersonBy, updatePersonDetail } = require('./person.controller')
+const { SchemaName } = require('./person.constants')
+const removeUnauthorizedFields = require('../../services/authorize/removeUnauthorizedFields')
+const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
+const initializeTags = require('../../util/initTags')
 
 module.exports = function (server) {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -12,15 +16,19 @@ module.exports = function (server) {
       Model: Person,
       selectFields: '-__v', // Hide '__v' property
       endResponseInAction: false,
-
       beforeActions: [
-        { middlewares: [ensureSanitized], only: ['create', 'update'] }
-
-      ],
+        { middlewares: [ authorizeActions(SchemaName), ensureSanitized ]
+        }, {
+          middlewares: [initializeTags],
+          only: ['create', 'update']
+        }],
+      actions: {
+        list: listPeople,
+        read: getPersonBy,
+        update: updatePersonDetail
+      },
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
-      afterActions: [
-        { middlewares: [helpers.formatResponse] }
-      ]
+      afterActions: [{ middlewares: [ removeUnauthorizedFields(Person), helpers.formatResponse ] }]
     })
   )
 

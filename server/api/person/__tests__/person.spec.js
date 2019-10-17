@@ -2,13 +2,13 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Person from '../person'
+
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../__tests__/person.fixture'
 
 test.before('before connect to database', async (t) => {
   await appReady
   t.context.memMongo = new MemoryMongo()
-  // console.log('App ready')
   await t.context.memMongo.start()
 })
 
@@ -17,7 +17,6 @@ test.after.always(async (t) => {
 })
 
 test.beforeEach('connect and add people fixture', async () => {
-  // console.log('creating people')
   await Person.create(people).catch((err) => `Unable to create people: ${err}`)
 })
 
@@ -28,12 +27,11 @@ test.afterEach.always(async () => {
 test.serial('verify fixture database has people', async t => {
   const count = await Person.countDocuments()
   t.is(count, people.length)
-  console.log(count, people.length)
   // can find by email with then
   const andrew = await Person.findOne({ email: 'andrew@groat.nz' })
   t.is(andrew.nickname, 'avowkind')
 
-  const dali = await Person.findOne({ email: 'salvador@voluntari.ly' })
+  const dali = await Person.findOne({ email: 'salvador@voluntarily.nz' })
   t.is(dali.nickname, 'Dali')
 
   await Person.find().then((p) => {
@@ -41,37 +39,56 @@ test.serial('verify fixture database has people', async t => {
   })
 })
 
-test.serial('Should correctly give number of people', async t => {
+test.serial('Should correctly block GET method for api people for anonymous', async t => {
   const res = await request(server)
     .get('/api/people')
     .set('Accept', 'application/json')
-    .expect(200)
-    .expect('Content-Type', /json/)
+    .expect(403)
 
-  t.is(people.length, res.body.length)
+  t.is(undefined, res.body.length) // Return data response will be undefined for 403 response
 })
 
-test.serial('Should send correct data when queried against an id', async t => {
-  t.plan(1)
+// FIXME: must test get and list person calls with signed in user
+test.serial('Should send correct person when queried against an id', async t => {
+  t.plan(3)
   const p = {
-    name: 'Testy McTestFace',
-    nickname: 'Testy',
-    phone: '123 456789',
-    email: 'query@omgtech.co.nz',
-    role: ['tester']
+    name: 'Testy C McTestface',
+    nickname: 'C Testy',
+    about: 'Tester',
+    location: 'Waikato District',
+    email: 'z.testy@voluntar.ly',
+    phone: '027 444 5555',
+    gender: 'non binary',
+    pronoun: { 'subject': 'they', 'object': 'them', 'possesive': 'ȁǹy' },
+    imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
+    role: ['tester', 'volunteer'],
+    status: 'active',
+    tags: []
   }
 
   const person = new Person(p)
-  await person.save()
-  const id = person._id
+  const res1 = await request(server)
+    .post('/api/people')
+    .send(person)
+    .set('Accept', 'application/json')
+    .expect(200)
 
+  const pObj = JSON.parse(res1.res.text)
+  const id = pObj._id
+
+  await Person.findById(id).then((result) => {
+    t.deepEqual(person._id, result._id)
+    t.deepEqual(person.pronoun, result.pronoun)
+    t.deepEqual(person.name, result.name)
+  })
+  /*
+  TODO: this should be change to add authorized user and retrieve person through server api
   const res = await request(server)
     .get(`/api/people/${id}`)
     .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200)
-
+    .expect(403)
   t.is(res.body.name, p.name)
+  */
 })
 
 test.serial('Should correctly add a person', async t => {
@@ -83,7 +100,8 @@ test.serial('Should correctly add a person', async t => {
     phone: '123 456789',
     email: 'addy@omgtech.co.nz',
     gender: 'binary',
-    role: ['tester']
+    role: ['tester'],
+    tags: []
   }
 
   const res = await request(server)
@@ -96,7 +114,6 @@ test.serial('Should correctly add a person', async t => {
   // can find by id
     const id = res.body._id
     await Person.findById(id).then((person) => {
-    // console.log('findById:', person)
       t.is(id, person._id.toString())
     })
 
@@ -113,18 +130,21 @@ test.serial('Should correctly add a person', async t => {
     t.is(savedPerson.avatar, '../../../static/img/person/person.png')
 
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 })
 
 test.serial('Should correctly add a person and sanitise inputs', async t => {
+  t.plan(6)
   const p = {
     name: 'Bobby; DROP TABLES', // is allowed
     nickname: '<b>SQLINJECTOR</b>',
     phone: "1234<img src=x onerror=alert('img') />ABCD", // should remove img
     email: 'bobby@omgtech.co.nz', // ok
     gender: "console.log('hello world')", // ok
-    role: ['tester']
+    pronoun: { 'subject': 'they', 'object': 'them', 'possesive': 'ȁǹy' }, // ok
+    role: ['tester'],
+    tags: []
   }
 
   await request(server)
@@ -134,41 +154,47 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
     .expect(200)
 
   const savedPerson = await Person.findOne({ email: p.email }).exec()
-  t.is(savedPerson.phone, '1234ABCD')
+  t.deepEqual('1234ABCD', savedPerson.phone)
+  t.deepEqual('Bobby; DROP TABLES', savedPerson.name)
+  t.deepEqual(p.nickname, savedPerson.nickname)
+  t.deepEqual(p.email, savedPerson.email)
+  t.deepEqual(p.gender, savedPerson.gender)
+  t.deepEqual(p.pronoun, savedPerson.pronoun)
 })
 
-test.serial('Should load a person into the db and delete them via the api', async t => {
-  t.plan(2)
+test.serial('Should load a person into the db but block access and delete them via the api', async t => {
+  t.plan(4)
   const p = {
     name: 'Testy McTestFace',
     nickname: 'Testy',
     phone: '123 456789',
     email: 'loady@omgtech.co.nz',
     gender: 'binary',
-    role: ['tester']
+    role: ['tester'],
+    tags: []
   }
   const person = new Person(p)
   await person.save()
   const id = person._id
 
-  // check person is there.
   const res = await request(server)
     .get(`/api/people/${id}`)
     .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200)
+    .expect(403)
 
-  t.is(res.body.name, p.name)
+  t.is(res.body.name, undefined)
 
   // delete the record
   await request(server)
     .delete(`/api/people/${person._id}`)
     .set('Accept', 'application/json')
-    .expect(200)
+    .expect(403)
 
-  // check person is gone
+  // check person is still in the database
   const queriedPerson = await Person.findOne({ email: p.email }).exec()
-  t.is(queriedPerson, null)
+  t.is(queriedPerson.name, p.name)
+  t.is(queriedPerson.email, p.email)
+  t.is(queriedPerson.phone, p.phone)
 })
 
 test.serial('Should find a person by email', async t => {
@@ -177,20 +203,19 @@ test.serial('Should find a person by email', async t => {
     name: 'Testy McTestFace',
     nickname: 'Testy',
     phone: '123 456789',
-    email: 'unique_email@voluntari.ly',
-    role: ['tester']
+    email: 'unique_email@voluntarily.nz',
+    role: ['tester'],
+    tags: []
   }
 
   const person = new Person(p)
   await person.save()
   const email = p.email
-  // console.log('asking for ', `/api/people/email/${email}`)
   const res = await request(server)
     .get(`/api/person/by/email/${email}`)
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200)
-  // console.log(res.body)
   t.is(res.body.name, p.name)
 })
 
@@ -200,8 +225,9 @@ test.serial('Should find a person by nickname', async t => {
     name: 'Testy McTestFace',
     nickname: 'Testy',
     phone: '123 456789',
-    email: 'Testy555@voluntari.ly',
-    role: ['tester']
+    email: 'Testy555@voluntarily.nz',
+    role: ['tester'],
+    tags: []
   }
 
   const person = new Person(p)
@@ -210,8 +236,7 @@ test.serial('Should find a person by nickname', async t => {
     .get(`/api/person/by/nickname/${p.nickname}`)
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
-    .expect(200)
-  // console.log(res.body)
+    .expect(200) // For now the tester ability is not proper defined so tester will have the same ability as admin
   t.is(res.body.name, p.name)
 })
 
@@ -219,10 +244,9 @@ test.serial('Should find no person', async t => {
   t.plan(1)
 
   const res = await request(server)
-    .get(`/api/person/by/email/not_a_real_email@voluntari.ly`)
+    .get(`/api/person/by/email/not_a_real_email@voluntarily.nz`)
     .set('Accept', 'application/json')
     .expect(404)
-  // console.log(res.body)
   t.is(res.body.error, 'person not found')
 })
 
@@ -231,8 +255,9 @@ test.serial('Should correctly handle missing inputs', async t => {
     name: 'Testy McTestFace',
     nickname: 'Testy',
     phone: '123 456789',
-    // email: 'Testy555@voluntari.ly', <- explicity remove email
-    role: ['tester']
+    // email: 'Testy555@voluntarily.nz', <- explicity remove email
+    role: ['tester'],
+    tags: []
   }
   try {
     const res = await request(server)
@@ -240,10 +265,9 @@ test.serial('Should correctly handle missing inputs', async t => {
       .send(p)
       .set('Accept', 'application/json')
       .expect(200)
-    // console.log(res.body)
     t.is(res.body.message, 'Person validation failed: email: Path `email` is required.')
     t.is(res.body.name, 'ValidationError')
   } catch (err) {
-    console.log('api/people', err)
+    console.error('api/people', err)
   }
 })

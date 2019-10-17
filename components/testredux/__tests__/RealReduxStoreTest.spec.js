@@ -54,11 +54,9 @@ test('mount, render add input and save', t => {
 
   // now click the save button.
   wrapper.find('button').first().simulate('click')
-  // console.log(realStore.getState())
   t.is(realStore.getState().rst.name, 'Andrew')
   // Hello class updates with the new text
   wrapper.update()
-  // console.log(wrapper.html())
   t.is(wrapper.find('h2').text(), 'Hello, Andrew')
 })
 

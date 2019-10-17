@@ -1,7 +1,7 @@
-import React from 'react'
-import DatePickerType from '../../components/Op/DatePickerType.constant'
 import { DatePicker } from 'antd'
 import moment from 'moment'
+import React from 'react'
+import DatePickerType from '../../components/Op/DatePickerType.constant'
 
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker
 /**
@@ -33,7 +33,7 @@ export const formatDateBaseOn = (datePickerType, value) => {
     case DatePickerType.MonthRange:
       return moment(value[0]).format('MM/YYYY')
     case DatePickerType.DateRange:
-      return `${moment(value[0].get('date'))}-${moment(value).format('DD/MM/YY')}`
+      return `${moment(value[0]).format('DD/MM/YY')} - ${moment(value[1]).format('DD/MM/YY')}`
     case DatePickerType.WeekRange:
       return `Week ${moment(value[0]).week()}`
     default:

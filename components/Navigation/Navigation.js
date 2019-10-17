@@ -1,8 +1,8 @@
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
+import { Avatar, Menu } from 'antd'
 import Link from 'next/link'
 import { withRouter } from 'next/router'
-import { Avatar, Menu } from 'antd'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 const StyledMenu = styled(Menu)`
   font-weight: bold;
@@ -11,7 +11,7 @@ const StyledMenu = styled(Menu)`
 const StyledAvatar = styled(Avatar)`
   background-color: #fff;
 
-  .ant-avatar > i {
+  .ant-imgUrl > i {
     margin-right: 0px;
   }
 `
@@ -20,7 +20,6 @@ const Navigation = ({ items, defaultItem, router, me, ...props }) => {
   // TODO next js get the location is different?
   // const activeItem = router && router.pathname ? router.pathname.slice(1) : defaultItem
   const activeItem = router.pathname.slice(1)
-
   return (
     <StyledMenu
       theme='light'
@@ -39,11 +38,13 @@ const Navigation = ({ items, defaultItem, router, me, ...props }) => {
       ))}
       <Menu.Item>
         <StyledAvatar>
-          <Avatar
-            size='small'
-            src={me && me.avatar}
-            icon='user'
-          />
+          <Link href={me && me._id ? `/people/${me._id}` : 'auth/sign-in'}>
+            <Avatar
+              size='small'
+              src={me && me.imgUrl}
+              icon='user'
+            />
+          </Link>
         </StyledAvatar>
       </Menu.Item>
     </StyledMenu>

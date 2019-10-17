@@ -1,24 +1,26 @@
 /*
-  Display an activity record in card format with a picture, title, and commitment.
+  Display an activity record in card format with a picture, name, and commitment.
 */
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 
 // todo if image is not present then use a fallback.
-const ActCard = ({ act, onPress, ...props }) => (
-  <div>
-    <Link href={`/acts/${act._id}`}>
-      <a>
-        <div className='requestContainer'>
-          <img className='requestImg' src={act.imgUrl} />
-          <p className='requestTitle'>{act.title}</p>
-          <p className='requestDateTime'>{act.duration}</p>
-          <p className='requestDescription'>{act.subtitle}</p>
-        </div>
-      </a>
-    </Link>
-    <style jsx>{`
+const ActCard = ({ act, onPress, ...props }) => {
+  const cardImage = act.imgUrl ? act.imgUrl : '../../static/missingimage.svg'
+  return (
+    <div>
+      <Link href={`/acts/${act._id}`}>
+        <a>
+          <div className='requestContainer'>
+            <img className='requestImg' src={cardImage} />
+            <p className='requestTitle'>{act.name}</p>
+            <p className='requestDateTime'>{act.duration}</p>
+            <p className='requestDescription'>{act.subtitle}</p>
+          </div>
+        </a>
+      </Link>
+      <style jsx>{`
       .requestContainer {
         width: 18.5rem;
         letter-spacing: -0.3px;
@@ -88,12 +90,13 @@ const ActCard = ({ act, onPress, ...props }) => (
         }
       }
     `}</style>
-  </div>
-)
+    </div>
+  )
+}
 
 ActCard.propTypes = {
   act: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     duration: PropTypes.string,

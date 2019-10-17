@@ -16,14 +16,23 @@ const OpportunityStatus = {
 
 const OpportunityFields = {
   ID: '_id',
-  TITLE: 'title',
+  NAME: 'name',
   SUBTITLE: 'subtitle',
   IMG_URL: 'imgUrl',
-  DURATION: 'duration'
+  DESCRIPTION: 'description',
+  DURATION: 'duration',
+  LOCATION: 'location',
+  STATUS: 'status',
+  DATE: 'date',
+  OFFER_ORG: 'offerOrg',
+  REQUESTOR: 'requestor',
+  FROM_ACTIVITY: 'fromActivity',
+  DATE_ADDED: 'dateAdded',
+  TAGS: 'tags'
 }
 
 module.exports = {
-  Subject: 'Opportunity',
+  SchemaName: 'Opportunity',
   OpportunityStatus,
   OpportunityFields,
   OpportunityRoutes

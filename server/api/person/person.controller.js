@@ -1,21 +1,63 @@
 const Person = require('./person')
 const sanitizeHtml = require('sanitize-html')
+const Action = require('../../services/abilities/ability.constants')
 
-/**
- * Get all orgs
- * @param req
- * @param res
- * @returns void
- */
+/* find a single person by searching for a key field.
+This is a convenience function usually used to call
+/api/person/by/email/person@example.com  but can be used for other fields
+*/
 function getPersonBy (req, res) {
-  const query = { [req.params.by]: req.params.value }
-  Person.findOne(query).exec((_err, got) => {
+  let query
+  if (req.params.by) {
+    query = { [req.params.by]: req.params.value }
+  } else {
+    query = req.params
+  }
+
+  Person.findOne(query).populate('tags').exec((_err, got) => {
     if (!got) { // person does not exist
       return res.status(404).send({ error: 'person not found' })
     }
-    // console.log('getPersonBy ', got)
     res.json(got)
   })
+}
+
+/* return a list of people matching the search criteria
+  if no params given then show all permitted.
+*/
+function listPeople (req, res) {
+  let query = {}
+  let sort = 'nickname'
+  let select = ''
+  try {
+    query = req.query.q ? JSON.parse(req.query.q) : {}
+    sort = req.query.s ? JSON.parse(req.query.s) : sort
+    select = req.query.p ? JSON.parse(req.query.p) : {}
+
+    Person.find(query, select).populate('tags').sort(sort)
+      .then(got => {
+        res.json(got)
+      })
+  } catch (e) {
+    console.error('Bad request', req.query)
+    return res.status(400).send(e)
+  }
+}
+
+async function updatePersonDetail (req, res, next) {
+  const { ability: userAbility } = req
+  const userID = req.body._id
+  let resultUpdate
+  try {
+    resultUpdate = await Person.accessibleBy(userAbility, Action.UPDATE).updateOne({ _id: userID }, req.body)
+  } catch (e) {
+    return res.sendStatus(400) // 400 error for any bad request body. This also prevent error to propagate and crash server
+  }
+  if (resultUpdate.n === 0) {
+    return res.sendStatus(404)
+  }
+  req.crudify.result = req.body
+  next()
 }
 
 function ensureSanitized (req, res, next) {
@@ -35,40 +77,16 @@ function ensureSanitized (req, res, next) {
   const p = req.body
   p.name = sanitizeHtml(p.name)
   p.nickname = sanitizeHtml(p.nickname)
-  p.phone = (p.phone != null) ? sanitizeHtml(p.phone) : ''
-  p.gender = (p.gender != null) ? sanitizeHtml(p.gender) : ''
-  p.about = (p.about != null) ? sanitizeHtml(p.about, szAbout) : ''
+  p.phone = p.phone && sanitizeHtml(p.phone)
+  p.gender = p.gender && sanitizeHtml(p.gender)
+  p.about = p.about && sanitizeHtml(p.about, szAbout)
   req.body = p
   next()
 }
 
-// HOW TO EMAIL A PERSON
-// const { emailPerson } = require('./email/emailperson')
-// function verifyEmailPerson (req, res) {
-//   console.log('verifyEmailPerson', req.params)
-//   if (!req.params.id) {
-//     res.status(400).send() // bad request
-//   }
-//   Person.findOne({ _id: req.params.id }).exec((err, person) => {
-//     if (err) {
-//       res.status(500).send(err)
-//       return
-//     }
-//     if (!person) {
-//       // not found
-//       res.status(404).send()
-//       return
-//     }
-
-//     emailPerson(person, 'verify', { token: 'ABCDEF123456' }).then(
-//       () => {
-//         res.status(200).end()
-//       }
-//     )
-//   })
-// }
-
 module.exports = {
   ensureSanitized,
-  getPersonBy
+  listPeople,
+  getPersonBy,
+  updatePersonDetail
 }

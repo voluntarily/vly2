@@ -18,7 +18,6 @@ test.before('Setup People fixtures', (t) => {
 
 test('render person details', t => {
   const wrapper = renderWithIntl(<PersonDetail person={t.context.me} />)
-  // console.log(wrapper.html())
   t.truthy(wrapper.find('Head'))
-  t.is(wrapper.find('h1').text(), t.context.me.nickname)
+  t.is(wrapper.find('h1').text(), t.context.me.name)
 })

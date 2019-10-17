@@ -3,22 +3,28 @@
   results in simple vertical list
   Entry - people menu item.
 */
-import React, { Component } from 'react'
 import { Button } from 'antd'
+import Cookie from 'js-cookie'
 import Link from 'next/link'
+import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
-import { FullPage } from '../../hocs/publicPage'
+import PersonList from '../../components/Person/PersonList'
+import { FullPage } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
-import PersonList from '../../components/Person/PersonList'
 
 class PersonListPage extends Component {
-  static async getInitialProps ({ store }) {
+  static async getInitialProps ({ store, req }) {
+    let cookies = req ? req.cookies : Cookie.get()
     // Get all People
     try {
-      await store.dispatch(reduxApi.actions.people.get())
+      const cookiesStr = JSON.stringify(cookies)
+      await store.dispatch(reduxApi.actions.people.get(undefined, {
+        params: cookiesStr
+      }))
     } catch (err) {
-      console.log('error in getting people', err)
+      console.error('error in getting people', err)
     }
   }
 
@@ -26,10 +32,15 @@ class PersonListPage extends Component {
     const people = this.props.people.data
     return (
       <FullPage>
+        <Helmet>
+          <title>Voluntarily - People List</title>
+        </Helmet>
         <h1><FormattedMessage id='personListTitle' defaultMessage='People' description='H1 on Person list page' /></h1>
-        <Button shape='round'><Link href='/person/new'><a>
-          <FormattedMessage id='people.new' defaultMessage='New Person' description='Button to create a new person' />
-        </a></Link></Button>
+        <Button shape='round'>
+          <Link href='/person/new'>
+            <a><FormattedMessage id='people.new' defaultMessage='New Person' description='Button to create a new person' /></a>
+          </Link>
+        </Button>
         <br /><br />
         <PersonList people={people} />
       </FullPage>

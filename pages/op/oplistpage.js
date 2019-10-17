@@ -1,27 +1,31 @@
-import React, { Component } from 'react'
 import { Button } from 'antd'
-import { FormattedMessage } from 'react-intl'
 import Link from 'next/link'
-import publicPage, { FullPage } from '../../hocs/publicPage'
-import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
+import { FormattedMessage } from 'react-intl'
 import OpList from '../../components/Op/OpList'
+import { FullPage } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
+import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 
 class Ops extends Component {
   static async getInitialProps ({ store, query }) {
     // Get all Ops
     try {
       const ops = await store.dispatch(reduxApi.actions.opportunities.get())
-      // console.log('got ops', ops)
       return { ops, query }
     } catch (err) {
-      console.log('error in getting ops', err)
+      console.error('error in getting ops', err)
     }
   }
 
   render () {
     return (
       <FullPage>
+        <Helmet>
+          <title>Voluntarily - Opportunities List</title>
+        </Helmet>
         <h1>
           <FormattedMessage
             id='opportunities'
@@ -41,7 +45,7 @@ class Ops extends Component {
 
 Ops.propTypes = {
   ops: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     description: PropTypes.string,

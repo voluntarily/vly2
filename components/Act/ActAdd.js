@@ -1,16 +1,16 @@
 /*
-  Display an activity record in card format with a picture, title, and commitment.
+  Display an activity record in card format with a picture, name, and commitment.
 */
-import React from 'react'
-import PropTypes from 'prop-types'
-import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
 import { Button } from 'antd'
+import Link from 'next/link'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
-
+import { Role } from '../../server/services/authorize/role.js'
 // todo if image is not present then use a fallback.
 const ActAdd = ({ roles, ...props }) => {
-  if (roles && roles.includes('activity-provider')) {
+  if (roles && roles.includes(Role.ACTIVITY_PROVIDER)) {
     return (
       <Link href={'/act/new'}>
         <Button type='primary' shape='round' size='large'>

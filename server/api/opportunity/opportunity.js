@@ -3,9 +3,11 @@ const Schema = mongoose.Schema
 const idvalidator = require('mongoose-id-validator')
 const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
 const { OpportunityStatus } = require('./opportunity.constants')
+const { SchemaName } = require('./opportunity.constants')
 
 const opportunitySchema = new Schema({
-  title: String, // "Growing in the garden",
+  name: String, // "Growing in the garden",
+  title: String, // deprecated - use name instead
   subtitle: String, // "Growing digitally in the garden",
   imgUrl: { type: 'String', required: true, default: '../../../static/img/opportunity/opportunity.png' }, // "https://image.flaticon.com/icons/svg/206/206857.svg",
   description: String, // "Project to grow something in the garden",
@@ -23,9 +25,11 @@ const opportunitySchema = new Schema({
     ]
   },
   date: [Date],
-  offerOrg: String,
+  fromActivity: { type: Schema.Types.ObjectId, ref: 'Activity', required: false },
+  offerOrg: { type: Schema.Types.ObjectId, ref: 'Organisation', required: false },
   requestor: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
   dateAdded: { type: 'Date', default: Date.now, required: true },
+  href: String,
   tags: [
     {
       type: Schema.Types.ObjectId, ref: 'Tag'
@@ -37,4 +41,4 @@ opportunitySchema.plugin(idvalidator)
 opportunitySchema.plugin(accessibleRecordsPlugin)
 opportunitySchema.plugin(accessibleFieldsPlugin)
 
-module.exports = mongoose.model('Opportunity', opportunitySchema)
+module.exports = mongoose.model(SchemaName, opportunitySchema)

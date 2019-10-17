@@ -1,25 +1,26 @@
-import { Button, Divider, message, Popconfirm } from 'antd'
-import Link from 'next/link'
+import { Button, Divider } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import InterestSection from '../../components/Interest/InterestSection'
-import RegisterInterestSection from '../../components/Interest/RegisterInterestSection'
-import OpDetail from '../../components/Op/OpDetail'
-import OpDetailForm from '../../components/Op/OpDetailForm'
-import PersonCard from '../../components/Person/PersonCard'
-import publicPage, { FullPage } from '../../hocs/publicPage'
-import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import Loading from '../../components/Loading'
+import OpDetail from '../../components/Op/OpDetail'
+import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
+import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
+import { FullPage } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
+import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
+import { MemberStatus } from '../../server/api/member/member.constants'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
+import OpEditPage from './opeditpage'
+import OpUnavailablePage from './opunavailablepage'
 
 const blankOp = {
-  title: '',
+  name: '',
   subtitle: '',
   imgUrl: '',
   duration: '',
-  location: '',
+  location: 'Online',
   status: 'inactive',
   date: [],
   startDate: null,
@@ -32,19 +33,41 @@ export class OpDetailPage extends Component {
     editing: false
   }
 
+  constructor (props) {
+    super(props)
+    this.confirmOpportunity = this.confirmOpportunity.bind(this)
+    this.cancelOpportunity = this.cancelOpportunity.bind(this)
+    this.isAdmin = this.isAdmin.bind(this)
+    this.isOwner = this.isOwner.bind(this)
+    this.canManageInterests = this.canManageInterests.bind(this)
+    this.canRegisterInterest = this.canRegisterInterest.bind(this)
+    this.retrieveOpportunity = this.retrieveOpportunity.bind(this)
+  }
+
   static async getInitialProps ({ store, query }) {
+    // console('getInitialProps: OpDetailPage', store, query)
+    const me = store.getState().session.me
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     const opExists = !!(query && query.id) // !! converts to a boolean value
-    // TODO: [VP-280] run get location and tag data requests in parallel
-    await store.dispatch(reduxApi.actions.locations.get())
-    await store.dispatch(reduxApi.actions.tags.get())
+    await Promise.all([
+      store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
+      store.dispatch(reduxApi.actions.locations.get()),
+      store.dispatch(reduxApi.actions.tags.get())
+    ])
+
     if (isNew) {
+      // if there is an act parameter then get the activity and create initial op.
+      if (query.act) {
+        await store.dispatch(reduxApi.actions.activities.get({ id: query.act }))
+      }
       return {
-        isNew
+        isNew,
+        actid: query.act
       }
     } else {
       if (opExists) {
+        query.session = store.getState().session //  Inject session with query that restricted api access
         await store.dispatch(reduxApi.actions.opportunities.get(query))
       }
       return {
@@ -60,221 +83,165 @@ export class OpDetailPage extends Component {
     }
   }
 
-  async handleSubmit (op) {
-    const userTags = op.tags
-    const dbTags = this.props.tags.data // tags existing in db
-    const tagIds = [] // user-defined tags converted to their objectids
-    const newTags = [] // user-defined tag values that aren't in the db
-
-    // determine which tags need to be added to the database
-    // based on whether they exist already or not.
-    userTags.forEach(t => {
-      const match = dbTags.find(dbTag => t.tag === dbTag.tag)
-      if (match) {
-        tagIds.push(match._id)
-      } else {
-        newTags.push(t)
-      }
-    })
-
-    // send post requests for each non-existing tag to create them
-    await this.props.dispatch(
-      reduxApi.actions.tags.post({}, { body: JSON.stringify(newTags) })
+  async createOpportunity (op) {
+    const res = await this.props.dispatch(
+      reduxApi.actions.opportunities.put(
+        { id: op._id },
+        { body: JSON.stringify(op) }
+      )
     )
-
-    // find the ids of all the newly created tags, which are now in props
-    newTags.forEach(newTag => {
-      tagIds.push(this.props.tags.data.find(tag => tag.tag === newTag.tag)._id)
-    })
-
-    let updatedOp = {
-      ...op,
-      tags: tagIds
-    }
-
-    // Actual data request
-    let res = {}
-    if (updatedOp._id) {
-      res = await this.props.dispatch(
-        reduxApi.actions.opportunities.put(
-          { id: updatedOp._id },
-          { body: JSON.stringify(updatedOp) }
-        )
-      )
-    } else {
-      res = await this.props.dispatch(
-        reduxApi.actions.opportunities.post(
-          {},
-          { body: JSON.stringify(updatedOp) }
-        )
-      )
-      updatedOp = res[0]
-      Router.replace(`/ops/${updatedOp._id}`)
-    }
-    this.setState({ editing: false })
-    message.success('Saved.')
+    return res[0]
   }
 
-  handleCancelEdit = () => {
+  async updateOpportunity (op) {
+    const res = await this.props.dispatch(
+      reduxApi.actions.opportunities.post(
+        {},
+        { body: JSON.stringify(op) }
+      )
+    )
+    return res[0]
+  }
+
+  stopEditing = () => {
     this.setState({ editing: false })
     if (this.props.isNew) { // return to previous
       Router.back()
     }
   }
 
-  // Called when the user confirms they want to delete an op
-  async handleCancelOp (op) {
-    if (!op) return
-    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.CANCELLED }) }))
-    // TODO: error handling - how can this fail?
-    message.success('Request Cancelled. ')
-    Router.replace(`/home`)
-  }
-
-  // Called when the user starts to delete an op, but then cancels it.
-  handleCancelButtonCancelled = () => { message.error('Cancel Request Cancelled') }
-
-  async handledCompleted (op) {
-    if (!op) return
-    // Data request
-    // TODO: change hard coded 'done' string to a constant.
+  async confirmOpportunity (op) {
     await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.COMPLETED }) }))
-    // TODO: error handling - see above
-    message.success('Opportunity Confimed')
-    Router.replace('/home')
   }
 
-  handledCompletedCancelled = () => {
-    message.error('Confirm Cancelled')
+  async cancelOpportunity (op) {
+    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.CANCELLED }) }))
+  }
+
+  isAdmin () {
+    return this.props.me && this.props.me.role.includes('admin')
+  }
+
+  isOwner (op) {
+    return this.props.isNew || (this.props.me && op.requestor && this.props.me._id === op.requestor._id)
+  }
+
+  canEdit (op) {
+    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
+    return (this.isOwner(op) || isOrgAdmin || this.isAdmin())
+  }
+
+  canManageInterests (op) {
+    return (this.isOwner(op) || this.isAdmin())
+  }
+
+  canRegisterInterest (op) {
+    return (this.props.isAuthenticated && !this.isOwner(op))
+  }
+
+  retrieveOpportunity () {
+    if (this.props.members.sync && this.props.members.data.length > 0 && this.props.me) {
+      this.props.me.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
+    }
+
+    let op
+    if (this.props.isNew) {
+      op = blankOp
+
+      // init from activity if provided
+      if (this.props.actid) {
+        const act = this.props.activities.data[0]
+        op = {
+          ...blankOp,
+          name: act.name,
+          subtitle: act.subtitle,
+          description: act.description,
+          imgUrl: act.imgUrl,
+          duration: act.duration,
+          tags: act.tags,
+          fromActivity: act._id
+        }
+      }
+      op.requestor = this.props.me
+
+      // set init offerOrg to first membership result
+      if (this.props.me.orgMembership && this.props.me.orgMembership.length > 0) {
+        op.offerOrg = {
+          _id: this.props.me.orgMembership[0].organisation._id
+        }
+      }
+    } else {
+      op = {
+        ...this.props.opportunities.data[0],
+        // tags: this.props.opportunities.data[0].tags.map(op => op.tag),
+        startDate: this.props.opportunities.data[0].date[0],
+        endDate: this.props.opportunities.data[0].date[1]
+      }
+    }
+    return op
   }
 
   render () {
-    const me = this.props.me
-    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
-    const isAdmin = (me && me.role.includes('admin'))
-    let isOwner = false
-    let content
-    let op
-    let organizer
-    if (this.props.isNew) {
-      op = blankOp
-      organizer = me
-      isOwner = true
-    } else if (this.props.opportunities.loading) {
-      content = <Loading><p>Loading details...</p></Loading>
-    } else {
-      const ops = this.props.opportunities.data
-      if (ops.length === 1) {
-        op = {
-          ...ops[0],
-          // tags: this.props.opportunities.data[0].tags.map(op => op.tag),
-          startDate: this.props.opportunities.data[0].date[0],
-          endDate: this.props.opportunities.data[0].date[1]
-        }
-        organizer = op.requestor
-        isOwner = ((me || {})._id === organizer._id)
-      } else { // array must be empty
-        // console.log('length', ops.length)
-        content = <h2><FormattedMessage id='op.notavailable' defaultMessage='Sorry, this opportunity is not available' description='message on person not found page' /></h2>
+    // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
+    if (!this.props.isNew) {
+      if (this.props.opportunities.loading) {
+        return (<Loading />)
+      }
+      if (this.props.opportunities.data.length !== 1) {
+        return (<OpUnavailablePage />)
       }
     }
 
-    // display permissions
-    const canEdit = (isOwner || isOrgAdmin || isAdmin)
-    const canManageInterests = (isOwner || isAdmin)
-    const canRegisterInterest = (this.props.isAuthenticated && !isOwner)
+    let op = this.retrieveOpportunity()
 
-    const existingTags = this.props.tags.data.map(tag => tag.tag)
-    const existingLocations = this.props.locations.data
-
-    const organizerInfo = () => {
-      return organizer &&
-        <div>
-          <h2>
-            <FormattedMessage id='organiser' defaultMessage='Requested by' description='Title for organiser card on op details page' />
-          </h2>
-          <PersonCard style={{ width: '300px' }} person={organizer} />
-        </div>
-    }
-    const volunteerInterestSection = () => {
+    if ((op && this.state.editing)) {
       return (
-        // if not signed in then the interested button signs in first
-        !this.props.isAuthenticated
-          ? <div>
-            <Link href={`/auth/sign-in`} >
-              <Button type='primary' shape='round' >
-                <FormattedMessage id='iminterested-anon' defaultMessage="I'm Interested" description="I'm interested button that leads to sign in page" />
-              </Button>
-            </Link>
-            <Divider />
-          </div>
-          : canRegisterInterest && <div>
-            <RegisterInterestSection op={op} me={this.props.me._id} />
-            <Divider />
-          </div>
+        <OpEditPage
+          op={op}
+          me={this.props.me}
+          existingTags={this.props.tags.data}
+          existingLocations={this.props.locations.data}
+          stopEditing={this.stopEditing.bind(this)}
+          updateOpportunity={this.updateOpportunity.bind(this)}
+          createOpportunity={this.createOpportunity.bind(this)}
+        />
       )
-    }
-
-    /* These components should only appear if a user is logged in and viewing an op they DID create themselves. */
-    const ownerManageInterests = () => {
-      return (canManageInterests &&
-        <div>
-          <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' onConfirm={this.handledCompleted.bind(this, op)} onCancel={this.handledCompletedCancelled} okText='Yes' cancelText='No'>
-            <Button type='primary' shape='round'>
-              <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
+    } else {
+      return (!this.props.isNew &&
+        <FullPage>
+          {this.canEdit(op) &&
+            <Button
+              id='editOpBtn'
+              style={{ float: 'right' }}
+              type='primary'
+              shape='round'
+              onClick={() => this.setState({ editing: true })}>
+              <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
             </Button>
-          </Popconfirm>
-            &nbsp;
-          <Popconfirm id='cancelOpPopConfirm' title='Confirm cancel of this opportunity.' onConfirm={this.handleCancelOp.bind(this, op)} onCancel={this.handleCancelButtonCancelled} okText='Yes' cancelText='No'>
-            <Button type='danger' shape='round' >
-              <FormattedMessage id='cancelOp' defaultMessage='Cancel Request' description='Button to cancel an opportunity on OpDetails page' />
-            </Button>
-          </Popconfirm>
-          <Divider />
-
-          <InterestSection opid={op._id} />
-        </div>
-      )
-    }
-
-    if (!content) {
-      if (op && this.state.editing) {
-        content = <div>
-          <OpDetailForm
-            op={op}
-            me={me}
-            onSubmit={this.handleSubmit.bind(this, op)}
-            onCancel={this.handleCancelEdit.bind(this)}
-            existingTags={existingTags}
-            existingLocations={existingLocations}
-          />
-        </div>
-      } else {
-        content = <div>
-          { canEdit && <Button id='editOpBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
-            <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
-          </Button>}
-
+          }
           <OpDetail op={op} />
-          {organizerInfo()}
           <Divider />
-          {volunteerInterestSection()}
-          {ownerManageInterests()}
-        </div>
-      }
+          <OpVolunteerInterestSection
+            isAuthenticated={this.props.isAuthenticated}
+            canRegisterInterest={this.canRegisterInterest(op)}
+            op={op}
+            meID={this.props.me && this.props.me._id}
+          />
+          <OpOwnerManageInterests
+            canManageInterests={this.canManageInterests(op)}
+            op={op}
+            confirmOpportunity={this.confirmOpportunity}
+            cancelOpportunity={this.cancelOpportunity}
+          />
+        </FullPage>
+      )
     }
-
-    return (
-      <FullPage>
-        {content}
-      </FullPage>
-    )
   }
 }
 
 OpDetailPage.propTypes = {
   op: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     duration: PropTypes.string,
@@ -286,5 +253,5 @@ OpDetailPage.propTypes = {
   })
 }
 
-export const OpDetailPageWithOps = withOps(OpDetailPage)
-export default publicPage(withOps(OpDetailPage))
+export const OpDetailPageWithOps = withMembers(withOps(OpDetailPage))
+export default publicPage(withMembers(withOps(OpDetailPage)))

@@ -1,63 +1,37 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
+import { Card } from '../VTheme/VTheme'
 
 const PersonCard = ({ person, ...props }) => (
-  <div>
+  <Card>
     <Link href={`/people/${person._id}`} >
       <a>
-        <div className='personContainer'>
-          <img className='personImg' src={person.avatar} />
-          <p className='personTitle'>{person.nickname}</p>
+        <img src={person.imgUrl} />
+        <figcaption>
+          <h1>{person.nickname}</h1>
           <p className='personName'>{person.name}</p>
-        </div>
+        </figcaption>
       </a>
-    </Link>
-    <style jsx>{`
-      .personContainer {
-        width: 10rem;
-        letter-spacing: -0.3px;
-        line-height: 24px;
-        margin-bottom: 0px;
-      }
-
-      .personImg {
-        width: 100%;
-        height: 10rem;
-        background-color: rgba(0,0,0,0.0);
-        object-fit: cover;
-        object-position: center;
-        
-      }
-
-      .personTitle {
-        margin-top: 0px;
-        margin-bottom: 0px;
-        vertical-align: middle;
-        font-weight: bold;
-        font-size: 16px;
-        color: #000;
-        text-overflow: ellipsis;
+    </Link>    <style jsx>{`
+      .personName {
         overflow: hidden;
+        text-overflow: ellipsis; 
+        word-wrap: break-word;
+        display: inline;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 6;
         -webkit-box-orient: vertical;
       }
-     
-      .personTitle :hover {
-        color: #6549aa;
-      }
-      
-
     `}</style>
-  </div>
+  </Card>
 )
 
 PersonCard.propTypes = {
   person: PropTypes.shape({
     name: PropTypes.string.isRequired,
     nickname: PropTypes.string.isRequired,
-    avatar: PropTypes.string,
+    imgUrl: PropTypes.string,
     _id: PropTypes.string.isRequired
   }).isRequired
 }

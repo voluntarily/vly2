@@ -1,3 +1,4 @@
+// import '../static/empty.less'
 import Document, { Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
@@ -34,7 +35,17 @@ export default class IntlDocument extends Document {
     return (
       <html>
         <Head>
+          <link rel='shortcut icon' href='../static/img/icons/favicon.ico' />
+          <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
+          <meta charSet='utf-8' />
+          <meta
+            name='viewport'
+            content='initial-scale=1.0, width=device-width'
+          />
+          <link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
+          <link rel='stylesheet' href='//cdn.quilljs.com/1.2.6/quill.snow.css' />
           {this.props.styleTags}
+
         </Head>
         <body>
           <Main />
@@ -45,6 +56,7 @@ export default class IntlDocument extends Document {
             }}
           />
           <NextScript />
+
         </body>
       </html>
     )

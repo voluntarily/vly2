@@ -1,40 +1,51 @@
 const orgList = [
   {
-    name: 'Voluntari.ly Administrators',
+    name: 'Voluntarily Administrators',
     slug: 'vly-admin',
-    type: ['admin'],
-    about: "Voluntari.ly Administrators have special powers. Contact us to get things done that can't be done any other way"
-
+    category: ['admin'],
+    imgUrl: 'https://example.com/image1',
+    info: {
+      about: 'Industry in the classroom.',
+      members: 'You are a member of Voluntarily.',
+      followers: 'You are a follower of Voluntarily.',
+      joiners: 'You are a nearly a member of Voluntarily.',
+      outsiders: 'You could be a member of Voluntarily.'
+    }
   },
   {
     name: 'OMGTech',
     slug: 'omgtech',
-    type: ['ap', 'vp'],
-    about: 'Awesome content providers'
+    category: ['ap', 'vp'],
+    imgUrl: 'https://example.com/image2',
+    info: {
+      about: 'Awesome content providers'
+    }
   },
   {
     name: 'Datacom',
     slug: 'datacom',
-    type: ['vp'],
-    about: 'some of our most loyal helpers'
+    category: ['vp'],
+    imgUrl: 'https://example.com/image3',
+    info: { about: 'some of our most loyal helpers' }
   },
   {
     name: 'Spark Ltd',
     slug: 'spark',
-    type: ['vp'],
-    about: 'more of our most loyal helpers'
+    category: ['vp'],
+    imgUrl: 'https://example.com/image4',
+    info: { about: 'more of our most loyal helpers' }
   },
   {
     name: 'Westpac Ltd',
     slug: 'westpac',
-    type: ['vp'],
-    about: 'even more of our most loyal helpers'
+    category: ['vp'],
+    info: { about: 'even more of our most loyal helpers' }
   },
   {
     name: 'Albany High School',
     slug: 'albany-high',
-    type: ['op'],
-    about: 'A great place to learn'
+    category: ['op'],
+    info: { about: 'A great place to learn' }
   }
 ]
 

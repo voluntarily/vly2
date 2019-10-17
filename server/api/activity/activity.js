@@ -1,15 +1,26 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const idvalidator = require('mongoose-id-validator')
+const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
 
 const ActivitySchema = new Schema({
-  title: String, // "Growing in the garden",
+  name: String, // "Growing in the garden",
+  title: String, // deprecated - use name instead
   subtitle: String, // "Growing digitally in the garden",
   imgUrl: { type: 'String', required: true, default: '../../../static/img/activity/activity.png' },
   description: String, // "Project to grow something in the garden",
   duration: String, // "15 Minutes",
-  org: { type: Schema.Types.ObjectId, ref: 'Organisation' },
+  offerOrg: { type: Schema.Types.ObjectId, ref: 'Organisation' },
   owner: { type: Schema.Types.ObjectId, ref: 'Person' },
   resource: {
+    type: String,
+    default: ''
+  },
+  volunteers: {
+    type: Number,
+    default: 1
+  },
+  space: {
     type: String,
     default: ''
   },
@@ -21,6 +32,10 @@ const ActivitySchema = new Schema({
       type: Schema.Types.ObjectId, ref: 'Tag'
     }
   ],
+  equipment: {
+    type: [String],
+    default: []
+  },
   status: {
     type: 'String',
     required: true,
@@ -29,5 +44,9 @@ const ActivitySchema = new Schema({
   },
   dateAdded: { type: 'Date', default: Date.now, required: true }
 })
+
+ActivitySchema.plugin(idvalidator)
+ActivitySchema.plugin(accessibleRecordsPlugin)
+ActivitySchema.plugin(accessibleFieldsPlugin)
 
 module.exports = mongoose.model('Activity', ActivitySchema)

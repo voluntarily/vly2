@@ -25,7 +25,7 @@ class ActListSection extends Component {
 
       return await this.props.dispatch(reduxApi.actions.activities.get(filters))
     } catch (err) {
-      // console.log('error in getting acts', err)
+      // console.error('error in getting acts', err)
     }
   }
 
@@ -56,7 +56,7 @@ class ActListSection extends Component {
 
 ActListSection.propTypes = {
   acts: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequire,
+    name: PropTypes.string.isRequire,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     description: PropTypes.string,

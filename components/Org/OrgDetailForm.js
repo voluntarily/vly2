@@ -3,7 +3,7 @@ import slug from 'limax'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import RichTextEditor from '../Editor/RichTextEditor'
+import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 
 function hasErrors (fieldsError) {
@@ -13,7 +13,6 @@ function hasErrors (fieldsError) {
 class OrgDetailForm extends Component {
   constructor (props) {
     super(props)
-    this.setAbout = this.setAbout.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
   }
 
@@ -22,12 +21,15 @@ class OrgDetailForm extends Component {
     this.props.form.validateFields()
   }
 
-  setAbout (value) {
-    this.props.form.setFieldsValue({ about: value })
-  }
   setImgUrl = (value) => {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
+  // setWebsite = (value) => {
+  //   this.props.form.setWebsite({ contactEmail: value })
+  // }
+  // setContactEmailUrl = (value) => {
+  //   this.props.form.setFieldsValue({ contactEmail: value })
+  // }
 
   handleSubmit = (e) => {
     e.preventDefault()
@@ -38,10 +40,20 @@ class OrgDetailForm extends Component {
         // update the rest from the form values.
         org.name = values.name
         org.slug = slug(values.name)
-        org.about = values.about
+        org.info.about = values.about
+        org.info.instructions = values.instructions
+        org.info.followers = values.followers
+        org.info.joiners = values.joiners
+        org.info.members = values.members
+        org.info.outsiders = values.outsiders
         org.imgUrl = values.imgUrl
-        org.type = values.type
+        org.website = values.website
+        org.twitter = values.twitter
+        org.facebook = values.facebook
+        org.contactEmail = values.contactEmail
+        org.category = values.category
 
+        window.scrollTo(0, 0)
         this.props.onSubmit(this.props.org)
       }
     })
@@ -49,13 +61,21 @@ class OrgDetailForm extends Component {
 
   render () {
     // get translated labels
-    const orgName = <FormattedMessage id='orgName' defaultMessage='Title' about='organisation Title label in OrgDetails Form' />
-    const orgAbout = <FormattedMessage id='orgAbout' defaultMessage='About' about='organisation Description label in OrgDetails Form' />
-    const orgImgUrl = <FormattedMessage id='orgImgUrl' defaultMessage='Image Link' about='organisation Image URL label in OrgDetails Form' />
-    const orgType = <FormattedMessage id='orgType' defaultMessage='Type' about='school, business or activity provider' />
+    const orgName = <FormattedMessage id='orgName' defaultMessage='Title' description='organisation Title label in OrgDetails Form' />
+    const orgImgUrl = <FormattedMessage id='orgImgUrl' defaultMessage='Image Link' description='organisation Image URL label in OrgDetails Form' />
+    const orgWebsite = <FormattedMessage id='orgWebsite' defaultMessage='Website' description='website label in OrgDetails Form' />
+    const orgContactEmail = <FormattedMessage id='orgContactEmail' defaultMessage='Contact Email' description='contact Email label in OrgDetails Form' />
+    const orgCategory = <FormattedMessage id='orgCategory' defaultMessage='Category' description='school, business or activity provider' />
+
+    const orgAbout = <FormattedMessage id='orgAbout' defaultMessage='About' description='organisation Description label in OrgDetails Form' />
+    const orgInfoInstructions = <FormattedMessage id='orgInfoInstructions' defaultMessage='Getting started' description='organisation instructions label in OrgDetails Form' />
+    const orgInfoFollowers = <FormattedMessage id='orgInfoFollowers' defaultMessage='Followers' description='organisation Description label in OrgDetails Form' />
+    const orgInfoJoiners = <FormattedMessage id='orgInfoJoiners' defaultMessage='Joiners' description='organisation Description label in OrgDetails Form' />
+    const orgInfoMembers = <FormattedMessage id='orgInfoMembers' defaultMessage='Members' description='organisation Description label in OrgDetails Form' />
+    const orgInfoOutsiders = <FormattedMessage id='orgInfoOutsiders' defaultMessage='Outsiders' description='organisation Description label in OrgDetails Form' />
 
     // TODO translate
-    const typeOptions = [
+    const categoryOptions = [
       { label: 'Business', value: 'vp' },
       { label: 'School', value: 'op' },
       { label: 'Activity provider', value: 'ap' },
@@ -80,7 +100,6 @@ class OrgDetailForm extends Component {
 
     // Only show error after a field is touched.
     const orgNameError = isFieldTouched('name') && getFieldError('name')
-
     return (
       <div className='OrgDetailForm'>
         <Form
@@ -109,7 +128,7 @@ class OrgDetailForm extends Component {
               ]
             })(
               // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
-              <RichTextEditor onChange={this.setAbout} />
+              <RichTextEditor />
             )}
           </Form.Item>
           <Form.Item label={orgImgUrl}>
@@ -120,15 +139,100 @@ class OrgDetailForm extends Component {
             )}
             <ImageUpload setImgUrl={this.setImgUrl} />
           </Form.Item>
-          <Form.Item label={orgType}>
-            {getFieldDecorator('type', {
+          <Form.Item label={orgContactEmail}>
+            {getFieldDecorator('contactEmail', {
               rules: [
-                { required: true, message: 'type is required' }
+              ]
+            })(
+              // <TextArea rows={20} placeholder='Enter email address for organisations contact person' />
+              <Input placeholder='example@gmail.com' />
+            )}
+          </Form.Item>
+          <Form.Item
+            label={orgWebsite}
+          >
+            {getFieldDecorator('website', {
+              rules: [
+                { pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/,
+                  message: 'Enter valid URL' }
+              ]
+            })(
+              <Input placeholder='https://example.com' />
+            )}
+          </Form.Item>
+          <Form.Item label='Facebook'>
+            {getFieldDecorator('facebook', {
+              rules: [
+              ]
+            })(
+              <Input addonBefore='https://www.facebook.com/' />
+            )}
+          </Form.Item>
+          <Form.Item label='Twitter'>
+            {getFieldDecorator('twitter', {
+            })(
+              <Input addonBefore='@' />
+            )}
+          </Form.Item>
+          <Form.Item label={orgCategory}>
+            {getFieldDecorator('category', {
+              rules: [
+                { required: true, message: 'category is required' }
               ]
             })(
               <Checkbox.Group
-                options={typeOptions}
+                options={categoryOptions}
               />
+            )}
+          </Form.Item>
+          <Form.Item label={orgInfoInstructions}>
+            {getFieldDecorator('instructions', {
+              rules: [
+
+              ]
+            })(
+              // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+              <RichTextEditor />
+            )}
+          </Form.Item>
+          <Form.Item label={orgInfoFollowers}>
+            {getFieldDecorator('followers', {
+              rules: [
+
+              ]
+            })(
+              // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+              <RichTextEditor />
+            )}
+          </Form.Item>
+          <Form.Item label={orgInfoJoiners}>
+            {getFieldDecorator('joiners', {
+              rules: [
+
+              ]
+            })(
+              // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+              <RichTextEditor />
+            )}
+          </Form.Item>
+          <Form.Item label={orgInfoMembers}>
+            {getFieldDecorator('members', {
+              rules: [
+
+              ]
+            })(
+              // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+              <RichTextEditor />
+            )}
+          </Form.Item>
+          <Form.Item label={orgInfoOutsiders}>
+            {getFieldDecorator('outsiders', {
+              rules: [
+
+              ]
+            })(
+              // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+              <RichTextEditor />
             )}
           </Form.Item>
           <Button
@@ -140,7 +244,7 @@ class OrgDetailForm extends Component {
             <FormattedMessage
               id='org.cancel'
               defaultMessage='Cancel'
-              about='Label for cancel button on organisation details form'
+              description='Label for cancel button on organisation details form'
             />
           </Button>
           <Button
@@ -153,8 +257,7 @@ class OrgDetailForm extends Component {
             <FormattedMessage
               id='org.save'
               defaultMessage='Save'
-              shape='round'
-              about='Label for submit button on organisation details form'
+              description='Label for submit button on organisation details form'
             />
           </Button>
         </Form>
@@ -166,9 +269,19 @@ class OrgDetailForm extends Component {
 OrgDetailForm.propTypes = {
   org: PropTypes.shape({
     name: PropTypes.string,
-    about: PropTypes.string,
-    type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])),
+    info: PropTypes.shape({
+      about: PropTypes.string.isRequired,
+      followers: PropTypes.string,
+      joiners: PropTypes.string,
+      members: PropTypes.string,
+      outsiders: PropTypes.string
+    }),
+    category: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])),
     imgUrl: PropTypes.string,
+    website: PropTypes.string,
+    contactEmail: PropTypes.string,
+    facebook: PropTypes.string,
+    twitter: PropTypes.string,
     _id: PropTypes.string
   }).isRequired,
   form: PropTypes.object,
@@ -183,18 +296,25 @@ OrgDetailForm.propTypes = {
 export default Form.create({
   name: 'organisation_detail_form',
   onFieldsChange (props, changedFields) {
-    // console.log('onFieldsChange', changedFields)
     // props.onChange(changedFields);
   },
   mapPropsToFields (props) {
+    const org = props.org
+    if (!org.info) { org.info = {} }
     return {
-      name: Form.createFormField({ ...props.org.name, value: props.org.name }),
-      about: Form.createFormField({ ...props.org.about, value: props.org.about }),
-      imgUrl: Form.createFormField({ ...props.org.imgUrl, value: props.org.imgUrl }),
-      type: Form.createFormField({ ...props.org.type, value: props.org.type })
+      name: Form.createFormField({ ...org.name, value: org.name }),
+      about: Form.createFormField({ ...org.info.about, value: org.info.about }),
+      instructions: Form.createFormField({ ...org.info.instructions, value: org.info.instructions }),
+      followers: Form.createFormField({ ...org.info.followers, value: org.info.followers }),
+      joiners: Form.createFormField({ ...org.info.joiners, value: org.info.joiners }),
+      members: Form.createFormField({ ...org.info.members, value: org.info.members }),
+      outsiders: Form.createFormField({ ...org.info.outsiders, value: org.info.outsiders }),
+      imgUrl: Form.createFormField({ ...org.imgUrl, value: org.imgUrl }),
+      website: Form.createFormField({ ...org.website, value: org.website }),
+      contactEmail: Form.createFormField({ ...org.contactEmail, value: org.contactEmail }),
+      facebook: Form.createFormField({ ...org.facebook, value: org.facebook }),
+      twitter: Form.createFormField({ ...org.twitter, value: org.twitter }),
+      category: Form.createFormField({ ...org.category, value: org.category })
     }
-  },
-  onValuesChange (_, values) {
-    // console.log('onValuesChange', values)
   }
 })(OrgDetailForm)

@@ -4,22 +4,25 @@ const Schema = mongoose.Schema
 const organisationSchema = new Schema({
   name: { type: 'String', required: true },
   slug: { type: 'String', required: true },
-<<<<<<< Updated upstream
   about: { type: 'String' },
-  // TODO: [VP-146] make required and provide a default image in the static folder.
-  imgUrl: String,
-=======
-  about: { type: 'String', required: true },
-  imgUrl: { type: 'String', required: true, default: '../../../static/img/organisation/organisation.png' },
->>>>>>> Stashed changes
-  contactEmail: String,
-  contactId: String,
+  // TODO: [VP-146] make required and provide a default image in the static folder.  imgUrl: String,
+  imgUrl: { type: 'String', required: true, default: '/static/img/organisation/organisation.png' },
   website: String,
-  type: {
+  facebook: String,
+  twitter: String,
+  category: {
     type: [String],
     required: true,
     default: ['vp'],
     enum: ['admin', 'vp', 'op', 'ap', 'other']
+  },
+  info: {
+    about: String,
+    instructions: String,
+    followers: String,
+    joiners: String,
+    members: String,
+    outsiders: String
   },
   dateAdded: { type: 'Date', default: Date.now, required: true }
 })

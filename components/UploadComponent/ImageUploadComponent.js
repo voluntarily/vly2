@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
 import { message } from 'antd'
+import React, { Component } from 'react'
 import callApi from '../../lib/apiCaller'
 import './imageuploader.less'
 
@@ -25,7 +25,6 @@ class ImageUpload extends Component {
       },
       meta: {}
     })
-
     this.onUpload = this.onUpload.bind(this)
     this.uppy.on('file-removed', (e) => { this.props.setImgUrl('') })
     this.uppy.addUploader(this.onUpload)

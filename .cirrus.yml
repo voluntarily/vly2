@@ -1,5 +1,9 @@
 container:
   image: node:12
+  additional_containers:
+    - name: db
+      image: mongo:latest
+      port: 27017
 
 lint_task:
   node_modules_cache:
@@ -24,18 +28,31 @@ test_task:
     - unset CIRRUS_CI
     - ./node_modules/codecov/bin/codecov --disable=gcov
 
+systemtest_task:
+  node_modules_cache:
+    folder: node_modules
+    fingerprint_script: cat package-lock.json
+    populate_script: MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" MONGOMS_VERSION="4.0.5" MONGOMS_DISABLE_POSTINSTALL=1 npm ci
+  test_script:
+    - apt-get update
+    - apt-get install -y firefox-esr
+    - npm run end-to-end-test
+
 prod_docker_docker_builder:
   only_if: $CIRRUS_BRANCH == 'master'
   depends_on:
     - test
+    - systemtest
     - lint
   env:
-    AWS_ACCOUNT_ID: ENCRYPTED[3afae87e49cb7fb6d48c91aad7fdbca95b7bdad59a37ba5e5baa04f9be4bb7dc7b58dff4b44e754e438c21af6e414636]
-    AWS_ACCESS_KEY_ID: ENCRYPTED[d86162b4131f8b01011d04f450b54011d70b5b613fc9a86b1e6f589ecf9e0864e4e4469fafbcee218eac16f799c2391d]
-    AWS_SECRET_ACCESS_KEY: ENCRYPTED[74a41c950ca740c721e7be77eee13576159bceade6cbac8f179066a57edce4d9d43430df4b5af82d5d94b17b066895b3]
-    AWS_DEFAULT_REGION: ap-southeast-1
-    SMTP_ID: ENCRYPTED[ca1ea7a7cb3776aae3f9853154e4371b2d2b42c36febc2da5e6aed019907c4754d4164e26e8666bc5c99b4171d98ad0d]
-    SMTP_PWD: ENCRYPTED[9be38cf7a68886cd0a5526c3438b5ea38ebd94e79c040beaeee81c4ea7c2480edc46642758ec2fe5894ec8ebcfae0d54]
+    AWS_ACCOUNT_ID: 585172581592 # voluntarily-deployment
+    AWS_ACCESS_KEY_ID: AKIAYQPYA7TMKZS4NM6W
+    AWS_SECRET_ACCESS_KEY: ENCRYPTED[f5a784932b9a9863ed4b2b92778409fbb386525f3f1971c21ff24e01a40cc0c71884090277cf21c6f90b61dcecf9589b]
+    AWS_DEFAULT_REGION: ap-southeast-1 
+    BADGR_USERNAME: andrew+badgr@voluntarily.nz
+    BADGR_PASSWORD: ENCRYPTED[dd2c079dd8cf1f70cfa032d6264b22791fd19c5ec544fa27742a813dd2ddee8e7afcd9c4260117a7d34060122d033c4c]
+    SMTP_ID: ENCRYPTED[07689bc5cc127560e922013dd7922f3053af96c03e3f6777a97068407e37ea822c23a1eed90e87ac36de3815193c61b9]
+    SMTP_PWD: ENCRYPTED[644f233a01dd2bfdccb0df17cfabc58c47b55ebb869257a2f9eb8fd64b9a269d35927c2112d9ceef186d39723f8b2b6e]
     IMAGE_TAG_VERSION: ${CIRRUS_BRANCH}
     HOME: /root
     APP_URL: https://alpha.voluntarily.nz

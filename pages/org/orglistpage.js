@@ -1,18 +1,21 @@
-import { Component } from 'react'
-import { Button } from 'antd'
-import { FormattedMessage } from 'react-intl'
+import { Button, Divider } from 'antd'
 import Link from 'next/link'
-import publicPage, { FullPage } from '../../hocs/publicPage'
-import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
+import { Component } from 'react'
+import { Helmet } from 'react-helmet'
+import { FormattedMessage } from 'react-intl'
 import OrgList from '../../components/Org/OrgList'
+import { FullPage, H3Black, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
+import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 
 class OrgListPage extends Component {
   static async getInitialProps ({ store, query }) {
     // Get all OrgListPage
     try {
-      await store.dispatch(reduxApi.actions.organisations.get())
+      const select = { p: 'name imgUrl category' }
+      await store.dispatch(reduxApi.actions.organisations.get(select))
     } catch (err) {
-      console.log('error in getting orgs', err)
+      console.error('error in getting orgs', err)
     }
   }
 
@@ -21,14 +24,20 @@ class OrgListPage extends Component {
     const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
     return (
       <FullPage>
-        <h1><FormattedMessage
-          defaultMessage='Organisations'
-          id='org.list.heading' /></h1>
+        <Helmet>
+          <title>Voluntarily - Organisation List</title>
+        </Helmet>
+        <PageHeaderContainer>
+          <H3Black><FormattedMessage
+            defaultMessage='Organisations'
+            id='org.list.heading' /></H3Black>
+          <RequestButtonContainer> {isAdmin && <Button type='primary' size='large' shape='round'><Link href='/org/new'><a>
+            <FormattedMessage id='org.new' defaultMessage='New Organisation' description='Button to create a new organisation' />
+          </a></Link></Button>}</RequestButtonContainer><p>Check out organisations doing social good on the Voluntarily platform</p>
+        </PageHeaderContainer>
+        <Divider />
         <OrgList orgs={orgs} />
 
-        { isAdmin && <Button shape='round'><Link href='/org/new'><a>
-          <FormattedMessage id='org.new' defaultMessage='New Organisation' description='Button to create a new organisation' />
-        </a></Link></Button>}
       </FullPage>
     )
   };

@@ -15,15 +15,9 @@ export const PersonRole = ({ role }) => {
 }
 
 const PersonRoles = ({ roles }) =>
-  <div>
-    <p>
-      {roles.map(role => <span key={role}><PersonRole role={role} /></span>)}
-    </p>
-    <style jsx>{`
-    span {      
-      padding-right: 1em;
-    }
-    `}</style>
-  </div>
+  roles && (
+    <span>
+      {roles.map(role => <span key={role}><PersonRole role={role} /> </span>)}
+    </span>)
 
 export default PersonRoles

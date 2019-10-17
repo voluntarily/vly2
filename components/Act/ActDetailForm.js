@@ -1,11 +1,12 @@
-import { Button, Divider, Form, Icon, Input, Tooltip } from 'antd'
+import { Button, Divider, Form, Icon, Input, Tooltip, Radio } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import RichTextEditor from '../Editor/RichTextEditor'
+import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import { TextHeadingBold, TextP } from '../VTheme/VTheme'
-import OpDetailTagsEditable from '../Op/OpDetailTagsEditable'
+import { H3Bold, P } from '../VTheme/VTheme'
+import TagInput from '../Form/Input/TagInput'
+import OrgSelector from '../Org/OrgSelector'
 
 import {
   DescriptionContainer,
@@ -22,54 +23,98 @@ function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
 }
 
+const isTest = (process.env.NODE_ENV === 'test')
+
 class ActDetailForm extends Component {
   constructor (props) {
     super(props)
-    this.setDescription = this.setDescription.bind(this)
+    this.state = {
+      input1Disabled: true,
+      input2Disabled: true,
+      option1: false,
+      option2: false,
+      totalVolunteerRequired: 1,
+      volunteerPerStudent: 1
+    }
+
     this.setImgUrl = this.setImgUrl.bind(this)
+    this.change = this.change.bind(this)
   }
 
   componentDidMount () {
     // Call validateFields here to disable the submit button when on a blank form.
     // empty callback supresses a default which prints to the console.
     this.props.form.validateFields(() => { })
+    if (this.props.act.volunteers === 0) {
+      this.actRadio('option1')
+    } else
+    if (this.props.act.volunteers < 1) {
+      this.actRadio('option2')
+    } else {
+      this.actRadio('option1')
+    }
+  }
+  actRadio = (event) => {
+    if (event === 'option1') {
+      this.setState({
+        input1Disabled: false,
+        input2Disabled: true,
+        option1: true,
+        option2: false
+      })
+    } else {
+      this.setState({
+        input2Disabled: false,
+        input1Disabled: true,
+        option1: false,
+        option2: true
+      })
+    }
+  }
+  change = (event) => {
+    const textname = event.target.name
+    if (textname === 'resourceinput1') {
+      this.setState({
+        totalVolunteerRequired: event.target.value
+      })
+    } else {
+      this.setState({
+        volunteerPerStudent: event.target.value
+      })
+    }
   }
 
-  setDescription (value) {
-    this.props.form.setFieldsValue({ description: value })
-  }
   setImgUrl = (value) => {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
-
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const act = this.props.act
         act.time = values.time
-        act.title = values.title
+        act.name = values.name
         act.subtitle = values.subtitle
         act.duration = values.duration
         act.resource = values.resource
+        act.volunteers = !this.state.input1Disabled ? this.state.totalVolunteerRequired : (1 / this.state.volunteerPerStudent)
+        act.space = values.space
         act.description = values.description
+        act.offerOrg = values.offerOrg && values.offerOrg.key
         act.imgUrl = values.imgUrl
+        act.tags = values.tags
         act.status = e.target.name === 'publish' ? 'active' : 'draft'
         // act.owner = (this.props.act.owner && this.props.op.owner._id) || this.props.me._id
         act.owner = this.props.me._id
         // TODO: [VP-305] should the owner of the activity be preserved or set to the last person who edits it?
-
+        if (!isTest) { window.scrollTo(0, 0) }
         this.props.onSubmit(this.props.act)
-      } else {
-        // console.log('field validation error:', err)
       }
     })
   }
 
   render () {
-    const isTest = (process.env.NODE_ENV === 'test')
-
     // get translated labels
     const actTitle = (
       <span>
@@ -110,6 +155,7 @@ class ActDetailForm extends Component {
         </Tooltip>
       </span>
     )
+
     const actResource = (
       <span>
         {' '}
@@ -120,6 +166,20 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML or Markdown here.'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+    const actSpace = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='actSpace'
+          defaultMessage='Space Requirement'
+          description='activity space label in ActDetail Form'
+        />
+        &nbsp;
+        <Tooltip title='How much space is required to run an activity? Indoor or Outdoor activity?'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -151,7 +211,20 @@ class ActDetailForm extends Component {
         </Tooltip>
       </span>
     )
-
+    const actOrganisation = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='actOrganisation'
+          defaultMessage='Activity Organisation'
+          description='label for Organisation offering the activity'
+        />
+        &nbsp;
+        <Tooltip title='Which organisation is this activity for?'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
     const actTags = (
       <FormattedMessage
         id='actTags'
@@ -164,19 +237,31 @@ class ActDetailForm extends Component {
     } = this.props.form
 
     // Only show error after a field is touched.
-    const titleError = isFieldTouched('title') && getFieldError('title')
-
+    const titleError = isFieldTouched('name') && getFieldError('name')
+    const orgMembership =
+    this.props.me.orgMembership &&
+    this.props.me.orgMembership.map(member => member.organisation)
     return (
       <div className='ActDetailForm'>
         <Form hideRequiredMark colon={false}>
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Tell everyone about this Activity?</TextHeadingBold>
+                <H3Bold>
+                  <FormattedMessage
+                    defaultMessage='Tell everyone about this Activity?'
+                    id='actDetailForm.AboutSection.subtitle'
+                    description='first section subtitle on actdetailform that asks for title and about details'
+                  />
+                </H3Bold>
               </TitleContainer>
-              <TextP>
-                Attract people to this activitiy with a snappy title, use the subtitle to layout the basic idea.
-              </TextP>
+              <P>
+                <FormattedMessage
+                  defaultMessage='Attract people to this activity with a snappy name, use the subtitle to layout the basic idea.'
+                  id='actDetailForm.AboutSection.instructions'
+                  description='first section instructions on actdetailform that asks for title and about details'
+                />
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -185,7 +270,7 @@ class ActDetailForm extends Component {
                   validateStatus={titleError ? 'error' : ''}
                   help={titleError || ''}
                 >
-                  {getFieldDecorator('title', {
+                  {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'Title is required' }]
                   })(<Input placeholder='Title' />)}
                 </Form.Item>
@@ -207,6 +292,13 @@ class ActDetailForm extends Component {
                     : <RichTextEditor onChange={this.setAbout} />
                 )}
               </Form.Item>
+              {orgMembership && (
+                <Form.Item label={actOrganisation}>
+                  {getFieldDecorator('offerOrg')(
+                    <OrgSelector orgs={orgMembership} />
+                  )}
+                </Form.Item>
+              )}
             </InputContainer>
           </FormGrid>
 
@@ -214,22 +306,29 @@ class ActDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>
-                  What topics and learning outcomes does this activity cover?
-                </TextHeadingBold>
+                <H3Bold>
+                  <FormattedMessage
+                    defaultMessage='What topics and learning outcomes does this activity cover?'
+                    id='actDetailForm.TagsSection.subtitle'
+                    description='Tag section subtitle on actdetailform that asks for topics and outcomes'
+                  />
+                </H3Bold>
               </TitleContainer>
-              <TextP>
-                Make this activity searchable by classifying it with subject, age group, and technology keywords.
-              </TextP>
+              <P>
+                <FormattedMessage
+                  defaultMessage='Make this activity searchable by classifying it with subject, age group, and technology keywords.'
+                  id='actDetailForm.TagsSection.instructions'
+                  description='Tag section instructions on actdetailform that asks for title and about details'
+                />
+              </P>
             </DescriptionContainer>
             <InputContainer>
-              {/* TODO: Implement Activity Tags */}
               <Form.Item label={actTags}>
                 {getFieldDecorator('tags', {
                   initialValue: [],
                   rules: []
                 })(
-                  <OpDetailTagsEditable
+                  <TagInput
                     existingTags={this.props.existingTags}
                   />
                 )}
@@ -241,15 +340,25 @@ class ActDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>What resources are required to run this activity?</TextHeadingBold>
+                <H3Bold>
+                  <FormattedMessage
+                    defaultMessage='What resources are required to run this activity?'
+                    id='actDetailForm.ResourceSection.subtitle'
+                    description='section subtitle on actdetail form for resources'
+                  />
+                </H3Bold>
               </TitleContainer>
-              <TextP>
-                What is the time commitment?<br />
-                How many people do you need to help?<br />
-                What skills might they require?<br />
-                Do you need a special space or location to work in?<br />
-                Does this activity require special equipment?
-              </TextP>
+              <P>
+                <FormattedMessage
+                  defaultMessage='What is the time commitment?
+                    How many people do you need to help?
+                    What skills might they require?
+                    Do you need a special space or location to work in?
+                    Does this activity require special equipment?'
+                  id='actDetailForm.ResourceSection.instructions'
+                  description='section instructions on actdetail form for resources'
+                />
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -261,29 +370,58 @@ class ActDetailForm extends Component {
                         message: 'Commitment level is required'
                       }
                     ]
-                  })(<Input placeholder='4 hours' />)}
+                  })(<Input placeholder='4 hours' required />)}
                 </Form.Item>
                 <Form.Item label={actResource}>
                   {getFieldDecorator('resource')(<Input placeholder='5 people, classroom, projector' />)}
                 </Form.Item>
+                <Form.Item>
+                  <Radio name='volunteer' value='option1' checked={this.state.option1} onClick={this.actRadio.bind(this, 'option1')}>
+                    <FormattedMessage
+                      id='act.detail.volunteercount'
+                      defaultMessage='Total number of volunteers required'
+                      description='label for field volunteer numbers required'
+                    />
+                  </Radio>
+                  {getFieldDecorator('totalVolunteerRequired')(<Input name='resourceinput1' onChange={this.change}
+                    disabled={this.state.input1Disabled} placeholder='Select from 1 to 100' />)}
+                </Form.Item>
+                <Form.Item>
+                  <Radio name='volunteer' value='option2' checked={this.state.option2} onClick={this.actRadio.bind(this, 'option2')}>
+                    <FormattedMessage
+                      id='act.detailform.volunteerratio'
+                      defaultMessage='Number of students per volunteer'
+                      description='label for field number of students per volunteer'
+                    />
+                  </Radio>
+                  {getFieldDecorator('volunteerPerStudent')(<Input name='resourceinput2' onChange={this.change}
+                    disabled={this.state.input2Disabled} placeholder='Specify the number of students' />)}
+                </Form.Item>
+                <Form.Item label={actSpace}>
+                  {getFieldDecorator('space')(<Input name='space' placeholder='40 sqm' />)}
+                </Form.Item>
               </ShortInputContainer>
-              <ul>
-                <li>TODO: [VP-301] list the number of volunteers required e.g. 1 adult for 5 children, or 20 people</li>
-                <li>TODO: [VP-302] list any equipment required for an activity</li>
-                <li>TODO: [VP-303] list any space requirements for an activity</li>
-              </ul>
             </InputContainer>
           </FormGrid>
           <Divider />
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Add an image</TextHeadingBold>
+                <H3Bold>
+                  <FormattedMessage
+                    id='actDetailForm.addImageSection.title'
+                    defaultMessage='Add an image'
+                    description='subtitle for add image section in act detail form'
+                  />
+                </H3Bold>
               </TitleContainer>
-              <TextP>
-                Activities with illustrations get more responses. If you don't have a
-                photo click suggest and we can provide one based on the tags.
-              </TextP>
+              <P>
+                <FormattedMessage
+                  id='actDetailForm.addImageSection.instructions'
+                  defaultMessage="Activities with illustrations get more responses. If you don't have a photo click suggest and we can provide one based on the tags."
+                  description='instructions for add image section in actdetail form'
+                />
+              </P>
               <img style={{ width: '50%', float: 'right' }} src={this.props.act.imgUrl} alt='' />
             </DescriptionContainer>
             <InputContainer>
@@ -303,15 +441,21 @@ class ActDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Save Activity</TextHeadingBold>
+                <H3Bold>
+                  <FormattedMessage
+                    id='actDetailForm.SaveActivityButton'
+                    defaultMessage='Save Activity'
+                    description='Subtitle for save activity section on ActDetailForm'
+                  />
+                </H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 <FormattedMessage
                   id='act.SaveInstructions'
                   defaultMessage='Save as Draft will allow you to preview the activity while Publish will make it available to everyone to view.'
                   description='Instructions for save and publish on activity details form'
                 />
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <Button
@@ -367,22 +511,40 @@ class ActDetailForm extends Component {
 ActDetailForm.propTypes = {
   act: PropTypes.shape({
     _id: PropTypes.string,
-    title: PropTypes.string,
+    name: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.string,
     resource: PropTypes.string,
+    volunteers: PropTypes.number,
+    space: PropTypes.string,
     time: PropTypes.Array,
     duration: PropTypes.string,
     status: PropTypes.string,
-    owner: PropTypes.string
+    owner: PropTypes.string,
+    offerOrg: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        _id: PropTypes.string
+      })
+    ])
   }),
   me: PropTypes.shape({
-    _id: PropTypes.string
+    _id: PropTypes.string,
+    orgMembership: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string,
+        name: PropTypes.string
+      })
+    )
   }),
   form: PropTypes.object,
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
   }),
+  existingTags: PropTypes.arrayOf(PropTypes.shape({
+    tag: PropTypes.string.isRequired,
+    _id: PropTypes.string
+  })).isRequired,
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired
   // dispatch: PropTypes.func.isRequired,
@@ -390,24 +552,38 @@ ActDetailForm.propTypes = {
 
 export default Form.create({
   name: 'activity_detail_form',
-  onFieldsChange (props, changedFields) {
-    // console.log('onFieldsChange', changedFields)
-    // props.onChange(changedFields);
-  },
   mapPropsToFields (props) {
+    let totalVolunteerRequired
+    let volunteerPerStudent
+    if (props.act.volunteers === 0) {
+      totalVolunteerRequired = 0
+    } else if (props.act.volunteers >= 1) {
+      totalVolunteerRequired = props.act.volunteers
+      // console.log(totalVolunteerRequired)
+    } else if (props.act.volunteers < 1) {
+      volunteerPerStudent = Math.round(1 / props.act.volunteers)
+      // console.log(volunteerPerStudent)
+    }
     return {
-      title: Form.createFormField({ ...props.act.title, value: props.act.title }),
+      name: Form.createFormField({ ...props.act.name, value: props.act.name }),
       subtitle: Form.createFormField({ ...props.act.subtitle, value: props.act.subtitle }),
       description: Form.createFormField({ ...props.act.description, value: props.act.description }),
+      offerOrg: Form.createFormField({
+        ...props.act.offerOrg,
+        value: { key: props.act.offerOrg ? props.act.offerOrg._id : '' }
+      }),
       duration: Form.createFormField({ ...props.act.duration, value: props.act.duration }),
       location: Form.createFormField({ ...props.act.location, value: props.act.location }),
       imgUrl: Form.createFormField({ ...props.act.imgUrl, value: props.act.imgUrl }),
       time: Form.createFormField({ ...props.act.time, value: props.act.time }),
       resource: Form.createFormField({ ...props.act.resource, value: props.act.resource }),
-      status: Form.createFormField({ ...props.act.status, value: props.act.status })
+      status: Form.createFormField({ ...props.act.status, value: props.act.status }),
+      tags: Form.createFormField({ ...props.act.tags, value: props.act.tags }),
+      totalVolunteerRequired: Form.createFormField({ ...totalVolunteerRequired, value: totalVolunteerRequired }),
+      volunteerPerStudent: Form.createFormField({ ...volunteerPerStudent, value: volunteerPerStudent }),
+      space: Form.createFormField({ ...props.act.space, value: props.act.space })
+
     }
   }
-  // onValuesChange (_, values) {
-  //   console.log('onValuesChange', values)
-  // }
+
 })(ActDetailForm)

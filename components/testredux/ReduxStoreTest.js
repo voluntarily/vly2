@@ -17,10 +17,8 @@ export const setName = name => {
 const initialState = { name: '' }
 
 export const ReduxStoreTestReducer = (state = initialState, action) => {
-  // console.log('ReduxStoreTestReducer', action, state)
   switch (action.type) {
     case SET_NAME:
-      // console.log('Reducing SET_NAME')
       return { ...state, name: action.name }
     default:
       return state
@@ -35,7 +33,6 @@ export class ReduxStoreTest extends Component {
 
   // when save clicked copy the edited name to the savedname
   handleClick = e => {
-    // console.log('handleClick', this.state.editname)
     // call redux dispatch with the setName Action and our new data.
     this.props.setName(this.state.editname)
   }

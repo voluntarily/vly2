@@ -15,7 +15,7 @@ const opid = '5cc903e5f94141437622cea7'
 const ops = [
   {
     _id: opid,
-    title: 'Growing in the garden',
+    name: 'Growing in the garden',
     subtitle: 'Growing digitally in the garden',
     imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
     description: 'Project to grow something in the garden',
@@ -85,7 +85,6 @@ test('mount the InterestSection with two interests', async t => {
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  // console.log(wrapper.html())
   t.is(wrapper.find('h2').text(), 'Interested Volunteers') // there are two cards on the screen
   t.is(wrapper.find('tbody tr').length, 2)
   t.regex(wrapper.find('tbody tr td').at(1).text(), /avowkind/)
@@ -110,18 +109,13 @@ test('mount the InterestSection with two interests', async t => {
 
   const declinebutton = wrapper.find('tbody tr').first().find('button').at(1)
   t.is(declinebutton.text(), 'Decline')
-  // console.log(declinebutton.html())
   declinebutton.simulate('click')
 
-  // const popconfirm = wrapper.find('Popconfirm').filter('#declineInvitePopConfirm').first()
-  // console.log(popconfirm.html())
-
-  // TODO: fix throw of rejected promise at this point
+  // // TODO: fix throw of rejected promise at this point
   // popconfirm.props().onConfirm(interests[0])
   // await sleep(1) // allow asynch fetch to complete
   // wrapper.update()
   // const status = wrapper.find('tbody tr').first().find('td').at(2).text()
-  // console.log(status)
   // t.truthy(myMock.done())
   myMock.restore()
 })

@@ -8,7 +8,7 @@ import orgs from './organisation.fixture.js'
 const p = {
   name: 'International Testing Corporation',
   slug: 'test-corp',
-  type: 'vp',
+  category: 'vp',
   about: 'Evil testing empire'
 }
 
@@ -73,9 +73,22 @@ test.serial('Should correctly give subset of orgs matching slug', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 1)
 })
+
+// test.only('Should correctly give a list with only name field', async t => {
+//   const nameOrganisation = "OMGTech";
+//   //p={"name": 1"} when applied on url, json is undefined
+//   const res = await request(server)
+//     .get('/api/organisations?q={"name":"' + nameOrganisation + '"}&p={"name": "1"}')
+//     .set('Accept', 'application/json')
+//     .expect(200)
+//     .expect('Content-Type', /json/)
+//   const got = res.body
+//   ('got', got[0].name)
+//   t.is(got[0].name, nameOrganisation)
+//   t.is(got[0].about, null)
+// })
 
 test.serial('Should find no matches', async t => {
   const res = await request(server)
@@ -84,7 +97,6 @@ test.serial('Should find no matches', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 0)
 })
 
@@ -92,40 +104,67 @@ test.serial('Should fail to find - invalid query', async t => {
   const res = await request(server)
     .get('/api/organisations?s={"invalid":"nomatches"}')
     .set('Accept', 'application/json')
+    .expect(404)
+  t.is(res.status, 404)
+})
+
+test.serial('Should fail to find - Bad request ', async t => {
+  const res = await request(server)
+    .get('/api/organisations?s={this is not json}')
+    .set('Accept', 'application/json')
     .expect(400)
   t.is(res.status, 400)
 })
-test.serial('Should correctly give subset of orgs of type', async t => {
+test.serial('Should correctly give subset of orgs of category', async t => {
   const res = await request(server)
-    .get('/api/organisations?q={"type":"vp"}')
+    .get('/api/organisations?q={"category":"vp"}')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 4)
 })
 
-test.serial('Should correctly give reverse sorted orgs of type', async t => {
+test.serial('Should correctly give reverse sorted orgs of category', async t => {
   const res = await request(server)
-    .get('/api/organisations?q={"type":"vp"}&s="-name"')
+    .get('/api/organisations?q={"category":"vp"}&s="-name"')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 4)
   t.is(got[0].slug, 'westpac')
 })
 
+// Searching for something in the subtitle (case insensitive)
+// [VP-508] Add searching for orgs by category, name and tags
+// test.serial('Should correctly give opportunity 2 when searching by "helpers"', async t => {
+//   const res = await request(server)
+//     .get('/api/opportunities?search=HeLPErs')
+//     .set('Accept', 'application/json')
+//     .expect(200)
+//     .expect('Content-Type', /json/)
+//   const got = res.body
+//   (got)
+//   // t.is(orgs[1].name, got[0].name)
+//   t.is(2, got.length)
+// })
+
+const queryString = params => Object.keys(params).map((key) => {
+  return key + '=' + params[key]
+}).join('&')
+
 test.serial('Should correctly select just the names and ids', async t => {
+  const query = {
+    q: JSON.stringify({ category: 'vp' }),
+    p: 'name imgUrl category'
+  }
   const res = await request(server)
-    .get('/api/organisations?q={"type":"vp"}&p={"name": 1}')
+    .get(`/api/organisations?${queryString(query)}`)
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 4)
   t.is(got[0].slug, undefined)
   t.is(got[0].name, 'Datacom')
@@ -160,7 +199,6 @@ test.serial('Should correctly add an organisation', async t => {
   // can find by id
     const id = res.body._id
     await Organisation.findById(id).then((organisation) => {
-    // console.log('findById:', organisation)
       t.is(id, organisation._id.toString())
     })
 
@@ -177,7 +215,7 @@ test.serial('Should correctly add an organisation', async t => {
     t.is(saved.imgUrl, '../../../static/img/organisation/organisation.png')
 
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 })
 

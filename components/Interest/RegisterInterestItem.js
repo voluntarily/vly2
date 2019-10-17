@@ -36,7 +36,7 @@ class RegisterInterestItem extends Component {
 
         this.props.onChangeStatus(interest)
       } else {
-        // console.log(err)
+        // console.error(err)
       }
     })
   }
@@ -134,7 +134,6 @@ class RegisterInterestItem extends Component {
 RegisterInterestItem.propTypes = {
   interest: PropTypes.shape({
     person: PropTypes.any.isRequired,
-    opportunity: PropTypes.object.isRequired,
     comment: PropTypes.string,
     status: PropTypes.string
   }).isRequired,
@@ -147,7 +146,6 @@ RegisterInterestItem.propTypes = {
 export default Form.create({
   name: 'register_interest_form',
   onFieldsChange (props, changedFields) {
-    // console.log('onFieldsChange', changedFields)
     // props.onChange(changedFields);
   },
   mapPropsToFields (props) {
@@ -179,7 +177,7 @@ function getOptions (interest) {
       options.headerAlwaysVisible = false
       options.headingText = <FormattedMessage id='getInvolvedHeading' defaultMessage='How do you want to get involved?' description='Heading displayed on form allowing volunteer to express interest in an opportunity' />
       options.subHeadingText = <FormattedMessage id='getInvolvedSubHeading' defaultMessage='Type in how you want to get involved, and an organizer will get in touch with you :)' description='Sub-heading displayed on form allowing volunteer to express interest in an opportunity' />
-      options.nextStateButtonText = <FormattedMessage id='getInvolvedButton' defaultMessage='Get Involved!' description='Button allowing volunteer to express interest in an opportunity' />
+      options.nextStateButtonText = <FormattedMessage id='getInvolvedButton' defaultMessage='Get Involved' description='Button allowing volunteer to express interest in an opportunity' />
       options.showFormButtonText = <FormattedMessage id='registerInterestShowForm' defaultMessage="I'm Interested" description='Button to allow volunteer to start expressing interest in an opportunity' />
       options.commentsPlaceholderText = 'How do you want to help out? Got any questions?' // Can't use FormattedMessage here, is there something else I can use?
       options.commentsEditable = true

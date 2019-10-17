@@ -3,21 +3,16 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import RichTextEditor from '../Editor/RichTextEditor'
-import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import { TextHeadingBold, TextP } from '../VTheme/VTheme'
-import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
-import OpDetailTagsEditable from './OpDetailTagsEditable'
-import OpLocationSelector from './OpLocationSelector'
-import {
-  DescriptionContainer,
-  FormGrid,
-  InputContainer,
-  MediumInputContainer,
-  ShortInputContainer,
-  TitleContainer
-} from '../VTheme/FormStyles'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
+import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
+import LocationSelector from '../Form/Input/LocationSelector'
+import RichTextEditor from '../Form/Input/RichTextEditor'
+import TagInput from '../Form/Input/TagInput'
+import OrgSelector from '../Org/OrgSelector'
+import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, ShortInputContainer, TitleContainer } from '../VTheme/FormStyles'
+import { H3Bold, P } from '../VTheme/VTheme'
+
 const { TextArea } = Input
 
 function hasErrors (fieldsError) {
@@ -33,7 +28,7 @@ class OpDetailForm extends Component {
       endDateValue: null,
       endOpen: false
     }
-    this.setDescription = this.setDescription.bind(this)
+    // this.setDescriptin = this.setDescription.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
   }
 
@@ -45,9 +40,6 @@ class OpDetailForm extends Component {
     this.setState({ endDateValue: this.props.op.date[1] })
   }
 
-  setDescription (value) {
-    this.props.form.setFieldsValue({ description: value })
-  }
   setImgUrl = value => {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
@@ -60,13 +52,12 @@ class OpDetailForm extends Component {
         const { startDateValue, endDateValue } = this.state
         op.date = [] // Dirty work around to not change schema
         op.date.push(startDateValue, endDateValue)
-        op.title = values.title
+        op.name = values.name
         op.subtitle = values.subtitle
-        op.tags = values.tags.map(t => {
-          return { tag: t }
-        })
+        op.tags = values.tags
         op.duration = values.duration
         op.location = values.location
+        op.offerOrg = values.offerOrg && values.offerOrg.key
         op.description = values.description
         op.imgUrl = values.imgUrl
 
@@ -80,7 +71,7 @@ class OpDetailForm extends Component {
 
         this.props.onSubmit(this.props.op)
       } else {
-        // console.log('field validation error:', err)
+        console.error('field validation error:', err)
       }
     })
   }
@@ -176,6 +167,20 @@ class OpDetailForm extends Component {
         </Tooltip>
       </span>
     )
+    const opOrganisation = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='opOrganisation'
+          defaultMessage='Offer Organisation'
+          description='label for Organisation offering the opportunity'
+        />
+        &nbsp;
+        <Tooltip title='Which organisation is this opportunity for?'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
     const opDescription = (
       <span>
         {' '}
@@ -250,21 +255,27 @@ class OpDetailForm extends Component {
     } = this.props.form
 
     // Only show error after a field is touched.
-    const titleError = isFieldTouched('title') && getFieldError('title')
+    const nameError = isFieldTouched('name') && getFieldError('name')
     const isNewOp = this.props.op._id
+    const orgMembership =
+      this.props.me.orgMembership &&
+      this.props.me.orgMembership.map(member => member.organisation)
+
     return (
       <div className='OpDetailForm'>
         <PageTitle>
           <h1>
             {isNewOp ? (
               <FormattedMessage
-                id='editOp'
+                id='opEdit'
                 description='Title for editing Ops'
+                defaultMessage='Edit'
               />
             ) : (
               <FormattedMessage
-                id='createOp'
+                id='opCreate'
                 description='Title for creating Ops'
+                defaultMessage='Create'
               />
             )}{' '}
             a request
@@ -283,24 +294,24 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>What are you looking for?</TextHeadingBold>
+                <H3Bold>What are you looking for?</H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 Before our skilled volunteers get involved, they need to know
                 how they can help. Add a title and description that tell
                 volunteers how they can help you.
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
                 <Form.Item
                   label={opTitle}
-                  validateStatus={titleError ? 'error' : ''}
-                  help={titleError || ''}
+                  validateStatus={nameError ? 'error' : ''}
+                  help={nameError || ''}
                 >
-                  {getFieldDecorator('title', {
-                    rules: [{ required: true, message: 'Title is required' }]
-                  })(<Input placeholder='Title' />)}
+                  {getFieldDecorator('name', {
+                    rules: [{ required: true, message: 'name is required' }]
+                  })(<Input placeholder='name' />)}
                 </Form.Item>
 
                 <Form.Item label={opSubtitle}>
@@ -321,10 +332,17 @@ class OpDetailForm extends Component {
                       placeholder='All the details about the request. You can use markdown here.'
                     />
                   ) : (
-                    <RichTextEditor onChange={this.setAbout} />
+                    <RichTextEditor />
                   )
                 )}
               </Form.Item>
+              {orgMembership && (
+                <Form.Item label={opOrganisation}>
+                  {getFieldDecorator('offerOrg')(
+                    <OrgSelector orgs={orgMembership} />
+                  )}
+                </Form.Item>
+              )}
             </InputContainer>
           </FormGrid>
 
@@ -332,26 +350,20 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>
-                  Do you need any specific skills? (optional)
-                </TextHeadingBold>
+                <H3Bold>Do you need any specific skills? (optional)</H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 Does what you're asking for fit into any specific categories
                 like programming, electronics, or robots? Enter them here to
                 make it easier for volunteers to find you.
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <Form.Item label={opTags}>
                 {getFieldDecorator('tags', {
                   initialValue: [],
                   rules: []
-                })(
-                  <OpDetailTagsEditable
-                    existingTags={this.props.existingTags}
-                  />
-                )}
+                })(<TagInput existingTags={this.props.existingTags} />)}
               </Form.Item>
             </InputContainer>
           </FormGrid>
@@ -360,12 +372,12 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Where and when? (optional)</TextHeadingBold>
+                <H3Bold>Where and when? (optional)</H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 More skilled volunteers will offer to help you if you know when,
                 or where you need help.
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -383,7 +395,12 @@ class OpDetailForm extends Component {
                   {getFieldDecorator('startDate', {})(
                     <DatePicker
                       showTime
-                      disabledDate={this.disabledStartDate}
+                      disabledDate={current => {
+                        return (
+                          moment().add(-1, 'days') >= current ||
+                          moment().add(1, 'year') <= current
+                        )
+                      }}
                       format='DD-MM-YYYY HH:mm:ss'
                       onChange={this.onStartDateChange}
                       style={{ width: '100%' }}
@@ -412,7 +429,7 @@ class OpDetailForm extends Component {
                       }
                     ]
                   })(
-                    <OpLocationSelector
+                    <LocationSelector
                       existingLocations={this.props.existingLocations}
                     />
                   )}
@@ -426,12 +443,12 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Add an image (optional)</TextHeadingBold>
+                <H3Bold>Add an image (optional)</H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 Requests with photos get more responses. If you don't have a
                 photo leave blank and we will provide one based on the category.
-              </TextP>
+              </P>
               <img
                 style={{ width: '50%', float: 'right' }}
                 src={this.props.op.imgUrl}
@@ -453,15 +470,15 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <TextHeadingBold>Confirm request</TextHeadingBold>
+                <H3Bold>Confirm request</H3Bold>
               </TitleContainer>
-              <TextP>
+              <P>
                 <FormattedMessage
                   id='op.SaveInstructions'
                   defaultMessage='Save as Draft will allow you to preview the request while Publish will make it available to everyone to view.'
                   description='Instructions for save and publish on opportunity details form'
                 />
-              </TextP>
+              </P>
             </DescriptionContainer>
             <InputContainer>
               <Button
@@ -479,7 +496,6 @@ class OpDetailForm extends Component {
               <Button
                 id='saveOpBtn'
                 name='save'
-                // htmlType='submit'
                 onClick={this.handleSubmit}
                 disabled={hasErrors(getFieldsError())}
                 style={{ marginLeft: 8 }}
@@ -494,7 +510,6 @@ class OpDetailForm extends Component {
                 id='publishOpBtn'
                 name='publish'
                 type='primary'
-                // htmlType='submit'
                 onClick={this.handleSubmit}
                 disabled={hasErrors(getFieldsError())}
                 style={{ marginLeft: 8 }}
@@ -507,7 +522,6 @@ class OpDetailForm extends Component {
               </Button>
             </InputContainer>
           </FormGrid>
-
         </Form>
       </div>
     )
@@ -517,11 +531,17 @@ class OpDetailForm extends Component {
 OpDetailForm.propTypes = {
   op: PropTypes.shape({
     _id: PropTypes.string,
-    title: PropTypes.string,
+    name: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.string,
     duration: PropTypes.string,
     location: PropTypes.string,
+    offerOrg: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        _id: PropTypes.string
+      })
+    ]),
     date: PropTypes.array,
     status: PropTypes.string,
 
@@ -534,7 +554,13 @@ OpDetailForm.propTypes = {
     )
   }),
   me: PropTypes.shape({
-    _id: PropTypes.string
+    _id: PropTypes.string,
+    orgMembership: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string,
+        name: PropTypes.string
+      })
+    )
   }),
   form: PropTypes.object,
   params: PropTypes.shape({
@@ -542,7 +568,12 @@ OpDetailForm.propTypes = {
   }),
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  existingTags: PropTypes.arrayOf(
+    PropTypes.shape({
+      tag: PropTypes.string.isRequired,
+      _id: PropTypes.string
+    })
+  ).isRequired,
   existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired
   // dispatch: PropTypes.func.isRequired,
 }
@@ -550,12 +581,11 @@ OpDetailForm.propTypes = {
 export default Form.create({
   name: 'opportunity_detail_form',
   onFieldsChange (props, changedFields) {
-    // console.log('onFieldsChange', changedFields)
     // props.onChange(changedFields);
   },
   mapPropsToFields (props) {
     return {
-      title: Form.createFormField({ ...props.op.title, value: props.op.title }),
+      name: Form.createFormField({ ...props.op.name, value: props.op.name }),
 
       subtitle: Form.createFormField({
         ...props.op.subtitle,
@@ -573,6 +603,10 @@ export default Form.create({
         ...props.op.location,
         value: props.op.location
       }),
+      offerOrg: Form.createFormField({
+        ...props.op.offerOrg,
+        value: { key: props.op.offerOrg ? props.op.offerOrg._id : '' }
+      }),
       imgUrl: Form.createFormField({
         ...props.op.imgUrl,
         value: props.op.imgUrl
@@ -583,7 +617,7 @@ export default Form.create({
       }),
       tags: Form.createFormField({
         ...props.op.tags,
-        value: props.op.tags.map(t => t.tag)
+        value: props.op.tags
       }),
       startDate: Form.createFormField({
         ...props.op.startDate,
@@ -595,7 +629,5 @@ export default Form.create({
       })
     }
   }
-  // onValuesChange (_, values) {
-  //   console.log('onValuesChange', values)
-  // }
+
 })(OpDetailForm)

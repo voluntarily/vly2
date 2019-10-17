@@ -15,7 +15,6 @@ import moment from 'moment'
 import Loading from '../../components/Loading'
 import DatePickerType from './DatePickerType.constant'
 
-// TODO: [VP-131] use redux instead of local state.
 class OpListSection extends Component {
   async loadData (search, location, query) {
     // Get all Ops
@@ -31,19 +30,35 @@ class OpListSection extends Component {
       if (query) {
         filters.q = query
       }
-
       return await this.props.dispatch(reduxApi.actions.opportunities.get(filters))
     } catch (err) {
-      // console.log('error in getting ops', err)
+      console.error('error in getting ops', err)
     }
   }
 
   applyDateFilter = (filter) => {
+    if (!filter) {
+      return this.props.opportunities.data
+    }
     if (filter.date.length === 0) return this.props.opportunities.data
     const momentLists = filter.date.map(element => moment(element))
-    if (!this.props.opportunities.isloading) {
+    if (!this.props.opportunities.loading) {
       const filteredData = this.props.opportunities.data.filter(element => this.isDateFilterBetween(momentLists, element.date))
       return filteredData
+    }
+  }
+  /**
+   * This method use in organization detail page
+   * to filter opportunities offered by specific organization
+   */
+  appltOrganizationFilter = (opData, org) => {
+    if (!org) {
+      return opData
+    } else {
+      if (!this.props.opportunities.loading) {
+        const filteredData = opData.filter(m => (m.offerOrg) && (m.offerOrg._id === org))
+        return filteredData
+      }
     }
   }
 
@@ -94,7 +109,8 @@ class OpListSection extends Component {
   }
 
   render () {
-    const opData = this.applyDateFilter(this.props.filter)
+    const opDataFilteredByDate = this.applyDateFilter(this.props.filter)
+    const opData = this.appltOrganizationFilter(opDataFilteredByDate, this.props.org)
     if (this.props.opportunities.loading) {
       return (<section>
         <Loading><p>Loading opportunities...</p></Loading>
@@ -110,7 +126,7 @@ class OpListSection extends Component {
 
 OpListSection.propTypes = {
   ops: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequire,
+    name: PropTypes.string.isRequire,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     description: PropTypes.string,
@@ -121,7 +137,8 @@ OpListSection.propTypes = {
   dispatch: PropTypes.func.isRequired,
   query: PropTypes.string,
   search: PropTypes.string,
-  location: PropTypes.string
+  location: PropTypes.string,
+  org: PropTypes.string
 }
 
 export const OpListSectionTest = OpListSection

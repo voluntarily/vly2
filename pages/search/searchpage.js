@@ -2,18 +2,44 @@ import { Button, Dropdown, Menu, Modal } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
 import TitleSection from '../../components/LandingPageComponents/TitleSectionSub'
 import DatePickerType from '../../components/Op/DatePickerType.constant'
 import OpListSection from '../../components/Op/OpListSection'
-import BigSearch from '../../components/Search/BigSearch'
-import { Spacer } from '../../components/VTheme/VTheme'
-import publicPage, { FullPage } from '../../hocs/publicPage'
+import FilterContainer from '../../components/Search/FilterContainer'
+import HeaderSearch from '../../components/Search/HeaderSearch'
+import LocationFilter from '../../components/Search/LocationFilter'
+import { FullPage, Spacer } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
 import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
 import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
 
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
 const { Item } = Menu
+
+const SearchPageContainer = styled.div`
+  margin-top: 14rem;
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    margin-top: 12rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    margin-top: 12rem;
+  }
+`
+
+const LOCATION_FILTER_NAME = 'location'
+const DATE_FILTER_NAME = 'date'
+
+function filterVisibilityName (filterName) {
+  return `${filterName}FilterVisible`
+}
+
+function filterValueName (filterName) {
+  return `${filterName}FilterValue`
+}
 
 export class SearchPage extends Component {
   state = {
@@ -22,8 +48,7 @@ export class SearchPage extends Component {
     showDatePickerModal: false,
     filter: {
       date: []
-    },
-    filterValue: null
+    }
   }
 
   constructor (props) {
@@ -44,7 +69,23 @@ export class SearchPage extends Component {
     }
   }
 
-  handleOpenDatePickperModal = () => {
+  openFilter = (filterName) => {
+    this.setState({ [filterVisibilityName(filterName)]: true })
+  }
+
+  closeFilter = (filterName) => {
+    this.setState({ [filterVisibilityName(filterName)]: false })
+  }
+
+  applyFilter = (filterName, value) => {
+    this.setState({ [filterValueName(filterName)]: value })
+  }
+
+  removeFilter = (filterName) => {
+    this.setState({ [filterValueName(filterName)]: null })
+  }
+
+  handleOpenDatePickerModal = () => {
     this.setState({ showDatePickerModal: !this.state.showDatePickerModal })
   }
 
@@ -66,15 +107,18 @@ export class SearchPage extends Component {
   handleDateChange = change => {
     // When user clear date picker value it the date value in the state will becom null which is not an array anymore.
     // By checking if the data changed is null then we instead make it an empty array
-    if (change) this.setState({ filter: { ...this.state.filter, date: (Array.isArray(change)) ? change : [change] } })
-    else this.setState({ filter: { ...this.state.fitler, date: [] } })
+    if (change) {
+      this.setState({
+        filter: {
+          ...this.state.filter,
+          date: Array.isArray(change) ? change : [change]
+        }
+      })
+    } else this.setState({ filter: { ...this.state.fitler, date: [] } })
   }
 
   changePickerType = type => {
     this.setState({ datePickerType: type })
-  }
-  locFilterChanged = location => {
-    this.setState({ filterValue: location })
   }
 
   formateDateValue = () => {
@@ -83,13 +127,15 @@ export class SearchPage extends Component {
   }
 
   render () {
-    const { search, filterValue } = this.state
+    const { search } = this.state
     const dateLabel = this.formateDateValue()
     const existingLocations = this.props.locations.data
 
     const DatePickerOption = (
       <Menu>
-        <Item onClick={() => this.changePickerType(DatePickerType.IndividualDate)}>
+        <Item
+          onClick={() => this.changePickerType(DatePickerType.IndividualDate)}
+        >
           <p>Date</p>
         </Item>
         <Item onClick={() => this.changePickerType(DatePickerType.WeekRange)}>
@@ -105,20 +151,76 @@ export class SearchPage extends Component {
     )
 
     return (
-      <FullPage>
-        <TitleSection title={<FormattedMessage defaultMessage={`Search results for "{search}"`} values={{ search }} id='search.title' />} />
-        <BigSearch search={search} onSearch={this.handleSearch} dateLabel={dateLabel} onClickDateFilter={this.handleOpenDatePickperModal} locations={existingLocations} onFilterChange={this.locFilterChanged} />
-        <Modal title='Pick date' visible={this.state.showDatePickerModal}
-          onCancel={() => this.setState({ showDatePickerModal: !this.state.showDatePickerModal })}
-          onOk={() => this.setState({ showDatePickerModal: !this.state.showDatePickerModal })}>
-          <Dropdown overlay={DatePickerOption} placement='bottomCenter'>
-            <Button>{ this.state.datePickerType === '' ? 'Date' : this.state.datePickerType}</Button>
-          </Dropdown>
-          <DatePickerComponent datePickerType={this.state.datePickerType} onDateChange={this.handleDateChange} dateValue={this.state.filter.date} />
-        </Modal>
-        <Spacer />
-        <OpListSection search={search} filter={this.state.filter} dateFilterType={this.state.datePickerType} location={filterValue} />
-      </FullPage>
+      <div>
+        <HeaderSearch
+          search={search}
+          onSearch={this.handleSearch}
+          dateLabel={dateLabel}
+          locations={existingLocations}
+          onFilterOpened={this.openFilter}
+          filterNames={[DATE_FILTER_NAME, LOCATION_FILTER_NAME]}
+        />
+        <FullPage>
+          <Helmet>
+            <title>Voluntarily - Search Results</title>
+          </Helmet>
+          <SearchPageContainer>
+            <TitleSection
+              title={
+                <FormattedMessage
+                  defaultMessage={`Search results for "{search}"`}
+                  values={{ search }}
+                  id='search.title'
+                />
+              }
+            />
+            <FilterContainer
+              onClose={this.closeFilter}
+              filterName={LOCATION_FILTER_NAME}
+              onFilterApplied={this.applyFilter}
+              onFilterRemoved={this.removeFilter}
+              isShowing={this.state[filterVisibilityName(LOCATION_FILTER_NAME)]}>
+              <LocationFilter locations={existingLocations} />
+            </FilterContainer>
+            {/* TODO: VP-445 modify date picker to use filter container (like with location). This will
+             help reduce the complexity of this page component */}
+            <Modal
+              title='Pick date'
+              visible={this.state[filterVisibilityName(DATE_FILTER_NAME)]}
+              onCancel={() =>
+                this.setState({
+                  [filterVisibilityName(DATE_FILTER_NAME)]: false
+                })
+              }
+              onOk={() =>
+                this.setState({
+                  [filterVisibilityName(DATE_FILTER_NAME)]: true
+                })
+              }
+            >
+              <Dropdown overlay={DatePickerOption} placement='bottomCenter'>
+                <Button>
+                  {this.state.datePickerType === ''
+                    ? 'Date'
+                    : this.state.datePickerType}
+                </Button>
+              </Dropdown>
+              <DatePickerComponent
+                datePickerType={this.state.datePickerType}
+                onDateChange={this.handleDateChange}
+                dateValue={this.state.filter.date}
+              />
+            </Modal>
+            <Spacer />
+            <OpListSection
+              search={search}
+              filter={this.state.filter}
+              dateFilterType={this.state.datePickerType}
+              location={this.state[filterValueName(LOCATION_FILTER_NAME)]}
+            />
+          </SearchPageContainer>
+        </FullPage>
+      </div>
     )
   }
 }

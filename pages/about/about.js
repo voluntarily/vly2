@@ -1,14 +1,15 @@
-import React, { Component } from 'react'
-import Head from 'next/head'
-import Markdown from 'markdown-to-jsx'
-import styled from 'styled-components'
 import { Button } from 'antd'
+import Markdown from 'markdown-to-jsx'
+import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
+import styled from 'styled-components'
+import AboutCTA from '../../components/About/AboutCTA.js'
+import { FullPage, Spacer } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
+import withIntl from '../../lib/withIntl'
 import aboutEn from './about-en-md.js'
 import aboutMi from './about-mi-md.js'
-import withIntl from '../../lib/withIntl'
-import publicPage, { FullPage } from '../../hocs/publicPage'
-import { Spacer } from '../../components/VTheme/VTheme'
-import AboutCTA from '../../components/About/AboutCTA.js'
+
 const getText = locale => {
   switch (locale) {
     case 'mi': {
@@ -69,9 +70,9 @@ class About extends Component {
 
     return (
       <FullPage>
-        <Head>
-          <title>Voluntari.ly - About</title>
-        </Head>
+        <Helmet>
+          <title>Voluntarily - Home</title>
+        </Helmet>
         <Spacer />
         <Spacer />
         <AboutSection>
