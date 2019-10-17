@@ -1,5 +1,6 @@
 const Activity = require('./activity')
 const Tag = require('../tag/tag')
+const Organisation = require('../organisation/organisation')
 const escapeRegex = require('../../util/regexUtil')
 /**
  * Get all orgs
@@ -24,16 +25,16 @@ const getActivities = async (req, res) => {
     if (req.query.search) {
       const search = req.query.search.trim()
       const regexSearch = escapeRegex(search)
-
+      const searchExpression = new RegExp(regexSearch, 'i')
       // split around one or more whitespace characters
       const keywordArray = search.split(/\s+/)
-
       // case insensitive regex which will find tags matching any of the array values
       const tagSearchExpression = new RegExp(keywordArray.map(w => escapeRegex(w)).join('|'), 'i')
-
-      // find tag ids to include in the opportunity search
+      // find tag ids to include in the activity search
       const matchingTagIds = await Tag.find({ 'tag': tagSearchExpression }, '_id').exec()
-      const searchExpression = new RegExp(regexSearch, 'i')
+      // find any organization matching search
+      const matchingOrgIds = await Organisation.find({ 'name': searchExpression }, '_id').exec()
+
       const searchParams = {
         $or: [
           { 'name': searchExpression },
@@ -48,6 +49,13 @@ const getActivities = async (req, res) => {
           $or: matchingTagIds.map(id => ({ 'tags': id }))
         }
         searchParams.$or.push(tagIdExpression)
+      }
+
+      if (matchingOrgIds.length > 0) {
+        const orgIdExpression = {
+          $or: matchingOrgIds.map(id => ({ 'offerOrg': id }))
+        }
+        searchParams.$or.push(orgIdExpression)
       }
       query = {
         $and: [
@@ -69,7 +77,11 @@ const getActivities = async (req, res) => {
 }
 const getActivity = async (req, res) => {
   try {
-    const got = await Activity.findOne(req.params).populate('owner').populate('tags').exec()
+    const got = await Activity.findOne(req.params)
+      .populate('owner', 'name nickname imgUrl')
+      .populate('offerOrg', 'name imgUrl category')
+      .populate('tags')
+      .exec()
     res.json(got)
   } catch (e) {
     res.status(404).send(e)
@@ -81,7 +93,7 @@ const putActivity = async (req, res) => {
     await Activity.findByIdAndUpdate(req.params._id, { $set: req.body })
     getActivity(req, res)
   } catch (e) {
-    console.log(e)
+    console.error(e)
     res.status(500).send(e)
   }
 }

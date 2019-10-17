@@ -7,9 +7,10 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
 import TagDisplay from '../Tags/TagDisplay'
-import { GridContainer, H1, H3Bold } from '../VTheme/VTheme'
+import { GridContainer, H1, H3Bold, H4 } from '../VTheme/VTheme'
 import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
+import { PersonBadgeSection } from './PersonBadge'
 
 const ProfileGrid = styled.div`
   display: grid;
@@ -78,12 +79,6 @@ const PersonDetail = ({ person }, ...props) => (
     <GridContainer> {/* Left Sidebar */}
       <Head title={person.nickname} />
       <ProfileImage src={person.imgUrl} alt={person.nickname} />
-      <DetailItem>
-        <Icon type='history' />
-      </DetailItem>
-      <DetailItem>
-        <Icon type='safety' />
-      </DetailItem>
       { person.orgMembership &&
         <DetailItem>
           <h3><FormattedMessage id='person.memberof' defaultMessage='Member of' description='Header for list of orgs I belong to' /></h3>
@@ -94,6 +89,11 @@ const PersonDetail = ({ person }, ...props) => (
           <h3><FormattedMessage id='person.following' defaultMessage='Following' description='Header for list of orgs I follow' /></h3>
           <MemberUl members={person.orgFollowership} />
         </DetailItem>}
+      <DetailItem>
+        <H4>Latest Achievements</H4>
+        <Divider />
+        <PersonBadgeSection person={person} />
+      </DetailItem>
     </GridContainer>
     <GridContainer> {/* Main Workspace */}
       <InfoSection>
@@ -167,11 +167,6 @@ const PersonDetail = ({ person }, ...props) => (
         <H3Bold>Latest Activities</H3Bold>
         <Divider />
       </InfoSection>
-      <InfoSection>
-        <H3Bold>Latest Achievements</H3Bold>
-        <Divider />
-      </InfoSection>
-
     </GridContainer>
   </ProfileGrid>
 

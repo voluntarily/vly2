@@ -37,7 +37,7 @@ test.beforeEach('connect and add two oppo entries', async (t) => {
     op.requestor = t.context.people[index]._id
     op.offerOrg = t.context.orgs[1]._id
   })
-  t.context.opportunities = await Opportunity.create(ops).catch((err) => console.log('Unable to create opportunities', err))
+  t.context.opportunities = await Opportunity.create(ops).catch((err) => console.error('Unable to create opportunities', err))
 })
 
 test.afterEach.always(async () => {
@@ -66,7 +66,6 @@ test.serial('Should correctly give count of all active Ops sorted by name', asyn
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log(got)
   t.is(2, got.length)
 
   t.is(got[0].name, '1 Mentor a year 12 business Impact Project')
@@ -80,7 +79,6 @@ test.serial('Should correctly give subset of ops matching status', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 3)
   // check requestor has been populated
   t.is(got[0].requestor.nickname, t.context.people[2].nickname)
@@ -95,7 +93,6 @@ test.serial('Should correctly select just the names and ids', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got[0].status, undefined)
   t.is(got[0].name, '1 Mentor a year 12 business Impact Project')
 })
@@ -202,6 +199,32 @@ test.serial('Should not add an opportunity with invalid tag ids', async t => {
   t.is(null, savedOpportunity)
 })
 
+test.serial('Should correctly add an opportunity with default image', async t => {
+  t.plan(3)
+  const op = {
+    name: 'The last 2000 metres',
+    subtitle: 'Launching into space step 5',
+    description: 'Project to build a simple rocket that will reach 400m',
+    duration: '4 hours',
+    location: 'Albany, Auckland',
+    status: OpportunityStatus.DRAFT,
+    tags: t.context.tags,
+    requestor: t.context.people[0]._id
+  }
+
+  const res = await request(server)
+    .post('/api/opportunities')
+    .send(op)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
+  t.is(res.status, 200)
+
+  const savedOpportunity = await Opportunity.findOne({ name: op.name }).exec()
+  t.is(savedOpportunity.subtitle, 'Launching into space step 5')
+  t.is(savedOpportunity.imgUrl, '/static/img/opportunity/opportunity.png')
+})
+
 test.serial('Should create tags that dont have the _id property', async t => {
   const tagName = 'noid'
   const tags = [
@@ -286,7 +309,6 @@ test.serial('Should find no matches', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  // console.log('got', got)
   t.is(got.length, 0)
 })
 

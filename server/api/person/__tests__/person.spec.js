@@ -9,7 +9,6 @@ import people from '../__tests__/person.fixture'
 test.before('before connect to database', async (t) => {
   await appReady
   t.context.memMongo = new MemoryMongo()
-  // console.log('App ready')
   await t.context.memMongo.start()
 })
 
@@ -59,7 +58,6 @@ test.serial('Should send correct person when queried against an id', async t => 
     location: 'Waikato District',
     email: 'z.testy@voluntar.ly',
     phone: '027 444 5555',
-    gender: 'non binary',
     pronoun: { 'subject': 'they', 'object': 'them', 'possesive': 'ȁǹy' },
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer'],
@@ -82,26 +80,24 @@ test.serial('Should send correct person when queried against an id', async t => 
     t.deepEqual(person.pronoun, result.pronoun)
     t.deepEqual(person.name, result.name)
   })
-  /* console.log(id)
+  /*
   TODO: this should be change to add authorized user and retrieve person through server api
   const res = await request(server)
     .get(`/api/people/${id}`)
     .set('Accept', 'application/json')
     .expect(403)
-  console.log(res.body)
   t.is(res.body.name, p.name)
   */
 })
 
 test.serial('Should correctly add a person', async t => {
-  t.plan(3)
+  t.plan(4)
 
   const p = {
     name: 'Testy McTestFace',
     nickname: 'Testy',
     phone: '123 456789',
     email: 'addy@omgtech.co.nz',
-    gender: 'binary',
     role: ['tester'],
     tags: []
   }
@@ -116,7 +112,6 @@ test.serial('Should correctly add a person', async t => {
   // can find by id
     const id = res.body._id
     await Person.findById(id).then((person) => {
-    // console.log('findById:', person)
       t.is(id, person._id.toString())
     })
 
@@ -128,8 +123,11 @@ test.serial('Should correctly add a person', async t => {
     // can find by email using await
     const savedPerson = await Person.findOne({ email: p.email }).exec()
     t.is(savedPerson.name, p.name)
+
+    // person has been given the default image
+    t.is(savedPerson.imgUrl, '/static/img/person/person.png')
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 })
 
@@ -140,7 +138,7 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
     nickname: '<b>SQLINJECTOR</b>',
     phone: "1234<img src=x onerror=alert('img') />ABCD", // should remove img
     email: 'bobby@omgtech.co.nz', // ok
-    gender: "console.log('hello world')", // ok
+    about: "console.log('hello world')", // ok
     pronoun: { 'subject': 'they', 'object': 'them', 'possesive': 'ȁǹy' }, // ok
     role: ['tester'],
     tags: []
@@ -157,7 +155,7 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
   t.deepEqual('Bobby; DROP TABLES', savedPerson.name)
   t.deepEqual(p.nickname, savedPerson.nickname)
   t.deepEqual(p.email, savedPerson.email)
-  t.deepEqual(p.gender, savedPerson.gender)
+  t.deepEqual(p.about, savedPerson.about)
   t.deepEqual(p.pronoun, savedPerson.pronoun)
 })
 
@@ -168,7 +166,6 @@ test.serial('Should load a person into the db but block access and delete them v
     nickname: 'Testy',
     phone: '123 456789',
     email: 'loady@omgtech.co.nz',
-    gender: 'binary',
     role: ['tester'],
     tags: []
   }
@@ -210,13 +207,11 @@ test.serial('Should find a person by email', async t => {
   const person = new Person(p)
   await person.save()
   const email = p.email
-  // console.log('asking for ', `/api/people/email/${email}`)
   const res = await request(server)
     .get(`/api/person/by/email/${email}`)
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200)
-  // console.log(res.body)
   t.is(res.body.name, p.name)
 })
 
@@ -266,10 +261,9 @@ test.serial('Should correctly handle missing inputs', async t => {
       .send(p)
       .set('Accept', 'application/json')
       .expect(200)
-    // console.log(res.body)
     t.is(res.body.message, 'Person validation failed: email: Path `email` is required.')
     t.is(res.body.name, 'ValidationError')
   } catch (err) {
-    console.log('api/people', err)
+    console.error('api/people', err)
   }
 })

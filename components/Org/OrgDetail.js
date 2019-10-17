@@ -6,7 +6,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberSection from '../Member/MemberSection'
-import { FullPage, H3Bold, H4, PageHeaderContainer, PBold } from '../VTheme/VTheme'
+import { FullPage, H3Bold, PageHeaderContainer, PBold } from '../VTheme/VTheme'
 import OrgCategory from './OrgCategory'
 const ButtonGroup = Button.Group
 
@@ -62,7 +62,7 @@ const ProfileImage = styled.img`
   object-fit: cover;
 `
 
-const AboutContainer = styled.div`
+const TabContainer = styled.div`
   text-align: left;
   width: 50rem;
   margin: 4rem auto;
@@ -117,22 +117,27 @@ const OrgDetail = ({ org, ...props }) => (
       <ProfileImage src={org.imgUrl} alt={org.name} />
       <TitleContainer>
         <H3Bold>{org.name}</H3Bold>
-        <H4> Charity</H4>
       </TitleContainer>
     </ProfileContainer>
     <ProfileContentContainer>
       <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
         <TabPane tab={orgTab} key='1'>
-          <AboutContainer>
+          <TabContainer>
             <Markdown children={(org.info && org.info.about) || ''} />
             <OrgCategory orgCategory={org.category} />
             <br />
-            <PBold>Social:</PBold>
+            <PBold>
+              <FormattedMessage
+                id='orgdetail.social.label'
+                defaultMessage='Social:'
+                description='Label for social media links on organisation details'
+              />
+            </PBold>
             <ButtonGroup size='medium'>
               {org.website && (
                 <SocialButton
                   type='link'
-                  href={`https://${org.website}`}
+                  href={`${org.website}`}
                   icon='global'
                   target='_blank'
                   rel='noopener noreferrer'
@@ -166,10 +171,15 @@ const OrgDetail = ({ org, ...props }) => (
                 />
               )}
             </ButtonGroup>
-          </AboutContainer>
+          </TabContainer>
         </TabPane>
         {/* <TabPane tab={orgResourcesTab} key='2' /> */}
-        <TabPane tab={orgInstructionTab} key='3' />
+        {/* // TODO: [VP-554] move the OpList for this org from the parent page to a tab  */}
+        <TabPane tab={orgInstructionTab} key='3'>
+          <TabContainer>
+            <Markdown children={(org.info && org.info.instructions) || ''} />
+          </TabContainer>
+        </TabPane>
         <TabPane tab={orgMemberTab} key='4'>
           <MemberSection org={org} />
         </TabPane>

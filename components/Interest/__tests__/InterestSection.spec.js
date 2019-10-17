@@ -85,7 +85,6 @@ test('mount the InterestSection with two interests', async t => {
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  // console.log(wrapper.html())
   t.is(wrapper.find('h2').text(), 'Interested Volunteers') // there are two cards on the screen
   t.is(wrapper.find('tbody tr').length, 2)
   t.regex(wrapper.find('tbody tr td').at(1).text(), /avowkind/)
@@ -110,7 +109,6 @@ test('mount the InterestSection with two interests', async t => {
 
   const declinebutton = wrapper.find('tbody tr').first().find('button').at(1)
   t.is(declinebutton.text(), 'Decline')
-  //  console.log(declinebutton.html())
   declinebutton.simulate('click')
 
   // // TODO: fix throw of rejected promise at this point
@@ -118,7 +116,6 @@ test('mount the InterestSection with two interests', async t => {
   // await sleep(1) // allow asynch fetch to complete
   // wrapper.update()
   // const status = wrapper.find('tbody tr').first().find('td').at(2).text()
-  // console.log(status)
   // t.truthy(myMock.done())
   myMock.restore()
 })

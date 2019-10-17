@@ -8,6 +8,7 @@ const completeConfig = {
   default: {
     appName,
     serverPort,
+    env: process.env.NODE_ENV || 'development',
     databaseUrl: process.env.MONGODB_URI || `mongodb://localhost/${databaseName}`,
     jsonOptions: {
       headers: {
@@ -24,7 +25,10 @@ const completeConfig = {
     SMTP_PWD: process.env.SMTP_PWD || '',
     onlyEmailText: process.env.TEXT_ONLY_EMAIL === 'true',
     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
-    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY
+    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+    BADGR_USERNAME: process.env.BADGR_USERNAME,
+    BADGR_PASSWORD: process.env.BADGR_PASSWORD,
+    BADGR_API: process.env.BADGR_API || 'https://api.au.badgr.io'
   },
 
   development: {

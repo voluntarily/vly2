@@ -1,15 +1,15 @@
 // import Link from 'next/link'
 import { Divider } from 'antd'
 import Head from 'next/head'
-import MemberItem from '../../components/Member/MemberItem'
-import MemberSection from '../../components/Member/MemberSection'
-import MemberTable from '../../components/Member/MemberTable'
-import RegisterMemberItem from '../../components/Member/RegisterMemberItem'
-import { FullPage } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
-import { MemberStatus } from '../../server/api/member/member.constants'
-import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
-import people from '../../server/api/person/__tests__/person.fixture'
+import MemberItem from '../../../components/Member/MemberItem'
+import MemberSection from '../../../components/Member/MemberSection'
+import MemberTable from '../../../components/Member/MemberTable'
+import RegisterMemberItem from '../../../components/Member/RegisterMemberItem'
+import { FullPage } from '../../../components/VTheme/VTheme'
+import publicPage from '../../../hocs/publicPage'
+import { MemberStatus } from '../../../server/api/member/member.constants'
+import orgs from '../../../server/api/organisation/__tests__/organisation.fixture'
+import people from '../../../server/api/person/__tests__/person.fixture'
 
 // Initial members added into test db
 const members = [
@@ -42,7 +42,7 @@ const members = [
 ]
 const orgid = '1'
 const handleMembershipChange = (member, action) => {
-  console.log(member.person.nickname, action)
+  console.error(member.person.nickname, action)
 }
 const TestMemberPage = ({ ...props }) => (
   <FullPage>

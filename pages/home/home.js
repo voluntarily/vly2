@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import NextActionBlock from '../../components/Action/NextActionBlock'
+import ActAdd from '../../components/Act/ActAdd'
 import OpAdd from '../../components/Op/OpAdd'
 import OpList from '../../components/Op/OpList'
 import OpRecommendations from '../../components/Op/OpRecommendations'
@@ -27,7 +28,6 @@ const TitleContainer = styled.div``
 
 function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
-  // console.log(key)
 }
 
 class PersonHomePage extends Component {
@@ -90,7 +90,7 @@ class PersonHomePage extends Component {
         store.dispatch(reduxApi.actions.recommendedOps.get({ me: me._id }))
       ])
     } catch (err) {
-      console.log('error in getting ops', err)
+      console.error('error in getting ops', err)
     }
   }
 
@@ -105,7 +105,6 @@ class PersonHomePage extends Component {
 
     const role = this.sortRoleByPower(person)
     const personData = { ...person, role }
-    console.log(personData)
     res = await this.props.dispatch(
       reduxApi.actions.people.put(
         { id: personData._id },
@@ -178,6 +177,7 @@ class PersonHomePage extends Component {
           </TitleContainer>
           <RequestButtonContainer>
             <OpAdd {...this.props} />
+            <ActAdd {...this.props} />
           </RequestButtonContainer>
           <p>See the requests you have signed up for here</p>
         </PageHeaderContainer>

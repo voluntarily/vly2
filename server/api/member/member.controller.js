@@ -9,7 +9,7 @@ const Organisation = require('../organisation/organisation')
 const getMemberbyId = id => {
   return Member.findOne({ _id: id })
     .populate({ path: 'person', select: 'nickname name imgUrl email' })
-    .populate({ path: 'organisation', select: 'name imgUrl' })
+    .populate({ path: 'organisation', select: 'name imgUrl category' })
     .exec()
 }
 
@@ -31,12 +31,12 @@ const listMembers = async (req, res) => {
         query.person = req.query.meid
       }
       // Return enough info for a personCard
-      got = await Member.find(query).populate({ path: 'person', select: 'nickname name imgUrl email' }).sort(sort).exec()
+      got = await Member.find(query).populate({ path: 'person', select: 'nickname name imgUrl email phone' }).sort(sort).exec()
     } else if (req.query.meid) {
       // a person is asking for the orgs they follow or are members of
       const query = { person: req.query.meid }
       // return info for an orgCard
-      got = await Member.find(query).populate({ path: 'organisation', select: 'name imgUrl' }).sort(sort).exec()
+      got = await Member.find(query).populate({ path: 'organisation', select: 'name imgUrl category' }).sort(sort).exec()
     } else {
       // list all relationships
       got = await Member.find().sort(sort).exec()
@@ -48,12 +48,11 @@ const listMembers = async (req, res) => {
 }
 
 const updateMember = async (req, res) => {
-  // console.log('updateMember', req.body)
   try {
     await Member.updateOne({ _id: req.body._id }, { $set: { status: req.body.status, validation: req.body.validation } }).exec()
     const { organisation } = req.body // person in here is the volunteer-- quite not good naming here
     Organisation.findById(organisation, (err, organisationFound) => {
-      if (err) console.log(err, organisationFound)
+      if (err) console.error(err, organisationFound)
       else {
         // TODO: [VP-436] notify the person of their status change in the organisation
         // const { organisation, status, person } = req.body // person in here is the volunteer-- quite not good naming here
@@ -62,7 +61,6 @@ const updateMember = async (req, res) => {
       }
     })
     const got = await getMemberbyId(req.body._id)
-    // console.log('updateMember', got)
 
     res.json(got)
   } catch (err) {
@@ -71,8 +69,6 @@ const updateMember = async (req, res) => {
 }
 
 const createMember = async (req, res) => {
-  // console.log('createMember', req.body)
-
   const newMember = new Member(req.body)
   newMember.save(async (err, saved) => {
     if (err) {
@@ -80,59 +76,11 @@ const createMember = async (req, res) => {
     }
 
     // TODO: [VP-424] email new members or followers of an organisation
-    // const volunteerID = req.body.person
-    // const { organisation } = req.body
-    // const { name } = organisation
-    // const { requestor } = req.body.organisation
-    // const orgId = organisation._id
-    // const { validation } = req.body
-    // requestor.volunteerComment = validation
-    // // sendEmailBaseOn('acknowledgeMember', volunteerID, name, opId)
-    // // sendEmailBaseOn('RequestorNotificationEmail', requestor._id, name, opId, comment)
-
     // return the member record with the org name filled in.
     const got = await getMemberbyId(newMember._id)
-    // console.log('createMember', got)
     res.json(got)
   })
 }
-
-// const processStatusToSendEmail = (memberStatus, organisation, volunteer) => {
-//   const { _id } = volunteer
-//   const { requestor, name } = organisation
-//   const opID = organisation._id
-//   if (memberStatus === MemberStatus.INVITED || memberStatus === MemberStatus.DECLINED) {
-//     // send email to volunteer only
-//     sendEmailBaseOn(memberStatus, _id, name, opID) // The _id in here is the volunteer id
-//   } else if (memberStatus === MemberStatus.COMMITTED) {
-//     // send email to requestor only
-//     sendEmailBaseOn(memberStatus, requestor, name, opID)
-//   }
-// }
-
-/**
- * This will be easier to add more status without having too much if. All we need is add another folder in email template folder and the status will reference to that folder
- * @param {string} status status will be used to indicate which email template to use
- * @param {string} personID so we can find the email of that person
- * @param {string} organisationTitle Just making the email content clearer
- * @param {string} opId To construct url that link to the organisation
- * @param {string} volunteerCommment (optional) This is only for requestor notification email only,default is empty string
- */
-// const sendEmailBaseOn = async (status, personID, organisationTitle, opId, volunteerComment = '') => {
-//   let opUrl = `${config.appUrl + '/ops/' + opId}`
-//   await Person.findById(personID, (err, person) => {
-//     if (err) console.log(err)
-//     else {
-//       const emailProps = {
-//         send: true
-//       }
-//       person.opUrl = opUrl
-//       person.volunteerEvent = organisationTitle
-//       person.volunteerComment = volunteerComment
-//       emailPerson(person, status, emailProps)
-//     }
-//   })
-// }
 
 module.exports = {
   listMembers,

@@ -6,7 +6,9 @@ import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import objectid from 'objectid'
 import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
+import orgs from '../server/api/organisation/__tests__/organisation.fixture'
 import people from '../server/api/person/__tests__/person.fixture'
+import acts from '../server/api/activity/__tests__/activity.fixture'
 import tags from '../server/api/tag/__tests__/tag.fixture.js'
 import withMockRoute from '../server/util/mockRouter'
 import thunk from 'redux-thunk'
@@ -16,48 +18,48 @@ import { API_URL } from '../lib/apiCaller'
 
 const locations = ['Auckland, Wellington, Christchurch']
 
-const orgMembership = [
-  {
-    _id: '5d4a40522733ea205d7c198a',
-    status: 'orgadmin',
-    person: '5ce78c62233f9c8771da046f',
-    organisation: {
-      _id: '5cc5f90b5368944bbb8ab91d',
-      name: 'Voluntarily NZ'
-    }
-  },
-  {
-    _id: '5d4b59f82bc0267ba2777417',
-    status: 'member',
-    person: '5ce78c62233f9c8771da046f',
-    organisation: {
-      _id: '5cc3ddf1b4c8c08e421a060e',
-      name: 'Datacom'
-    }
-  }
-]
 const fetchMock = require('fetch-mock')
 
 test.before('Setup fixtures', (t) => {
   // This gives all the people fake ids to better represent a fake mongo db
   people.map(p => { p._id = objectid().toString() })
-  const me = people[0]
+  orgs.map(org => { org._id = objectid().toString() })
+  acts.map(act => { act._id = objectid().toString() })
 
+  const me = people[0]
+  const offerOrg = orgs[0]
   // Set myself as the requestor for all of the opportunities, and fake ids
   ops.map((op, index) => {
     op._id = objectid().toString()
     op.requestor = me
+    op.offerOrg = offerOrg
     op.tags = [tags[index], tags[index + 1]]
   })
 
+  const orgMembership = [
+    {
+      _id: objectid().toString(),
+      status: 'orgadmin',
+      person: people[0]._id,
+      organisation: orgs[0]
+    },
+    {
+      _id: objectid().toString(),
+      status: 'member',
+      person: me._id,
+      organisation: orgs[1]
+    }
+  ]
   t.context = {
     me,
     people,
     ops,
     op: ops[1],
-    tags
+    tags,
+    acts,
+    orgs,
+    orgMembership
   }
-
   t.context.defaultstore = {
     session: {
       isAuthenticated: true,
@@ -91,6 +93,13 @@ test.before('Setup fixtures', (t) => {
       loading: false,
       data: orgMembership,
       request: null
+    },
+    activities: {
+      sync: true,
+      syncing: false,
+      loading: false,
+      data: [ acts[0] ],
+      request: null
     }
   }
   t.context.mockStore = configureStore([thunk])(t.context.defaultstore)
@@ -102,7 +111,7 @@ function makeFetchMock (opportunityId) {
   return myMock
 }
 
-test('send "PUT" request to redux-api when opportunity is cancelled on OpDetailPage', t => {
+test('send "PUT" request to redux-api when opportunity is canceled and confirmed on OpDetailPage', t => {
   const opportunityToCancel = t.context.op
   const myMock = makeFetchMock(opportunityToCancel._id)
   myMock.put(API_URL + '/opportunities/' + opportunityToCancel._id, { body: { status: 200 } })
@@ -125,10 +134,6 @@ test('send "PUT" request to redux-api when opportunity is cancelled on OpDetailP
 })
 
 test('does not send "PUT" request to redux-api when cancel opportunity button is cancelled on OpDetailPage', t => {
-  // const opportunityToCancel = t.context.ops
-  // const myMock = makeFetchMock(opportunityToCancel._id)
-  // reduxApi.use('fetch', adapterFetch(myMock))
-
   const props = {
     me: t.context.me,
     dispatch: t.context.mockStore.dispatch
@@ -216,15 +221,11 @@ test('can Edit the Op', t => {
   cancelButton.simulate('click')
   editButton = wrapper.find('#editOpBtn').first()
   t.is(editButton.text(), 'Edit')
-  t.is(wrapper.find('h1').first().text(), 'NZTA Innovation Centre')
+  t.is(wrapper.find('h1').first().text(), opportunityToEdit.name)
   editButton.simulate('click')
   const saveButton = wrapper.find('#saveOpBtn').first()
   t.is(saveButton.text(), 'Save as draft')
   saveButton.simulate('click')
-
-  // console.log(t.context.mockStore.getActions()[0])
-  // should switch back to display mode
-  // console.log(wrapper.html())
 })
 
 test('display unavailable opportunity message when opportunity id is invalid on OpDetailPage', t => {
@@ -241,7 +242,11 @@ test('display unavailable opportunity message when opportunity id is invalid on 
         data: []
       },
       tags: { data: tags },
-      locations: { data: locations }
+      locations: { data: locations },
+      activities: {
+        loading: false,
+        data: []
+      }
     }
   )
 
@@ -281,7 +286,7 @@ test('display loading opportunity message when opportunity is loading', t => {
   t.is(wrapper.find('img').prop('src'), '/static/loading.svg')
 })
 
-test('can create new Op', t => {
+test('can create new Op from blank', t => {
   const opportunityToEdit = t.context.op
   const myMock = makeFetchMock(opportunityToEdit._id)
   myMock.post(API_URL + '/tags/', { body: { status: 200 } })
@@ -299,14 +304,62 @@ test('can create new Op', t => {
       <RoutedOpDetailPage {...props} />
     </Provider>
   )
-  // console.log(wrapper.html())
   const saveButton = wrapper.find('#saveOpBtn').first()
   t.is(saveButton.text(), 'Save as draft')
   // saveButton.simulate('click')
+})
 
-  // console.log(t.context.mockStore.getActions()[0])
-  // should switch back to display mode
-  // console.log(wrapper.html())
+test('can cancel new Op from blank', t => {
+  const opportunityToEdit = t.context.op
+  const myMock = makeFetchMock(opportunityToEdit._id)
+  myMock.post(API_URL + '/tags/', { body: { status: 200 } })
+  myMock.put(API_URL + '/opportunities/' + opportunityToEdit._id, { body: { status: 200 } })
+  reduxApi.use('fetch', adapterFetch(myMock))
+
+  const props = {
+    isNew: true,
+    me: t.context.me,
+    dispatch: t.context.mockStore.dispatch
+  }
+  const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <RoutedOpDetailPage {...props} />
+    </Provider>
+  )
+  const saveButton = wrapper.find('#saveOpBtn').first()
+  t.is(saveButton.text(), 'Save as draft')
+  const cancelButton = wrapper.find('#cancelOpBtn').first()
+  t.is(cancelButton.text(), 'Cancel')
+  cancelButton.simulate('click')
+})
+
+test('can create new Op from Activity', t => {
+  const opportunityToEdit = t.context.op
+  const fromActivity = t.context.acts[0]
+  const myMock = makeFetchMock(opportunityToEdit._id)
+  myMock.post(API_URL + '/tags/', { body: { status: 200 } })
+  myMock.put(API_URL + '/opportunities/' + opportunityToEdit._id, { body: { status: 200 } })
+  reduxApi.use('fetch', adapterFetch(myMock))
+
+  const props = {
+    isNew: true,
+    me: t.context.me,
+    dispatch: t.context.mockStore.dispatch,
+    actid: fromActivity._id
+  }
+  const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <RoutedOpDetailPage {...props} />
+    </Provider>
+  )
+  // check fields are initialised
+  t.is(wrapper.find('#opportunity_detail_form_name').first().prop('value'), fromActivity.name)
+  t.is(wrapper.find('#opportunity_detail_form_subtitle').first().prop('value'), fromActivity.subtitle)
+  t.is(wrapper.find('#opportunity_detail_form_imgUrl').first().prop('value'), fromActivity.imgUrl)
+  const saveButton = wrapper.find('#saveOpBtn').first()
+  t.is(saveButton.text(), 'Save as draft')
 })
 
 test('page loads when user is not signed in but does not show edit VP-499', t => {

@@ -242,12 +242,34 @@ test.serial('members can become admins ', async t => {
   adminButton.simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  // console.log(t.context.store.getState().members.data)
 
   // check status change
   membersSection = wrapper.find('section').at(1)
   memberRow2 = membersSection.find('tbody tr').at(1)
   t.is(memberRow2.find('td').at(MTF.STATUS).text(), MemberStatus.ORGADMIN)
+})
+
+test.serial('admins can see exportMembers button', async t => {
+  const members = t.context.members
+  const org = t.context.orgs[5]
+  const orgid = org._id
+  const orgMembers = members.filter(member => member.organisation._id === orgid)
+  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, orgMembers)
+
+  const wrapper = await mountWithIntl(
+    <Provider store={t.context.store}>
+      <MemberSection org={org} />
+    </Provider>
+  )
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
+
+  // export members button should be visible
+  let exportMemberSection = wrapper.find('section').at(3)
+  t.true(exportMemberSection.find('Button').exists())
+  let exportMembersButton = exportMemberSection.find('Button').at(0)
+
+  t.is(exportMembersButton.text(), 'Export Members')
 })
 
 // TODO: [VP-448] Add Separate set of tests for when logged in user is a joiner, member, follower etc

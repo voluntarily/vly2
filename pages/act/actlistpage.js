@@ -41,7 +41,6 @@ class Acts extends Component {
           ...query
         })
       )
-      // console.log('got acts',acts)
       return { acts, query }
     } catch (err) {
       console.log('error in getting acts', err)

@@ -63,21 +63,36 @@ test.serial('can provide custom action mapper', async t => {
 })
 
 test.serial('Default request action mapper can handle GET', async t => {
-  t.is(defaultConvertRequestToAction('GET'), Action.READ)
+  const request = new MockExpressRequest({
+    method: 'GET'
+  })
+  t.is(defaultConvertRequestToAction(request), Action.READ)
 })
 
 test.serial('Default request action mapper can handle POST', async t => {
-  t.is(defaultConvertRequestToAction('POST'), Action.CREATE)
+  const request = new MockExpressRequest({
+    method: 'POST'
+  })
+  t.is(defaultConvertRequestToAction(request), Action.CREATE)
 })
 
 test.serial('Default request action mapper can handle PUT', async t => {
-  t.is(defaultConvertRequestToAction('PUT'), Action.UPDATE)
+  const request = new MockExpressRequest({
+    method: 'PUT'
+  })
+  t.is(defaultConvertRequestToAction(request), Action.UPDATE)
 })
 
 test.serial('Default request action mapper can handle DELETE', async t => {
-  t.is(defaultConvertRequestToAction('DELETE'), Action.DELETE)
+  const request = new MockExpressRequest({
+    method: 'DELETE'
+  })
+  t.is(defaultConvertRequestToAction(request), Action.DELETE)
 })
 
 test.serial('Default request action mapper defaults to READ when unexpected method received', async t => {
-  t.is(defaultConvertRequestToAction(), Action.READ)
+  const request = new MockExpressRequest({
+    method: 'PATCH'
+  })
+  t.is(defaultConvertRequestToAction(request), Action.READ)
 })

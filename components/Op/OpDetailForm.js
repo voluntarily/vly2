@@ -71,7 +71,7 @@ class OpDetailForm extends Component {
 
         this.props.onSubmit(this.props.op)
       } else {
-        // console.log('field validation error:', err)
+        console.error('field validation error:', err)
       }
     })
   }
@@ -536,9 +536,12 @@ OpDetailForm.propTypes = {
     imgUrl: PropTypes.string,
     duration: PropTypes.string,
     location: PropTypes.string,
-    offerOrg: PropTypes.shape({
-      _id: PropTypes.string
-    }),
+    offerOrg: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        _id: PropTypes.string
+      })
+    ]),
     date: PropTypes.array,
     status: PropTypes.string,
 
@@ -626,7 +629,5 @@ export default Form.create({
       })
     }
   }
-  // onValuesChange (_, values) {
-  //   console.log('onValuesChange', values)
-  // }
+
 })(OpDetailForm)

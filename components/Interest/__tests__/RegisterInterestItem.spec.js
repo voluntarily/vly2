@@ -87,7 +87,7 @@ test('initial state', t => {
 
   // click button and get form
   wrapper.find('button').simulate('click')
-  t.is(wrapper.find('button').first().text(), 'Get Involved!')
+  t.is(wrapper.find('button').first().text(), 'Get Involved')
   t.is(wrapper.find('button').at(1).text(), 'Cancel')
 
   // click cancel and return to the original button
@@ -96,7 +96,7 @@ test('initial state', t => {
 
   // click button and get form again, click action
   wrapper.find('button').simulate('click')
-  t.is(wrapper.find('button').first().text(), 'Get Involved!')
+  t.is(wrapper.find('button').first().text(), 'Get Involved')
   wrapper.find('button').first().simulate('click')
 
   t.is(wrapper.find('.ant-form-explain').text(), 'Comment is required')
@@ -157,7 +157,6 @@ test('invited', t => {
     onChangeStatus={changeStatus}
     onWithdraw={withdraw}
   />)
-  // console.log(wrapper.html())
   t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
 })
 
@@ -170,7 +169,6 @@ test('committed', t => {
     onChangeStatus={changeStatus}
     onWithdraw={withdraw}
   />)
-  // console.log(wrapper.html())
   t.is(wrapper.find('h1').first().text(), 'You\'ve been invited to participate!')
 })
 

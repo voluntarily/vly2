@@ -1,4 +1,4 @@
-import { Button, Divider, message } from 'antd'
+import { Button, message } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
@@ -7,11 +7,11 @@ import { FormattedMessage } from 'react-intl'
 import ActDetail from '../../components/Act/ActDetail'
 import ActDetailForm from '../../components/Act/ActDetailForm'
 import Loading from '../../components/Loading'
-import PersonCard from '../../components/Person/PersonCard'
-import { FullPage } from '../../components/VTheme/VTheme'
+import { FullPage, Spacer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
-import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
+import reduxApi, { withActs, withMembers } from '../../lib/redux/reduxApi.js'
 import { Role } from '../../server/services/authorize/role'
+import { MemberStatus } from '../../server/api/member/member.constants'
 
 const blankAct = {
   title: '',
@@ -29,19 +29,27 @@ export class ActDetailPage extends Component {
   }
 
   static async getInitialProps ({ store, query }) {
-    await store.dispatch(reduxApi.actions.tags.get())
-
-    // Get one Act
+    const me = store.getState().session.me
     const isNew = query && query.new && query.new === 'new'
+    const actExists = !!(query && query.id) // !! converts to a boolean value
+    await Promise.all([
+      store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
+      store.dispatch(reduxApi.actions.tags.get())
+    ])
+
     if (isNew) {
       return {
-        isNew: true,
+        isNew,
         actid: null
       }
-    } else if (query && query.id) {
-      await store.dispatch(reduxApi.actions.activities.get(query))
+    } else {
+      if (actExists) {
+        query.session = store.getState().session //  Inject session with query that restricted api access
+        await store.dispatch(reduxApi.actions.activities.get(query))
+      }
       return {
-        isNew: false,
+        isNew,
+        actExists,
         actid: query.id
       }
     }
@@ -86,11 +94,24 @@ export class ActDetailPage extends Component {
   }
 
   handleDeleteCancel = () => { message.error('Delete Cancelled') }
+
   render () {
     const me = this.props.me
     const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
     const isAdmin = (me && me.role.includes(Role.ADMIN))
     const isOP = (me && me.role.includes(Role.OPPORTUNITY_PROVIDER))
+
+    // get membership list for owner
+    if (me &&
+        this.props.members.sync &&
+        this.props.members.data.length > 0 &&
+        this.props.members) {
+      me.orgMembership = this.props.members.data.filter(
+        m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status) &&
+          m.organisation.category.includes('ap')
+      )
+    }
+
     let isOwner = false
     let content
     let act
@@ -99,8 +120,14 @@ export class ActDetailPage extends Component {
       act = blankAct
       owner = me
       isOwner = true
+      // set init offerOrg to first membership result
+      if (me.orgMembership && me.orgMembership.length > 0) {
+        act.offerOrg = {
+          _id: me.orgMembership[0].organisation._id
+        }
+      }
     } else if (this.props.activities.loading) {
-      content = <Loading><p>Loading details...</p></Loading>
+      content = <Loading />
     } else {
       const acts = this.props.activities.data
       if (acts.length === 1) {
@@ -111,7 +138,6 @@ export class ActDetailPage extends Component {
         owner = act.owner
         isOwner = ((me || {})._id === (owner || {})._id)
       } else { // array must be empty
-        // console.log('length', acts.length)
         content = <h2><FormattedMessage id='act.notavailable' defaultMessage='Sorry, this activitiy is not available' description='message on activity not found page' /></h2>
       }
     }
@@ -120,25 +146,16 @@ export class ActDetailPage extends Component {
     const canEdit = (isOwner || isOrgAdmin || isAdmin)
     const existingTags = this.props.tags.data
 
-    const ownerInfo = () => {
-      // TODO: should this be owner individual or Activity Provider Org
-      return owner &&
-        <div>
-          <h2>
-            <FormattedMessage id='act.ownerInfo' defaultMessage='Created by' description='Title for activity creator card on activity page' />
-          </h2>
-          <PersonCard style={{ width: '300px' }} person={owner} />
-        </div>
-    }
-
     // button to make an opportunity from an activity
     const createOpportunitySection = () => {
       return (
         // if not signed in then the interested button signs in first
-        isOP && <div>
-          <Button>TODO: Create Opportunity</Button>
-          <Divider />
-        </div>
+        isOP &&
+          <Button style={{ float: 'right' }} type='primary' shape='round' href={`/op/new?act=${act._id}`} >
+            <FormattedMessage id='act.createOpportunityBtn'
+              defaultMessage='Create new request from this Activity'
+              description='Button to create an opportunity from an activity' />
+          </Button>
       )
     }
 
@@ -155,14 +172,15 @@ export class ActDetailPage extends Component {
         </div>
       } else {
         content = <div>
-          { canEdit && <Button id='editActBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })} >
-            <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
-          </Button>}
-
-          <ActDetail act={act} />
-          {ownerInfo()}
-          <Divider />
           {createOpportunitySection()}
+          { canEdit &&
+            <Button id='editActBtn' style={{ float: 'right' }}
+              type='primary' shape='round'
+              onClick={() => this.setState({ editing: true })} >
+              <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
+            </Button>}
+          <Spacer />
+          <ActDetail act={act} />
         </div>
       }
     }
@@ -191,5 +209,5 @@ ActDetailPage.propTypes = {
     id: PropTypes.string.isRequired
   })
 }
-export const ActDetailPageWithActs = withActs(ActDetailPage)
-export default publicPage(withActs(ActDetailPage))
+export const ActDetailPageWithActs = withMembers(withActs(ActDetailPage))
+export default publicPage(withMembers(withActs(ActDetailPage)))

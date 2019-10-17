@@ -14,10 +14,9 @@ class Ops extends Component {
     // Get all Ops
     try {
       const ops = await store.dispatch(reduxApi.actions.opportunities.get())
-      // console.log('got ops', ops)
       return { ops, query }
     } catch (err) {
-      console.log('error in getting ops', err)
+      console.error('error in getting ops', err)
     }
   }
 

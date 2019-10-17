@@ -9,6 +9,7 @@ import { FormattedMessage } from 'react-intl'
 import Loading from '../../components/Loading'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
+import { IssueBadgeButton } from '../../components/IssueBadge/issueBadge'
 import { FullPage } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withMembers, withPeople, withLocations } from '../../lib/redux/reduxApi.js'
@@ -28,12 +29,13 @@ const blankPerson = {
     'object': '',
     'possessive': ''
   },
-  imgUrl: '',
+  imgUrl: '/static/img/person/person.png',
   website: null,
   facebook: null,
   twitter: null,
   role: ['volunteer'],
-  status: 'inactive'
+  status: 'inactive',
+  tags: []
 }
 
 export class PersonDetailPage extends Component {
@@ -61,7 +63,7 @@ export class PersonDetailPage extends Component {
         await store.dispatch(reduxApi.actions.members.get({ meid }))
       } catch (err) {
         // this can return a 403 forbidden if not signed in
-        console.log('Error in persondetailpage:', err)
+        console.error('Error in persondetailpage:', err)
       }
 
       return {
@@ -143,11 +145,13 @@ export class PersonDetailPage extends Component {
             </a></Link>
           </Button>}
         {isAdmin &&
-          <Button shape='round'>
-            <Link href='/person/new'><a>
-              <FormattedMessage id='person.altnew' defaultMessage='New Person' description='Button to create a new person' />
-            </a></Link>
-          </Button>}
+          <>
+            <Button shape='round'>
+              <Link href='/person/new'><a>
+                <FormattedMessage id='person.altnew' defaultMessage='New Person' description='Button to create a new person' />
+              </a></Link>
+            </Button>
+          </>}
       </div>
     } else {
       content = this.state.editing
@@ -165,6 +169,10 @@ export class PersonDetailPage extends Component {
               <FormattedMessage id='deletePerson' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
             </Button>
           </Popconfirm>}
+          &nbsp;
+          {
+            (isAdmin) && <IssueBadgeButton person={this.props.people.data[0]} />
+          }
 
         </>
     }
