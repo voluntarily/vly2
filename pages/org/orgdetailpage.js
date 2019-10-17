@@ -16,7 +16,7 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 const blankOrg = {
   name: '',
   about: '',
-  imgUrl: '',
+  imgUrl: '/static/img/organisation/organisation.png',
   contactEmail: '',
   contactId: null,
   website: null,

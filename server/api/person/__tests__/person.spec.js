@@ -58,7 +58,6 @@ test.serial('Should send correct person when queried against an id', async t => 
     location: 'Waikato District',
     email: 'z.testy@voluntar.ly',
     phone: '027 444 5555',
-    gender: 'non binary',
     pronoun: { 'subject': 'they', 'object': 'them', 'possesive': 'ȁǹy' },
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer'],
@@ -99,7 +98,6 @@ test.serial('Should correctly add a person', async t => {
     nickname: 'Testy',
     phone: '123 456789',
     email: 'addy@omgtech.co.nz',
-    gender: 'binary',
     role: ['tester'],
     tags: []
   }
@@ -127,8 +125,7 @@ test.serial('Should correctly add a person', async t => {
     t.is(savedPerson.name, p.name)
 
     // person has been given the default image
-    t.is(savedPerson.avatar, '../../../static/img/person/person.png')
-
+    t.is(savedPerson.imgUrl, '/static/img/person/person.png')
   } catch (err) {
     console.error(err)
   }
@@ -141,7 +138,7 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
     nickname: '<b>SQLINJECTOR</b>',
     phone: "1234<img src=x onerror=alert('img') />ABCD", // should remove img
     email: 'bobby@omgtech.co.nz', // ok
-    gender: "console.log('hello world')", // ok
+    about: "console.log('hello world')", // ok
     pronoun: { 'subject': 'they', 'object': 'them', 'possesive': 'ȁǹy' }, // ok
     role: ['tester'],
     tags: []
@@ -158,7 +155,7 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
   t.deepEqual('Bobby; DROP TABLES', savedPerson.name)
   t.deepEqual(p.nickname, savedPerson.nickname)
   t.deepEqual(p.email, savedPerson.email)
-  t.deepEqual(p.gender, savedPerson.gender)
+  t.deepEqual(p.about, savedPerson.about)
   t.deepEqual(p.pronoun, savedPerson.pronoun)
 })
 
@@ -169,7 +166,6 @@ test.serial('Should load a person into the db but block access and delete them v
     nickname: 'Testy',
     phone: '123 456789',
     email: 'loady@omgtech.co.nz',
-    gender: 'binary',
     role: ['tester'],
     tags: []
   }

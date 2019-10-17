@@ -212,8 +212,7 @@ test.serial('Should correctly add an organisation', async t => {
     t.is(saved.name, p.name)
 
     // organisation has been given the default image
-    t.is(saved.imgUrl, '../../../static/img/organisation/organisation.png')
-
+    t.is(saved.imgUrl, '/static/img/organisation/organisation.png')
   } catch (err) {
     console.error(err)
   }

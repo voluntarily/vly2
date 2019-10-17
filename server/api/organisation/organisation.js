@@ -6,7 +6,7 @@ const organisationSchema = new Schema({
   slug: { type: 'String', required: true },
   about: { type: 'String' },
   // TODO: [VP-146] make required and provide a default image in the static folder.  imgUrl: String,
-  imgUrl: { type: 'String', required: true, default: '/static/img/organisation/organisation.png' },
+  imgUrl: { type: 'String', default: '/static/img/organisation/organisation.png' },
   website: String,
   facebook: String,
   twitter: String,

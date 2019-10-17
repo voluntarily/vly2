@@ -201,25 +201,27 @@ test.serial('Should not add an opportunity with invalid tag ids', async t => {
 
 test.serial('Should correctly add an opportunity with default image', async t => {
   t.plan(3)
+  const op = {
+    name: 'The last 2000 metres',
+    subtitle: 'Launching into space step 5',
+    description: 'Project to build a simple rocket that will reach 400m',
+    duration: '4 hours',
+    location: 'Albany, Auckland',
+    status: OpportunityStatus.DRAFT,
+    tags: t.context.tags,
+    requestor: t.context.people[0]._id
+  }
 
   const res = await request(server)
     .post('/api/opportunities')
-    .send({
-      title: 'The first 400 metres',
-      subtitle: 'Launching into space step 3',
-      description: 'Project to build a simple rocket that will reach 400m',
-      duration: '4 hours',
-      location: 'Albany, Auckland',
-      status: 'draft',
-      requestor: t.context.people[0]._id
-    })
+    .send(op)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 200)
 
-  const savedOpportunity = await Opportunity.findOne({ title: 'The first 400 metres' }).exec()
-  t.is(savedOpportunity.subtitle, 'Launching into space step 3')
-  // opportunity has been given the default image
+  const savedOpportunity = await Opportunity.findOne({ name: op.name }).exec()
+  t.is(savedOpportunity.subtitle, 'Launching into space step 5')
   t.is(savedOpportunity.imgUrl, '/static/img/opportunity/opportunity.png')
 })
 
