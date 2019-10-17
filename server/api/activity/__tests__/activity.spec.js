@@ -169,7 +169,7 @@ test.serial('Should correctly add an activity with default image', async t => {
 
   const savedActivity = await Activity.findOne({ title: 'The first 400 metres' }).exec()
   t.is(savedActivity.subtitle, 'Launching into space step 3')
-  
+
   // activity has been given the default image
   t.is(savedActivity.imgUrl, '../../../static/img/activity/activity.png')
 })
