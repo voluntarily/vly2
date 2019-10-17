@@ -60,7 +60,7 @@ test.serial('verify fixture database has ops', async t => {
 
 test.serial('Should correctly give count of all active Ops sorted by name', async t => {
   const res = await request(server)
-    .get('/api/opportunities')
+    .get('/api/opportunities?s="name"')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
@@ -73,7 +73,7 @@ test.serial('Should correctly give count of all active Ops sorted by name', asyn
 
 test.serial('Should correctly give subset of ops matching status', async t => {
   const res = await request(server)
-    .get('/api/opportunities?q={"status":"draft"}')
+    .get('/api/opportunities?q={"status":"draft"}&s="name"')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
@@ -87,7 +87,7 @@ test.serial('Should correctly give subset of ops matching status', async t => {
 
 test.serial('Should correctly select just the names and ids', async t => {
   const res = await request(server)
-    .get('/api/opportunities?p={"name": 1}')
+    .get('/api/opportunities?p={"name": 1}&s="name"')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)

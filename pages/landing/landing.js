@@ -12,13 +12,12 @@ import { Helmet } from 'react-helmet'
 import moment from 'moment'
 
 class Landing extends Component {
-  render() {
-
+  render () {
     // Setting the Landing page to get the next 3 months of opportunities
-    const today = moment().startOf('day');
+    const today = moment().startOf('day')
     const monthsToGet = 3
-    const futureDate = moment().add(monthsToGet, 'M');
-    console.log(today);
+    const futureDate = moment().add(monthsToGet, 'M')
+    console.log(today)
     return (
       <div>
         <Hero />

@@ -15,7 +15,7 @@ const optitle = [
   'Lets build a webpage',
   'Lets eat python',
   'Teaching student how to program'
-];
+]
 
 const oplocation = [
   'Auckland',
@@ -25,8 +25,8 @@ const oplocation = [
   'Dunedin',
   'Matamata',
   'Hawkes Bay',
-  'Queenstown',
-];
+  'Queenstown'
+]
 
 const opduration = [
   '2 Hours (Flexible)',
@@ -35,8 +35,7 @@ const opduration = [
   '3 hours',
   '45 minutes',
   '2-3 hours'
-];
-
+]
 
 const forall = (model, action) => {
   var cursor = model.find().cursor()
@@ -104,7 +103,7 @@ const createOpportunity = async (op) => {
 }
 
 const createRandomDate = (start, end) => {
-  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
 }
 
 const GetRandomPersonID = async () => {
