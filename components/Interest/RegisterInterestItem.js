@@ -3,7 +3,7 @@
   Unlike InterestItem, this one is a Form allowing state changes.
 */
 
-import { Button, Col, Form, Popconfirm, Row } from 'antd'
+import { Button, Col, Form, Popconfirm, Row, Radio } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
@@ -94,6 +94,11 @@ class RegisterInterestItem extends Component {
                 </Button>
                 &nbsp;
               </span> : null}
+
+
+              <Radio.Group buttonStyle='solid'>
+                    <Radio.Button value='inactive'>Not Available</Radio.Button>
+              </Radio.Group>
 
             {/* Button to handle withdrawal from op */}
             {options.withdrawInterestButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
