@@ -50,17 +50,21 @@ Voluntarily is based on the [MERN (MongoDB, Express, React+Redux, Node)](http://
 7. `npm run storybook` - starts the Storybook Component Library
 
 
-Once you see the message "Voluntarily is running on port: 3122! Be Awesome!" then you can open your browser at http://localhost:3122.
+Once you see the message: 
 
-If you see the message "Please make sure Mongodb is installed and running!"  then go back and start mongod.
+    "Voluntarily is running on port: 3122! Be Awesome!" 
+
+then you can open your browser at http://localhost:3122.
+
+If you see the message _"Please make sure Mongodb is installed and running!"_  then go back and start mongod.
 
 Press control+C to exit the node application.
 
 #######################Running BDD Tests#########################
 
-cd systemtest
-npx codeceptjs run --grep "@smoke" --plugins allure   
-allure serve output
+    cd systemtest
+    npx codeceptjs run --grep "@smoke" --plugins allure   
+    allure serve output
 
 
 
@@ -68,5 +72,11 @@ allure serve output
 
 //Refer https://codecept.io/bdd
 
+### MacOS
+You may need to install selenium and webdriver
+`brew install selenium-server-standalone`
+`brew install allure`
+followed by
+`selenium-server -port 4444`
 
 
