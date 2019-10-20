@@ -9,75 +9,75 @@ const RemoveItemButton = styled.button`
   width: 32px;
   margin-left: 6px;
   cursor: pointer;
-`;
+`
 const ItemInputWithDelete = styled(Input)`
   width: calc(100% - 38px);
-`;
+`
 
 export class DynamicFieldSet extends React.Component {
   /**
    * Gets the set of field values from the associated form.
    * @returns {string[]} The list of values.
    */
-  getValues() {
-    return this.props.form.getFieldValue(this.props.field);
+  getValues () {
+    return this.props.form.getFieldValue(this.props.field)
   }
   /**
    * Sets the set of field values on the associated form.
    * @param {string[]} values The set of values.
    */
-  setValues(values) {
-    this.props.form.setFieldsValue({ [this.props.field]: values });
+  setValues (values) {
+    this.props.form.setFieldsValue({ [this.props.field]: values })
   }
 
   /**
    * Removes an item.
    * @param {number} index The index of the item to remove.
    */
-  remove(index) {
-    const value = this.getValues();
+  remove (index) {
+    const value = this.getValues()
 
-    this.setValues(value.filter((key, i) => i !== index));
+    this.setValues(value.filter((key, i) => i !== index))
   }
 
   /**
    * Adds an additional item.
    */
-  add() {
-    this.setValues(this.getValues().concat(''));
+  add () {
+    this.setValues(this.getValues().concat(''))
   }
 
-  onChange(index, value) {
-    const values = this.getValues();
-    values[index] = value;
+  onChange (index, value) {
+    const values = this.getValues()
+    values[index] = value
 
-    this.setValues(values);
+    this.setValues(values)
   }
 
-  render() {
+  render () {
     this.props.form.getFieldDecorator(this.props.field, { initialValue: [] })
 
-    const values = this.getValues();
+    const values = this.getValues()
 
     // Choose between just an <input /> element and one with the delete <button />
     const FormItem = values.length > 1
       ? ItemInputWithDelete
-      : Input;
+      : Input
 
     const formItems = values.map((value, index) => (
       <Form.Item key={index}>
         <FormItem value={values[index]}
-                  placeholder={this.props.placeholder}
-                  onChange={event => this.onChange(index, event.target.value)} />
-        
-        {values.length > 1 ? 
-          <RemoveItemButton type="button"
-                            className="dynamic-delete-button"
-                            title={this.props.removeTooltip || undefined}
-                            onClick={() => this.remove(index)}>
+          placeholder={this.props.placeholder}
+          onChange={event => this.onChange(index, event.target.value)} />
+
+        {values.length > 1
+          ? <RemoveItemButton type='button'
+            className='dynamic-delete-button'
+            title={this.props.removeTooltip || undefined}
+            onClick={() => this.remove(index)}>
             <Icon type='minus-circle-o' />
           </RemoveItemButton>
-        : null}
+          : null}
       </Form.Item>
     ))
 
@@ -86,8 +86,8 @@ export class DynamicFieldSet extends React.Component {
         {formItems}
         <Form.Item>
           <Button className='ant-btn-primary ant-btn-round ant-btn-lg'
-                  block={true}
-                  onClick={() => this.add()}>
+            block
+            onClick={() => this.add()}>
             <Icon type='plus' /> {this.props.addItemText || 'Add item'}
           </Button>
         </Form.Item>

@@ -101,7 +101,7 @@ class ActDetailForm extends Component {
         act.resource = values.resource
         act.volunteers = !this.state.input1Disabled ? this.state.totalVolunteerRequired : (1 / this.state.volunteerPerStudent)
         act.space = values.space
-        act.equipment = values.equipment;
+        act.equipment = values.equipment
         act.description = values.description
         act.offerOrg = values.offerOrg && values.offerOrg.key
         act.imgUrl = values.imgUrl
@@ -419,7 +419,7 @@ class ActDetailForm extends Component {
             </InputContainer>
           </FormGrid>
 
-          <Divider/>
+          <Divider />
 
           <FormGrid>
             <DescriptionContainer>
@@ -435,7 +435,7 @@ class ActDetailForm extends Component {
               <P>
                 <FormattedMessage
                   id='actDetailForm.addEquipment.instructions'
-                  defaultMessage="Let volunteers and businesses know what you need to make the opportunity happen."
+                  defaultMessage='Let volunteers and businesses know what you need to make the opportunity happen.'
                   description='instructions to add equipment in act detail form'
                 />
               </P>
@@ -444,7 +444,7 @@ class ActDetailForm extends Component {
               <MediumInputContainer>
                 <Form.Item label={actEquipment}>
                   <DynamicFieldSet form={this.props.form}
-                    field="equipment"
+                    field='equipment'
                     placeholder={'Equipment description'}
                     validationMessage={
                       <FormattedMessage
@@ -452,14 +452,14 @@ class ActDetailForm extends Component {
                         defaultMessage={`Add an equipment or remove field`}
                       />
                     }
-                    addItemText="Add equipment" />
+                    addItemText='Add equipment' />
                 </Form.Item>
               </MediumInputContainer>
             </InputContainer>
           </FormGrid>
 
           <Divider />
-          
+
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -639,7 +639,7 @@ export default Form.create({
       totalVolunteerRequired: Form.createFormField({ ...totalVolunteerRequired, value: totalVolunteerRequired }),
       volunteerPerStudent: Form.createFormField({ ...volunteerPerStudent, value: volunteerPerStudent }),
       space: Form.createFormField({ ...props.act.space, value: props.act.space }),
-      equipment: Form.createFormField({...props.act.equipment, value: props.act.equipment })
+      equipment: Form.createFormField({ ...props.act.equipment, value: props.act.equipment })
     }
   }
 
