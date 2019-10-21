@@ -128,10 +128,12 @@ const Footer = ({ isAuthenticated, ...props }) => (
           />
           :&nbsp;
           <FormattedMessage
-            id='revision'
+            id='revision' // set in server.js
             defaultMessage='local-build'
-            description='Source code revision, auto generalted.'
-          />
+            description='Source code revision, auto generated.'
+          >
+            {txt => <a href={'https://github.com/voluntarily/vly2/commit/' + txt.split(/[ \- _ ]+/)[0]} target='_blank'>{txt}</a> }
+          </FormattedMessage>
         </P>
       </FooterText>
       <Spacer />
