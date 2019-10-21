@@ -20,7 +20,7 @@ const ActList = ({ acts, ...props }) => (
   </ActivityGrid>
 )
 
-ActList.practTypes = {
+ActList.propTypes = {
   acts: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
