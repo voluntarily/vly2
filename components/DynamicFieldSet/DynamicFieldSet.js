@@ -20,7 +20,7 @@ export class DynamicFieldSet extends React.Component {
    * @returns {string[]} The list of values.
    */
   getValues () {
-    return this.props.form.getFieldValue(this.props.field)
+    return this.props.form.getFieldValue(this.props.field) || []
   }
   /**
    * Sets the set of field values on the associated form.
@@ -58,7 +58,6 @@ export class DynamicFieldSet extends React.Component {
     this.props.form.getFieldDecorator(this.props.field, { initialValue: [] })
 
     const values = this.getValues()
-
     // Choose between just an <input /> element and one with the delete <button />
     const FormItem = values.length > 1
       ? ItemInputWithDelete

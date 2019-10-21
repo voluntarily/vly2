@@ -63,16 +63,21 @@ export const ItemStatus = ({ status }) =>
   </ItemListing>
 
 export const EquipmentList = ({ equipment }) =>
-  <ItemListing>
-    <FormattedMessage
-      id='itemlist.equipment'
-      defaultMessage='Equipment:'
-      description='Equipment label for acts and ops'
-    />
-    <ul>
-      {equipment.map(item => <li>{item}</li>)}
-    </ul>
-  </ItemListing>
+  equipment
+    ? <ItemListing>
+      🔧&nbsp;
+      <strong>
+        <FormattedMessage
+          id='itemlist.equipment'
+          defaultMessage='Equipment:'
+          description='Equipment label for acts and ops'
+        />
+      </strong>
+      <ul>
+        {equipment.map((item, index) => <li key={index}>{item}</li>)}
+      </ul>
+    </ItemListing>
+    : ''
 
 export const ItemIdLine = ({ item, path }) =>
   <ItemListing>
@@ -124,23 +129,21 @@ export const ItemVolunteers = ({ volunteers }) => {
         &nbsp;&nbsp;&nbsp;{volunteers}
       </ItemListing>
     )
-  } else if (volunteers < 1) {
-    return (
-      <ItemListing>
-        🙋&nbsp;
-        <strong>
-          <FormattedMessage
-            id='act.detail.volunteerratio'
-            defaultMessage='Volunteers per student:'
-            description='label for number of volunteers required per student'
-          />
-        </strong>
-        &nbsp;&nbsp;&nbsp;{Math.round(1 / volunteers)}
-      </ItemListing>
-    )
   }
 
-  return ''
+  return (
+    <ItemListing>
+        🙋&nbsp;
+      <strong>
+        <FormattedMessage
+          id='act.detail.volunteerratio'
+          defaultMessage='Volunteers per student:'
+          description='label for number of volunteers required per student'
+        />
+      </strong>
+      {Math.round(1 / volunteers)}
+    </ItemListing>
+  )
 }
 
 export const ItemSpace = ({ space }) =>

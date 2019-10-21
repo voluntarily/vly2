@@ -107,10 +107,10 @@ test('render the detail with act', t => {
       existingTags={[]} />
   )
   t.is(wrapper.find('ActDetailForm').length, 1)
-  t.is(wrapper.find('button').length, 3)
-  wrapper.find('button').first().simulate('click')
+  t.is(wrapper.find('button').length, 4)
+  wrapper.find('#cancelActBtn').first().simulate('click')
   t.truthy(cancelAct.calledOnce)
-  wrapper.find('button').at(2).simulate('click')
+  wrapper.find('#publishActBtn').first().simulate('click')
   t.truthy(submitAct.calledOnce)
   t.truthy(submitAct.calledWith(act))
 
@@ -141,7 +141,6 @@ test('toggle radio buttons', t => {
     />
   )
   t.is(wrapper.find('ActDetailForm').length, 1)
-  t.is(wrapper.find('button').length, 3)
   t.is(wrapper.find('Radio').length, 2)
 
   const radioButton = wrapper.find('Radio')
@@ -150,17 +149,13 @@ test('toggle radio buttons', t => {
 
   radioButton.at(0).props().onClick({ target: { value: 'option1' } })
   input1.props().onChange({ target: { name: 'resourceinput1', value: 10 } })
-  // console.log(act.volunteers)
-  wrapper.find('button').at(1).simulate('click')
+  wrapper.find('#publishActBtn').first().simulate('click')
   t.is(t.context.act.volunteers, 10)
   t.regex(t.context.act.volunteers.toString(), /^\d+$/)
-  // console.log(t.context.act.volunteers)
   radioButton.at(1).props().onClick({ target: { value: 'option2' } })
   input2.props().onChange({ target: { name: 'resourceinput2', value: 5 } })
-  // console.log(act.volunteers)
-  wrapper.find('button').at(1).simulate('click')
+  wrapper.find('#publishActBtn').first().simulate('click')
   t.is(t.context.act.volunteers, 0.2)
-  // console.log(t.context.act.volunteers)
 })
 test('componentDidMount - set volunteer to 0.2', t => {
   const submitAct = sinon.spy()
@@ -243,12 +238,12 @@ test('render the detail with new blank act', t => {
       existingTags={[]} />
   )
   t.is(wrapper.find('ActDetailForm').length, 1)
-  t.is(wrapper.find('button').length, 3)
-  wrapper.find('button').first().simulate('click')
+  t.is(wrapper.find('button').length, 4)
+  wrapper.find('#cancelActBtn').first().simulate('click')
   t.truthy(cancelAct.calledOnce)
 
   // can't click submit until fields entered
-  wrapper.find('button').at(1).simulate('click')
+  wrapper.find('#saveActBtn').at(1).simulate('click')
   t.falsy(submitAct.calledOnce)
   wrapper.update()
   // should see title is required
@@ -269,7 +264,7 @@ test('render the detail with new blank act', t => {
   imgUpload.props().setImgUrl(testImg)
 
   // save the resulting activity
-  wrapper.find('button').at(1).simulate('click')
+  wrapper.find('#publishActBtn').at(1).simulate('click')
   t.truthy(submitAct.calledOnce)
   const actResult = submitAct.args[0][0]
   t.is(actResult.imgUrl, testImg)

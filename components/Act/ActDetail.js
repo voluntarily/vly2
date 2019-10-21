@@ -19,10 +19,11 @@ export function ActDetail ({ act }) {
 
           <h1>{act.name}</h1>
           <ItemContainer>
+            <ItemStatus status={act.status} />
             <ItemDuration duration={act.duration} />
             <ItemVolunteers volunteers={act.volunteers} />
             <ItemSpace space={act.space} />
-            <ItemStatus status={act.status} />
+            <EquipmentList equipment={act.equipment} />
             <Divider />
             <ItemIdLine item={act.offerOrg} path='orgs' />
             <ItemIdLine item={act.owner} path='people' />
@@ -38,7 +39,6 @@ export function ActDetail ({ act }) {
               }}
             />
           </ItemDescription>
-          <EquipmentList equipment={act.equipment} />
           <Spacer />
         </Left>
         <Right>

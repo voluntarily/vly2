@@ -5,27 +5,54 @@ import { ItemVolunteers } from '../../VTheme/ItemList'
 import ActDetail from '../ActDetail'
 
 // Initial activities
-const act = {
+const actMin = {
   _id: '5cc903e5f94141437622cea7',
   name: 'Growing in the garden',
   subtitle: 'Growing digitally in the garden',
   imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
   description: 'Project to grow something in the garden',
-  volunteers: 1,
   duration: '15 Minutes',
-  space: '1 acre',
   location: 'Newmarket, Auckland',
   status: 'draft',
   tags: []
 }
 
-test('render the detail with act', t => {
-  const wrapper = mountWithIntl(<ActDetail act={act} onPress={() => {}} />)
+const actMax = {
+  _id: '5cc903e5f94141437622cea7',
+  name: 'herding cats',
+  subtitle: 'can you train cats using lazers',
+  imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+  description: 'Probably not ok to do this',
+  volunteers: 5,
+  duration: '6 hours',
+  space: '1 acre',
+  location: 'Newmarket, Auckland',
+  equipment: ['cats', 'lasers', 'buckets'],
+  status: 'active',
+  tags: [ {
+    tag: 'algorithms'
+  },
+  {
+    tag: 'scheduling'
+  }
+  ]
+}
+
+test('render the detail with short act', t => {
+  const wrapper = mountWithIntl(<ActDetail act={actMin} onPress={() => {}} />)
   t.truthy(wrapper.find('Head'))
-  t.is(wrapper.find('h1').text(), act.name)
-  t.is(wrapper.find({ space: '1 acre' }).length, 1)
-  t.is(wrapper.find({ volunteers: 1 }).length, 1)
-  t.is(wrapper.find('li').length, 6)
+  t.is(wrapper.find('h1').text(), actMin.name)
+  t.is(wrapper.find({ duration: actMin.duration }).length, 1)
+  t.is(wrapper.find('li').length, 4) // only minimal items shown
+})
+
+test('render the detail with full act', t => {
+  const wrapper = mountWithIntl(<ActDetail act={actMax} onPress={() => {}} />)
+  t.truthy(wrapper.find('Head'))
+  t.is(wrapper.find('h1').text(), actMax.name)
+  t.is(wrapper.find({ space: actMax.space }).length, 1)
+  t.is(wrapper.find({ volunteers: actMax.volunteers }).length, 1)
+  t.is(wrapper.find('li').length, 10)
 })
 
 test('render the detail with no picture ', t => {
