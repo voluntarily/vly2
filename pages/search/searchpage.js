@@ -15,7 +15,7 @@ import { FullPage, Spacer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
 import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
-
+import OpOrder from '../../components/Op/OpOrderby'
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
 const { Item } = Menu
 
@@ -174,6 +174,7 @@ export class SearchPage extends Component {
                 />
               }
             />
+            <OpOrder />
             <FilterContainer
               onClose={this.closeFilter}
               filterName={LOCATION_FILTER_NAME}
