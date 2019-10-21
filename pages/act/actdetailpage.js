@@ -18,6 +18,7 @@ const blankAct = {
   subtitle: '',
   imgUrl: '',
   duration: '',
+  equipment: [],
   description: '',
   status: 'draft',
   tags: []
