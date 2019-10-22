@@ -10,7 +10,7 @@ docker pull 585172581592.dkr.ecr.ap-southeast-1.amazonaws.com/vly2-alpha:master
 # retag
 docker image tag 585172581592.dkr.ecr.ap-southeast-1.amazonaws.com/vly2-alpha:master 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-beta:master
 
-# login to signapore
+# login to sydney
 source ${MY_DIR}/login-sydney
 
 # push the new image
