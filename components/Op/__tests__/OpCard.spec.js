@@ -51,7 +51,6 @@ test('draft ops should display name with prefix DRAFT: ', t => {
   t.is(wrapper.find('figcaption').find('h1').text(), `DRAFT: ${op.name}`)
 })
 
-
 test('Link on card should point to ops/<opportunity_id>', t => {
   const op = t.context.op
   const wrapper = mountWithIntl(
@@ -86,16 +85,14 @@ test('op with an interested should append interested inside strong tag for subti
   )
   // should find interested status inside a strong tag
   t.is(wrapper.find('strong').last().text(), ' - interested')
-  //should fin the op name suffix with - interested inside last p tag
+  // should find the op name suffix with - interested inside last p tag
   t.is(wrapper.find('figcaption').find('p').last().text(), `${op.subtitle} - interested`)
 })
 
-
-
 test('ops without location and duration should display P tags with blank', t => {
   const op = t.context.ops[4]
-  op.location=undefined
-  op.duration=undefined
+  op.location = undefined
+  op.duration = undefined
   const wrapper = mountWithIntl(
     <OpCard op={op} />
   )
