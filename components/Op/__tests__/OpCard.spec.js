@@ -40,7 +40,7 @@ test('op without an image should be displayed with default image', t => {
   t.is(wrapper.find('img').prop('src'), '../../static/missingimage.svg')
 })
 
-test.only('draft ops should display name with prefix DRAFT: ', t => {
+test('draft ops should display name with prefix DRAFT: ', t => {
   t.plan(1)
   const op = t.context.op
   op.status = 'draft'
@@ -49,6 +49,16 @@ test.only('draft ops should display name with prefix DRAFT: ', t => {
     <OpCard op={op} onPress={() => {}} />
   )
   t.is(wrapper.find('figcaption').find('h1').text(), `DRAFT: ${op.name}`)
+})
+
+
+test('Link on card should point to ops/<opportunity_id>', t => {
+  const op = t.context.op
+  const wrapper = mountWithIntl(
+    <OpCard op={op} />
+  )
+  let archivedOpLink = wrapper.find('Link').first().props().href
+  t.is((archivedOpLink), '/ops/' + op._id)
 })
 
 test('Link on cards in history tab, points to archived Opportunities.', t => {
@@ -67,8 +77,6 @@ test('ops with start and end date should be display start date', t => {
   )
   t.is(wrapper.find('figcaption').find('h1').text(), op.name)
   t.is(wrapper.find('figcaption').find('p').at(1).text(), ' 🗓 12:26AM - Fri 24/05/19 ')
-  // should have a real location
-  t.is(wrapper.find('figcaption').find('p').first().text(), ` 🏫 ${op.location}`)
 })
 
 test('op with an interested should append interested inside strong tag for subtitle', t => {
@@ -76,7 +84,23 @@ test('op with an interested should append interested inside strong tag for subti
   const wrapper = mountWithIntl(
     <OpCard op={op} />
   )
-  // should find interested status
+  // should find interested status inside a strong tag
   t.is(wrapper.find('strong').last().text(), ' - interested')
+  //should fin the op name suffix with - interested inside last p tag
   t.is(wrapper.find('figcaption').find('p').last().text(), `${op.subtitle} - interested`)
+})
+
+
+
+test('ops without location and duration should display P tags with blank', t => {
+  const op = t.context.ops[4]
+  op.location=undefined
+  op.duration=undefined
+  const wrapper = mountWithIntl(
+    <OpCard op={op} />
+  )
+  t.is(wrapper.find('figcaption').find('h1').text(), op.name)
+  t.is(wrapper.find('figcaption').find('p').at(1).text(), ' 🗓 12:26AM - Fri 24/05/19 ')
+  t.is(wrapper.find('figcaption').find('p').at(0).text().trim().length, 0)
+  t.is(wrapper.find('figcaption').find('p').at(2).text().trim().length, 0)
 })
