@@ -3,6 +3,7 @@ import test from 'ava'
 import { shallowWithIntl, mountWithIntl } from '../../../lib/react-intl-test-helper'
 import OpCard from '../OpCard'
 import ops from './Op.fixture'
+import moment from 'moment'
 
 test.before('Setup fixtures', (t) => {
   // Initial opportunities
@@ -75,7 +76,7 @@ test('ops with start and end date should be display start date', t => {
     <OpCard op={op} />
   )
   t.is(wrapper.find('figcaption').find('h1').text(), op.name)
-  t.is(wrapper.find('figcaption').find('p').at(1).text(), ' 🗓 12:26AM - Fri 24/05/19 ')
+  t.is(wrapper.find('figcaption').find('p').at(1).text(), moment(op.date[0]).format(' 🗓 h:mmA - ddd DD/MM/YY '))
 })
 
 test('op with an interested should append interested inside strong tag for subtitle', t => {
@@ -97,7 +98,7 @@ test('ops without location and duration should display P tags with blank', t => 
     <OpCard op={op} />
   )
   t.is(wrapper.find('figcaption').find('h1').text(), op.name)
-  t.is(wrapper.find('figcaption').find('p').at(1).text(), ' 🗓 12:26AM - Fri 24/05/19 ')
+  t.is(wrapper.find('figcaption').find('p').at(1).text(), moment(op.date[0]).format(' 🗓 h:mmA - ddd DD/MM/YY '))
   t.is(wrapper.find('figcaption').find('p').at(0).text().trim().length, 0)
   t.is(wrapper.find('figcaption').find('p').at(2).text().trim().length, 0)
 })
