@@ -48,7 +48,8 @@ export class SearchPage extends Component {
     showDatePickerModal: false,
     filter: {
       date: []
-    }
+    },
+    opOrderBy: 'name'
   }
 
   constructor (props) {
@@ -125,7 +126,12 @@ export class SearchPage extends Component {
     if (this.state.filter.date.length === 0) return 'Date'
     return formatDateBaseOn(this.state.datePickerType, this.state.filter.date)
   }
-
+  sortHandler = (value) => {
+    this.setState({
+      opOrderBy: value
+    })
+    // console.log(`selected ${this.state.opOrderBy}`)
+  }
   render () {
     const { search } = this.state
     const dateLabel = this.formateDateValue()
@@ -174,7 +180,9 @@ export class SearchPage extends Component {
                 />
               }
             />
-            <OpOrder />
+            <TitleSection
+              title={<OpOrder sortHandler={this.sortHandler.bind(this)} />}
+            />
             <FilterContainer
               onClose={this.closeFilter}
               filterName={LOCATION_FILTER_NAME}
@@ -218,6 +226,7 @@ export class SearchPage extends Component {
               filter={this.state.filter}
               dateFilterType={this.state.datePickerType}
               location={this.state[filterValueName(LOCATION_FILTER_NAME)]}
+              orderby={this.state.opOrderBy}
             />
           </SearchPageContainer>
         </FullPage>

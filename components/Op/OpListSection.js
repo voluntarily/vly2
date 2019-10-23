@@ -61,6 +61,20 @@ class OpListSection extends Component {
       }
     }
   }
+  sortOrder = (orderValue) => {
+    const dataOp = this.props.opportunities.data
+    const sortedarray = dataOp.sort((a, b) => new Date(b.dateAdded).getDate() - new Date(a.dateAdded).getDate())
+    console.log(orderValue, sortedarray)
+    if (orderValue === 'name') {
+      return (dataOp.sort((a, b) => a.name.localeCompare(b.name)))
+    } else if (orderValue === 'date') {
+      return (dataOp.sort((a, b) => new Date(b.dateAdded).getDate() - new Date(a.dateAdded).getDate()))
+    } else if (orderValue === 'location') {
+      // return()
+    } else {
+      // return (dataOp.sort((a, b))
+    }
+  }
 
   isDateFilterBetween = (date, opDateArray) => {
     const { hasValue } = this
@@ -118,7 +132,7 @@ class OpListSection extends Component {
       </section>)
     } else {
       return (<section>
-        <OpList ops={opData} />
+        <OpList ops={opData} order={this.sortOrder(this.props.orderby)} />
       </section>)
     }
   }
