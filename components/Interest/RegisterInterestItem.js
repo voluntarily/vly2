@@ -89,10 +89,17 @@ class RegisterInterestItem extends Component {
             {/* Button to handle positive state change */}
             {options.nextStateButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
               ? <span>
-              <Checkbox.Group  />
-              <Radio.Group buttonStyle='solid'>
-                    <Radio.Button value='inactive'>Terms and Conditions</Radio.Button>
-              </Radio.Group>
+
+            <Form.Item label={orgCategory}>
+            {getFieldDecorator('category', {
+              rules: [
+                { required: true, message: 'category is required' }
+              ]})(
+              <Checkbox.Group
+                options={categoryOptions}
+              />
+            )}
+            </Form.Item>
 
                 <Button type='primary' disabled={hasErrors(getFieldsError())} shape='round' onClick={this.handleChangeStateButtonClicked.bind(this)}>
                   {options.nextStateButtonText}
