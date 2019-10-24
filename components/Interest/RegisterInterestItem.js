@@ -51,6 +51,11 @@ class RegisterInterestItem extends Component {
       getFieldDecorator, getFieldsError
     } = this.props.form
 
+    const termsCondtionsOptions = [
+      { label: 'Terms Conditions', value: 'Terms Conditions'}  
+    ]
+
+    const termsCondtions = <FormattedMessage id='termsCondtions' defaultMessage='Terms and Conditions' description='termsCondtions' />
     // Options to configure the controls on this page based on the state of the interest.
     const options = getOptions(this.props.interest)
 
@@ -90,16 +95,16 @@ class RegisterInterestItem extends Component {
             {options.nextStateButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
               ? <span>
 
-            <Form.Item label={orgCategory}>
-            {getFieldDecorator('category', {
+             <Form.Item label= {termsCondtions}>
+            {getFieldDecorator('termsCondtions', {
               rules: [
-                { required: true, message: 'category is required' }
+                { required: true, message: 'Please agree to the Terms and Conditions' }
               ]})(
               <Checkbox.Group
-                options={categoryOptions}
+              options={termsCondtionsOptions} 
               />
             )}
-            </Form.Item>
+            </Form.Item> 
 
                 <Button type='primary' disabled={hasErrors(getFieldsError())} shape='round' onClick={this.handleChangeStateButtonClicked.bind(this)}>
                   {options.nextStateButtonText}
