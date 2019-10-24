@@ -3,7 +3,7 @@
   Unlike InterestItem, this one is a Form allowing state changes.
 */
 
-import { Button, Col, Form, Popconfirm, Row, Radio,Checkbox} from 'antd'
+import { Button, Col, Form, Popconfirm, Row, Checkbox } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
@@ -52,7 +52,7 @@ class RegisterInterestItem extends Component {
     } = this.props.form
 
     const termsCondtionsOptions = [
-      { label: 'Terms Conditions', value: 'Terms Conditions'}  
+      { label: 'Terms Conditions', value: 'Terms Conditions' }
     ]
 
     const termsCondtions = <FormattedMessage id='termsCondtions' defaultMessage='Terms and Conditions' description='termsCondtions' />
@@ -95,16 +95,16 @@ class RegisterInterestItem extends Component {
             {options.nextStateButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
               ? <span>
 
-             <Form.Item label= {termsCondtions}>
-            {getFieldDecorator('termsCondtions', {
-              rules: [
-                { required: true, message: 'Please agree to the Terms and Conditions' }
-              ]})(
-              <Checkbox.Group
-              options={termsCondtionsOptions} 
-              />
-            )}
-            </Form.Item> 
+                <Form.Item label={termsCondtions}>
+                  {getFieldDecorator('termsCondtions', {
+                    rules: [
+                      { required: true, message: 'Please agree to the Terms and Conditions' }
+                    ] })(
+                      <Checkbox.Group
+                      options={termsCondtionsOptions}
+                    />
+                  )}
+                </Form.Item>
 
                 <Button type='primary' disabled={hasErrors(getFieldsError())} shape='round' onClick={this.handleChangeStateButtonClicked.bind(this)}>
                   {options.nextStateButtonText}
