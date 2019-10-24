@@ -85,7 +85,8 @@ test('render landing page ', t => {
       <LandingTest {...props} />
     </Provider>)
   t.is(wrapper.find('h1').first().text(), 'volunteer yo—self.')
-
-  // there should be a list of ops
-  t.is(wrapper.find('.requestTitle').length, ops.length)
+  // there should be a list of ops each with a link pointing to detailed op page
+  for (const op of ops) {
+    t.is(wrapper.find(`a[href='/ops/${op._id}']`).length, 1)
+  }
 })
