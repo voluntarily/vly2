@@ -99,8 +99,9 @@ class RegisterInterestItem extends Component {
                   {getFieldDecorator('termsCondtions', {
                     rules: [
                       { required: true, message: 'Please agree to the Terms and Conditions' }
-                    ] })(
-                      <Checkbox.Group
+                    ]
+                  })(
+                    <Checkbox.Group
                       options={termsCondtionsOptions}
                     />
                   )}

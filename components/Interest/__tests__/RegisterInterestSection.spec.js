@@ -119,5 +119,4 @@ test.serial('mount RegisterInterestSection with op and me', async t => {
   myMock.restore()
 })
 
-
 // showing status
