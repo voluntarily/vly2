@@ -87,7 +87,7 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
   wrapper.find('button').first().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('h1').first().text(), 'Thank you for expressing your interest!')
+  t.is(wrapper.find('h1').first().text(), 'How do you want to get involved?')
 
   // press Get Involved! button
   t.truthy(myMock.done())
@@ -118,5 +118,6 @@ test.serial('mount RegisterInterestSection with op and me', async t => {
   t.truthy(myMock.done())
   myMock.restore()
 })
+
 
 // showing status
