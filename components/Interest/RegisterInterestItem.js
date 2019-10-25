@@ -52,10 +52,10 @@ class RegisterInterestItem extends Component {
     } = this.props.form
 
     const termsCondtionsOptions = [
-      { label: 'Terms Conditions', value: 'Terms Conditions' }
+      { label: 'I accept the Terms and Conditions', value: 'I accept the Terms and Conditions' }
     ]
 
-    const termsCondtions = <FormattedMessage id='termsCondtions' defaultMessage='Terms and Conditions' description='termsCondtions' />
+    const termsCondtions = <FormattedMessage id='termsCondtions' defaultMessage='Terms & Conditions' description='termsCondtions' />
     // Options to configure the controls on this page based on the state of the interest.
     const options = getOptions(this.props.interest)
 
