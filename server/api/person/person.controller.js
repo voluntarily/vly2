@@ -1,14 +1,11 @@
 const Person = require('./person')
-const pick = require('lodash.pick')
 const sanitizeHtml = require('sanitize-html')
 const Action = require('../../services/abilities/ability.constants')
-const { defaultConvertRequestToAction } = require('../../middleware/authorize/authorizeRequest.js')
 
 /* find a single person by searching for a key field.
 This is a convenience function usually used to call
-/api/person/by/email/person@example.com  but can be used for other fields
 */
-function getPersonBy (req, res) {
+function getPersonBy (req, res, next) {
   let query
   if (req.params.by) {
     query = { [req.params.by]: req.params.value }
@@ -20,8 +17,7 @@ function getPersonBy (req, res) {
     if (!got) { // person does not exist
       return res.status(404).send({ error: 'person not found' })
     }
-
-    res.json(removeField(req, got))
+    res.json(got)
   })
 }
 
@@ -40,23 +36,11 @@ function listPeople (req, res, next) {
     Person.find(query, select).sort(sort)
       .then(got => {
         req.crudify = { result: got }
-        next()
+        return next()
       })
   } catch (e) {
-    console.error('Bad request', req.query)
     return res.status(400).send(e)
   }
-}
-
-function removeField (request, queryResult) {
-  const action = defaultConvertRequestToAction(request)
-  const { me } = request.session
-  const authorizedFields = Person.accessibleFieldsBy(request.ability, action)
-  let filteredResult
-  if (me != null) {
-    filteredResult = queryResult._id.toString() === me._id.toString() ? me : pick(queryResult, authorizedFields)
-  }
-  return filteredResult
 }
 
 async function updatePersonDetail (req, res, next) {

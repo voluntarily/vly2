@@ -33,6 +33,4 @@ module.exports = function (server) {
       afterActions: [{ middlewares: [ removeUnauthorizedFields(Person), helpers.formatResponse ] }]
     })
   )
-
-  server.get('/api/person/by/:by/:value', getPersonBy)
 }
