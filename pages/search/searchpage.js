@@ -15,7 +15,7 @@ import { FullPage, Spacer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
 import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
-import OpOrder from '../../components/Op/OpOrderby'
+import OpOrderby from '../../components/Op/OpOrderby'
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
 const { Item } = Menu
 
@@ -49,12 +49,13 @@ export class SearchPage extends Component {
     filter: {
       date: []
     },
-    opOrderBy: 'name'
+    opOrderBy: 'date'
   }
 
   constructor (props) {
     super(props)
     this.state.search = props.search
+    this.sortHandler = this.sortHandler.bind(this)
   }
 
   static getDerivedStateFromProps ({ search }) {
@@ -180,9 +181,10 @@ export class SearchPage extends Component {
                 />
               }
             />
-            <TitleSection
+            {/* <TitleSection
               title={<OpOrder sortHandler={this.sortHandler.bind(this)} />}
-            />
+            /> */}
+            <OpOrderby sortHandler={this.sortHandler} />
             <FilterContainer
               onClose={this.closeFilter}
               filterName={LOCATION_FILTER_NAME}
