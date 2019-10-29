@@ -181,9 +181,6 @@ export class SearchPage extends Component {
                 />
               }
             />
-            {/* <TitleSection
-              title={<OpOrder sortHandler={this.sortHandler.bind(this)} />}
-            /> */}
             <OpOrderby sortHandler={this.sortHandler} />
             <FilterContainer
               onClose={this.closeFilter}

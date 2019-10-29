@@ -295,7 +295,7 @@ test.serial('Test sort by name', async t => {
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/?search=Growing`
-  myMock.getOnce(api, opsWithOpenEndDate)
+  myMock.getOnce(api, ops)
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
@@ -304,8 +304,6 @@ test.serial('Test sort by name', async t => {
   )
   await sleep(1)
   wrapper.update()
-  // console.log(opsWithOpenEndDate[0].name, opsWithOpenEndDate[4].name)
-
   // Checking first and last name in opcard list
   t.is(wrapper.find('OpCard').first().text().includes('1 Mentor'), true)
   t.is(wrapper.find('OpCard').last().text().includes('5 Going'), true)
@@ -318,7 +316,7 @@ test.serial('Test sort by date', async t => {
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/?search=Growing`
-  myMock.getOnce(api, opsWithOpenEndDate)
+  myMock.getOnce(api, ops)
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
@@ -327,13 +325,11 @@ test.serial('Test sort by date', async t => {
   )
   await sleep(1)
   wrapper.update()
-  // console.log(opsWithOpenEndDate[1].date[0], opsWithOpenEndDate[4].date[0])
-  // console.log(wrapper.find('OpCard').at(2).text())
-  // console.log(wrapper.find('OpCard').at(4).text())
+  console.log(ops[2].date[0], ops[2].date[1])
 
-  // Checking first and last start date of an opportunity in opcard list. All the dates are same.
-  t.is(wrapper.find('OpCard').at(1).text().includes('24/05/19'), true)
-  t.is(wrapper.find('OpCard').at(4).text().includes('24/05/19'), true)
+  // Checking first and last name of an opportunity in opcard list based on their dates
+  t.is(wrapper.find('OpCard').first().text().includes('1 Mentor'), true)
+  t.is(wrapper.find('OpCard').last().text().includes('5 Going'), true)
   t.truthy(myMock.done())
   myMock.restore()
 })
@@ -343,7 +339,7 @@ test.serial('Test sort by commitment', async t => {
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/?search=Growing`
-  myMock.getOnce(api, opsWithOpenEndDate)
+  myMock.getOnce(api, ops)
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
@@ -352,8 +348,6 @@ test.serial('Test sort by commitment', async t => {
   )
   await sleep(1)
   wrapper.update()
-  // console.log(wrapper.find('OpCard').first().text())
-
   // Checking first and last duration in opcard list. The oplist is sorted from low to high, i.e short to long
   t.is(wrapper.find('OpCard').first().text().includes('1 hour sessions'), true)
   t.is(wrapper.find('OpCard').last().text().includes('4 hours'), true)
