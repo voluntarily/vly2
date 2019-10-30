@@ -288,3 +288,69 @@ test.serial('Test filter by week allow to add open end opportunity', async t => 
   t.truthy(myMock.done())
   myMock.restore()
 })
+
+test.serial('Test sort by name', async t => {
+  const realStore = makeStore(initStore)
+
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/?search=Growing`
+  myMock.getOnce(api, ops)
+
+  const wrapper = await mountWithIntl(
+    <Provider store={realStore}>
+      <OpListSection search='Growing' orderby='name' />
+    </Provider>
+  )
+  await sleep(1)
+  wrapper.update()
+  // Checking first and last name in opcard list
+  t.is(wrapper.find('OpCard').first().text().includes('1 Mentor'), true)
+  t.is(wrapper.find('OpCard').last().text().includes('5 Going'), true)
+  t.truthy(myMock.done())
+  myMock.restore()
+})
+test.serial('Test sort by date', async t => {
+  const realStore = makeStore(initStore)
+
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/?search=Growing`
+  myMock.getOnce(api, ops)
+
+  const wrapper = await mountWithIntl(
+    <Provider store={realStore}>
+      <OpListSection search='Growing' orderby='date' />
+    </Provider>
+  )
+  await sleep(1)
+  wrapper.update()
+  console.log(ops[2].date[0], ops[2].date[1])
+
+  // Checking first and last name of an opportunity in opcard list based on their dates
+  t.is(wrapper.find('OpCard').first().text().includes('1 Mentor'), true)
+  t.is(wrapper.find('OpCard').last().text().includes('5 Going'), true)
+  t.truthy(myMock.done())
+  myMock.restore()
+})
+test.serial('Test sort by commitment', async t => {
+  const realStore = makeStore(initStore)
+
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/?search=Growing`
+  myMock.getOnce(api, ops)
+
+  const wrapper = await mountWithIntl(
+    <Provider store={realStore}>
+      <OpListSection search='Growing' orderby='commitment' />
+    </Provider>
+  )
+  await sleep(1)
+  wrapper.update()
+  // Checking first and last duration in opcard list. The oplist is sorted from low to high, i.e short to long
+  t.is(wrapper.find('OpCard').first().text().includes('1 hour sessions'), true)
+  t.is(wrapper.find('OpCard').last().text().includes('4 hours'), true)
+  t.truthy(myMock.done())
+  myMock.restore()
+})
