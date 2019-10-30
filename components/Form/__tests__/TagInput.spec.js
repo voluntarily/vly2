@@ -22,7 +22,7 @@ test('render the op with a few pre-existing tags', t => {
   const secondTag = 'network'
 
   const wrapper = mountWithIntl(
-    <TagInput value={[{ tag: firstTag }, { tag: secondTag }]} existingTags={[]} />
+    <TagInput value={[firstTag, secondTag]} existingTags={[]} />
   )
 
   t.is(wrapper.find('.ant-tag').length, 2)
@@ -37,7 +37,7 @@ test('render the op with a few pre-existing tags, and add a tag into the input f
   const inputTag = 'new tag!'
 
   const wrapper = mountWithIntl(
-    <TagInput value={[{ tag: firstTag }, { tag: secondTag }]} existingTags={[]} />
+    <TagInput value={[firstTag, secondTag]} existingTags={[]} />
   )
 
   t.is(wrapper.find('.ant-tag').length, 2)
@@ -53,8 +53,8 @@ test('render the op with a few pre-existing tags, and add a tag fully, to re-ren
   const inputTag = 'new tag!'
 
   const mockOnChange = sinon.spy()
-  const value = [{ tag: firstTag }, { tag: secondTag }]
-  const expectedNewValue = [{ tag: firstTag }, { tag: secondTag }, { tag: inputTag }]
+  const value = [firstTag, secondTag]
+  const expectedNewValue = [firstTag, secondTag, inputTag]
 
   const wrapper = mountWithIntl(
     <TagInput onChange={mockOnChange} value={value} existingTags={[]} />
@@ -80,7 +80,7 @@ test('render the op with a few pre-existing tags, and remove a tag from them', t
   const mockOnChange = sinon.spy()
 
   const wrapper = mountWithIntl(
-    <TagInput onChange={mockOnChange} value={[{ tag: firstTag }, { tag: secondTag }]} existingTags={[]} />
+    <TagInput onChange={mockOnChange} value={[firstTag, secondTag]} existingTags={[]} />
   )
 
   const wrapperInstance = wrapper.instance()
@@ -88,13 +88,13 @@ test('render the op with a few pre-existing tags, and remove a tag from them', t
   wrapperInstance.removeTag('network')
 
   t.true(mockOnChange.calledOnce)
-  t.true(mockOnChange.calledWith([{ tag: firstTag }]))
+  t.true(mockOnChange.calledWith([ firstTag ]))
 })
 
 test('render when input value doesnt match any existing tags', t => {
   const existingTags = [
-    { tag: 'JAVA', _id: '123456781234567812345678' },
-    { tag: 'networks', _id: '876543218765432187654321' }
+    'JAVA',
+    'networks'
   ] // case shouldn't matter
   const input = 'ja'
   const mockOnChange = sinon.spy()
@@ -111,7 +111,7 @@ test('render when input value doesnt match any existing tags', t => {
   wrapperInstance.handleSearch(input)
 
   t.is(wrapperInstance.state.matchingTags.length, 1)
-  t.is(wrapperInstance.state.matchingTags[0].tag, 'JAVA')
+  t.is(wrapperInstance.state.matchingTags[0], 'JAVA')
 
   // options should be what the user typed, plus any matching tags
   // t.is(wrapper.find('Option').length, 2)
