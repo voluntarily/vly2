@@ -111,7 +111,7 @@ test.serial('add a person', async t => {
     phone: '123 456789',
     email: 'addy@omgtech.co.nz',
     role: ['tester'],
-    tags: ['tag2', 'tag2', 'tag3']
+    tags: ['tag1', 'tag2', 'tag3']
   }
   try {
     // anon user can add a new person

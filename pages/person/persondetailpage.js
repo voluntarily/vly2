@@ -47,6 +47,7 @@ export class PersonDetailPage extends Component {
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     await store.dispatch(reduxApi.actions.locations.get())
+    await store.dispatch(reduxApi.actions.tags.get())
     if (isNew) {
       return {
         isNew: true,
@@ -136,6 +137,8 @@ export class PersonDetailPage extends Component {
     if (this.props.members.sync && this.props.members.data.length > 0) {
       person.orgMembership = this.props.members.data.filter(m => m.status === MemberStatus.MEMBER)
     }
+    if (!this.props.people.loading) {
+
     if (!person) {
       content =
         <div>
@@ -184,6 +187,7 @@ export class PersonDetailPage extends Component {
           </>
       }
     }
+  }
     return (
       <FullPage>
         <Helmet>
@@ -208,7 +212,8 @@ PersonDetailPage.propTypes = {
     pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
-    status: PropTypes.oneOf(['active', 'inactive', 'hold'])
+    status: PropTypes.oneOf(['active', 'inactive', 'hold']),
+    tags: PropTypes.arrayOf(PropTypes.string)
   }),
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
