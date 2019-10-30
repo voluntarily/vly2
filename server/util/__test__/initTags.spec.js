@@ -18,7 +18,7 @@ test.after.always(async (t) => {
 })
 
 test.serial('Add tags to DB if needed', async t => {
-  t.plan(5)
+  t.plan(4)
   const p1 = {
     name: 'Testy McTestFace',
     nickname: 'Testy',
@@ -43,8 +43,6 @@ test.serial('Add tags to DB if needed', async t => {
   request2.body = p2
 
   const response = new MockResponse()
-  // response.sendStatus = (status) => { fakeSendStatus() }
-
   const next = sinon.fake()
 
   try {
@@ -54,14 +52,9 @@ test.serial('Add tags to DB if needed', async t => {
     t.is(next.callCount, 2)
 
     await Tag.find().then(tags => {
-      console.log('find', tags, tags[0])
-
       t.is(tags.length, 1)
-      console.log('got tags', tags[0].tags)
-      t.is(Array.from(tags[0].tags), ['taga', 'tagb', 'tagc'])
+      t.deepEqual(Array.from(tags[0].tags), ['taga', 'tagb', 'tagc'])
     })
-
-    t.is(response.statusCOde, 200)
   } catch (err) {
     console.error('api/people err', err, err.stack)
   }
