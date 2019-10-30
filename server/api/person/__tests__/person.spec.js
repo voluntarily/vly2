@@ -113,6 +113,14 @@ test.serial('add a person', async t => {
     role: ['tester'],
     tags: ['tag1', 'tag2', 'tag3']
   }
+
+  const res = await request(server)
+    .post('/api/people')
+    .send(p)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
   try {
     // anon user can add a new person
     const res = await request(server)
@@ -204,6 +212,7 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
     .post('/api/people')
     .send(p)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
 
   const savedPerson = await Person.findOne({ email: p.email }).exec()
