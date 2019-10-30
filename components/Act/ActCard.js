@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 // todo if image is not present then use a fallback.
 const ActCard = ({ act, onPress, ...props }) => {
-  const cardImage = act.imgUrl ? act.imgUrl : '../../static/missingimage.svg'
+  const cardImage = act.imgUrl ? act.imgUrl : '/static/missingimage.svg'
   return (
     <div>
       <Link href={`/acts/${act._id}`}>

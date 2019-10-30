@@ -18,7 +18,7 @@ services:
       - ./lib:/usr/src/app/lib
       - ./pages:/usr/src/app/pages
       - ./server:/usr/src/app/server
-      - ./static:/usr/src/app/static
+      - /static:/usr/src/app/static
       - ./.babelrc:/usr/src/app/.babelrc
       - ./next.config.js:/usr/src/app/next.config.js
       - ./nodemon.json:/usr/src/app/nodemon.json

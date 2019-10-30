@@ -30,7 +30,7 @@ class WomensRefuge extends React.Component {
       <>
         <script src='https://d3f5l8ze0o4j2m.cloudfront.net/m87/k33spt.js' />
         <a className='WomensRefuge-class' id='WomensRefuge-id'>
-          <ShieldSiteLogo src='../../static/womens_refuge.png' />
+          <ShieldSiteLogo src='.././static/womens_refuge.png' />
         </a>
       </>
     )

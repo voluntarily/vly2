@@ -38,7 +38,7 @@ test('op without an image should be displayed with default image', t => {
   const wrapper = shallowWithIntl(
     <OpCard op={{ ...op, imgUrl: undefined }} onPress={() => {}} />
   )
-  t.is(wrapper.find('img').prop('src'), '../../static/missingimage.svg')
+  t.is(wrapper.find('img').prop('src'), '.././static/missingimage.svg')
 })
 
 test('draft ops should display name with prefix DRAFT: ', t => {

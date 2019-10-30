@@ -83,7 +83,12 @@ const appReady = app.prepare().then(() => {
   // MongoDB
   mongoose.Promise = Promise
   if (process.env.NODE_ENV !== 'test') {
-    mongoose.connect(config.databaseUrl, { useNewUrlParser: true, useCreateIndex: true })
+    mongoose.connect(config.databaseUrl,
+      {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true
+      })
       .then(console.log('mongodb connected at:', config.databaseUrl))
     const db = mongoose.connection
     db.on('error', console.error.bind(console, 'connection error:'))

@@ -115,7 +115,7 @@ class OpListSection extends Component {
     if (this.props.opportunities.loading) {
       return (
         <section>
-          <Loading><p>Loading opportunities...</p></Loading>
+          <Loading />
         </section>)
     } else {
       return (

@@ -4,7 +4,6 @@
 import React from 'react'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
-import { Container } from 'next/app'
 import { withRouter } from 'next/router'
 import { FormattedMessage } from 'react-intl'
 import { FullPage, Spacer } from '../components/VTheme/VTheme'
@@ -80,13 +79,11 @@ class ErrorPage extends React.Component {
             <Spacer />
             <BugImage src='/static/img/bug.png' />
             <BugContainer>
-              <Container className='pt-5 text-center'>
-                <p>
+              <p>
                   An <strong>HTTP {this.props.errorCode}</strong> error occurred
                   while trying to access{' '}
-                  <strong>{this.props.router.asPath}</strong>
-                </p>
-              </Container>
+                <strong>{this.props.router.asPath}</strong>
+              </p>
             </BugContainer>
           </FullPage>
         )

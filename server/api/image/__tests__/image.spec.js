@@ -6,7 +6,7 @@ import fsExtra from 'fs-extra'
 
 test.after.always(() => {
   // clean out upload folder.
-  fsExtra.emptyDirSync('./static/upload-test')
+  fsExtra.emptyDirSync('/static/upload-test')
 })
 
 test.serial('can return image from static folder', async t => {

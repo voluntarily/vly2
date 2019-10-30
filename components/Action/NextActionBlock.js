@@ -22,13 +22,13 @@ const NextActionBlock = ({ ...props }) => (
     </SectionTitleWrapper>
     <Grid>
       <ActionCard
-        image='./static/img/actions/discoverActs.png'
+        image='/static/img/actions/discoverActs.png'
         name='Find someone to help'
         description='Teachers are asking for your help. There are many ways to get involved in your community'
         link='../search'
       />
       <ActionCard
-        image='./static/img/actions/tryTemplates.png'
+        image='/static/img/actions/tryTemplates.png'
         name='Contribute to the platform'
         description='Help mobilise more volunteers by contributing. All skill levels are welcome, and training is provided.'
         link='https://github.com/voluntarily/vly2'

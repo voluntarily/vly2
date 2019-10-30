@@ -1,7 +1,7 @@
 import React from 'react'
 
 class RichTextEditor extends React.Component {
-  componentWillMount () {
+  componentDidMount () {
     const isTest = process.env.NODE_ENV === 'test'
     if (document && !isTest) {
       this.quill = require('react-quill')
