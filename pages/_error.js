@@ -108,14 +108,12 @@ class ErrorPage extends React.Component {
                 defaultMessage='Sorry, there was a problem and we can not complete this task. We have let our team know so they can take a look and fix it. For now try to refresh the page, or go back to the previous page'
                 tagName='h2'
               />
-              <Container className='pt-5 text-center'>
-                <h4 className='display-4'>HTTP {this.props.errorCode} Error</h4>
-                <p>
+              <h4 className='display-4'>HTTP {this.props.errorCode} Error</h4>
+              <p>
                   An <strong>HTTP {this.props.errorCode}</strong> error occurred
                   while trying to access{' '}
-                  <strong>{this.props.router.asPath}</strong>
-                </p>
-              </Container>
+                <strong>{this.props.router.asPath}</strong>
+              </p>
               &nbsp;
             </div>
           </FullPage>

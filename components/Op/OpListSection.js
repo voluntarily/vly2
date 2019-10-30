@@ -62,6 +62,7 @@ class OpListSection extends Component {
       }
     }
   }
+
   sortOrder = (orderValue) => {
     const dataOp = this.props.opportunities.data
     if (orderValue === 'name') {
@@ -132,7 +133,7 @@ class OpListSection extends Component {
       return (
         <section>
           <OpList ops={opData} orderby={this.sortOrder(this.props.orderby)} />
-      </section>)
+        </section>)
     }
   }
 }

@@ -127,12 +127,14 @@ export class SearchPage extends Component {
     if (this.state.filter.date.length === 0) return 'Date'
     return formatDateBaseOn(this.state.datePickerType, this.state.filter.date)
   }
+
   sortHandler = (value) => {
     this.setState({
       opOrderBy: value
     })
     // console.log(`selected ${this.state.opOrderBy}`)
   }
+
   render () {
     const { search } = this.state
     const dateLabel = this.formateDateValue()
