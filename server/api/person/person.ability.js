@@ -30,7 +30,10 @@ const ruleBuilder = session => {
       PersonFields.ABOUT,
       PersonFields.ROLE,
       PersonFields.PRONOUN,
-      PersonFields.TAGS
+      PersonFields.TAGS,
+      PersonFields.FACEBOOK,
+      PersonFields.WEBSITE,
+      PersonFields.TWITTER
     ]
   }, {
     subject: SchemaName,
@@ -45,7 +48,10 @@ const ruleBuilder = session => {
       PersonFields.ROLE,
       PersonFields.ABOUT,
       PersonFields.PRONOUN,
-      PersonFields.TAGS
+      PersonFields.TAGS,
+      PersonFields.FACEBOOK,
+      PersonFields.WEBSITE,
+      PersonFields.TWITTER
     ]
   }, {
     subject: SchemaName,
