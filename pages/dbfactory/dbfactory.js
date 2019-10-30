@@ -9,14 +9,16 @@ export class DBfactory extends Component {
   constructor (props) {
     super(props)
     this.state = { people: 1, ops: 1 }
-    this.queryHandler = this.queryHandler.bind(this)
+    this.handleQuery = this.handleQuery.bind(this)
   }
-  queryHandler = (event) => {
+
+  handleQuery = (event) => {
     this.setState({
       [event.target.name]: event.target.value
     })
   }
-  apicallHandler = async () => {
+
+  handleApiCall = async () => {
     const URL = callApi(`db/initdb?people=${this.state.people}&ops=${this.state.ops}`)
       .then(res => {
         console.log(res)
@@ -26,6 +28,7 @@ export class DBfactory extends Component {
       .catch(err => console.log(err))
     return URL
   }
+
   render () {
     const divtextbox = {
       width: '200px',
@@ -51,13 +54,13 @@ export class DBfactory extends Component {
             <TitleSection title='Use the below fields to generate random people and opportunities data' />
             <div style={divtextbox}>
               <span className='ant-form-item-children'>People &nbsp;</span>
-              <input className='ant-input' type='text' name='people' onChange={this.queryHandler} value={this.state.people} /><br />
+              <input className='ant-input' type='text' name='people' onChange={this.handleQuery} value={this.state.people} /><br />
               <span className='ant-form-item-children'>Opportunity &nbsp;</span>
-              <input className='ant-input' type='text' name='ops' onChange={this.queryHandler} value={this.state.ops} /><br />
+              <input className='ant-input' type='text' name='ops' onChange={this.handleQuery} value={this.state.ops} /><br />
             &nbsp;
             </div>
             <div style={generatebutton}>
-              <Button className='ant-btn ant-btn-primary' onClick={this.apicallHandler}>Generate</Button>
+              <Button className='ant-btn ant-btn-primary' onClick={this.handleApiCall}>Generate</Button>
             </div>
 
           </div>

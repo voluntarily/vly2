@@ -66,7 +66,7 @@ test.serial('Should send correct data when queried against a _id', async t => {
 })
 
 test.serial('Should return 404 code when queried non existing interest', async t => {
-  const res = await request(server).get(`/api/interestsArchived/5cc8d60b8b16812b5b392123`)
+  const res = await request(server).get('/api/interestsArchived/5cc8d60b8b16812b5b392123')
   const expectedResponseStatus = 404
   t.is(res.status, expectedResponseStatus)
 })

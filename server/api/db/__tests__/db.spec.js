@@ -83,7 +83,7 @@ test.serial(' list entities', async t => {
 
 /* this currently generates a db exception */
 test.skip(' fixName entities', async t => {
-  let res = await request(server)
+  const res = await request(server)
     .get('/api/db/fixName?e=Person')
     .set('Accept', 'application/json')
     .expect(200)

@@ -58,7 +58,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
 
 test.serial('Should not find invalid _id', async t => {
   const res = await request(server)
-    .get(`/api/tags/123456781234567812345678`)
+    .get('/api/tags/123456781234567812345678')
     .set('Accept', 'application/json')
   t.is(res.status, 404)
 })

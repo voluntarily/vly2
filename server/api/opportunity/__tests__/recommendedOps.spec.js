@@ -148,7 +148,7 @@ test.serial('When I havent provided any skills, nothing should be recommended', 
 
 test.serial('Should return bad request when specified person does not exist in db', async t => {
   const res = await request(server)
-    .get(`/api/opportunities/recommended?me=999999999999999999999999`)
+    .get('/api/opportunities/recommended?me=999999999999999999999999')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
 

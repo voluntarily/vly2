@@ -46,14 +46,14 @@ test.serial('Anonymous users should receive 404 from GET by ID endpoint if draft
 
 test.serial('Anonymous users should receive 200 from GET all endpoint', async t => {
   const res = await request(server)
-    .get(`/api/opportunities`)
+    .get('/api/opportunities')
     .set('Accept', 'application/json')
   t.is(200, res.status)
 })
 
 test.serial('Anonymous users should only receive active ops from GET all endpoint', async t => {
   const res = await request(server)
-    .get(`/api/opportunities`)
+    .get('/api/opportunities')
     .set('Accept', 'application/json')
   t.is(res.body.filter(op => op.status !== OpportunityStatus.ACTIVE).length, 0)
 })

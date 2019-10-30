@@ -34,6 +34,7 @@ class PersonHomePage extends Component {
   state = {
     editProfile: false
   }
+
   constructor (props) {
     super(props)
     this.getArchivedOpportunitiesByStatus = this.getArchivedOpportunitiesByStatus.bind(
@@ -125,6 +126,7 @@ class PersonHomePage extends Component {
     }
     return role
   }
+
   render () {
     var shadowStyle = { overflow: 'visible' }
     if (this.props.members.sync && this.props.members.data.length > 0) {
@@ -232,7 +234,8 @@ class PersonHomePage extends Component {
                 </H3Black>
               </SectionTitleWrapper>
               <OpRecommendations
-                recommendedOps={this.props.recommendedOps.data[0]} />
+                recommendedOps={this.props.recommendedOps.data[0]}
+              />
             </SectionWrapper>
 
           </TabPane>

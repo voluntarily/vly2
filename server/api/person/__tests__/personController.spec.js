@@ -48,7 +48,7 @@ test.serial('Should call send status function for null record ', async t => {
 })
 
 test.serial('Should call next middleware when record is found', async t => {
-  const personToQuery = await Person.find({ 'name': 'Andrew Watkins' })
+  const personToQuery = await Person.find({ name: 'Andrew Watkins' })
   const idToQuery = personToQuery[0]._id
 
   const fakeSendStatus = sinon.fake()
@@ -61,19 +61,19 @@ test.serial('Should call next middleware when record is found', async t => {
   const request = new MockExpressRequest()
   request.body = {
     _id: idToQuery,
-    'name': 'Andrew Watkins',
-    'nickname': 'avowkind',
-    'email': 'andrew@groat.nz',
-    'about': 'Voluntari.ly Product Lead',
-    'location': 'Auckland',
-    'gender': 'male',
-    'language': 'EN',
-    'role': [
+    name: 'Andrew Watkins',
+    nickname: 'avowkind',
+    email: 'andrew@groat.nz',
+    about: 'Voluntari.ly Product Lead',
+    location: 'Auckland',
+    gender: 'male',
+    language: 'EN',
+    role: [
       'admin'
     ],
-    'status': 'active',
-    'imgUrl': 'https://avatars2.githubusercontent.com/u/1596437?v=4',
-    'phone': '+64 027 7031007'
+    status: 'active',
+    imgUrl: 'https://avatars2.githubusercontent.com/u/1596437?v=4',
+    phone: '+64 027 7031007'
   }
   request.ability = ability
   request.crudify = {

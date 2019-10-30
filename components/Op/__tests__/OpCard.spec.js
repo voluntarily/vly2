@@ -57,7 +57,7 @@ test('Link on card should point to ops/<opportunity_id>', t => {
   const wrapper = mountWithIntl(
     <OpCard op={op} />
   )
-  let archivedOpLink = wrapper.find('Link').first().props().href
+  const archivedOpLink = wrapper.find('Link').first().props().href
   t.is((archivedOpLink), '/ops/' + op._id)
 })
 
@@ -66,7 +66,7 @@ test('Link on cards in history tab, points to archived Opportunities.', t => {
   const wrapper = mountWithIntl(
     <OpCard op={archivedOp} />
   )
-  let archivedOpLink = wrapper.find('Link').first().props().href
+  const archivedOpLink = wrapper.find('Link').first().props().href
   t.is((archivedOpLink), '/archivedops/' + archivedOp._id)
 })
 

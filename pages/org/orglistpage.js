@@ -28,12 +28,23 @@ class OrgListPage extends Component {
           <title>Voluntarily - Organisation List</title>
         </Helmet>
         <PageHeaderContainer>
-          <H3Black><FormattedMessage
-            defaultMessage='Organisations'
-            id='org.list.heading' /></H3Black>
-          <RequestButtonContainer> {isAdmin && <Button type='primary' size='large' shape='round'><Link href='/org/new'><a>
-            <FormattedMessage id='org.new' defaultMessage='New Organisation' description='Button to create a new organisation' />
-          </a></Link></Button>}</RequestButtonContainer><p>Check out organisations doing social good on the Voluntarily platform</p>
+          <H3Black>
+            <FormattedMessage
+              defaultMessage='Organisations'
+              id='org.list.heading'
+            />
+          </H3Black>
+          <RequestButtonContainer>
+            {isAdmin &&
+              <Button type='primary' size='large' shape='round'>
+                <Link href='/org/new'>
+                  <a>
+                    <FormattedMessage id='org.new' defaultMessage='New Organisation' description='Button to create a new organisation' />
+                  </a>
+                </Link>
+              </Button>}
+          </RequestButtonContainer>
+          <p>Check out organisations doing social good on the Voluntarily platform</p>
         </PageHeaderContainer>
         <Divider />
         <OrgList orgs={orgs} />

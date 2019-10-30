@@ -16,7 +16,7 @@ const opsWithOpenEndDate = [
     ...ops[0],
     date: [
       {
-        '$date': '2019-05-23T12:26:18.000Z'
+        $date: '2019-05-23T12:26:18.000Z'
       },
       null
     ]
@@ -26,7 +26,7 @@ const opsWithOpenEndDate = [
 const initStore = {
   opportunities: {
     loading: false,
-    data: [ ]
+    data: []
   }
 }
 const filterDateState = {
@@ -184,7 +184,7 @@ test.serial('test filter by date is called, no op is shown', async t => {
 test.serial('test filter by month is called. There is 1 OP shown', async t => {
   const realStore = makeStore(initStore)
   const monthFilterValue = {
-    date: [ ops[0].date[0] ] // Confusing but basically this will create an array of 1 element from the first element of the ops array
+    date: [ops[0].date[0]] // Confusing but basically this will create an array of 1 element from the first element of the ops array
   }
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))

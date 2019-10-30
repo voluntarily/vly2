@@ -19,7 +19,7 @@ test.before('Setup fixtures', (t) => {
   })
 
   // setup list of interests, i'm interested in first 5 ops
-  const interestStates = [ 'interested', 'invited', 'committed', 'declined', 'completed', 'cancelled' ]
+  const interestStates = ['interested', 'invited', 'committed', 'declined', 'completed', 'cancelled']
   const interests = ops.filter(op => op.requestor !== me._id).map((op, index) => {
     return ({
       _id: objectid().toString(),

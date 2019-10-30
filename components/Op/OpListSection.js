@@ -47,6 +47,7 @@ class OpListSection extends Component {
       return filteredData
     }
   }
+
   /**
    * This method use in organization detail page
    * to filter opportunities offered by specific organization
@@ -112,14 +113,15 @@ class OpListSection extends Component {
     const opDataFilteredByDate = this.applyDateFilter(this.props.filter)
     const opData = this.appltOrganizationFilter(opDataFilteredByDate, this.props.org)
     if (this.props.opportunities.loading) {
-      return (<section>
-        <Loading><p>Loading opportunities...</p></Loading>
-
-      </section>)
+      return (
+        <section>
+          <Loading><p>Loading opportunities...</p></Loading>
+        </section>)
     } else {
-      return (<section>
-        <OpList ops={opData} />
-      </section>)
+      return (
+        <section>
+          <OpList ops={opData} />
+        </section>)
     }
   }
 }

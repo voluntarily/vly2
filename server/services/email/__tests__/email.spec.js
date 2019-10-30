@@ -35,7 +35,6 @@ test('Should setup and send test email', async t => {
  SMTP_ID=<aws ses id>
  SMTP_PWD=<aws ses password>
  */
-// eslint-disable-next-line ava/no-skip-test
 test.skip('send test email via AWS SMTP', async t => {
   t.plan(3)
   const transport = await getTransportSES()

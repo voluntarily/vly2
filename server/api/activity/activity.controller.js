@@ -31,29 +31,29 @@ const getActivities = async (req, res) => {
       // case insensitive regex which will find tags matching any of the array values
       const tagSearchExpression = new RegExp(keywordArray.map(w => escapeRegex(w)).join('|'), 'i')
       // find tag ids to include in the activity search
-      const matchingTagIds = await Tag.find({ 'tag': tagSearchExpression }, '_id').exec()
+      const matchingTagIds = await Tag.find({ tag: tagSearchExpression }, '_id').exec()
       // find any organization matching search
-      const matchingOrgIds = await Organisation.find({ 'name': searchExpression }, '_id').exec()
+      const matchingOrgIds = await Organisation.find({ name: searchExpression }, '_id').exec()
 
       const searchParams = {
         $or: [
-          { 'name': searchExpression },
-          { 'subtitle': searchExpression },
-          { 'description': searchExpression }
+          { name: searchExpression },
+          { subtitle: searchExpression },
+          { description: searchExpression }
         ]
       }
 
       // mongoose isn't happy if we provide an empty array as an expression
       if (matchingTagIds.length > 0) {
         const tagIdExpression = {
-          $or: matchingTagIds.map(id => ({ 'tags': id }))
+          $or: matchingTagIds.map(id => ({ tags: id }))
         }
         searchParams.$or.push(tagIdExpression)
       }
 
       if (matchingOrgIds.length > 0) {
         const orgIdExpression = {
-          $or: matchingOrgIds.map(id => ({ 'offerOrg': id }))
+          $or: matchingOrgIds.map(id => ({ offerOrg: id }))
         }
         searchParams.$or.push(orgIdExpression)
       }

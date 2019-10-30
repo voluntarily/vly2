@@ -25,7 +25,8 @@ test.after.always(() => {
 test.serial('render tags', t => {
   const wrapper = mountWithIntl(
     <TagDisplay
-      tags={tags} />
+      tags={tags}
+    />
   )
 
   t.truthy(wrapper.html().includes(tags[0].tag) && wrapper.html().includes(tags[1].tag))

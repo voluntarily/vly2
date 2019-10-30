@@ -78,11 +78,13 @@ class MemberSection extends Component {
       orgAdminSection =
         <div>
           <SubSection>
-            <h2><FormattedMessage
-              id='memberSection.JoinersTitle'
-              defaultMessage='Organisation Joiners'
-              description='label for joiner table on org detail page'
-            /></h2>
+            <h2>
+              <FormattedMessage
+                id='memberSection.JoinersTitle'
+                defaultMessage='Organisation Joiners'
+                description='label for joiner table on org detail page'
+              />
+            </h2>
 
             <MemberTable
               members={joiners}
@@ -91,11 +93,13 @@ class MemberSection extends Component {
             />
           </SubSection>
           <SubSection>
-            <h2><FormattedMessage
-              id='memberSection.MembersTitle'
-              defaultMessage='Organisation Members'
-              description='label for member table on org detail page'
-            /></h2>
+            <h2>
+              <FormattedMessage
+                id='memberSection.MembersTitle'
+                defaultMessage='Organisation Members'
+                description='label for member table on org detail page'
+              />
+            </h2>
 
             <MemberTable
               members={members}
@@ -105,11 +109,13 @@ class MemberSection extends Component {
           </SubSection>
 
           <SubSection>
-            <h2><FormattedMessage
-              id='memberSection.followersTitle'
-              defaultMessage='Organisation Followers'
-              description='label for follower table on org detail page'
-            /></h2>
+            <h2>
+              <FormattedMessage
+                id='memberSection.followersTitle'
+                defaultMessage='Organisation Followers'
+                description='label for follower table on org detail page'
+              />
+            </h2>
 
             <MemberTable
               members={followers}
@@ -124,11 +130,13 @@ class MemberSection extends Component {
     if (joinerOrValidator(myMembership)) {
       joinerInfoSection =
         <section>
-          <h2><FormattedMessage
-            id='memberSection.joinerInfoSection'
-            defaultMessage='Information for new members'
-            description='label for follower table on org detail page'
-          /></h2>
+          <h2>
+            <FormattedMessage
+              id='memberSection.joinerInfoSection'
+              defaultMessage='Information for new members'
+              description='label for follower table on org detail page'
+            />
+          </h2>
           <Markdown children={org.info.joiners || ''} />
         </section>
     }
@@ -138,11 +146,13 @@ class MemberSection extends Component {
     if (memberOrOrgAdmin(myMembership)) {
       memberInfoSection =
         <section>
-          <h2><FormattedMessage
-            id='memberSection.memberInfoTitle'
-            defaultMessage='Information for members'
-            description='label for org info for members detail page'
-          /></h2>
+          <h2>
+            <FormattedMessage
+              id='memberSection.memberInfoTitle'
+              defaultMessage='Information for members'
+              description='label for org info for members detail page'
+            />
+          </h2>
           <Markdown children={org.info.members || ''} />
         </section>
     }
@@ -152,11 +162,13 @@ class MemberSection extends Component {
     if (follower(myMembership)) {
       followerInfoSection =
         <section>
-          <h2><FormattedMessage
-            id='memberSection.followerInfoTitle'
-            defaultMessage='Information for followers'
-            description='label for org info for followers detail page'
-          /></h2>
+          <h2>
+            <FormattedMessage
+              id='memberSection.followerInfoTitle'
+              defaultMessage='Information for followers'
+              description='label for org info for followers detail page'
+            />
+          </h2>
           <Markdown children={org.info.followers || ''} />
         </section>
     }
@@ -165,11 +177,13 @@ class MemberSection extends Component {
     if (nonMember(myMembership)) {
       nonMemberInfoSection =
         <section>
-          <h2><FormattedMessage
-            id='memberSection.notMember'
-            defaultMessage='About Joining'
-            description='message to non members on the org members tab'
-          /></h2>
+          <h2>
+            <FormattedMessage
+              id='memberSection.notMember'
+              defaultMessage='About Joining'
+              description='message to non members on the org members tab'
+            />
+          </h2>
           <Markdown children={org.info.outsiders || ''} />
         </section>
     }

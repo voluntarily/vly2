@@ -32,7 +32,7 @@ test.beforeEach('connect and add two activity entries', async (t) => {
     act.owner = t.context.people[index]._id
     act.offerOrg = t.context.orgs[index]._id
     // each act has two consecutive tags from the list
-    act.tags = [ t.context.tags[index]._id, t.context.tags[index + 1]._id ]
+    act.tags = [t.context.tags[index]._id, t.context.tags[index + 1]._id]
   })
 
   t.context.activities = await Activity.create(acts).catch((err) => console.error('Unable to create activities', err))
@@ -127,7 +127,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
 
 test.serial('Should not find invalid _id', async t => {
   const res = await request(server)
-    .get(`/api/activities/5ce8acae1fbf56001027b254`)
+    .get('/api/activities/5ce8acae1fbf56001027b254')
     .set('Accept', 'application/json')
   t.is(res.status, 404)
 })
@@ -287,7 +287,7 @@ test.serial('Should return any activities with matching tags or name/desc/subtit
   await activity.save()
 
   const res = await request(server)
-    .get(`/api/activities?search=java robots`)
+    .get('/api/activities?search=java robots')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)

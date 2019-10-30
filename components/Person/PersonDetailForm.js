@@ -25,14 +25,16 @@ function hasErrors (fieldsError) {
 class PersonDetailForm extends Component {
   constructor (props) {
     super(props)
-    this.setAbout = this.setAbout.bind(this)
+    this.handleChangeAbout = this.handleChangeAbout.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
   }
+
   componentDidMount () {
     // To disabled submit button at the beginning.
     this.props.form.validateFields()
   }
-  setAbout (value) {
+
+  handleChangeAbout (value) {
     this.props.form.setFieldsValue({ about: value })
   }
 
@@ -238,21 +240,21 @@ class PersonDetailForm extends Component {
                 </Row>
                 <Row>
                   <Col span='8'>
-                    <Form.Item layout='inline' style={{ width: '100%', marginRight: 0 }} >
+                    <Form.Item layout='inline' style={{ width: '100%', marginRight: 0 }}>
                       {getFieldDecorator('pronoun_subject', {
                         rules: []
                       })(<Input placeholder='they' />)}
                     </Form.Item>
                   </Col>
                   <Col span='8'>
-                    <Form.Item layout='inline' >
+                    <Form.Item layout='inline'>
                       {getFieldDecorator('pronoun_object', {
                         rules: []
                       })(<Input placeholder='them' />)}
                     </Form.Item>
                   </Col>
                   <Col span='8'>
-                    <Form.Item layout='inline' >
+                    <Form.Item layout='inline'>
                       {getFieldDecorator('pronoun_possessive', {
                         rules: []
                       })(<Input placeholder='theirs' />)}
@@ -288,7 +290,7 @@ class PersonDetailForm extends Component {
                       placeholder='You can use markdown here.'
                     />
                   ) : (
-                    <RichTextEditor onChange={this.setAbout} />
+                    <RichTextEditor onChange={this.handleChangeAbout} />
                   )
                 )}
               </Form.Item>

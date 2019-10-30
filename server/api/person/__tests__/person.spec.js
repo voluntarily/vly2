@@ -58,7 +58,7 @@ test.serial('Should send correct person when queried against an id', async t => 
     location: 'Waikato District',
     email: 'z.testy@voluntar.ly',
     phone: '027 444 5555',
-    pronoun: { 'subject': 'they', 'object': 'them', 'possesive': 'ȁǹy' },
+    pronoun: { subject: 'they', object: 'them', possesive: 'ȁǹy' },
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer'],
     status: 'active',
@@ -139,7 +139,7 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
     phone: "1234<img src=x onerror=alert('img') />ABCD", // should remove img
     email: 'bobby@omgtech.co.nz', // ok
     about: "console.log('hello world')", // ok
-    pronoun: { 'subject': 'they', 'object': 'them', 'possesive': 'ȁǹy' }, // ok
+    pronoun: { subject: 'they', object: 'them', possesive: 'ȁǹy' }, // ok
     role: ['tester'],
     tags: []
   }
@@ -240,7 +240,7 @@ test.serial('Should find no person', async t => {
   t.plan(1)
 
   const res = await request(server)
-    .get(`/api/person/by/email/not_a_real_email@voluntarily.nz`)
+    .get('/api/person/by/email/not_a_real_email@voluntarily.nz')
     .set('Accept', 'application/json')
     .expect(404)
   t.is(res.body.error, 'person not found')

@@ -11,7 +11,7 @@ class TestRedirect extends React.Component {
 
   async componentDidMount (props) {
     await this.wait(5000)
-    Router.push(`/`)
+    Router.push('/')
   }
 
   render = () => {

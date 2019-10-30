@@ -83,7 +83,8 @@ class RegisterInterestSection extends Component {
           <RegisterInterestItem
             interest={interest}
             onChangeStatus={this.handleChangeStatus.bind(this)}
-            onWithdraw={this.handleWithdraw.bind(this)} />
+            onWithdraw={this.handleWithdraw.bind(this)}
+          />
           {
             (interest.status === 'committed') &&
               (

@@ -29,7 +29,7 @@ const actMax = {
   location: 'Newmarket, Auckland',
   equipment: ['cats', 'lasers', 'buckets'],
   status: 'active',
-  tags: [ {
+  tags: [{
     tag: 'algorithms'
   },
   {

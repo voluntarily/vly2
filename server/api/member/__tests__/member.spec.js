@@ -122,7 +122,7 @@ test.serial('Should send correct data when queried against a _id', async t => {
 
 test.serial('Should return 404 code when queried non existing member', async t => {
   const res = await request(server)
-    .get(`/api/members/asodifklamd`)
+    .get('/api/members/asodifklamd')
     .set('Accept', 'application/json')
 
   // This test is not ready since the return status was 500 not 404

@@ -32,7 +32,7 @@ class ImageUpload extends Component {
 
   onUpload (fileIDs) {
     var file = this.uppy.getFile(fileIDs[0])
-    let FR = new window.FileReader()
+    const FR = new window.FileReader()
     var setImgUrl = this.props.setImgUrl
     FR.onloadend = e => {
       callApi('images', 'post', { image: e.currentTarget.result, file: file.name }).then(response => {
@@ -47,9 +47,9 @@ class ImageUpload extends Component {
 
   render () {
     const up = (process.env.NODE_ENV !== 'test') &&
-    <div onChange={this.onChange}>
-      <Dashboard uppy={this.uppy} inline height={200} proudlyDisplayPoweredByUppy={false} hideUploadButton />
-    </div>
+      <div onChange={this.handleChange}>
+        <Dashboard uppy={this.uppy} inline height={200} proudlyDisplayPoweredByUppy={false} hideUploadButton />
+      </div>
     return up
   }
 }

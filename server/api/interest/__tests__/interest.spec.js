@@ -118,7 +118,7 @@ test.serial('Should not find interests matching an op + wrong person', async t =
 
 test.serial('Should 404 on invalid op search', async t => {
   const res = await request(server)
-    .get(`/api/interests?op=rubbish`)
+    .get('/api/interests?op=rubbish')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
   t.is(res.status, 404)
@@ -136,7 +136,7 @@ test.serial('Should send correct data when queried against a _id', async t => {
 
 test.serial('Should return 404 code when queried non existing interest', async t => {
   const res = await request(server)
-    .get(`/api/interests/asodifklamd`)
+    .get('/api/interests/asodifklamd')
     .set('Accept', 'application/json')
 
   // This test is not ready since the return status was 500 not 404

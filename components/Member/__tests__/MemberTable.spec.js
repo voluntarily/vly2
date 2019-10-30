@@ -18,10 +18,11 @@ const MTF = {
 test('MemberTable renders followers properly', t => {
   const members = t.context.members.filter(m => m.status === MemberStatus.FOLLOWER)
   const handleMembershipChange = sinon.spy()
-  const wrapper = mountWithIntl(<MemberTable
-    members={members}
-    onMembershipChange={handleMembershipChange}
-  />)
+  const wrapper = mountWithIntl(
+    <MemberTable
+      members={members}
+      onMembershipChange={handleMembershipChange}
+    />)
 
   // Confirm table headers
   t.is(wrapper.find('th').at(1).text(), 'Name')
@@ -43,10 +44,11 @@ test('MemberTable renders followers properly', t => {
 test('MemberTable renders members properly', t => {
   const members = t.context.members.filter(m => m.status === MemberStatus.MEMBER)
   const handleMembershipChange = sinon.spy()
-  const wrapper = mountWithIntl(<MemberTable
-    members={members}
-    onMembershipChange={handleMembershipChange}
-  />)
+  const wrapper = mountWithIntl(
+    <MemberTable
+      members={members}
+      onMembershipChange={handleMembershipChange}
+    />)
 
   t.is(wrapper.find('tbody tr').length, members.length)
   // Confirm table data
@@ -66,10 +68,11 @@ test('row click handler pushes to profile page', t => {
 
   const handleMembershipChange = sinon.spy()
   const RoutedTable = withMockRoute(MemberTable, '/about')
-  const wrapper = mountWithIntl(<RoutedTable
-    members={members}
-    onMembershipChange={handleMembershipChange}
-  />, '/test')
+  const wrapper = mountWithIntl(
+    <RoutedTable
+      members={members}
+      onMembershipChange={handleMembershipChange}
+    />, '/test')
   const row1 = wrapper.find('tr').at(1)
   t.regex(row1.find('td').at(1).text(), /avowkind/)
   row1.find('.ant-avatar').first().simulate('click')
@@ -78,10 +81,11 @@ test('row click handler pushes to profile page', t => {
 test('expanded row render', t => {
   const members = t.context.members.filter(m => m.status === MemberStatus.FOLLOWER)
   const handleMembershipChange = sinon.spy()
-  const wrapper = mountWithIntl(<MemberTable
-    members={members}
-    onMembershipChange={handleMembershipChange}
-  />)
+  const wrapper = mountWithIntl(
+    <MemberTable
+      members={members}
+      onMembershipChange={handleMembershipChange}
+    />)
 
   const expander = wrapper.find('.ant-table-row-expand-icon').first()
   expander.simulate('click')

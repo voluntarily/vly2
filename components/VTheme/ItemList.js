@@ -64,19 +64,20 @@ export const ItemStatus = ({ status }) =>
 
 export const EquipmentList = ({ equipment }) =>
   equipment
-    ? <ItemListing>
+    ? (
+      <ItemListing>
       🔧&nbsp;
-      <strong>
-        <FormattedMessage
-          id='itemlist.equipment'
-          defaultMessage='Equipment:'
-          description='Equipment label for acts and ops'
-        />
-      </strong>
-      <ul>
-        {equipment.map((item, index) => <li key={index}>{item}</li>)}
-      </ul>
-    </ItemListing>
+        <strong>
+          <FormattedMessage
+            id='itemlist.equipment'
+            defaultMessage='Equipment:'
+            description='Equipment label for acts and ops'
+          />
+        </strong>
+        <ul>
+          {equipment.map((item, index) => <li key={index}>{item}</li>)}
+        </ul>
+      </ItemListing>)
     : ''
 
 export const ItemIdLine = ({ item, path }) =>
@@ -99,17 +100,19 @@ export const ItemDate = ({ startDate, endDate }) =>
 
 export const ItemLocation = ({ location }) =>
   location
-    ? <ItemListing>
+    ? (
+      <ItemListing>
     🏫&nbsp;
-      <strong>
-        <FormattedMessage
-          id='itemlist.location'
-          defaultMessage='Location:'
-          description='Location label for acts and ops'
-        />
-      </strong>&nbsp;&nbsp;&nbsp;
-      {sanitize(location)}
-    </ItemListing>
+        <strong>
+          <FormattedMessage
+            id='itemlist.location'
+            defaultMessage='Location:'
+            description='Location label for acts and ops'
+          />
+        </strong>&nbsp;&nbsp;&nbsp;
+        {sanitize(location)}
+      </ItemListing>
+    )
     : ''
 
 export const ItemVolunteers = ({ volunteers }) => {
@@ -148,14 +151,16 @@ export const ItemVolunteers = ({ volunteers }) => {
 
 export const ItemSpace = ({ space }) =>
   space
-    ? <ItemListing>
-    🐘&nbsp;
-      <strong>
-        <FormattedMessage
-          id='act.detail.space'
-          defaultMessage='Space:'
-          description='label for space requirement'
-        />
-      </strong>&nbsp;&nbsp;&nbsp;{space}
-    </ItemListing>
+    ? (
+      <ItemListing>
+        🐘&nbsp;
+        <strong>
+          <FormattedMessage
+            id='act.detail.space'
+            defaultMessage='Space:'
+            description='label for space requirement'
+          />
+        </strong>&nbsp;&nbsp;&nbsp;{space}
+      </ItemListing>
+    )
     : ''

@@ -16,6 +16,10 @@ export default class OpEditPage extends React.Component {
     message.success('Saved.')
   }
 
+  handleCancel () {
+    this.props.stopEditing()
+  }
+
   render () {
     return (
       <FullPage>
@@ -23,7 +27,7 @@ export default class OpEditPage extends React.Component {
           op={this.props.op}
           me={this.props.me}
           onSubmit={this.handleSubmit.bind(this, this.props.op)}
-          onCancel={this.props.stopEditing}
+          onCancel={this.handleCancel.bind(this)}
           existingTags={this.props.existingTags}
           existingLocations={this.props.existingLocations}
         />

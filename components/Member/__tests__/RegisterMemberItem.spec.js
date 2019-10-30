@@ -16,10 +16,11 @@ test('initial state', t => {
     validation: '',
     status: MemberStatus.NONE
   }
-  const wrapper = mountWithIntl(<RegisterMemberItem
-    member={member}
-    onChangeStatus={changeStatus}
-  />)
+  const wrapper = mountWithIntl(
+    <RegisterMemberItem
+      member={member}
+      onChangeStatus={changeStatus}
+    />)
   t.is(wrapper.find('button').first().text(), 'Follow')
   t.is(wrapper.find('button').at(1).text(), 'Join')
 

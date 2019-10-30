@@ -8,7 +8,7 @@ test('verify that plain input is translated EN', t => {
   const wrapper = mountWithIntl(
     <IntlDemo />
   )
-
+  console.log(wrapper.find('span').first().html())
   t.is(wrapper.find('span').first().prop('children'), 'Replace in translation with Hello World!')
   t.is(wrapper.find('span').at(1).prop('children'), '1,000')
 })

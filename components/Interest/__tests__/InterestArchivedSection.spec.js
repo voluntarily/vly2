@@ -62,7 +62,7 @@ const markAndrewAsAbsent = {
 const initStore = {
   interests: {
     loading: false,
-    data: [ ]
+    data: []
   }
 }
 
