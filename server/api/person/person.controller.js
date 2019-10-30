@@ -17,7 +17,8 @@ function getPersonBy (req, res, next) {
     if (!got) { // person does not exist
       return res.status(404).send({ error: 'person not found' })
     }
-    res.json(got)
+    req.crudify = { result: got }
+    return next()
   })
 }
 
@@ -35,7 +36,8 @@ function listPeople (req, res, next) {
 
     Person.find(query, select).sort(sort)
       .then(got => {
-        req.crudify = { result: got }
+        const dbRecord = normalizeDBRecordObject(got)
+        req.crudify = { result: dbRecord }
         return next()
       })
   } catch (e) {
@@ -57,6 +59,20 @@ async function updatePersonDetail (req, res, next) {
   }
   req.crudify.result = req.body
   next()
+}
+
+/**
+ * Why use this? Well, using the Get method for api/people endpoint with a query param
+ * will return an array in the db record which is fine. But the middleware job is only remove fields 
+ * After removing field the response return will still be in an array of 1 element which is not what the front end 
+ * expects. It expects the same record which is a json object only. The function bellow is used to convert array of object with 1 function
+ * into an object
+ */
+function normalizeDBRecordObject (dbRecord) {
+  if(dbRecord.length === 1) {
+    return dbRecord[0]
+  }
+  return dbRecord
 }
 
 function ensureSanitized (req, res, next) {
