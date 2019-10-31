@@ -79,7 +79,7 @@ export default [
     subtitle: 'Launching into space',
     imgUrl: 'https://images.sunlive.co.nz/images/170705-st-marys-school-rockets1.jpg',
     description: 'Project to build a simple rocket that will reach 100m',
-    duration: '2 hours',
+    duration: '',
     location: 'Hamilton',
     // this has no requestor
     offerOrg: orgActionWhizzyFelt,
@@ -93,7 +93,7 @@ export default [
     subtitle: 'Travelling up',
     imgUrl: 'https://images.sunlive.co.nz/images/170705-st-marys-school-rockets1.jpg',
     description: 'Attempting to go where no man has gone before',
-    duration: '2 days',
+    duration: '',
     location: 'Auckland',
     requestor,
     // this one has no offerOrg
