@@ -63,16 +63,20 @@ class OpListSection extends Component {
   }
   sortOrder = (orderValue) => {
     const dataOp = this.props.opportunities.data
-    try {
-      if (orderValue === 'name') {
-        return (dataOp.sort((a, b) => a.name.localeCompare(b.name)))
-      } else if (orderValue === 'date') {
-        return (dataOp.sort((a, b) => new Date(a.date[0]).getDate() - new Date(b.date[0]).getDate()))
-      } else if (orderValue === 'commitment') {
-        return (dataOp.sort((a, b) => a.duration.localeCompare(b.duration)))
-      }
-    } catch (err) {
-      console.log('Undefined value', err)
+    if (orderValue === 'name') {
+      return (dataOp.sort((a, b) => a.name.localeCompare(b.name)))
+    } else if (orderValue === 'date') {
+      return (dataOp.sort((a, b) => new Date(a.date[0]).getDate() - new Date(b.date[0]).getDate()))
+    } else if (orderValue === 'commitment') {
+      // console.log(dataOp.sort((a, b) => b.duration ? a.duration.localeCompare(b.duration) : ''))
+      // return (dataOp.sort((a, b) => b.duration ? a.duration.localeCompare(b.duration) : ''))
+      dataOp.sort((a, b) => {
+        if (a.duration !== '') {
+          return (a.duration.localeCompare(b.duration))
+        } else {
+          return ''
+        }
+      })
     }
     // TODO: [VP-698] Location based sorting for the opportunities
   }
