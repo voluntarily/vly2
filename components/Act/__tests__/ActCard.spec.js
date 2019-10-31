@@ -45,7 +45,7 @@ test('shallow the card with no pic', t => {
   )
   t.is((wrapper.find('Link').first().props().href), '/acts/' + act._id)
   t.is(wrapper.find('h1').text(), `${act.name}`)
-  t.is(wrapper.find('img').prop('src'), '../../static/missingimage.svg')
+  t.is(wrapper.find('img').prop('src'), '/static/missingimage.svg')
   t.is(wrapper.find('figcaption').find('p').first().text(), '')
   t.is(wrapper.find('figcaption').find('p').last().text(), `${act.subtitle}`)
 })

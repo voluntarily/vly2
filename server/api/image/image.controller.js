@@ -11,10 +11,10 @@ const uploadImage = async (req, res) => {
     const uniqueID = cuid()
     slug.defaults.mode = 'rfc3986'
     const uploadUrl = `/static/upload${(process.env.NODE_ENV === 'test') ? '-test' : ''}`
-    const uploadPath = `.${uploadUrl}`
+    const uploadPath = `./public${uploadUrl}`
     !fs.existsSync(uploadPath) && fs.mkdirSync(uploadPath)
     const filename = `${uploadUrl}/${uniqueID}-${slug(req.body.file)}`
-    const fqp = `.${filename}`
+    const fqp = `./public${filename}`
     const result = {
       status: 200,
       message: 'OK',
