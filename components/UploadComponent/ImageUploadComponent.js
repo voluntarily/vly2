@@ -31,9 +31,9 @@ class ImageUpload extends Component {
   }
 
   onUpload (fileIDs) {
-    var file = this.uppy.getFile(fileIDs[0])
+    const file = this.uppy.getFile(fileIDs[0])
     const FR = new window.FileReader()
-    var setImgUrl = this.props.setImgUrl
+    const setImgUrl = this.props.setImgUrl
     FR.onloadend = e => {
       callApi('images', 'post', { image: e.currentTarget.result, file: file.name }).then(response => {
         setImgUrl(response.imageUrl)

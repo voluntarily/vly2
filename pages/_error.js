@@ -39,7 +39,7 @@ class ErrorPage extends React.Component {
   }
 
   render () {
-    var response
+    let response
 
     switch (this.props.errorCode) {
       case 200: // Also display a 404 if someone requests /_error explicitly

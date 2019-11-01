@@ -11,7 +11,7 @@ class RichTextEditor extends React.Component {
   render () {
     const isTest = process.env.NODE_ENV === 'test'
 
-    var toolbarOptions = [
+    const toolbarOptions = [
       ['bold', 'italic', 'underline', 'strike'], // toggled buttons
       ['blockquote', 'code-block'],
       [{ list: 'ordered' }, { list: 'bullet' }],

@@ -39,7 +39,7 @@ class ActDetailForm extends Component {
     }
 
     this.setImgUrl = this.setImgUrl.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    // this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount () {
