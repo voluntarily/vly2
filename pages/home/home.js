@@ -99,23 +99,18 @@ class PersonHomePage extends Component {
     this.setState({ editProfile: false })
   }
 
-  async handleUpdate (person) {
-    if (!person) return
-    // Actual data request
-    let res = {}
-
+  handleUpdate = async () => {
+    const person = this.props.me
     const role = this.sortRoleByPower(person)
     const personData = { ...person, role }
-    res = await this.props.dispatch(
+    await this.props.dispatch(
       reduxApi.actions.people.put(
         { id: personData._id },
         { body: JSON.stringify(personData) }
       )
     )
-
-    person = res[0]
     message.success('Saved.')
-    // go  to details page
+    // go to details page
     this.setState({ editProfile: false })
   }
 
@@ -262,7 +257,7 @@ class PersonHomePage extends Component {
                   person={this.props.me}
                   existingTags={this.props.tags.data}
                   locations={this.props.locations.data[0].locations}
-                  onSubmit={this.handleUpdate.bind(this, this.props.me)}
+                  onSubmit={this.handleUpdate}
                   onCancel={this.handleCancel}
                 />
               ) : (

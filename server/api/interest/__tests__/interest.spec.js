@@ -136,7 +136,8 @@ test.serial('Should send correct data when queried against a _id', async t => {
 
 test.serial('Should return 404 code when queried non existing interest', async t => {
   const res = await request(server)
-    .get('/api/interests/asodifklamd')
+  // use a valid objectid but one that is not an interest record
+    .get('/api/interests/5cc8d60b8b16812b5babcdef')
     .set('Accept', 'application/json')
 
   // This test is not ready since the return status was 500 not 404
