@@ -140,8 +140,7 @@ test.serial('Should return 404 code when queried non existing interest', async t
     .get('/api/interests/5cc8d60b8b16812b5babcdef')
     .set('Accept', 'application/json')
 
-  // This test is not ready since the return status was 500 not 404
-  const expectedResponseStatus = 500
+  const expectedResponseStatus = 404
   t.is(res.status, expectedResponseStatus)
 })
 
