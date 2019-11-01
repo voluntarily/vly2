@@ -21,10 +21,10 @@ test.before('Setup fixtures', (t) => {
   // setup list of opportunities, I am owner for the first one
   ops.map((op, index) => {
     op._id = objectid().toString()
-    op.requestor = people[index]
+    op.requestor = people[index]._id
   })
   // take ownership of 2nd event and set to done
-  archivedOpportunities[1].requestor = me
+  archivedOpportunities[1].requestor = me._id
   archivedOpportunities[1].status = 'completed'
 
   // setup list of interests, i'm interested in first 5 ops
@@ -120,10 +120,10 @@ test.serial('render volunteer home page - Active tab', t => {
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
     </Provider>)
-  t.is(wrapper.find('h1').first().text(), t.context.me.nickname + "'s Requests")
-  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Upcoming requests')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Active Requests')
-  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 2)
+  t.is(wrapper.find('h3').first().text(), t.context.me.nickname + "'s Requests")
+  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h3').first().text(), 'Getting Started')
+  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 7)
 })
 
 test.serial('render volunteer home page - History tab', t => {
@@ -136,8 +136,8 @@ test.serial('render volunteer home page - History tab', t => {
       <PersonHomePageTest {...props} />
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(1).simulate('click')
-  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Past requests')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Completed Requests')
+  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'History')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h3').first().text(), 'Completed Requests')
   t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 2)
 })
 
@@ -185,7 +185,7 @@ test.serial('retrieve completed archived opportunities', async t => {
   t.is(res[1], archivedOpportunities[1])
 })
 
-test.only('ensure oprecommendations is passed recommended ops retrieved from server', async t => {
+test.serial('ensure oprecommendations is passed recommended ops retrieved from server', async t => {
   const props = {
     me: t.context.me
   }
