@@ -37,7 +37,7 @@ test.before('Setup fixtures', (t) => {
   }
 })
 
-test.serial('Send acknowledgeInterest email to person', async t => {
+test.skip('Send acknowledgeInterest email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
@@ -50,7 +50,7 @@ test.serial('Send acknowledgeInterest email to person', async t => {
   t.regex(info.response, /250.*/, info.response)
   t.regex(info.originalMessage.subject, /Confirming your interest/)
 })
-
+// TODO: [VP-748] replace all the send tests with render tests and only check send once as this is veryslow
 test.serial('render acknowledgeInterest email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
@@ -64,7 +64,7 @@ test.serial('render acknowledgeInterest email to person', async t => {
   t.truthy(getByText(document, `Kia ora ${t.context.to.nickname},`))
 })
 
-test.serial('Send invited email to person', async t => {
+test.skip('Send invited email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
@@ -78,7 +78,7 @@ test.serial('Send invited email to person', async t => {
   t.regex(info.originalMessage.subject, /You're invited to/)
 })
 
-test.serial('Send committed email to person', async t => {
+test.skip('Send committed email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
@@ -92,7 +92,7 @@ test.serial('Send committed email to person', async t => {
   t.regex(info.originalMessage.subject, /just committed to/)
 })
 
-test.serial('Send declined email to volunteer', async t => {
+test.skip('Send declined email to volunteer', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
@@ -106,7 +106,7 @@ test.serial('Send declined email to volunteer', async t => {
   t.regex(info.originalMessage.subject, /update on/)
 })
 
-test.serial('Send person interested email to requestor', async t => {
+test.skip('Send person interested email to requestor', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
