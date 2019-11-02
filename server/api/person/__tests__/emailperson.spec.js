@@ -51,7 +51,7 @@ test.skip('Send acknowledgeInterest email to person', async t => {
   t.regex(info.originalMessage.subject, /Confirming your interest/)
 })
 // TODO: [VP-748] replace all the send tests with render tests and only check send once as this is veryslow
-test.serial('render acknowledgeInterest email to person', async t => {
+test.skip('render acknowledgeInterest email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
