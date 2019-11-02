@@ -6,11 +6,11 @@ test('Check transport is right transport', async t => {
   const t1 = await getTransportSES()
   t.is(t1.options.host, 'email-smtp.us-west-2.amazonaws.com')
 
-  // const t2 = await getTransportTest()
-  // t.is(t2.options.host, 'smtp.ethereal.email')
+  const t2 = await getTransportTest()
+  t.is(t2.options.host, 'smtp.ethereal.email')
 
-  // const t3 = await getTransport()
-  // t.is(t3.options.host, 'smtp.ethereal.email')
+  const t3 = await getTransport()
+  t.is(t3.options.host, 'smtp.ethereal.email')
 })
 
 test.skip('Should setup and send test email', async t => {
