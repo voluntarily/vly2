@@ -61,6 +61,23 @@ class OpListSection extends Component {
       }
     }
   }
+  sortOrder = (orderValue) => {
+    const dataOp = this.props.opportunities.data
+    if (orderValue === 'name') {
+      return (dataOp.sort((a, b) => a.name.localeCompare(b.name)))
+    } else if (orderValue === 'date') {
+      return (dataOp.sort((a, b) => new Date(a.date[0]).getDate() - new Date(b.date[0]).getDate()))
+    } else if (orderValue === 'commitment') {
+      dataOp.sort((a, b) => {
+        if (a.duration !== '') {
+          return (a.duration.localeCompare(b.duration))
+        } else {
+          return ''
+        }
+      })
+    }
+    // TODO: [VP-698] Location based sorting for the opportunities
+  }
 
   isDateFilterBetween = (date, opDateArray) => {
     const { hasValue } = this
@@ -118,7 +135,7 @@ class OpListSection extends Component {
       </section>)
     } else {
       return (<section>
-        <OpList ops={opData} />
+        <OpList ops={opData} orderby={this.sortOrder(this.props.orderby)} />
       </section>)
     }
   }
