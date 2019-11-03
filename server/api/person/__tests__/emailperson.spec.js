@@ -5,10 +5,11 @@ import orgs from '../../organisation/__tests__/organisation.fixture'
 import people from './person.fixture'
 import objectid from 'objectid'
 import { config } from '../../../../config/config'
+import nodemailerMock from 'nodemailer-mock'
 import { JSDOM } from 'jsdom'
 import { getByText } from '@testing-library/dom'
 
-test.before('Setup fixtures', (t) => {
+test.before(t => {
   // not using mongo or server here so faking ids
   people.map(p => {
     p._id = objectid().toString()
@@ -37,25 +38,32 @@ test.before('Setup fixtures', (t) => {
   }
 })
 
-test.skip('Send acknowledgeInterest email to person', async t => {
+test.afterEach(t => {
+  // Reset the mock back to the defaults after each test
+  nodemailerMock.mock.reset()
+})
+
+test('Send acknowledgeInterest email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
     op: t.context.op
   }
   const info = await emailPerson('acknowledgeInterest', t.context.to, props)
-  // these pass if send is enabled
-  t.true(info.accepted[0] === t.context.to.email)
-  t.true(info.rejected.length === 0)
-  t.regex(info.response, /250.*/, info.response)
-  t.regex(info.originalMessage.subject, /Confirming your interest/)
+  t.true(info.accepted[0] === 'accepted')
+
+  const sentMail = nodemailerMock.mock.getSentMail()
+  t.is(sentMail.length, 1)
+  t.truthy(sentMail[0].text.includes('On behalf of Andrew Watkins and the Voluntarily team'))
+  t.regex(sentMail[0].subject, /Confirming your interest/)
 })
-// TODO: [VP-748] replace all the send tests with render tests and only check send once as this is veryslow
-test.skip('render acknowledgeInterest email to person', async t => {
+
+test('render acknowledgeInterest email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
-    op: t.context.op
+    op: t.context.op,
+    renderonly: true
   }
   const html = await emailPerson('acknowledgeInterest', t.context.to, props, true)
   const document = (new JSDOM(html)).window.document
@@ -64,49 +72,51 @@ test.skip('render acknowledgeInterest email to person', async t => {
   t.truthy(getByText(document, `Kia ora ${t.context.to.nickname},`))
 })
 
-test.skip('Send invited email to person', async t => {
+test('Send invited email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
     op: t.context.op
   }
   const info = await emailPerson('invited', t.context.to, props)
-  // these pass if send is enabled
-  t.true(info.accepted[0] === t.context.to.email)
-  t.true(info.rejected.length === 0)
-  t.regex(info.response, /250.*/, info.response)
-  t.regex(info.originalMessage.subject, /You're invited to/)
+  t.true(info.accepted[0] === 'accepted')
+
+  const sentMail = nodemailerMock.mock.getSentMail()
+  t.is(sentMail.length, 1)
+  t.truthy(sentMail[0].text.includes('Click on the Opportunity link below to accept the invitation'))
+  t.regex(sentMail[0].subject, /You're invited to 1 Mentor a year 12 business Impact Project/)
 })
 
-test.skip('Send committed email to person', async t => {
+test('Send committed email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
     op: t.context.op
   }
   const info = await emailPerson('committed', t.context.to, props)
-  // these pass if send is enabled
-  t.true(info.accepted[0] === t.context.to.email)
-  t.true(info.rejected.length === 0)
-  t.regex(info.response, /250.*/, info.response)
-  t.regex(info.originalMessage.subject, /just committed to/)
+  t.true(info.accepted[0] === 'accepted')
+
+  const sentMail = nodemailerMock.mock.getSentMail()
+  t.is(sentMail.length, 1)
+  t.truthy(sentMail[0].text.includes('Andrew Watkins just committed to your opportunity'))
+  t.regex(sentMail[0].subject, /Andrew Watkins just committed to 1 Mentor a year 12 business Impact Project/)
 })
 
-test.skip('Send declined email to volunteer', async t => {
+test('Send declined email to volunteer', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
     op: t.context.op
   }
   const info = await emailPerson('declined', t.context.to, props)
-  // these pass if send is enabled
-  t.true(info.accepted[0] === t.context.to.email)
-  t.true(info.rejected.length === 0)
-  t.regex(info.response, /250.*/, info.response)
-  t.regex(info.originalMessage.subject, /update on/)
+  t.true(info.accepted[0] === 'accepted')
+  const sentMail = nodemailerMock.mock.getSentMail()
+  t.is(sentMail.length, 1)
+  t.truthy(sentMail[0].text.includes('Right now we have all the people we need for 1 Mentor a year 12 business'))
+  t.regex(sentMail[0].subject, /update on 1 Mentor a year 12 business Impact Project/)
 })
 
-test.skip('Send person interested email to requestor', async t => {
+test('Send person interested email to requestor', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
@@ -114,9 +124,9 @@ test.skip('Send person interested email to requestor', async t => {
     comment: 'All your base belong to us'
   }
   const info = await emailPerson('interested', t.context.to, props)
-  // these pass if send is enabled
-  t.true(info.accepted[0] === t.context.to.email)
-  t.true(info.rejected.length === 0)
-  t.regex(info.response, /250.*/, info.response)
-  t.regex(info.originalMessage.subject, /is interested in/)
+  t.true(info.accepted[0] === 'accepted')
+  const sentMail = nodemailerMock.mock.getSentMail()
+  t.is(sentMail.length, 1)
+  t.truthy(sentMail[0].text.includes('Andrew Watkins just expressed interest in your opportunity'))
+  t.regex(sentMail[0].subject, /Andrew Watkins is interested in 1 Mentor/)
 })
