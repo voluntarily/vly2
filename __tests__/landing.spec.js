@@ -1,8 +1,8 @@
-import React from 'react'
 import test from 'ava'
 import { LandingTest } from '../pages/landing/landing'
 import { mountWithIntl } from '../lib/react-intl-test-helper'
 import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import objectid from 'objectid'
 import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
@@ -48,7 +48,7 @@ test.before('Setup fixtures', (t) => {
     me: {}
   }
 
-  t.context.mockStore = configureStore()(
+  t.context.mockStore = configureStore([thunk])(
     {
       session: t.context.sessionAnon,
       opportunities: {

@@ -16,7 +16,7 @@ import Loading from '../../components/Loading'
 import DatePickerType from './DatePickerType.constant'
 
 class OpListSection extends Component {
-  async loadData (search, location, query) {
+  loadData (search, location, query) {
     // Get all Ops
     try {
       const filters = {}
@@ -30,7 +30,7 @@ class OpListSection extends Component {
       if (query) {
         filters.q = query
       }
-      return await this.props.dispatch(reduxApi.actions.opportunities.get(filters))
+      return this.props.dispatch(reduxApi.actions.opportunities.get(filters))
     } catch (err) {
       console.error('error in getting ops', err)
     }

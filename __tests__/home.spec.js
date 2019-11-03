@@ -1,4 +1,3 @@
-import React from 'react'
 import test from 'ava'
 import { PersonHomePageTest } from '../pages/home/home'
 import { mountWithIntl } from '../lib/react-intl-test-helper'
