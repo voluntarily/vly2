@@ -149,7 +149,7 @@
       "server/**/*.js"
     ],
     "failFast": false,
-    "timeout": "5m",
+    "timeout": "2m",
     "babel": {
       "testOptions": {
         "plugins": [
@@ -169,7 +169,8 @@
       "pages/**/*.js",
       "components/**/*.js",
       "server/**/*.js",
-      "lib/**/*.js"
+      "lib/**/*.js",
+      "hocs/**/*.js"
     ],
     "exclude": [
       "**/*.spec.js",

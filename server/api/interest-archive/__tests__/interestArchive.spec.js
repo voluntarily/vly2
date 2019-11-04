@@ -10,9 +10,9 @@ import people from '../../person/__tests__/person.fixture'
 import archivedOps from '../../archivedOpportunity/__tests__/archivedOpportunity.fixture.js'
 
 test.before('before connect to database', async (t) => {
-  await appReady
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  await appReady
 })
 
 test.after.always(async (t) => {

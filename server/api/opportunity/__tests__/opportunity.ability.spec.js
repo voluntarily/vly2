@@ -11,9 +11,9 @@ import ops from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
 
 test.before('before connect to database', async (t) => {
-  await appReady
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  await appReady
 })
 
 test.beforeEach('connect and add two oppo entries', async (t) => {

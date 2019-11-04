@@ -7,9 +7,9 @@ import people from '../../../api/person/__tests__/person.fixture'
 import { jwtData, DEFAULT_SESSION } from './setSession.fixture'
 
 test.before('before connect to database', async (t) => {
-  await appReady
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  await appReady
 })
 
 test.after.always(async (t) => {

@@ -11,9 +11,9 @@ import Organisation from '../../organisation/organisation'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 
 test.before('before connect to database', async (t) => {
-  await appReady
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  await appReady
 
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.me = t.context.people[0] // I am the first person.

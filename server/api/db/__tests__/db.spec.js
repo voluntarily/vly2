@@ -14,9 +14,9 @@ import people from '../../person/__tests__/person.fixture'
 import acts from '../../activity/__tests__/activity.fixture'
 
 test.before('Setup fixtures and database', async (t) => {
-  await appReady
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  await appReady
 
   const orrgs = await Organisation.create(orgs).catch(() => 'Unable to create orgs')
   people.forEach(p => {
