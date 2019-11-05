@@ -343,7 +343,7 @@ test.serial('Mongoose validation should failed for empty string', async (t) => {
     .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 500)
   t.assert(res.body.errors != null, 'Assert there is an error in the request')
-  t.is(res.body.message,'Activity validation failed: imgUrl: Path `imgUrl` is required.')
+  t.is(res.body.message, 'Activity validation failed: imgUrl: Path `imgUrl` is required.')
   t.is(res.body.name, 'ValidationError')
 })
 
