@@ -21,7 +21,7 @@ const badgeData = [{
 
 test('PersonBadge renders properly', async t => {
   const mockServer = mockFetch.sandbox()
-  mockServer.get(`begin:${APP_URL}/api/badge`, { body: [ ...badgeData ] })
+  mockServer.get(`begin:${APP_URL}/api/badge`, { body: [...badgeData] })
   const person = {
     _id: 'taskldjfh0'
   }

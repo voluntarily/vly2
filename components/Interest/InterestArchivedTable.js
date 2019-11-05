@@ -18,7 +18,7 @@ class InterestArchivedTable extends Component {
     this.props.onAbsent(interest)
   }
 
-  onChange = (pagination, filters, sorter) => {
+  handleTableChange = (pagination, filters, sorter) => {
     this.setState({
       filteredInfo: filters,
       sortedInfo: sorter
@@ -30,7 +30,8 @@ class InterestArchivedTable extends Component {
     sortedInfo = sortedInfo || {}
     filteredInfo = filteredInfo || {}
     const columns = [
-      { title: 'Name',
+      {
+        title: 'Name',
         key: 'name',
         sorter: (a, b) => a.person.nickname.length - b.person.nickname.length,
         sortOrder: sortedInfo.columnKey === 'imgUrl' && sortedInfo.order,
@@ -80,18 +81,24 @@ class InterestArchivedTable extends Component {
           const options = getEnabledButtons(record)
           return (
             <div>
-              {options.attendedButtonEnabled && <span>
-                <Button type='danger' shape='round' onClick={this.handlePresentButtonClicked.bind(this, record)}>
-                  <FormattedMessage id='markPresent' defaultMessage='Attended'
-                    description='Button allowing event organizer to mark the volunteer as attended' />
-                </Button>
-              </span> }
-              {options.notAttendedButtonEnabled && <span>
-                <Button type='danger' shape='round' onClick={this.handleAbsentButtonClicked.bind(this, record)}>
-                  <FormattedMessage id='markAbsent' defaultMessage='Not Attended'
-                    description='Button allowing event organizer to mark the volunteer as not attended' />
-                </Button>
-              </span>}
+              {options.attendedButtonEnabled &&
+                <span>
+                  <Button type='danger' shape='round' onClick={this.handlePresentButtonClicked.bind(this, record)}>
+                    <FormattedMessage
+                      id='markPresent' defaultMessage='Attended'
+                      description='Button allowing event organizer to mark the volunteer as attended'
+                    />
+                  </Button>
+                </span>}
+              {options.notAttendedButtonEnabled &&
+                <span>
+                  <Button type='danger' shape='round' onClick={this.handleAbsentButtonClicked.bind(this, record)}>
+                    <FormattedMessage
+                      id='markAbsent' defaultMessage='Not Attended'
+                      description='Button allowing event organizer to mark the volunteer as not attended'
+                    />
+                  </Button>
+                </span>}
             </div>
           )
         }
@@ -103,7 +110,7 @@ class InterestArchivedTable extends Component {
         dataSource={this.props.interests}
         rowKey='_id'
         pagination={false}
-        onChange={this.onChange}
+        onChange={this.handleTableChange}
       />
     )
   }

@@ -17,8 +17,10 @@ module.exports = function (server) {
       selectFields: '-__v', // Hide '__v' property
       endResponseInAction: false,
       beforeActions: [
-        { middlewares: [ authorizeActions(SchemaName), ensureSanitized ]
-        }, {
+        {
+          middlewares: [authorizeActions(SchemaName), ensureSanitized]
+        },
+        {
           middlewares: [initializeTags],
           only: ['create', 'update']
         }],
@@ -28,7 +30,7 @@ module.exports = function (server) {
         update: updatePersonDetail
       },
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
-      afterActions: [{ middlewares: [ removeUnauthorizedFields(Person), helpers.formatResponse ] }]
+      afterActions: [{ middlewares: [removeUnauthorizedFields(Person), helpers.formatResponse] }]
     })
   )
 

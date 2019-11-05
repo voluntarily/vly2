@@ -9,7 +9,7 @@ import Link from 'next/link'
 // todo if image is not present then use a fallback.
 const AwesomeCard = ({ op, onPress, ...props }) => (
   <div>
-    <Link href={`#`}>
+    <Link href='#'>
       <div className='requestContainer'>
         <img className='requestImg' />
         <p className='requestTitle'>We want to build robot doggos</p>
@@ -82,7 +82,8 @@ const AwesomeCard = ({ op, onPress, ...props }) => (
           height: 12rem;
         }
       }
-    `}</style>
+    `}
+    </style>
   </div>
 )
 

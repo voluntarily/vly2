@@ -18,10 +18,10 @@ const op = {
   location: 'Newmarket, Auckland',
   date: [
     {
-      '$date': '2019-06-16T05:57:01.000Z'
+      $date: '2019-06-16T05:57:01.000Z'
     },
     {
-      '$date': '2019-06-23T05:57:01.000Z'
+      $date: '2019-06-23T05:57:01.000Z'
     }
   ],
   status: 'draft',
@@ -68,7 +68,8 @@ test('shallow the detail with op', t => {
       onSubmit={() => {}}
       onCancel={() => {}}
       existingLocations={sortedLocations}
-      existingTags={[]} />
+      existingTags={[]}
+    />
   )
   t.is(wrapper.find('OpDetailForm').length, 1)
 })
@@ -84,7 +85,8 @@ test('render the detail with op', t => {
       onSubmit={submitOp}
       onCancel={cancelOp}
       existingLocations={sortedLocations}
-      existingTags={[]} />
+      existingTags={[]}
+    />
   )
   t.is(wrapper.find('OpDetailForm').length, 1)
   t.is(wrapper.find('button').length, 3)
@@ -111,7 +113,8 @@ test('render the detail with new blank op', t => {
       onSubmit={submitOp}
       onCancel={cancelOp}
       existingLocations={sortedLocations}
-      existingTags={[]} />
+      existingTags={[]}
+    />
   )
   t.log(wrapper.first())
   const datePicker = wrapper.find('.ant-calendar-picker')

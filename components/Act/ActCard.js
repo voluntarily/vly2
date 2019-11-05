@@ -9,7 +9,7 @@ import { Card } from '../VTheme/VTheme'
 // todo if image is not present then use a fallback.
 const ActCard = ({ act, onPress, ...props }) => {
   const draft = act.status === 'draft' ? 'DRAFT: ' : ''
-  const cardImage = act.imgUrl ? act.imgUrl : '../../static/missingimage.svg'
+  const cardImage = act.imgUrl ? act.imgUrl : '/static/missingimage.svg'
   const duration = act.duration ? `⏱ ${act.duration}` : ''
   return (
     <Card>

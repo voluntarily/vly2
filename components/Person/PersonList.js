@@ -7,10 +7,9 @@ import { Grid8 } from '../VTheme/VTheme'
 
 const PersonList = ({ people, ...props }) => (
   <Grid8>
-    { people
+    {people
       ? people.map((person, index) => <PersonCard person={person} key={index} />)
-      : 'No Matching People'
-    }
+      : 'No Matching People'}
   </Grid8>
 )
 

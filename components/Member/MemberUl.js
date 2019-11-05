@@ -11,18 +11,20 @@ import { MemberStatus } from '../../server/api/member/member.constants'
   expects members list to be filtered by status - Follower or Member
 */
 const OrgLi = ({ org, status }) =>
-  <Link href={`/orgs/${org._id}`}><a>
-    <li>
-      <Avatar
-        size='small'
-        shape='square'
-        src={org.imgUrl}
-        icon='team'
-      />&nbsp;&nbsp;
-      {org.name}&nbsp;
-      {status === MemberStatus.ORGADMIN && <Icon type='solution' />}
-    </li>
-  </a></Link>
+  <Link href={`/orgs/${org._id}`}>
+    <a>
+      <li>
+        <Avatar
+          size='small'
+          shape='square'
+          src={org.imgUrl}
+          icon='team'
+        />&nbsp;&nbsp;
+        {org.name}&nbsp;
+        {status === MemberStatus.ORGADMIN && <Icon type='solution' />}
+      </li>
+    </a>
+  </Link>
 
 const UnbulletedUl = styled.ul`
   list-style: none;

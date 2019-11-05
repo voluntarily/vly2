@@ -16,7 +16,7 @@ import Loading from '../../components/Loading'
 import DatePickerType from './DatePickerType.constant'
 
 class OpListSection extends Component {
-  async loadData (search, location, query) {
+  loadData (search, location, query) {
     // Get all Ops
     try {
       const filters = {}
@@ -30,7 +30,7 @@ class OpListSection extends Component {
       if (query) {
         filters.q = query
       }
-      return await this.props.dispatch(reduxApi.actions.opportunities.get(filters))
+      return this.props.dispatch(reduxApi.actions.opportunities.get(filters))
     } catch (err) {
       console.error('error in getting ops', err)
     }
@@ -47,6 +47,7 @@ class OpListSection extends Component {
       return filteredData
     }
   }
+
   /**
    * This method use in organization detail page
    * to filter opportunities offered by specific organization
@@ -61,6 +62,7 @@ class OpListSection extends Component {
       }
     }
   }
+
   sortOrder = (orderValue) => {
     const dataOp = this.props.opportunities.data
     if (orderValue === 'name') {
@@ -129,14 +131,15 @@ class OpListSection extends Component {
     const opDataFilteredByDate = this.applyDateFilter(this.props.filter)
     const opData = this.appltOrganizationFilter(opDataFilteredByDate, this.props.org)
     if (this.props.opportunities.loading) {
-      return (<section>
-        <Loading><p>Loading opportunities...</p></Loading>
-
-      </section>)
+      return (
+        <section>
+          <Loading />
+        </section>)
     } else {
-      return (<section>
-        <OpList ops={opData} orderby={this.sortOrder(this.props.orderby)} />
-      </section>)
+      return (
+        <section>
+          <OpList ops={opData} orderby={this.sortOrder(this.props.orderby)} />
+        </section>)
     }
   }
 }

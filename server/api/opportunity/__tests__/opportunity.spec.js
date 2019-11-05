@@ -19,9 +19,9 @@ import InterestArchive from '../../interest-archive/interestArchive'
 const { regions } = require('../../location/locationData')
 
 test.before('before connect to database', async (t) => {
-  await appReady
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  await appReady
 })
 
 test.after.always(async (t) => {
@@ -143,7 +143,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
 
 test.serial('Should not find invalid _id', async t => {
   const res = await request(server)
-    .get(`/api/opportunities/5ce8acae1fbf56001027b254`)
+    .get('/api/opportunities/5ce8acae1fbf56001027b254')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 404)
@@ -374,7 +374,7 @@ test.serial('Should return any opportunities with matching tags or name/desc/sub
   await opp.save()
 
   const res = await request(server)
-    .get(`/api/opportunities?search=java robots`)
+    .get('/api/opportunities?search=java robots')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)

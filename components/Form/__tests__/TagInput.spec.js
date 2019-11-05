@@ -67,7 +67,7 @@ test('render the op with a few pre-existing tags, and add a tag fully, to re-ren
   wrapperInstance.handleSearch(inputTag)
   t.is(wrapperInstance.state.inputvalue, inputTag)
 
-  wrapperInstance.optionSelected(inputTag)
+  wrapperInstance.handleSelect(inputTag)
   t.is(wrapperInstance.state.inputvalue, '')
 
   t.true(mockOnChange.calledOnce)
@@ -88,7 +88,7 @@ test('render the op with a few pre-existing tags, and remove a tag from them', t
   wrapperInstance.removeTag('network')
 
   t.true(mockOnChange.calledOnce)
-  t.true(mockOnChange.calledWith([ { tag: firstTag } ]))
+  t.true(mockOnChange.calledWith([{ tag: firstTag }]))
 })
 
 test('render when input value doesnt match any existing tags', t => {

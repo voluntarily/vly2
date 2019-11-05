@@ -231,7 +231,7 @@ export class Teacher extends Component {
             </HalfGrid>
           </HeroContainer>
           <SectionContainer>
-            <AboutImage src='./static/test2.png' />
+            <AboutImage src='/static/test2.png' />
             <H3Bold>
               Enable your staff to become role models for future innovators.
             </H3Bold>
@@ -344,7 +344,7 @@ export class Teacher extends Component {
           <TitleSection title='Features' />
           <TripleGrid>
             <ItemContainer>
-              <ItemIcon src='./static/img/icons/search.svg' />
+              <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>Volunteering Management</PBold>
               <P>
                 V provides you and your staff with an easy way to find schools
@@ -352,7 +352,7 @@ export class Teacher extends Component {
               </P>
             </ItemContainer>
             <ItemContainer>
-              <ItemIcon src='./static/img/icons/search.svg' />
+              <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>Impact reporting</PBold>
               <P>
                 V measures the impact your actions have on New Zealand. See how
@@ -360,7 +360,7 @@ export class Teacher extends Component {
               </P>
             </ItemContainer>
             <ItemContainer>
-              <ItemIcon src='./static/img/icons/search.svg' />
+              <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>HR system integration</PBold>
               <P>
                 V supports single sign on, so you don't have to remember extra
@@ -368,7 +368,7 @@ export class Teacher extends Component {
               </P>
             </ItemContainer>
             <ItemContainer>
-              <ItemIcon src='./static/img/icons/search.svg' />
+              <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>Automated police vetting</PBold>
               <P>
                 V provides you and your staff with an easy way to find schools
@@ -376,7 +376,7 @@ export class Teacher extends Component {
               </P>
             </ItemContainer>
             <ItemContainer>
-              <ItemIcon src='./static/img/icons/search.svg' />
+              <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>Cause Targeting</PBold>
               <P>
                 Our systems enable you to target specific causes you want to
@@ -384,7 +384,7 @@ export class Teacher extends Component {
               </P>
             </ItemContainer>
             <ItemContainer>
-              <ItemIcon src='./static/img/icons/search.svg' />
+              <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>Integration</PBold>
               <P>
                 V supports single sign on, so you don't have to remember extra

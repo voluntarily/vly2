@@ -78,11 +78,12 @@ test('initial state', t => {
   const changeStatus = sinon.fake()
   const withdraw = sinon.fake()
 
-  const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[0]}
-    onChangeStatus={changeStatus}
-    onWithdraw={withdraw}
-  />)
+  const wrapper = mountWithIntl(
+    <RegisterInterestItem
+      interest={interests[0]}
+      onChangeStatus={changeStatus}
+      onWithdraw={withdraw}
+    />)
   t.is(wrapper.find('button').text(), "I'm Interested")
 
   // click button and get form
@@ -114,11 +115,12 @@ test('interested state', t => {
   const changeStatus = sinon.fake()
   const withdraw = sinon.fake()
 
-  const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[1]}
-    onChangeStatus={changeStatus}
-    onWithdraw={withdraw}
-  />)
+  const wrapper = mountWithIntl(
+    <RegisterInterestItem
+      interest={interests[1]}
+      onChangeStatus={changeStatus}
+      onWithdraw={withdraw}
+    />)
   t.is(wrapper.find('button').first().text(), 'Withdraw Interest')
   wrapper.find('button').first().simulate('click')
 })
@@ -127,11 +129,12 @@ test('completed state', t => {
   const changeStatus = sinon.fake()
   const withdraw = sinon.fake()
 
-  const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[1]}
-    onChangeStatus={changeStatus}
-    onWithdraw={withdraw}
-  />)
+  const wrapper = mountWithIntl(
+    <RegisterInterestItem
+      interest={interests[1]}
+      onChangeStatus={changeStatus}
+      onWithdraw={withdraw}
+    />)
   t.is(wrapper.find('h1').first().text(), 'Thank you for expressing your interest!')
 })
 
@@ -139,11 +142,12 @@ test('cancelled state', t => {
   const changeStatus = sinon.fake()
   const withdraw = sinon.fake()
 
-  const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[4]}
-    onChangeStatus={changeStatus}
-    onWithdraw={withdraw}
-  />)
+  const wrapper = mountWithIntl(
+    <RegisterInterestItem
+      interest={interests[4]}
+      onChangeStatus={changeStatus}
+      onWithdraw={withdraw}
+    />)
   // testing the words that come out
   t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
 })
@@ -152,11 +156,12 @@ test('invited', t => {
   const changeStatus = sinon.fake()
   const withdraw = sinon.fake()
 
-  const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[4]}
-    onChangeStatus={changeStatus}
-    onWithdraw={withdraw}
-  />)
+  const wrapper = mountWithIntl(
+    <RegisterInterestItem
+      interest={interests[4]}
+      onChangeStatus={changeStatus}
+      onWithdraw={withdraw}
+    />)
   t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
 })
 
@@ -164,11 +169,12 @@ test('committed', t => {
   const changeStatus = sinon.fake()
   const withdraw = sinon.fake()
 
-  const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[2]}
-    onChangeStatus={changeStatus}
-    onWithdraw={withdraw}
-  />)
+  const wrapper = mountWithIntl(
+    <RegisterInterestItem
+      interest={interests[2]}
+      onChangeStatus={changeStatus}
+      onWithdraw={withdraw}
+    />)
   t.is(wrapper.find('h1').first().text(), 'You\'ve been invited to participate!')
 })
 
@@ -176,11 +182,12 @@ test('declined', t => {
   const changeStatus = sinon.fake()
   const withdraw = sinon.fake()
 
-  const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[5]}
-    onChangeStatus={changeStatus}
-    onWithdraw={withdraw}
-  />)
+  const wrapper = mountWithIntl(
+    <RegisterInterestItem
+      interest={interests[5]}
+      onChangeStatus={changeStatus}
+      onWithdraw={withdraw}
+    />)
   t.is(wrapper.find('h1').first().text(), 'Our apologies')
 })
 // TODO: popconfirm requires a valid event.

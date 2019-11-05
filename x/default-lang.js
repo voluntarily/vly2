@@ -8,7 +8,7 @@ const defaultMessages = glob
   .map(file => JSON.parse(file))
   .reduce((messages, descriptors) => {
     descriptors.forEach(({ id, defaultMessage }) => {
-      if (messages.hasOwnProperty(id)) {
+      if (Object.prototype.hasOwnProperty.call(messages, id)) {
         throw new Error(`Duplicate message id: ${id}`)
       }
       messages[id] = defaultMessage

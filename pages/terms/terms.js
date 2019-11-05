@@ -97,7 +97,8 @@ class Terms extends Component {
               margin: 0 3em;
             }
           }
-        `}</style>
+        `}
+        </style>
       </FullPage>
     )
   }

@@ -49,11 +49,13 @@ class InterestArchivedSection extends Component {
               id='interestArchiveSection.name'
               defaultMessage='Volunteers'
               description='label for interest table on op detail page'
-            /></h2>
+            />
+          </h2>
           <InterestArchivedTable
             interests={this.props.interestsArchived.data}
             onPresent={this.markAsPresent.bind(this)}
-            onAbsent={this.markAsAbsent.bind(this)} />
+            onAbsent={this.markAsAbsent.bind(this)}
+          />
         </section>
       )
     }

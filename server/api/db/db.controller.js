@@ -16,7 +16,7 @@ const optitle = ['A Quest for soldering irons',
   'Teaching student how to program']
 
 const forall = (model, action) => {
-  var cursor = model.find().cursor()
+  const cursor = model.find().cursor()
 
   // Execute the each command, triggers for each document
   cursor.eachAsync(item => {

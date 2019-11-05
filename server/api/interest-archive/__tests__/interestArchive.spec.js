@@ -10,9 +10,9 @@ import people from '../../person/__tests__/person.fixture'
 import archivedOps from '../../archivedOpportunity/__tests__/archivedOpportunity.fixture.js'
 
 test.before('before connect to database', async (t) => {
-  await appReady
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  await appReady
 })
 
 test.after.always(async (t) => {
@@ -66,7 +66,7 @@ test.serial('Should send correct data when queried against a _id', async t => {
 })
 
 test.serial('Should return 404 code when queried non existing interest', async t => {
-  const res = await request(server).get(`/api/interestsArchived/5cc8d60b8b16812b5b392123`)
+  const res = await request(server).get('/api/interestsArchived/5cc8d60b8b16812b5b392123')
   const expectedResponseStatus = 404
   t.is(res.status, expectedResponseStatus)
 })

@@ -17,25 +17,29 @@ class TagInput extends React.Component {
         children.unshift(<Option key={inputvalue}>{inputvalue}</Option>)
       }
 
-      return <div>
-        <AutoComplete placeholder='Search skills'
-          defaultActiveFirstOption // user must select from the dropdown
-          onSearch={this.handleSearch}
-          onSelect={this.optionSelected}
-          value={this.state.inputvalue}
-        >
-          {children}
-        </AutoComplete>
-        {this.props.value ? this.props.value.map(({ tag }) =>
-          <Tag closable
-            onClose={() => this.removeTag(tag)}
-            key={tag}
-          >{tag}</Tag>
-        ) : null}
-      </div>
+      return (
+        <>
+          <AutoComplete
+            placeholder='Search skills'
+            defaultActiveFirstOption // user must select from the dropdown
+            onSearch={this.handleSearch}
+            onSelect={this.handleSelect}
+            value={this.state.inputvalue}
+          >
+            {children}
+          </AutoComplete>
+          {this.props.value ? this.props.value.map(({ tag }) =>
+            <Tag
+              closable
+              onClose={() => this.removeTag(tag)}
+              key={tag}
+            >{tag}
+            </Tag>
+          ) : null}
+        </>)
     }
 
-    optionSelected = value => {
+    handleSelect = value => {
       const trimmedVal = value.trim().toLowerCase()
       if (trimmedVal && !this.props.value.find(({ tag }) => trimmedVal === tag)) {
         const existing = this.state.matchingTags.find(t => t.tag === trimmedVal)

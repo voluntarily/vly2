@@ -10,9 +10,13 @@ import people from '../../person/__tests__/person.fixture'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 
 test.before('before connect to database', async (t) => {
-  await appReady
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+  try {
+    t.context.memMongo = new MemoryMongo()
+    await t.context.memMongo.start()
+    await appReady
+  } catch (e) {
+    console.error('member.spec.js - error in test setup', e)
+  }
 
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create organisations: ${err}`)
@@ -122,7 +126,7 @@ test.serial('Should send correct data when queried against a _id', async t => {
 
 test.serial('Should return 404 code when queried non existing member', async t => {
   const res = await request(server)
-    .get(`/api/members/asodifklamd`)
+    .get('/api/members/asodifklamd')
     .set('Accept', 'application/json')
 
   // This test is not ready since the return status was 500 not 404

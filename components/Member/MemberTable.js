@@ -9,7 +9,8 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 
 class MemberTable extends Component {
   columns = [
-    { title: 'Name',
+    {
+      title: 'Name',
       key: 'imgUrl',
       render: (text, record) => {
         return (
@@ -42,12 +43,12 @@ class MemberTable extends Component {
             {options.map(btn => {
               return (
                 btn.buttonEnabled &&
-                <span key={btn.action}>
-                  <Button type='primary' shape='round' onClick={this.handleMembershipChange.bind(this, record, btn.action)}>
-                    {btn.label}
-                  </Button>
+                  <span key={btn.action}>
+                    <Button type='primary' shape='round' onClick={this.handleMembershipChange.bind(this, record, btn.action)}>
+                      {btn.label}
+                    </Button>
                   &nbsp;
-                </span>
+                  </span>
               )
             })}
           </div>
