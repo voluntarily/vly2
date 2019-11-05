@@ -11,23 +11,15 @@ import ops from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
 
 test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-  await appReady
-})
-
-test.beforeEach('connect and add two oppo entries', async (t) => {
-  // connect each oppo to a requestor.
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-  t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
-  ops.map((op, index) => { op.requestor = t.context.people[index]._id })
-  t.context.opportunities = await Opportunity.create(ops).catch((err) => console.error('Unable to create opportunities', err))
-})
-
-test.afterEach.always(async t => {
-  await Person.deleteMany()
-  await Tag.deleteMany()
-  await Opportunity.deleteMany()
+  try {
+    t.context.memMongo = new MemoryMongo()
+    await t.context.memMongo.start()
+    await appReady
+    t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+    t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
+    ops.map((op, index) => { op.requestor = t.context.people[index]._id })
+    t.context.opportunities = await Opportunity.create(ops).catch((err) => console.error('Unable to create opportunities', err))
+  } catch (e) { console.error('opportunity.ability.spec.js before error', e) }
 })
 
 test.serial('Anonymous users should receive 200 from GET by ID endpoint', async t => {
