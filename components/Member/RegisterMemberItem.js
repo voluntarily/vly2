@@ -108,32 +108,34 @@ class RegisterMemberItem extends Component {
     return (
       <Form>
         {/* Validation text area */}
-        {options.showValidation && <Row>
-          <Col
-            xs={{ span: 24 }}
-            md={{ span: 12 }}>
-            <Form.Item label='Enter your organisations validation code'>
-              {getFieldDecorator('validation', {
-                // rules: [
-                //   { required: true, message: 'Validation is required' }
-                // ]
-              })(
-                <Input />
-              )}
-            </Form.Item>
-          </Col>
-        </Row> }
+        {options.showValidation &&
+          <Row>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 12 }}
+            >
+              <Form.Item label='Enter your organisations validation code'>
+                {getFieldDecorator('validation', {
+                  // rules: [
+                  //   { required: true, message: 'Validation is required' }
+                  // ]
+                })(
+                  <Input />
+                )}
+              </Form.Item>
+            </Col>
+          </Row>}
 
         {/* Form buttons */}
         <Row>
           {options.btns.map((btn, index) => {
-            return (<span key={index} >
-              {btn.msg && <p>{btn.msg}</p>}
-              <Button type={btn.type} shape='round' onClick={this.handleMemberButton.bind(this, btn.action)}>
-                {btn.text}
-              </Button>
-
-            </span>)
+            return (
+              <span key={index}>
+                {btn.msg && <p>{btn.msg}</p>}
+                <Button type={btn.type} shape='round' onClick={this.handleMemberButton.bind(this, btn.action)}>
+                  {btn.text}
+                </Button>
+              </span>)
           })}
         </Row>
       </Form>

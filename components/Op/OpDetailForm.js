@@ -82,11 +82,11 @@ class OpDetailForm extends Component {
     })
   }
 
-  onEndDateChange = value => {
+  handleEndDateChange = value => {
     this.changeFormValue('endDateValue', value)
   }
 
-  onStartDateChange = value => {
+  handleStartDateChange = value => {
     this.changeFormValue('startDateValue', value)
   }
 
@@ -402,7 +402,7 @@ class OpDetailForm extends Component {
                         )
                       }}
                       format='DD-MM-YYYY HH:mm:ss'
-                      onChange={this.onStartDateChange}
+                      onChange={this.handleStartDateChange}
                       style={{ width: '100%' }}
                     />
                   )}
@@ -413,7 +413,7 @@ class OpDetailForm extends Component {
                       showTime
                       disabledDate={this.disabledEndDate}
                       format='DD-MM-YYYY HH:mm:ss'
-                      onChange={this.onEndDateChange}
+                      onChange={this.handleEndDateChange}
                       style={{ width: '100%' }}
                     />
                   )}

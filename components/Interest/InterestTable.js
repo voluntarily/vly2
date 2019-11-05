@@ -38,7 +38,7 @@ class InterestTable extends Component {
     }
   }
 
-  onChange = (pagination, filters, sorter) => {
+  handleTableChange = (pagination, filters, sorter) => {
     this.setState({
       filteredInfo: filters,
       sortedInfo: sorter
@@ -195,7 +195,7 @@ class InterestTable extends Component {
     ]
     const rowSelection = {
       // selectedRowKeys,
-      onChange: this.onSelectChange
+      handleTableChange: this.onSelectChange
       // getCheckboxProps: record => ({
       //   disabled: record.name === "Disabled User", // Column configuration not to be checked
       //   name: record.name
@@ -230,7 +230,7 @@ class InterestTable extends Component {
       </Menu>
     )
     return (
-      <React.Fragment>
+      <>
         <Dropdown overlay={menu}>
           <a className='ant-dropdown-link'>
             Group Actions <Icon type='down' />
@@ -241,10 +241,10 @@ class InterestTable extends Component {
           dataSource={this.props.interests}
           rowKey='_id'
           pagination={false}
-          onChange={this.onChange}
+          onChange={this.handleTableChange}
           rowSelection={rowSelection}
         />
-      </React.Fragment>
+      </>
     )
   }
 }

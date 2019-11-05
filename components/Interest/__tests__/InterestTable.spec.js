@@ -5,19 +5,20 @@ import sinon from 'sinon'
 import withMockRoute from '../../../server/util/mockRouter'
 
 test('InterestTable renders properly', t => {
-  const wrapper = mountWithIntl(<InterestTable
-    onInvite={() => {}}
-    onWithdrawInvite={() => {}}
-    onDecline={() => {}}
-    interests={[{
-      person: { nickname: 'Test Name' },
-      opportunity: 'Test Opportunity',
-      comment: 'Test Comment',
-      status: 'Test Status',
-      _id: '11223344'
-    }
-    ]}
-  />)
+  const wrapper = mountWithIntl(
+    <InterestTable
+      onInvite={() => {}}
+      onWithdrawInvite={() => {}}
+      onDecline={() => {}}
+      interests={[{
+        person: { nickname: 'Test Name' },
+        opportunity: 'Test Opportunity',
+        comment: 'Test Comment',
+        status: 'Test Status',
+        _id: '11223344'
+      }
+      ]}
+    />)
 
   // Confirm table headers
   // t.is(wrapper.find('th').at(0).text(), 'Selected')
@@ -33,18 +34,19 @@ test('InterestTable renders properly', t => {
 
 test('row click handler pushes to profile page', t => {
   const RoutedTable = withMockRoute(InterestTable, '/about')
-  const wrapper = mountWithIntl(<RoutedTable
-    onInvite={() => {}}
-    onWithdrawInvite={() => {}}
-    onDecline={() => {}}
-    interests={[{
-      person: { nickname: 'Test Name' },
-      opportunity: 'Test Opportunity',
-      comment: 'Test Comment',
-      status: 'Test Status',
-      _id: '11223344'
-    }]}
-  />, '/test')
+  const wrapper = mountWithIntl(
+    <RoutedTable
+      onInvite={() => {}}
+      onWithdrawInvite={() => {}}
+      onDecline={() => {}}
+      interests={[{
+        person: { nickname: 'Test Name' },
+        opportunity: 'Test Opportunity',
+        comment: 'Test Comment',
+        status: 'Test Status',
+        _id: '11223344'
+      }]}
+    />, '/test')
 
   wrapper.find('td').at(0).simulate('click')
   t.regex(wrapper.find('td').at(1).text(), /Test Name/)
@@ -55,11 +57,12 @@ test('Invite button click handler calls correct callback', t => {
   const onWithdrawInviteCallback = sinon.spy()
   const onDeclineCallback = sinon.spy()
 
-  const wrapper = shallowWithIntl(<InterestTable
-    onInvite={onInviteCallback}
-    onWithdrawInvite={onWithdrawInviteCallback}
-    onDecline={onDeclineCallback}
-  />)
+  const wrapper = shallowWithIntl(
+    <InterestTable
+      onInvite={onInviteCallback}
+      onWithdrawInvite={onWithdrawInviteCallback}
+      onDecline={onDeclineCallback}
+    />)
 
   // test default status
   wrapper.instance().handleInviteButtonClicked({})
@@ -74,11 +77,12 @@ test('Withdraw invite button click handler calls correct callback', t => {
   const onWithdrawInviteCallback = sinon.spy()
   const onDeclineCallback = sinon.spy()
 
-  const wrapper = shallowWithIntl(<InterestTable
-    onInvite={onInviteCallback}
-    onWithdrawInvite={onWithdrawInviteCallback}
-    onDecline={onDeclineCallback}
-  />)
+  const wrapper = shallowWithIntl(
+    <InterestTable
+      onInvite={onInviteCallback}
+      onWithdrawInvite={onWithdrawInviteCallback}
+      onDecline={onDeclineCallback}
+    />)
 
   // test default status
   wrapper.instance().handleWithdrawInviteButtonClicked({})
@@ -93,11 +97,12 @@ test('Decline invite button click handler calls correct callback', t => {
   const onWithdrawInviteCallback = sinon.spy()
   const onDeclineCallback = sinon.spy()
 
-  const wrapper = mountWithIntl(<InterestTable
-    onInvite={onInviteCallback}
-    onWithdrawInvite={onWithdrawInviteCallback}
-    onDecline={onDeclineCallback}
-  />)
+  const wrapper = mountWithIntl(
+    <InterestTable
+      onInvite={onInviteCallback}
+      onWithdrawInvite={onWithdrawInviteCallback}
+      onDecline={onDeclineCallback}
+    />)
 
   // test default status
   wrapper.instance().handleDeclineButtonClicked({})
@@ -108,53 +113,56 @@ test('Decline invite button click handler calls correct callback', t => {
 })
 
 test('InterestTable renders undeclined button ', t => {
-  const wrapper = mountWithIntl(<InterestTable
-    onInvite={() => {}}
-    onWithdrawInvite={() => {}}
-    onDecline={() => {}}
-    interests={[{
-      person: { nickname: 'Test Name' },
-      opportunity: 'Test Opportunity',
-      comment: 'Test Comment',
-      status: 'declined',
-      _id: '11223344'
-    }]}
-  />)
+  const wrapper = mountWithIntl(
+    <InterestTable
+      onInvite={() => {}}
+      onWithdrawInvite={() => {}}
+      onDecline={() => {}}
+      interests={[{
+        person: { nickname: 'Test Name' },
+        opportunity: 'Test Opportunity',
+        comment: 'Test Comment',
+        status: 'declined',
+        _id: '11223344'
+      }]}
+    />)
 
   // Confirm table data
   t.is(wrapper.find('button').last().text(), 'Undecline Invite')
 })
 
 test('InterestTable renders completed label ', t => {
-  const wrapper = mountWithIntl(<InterestTable
-    onInvite={() => {}}
-    onWithdrawInvite={() => {}}
-    onDecline={() => {}}
-    interests={[{
-      person: { nickname: 'Test Name' },
-      opportunity: 'Test Opportunity',
-      comment: 'Test Comment',
-      status: 'completed',
-      _id: '11223344'
-    }]}
-  />)
+  const wrapper = mountWithIntl(
+    <InterestTable
+      onInvite={() => {}}
+      onWithdrawInvite={() => {}}
+      onDecline={() => {}}
+      interests={[{
+        person: { nickname: 'Test Name' },
+        opportunity: 'Test Opportunity',
+        comment: 'Test Comment',
+        status: 'completed',
+        _id: '11223344'
+      }]}
+    />)
   // Confirm table data
   t.is(wrapper.find('td').at(3).text(), 'completed')
 })
 
 test('InterestTable renders invite button ', t => {
-  const wrapper = mountWithIntl(<InterestTable
-    onInvite={() => {}}
-    onWithdrawInvite={() => {}}
-    onDecline={() => {}}
-    interests={[{
-      person: { nickname: 'Test Name' },
-      opportunity: 'Test Opportunity',
-      comment: 'Test Comment',
-      status: 'interested',
-      _id: '11223344'
-    }]}
-  />)
+  const wrapper = mountWithIntl(
+    <InterestTable
+      onInvite={() => {}}
+      onWithdrawInvite={() => {}}
+      onDecline={() => {}}
+      interests={[{
+        person: { nickname: 'Test Name' },
+        opportunity: 'Test Opportunity',
+        comment: 'Test Comment',
+        status: 'interested',
+        _id: '11223344'
+      }]}
+    />)
 
   // Confirm table data
   t.is(wrapper.find('button').first().text(), 'Invite')

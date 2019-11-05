@@ -98,7 +98,7 @@ test.before('Setup fixtures', (t) => {
       sync: true,
       syncing: false,
       loading: false,
-      data: [ acts[0] ],
+      data: [acts[0]],
       request: null
     }
   }

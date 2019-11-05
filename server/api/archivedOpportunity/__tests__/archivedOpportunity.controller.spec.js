@@ -12,15 +12,19 @@ import request from 'supertest'
 import objectid from 'objectid'
 
 test.before('before connect to database', async (t) => {
-  await appReady
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+  try {
+    t.context.memMongo = new MemoryMongo()
+    await t.context.memMongo.start()
+    await appReady
 
-  // connect each oppo to a requestor.
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-  t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
-  archivedOps.map((op, index) => { op.requestor = t.context.people[index]._id })
-  t.context.opportunities = await ArchiveOpportunity.create(archivedOps).catch((err) => console.error('Unable to create opportunities', err))
+    // connect each oppo to a requestor.
+    t.context.people = await Person.create(people).catch((err) => console.error(`Unable to create people: ${err}`))
+    t.context.tags = await Tag.create(tags).catch((err) => console.error(`Unable to create tags: ${err}`))
+    archivedOps.map((op, index) => { op.requestor = t.context.people[index]._id })
+    t.context.opportunities = await ArchiveOpportunity.create(archivedOps).catch((err) => console.error('Unable to create opportunities', err))
+  } catch (e) {
+    console.error('archivedOpportunity.controller.spec before connect error', e)
+  }
 })
 
 test.after.always(async (t) => {

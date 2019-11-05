@@ -63,7 +63,7 @@ const declinedAndrew = {
 const initStore = {
   interests: {
     loading: false,
-    data: [ ]
+    data: []
   }
 }
 

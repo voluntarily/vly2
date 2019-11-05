@@ -20,7 +20,7 @@ export const orgOmgTech = {
     about: 'Awesome content providers'
   }
 }
-const noDate = [ ]
+const noDate = []
 const openDate = [
   '2019-05-23T12:26:18.000Z' // Fri, 24 May 2019 00:26:18 NZST
 ]
@@ -41,7 +41,7 @@ export default [
     status: 'active',
     requestor,
     offerOrg: orgActionWhizzyFelt,
-    tags: [ ],
+    tags: [],
     date: noDate
   },
   {
@@ -55,7 +55,7 @@ export default [
     status: 'active',
     requestor,
     offerOrg: orgOmgTech,
-    tags: [ ],
+    tags: [],
     date: openDate
   },
   {
@@ -70,7 +70,7 @@ export default [
     requestor,
     offerOrg: orgActionWhizzyFelt,
     interest: { status: 'interested' },
-    tags: [ ],
+    tags: [],
     date
   },
   {
@@ -79,12 +79,12 @@ export default [
     subtitle: 'Launching into space',
     imgUrl: 'https://images.sunlive.co.nz/images/170705-st-marys-school-rockets1.jpg',
     description: 'Project to build a simple rocket that will reach 100m',
-    duration: '2 hours',
+    duration: '',
     location: 'Hamilton',
     // this has no requestor
     offerOrg: orgActionWhizzyFelt,
     status: 'active',
-    tags: [ ],
+    tags: [],
     date
   },
   {
@@ -93,12 +93,12 @@ export default [
     subtitle: 'Travelling up',
     imgUrl: 'https://images.sunlive.co.nz/images/170705-st-marys-school-rockets1.jpg',
     description: 'Attempting to go where no man has gone before',
-    duration: '2 days',
+    duration: '',
     location: 'Auckland',
     requestor,
     // this one has no offerOrg
     status: 'active',
-    tags: [ ],
+    tags: [],
     date
   }
 ]

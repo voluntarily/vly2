@@ -20,7 +20,7 @@ const getMemberbyId = id => {
   api/members?me='personid' -> list all the orgs i'm membered in and populate the org out.
  */
 const listMembers = async (req, res) => {
-  let sort = 'status'
+  const sort = 'status'
   let got
   try {
     if (req.query.orgid) {

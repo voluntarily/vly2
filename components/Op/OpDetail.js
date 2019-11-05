@@ -20,7 +20,7 @@ export function OpDetail ({ op }) {
   const endDate = op.date[1]
     ? '  →  ' + moment(op.date[1]).format('h:mmA · ddd DD/MM/YYYY')
     : ' '
-  const img = op.imgUrl || '../../static/missingimage.svg'
+  const img = op.imgUrl || '.././static/missingimage.svg'
   return (
     <>
       <Head>

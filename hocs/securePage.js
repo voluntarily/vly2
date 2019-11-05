@@ -15,6 +15,7 @@ const securePageHoc = Page => class SecurePage extends React.Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool.isRequired
   }
+
   render () {
     if (this.props.isAuthenticated) {
       return <Page {...this.props} />

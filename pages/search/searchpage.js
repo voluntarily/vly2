@@ -15,7 +15,7 @@ import { FullPage, Spacer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
 import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
-
+import OpOrderby from '../../components/Op/OpOrderby'
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
 const { Item } = Menu
 
@@ -48,12 +48,14 @@ export class SearchPage extends Component {
     showDatePickerModal: false,
     filter: {
       date: []
-    }
+    },
+    opOrderBy: 'date'
   }
 
   constructor (props) {
     super(props)
     this.state.search = props.search
+    this.sortHandler = this.sortHandler.bind(this)
   }
 
   static getDerivedStateFromProps ({ search }) {
@@ -69,19 +71,19 @@ export class SearchPage extends Component {
     }
   }
 
-  openFilter = (filterName) => {
+  handleFilterOpened = (filterName) => {
     this.setState({ [filterVisibilityName(filterName)]: true })
   }
 
-  closeFilter = (filterName) => {
+  handleClose = (filterName) => {
     this.setState({ [filterVisibilityName(filterName)]: false })
   }
 
-  applyFilter = (filterName, value) => {
+  handleFilterApplied = (filterName, value) => {
     this.setState({ [filterValueName(filterName)]: value })
   }
 
-  removeFilter = (filterName) => {
+  handleFilterRemoved = (filterName) => {
     this.setState({ [filterValueName(filterName)]: null })
   }
 
@@ -126,6 +128,13 @@ export class SearchPage extends Component {
     return formatDateBaseOn(this.state.datePickerType, this.state.filter.date)
   }
 
+  sortHandler = (value) => {
+    this.setState({
+      opOrderBy: value
+    })
+    // console.log(`selected ${this.state.opOrderBy}`)
+  }
+
   render () {
     const { search } = this.state
     const dateLabel = this.formateDateValue()
@@ -157,7 +166,7 @@ export class SearchPage extends Component {
           onSearch={this.handleSearch}
           dateLabel={dateLabel}
           locations={existingLocations}
-          onFilterOpened={this.openFilter}
+          onFilterOpened={this.handleFilterOpened}
           filterNames={[DATE_FILTER_NAME, LOCATION_FILTER_NAME]}
         />
         <FullPage>
@@ -168,18 +177,20 @@ export class SearchPage extends Component {
             <TitleSection
               title={
                 <FormattedMessage
-                  defaultMessage={`Search results for "{search}"`}
+                  defaultMessage={'Search results for "{search}"'}
                   values={{ search }}
                   id='search.title'
                 />
               }
             />
+            <OpOrderby sortHandler={this.sortHandler} />
             <FilterContainer
-              onClose={this.closeFilter}
+              onClose={this.handleClose}
               filterName={LOCATION_FILTER_NAME}
-              onFilterApplied={this.applyFilter}
-              onFilterRemoved={this.removeFilter}
-              isShowing={this.state[filterVisibilityName(LOCATION_FILTER_NAME)]}>
+              onFilterApplied={this.handleFilterApplied}
+              onFilterRemoved={this.handleFilterRemoved}
+              isShowing={this.state[filterVisibilityName(LOCATION_FILTER_NAME)]}
+            >
               <LocationFilter locations={existingLocations} />
             </FilterContainer>
             {/* TODO: VP-445 modify date picker to use filter container (like with location). This will
@@ -190,13 +201,11 @@ export class SearchPage extends Component {
               onCancel={() =>
                 this.setState({
                   [filterVisibilityName(DATE_FILTER_NAME)]: false
-                })
-              }
+                })}
               onOk={() =>
                 this.setState({
                   [filterVisibilityName(DATE_FILTER_NAME)]: true
-                })
-              }
+                })}
             >
               <Dropdown overlay={DatePickerOption} placement='bottomCenter'>
                 <Button>
@@ -217,6 +226,7 @@ export class SearchPage extends Component {
               filter={this.state.filter}
               dateFilterType={this.state.datePickerType}
               location={this.state[filterValueName(LOCATION_FILTER_NAME)]}
+              orderby={this.state.opOrderBy}
             />
           </SearchPageContainer>
         </FullPage>

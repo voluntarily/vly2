@@ -50,14 +50,16 @@ class InterestSection extends Component {
               id='interestSection.name'
               defaultMessage='Interested Volunteers'
               description='label for interest table on op detail page'
-            /></h2>
+            />
+          </h2>
 
           <InterestTable
             checkboxEnabled
             interests={this.props.interests.data}
             onInvite={this.handleInvite.bind(this)}
             onWithdrawInvite={this.handleWithdrawInvite.bind(this)}
-            onDecline={this.handleDecline.bind(this)} />
+            onDecline={this.handleDecline.bind(this)}
+          />
         </section>
       )
     }

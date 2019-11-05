@@ -10,7 +10,7 @@ const getArchivedOpportunity = async (req, res) => {
     if (got == null) {
       throw Error()
     }
-    res.json(got)
+    return res.json(got)
   } catch (e) {
     res.status(404).send(e)
   }

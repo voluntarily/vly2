@@ -14,9 +14,9 @@ import tags from '../../tag/__tests__/tag.fixture'
 import acts from './activity.fixture.js'
 
 test.before('before connect to database', async (t) => {
-  await appReady
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  await appReady
 })
 
 test.after.always(async (t) => {
@@ -32,7 +32,7 @@ test.beforeEach('connect and add two activity entries', async (t) => {
     act.owner = t.context.people[index]._id
     act.offerOrg = t.context.orgs[index]._id
     // each act has two consecutive tags from the list
-    act.tags = [ t.context.tags[index]._id, t.context.tags[index + 1]._id ]
+    act.tags = [t.context.tags[index]._id, t.context.tags[index + 1]._id]
   })
 
   t.context.activities = await Activity.create(acts).catch((err) => console.error('Unable to create activities', err))
@@ -127,7 +127,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
 
 test.serial('Should not find invalid _id', async t => {
   const res = await request(server)
-    .get(`/api/activities/5ce8acae1fbf56001027b254`)
+    .get('/api/activities/5ce8acae1fbf56001027b254')
     .set('Accept', 'application/json')
   t.is(res.status, 404)
 })
@@ -171,7 +171,7 @@ test.serial('Should correctly add an activity with default image', async t => {
   t.is(savedActivity.subtitle, 'Launching into space step 3')
 
   // activity has been given the default image
-  t.is(savedActivity.imgUrl, '../../../static/img/activity/activity.png')
+  t.is(savedActivity.imgUrl, '../.././static/img/activity/activity.png')
 })
 
 test.serial('Should correctly delete an activity', async t => {
@@ -287,7 +287,7 @@ test.serial('Should return any activities with matching tags or name/desc/subtit
   await activity.save()
 
   const res = await request(server)
-    .get(`/api/activities?search=java robots`)
+    .get('/api/activities?search=java robots')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)

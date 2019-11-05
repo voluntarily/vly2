@@ -8,6 +8,7 @@ class SignIn extends React.Component {
   componentDidMount () {
     authorize({ redirectUrl: this.props.redirectUrl })
   }
+
   render () {
     return null
   }

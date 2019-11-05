@@ -10,7 +10,7 @@ import { HalfGrid, Spacer } from '../VTheme/VTheme'
 import { Left, Right, ItemContainer, ItemDescription, TagContainer, ItemVolunteers, ItemDuration, ItemStatus, ItemIdLine, ItemSpace, EquipmentList } from '../VTheme/ItemList'
 
 export function ActDetail ({ act }) {
-  const img = act.imgUrl || '../../static/missingimage.svg'
+  const img = act.imgUrl || '/static/missingimage.svg'
   return (
     <>
       <Head><title>{act.name}</title></Head>

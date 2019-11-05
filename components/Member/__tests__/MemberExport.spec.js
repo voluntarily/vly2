@@ -32,7 +32,7 @@ test('Click ExportMembers button', t => {
   const wrapper = mountWithIntl(<MemberExport />)
   t.true(wrapper.find('Button').exists())
 
-  let downloadButton = wrapper.find('Button').first()
+  const downloadButton = wrapper.find('Button').first()
   t.is(downloadButton.text(), 'Export Members')
   downloadButton.simulate('click')
 })

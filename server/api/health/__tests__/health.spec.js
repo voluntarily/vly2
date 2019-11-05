@@ -1,9 +1,15 @@
 import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
+import MemoryMongo from '../../../util/test-memory-mongo'
+
+test.before('before connect to database', async (t) => {
+  t.context.memMongo = new MemoryMongo()
+  await t.context.memMongo.start()
+  await appReady
+})
 
 test('Should respond to health check', async t => {
-  await appReady
   const res = await request(server)
     .get('/api/health')
     .set('Accept', 'application/json')
@@ -15,7 +21,6 @@ test('Should respond to health check', async t => {
 })
 
 test('Should respond to parameter check', async t => {
-  await appReady
   const res = await request(server)
     .get('/api/health/test1')
     .set('Accept', 'application/json')
@@ -28,7 +33,6 @@ test('Should respond to parameter check', async t => {
 })
 
 test('Should respond to query check', async t => {
-  await appReady
   const res = await request(server)
     .get('/api/health?a=1&b=["one","two","three"]')
     .set('Accept', 'application/json')

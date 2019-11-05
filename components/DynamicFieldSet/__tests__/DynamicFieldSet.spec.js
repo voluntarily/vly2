@@ -5,11 +5,11 @@ import { DynamicFieldSet } from '../DynamicFieldSet'
 
 const mockForm = (items) => {
   let _state = {
-    'test': items
+    test: items
   }
 
   return {
-    getFieldValue: () => _state['test'],
+    getFieldValue: () => _state.test,
     setFieldsValue: function (state) {
       _state = state
     },

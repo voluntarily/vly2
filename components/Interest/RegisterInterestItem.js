@@ -64,35 +64,40 @@ class RegisterInterestItem extends Component {
         <Form>
           {/* Headers */}
           {options.formAlwaysVisible || options.headerAlwaysVisible || this.state.isFormVisible
-            ? <Row>
-              <h1>{options.headingText}</h1>
-              <p>{options.subHeadingText}</p>
-            </Row> : null}
+            ? (
+              <Row>
+                <h1>{options.headingText}</h1>
+                <p>{options.subHeadingText}</p>
+              </Row>) : null}
 
           {/* Comment text area */}
           {options.formAlwaysVisible || this.state.isFormVisible
-            ? <Row>
-              <Col
-                xs={{ span: 24 }}
-                md={{ span: 12 }}>
-                <Form.Item label='Your message'>
-                  {getFieldDecorator('comment', {
-                    rules: [
-                      { required: true, message: 'Comment is required' }
-                    ]
-                  })(
-                    <TextArea
-                      readOnly={!options.commentsEditable}
-                      placeholder={options.commentsPlaceholderText} />
-                  )}
-                </Form.Item>
-              </Col>
-            </Row> : null}
+            ? (
+              <Row>
+                <Col
+                  xs={{ span: 24 }}
+                  md={{ span: 12 }}
+                >
+                  <Form.Item label='Your message'>
+                    {getFieldDecorator('comment', {
+                      rules: [
+                        { required: true, message: 'Comment is required' }
+                      ]
+                    })(
+                      <TextArea
+                        readOnly={!options.commentsEditable}
+                        placeholder={options.commentsPlaceholderText}
+                      />
+                    )}
+                  </Form.Item>
+                </Col>
+              </Row>) : null}
 
           {/* Form buttons */}
           <Row>
             {/* Button to handle positive state change */}
             {options.nextStateButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
+<<<<<<< HEAD
               ? <span>
 
                 <Form.Item label={termsCondtions}>
@@ -113,37 +118,54 @@ class RegisterInterestItem extends Component {
                 </Button>
                 &nbsp;
               </span> : null}
+=======
+              ? (
+                <span>
+                  <Button type='primary' disabled={hasErrors(getFieldsError())} shape='round' onClick={this.handleChangeStateButtonClicked.bind(this)}>
+                    {options.nextStateButtonText}
+                  </Button>
+                &nbsp;
+                </span>)
+              : null}
+
+>>>>>>> 1e16e9915ab6171f8c7bec5530d9769e09568fa1
             {/* Button to handle withdrawal from op */}
             {options.withdrawInterestButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
-              ? <span>
-                <Popconfirm id='WithdrawInterestPopConfirm' title='Confirm withdrawal of interest' onConfirm={this.handleWithdrawButtonClicked.bind(this)} okText='Yes' cancelText='No'>
-                  <Button type='danger' shape='round' >
-                    {options.withdrawInterestButtonText}
-                  </Button>
-                </Popconfirm>
+              ? (
+                <span>
+                  <Popconfirm id='WithdrawInterestPopConfirm' title='Confirm withdrawal of interest' onConfirm={this.handleWithdrawButtonClicked.bind(this)} okText='Yes' cancelText='No'>
+                    <Button type='danger' shape='round'>
+                      {options.withdrawInterestButtonText}
+                    </Button>
+                  </Popconfirm>
                 &nbsp;
-              </span> : null}
+                </span>)
+              : null}
 
             {/* Button to show form */}
             {!options.formAlwaysVisible && !this.state.isFormVisible
-              ? <span>
-                <Button type='primary' shape='round' onClick={() => this.setState({ isFormVisible: true })}>
-                  {options.showFormButtonText}
-                </Button>
+              ? (
+                <span>
+                  <Button type='primary' shape='round' onClick={() => this.setState({ isFormVisible: true })}>
+                    {options.showFormButtonText}
+                  </Button>
                 &nbsp;
-              </span> : null}
+                </span>)
+              : null}
 
             {/* Button to hide form */}
             {!options.formAlwaysVisible && this.state.isFormVisible
-              ? <span>
-                <Button type='secondary' shape='round' onClick={() => this.setState({ isFormVisible: false })}>
-                  {options.hideFormButtonText}
-                </Button>
-                &nbsp;
-              </span> : null}
+              ? (
+                <span>
+                  <Button type='secondary' shape='round' onClick={() => this.setState({ isFormVisible: false })}>
+                    {options.hideFormButtonText}
+                  </Button>
+                  &nbsp;
+                </span>)
+              : null}
           </Row>
         </Form>
-      </div >
+      </div>
     )
   }
 }

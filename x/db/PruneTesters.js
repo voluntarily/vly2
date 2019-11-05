@@ -33,7 +33,6 @@ const deletePerson = async personId => {
 getData('http://localhost:3122/api/people')
   .then(people => {
     console.log(people)
-    // eslint-disable-next-line array-callback-return consistent-return
     people.people.map(p => {
       if (p.role === 'tester') {
         console.log('deleting:', p.name)

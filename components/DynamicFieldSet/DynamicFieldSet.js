@@ -22,6 +22,7 @@ export class DynamicFieldSet extends React.Component {
   getValues () {
     return this.props.form.getFieldValue(this.props.field) || []
   }
+
   /**
    * Sets the set of field values on the associated form.
    * @param {string[]} values The set of values.
@@ -65,17 +66,22 @@ export class DynamicFieldSet extends React.Component {
 
     const formItems = values.map((value, index) => (
       <Form.Item key={index}>
-        <FormItem value={values[index]}
+        <FormItem
+          value={values[index]}
           placeholder={this.props.placeholder}
-          onChange={event => this.onChange(index, event.target.value)} />
+          onChange={event => this.onChange(index, event.target.value)}
+        />
 
         {values.length > 1
-          ? <RemoveItemButton type='button'
-            className='dynamic-delete-button'
-            title={this.props.removeTooltip || undefined}
-            onClick={() => this.remove(index)}>
-            <Icon type='minus-circle-o' />
-          </RemoveItemButton>
+          ? (
+            <RemoveItemButton
+              type='button'
+              className='dynamic-delete-button'
+              title={this.props.removeTooltip || undefined}
+              onClick={() => this.remove(index)}
+            >
+              <Icon type='minus-circle-o' />
+            </RemoveItemButton>)
           : null}
       </Form.Item>
     ))
@@ -84,9 +90,11 @@ export class DynamicFieldSet extends React.Component {
       <>
         {formItems}
         <Form.Item>
-          <Button className='ant-btn-primary ant-btn-round ant-btn-lg'
+          <Button
+            className='ant-btn-primary ant-btn-round ant-btn-lg'
             block
-            onClick={() => this.add()}>
+            onClick={() => this.add()}
+          >
             <Icon type='plus' /> {this.props.addItemText || 'Add item'}
           </Button>
         </Form.Item>

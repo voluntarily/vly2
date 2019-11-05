@@ -62,12 +62,12 @@ async function updatePersonDetail (req, res, next) {
 
 function ensureSanitized (req, res, next) {
   const szAbout = {
-    allowedTags: [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+    allowedTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
       'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
-      'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe' ],
+      'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe'],
     allowedAttributes: {
-      a: [ 'href' ],
-      img: [ 'src' ]
+      a: ['href'],
+      img: ['src']
     },
     allowedIframeHostnames: ['www.youtube.com']
   }

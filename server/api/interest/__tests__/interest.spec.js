@@ -11,9 +11,9 @@ import Organisation from '../../organisation/organisation'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 
 test.before('before connect to database', async (t) => {
-  await appReady
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  await appReady
 
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.me = t.context.people[0] // I am the first person.
@@ -118,7 +118,7 @@ test.serial('Should not find interests matching an op + wrong person', async t =
 
 test.serial('Should 404 on invalid op search', async t => {
   const res = await request(server)
-    .get(`/api/interests?op=rubbish`)
+    .get('/api/interests?op=rubbish')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
   t.is(res.status, 404)
@@ -136,11 +136,11 @@ test.serial('Should send correct data when queried against a _id', async t => {
 
 test.serial('Should return 404 code when queried non existing interest', async t => {
   const res = await request(server)
-    .get(`/api/interests/asodifklamd`)
+  // use a valid objectid but one that is not an interest record
+    .get('/api/interests/5cc8d60b8b16812b5babcdef')
     .set('Accept', 'application/json')
 
-  // This test is not ready since the return status was 500 not 404
-  const expectedResponseStatus = 500
+  const expectedResponseStatus = 404
   t.is(res.status, expectedResponseStatus)
 })
 

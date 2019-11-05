@@ -37,7 +37,7 @@ const acts = [
 const initStore = {
   activities: {
     loading: false,
-    data: [ ]
+    data: []
   }
 }
 

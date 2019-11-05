@@ -39,7 +39,7 @@ class ActDetailForm extends Component {
     }
 
     this.setImgUrl = this.setImgUrl.bind(this)
-    this.change = this.change.bind(this)
+    // this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount () {
@@ -55,6 +55,7 @@ class ActDetailForm extends Component {
       this.actRadio('option1')
     }
   }
+
   actRadio = (event) => {
     if (event === 'option1') {
       this.setState({
@@ -72,7 +73,8 @@ class ActDetailForm extends Component {
       })
     }
   }
-  change = (event) => {
+
+  handleChange = (event) => {
     const textname = event.target.name
     if (textname === 'resourceinput1') {
       this.setState({
@@ -304,7 +306,7 @@ class ActDetailForm extends Component {
                 })(
                   isTest
                     ? <TextArea rows={20} placeholder='All the details about the activity, you can use HTML or Markdown here' />
-                    : <RichTextEditor onChange={this.setAbout} />
+                    : <RichTextEditor />
                 )}
               </Form.Item>
               {orgMembership && (
@@ -398,8 +400,11 @@ class ActDetailForm extends Component {
                       description='label for field volunteer numbers required'
                     />
                   </Radio>
-                  {getFieldDecorator('totalVolunteerRequired')(<Input name='resourceinput1' onChange={this.change}
-                    disabled={this.state.input1Disabled} placeholder='Select from 1 to 100' />)}
+                  {getFieldDecorator('totalVolunteerRequired')(
+                    <Input
+                      name='resourceinput1' onChange={this.handleChange}
+                      disabled={this.state.input1Disabled} placeholder='Select from 1 to 100'
+                    />)}
                 </Form.Item>
                 <Form.Item>
                   <Radio name='volunteer' value='option2' checked={this.state.option2} onClick={this.actRadio.bind(this, 'option2')}>
@@ -409,8 +414,12 @@ class ActDetailForm extends Component {
                       description='label for field number of students per volunteer'
                     />
                   </Radio>
-                  {getFieldDecorator('volunteerPerStudent')(<Input name='resourceinput2' onChange={this.change}
-                    disabled={this.state.input2Disabled} placeholder='Specify the number of students' />)}
+                  {getFieldDecorator('volunteerPerStudent')(
+                    <Input
+                      name='resourceinput2'
+                      onChange={this.handleChange}
+                      disabled={this.state.input2Disabled} placeholder='Specify the number of students'
+                    />)}
                 </Form.Item>
                 <Form.Item label={actSpace}>
                   {getFieldDecorator('space')(<Input name='space' placeholder='40 sqm' />)}
@@ -443,16 +452,18 @@ class ActDetailForm extends Component {
             <InputContainer>
               <MediumInputContainer>
                 <Form.Item label={actEquipment}>
-                  <DynamicFieldSet form={this.props.form}
+                  <DynamicFieldSet
+                    form={this.props.form}
                     field='equipment'
-                    placeholder={'Equipment description'}
+                    placeholder='Equipment description'
                     validationMessage={
                       <FormattedMessage
                         id='actDetailForm.addEquipment.validationMessage'
-                        defaultMessage={`Add an equipment or remove field`}
+                        defaultMessage='Add an equipment or remove field'
                       />
                     }
-                    addItemText='Add equipment' />
+                    addItemText='Add equipment'
+                  />
                 </Form.Item>
               </MediumInputContainer>
             </InputContainer>
@@ -488,7 +499,7 @@ class ActDetailForm extends Component {
                   })(<Input />)}
                   <ImageUpload setImgUrl={this.setImgUrl} />
                 </Form.Item>
-                // TODO: [VP-304] add suggest photo button to ActDetailForm
+                {/* // TODO: [VP-304] add suggest photo button to ActDetailForm */}
               </MediumInputContainer>
             </InputContainer>
           </FormGrid>

@@ -31,7 +31,7 @@ function PersonBadge ({ person }) {
         userBadge.map((badge) => {
           return (
             <Badge key={badge._id} title={badge._id}>
-              <a href={`${config.BADGR_API}/public/assertions/${badge.entityId}`} target='_blank'>
+              <a href={`${config.BADGR_API}/public/assertions/${badge.entityId}`} rel='noopener noreferrer' target='_blank'>
                 <img width='60px' height='60px' alt={`${badge._id} badge`} src={`${badge.badgeclassOpenBadgeId}/image?type=png`} />
               </a>
             </Badge>)

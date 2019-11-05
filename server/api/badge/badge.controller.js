@@ -33,17 +33,17 @@ const issueNewBadge = async (req, res) => {
   }
 
   const body = {
-    'recipient': {
-      'identity': `${email}`,
-      'type': 'email',
-      'hashed': true
+    recipient: {
+      identity: `${email}`,
+      type: 'email',
+      hashed: true
     }
   }
   const response = await fetch(`${BADGR_API}/v2/badgeclasses/${badgeID}/assertions`, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json'
     }
   })
@@ -81,7 +81,7 @@ const listAllBadge = async (req, res) => {
   const badgeListResponse = await fetch(`${BADGR_API}/v2/badgeclasses`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${accessToken}`
+      Authorization: `Bearer ${accessToken}`
     }
   })
   const data = await badgeListResponse.json()

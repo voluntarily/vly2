@@ -11,7 +11,7 @@ import { setSession } from '../lib/redux/actions'
 export default Page =>
   class DefaultPage extends React.Component {
     static async getInitialProps (ctx) {
-      let cookies = ctx.req ? ctx.req.cookies : Cookie.get()
+      const cookies = ctx.req ? ctx.req.cookies : Cookie.get()
       let session = {}
       const loggedUser = process.browser
         ? getUserFromLocalCookie()
@@ -53,16 +53,17 @@ export default Page =>
     componentWillUnmount () {
       window.removeEventListener('storage', this.logout, false)
     }
+
     render () {
       return (
         <Layout>
-          { !this.props.isPlain && <Header {...this.props} />}
+          {!this.props.isPlain && <Header {...this.props} />}
           <Layout.Content>
             <FillWindow>
               <Page {...this.props} />
             </FillWindow>
           </Layout.Content>
-          { !this.props.isPlain && <Footer {...this.props} />}
+          {!this.props.isPlain && <Footer {...this.props} />}
         </Layout>
       )
     }

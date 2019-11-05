@@ -16,7 +16,7 @@ const opsWithOpenEndDate = [
     ...ops[0],
     date: [
       {
-        '$date': '2019-05-23T12:26:18.000Z'
+        $date: '2019-05-23T12:26:18.000Z'
       },
       null
     ]
@@ -26,7 +26,7 @@ const opsWithOpenEndDate = [
 const initStore = {
   opportunities: {
     loading: false,
-    data: [ ]
+    data: []
   }
 }
 const filterDateState = {
@@ -184,7 +184,7 @@ test.serial('test filter by date is called, no op is shown', async t => {
 test.serial('test filter by month is called. There is 1 OP shown', async t => {
   const realStore = makeStore(initStore)
   const monthFilterValue = {
-    date: [ ops[0].date[0] ] // Confusing but basically this will create an array of 1 element from the first element of the ops array
+    date: [ops[0].date[0]] // Confusing but basically this will create an array of 1 element from the first element of the ops array
   }
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -285,6 +285,73 @@ test.serial('Test filter by week allow to add open end opportunity', async t => 
   await sleep(1)
   wrapper.update()
   t.is(wrapper.find('OpCard').length, 3) // The week value not match the available date range in the ops array. Only the open end will match
+  t.truthy(myMock.done())
+  myMock.restore()
+})
+
+test.serial('Test sort by name', async t => {
+  const realStore = makeStore(initStore)
+
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/?search=Growing`
+  myMock.getOnce(api, ops)
+
+  const wrapper = await mountWithIntl(
+    <Provider store={realStore}>
+      <OpListSection search='Growing' orderby='name' />
+    </Provider>
+  )
+  await sleep(1)
+  wrapper.update()
+  // Checking first and last name in opcard list
+  t.is(wrapper.find('OpCard').first().text().includes('1 Mentor'), true)
+  t.is(wrapper.find('OpCard').last().text().includes('5 Going'), true)
+  t.truthy(myMock.done())
+  myMock.restore()
+})
+test.serial('Test sort by date', async t => {
+  const realStore = makeStore(initStore)
+
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/?search=Growing`
+  myMock.getOnce(api, ops)
+
+  const wrapper = await mountWithIntl(
+    <Provider store={realStore}>
+      <OpListSection search='Growing' orderby='date' />
+    </Provider>
+  )
+  await sleep(1)
+  wrapper.update()
+  // console.log(ops[2].date[0], ops[2].date[1])
+
+  // Checking first and last name of an opportunity in opcard list based on their dates
+  t.is(wrapper.find('OpCard').first().text().includes('1 Mentor'), true)
+  t.is(wrapper.find('OpCard').last().text().includes('5 Going'), true)
+  t.truthy(myMock.done())
+  myMock.restore()
+})
+test.serial('Test sort by commitment', async t => {
+  const realStore = makeStore(initStore)
+
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  const api = `${API_URL}/opportunities/?search=Growing`
+  myMock.getOnce(api, ops)
+
+  const wrapper = await mountWithIntl(
+    <Provider store={realStore}>
+      <OpListSection search='Growing' orderby='commitment' />
+    </Provider>
+  )
+  await sleep(1)
+  wrapper.update()
+  // Checking first and last duration in opcard list. The oplist is sorted from low to high, i.e short to long
+  // should put #3 15 mins before #2 at 4 hours
+  t.is(wrapper.find('OpCard').at(1).text().includes('3 Growing in the garden'), true)
+  t.is(wrapper.find('OpCard').at(2).text().includes('2 Self driving model cars'), true)
   t.truthy(myMock.done())
   myMock.restore()
 })

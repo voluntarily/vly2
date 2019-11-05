@@ -10,7 +10,7 @@ function PersonListItem (props) {
   return (
     <div className={styles['single-person']}>
       <h3>
-        <Link to={`/people/${props.person.cuid}`} >
+        <Link to={`/people/${props.person.cuid}`}>
           <a>{props.person.name}</a>
         </Link>
       </h3>
@@ -19,7 +19,8 @@ function PersonListItem (props) {
         props.person.role.map(role => (
           <li key={role}>{role}</li>
         ))
-      }</ul>
+      }
+      </ul>
     </div>
   )
 }
