@@ -2,18 +2,15 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import MemoryMongo from '../../../util/test-memory-mongo'
-import fs from 'fs'
-import fsExtra from 'fs-extra'
+import fs from 'fs-extra'
 
 test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-  await appReady
-})
-
-test.after.always(() => {
-  // clean out upload folder.
-  fsExtra.emptyDirSync('../../../public/static/upload-test')
+  try {
+    t.context.memMongo = new MemoryMongo()
+    await t.context.memMongo.start()
+    await appReady
+    fs.emptyDirSync('public/static/upload-test')
+  } catch (e) { console.error('image.spec.js error before', e) }
 })
 
 test.serial('can return image from static folder', async t => {

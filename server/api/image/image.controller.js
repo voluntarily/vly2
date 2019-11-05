@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require('fs-extra')
 const cuid = require('cuid')
 const slug = require('slug')
 const { config } = require('../../../config/config')

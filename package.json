@@ -56,6 +56,7 @@
     "intl": "^1.2.5",
     "js-cookie": "^2.2.1",
     "jsdom": "^15.1.1",
+    "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "less": "^3.10.3",
     "less-vars-to-js": "1.3.0",
@@ -169,8 +170,7 @@
       "pages/**/*.js",
       "components/**/*.js",
       "server/**/*.js",
-      "lib/**/*.js",
-      "hocs/**/*.js"
+      "lib/**/*.js"
     ],
     "exclude": [
       "**/*.spec.js",
@@ -179,9 +179,11 @@
       "server/util/mockRouter.js",
       "server/util/test-memory-mongo.js",
       "lib/react-intl-test*.js",
+      "lib/auth/auth0.js",
       "server/config.js",
       "components/examples/**/*.js",
-      "server/api/db/db.controller.js"
+      "server/api/db/db.controller.js",
+      "server/api/image/cloudImageUpload.js"
     ],
     "reporter": [
       "lcov",

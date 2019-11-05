@@ -4,7 +4,7 @@ const IntlPolyfill = require('intl')
 Intl.NumberFormat = IntlPolyfill.NumberFormat
 Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
 
-const { readFileSync } = require('fs')
+const { readFileSync } = require('fs-extra')
 const { basename } = require('path')
 
 const UPLOAD_LIMIT = '6000kb'

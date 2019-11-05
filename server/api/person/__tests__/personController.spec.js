@@ -10,21 +10,18 @@ import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../__tests__/person.fixture'
 
 test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-  await appReady
+  try {
+    t.context.memMongo = new MemoryMongo()
+    await t.context.memMongo.start()
+    await appReady
+    await Person.create(people).catch((err) => console.error('Unable to create people:', err))
+  } catch (e) {
+    console.error('personController.spec.js, before connect to database', e)
+  }
 })
 
 test.after.always(async (t) => {
   await t.context.memMongo.stop()
-})
-
-test.beforeEach('connect and add people fixture', async () => {
-  await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-})
-
-test.afterEach.always(async () => {
-  await Person.deleteMany()
 })
 
 test.serial('Should call send status function for null record ', async t => {
