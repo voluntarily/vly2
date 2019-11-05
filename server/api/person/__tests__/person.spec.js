@@ -2,29 +2,24 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Person from '../person'
-
+import { jwtData, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../__tests__/person.fixture'
 
 test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-  await appReady
+  try {
+    t.context.memMongo = new MemoryMongo()
+    await t.context.memMongo.start()
+    await appReady
+    t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  } catch (e) { console.error('person.spec.js error before', e) }
 })
 
 test.after.always(async (t) => {
   await t.context.memMongo.stop()
 })
 
-test.beforeEach('connect and add people fixture', async () => {
-  await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-})
-
-test.afterEach.always(async () => {
-  await Person.deleteMany()
-})
-
-test.serial('verify fixture database has people', async t => {
+test('verify fixture database has people', async t => {
   const count = await Person.countDocuments()
   t.is(count, people.length)
   // can find by email with then
@@ -39,96 +34,158 @@ test.serial('verify fixture database has people', async t => {
   })
 })
 
-test.serial('Should correctly block GET method for api people for anonymous', async t => {
+test('list everyone - Anon user', async t => {
+  const resAnon = await request(server)
+    .get('/api/people')
+    .set('Accept', 'application/json')
+  t.is(resAnon.status, 403) // Return data response will be undefined for 403 response
+})
+
+test('list everyone - General User', async t => {
+  // general user
   const res = await request(server)
     .get('/api/people')
     .set('Accept', 'application/json')
-    .expect(403)
-
-  t.is(undefined, res.body.length) // Return data response will be undefined for 403 response
+    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
+    .expect(200)
+  t.is(res.body.length, t.context.people.length)
 })
 
-// FIXME: must test get and list person calls with signed in user
-test.serial('Should send correct person when queried against an id', async t => {
-  t.plan(3)
-  const p = {
-    name: 'Testy C McTestface',
-    nickname: 'C Testy',
-    about: 'Tester',
-    location: 'Waikato District',
-    email: 'z.testy@voluntar.ly',
-    phone: '027 444 5555',
-    pronoun: { subject: 'they', object: 'them', possesive: 'ȁǹy' },
-    imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
-    role: ['tester', 'volunteer'],
-    status: 'active',
-    tags: []
-  }
-
-  const person = new Person(p)
-  const res1 = await request(server)
-    .post('/api/people')
-    .send(person)
+test('list everyone - admin user', async t => {
+  // admin user
+  const resAdmin = await request(server)
+    .get('/api/people')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
+  t.is(resAdmin.body.length, t.context.people.length)
+})
 
-  const pObj = JSON.parse(res1.res.text)
-  const id = pObj._id
+test('list everyone - bad filter', async t => {
+  // bad request
+  const resBad = await request(server)
+    .get('/api/people?q=thisisnotjson')
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+  t.is(resBad.status, 400)
+})
 
-  await Person.findById(id).then((result) => {
-    t.deepEqual(person._id, result._id)
-    t.deepEqual(person.pronoun, result.pronoun)
-    t.deepEqual(person.name, result.name)
-  })
-  /*
-  TODO: this should be change to add authorized user and retrieve person through server api
-  const res = await request(server)
+test('list everyone - filtered, sorted, produced', async t => {
+  // filtered & sorted request
+  const resFilter = await request(server)
+    .get('/api/people?q={"about":"Tester"}&s="phone"&p="nickname, phone"')
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+  const testers = t.context.people.filter(p => p.about === 'Tester')
+  t.is(resFilter.body.length, testers.length)
+  t.is(resFilter.body[0].phone, testers[testers.length - 1].phone)
+})
+
+test('Get person by id', async t => {
+  const p = t.context.people[2] // Testy A.
+  const id = p._id
+  // fetch the person - no auth
+  await request(server)
     .get(`/api/people/${id}`)
     .set('Accept', 'application/json')
     .expect(403)
+
+  // fetch the person - with auth
+  const res = await request(server)
+    .get(`/api/people/${id}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
   t.is(res.body.name, p.name)
-  */
+  t.is(res.body.email, p.email)
 })
 
-test.serial('Should correctly add a person', async t => {
-  t.plan(4)
+test.serial('add a person', async t => {
+  t.plan(5)
 
   const p = {
-    name: 'Testy McTestFace',
-    nickname: 'Testy',
+    name: 'Addy McAddFace',
+    nickname: 'Addy',
     phone: '123 456789',
     email: 'addy@omgtech.co.nz',
     role: ['tester'],
     tags: []
   }
-
-  const res = await request(server)
-    .post('/api/people')
-    .send(p)
-    .set('Accept', 'application/json')
-    .expect(200)
-
   try {
-  // can find by id
+    // anon user can add a new person
+    const res = await request(server)
+      .post('/api/people')
+      .send(p)
+      .set('Accept', 'application/json')
+      .expect(200)
+
+    // can find by id
     const id = res.body._id
-    await Person.findById(id).then((person) => {
-      t.is(id, person._id.toString())
-    })
+    const foundId = await Person.findById(id).exec()
+    t.is(foundId.name, p.name)
 
-    // can find by email with then
-    await Person.findOne({ email: p.email }).then((person) => {
-      t.is(person.name, p.name)
-    })
-
-    // can find by email using await
-    const savedPerson = await Person.findOne({ email: p.email }).exec()
-    t.is(savedPerson.name, p.name)
+    // can find by email
+    const foundEmail = await Person.findOne({ email: p.email }).exec()
+    t.is(foundEmail.name, p.name)
 
     // person has been given the default image
-    t.is(savedPerson.imgUrl, '/static/img/person/person.png')
+    t.is(foundEmail.imgUrl, '/static/img/person/person.png')
+
+    // get the new person
+    const resPerson = await request(server)
+      .get(`/api/people/${id}`)
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${jwtData.idToken}`])
+      .expect(200)
+    console.log(resPerson.body)
+    t.is(resPerson.body.name, p.name)
+    t.is(resPerson.body.email, p.email)
+
+    // clean up
+    await Person.deleteOne({ email: p.email })
   } catch (err) {
     console.error(err)
   }
+})
+
+test.serial('Update people', async t => {
+// update the person
+  const p = t.context.people[0]
+  const id = p._id
+  p.phone = '000 0000 000'
+
+  // anon user cannot update
+  await request(server)
+    .put(`/api/people/${id}`)
+    .send(p)
+    .set('Accept', 'application/json')
+    .expect(403)
+
+  // bad id cannot update, not found
+  await request(server)
+    .put('/api/people/notapersonid')
+    .send(p)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
+    .expect(404)
+
+  // wrong id cannot update, bad request
+  await request(server)
+    .put('/api/people/5d9fe53e4eb179218c8d1d2b')
+    .send(p)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
+    .expect(404)
+
+  const resUpdated = await request(server)
+    .put(`/api/people/${id}`)
+    .send(p)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+  t.is(resUpdated.body.phone, p.phone)
 })
 
 test.serial('Should correctly add a person and sanitise inputs', async t => {
@@ -157,32 +214,16 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
   t.deepEqual(p.email, savedPerson.email)
   t.deepEqual(p.about, savedPerson.about)
   t.deepEqual(p.pronoun, savedPerson.pronoun)
+
+  await Person.deleteOne({ email: p.email })
 })
 
-test.serial('Should load a person into the db but block access and delete them via the api', async t => {
-  t.plan(4)
-  const p = {
-    name: 'Testy McTestFace',
-    nickname: 'Testy',
-    phone: '123 456789',
-    email: 'loady@omgtech.co.nz',
-    role: ['tester'],
-    tags: []
-  }
-  const person = new Person(p)
-  await person.save()
-  const id = person._id
+test.serial('Anon user cannot remove a user', async t => {
+  const p = t.context.people[3]
 
-  const res = await request(server)
-    .get(`/api/people/${id}`)
-    .set('Accept', 'application/json')
-    .expect(403)
-
-  t.is(res.body.name, undefined)
-
-  // delete the record
+  // try to delete the record anonymously
   await request(server)
-    .delete(`/api/people/${person._id}`)
+    .delete(`/api/people/${p._id}`)
     .set('Accept', 'application/json')
     .expect(403)
 
@@ -190,22 +231,11 @@ test.serial('Should load a person into the db but block access and delete them v
   const queriedPerson = await Person.findOne({ email: p.email }).exec()
   t.is(queriedPerson.name, p.name)
   t.is(queriedPerson.email, p.email)
-  t.is(queriedPerson.phone, p.phone)
 })
 
-test.serial('Should find a person by email', async t => {
+test('Should find a person by email', async t => {
   t.plan(1)
-  const p = {
-    name: 'Testy McTestFace',
-    nickname: 'Testy',
-    phone: '123 456789',
-    email: 'unique_email@voluntarily.nz',
-    role: ['tester'],
-    tags: []
-  }
-
-  const person = new Person(p)
-  await person.save()
+  const p = t.context.people[4]
   const email = p.email
   const res = await request(server)
     .get(`/api/person/by/email/${email}`)
@@ -215,19 +245,9 @@ test.serial('Should find a person by email', async t => {
   t.is(res.body.name, p.name)
 })
 
-test.serial('Should find a person by nickname', async t => {
+test('Should find a person by nickname', async t => {
   t.plan(1)
-  const p = {
-    name: 'Testy McTestFace',
-    nickname: 'Testy',
-    phone: '123 456789',
-    email: 'Testy555@voluntarily.nz',
-    role: ['tester'],
-    tags: []
-  }
-
-  const person = new Person(p)
-  await person.save()
+  const p = t.context.people[5]
   const res = await request(server)
     .get(`/api/person/by/nickname/${p.nickname}`)
     .set('Accept', 'application/json')

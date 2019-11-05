@@ -27,6 +27,25 @@ const jwtData = {
 
 jwtData.idToken = jwt.sign(jwtData.idTokenPayload, 'secret')
 
+const jwtDataDali = {
+  accessToken: 'IGs4bjO5WLjsulmjKiW2-VLeetlgykUP',
+  idTokenPayload: {
+    email: 'salvador@voluntarily.nz',
+    email_verified: true,
+    exp: Math.floor(Date.now() / 1000) + (60 * 60),
+    iat: Math.floor(Date.now() / 1000),
+    name: 'Salvador Domingo Felipe Jacinto Dalí i Domènech, 1st Marquis of Dalí de Púbol ',
+    nickname: 'Dali',
+    picture: 'https://avatars2.githubusercontent.com/u/1596437?v=4'
+  },
+  refreshToken: null,
+  state: 'Nz_CgRTnYPO5CbD4ueKmkdCiuk2z3psk',
+  expiresIn: 3600,
+  tokenType: 'Bearer',
+  scope: null
+}
+jwtDataDali.idToken = jwt.sign(jwtDataDali.idTokenPayload, 'secret')
+
 const DEFAULT_SESSION = {
   isAuthenticated: false,
   user: null,
@@ -34,6 +53,7 @@ const DEFAULT_SESSION = {
 }
 
 module.exports = {
-  jwtData,
+  jwtData, // represents andrew an admin
+  jwtDataDali, // represents dali a normal volunteer
   DEFAULT_SESSION
 }
