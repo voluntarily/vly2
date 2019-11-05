@@ -36,12 +36,12 @@ const ActivitySchema = new Schema({
     default: []
   },
   status: {
-    type: 'String',
+    type: String,
     required: true,
     default: 'draft',
     enum: ['draft', 'active', 'retired']
   },
-  dateAdded: { type: 'Date', default: Date.now, required: true }
+  dateAdded: { type: Date, default: Date.now, required: true }
 })
 
 ActivitySchema.plugin(idvalidator)
