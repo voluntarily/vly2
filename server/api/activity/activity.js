@@ -4,10 +4,9 @@ const idvalidator = require('mongoose-id-validator')
 const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
 
 const ActivitySchema = new Schema({
-  name: String, // "Growing in the garden",
-  title: String, // deprecated - use name instead
+  name: { type: String, required: true }, // "Growing in the garden",
   subtitle: String, // "Growing digitally in the garden",
-  imgUrl: { type: 'String', required: true, default: '../.././static/img/activity/activity.png' },
+  imgUrl: { type: String, required: true, default: '../.././static/img/activity/activity.png' },
   description: String, // "Project to grow something in the garden",
   duration: String, // "15 Minutes",
   offerOrg: { type: Schema.Types.ObjectId, ref: 'Organisation' },

@@ -255,12 +255,13 @@ class ActDetailForm extends Component {
 
     // Only show error after a field is touched.
     const titleError = isFieldTouched('name') && getFieldError('name')
+    const durationError = isFieldTouched('duration') && getFieldError('duration')
     const orgMembership =
     this.props.me.orgMembership &&
     this.props.me.orgMembership.map(member => member.organisation)
     return (
       <div className='ActDetailForm'>
-        <Form hideRequiredMark colon={false}>
+        <Form colon={false}>
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -289,7 +290,7 @@ class ActDetailForm extends Component {
                 >
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'Title is required' }]
-                  })(<Input placeholder='Title' />)}
+                  })(<Input placeholder='Title' required />)}
                 </Form.Item>
 
                 <Form.Item label={actSubtitle}>
@@ -379,7 +380,11 @@ class ActDetailForm extends Component {
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
-                <Form.Item label={actCommitment}>
+                <Form.Item
+                  label={actCommitment}
+                  validateStatus={durationError ? 'error' : ''}
+                  help={durationError || ''}
+                >
                   {getFieldDecorator('duration', {
                     rules: [
                       {
@@ -519,7 +524,7 @@ class ActDetailForm extends Component {
               <P>
                 <FormattedMessage
                   id='act.SaveInstructions'
-                  defaultMessage='Save as Draft will allow you to preview the activity while Publish will make it available to everyone to view.'
+                  defaultMessage='Save as draft will allow you to preview the activity while Publish will make it available to everyone to view.'
                   description='Instructions for save and publish on activity details form'
                 />
               </P>
