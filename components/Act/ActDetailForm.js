@@ -106,7 +106,7 @@ class ActDetailForm extends Component {
         act.equipment = values.equipment
         act.description = values.description
         act.offerOrg = values.offerOrg && values.offerOrg.key
-        act.imgUrl = values.imgUrl
+        act.imgUrl = values.imgUrl === '' ? undefined : values.imgUrl
         act.tags = values.tags
         act.status = e.target.name === 'publish' ? 'active' : 'draft'
         // act.owner = (this.props.act.owner && this.props.op.owner._id) || this.props.me._id
