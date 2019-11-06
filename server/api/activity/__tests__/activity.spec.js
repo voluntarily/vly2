@@ -171,7 +171,7 @@ test.serial('Should correctly add an activity with default image', async t => {
   t.is(savedActivity.subtitle, 'Launching into space step 3')
 
   // activity has been given the default image
-  t.is(savedActivity.imgUrl, '../.././static/img/activity/activity.png')
+  t.is(savedActivity.imgUrl, '/static/img/activity/activity.png')
 })
 
 test.serial('Should correctly delete an activity', async t => {
