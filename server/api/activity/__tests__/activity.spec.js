@@ -152,7 +152,7 @@ test.serial('Should correctly add an activity', async t => {
   t.is(savedActivity.subtitle, 'Launching into space step 3')
 })
 
-test.serial('Should correctly add an activity with default image', async t => {
+test.only('Should correctly add an activity with default image', async t => {
   t.plan(3)
 
   const res = await request(server)
@@ -171,6 +171,7 @@ test.serial('Should correctly add an activity with default image', async t => {
   t.is(savedActivity.subtitle, 'Launching into space step 3')
 
   // activity has been given the default image
+  console.log(savedActivity)
   t.is(savedActivity.imgUrl, '/static/img/activity/activity.png')
 })
 
