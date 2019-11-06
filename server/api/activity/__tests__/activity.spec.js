@@ -158,7 +158,7 @@ test.serial('Should correctly add an activity with default image', async t => {
   const res = await request(server)
     .post('/api/activities')
     .send({
-      title: 'The first 400 metres',
+      name: 'The first 400 metres',
       subtitle: 'Launching into space step 3',
       description: 'Project to build a simple rocket that will reach 400m',
       duration: '4 hours'
@@ -167,7 +167,7 @@ test.serial('Should correctly add an activity with default image', async t => {
 
   t.is(res.status, 200)
 
-  const savedActivity = await Activity.findOne({ title: 'The first 400 metres' }).exec()
+  const savedActivity = await Activity.findOne({ name: 'The first 400 metres' }).exec()
   t.is(savedActivity.subtitle, 'Launching into space step 3')
 
   // activity has been given the default image
