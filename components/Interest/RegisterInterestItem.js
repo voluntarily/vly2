@@ -97,7 +97,6 @@ class RegisterInterestItem extends Component {
           <Row>
             {/* Button to handle positive state change */}
             {options.nextStateButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
-<<<<<<< HEAD
               ? <span>
 
                 <Form.Item label={termsCondtions}>
@@ -118,17 +117,6 @@ class RegisterInterestItem extends Component {
                 </Button>
                 &nbsp;
               </span> : null}
-=======
-              ? (
-                <span>
-                  <Button type='primary' disabled={hasErrors(getFieldsError())} shape='round' onClick={this.handleChangeStateButtonClicked.bind(this)}>
-                    {options.nextStateButtonText}
-                  </Button>
-                &nbsp;
-                </span>)
-              : null}
-
->>>>>>> 1e16e9915ab6171f8c7bec5530d9769e09568fa1
             {/* Button to handle withdrawal from op */}
             {options.withdrawInterestButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
               ? (
