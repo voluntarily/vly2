@@ -1,7 +1,7 @@
 // Demonstrate that the Router functions work as you would expect
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import callApi from '../../lib/apiCaller'
+import callApi from '../../lib/callApi'
 
 const ADD_HEALTH = 'ADD_HEALTH' // allows us to use the type without redefining strings everywhere
 

@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 
 import fetchMock from 'fetch-mock'
-import { API_URL } from '../../../lib/apiCaller'
+import { API_URL } from '../../../lib/callApi'
 
 import { ReduxStoreTestReducer } from '../ReduxStoreTest'
 /*
