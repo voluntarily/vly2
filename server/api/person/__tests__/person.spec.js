@@ -139,7 +139,6 @@ test.serial('add a person', async t => {
       .set('Accept', 'application/json')
       .set('Cookie', [`idToken=${jwtData.idToken}`])
       .expect(200)
-    console.log(resPerson.body)
     t.is(resPerson.body.name, p.name)
     t.is(resPerson.body.email, p.email)
 
@@ -151,7 +150,7 @@ test.serial('add a person', async t => {
 })
 
 test.serial('Update people', async t => {
-// update the person
+  // update the person
   const p = t.context.people[0]
   const id = p._id
   p.phone = '000 0000 000'
@@ -275,15 +274,11 @@ test.serial('Should correctly handle missing inputs', async t => {
     role: ['tester'],
     tags: []
   }
-  try {
-    const res = await request(server)
-      .post('/api/people')
-      .send(p)
-      .set('Accept', 'application/json')
-      .expect(200)
-    t.is(res.body.message, 'Person validation failed: email: Path `email` is required.')
-    t.is(res.body.name, 'ValidationError')
-  } catch (err) {
-    console.error('api/people', err)
-  }
+  const res = await request(server)
+    .post('/api/people')
+    .send(p)
+    .set('Accept', 'application/json')
+    .expect(500)
+  t.is(res.body.message, 'Person validation failed: email: Path `email` is required.')
+  t.is(res.body.name, 'ValidationError')
 })
