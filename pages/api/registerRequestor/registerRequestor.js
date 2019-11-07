@@ -64,7 +64,7 @@ export default async (req, res) => {
     const matchNames = intersect([...reg.firstname.split(' '), ...reg.lastname.split(' ')], me.name.split(' '))
 
     if (matchNames.length < 2) { // names do not match enough
-      // return res.status(404).end(`Names do not match: ${reg.firstname}, ${reg.lastname}`)
+      return res.status(404).end(`Names do not match: ${reg.firstname}, ${reg.lastname}`)
     }
     if (!['Full', 'Provisional', 'Subject to Confirmation'].includes(reg.category)) {
       return res.status(404).end(`Invalid Category: ${reg.category}`)
