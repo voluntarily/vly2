@@ -13,7 +13,7 @@ const config = require('../../../config/config').config
 export default (req, res) => {
   res.setHeader('Content-Type', 'application/json')
   const {
-    query: { param },
+    query: { param }
   } = req
 
   const result = {

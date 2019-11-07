@@ -1,8 +1,3 @@
-import fetch from 'isomorphic-fetch'
-import { Role } from '../../../server/services/authorize/role'
-import { JSDOM } from 'jsdom'
-import moment from 'moment'
-
 /* the registerRequestor endpoint allows a person to
    register as an opportunity provider or activity provider
 
@@ -18,7 +13,6 @@ import moment from 'moment'
     - registration id not found  - 404 - Not found
     - found but didn't match name - 400 Bad Request
 */
-
 
 export default async (req, res) => {
   if (!req.session.isAuthenticated) res.status(403).end()

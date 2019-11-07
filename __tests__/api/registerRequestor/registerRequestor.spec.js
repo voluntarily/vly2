@@ -19,4 +19,3 @@ test('Should respond to health check', async t => {
   const health = res.body
   t.is(health.health, 'OK')
 })
-
