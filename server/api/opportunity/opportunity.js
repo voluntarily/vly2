@@ -30,15 +30,12 @@ const opportunitySchema = new Schema({
   requestor: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
   dateAdded: { type: 'Date', default: Date.now, required: true },
   href: String,
-  tags: [
-    {
-      type: Schema.Types.ObjectId, ref: 'Tag'
-    }
-  ]
+  tags: [String]
 })
 
 opportunitySchema.plugin(idvalidator)
 opportunitySchema.plugin(accessibleRecordsPlugin)
 opportunitySchema.plugin(accessibleFieldsPlugin)
+opportunitySchema.index({ tags: 1 })
 
 module.exports = mongoose.model(SchemaName, opportunitySchema)

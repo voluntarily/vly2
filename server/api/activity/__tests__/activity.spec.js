@@ -2,14 +2,13 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
-import Tag from '../../tag/tag'
 import Activity from '../activity'
 import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
 import orgs from '../../organisation/__tests__/organisation.fixture'
-import tags from '../../tag/__tests__/tag.fixture'
+import tagList from '../../tag/__tests__/tag.fixture'
 
 import acts from './activity.fixture.js'
 
@@ -27,12 +26,11 @@ test.beforeEach('connect and add two activity entries', async (t) => {
   // connect each activity to an owner and org
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create organisations: ${err}`)
-  t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
   acts.map((act, index) => {
     act.owner = t.context.people[index]._id
     act.offerOrg = t.context.orgs[index]._id
     // each act has two consecutive tags from the list
-    act.tags = [t.context.tags[index]._id, t.context.tags[index + 1]._id]
+    act.tags = [ tagList[index], tagList[index + 1] ]
   })
 
   t.context.activities = await Activity.create(acts).catch((err) => console.error('Unable to create activities', err))
@@ -41,7 +39,6 @@ test.beforeEach('connect and add two activity entries', async (t) => {
 test.afterEach.always(async () => {
   await Activity.deleteMany()
   await Person.deleteMany()
-  await Tag.deleteMany()
 })
 
 test.serial('verify fixture database has acts', async t => {
@@ -132,7 +129,9 @@ test.serial('Should not find invalid _id', async t => {
   t.is(res.status, 404)
 })
 
-test.serial('Should correctly add an activity', async t => {
+//test.serial('Should correctly add an activity', async t => {
+  test.serial('activetest', async t => {
+
   t.plan(2)
 
   const res = await request(server)
@@ -235,7 +234,7 @@ test.serial('Should correctly give activity 1 when searching by Organization', a
 
 test.serial('Should correctly give 2 activities when searching by Tags', async t => {
   const res = await request(server)
-    .get(`/api/activities?search=${t.context.tags[2].tag}`)
+    .get(`/api/activities?search=${tagList[2]}`)
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
@@ -263,12 +262,12 @@ test.serial('Should fail to find - invalid query', async t => {
   t.is(res.status, 404)
 })
 
-test.serial('Should return any activities with matching tags or name/desc/subtitle', async t => {
+ test.serial('Should return any activities with matching tags or name/desc/subtitle', async t => {
   // assign tags to activities
-  const tags = t.context.tags
-  t.context.activities[2].tags = [tags[0]._id, tags[2]._id]
-  t.context.activities[0].tags = [tags[0]._id]
-  t.context.activities[1].tags = [tags[2]._id]
+  const tags = tagList
+  t.context.activities[2].tags = ['java', 'robots']
+  t.context.activities[0].tags = ['java']
+  t.context.activities[1].tags = ['robots']
 
   await Promise.all([
     t.context.activities[2].save(),
@@ -297,109 +296,6 @@ test.serial('Should return any activities with matching tags or name/desc/subtit
   t.is(4, got.length)
 })
 
-test.serial('Should correctly add an activity with tags all having id properties', async t => {
-  t.plan(3)
-
-  const tags = t.context.tags
-
-  const res = await request(server)
-    .post('/api/activities')
-    .send({
-      name: 'The first 400 metres',
-      subtitle: 'Launching into space step 3',
-      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
-      description: 'Project to build a simple rocket that will reach 400m',
-      duration: '4 hours',
-      resource: '5 rockets and 6 volunteers',
-      tags: tags,
-      owner: t.context.people[0]._id
-    })
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
-
-  t.is(res.status, 200)
-
-  const savedAct = await Activity.findOne({ name: 'The first 400 metres' }).exec()
-  t.is(savedAct.subtitle, 'Launching into space step 3')
-  t.is(t.context.tags.length, savedAct.tags.length)
-})
-
-test.serial('Mongoose validation should failed for empty string', async (t) => {
-  t.plan(4)
-  const tags = t.context.tags
-  const res = await request(server)
-    .post('/api/activities')
-    .send({
-      name: 'The first 400 metres',
-      subtitle: 'Launching into space step 3',
-      imgUrl: '',
-      description: 'Project to build a simple rocket that will reach 400m',
-      duration: '4 hours',
-      resource: '5 rockets and 6 volunteers',
-      tags: tags,
-      owner: t.context.people[0]._id
-    })
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
-  t.is(res.status, 500)
-  t.assert(res.body.errors != null, 'Assert there is an error in the request')
-  t.is(res.body.message, 'Activity validation failed: imgUrl: Path `imgUrl` is required.')
-  t.is(res.body.name, 'ValidationError')
-})
-
-test.serial('Should not add an activity with invalid tag ids', async t => {
-  await request(server)
-    .post('/api/activities')
-    .send({
-      name: 'The first 400 metres',
-      subtitle: 'Launching into space step 3',
-      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
-      description: 'Project to build a simple rocket that will reach 400m',
-      duration: '4 hours',
-      tags: [{ _id: '123456781234567812345678', tag: 'test' }],
-      requestor: t.context.people[0]._id
-    })
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
-
-  const savedAct = await Activity.findOne({ name: 'The first 400 metres' }).exec()
-  t.is(null, savedAct)
-})
-
-test.serial('Should create tags that dont have the _id property', async t => {
-  const tagName = 'noid'
-  const tags = [
-    t.context.tags[0],
-    {
-      tag: tagName
-    }
-  ]
-
-  const existingTag = await Tag.findOne({ tag: tagName })
-  t.is(null, existingTag)
-
-  await request(server)
-    .post('/api/activities')
-    .send({
-      name: 'The first 400 metres',
-      subtitle: 'Launching into space step 3',
-      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
-      description: 'Project to build a simple rocket that will reach 400m',
-      duration: '4 hours',
-      tags: tags,
-      requestor: t.context.people[0]._id
-
-    })
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
-
-  const savedTag = await Tag.findOne({ tag: tagName })
-  t.is(tagName, savedTag.tag)
-
-  const savedAct = await Activity.findOne({ name: 'The first 400 metres' }).populate('tags').exec()
-  // ensure the tag has an id
-  t.truthy(savedAct.tags.find(t => t.tag === tagName)._id)
-})
 
 // populate
 test.serial('will populate out the org id with name and img', async t => {

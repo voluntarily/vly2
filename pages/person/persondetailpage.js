@@ -164,7 +164,7 @@ export class PersonDetailPage extends Component {
         </div>
     } else {
       if (this.state.editing) {
-        content = <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancelEdit.bind(this)} locations={this.props.locations.data} />
+        content = <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancelEdit.bind(this)} locations={this.props.locations.data} existingTags={this.props.tags.data} />
       } else {
         content =
           <>

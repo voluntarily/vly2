@@ -5,7 +5,7 @@ const initializeTags = async (req, res, next) => {
     const { tags } = req.body
     if (tags) {
       try {
-        let tagset = await Tag.findOne({ name: 'person' }).exec()
+        let tagset = await Tag.findOne().exec()
         if (tagset) {
           let currentTags = new Set(tagset.tags)
           tags.forEach(x => {
@@ -16,7 +16,7 @@ const initializeTags = async (req, res, next) => {
           })
           await tagset.save()
         } else {
-          await Tag.create({ name: 'person', tags: tags })
+          await Tag.create({ tags: tags })
         }
       } catch (error) {
         console.log('Failed to fetch tags to append to', error)
