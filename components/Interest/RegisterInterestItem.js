@@ -55,7 +55,7 @@ class RegisterInterestItem extends Component {
       { label: 'I accept the ', value: 'I accept the Terms and Conditions' }
     ]
 
-    const termsCondtions = <FormattedMessage id='termsCondtions' defaultMessage='Terms & Conditions' description='termsCondtions' />
+    // const termsCondtions = <FormattedMessage id='termsCondtions' defaultMessage='Terms & Conditions' description='termsCondtions' />
     // Options to configure the controls on this page based on the state of the interest.
     const options = getOptions(this.props.interest)
 
@@ -97,31 +97,33 @@ class RegisterInterestItem extends Component {
           <Row>
             {/* Button to handle positive state change */}
             {options.nextStateButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
-              ? <span>
+              ? (
+                <span>
 
-                <Form.Item>
-                  {getFieldDecorator('termsCondtions', {
-                    rules: [
-                      { required: true, message: 'I agree to the Terms and Conditions' }
-                    ]
-                  })(
-                    <Checkbox.Group
-                      options={termsCondtionsOptions}
-                    />
-                  )}
-                  <a
-                    href='/terms'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                  >
-                  Terms and Conditions
-                  </a>
-                </Form.Item>
-                <Button type='primary' disabled={hasErrors(getFieldsError())} shape='round' onClick={this.handleChangeStateButtonClicked.bind(this)}>
-                  {options.nextStateButtonText}
-                </Button>
-                &nbsp;
-              </span> : null}
+                  <Form.Item>
+                    {getFieldDecorator('termsCondtions', {
+                      rules: [
+                        { required: true, message: 'I agree to the Terms and Conditions' }
+                      ]
+                    })(
+                      <Checkbox.Group
+                        options={termsCondtionsOptions}
+                      />
+                    )}
+                    <a
+                      href='/terms'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      Terms and Conditions
+                    </a>
+                  </Form.Item>
+                  <Button type='primary' disabled={hasErrors(getFieldsError())} shape='round' onClick={this.handleChangeStateButtonClicked.bind(this)}>
+                    {options.nextStateButtonText}
+                  </Button>
+                  &nbsp;
+                </span>)
+              : null}
             {/* Button to handle withdrawal from op */}
             {options.withdrawInterestButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
               ? (
