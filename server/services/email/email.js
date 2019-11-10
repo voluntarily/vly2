@@ -57,13 +57,28 @@ const getTransportMock = () =>
     }
   })
 
+const getTransportFromEnvironment = () =>
+  nodemailer.createTransport({
+    host: process.env.VLY_SMTP_HOST,
+    port: process.env.VLY_SMTP_PORT,
+    secure: false
+  })
+
+let currentTransport = null
+
+if (process.env.NODE_ENV === 'test') {
+  currentTransport = getTransportMock
+} else if (process.env.VLY_SMTP_HOST && process.env.VLY_SMTP_PORT) {
+  currentTransport = getTransportFromEnvironment
+} else if (process.env.NODE_ENV === 'development') {
+  currentTransport = getTransportDev
+} else {
+  currentTransport = getTransportSES
+}
+
 module.exports = {
   getTransportSES,
   getTransportDev, // should use this one for development only
   getTransportMock, // use for testing
-  getTransport: (process.env.NODE_ENV === 'test')
-    ? getTransportMock
-    : (process.env.NODE_ENV === 'development')
-      ? getTransportDev
-      : getTransportSES
+  getTransport: currentTransport
 }

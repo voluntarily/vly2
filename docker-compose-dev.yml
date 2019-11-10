@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+  web:
+    image: node:12.13.0-stretch
+    user: '1000:1000'
+    depends_on:
+      - db
+      - mail
+    ports:
+      - "${WEB_PORT:-3122}:3122"
+    volumes:
+      - .:/home/node/app
+    working_dir: /home/node/app
+    command: x/docker-dev/web-container-start-command.sh
+    environment:
+      NEXT_TELEMETRY_DISABLED: 1
+      NODE_ENV: development
+      MONGODB_URI: mongodb://db:27017/vly-dev
+      MONGOMS_DOWNLOAD_MIRROR: "http://downloads.mongodb.org"
+      MONGOMS_VERSION: "v4.0-latest"
+      VLY_SMTP_HOST: mail
+      VLY_SMTP_PORT: 1025
+  db:
+    image: mongo:4.2.1
+    volumes:
+      - dbdata:/data/db
+  mail:
+    image: 'mailhog/mailhog:latest'
+    ports:
+      - "8025:8025"
+
+volumes:
+  dbdata:
