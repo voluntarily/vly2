@@ -8,7 +8,7 @@ function listTags (req, res) {
     if (err) {
       res.status(500).send(err)
     }
-    res.json(fetched.tags)
+    res.json(fetched.tags ? fetched.tags : [])
   })
 }
 
