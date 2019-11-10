@@ -3,7 +3,7 @@ import { Button, message } from 'antd'
 // import fetch from 'isomorphic-fetch'
 import publicPage from '../../hocs/publicPage'
 import TitleSection from '../../components/LandingPageComponents/TitleSection'
-import callApi from '../../lib/apiCaller'
+import callApi from '../../lib/callApi'
 import { FullPage } from '../../components/VTheme/VTheme'
 export class DBfactory extends Component {
   constructor (props) {

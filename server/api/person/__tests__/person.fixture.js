@@ -41,9 +41,9 @@ const people = [
     tags: []
   },
   {
-    name: 'Testy A McTestface',
-    nickname: 'A Testy',
-    about: 'Tester',
+    name: 'Alice Niceteacher',
+    nickname: 'niceteacheralice',
+    about: 'Alice is a registered primary school teacher, working in Napier who has filled in her teacher details',
     location: 'Napier',
     email: 'atesty@voluntarily.nz',
     phone: '027 444 5558',
@@ -52,10 +52,19 @@ const people = [
       object: 'her',
       possessive: 'her'
     },
-    imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
-    role: ['tester', 'volunteer'],
+    imgUrl: 'https://publicdomainvectors.org/photos/teacher.png',
+    role: ['opportunityProvider', 'volunteer'],
     status: 'active',
-    tags: []
+    tags: [],
+    teacher: {
+      registration: {
+        trn: '123456',
+        firstname: 'Alice Mary Jane',
+        lastname: 'Niceteacher',
+        category: 'Full',
+        expiry: '24 Dec 2025'
+      }
+    }
   },
   {
     name: 'Testy B McTestface',

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import apiCaller from '../../lib/apiCaller'
+import callApi from '../../lib/callApi'
 import styled from 'styled-components'
 import { config } from '../../config/config'
 
@@ -15,7 +15,7 @@ const Badge = styled.div`
   `
 
 const getBadgeData = async ({ _id }, setUserBadge) => {
-  const data = await apiCaller(`badge/${_id}`)
+  const data = await callApi(`badge/${_id}`)
   setUserBadge(data)
 }
 

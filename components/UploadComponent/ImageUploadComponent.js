@@ -1,6 +1,6 @@
 import { message } from 'antd'
 import React, { Component } from 'react'
-import callApi from '../../lib/apiCaller'
+import callApi from '../../lib/callApi'
 import './imageuploader.less'
 
 const { Dashboard } = require('@uppy/react')

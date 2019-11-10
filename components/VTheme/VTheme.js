@@ -447,3 +447,19 @@ time {
 
 }
 `
+
+/* Item lists - tidy listings
+*/
+export const Ul = styled.ul`
+  margin: 1.5rem 0 1rem 0;
+  padding-left: 0;
+  list-style: none;
+`
+export const Li = styled.li`
+  list-style: none;
+  font-weight: 500;
+  font-size: 1rem;
+  opacity: 1;
+  color: initial;
+  margin-bottom: 0.3rem;
+`
