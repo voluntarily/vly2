@@ -11,7 +11,6 @@ const config = require('../../../config/config').config
   /api/health/config - prints the current config file and env vars.
 */
 export default (req, res) => {
-  console.log(res)
   res.setHeader('Content-Type', 'application/json')
 
   const result = {
