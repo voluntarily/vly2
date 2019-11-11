@@ -5,9 +5,9 @@ const initializeTags = async (req, res, next) => {
     const { tags } = req.body
     if (tags) {
       try {
-        let tagset = await Tag.findOne().exec()
+        const tagset = await Tag.findOne().exec()
         if (tagset) {
-          let currentTags = new Set(tagset.tags)
+          const currentTags = new Set(tagset.tags)
           tags.forEach(x => {
             if (!currentTags.has(x)) {
               currentTags.add(x)

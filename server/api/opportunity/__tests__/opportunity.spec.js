@@ -8,7 +8,6 @@ import Organisation from '../../organisation/organisation'
 import people from '../../person/__tests__/person.fixture'
 import ops from './opportunity.fixture.js'
 import orgs from '../../organisation/__tests__/organisation.fixture.js'
-import tags from '../../tag/__tests__/tag.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 import archivedOpportunity from './../../archivedOpportunity/archivedOpportunity'
 import { OpportunityStatus } from '../opportunity.constants'
@@ -118,7 +117,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.DRAFT,
-    tags: [t.context.tags[0]._id],
+    tags: [t.context.tags[0]],
     requestor: t.context.people[1]._id
   })
   await opp.save()

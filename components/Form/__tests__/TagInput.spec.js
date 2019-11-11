@@ -88,7 +88,7 @@ test('render the op with a few pre-existing tags, and remove a tag from them', t
   wrapperInstance.removeTag('network')
 
   t.true(mockOnChange.calledOnce)
-  t.true(mockOnChange.calledWith([ firstTag ]))
+  t.true(mockOnChange.calledWith([firstTag]))
 })
 
 test('render when input value doesnt match any existing tags', t => {

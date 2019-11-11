@@ -1,7 +1,6 @@
 import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
-import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 import Activity from '../activity'
 import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
@@ -30,7 +29,7 @@ test.beforeEach('connect and add two activity entries', async (t) => {
     act.owner = t.context.people[index]._id
     act.offerOrg = t.context.orgs[index]._id
     // each act has two consecutive tags from the list
-    act.tags = [ tagList[index], tagList[index + 1] ]
+    act.tags = [tagList[index], tagList[index + 1]]
   })
 
   t.context.activities = await Activity.create(acts).catch((err) => console.error('Unable to create activities', err))
@@ -129,9 +128,8 @@ test.serial('Should not find invalid _id', async t => {
   t.is(res.status, 404)
 })
 
-//test.serial('Should correctly add an activity', async t => {
-  test.serial('activetest', async t => {
-
+// test.serial('Should correctly add an activity', async t => {
+test.serial('activetest', async t => {
   t.plan(2)
 
   const res = await request(server)
@@ -262,9 +260,8 @@ test.serial('Should fail to find - invalid query', async t => {
   t.is(res.status, 404)
 })
 
- test.serial('Should return any activities with matching tags or name/desc/subtitle', async t => {
+test.serial('Should return any activities with matching tags or name/desc/subtitle', async t => {
   // assign tags to activities
-  const tags = tagList
   t.context.activities[2].tags = ['java', 'robots']
   t.context.activities[0].tags = ['java']
   t.context.activities[1].tags = ['robots']
@@ -295,7 +292,6 @@ test.serial('Should fail to find - invalid query', async t => {
   // should return the 3 with assigned tags, and the one with matching name
   t.is(4, got.length)
 })
-
 
 // populate
 test.serial('will populate out the org id with name and img', async t => {

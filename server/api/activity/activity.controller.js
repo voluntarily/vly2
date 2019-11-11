@@ -26,25 +26,24 @@ const getActivities = async (req, res) => {
       const regexSearch = escapeRegex(search)
       const searchExpression = new RegExp(regexSearch, 'i')
       // find any organization matching search
-      const matchingOrgIds = await Organisation.find({ 'name': searchExpression }, '_id').exec()
+      const matchingOrgIds = await Organisation.find({ name: searchExpression }, '_id').exec()
 
       // split around one or more whitespace characters
       const keywordArray = search.split(/\s+/)
       // case insensitive regex which will find tags matching any of the array values
-      //const tagSearchExpression = new RegExp(keywordArray.map(w => escapeRegex(w)).join('|'), 'i')
+      // const tagSearchExpression = new RegExp(keywordArray.map(w => escapeRegex(w)).join('|'), 'i')
       // find tag ids to include in the activity search
-      //const matchingTagIds = await Tag.find({ 'tag': tagSearchExpression },'_id').exec()
-
+      // const matchingTagIds = await Tag.find({ 'tag': tagSearchExpression },'_id').exec()
 
       const searchParams = {
         $or: [
-          { 'name': searchExpression },
-          { 'subtitle': searchExpression },
-          { 'description': searchExpression },
-          { 'tags': { $in: keywordArray } }
+          { name: searchExpression },
+          { subtitle: searchExpression },
+          { description: searchExpression },
+          { tags: { $in: keywordArray } }
         ]
       }
-      console.log("asdfasd", req.query, searchParams, '\n\n\n')
+      console.log('asdfasd', req.query, searchParams, '\n\n\n')
       // mongoose isn't happy if we provide an empty array as an expression
       if (matchingOrgIds.length > 0) {
         const orgIdExpression = {
@@ -62,7 +61,7 @@ const getActivities = async (req, res) => {
 
     try {
       const got = await Activity.find(query, select).sort(sort).exec()
-      console.log("I GOT", got)
+      console.log('I GOT', got)
       res.json(got)
     } catch (e) {
       res.status(404).send(e)
@@ -85,9 +84,9 @@ const getActivity = async (req, res) => {
 
 const putActivity = async (req, res) => {
   try {
-    console.log("Getting activity")
+    console.log('Getting activity')
     await Activity.findByIdAndUpdate(req.params._id, { $set: req.body })
-    console.log("next line")
+    console.log('next line')
     getActivity(req, res)
   } catch (e) {
     console.error(e)
