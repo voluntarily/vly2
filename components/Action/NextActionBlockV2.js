@@ -23,12 +23,13 @@ const NextActionBlockV2 = ({ ...props }) => (
         image='/static/img/actions/discoverActs.png'
         name='Discover'
         description='Discover interesting ways to get involved in your community.'
-        link='../search'
+        link='/search'
       />
       <ActionCard
         image='/static/img/actions/profile2.png'
-        name='Complete your Profile'
-        description='Tell the world about yourself and your skills. Complete profiles score more opportunities to help out!'
+        name='Register as a Requestor'
+        description='If you are a teacher, click here to enable creating new requests for volunteers.'
+        link='/action/registerTeacher'
       />
 
       <ActionCard

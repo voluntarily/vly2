@@ -38,14 +38,24 @@ const personSchema = new Schema({
   },
   // used to indicate whether people show up in searches.
   status: {
-    type: 'String',
+    type: String,
     required: true,
     default: 'active',
     enum: ['active', 'inactive', 'hold']
   },
   dateAdded: { type: 'Date', default: Date.now, required: true },
   href: String,
-  tags: [String]
+  tags: [String],
+  // Teacher Specific fields
+  teacher: {
+    registration: {
+      trn: String, // teacher registration number
+      firstname: String,
+      lastname: String,
+      category: String,
+      expiry: String
+    }
+  }
 })
 
 personSchema.plugin(idvalidator)
