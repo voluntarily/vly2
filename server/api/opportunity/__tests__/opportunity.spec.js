@@ -8,6 +8,7 @@ import Organisation from '../../organisation/organisation'
 import people from '../../person/__tests__/person.fixture'
 import ops from './opportunity.fixture.js'
 import orgs from '../../organisation/__tests__/organisation.fixture.js'
+import tags from '../../tag/__tests__/tag.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 import archivedOpportunity from './../../archivedOpportunity/archivedOpportunity'
 import { OpportunityStatus } from '../opportunity.constants'
@@ -107,7 +108,7 @@ test.serial('Should correctly give number of active Opportunities', async t => {
 })
 
 test.serial('Should send correct data when queried against an _id', async t => {
-  t.plan(4)
+  t.plan(3)
 
   const opp = new Opportunity({
     name: 'The first 1000 metres',
@@ -117,7 +118,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.DRAFT,
-    tags: [t.context.tags[0]],
+    tags: [tags[0]],
     requestor: t.context.people[1]._id
   })
   await opp.save()
@@ -151,7 +152,7 @@ test.serial('Should correctly add an opportunity with default image', async t =>
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.DRAFT,
-    tags: t.context.tags,
+    tags: tags,
     requestor: t.context.people[0]._id
   }
 
@@ -254,10 +255,9 @@ test.serial('Should include description in search', async t => {
 
 test.serial('Should return any opportunities with matching tags or name/desc/subtitle', async t => {
   // assign tags to opportunities
-  const tags = t.context.tags
-  t.context.opportunities[2].tags = [tags[0], tags[2]]
-  t.context.opportunities[0].tags = [tags[0]]
-  t.context.opportunities[1].tags = [tags[2]]
+  t.context.opportunities[2].tags = ['java', 'robots']
+  t.context.opportunities[0].tags = ['java']
+  t.context.opportunities[1].tags = ['robots']
 
   await Promise.all([
     t.context.opportunities[2].save(),
