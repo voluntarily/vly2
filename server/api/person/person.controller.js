@@ -14,7 +14,7 @@ function getPersonBy (req, res) {
     query = req.params
   }
 
-  Person.findOne(query).populate('tags').exec((_err, got) => {
+  Person.findOne(query).exec((_err, got) => {
     if (!got) { // person does not exist
       return res.status(404).send({ error: 'person not found' })
     }
@@ -34,7 +34,7 @@ function listPeople (req, res) {
     sort = req.query.s ? JSON.parse(req.query.s) : sort
     select = req.query.p ? JSON.parse(req.query.p) : {}
 
-    Person.find(query, select).populate('tags').sort(sort)
+    Person.find(query, select).sort(sort)
       .then(got => {
         res.json(got)
       })
