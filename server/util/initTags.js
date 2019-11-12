@@ -21,8 +21,8 @@ const initializeTags = async (req, res, next) => {
       } catch (error) {
         console.log('Failed to fetch tags to append to', error)
       }
-      next()
     }
+    next()
   } catch (e) {
     console.error('qwerty', e)
     res.status(500).send(e)
