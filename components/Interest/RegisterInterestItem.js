@@ -51,9 +51,10 @@ class RegisterInterestItem extends Component {
       getFieldDecorator, getFieldsError
     } = this.props.form
 
-    const termsCondtionsOptions = [
-      { label: 'I accept the ', value: 'I accept the Terms and Conditions' }
+    const termsCondtionsOptions = [ 
+      { label: 'I accept the ', value: true } 
     ]
+    
 
     // const termsCondtions = <FormattedMessage id='termsCondtions' defaultMessage='Terms & Conditions' description='termsCondtions' />
     // Options to configure the controls on this page based on the state of the interest.
@@ -101,13 +102,13 @@ class RegisterInterestItem extends Component {
                 <span>
 
                   <Form.Item>
-                    {getFieldDecorator('termsCondtions', {
+                    {getFieldDecorator('termsConditions', {
                       rules: [
                         { required: true, message: 'I agree to the Terms and Conditions' }
                       ]
                     })(
                       <Checkbox.Group
-                        options={termsCondtionsOptions}
+                        options = {termsCondtionsOptions}
                       />
                     )}
                     <a
