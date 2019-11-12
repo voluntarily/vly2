@@ -105,15 +105,15 @@ test('initial state', t => {
 
   // click button and get form again, click action
   wrapper.find('button').simulate('click')
-  //t.is(wrapper.find('button').first().text(), 'Get Involved')
-  //wrapper.find('button').first().simulate('click')
+  t.is(wrapper.find('button').first().text(), 'Get Involved')
+  wrapper.find('button').first().simulate('click')
 
   //t.is(wrapper.find('.ant-form-explain').text(), 'Comment is required')
 
   // fill in comment and click again
   const comment = wrapper.find('textarea')
   comment.simulate('change', { target: { value: 'My Comment' } })
-  //wrapper.find('button').first().simulate('click')
+  wrapper.find('button').first().simulate('click')
 
   console.log('Terms and Conditions test starts here')
   
