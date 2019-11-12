@@ -14,7 +14,7 @@ import withMockRoute from '../server/util/mockRouter'
 import thunk from 'redux-thunk'
 import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
-import { API_URL } from '../lib/apiCaller'
+import { API_URL } from '../lib/callApi'
 
 const locations = ['Auckland, Wellington, Christchurch']
 

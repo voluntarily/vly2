@@ -38,7 +38,7 @@ const personSchema = new Schema({
   },
   // used to indicate whether people show up in searches.
   status: {
-    type: 'String',
+    type: String,
     required: true,
     default: 'active',
     enum: ['active', 'inactive', 'hold']
@@ -50,7 +50,17 @@ const personSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Tag'
     }
-  ]
+  ],
+  // Teacher Specific fields
+  teacher: {
+    registration: {
+      trn: String, // teacher registration number
+      firstname: String,
+      lastname: String,
+      category: String,
+      expiry: String
+    }
+  }
 })
 
 personSchema.plugin(idvalidator)

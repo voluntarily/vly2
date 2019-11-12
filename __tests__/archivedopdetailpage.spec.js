@@ -11,7 +11,7 @@ import { Provider } from 'react-redux'
 import withMockRoute from '../server/util/mockRouter'
 import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
-import { API_URL } from '../lib/apiCaller'
+import { API_URL } from '../lib/callApi'
 
 const fetchMock = require('fetch-mock')
 

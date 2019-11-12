@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import NextActionBlock from '../../components/Action/NextActionBlock'
+import NextActionBlock from '../../components/Action/NextActionBlockV2'
 import ActAdd from '../../components/Act/ActAdd'
 import OpAdd from '../../components/Op/OpAdd'
 import OpList from '../../components/Op/OpList'
@@ -183,8 +183,6 @@ class PersonHomePage extends Component {
           <TabPane tab={opsTab} key='1'>
 
             <SectionWrapper>
-
-              {/* // TODO: [VP-208] list of things volunteers can do on home page */}
               <NextActionBlock />
             </SectionWrapper>
             {
