@@ -1,7 +1,6 @@
 const escapeRegex = require('../../util/regexUtil')
 const Opportunity = require('./opportunity')
 const Interest = require('./../interest/interest')
-const Tag = require('./../tag/tag')
 const Person = require('./../person/person')
 const ArchivedOpportunity = require('./../archivedOpportunity/archivedOpportunity')
 const InterestArchive = require('./../interest-archive/interestArchive')
@@ -38,27 +37,15 @@ const getOpportunities = async (req, res) => {
       // split around one or more whitespace characters
       const keywordArray = search.split(/\s+/)
 
-      // case insensitive regex which will find tags matching any of the array values
-      const tagSearchExpression = new RegExp(keywordArray.map(w => escapeRegex(w)).join('|'), 'i')
-
-      // find tag ids to include in the opportunity search
-      const matchingTagIds = await Tag.find({ tag: tagSearchExpression }, '_id').exec()
-
       const searchExpression = new RegExp(regexSearch, 'i')
+
       const searchParams = {
         $or: [
           { name: searchExpression },
           { subtitle: searchExpression },
-          { description: searchExpression }
+          { description: searchExpression },
+          { tags: { $in: keywordArray } }
         ]
-      }
-
-      // mongoose isn't happy if we provide an empty array as an expression
-      if (matchingTagIds.length > 0) {
-        const tagIdExpression = {
-          $or: matchingTagIds.map(id => ({ tags: id }))
-        }
-        searchParams.$or.push(tagIdExpression)
       }
 
       query = {
@@ -130,7 +117,6 @@ const getOpportunity = async (req, res) => {
       .findOne(req.params)
       .populate('requestor', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl category')
-      .populate('tags')
       .exec()
     if (got == null) {
       // BUG: [VP-478] populate tags with many tags can cause a 507 Insufficient Space error.
