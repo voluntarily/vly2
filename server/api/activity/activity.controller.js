@@ -43,7 +43,6 @@ const getActivities = async (req, res) => {
           { tags: { $in: keywordArray } }
         ]
       }
-      console.log('asdfasd', req.query, searchParams, '\n\n\n')
       // mongoose isn't happy if we provide an empty array as an expression
       if (matchingOrgIds.length > 0) {
         const orgIdExpression = {
