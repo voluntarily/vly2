@@ -2,20 +2,23 @@ import test from 'ava'
 import request from 'supertest'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import { server, appReady } from '../../../server'
+import { regions } from '../../location/locationData'
+
+// Schemas
 import Opportunity from '../opportunity'
+import { OpportunityStatus } from '../opportunity.constants'
 import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
+import archivedOpportunity from './../../archivedOpportunity/archivedOpportunity'
+import Interest from '../../interest/interest'
+import InterestArchive from '../../interest-archive/interestArchive'
+
+// Fixtures
 import people from '../../person/__tests__/person.fixture'
 import ops from './opportunity.fixture.js'
 import orgs from '../../organisation/__tests__/organisation.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
-import archivedOpportunity from './../../archivedOpportunity/archivedOpportunity'
-import { OpportunityStatus } from '../opportunity.constants'
-import Interest from '../../interest/interest'
-import InterestArchive from '../../interest-archive/interestArchive'
-
-const { regions } = require('../../location/locationData')
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -34,6 +37,7 @@ test.beforeEach('connect and add two oppo entries', async (t) => {
   ops.map((op, index) => {
     op.requestor = t.context.people[index]._id
     op.offerOrg = t.context.orgs[1]._id
+    op.tags = [tags[index]]
   })
   t.context.opportunities = await Opportunity.create(ops).catch((err) => console.error('Unable to create opportunities', err))
 })
@@ -147,7 +151,7 @@ test.serial('Should correctly add an opportunity with default image', async t =>
   t.plan(3)
   const op = {
     name: 'The last 2000 metres',
-    subtitle: 'Launching into space step 5',
+    subtitle: 'Launching into space step 50',
     description: 'Project to build a simple rocket that will reach 400m',
     duration: '4 hours',
     location: 'Albany, Auckland',
@@ -165,7 +169,7 @@ test.serial('Should correctly add an opportunity with default image', async t =>
   t.is(res.status, 200)
 
   const savedOpportunity = await Opportunity.findOne({ name: op.name }).exec()
-  t.is(savedOpportunity.subtitle, 'Launching into space step 5')
+  t.is(savedOpportunity.subtitle, 'Launching into space step 50')
   t.is(savedOpportunity.imgUrl, '/static/img/opportunity/opportunity.png')
 })
 
@@ -180,7 +184,8 @@ test.serial('Should correctly delete an opportunity', async t => {
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.DRAFT,
-    requestor: t.context.people[0]._id
+    requestor: t.context.people[0]._id,
+    tags: tags
   })
   await opp.save()
 
@@ -302,7 +307,8 @@ test.serial('Should update from draft to active', async t => {
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.DRAFT,
-    requestor: t.context.people[0]._id
+    requestor: t.context.people[0]._id,
+    tags: []
   })
 
   await opp.save()
@@ -329,7 +335,8 @@ test.serial('Should archive Opportunity when a completed update is sent', async 
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.ACTIVE,
-    requestor: t.context.people[0]._id
+    requestor: t.context.people[0]._id,
+    tags
   })
 
   await opp.save()
@@ -356,7 +363,8 @@ test.serial('should archive interests associated with opportunity', async t => {
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.DRAFT,
-    requestor: t.context.people[0]._id
+    requestor: t.context.people[0]._id,
+    tags
   })
 
   await opp.save()
@@ -394,7 +402,8 @@ test.serial('should return 400 for a bad request', async t => {
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.DRAFT,
-    requestor: t.context.people[0]._id
+    requestor: t.context.people[0]._id,
+    tags
   })
 
   await opp.save()
@@ -484,7 +493,8 @@ test.serial('should permit titles with special characters', async t => {
       description: 'Building with Lego Mindstorms EV3.',
       location: 'Wellington City',
       status: OpportunityStatus.ACTIVE,
-      requestor: t.context.people[0]._id
+      requestor: t.context.people[0]._id,
+      tags: ['lego']
     })
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
@@ -505,7 +515,9 @@ test.serial('should permit descriptions with special characters', async t => {
       description: 'Build and program Lego robots. " / % ^ ( ) * @ #',
       location: 'Wellington City',
       status: OpportunityStatus.ACTIVE,
-      requestor: t.context.people[0]._id
+      requestor: t.context.people[0]._id,
+      tags: ['robot']
+
     })
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
@@ -525,7 +537,9 @@ test.serial('should strip script tags and contents from name', async t => {
       description: '-',
       location: 'Wellington City',
       status: OpportunityStatus.ACTIVE,
-      requestor: t.context.people[0]._id
+      requestor: t.context.people[0]._id,
+      tags: ['lego', 'robot']
+
     })
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
@@ -544,7 +558,9 @@ test.serial('should strip "color:blue" and "font-size:2em" from style attribute'
       description: '<span style="color:blue; font-size:2em;">Build</span> and program <span style="color:rgb(250,0,0)">Lego</span> robots.',
       location: 'Wellington City',
       status: OpportunityStatus.ACTIVE,
-      requestor: t.context.people[0]._id
+      requestor: t.context.people[0]._id,
+      tags: ['blue']
+
     })
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
@@ -565,7 +581,8 @@ test.serial('should allow iframes from youtube only, and allow height, src and w
         '<p><iframe width="560" height="315" src="https://www.youtuberepeater.com/embed/wLupj65qJHg"></iframe></p>',
       location: 'Wellington City',
       status: OpportunityStatus.ACTIVE,
-      requestor: t.context.people[0]._id
+      requestor: t.context.people[0]._id,
+      tags: ['iframe']
     })
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
