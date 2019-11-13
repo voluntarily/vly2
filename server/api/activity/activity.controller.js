@@ -30,10 +30,6 @@ const getActivities = async (req, res) => {
 
       // split around one or more whitespace characters
       const keywordArray = search.split(/\s+/)
-      // case insensitive regex which will find tags matching any of the array values
-      // const tagSearchExpression = new RegExp(keywordArray.map(w => escapeRegex(w)).join('|'), 'i')
-      // find tag ids to include in the activity search
-      // const matchingTagIds = await Tag.find({ 'tag': tagSearchExpression },'_id').exec()
 
       const searchParams = {
         $or: [
