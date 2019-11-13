@@ -24,7 +24,11 @@ const organisationSchema = new Schema({
     members: String,
     outsiders: String
   },
-  dateAdded: { type: 'Date', default: Date.now, required: true }
+  dateAdded: { type: 'Date', default: Date.now, required: true },
+  ageRange: {
+    from: Number,
+    to: Number
+  }
 })
 
 module.exports = mongoose.model('Organisation', organisationSchema)
