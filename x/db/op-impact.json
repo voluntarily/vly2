@@ -8,8 +8,6 @@
   "offerOrg": "Albany High School",
   "location": "Auckland",
   "status": "draft",
-  "tags": [
-    { "_id": "2d00626d9c22c22080187bb6" }
-  ],
+  "tags": ["networks"],
   "requestor": "5ccbe4c26c285b7184bff574"
 }
