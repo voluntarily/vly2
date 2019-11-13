@@ -244,14 +244,15 @@ class OrgDetailForm extends Component {
           </Form.Item>
 
           {(getFieldValue('category') || []).includes(OrganisationCategory.SCHOOL)
-            ? <Form.Item label={orgAgeRange}>
-              {getFieldDecorator('ageRange')(
-                <NumericRange
-                  fromPlaceholder='5'
-                  toPlaceholder='18'
-                />
-              )}
-              </Form.Item>
+            ? (
+              <Form.Item label={orgAgeRange}>
+                {getFieldDecorator('ageRange')(
+                  <NumericRange
+                    fromPlaceholder='5'
+                    toPlaceholder='18'
+                  />
+                )}
+              </Form.Item>)
             : null}
 
           <Button
