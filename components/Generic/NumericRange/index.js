@@ -19,16 +19,16 @@ const Container = styled.div`
 // TODO: Workaround - unable to use SFC here as there's an issue upstream in antd to do with
 // refs and the new version of reactjs
 class NumericRange extends React.Component {
-  render() {
+  render () {
     const onChange = (change) => this.props.onChange({ ...(this.props.value || {}), ...change })
 
     return (
       <Container>
-          <span>From: </span>
-          <InputNumber placeholder={this.props.fromPlaceholder} onChange={from => onChange({ from })} />
+        <span>From: </span>
+        <InputNumber placeholder={this.props.fromPlaceholder} onChange={from => onChange({ from })} />
 
-          <span>to: </span>
-          <InputNumber placeholder={this.props.toPlaceholder} onChange={to => onChange({ to })} />
+        <span>to: </span>
+        <InputNumber placeholder={this.props.toPlaceholder} onChange={to => onChange({ to })} />
       </Container>)
   }
 }
@@ -37,7 +37,7 @@ NumericRange.propTypes = {
   value: PropTypes.object,
   onChange: PropTypes.func,
   fromPlaceholder: PropTypes.string,
-  toPlaceholder: PropTypes.string,
+  toPlaceholder: PropTypes.string
 }
 
 export default NumericRange

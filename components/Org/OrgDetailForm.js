@@ -245,11 +245,12 @@ class OrgDetailForm extends Component {
 
           {(getFieldValue('category') || []).includes(OrganisationCategory.SCHOOL)
             ? <Form.Item label={orgAgeRange}>
-                {getFieldDecorator('ageRange')(
-                  <NumericRange
-                    fromPlaceholder="5"
-                    toPlaceholder="18" />
-                )}
+              {getFieldDecorator('ageRange')(
+                <NumericRange
+                  fromPlaceholder='5'
+                  toPlaceholder='18'
+                />
+              )}
               </Form.Item>
             : null}
 
@@ -301,7 +302,7 @@ OrgDetailForm.propTypes = {
     facebook: PropTypes.string,
     twitter: PropTypes.string,
     _id: PropTypes.string,
-    ageRange: PropTypes.object,
+    ageRange: PropTypes.object
   }).isRequired,
   form: PropTypes.object,
   params: PropTypes.shape({
