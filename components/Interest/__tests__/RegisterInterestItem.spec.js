@@ -81,7 +81,7 @@ const interests = [
 
 ]
 
-test.only('initial state', t => {
+test('initial state', t => {
   const changeStatus = sinon.fake()
   const withdraw = sinon.fake()
 
@@ -116,10 +116,9 @@ test.only('initial state', t => {
   getInvolvedBtn = wrapper.find('button').first()
   t.is(getInvolvedBtn.prop('disabled'), true)
 
-  // fill in checkbbox and click again
+  // fill in checkbox and click again
   const checkbox = wrapper.find({ type: 'checkbox' }).last()
   checkbox.simulate('change', { target: { checked: 'true' } })
-  // wrapper.update()
   getInvolvedBtn = wrapper.find('button').first()
   t.is(getInvolvedBtn.prop('disabled'), false)
 

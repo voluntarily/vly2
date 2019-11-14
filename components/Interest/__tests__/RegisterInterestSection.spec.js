@@ -84,10 +84,13 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
   // fill in comment on input field
   const comment = wrapper.find('#register_interest_form_comment').first()
   comment.simulate('change', { target: { value: 'Test mount RegisterInterestSection with with no existing interest' } })
+  const checkbox = wrapper.find({ type: 'checkbox' }).last()
+  checkbox.simulate('change', { target: { checked: 'true' } })
+
   wrapper.find('button').first().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('h1').first().text(), 'How do you want to get involved?')
+  t.is(wrapper.find('h1').first().text(), 'Thank you for expressing your interest!')
 
   // press Get Involved! button
   t.truthy(myMock.done())
