@@ -3,7 +3,6 @@ import test from 'ava'
 import people from '../../../server/api/person/__tests__/person.fixture'
 import sinon from 'sinon'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
-import { Checkbox } from 'antd';
 
 // Initial opportunities added into test db
 const opid = '5cc903e5f94141437622cea7'
@@ -27,7 +26,7 @@ const interests = [
     _id: interestid,
     person: people[0],
     opportunity: ops[0],
-    comment: "Leshgooo",
+    comment: 'Leshgooo',
     termsCondition: true,
     status: null
   },
@@ -35,7 +34,7 @@ const interests = [
     _id: interestid,
     person: people[0],
     opportunity: ops[0],
-    comment: "Underrrr",
+    comment: 'Underrrr',
     termsCondition: true,
     status: 'interested'
   },
@@ -82,7 +81,7 @@ const interests = [
 
 ]
 
-test('initial state', t => {
+test.only('initial state', t => {
   const changeStatus = sinon.fake()
   const withdraw = sinon.fake()
 
@@ -105,29 +104,27 @@ test('initial state', t => {
 
   // click button and get form again, click action
   wrapper.find('button').simulate('click')
-  t.is(wrapper.find('button').first().text(), 'Get Involved')
-  wrapper.find('button').first().simulate('click')
 
-  //t.is(wrapper.find('.ant-form-explain').text(), 'Comment is required')
+  // the Get Involved button should be disabled until we enter a comment
+  let getInvolvedBtn = wrapper.find('button').first()
+  t.is(getInvolvedBtn.text(), 'Get Involved')
+  t.is(getInvolvedBtn.prop('disabled'), true)
 
   // fill in comment and click again
   const comment = wrapper.find('textarea')
   comment.simulate('change', { target: { value: 'My Comment' } })
+  getInvolvedBtn = wrapper.find('button').first()
+  t.is(getInvolvedBtn.prop('disabled'), true)
+
+  // fill in checkbbox and click again
+  const checkbox = wrapper.find({ type: 'checkbox' }).last()
+  checkbox.simulate('change', { target: { checked: 'true' } })
+  // wrapper.update()
+  getInvolvedBtn = wrapper.find('button').first()
+  t.is(getInvolvedBtn.prop('disabled'), false)
+
+  // click getInvolved Button
   wrapper.find('button').first().simulate('click')
-
-  console.log('Terms and Conditions test starts here')
-  
-  //t.is(wrapper.find('.ant-form-explain').text(), 'I agree to the Terms and Conditions')
-
-  //fill in checkbbox and click again
-  console.log("cehjsjkas")
-  const checkboxState = wrapper.find({type: 'checkbox'})
-  console.log("checkbox value ====" + checkboxState.checked)
-  checkboxState.simulate('change', {target: { checked: 'true'}})
-  //console.log("checkbox value ====" + checkboxState)
-  t.is(wrapper.find('button').first().text(), 'Get Involved')
-  wrapper.find('button').first().simulate('click')
-
   // status change callback is called.
   t.truthy(changeStatus.calledOnce)
 })
@@ -156,7 +153,7 @@ test('completed state', t => {
       onWithdraw={withdraw}
     />)
   t.is(wrapper.find('h1').first().text(), 'Thank you for expressing your interest!')
-})  
+})
 
 test('cancelled state', t => {
   const changeStatus = sinon.fake()
@@ -169,7 +166,7 @@ test('cancelled state', t => {
       onWithdraw={withdraw}
     />)
   // testing the words that come out
-  t.is(wrapper.find('h1').first().text(), 'Thank you so much!')       
+  t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
 })
 
 test('invited', t => {
