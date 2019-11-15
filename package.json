@@ -49,6 +49,8 @@
     "enzyme-adapter-react-16": "^1.15.1",
     "eslint-plugin-html": "^6.0.0",
     "express": "^4.16.4",
+    "fs": "0.0.1-security",
+    "fs-extra": "^8.1.0",
     "glob": "^7.1.5",
     "hoist-non-react-statics": "^3.3.0",
     "ical-generator": "^1.8.2",
