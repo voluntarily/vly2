@@ -9,7 +9,6 @@ export default async (req, res) => {
   if (!req.session.isAuthenticated) res.status(403).end()
 
   try {
-    const { cmd } = req.query
     const payload = req.query
     payload.token = makeURLToken(payload)
     return res.json(payload)
