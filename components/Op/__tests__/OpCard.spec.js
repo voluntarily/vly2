@@ -79,15 +79,25 @@ test('ops with start and end date should be display start date', t => {
   t.is(wrapper.find('figcaption').find('p').at(1).text(), moment(op.date[0]).format(' 🗓 h:mmA - ddd DD/MM/YY '))
 })
 
-test('op with an interested should append interested inside strong tag for subtitle', t => {
+test('op with an interest status should have related icon appear in card', t => {
   const op = t.context.ops[2]
   const wrapper = mountWithIntl(
     <OpCard op={op} />
-  )
-  // should find interested status inside a strong tag
-  t.is(wrapper.find('strong').last().text(), ' - interested')
-  // should find the op name suffix with - interested inside last p tag
-  t.is(wrapper.find('figcaption').find('p').last().text(), `${op.subtitle} - interested`)
+  )  
+  // when interest status is interested, icon should be like
+  t.truthy(wrapper.find('i').first().hasClass('anticon-like'))
+
+  // Dynamic update is not working, make seperate tests ??
+  op.interest.status = 'invited'
+  wrapper.update().render()
+  console.log(wrapper.html())
+  t.truthy(wrapper.find('i').first().hasClass('anticon-message'))
+
+  op.interest.status = 'committed'
+  wrapper.update()
+  t.truthy(wrapper.find('i').first().hasClass('anticon-check-circle'))
+
+  // TODO tidy up old test logic and add test for each interest status
 })
 
 test('ops without location and duration should display P tags with blank', t => {
