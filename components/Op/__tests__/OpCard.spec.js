@@ -83,7 +83,7 @@ test('op with an interest status should have related icon appear in card', t => 
   const op = t.context.ops[2]
   const wrapper = mountWithIntl(
     <OpCard op={op} />
-  )  
+  )
   // when interest status is interested, icon should be like
   t.truthy(wrapper.find('i').first().hasClass('anticon-like'))
 
