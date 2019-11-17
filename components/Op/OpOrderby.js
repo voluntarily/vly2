@@ -10,7 +10,7 @@ const OpOrderby = (props) => {
     marginTop: -60
   }
   return (
-    <Select placeholder='Sort By' defaultValue='Date' style={style} onChange={props.sortHandler}>
+    <Select placeholder='Sort By' defaultValue='Date' style={style} onChange={props.handleSort}>
       <Select.Option name='date' value='date'>
         <FormattedMessage
           id='sortDate'
