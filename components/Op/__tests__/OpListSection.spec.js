@@ -331,7 +331,6 @@ test.serial('Test sort by date', async t => {
       }
       return op
     })
-    console.log(2, opsModified)
     myMock.getOnce(api, opsModified)
 
     const wrapper = await mountWithIntl(
