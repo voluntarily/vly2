@@ -366,7 +366,6 @@ test.serial('Test sort by commitment', async t => {
   wrapper.update()
   // Checking first and last duration in opcard list. The oplist is sorted from low to high, i.e short to long
   // should put #3 15 mins before #2 at 4 hours
-  console.log(wrapper.find('OpCard').at(2).text().includes('2 Self driving model cars'))
   t.is(wrapper.find('OpCard').at(1).text().includes('3 Growing in the garden'), true)
   t.is(wrapper.find('OpCard').at(2).text().includes('2 Self driving model cars'), true)
   t.truthy(myMock.done())
