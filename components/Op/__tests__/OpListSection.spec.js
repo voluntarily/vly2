@@ -341,7 +341,6 @@ test.serial('Test sort by date', async t => {
     await sleep(1)
     wrapper.update()
     // Checking first and last name of an opportunity in opcard list based on their dates
-    console.log(wrapper.find('OpCard').last().text())
     t.is(wrapper.find('OpCard').first().text().includes('1 Mentor'), true)
     t.is(wrapper.find('OpCard').last().text().includes('4 The first 100'), true)
     t.truthy(myMock.done())
@@ -367,8 +366,9 @@ test.serial('Test sort by commitment', async t => {
   wrapper.update()
   // Checking first and last duration in opcard list. The oplist is sorted from low to high, i.e short to long
   // should put #3 15 mins before #2 at 4 hours
-  t.is(wrapper.find('OpCard').at(1).text().includes('15 mins'), true)
-  t.is(wrapper.find('OpCard').at(2).text().includes('4 hours'), true)
+  console.log(wrapper.find('OpCard').at(2).text().includes('2 Self driving model cars'))
+  t.is(wrapper.find('OpCard').at(1).text().includes('3 Growing in the garden'), true)
+  t.is(wrapper.find('OpCard').at(2).text().includes('2 Self driving model cars'), true)
   t.truthy(myMock.done())
   myMock.restore()
 })
