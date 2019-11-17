@@ -331,6 +331,7 @@ test.serial('Test sort by date', async t => {
       }
       return op
     })
+    console.log(1, opsModified)
     myMock.getOnce(api, opsModified)
 
     const wrapper = await mountWithIntl(
@@ -341,6 +342,7 @@ test.serial('Test sort by date', async t => {
     await sleep(1)
     wrapper.update()
     // Checking first and last name of an opportunity in opcard list based on their dates
+    console.log(wrapper.find('OpCard').last().text())
     t.is(wrapper.find('OpCard').first().text().includes('1 Mentor'), true)
     t.is(wrapper.find('OpCard').last().text().includes('5 Going'), true)
     t.truthy(myMock.done())
@@ -366,7 +368,8 @@ test.serial('Test sort by commitment', async t => {
   wrapper.update()
   // Checking first and last duration in opcard list. The oplist is sorted from low to high, i.e short to long
   // should put #3 15 mins before #2 at 4 hours
-  // console.log(wrapper.find('OpCard').at(2).text())
+  console.log(wrapper.find('OpCard').at(1).text())
+  console.log(wrapper.find('OpCard').at(2).text())
   t.is(wrapper.find('OpCard').at(1).text().includes('5 Going to the moon'), true)
   t.is(wrapper.find('OpCard').at(2).text().includes('1 Mentor a year'), true)
   t.truthy(myMock.done())
