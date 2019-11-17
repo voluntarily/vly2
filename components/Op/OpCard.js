@@ -40,9 +40,10 @@ const OpCard = ({ op }) => {
   const interestIcon = ((interest) => {
     if (!interest) { return '' }
     switch (interest.status) {
-      case 'interested': return <StyledIcon type='like' theme='twoTone' twoToneColor='#08c' /> // interested
+      case 'interested': return <StyledIcon type='like' theme='twoTone' twoToneColor='#6549AA' /> // interested
       case 'invited': return <StyledIcon type='message' theme='twoTone' twoToneColor='#fb0' /> // invited
       case 'committed': return <StyledIcon type='check-circle' theme='twoTone' twoToneColor='#0f0' /> // committed
+      case 'declined': return <StyledIcon type='stop' theme='twoTone' twoToneColor='#f00' /> // declined. Icons: stop/close-circle/dislike
       default: return ''
     }
   })(op.interest)

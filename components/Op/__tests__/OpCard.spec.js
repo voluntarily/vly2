@@ -89,7 +89,7 @@ test('op with an interest status should have related icon appear in card', t => 
 
   // Dynamic update is not working, make seperate tests ??
   op.interest.status = 'invited'
-  wrapper.update().render()
+  wrapper.update()
   console.log(wrapper.html())
   t.truthy(wrapper.find('i').first().hasClass('anticon-message'))
 
