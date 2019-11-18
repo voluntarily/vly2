@@ -1,7 +1,7 @@
 /* Dumb React component Shows contents of an opportunity
  */
 import { FormattedMessage } from 'react-intl'
-import { Button, Divider, Tabs, Icon } from 'antd'
+import { Button, Divider, Tabs } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
 import moment from 'moment'
@@ -25,44 +25,49 @@ import {
 
 const { TabPane } = Tabs
 
+function callback (key) {
+  // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
+}
 
 const aboutTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-    <Icon type='info-circle' />
+ 
     <FormattedMessage id='orgAbout' />
   </span>
 )
 
 const questionTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-    <Icon type='question' />
+ 
     Questions
   </span>
 )
 
 const manageTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-    <Icon type='info-circle' />
+
     Manage Volunteers
   </span>
 )
 
 const editTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-    <Icon type='setting' />
+   
     Edit Activity
   </span>
 )
 
 const AboutGrid = styled.div`
-margin-top: 4rem;
+margin: 2rem 0;
 display: grid;
 grid-template-columns: 25rem 1fr;
 gap: 5rem;
 text-align: left;
 
-`
 
+`
+const TabContainer = styled.div`
+margin-top: 2rem;`
 
 
 
@@ -92,7 +97,7 @@ export function OpDetail ({ op }) {
         </Left>
         <Right>
           <h1>{op.name}</h1>
-          <h3>{op.location}</h3>
+          <h4>{op.location}</h4>
           <ItemContainer>
             <ItemDuration duration={op.duration} />
             <ItemDate startDate={startDate} endDate={endDate} />
@@ -100,8 +105,9 @@ export function OpDetail ({ op }) {
             </ItemContainer>
         </Right>
       </HalfGrid>
-      <Tabs style={shadowStyle}>
-        <TabPane tab={aboutTab}>
+      <TabContainer>
+      <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
+        <TabPane tab={aboutTab}  key='1'>
 
           <AboutGrid>
           <div><h2>About this Activity</h2></div><ItemDescription>
@@ -116,7 +122,9 @@ export function OpDetail ({ op }) {
             />
           </ItemDescription>
           </AboutGrid>
-          <Divider />
+         <Divider></Divider>
+   
+
           <AboutGrid>
 
           <div><h2>Organised by</h2></div>
@@ -128,10 +136,11 @@ export function OpDetail ({ op }) {
           </AboutGrid>
           
         </TabPane>
-        <TabPane tab={questionTab} />
-        <TabPane tab={manageTab} />
-        <TabPane tab={editTab} />
+        <TabPane tab={questionTab}  key='2'/>
+        <TabPane tab={manageTab}  key='3'/>
+        <TabPane tab={editTab}  key='4'/>
       </Tabs>
+      </TabContainer>
     </>
   )
 }
