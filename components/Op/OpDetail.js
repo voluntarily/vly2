@@ -22,6 +22,7 @@ import {
   ItemDate,
   ItemImage
 } from '../VTheme/ItemList'
+import { OpQuestion } from './OpQuestion'
 
 const { TabPane } = Tabs
 
@@ -136,7 +137,9 @@ export function OpDetail ({ op }) {
           </AboutGrid>
           
         </TabPane>
-        <TabPane tab={questionTab}  key='2'/>
+        <TabPane tab={questionTab}  key='2'>
+          <OpQuestion />
+        </TabPane>
         <TabPane tab={manageTab}  key='3'/>
         <TabPane tab={editTab}  key='4'/>
       </Tabs>
