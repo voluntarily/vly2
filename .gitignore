@@ -13,7 +13,6 @@ yarn.lock
 .ssh
 *.pem
 .env
-package-lock.json
 .vscode/launch.json
 public/static/upload/*
 public/static/upload-test/*
