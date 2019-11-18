@@ -209,18 +209,19 @@ export class OpDetailPage extends Component {
     } else {
       return (!this.props.isNew &&
         <FullPage>
+
+          <OpDetail op={op} />
+          <Divider />
           {this.canEdit(op) &&
             <Button
               id='editOpBtn'
-              style={{ float: 'right' }}
+              style={{ marginBottom: '1rem' }}
               type='primary'
               shape='round'
               onClick={() => this.setState({ editing: true })}
             >
               <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
             </Button>}
-          <OpDetail op={op} />
-          <Divider />
           <OpVolunteerInterestSection
             isAuthenticated={this.props.isAuthenticated}
             canRegisterInterest={this.canRegisterInterest(op)}
