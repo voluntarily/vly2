@@ -32,45 +32,34 @@ function callback (key) {
 
 const aboutTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
- 
     <FormattedMessage id='orgAbout' />
   </span>
 )
 
 const questionTab = (
-  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
- 
-    Questions
-  </span>
+  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Questions</span>
 )
 
 const manageTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-
     Manage Volunteers
   </span>
 )
 
 const editTab = (
-  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-   
-    Edit Activity
-  </span>
+  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Edit Activity</span>
 )
 
 const AboutGrid = styled.div`
-margin: 2rem 0;
-display: grid;
-grid-template-columns: 25rem 1fr;
-gap: 5rem;
-text-align: left;
-
-
+  margin: 2rem 0;
+  display: grid;
+  grid-template-columns: 25rem 1fr;
+  gap: 5rem;
+  text-align: left;
 `
 const TabContainer = styled.div`
-margin-top: 2rem;`
-
-
+  margin-top: 2rem;
+`
 
 export function OpDetail ({ op }) {
   // This will make sure that if the description is undefined we will set it to an empty string
@@ -92,9 +81,6 @@ export function OpDetail ({ op }) {
       <HalfGrid>
         <Left>
           <ItemImage src={img} alt={op.name} />
-          <TagContainer>
-            <TagDisplay tags={op.tags} />
-          </TagContainer>
         </Left>
         <Right>
           <h1>{op.name}</h1>
@@ -103,46 +89,51 @@ export function OpDetail ({ op }) {
             <ItemDuration duration={op.duration} />
             <ItemDate startDate={startDate} endDate={endDate} />
             <ItemStatus status={op.status} />
-            </ItemContainer>
+          </ItemContainer>
         </Right>
       </HalfGrid>
       <TabContainer>
-      <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
-        <TabPane tab={aboutTab}  key='1'>
+        <Tabs style={shadowStyle} defaultActiveKey='2' onChange={callback}>
+          <TabPane tab={aboutTab} key='1'>
+            <AboutGrid>
+              <div>
+                <h2>About this Activity</h2>{' '}
 
-          <AboutGrid>
-          <div><h2>About this Activity</h2></div><ItemDescription>
-            <Markdown
-              style={{ width: '100%' }}
-              children={description}
-              options={{
-                overrides: {
-                  Button: { component: Button }
-                }
-              }}
-            />
-          </ItemDescription>
-          </AboutGrid>
-         <Divider></Divider>
-   
+              </div>
+              <ItemDescription>
+                <Markdown
+                  style={{ width: '100%' }}
+                  children={description}
+                  options={{
+                    overrides: {
+                      Button: { component: Button }
+                    }
+                  }}
+                />
+                                <TagContainer>
+                  <TagDisplay tags={op.tags} />
+                </TagContainer>
+              </ItemDescription>
+            </AboutGrid>
+            <Divider />
 
-          <AboutGrid>
+            <AboutGrid>
+              <div>
+                <h2>Organised by</h2>
+              </div>
 
-          <div><h2>Organised by</h2></div>
-          <div>
-            <ItemIdLine item={op.offerOrg} path='orgs' />
-            <ItemIdLine item={op.requestor} path='people' />
-            </div>
-  
-          </AboutGrid>
-          
-        </TabPane>
-        <TabPane tab={questionTab}  key='2'>
-          <OpQuestion />
-        </TabPane>
-        <TabPane tab={manageTab}  key='3'/>
-        <TabPane tab={editTab}  key='4'/>
-      </Tabs>
+              <div>
+                <ItemIdLine item={op.offerOrg} path='orgs' />
+                <ItemIdLine item={op.requestor} path='people' />
+              </div>
+            </AboutGrid>
+          </TabPane>
+          <TabPane tab={questionTab} key='2'>
+            <OpQuestion />
+          </TabPane>
+          <TabPane tab={manageTab} key='3' />
+          <TabPane tab={editTab} key='4' />
+        </Tabs>
       </TabContainer>
     </>
   )
