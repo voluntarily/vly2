@@ -19,7 +19,7 @@ docker build --target production \
     --build-arg BUILD_APP_URL=${APP_URL} \
     --build-arg BUILD_AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
     --build-arg BUILD_AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
-    --build-arg BUILD_VLY_PRIVATE_KEY=${VLY_PRIVATE_KEY} \
+    --build-arg BUILD_VLY_PRIVATE_KEY="${VLY_PRIVATE_KEY}" \
     --build-arg BUILD_SMTP_ID=${SMTP_ID} \
     --build-arg BUILD_BADGR_USERNAME=${BADGR_USERNAME}\
     --build-arg BUILD_BADGR_PASSWORD=${BADGR_PASSWORD}\
