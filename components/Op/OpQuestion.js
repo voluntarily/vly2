@@ -189,7 +189,7 @@ export function OpQuestion ({ op }) {
           <h4>Yeah, text me at 027 123 4567 when you get close to the school</h4>
           <QuestionDetail>
           <img />
-          <p>Legitimate Name</p>
+          <p>Legitimate teacher</p>
           <Button shape="round" type='secondary' block>Reply</Button>
           </QuestionDetail>
           </ContentCard>
