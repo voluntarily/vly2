@@ -24,7 +24,9 @@ const SectionWrapper = styled.div`
   margin: 4rem 0 6rem 0;
 `
 
-const TitleContainer = styled.div``
+const TitleContainer = styled.div`
+text-transform: capitalize;
+`
 
 function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
@@ -168,9 +170,9 @@ class PersonHomePage extends Component {
         </Helmet>
         <PageHeaderContainer>
           <TitleContainer>
-            <H3Black>
+            <h1>
               {this.props.me.nickname}'s Requests
-            </H3Black>
+            </h1>
           </TitleContainer>
           <RequestButtonContainer>
             <OpAdd {...this.props} />
@@ -189,13 +191,13 @@ class PersonHomePage extends Component {
               this.props.opportunities.data.length !== 0 && (
                 <SectionWrapper>
                   <SectionTitleWrapper>
-                    <H3Black>
+                    <h2>
                       <FormattedMessage
                         id='home.liveOpportunities'
                         defaultMessage='Active Requests'
                         decription='subtitle on volunteer home page for active requests and opportunities'
                       />
-                    </H3Black>
+                    </h2>
                   </SectionTitleWrapper>
                   {ops && (
                     <OpList
@@ -211,7 +213,7 @@ class PersonHomePage extends Component {
 
             <SectionWrapper>
               <SectionTitleWrapper>
-                <H3Black>
+                <h2>
                   <FormattedMessage
                     id='home.recommendedOpportunities'
                     defaultMessage='Recommended for you'
@@ -224,7 +226,7 @@ class PersonHomePage extends Component {
                       decription='Subtitle on volunteer home page for recommended opportunities'
                     />
                   </P>
-                </H3Black>
+                </h2>
               </SectionTitleWrapper>
               <OpRecommendations
                 recommendedOps={this.props.recommendedOps.data[0]}
@@ -235,13 +237,13 @@ class PersonHomePage extends Component {
           <TabPane tab={searchTab} key='2'>
             <SectionWrapper>
               <SectionTitleWrapper>
-                <H3Black>Completed Requests</H3Black>
+                <h2>Completed Requests</h2>
               </SectionTitleWrapper>
               <OpList
                 ops={this.getArchivedOpportunitiesByStatus('completed')}
               />
               <SectionTitleWrapper>
-                <H3Black>Cancelled Requests</H3Black>
+                <h2>Cancelled Requests</h2>
               </SectionTitleWrapper>
               <OpList
                 ops={this.getArchivedOpportunitiesByStatus('cancelled')}

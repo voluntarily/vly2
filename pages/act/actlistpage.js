@@ -68,13 +68,13 @@ class Acts extends Component {
           <title>Voluntarily - Activities List</title>
         </Helmet>
         <PageHeaderContainer>
-          <H3Black>
+          <h1>
             <FormattedMessage
               id='resource'
               defaultMessage='Activities'
               description='Title of page listing activities'
             />
-          </H3Black>
+          </h1>
 
           <RequestButtonContainer>
             <Button type='primary' shape='round' size='large'>

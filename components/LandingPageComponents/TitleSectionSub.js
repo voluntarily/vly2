@@ -11,7 +11,7 @@ const TitleContainer = styled.div`
 
 const TitleSectionSub = ({ title, subtitle, ...props }) => (
   <TitleContainer>
-    <H3Black>{title}</H3Black>
+    <h2>{title}</h2>
     <H5>{subtitle}</H5>
   </TitleContainer>
 )

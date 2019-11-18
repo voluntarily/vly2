@@ -28,12 +28,12 @@ class OrgListPage extends Component {
           <title>Voluntarily - Organisation List</title>
         </Helmet>
         <PageHeaderContainer>
-          <H3Black>
+          <h1>
             <FormattedMessage
               defaultMessage='Organisations'
               id='org.list.heading'
             />
-          </H3Black>
+          </h1>
           <RequestButtonContainer>
             {isAdmin &&
               <Button type='primary' size='large' shape='round'>

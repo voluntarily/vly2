@@ -12,11 +12,10 @@ const SectionTitleWrapper = styled.div`
 const NextActionBlockV2 = ({ ...props }) => (
   <BlockContainer>
     <SectionTitleWrapper>
-      <H3Black>Getting Started</H3Black>
-      <P>
-        To start volunteering on Voluntarily, here are a few things we recommend
-        doing:
-      </P>
+      <h2>Getting Started</h2>
+      <h5>
+        To get started, try an activity below.
+      </h5>
     </SectionTitleWrapper>
     <Grid>
       <ActionCard
