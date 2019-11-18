@@ -7,6 +7,7 @@ import objectid from 'objectid'
 import OrgDetailForm from '../OrgDetailForm'
 import sinon from 'sinon'
 import organisations from '../../../server/api/organisation/__tests__/organisation.fixture'
+import { Category } from '../../../server/api/organisation/organisation.constants'
 
 test.before('Setup Organisations fixtures', (t) => {
   // not using mongo or server here so faking ids
@@ -54,4 +55,22 @@ test('render the detail with op', t => {
   wrapper.find('Form').first().simulate('submit')
   t.truthy(submitOp.calledOnce)
   t.truthy(submitOp.calledWith(t.context.org))
+})
+
+test('Age range field is shown when organisation category is school', async t => {
+  const wrapper = mountWithIntl(
+    <OrgDetailForm org={t.context.org} onSubmit={() => {}} onCancel={() => {}} />
+  )
+
+  const categories = wrapper.find(`#organisation_detail_form_category`).first()
+  t.truthy(categories);
+  
+  // Check the School checkbox which causes the Age Range field to display
+  const school = wrapper
+    .find(`#organisation_detail_form_category input[value="${Category.SCHOOL}"]`)
+    .first()
+  school.simulate('change')
+
+  // Assert the Age Range field is present
+  t.is(wrapper.find(`label[htmlFor="organisation_detail_form_ageRange"]`).length, 1);
 })
