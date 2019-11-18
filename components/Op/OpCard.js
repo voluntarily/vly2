@@ -33,17 +33,16 @@ const OpCard = ({ op }) => {
   const cardImage = op.imgUrl ? op.imgUrl : '.././static/missingimage.svg'
   const draft = op.status === 'draft' ? 'DRAFT: ' : ''
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
-  // const interestState = op.interest ? ` - ${op.interest.status}` : '' // TODO remove
   const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA - ddd DD/MM/YY') : ''
   const startLocation = op.location ? `🏫 ${op.location}` : ''
   const startDuration = op.duration ? `⏱ ${op.duration}` : ''
   const interestIcon = ((interest) => {
     if (!interest) { return '' }
     switch (interest.status) {
-      case 'interested': return <StyledIcon type='like' theme='twoTone' twoToneColor='#6549AA' /> // interested
-      case 'invited': return <StyledIcon type='message' theme='twoTone' twoToneColor='#fb0' /> // invited
-      case 'committed': return <StyledIcon type='check-circle' theme='twoTone' twoToneColor='#0f0' /> // committed
-      case 'declined': return <StyledIcon type='stop' theme='twoTone' twoToneColor='#f00' /> // declined. Icons: stop/close-circle/dislike
+      case 'interested': return <StyledIcon type='like' theme='twoTone' twoToneColor='#6549AA' />
+      case 'invited': return <StyledIcon type='message' theme='twoTone' twoToneColor='#fb0' />
+      case 'committed': return <StyledIcon type='check-circle' theme='twoTone' twoToneColor='#0f0' />
+      case 'declined': return <StyledIcon type='close-circle' theme='twoTone' twoToneColor='#f00' />
       default: return ''
     }
   })(op.interest)
@@ -66,12 +65,6 @@ const OpCard = ({ op }) => {
             <p> {startDuration}</p>
             <p>
               {op.subtitle}
-              {/* TODO Remove
-              <strong>{interestState}</strong>
-              <Icon type='like' theme='twoTone' twoToneColor='#08c' />
-              <Icon type='message' theme='twoTone' twoToneColor='#fb0' />
-              <Icon type='check-circle' theme='twoTone' twoToneColor='#0f0' />
-              */}
             </p>
           </figcaption>
         </a>
