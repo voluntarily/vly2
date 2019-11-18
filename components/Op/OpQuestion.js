@@ -26,7 +26,7 @@ import {
 const { TextArea } = Input
 
 const AboutGrid = styled.div`
-  margin: 2rem 0;
+  margin: 2rem 0 0 0;
   display: grid;
   grid-template-columns: 25rem 1fr;
   gap: 5rem;
@@ -47,11 +47,13 @@ const ButtonContainer = styled.div`
 `
 
 const QuestionSection = styled.div`
-  float: right;
-  width: 50rem;
+
+  width: 80rem;
+
+
 `
 //start question
-const Question = styled.div`
+const ContentCard = styled.div`
   background-color: #ffffff;
   box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
   border-radius: 8px;
@@ -68,6 +70,15 @@ const Question = styled.div`
     margin-bottom: 1rem
   }
 
+  h4 {
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: -0.38px;
+    line-height: 32px;
+
+    margin-bottom: 1rem
+  }
+
   p {
     width: 50%;
     margin-top: 0.2rem;
@@ -77,11 +88,21 @@ const Question = styled.div`
   img {
     height: 2rem;
     width: 2rem;
-    float: left;
+
     background-color: purple;
     border-radius: 150px;
   }
 `
+
+const Question = styled.div`
+
+display: grid;
+grid-template-columns: 8rem 50rem;
+gap: 1rem;
+float: right;
+margin-top: 3rem;
+`
+
 
 
 
@@ -95,7 +116,12 @@ grid-template-columns: 2rem 1fr 7rem;
 //start response
 const Response = styled.div`
 margin-top: 1rem;
+display: grid;
+grid-template-columns: 8rem 45rem;
+gap: 1rem;
+float: right;
 `
+
 
 
 //end response
@@ -124,7 +150,7 @@ export function OpQuestion ({ op }) {
     <>
       <AboutGrid>
         <div>
-          <h2>Questions LOL</h2>
+          <h2>Questions</h2>
         </div>
         <AskContainer>
           <TextArea rows={3} placeholder='Ask a question here' />
@@ -135,20 +161,41 @@ export function OpQuestion ({ op }) {
       </AboutGrid>
       <QuestionSection>
         <Question>
-       
-          <h3>Can I get free parking at the school? Can I get free parking at the school? Can I get free parking at the school? Can I get free parking at the school? </h3>
+
+
+
+        <DateBlock>
+         <p>29 Jan 2019<br/>11:59PM</p>
+       </DateBlock>
+       <ContentCard>
+          <h3>Can I get free parking at the school? </h3>
           <QuestionDetail>
           <img />
           <p>Legitimate Name</p>
      
  
-          <Button shape="round" type='primary' block>Reply</Button>
-    
+          <Button shape="round" type='secondary' block>Reply</Button>
+      
           </QuestionDetail>
+          </ContentCard>
+
+
         </Question>
         <Response>
-
+        <DateBlock>
+         <p>29 Jan 2019<br/>11:59PM</p>
+       </DateBlock>
+       <ContentCard>
+          <h4>Yeah, text me at 027 123 4567 when you get close to the school</h4>
+          <QuestionDetail>
+          <img />
+          <p>Legitimate Name</p>
+          <Button shape="round" type='secondary' block>Reply</Button>
+          </QuestionDetail>
+          </ContentCard>
         </Response>
+        
+        
 
       </QuestionSection>
     </>

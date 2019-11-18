@@ -56,9 +56,23 @@ const AboutGrid = styled.div`
   grid-template-columns: 25rem 1fr;
   gap: 5rem;
   text-align: left;
+  @media screen and (min-width: 768px) and (max-width: 1281px) {
+    grid-template-columns: calc(50vw - 4rem) calc(50vw - 4rem);
+    grid-column-gap: 2rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: calc(100vw - 2rem);
+  }
 `
 const TabContainer = styled.div`
   margin-top: 2rem;
+`
+
+const ActionContainer = styled.div`
+display: grid;
+grid-template-columns: 10rem 10rem 1fr;
+gap: 1rem;
 `
 
 export function OpDetail ({ op }) {
@@ -90,6 +104,14 @@ export function OpDetail ({ op }) {
             <ItemDate startDate={startDate} endDate={endDate} />
             <ItemStatus status={op.status} />
           </ItemContainer>
+          <ActionContainer>
+          <Button shape='round' type='primary'>
+            Offer to help
+          </Button>
+          <Button shape='round' type='secondary'>
+            Share
+          </Button>
+          </ActionContainer>
         </Right>
       </HalfGrid>
       <TabContainer>
@@ -97,8 +119,7 @@ export function OpDetail ({ op }) {
           <TabPane tab={aboutTab} key='1'>
             <AboutGrid>
               <div>
-                <h2>About this Activity</h2>{' '}
-
+                <h2>About this Activity</h2>
               </div>
               <ItemDescription>
                 <Markdown
@@ -110,7 +131,7 @@ export function OpDetail ({ op }) {
                     }
                   }}
                 />
-                                <TagContainer>
+                <TagContainer>
                   <TagDisplay tags={op.tags} />
                 </TagContainer>
               </ItemDescription>

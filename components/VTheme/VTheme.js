@@ -45,6 +45,7 @@ export const HalfGrid = styled.div`
   margin: 0;
   grid-template-columns: 39rem 39rem;
   grid-column-gap: 2rem;
+  margin: 8rem 0 4rem 0;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: calc(50vw - 4rem) calc(50vw - 4rem);
