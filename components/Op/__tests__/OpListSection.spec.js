@@ -311,27 +311,43 @@ test.serial('Test sort by name', async t => {
   myMock.restore()
 })
 test.serial('Test sort by date', async t => {
-  const realStore = makeStore(initStore)
+  try {
+    const realStore = makeStore(initStore)
 
-  const myMock = fetchMock.sandbox()
-  reduxApi.use('fetch', adapterFetch(myMock))
-  const api = `${API_URL}/opportunities/?search=Growing`
-  myMock.getOnce(api, ops)
+    const myMock = fetchMock.sandbox()
+    reduxApi.use('fetch', adapterFetch(myMock))
+    const api = `${API_URL}/opportunities/?search=Growing`
 
-  const wrapper = await mountWithIntl(
-    <Provider store={realStore}>
-      <OpListSection search='Growing' orderby='date' />
-    </Provider>
-  )
-  await sleep(1)
-  wrapper.update()
-  // console.log(ops[2].date[0], ops[2].date[1])
+    const opsModified = ops.map((op, index) => {
+      if (index === 0) {
+        op.date = ['2019-05-23T12:26:18.000Z', '2019-05-23T12:26:18.000Z']
+      } else if (index === 1) {
+        op.date = [null, 'undefined']
+      } else if (index === 2) {
+        op.date = [null, '2019-05-23T12:26:18.000Z']
+      } else if (index === 3) {
+        op.date[0] = '2019-05-23T12:26:18.000Z'
+        delete op.date[1]
+      }
+      return op
+    })
+    myMock.getOnce(api, opsModified)
 
-  // Checking first and last name of an opportunity in opcard list based on their dates
-  t.is(wrapper.find('OpCard').first().text().includes('1 Mentor'), true)
-  t.is(wrapper.find('OpCard').last().text().includes('5 Going'), true)
-  t.truthy(myMock.done())
-  myMock.restore()
+    const wrapper = await mountWithIntl(
+      <Provider store={realStore}>
+        <OpListSection search='Growing' orderby='date' />
+      </Provider>
+    )
+    await sleep(1)
+    wrapper.update()
+    // Checking first and last name of an opportunity in opcard list based on their dates
+    t.is(wrapper.find('OpCard').first().text().includes('1 Mentor'), true)
+    t.is(wrapper.find('OpCard').last().text().includes('4 The first 100'), true)
+    t.truthy(myMock.done())
+    myMock.restore()
+  } catch (e) {
+    console.log(e)
+  }
 })
 test.serial('Test sort by commitment', async t => {
   const realStore = makeStore(initStore)
