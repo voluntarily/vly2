@@ -171,7 +171,7 @@ test.serial('Should correctly add an activity with default image', async t => {
   t.is(savedActivity.subtitle, 'Launching into space step 3')
 
   // activity has been given the default image
-  t.is(savedActivity.imgUrl, '../.././static/img/activity/activity.png')
+  t.is(savedActivity.imgUrl, '/static/img/activity/activity.png')
 })
 
 test.serial('Should correctly delete an activity', async t => {
@@ -322,6 +322,29 @@ test.serial('Should correctly add an activity with tags all having id properties
   const savedAct = await Activity.findOne({ name: 'The first 400 metres' }).exec()
   t.is(savedAct.subtitle, 'Launching into space step 3')
   t.is(t.context.tags.length, savedAct.tags.length)
+})
+
+test.serial('Mongoose validation should failed for empty string', async (t) => {
+  t.plan(4)
+  const tags = t.context.tags
+  const res = await request(server)
+    .post('/api/activities')
+    .send({
+      name: 'The first 400 metres',
+      subtitle: 'Launching into space step 3',
+      imgUrl: '',
+      description: 'Project to build a simple rocket that will reach 400m',
+      duration: '4 hours',
+      resource: '5 rockets and 6 volunteers',
+      tags: tags,
+      owner: t.context.people[0]._id
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+  t.is(res.status, 500)
+  t.assert(res.body.errors != null, 'Assert there is an error in the request')
+  t.is(res.body.message, 'Activity validation failed: imgUrl: Path `imgUrl` is required.')
+  t.is(res.body.name, 'ValidationError')
 })
 
 test.serial('Should not add an activity with invalid tag ids', async t => {

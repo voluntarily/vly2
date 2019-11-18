@@ -14,7 +14,7 @@ import { MemberStatus } from '../server/api/member/member.constants'
 import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import thunk from 'redux-thunk'
-import { API_URL } from '../lib/apiCaller'
+import { API_URL } from '../lib/callApi'
 const { sortedLocations, regions } = require('../server/api/location/locationData')
 
 test.before('Setup fixtures', (t) => {
@@ -179,7 +179,7 @@ test.serial('render volunteer home page - Active tab', t => {
   t.is(wrapper.find('h3').first().text(), t.context.me.nickname + "'s Requests")
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
   t.is(wrapper.find('.ant-tabs-tabpane-active h3').first().text(), 'Getting Started')
-  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 7)
+  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 13)
 })
 
 test.serial('render volunteer home page - History tab', t => {

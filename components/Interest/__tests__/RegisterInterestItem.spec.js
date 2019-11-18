@@ -26,49 +26,56 @@ const interests = [
     _id: interestid,
     person: people[0],
     opportunity: ops[0],
-    comment: "I'm Andrew",
+    comment: 'Leshgooo',
+    termsCondition: true,
     status: null
   },
   {
     _id: interestid,
     person: people[0],
     opportunity: ops[0],
-    comment: "I'm Andrew",
+    comment: 'Underrrr',
+    termsCondition: true,
     status: 'interested'
   },
   {
     _id: interestid,
     person: people[0],
     opportunity: ops[0],
-    comment: "I'm Andrew",
+    comment: "I'm AndrewCraz",
+    termsCondition: true,
     status: 'invited'
   },
   {
     _id: interestid,
     person: people[0],
     opportunity: ops[0],
-    comment: "I'm Andrew",
+    comment: "I'm AndrewSssuss",
+    termsCondition: true,
     status: 'committed'
   },
   {
     _id: interestid,
     person: people[0],
     opportunity: ops[0],
-    comment: "I'm Andrew",
+    comment: "I'm AndrewYozzaaa",
+    termsCondition: true,
     status: 'completed'
   },
   {
     _id: interestid,
     person: people[0],
     opportunity: ops[0],
-    comment: "I'm Andrew",
+    comment: "I'm AndreSwaaaw",
+    termsCondition: true,
     status: 'cancelled'
   },
   {
     _id: interestid,
     person: people[0],
     opportunity: ops[0],
-    comment: "I'm Andrew",
+    comment: "I'm Andressssw",
+    termsCondition: true,
     status: 'declined'
   }
 
@@ -97,20 +104,29 @@ test('initial state', t => {
 
   // click button and get form again, click action
   wrapper.find('button').simulate('click')
-  t.is(wrapper.find('button').first().text(), 'Get Involved')
-  wrapper.find('button').first().simulate('click')
 
-  t.is(wrapper.find('.ant-form-explain').text(), 'Comment is required')
+  // the Get Involved button should be disabled until we enter a comment
+  let getInvolvedBtn = wrapper.find('button').first()
+  t.is(getInvolvedBtn.text(), 'Get Involved')
+  t.is(getInvolvedBtn.prop('disabled'), true)
 
   // fill in comment and click again
   const comment = wrapper.find('textarea')
   comment.simulate('change', { target: { value: 'My Comment' } })
-  wrapper.find('button').first().simulate('click')
+  getInvolvedBtn = wrapper.find('button').first()
+  t.is(getInvolvedBtn.prop('disabled'), true)
 
+  // fill in checkbox and click again
+  const checkbox = wrapper.find({ type: 'checkbox' }).last()
+  checkbox.simulate('change', { target: { checked: 'true' } })
+  getInvolvedBtn = wrapper.find('button').first()
+  t.is(getInvolvedBtn.prop('disabled'), false)
+
+  // click getInvolved Button
+  wrapper.find('button').first().simulate('click')
   // status change callback is called.
   t.truthy(changeStatus.calledOnce)
 })
-
 test('interested state', t => {
   const changeStatus = sinon.fake()
   const withdraw = sinon.fake()

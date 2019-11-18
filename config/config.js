@@ -1,12 +1,10 @@
-
-const appName = 'Voluntarily NZ'
-const databaseName = 'vly2'
+const databaseName = process.env.DBNAME || 'vly2'
 const serverPort = process.env.PORT || 3122
 
 const completeConfig = {
 
   default: {
-    appName,
+    appName: process.env.APPNAME || 'Voluntarily NZ',
     serverPort,
     env: process.env.NODE_ENV || 'development',
     databaseUrl: process.env.MONGODB_URI || `mongodb://localhost/${databaseName}`,

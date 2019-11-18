@@ -1,0 +1,3 @@
+# usage: mkkey dev|test|prod
+openssl genrsa -out $1.priv.pem 2048
+openssl rsa -in $1.priv.pem -outform PEM -pubout -out $1.pub.pem

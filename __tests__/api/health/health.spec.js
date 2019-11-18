@@ -1,7 +1,7 @@
 import test from 'ava'
 import request from 'supertest'
-import { server, appReady } from '../../../server'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { server, appReady } from '../../../server/server'
+import MemoryMongo from '../../../server/util/test-memory-mongo'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -29,7 +29,7 @@ test('Should respond to parameter check', async t => {
 
   const health = res.body
   t.is(health.health, 'OK')
-  t.is(health.params.param1, 'test1')
+  t.is(health.param, 'test1')
 })
 
 test('Should respond to query check', async t => {

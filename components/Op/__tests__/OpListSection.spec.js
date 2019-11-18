@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import DatePickerType from '../DatePickerType.constant'
-import { API_URL } from '../../../lib/apiCaller'
+import { API_URL } from '../../../lib/callApi'
 import ops, { orgActionWhizzyFelt, orgOmgTech } from './Op.fixture'
 const { fetchMock } = require('fetch-mock')
 
