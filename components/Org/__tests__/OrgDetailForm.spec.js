@@ -62,9 +62,9 @@ test('Age range field is shown when organisation category is school', async t =>
     <OrgDetailForm org={t.context.org} onSubmit={() => {}} onCancel={() => {}} />
   )
 
-  const categories = wrapper.find(`#organisation_detail_form_category`).first()
-  t.truthy(categories);
-  
+  const categories = wrapper.find('#organisation_detail_form_category').first()
+  t.truthy(categories)
+
   // Check the School checkbox which causes the Age Range field to display
   const school = wrapper
     .find(`#organisation_detail_form_category input[value="${Category.SCHOOL}"]`)
@@ -72,5 +72,5 @@ test('Age range field is shown when organisation category is school', async t =>
   school.simulate('change')
 
   // Assert the Age Range field is present
-  t.is(wrapper.find(`label[htmlFor="organisation_detail_form_ageRange"]`).length, 1);
+  t.is(wrapper.find('label[htmlFor="organisation_detail_form_ageRange"]').length, 1)
 })
