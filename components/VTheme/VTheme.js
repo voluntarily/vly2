@@ -405,6 +405,7 @@ h1 {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   -webkit-transition: all 0.28s;
+  transition: all 0.28s;
   font-weight: 700;
   font-size: 20px;
   line-height: 1.4;
@@ -413,14 +414,15 @@ h1 {
 }
 
 img {
+  transition: all 0.2s;
   -webkit-transition: all 0.2s;
   width: 100%;
   height: auto;
   max-height: 10rem;
   background-color: rgba(0, 0, 0, 0);
-  object-fit: scale-down;
+  object-fit: cover;
   overflow: hidden;
-  object-position: center;
+  object-position: top;
 }
 
 time {

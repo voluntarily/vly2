@@ -31,11 +31,21 @@ export const ItemDescription = styled.article`
   opacity: 1;
   color: initial;
   margin-bottom: 1rem;
+  text-align: left;
   `
 
 export const TagContainer = styled.div`
   margin-top: 0.2rem;
 `
+
+export const ItemImage = styled.img`
+width: 100%;
+height: 20rem;
+object-fit: cover;
+object-position: center;
+`
+
+
 export const ItemDuration = ({ duration }) =>
   <ItemListing>
   ⏱&nbsp;
