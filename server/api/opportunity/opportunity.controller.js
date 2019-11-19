@@ -1,7 +1,6 @@
 const escapeRegex = require('../../util/regexUtil')
 const Opportunity = require('./opportunity')
 const Interest = require('./../interest/interest')
-const Tag = require('./../tag/tag')
 const Person = require('./../person/person')
 const ArchivedOpportunity = require('./../archivedOpportunity/archivedOpportunity')
 const InterestArchive = require('./../interest-archive/interestArchive')
@@ -18,8 +17,8 @@ const { getLocationRecommendations, getSkillsRecommendations } = require('./oppo
  */
 const getOpportunities = async (req, res) => {
   // limit to Active ops unless one of the params overrides
-  let query = { 'status': OpportunityStatus.ACTIVE }
-  let sort = 'date'
+  let query = { status: OpportunityStatus.ACTIVE }
+  let sort = 'name'
   let select = {}
 
   try {
@@ -38,27 +37,15 @@ const getOpportunities = async (req, res) => {
       // split around one or more whitespace characters
       const keywordArray = search.split(/\s+/)
 
-      // case insensitive regex which will find tags matching any of the array values
-      const tagSearchExpression = new RegExp(keywordArray.map(w => escapeRegex(w)).join('|'), 'i')
-
-      // find tag ids to include in the opportunity search
-      const matchingTagIds = await Tag.find({ 'tag': tagSearchExpression }, '_id').exec()
-
       const searchExpression = new RegExp(regexSearch, 'i')
+
       const searchParams = {
         $or: [
-          { 'name': searchExpression },
-          { 'subtitle': searchExpression },
-          { 'description': searchExpression }
+          { name: searchExpression },
+          { subtitle: searchExpression },
+          { description: searchExpression },
+          { tags: { $in: keywordArray } }
         ]
-      }
-
-      // mongoose isn't happy if we provide an empty array as an expression
-      if (matchingTagIds.length > 0) {
-        const tagIdExpression = {
-          $or: matchingTagIds.map(id => ({ 'tags': id }))
-        }
-        searchParams.$or.push(tagIdExpression)
       }
 
       query = {
@@ -77,7 +64,7 @@ const getOpportunities = async (req, res) => {
       // location is a filter so should still match all other queries. use AND, not OR
       query = {
         $and: [
-          { 'location': { $in: locsToFind } },
+          { location: { $in: locsToFind } },
           query
         ]
       }
@@ -130,7 +117,6 @@ const getOpportunity = async (req, res) => {
       .findOne(req.params)
       .populate('requestor', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl category')
-      .populate('tags')
       .exec()
     if (got == null) {
       // BUG: [VP-478] populate tags with many tags can cause a 507 Insufficient Space error.
@@ -162,14 +148,14 @@ const putOpportunity = async (req, res) => {
 }
 
 const archiveOpportunity = async (id) => {
-  let opportunity = await Opportunity.findById(id).exec()
+  const opportunity = await Opportunity.findById(id).exec()
   await new ArchivedOpportunity(opportunity.toJSON()).save()
   await Opportunity.deleteOne({ _id: id }).exec()
   return archiveOpportunity
 }
 
 const archiveInterests = async (opId) => {
-  let opportunityInterests = await Interest.find({ opportunity: opId }).exec()
+  const opportunityInterests = await Interest.find({ opportunity: opId }).exec()
   let interest
   for (interest of opportunityInterests) {
     await new InterestArchive(interest.toJSON()).save()
@@ -179,30 +165,30 @@ const archiveInterests = async (opId) => {
 
 function ensureSanitized (req, res, next) {
   const descriptionOptions = {
-    allowedTags: [ 'a', 'b', 'br', 'caption', 'code', 'div', 'blockquote', 'em',
+    allowedTags: ['a', 'b', 'br', 'caption', 'code', 'div', 'blockquote', 'em',
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'iframe', 'img', 'li', 'ol',
       'p', 'pre', 's', 'span', 'strike', 'strong', 'table', 'tbody', 'td', 'th',
-      'thead', 'tr', 'u', 'ul' ],
+      'thead', 'tr', 'u', 'ul'],
     allowedAttributes: {
-      a: [ 'href' ],
-      iframe: [ 'height', 'src', 'width' ],
-      img: [ 'src' ],
-      pre: [ 'spellcheck' ],
-      span: [ 'style' ]
+      a: ['href'],
+      iframe: ['height', 'src', 'width'],
+      img: ['src'],
+      pre: ['spellcheck'],
+      span: ['style']
     },
     allowedClasses: {
-      '*': [ 'ql-align-center', 'ql-align-right', 'ql-align-justify', 'ql-syntax' ]
+      '*': ['ql-align-center', 'ql-align-right', 'ql-align-justify', 'ql-syntax']
     },
     allowedStyles: {
       span: {
         // permits values for color and background-color CSS properties that look like 'rgb(230,0,50)'
-        'color': [ /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/ ],
-        'background-color': [ /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/ ]
+        color: [/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/],
+        backgroundColor: [/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/]
       }
     },
-    allowedIframeHostnames: [ 'www.youtube.com' ],
+    allowedIframeHostnames: ['www.youtube.com'],
     // Should prevent any iframes using something other than https for their src.
-    allowedSchemesByTag: { iframe: [ 'https' ] },
+    allowedSchemesByTag: { iframe: ['https'] },
     allowProtocolRelative: false
   }
 

@@ -51,5 +51,8 @@ test.serial('Only authorized fields returned for list get', async t => {
   removeUnauthorizedFields(FakeSchema)(mockRequestObject, {}, nextMiddleware)
   t.assert(nextMiddleware.called)
   t.assert(Array.isArray(mockRequestObject.crudify.result))
-  mockRequestObject.crudify.result.forEach(item => t.true(item.hasOwnProperty(Fields.NAME)) && t.false(item.hasOwnProperty(Fields.SUBTITLE)))
+  mockRequestObject.crudify.result.forEach(
+    item => t.true(Object.prototype.hasOwnProperty.call(item, Fields.NAME)) &&
+    t.false(Object.prototype.hasOwnProperty.call(item, Fields.SUBTITLE))
+  )
 })

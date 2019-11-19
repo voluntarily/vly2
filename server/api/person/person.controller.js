@@ -14,7 +14,7 @@ function getPersonBy (req, res) {
     query = req.params
   }
 
-  Person.findOne(query).populate('tags').exec((_err, got) => {
+  Person.findOne(query).exec((_err, got) => {
     if (!got) { // person does not exist
       return res.status(404).send({ error: 'person not found' })
     }
@@ -34,7 +34,7 @@ function listPeople (req, res) {
     sort = req.query.s ? JSON.parse(req.query.s) : sort
     select = req.query.p ? JSON.parse(req.query.p) : {}
 
-    Person.find(query, select).populate('tags').sort(sort)
+    Person.find(query, select).sort(sort)
       .then(got => {
         res.json(got)
       })
@@ -62,12 +62,12 @@ async function updatePersonDetail (req, res, next) {
 
 function ensureSanitized (req, res, next) {
   const szAbout = {
-    allowedTags: [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+    allowedTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
       'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
-      'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe' ],
+      'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe'],
     allowedAttributes: {
-      a: [ 'href' ],
-      img: [ 'src' ]
+      a: ['href'],
+      img: ['src']
     },
     allowedIframeHostnames: ['www.youtube.com']
   }

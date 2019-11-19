@@ -192,7 +192,7 @@ export class OpDetailPage extends Component {
       }
     }
 
-    let op = this.retrieveOpportunity()
+    const op = this.retrieveOpportunity()
 
     if ((op && this.state.editing)) {
       return (
@@ -215,10 +215,10 @@ export class OpDetailPage extends Component {
               style={{ float: 'right' }}
               type='primary'
               shape='round'
-              onClick={() => this.setState({ editing: true })}>
+              onClick={() => this.setState({ editing: true })}
+            >
               <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
-            </Button>
-          }
+            </Button>}
           <OpDetail op={op} />
           <Divider />
           <OpVolunteerInterestSection

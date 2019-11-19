@@ -1,6 +1,6 @@
 import '../assets/voluntarily.less'
 import React from 'react'
-import App, { Container } from 'next/app'
+import App from 'next/app'
 import { IntlProvider, addLocaleData } from 'react-intl'
 import { Provider } from 'react-redux'
 import withRedux from 'next-redux-wrapper'
@@ -60,17 +60,15 @@ class MyApp extends App {
     const { Component, pageProps, locale, messages, initialNow, store } = this.props
 
     return (
-      <Container>
-        <Provider store={store}>
-          <IntlProvider
-            locale={locale}
-            messages={messages}
-            initialNow={initialNow}
-          >
-            <Component {...pageProps} />
-          </IntlProvider>
-        </Provider>
-      </Container>
+      <Provider store={store}>
+        <IntlProvider
+          locale={locale}
+          messages={messages}
+          initialNow={initialNow}
+        >
+          <Component {...pageProps} />
+        </IntlProvider>
+      </Provider>
     )
   }
 }

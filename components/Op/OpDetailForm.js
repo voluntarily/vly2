@@ -82,11 +82,11 @@ class OpDetailForm extends Component {
     })
   }
 
-  onEndDateChange = value => {
+  handleEndDateChange = value => {
     this.changeFormValue('endDateValue', value)
   }
 
-  onStartDateChange = value => {
+  handleStartDateChange = value => {
     this.changeFormValue('startDateValue', value)
   }
 
@@ -402,7 +402,7 @@ class OpDetailForm extends Component {
                         )
                       }}
                       format='DD-MM-YYYY HH:mm:ss'
-                      onChange={this.onStartDateChange}
+                      onChange={this.handleStartDateChange}
                       style={{ width: '100%' }}
                     />
                   )}
@@ -413,7 +413,7 @@ class OpDetailForm extends Component {
                       showTime
                       disabledDate={this.disabledEndDate}
                       format='DD-MM-YYYY HH:mm:ss'
-                      onChange={this.onEndDateChange}
+                      onChange={this.handleEndDateChange}
                       style={{ width: '100%' }}
                     />
                   )}
@@ -546,12 +546,7 @@ OpDetailForm.propTypes = {
     status: PropTypes.string,
 
     // requestor: PropTypes.string,
-    tags: PropTypes.arrayOf(
-      PropTypes.shape({
-        tag: PropTypes.string.isRequired,
-        _id: PropTypes.string
-      })
-    )
+    tags: PropTypes.arrayOf(PropTypes.string)
   }),
   me: PropTypes.shape({
     _id: PropTypes.string,
@@ -568,12 +563,7 @@ OpDetailForm.propTypes = {
   }),
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  existingTags: PropTypes.arrayOf(
-    PropTypes.shape({
-      tag: PropTypes.string.isRequired,
-      _id: PropTypes.string
-    })
-  ).isRequired,
+  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired
   // dispatch: PropTypes.func.isRequired,
 }

@@ -4,7 +4,7 @@ const IntlPolyfill = require('intl')
 Intl.NumberFormat = IntlPolyfill.NumberFormat
 Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
 
-const { readFileSync } = require('fs')
+const { readFileSync } = require('fs-extra')
 const { basename } = require('path')
 
 const UPLOAD_LIMIT = '6000kb'
@@ -83,7 +83,12 @@ const appReady = app.prepare().then(() => {
   // MongoDB
   mongoose.Promise = Promise
   if (process.env.NODE_ENV !== 'test') {
-    mongoose.connect(config.databaseUrl, { useNewUrlParser: true, useCreateIndex: true })
+    mongoose.connect(config.databaseUrl,
+      {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true
+      })
       .then(console.log('mongodb connected at:', config.databaseUrl))
     const db = mongoose.connection
     db.on('error', console.error.bind(console, 'connection error:'))

@@ -24,7 +24,8 @@ const Container = () => (
           margin: 2rem;
         }
       }
-    `}</style>
+    `}
+    </style>
   </div>
 )
 

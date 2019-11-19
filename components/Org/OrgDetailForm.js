@@ -153,8 +153,10 @@ class OrgDetailForm extends Component {
           >
             {getFieldDecorator('website', {
               rules: [
-                { pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/,
-                  message: 'Enter valid URL' }
+                {
+                  pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/,
+                  message: 'Enter valid URL'
+                }
               ]
             })(
               <Input placeholder='https://example.com' />

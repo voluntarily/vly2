@@ -2,26 +2,28 @@ import test from 'ava'
 import request from 'supertest'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import { server, appReady } from '../../../server'
+import { regions } from '../../location/locationData'
+
+// Schemas
 import Opportunity from '../opportunity'
-import Tag from '../../tag/tag'
+import { OpportunityStatus } from '../opportunity.constants'
 import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
+import archivedOpportunity from './../../archivedOpportunity/archivedOpportunity'
+import Interest from '../../interest/interest'
+import InterestArchive from '../../interest-archive/interestArchive'
+
+// Fixtures
 import people from '../../person/__tests__/person.fixture'
 import ops from './opportunity.fixture.js'
 import orgs from '../../organisation/__tests__/organisation.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
-import archivedOpportunity from './../../archivedOpportunity/archivedOpportunity'
-import { OpportunityStatus } from '../opportunity.constants'
-import Interest from '../../interest/interest'
-import InterestArchive from '../../interest-archive/interestArchive'
-
-const { regions } = require('../../location/locationData')
 
 test.before('before connect to database', async (t) => {
-  await appReady
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  await appReady
 })
 
 test.after.always(async (t) => {
@@ -32,10 +34,10 @@ test.beforeEach('connect and add two oppo entries', async (t) => {
   // connect each oppo to a requestor.
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create orgs: ${err}`)
-  t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
   ops.map((op, index) => {
     op.requestor = t.context.people[index]._id
     op.offerOrg = t.context.orgs[1]._id
+    op.tags = [tags[index]]
   })
   t.context.opportunities = await Opportunity.create(ops).catch((err) => console.error('Unable to create opportunities', err))
 })
@@ -43,7 +45,6 @@ test.beforeEach('connect and add two oppo entries', async (t) => {
 test.afterEach.always(async () => {
   await Opportunity.deleteMany()
   await Person.deleteMany()
-  await Tag.deleteMany()
 })
 
 test.serial('verify fixture database has ops', async t => {
@@ -111,7 +112,7 @@ test.serial('Should correctly give number of active Opportunities', async t => {
 })
 
 test.serial('Should send correct data when queried against an _id', async t => {
-  t.plan(4)
+  t.plan(3)
 
   const opp = new Opportunity({
     name: 'The first 1000 metres',
@@ -121,7 +122,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.DRAFT,
-    tags: [t.context.tags[0]._id],
+    tags: [tags[0]],
     requestor: t.context.people[1]._id
   })
   await opp.save()
@@ -136,79 +137,26 @@ test.serial('Should send correct data when queried against an _id', async t => {
 
   // verify requestor was populated out
   t.is(res.body.requestor.name, person1.name)
-
-  // verify tag was populated out
-  t.is(res.body.tags[0].tag, t.context.tags[0].tag)
 })
 
 test.serial('Should not find invalid _id', async t => {
   const res = await request(server)
-    .get(`/api/opportunities/5ce8acae1fbf56001027b254`)
+    .get('/api/opportunities/5ce8acae1fbf56001027b254')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 404)
-})
-
-test.serial('Should correctly add an opportunity with tags all having id properties', async t => {
-  t.plan(3)
-
-  const tags = t.context.tags
-
-  const res = await request(server)
-    .post('/api/opportunities')
-    .send({
-      name: 'The first 400 metres',
-      subtitle: 'Launching into space step 3',
-      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
-      description: 'Project to build a simple rocket that will reach 400m',
-      duration: '4 hours',
-      location: 'Albany, Auckland',
-      status: OpportunityStatus.DRAFT,
-      tags: tags,
-      requestor: t.context.people[0]._id
-    })
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
-
-  t.is(res.status, 200)
-
-  const savedOpportunity = await Opportunity.findOne({ name: 'The first 400 metres' }).exec()
-  t.is(savedOpportunity.subtitle, 'Launching into space step 3')
-  t.is(t.context.tags.length, savedOpportunity.tags.length)
-})
-
-test.serial('Should not add an opportunity with invalid tag ids', async t => {
-  await request(server)
-    .post('/api/opportunities')
-    .send({
-      name: 'The first 400 metres',
-      subtitle: 'Launching into space step 3',
-      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
-      description: 'Project to build a simple rocket that will reach 400m',
-      duration: '4 hours',
-      location: 'Albany, Auckland',
-      status: OpportunityStatus.DRAFT,
-      tags: [{ _id: '123456781234567812345678', tag: 'test' }],
-      requestor: t.context.people[0]._id
-
-    })
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
-
-  const savedOpportunity = await Opportunity.findOne({ name: 'The first 400 metres' }).exec()
-  t.is(null, savedOpportunity)
 })
 
 test.serial('Should correctly add an opportunity with default image', async t => {
   t.plan(3)
   const op = {
     name: 'The last 2000 metres',
-    subtitle: 'Launching into space step 5',
+    subtitle: 'Launching into space step 50',
     description: 'Project to build a simple rocket that will reach 400m',
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.DRAFT,
-    tags: t.context.tags,
+    tags: tags,
     requestor: t.context.people[0]._id
   }
 
@@ -221,45 +169,8 @@ test.serial('Should correctly add an opportunity with default image', async t =>
   t.is(res.status, 200)
 
   const savedOpportunity = await Opportunity.findOne({ name: op.name }).exec()
-  t.is(savedOpportunity.subtitle, 'Launching into space step 5')
+  t.is(savedOpportunity.subtitle, 'Launching into space step 50')
   t.is(savedOpportunity.imgUrl, '/static/img/opportunity/opportunity.png')
-})
-
-test.serial('Should create tags that dont have the _id property', async t => {
-  const tagName = 'noid'
-  const tags = [
-    t.context.tags[0],
-    {
-      tag: tagName
-    }
-  ]
-
-  const existingTag = await Tag.findOne({ tag: tagName })
-  t.is(null, existingTag)
-
-  await request(server)
-    .post('/api/opportunities')
-    .send({
-      name: 'The first 400 metres',
-      subtitle: 'Launching into space step 3',
-      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
-      description: 'Project to build a simple rocket that will reach 400m',
-      duration: '4 hours',
-      location: 'Albany, Auckland',
-      status: OpportunityStatus.DRAFT,
-      tags: tags,
-      requestor: t.context.people[0]._id
-
-    })
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
-
-  const savedTag = await Tag.findOne({ tag: tagName })
-  t.is(tagName, savedTag.tag)
-
-  const savedOpportunity = await Opportunity.findOne({ name: 'The first 400 metres' }).populate('tags').exec()
-  // ensure the tag has an id
-  t.truthy(savedOpportunity.tags.find(t => t.tag === tagName)._id)
 })
 
 test.serial('Should correctly delete an opportunity', async t => {
@@ -273,7 +184,8 @@ test.serial('Should correctly delete an opportunity', async t => {
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.DRAFT,
-    requestor: t.context.people[0]._id
+    requestor: t.context.people[0]._id,
+    tags: tags
   })
   await opp.save()
 
@@ -348,10 +260,9 @@ test.serial('Should include description in search', async t => {
 
 test.serial('Should return any opportunities with matching tags or name/desc/subtitle', async t => {
   // assign tags to opportunities
-  const tags = t.context.tags
-  t.context.opportunities[2].tags = [tags[0]._id, tags[2]._id]
-  t.context.opportunities[0].tags = [tags[0]._id]
-  t.context.opportunities[1].tags = [tags[2]._id]
+  t.context.opportunities[2].tags = ['java', 'robots']
+  t.context.opportunities[0].tags = ['java']
+  t.context.opportunities[1].tags = ['robots']
 
   await Promise.all([
     t.context.opportunities[2].save(),
@@ -374,7 +285,7 @@ test.serial('Should return any opportunities with matching tags or name/desc/sub
   await opp.save()
 
   const res = await request(server)
-    .get(`/api/opportunities?search=java robots`)
+    .get('/api/opportunities?search=java robots')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
@@ -396,7 +307,8 @@ test.serial('Should update from draft to active', async t => {
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.DRAFT,
-    requestor: t.context.people[0]._id
+    requestor: t.context.people[0]._id,
+    tags: []
   })
 
   await opp.save()
@@ -423,7 +335,8 @@ test.serial('Should archive Opportunity when a completed update is sent', async 
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.ACTIVE,
-    requestor: t.context.people[0]._id
+    requestor: t.context.people[0]._id,
+    tags
   })
 
   await opp.save()
@@ -450,7 +363,8 @@ test.serial('should archive interests associated with opportunity', async t => {
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.DRAFT,
-    requestor: t.context.people[0]._id
+    requestor: t.context.people[0]._id,
+    tags
   })
 
   await opp.save()
@@ -488,7 +402,8 @@ test.serial('should return 400 for a bad request', async t => {
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: OpportunityStatus.DRAFT,
-    requestor: t.context.people[0]._id
+    requestor: t.context.people[0]._id,
+    tags
   })
 
   await opp.save()
@@ -578,7 +493,8 @@ test.serial('should permit titles with special characters', async t => {
       description: 'Building with Lego Mindstorms EV3.',
       location: 'Wellington City',
       status: OpportunityStatus.ACTIVE,
-      requestor: t.context.people[0]._id
+      requestor: t.context.people[0]._id,
+      tags: ['lego']
     })
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
@@ -599,7 +515,9 @@ test.serial('should permit descriptions with special characters', async t => {
       description: 'Build and program Lego robots. " / % ^ ( ) * @ #',
       location: 'Wellington City',
       status: OpportunityStatus.ACTIVE,
-      requestor: t.context.people[0]._id
+      requestor: t.context.people[0]._id,
+      tags: ['robot']
+
     })
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
@@ -619,7 +537,9 @@ test.serial('should strip script tags and contents from name', async t => {
       description: '-',
       location: 'Wellington City',
       status: OpportunityStatus.ACTIVE,
-      requestor: t.context.people[0]._id
+      requestor: t.context.people[0]._id,
+      tags: ['lego', 'robot']
+
     })
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
@@ -638,7 +558,9 @@ test.serial('should strip "color:blue" and "font-size:2em" from style attribute'
       description: '<span style="color:blue; font-size:2em;">Build</span> and program <span style="color:rgb(250,0,0)">Lego</span> robots.',
       location: 'Wellington City',
       status: OpportunityStatus.ACTIVE,
-      requestor: t.context.people[0]._id
+      requestor: t.context.people[0]._id,
+      tags: ['blue']
+
     })
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
@@ -659,7 +581,8 @@ test.serial('should allow iframes from youtube only, and allow height, src and w
         '<p><iframe width="560" height="315" src="https://www.youtuberepeater.com/embed/wLupj65qJHg"></iframe></p>',
       location: 'Wellington City',
       status: OpportunityStatus.ACTIVE,
-      requestor: t.context.people[0]._id
+      requestor: t.context.people[0]._id,
+      tags: ['iframe']
     })
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])

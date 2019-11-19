@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 const OpAdd = ({ roles, ...props }) => {
   if (roles && roles.includes('opportunityProvider')) {
     return (
-      <Link href={'/op/new'}>
+      <Link href='/op/new'>
         <Button type='primary' shape='round' size='large'>
           <FormattedMessage
             id='opAdd.new'

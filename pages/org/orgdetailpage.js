@@ -76,7 +76,7 @@ class OrgDetailPage extends Component {
     )
     // TODO: error handling - how can this fail?
     message.success('Deleted. ')
-    Router.replace(`/orgs`)
+    Router.replace('/orgs')
   }
 
   async handleSubmit (org) {

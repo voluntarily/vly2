@@ -14,7 +14,7 @@ const moment = require('moment')
   api/interests?me='personid' -> list all the ops i'm interested in and populate the op out.
  */
 const listInterests = async (req, res) => {
-  let sort = 'dateAdded' // todo sort by date.
+  const sort = 'dateAdded' // todo sort by date.
   let got
   try {
     if (req.query.op) {
@@ -83,7 +83,6 @@ const processStatusToSendEmail = (template, interest) => {
   const volunteer = interest.person
   const requestor = interest.opportunity.requestor
 
-  let icalString
   const calendar = ical({
     prodId: { company: 'Voluntarily', product: 'Invitation' },
     domain: 'voluntarily.nz',
@@ -92,16 +91,15 @@ const processStatusToSendEmail = (template, interest) => {
   if (isEvent1DayOnly(op)) {
     addEventToIcalCalendar(calendar, op)
   }
-  icalString = calendar.toString()
+  const icalString = calendar.toString()
   switch (template) {
     case InterestStatus.INVITED:
-      const calendarAttachment = {
+      sendInterestedEmail(template, volunteer, interest, {
         attachment: [{
           filename: 'invitation.ics',
           content: icalString
         }]
-      }
-      sendInterestedEmail(template, volunteer, interest, calendarAttachment)
+      })
       break
     case InterestStatus.DECLINED:
       sendInterestedEmail(template, volunteer, interest)
@@ -117,7 +115,7 @@ const isEvent1DayOnly = (opportunity) => {
 }
 
 const addEventToIcalCalendar = (icalCalendar, opportunity) => {
-  let durationStringInISO = convertDurationStringToISO(opportunity.duration)
+  const durationStringInISO = convertDurationStringToISO(opportunity.duration)
   const duration = moment.duration(durationStringInISO).isValid() ? moment.duration(durationStringInISO) : moment(0, 'second')
   const cleanEventDescription = htmlSanitizer(opportunity.description, {
     allowedTags: [],

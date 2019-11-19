@@ -10,7 +10,7 @@ const opList = [
     duration: '12 weeks, 1 hour sessions',
     location: regions[0].name,
     status: OpportunityStatus.ACTIVE,
-    tags: [ ],
+    tags: [],
     date: [
       null,
       null
@@ -24,7 +24,7 @@ const opList = [
     duration: '4 hours',
     location: regions[0].containedTerritories[1],
     status: OpportunityStatus.ACTIVE,
-    tags: [ ],
+    tags: [],
     date: [
       '2019-07-30T09:00:00.000Z',
       '2019-07-30T16:00:00.000Z'
@@ -38,7 +38,7 @@ const opList = [
     duration: '6 hours',
     location: regions[0].containedTerritories[1],
     status: OpportunityStatus.DRAFT,
-    tags: [ ],
+    tags: [],
     date: [
       '2020-07-30T09:00:00.000Z',
       null
@@ -52,7 +52,7 @@ const opList = [
     duration: '2 hours',
     location: regions[0].containedTerritories[2],
     status: OpportunityStatus.DRAFT,
-    tags: [ ],
+    tags: [],
     date: [
       null,
       null
@@ -66,7 +66,7 @@ const opList = [
     duration: '2 days',
     location: regions[2].name,
     status: OpportunityStatus.DRAFT,
-    tags: [ ],
+    tags: [],
     date: [
       null,
       null

@@ -16,7 +16,7 @@ import Loading from '../../components/Loading'
 import DatePickerType from './DatePickerType.constant'
 
 class OpListSection extends Component {
-  async loadData (search, location, query) {
+  loadData (search, location, query) {
     // Get all Ops
     try {
       const filters = {}
@@ -30,7 +30,7 @@ class OpListSection extends Component {
       if (query) {
         filters.q = query
       }
-      return await this.props.dispatch(reduxApi.actions.opportunities.get(filters))
+      return this.props.dispatch(reduxApi.actions.opportunities.get(filters))
     } catch (err) {
       console.error('error in getting ops', err)
     }
@@ -47,6 +47,7 @@ class OpListSection extends Component {
       return filteredData
     }
   }
+
   /**
    * This method use in organization detail page
    * to filter opportunities offered by specific organization
@@ -61,15 +62,29 @@ class OpListSection extends Component {
       }
     }
   }
+
   sortOrder = (orderValue) => {
     const dataOp = this.props.opportunities.data
     if (orderValue === 'name') {
       return (dataOp.sort((a, b) => a.name.localeCompare(b.name)))
     } else if (orderValue === 'date') {
-      return (dataOp.sort((a, b) => new Date(a.date[0]).getDate() - new Date(b.date[0]).getDate()))
+      dataOp.sort((a, b) => {
+        const dateA = a.date && a.date[0]
+        const dateB = b.date && b.date[1]
+        if (!dateA && dateB) {
+          return 1
+        } else if (dateA && !dateB) {
+          return -1
+        } else if (dateA === dateB) {
+          return 0
+        } else {
+          return (dateA > dateB) ? 1 : (dateB > dateA ? -1 : 0)
+        }
+      })
+      // return (dataOp.sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate()))
     } else if (orderValue === 'commitment') {
       dataOp.sort((a, b) => {
-        if (a.duration !== '') {
+        if (a.duration && a.duration !== '') {
           return (a.duration.localeCompare(b.duration))
         } else {
           return ''
@@ -129,14 +144,15 @@ class OpListSection extends Component {
     const opDataFilteredByDate = this.applyDateFilter(this.props.filter)
     const opData = this.appltOrganizationFilter(opDataFilteredByDate, this.props.org)
     if (this.props.opportunities.loading) {
-      return (<section>
-        <Loading><p>Loading opportunities...</p></Loading>
-
-      </section>)
+      return (
+        <section>
+          <Loading />
+        </section>)
     } else {
-      return (<section>
-        <OpList ops={opData} orderby={this.sortOrder(this.props.orderby)} />
-      </section>)
+      return (
+        <section>
+          <OpList ops={opData} orderby={this.sortOrder(this.props.orderby)} />
+        </section>)
     }
   }
 }

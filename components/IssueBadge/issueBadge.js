@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Router from 'next/router'
 import { Button, Modal, Select } from 'antd'
-import callApi from '../../lib/apiCaller'
+import callApi from '../../lib/callApi'
 
 const { Option } = Select
 
@@ -31,7 +31,8 @@ function IssueBadge ({ person }) {
         visible={modalVisible}
         onOk={handleOk}
         confirmLoading={modalButtonIsLoading}
-        onCancel={() => setModalVisible(false)}>
+        onCancel={() => setModalVisible(false)}
+      >
         <BadgeList badgeList={badgeList} setBadgeChosen={setBadgeChosen} />
       </Modal>
     </div>
@@ -47,7 +48,7 @@ function BadgeList ({ badgeList, setBadgeChosen }) {
     <Select placeholder='Please select' style={{ width: '100%' }} onChange={handleOptionChange}>
       {
         badgeList.map((badge, key) => {
-          return (<Option key={key} >{badge.name}</Option>)
+          return (<Option key={key}>{badge.name}</Option>)
         })
       }
     </Select>
@@ -55,7 +56,7 @@ function BadgeList ({ badgeList, setBadgeChosen }) {
 }
 
 const setAvailableBadgeData = async (setBadgeList) => {
-  const badgeList = await callApi(`badges`)
+  const badgeList = await callApi('badges')
   setBadgeList(badgeList)
 }
 

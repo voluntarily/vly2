@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 
-import { API_URL } from '../../../lib/apiCaller'
+import { API_URL } from '../../../lib/callApi'
 import people from '../../../server/api/person/__tests__/person.fixture'
 
 const { fetchMock } = require('fetch-mock')
@@ -84,6 +84,9 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
   // fill in comment on input field
   const comment = wrapper.find('#register_interest_form_comment').first()
   comment.simulate('change', { target: { value: 'Test mount RegisterInterestSection with with no existing interest' } })
+  const checkbox = wrapper.find({ type: 'checkbox' }).last()
+  checkbox.simulate('change', { target: { checked: 'true' } })
+
   wrapper.find('button').first().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()

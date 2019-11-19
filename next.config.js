@@ -1,7 +1,7 @@
 /* eslint-disable */
 const withLess = require('@zeit/next-less')
 const lessToJS = require('less-vars-to-js')
-const fs = require('fs')
+const fs = require('fs-extra')
 const path = require('path')
 
 // Where your antd-custom.less file lives

@@ -15,7 +15,7 @@ class AntdType extends React.Component {
       <div>
         <Title>h1. Ant Design</Title>
         <Title level={2}>h2. Paragraph features</Title>
-        <Paragraph >{this.state.str}</Paragraph>
+        <Paragraph>{this.state.str}</Paragraph>
         <Paragraph copyable>This is a copyable text.</Paragraph>
         <Paragraph copyable={{ text: 'Hello, Ant Design!' }}>Replace copy text.</Paragraph>
         <p>{this.state.str}</p>

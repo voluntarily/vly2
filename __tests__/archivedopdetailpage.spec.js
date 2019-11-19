@@ -11,7 +11,7 @@ import { Provider } from 'react-redux'
 import withMockRoute from '../server/util/mockRouter'
 import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
-import { API_URL } from '../lib/apiCaller'
+import { API_URL } from '../lib/callApi'
 
 const fetchMock = require('fetch-mock')
 
@@ -96,7 +96,7 @@ test('archivedOpDetailPage should have an InterestSection component', t => {
 })
 
 test('archivedOpDetailPage should display OpUnavalablePage when no opportunity can be retrieved', t => {
-  let myStore = { ...t.context.mockStore }
+  const myStore = { ...t.context.mockStore }
   myStore.getState().archivedOpportunities.data = []
 
   const props = {
@@ -118,7 +118,7 @@ test('archivedOpDetailPage should display OpUnavalablePage when no opportunity c
 })
 
 test('archivedOpDetailPage should display Loading spinner when loading', t => {
-  let myStore = { ...t.context.mockStore }
+  const myStore = { ...t.context.mockStore }
   myStore.getState().archivedOpportunities.loading = true
 
   const props = {

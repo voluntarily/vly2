@@ -56,7 +56,7 @@ const AboutCTA = () => (
     <TitleSectionSub title='How to get involved' />
     <TripleGrid>
       <CTAContainer>
-        <CTAImage src='../../static/img/about/dev.png' />
+        <CTAImage src='/static/img/about/dev.png' />
         <CTATitle>
           <FormattedMessage
             id='cta.title.dev'
@@ -88,7 +88,7 @@ const AboutCTA = () => (
         </Button>
       </CTAContainer>
       <CTAContainer>
-        <CTAImage src='../../static/img/about/volunteers.png' />
+        <CTAImage src='/static/img/about/volunteers.png' />
         <CTATitle>
           <FormattedMessage
             id='cta.title.volunteer'
@@ -113,7 +113,7 @@ const AboutCTA = () => (
         </Button>
       </CTAContainer>
       <CTAContainer>
-        <CTAImage src='../../static/img/about/sponsors.png' />
+        <CTAImage src='/static/img/about/sponsors.png' />
         <CTATitle>
           <FormattedMessage
             id='cta.title.sponsor'

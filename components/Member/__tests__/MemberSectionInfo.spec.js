@@ -8,7 +8,7 @@ import MemberSection from '../MemberSection'
 import { Provider } from 'react-redux'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
-import { API_URL } from '../../../lib/apiCaller'
+import { API_URL } from '../../../lib/callApi'
 import fixture from './member.fixture.js'
 import { MemberStatus } from '../../../server/api/member/member.constants'
 import objectid from 'objectid'
@@ -20,7 +20,7 @@ test.before('Setup fixtures', t => {
   const initStore = {
     members: {
       loading: false,
-      data: [ ]
+      data: []
     },
     session: {
       me: t.context.people[1]
@@ -58,7 +58,7 @@ test.serial('What instructions non members see', async t => {
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  let membersSection = wrapper.find('section').first()
+  const membersSection = wrapper.find('section').first()
   t.regex(membersSection.find('h2').first().text(), /About Joining/)
   t.is(membersSection.find('span').at(1).text(), org.info.outsiders)
   t.truthy(t.context.fetchMock.done())
@@ -76,7 +76,7 @@ test.serial('What instructions followers see', async t => {
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  let membersSection = wrapper.find('section').first()
+  const membersSection = wrapper.find('section').first()
   t.regex(membersSection.find('h2').first().text(), /Information for followers/)
   t.is(membersSection.find('span').at(1).text(), org.info.followers)
   t.truthy(t.context.fetchMock.done())
@@ -94,7 +94,7 @@ test.serial('What instructions joiners see', async t => {
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  let membersSection = wrapper.find('section').first()
+  const membersSection = wrapper.find('section').first()
   t.regex(membersSection.find('h2').first().text(), /Information for new members/)
   t.is(membersSection.find('span').at(1).text(), org.info.joiners)
   t.truthy(t.context.fetchMock.done())
@@ -112,7 +112,7 @@ test.serial('What instructions validators see', async t => {
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  let membersSection = wrapper.find('section').first()
+  const membersSection = wrapper.find('section').first()
   t.regex(membersSection.find('h2').first().text(), /Information for new members/)
   t.is(membersSection.find('span').at(1).text(), org.info.joiners)
   t.truthy(t.context.fetchMock.done())
@@ -130,7 +130,7 @@ test.serial('What instructions members see', async t => {
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  let membersSection = wrapper.find('section').first()
+  const membersSection = wrapper.find('section').first()
   t.regex(membersSection.find('h2').first().text(), /Information for members/)
   t.is(membersSection.find('span').at(1).text(), org.info.members)
   t.truthy(t.context.fetchMock.done())
@@ -152,7 +152,7 @@ test.serial('What instructions non members see when no info', async t => {
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  let membersSection = wrapper.find('section').first()
+  const membersSection = wrapper.find('section').first()
   t.regex(membersSection.find('h2').first().text(), /About Joining/)
   t.is(membersSection.find('span').at(1).text(), '')
   t.truthy(t.context.fetchMock.done())

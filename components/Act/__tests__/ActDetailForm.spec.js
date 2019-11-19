@@ -88,7 +88,8 @@ test('shallow the detail with act', t => {
       act={t.context.act}
       onSubmit={() => {}}
       onCancel={() => {}}
-      existingTags={[]} />
+      existingTags={[]}
+    />
   )
   t.is(wrapper.find('ActDetailForm').length, 1)
 })
@@ -104,7 +105,8 @@ test('render the detail with act', t => {
       me={me}
       onSubmit={submitAct}
       onCancel={cancelAct}
-      existingTags={[]} />
+      existingTags={[]}
+    />
   )
   t.is(wrapper.find('ActDetailForm').length, 1)
   t.is(wrapper.find('button').length, 4)
@@ -235,7 +237,8 @@ test('render the detail with new blank act', t => {
       me={me}
       onSubmit={submitAct}
       onCancel={cancelAct}
-      existingTags={[]} />
+      existingTags={[]}
+    />
   )
   t.is(wrapper.find('ActDetailForm').length, 1)
   t.is(wrapper.find('button').length, 4)

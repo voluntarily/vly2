@@ -1,16 +1,19 @@
 import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
-import fs from 'fs'
-import fsExtra from 'fs-extra'
+import MemoryMongo from '../../../util/test-memory-mongo'
+import fs from 'fs-extra'
 
-test.after.always(() => {
-  // clean out upload folder.
-  fsExtra.emptyDirSync('./static/upload-test')
+test.before('before connect to database', async (t) => {
+  try {
+    t.context.memMongo = new MemoryMongo()
+    await t.context.memMongo.start()
+    await appReady
+    fs.emptyDirSync('public/static/upload-test')
+  } catch (e) { console.error('image.spec.js error before', e) }
 })
 
 test.serial('can return image from static folder', async t => {
-  await appReady
   const res = await request(server)
     .get('/static/img/194px-Testcard_F.jpg')
     .set('Accept', 'image')
@@ -29,7 +32,6 @@ const sendImageToAPI = (path, filename) => {
 }
 
 test.serial('Should upload a small file', async t => {
-  await appReady
   const res = await sendImageToAPI(__dirname, '194px-Testcard_F.jpg')
     .expect(200)
     .expect('Content-Type', /json/)
@@ -48,7 +50,6 @@ test.serial('Should upload a small file', async t => {
 })
 
 test.serial('Should fail to upload', async t => {
-  await appReady
   const res = await request(server)
     .post('/api/images')
     .set('content-type', 'application/json')

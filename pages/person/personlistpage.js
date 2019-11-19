@@ -16,7 +16,7 @@ import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
 
 class PersonListPage extends Component {
   static async getInitialProps ({ store, req }) {
-    let cookies = req ? req.cookies : Cookie.get()
+    const cookies = req ? req.cookies : Cookie.get()
     // Get all People
     try {
       const cookiesStr = JSON.stringify(cookies)

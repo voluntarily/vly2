@@ -5,7 +5,7 @@ import MemberSection from '../MemberSection'
 import { Provider } from 'react-redux'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
-import { API_URL } from '../../../lib/apiCaller'
+import { API_URL } from '../../../lib/callApi'
 import fixture from './member.fixture.js'
 import { MemberStatus } from '../../../server/api/member/member.constants'
 
@@ -24,7 +24,7 @@ test.before('Setup fixtures', t => {
   const initStore = {
     members: {
       loading: false,
-      data: [ ]
+      data: []
     },
     session: {
       me: t.context.people[0]
@@ -69,7 +69,7 @@ test.serial('followers can become members and then be removed', async t => {
   let firstFollowerRow = followersSection.find('tbody tr').first()
 
   const orgFollowers = orgMembers.filter(member => member.status === MemberStatus.FOLLOWER)
-  let firstFollower = orgFollowers[0]
+  const firstFollower = orgFollowers[0]
 
   t.is(firstFollowerRow.find('td').at(MTF.NAME).text(), firstFollower.person.nickname)
   t.is(firstFollowerRow.find('td').at(MTF.STATUS).text(), MemberStatus.FOLLOWER)
@@ -148,7 +148,7 @@ test.serial('joiners can become members ', async t => {
   t.is(joinersSection.find('tbody tr').length, 2)
   let firstJoinerRow = joinersSection.find('tbody tr').first()
   const orgjoiners = orgMembers.filter(member => member.status === MemberStatus.JOINER)
-  let firstJoiner = orgjoiners[0]
+  const firstJoiner = orgjoiners[0]
 
   t.is(firstJoinerRow.find('td').at(MTF.NAME).text(), firstJoiner.person.nickname)
   t.is(firstJoinerRow.find('td').at(MTF.STATUS).text(), MemberStatus.JOINER)
@@ -175,7 +175,7 @@ test.serial('joiners can become members ', async t => {
   t.is(joinersSection.find('tbody tr').length, 1)// check the remaining joiner
   firstJoinerRow = joinersSection.find('tbody tr').first()
   const orgValidators = orgMembers.filter(member => member.status === MemberStatus.VALIDATOR)
-  let firstValidator = orgValidators[0]
+  const firstValidator = orgValidators[0]
 
   t.is(firstJoinerRow.find('td').at(MTF.NAME).text(), firstValidator.person.nickname)
   t.is(firstJoinerRow.find('td').at(MTF.STATUS).text(), MemberStatus.VALIDATOR)
@@ -206,7 +206,7 @@ test.serial('members can become admins ', async t => {
   const org = t.context.orgs[5]
   const orgid = org._id
   const orgMembers = members.filter(member => member.organisation._id === orgid)
-  let trueMembers = orgMembers.filter(member => [MemberStatus.MEMBER].includes(member.status))
+  const trueMembers = orgMembers.filter(member => [MemberStatus.MEMBER].includes(member.status))
   t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, orgMembers)
 
   const wrapper = await mountWithIntl(
@@ -223,14 +223,14 @@ test.serial('members can become admins ', async t => {
   t.is(membersSection.find('tbody tr').length, 2)
 
   // check orgAdmin can't change own state
-  let memberRow1 = membersSection.find('tbody tr').at(0)
+  const memberRow1 = membersSection.find('tbody tr').at(0)
   t.is(memberRow1.find('td').at(MTF.STATUS).text(), MemberStatus.ORGADMIN)
   t.is(memberRow1.find('button').length, 0)
 
   let memberRow2 = membersSection.find('tbody tr').at(1)
   t.is(memberRow2.find('td').at(MTF.STATUS).text(), MemberStatus.MEMBER)
 
-  let firstMember = trueMembers[0]
+  const firstMember = trueMembers[0]
   t.is(memberRow2.find('td').at(MTF.NAME).text(), firstMember.person.nickname)
 
   // test Make Admin button
@@ -265,9 +265,9 @@ test.serial('admins can see exportMembers button', async t => {
   wrapper.update()
 
   // export members button should be visible
-  let exportMemberSection = wrapper.find('section').at(3)
+  const exportMemberSection = wrapper.find('section').at(3)
   t.true(exportMemberSection.find('Button').exists())
-  let exportMembersButton = exportMemberSection.find('Button').at(0)
+  const exportMembersButton = exportMemberSection.find('Button').at(0)
 
   t.is(exportMembersButton.text(), 'Export Members')
 })

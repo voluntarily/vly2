@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import people from '../../../server/api/person/__tests__/person.fixture'
-import { API_URL } from '../../../lib/apiCaller'
+import { API_URL } from '../../../lib/callApi'
 
 const { fetchMock } = require('fetch-mock')
 
@@ -62,7 +62,7 @@ const markAndrewAsAbsent = {
 const initStore = {
   interests: {
     loading: false,
-    data: [ ]
+    data: []
   }
 }
 

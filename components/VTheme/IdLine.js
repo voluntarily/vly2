@@ -14,17 +14,18 @@ import React from 'react'
 
 const IdLine = ({ item, path }) =>
   item
-    ? <Link href={`/${path}/${item._id}`}>
-      <a style={{ display: 'block', margin: '0' }} >
-        <Avatar
-          size={32}
-          shape='square'
-          src={item.imgUrl}
-          icon='team'
-        />
-        <span style={{ marginLeft: '1em' }}>{item.name}</span>
-      </a>
-    </Link>
+    ? (
+      <Link href={`/${path}/${item._id}`}>
+        <a style={{ display: 'block', margin: '0' }}>
+          <Avatar
+            size={32}
+            shape='square'
+            src={item.imgUrl}
+            icon='team'
+          />
+          <span style={{ marginLeft: '1em' }}>{item.name}</span>
+        </a>
+      </Link>)
     : ''
 
 IdLine.propTypes = {

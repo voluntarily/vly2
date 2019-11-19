@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import apiCaller from '../../lib/apiCaller'
+import callApi from '../../lib/callApi'
 import styled from 'styled-components'
 import { config } from '../../config/config'
 
@@ -15,7 +15,7 @@ const Badge = styled.div`
   `
 
 const getBadgeData = async ({ _id }, setUserBadge) => {
-  const data = await apiCaller(`badge/${_id}`)
+  const data = await callApi(`badge/${_id}`)
   setUserBadge(data)
 }
 
@@ -31,7 +31,7 @@ function PersonBadge ({ person }) {
         userBadge.map((badge) => {
           return (
             <Badge key={badge._id} title={badge._id}>
-              <a href={`${config.BADGR_API}/public/assertions/${badge.entityId}`} target='_blank'>
+              <a href={`${config.BADGR_API}/public/assertions/${badge.entityId}`} rel='noopener noreferrer' target='_blank'>
                 <img width='60px' height='60px' alt={`${badge._id} badge`} src={`${badge.badgeclassOpenBadgeId}/image?type=png`} />
               </a>
             </Badge>)

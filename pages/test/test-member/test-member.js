@@ -64,12 +64,12 @@ const TestMemberPage = ({ ...props }) => (
     {/* <code>{JSON.stringify(members)}</code>  */}
 
     <h1>Register Member Buttons</h1>
-    {members.map(member => {
-      return <div>
+    {members.map((member, index) =>
+      <div key={index}>
         <MemberItem member={member} />
         <RegisterMemberItem member={member} /><br />
       </div>
-    })}
+    )}
 
   </FullPage>
 )

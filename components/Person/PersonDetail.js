@@ -79,12 +79,12 @@ const PersonDetail = ({ person }, ...props) => (
     <GridContainer> {/* Left Sidebar */}
       <Head title={person.nickname} />
       <ProfileImage src={person.imgUrl} alt={person.nickname} />
-      { person.orgMembership &&
+      {person.orgMembership &&
         <DetailItem>
           <h3><FormattedMessage id='person.memberof' defaultMessage='Member of' description='Header for list of orgs I belong to' /></h3>
           <MemberUl members={person.orgMembership} />
         </DetailItem>}
-      { person.orgFollowership &&
+      {person.orgFollowership &&
         <DetailItem>
           <h3><FormattedMessage id='person.following' defaultMessage='Following' description='Header for list of orgs I follow' /></h3>
           <MemberUl members={person.orgFollowership} />
@@ -116,19 +116,19 @@ const PersonDetail = ({ person }, ...props) => (
             </a>
           </li>
           <li>
-            <a href={person.website} target='_blank' >
+            <a href={person.website} rel='noopener noreferrer' target='_blank'>
               <StyledIcon type='global' />
               {person.website}
             </a>
           </li>
           <li>
-            <a href={`https://www.facebook.com/${person.facebook}`} target='_blank' >
+            <a href={`https://www.facebook.com/${person.facebook}`} rel='noopener noreferrer' target='_blank'>
               <StyledIcon type='facebook' />
               {person.facebook}
             </a>
           </li>
           <li>
-            <a href={`https://www.twitter.com/${person.twitter}`} target='_blank' >
+            <a href={`https://www.twitter.com/${person.twitter}`} rel='noopener noreferrer' target='_blank'>
               <StyledIcon type='twitter' />
               {person.twitter}
             </a>
@@ -153,7 +153,8 @@ const PersonDetail = ({ person }, ...props) => (
           <FormattedMessage
             defaultMessage='Interests and Skills'
             id='person.skills.title'
-            description='subheading for tags on person details page' />
+            description='subheading for tags on person details page'
+          />
         </H3Bold>
         <TagDisplay tags={person.tags} />
       </InfoSection>
@@ -196,12 +197,7 @@ PersonDetail.propTypes = {
       ])
     ),
     status: PropTypes.oneOf(['active', 'inactive', 'hold']),
-    tags: PropTypes.arrayOf(
-      PropTypes.shape({
-        tag: PropTypes.string.isRequired,
-        _id: PropTypes.string
-      })
-    )
+    tags: PropTypes.arrayOf(PropTypes.string)
   }).isRequired
 }
 

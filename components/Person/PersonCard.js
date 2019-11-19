@@ -5,7 +5,7 @@ import { Card } from '../VTheme/VTheme'
 
 const PersonCard = ({ person, ...props }) => (
   <Card>
-    <Link href={`/people/${person._id}`} >
+    <Link href={`/people/${person._id}`}>
       <a>
         <img src={person.imgUrl} />
         <figcaption>
@@ -13,7 +13,8 @@ const PersonCard = ({ person, ...props }) => (
           <p className='personName'>{person.name}</p>
         </figcaption>
       </a>
-    </Link>    <style jsx>{`
+    </Link>
+    <style jsx>{`
       .personName {
         overflow: hidden;
         text-overflow: ellipsis; 
@@ -23,7 +24,8 @@ const PersonCard = ({ person, ...props }) => (
         -webkit-line-clamp: 6;
         -webkit-box-orient: vertical;
       }
-    `}</style>
+    `}
+    </style>
   </Card>
 )
 

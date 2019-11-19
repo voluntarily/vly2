@@ -2,7 +2,7 @@ import test from 'ava'
 import { PersonBadgeSection } from '../PersonBadge'
 import mockFetch from 'fetch-mock'
 import { mount } from 'enzyme'
-import { APP_URL } from '../../../lib/apiCaller'
+import { APP_URL } from '../../../lib/callApi'
 
 const badgeData = [{
   badgeclass: 'cqNQRgBaTVagim095Pldsw',
@@ -21,7 +21,7 @@ const badgeData = [{
 
 test('PersonBadge renders properly', async t => {
   const mockServer = mockFetch.sandbox()
-  mockServer.get(`begin:${APP_URL}/api/badge`, { body: [ ...badgeData ] })
+  mockServer.get(`begin:${APP_URL}/api/badge`, { body: [...badgeData] })
   const person = {
     _id: 'taskldjfh0'
   }

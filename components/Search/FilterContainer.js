@@ -30,10 +30,10 @@ class FilterContainer extends React.Component {
       this.setState({ filterApplied: false, filterValue: null })
       onFilterRemoved(filterName)
     }
-    this.closeModal()
+    this.handleCancel()
   }
 
-  closeModal = () => {
+  handleCancel = () => {
     const { onClose, filterName } = this.props
     onClose(filterName)
   }
@@ -48,7 +48,7 @@ class FilterContainer extends React.Component {
         okText={okText}
         cancelText='Cancel'
         onOk={this.state.filterApplied ? this.removeFilter : this.applyFilter}
-        onCancel={this.closeModal}
+        onCancel={this.handleCancel}
       >
         <div className='filter-details-container'>
           {

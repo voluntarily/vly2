@@ -33,9 +33,13 @@ class Ops extends Component {
             description='Title of page listing opportunities'
           />
         </h1>
-        <Button shape='round'><Link href='/op/new'><a>
-          <FormattedMessage id='op.new' defaultMessage='New Opportunity' description='Button to create a new opportunity' />
-        </a></Link></Button>
+        <Button shape='round'>
+          <Link href='/op/new'>
+            <a>
+              <FormattedMessage id='op.new' defaultMessage='New Opportunity' description='Button to create a new opportunity' />
+            </a>
+          </Link>
+        </Button>
         <br /><br />
         <OpList ops={this.props.ops} />
       </FullPage>

@@ -27,8 +27,10 @@ export default class LocalStateTest extends Component {
     <div>
       <Hello name={this.state.savedname} />
       <label>Name:&nbsp;
-        <input type='text' id='editname' name='editname' onChange={this.handleChange}
-          defaultValue={this.state.editname} size='20' />
+        <input
+          type='text' id='editname' name='editname' onChange={this.handleChange}
+          defaultValue={this.state.editname} size='20'
+        />
       </label>
       <button type='submit' onClick={this.handleClick}>Save</button>
       <hr />

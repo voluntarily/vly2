@@ -45,7 +45,7 @@ export class ArchivedOpDetailPage extends OpDetailPage {
       }
     }
 
-    let op = this.retrieveOpportunity()
+    const op = this.retrieveOpportunity()
     return (
       <FullPage>
         <Helmet>

@@ -76,7 +76,7 @@ export class ActDetailPage extends Component {
     await this.props.dispatch(reduxApi.actions.activities.delete({ id: act._id }))
     // TODO error handling - how can this fail?
     message.success('Deleted. ')
-    Router.replace(`/acts`)
+    Router.replace('/acts')
   }
 
   async handleSubmit (act) {
@@ -152,37 +152,43 @@ export class ActDetailPage extends Component {
       return (
         // if not signed in then the interested button signs in first
         isOP &&
-          <Button style={{ float: 'right' }} type='primary' shape='round' href={`/op/new?act=${act._id}`} >
-            <FormattedMessage id='act.createOpportunityBtn'
+          <Button style={{ float: 'right' }} type='primary' shape='round' href={`/op/new?act=${act._id}`}>
+            <FormattedMessage
+              id='act.createOpportunityBtn'
               defaultMessage='Create new request from this Activity'
-              description='Button to create an opportunity from an activity' />
+              description='Button to create an opportunity from an activity'
+            />
           </Button>
       )
     }
 
     if (!content) {
       if (act && this.state.editing) {
-        content = <div>
-          <ActDetailForm
-            act={act}
-            me={me}
-            onSubmit={this.handleSubmit.bind(this, act)}
-            onCancel={this.handleCancelEdit.bind(this)}
-            existingTags={existingTags}
-          />
-        </div>
+        content =
+          <>
+            <ActDetailForm
+              act={act}
+              me={me}
+              onSubmit={this.handleSubmit.bind(this, act)}
+              onCancel={this.handleCancelEdit.bind(this)}
+              existingTags={existingTags}
+            />
+          </>
       } else {
-        content = <div>
-          {createOpportunitySection()}
-          { canEdit &&
-            <Button id='editActBtn' style={{ float: 'right' }}
-              type='primary' shape='round'
-              onClick={() => this.setState({ editing: true })} >
-              <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
-            </Button>}
-          <Spacer />
-          <ActDetail act={act} />
-        </div>
+        content =
+          <>
+            {createOpportunitySection()}
+            {canEdit &&
+              <Button
+                id='editActBtn' style={{ float: 'right' }}
+                type='primary' shape='round'
+                onClick={() => this.setState({ editing: true })}
+              >
+                <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
+              </Button>}
+            <Spacer />
+            <ActDetail act={act} />
+          </>
       }
     }
 

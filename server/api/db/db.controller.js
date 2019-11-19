@@ -1,6 +1,9 @@
+const mongoose = require('mongoose')
 const Opportunity = require('../opportunity/opportunity')
 const Person = require('../person/person')
 const Organisation = require('../organisation/organisation')
+const Tag = require('../tag/tag')
+const TagObj = require('../tag/tagObj')
 const Activity = require('../activity/activity')
 const cuid = require('cuid')
 const optitle = [
@@ -37,11 +40,12 @@ const opduration = [
   '2-3 hours'
 ]
 
-const forall = (model, action) => {
-  var cursor = model.find().cursor()
+const forall = async (model, action) => {
+  const cursor = model.find().cursor()
+
   // Execute the each command, triggers for each document
-  cursor.eachAsync(item => {
-    action(item)
+  cursor.eachAsync(async item => {
+    await action(item)
     // return user.save().exec()        // Need promise
   }).then(
     (res) => console.log('db action completed'),
@@ -55,6 +59,8 @@ const getModel = name => {
     case 'Opportunity': return Opportunity
     case 'Activity': return Activity
     case 'Person': return Person
+    case 'TagObj': return TagObj
+    case 'Tag': return Tag
   }
 }
 const createPerson = async (p) => {
@@ -134,14 +140,14 @@ const dbAction = async (req, res) => {
       break
     case 'list': {
       const model = getModel(req.query.e)
-      if (model) { forall(model, console.log) }
+      if (model) { await forall(model, console.log) }
       break
     }
 
     case 'fixName': {
       const model = getModel(req.query.e)
       if (model) {
-        forall(model, async item => {
+        await forall(model, async item => {
           if (item.title) {
             item.name = item.title
             delete item.title
@@ -151,6 +157,30 @@ const dbAction = async (req, res) => {
             item.imgUrl = item.avatar
             delete item.avatar
             await item.save()
+          }
+        })
+      }
+      break
+    }
+    case 'fixTags': {
+      /* example: localhost:3122/api/db/fixTags?e="Person" */
+      const model = getModel(req.query.e)
+      console.log('FixTags: Model = ', model)
+      if (model) {
+        await forall(model, async item => {
+          console.log('before:', item)
+          if (item.tags && item.tags.length !== 0 &&
+            mongoose.Types.ObjectId.isValid(item.tags[0])) {
+            const strTags = await Promise.all(item.tags.map(
+              async t => {
+                const tag = await TagObj.findById(t)
+                return tag.tag
+              }))
+            console.log('strTags', strTags)
+            item.tags = strTags
+            console.log('about to save:', item)
+            const saved = await item.save()
+            console.log('saved:', saved)
           }
         })
       }

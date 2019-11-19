@@ -5,30 +5,44 @@ import Organisation from '../organisation'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import orgs from './organisation.fixture.js'
 
-const p = {
-  name: 'International Testing Corporation',
-  slug: 'test-corp',
-  category: 'vp',
-  about: 'Evil testing empire'
+const testOrg = {
+  name: 'Test Organisation',
+  slug: 'test-organisation',
+  category: ['vp', 'ap'],
+  imgUrl: 'https://example.com/image1',
+  info: {
+    about: 'Industry in the classroom.',
+    members: 'You are a member of Test Organisation.',
+    followers: 'You are a follower of Test Organisation.',
+    joiners: 'You are a nearly a member of Test Organisation.',
+    outsiders: 'You could be a member of Test Organisation.'
+  }
+}
+
+const testOrgNoImg = {
+  name: 'Test Organisation 2',
+  slug: 'test-organisation-2',
+  category: ['vp'],
+  info: {
+    about: 'Industry in the classroom.',
+    members: 'You are a member of Test Organisation.',
+    followers: 'You are a follower of Test Organisation.',
+    joiners: 'You are a nearly a member of Test Organisation.',
+    outsiders: 'You could be a member of Test Organisation.'
+  }
 }
 
 test.before('before connect to database', async (t) => {
-  await appReady
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+  try {
+    t.context.memMongo = new MemoryMongo()
+    await t.context.memMongo.start()
+    await appReady
+    await Organisation.create(orgs).catch(() => 'Unable to create orgs')
+  } catch (e) { console.error('organisation.spec.js before error:', e) }
 })
 
 test.after.always(async (t) => {
   await t.context.memMongo.stop()
-})
-
-test.beforeEach('connect and add organisation entries', async () => {
-  // TODO catch a db error here.
-  await Organisation.create(orgs).catch(() => 'Unable to create orgs')
-})
-
-test.afterEach.always(async () => {
-  await Organisation.deleteMany()
 })
 
 test.serial('verify fixture database has orgs', async t => {
@@ -173,7 +187,7 @@ test.serial('Should correctly select just the names and ids', async t => {
 test.serial('Should send correct data when queried against an id', async t => {
   t.plan(1)
 
-  const organisation = new Organisation(p)
+  const organisation = new Organisation(testOrg)
   await organisation.save()
   const id = organisation._id
 
@@ -183,7 +197,7 @@ test.serial('Should send correct data when queried against an id', async t => {
     .expect('Content-Type', /json/)
     .expect(200)
 
-  t.is(res.body.name, p.name)
+  t.is(res.body.name, testOrg.name)
 })
 
 test.serial('Should correctly add an organisation', async t => {
@@ -191,7 +205,7 @@ test.serial('Should correctly add an organisation', async t => {
 
   const res = await request(server)
     .post('/api/organisations')
-    .send(p)
+    .send(testOrgNoImg)
     .set('Accept', 'application/json')
     .expect(200)
 
@@ -203,13 +217,13 @@ test.serial('Should correctly add an organisation', async t => {
     })
 
     // can find by email with then
-    await Organisation.findOne({ slug: p.slug }).then((organisation) => {
-      t.is(organisation.name, p.name)
+    await Organisation.findOne({ slug: testOrgNoImg.slug }).then((organisation) => {
+      t.is(organisation.name, testOrgNoImg.name)
     })
 
     // can find by email using await
-    const saved = await Organisation.findOne({ slug: p.slug }).exec()
-    t.is(saved.name, p.name)
+    const saved = await Organisation.findOne({ slug: testOrgNoImg.slug }).exec()
+    t.is(saved.name, testOrgNoImg.name)
 
     // organisation has been given the default image
     t.is(saved.imgUrl, '/static/img/organisation/organisation.png')
@@ -221,7 +235,20 @@ test.serial('Should correctly add an organisation', async t => {
 test.serial('Should load a organisation into the db and delete them via the api', async t => {
   t.plan(2)
 
-  const organisation = new Organisation(p)
+  const testOrgDelete = {
+    name: 'Test Organisation Delete',
+    slug: 'test-organisation-delete',
+    category: ['vp'],
+    info: {
+      about: 'Industry in the classroom.',
+      members: 'You are a member of Test Organisation.',
+      followers: 'You are a follower of Test Organisation.',
+      joiners: 'You are a nearly a member of Test Organisation.',
+      outsiders: 'You could be a member of Test Organisation.'
+    }
+  }
+
+  const organisation = new Organisation(testOrgDelete)
   await organisation.save()
   const id = organisation._id
 
@@ -232,7 +259,7 @@ test.serial('Should load a organisation into the db and delete them via the api'
     .expect('Content-Type', /json/)
     .expect(200)
 
-  t.is(res.body.name, p.name)
+  t.is(res.body.name, testOrgDelete.name)
 
   // delete the record
   await request(server)
@@ -241,6 +268,6 @@ test.serial('Should load a organisation into the db and delete them via the api'
     .expect(200)
 
   // check organisation is gone
-  const q = await Organisation.findOne({ slug: p.slug }).exec()
+  const q = await Organisation.findOne({ slug: testOrgDelete.slug }).exec()
   t.is(q, null)
 })

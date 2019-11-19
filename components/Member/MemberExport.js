@@ -20,7 +20,7 @@ const exportMembers = (members) => {
 }
 
 const triggerDownload = (data) => {
-  let link = document.createElement('a')
+  const link = document.createElement('a')
   link.setAttribute('href', data)
   link.setAttribute('download', 'members.csv')
   link.click()

@@ -39,7 +39,7 @@ class ActDetailForm extends Component {
     }
 
     this.setImgUrl = this.setImgUrl.bind(this)
-    this.change = this.change.bind(this)
+    // this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount () {
@@ -55,6 +55,7 @@ class ActDetailForm extends Component {
       this.actRadio('option1')
     }
   }
+
   actRadio = (event) => {
     if (event === 'option1') {
       this.setState({
@@ -72,7 +73,8 @@ class ActDetailForm extends Component {
       })
     }
   }
-  change = (event) => {
+
+  handleChange = (event) => {
     const textname = event.target.name
     if (textname === 'resourceinput1') {
       this.setState({
@@ -104,7 +106,7 @@ class ActDetailForm extends Component {
         act.equipment = values.equipment
         act.description = values.description
         act.offerOrg = values.offerOrg && values.offerOrg.key
-        act.imgUrl = values.imgUrl
+        act.imgUrl = values.imgUrl === '' ? undefined : values.imgUrl
         act.tags = values.tags
         act.status = e.target.name === 'publish' ? 'active' : 'draft'
         // act.owner = (this.props.act.owner && this.props.op.owner._id) || this.props.me._id
@@ -253,12 +255,13 @@ class ActDetailForm extends Component {
 
     // Only show error after a field is touched.
     const titleError = isFieldTouched('name') && getFieldError('name')
+    const durationError = isFieldTouched('duration') && getFieldError('duration')
     const orgMembership =
     this.props.me.orgMembership &&
     this.props.me.orgMembership.map(member => member.organisation)
     return (
       <div className='ActDetailForm'>
-        <Form hideRequiredMark colon={false}>
+        <Form colon={false}>
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -287,7 +290,7 @@ class ActDetailForm extends Component {
                 >
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'Title is required' }]
-                  })(<Input placeholder='Title' />)}
+                  })(<Input placeholder='Title' required />)}
                 </Form.Item>
 
                 <Form.Item label={actSubtitle}>
@@ -304,7 +307,7 @@ class ActDetailForm extends Component {
                 })(
                   isTest
                     ? <TextArea rows={20} placeholder='All the details about the activity, you can use HTML or Markdown here' />
-                    : <RichTextEditor onChange={this.setAbout} />
+                    : <RichTextEditor />
                 )}
               </Form.Item>
               {orgMembership && (
@@ -377,7 +380,11 @@ class ActDetailForm extends Component {
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
-                <Form.Item label={actCommitment}>
+                <Form.Item
+                  label={actCommitment}
+                  validateStatus={durationError ? 'error' : ''}
+                  help={durationError || ''}
+                >
                   {getFieldDecorator('duration', {
                     rules: [
                       {
@@ -398,8 +405,11 @@ class ActDetailForm extends Component {
                       description='label for field volunteer numbers required'
                     />
                   </Radio>
-                  {getFieldDecorator('totalVolunteerRequired')(<Input name='resourceinput1' onChange={this.change}
-                    disabled={this.state.input1Disabled} placeholder='Select from 1 to 100' />)}
+                  {getFieldDecorator('totalVolunteerRequired')(
+                    <Input
+                      name='resourceinput1' onChange={this.handleChange}
+                      disabled={this.state.input1Disabled} placeholder='Select from 1 to 100'
+                    />)}
                 </Form.Item>
                 <Form.Item>
                   <Radio name='volunteer' value='option2' checked={this.state.option2} onClick={this.actRadio.bind(this, 'option2')}>
@@ -409,8 +419,12 @@ class ActDetailForm extends Component {
                       description='label for field number of students per volunteer'
                     />
                   </Radio>
-                  {getFieldDecorator('volunteerPerStudent')(<Input name='resourceinput2' onChange={this.change}
-                    disabled={this.state.input2Disabled} placeholder='Specify the number of students' />)}
+                  {getFieldDecorator('volunteerPerStudent')(
+                    <Input
+                      name='resourceinput2'
+                      onChange={this.handleChange}
+                      disabled={this.state.input2Disabled} placeholder='Specify the number of students'
+                    />)}
                 </Form.Item>
                 <Form.Item label={actSpace}>
                   {getFieldDecorator('space')(<Input name='space' placeholder='40 sqm' />)}
@@ -443,16 +457,18 @@ class ActDetailForm extends Component {
             <InputContainer>
               <MediumInputContainer>
                 <Form.Item label={actEquipment}>
-                  <DynamicFieldSet form={this.props.form}
+                  <DynamicFieldSet
+                    form={this.props.form}
                     field='equipment'
-                    placeholder={'Equipment description'}
+                    placeholder='Equipment description'
                     validationMessage={
                       <FormattedMessage
                         id='actDetailForm.addEquipment.validationMessage'
-                        defaultMessage={`Add an equipment or remove field`}
+                        defaultMessage='Add an equipment or remove field'
                       />
                     }
-                    addItemText='Add equipment' />
+                    addItemText='Add equipment'
+                  />
                 </Form.Item>
               </MediumInputContainer>
             </InputContainer>
@@ -488,7 +504,7 @@ class ActDetailForm extends Component {
                   })(<Input />)}
                   <ImageUpload setImgUrl={this.setImgUrl} />
                 </Form.Item>
-                // TODO: [VP-304] add suggest photo button to ActDetailForm
+                {/* // TODO: [VP-304] add suggest photo button to ActDetailForm */}
               </MediumInputContainer>
             </InputContainer>
           </FormGrid>
@@ -508,7 +524,7 @@ class ActDetailForm extends Component {
               <P>
                 <FormattedMessage
                   id='act.SaveInstructions'
-                  defaultMessage='Save as Draft will allow you to preview the activity while Publish will make it available to everyone to view.'
+                  defaultMessage='Save as draft will allow you to preview the activity while Publish will make it available to everyone to view.'
                   description='Instructions for save and publish on activity details form'
                 />
               </P>
@@ -598,10 +614,7 @@ ActDetailForm.propTypes = {
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
   }),
-  existingTags: PropTypes.arrayOf(PropTypes.shape({
-    tag: PropTypes.string.isRequired,
-    _id: PropTypes.string
-  })).isRequired,
+  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired
   // dispatch: PropTypes.func.isRequired,
