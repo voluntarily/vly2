@@ -39,6 +39,24 @@ export const Spacer = styled.div`
   height: 4rem;
 ` // end spacer
 
+
+
+export const OpSectionGrid = styled.div`
+  margin: 2rem 0;
+  display: grid;
+  grid-template-columns: 25rem 1fr;
+  gap: 5rem;
+  text-align: left;
+  @media screen and (min-width: 768px) and (max-width: 1281px) {
+    grid-template-columns: calc(50vw - 4rem) calc(50vw - 4rem);
+    grid-column-gap: 2rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: calc(100vw - 2rem);
+  }
+`//end OpSection
+
 export const HalfGrid = styled.div`
   display: grid;
   position: relative;

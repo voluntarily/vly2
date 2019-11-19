@@ -9,7 +9,7 @@ import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
-import { HalfGrid, Spacer } from '../VTheme/VTheme'
+import { HalfGrid, Spacer, OpSectionGrid } from '../VTheme/VTheme'
 import {
   Left,
   Right,
@@ -58,21 +58,7 @@ const editTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Edit Activity</span>
 )
 
-const OpSection = styled.div`
-  margin: 2rem 0;
-  display: grid;
-  grid-template-columns: 25rem 1fr;
-  gap: 5rem;
-  text-align: left;
-  @media screen and (min-width: 768px) and (max-width: 1281px) {
-    grid-template-columns: calc(50vw - 4rem) calc(50vw - 4rem);
-    grid-column-gap: 2rem;
-  }
 
-  @media screen and (max-width: 768px) {
-    grid-template-columns: calc(100vw - 2rem);
-  }
-`
 const TabContainer = styled.div`
   margin-top: 2rem;
 `
@@ -123,9 +109,9 @@ export function OpDetail ({ op }) {
         </Right>
       </HalfGrid>
       <TabContainer>
-        <Tabs style={shadowStyle} defaultActiveKey='3' onChange={callback}>
+        <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={aboutTab} key='1'>
-            <OpSection>
+            <OpSectionGrid>
               <div>
                 <h2>About this Activity</h2>
               </div>
@@ -140,13 +126,15 @@ export function OpDetail ({ op }) {
                   }}
                 />
                 <TagContainer>
+                  <Divider />
+                  <h5><FormattedMessage id='opTags' defaultMessage='Tags' description='Tags on an opportunity' /></h5>
                   <TagDisplay tags={op.tags} />
                 </TagContainer>
               </ItemDescription>
-            </OpSection>
+            </OpSectionGrid>
             <Divider />
 
-            <OpSection>
+            <OpSectionGrid>
               <div>
                 <h2>Organised by</h2>
               </div>
@@ -155,7 +143,7 @@ export function OpDetail ({ op }) {
                 <ItemIdLine item={op.offerOrg} path='orgs' />
                 <ItemIdLine item={op.requestor} path='people' />
               </div>
-            </OpSection>
+            </OpSectionGrid>
           </TabPane>
           <TabPane tab={questionTab} key='2'>
             <OpQuestion />

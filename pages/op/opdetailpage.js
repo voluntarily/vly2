@@ -7,7 +7,7 @@ import Loading from '../../components/Loading'
 import OpDetail from '../../components/Op/OpDetail'
 import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
-import { FullPage } from '../../components/VTheme/VTheme'
+import { FullPage, OpSectionGrid } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
@@ -219,9 +219,9 @@ export class OpDetailPage extends Component {
             op={op}
             meID={this.props.me && this.props.me._id}
           />
-                   {this.canEdit(op) &&  <div><h2>Danger zone</h2>
-                   <h5> These buttons will permanantly change your activity - be careful!</h5>
-                           
+                   {this.canEdit(op) &&  <OpSectionGrid><h2>Danger zone</h2>
+            <div>
+                   <h5> These buttons will permanantly change your activity - be careful!</h5>                           
             <Button
               id='editOpBtn'
               style={{ marginBottom: '1rem' }}
@@ -230,13 +230,13 @@ export class OpDetailPage extends Component {
               onClick={() => this.setState({ editing: true })}
             >
               <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
-            </Button></div>}
-          <OpOwnerManageInterests
+            </Button><OpOwnerManageInterests
             canManageInterests={this.canManageInterests(op)}
             op={op}
             confirmOpportunity={this.confirmOpportunity}
             cancelOpportunity={this.cancelOpportunity}
           />
+          </div></OpSectionGrid>}
           
         </FullPage>
       )

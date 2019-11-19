@@ -51,7 +51,7 @@ export default class OpOwnerManageInterests extends Component {
             </Button>
           </Popconfirm>
           <Divider />
-          <InterestSection opid={this.props.op._id} />
+        
         </section>
     )
   }
