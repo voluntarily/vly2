@@ -25,14 +25,18 @@ class NumericRange extends React.Component {
     return (
       <Container>
         <span>From: </span>
-        <InputNumber placeholder={this.props.fromPlaceholder}
+        <InputNumber
+          placeholder={this.props.fromPlaceholder}
           onChange={from => onChange({ from })}
-          className="numeric-range-from" />
+          className='numeric-range-from'
+        />
 
         <span>to: </span>
-        <InputNumber placeholder={this.props.toPlaceholder}
+        <InputNumber
+          placeholder={this.props.toPlaceholder}
           onChange={to => onChange({ to })}
-          className="numeric-range-to" />
+          className='numeric-range-to'
+        />
       </Container>)
   }
 }

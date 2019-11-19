@@ -245,7 +245,7 @@ class OrgDetailForm extends Component {
 
           {(getFieldValue('category') || []).includes(OrganisationCategory.SCHOOL)
             ? (
-              <Form.Item label={orgAgeRange}>
+              <Form.Item htmlId='age-range' label={orgAgeRange}>
                 {getFieldDecorator('ageRange')(
                   <NumericRange
                     fromPlaceholder='5'
