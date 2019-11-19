@@ -5,6 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test PORT=8080 node_modules/.bin/nyc node --no-deprecation node_modules/ava/cli.js",
+    "test-no-code-coverage": "cross-env NODE_ENV=test PORT=8080 node --no-deprecation node_modules/ava/cli.js",
     "watch:test": "npm run test -- --watch",
     "end-to-end-test": "run-p -r dev testcafe-tests",
     "testcafe-tests": "wait-on -t 30000 -w 2000 -l http://localhost:3122 && node node_modules/testcafe/bin/testcafe.js firefox:headless systemtest/landing.test.js",
