@@ -26,11 +26,7 @@ const ActivitySchema = new Schema({
   time: {
     type: [Date]
   },
-  tags: [
-    {
-      type: Schema.Types.ObjectId, ref: 'Tag'
-    }
-  ],
+  tags: [String],
   equipment: {
     type: [String],
     default: []
@@ -47,5 +43,6 @@ const ActivitySchema = new Schema({
 ActivitySchema.plugin(idvalidator)
 ActivitySchema.plugin(accessibleRecordsPlugin)
 ActivitySchema.plugin(accessibleFieldsPlugin)
+ActivitySchema.index({ tags: 1 })
 
 module.exports = mongoose.model('Activity', ActivitySchema)

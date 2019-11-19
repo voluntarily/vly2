@@ -29,13 +29,7 @@ const actMax = {
   location: 'Newmarket, Auckland',
   equipment: ['cats', 'lasers', 'buckets'],
   status: 'active',
-  tags: [{
-    tag: 'algorithms'
-  },
-  {
-    tag: 'scheduling'
-  }
-  ]
+  tags: ['algorithms', 'scheduling']
 }
 
 test('render the detail with short act', t => {

@@ -30,6 +30,7 @@ const Navigation = ({ items, defaultItem, router, me, ...props }) => {
       {items.map(item => (
         <Menu.Item key={item.key}>
           {/* don't do prefetch during testing */}
+          {/* // TODO: [VP-800] in menu if link is offset use A instead of Link to avoid Next warning */}
           <Link key={item.href} href={item.href}>
             <a>{item.text}</a>
           </Link>

@@ -1,9 +1,9 @@
-/*
-  Dumb component. Contains information about a volunteer's interest in an opportunity.
-  Unlike InterestItem, this one is a Form allowing state changes.
-*/
+// /*
+//   Dumb component. Contains information about a volunteer's interest in an opportunity.
+//   Unlike InterestItem, this one is a Form allowing state changes.
+// */
 
-import { Button, Col, Form, Popconfirm, Row } from 'antd'
+import { Button, Col, Form, Popconfirm, Row, Checkbox } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
@@ -18,7 +18,8 @@ class RegisterInterestItem extends Component {
     super(props)
 
     this.state = {
-      isFormVisible: false
+      isFormVisible: false,
+      termsAccepted: false
     }
   }
 
@@ -28,15 +29,12 @@ class RegisterInterestItem extends Component {
 
   handleChangeStateButtonClicked (e) {
     e.preventDefault()
-
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const interest = this.props.interest
         interest.comment = values.comment
 
         this.props.onChangeStatus(interest)
-      } else {
-        // console.error(err)
       }
     })
   }
@@ -48,7 +46,8 @@ class RegisterInterestItem extends Component {
 
   render () {
     const {
-      getFieldDecorator, getFieldsError
+      getFieldDecorator,
+      getFieldsError
     } = this.props.form
 
     // Options to configure the controls on this page based on the state of the interest.
@@ -73,7 +72,7 @@ class RegisterInterestItem extends Component {
                   xs={{ span: 24 }}
                   md={{ span: 12 }}
                 >
-                  <Form.Item label='Your message'>
+                  <Form.Item>
                     {getFieldDecorator('comment', {
                       rules: [
                         { required: true, message: 'Comment is required' }
@@ -94,13 +93,38 @@ class RegisterInterestItem extends Component {
             {options.nextStateButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
               ? (
                 <span>
-                  <Button type='primary' disabled={hasErrors(getFieldsError())} shape='round' onClick={this.handleChangeStateButtonClicked.bind(this)}>
+                  <Form.Item>
+                    <Checkbox
+                      defaultChecked={!!this.state.termsAccepted}
+                      onChange={e => this.setState({ termsAccepted: e.target.checked })}
+                    >
+                      <FormattedMessage
+                        id='registerinterestitem.accepttcs'
+                        defaultMessage='I accept the '
+                      />
+                      <a
+                        href='/terms'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                      >
+                        <FormattedMessage
+                          id='registerinterestitem.termsandconditions'
+                          defaultMessage='Terms and Conditions'
+                        />
+                      </a>
+                    </Checkbox>
+                  </Form.Item>
+                  <Button
+                    type='primary'
+                    disabled={hasErrors(getFieldsError()) || !this.state.termsAccepted}
+                    shape='round'
+                    onClick={this.handleChangeStateButtonClicked.bind(this)}
+                  >
                     {options.nextStateButtonText}
                   </Button>
-                &nbsp;
+                  &nbsp;
                 </span>)
               : null}
-
             {/* Button to handle withdrawal from op */}
             {options.withdrawInterestButtonEnabled && (options.formAlwaysVisible || this.state.isFormVisible)
               ? (
@@ -118,7 +142,11 @@ class RegisterInterestItem extends Component {
             {!options.formAlwaysVisible && !this.state.isFormVisible
               ? (
                 <span>
-                  <Button type='primary' shape='round' onClick={() => this.setState({ isFormVisible: true })}>
+                  <Button
+                    type='primary'
+                    shape='round'
+                    onClick={() => this.setState({ isFormVisible: true })}
+                  >
                     {options.showFormButtonText}
                   </Button>
                 &nbsp;
@@ -188,7 +216,7 @@ function getOptions (interest) {
     case null:
       options.headerAlwaysVisible = false
       options.headingText = <FormattedMessage id='getInvolvedHeading' defaultMessage='How do you want to get involved?' description='Heading displayed on form allowing volunteer to express interest in an opportunity' />
-      options.subHeadingText = <FormattedMessage id='getInvolvedSubHeading' defaultMessage='Type in how you want to get involved, and an organizer will get in touch with you :)' description='Sub-heading displayed on form allowing volunteer to express interest in an opportunity' />
+      options.subHeadingText = <FormattedMessage id='getInvolvedSubHeading' defaultMessage='Let us know how you want to get involved or what you have to offer and an organizer will get in touch with you.' description='Sub-heading displayed on form allowing volunteer to express interest in an opportunity' />
       options.nextStateButtonText = <FormattedMessage id='getInvolvedButton' defaultMessage='Get Involved' description='Button allowing volunteer to express interest in an opportunity' />
       options.showFormButtonText = <FormattedMessage id='registerInterestShowForm' defaultMessage="I'm Interested" description='Button to allow volunteer to start expressing interest in an opportunity' />
       options.commentsPlaceholderText = 'How do you want to help out? Got any questions?' // Can't use FormattedMessage here, is there something else I can use?
@@ -240,3 +268,8 @@ function getOptions (interest) {
 
   return options
 }
+
+/*
+  Dumb component. Contains information about a volunteer's interest in an opportunity.
+  Unlike InterestItem, this one is a Form allowing state changes.
+*/
