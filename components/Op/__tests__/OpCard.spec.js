@@ -81,23 +81,47 @@ test('ops with start and end date should be display start date', t => {
 
 test('op with an interest status should have related icon appear in card', t => {
   const op = t.context.ops[2]
+  let wrapper = mountWithIntl(
+    <OpCard op={op} />
+  )
+  t.truthy(wrapper.find('i').first().hasClass('anticon-like'))
+
+  op.interest.status = 'invited'
+  wrapper = mountWithIntl(
+    <OpCard op={op} />
+  )
+  t.truthy(wrapper.find('i').first().hasClass('anticon-message'))
+
+  op.interest.status = 'committed'
+  wrapper = mountWithIntl(
+    <OpCard op={op} />
+  )
+  t.truthy(wrapper.find('i').first().hasClass('anticon-check-circle'))
+
+  op.interest.status = 'declined'
+  wrapper = mountWithIntl(
+    <OpCard op={op} />
+  )
+  t.truthy(wrapper.find('i').first().hasClass('anticon-close-circle'))
+})
+
+test('op with uncatered interest status should not have related icon appear in card', t => {
+  const op = t.context.ops[2]
+  op.interest.status = 'otherstatus'
   const wrapper = mountWithIntl(
     <OpCard op={op} />
   )
   // when interest status is interested, icon should be like
-  t.truthy(wrapper.find('i').first().hasClass('anticon-like'))
+  t.is(wrapper.find('i.anticon').length, 0)
+})
 
-  // Dynamic update is not working, make seperate tests ??
-  op.interest.status = 'invited'
-  wrapper.update()
-  console.log(wrapper.html())
-  t.truthy(wrapper.find('i').first().hasClass('anticon-message'))
-
-  op.interest.status = 'committed'
-  wrapper.update()
-  t.truthy(wrapper.find('i').first().hasClass('anticon-check-circle'))
-
-  // TODO tidy up old test logic and add test for each interest status
+test('op with no interest status should not have related icon appear in card', t => {
+  const op = t.context.ops[1]
+  const wrapper = mountWithIntl(
+    <OpCard op={op} />
+  )
+  // when interest status is interested, icon should be like
+  t.is(wrapper.find('i.anticon').length, 0)
 })
 
 test('ops without location and duration should display P tags with blank', t => {
