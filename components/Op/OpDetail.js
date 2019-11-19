@@ -23,6 +23,7 @@ import {
   ItemImage
 } from '../VTheme/ItemList'
 import { OpQuestion } from './OpQuestion'
+import OpUpdate from './OpUpdate'
 
 const { TabPane } = Tabs
 
@@ -43,6 +44,13 @@ const questionTab = (
 const manageTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
     Manage Volunteers
+  </span>
+)
+
+
+const updateTab = (
+  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+    Updates
   </span>
 )
 
@@ -105,17 +113,17 @@ export function OpDetail ({ op }) {
             <ItemStatus status={op.status} />
           </ItemContainer>
           <ActionContainer>
-          <Button shape='round' type='primary'>
-            Offer to help
+          <Button shape='round' size='large' type='primary'>
+            Offer help
           </Button>
-          <Button shape='round' type='secondary'>
+          <Button shape='round' size='large' type='secondary'>
             Share
           </Button>
           </ActionContainer>
         </Right>
       </HalfGrid>
       <TabContainer>
-        <Tabs style={shadowStyle} defaultActiveKey='2' onChange={callback}>
+        <Tabs style={shadowStyle} defaultActiveKey='3' onChange={callback}>
           <TabPane tab={aboutTab} key='1'>
             <AboutGrid>
               <div>
@@ -152,8 +160,11 @@ export function OpDetail ({ op }) {
           <TabPane tab={questionTab} key='2'>
             <OpQuestion />
           </TabPane>
-          <TabPane tab={manageTab} key='3' />
-          <TabPane tab={editTab} key='4' />
+          <TabPane tab={updateTab} key='3'>
+            <OpUpdate />
+          </TabPane>
+          <TabPane tab={manageTab} key='4'></TabPane>
+          <TabPane tab={editTab} key='5' />
         </Tabs>
       </TabContainer>
     </>

@@ -212,7 +212,16 @@ export class OpDetailPage extends Component {
 
           <OpDetail op={op} />
           <Divider />
-          {this.canEdit(op) &&
+
+          <OpVolunteerInterestSection
+            isAuthenticated={this.props.isAuthenticated}
+            canRegisterInterest={this.canRegisterInterest(op)}
+            op={op}
+            meID={this.props.me && this.props.me._id}
+          />
+                   <h2>Danger zone</h2>
+                   <h5> These buttons will permanantly change your activity - be careful!</h5>
+                             {this.canEdit(op) &&
             <Button
               id='editOpBtn'
               style={{ marginBottom: '1rem' }}
@@ -222,18 +231,13 @@ export class OpDetailPage extends Component {
             >
               <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
             </Button>}
-          <OpVolunteerInterestSection
-            isAuthenticated={this.props.isAuthenticated}
-            canRegisterInterest={this.canRegisterInterest(op)}
-            op={op}
-            meID={this.props.me && this.props.me._id}
-          />
           <OpOwnerManageInterests
             canManageInterests={this.canManageInterests(op)}
             op={op}
             confirmOpportunity={this.confirmOpportunity}
             cancelOpportunity={this.cancelOpportunity}
           />
+          
         </FullPage>
       )
     }

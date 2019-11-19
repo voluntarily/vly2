@@ -134,7 +134,7 @@ class PersonHomePage extends Component {
     const ops = this.mergeOpsList()
 
     const opsTab = (
-      <span>
+      <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
         <Icon type='inbox' />
         <FormattedMessage
           id='home.liveops'
@@ -144,7 +144,7 @@ class PersonHomePage extends Component {
       </span>
     )
     const searchTab = (
-      <span>
+      <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
         <Icon type='history' />
         <FormattedMessage
           id='home.pastops'
@@ -154,7 +154,7 @@ class PersonHomePage extends Component {
       </span>
     )
     const profileTab = (
-      <span>
+      <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
         <Icon type='setting' />
         <FormattedMessage
           id='home.profile'

@@ -28,7 +28,7 @@ const { TextArea } = Input
 const AboutGrid = styled.div`
   margin: 2rem 0 0 0;
   display: grid;
-  grid-template-columns: 25rem 1fr;
+  grid-template-columns: 20rem 1fr ;
   gap: 5rem;
   text-align: left;
 `
@@ -80,9 +80,7 @@ const ContentCard = styled.div`
   }
 
   p {
-    width: 50%;
-    margin-top: 0.2rem;
-    margin-left: 0.5rem;
+
   }
 
   img {
@@ -145,61 +143,27 @@ line-height: 24px;
 
 
 
-export function OpQuestion ({ op }) {
+export function OpUpdate ({ op }) {
   return (
     <>
-      <AboutGrid>
-        <div>
-          <h2>Questions</h2>
-        </div>
-        <AskContainer>
-          <TextArea rows={2} placeholder='Ask a question here' />
-          <ButtonContainer>
-            <Button shape="round" size='large' type='primary'>Submit</Button>
-          </ButtonContainer>
-        </AskContainer>
-      </AboutGrid>
-      <QuestionSection>
-        <Question>
+    <AboutGrid>
+    <h2>Updates</h2>
+    <ContentCard>
+      <h3>Live Telecast rescheduled to December 2024!</h3>
+      <p>There can be no cost reduction until we can achieve a rock-solid yield enhancement. A higher-quality, synchronized, integration strengthens the decision makers within the silo.
+The clients cross-pollinate the quality-oriented co-innovations ahead of schedule; nevertheless the pioneers reframe our dynamically managed quick-wins.<br/><br/>We need to take a bite out of the thought-provoking options. The product manager synergizes real-time on-boarding processes. In the same time, the market thinkers adequately transgenerate changes.
+Business platform won't happen without growth engine. Our underlying, low-risk high-yield and inter-company Strategic Management Systems iterate a target, while the decision makers formulate our solution providers. Our execution efficiently reenergizes the facilitator.
+Our cognitive strategic staircases interact with a potential shareholder value across the wider Group; nevertheless our ever-changing and/or non-linear digital change operationalizes our nimble, awesome, developer-led and well-scoped correlations. Internally and externally, the visionary commoditizes our top-down expectations.<br/><br/>Our sprint-based and extensible responsive design inspires the enabler.
+It's not about win-win solutions. It's about an all-encompassing resiliency. Quality assurance requires that we all pull in the same direction. The prioritizing correlations energize the game changers.
+The board-level executives consistently transgenerate our siloed ingenuity in the marketplace.
+A stress management will be best positioned to re-imagine unmatched, cognitive and cognitive risk appetites, whereas opting out of usage-based leadership strategy is not a choice.
+.</p><br/><Button shape="round"  size='large' type='secondary' >Reply</Button>
 
+    </ContentCard>
 
-
-        <DateBlock>
-         <p>29 Jan 2019<br/>11:59PM</p>
-       </DateBlock>
-       <ContentCard>
-          <h3>Can I get free parking at the school? </h3>
-          <QuestionDetail>
-          <img />
-          <p>Legitimate Name</p>
-     
- 
-          <Button shape="round" size='large' type='secondary' block>Reply</Button>
-      
-          </QuestionDetail>
-          </ContentCard>
-
-
-        </Question>
-        <Response>
-        <DateBlock>
-         <p>29 Jan 2019<br/>11:59PM</p>
-       </DateBlock>
-       <ContentCard>
-          <h4>Yeah, text me at 027 123 4567 when you get close to the school</h4>
-          <QuestionDetail>
-          <img />
-          <p>Legitimate teacher</p>
-          <Button shape="round"  size='large' type='secondary' block>Reply</Button>
-          </QuestionDetail>
-          </ContentCard>
-        </Response>
-        
-        
-
-      </QuestionSection>
+    </AboutGrid>
     </>
   )
 }
 
-export default OpQuestion
+export default OpUpdate
