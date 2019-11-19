@@ -58,7 +58,7 @@ const editTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Edit Activity</span>
 )
 
-const AboutGrid = styled.div`
+const OpSection = styled.div`
   margin: 2rem 0;
   display: grid;
   grid-template-columns: 25rem 1fr;
@@ -125,7 +125,7 @@ export function OpDetail ({ op }) {
       <TabContainer>
         <Tabs style={shadowStyle} defaultActiveKey='3' onChange={callback}>
           <TabPane tab={aboutTab} key='1'>
-            <AboutGrid>
+            <OpSection>
               <div>
                 <h2>About this Activity</h2>
               </div>
@@ -143,10 +143,10 @@ export function OpDetail ({ op }) {
                   <TagDisplay tags={op.tags} />
                 </TagContainer>
               </ItemDescription>
-            </AboutGrid>
+            </OpSection>
             <Divider />
 
-            <AboutGrid>
+            <OpSection>
               <div>
                 <h2>Organised by</h2>
               </div>
@@ -155,7 +155,7 @@ export function OpDetail ({ op }) {
                 <ItemIdLine item={op.offerOrg} path='orgs' />
                 <ItemIdLine item={op.requestor} path='people' />
               </div>
-            </AboutGrid>
+            </OpSection>
           </TabPane>
           <TabPane tab={questionTab} key='2'>
             <OpQuestion />
@@ -164,7 +164,7 @@ export function OpDetail ({ op }) {
             <OpUpdate />
           </TabPane>
           <TabPane tab={manageTab} key='4'></TabPane>
-          <TabPane tab={editTab} key='5' />
+          <TabPane tab={editTab} key='5'></TabPane>
         </Tabs>
       </TabContainer>
     </>

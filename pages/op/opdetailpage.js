@@ -219,9 +219,9 @@ export class OpDetailPage extends Component {
             op={op}
             meID={this.props.me && this.props.me._id}
           />
-                   <h2>Danger zone</h2>
+                   {this.canEdit(op) &&  <div><h2>Danger zone</h2>
                    <h5> These buttons will permanantly change your activity - be careful!</h5>
-                             {this.canEdit(op) &&
+                           
             <Button
               id='editOpBtn'
               style={{ marginBottom: '1rem' }}
@@ -230,7 +230,7 @@ export class OpDetailPage extends Component {
               onClick={() => this.setState({ editing: true })}
             >
               <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
-            </Button>}
+            </Button></div>}
           <OpOwnerManageInterests
             canManageInterests={this.canManageInterests(op)}
             op={op}
