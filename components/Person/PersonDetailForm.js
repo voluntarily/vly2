@@ -461,7 +461,8 @@ PersonDetailForm.propTypes = {
         'tester'
       ])
     ),
-    status: PropTypes.oneOf(['active', 'inactive', 'hold'])
+    status: PropTypes.oneOf(['active', 'inactive', 'hold']),
+    tags: PropTypes.arrayOf(PropTypes.string)
   }),
   form: PropTypes.object,
   params: PropTypes.shape({
@@ -470,12 +471,7 @@ PersonDetailForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   locations: PropTypes.arrayOf(PropTypes.string),
-  existingTags: PropTypes.arrayOf(
-    PropTypes.shape({
-      tag: PropTypes.string.isRequired,
-      _id: PropTypes.string
-    })
-  ).isRequired
+  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired
   // dispatch: PropTypes.func.isRequired,
 }
 
