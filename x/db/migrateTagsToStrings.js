@@ -2,7 +2,10 @@
 var MongoClient = require('mongodb').MongoClient
 var ObjectId = require('mongodb').ObjectID
 
-var url = 'mongodb://localhost:27017/'
+// var url = 'mongodb://localhost:27017/'
+// var dbname = 'vly2'
+var url = 'mongodb+srv://vly-client:ZhF3BUDiwpy8C3xK@cluster0-kwmsu.mongodb.net/'
+var dbname = 'vly2-alpha'
 
 var allTags = new Set()
 var dbo
@@ -39,12 +42,15 @@ const convertTags = async function (doc) {
 
 MongoClient.connect(url, { useUnifiedTopology: true }, (err, db) => {
   if (err) throw err
-  dbo = db.db('vly2')
+  dbo = db.db(dbname)
   const operations = ['people', 'opportunities', 'activities'].map(col => {
     console.log('Updating collection', col)
     return new Promise((resolve, reject) => {
       dbo.collection(col).find().toArray(async (err, result) => {
-        if (err) reject(err)
+        if (err) {
+          console.err('rejected', err)
+          reject(err)
+        }
         for (const doc of result) {
           const before = [...doc.tags]
           const updated = await convertTags(doc)
