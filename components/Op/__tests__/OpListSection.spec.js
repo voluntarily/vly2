@@ -320,17 +320,18 @@ test.serial('Test sort by date', async t => {
 
     const opsModified = ops.map((op, index) => {
       if (index === 0) {
-        op.date = ['2019-05-23T12:26:18.000Z', '2019-05-23T12:26:18.000Z']
+        op.date = ['2019-05-25T12:26:18.000Z', '2019-05-26T12:26:18.000Z']
       } else if (index === 1) {
         op.date = [null, 'undefined']
       } else if (index === 2) {
-        op.date = [null, '2019-05-23T12:26:18.000Z']
+        op.date = [null, '2019-05-25T12:26:18.000Z']
       } else if (index === 3) {
-        op.date[0] = '2019-05-23T12:26:18.000Z'
+        op.date[0] = '2019-05-10T12:26:18.000Z'
         delete op.date[1]
       }
       return op
     })
+    console.log(opsModified)
     myMock.getOnce(api, opsModified)
 
     const wrapper = await mountWithIntl(
@@ -342,7 +343,7 @@ test.serial('Test sort by date', async t => {
     wrapper.update()
     // Checking first and last name of an opportunity in opcard list based on their dates
     t.is(wrapper.find('OpCard').first().text().includes('1 Mentor'), true)
-    t.is(wrapper.find('OpCard').last().text().includes('4 The first 100'), true)
+    t.is(wrapper.find('OpCard').at(3).text().includes('4 The first 100 metres'), true)
     t.truthy(myMock.done())
     myMock.restore()
   } catch (e) {
@@ -366,8 +367,8 @@ test.serial('Test sort by commitment', async t => {
   wrapper.update()
   // Checking first and last duration in opcard list. The oplist is sorted from low to high, i.e short to long
   // should put #3 15 mins before #2 at 4 hours
-  t.is(wrapper.find('OpCard').at(1).text().includes('3 Growing in the garden'), true)
-  t.is(wrapper.find('OpCard').at(2).text().includes('2 Self driving model cars'), true)
+  t.is(wrapper.find('OpCard').at(3).text().includes('3 Growing in the garden'), true)
+  t.is(wrapper.find('OpCard').at(4).text().includes('2 Self driving model cars'), true)
   t.truthy(myMock.done())
   myMock.restore()
 })
