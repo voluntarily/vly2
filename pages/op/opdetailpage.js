@@ -221,21 +221,21 @@ export class OpDetailPage extends Component {
           />
                    {this.canEdit(op) &&  <OpSectionGrid><h2>Danger zone</h2>
             <div>
-                   <h5> These buttons will permanantly change your activity - be careful!</h5>                           
-            <Button
-              id='editOpBtn'
-              style={{ marginBottom: '1rem' }}
-              type='primary'
-              shape='round'
-              onClick={() => this.setState({ editing: true })}
-            >
-              <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
-            </Button><OpOwnerManageInterests
+                   <h4> These buttons will permanantly change your activity - be careful!</h4>                           
+            <OpOwnerManageInterests
             canManageInterests={this.canManageInterests(op)}
             op={op}
             confirmOpportunity={this.confirmOpportunity}
             cancelOpportunity={this.cancelOpportunity}
-          />
+          /><Button
+          id='editOpBtn'
+          style={{ marginBottom: '1rem' }}
+          type='primary'
+          shape='round'
+          onClick={() => this.setState({ editing: true })}
+        >
+          <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
+        </Button>
           </div></OpSectionGrid>}
           
         </FullPage>

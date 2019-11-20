@@ -10,6 +10,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
 import { HalfGrid, Spacer, OpSectionGrid } from '../VTheme/VTheme'
+import InterestSection from '../../components/Interest/InterestSection'
+
 import {
   Left,
   Right,

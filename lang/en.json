@@ -121,7 +121,7 @@
   "sortDate": "Date",
   "sortName": "Name",
   "sortCommitment": "commitment",
-  "completedOp": "Completed",
+  "completedOp": "Complete Activity",
   "cancelOp": "Cancel Request",
   "iminterested-anon": "I'm Interested",
   "orgMembers": "Members",
