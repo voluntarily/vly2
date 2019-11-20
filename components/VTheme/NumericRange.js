@@ -28,7 +28,8 @@ class NumericRange extends React.Component {
         <FormattedMessage
           id='numericRange.from'
           defaultMessage='From:'
-          description='The "from" value of a numeric range pair' />
+          description='The "from" value of a numeric range pair'
+        />
         <InputNumber
           min={this.props.fromMin}
           max={this.props.fromMax}
@@ -40,7 +41,8 @@ class NumericRange extends React.Component {
         <FormattedMessage
           id='numericRange.to'
           defaultMessage='To:'
-          description='The "to" value of a numeric range pair' />
+          description='The "to" value of a numeric range pair'
+        />
         <InputNumber
           min={this.props.toMin}
           max={this.props.toMax}
