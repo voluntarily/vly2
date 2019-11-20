@@ -26,6 +26,8 @@ class NumericRange extends React.Component {
       <Container>
         <span>From: </span>
         <InputNumber
+          min={this.props.fromMin}
+          max={this.props.fromMax}
           placeholder={this.props.fromPlaceholder}
           onChange={from => onChange({ from })}
           className='numeric-range-from'
@@ -33,6 +35,8 @@ class NumericRange extends React.Component {
 
         <span>to: </span>
         <InputNumber
+          min={this.props.toMin}
+          max={this.props.toMax}
           placeholder={this.props.toPlaceholder}
           onChange={to => onChange({ to })}
           className='numeric-range-to'
@@ -45,7 +49,11 @@ NumericRange.propTypes = {
   value: PropTypes.object,
   onChange: PropTypes.func,
   fromPlaceholder: PropTypes.string,
-  toPlaceholder: PropTypes.string
+  fromMin: PropTypes.number,
+  fromMax: PropTypes.number,
+  toPlaceholder: PropTypes.string,
+  toMin: PropTypes.number,
+  toMax: PropTypes.number
 }
 
 export default NumericRange
