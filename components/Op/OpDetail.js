@@ -111,7 +111,7 @@ export function OpDetail ({ op }) {
         </Right>
       </HalfGrid>
       <TabContainer>
-        <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
+        <Tabs style={shadowStyle} defaultActiveKey='2' onChange={callback}>
           <TabPane tab={aboutTab} key='1'>
             <OpSectionGrid>
               <div>
@@ -154,7 +154,7 @@ export function OpDetail ({ op }) {
             <OpUpdate />
           </TabPane>
           <TabPane tab={manageTab} key='4'></TabPane>
-          <TabPane tab={editTab} key='5'></TabPane>
+          <TabPane tab={editTab} ></TabPane>
         </Tabs>
       </TabContainer>
     </>

@@ -9,7 +9,7 @@ import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
-import { HalfGrid, Spacer, PBold } from '../VTheme/VTheme'
+import { HalfGrid, Spacer, PBold, OpSectionGrid } from '../VTheme/VTheme'
 import {
   Left,
   Right,
@@ -25,13 +25,6 @@ import {
 
 const { TextArea } = Input
 
-const AboutGrid = styled.div`
-  margin: 2rem 0 0 0;
-  display: grid;
-  grid-template-columns: 25rem 1fr;
-  gap: 5rem;
-  text-align: left;
-`
 
 const AskContainer = styled.div`
   padding: 1rem;
@@ -39,7 +32,6 @@ const AskContainer = styled.div`
   background: #ffffff;
   box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
   border-radius: 8px;
-  
 `
 
 const ButtonContainer = styled.div`
@@ -48,11 +40,8 @@ const ButtonContainer = styled.div`
 
 const QuestionSection = styled.div`
 
-  width: 80rem;
-
-
 `
-//start question
+// start question
 const ContentCard = styled.div`
   background-color: #ffffff;
   box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
@@ -67,7 +56,7 @@ const ContentCard = styled.div`
     letter-spacing: -0.38px;
     line-height: 32px;
 
-    margin-bottom: 1rem
+    margin-bottom: 1rem;
   }
 
   h4 {
@@ -76,7 +65,7 @@ const ContentCard = styled.div`
     letter-spacing: -0.38px;
     line-height: 32px;
 
-    margin-bottom: 1rem
+    margin-bottom: 1rem;
   }
 
   p {
@@ -95,108 +84,216 @@ const ContentCard = styled.div`
 `
 
 const Question = styled.div`
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 1rem;
+  float: right;
+  margin-top: 2rem;
+  width: 59rem;
 
-display: grid;
-grid-template-columns: 8rem 50rem;
-gap: 1rem;
-float: right;
-margin-top: 3rem;
+  @media screen and (min-width: 768px) and (max-width: 1281px) {
+    width: calc(100vw - 2rem);
+  }
+
+  @media screen and (max-width: 768px) {
+    width: calc(100vw - 2rem);
+    grid-template-columns: 1fr;
+    margin-top: 1rem;
+  }
 `
-
-
-
-
 
 const QuestionDetail = styled.div`
-display: grid;
-grid-template-columns: 2rem 1fr 7rem;
+  display: grid;
+  grid-template-columns: 2rem 1fr 7rem;
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 2rem 1fr 6rem;
+  
+  }
 `
-//end question
+// end question
 
-//start response
+// start response
 const Response = styled.div`
-margin-top: 1rem;
-display: grid;
-grid-template-columns: 8rem 45rem;
-gap: 1rem;
-float: right;
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 8rem 45rem;
+  gap: 1rem;
+  float: right;
+
+  @media screen and (min-width: 768px) and (max-width: 1281px) {
+    width: calc(100vw - 2rem);
+  }
+
+  @media screen and (max-width: 768px) {
+    margin-top: 0rem;
+    width: calc(100vw - 5rem);
+    grid-template-columns: calc(100vw - 5rem);
+    float: right;
+  }
 `
 
+// end response
 
-
-//end response
-
-//start date block
+// start date block
 const DateBlock = styled.div`
+  p {
+    padding-top: 2rem;
+    color: #555555;
+    letter-spacing: -0.3px;
+    text-align: right;
+    line-height: 24px;
 
 
-p {
-padding-top: 2rem;
-color: #555555;
-letter-spacing: -0.3px;
-text-align: right;
-line-height: 24px;
-
-}
-
+  @media screen and (max-width: 768px) {
+display: none;
+  }
+  }
 `
 
-//end date block
-
-
+// end date block
 
 export function OpQuestion ({ op }) {
   return (
     <>
-      <AboutGrid>
+      <OpSectionGrid>
         <div>
           <h2>Questions</h2>
         </div>
         <AskContainer>
-          <TextArea rows={2} placeholder='Ask a question here' />
+          <TextArea rows={3} placeholder='Ask a question here' />
           <ButtonContainer>
-            <Button shape="round" size='large' type='primary'>Submit</Button>
+            <Button shape='round' size='large' type='primary'>
+              Submit
+            </Button>
           </ButtonContainer>
         </AskContainer>
-      </AboutGrid>
+      </OpSectionGrid>
+      
       <QuestionSection>
         <Question>
+          <DateBlock>
+            <p>
+              29 Jan 2019
+              <br />
+              11:59PM
+            </p>
+          </DateBlock>
+          <ContentCard>
+            <h3>Can I get free parking at the school? </h3>
+            <QuestionDetail>
+              <img />
+              <p>Legitimate Name</p>
 
-
-
-        <DateBlock>
-         <p>29 Jan 2019<br/>11:59PM</p>
-       </DateBlock>
-       <ContentCard>
-          <h3>Can I get free parking at the school? </h3>
-          <QuestionDetail>
-          <img />
-          <p>Legitimate Name</p>
-     
- 
-          <Button shape="round" size='large' type='secondary' block>Reply</Button>
-      
-          </QuestionDetail>
+              <Button shape='round' size='large' type='secondary' block>
+                Reply
+              </Button>
+            </QuestionDetail>
           </ContentCard>
-
-
         </Question>
         <Response>
-        <DateBlock>
-         <p>29 Jan 2019<br/>11:59PM</p>
-       </DateBlock>
-       <ContentCard>
-          <h4>Yeah, text me at 027 123 4567 when you get close to the school</h4>
-          <QuestionDetail>
-          <img />
-          <p>Legitimate teacher</p>
-          <Button shape="round"  size='large' type='secondary' block>Reply</Button>
-          </QuestionDetail>
+          <DateBlock>
+            <p>
+              29 Jan 2019
+              <br />
+              11:59PM
+            </p>
+          </DateBlock>
+          <ContentCard>
+            <h4>
+              Yeah, text me at 027 123 4567 when you get close to the school
+            </h4>
+            <QuestionDetail>
+              <img />
+              <p>Legitimate teacher</p>
+              <Button shape='round' size='large' type='secondary' block>
+                Reply
+              </Button>
+            </QuestionDetail>
+          </ContentCard>
+        </Response>
+        <Question>
+          <DateBlock>
+            <p>
+              29 Jan 2019
+              <br />
+              11:59PM
+            </p>
+          </DateBlock>
+          <ContentCard>
+            <h3>Can I get free parking at the school? </h3>
+            <QuestionDetail>
+              <img />
+              <p>Legitimate Name</p>
+
+              <Button shape='round' size='large' type='secondary' block>
+                Reply
+              </Button>
+            </QuestionDetail>
+          </ContentCard>
+        </Question>
+        <Response>
+          <DateBlock>
+            <p>
+              29 Jan 2019
+              <br />
+              11:59PM
+            </p>
+          </DateBlock>
+          <ContentCard>
+            <h4>
+              Yeah, text me at 027 123 4567 when you get close to the school
+            </h4>
+            <QuestionDetail>
+              <img />
+              <p>Legitimate teacher</p>
+              <Button shape='round' size='large' type='secondary' block>
+                Reply
+              </Button>
+            </QuestionDetail>
+          </ContentCard>
+        </Response>
+        <Question>
+          <DateBlock>
+            <p>
+              29 Jan 2019
+              <br />
+              11:59PM
+            </p>
+          </DateBlock>
+          <ContentCard>
+            <h3>Can I get free parking at the school? </h3>
+            <QuestionDetail>
+              <img />
+              <p>Legitimate Name</p>
+
+              <Button shape='round' size='large' type='secondary' block>
+                Reply
+              </Button>
+            </QuestionDetail>
+          </ContentCard>
+        </Question>
+        <Response>
+          <DateBlock>
+            <p>
+              29 Jan 2019
+              <br />
+              11:59PM
+            </p>
+          </DateBlock>
+          <ContentCard>
+            <h4>
+              Yeah, text me at 027 123 4567 when you get close to the school
+            </h4>
+            <QuestionDetail>
+              <img />
+              <p>Legitimate teacher</p>
+              <Button shape='round' size='large' type='secondary' block>
+                Reply
+              </Button>
+            </QuestionDetail>
           </ContentCard>
         </Response>
         
-        
-
       </QuestionSection>
     </>
   )

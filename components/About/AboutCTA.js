@@ -1,8 +1,7 @@
 import { Button } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import TitleSectionSub from '../LandingPageComponents/TitleSectionSub'
-import { TripleGrid } from '../VTheme/VTheme'
+import { TripleGrid, Spacer } from '../VTheme/VTheme'
 
 // cardcontainer
 const CTAContainer = styled.div`
@@ -53,7 +52,7 @@ const CTADescription = styled.h1`
 
 const AboutCTA = () => (
   <div>
-    <TitleSectionSub title='How to get involved' />
+    <Spacer />
     <TripleGrid>
       <CTAContainer>
         <CTAImage src='/static/img/about/dev.png' />

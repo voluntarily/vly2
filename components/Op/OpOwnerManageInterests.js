@@ -63,7 +63,7 @@ export default class OpOwnerManageInterests extends Component {
         <section>
               <Divider />
           <ControlGrid>
-            <h5><strong>Finish this activity</strong><br />This will end the activity and mark it as complete</h5>
+            <h5><strong>Finish this activity</strong><br />Only use this button once your activity is complete</h5>
           <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' onConfirm={this.handleCompleted} onCancel={this.handleCompletedCancelled} okText='Yes' cancelText='No'>
             <Button type='primary' shape='round' size='large'>
               <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
