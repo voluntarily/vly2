@@ -247,10 +247,10 @@ class OrgDetailForm extends Component {
             ? (
               <Form.Item htmlId='age-range' label={orgAgeRange}>
                 {getFieldDecorator('ageRange', {
-                    rules: [
+                  rules: [
 
-                    ]
-                  })(
+                  ]
+                })(
                   <NumericRange
                     fromPlaceholder='5'
                     fromMin={0}
