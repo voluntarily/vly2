@@ -1,49 +1,14 @@
 /* Dumb React component Shows contents of an opportunity
  */
-import { FormattedMessage } from 'react-intl'
-import { Button, Divider, Tabs, Input } from 'antd'
-import Markdown from 'markdown-to-jsx'
+
+import { Button } from 'antd'
+
 import styled from 'styled-components'
-import moment from 'moment'
-import Head from 'next/head'
-import PropTypes from 'prop-types'
+
 import React from 'react'
-import TagDisplay from '../Tags/TagDisplay'
-import { HalfGrid, Spacer, PBold, OpSectionGrid } from '../VTheme/VTheme'
-import {
-  Left,
-  Right,
-  ItemContainer,
-  ItemDescription,
-  TagContainer,
-  ItemDuration,
-  ItemStatus,
-  ItemIdLine,
-  ItemDate,
-  ItemImage
-} from '../VTheme/ItemList'
 
-const { TextArea } = Input
+import { OpSectionGrid } from '../VTheme/VTheme'
 
-const AskContainer = styled.div`
-  padding: 1rem;
-  width: 100%;
-  background: #ffffff;
-  box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
-  border-radius: 8px;
-  
-`
-
-const ButtonContainer = styled.div`
-  margin-top: 0.5rem;
-`
-
-const QuestionSection = styled.div`
-
-  width: 80rem;
-
-
-`
 // start question
 const ContentCard = styled.div`
   background-color: #ffffff;
@@ -83,49 +48,6 @@ const ContentCard = styled.div`
     border-radius: 150px;
   }
 `
-
-const Question = styled.div`
-
-display: grid;
-grid-template-columns: 8rem 50rem;
-gap: 1rem;
-float: right;
-margin-top: 3rem;
-`
-
-const QuestionDetail = styled.div`
-display: grid;
-grid-template-columns: 2rem 1fr 7rem;
-`
-// end question
-
-// start response
-const Response = styled.div`
-margin-top: 1rem;
-display: grid;
-grid-template-columns: 8rem 45rem;
-gap: 1rem;
-float: right;
-`
-
-// end response
-
-// start date block
-const DateBlock = styled.div`
-
-
-p {
-padding-top: 2rem;
-color: #555555;
-letter-spacing: -0.3px;
-text-align: right;
-line-height: 24px;
-
-}
-
-`
-
-// end date block
 
 export function OpUpdate ({ op }) {
   return (

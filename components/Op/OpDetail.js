@@ -9,9 +9,7 @@ import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
-import { HalfGrid, Spacer, OpSectionGrid } from '../VTheme/VTheme'
-import InterestSection from '../../components/Interest/InterestSection'
-
+import { HalfGrid, OpSectionGrid } from '../VTheme/VTheme'
 import {
   Left,
   Right,
@@ -30,9 +28,6 @@ import OpVolunteerInterestSection from './OpVolunteerInterestSection'
 
 const { TabPane } = Tabs
 
-function callback (key) {
-  // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
-}
 
 const aboutTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
@@ -82,11 +77,10 @@ export function OpDetail ({ op, handleEditClicked, canEdit, canRegisterInterest,
   const shadowStyle = { overflow: 'visible', textAlign: 'center' }
 
   const handleTabChange = (key, e) => {
-    if (key == '5') {
+    if (key === '5') {
       handleEditClicked()
     }
   }
-
 
   return (
     <>

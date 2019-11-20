@@ -1,7 +1,7 @@
 /* Display a grid of opanisation cards from an [op]
  */
 import React from 'react'
-import { Grid, H3Black, P } from '../VTheme/VTheme'
+import { Grid } from '../VTheme/VTheme'
 import ActionCard from './ActionCard'
 import styled from 'styled-components'
 

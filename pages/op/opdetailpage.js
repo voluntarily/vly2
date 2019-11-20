@@ -9,8 +9,7 @@ import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import {
   FullPage,
-  OpSectionGrid,
-  ControlGrid
+  OpSectionGrid
 } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
@@ -261,7 +260,7 @@ export class OpDetailPage extends Component {
                 <div>
                   <h4>
                     {' '}
-                    These buttons will permanantly change your activity - be
+                    These buttons will permanantly end your activity - be
                     careful!
                   </h4>
                   <OpOwnerManageInterests

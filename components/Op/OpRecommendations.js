@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { H5 } from '../VTheme/VTheme'
 import OpList from './OpList'
 
 class OpRecommendations extends React.Component {

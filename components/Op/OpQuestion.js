@@ -1,27 +1,13 @@
 /* Dumb React component Shows contents of an opportunity
  */
-import { FormattedMessage } from 'react-intl'
-import { Button, Divider, Tabs, Input } from 'antd'
-import Markdown from 'markdown-to-jsx'
+
+import { Button, Input } from 'antd'
+
 import styled from 'styled-components'
-import moment from 'moment'
-import Head from 'next/head'
-import PropTypes from 'prop-types'
+
 import React from 'react'
-import TagDisplay from '../Tags/TagDisplay'
-import { HalfGrid, Spacer, PBold, OpSectionGrid } from '../VTheme/VTheme'
-import {
-  Left,
-  Right,
-  ItemContainer,
-  ItemDescription,
-  TagContainer,
-  ItemDuration,
-  ItemStatus,
-  ItemIdLine,
-  ItemDate,
-  ItemImage
-} from '../VTheme/ItemList'
+
+import { OpSectionGrid } from '../VTheme/VTheme'
 
 const { TextArea } = Input
 
