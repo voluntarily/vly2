@@ -88,7 +88,6 @@ export function OpDetail ({ op, handleEditClicked, canEdit, canRegisterInterest,
   }
 
 
-console.log(isAuthenticated)
   return (
     <>
       <Head>

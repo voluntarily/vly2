@@ -211,7 +211,6 @@ export class OpDetailPage extends Component {
   }
 
   render () {
-    console.log(this.props)
     // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
     if (!this.props.isNew) {
       if (this.props.opportunities.loading) {

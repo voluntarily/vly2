@@ -2,8 +2,9 @@ import { Button, Divider, message, Popconfirm } from 'antd'
 import Router from 'next/router'
 import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
-import { ControlGrid } from '../../components/VTheme/VTheme'
+
+import { ControlGrid, Spacer } from '../../components/VTheme/VTheme'
+import InterestSection from '../../components/Interest/InterestSection'
 
 export default class OpOwnerManageInterests extends Component {
   constructor (props) {
@@ -58,7 +59,9 @@ export default class OpOwnerManageInterests extends Component {
               </Button>
             </Popconfirm>
           </ControlGrid>
-
+          <Divider />
+          <Spacer />
+          <InterestSection opid={this.props.op._id} />
         </section>
     )
   }
