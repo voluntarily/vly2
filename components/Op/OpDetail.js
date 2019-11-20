@@ -26,11 +26,11 @@ import {
 } from '../VTheme/ItemList'
 import { OpQuestion } from './OpQuestion'
 import OpUpdate from './OpUpdate'
+import OpVolunteerInterestSection from './OpVolunteerInterestSection'
 
 const { TabPane } = Tabs
 
 function callback (key) {
-
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
 }
 
@@ -51,9 +51,7 @@ const manageTab = (
 )
 
 const updateTab = (
-  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-    Updates
-  </span>
+  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Updates</span>
 )
 
 const editTab = (
@@ -65,12 +63,12 @@ const TabContainer = styled.div`
 `
 
 const ActionContainer = styled.div`
-display: grid;
-grid-template-columns: 10rem 10rem 1fr;
-gap: 1rem;
+  display: grid;
+  grid-template-columns: 10rem 10rem 1fr;
+  gap: 1rem;
 `
 
-export function OpDetail ({ op, handleEditClicked, canEdit }) {
+export function OpDetail ({ op, handleEditClicked, canEdit, canRegisterInterest, isAuthenticated, me }) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
   const description = op.description || ''
@@ -89,6 +87,8 @@ export function OpDetail ({ op, handleEditClicked, canEdit }) {
     }
   }
 
+
+console.log(isAuthenticated)
   return (
     <>
       <Head>
@@ -107,18 +107,24 @@ export function OpDetail ({ op, handleEditClicked, canEdit }) {
             <ItemStatus status={op.status} />
           </ItemContainer>
           <ActionContainer>
-
-            <Button shape='round' size='large' type='primary'>
-            Offer help
-            </Button>
+            <OpVolunteerInterestSection
+              isAuthenticated={isAuthenticated}
+              canRegisterInterest={canRegisterInterest}
+              op={op}
+              meID={me && me._id}
+            />
             <Button shape='round' size='large' type='secondary'>
-            Share
+              Share
             </Button>
           </ActionContainer>
         </Right>
       </HalfGrid>
       <TabContainer>
-        <Tabs style={shadowStyle} defaultActiveKey='2' onChange={handleTabChange}>
+        <Tabs
+          style={shadowStyle}
+          defaultActiveKey='1'
+          onChange={handleTabChange}
+        >
           <TabPane tab={aboutTab} key='1'>
             <OpSectionGrid>
               <div>
@@ -136,7 +142,13 @@ export function OpDetail ({ op, handleEditClicked, canEdit }) {
                 />
                 <TagContainer>
                   <Divider />
-                  <h5><FormattedMessage id='opTags' defaultMessage='Tags' description='Tags on an opportunity' /></h5>
+                  <h5>
+                    <FormattedMessage
+                      id='opTags'
+                      defaultMessage='Tags'
+                      description='Tags on an opportunity'
+                    />
+                  </h5>
                   <TagDisplay tags={op.tags} />
                 </TagContainer>
               </ItemDescription>
