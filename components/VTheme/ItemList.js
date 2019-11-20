@@ -45,7 +45,6 @@ object-fit: cover;
 object-position: center;
 `
 
-
 export const ItemDuration = ({ duration }) =>
   <ItemListing>
   ⏱&nbsp;

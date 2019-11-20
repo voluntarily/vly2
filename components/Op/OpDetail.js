@@ -50,7 +50,6 @@ const manageTab = (
   </span>
 )
 
-
 const updateTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
     Updates
@@ -58,9 +57,8 @@ const updateTab = (
 )
 
 const editTab = (
-    <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }} >Edit Activity</span>
+  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Edit Activity</span>
 )
-
 
 const TabContainer = styled.div`
   margin-top: 2rem;
@@ -109,13 +107,13 @@ export function OpDetail ({ op, handleEditClicked, canEdit }) {
             <ItemStatus status={op.status} />
           </ItemContainer>
           <ActionContainer>
-            
-          <Button shape='round' size='large' type='primary'>
+
+            <Button shape='round' size='large' type='primary'>
             Offer help
-          </Button>
-          <Button shape='round' size='large' type='secondary'>
+            </Button>
+            <Button shape='round' size='large' type='secondary'>
             Share
-          </Button>
+            </Button>
           </ActionContainer>
         </Right>
       </HalfGrid>
@@ -162,8 +160,8 @@ export function OpDetail ({ op, handleEditClicked, canEdit }) {
           <TabPane tab={updateTab} key='3'>
             <OpUpdate />
           </TabPane>
-          { canEdit && <TabPane tab={manageTab} key='4'></TabPane>}
-          { canEdit && <TabPane tab={editTab} key='5'></TabPane>}
+          {canEdit && <TabPane tab={manageTab} key='4' />}
+          {canEdit && <TabPane tab={editTab} key='5' />}
         </Tabs>
       </TabContainer>
     </>

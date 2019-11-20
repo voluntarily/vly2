@@ -23,13 +23,13 @@ class Landing extends Component {
           <div className='spacer' />
           <TitleSection
             title='Who we help'
-            
+
           />
           <PersonaSection />
           <div className='spacer' />
           <TitleSection
             title='Happening Soon'
-           
+
           />
 
           <OpListSection store={this.props.store} filter={{ date: '' }} />

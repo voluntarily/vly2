@@ -39,8 +39,6 @@ export const Spacer = styled.div`
   height: 4rem;
 ` // end spacer
 
-
-
 export const ControlGrid = styled.div`
 display: grid;
 grid-template-columns: 5fr 2fr;
@@ -59,7 +57,6 @@ align-self: center;
 
 `
 
-
 export const OpSectionGrid = styled.div`
   margin: 2rem 0;
   display: grid;
@@ -74,7 +71,7 @@ export const OpSectionGrid = styled.div`
   @media screen and (max-width: 768px) {
     grid-template-columns: calc(100vw - 2rem);
   }
-`//end OpSection
+`// end OpSection
 
 export const HalfGrid = styled.div`
   display: grid;
@@ -413,6 +410,7 @@ a { text-decoration: none; }
 
 figcaption {
   -webkit-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 :hover {

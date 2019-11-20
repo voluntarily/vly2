@@ -29,8 +29,6 @@ const blankOp = {
 }
 
 export class OpDetailPage extends Component {
-  
-
   constructor (props) {
     super(props)
     this.state = {
@@ -218,7 +216,7 @@ export class OpDetailPage extends Component {
       return (!this.props.isNew &&
         <FullPage>
 
-          <OpDetail op={op} handleEditClicked={this.handleEditClicked} canEdit={this.canEdit(op)}/>
+          <OpDetail op={op} handleEditClicked={this.handleEditClicked} canEdit={this.canEdit(op)} />
           <Divider />
 
           <OpVolunteerInterestSection
@@ -227,25 +225,26 @@ export class OpDetailPage extends Component {
             op={op}
             meID={this.props.me && this.props.me._id}
           />
-                   {this.canEdit(op) &&  <OpSectionGrid><h2>Danger zone</h2>
+          {this.canEdit(op) && <OpSectionGrid><h2>Danger zone</h2>
             <div>
-                   <h4> These buttons will permanantly change your activity - be careful!</h4>                           
-            <OpOwnerManageInterests
-            canManageInterests={this.canManageInterests(op)}
-            op={op}
-            confirmOpportunity={this.confirmOpportunity}
-            cancelOpportunity={this.cancelOpportunity}
-          /><Button
-          id='editOpBtn'
-          style={{ marginBottom: '1rem' }}
-          type='primary'
-          shape='round'
-          onClick={() => this.setState({ editing: true })}
-        >
-          <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
-        </Button>
-          </div></OpSectionGrid>}
-          
+              <h4> These buttons will permanantly change your activity - be careful!</h4>
+              <OpOwnerManageInterests
+                canManageInterests={this.canManageInterests(op)}
+                op={op}
+                confirmOpportunity={this.confirmOpportunity}
+                cancelOpportunity={this.cancelOpportunity}
+              /><Button
+                id='editOpBtn'
+                style={{ marginBottom: '1rem' }}
+                type='primary'
+                shape='round'
+                onClick={() => this.setState({ editing: true })}
+              >
+                <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
+                </Button>
+            </div>
+          </OpSectionGrid>}
+
         </FullPage>
       )
     }

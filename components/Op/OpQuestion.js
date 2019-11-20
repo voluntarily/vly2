@@ -25,7 +25,6 @@ import {
 
 const { TextArea } = Input
 
-
 const AskContainer = styled.div`
   padding: 1rem;
   width: 100%;
@@ -171,7 +170,7 @@ export function OpQuestion ({ op }) {
           </ButtonContainer>
         </AskContainer>
       </OpSectionGrid>
-      
+
       <QuestionSection>
         <Question>
           <DateBlock>
@@ -296,7 +295,7 @@ export function OpQuestion ({ op }) {
             </QuestionDetail>
           </ContentCard>
         </Response>
-        
+
       </QuestionSection>
     </>
   )
