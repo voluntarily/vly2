@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { FormattedMessage } from 'react-intl'
 import { InputNumber } from 'antd'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
@@ -24,7 +25,10 @@ class NumericRange extends React.Component {
 
     return (
       <Container>
-        <span>From: </span>
+        <FormattedMessage
+          id='numericRange.from'
+          defaultMessage='From:'
+          description='The "from" value of a numeric range pair' />
         <InputNumber
           min={this.props.fromMin}
           max={this.props.fromMax}
@@ -33,7 +37,10 @@ class NumericRange extends React.Component {
           className='numeric-range-from'
         />
 
-        <span>to: </span>
+        <FormattedMessage
+          id='numericRange.to'
+          defaultMessage='To:'
+          description='The "to" value of a numeric range pair' />
         <InputNumber
           min={this.props.toMin}
           max={this.props.toMax}
