@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Opportunity = require('../opportunity/opportunity')
+const ArchivedOpportunity = require('../archivedOpportunity/archivedOpportunity')
 const Person = require('../person/person')
 const Organisation = require('../organisation/organisation')
 const Tag = require('../tag/tag')
@@ -35,6 +36,7 @@ const getModel = name => {
   switch (name) {
     case 'Organisation': return Organisation
     case 'Opportunity': return Opportunity
+    case 'ArchivedOpportunity': return ArchivedOpportunity
     case 'Activity': return Activity
     case 'Person': return Person
     case 'TagObj': return TagObj
