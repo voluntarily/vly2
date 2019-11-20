@@ -1,0 +1,514 @@
+{
+  "help": "https://catalogue.data.govt.nz/api/3/action/help_show?name=datastore_search",
+  "success": true,
+  "result": {
+    "sort": "Org_Name",
+    "include_total": true,
+    "resource_id": "bdfe0e4c-1554-4701-a8fe-ba1c8e0cc2ce",
+    "fields": [
+      {
+        "type": "int",
+        "id": "_id"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "numeric",
+        "id": "School_Id"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Org_Name"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Telephone"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Fax"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Email"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Contact1_Name"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "URL"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Add1_Line1"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Add1_Suburb"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Add1_City"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Add2_Line1"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Add2_Suburb"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Add2_City"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "text",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Add2_Postal_Code"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Urban_Area"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Org_Type"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Definition"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Authority"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "CoEd_Status"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Territorial_Authority"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Regional_Council"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Local_Office_Name"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Education_Region"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "General_Electorate"
+      },
+      {
+        "type": "text",
+        "id": "M\u0101ori_Electorate"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Area_Unit"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Ward"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "numeric",
+        "id": "Col_Id"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "text",
+        "id": "Col_Name"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "numeric",
+        "id": "Latitude"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "numeric",
+        "id": "Longitude"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "numeric",
+        "id": "Decile"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "timestamp",
+        "id": "Roll_Date"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "numeric",
+        "id": "Total"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "numeric",
+        "id": "European"
+      },
+      {
+        "type": "numeric",
+        "id": "M\u0101ori"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "numeric",
+        "id": "Pacific"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "numeric",
+        "id": "Asian"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "numeric",
+        "id": "MELAA"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "numeric",
+        "id": "Other"
+      },
+      {
+        "info": {
+          "notes": "",
+          "type_override": "",
+          "label": ""
+        },
+        "type": "numeric",
+        "id": "International"
+      }
+    ],
+    "records_format": "objects",
+    "records": [
+      {
+        "_id": 1,
+        "School_Id": 1,
+        "Org_Name": "Test school 1",
+        "Telephone": "1231231231",
+        "Email": "",
+        "URL": "https://school1.example.school.nz",
+        "Add1_Line1": "1 Test Rd",
+        "Add1_Suburb": "Testurb",
+        "Add1_City": "Testland",
+        "Org_Type": "Composite",
+        "Decile": null
+      },
+      {
+        "_id": 2,
+        "School_Id": 2,
+        "Org_Name": "Test school 2",
+        "Telephone": "1231231232",
+        "Email": "office@school2.example.school.nz",
+        "URL": "https://school2.example.school.nz",
+        "Add1_Line1": "2 Test Rd",
+        "Add1_Suburb": "Testurb",
+        "Add1_City": "Testland",
+        "Org_Type": "Full Primary",
+        "Decile": 8
+      },
+      {
+        "_id": 3,
+        "School_Id": 3,
+        "Org_Name": "Test school 3",
+        "Telephone": "1231231233",
+        "Email": "principal@school3.example.school.nz",
+        "URL": "https://school3.example.school.nz",
+        "Add1_Line1": "3 Test Rd",
+        "Add1_Suburb": "Testurb",
+        "Add1_City": "Testland",
+        "Org_Type": "Contributing",
+        "Decile": 5
+      },
+      {
+        "_id": 4,
+        "School_Id": 4,
+        "Org_Name": "Test school 4",
+        "Telephone": "1231231234",
+        "Email": "office@school4.example.com",
+        "URL": "https://school4.example.com",
+        "Add1_Line1": "4 Test Rd",
+        "Add1_Suburb": "",
+        "Add1_City": "Testland",
+        "Org_Type": "Full Primary",
+        "Decile": 2
+      },
+      {
+        "_id": 5,
+        "School_Id": 5,
+        "Org_Name": "Test school 5",
+        "Telephone": "1231231235",
+        "Email": "school5@edu.example.com",
+        "URL": "https://edu.example.com/school5",
+        "Add1_Line1": "5 Test Rd",
+        "Add1_Suburb": "Testurb",
+        "Add1_City": "Testland",
+        "Org_Type": "Composite",
+        "Decile": 99
+      },
+      {
+        "_id": 6,
+        "School_Id": 6,
+        "Org_Name": "Test school 6",
+        "Telephone": "1231231236",
+        "Email": "school6@edu.example.com",
+        "URL": "https://edu.example.com/school6",
+        "Add1_Line1": "6 Test Rd",
+        "Add1_Suburb": "",
+        "Add1_City": "Testland",
+        "Org_Type": "Composite",
+        "Decile": 99
+      },
+      {
+        "_id": 7,
+        "School_Id": 7,
+        "Org_Name": "Test school 7",
+        "Telephone": "1231231237",
+        "Email": "",
+        "URL": "https://edu.example.com/school7",
+        "Add1_Line1": "7 Test Rd",
+        "Add1_Suburb": "",
+        "Add1_City": "Testland",
+        "Org_Type": "Composite",
+        "Decile": 99
+      },
+      {
+        "_id": 8,
+        "School_Id": 8,
+        "Org_Name": "Test school 8",
+        "Telephone": "1231231238",
+        "Email": "",
+        "URL": "https://edu.example.com/school8",
+        "Add1_Line1": "8 Test Rd",
+        "Add1_Suburb": "",
+        "Add1_City": "Testland",
+        "Org_Type": "Composite",
+        "Decile": 99
+      },
+      {
+        "_id": 9,
+        "School_Id": 9,
+        "Org_Name": "Test school 9",
+        "Telephone": "1231231239",
+        "Email": "",
+        "URL": "https://school9.example.com/",
+        "Add1_Line1": "9 Test Rd",
+        "Add1_Suburb": "",
+        "Add1_City": "Testland",
+        "Org_Type": "Composite",
+        "Decile": 99
+      },
+      {
+        "_id": 10,
+        "School_Id": 10,
+        "Org_Name": "Test school 10",
+        "Telephone": "12312312310",
+        "Email": "",
+        "URL": "https://school10.example.school.nz/",
+        "Add1_Line1": "10 Test Rd",
+        "Add1_Suburb": "",
+        "Add1_City": "Testland",
+        "Org_Type": "Composite",
+        "Decile": 3
+      }
+    ],
+    "limit": 10,
+    "offset": 0,
+    "_links": {
+      "start": "/api/3/action/datastore_search?sort=Org_Name&resource_id=bdfe0e4c-1554-4701-a8fe-ba1c8e0cc2ce&limit=10",
+      "next": "/api/3/action/datastore_search?sort=Org_Name&resource_id=bdfe0e4c-1554-4701-a8fe-ba1c8e0cc2ce&limit=10&offset=10"
+    },
+    "total": 15
+  }
+}
