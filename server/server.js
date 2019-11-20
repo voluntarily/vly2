@@ -35,7 +35,6 @@ const { config } = require('../config/config')
 const localeDataCache = new Map()
 const getLocaleDataScript = locale => {
   // const lang = locale.split('-')[0]
-  const lang = locale
   const lang = locale || 'en'
   if (!localeDataCache.has(lang)) {
     const localeDataFile = require.resolve(`react-intl/locale-data/${lang}`)
