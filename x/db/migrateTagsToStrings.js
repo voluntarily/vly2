@@ -2,10 +2,8 @@
 var MongoClient = require('mongodb').MongoClient
 var ObjectId = require('mongodb').ObjectID
 
-// var url = 'mongodb://localhost:27017/'
-// var dbname = 'vly2'
-var url = 'mongodb+srv://vly-client:ZhF3BUDiwpy8C3xK@cluster0-kwmsu.mongodb.net/'
-var dbname = 'vly2-alpha'
+var url = 'mongodb://localhost:27017/'
+var dbname = 'vly2'
 
 var allTags = new Set()
 var dbo
