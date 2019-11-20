@@ -1,5 +1,5 @@
 const SCHOOL_TYPES = {
-  ACTIVITY_CENTRE: 'Activity centre',
+  ACTIVITY_CENTRE: 'Activity Centre',
   COMPOSITE: 'Composite',
   COMPOSITE_Y1_10: 'Composite (Year 1-10)',
   CONTRIBUTING: 'Contributing',
