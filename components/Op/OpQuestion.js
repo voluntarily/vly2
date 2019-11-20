@@ -99,6 +99,7 @@ const Question = styled.div`
     width: calc(100vw - 2rem);
     grid-template-columns: 1fr;
     margin-top: 1rem;
+    float: left;
   }
 `
 
@@ -122,6 +123,8 @@ const Response = styled.div`
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     width: calc(100vw - 2rem);
+    grid-template-columns: 8rem calc(100vw - 14rem);
+
   }
 
   @media screen and (max-width: 768px) {
