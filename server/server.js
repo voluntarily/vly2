@@ -63,6 +63,7 @@ const appReady = app.prepare().then(() => {
   server.use(bodyParser.json({ limit: UPLOAD_LIMIT, extended: true }))
   server.use(function (req, res, next) {
     req.locale = req.acceptsLanguages(supportedLanguages)
+    req.locale = req.locale || 'en'
     req.localeDataScript = getLocaleDataScript(req.locale)
     // req.messages = dev ? {} : getMessages(req.locale)
     req.messages = getMessages(req.locale)
