@@ -7,7 +7,7 @@ import Loading from '../../components/Loading'
 import OpDetail from '../../components/Op/OpDetail'
 import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
-import { FullPage, OpSectionGrid } from '../../components/VTheme/VTheme'
+import { FullPage, OpSectionGrid, ControlGrid } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
@@ -29,12 +29,13 @@ const blankOp = {
 }
 
 export class OpDetailPage extends Component {
-  state = {
-    editing: false
-  }
+  
 
   constructor (props) {
     super(props)
+    this.state = {
+      editing: false
+    }
     this.confirmOpportunity = this.confirmOpportunity.bind(this)
     this.cancelOpportunity = this.cancelOpportunity.bind(this)
     this.isAdmin = this.isAdmin.bind(this)
@@ -181,6 +182,13 @@ export class OpDetailPage extends Component {
     return op
   }
 
+  handleEditClicked = () => {
+    console.log(1)
+    this.setState({
+      editing: !this.state.editing
+    })
+  }
+
   render () {
     // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
     if (!this.props.isNew) {
@@ -210,7 +218,7 @@ export class OpDetailPage extends Component {
       return (!this.props.isNew &&
         <FullPage>
 
-          <OpDetail op={op} />
+          <OpDetail op={op} handleEditClicked={this.handleEditClicked} canEdit={this.canEdit(op)}/>
           <Divider />
 
           <OpVolunteerInterestSection

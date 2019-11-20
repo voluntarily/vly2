@@ -9,7 +9,7 @@ import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
-import { HalfGrid, Spacer, PBold } from '../VTheme/VTheme'
+import { HalfGrid, Spacer, PBold, OpSectionGrid } from '../VTheme/VTheme'
 import {
   Left,
   Right,
@@ -25,13 +25,6 @@ import {
 
 const { TextArea } = Input
 
-const AboutGrid = styled.div`
-  margin: 2rem 0 0 0;
-  display: grid;
-  grid-template-columns: 20rem 1fr ;
-  gap: 5rem;
-  text-align: left;
-`
 
 const AskContainer = styled.div`
   padding: 1rem;
@@ -146,7 +139,7 @@ line-height: 24px;
 export function OpUpdate ({ op }) {
   return (
     <>
-    <AboutGrid>
+    <OpSectionGrid>
     <h2>Updates</h2>
     <ContentCard>
       <h3>Live Telecast rescheduled to December 2024!</h3>
@@ -161,7 +154,7 @@ A stress management will be best positioned to re-imagine unmatched, cognitive a
 
     </ContentCard>
 
-    </AboutGrid>
+    </OpSectionGrid>
     </>
   )
 }

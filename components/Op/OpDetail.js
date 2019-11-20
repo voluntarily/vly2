@@ -30,6 +30,7 @@ import OpUpdate from './OpUpdate'
 const { TabPane } = Tabs
 
 function callback (key) {
+
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
 }
 
@@ -57,7 +58,7 @@ const updateTab = (
 )
 
 const editTab = (
-  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Edit Activity</span>
+    <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }} >Edit Activity</span>
 )
 
 
@@ -71,7 +72,7 @@ grid-template-columns: 10rem 10rem 1fr;
 gap: 1rem;
 `
 
-export function OpDetail ({ op }) {
+export function OpDetail ({ op, handleEditClicked, canEdit }) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
   const description = op.description || ''
@@ -83,6 +84,13 @@ export function OpDetail ({ op }) {
     : ' '
   const img = op.imgUrl || '.././static/missingimage.svg'
   const shadowStyle = { overflow: 'visible', textAlign: 'center' }
+
+  const handleTabChange = (key, e) => {
+    if (key == '5') {
+      handleEditClicked()
+    }
+  }
+
   return (
     <>
       <Head>
@@ -101,6 +109,7 @@ export function OpDetail ({ op }) {
             <ItemStatus status={op.status} />
           </ItemContainer>
           <ActionContainer>
+            
           <Button shape='round' size='large' type='primary'>
             Offer help
           </Button>
@@ -111,7 +120,7 @@ export function OpDetail ({ op }) {
         </Right>
       </HalfGrid>
       <TabContainer>
-        <Tabs style={shadowStyle} defaultActiveKey='2' onChange={callback}>
+        <Tabs style={shadowStyle} defaultActiveKey='2' onChange={handleTabChange}>
           <TabPane tab={aboutTab} key='1'>
             <OpSectionGrid>
               <div>
@@ -153,8 +162,8 @@ export function OpDetail ({ op }) {
           <TabPane tab={updateTab} key='3'>
             <OpUpdate />
           </TabPane>
-          <TabPane tab={manageTab} key='4'></TabPane>
-          <TabPane tab={editTab} ></TabPane>
+          { canEdit && <TabPane tab={manageTab} key='4'></TabPane>}
+          { canEdit && <TabPane tab={editTab} key='5'></TabPane>}
         </Tabs>
       </TabContainer>
     </>

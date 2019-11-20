@@ -41,6 +41,25 @@ export const Spacer = styled.div`
 
 
 
+export const ControlGrid = styled.div`
+display: grid;
+grid-template-columns: 5fr 2fr;
+
+align-self: center;
+
+@media screen and (min-width: 768px) and (max-width: 1281px) {
+    grid-template-columns: 1fr 13rem;
+    grid-column-gap: 2rem;
+  }
+
+
+@media screen and (max-width: 768px) {
+    grid-template-columns: calc(100vw - 2rem);
+  }
+
+`
+
+
 export const OpSectionGrid = styled.div`
   margin: 2rem 0;
   display: grid;

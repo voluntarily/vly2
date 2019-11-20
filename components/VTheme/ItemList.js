@@ -24,7 +24,7 @@ export const ItemListing = styled.li`
   color: initial;
   margin-bottom: 0.3rem;
 `
-export const ItemDescription = styled.article`
+export const ItemDescription = styled.div`
   letter-spacing: -0.02rem;
   font-weight: 400;
   font-size: 1rem;

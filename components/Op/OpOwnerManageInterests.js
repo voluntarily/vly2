@@ -2,28 +2,8 @@ import { Button, Divider, message, Popconfirm } from 'antd'
 import Router from 'next/router'
 import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import InterestSection from '../../components/Interest/InterestSection'
 import styled from 'styled-components'
-
-
-
-const ControlGrid = styled.div`
-display: grid;
-grid-template-columns: 5fr 2fr;
-
-align-self: center;
-
-@media screen and (min-width: 768px) and (max-width: 1281px) {
-    grid-template-columns: 1fr 13rem;
-    grid-column-gap: 2rem;
-  }
-
-
-@media screen and (max-width: 768px) {
-    grid-template-columns: calc(100vw - 2rem);
-  }
-
-`
+import { ControlGrid } from '../../components/VTheme/VTheme'
 
 
 export default class OpOwnerManageInterests extends Component {
@@ -79,8 +59,7 @@ export default class OpOwnerManageInterests extends Component {
             </Button>
           </Popconfirm>
           </ControlGrid>
-          <Divider />
-          <InterestSection opid={this.props.op._id} />
+
         </section>
     )
   }
