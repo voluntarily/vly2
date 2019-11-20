@@ -9,7 +9,7 @@ import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import {
   FullPage,
-  OpSectionGrid,
+  OpSectionGrid
 } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'

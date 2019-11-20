@@ -178,7 +178,7 @@ class PersonHomePage extends Component {
             <OpAdd {...this.props} />
             <ActAdd {...this.props} />
           </RequestButtonContainer>
-          <p>See the requests you have signed up for here</p>
+          <h5>See the requests you have signed up for here</h5>
         </PageHeaderContainer>
 
         <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
