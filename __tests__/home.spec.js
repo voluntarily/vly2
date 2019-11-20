@@ -176,9 +176,9 @@ test.serial('render volunteer home page - Active tab', t => {
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
     </Provider>)
-  t.is(wrapper.find('h3').first().text(), t.context.me.nickname + "'s Requests")
+  t.is(wrapper.find('h1').first().text(), t.context.me.nickname + "'s Requests")
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h3').first().text(), 'Getting Started')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Discover')
   t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 13)
 })
 
@@ -193,7 +193,7 @@ test.serial('render volunteer home page - History tab', t => {
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(1).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'History')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h3').first().text(), 'Completed Requests')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h2').first().text(), 'Completed Requests')
   t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 2)
 })
 

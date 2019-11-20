@@ -151,7 +151,7 @@ test('completed state', t => {
       onChangeStatus={changeStatus}
       onWithdraw={withdraw}
     />)
-  t.is(wrapper.find('h1').first().text(), 'Thank you for expressing your interest!')
+  t.is(wrapper.find('h4').first().text(), 'Thank you for expressing your interest!')
 })
 
 test('cancelled state', t => {
@@ -165,7 +165,7 @@ test('cancelled state', t => {
       onWithdraw={withdraw}
     />)
   // testing the words that come out
-  t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
+  t.is(wrapper.find('h4').first().text(), 'Thank you so much!')
 })
 
 test('invited', t => {
@@ -178,7 +178,7 @@ test('invited', t => {
       onChangeStatus={changeStatus}
       onWithdraw={withdraw}
     />)
-  t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
+  t.is(wrapper.find('h4').first().text(), 'Thank you so much!')
 })
 
 test('committed', t => {
@@ -191,7 +191,7 @@ test('committed', t => {
       onChangeStatus={changeStatus}
       onWithdraw={withdraw}
     />)
-  t.is(wrapper.find('h1').first().text(), 'You\'ve been invited to participate!')
+  t.is(wrapper.find('h4').first().text(), 'You\'ve been invited to participate!')
 })
 
 test('declined', t => {
@@ -204,7 +204,7 @@ test('declined', t => {
       onChangeStatus={changeStatus}
       onWithdraw={withdraw}
     />)
-  t.is(wrapper.find('h1').first().text(), 'Our apologies')
+  t.is(wrapper.find('h4').first().text(), 'Our apologies')
 })
 // TODO: popconfirm requires a valid event.
 // popconfirm.props().onConfirm()

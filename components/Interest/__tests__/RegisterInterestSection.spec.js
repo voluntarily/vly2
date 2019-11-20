@@ -76,7 +76,7 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
   // we should see "i'm interested"
   t.is(wrapper.find('button').first().text(), "I'm Interested")
   wrapper.find('button').first().simulate('click')
-  t.is(wrapper.find('h1').first().text(), 'How do you want to get involved?')
+  t.is(wrapper.find('h4').first().text(), 'How do you want to get involved?')
 
   const postnewinterest = `${API_URL}/interests/`
   myMock.postOnce(postnewinterest, interests[0])
@@ -90,7 +90,7 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
   wrapper.find('button').first().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('h1').first().text(), 'Thank you for expressing your interest!')
+  t.is(wrapper.find('h4').first().text(), 'Thank you for expressing your interest!')
 
   // press Get Involved! button
   t.truthy(myMock.done())
@@ -117,7 +117,7 @@ test.serial('mount RegisterInterestSection with op and me', async t => {
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // once loading completed should the thank you note
-  t.is(wrapper.find('h1').first().text(), 'Thank you for expressing your interest!')
+  t.is(wrapper.find('h4').first().text(), 'Thank you for expressing your interest!')
   t.truthy(myMock.done())
   myMock.restore()
 })
