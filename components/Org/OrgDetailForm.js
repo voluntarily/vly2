@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import NumericRange from '../Generic/NumericRange'
+import NumericRange from '../VTheme/NumericRange'
 import { Category as OrganisationCategory } from '../../server/api/organisation/organisation.constants'
 
 function hasErrors (fieldsError) {
