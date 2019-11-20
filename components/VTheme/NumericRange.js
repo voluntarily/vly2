@@ -40,7 +40,7 @@ class NumericRange extends React.Component {
 
         <FormattedMessage
           id='numericRange.to'
-          defaultMessage='To:'
+          defaultMessage='to:'
           description='The "to" value of a numeric range pair'
         />
         <InputNumber
