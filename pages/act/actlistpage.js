@@ -10,7 +10,7 @@ import styled from 'styled-components'
 import ActList from '../../components/Act/ActList'
 import ActMenu from '../../components/Act/ActMenu'
 import NoResult from '../../components/NoResult'
-import { ActivityContainer, FullPage, GridContainer, H3Black, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
+import { ActivityContainer, FullPage, GridContainer, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 

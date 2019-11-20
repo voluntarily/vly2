@@ -9,7 +9,7 @@ import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import {
   FullPage,
-  OpSectionGrid
+  OpSectionGrid,
 } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
@@ -240,7 +240,7 @@ export class OpDetailPage extends Component {
           <FullPage>
             <OpDetail
               op={op}
-              handleEditClicked={this.handleEditClicked}
+              onEditClicked={this.handleEditClicked}
               canEdit={this.canEdit(op)}
               canRegisterInterest={this.canRegisterInterest(op)}
               isAuthenticated={this.props.isAuthenticated}

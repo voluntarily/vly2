@@ -28,7 +28,6 @@ import OpVolunteerInterestSection from './OpVolunteerInterestSection'
 
 const { TabPane } = Tabs
 
-
 const aboutTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
     <FormattedMessage id='orgAbout' />
@@ -63,7 +62,7 @@ const ActionContainer = styled.div`
   gap: 1rem;
 `
 
-export function OpDetail ({ op, handleEditClicked, canEdit, canRegisterInterest, isAuthenticated, me }) {
+export function OpDetail ({ op, onEditClicked, canEdit, canRegisterInterest, isAuthenticated, me }) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
   const description = op.description || ''
@@ -78,7 +77,7 @@ export function OpDetail ({ op, handleEditClicked, canEdit, canRegisterInterest,
 
   const handleTabChange = (key, e) => {
     if (key === '5') {
-      handleEditClicked()
+      onEditClicked()
     }
   }
 
