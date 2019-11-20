@@ -45,12 +45,7 @@ const personSchema = new Schema({
   },
   dateAdded: { type: 'Date', default: Date.now, required: true },
   href: String,
-  tags: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Tag'
-    }
-  ],
+  tags: [String],
   // Teacher Specific fields
   teacher: {
     registration: {
@@ -66,6 +61,7 @@ const personSchema = new Schema({
 personSchema.plugin(idvalidator)
 personSchema.plugin(accessibleFieldsPlugin)
 personSchema.plugin(accessibleRecordsPlugin)
+personSchema.index({ tags: 1 })
 // personSchema.plugin(accessibleFieldsPlugin)
 
 module.exports = mongoose.model(SchemaName, personSchema)
