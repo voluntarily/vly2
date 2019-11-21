@@ -9,6 +9,10 @@ import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
 import { HalfGrid, Spacer } from '../VTheme/VTheme'
 import { Left, Right, ItemContainer, ItemDescription, TagContainer, ItemDuration, ItemStatus, ItemIdLine, ItemDate, ItemLocation } from '../VTheme/ItemList'
+import { ShareLink } from './OpShareLinks'
+import { Helmet } from 'react-helmet'
+import { useRouter } from 'next/router'
+import { config } from '../../config/config'
 
 export function OpDetail ({ op }) {
   // This will make sure that if the description is undefined we will set it to an empty string
@@ -21,10 +25,23 @@ export function OpDetail ({ op }) {
     ? '  →  ' + moment(op.date[1]).format('h:mmA · ddd DD/MM/YYYY')
     : ' '
   const img = op.imgUrl || '.././static/missingimage.svg'
+  const creator = `@${op.requestor.name}`
+  const router = useRouter()
+  const appUrl = `${config.appUrl}${router.asPath}`
+
   return (
     <>
       <Head>
-        <title>Voluntarily - {op.name}</title>
+        <Helmet>
+          <title>Voluntarily - {op.name}</title>
+          <meta name='twitter:card' content='summary' />
+          <meta name='twitter:site' content='@voluntarily' />
+          <meta name='twitter:creator' content={creator} />
+          <meta property='og:url' content={appUrl} />
+          <meta property='og:title' content={op.name} />
+          <meta property='og:description' content={description} />
+          <meta property='og:image' content={img} />
+        </Helmet>
       </Head>
       <HalfGrid>
         <Left>
@@ -51,6 +68,8 @@ export function OpDetail ({ op }) {
               }}
             />
           </ItemDescription>
+
+          <ShareLink url={appUrl} />
         </Left>
         <Right>
           <Spacer />
