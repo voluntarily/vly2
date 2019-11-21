@@ -18,6 +18,7 @@ test.before('Setup fixtures', (t) => {
 test('render the detail with op', t => {
   const wrapper = renderWithIntl(<OpDetail op={t.context.op} onPress={() => {}} />)
   t.truthy(wrapper.find('Head'))
+  t.truthy(wrapper.find('ShareLink'))
   t.is(wrapper.find('h1').text(), t.context.op.name)
 })
 
