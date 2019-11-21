@@ -345,11 +345,6 @@ test.serial('Test sort by date', async t => {
     await sleep(1)
     wrapper.update()
     // Checking first and last name of an opportunity in opcard list based on their dates
-    console.log(wrapper.find('OpCard').at(0).text())
-    console.log(wrapper.find('OpCard').at(1).text())
-    console.log(wrapper.find('OpCard').at(2).text())
-    console.log(wrapper.find('OpCard').at(3).text())
-    console.log(wrapper.find('OpCard').at(4).text())
     t.is(wrapper.find('OpCard').at(0).text().includes('1 Mentor a year 12 business Impact Project'), true)
     t.is(wrapper.find('OpCard').at(4).text().includes('4 The first 100 metres'), true)
     t.truthy(myMock.done())
@@ -375,13 +370,8 @@ test.serial('Test sort by commitment', async t => {
   wrapper.update()
   // Checking first and last duration in opcard list. The oplist is sorted from low to high, i.e short to long
   // should put #3 15 mins before #2 at 4 hours
-  console.log(wrapper.find('OpCard').at(0).text())
-  console.log(wrapper.find('OpCard').at(1).text())
-  console.log(wrapper.find('OpCard').at(2).text())
-  console.log(wrapper.find('OpCard').at(3).text())
-  console.log(wrapper.find('OpCard').at(4).text())
-  t.is(wrapper.find('OpCard').at(3).text().includes('3 Growing in the garden'), true)
-  t.is(wrapper.find('OpCard').at(4).text().includes('2 Self driving model cars'), true)
+  t.is(wrapper.find('OpCard').at(1).text().includes('3 Growing in the garden'), true)
+  t.is(wrapper.find('OpCard').at(2).text().includes('2 Self driving model cars'), true)
   t.truthy(myMock.done())
   myMock.restore()
 })
