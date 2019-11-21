@@ -14,7 +14,7 @@ export default (req, res) => {
   res.setHeader('Content-Type', 'application/json')
 
   const result = {
-    message: `${config.appName} (${process.env.REVISION || 'local_build'}) running on ${config.appUrl}/ Be Awesome`,
+    message: `${config.appName} (${process.env.REVISION || 'local_build'}) running on ${config.appUrl} ${config.env} / Be Awesome`,
     health: 'OK',
     // params: req.params,
     query: req.query,

@@ -10,6 +10,7 @@ import { JSDOM } from 'jsdom'
 import { getByText } from '@testing-library/dom'
 
 test.before(t => {
+  process.env.mockEmails = true
   // not using mongo or server here so faking ids
   people.map(p => {
     p._id = objectid().toString()
