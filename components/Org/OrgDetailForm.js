@@ -5,6 +5,8 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import NumericRange from '../VTheme/NumericRange'
+import { Category as OrganisationCategory } from '../../server/api/organisation/organisation.constants'
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
@@ -52,6 +54,7 @@ class OrgDetailForm extends Component {
         org.facebook = values.facebook
         org.contactEmail = values.contactEmail
         org.category = values.category
+        org.ageRange = values.ageRange
 
         window.scrollTo(0, 0)
         this.props.onSubmit(this.props.org)
@@ -73,8 +76,10 @@ class OrgDetailForm extends Component {
     const orgInfoJoiners = <FormattedMessage id='orgInfoJoiners' defaultMessage='Joiners' description='organisation Description label in OrgDetails Form' />
     const orgInfoMembers = <FormattedMessage id='orgInfoMembers' defaultMessage='Members' description='organisation Description label in OrgDetails Form' />
     const orgInfoOutsiders = <FormattedMessage id='orgInfoOutsiders' defaultMessage='Outsiders' description='organisation Description label in OrgDetails Form' />
+    const orgAgeRange = <FormattedMessage id='orgAgeRange' defaultMessage='Age range' description='Age range of students at the school' />
 
     // TODO translate
+    // TODO Use constant values from server/api/organisation/organisation.constants.js
     const categoryOptions = [
       { label: 'Business', value: 'vp' },
       { label: 'School', value: 'op' },
@@ -84,7 +89,7 @@ class OrgDetailForm extends Component {
     ]
 
     const {
-      getFieldDecorator, getFieldsError, getFieldError, isFieldTouched
+      getFieldDecorator, getFieldsError, getFieldError, isFieldTouched, getFieldValue
     } = this.props.form
 
     const formItemLayout = {
@@ -237,6 +242,27 @@ class OrgDetailForm extends Component {
               <RichTextEditor />
             )}
           </Form.Item>
+
+          {(getFieldValue('category') || []).includes(OrganisationCategory.SCHOOL)
+            ? (
+              <Form.Item htmlId='age-range' label={orgAgeRange}>
+                {getFieldDecorator('ageRange', {
+                  rules: [
+
+                  ]
+                })(
+                  <NumericRange
+                    fromPlaceholder='5'
+                    fromMin={0}
+                    fromMax={120}
+                    toPlaceholder='18'
+                    toMin={0}
+                    toMax={120}
+                  />
+                )}
+              </Form.Item>)
+            : null}
+
           <Button
             type='secondary'
             htmlType='button'
@@ -284,7 +310,8 @@ OrgDetailForm.propTypes = {
     contactEmail: PropTypes.string,
     facebook: PropTypes.string,
     twitter: PropTypes.string,
-    _id: PropTypes.string
+    _id: PropTypes.string,
+    ageRange: PropTypes.object
   }).isRequired,
   form: PropTypes.object,
   params: PropTypes.shape({
@@ -316,7 +343,8 @@ export default Form.create({
       contactEmail: Form.createFormField({ ...org.contactEmail, value: org.contactEmail }),
       facebook: Form.createFormField({ ...org.facebook, value: org.facebook }),
       twitter: Form.createFormField({ ...org.twitter, value: org.twitter }),
-      category: Form.createFormField({ ...org.category, value: org.category })
+      category: Form.createFormField({ ...org.category, value: org.category }),
+      ageRange: Form.createFormField({ ...org.ageRange, value: org.ageRange })
     }
   }
 })(OrgDetailForm)

@@ -7,6 +7,8 @@ import objectid from 'objectid'
 import OrgDetailForm from '../OrgDetailForm'
 import sinon from 'sinon'
 import organisations from '../../../server/api/organisation/__tests__/organisation.fixture'
+import { Category } from '../../../server/api/organisation/organisation.constants'
+import { MockWindowScrollTo } from '../../../server/util/mock-dom-helpers'
 
 test.before('Setup Organisations fixtures', (t) => {
   // not using mongo or server here so faking ids
@@ -54,4 +56,69 @@ test('render the detail with op', t => {
   wrapper.find('Form').first().simulate('submit')
   t.truthy(submitOp.calledOnce)
   t.truthy(submitOp.calledWith(t.context.org))
+})
+
+test('Age range field is shown when organisation category is school', async t => {
+  const wrapper = mountWithIntl(
+    <OrgDetailForm org={t.context.org} onSubmit={() => {}} onCancel={() => {}} />
+  )
+
+  const categories = wrapper.find('#organisation_detail_form_category').first()
+  t.truthy(categories)
+
+  // Check the School checkbox which causes the Age Range field to display
+  const school = wrapper
+    .find(`#organisation_detail_form_category input[value="${Category.SCHOOL}"]`)
+    .first()
+  school.simulate('change')
+
+  // Assert the Age Range field is present
+  t.is(wrapper.find('label[htmlFor="organisation_detail_form_ageRange"]').length, 1)
+})
+
+test('Fields are submitted', async t => {
+  global.window.scrollTo = new MockWindowScrollTo().scrollTo
+
+  const submitOp = sinon.spy()
+
+  const wrapper = mountWithIntl(
+    <OrgDetailForm org={t.context.org} onSubmit={submitOp} onCancel={() => {}} />
+  )
+
+  // Organisation name
+  wrapper
+    .find('#organisation_detail_form_name')
+    .first()
+    .simulate('change', { target: { value: 'Test org' } })
+
+  // Age range
+  const categories = wrapper.find('#organisation_detail_form_category').first()
+  t.truthy(categories)
+
+  const school = wrapper
+    .find(`#organisation_detail_form_category input[value="${Category.SCHOOL}"]`)
+    .first()
+  school.simulate('change')
+
+  t.is(wrapper.find('label[htmlFor="organisation_detail_form_ageRange"]').length, 1)
+
+  const ageRange = wrapper.find('NumericRange#organisation_detail_form_ageRange').first()
+  ageRange.find('.numeric-range-from input').first()
+    .simulate('change', { target: { value: '10' } })
+
+  ageRange.find('.numeric-range-to input').first()
+    .simulate('change', { target: { value: '99' } })
+
+  // Submit the form
+  wrapper.find('Form').first().simulate('submit')
+
+  // Assert
+  t.truthy(submitOp.calledOnce)
+  t.truthy(submitOp.calledWithMatch({
+    name: 'Test org',
+    ageRange: {
+      from: 10,
+      to: 99
+    }
+  }))
 })
