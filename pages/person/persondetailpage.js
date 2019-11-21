@@ -47,6 +47,7 @@ export class PersonDetailPage extends Component {
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     await store.dispatch(reduxApi.actions.locations.get())
+    await store.dispatch(reduxApi.actions.tags.get())
     if (isNew) {
       return {
         isNew: true,
@@ -136,52 +137,54 @@ export class PersonDetailPage extends Component {
     if (this.props.members.sync && this.props.members.data.length > 0) {
       person.orgMembership = this.props.members.data.filter(m => m.status === MemberStatus.MEMBER)
     }
-    if (!person) {
-      content =
-        <div>
-          <h2><FormattedMessage id='person.notavailable' defaultMessage='Sorry, this person is not available' description='message on person not found page' /></h2>
-          {showPeopleButton &&
-            <Button shape='round'>
-              <Link href='/people'>
-                <a>
-                  <FormattedMessage id='showPeople' defaultMessage='Show All' description='Button to show all People' />
-                </a>
-              </Link>
-            </Button>}
-          {isAdmin &&
-            <>
+    if (!this.props.people.loading) {
+      if (!person) {
+        content =
+          <div>
+            <h2><FormattedMessage id='person.notavailable' defaultMessage='Sorry, this person is not available' description='message on person not found page' /></h2>
+            {showPeopleButton &&
               <Button shape='round'>
-                <Link href='/person/new'>
+                <Link href='/people'>
                   <a>
-                    <FormattedMessage id='person.altnew' defaultMessage='New Person' description='Button to create a new person' />
+                    <FormattedMessage id='showPeople' defaultMessage='Show All' description='Button to show all People' />
                   </a>
                 </Link>
-              </Button>
-            </>}
-        </div>
-    } else {
-      if (this.state.editing) {
-        content = <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancelEdit.bind(this)} locations={this.props.locations.data} />
-      } else {
-        content =
-          <>
-            {canEdit &&
-              <Button style={{ float: 'right' }} type='secondary' shape='round' onClick={() => this.setState({ editing: true })}>
-                <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
               </Button>}
-            <PersonDetail person={person} />
-            &nbsp;
-            {canRemove &&
-              <Popconfirm title='Confirm removal of this person.' onConfirm={this.handleDeletePerson} onCancel={this.handleCancelDelete.bind(this)} okText='Yes' cancelText='No'>
-                <Button type='danger' shape='round'>
-                  <FormattedMessage id='deletePerson' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
+            {isAdmin &&
+              <>
+                <Button shape='round'>
+                  <Link href='/person/new'>
+                    <a>
+                      <FormattedMessage id='person.altnew' defaultMessage='New Person' description='Button to create a new person' />
+                    </a>
+                  </Link>
                 </Button>
-              </Popconfirm>}
+              </>}
+          </div>
+      } else {
+        if (this.state.editing) {
+          content = <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancelEdit.bind(this)} locations={this.props.locations.data} existingTags={this.props.tags.data} />
+        } else {
+          content =
+            <>
+              {canEdit &&
+                <Button style={{ float: 'right' }} type='secondary' shape='round' onClick={() => this.setState({ editing: true })}>
+                  <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
+                </Button>}
+              <PersonDetail person={person} />
             &nbsp;
-            {
-              (isAdmin) && <IssueBadgeButton person={this.props.people.data[0]} />
-            }
-          </>
+              {canRemove &&
+                <Popconfirm title='Confirm removal of this person.' onConfirm={this.handleDeletePerson} onCancel={this.handleCancelDelete.bind(this)} okText='Yes' cancelText='No'>
+                  <Button type='danger' shape='round'>
+                    <FormattedMessage id='deletePerson' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
+                  </Button>
+                </Popconfirm>}
+            &nbsp;
+              {
+                (isAdmin) && <IssueBadgeButton person={this.props.people.data[0]} />
+              }
+            </>
+        }
       }
     }
     return (
@@ -208,7 +211,8 @@ PersonDetailPage.propTypes = {
     pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
-    status: PropTypes.oneOf(['active', 'inactive', 'hold'])
+    status: PropTypes.oneOf(['active', 'inactive', 'hold']),
+    tags: PropTypes.arrayOf(PropTypes.string)
   }),
   params: PropTypes.shape({
     id: PropTypes.string.isRequired

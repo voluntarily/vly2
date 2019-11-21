@@ -7,9 +7,6 @@
   "duration": "4 hours",
   "location": "Auckland",
   "status": "draft",
-  "tags": [
-    { "_id": "5d00656d9c52c52080187aa6" },
-    { "_id": "2d00626d9c22c22080187bb6" }
-  ],	
+  "tags": ["java", "networks"],
   "requestor": "5ccbe4c26c285b7184bff574"
 }

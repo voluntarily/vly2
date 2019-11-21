@@ -42,11 +42,11 @@ const getSkillsRecommendations = async (me) => {
 
   // mongoose isn't happy if we provide an empty array as an expression
   if (tagsToMatch.length > 0) {
-    const tagIdExpression = {
-      $or: tagsToMatch.map(id => ({ tags: id }))
-    }
     const opsWithMatchingTags = await Opportunity
-      .find({ ...tagIdExpression, requestor: { $ne: me._id } })
+      .find({
+        tags: { $in: tagsToMatch },
+        requestor: { $ne: me._id }
+      })
       .populate('requestor', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl category')
     const opsWithCounts = []
