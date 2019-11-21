@@ -8,7 +8,7 @@ const shareLinkStyle = {
   outline: 'none'
 }
 
-export const ShareLink = ({ url }) => {
+export const ShareLinks = ({ url }) => {
   return (
     <>
       <FacebookShareButton
