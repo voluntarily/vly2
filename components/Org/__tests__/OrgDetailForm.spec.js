@@ -86,28 +86,23 @@ test('Fields are submitted', async t => {
   )
 
   // Organisation name
-  wrapper
-    .find('#organisation_detail_form_name')
-    .first()
+  wrapper.find('#organisation_detail_form_name').first()
     .simulate('change', { target: { value: 'Test org' } })
 
+  // School dependent fields
+  wrapper.find(`#organisation_detail_form_category input[value="${Category.SCHOOL}"]`).first()
+    .simulate('change')
+
   // Age range
-  const categories = wrapper.find('#organisation_detail_form_category').first()
-  t.truthy(categories)
-
-  const school = wrapper
-    .find(`#organisation_detail_form_category input[value="${Category.SCHOOL}"]`)
-    .first()
-  school.simulate('change')
-
-  t.is(wrapper.find('label[htmlFor="organisation_detail_form_ageRange"]').length, 1)
-
   const ageRange = wrapper.find('NumericRange#organisation_detail_form_ageRange').first()
   ageRange.find('.numeric-range-from input').first()
     .simulate('change', { target: { value: '10' } })
-
   ageRange.find('.numeric-range-to input').first()
     .simulate('change', { target: { value: '99' } })
+
+  // Decile
+  wrapper.find('.decile input').first()
+    .simulate('change', { target: { value: '8' } })
 
   // Submit the form
   wrapper.find('Form').first().simulate('submit')
@@ -119,7 +114,8 @@ test('Fields are submitted', async t => {
     ageRange: {
       from: 10,
       to: 99
-    }
+    },
+    decile: 8
   }))
 })
 

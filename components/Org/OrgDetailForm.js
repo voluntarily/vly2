@@ -250,7 +250,7 @@ class OrgDetailForm extends Component {
               <>
                 <Form.Item htmlId='decile' label={orgDecile}>
                   {getFieldDecorator('decile', {})(
-                    <InputNumber min={1} max={10} />
+                    <InputNumber min={1} max={10} className='decile' />
                   )}
                 </Form.Item>
 
