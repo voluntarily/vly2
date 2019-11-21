@@ -5,7 +5,6 @@ const getArchivedOpportunity = async (req, res) => {
     const got = await ArchivedOpportunity
       .findOne(req.params)
       .populate('requestor')
-      .populate('tags')
       .exec()
     if (got == null) {
       throw Error()
