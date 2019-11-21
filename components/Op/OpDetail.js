@@ -56,13 +56,22 @@ const TabContainer = styled.div`
   margin-top: 2rem;
 `
 
+const isDev = process.env.NODE_ENV === 'development'
+
 const ActionContainer = styled.div`
   display: grid;
   grid-template-columns: 10rem 10rem 1fr;
   gap: 1rem;
 `
 
-export function OpDetail ({ op, onEditClicked, canEdit, canRegisterInterest, isAuthenticated, me }) {
+export function OpDetail ({
+  op,
+  onEditClicked,
+  canEdit,
+  canRegisterInterest,
+  isAuthenticated,
+  me
+}) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
   const description = op.description || ''
@@ -158,12 +167,12 @@ export function OpDetail ({ op, onEditClicked, canEdit, canRegisterInterest, isA
               </div>
             </OpSectionGrid>
           </TabPane>
-          <TabPane tab={questionTab} key='2'>
+          {isDev && <TabPane tab={questionTab} key='2'>
             <OpQuestion />
-          </TabPane>
-          <TabPane tab={updateTab} key='3'>
+          </TabPane>}
+          {isDev && <TabPane tab={updateTab} key='3'>
             <OpUpdate />
-          </TabPane>
+          </TabPane>}
           {canEdit && <TabPane tab={manageTab} key='4' />}
           {canEdit && <TabPane tab={editTab} key='5' />}
         </Tabs>
