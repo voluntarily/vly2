@@ -30,7 +30,7 @@ class RichTextEditor extends React.Component {
       return (
         <div>
           <Quill
-            style={{ lineHeight: '21px', }}
+            style={{ lineHeight: '21px' }}
             // placeholder='Communicate'
             modules={modules}
             defaultValue={this.props.value} onChange={this.props.onChange}
