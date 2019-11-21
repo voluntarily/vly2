@@ -4,7 +4,7 @@ import test from 'ava'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
 import objectid from 'objectid'
 
-import OrgDetailForm from '../OrgDetailForm'
+import OrgDetailForm, { validateAgeRange } from '../OrgDetailForm'
 import sinon from 'sinon'
 import organisations from '../../../server/api/organisation/__tests__/organisation.fixture'
 import { Category } from '../../../server/api/organisation/organisation.constants'
@@ -120,5 +120,31 @@ test('Fields are submitted', async t => {
       from: 10,
       to: 99
     }
+  }))
+})
+
+test('validateAgeRange - no age range value', t => {
+  t.true(validateAgeRange(undefined))
+})
+test('validateAgeRange - from and to fields valid', t => {
+  t.true(validateAgeRange({
+    from: 5,
+    to: 100
+  }))
+})
+test('validateAgeRange - only from field', t => {
+  t.true(validateAgeRange({
+    from: 5
+  }))
+})
+test('validateAgeRange - only to field', t => {
+  t.true(validateAgeRange({
+    to: 500
+  }))
+})
+test('validateAgeRange - to less than from', t => {
+  t.false(validateAgeRange({
+    from: 10,
+    to: 5
   }))
 })
