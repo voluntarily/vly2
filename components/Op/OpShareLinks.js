@@ -8,36 +8,34 @@ const shareLinkStyle = {
   outline: 'none'
 }
 
-export const ShareLinks = ({ url }) => {
-  return (
-    <>
-      <FacebookShareButton
-        style={shareLinkStyle}
-        url={url}
-      >
-        <FacebookIcon size={32} round />
-      </FacebookShareButton>
+export const ShareLinks = ({ url }) =>  (
+  <div>
+    <FacebookShareButton
+      style={shareLinkStyle}
+      url={url}
+    >
+      <FacebookIcon size={32} round />
+    </FacebookShareButton>
 
-      <TwitterShareButton
-        style={shareLinkStyle}
-        url={url}
-      >
-        <TwitterIcon size={32} round />
-      </TwitterShareButton>
+    <TwitterShareButton
+      style={shareLinkStyle}
+      url={url}
+    >
+      <TwitterIcon size={32} round />
+    </TwitterShareButton>
 
-      <LinkedinShareButton
-        style={shareLinkStyle}
-        url={url}
-      >
-        <LinkedinIcon size={32} round />
-      </LinkedinShareButton>
+    <LinkedinShareButton
+      style={shareLinkStyle}
+      url={url}
+    >
+      <LinkedinIcon size={32} round />
+    </LinkedinShareButton>
 
-      <WhatsappShareButton
-        style={shareLinkStyle}
-        url={url}
-      >
-        <WhatsappIcon size={32} round />
-      </WhatsappShareButton>
-    </>
-  )
-}
+    <WhatsappShareButton
+      style={shareLinkStyle}
+      url={url}
+    >
+      <WhatsappIcon size={32} round />
+    </WhatsappShareButton>
+  </div>
+)
