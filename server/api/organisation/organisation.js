@@ -28,7 +28,8 @@ const organisationSchema = new Schema({
   ageRange: {
     from: Number,
     to: Number
-  }
+  },
+  decile: Number
 })
 
 module.exports = mongoose.model('Organisation', organisationSchema)

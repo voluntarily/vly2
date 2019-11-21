@@ -55,6 +55,7 @@ class OrgDetailForm extends Component {
         org.contactEmail = values.contactEmail
         org.category = values.category
         org.ageRange = values.ageRange
+        org.decile = values.decile
 
         window.scrollTo(0, 0)
         this.props.onSubmit(this.props.org)
@@ -365,7 +366,8 @@ export default Form.create({
       facebook: Form.createFormField({ ...org.facebook, value: org.facebook }),
       twitter: Form.createFormField({ ...org.twitter, value: org.twitter }),
       category: Form.createFormField({ ...org.category, value: org.category }),
-      ageRange: Form.createFormField({ ...org.ageRange, value: org.ageRange })
+      ageRange: Form.createFormField({ ...org.ageRange, value: org.ageRange }),
+      decile: Form.createFormField({ ...org.decile, value: org.decile })
     }
   }
 })(OrgDetailForm)
