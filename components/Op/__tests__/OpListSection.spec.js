@@ -351,7 +351,7 @@ test.serial('Test sort by date', async t => {
     console.log(wrapper.find('OpCard').at(3).text())
     console.log(wrapper.find('OpCard').at(4).text())
     t.is(wrapper.find('OpCard').at(0).text().includes('1 Mentor a year 12 business Impact Project'), true)
-    t.is(wrapper.find('OpCard').at(1).text().includes('3 Growing in the garden'), true)
+    t.is(wrapper.find('OpCard').at(4).text().includes('4 The first 100 metres'), true)
     t.truthy(myMock.done())
     myMock.restore()
   } catch (e) {
