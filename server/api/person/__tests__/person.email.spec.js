@@ -1,5 +1,5 @@
 import test from 'ava'
-import { emailPerson } from '../email/emailperson'
+import { emailPerson } from '../person.email'
 import ops from '../../opportunity/__tests__/opportunity.fixture'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 import people from './person.fixture'

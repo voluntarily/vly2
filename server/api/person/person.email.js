@@ -1,7 +1,6 @@
-const { getTransport } = require('../../../services/email/email')
+const { getTransport } = require('../../services/email/email')
 const Email = require('email-templates')
-const path = require('path')
-const { config } = require('../../../../config/config')
+const { config } = require('../../../config/config')
 /*
   format and send a email to the given address
   @to {person Object} the target of the email
@@ -26,7 +25,7 @@ module.exports.emailPerson = async (template, to, props, renderOnly = false) => 
     })
     if (renderOnly) {
       return await email.render(
-        path.join(__dirname, template + '/html'),
+        template + '/html',
         {
           to,
           ...props
@@ -34,7 +33,7 @@ module.exports.emailPerson = async (template, to, props, renderOnly = false) => 
       )
     } else {
       return await email.send({
-        template: path.join(__dirname, template),
+        template: template,
         message: {
           to: to.email,
           attachments: props.attachment ? props.attachment : null

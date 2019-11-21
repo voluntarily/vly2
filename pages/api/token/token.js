@@ -4,11 +4,8 @@ import { handleURLToken } from '../../../lib/sec/actiontoken'
   and then forwards to the requested page.
 
 */
-const actionTable = {
-  log: props => console.log('log', props)
-}
 
-export default async (req, res) => {
+export const handleToken = async (req, res, actionTable) => {
   console.log('token', req.query)
   const { token } = req.query
   // request must have a ?token=
@@ -28,3 +25,9 @@ export default async (req, res) => {
     res.status(500).end()
   }
 }
+
+const testActionTable = {
+  log: props => console.log('log', props)
+}
+
+export default (req, res) => handleToken(req, res, testActionTable)

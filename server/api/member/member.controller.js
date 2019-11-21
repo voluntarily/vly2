@@ -2,8 +2,8 @@ const Member = require('./member')
 // const Person = require('../person/person')
 const Organisation = require('../organisation/organisation')
 // const { config } = require('../../../config/config')
-// const { emailPerson } = require('../person/email/emailperson')
 // const { MemberStatus } = require('./member.constants')
+// const { emailPerson } = require('../person/person.email')
 
 /* get a single member record with org and person populated out */
 const getMemberbyId = id => {
@@ -82,6 +82,37 @@ const createMember = async (req, res) => {
   })
 }
 
+/**
+ * This will be easier to add more status without having too much if. All we need is add another folder in email template folder and the status will reference to that folder
+ * @param {string} template status will be used to indicate which email template to use
+ * @param {object} to person email is for. (requestor or volunteer) with email populated.
+ * @param {object} member populated out member with person and op. can be null
+ * @param {object} org the current organisation
+ * @param {object} props extra properties such as attachment
+ */
+// const sendMemberEmail = async (template, to, from, interest, org, props) => {
+//   const op = interest.opportunity
+//   await emailPerson(template, to, {
+//     send: true,
+//     op,
+//     from,
+//     org,
+//     ...props
+//   })
+// }
+
+// const sendMemberInvitation = async () => {
+//   // template expects
+//   //    to: person receiving email
+//   // -   from: person sending email - the orgAdmin
+//   // -   org: The organisation (with added href linkback)
+//   // -   adminMsg: text added by the orgAdmin
+//   // -   buttonLabel: label for callback button
+//   // -   buttonHref: the callback button url
+
+//   const me = req.session.me
+//   sendMemberEmail('inviteMember', me)
+// }
 module.exports = {
   listMembers,
   updateMember,
