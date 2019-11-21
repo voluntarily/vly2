@@ -68,10 +68,23 @@ class OpListSection extends Component {
     if (orderValue === 'name') {
       return (dataOp.sort((a, b) => a.name.localeCompare(b.name)))
     } else if (orderValue === 'date') {
-      return (dataOp.sort((a, b) => new Date(a.date[0]).getDate() - new Date(b.date[0]).getDate()))
+      dataOp.sort((a, b) => {
+        const dateA = a.date && a.date[0]
+        const dateB = b.date && b.date[1]
+        if (!dateA && dateB) {
+          return 1
+        } else if (dateA && !dateB) {
+          return -1
+        } else if (dateA === dateB) {
+          return 0
+        } else {
+          return (dateA > dateB) ? 1 : (dateB > dateA ? -1 : 0)
+        }
+      })
+      // return (dataOp.sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate()))
     } else if (orderValue === 'commitment') {
       dataOp.sort((a, b) => {
-        if (a.duration !== '') {
+        if (a.duration && a.duration !== '') {
           return (a.duration.localeCompare(b.duration))
         } else {
           return ''
