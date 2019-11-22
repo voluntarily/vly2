@@ -18,7 +18,7 @@ test.before('Setup fixtures', (t) => {
 test('render the detail properly', t => {
   const RoutedOpDetail = withMockRoute(OpDetail, `/ops/${t.context.op._id}`)
   const wrapper = mountWithIntl(
-    <RoutedOpDetail op={t.context.op}/> 
+    <RoutedOpDetail op={t.context.op} />
   )
   t.truthy(wrapper.find('Head'))
   t.truthy(wrapper.find('ShareLink'))
@@ -26,4 +26,3 @@ test('render the detail properly', t => {
 })
 
 // test.todo('verify markdown in description is rendered')
-
