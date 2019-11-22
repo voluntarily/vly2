@@ -26,7 +26,8 @@ export function OpDetail ({ op }) {
   const img = op.imgUrl || '.././static/missingimage.svg'
   const creator = `@${op.requestor.name}`
   const router = useRouter()
-  const appUrl = `${config.appUrl}${router.asPath}`
+  const { asPath } = router
+  const appUrl = `${config.appUrl}${asPath}`  
 
   return (
     <>
