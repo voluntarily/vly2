@@ -22,6 +22,7 @@ class MemoryMongo {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
       keepAlive: true,
       keepAliveInitialDelay: 300000,
       poolSize: 30,

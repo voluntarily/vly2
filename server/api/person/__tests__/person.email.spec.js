@@ -1,5 +1,5 @@
 import test from 'ava'
-import { emailPerson } from '../email/emailperson'
+import { emailPerson } from '../person.email'
 import ops from '../../opportunity/__tests__/opportunity.fixture'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 import people from './person.fixture'
@@ -10,6 +10,7 @@ import { JSDOM } from 'jsdom'
 import { getByText } from '@testing-library/dom'
 
 test.before(t => {
+  process.env.mockEmails = true
   // not using mongo or server here so faking ids
   people.map(p => {
     p._id = objectid().toString()
