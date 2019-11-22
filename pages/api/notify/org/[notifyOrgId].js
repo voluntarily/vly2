@@ -21,7 +21,7 @@ export default async (req, res) => {
       person: me._id,
       organisation: orgid
     }
-    const membership = await Member.findOne(membershipQuery)
+    const membership = await Member.findOne(membershipQuery).exec()
     if (!(membership && membership.status === MemberStatus.ORGADMIN) ) {
       console.error('you are not an orgadmin of this organisation')
       return res.status(403).json({ error: 'signed-in person is not an orgadmin of the requested organisation'})

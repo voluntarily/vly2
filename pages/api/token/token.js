@@ -6,7 +6,7 @@ import { handleURLToken } from '../../../lib/sec/actiontoken'
 */
 
 export const handleToken = async (req, res, actionTable) => {
-  console.log('token', req.query)
+  // console.log('handleToken', req.query)
   const { token } = req.query
   // request must have a ?token=
   if (!token) {
@@ -14,14 +14,14 @@ export const handleToken = async (req, res, actionTable) => {
   }
   // if user is not authenticated then get them in.
   if (!req.session.isAuthenticated) {
-    console.log('signing thru to', req.originalUrl)
-    res.redirect(`/auth/sign-thru?redirect=${req.originalUrl}`)
+    // console.log('signing thru to', req.originalUrl)
+    return res.redirect(`/auth/sign-thru?redirect=${req.originalUrl}`)
   }
   try {
-    const payload = handleURLToken(token, actionTable)
-    res.redirect(payload.redirectUrl)
+    const payload = await handleURLToken(token, actionTable)
+    return res.redirect(payload.redirectUrl)
   } catch (e) {
-    console.log('doToken:', e)
+    console.log('handleToken:', e)
     res.status(500).end()
   }
 }

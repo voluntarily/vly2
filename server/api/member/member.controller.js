@@ -68,6 +68,26 @@ const updateMember = async (req, res) => {
   }
 }
 
+// creates a new member or updates status of existing member
+const addMember = async (member) => {
+  try {
+    const found = await Member.findOneAndUpdate(
+      { // check for a match
+        person: member.person,
+        organisation: member.organisation
+      },
+      member, // create or upsert
+      { new: true, upsert: true }
+    )
+    // get populated out member record
+    const got = await getMemberbyId(found._id)
+    return got
+  } catch (e) {
+    console.error(e)
+    return false
+  }
+}
+
 const createMember = async (req, res) => {
   const newMember = new Member(req.body)
   newMember.save(async (err, saved) => {
@@ -116,5 +136,6 @@ const createMember = async (req, res) => {
 module.exports = {
   listMembers,
   updateMember,
-  createMember
+  createMember,
+  addMember
 }

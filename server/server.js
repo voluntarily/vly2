@@ -86,7 +86,8 @@ const appReady = app.prepare().then(() => {
       {
         useNewUrlParser: true,
         useCreateIndex: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false
       })
       .then(console.log('mongodb connected at:', config.databaseUrl))
     const db = mongoose.connection
