@@ -27,7 +27,7 @@ function OpDetail (props) {
   const img = op.imgUrl || '.././static/missingimage.svg'
   const creator = `@${op.requestor.name}`
   const appUrl = `${config.appUrl}${router.asPath}`
-  const a = 'sss'
+  
   return (
     <>
       <Head>
