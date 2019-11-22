@@ -55,7 +55,7 @@ const jwtDataAlice = {
     email_verified: true,
     exp: Math.floor(Date.now() / 1000) + (60 * 60),
     iat: Math.floor(Date.now() / 1000),
-    picture: 'https://publicdomainvectors.org/photos/teacher.png',
+    picture: 'https://publicdomainvectors.org/photos/teacher.png'
   },
   refreshToken: null,
   state: 'Nz_CgRTnYPO5CbD4ueKmkdCiuk2z3psk',

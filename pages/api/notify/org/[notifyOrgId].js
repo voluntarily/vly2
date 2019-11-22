@@ -7,8 +7,7 @@ import { config } from '../../../../config/config'
 
 export default async (req, res) => {
   // verify signed in
-  if (!req.session || !req.session.isAuthenticated)
-    return res.status(403).end()
+  if (!req.session || !req.session.isAuthenticated) { return res.status(403).end() }
 
   try {
     // verify the org
@@ -17,14 +16,14 @@ export default async (req, res) => {
 
     // verify I am orgAdmin of org
     const me = req.session.me
-    const membershipQuery = { 
+    const membershipQuery = {
       person: me._id,
       organisation: orgid
     }
     const membership = await Member.findOne(membershipQuery).exec()
-    if (!(membership && membership.status === MemberStatus.ORGADMIN) ) {
+    if (!(membership && membership.status === MemberStatus.ORGADMIN)) {
       console.error('you are not an orgadmin of this organisation')
-      return res.status(403).json({ error: 'signed-in person is not an orgadmin of the requested organisation'})
+      return res.status(403).json({ error: 'signed-in person is not an orgadmin of the requested organisation' })
     }
     const orgAdmin = me
     // make org links canonical
@@ -54,12 +53,12 @@ export default async (req, res) => {
     // -   buttonHref: the callback button url
 
     const info = await emailPerson('inviteMember', orgAdmin, {
-        from: orgAdmin,
-        org,
-        adminMsg,
-        buttonLabel,
-        buttonHref: payload.token
-      })
+      from: orgAdmin,
+      org,
+      adminMsg,
+      buttonLabel,
+      buttonHref: payload.token
+    })
     const response = {
       id: req.query.notifyOrgId,
       payload,
@@ -72,5 +71,4 @@ export default async (req, res) => {
     console.error('notifyOrg', e)
     res.status(404).end()
   }
-
 }
