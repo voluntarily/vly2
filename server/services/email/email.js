@@ -46,16 +46,13 @@ const getTransportSES = () =>
     }
   })
 
-const getTransportMock = () =>
-  nodemailerMock.createTransport({
-    host: 'smtp.ethereal.email',
+const getTransportMock = () => {
+  return (nodemailerMock.createTransport({
+    host: 'smtp.voluntarily.nz',
     port: 587,
-    secure: false,
-    auth: {
-      user: 'emma.lockman76@ethereal.email', // If the email is not sent, just need to get on the website and create a new account
-      pass: 'CzBhFBWqHqGkZVvDFH'
-    }
-  })
+    secure: false
+  }))
+}
 
 const getTransportFromEnvironment = () =>
   nodemailer.createTransport({
@@ -64,16 +61,16 @@ const getTransportFromEnvironment = () =>
     secure: false
   })
 
-let currentTransport = null
-
-if (process.env.NODE_ENV === 'test') {
-  currentTransport = getTransportMock
-} else if (process.env.VLY_SMTP_HOST && process.env.VLY_SMTP_PORT) {
-  currentTransport = getTransportFromEnvironment
-} else if (process.env.NODE_ENV === 'development') {
-  currentTransport = getTransportDev
-} else {
-  currentTransport = getTransportSES
+const currentTransport = () => {
+  if (process.env.mockEmails || config.env === 'test') {
+    return getTransportMock()
+  } else if (process.env.VLY_SMTP_HOST && process.env.VLY_SMTP_PORT) {
+    return getTransportFromEnvironment()
+  } else if (config.env === 'development') {
+    return getTransportDev()
+  } else {
+    return getTransportSES()
+  }
 }
 
 module.exports = {
