@@ -154,6 +154,7 @@
     "timeout": "2m",
     "babel": {
       "testOptions": {
+        "retainLines": true,
         "plugins": [
           "@babel/plugin-syntax-jsx"
         ],
