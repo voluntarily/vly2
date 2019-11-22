@@ -20,7 +20,6 @@ test('render the detail properly', t => {
   const wrapper = mountWithIntl(
     <RoutedOpDetail op={t.context.op}/> 
   )
-  // const wrapper = renderWithIntl(<OpDetail op={t.context.op} onPress={() => {}} />)
   t.truthy(wrapper.find('Head'))
   t.truthy(wrapper.find('ShareLink'))
   t.is(wrapper.find('h1').text(), t.context.op.name)
