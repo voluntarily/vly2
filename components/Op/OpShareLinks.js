@@ -12,7 +12,7 @@ export const ShareLinks = ({ url }) =>  (
   <div>
     <FacebookShareButton
       style={shareLinkStyle}
-      url={url}
+      url={url} 
     >
       <FacebookIcon size={32} round />
     </FacebookShareButton>
