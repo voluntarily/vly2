@@ -26,7 +26,7 @@ const SectionWrapper = styled.div`
 
 const TitleContainer = styled.div``
 
-function callback (key) {
+function callback(key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
 }
 
@@ -35,21 +35,27 @@ class PersonHomePage extends Component {
     editProfile: false
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.getArchivedOpportunitiesByStatus = this.getArchivedOpportunitiesByStatus.bind(
       this
     )
   }
 
-  getArchivedOpportunitiesByStatus (status) {
+  getArchivedOpportunitiesByStatus(status) {
     return this.props.archivedOpportunities.data.filter(
       op => op.status === status && op.requestor === this.props.me._id
     )
   }
 
-  mergeOpsList () {
+  myOpsList() {
     const myops = this.props.opportunities.data // list of ops I own
+    const ops = [...myops]
+    return ops
+
+  }
+
+  volOpsList () {
     const interests = this.props.interests.data // list of ops I'm volunteering for
     const volops = interests
       .map((interest, index) => {
@@ -65,11 +71,16 @@ class PersonHomePage extends Component {
         }
       })
       .filter(op => op)
-    const ops = [...volops, ...myops]
+    const ops = [...volops]
     return ops
-  }
+  } 
 
-  static async getInitialProps ({ store }) {
+
+
+
+
+
+  static async getInitialProps({ store }) {
     try {
       const me = store.getState().session.me
       const requestor = { requestor: me._id }
@@ -122,14 +133,15 @@ class PersonHomePage extends Component {
     return role
   }
 
-  render () {
+  render() {
     const shadowStyle = { overflow: 'visible' }
     if (this.props.members.sync && this.props.members.data.length > 0) {
       this.props.me.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
       this.props.me.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
     }
 
-    const ops = this.mergeOpsList()
+    const ops = this.myOpsList()
+    const vops = this.volOpsList()
 
     const opsTab = (
       <span>
@@ -192,29 +204,55 @@ class PersonHomePage extends Component {
                     <H3Black>
                       <FormattedMessage
                         id='home.liveOpportunities'
-                        defaultMessage='Active Requests'
-                        decription='subtitle on volunteer home page for active requests and opportunities'
+                        defaultMessage='Active Opportunities'
+                        decription='subtitle on teacher home page for active opportunities that have been hosted'
                       />
                     </H3Black>
                   </SectionTitleWrapper>
                   {ops && (
                     <OpList
-                      ops={ops.filter(op =>
-                        ['active', 'draft'].includes(op.status)
-                      )}
+                      
+                   ops={ops.filter(op => 
+                    ['active', 'draft'].includes(op.status)
+                   )}
+                    
                     />
 
                   )}
+               
+                  <SectionTitleWrapper>
+                    <H3Black>
+                      <FormattedMessage
+                        id='home.myOpportunities'
+                        defaultMessage='My Opportunities'
+                        decription='subtitle on teacher home page for signed up opportunities by the volunteers'
+                      />
+                    </H3Black>
+                  </SectionTitleWrapper>
+                  {ops && (
+                    <OpList
+                      ops={vops.filter(op =>
+                        ['active', 'draft'].includes(op.status)
+                      )}
+
+                    />
+
+
+                  )}
+
                 </SectionWrapper>
+                
               )
             }
+
+
 
             <SectionWrapper>
               <SectionTitleWrapper>
                 <H3Black>
                   <FormattedMessage
                     id='home.recommendedOpportunities'
-                    defaultMessage='Recommended for you'
+                    defaultMessage='Recommended for You'
                     decription='Title on volunteer home page for recommended opportunities'
                   />
                   <P>
@@ -259,22 +297,22 @@ class PersonHomePage extends Component {
                   onCancel={this.handleCancel}
                 />
               ) : (
-                <div>
-                  <Button
-                    style={{ float: 'right' }}
-                    type='secondary'
-                    shape='round'
-                    onClick={() => this.setState({ editProfile: true })}
-                  >
-                    <FormattedMessage
-                      id='editPerson'
-                      defaultMessage='Edit'
-                      description='Button to edit an person on PersonDetails page'
-                    />
-                  </Button>
-                  <PersonDetail person={this.props.me} />
-                </div>
-              )}
+                  <div>
+                    <Button
+                      style={{ float: 'right' }}
+                      type='secondary'
+                      shape='round'
+                      onClick={() => this.setState({ editProfile: true })}
+                    >
+                      <FormattedMessage
+                        id='editPerson'
+                        defaultMessage='Edit'
+                        description='Button to edit an person on PersonDetails page'
+                      />
+                    </Button>
+                    <PersonDetail person={this.props.me} />
+                  </div>
+                )}
             </SectionWrapper>
           </TabPane>
         </Tabs>
