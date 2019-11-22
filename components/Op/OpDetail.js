@@ -10,12 +10,13 @@ import TagDisplay from '../Tags/TagDisplay'
 import { HalfGrid, Spacer } from '../VTheme/VTheme'
 import { Left, Right, ItemContainer, ItemDescription, TagContainer, ItemDuration, ItemStatus, ItemIdLine, ItemDate, ItemLocation } from '../VTheme/ItemList'
 import { ShareLinks } from './OpShareLinks'
-import { useRouter } from 'next/router'
+import { withRouter } from 'next/router'
 import { config } from '../../config/config'
 
-export function OpDetail ({ op }) {
+function OpDetail (props) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
+  const { op, router } = props
   const description = op.description || ''
   const startDate = op.date[0]
     ? moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
@@ -25,10 +26,8 @@ export function OpDetail ({ op }) {
     : ' '
   const img = op.imgUrl || '.././static/missingimage.svg'
   const creator = `@${op.requestor.name}`
-  const router = useRouter()
-  const { asPath } = router
-  const appUrl = `${config.appUrl}${asPath}`  
-
+  const appUrl = `${config.appUrl}${router.asPath}`  
+  
   return (
     <>
       <Head>
@@ -92,4 +91,4 @@ OpDetail.propTypes = {
   })
 }
 
-export default OpDetail
+export default withRouter(OpDetail)
