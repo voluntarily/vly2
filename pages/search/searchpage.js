@@ -183,7 +183,7 @@ export class SearchPage extends Component {
                 />
               }
             />
-            <OpOrderby sortHandler={this.sortHandler} />
+            <OpOrderby handleSort={this.sortHandler} />
             <FilterContainer
               onClose={this.handleClose}
               filterName={LOCATION_FILTER_NAME}

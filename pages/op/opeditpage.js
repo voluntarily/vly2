@@ -46,20 +46,12 @@ OpEditPage.propTypes = {
     date: PropTypes.array,
     status: PropTypes.string,
 
-    tags: PropTypes.arrayOf(
-      PropTypes.shape({
-        tag: PropTypes.string.isRequired,
-        _id: PropTypes.string
-      })
-    )
+    tags: PropTypes.arrayOf(PropTypes.string)
   }),
   me: PropTypes.shape({
     _id: PropTypes.string
   }),
-  existingTags: PropTypes.arrayOf(PropTypes.shape({
-    tag: PropTypes.string.isRequired,
-    _id: PropTypes.string
-  })).isRequired,
+  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired,
   stopEditing: PropTypes.func.isRequired,
   createOpportunity: PropTypes.func.isRequired,
