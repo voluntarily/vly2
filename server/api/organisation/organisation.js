@@ -31,4 +31,13 @@ const organisationSchema = new Schema({
   }
 })
 
-module.exports = mongoose.model('Organisation', organisationSchema)
+// protect multiple imports
+var Organisation
+
+if (mongoose.models.Organisation) {
+  Organisation = mongoose.model('Organisation')
+} else {
+  Organisation = mongoose.model('Organisation', organisationSchema)
+}
+
+module.exports = Organisation

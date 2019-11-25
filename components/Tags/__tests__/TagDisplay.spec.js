@@ -6,10 +6,7 @@ import TagDisplay from '../TagDisplay'
 
 const originalWarn = console.warn
 
-const tags = [
-  { tag: 'test' },
-  { tag: 'wowzer' }
-]
+const tags = ['test', 'wowzer']
 
 test.before('before test silence async-validator', () => {
   console.warn = (...args) => {
@@ -29,5 +26,5 @@ test.serial('render tags', t => {
     />
   )
 
-  t.truthy(wrapper.html().includes(tags[0].tag) && wrapper.html().includes(tags[1].tag))
+  t.truthy(wrapper.html().includes(tags[0]) && wrapper.html().includes(tags[1]))
 })

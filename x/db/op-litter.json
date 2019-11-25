@@ -6,16 +6,6 @@
   "duration": "2 hours",
   "location": "Auckland",
   "status": "draft",
-  "tags": [
-    { 
-       "tag": "Machine Vision"
-    },
-    { 
-       "tag": "Camera"
-    },
-    { 
-       "tag": "Computer"
-    }
-  ],
+  "tags": ["Machine Vision", "Camera", "Computer"],
   "requestor": "5ccbe4c26c285b7184bff574"
 }

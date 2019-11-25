@@ -2,9 +2,9 @@ import test from 'ava'
 import nodemailerMock from 'nodemailer-mock'
 import { getTransport } from '../email'
 
-test.before('Setup mailer', (t) => {
+test.before('Setup mailer', async (t) => {
   try {
-    t.context.transport = getTransport()
+    t.context.transport = await getTransport()
   } catch (err) { console.error(err) }
 })
 
