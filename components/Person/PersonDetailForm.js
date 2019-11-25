@@ -213,13 +213,14 @@ class PersonDetailForm extends Component {
             </DescriptionContainer>
 
             <select name="pets" id="pet-select">
-            <option value="">--Please choose an option--</option>
-            <option value="dog">Dog</option>
-            <option value="cat">Cat</option>
-            <option value="hamster">Hamster</option>
-           <option value="parrot">Parrot</option>
-           <option value="spider">Spider</option>
-           <option value="goldfish">Goldfish</option>
+            <option value="">--Please choose your level of education--</option>
+            <option value="dog">No formal education</option>
+            <option value="cat">High School graduate</option>
+            <option value="hamster">Some college</option>
+           <option value="parrot">Associate's and/or Bachelor's degree</option>
+           <option value="spider">Bachelor's degree</option>
+           <option value="goldfish">Master's degree</option>
+           <option value="goldfish">Doctoral or professional degree</option>
           </select>
             <InputContainer>
               <ShortInputContainer>
