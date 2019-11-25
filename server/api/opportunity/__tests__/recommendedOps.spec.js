@@ -2,7 +2,6 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Opportunity from '../opportunity'
-import Tag from '../../tag/tag'
 import Person from '../../person/person'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
@@ -25,7 +24,7 @@ test.after.always(async (t) => {
 test.beforeEach('connect and add two oppo entries', async (t) => {
   // connect each oppo to a requestor.
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-  t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
+  t.context.tags = tags
   ops.map((op, index) => { op.requestor = t.context.people[index]._id })
   t.context.opportunities = await Opportunity.create(ops).catch((err) => console.error('Unable to create opportunities', err))
 })
@@ -33,7 +32,6 @@ test.beforeEach('connect and add two oppo entries', async (t) => {
 test.afterEach.always(async () => {
   await Opportunity.deleteMany()
   await Person.deleteMany()
-  await Tag.deleteMany()
 })
 
 test.serial('Op recommendations based on location should include those nearby and not requested by me', async t => {
@@ -78,7 +76,7 @@ test.serial('Op recommendations based on location should include those nearby an
 
 test.serial('Ops recommended based on skills should match at least one of my skills and be ranked', async t => {
   // set my tags as all tags but the first one in the db
-  t.context.people[0].tags = t.context.tags.map(t => t._id).slice(1)
+  t.context.people[0].tags = t.context.tags.slice(1)
   await t.context.people[0].save()
   const me = t.context.people[0]._id
 
@@ -91,13 +89,13 @@ test.serial('Ops recommended based on skills should match at least one of my ski
   const numMatchingOps = 3
 
   // matches but was requested by me (so shouldn't be included)
-  ops[0].tags = t.context.tags.map(t => t._id)
+  ops[0].tags = t.context.tags
   ops[0].requestor = me
 
   // contains matches (in order of most to least)
-  ops[1].tags = t.context.tags.map(t => t._id).slice(0)
-  ops[2].tags = t.context.tags.map(t => t._id).slice(2)
-  ops[3].tags = t.context.tags.map(t => t._id).slice(3)
+  ops[1].tags = t.context.tags.slice(0)
+  ops[2].tags = t.context.tags.slice(2)
+  ops[3].tags = t.context.tags.slice(3)
 
   ops.forEach(async op => {
     await op.save()
@@ -127,7 +125,7 @@ test.serial('When I havent provided any skills, nothing should be recommended', 
 
   const ops = t.context.opportunities
   ops.forEach((op) => {
-    op.tags = t.context.tags.map(t => t._id)
+    op.tags = t.context.tags
     op.requestor = t.context.people[1]._id // not me
   })
 

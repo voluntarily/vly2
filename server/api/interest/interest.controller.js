@@ -1,7 +1,7 @@
 const Interest = require('./interest')
 const Person = require('../person/person')
 const { config } = require('../../../config/config')
-const { emailPerson } = require('../person/email/emailperson')
+const { emailPerson } = require('../person/person.email')
 const { InterestStatus } = require('./interest.constants')
 const ical = require('ical-generator')
 const htmlSanitizer = require('sanitize-html')
@@ -46,6 +46,7 @@ const getInterestDetail = async (interestID) => {
 
   const requestorDetail = await Person.findById(interestDetail.opportunity.requestor, 'name nickname email imgUrl')
   interestDetail.opportunity.requestor = requestorDetail
+  interestDetail.opportunity.imgUrl = `${config.appUrl}${interestDetail.opportunity.imgUrl}`
   interestDetail.opportunity.href = `${config.appUrl + '/ops/' + interestDetail.opportunity._id}`
   interestDetail.person.href = `${config.appUrl + '/people/' + interestDetail.person._id}`
   return interestDetail

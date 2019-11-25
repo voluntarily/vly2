@@ -8,7 +8,6 @@ const { readFileSync } = require('fs-extra')
 const { basename } = require('path')
 
 const UPLOAD_LIMIT = '6000kb'
-
 require('dotenv').config()
 const express = require('express')
 const server = express()
@@ -35,7 +34,7 @@ const { config } = require('../config/config')
 const localeDataCache = new Map()
 const getLocaleDataScript = locale => {
   // const lang = locale.split('-')[0]
-  const lang = locale
+  const lang = locale || 'en'
   if (!localeDataCache.has(lang)) {
     const localeDataFile = require.resolve(`react-intl/locale-data/${lang}`)
     const localeDataScript = readFileSync(localeDataFile, 'utf8')
@@ -63,6 +62,7 @@ const appReady = app.prepare().then(() => {
   server.use(bodyParser.json({ limit: UPLOAD_LIMIT, extended: true }))
   server.use(function (req, res, next) {
     req.locale = req.acceptsLanguages(supportedLanguages)
+    req.locale = req.locale || 'en'
     req.localeDataScript = getLocaleDataScript(req.locale)
     // req.messages = dev ? {} : getMessages(req.locale)
     req.messages = getMessages(req.locale)
@@ -87,7 +87,8 @@ const appReady = app.prepare().then(() => {
       {
         useNewUrlParser: true,
         useCreateIndex: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false
       })
       .then(console.log('mongodb connected at:', config.databaseUrl))
     const db = mongoose.connection
@@ -103,10 +104,12 @@ const appReady = app.prepare().then(() => {
 
   // Next.js page routes
   server.get('*', routerHandler)
-
   // Start server
   if (process.env.NODE_ENV !== 'test') {
-    server.listen(config.serverPort, () => console.log(`${config.appName} (${process.env.REVISION || 'local_build'}) running on ${config.appUrl}/ Be Awesome`))
+    server.listen(config.serverPort, () =>
+      console.log(`${config.appName} (${process.env.REVISION || 'local_build'}) running on ${config.appUrl} ${config.env}/ Be Awesome`))
+  } else {
+    console.log(`${config.appName} (${process.env.REVISION || 'local_build'}) ${config.env}/ Be Testy`)
   }
 })
 

@@ -614,10 +614,7 @@ ActDetailForm.propTypes = {
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
   }),
-  existingTags: PropTypes.arrayOf(PropTypes.shape({
-    tag: PropTypes.string.isRequired,
-    _id: PropTypes.string
-  })).isRequired,
+  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired
   // dispatch: PropTypes.func.isRequired,
