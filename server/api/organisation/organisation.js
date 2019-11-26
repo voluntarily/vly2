@@ -29,7 +29,9 @@ const organisationSchema = new Schema({
     from: Number,
     to: Number
   },
-  decile: Number
+  decile: Number,
+  contactName: String,
+  contactPhoneNumber: String
 })
 
 // protect multiple imports

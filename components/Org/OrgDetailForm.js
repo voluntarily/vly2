@@ -53,6 +53,8 @@ class OrgDetailForm extends Component {
         org.twitter = values.twitter
         org.facebook = values.facebook
         org.contactEmail = values.contactEmail
+        org.contactName = values.contactName
+        org.contactPhoneNumber = values.contactPhoneNumber
         org.category = values.category
         org.ageRange = values.ageRange
         org.decile = values.decile
@@ -79,6 +81,8 @@ class OrgDetailForm extends Component {
     const orgInfoOutsiders = <FormattedMessage id='orgInfoOutsiders' defaultMessage='Outsiders' description='organisation Description label in OrgDetails Form' />
     const orgAgeRange = <FormattedMessage id='orgAgeRange' defaultMessage='Age range' description='Age range of students at the school' />
     const orgDecile = <FormattedMessage id='orgDecile' defaultMessage='Decile' description='Decile of school' />
+    const orgContactName = <FormattedMessage id='orgContactName' defaultMessage='Contact name' description='Contact name' />
+    const orgContactPhoneNumber = <FormattedMessage id='orgContactPhoneNumber' defaultMessage='Contact phone number' description='Contact phone number' />
 
     // TODO translate
     // TODO Use constant values from server/api/organisation/organisation.constants.js
@@ -282,6 +286,22 @@ class OrgDetailForm extends Component {
                     />
                   )}
                 </Form.Item>
+                <Form.Item label={orgContactName}>
+                  {getFieldDecorator('contactName', {
+                    rules: [
+                    ]
+                  })(
+                    <Input />
+                  )}
+                </Form.Item>
+                <Form.Item label={orgContactPhoneNumber}>
+                  {getFieldDecorator('contactPhoneNumber', {
+                    rules: [
+                    ]
+                  })(
+                    <Input placeholder='07 345 6789' />
+                  )}
+                </Form.Item>
               </>)
             : null}
 
@@ -333,7 +353,9 @@ OrgDetailForm.propTypes = {
     facebook: PropTypes.string,
     twitter: PropTypes.string,
     _id: PropTypes.string,
-    ageRange: PropTypes.object
+    ageRange: PropTypes.object,
+    contactName: PropTypes.string,
+    contactPhoneNumber: PropTypes.string,
   }).isRequired,
   form: PropTypes.object,
   params: PropTypes.shape({
@@ -367,7 +389,9 @@ export default Form.create({
       twitter: Form.createFormField({ ...org.twitter, value: org.twitter }),
       category: Form.createFormField({ ...org.category, value: org.category }),
       ageRange: Form.createFormField({ ...org.ageRange, value: org.ageRange }),
-      decile: Form.createFormField({ ...org.decile, value: org.decile })
+      decile: Form.createFormField({ ...org.decile, value: org.decile }),
+      contactName: Form.createFormField({ ...org.contactName, value: org.contactName }),
+      contactPhoneNumber: Form.createFormField({ ...org.contactPhoneNumber, value: org.contactPhoneNumber }),
     }
   }
 })(OrgDetailForm)
