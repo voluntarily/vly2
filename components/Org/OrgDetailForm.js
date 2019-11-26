@@ -349,7 +349,7 @@ OrgDetailForm.propTypes = {
     _id: PropTypes.string,
     ageRange: PropTypes.object,
     contactName: PropTypes.string,
-    contactPhoneNumber: PropTypes.string,
+    contactPhoneNumber: PropTypes.string
   }).isRequired,
   form: PropTypes.object,
   params: PropTypes.shape({
@@ -385,7 +385,7 @@ export default Form.create({
       ageRange: Form.createFormField({ ...org.ageRange, value: org.ageRange }),
       decile: Form.createFormField({ ...org.decile, value: org.decile }),
       contactName: Form.createFormField({ ...org.contactName, value: org.contactName }),
-      contactPhoneNumber: Form.createFormField({ ...org.contactPhoneNumber, value: org.contactPhoneNumber }),
+      contactPhoneNumber: Form.createFormField({ ...org.contactPhoneNumber, value: org.contactPhoneNumber })
     }
   }
 })(OrgDetailForm)
