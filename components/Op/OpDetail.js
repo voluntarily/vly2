@@ -13,10 +13,10 @@ import { ShareLinks } from './OpShareLinks'
 import { withRouter } from 'next/router'
 import { config } from '../../config/config'
 
-function OpDetail (props) {
+function OpDetail ({op, router}) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
-  const { op, router } = props
+  const requestor = op.requestor || ''
   const description = op.description || ''
   const startDate = op.date[0]
     ? moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
@@ -25,7 +25,7 @@ function OpDetail (props) {
     ? '  →  ' + moment(op.date[1]).format('h:mmA · ddd DD/MM/YYYY')
     : ' '
   const img = op.imgUrl || '.././static/missingimage.svg'
-  const creator = `@${op.requestor.name}`
+  const creator = `@${requestor.name || ''}`
   const appUrl = `${config.appUrl}${router.asPath}`
   
   return (
@@ -50,7 +50,7 @@ function OpDetail (props) {
             <ItemStatus status={op.status} />
             <Divider />
             <ItemIdLine item={op.offerOrg} path='orgs' />
-            <ItemIdLine item={op.requestor} path='people' />
+            <ItemIdLine item={requestor} path='people' />
           </ItemContainer>
           <Divider />
 
