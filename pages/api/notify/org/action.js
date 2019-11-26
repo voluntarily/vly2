@@ -36,7 +36,6 @@ const props = {
 export default (req, res) => handleToken(req, res, {
   join: async props => {
     // join the signed in person to the org in the request.
-    // console.log('join', props)
 
     await addMember({
       person: req.session.me._id,
