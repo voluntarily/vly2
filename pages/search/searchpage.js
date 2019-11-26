@@ -132,7 +132,6 @@ export class SearchPage extends Component {
     this.setState({
       opOrderBy: value
     })
-    // console.log(`selected ${this.state.opOrderBy}`)
   }
 
   render () {

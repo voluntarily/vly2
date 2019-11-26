@@ -155,6 +155,7 @@
     "timeout": "2m",
     "babel": {
       "testOptions": {
+        "retainLines": true,
         "plugins": [
           "@babel/plugin-syntax-jsx"
         ],
@@ -185,7 +186,8 @@
       "server/config.js",
       "components/examples/**/*.js",
       "server/api/db/db.controller.js",
-      "server/api/image/cloudImageUpload.js"
+      "server/api/image/cloudImageUpload.js",
+      "server/services/email/email.js"
     ],
     "reporter": [
       "lcov",

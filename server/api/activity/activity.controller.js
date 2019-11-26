@@ -56,7 +56,6 @@ const getActivities = async (req, res) => {
 
     try {
       const got = await Activity.find(query, select).sort(sort).exec()
-      console.log('I GOT', got)
       res.json(got)
     } catch (e) {
       res.status(404).send(e)
@@ -79,9 +78,7 @@ const getActivity = async (req, res) => {
 
 const putActivity = async (req, res) => {
   try {
-    console.log('Getting activity')
     await Activity.findByIdAndUpdate(req.params._id, { $set: req.body })
-    console.log('next line')
     getActivity(req, res)
   } catch (e) {
     console.error(e)
