@@ -54,7 +54,7 @@ export function OpDetail ({ op }) {
         </Left>
         <Right>
           <Spacer />
-          <img style={{ width: '100%' }} src={img} alt={op.name} />
+          <img style={{ width: '100%', zIndex: 2 }} src={img} alt={op.name} />
           <TagContainer>
             <TagDisplay tags={op.tags} />
           </TagContainer>
