@@ -13,7 +13,7 @@ import { ShareLinks } from './OpShareLinks'
 import { withRouter } from 'next/router'
 import { config } from '../../config/config'
 
-function OpDetail ({op, router}) {
+function OpDetail ({ op, router }) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
   const requestor = op.requestor || ''
@@ -27,7 +27,7 @@ function OpDetail ({op, router}) {
   const img = op.imgUrl || '.././static/missingimage.svg'
   const creator = `@${requestor.name || ''}`
   const appUrl = `${config.appUrl}${router.asPath}`
-  
+
   return (
     <>
       <Head>
