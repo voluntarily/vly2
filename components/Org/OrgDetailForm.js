@@ -287,18 +287,12 @@ class OrgDetailForm extends Component {
                   )}
                 </Form.Item>
                 <Form.Item label={orgContactName}>
-                  {getFieldDecorator('contactName', {
-                    rules: [
-                    ]
-                  })(
+                  {getFieldDecorator('contactName')(
                     <Input />
                   )}
                 </Form.Item>
                 <Form.Item label={orgContactPhoneNumber}>
-                  {getFieldDecorator('contactPhoneNumber', {
-                    rules: [
-                    ]
-                  })(
+                  {getFieldDecorator('contactPhoneNumber')(
                     <Input placeholder='07 345 6789' />
                   )}
                 </Form.Item>
