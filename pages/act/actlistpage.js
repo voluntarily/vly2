@@ -43,7 +43,7 @@ class Acts extends Component {
       )
       return { acts, query }
     } catch (err) {
-      console.log('error in getting acts', err)
+      console.error('error in getting acts', err)
     }
   }
 

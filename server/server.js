@@ -8,7 +8,6 @@ const { readFileSync } = require('fs-extra')
 const { basename } = require('path')
 
 const UPLOAD_LIMIT = '6000kb'
-
 require('dotenv').config()
 const express = require('express')
 const server = express()
@@ -88,7 +87,8 @@ const appReady = app.prepare().then(() => {
       {
         useNewUrlParser: true,
         useCreateIndex: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false
       })
       .then(console.log('mongodb connected at:', config.databaseUrl))
     const db = mongoose.connection
@@ -104,10 +104,12 @@ const appReady = app.prepare().then(() => {
 
   // Next.js page routes
   server.get('*', routerHandler)
-
   // Start server
   if (process.env.NODE_ENV !== 'test') {
-    server.listen(config.serverPort, () => console.log(`${config.appName} (${process.env.REVISION || 'local_build'}) running on ${config.appUrl}/ Be Awesome`))
+    server.listen(config.serverPort, () =>
+      console.log(`${config.appName} (${process.env.REVISION || 'local_build'}) running on ${config.appUrl} ${config.env}/ Be Awesome`))
+  } else {
+    console.log(`${config.appName} (${process.env.REVISION || 'local_build'}) ${config.env}/ Be Testy`)
   }
 })
 

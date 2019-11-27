@@ -9,7 +9,7 @@ import uuid from 'uuid'
 */
 export async function connectDB() {
   const connecturl = `mongodb://localhost:27017/vly-test-${uuid()}`
-  await mongoose.connect(connecturl, { useNewUrlParser: true, useCreateIndex: true })
+  await mongoose.connect(connecturl, { useFindAndModify: false, useNewUrlParser: true, useCreateIndex: true })
     .then(() => console.log('Test database connected:', connecturl))
     .catch(() => 'Unable to connect to test database')
 }

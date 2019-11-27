@@ -9,10 +9,14 @@ import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
 import { HalfGrid, Spacer } from '../VTheme/VTheme'
 import { Left, Right, ItemContainer, ItemDescription, TagContainer, ItemDuration, ItemStatus, ItemIdLine, ItemDate, ItemLocation } from '../VTheme/ItemList'
+import { ShareLinks } from './OpShareLinks'
+import { withRouter } from 'next/router'
+import { config } from '../../config/config'
 
-export function OpDetail ({ op }) {
+function OpDetail ({ op, router }) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
+  const requestor = op.requestor || ''
   const description = op.description || ''
   const startDate = op.date[0]
     ? moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
@@ -21,10 +25,20 @@ export function OpDetail ({ op }) {
     ? '  →  ' + moment(op.date[1]).format('h:mmA · ddd DD/MM/YYYY')
     : ' '
   const img = op.imgUrl || '.././static/missingimage.svg'
+  const creator = `@${requestor.name || ''}`
+  const appUrl = `${config.appUrl}${router.asPath}`
+
   return (
     <>
       <Head>
         <title>Voluntarily - {op.name}</title>
+        <meta name='twitter:card' content='summary' />
+        <meta name='twitter:site' content='@voluntarilyHQ' />
+        <meta name='twitter:creator' content={creator} />
+        <meta property='og:url' content={appUrl} />
+        <meta property='og:title' content={op.name} />
+        <meta property='og:description' content={description} />
+        <meta property='og:image' content={img} />
       </Head>
       <HalfGrid>
         <Left>
@@ -36,7 +50,7 @@ export function OpDetail ({ op }) {
             <ItemStatus status={op.status} />
             <Divider />
             <ItemIdLine item={op.offerOrg} path='orgs' />
-            <ItemIdLine item={op.requestor} path='people' />
+            <ItemIdLine item={requestor} path='people' />
           </ItemContainer>
           <Divider />
 
@@ -51,6 +65,8 @@ export function OpDetail ({ op }) {
               }}
             />
           </ItemDescription>
+
+          <ShareLinks url={appUrl} />
         </Left>
         <Right>
           <Spacer />
@@ -75,4 +91,4 @@ OpDetail.propTypes = {
   })
 }
 
-export default OpDetail
+export default withRouter(OpDetail)
