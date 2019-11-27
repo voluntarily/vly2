@@ -240,6 +240,7 @@ export class OpDetailPage extends Component {
           <FullPage>
             <OpDetail
               op={op}
+              router={this.props.router}
               onEditClicked={this.handleEditClicked}
               canEdit={this.canEdit(op)}
               canRegisterInterest={this.canRegisterInterest(op)}

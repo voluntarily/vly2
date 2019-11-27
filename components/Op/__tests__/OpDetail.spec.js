@@ -17,8 +17,11 @@ test.before('Setup fixtures', (t) => {
   }
 })
 
-test('render the detail with op', t => {
-  const wrapper = mountWithIntl(<OpDetail op={t.context.op} onPress={() => {}} />)
+test.only('render the detail with op', t => {
+  const RoutedOpDetail = withMockRoute(OpDetail, `/ops/${t.context.op._id}`)
+  const wrapper = mountWithIntl(
+    <RoutedOpDetail op={t.context.op} onPress={() => {}} />
+  )
   t.truthy(wrapper.find('Head'))
   t.is(wrapper.find('h1').text(), t.context.op.name)
 })
