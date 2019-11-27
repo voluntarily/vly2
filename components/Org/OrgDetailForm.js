@@ -248,7 +248,19 @@ class OrgDetailForm extends Component {
               <Form.Item htmlId='age-range' label={orgAgeRange}>
                 {getFieldDecorator('ageRange', {
                   rules: [
-
+                    {
+                      type: 'method',
+                      validator: (rule, value, callback) => {
+                        callback(validateAgeRange(value)
+                          ? undefined
+                          : (
+                            <FormattedMessage
+                              id='org.detail.ageRange'
+                              defaultMessage='Please enter the age range of your students'
+                              description='The age range specified on the organisation form is invalid'
+                            />))
+                      }
+                    }
                   ]
                 })(
                   <NumericRange
@@ -348,3 +360,21 @@ export default Form.create({
     }
   }
 })(OrgDetailForm)
+
+/**
+ * Validates the age range field.
+ * @param {{ from: Number, to: Number }?} value The value in the age range field.
+ * @returns {boolean} True if the field is valid based on the input, False otherwise.
+ */
+export const validateAgeRange = (value) => {
+  // Allow an empty age range
+  if (!value) { return true }
+
+  const from = Number(value.from)
+  const to = Number(value.to)
+
+  // Only compare age ranges if both are specified
+  if (from && to) { return (from <= to) }
+
+  return true
+}
