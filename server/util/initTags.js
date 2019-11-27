@@ -19,7 +19,7 @@ const initializeTags = async (req, res, next) => {
           await Tag.create({ tags: tags })
         }
       } catch (error) {
-        console.log('Failed to fetch tags to append to', error)
+        console.error('Failed to fetch tags to append to', error)
       }
     }
     next()
