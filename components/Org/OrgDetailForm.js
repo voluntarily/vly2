@@ -293,7 +293,7 @@ class OrgDetailForm extends Component {
                 </Form.Item>
                 <Form.Item label={orgContactPhoneNumber}>
                   {getFieldDecorator('contactPhoneNumber')(
-                    <Input placeholder='07 345 6789' />
+                    <Input placeholder='01 123 456789' />
                   )}
                 </Form.Item>
               </>)
