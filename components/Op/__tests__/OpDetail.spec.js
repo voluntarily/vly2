@@ -27,14 +27,13 @@ test('render the detail with op', t => {
 test.serial('render the tabs', t => {
 
 
-  const wrapper = renderWithIntl(<OpDetail op={t.context.op} onPress={() => {}} />)
-t.is(wrapper.find('.ant-tabs-tab').children().text(), 'About')
-t.is(wrapper.find('.ant-tabs-tab').children().text(), 'Questions')
-t.is(wrapper.find('.ant-tabs-tab').children().text(), 'Updates')
-t.is(wrapper.find('.ant-tabs-tab').children().text(), 'Manage Volunteers')
-t.is(wrapper.find('.ant-tabs-tab').children().text(), 'Edit Activity')
+const wrapper = renderWithIntl(<OpDetail op={t.context.op} onPress={() => {}} />)
+console.log(wrapper.find('.ant-tabs-tab').html())
+t.is(wrapper.find('.ant-tabs-tab').text(), 'About')
+t.is(wrapper.find('.ant-tabs-tab').at(1).text(), 'Questions')
+t.is(wrapper.find('.ant-tabs-tab').at(2).text(), 'Updates')
+t.is(wrapper.find('.ant-tabs-tab').at(3).text(), 'Manage Volunteers')
+t.is(wrapper.find('.ant-tabs-tab').at(4).text(), 'Edit Activity')
 
-
-
-}
+})
 // test.todo('verify markdown in description is rendered')

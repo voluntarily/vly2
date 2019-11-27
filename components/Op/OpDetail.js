@@ -56,7 +56,7 @@ const TabContainer = styled.div`
   margin-top: 2rem;
 `
 
-const isDev = process.env.NODE_ENV === 'development'
+const isNotProd = process.env.NODE_ENV !== 'production'
 
 const ActionContainer = styled.div`
   display: grid;
@@ -91,7 +91,7 @@ export function OpDetail ({
   }
 
   return (
-    <>
+    <section>
       <Head>
         <title>Voluntarily - {op.name}</title>
       </Head>
@@ -167,17 +167,18 @@ export function OpDetail ({
               </div>
             </OpSectionGrid>
           </TabPane>
-          {isDev && <TabPane tab={questionTab} key='2'>
+          {isNotProd && <TabPane tab={questionTab} key='2'>
             <OpQuestion />
           </TabPane>}
-          {isDev && <TabPane tab={updateTab} key='3'>
+          {isNotProd && <TabPane tab={updateTab} key='3'>
             <OpUpdate />
           </TabPane>}
           {canEdit && <TabPane tab={manageTab} key='4' />}
           {canEdit && <TabPane tab={editTab} key='5' />}
         </Tabs>
       </TabContainer>
-    </>
+
+    </section>
   )
 }
 
