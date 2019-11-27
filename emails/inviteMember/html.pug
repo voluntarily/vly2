@@ -3,20 +3,21 @@
 //-   from: person sending email - the orgAdmin
 //-   org: The organisation (with added href linkback)
 //-   adminMsg: text added by the orgAdmin
+//-   memberStatus
 //-   buttonLabel: label for callback button
 //-   buttonHref: the callback button url
 //- }
 extends ../theme/layout.pug
 
 block tagline
-  span Confirm your membership
+  span Membership status
   
 block copybig
   a( href=org.href) #{org.name} 
 
 block copy
   p Kia ora,
-  p #{from.name} is asking to automatically join you to the #{org.name} organisation on the Voluntarily platform
+  p #{from.name} is asking to automatically add you as a #{memberStatus} to #{org.name} organisation on the Voluntarily platform
   p #{adminMsg}
   p Click the button below to sign into Voluntarily.NZ and confirm membership of #{org.name}
     
