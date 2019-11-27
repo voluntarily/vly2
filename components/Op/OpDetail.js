@@ -167,17 +167,20 @@ export function OpDetail ({
               </div>
             </OpSectionGrid>
           </TabPane>
-          {isNotProd && <TabPane tab={questionTab} key='2'>
-            <OpQuestion />
-          </TabPane>}
-          {isNotProd && <TabPane tab={updateTab} key='3'>
-            <OpUpdate />
-          </TabPane>}
+          {isNotProd && (
+            <TabPane tab={questionTab} key='2'>
+              <OpQuestion />
+            </TabPane>
+          )}
+          {isNotProd && (
+            <TabPane tab={updateTab} key='3'>
+              <OpUpdate />
+            </TabPane>
+          )}
           {canEdit && <TabPane tab={manageTab} key='4' />}
           {canEdit && <TabPane tab={editTab} key='5' />}
         </Tabs>
       </TabContainer>
-
     </section>
   )
 }
