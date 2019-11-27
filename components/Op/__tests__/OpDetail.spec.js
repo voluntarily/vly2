@@ -17,7 +17,7 @@ test.before('Setup fixtures', (t) => {
   }
 })
 
-test.only('render the detail with op', t => {
+test('render the detail with op', t => {
   const RoutedOpDetail = withMockRoute(OpDetail, `/ops/${t.context.op._id}`)
   const wrapper = mountWithIntl(
     <RoutedOpDetail op={t.context.op} onPress={() => {}} />
@@ -37,7 +37,10 @@ test('render the detail properly', t => {
 })
 
 test.serial('render the tabs', t => {
-  const wrapper = mountWithIntl(<OpDetail op={t.context.op} onPress={() => {}} />)
+  const RoutedOpDetail = withMockRoute(OpDetail, `/ops/${t.context.op._id}`)
+  const wrapper = mountWithIntl(
+    <RoutedOpDetail op={t.context.op} onPress={() => {}} />
+  )
   t.is(wrapper.find('.ant-tabs-tab').at(0).text(), 'About')
   t.is(wrapper.find('.ant-tabs-tab').at(1).text(), 'Questions')
   t.is(wrapper.find('.ant-tabs-tab').at(2).text(), 'Updates')
