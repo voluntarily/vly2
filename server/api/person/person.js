@@ -56,6 +56,15 @@ const personSchema = new Schema({
       expiry: String
     }
   }
+  // education: {
+  //   NoFormalEducation: String,
+  //   HighSchoolGraduate: String,
+  //   SomeCollege: String,
+  //   AssoiateBachelorsDegree: String,
+  //   BachelorDegree: String,
+  //   Masters: String, 
+  //   Doctoral: String
+  // }
 })
 
 personSchema.plugin(idvalidator)

@@ -173,6 +173,20 @@ class PersonDetailForm extends Component {
         </Tooltip>
       </span>
     )
+    const education = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='education'
+          defaultMessage='Select your education '
+          description='Education'
+        />
+        &nbsp;
+        <Tooltip title='Select your education'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
 
     const personTags = (
       <FormattedMessage
@@ -196,11 +210,9 @@ class PersonDetailForm extends Component {
       { label: 'Content provider', value: 'activityProvider' },
       { label: 'Tester', value: 'tester' }
     ]
-
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
     const isTest = process.env.NODE_ENV === 'test'
-
     return (
       <div className='PersonDetailForm'>
         <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
@@ -211,17 +223,6 @@ class PersonDetailForm extends Component {
               </TitleContainer>
               <P>How do we get in touch?</P>
             </DescriptionContainer>
-
-            <select name="pets" id="pet-select">
-            <option value="">--Please choose your level of education--</option>
-            <option value="dog">No formal education</option>
-            <option value="cat">High School graduate</option>
-            <option value="hamster">Some college</option>
-           <option value="parrot">Associate's and/or Bachelor's degree</option>
-           <option value="spider">Bachelor's degree</option>
-           <option value="goldfish">Master's degree</option>
-           <option value="goldfish">Doctoral or professional degree</option>
-          </select>
             <InputContainer>
               <ShortInputContainer>
                 <Form.Item
@@ -307,6 +308,13 @@ class PersonDetailForm extends Component {
               </Form.Item>
               <Form.Item label={personLocation}>
                 {getFieldDecorator('location', {
+                  rules: []
+                })(
+                  <LocationSelector existingLocations={this.props.locations} />
+                )}
+              </Form.Item>
+              <Form.Item label={education}>
+                {getFieldDecorator('education', {
                   rules: []
                 })(
                   <LocationSelector existingLocations={this.props.locations} />
