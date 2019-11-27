@@ -72,8 +72,10 @@ export function OpDetail ({
   isAuthenticated,
   me
 }) {
+
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
+  const requestor = op.requestor || ''
   const description = op.description || ''
   const startDate = op.date[0]
     ? moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
@@ -82,6 +84,7 @@ export function OpDetail ({
     ? '  →  ' + moment(op.date[1]).format('h:mmA · ddd DD/MM/YYYY')
     : ' '
   const img = op.imgUrl || '.././static/missingimage.svg'
+
   const shadowStyle = { overflow: 'visible', textAlign: 'center' }
 
   const handleTabChange = (key, e) => {
@@ -90,10 +93,21 @@ export function OpDetail ({
     }
   }
 
+  const creator = `@${requestor.name || ''}`
+  const appUrl = `${config.appUrl}${router.asPath}`
+
+
   return (
     <section>
       <Head>
         <title>Voluntarily - {op.name}</title>
+        <meta name='twitter:card' content='summary' />
+        <meta name='twitter:site' content='@voluntarilyHQ' />
+        <meta name='twitter:creator' content={creator} />
+        <meta property='og:url' content={appUrl} />
+        <meta property='og:title' content={op.name} />
+        <meta property='og:description' content={description} />
+        <meta property='og:image' content={img} />
       </Head>
       <HalfGrid>
         <Left>
@@ -117,7 +131,9 @@ export function OpDetail ({
             <Button shape='round' size='large' type='secondary'>
               Share
             </Button>
+          <ShareLinks url={appUrl} />
           </ActionContainer>
+
         </Right>
       </HalfGrid>
       <TabContainer>
@@ -196,4 +212,4 @@ OpDetail.propTypes = {
   })
 }
 
-export default OpDetail
+export default withRouter(OpDetail)
