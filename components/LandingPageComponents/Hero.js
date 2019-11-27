@@ -56,6 +56,7 @@ margin-top: 4rem;
 `
 // start left hand video side
 const HeroLeft = styled.div`
+  position: relative;
   margin-top: 7rem;
   width: 30rem;
   height: 60rem;
@@ -104,32 +105,30 @@ const HeroLeft = styled.div`
 `
 
 const Notch = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
   width: 12rem;
   height: 2rem;
-  margin-left: 9rem;
   background-color: white;
-  z-index: 100;
-  position: absolute;
   border-radius: 0px 0px 24px 24px;
 
   @media screen and (min-width: 1380px) and (max-width: 1920px) {
-    margin-left: 6rem;
     background-color: white;
   }
   @media screen and (min-width: 1282px) and (max-width: 1380px) {
-    margin-left: 4rem;
     width: 10rem;
     height: 1.5rem;
     background-color: white;
   }
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    margin-left: 5rem;
     width: 8rem;
     height: 1rem;
     background-color: white;
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
-    margin-left: 3.5rem;
     width: 4rem;
     height: 0.8rem;
     background-color: white;
