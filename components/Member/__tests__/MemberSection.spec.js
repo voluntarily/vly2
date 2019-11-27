@@ -56,12 +56,12 @@ test.serial('followers can become members and then be removed', async t => {
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
 
-  let membersSection = wrapper.find('section').at(1)
+  let membersSection = wrapper.find('section').at(2)
   t.regex(membersSection.find('h2').first().text(), /Members/)
   // there should be one member initally
   t.is(membersSection.find('tbody tr').length, 1)
 
-  let followersSection = wrapper.find('section').at(2)
+  let followersSection = wrapper.find('section').at(3)
   t.regex(followersSection.find('h2').first().text(), /Followers/)
   // there should be one row for each person in the fixture except for the admin
   t.is(followersSection.find('tbody tr').length, t.context.people.length - 1)
@@ -86,14 +86,14 @@ test.serial('followers can become members and then be removed', async t => {
   wrapper.update()
 
   // first follower should no longer be in the table, moved to the Members table
-  followersSection = wrapper.find('section').at(2)
+  followersSection = wrapper.find('section').at(3)
   firstFollowerRow = followersSection.find('tbody tr').first()
 
   t.is(firstFollowerRow.find('td').at(MTF.STATUS).text(), MemberStatus.FOLLOWER)
   t.is(firstFollowerRow.find('td').at(MTF.NAME).text(), orgFollowers[1].person.nickname)
 
   // there should now be 2 members and Dali should be the second one
-  membersSection = wrapper.find('section').at(1)
+  membersSection = wrapper.find('section').at(2)
   t.is(membersSection.find('tbody tr').length, 2)
   const member2 = membersSection.find('tbody tr').at(1)
   t.is(member2.find('td').at(MTF.NAME).text(), firstFollower.person.nickname)
@@ -110,10 +110,10 @@ test.serial('followers can become members and then be removed', async t => {
 
   // person has gone from both members and followers section.
   // As an EXMEMBER is not a FOLLOWER by default
-  membersSection = wrapper.find('section').at(1)
+  membersSection = wrapper.find('section').at(2)
   t.is(membersSection.find('tbody tr').length, 1)
 
-  followersSection = wrapper.find('section').at(2)
+  followersSection = wrapper.find('section').at(3)
   t.is(followersSection.find('tbody tr').length, t.context.people.length - 2)
 
   t.truthy(t.context.fetchMock.done())
@@ -137,13 +137,13 @@ test.serial('joiners can become members ', async t => {
   wrapper.update()
 
   // there should be 2 member initally
-  let membersSection = wrapper.find('section').at(1)
+  let membersSection = wrapper.find('section').at(2)
   t.regex(membersSection.find('h2').first().text(), /Members/)
   const memberCount = membersSection.find('tbody tr').length
   t.is(memberCount, 2)
 
   // there should be one joiner and one validator
-  let joinersSection = wrapper.find('section').at(0)
+  let joinersSection = wrapper.find('section').at(1)
   t.regex(joinersSection.find('h2').first().text(), /Joiners/)
   t.is(joinersSection.find('tbody tr').length, 2)
   let firstJoinerRow = joinersSection.find('tbody tr').first()
@@ -165,13 +165,13 @@ test.serial('joiners can become members ', async t => {
   wrapper.update()
 
   // there should now be 3 members
-  membersSection = wrapper.find('section').at(1)
+  membersSection = wrapper.find('section').at(2)
   t.is(membersSection.find('tbody tr').length, memberCount + 1)
   const member2 = membersSection.find('tbody tr').at(1)
   t.is(member2.find('td').at(MTF.NAME).text(), firstJoiner.person.nickname)
 
   // one joiner left
-  joinersSection = wrapper.find('section').at(0)
+  joinersSection = wrapper.find('section').at(1)
   t.is(joinersSection.find('tbody tr').length, 1)// check the remaining joiner
   firstJoinerRow = joinersSection.find('tbody tr').first()
   const orgValidators = orgMembers.filter(member => member.status === MemberStatus.VALIDATOR)
@@ -192,10 +192,10 @@ test.serial('joiners can become members ', async t => {
   wrapper.update()
 
   // check length of joiners table now
-  joinersSection = wrapper.find('section').at(0)
+  joinersSection = wrapper.find('section').at(1)
   t.is(joinersSection.find('tbody tr').length, 0)
   // check members table unchanged
-  membersSection = wrapper.find('section').at(1)
+  membersSection = wrapper.find('section').at(2)
   t.is(membersSection.find('tbody tr').length, memberCount + 1)
   t.truthy(t.context.fetchMock.done())
   t.context.fetchMock.restore()
@@ -218,7 +218,7 @@ test.serial('members can become admins ', async t => {
   wrapper.update()
 
   // there should be 2 members initally
-  let membersSection = wrapper.find('section').at(1)
+  let membersSection = wrapper.find('section').at(2)
   t.regex(membersSection.find('h2').first().text(), /Members/)
   t.is(membersSection.find('tbody tr').length, 2)
 
@@ -244,7 +244,7 @@ test.serial('members can become admins ', async t => {
   wrapper.update()
 
   // check status change
-  membersSection = wrapper.find('section').at(1)
+  membersSection = wrapper.find('section').at(2)
   memberRow2 = membersSection.find('tbody tr').at(1)
   t.is(memberRow2.find('td').at(MTF.STATUS).text(), MemberStatus.ORGADMIN)
 })
@@ -265,7 +265,7 @@ test.serial('admins can see exportMembers button', async t => {
   wrapper.update()
 
   // export members button should be visible
-  const exportMemberSection = wrapper.find('section').at(3)
+  const exportMemberSection = wrapper.find('section').at(4)
   t.true(exportMemberSection.find('Button').exists())
   const exportMembersButton = exportMemberSection.find('Button').at(0)
 

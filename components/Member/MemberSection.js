@@ -14,9 +14,11 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Markdown from 'markdown-to-jsx'
 import MemberExport from './MemberExport'
+import InviteMembers from './InviteMembers'
 
 const SubSection = styled.section`
   margin-bottom: 2.0rem;
+  text-align: left;
 `
 
 class MemberSection extends Component {
@@ -77,6 +79,9 @@ class MemberSection extends Component {
       const joiners = this.props.members.data.filter(joinerOrValidator)
       orgAdminSection =
         <div>
+          <SubSection>
+            <InviteMembers org={org} />
+          </SubSection>
           <SubSection>
             <h2>
               <FormattedMessage
