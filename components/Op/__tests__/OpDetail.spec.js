@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import { renderWithIntl } from '../../../lib/react-intl-test-helper'
+import { mountWithIntl } from '../../../lib/react-intl-test-helper.js'
 
 import OpDetail from '../OpDetail'
 import ops from './Op.fixture'
@@ -16,7 +16,7 @@ test.before('Setup fixtures', (t) => {
 })
 
 test('render the detail with op', t => {
-  const wrapper = renderWithIntl(<OpDetail op={t.context.op} onPress={() => {}} />)
+  const wrapper = mountWithIntl(<OpDetail op={t.context.op} onPress={() => {}} />)
   t.truthy(wrapper.find('Head'))
   t.is(wrapper.find('h1').text(), t.context.op.name)
 })
@@ -27,13 +27,9 @@ test('render the detail with op', t => {
 test.serial('render the tabs', t => {
 
 
-const wrapper = renderWithIntl(<OpDetail op={t.context.op} onPress={() => {}} />)
-console.log(wrapper.find('.ant-tabs-tab').html())
-t.is(wrapper.find('.ant-tabs-tab').text(), 'About')
+const wrapper = mountWithIntl(<OpDetail op={t.context.op} onPress={() => {}} />)
+t.is(wrapper.find('.ant-tabs-tab').at(0).text(), 'About')
 t.is(wrapper.find('.ant-tabs-tab').at(1).text(), 'Questions')
 t.is(wrapper.find('.ant-tabs-tab').at(2).text(), 'Updates')
-t.is(wrapper.find('.ant-tabs-tab').at(3).text(), 'Manage Volunteers')
-t.is(wrapper.find('.ant-tabs-tab').at(4).text(), 'Edit Activity')
-
 })
 // test.todo('verify markdown in description is rendered')
