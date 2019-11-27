@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import { FullPage } from '../../components/VTheme/VTheme'
 import callApi from '../../lib/callApi'
 import queryString from 'querystring'
-import { useRouter } from 'next/router'
 
 const Payload = ({ payload }) =>
   <dl>
@@ -20,8 +19,6 @@ const Payload = ({ payload }) =>
 export const TestToken = () => {
   const [link, setLink] = useState('')
   const [refresh, setRefresh] = useState(0)
-  const router = useRouter()
-  console.log(router.pathname, router.query)
   const payload = {
     landingUrl: '/api/token',
     redirectUrl: '/test/test-token',
@@ -36,7 +33,6 @@ export const TestToken = () => {
     async function fetchData () {
       try {
         const data = await callApi(`token/log?${queryString.stringify(payload)}`)
-        console.log(data)
         setLink(data)
       } catch (e) {
         console.error('getToken:', e)

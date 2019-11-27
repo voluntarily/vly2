@@ -13,7 +13,7 @@ export default async (req, res) => {
     payload.token = makeURLToken(payload)
     return res.json(payload)
   } catch (e) {
-    console.log('doToken:', e)
+    console.error('doToken:', e)
     res.status(500).end()
   }
 }
