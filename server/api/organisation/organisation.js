@@ -28,7 +28,10 @@ const organisationSchema = new Schema({
   ageRange: {
     from: Number,
     to: Number
-  }
+  },
+  decile: Number,
+  contactName: String,
+  contactPhoneNumber: String
 })
 
 // protect multiple imports
