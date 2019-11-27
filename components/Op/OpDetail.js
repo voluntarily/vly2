@@ -25,6 +25,9 @@ import {
 import { OpQuestion } from './OpQuestion'
 import OpUpdate from './OpUpdate'
 import OpVolunteerInterestSection from './OpVolunteerInterestSection'
+import { withRouter } from 'next/router'
+import { config } from '../../config/config'
+import { ShareLinks } from './OpShareLinks'
 
 const { TabPane } = Tabs
 
@@ -66,13 +69,13 @@ const ActionContainer = styled.div`
 
 export function OpDetail ({
   op,
+  router,
   onEditClicked,
   canEdit,
   canRegisterInterest,
   isAuthenticated,
   me
 }) {
-
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
   const requestor = op.requestor || ''
@@ -95,7 +98,6 @@ export function OpDetail ({
 
   const creator = `@${requestor.name || ''}`
   const appUrl = `${config.appUrl}${router.asPath}`
-
 
   return (
     <section>
@@ -131,7 +133,7 @@ export function OpDetail ({
             <Button shape='round' size='large' type='secondary'>
               Share
             </Button>
-          <ShareLinks url={appUrl} />
+            <ShareLinks url={appUrl} />
           </ActionContainer>
 
         </Right>

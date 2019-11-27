@@ -17,7 +17,6 @@ test.before('Setup fixtures', (t) => {
   }
 })
 
-
 test('render the detail with op', t => {
   const wrapper = mountWithIntl(<OpDetail op={t.context.op} onPress={() => {}} />)
   t.truthy(wrapper.find('Head'))
