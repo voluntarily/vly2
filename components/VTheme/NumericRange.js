@@ -21,7 +21,9 @@ const Container = styled.div`
 // refs and the new version of reactjs
 class NumericRange extends React.Component {
   render () {
-    const onChange = (change) => this.props.onChange({ ...(this.props.value || {}), ...change })
+    const value = this.props.value || {}
+
+    const onChange = (change) => this.props.onChange({ ...value, ...change })
 
     return (
       <Container>
@@ -34,6 +36,7 @@ class NumericRange extends React.Component {
           min={this.props.fromMin}
           max={this.props.fromMax}
           placeholder={this.props.fromPlaceholder}
+          value={value.from}
           onChange={from => onChange({ from })}
           className='numeric-range-from'
         />
@@ -47,6 +50,7 @@ class NumericRange extends React.Component {
           min={this.props.toMin}
           max={this.props.toMax}
           placeholder={this.props.toPlaceholder}
+          value={value.to}
           onChange={to => onChange({ to })}
           className='numeric-range-to'
         />
