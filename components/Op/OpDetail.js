@@ -33,7 +33,7 @@ function OpDetail ({ op, router }) {
       <Head>
         <title>Voluntarily - {op.name}</title>
         <meta name='twitter:card' content='summary' />
-        <meta name='twitter:site' content='@voluntarily' />
+        <meta name='twitter:site' content='@voluntarilyHQ' />
         <meta name='twitter:creator' content={creator} />
         <meta property='og:url' content={appUrl} />
         <meta property='og:title' content={op.name} />
