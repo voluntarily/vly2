@@ -170,11 +170,14 @@ class OrgDetailForm extends Component {
     return (
       <div className='OrgDetailForm'>
         <PageTitle>
-          <h1>    <FormattedMessage
+          <h1>
+            {' '}
+            <FormattedMessage
               id='orgDetail.form.title'
               defaultMessage='Manage Organisation'
               description='Main Title for Organisation edit form'
-            /></h1>
+            />
+          </h1>
         </PageTitle>
         <Divider />
 
@@ -182,21 +185,27 @@ class OrgDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <h3>About your Organisation</h3>
+                <h3>
+                  <FormattedMessage
+                    id='orgDetail.form.about'
+                    defaultMessage='About your Organisation'
+                    description='Title for about section of organisation edit form'
+                  />
+                </h3>
               </TitleContainer>
               <p>Tell the world a little bit about your organisation.</p>
             </DescriptionContainer>
             <InputContainer>
-            <ShortInputContainer>
-              <Form.Item
-                label={orgName}
-                validateStatus={orgNameError ? 'error' : ''}
-                help={orgNameError || ''}
-              >
-                {getFieldDecorator('name', {
-                  rules: [{ required: true, message: 'A name is required' }]
-                })(<Input placeholder='Organisation Name' />)}
-              </Form.Item>
+              <ShortInputContainer>
+                <Form.Item
+                  label={orgName}
+                  validateStatus={orgNameError ? 'error' : ''}
+                  help={orgNameError || ''}
+                >
+                  {getFieldDecorator('name', {
+                    rules: [{ required: true, message: 'A name is required' }]
+                  })(<Input placeholder='Organisation Name' />)}
+                </Form.Item>
               </ShortInputContainer>
               <Form.Item label={orgAbout}>
                 {getFieldDecorator('about', {
@@ -225,39 +234,38 @@ class OrgDetailForm extends Component {
               </p>
             </DescriptionContainer>
             <InputContainer>
-            <ShortInputContainer>
-              <Form.Item label={orgContactEmail}>
-                {getFieldDecorator('contactEmail', {
-                  rules: []
-                })(
-                  // <TextArea rows={20} placeholder='Enter email address for organisations contact person' />
-                  <Input placeholder='example@gmail.com' />
-                )}
-              </Form.Item>
-              <Form.Item label={orgWebsite}>
-                {getFieldDecorator('website', {
-                  rules: [
-                    {
-                      pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/,
-                      message: 'Enter valid URL'
-                    }
-                  ]
-                })(<Input placeholder='https://example.com' />)}
-              </Form.Item>
+              <ShortInputContainer>
+                <Form.Item label={orgContactEmail}>
+                  {getFieldDecorator('contactEmail', {
+                    rules: []
+                  })(
+                    // <TextArea rows={20} placeholder='Enter email address for organisations contact person' />
+                    <Input placeholder='example@gmail.com' />
+                  )}
+                </Form.Item>
+                <Form.Item label={orgWebsite}>
+                  {getFieldDecorator('website', {
+                    rules: [
+                      {
+                        pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/,
+                        message: 'Enter valid URL'
+                      }
+                    ]
+                  })(<Input placeholder='https://example.com' />)}
+                </Form.Item>
               </ShortInputContainer>
               <MediumInputContainer>
-              <Form.Item label='Facebook'>
-                {getFieldDecorator('facebook', {
-                  rules: []
-                })(<Input addonBefore='facebook.com/' />)}
-              </Form.Item>
+                <Form.Item label='Facebook'>
+                  {getFieldDecorator('facebook', {
+                    rules: []
+                  })(<Input addonBefore='facebook.com/' />)}
+                </Form.Item>
               </MediumInputContainer>
               <ShortInputContainer>
-              <Form.Item label='Twitter'>
-                {getFieldDecorator('twitter', {})(<Input addonBefore='@' />)}
-              </Form.Item>
+                <Form.Item label='Twitter'>
+                  {getFieldDecorator('twitter', {})(<Input addonBefore='@' />)}
+                </Form.Item>
               </ShortInputContainer>
-
             </InputContainer>
           </FormGrid>
           <Divider />
@@ -266,7 +274,11 @@ class OrgDetailForm extends Component {
               <TitleContainer>
                 <h3>Staff Instructions</h3>
               </TitleContainer>
-              <p>What processes do you want staff to do before they start volunteering? Should they fill in a form? Ask for approval from their manager? Specify your instructions here.</p>
+              <p>
+                What processes do you want staff to do before they start
+                volunteering? Should they fill in a form? Ask for approval from
+                their manager? Specify your instructions here.
+              </p>
             </DescriptionContainer>
             <InputContainer>
               <Form.Item label={orgInfoInstructions}>
@@ -286,17 +298,20 @@ class OrgDetailForm extends Component {
                 <h3>Partner Instructions</h3>
               </TitleContainer>
               <p>
-                Is there anything you want partners who collaborate on CSR activities with you to know? Write it here
+                Is there anything you want partners who collaborate on CSR
+                activities with you to know? Write it here
               </p>
             </DescriptionContainer>
-            <InputContainer><Form.Item label={orgInfoFollowers}>
-            {getFieldDecorator('followers', {
-              rules: []
-            })(
-              // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
-              <RichTextEditor />
-            )}
-          </Form.Item></InputContainer>
+            <InputContainer>
+              <Form.Item label={orgInfoFollowers}>
+                {getFieldDecorator('followers', {
+                  rules: []
+                })(
+                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+                  <RichTextEditor />
+                )}
+              </Form.Item>
+            </InputContainer>
           </FormGrid>
 
           <Divider />
@@ -310,14 +325,15 @@ class OrgDetailForm extends Component {
               </p>
             </DescriptionContainer>
             <InputContainer>
-          <Form.Item label={orgInfoJoiners}>
-            {getFieldDecorator('joiners', {
-              rules: []
-            })(
-              // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
-              <RichTextEditor />
-            )}
-          </Form.Item></InputContainer>
+              <Form.Item label={orgInfoJoiners}>
+                {getFieldDecorator('joiners', {
+                  rules: []
+                })(
+                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+                  <RichTextEditor />
+                )}
+              </Form.Item>
+            </InputContainer>
           </FormGrid>
           <Divider />
           <FormGrid>
@@ -326,18 +342,20 @@ class OrgDetailForm extends Component {
                 <h3>Staff Section</h3>
               </TitleContainer>
               <p>
-               Anything you want to only tell staff about? ie: Where to get Company T-Shirts before volunteering
+                Anything you want to only tell staff about? ie: Where to get
+                Company T-Shirts before volunteering
               </p>
             </DescriptionContainer>
             <InputContainer>
-          <Form.Item label={orgInfoMembers}>
-            {getFieldDecorator('members', {
-              rules: []
-            })(
-              // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
-              <RichTextEditor />
-            )}
-          </Form.Item></InputContainer>
+              <Form.Item label={orgInfoMembers}>
+                {getFieldDecorator('members', {
+                  rules: []
+                })(
+                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+                  <RichTextEditor />
+                )}
+              </Form.Item>
+            </InputContainer>
           </FormGrid>
           <Divider />
           <FormGrid>
@@ -350,15 +368,15 @@ class OrgDetailForm extends Component {
               </p>
             </DescriptionContainer>
             <InputContainer>
-          
-            <Form.Item label={orgInfoOutsiders}>
-            {getFieldDecorator('outsiders', {
-              rules: []
-            })(
-              // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
-              <RichTextEditor />
-            )}
-          </Form.Item></InputContainer>
+              <Form.Item label={orgInfoOutsiders}>
+                {getFieldDecorator('outsiders', {
+                  rules: []
+                })(
+                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+                  <RichTextEditor />
+                )}
+              </Form.Item>
+            </InputContainer>
           </FormGrid>
           <Divider />
           <FormGrid>
@@ -366,68 +384,56 @@ class OrgDetailForm extends Component {
               <TitleContainer>
                 <h3>God Mode controls</h3>
               </TitleContainer>
-              <p>
-                Admin section for changing orgtype
-              </p>
+              <p>Admin section for changing orgtype</p>
             </DescriptionContainer>
             <InputContainer>
-   
-
-            <Form.Item label={orgCategory}>
-            {getFieldDecorator('category', {
-              rules: [{ required: true, message: 'category is required' }]
-            })(<Checkbox.Group options={categoryOptions} />)}
-          </Form.Item>
-
-          
+              <Form.Item label={orgCategory}>
+                {getFieldDecorator('category', {
+                  rules: [{ required: true, message: 'category is required' }]
+                })(<Checkbox.Group options={categoryOptions} />)}
+              </Form.Item>
             </InputContainer>
           </FormGrid>
-          
+
           <Divider />
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
                 <h3>Confirm</h3>
               </TitleContainer>
-              <p>
-                Check before you go
-              </p>
+              <p>Check before you go</p>
             </DescriptionContainer>
             <InputContainer>
-            <Button
-            type='primary'
-            size='large'
-            htmlType='submit'
-            shape='round'
-            disabled={hasErrors(getFieldsError())}
-            style={{ marginLeft: 8 }}
-          >
-            <FormattedMessage
-              id='org.save'
-              defaultMessage='Save'
-              description='Label for submit button on organisation details form'
-            />
-          </Button>&nbsp;&nbsp;
-            <Button
-            type='secondary'
-            htmlType='button'
-            shape='round'
-            size='large'
-            onClick={this.props.onCancel}
-          >
-            <FormattedMessage
-              id='org.cancel'
-              defaultMessage='Cancel'
-              description='Label for cancel button on organisation details form'
-            />
-          </Button>
-          
+              <Button
+                type='primary'
+                size='large'
+                htmlType='submit'
+                shape='round'
+                disabled={hasErrors(getFieldsError())}
+                style={{ marginLeft: 8 }}
+              >
+                <FormattedMessage
+                  id='org.save'
+                  defaultMessage='Save'
+                  description='Label for submit button on organisation details form'
+                />
+              </Button>
+              &nbsp;&nbsp;
+              <Button
+                type='secondary'
+                htmlType='button'
+                shape='round'
+                size='large'
+                onClick={this.props.onCancel}
+              >
+                <FormattedMessage
+                  id='org.cancel'
+                  defaultMessage='Cancel'
+                  description='Label for cancel button on organisation details form'
+                />
+              </Button>
             </InputContainer>
           </FormGrid>
-          
-
-          
-          
         </Form>
       </div>
     )

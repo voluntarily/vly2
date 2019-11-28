@@ -49,7 +49,7 @@ test('render the detail with op', t => {
   )
   t.is(wrapper.find('OrgDetailForm').length, 1)
   t.is(wrapper.find('button').length, 2)
-  wrapper.find('button').first().simulate('click')
+  wrapper.find('button').last().simulate('click')
   t.truthy(cancelOp.calledOnce)
   wrapper.find('Form').first().simulate('submit')
   t.truthy(submitOp.calledOnce)

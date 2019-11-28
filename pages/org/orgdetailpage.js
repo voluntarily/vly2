@@ -8,7 +8,7 @@ import RegisterMemberSection from '../../components/Member/RegisterMemberSection
 import OpListSection from '../../components/Op/OpListSection'
 import OrgDetail from '../../components/Org/OrgDetail'
 import OrgDetailForm from '../../components/Org/OrgDetailForm'
-import { FullPage, Spacer, H3Black } from '../../components/VTheme/VTheme'
+import { FullPage, Spacer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
