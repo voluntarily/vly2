@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl'
 import Loading from '../../components/Loading'
 import OpDetail from '../../components/Op/OpDetail'
 import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
-import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import {
   FullPage,
   OpSectionGrid
