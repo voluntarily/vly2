@@ -35,7 +35,7 @@ export default class IntlDocument extends Document {
     return (
       <html>
         <Head>
-          <link rel='shortcut icon' href='./static/img/icons/favicon.ico' />
+          <link rel='shortcut icon' href='/static/img/icons/favicon.ico' />
           <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
           <meta charSet='utf-8' />
           <meta
