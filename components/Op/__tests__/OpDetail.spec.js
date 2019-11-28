@@ -81,8 +81,6 @@ test.serial('render tags on OpDetail', t => {
   t.truthy(wrapper.find('TagDisplay'))
 })
 
-
-
 test.serial('Check Edit Button', t => {
   const RoutedOpDetail = withMockRoute(OpDetail, `/ops/${t.context.op._id}`)
   const wrapper = mountWithIntl(
@@ -98,8 +96,6 @@ test.serial('Check Description Exists', t => {
   )
   t.truthy(wrapper.find('ItemDescription'))
   t.is(wrapper.find('Markdown').text(), t.context.op.description)
-
 })
-
 
 // test.todo('verify markdown in description is rendered')
