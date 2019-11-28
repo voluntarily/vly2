@@ -24,18 +24,27 @@ export const ItemListing = styled.li`
   color: initial;
   margin-bottom: 0.3rem;
 `
-export const ItemDescription = styled.article`
+export const ItemDescription = styled.div`
   letter-spacing: -0.02rem;
   font-weight: 400;
   font-size: 1rem;
   opacity: 1;
   color: initial;
   margin-bottom: 1rem;
+  text-align: left;
   `
 
 export const TagContainer = styled.div`
   margin-top: 0.2rem;
 `
+
+export const ItemImage = styled.img`
+width: 100%;
+height: 20rem;
+object-fit: cover;
+object-position: center;
+`
+
 export const ItemDuration = ({ duration }) =>
   <ItemListing>
   ⏱&nbsp;
