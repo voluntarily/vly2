@@ -219,7 +219,7 @@ export class OpDetailPage extends Component {
             >
               <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
             </Button>}
-          <OpDetail op={op} router={this.props.router} />
+          <OpDetail op={op} {...this.props} />
           <Divider />
           <OpVolunteerInterestSection
             isAuthenticated={this.props.isAuthenticated}
