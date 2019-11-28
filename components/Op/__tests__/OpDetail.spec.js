@@ -7,7 +7,7 @@ import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import OpDetail from '../OpDetail'
 import ops from './Op.fixture'
 
-test.before('Setup fixtures', (t) => {
+test.before('Setup fixtures', t => {
   // Initial opportunities
   t.context.ops = ops
   t.context.op = ops[0]
@@ -41,9 +41,44 @@ test.serial('render the tabs', t => {
   const wrapper = mountWithIntl(
     <RoutedOpDetail op={t.context.op} onPress={() => {}} />
   )
-  t.is(wrapper.find('.ant-tabs-tab').at(0).text(), 'About')
-  t.is(wrapper.find('.ant-tabs-tab').at(1).text(), 'Questions')
-  t.is(wrapper.find('.ant-tabs-tab').at(2).text(), 'Updates')
+  t.is(
+    wrapper
+      .find('.ant-tabs-tab')
+      .at(0)
+      .text(),
+    'About'
+  )
+  t.is(
+    wrapper
+      .find('.ant-tabs-tab')
+      .at(1)
+      .text(),
+    'Questions'
+  )
+  t.is(
+    wrapper
+      .find('.ant-tabs-tab')
+      .at(2)
+      .text(),
+    'Updates'
+  )
+})
+
+test.serial('render questions and updates', t => {
+  const RoutedOpDetail = withMockRoute(OpDetail, `/ops/${t.context.op._id}`)
+  const wrapper = mountWithIntl(
+    <RoutedOpDetail op={t.context.op} onPress={() => {}} />
+  )
+  t.truthy(wrapper.find('OpQuestion'))
+  t.truthy(wrapper.find('OpUpdate'))
+})
+
+test.serial('render tags on OpDetail', t => {
+  const RoutedOpDetail = withMockRoute(OpDetail, `/ops/${t.context.op._id}`)
+  const wrapper = mountWithIntl(
+    <RoutedOpDetail op={t.context.op} onPress={() => {}} />
+  )
+  t.truthy(wrapper.find('TagDisplay'))
 })
 
 // test.todo('verify markdown in description is rendered')
