@@ -45,4 +45,5 @@ test.serial('render the tabs', t => {
   t.is(wrapper.find('.ant-tabs-tab').at(1).text(), 'Questions')
   t.is(wrapper.find('.ant-tabs-tab').at(2).text(), 'Updates')
 })
+
 // test.todo('verify markdown in description is rendered')

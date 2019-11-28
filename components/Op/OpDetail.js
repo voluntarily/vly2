@@ -63,8 +63,8 @@ const isNotProd = process.env.NODE_ENV !== 'production'
 
 const ActionContainer = styled.div`
   display: grid;
-  grid-template-columns: 10rem 10rem 1fr;
-  gap: 1rem;
+  grid-template-columns: 10rem 1fr;
+  gap: 3rem;
 `
 
 export function OpDetail ({
@@ -78,8 +78,7 @@ export function OpDetail ({
 }) {
   // This will make sure that if the description is undefined we will set it to an empty string
   // Otherwise Markdown will throw error
-  const requestor = op.requestor || ''
-  const description = op.description || ''
+
   const startDate = op.date[0]
     ? moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
     : 'Negotiable'
@@ -95,7 +94,8 @@ export function OpDetail ({
       onEditClicked()
     }
   }
-
+  const description = op.description || ''
+  const requestor = op.requestor || ''
   const creator = `@${requestor.name || ''}`
   const appUrl = `${config.appUrl}${router.asPath}`
 
@@ -130,9 +130,6 @@ export function OpDetail ({
               op={op}
               meID={me && me._id}
             />
-            <Button shape='round' size='large' type='secondary'>
-              Share
-            </Button>
             <ShareLinks url={appUrl} />
           </ActionContainer>
 

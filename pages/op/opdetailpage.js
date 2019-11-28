@@ -240,7 +240,6 @@ export class OpDetailPage extends Component {
           <FullPage>
             <OpDetail
               op={op}
-              router={this.props.router}
               onEditClicked={this.handleEditClicked}
               canEdit={this.canEdit(op)}
               canRegisterInterest={this.canRegisterInterest(op)}
@@ -248,13 +247,6 @@ export class OpDetailPage extends Component {
               me={this.me}
             />
             <Divider />
-
-            <OpVolunteerInterestSection
-              isAuthenticated={this.props.isAuthenticated}
-              canRegisterInterest={this.canRegisterInterest(op)}
-              op={op}
-              meID={this.props.me && this.props.me._id}
-            />
             {this.canEdit(op) && (
               <OpSectionGrid>
                 <h2>Danger zone</h2>
