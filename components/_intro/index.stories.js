@@ -3,7 +3,7 @@ import { Divider } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import { ColorContainer, ColorGrid, ColorSwatch, StoryIntroContainer } from '../VTheme/VStoryTheme'
-import { BigQuote, BigQuoteAuthor, Grid, h1, H3, H3Black, H3Bold, h4, p, PBold, TextBigTitle } from '../VTheme/VTheme'
+import { BigQuote, BigQuoteAuthor, Grid, H3, H3Black, H3Bold, PBold, TextBigTitle } from '../VTheme/VTheme'
 
 storiesOf('Welcome', module)
   .add('Getting Started', () => (
