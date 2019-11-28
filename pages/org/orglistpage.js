@@ -4,7 +4,7 @@ import { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import OrgList from '../../components/Org/OrgList'
-import { FullPage, H3Black, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
+import { FullPage, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 
@@ -28,12 +28,12 @@ class OrgListPage extends Component {
           <title>Voluntarily - Organisation List</title>
         </Helmet>
         <PageHeaderContainer>
-          <H3Black>
+          <h1>
             <FormattedMessage
               defaultMessage='Organisations'
               id='org.list.heading'
             />
-          </H3Black>
+          </h1>
           <RequestButtonContainer>
             {isAdmin &&
               <Button type='primary' size='large' shape='round'>
