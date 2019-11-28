@@ -154,6 +154,34 @@ class OrgDetailForm extends Component {
         description='organisation Description label in OrgDetails Form'
       />
     )
+    const orgAgeRange = (
+      <FormattedMessage
+        id='orgAgeRange'
+        defaultMessage='Age range'
+        description='Age range of students at the school'
+      />
+    )
+    const orgDecile = (
+      <FormattedMessage
+        id='orgDecile'
+        defaultMessage='Decile'
+        description='Decile of school'
+      />
+    )
+    const orgContactName = (
+      <FormattedMessage
+        id='orgContactName'
+        defaultMessage='Contact name'
+        description='Contact name'
+      />
+    )
+    const orgContactPhoneNumber = (
+      <FormattedMessage
+        id='orgContactPhoneNumber'
+        defaultMessage='Contact phone number'
+        description='Contact phone number'
+      />
+    )
 
     // TODO translate
     // TODO Use constant values from server/api/organisation/organisation.constants.js
@@ -402,8 +430,67 @@ class OrgDetailForm extends Component {
               </Form.Item>
             </InputContainer>
           </FormGrid>
-
           <Divider />
+          {(getFieldValue('category') || []).includes(OrganisationCategory.SCHOOL)
+            ? (
+              <>
+                <FormGrid>
+                  <DescriptionContainer>
+                    <TitleContainer>
+                      <h3>School details</h3>
+                    </TitleContainer>
+                    <p>A few details about your school</p>
+                  </DescriptionContainer>
+                  <InputContainer>
+                    <Form.Item htmlId='decile' label={orgDecile}>
+                      {getFieldDecorator('decile', {})(
+                        <InputNumber min={1} max={10} className='decile' />
+                      )}
+                    </Form.Item>
+
+                    <Form.Item htmlId='age-range' label={orgAgeRange}>
+                      {getFieldDecorator('ageRange', {
+                        rules: [
+                          {
+                            type: 'method',
+                            validator: (rule, value, callback) => {
+                              callback(validateAgeRange(value)
+                                ? undefined
+                                : (
+                                  <FormattedMessage
+                                    id='org.detail.ageRange'
+                                    defaultMessage='Please enter the age range of your students'
+                                    description='The age range specified on the organisation form is invalid'
+                                  />))
+                            }
+                          }
+                        ]
+                      })(
+                        <NumericRange
+                          fromPlaceholder='5'
+                          fromMin={0}
+                          fromMax={120}
+                          toPlaceholder='18'
+                          toMin={0}
+                          toMax={120}
+                        />
+                      )}
+                    </Form.Item>
+                    <Form.Item label={orgContactName}>
+                      {getFieldDecorator('contactName')(
+                        <Input />
+                      )}
+                    </Form.Item>
+                    <Form.Item label={orgContactPhoneNumber}>
+                      {getFieldDecorator('contactPhoneNumber')(
+                        <Input placeholder='01 123 456789' />
+                      )}
+                    </Form.Item>
+                  </InputContainer>
+                </FormGrid>
+                <Divider />
+              </>)
+            : null}
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -412,57 +499,6 @@ class OrgDetailForm extends Component {
               <p>Check before you go</p>
             </DescriptionContainer>
             <InputContainer>
-
-          {(getFieldValue('category') || []).includes(OrganisationCategory.SCHOOL)
-            ? (
-              <>
-                <Form.Item htmlId='decile' label={orgDecile}>
-                  {getFieldDecorator('decile', {})(
-                    <InputNumber min={1} max={10} className='decile' />
-                  )}
-                </Form.Item>
-
-                <Form.Item htmlId='age-range' label={orgAgeRange}>
-                  {getFieldDecorator('ageRange', {
-                    rules: [
-                      {
-                        type: 'method',
-                        validator: (rule, value, callback) => {
-                          callback(validateAgeRange(value)
-                            ? undefined
-                            : (
-                              <FormattedMessage
-                                id='org.detail.ageRange'
-                                defaultMessage='Please enter the age range of your students'
-                                description='The age range specified on the organisation form is invalid'
-                              />))
-                        }
-                      }
-                    ]
-                  })(
-                    <NumericRange
-                      fromPlaceholder='5'
-                      fromMin={0}
-                      fromMax={120}
-                      toPlaceholder='18'
-                      toMin={0}
-                      toMax={120}
-                    />
-                  )}
-                </Form.Item>
-                <Form.Item label={orgContactName}>
-                  {getFieldDecorator('contactName')(
-                    <Input />
-                  )}
-                </Form.Item>
-                <Form.Item label={orgContactPhoneNumber}>
-                  {getFieldDecorator('contactPhoneNumber')(
-                    <Input placeholder='01 123 456789' />
-                  )}
-                </Form.Item>
-              </>)
-            : null}
-
               <Button
                 type='primary'
                 size='large'
