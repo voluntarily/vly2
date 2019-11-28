@@ -81,33 +81,33 @@ test('Fields are submitted', async t => {
 
   const submitOp = sinon.spy()
 
+  // Change the text value of an input
+  const setInputValue = (selector, text) => {
+    wrapper
+      .find(selector)
+      .first()
+      .simulate('change', { target: { value: text } })
+  }
+
   const wrapper = mountWithIntl(
     <OrgDetailForm org={t.context.org} onSubmit={submitOp} onCancel={() => {}} />
   )
 
   // Organisation name
-  wrapper
-    .find('#organisation_detail_form_name')
-    .first()
-    .simulate('change', { target: { value: 'Test org' } })
-
-  // Age range
-  const categories = wrapper.find('#organisation_detail_form_category').first()
-  t.truthy(categories)
-
-  const school = wrapper
-    .find(`#organisation_detail_form_category input[value="${Category.SCHOOL}"]`)
-    .first()
-  school.simulate('change')
-
-  t.is(wrapper.find('label[htmlFor="organisation_detail_form_ageRange"]').length, 1)
-
-  const ageRange = wrapper.find('NumericRange#organisation_detail_form_ageRange').first()
-  ageRange.find('.numeric-range-from input').first()
-    .simulate('change', { target: { value: '10' } })
-
-  ageRange.find('.numeric-range-to input').first()
-    .simulate('change', { target: { value: '99' } })
+  setInputValue('#organisation_detail_form_name', 'Test org')
+  // School dependent fields
+  // Check the School category checkbox
+  wrapper.find(`#organisation_detail_form_category input[value="${Category.SCHOOL}"]`).first()
+    .simulate('change')
+  // Age range (from and to)
+  setInputValue('#organisation_detail_form_ageRange .numeric-range-from input', '10')
+  setInputValue('#organisation_detail_form_ageRange .numeric-range-to input', '99')
+  // Decile
+  setInputValue('input#organisation_detail_form_decile', '8')
+  // Contact name
+  setInputValue('input#organisation_detail_form_contactName', 'John stevens')
+  // Contact phone number
+  setInputValue('input#organisation_detail_form_contactPhoneNumber', '021 123 456789')
 
   // Submit the form
   wrapper.find('Form').first().simulate('submit')
@@ -119,7 +119,10 @@ test('Fields are submitted', async t => {
     ageRange: {
       from: 10,
       to: 99
-    }
+    },
+    decile: 8,
+    contactName: 'John stevens',
+    contactPhoneNumber: '021 123 456789'
   }))
 })
 
