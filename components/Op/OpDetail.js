@@ -63,7 +63,7 @@ const isNotProd = process.env.NODE_ENV !== 'production'
 
 const ActionContainer = styled.div`
   display: grid;
-  grid-template-columns: 10rem 1fr;
+ 
   gap: 2rem;
 `
 

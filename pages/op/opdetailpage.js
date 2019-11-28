@@ -244,6 +244,7 @@ export class OpDetailPage extends Component {
               canRegisterInterest={this.canRegisterInterest(op)}
               isAuthenticated={this.props.isAuthenticated}
               me={this.me}
+              {...this.props}
             />
             <Divider />
             {this.canEdit(op) && (
