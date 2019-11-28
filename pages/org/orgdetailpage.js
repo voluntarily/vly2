@@ -162,14 +162,14 @@ class OrgDetailPage extends Component {
         <div>
           <OrgDetail org={org} meid={this.props.me._id} />
           <Divider />
-          <H3Black>
+          <h2>
             <FormattedMessage
               id='getInvolved'
               defaultMessage='Get involved'
               description='Header for org activities'
             />
-          </H3Black>
-          <h5>Get involved with {org.name} opportunities in your community</h5>
+          </h2>
+          <h5>Volunteer with {org.name}</h5>
           <OpListSection org={org._id} />
           <Spacer />
           <Divider />

@@ -183,6 +183,7 @@ class OrgDetailForm extends Component {
               <p>Tell the world a little bit about your organisation.</p>
             </DescriptionContainer>
             <InputContainer>
+            <ShortInputContainer>
               <Form.Item
                 label={orgName}
                 validateStatus={orgNameError ? 'error' : ''}
@@ -192,6 +193,7 @@ class OrgDetailForm extends Component {
                   rules: [{ required: true, message: 'A name is required' }]
                 })(<Input placeholder='Organisation Name' />)}
               </Form.Item>
+              </ShortInputContainer>
               <Form.Item label={orgAbout}>
                 {getFieldDecorator('about', {
                   rules: []
@@ -219,6 +221,7 @@ class OrgDetailForm extends Component {
               </p>
             </DescriptionContainer>
             <InputContainer>
+            <ShortInputContainer>
               <Form.Item label={orgContactEmail}>
                 {getFieldDecorator('contactEmail', {
                   rules: []
@@ -237,14 +240,20 @@ class OrgDetailForm extends Component {
                   ]
                 })(<Input placeholder='https://example.com' />)}
               </Form.Item>
+              </ShortInputContainer>
+              <MediumInputContainer>
               <Form.Item label='Facebook'>
                 {getFieldDecorator('facebook', {
                   rules: []
-                })(<Input addonBefore='https://www.facebook.com/' />)}
+                })(<Input addonBefore='facebook.com/' />)}
               </Form.Item>
+              </MediumInputContainer>
+              <ShortInputContainer>
               <Form.Item label='Twitter'>
                 {getFieldDecorator('twitter', {})(<Input addonBefore='@' />)}
               </Form.Item>
+              </ShortInputContainer>
+
             </InputContainer>
           </FormGrid>
           <Divider />
