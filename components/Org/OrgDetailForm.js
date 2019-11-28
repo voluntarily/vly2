@@ -441,7 +441,7 @@ class OrgDetailForm extends Component {
                     </TitleContainer>
                     <p>A few details about your school</p>
                   </DescriptionContainer>
-                  <InputContainer>
+                  <ShortInputContainer>
                     <Form.Item htmlId='decile' label={orgDecile}>
                       {getFieldDecorator('decile', {})(
                         <InputNumber min={1} max={10} className='decile' />
@@ -486,7 +486,7 @@ class OrgDetailForm extends Component {
                         <Input placeholder='01 123 456789' />
                       )}
                     </Form.Item>
-                  </InputContainer>
+                  </ShortInputContainer>
                 </FormGrid>
                 <Divider />
               </>)
