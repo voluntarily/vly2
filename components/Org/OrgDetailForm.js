@@ -170,7 +170,11 @@ class OrgDetailForm extends Component {
     return (
       <div className='OrgDetailForm'>
         <PageTitle>
-          <h1>Organisations</h1>
+          <h1>    <FormattedMessage
+              id='orgDetail.form.title'
+              defaultMessage='Manage Organisation'
+              description='Main Title for Organisation edit form'
+            /></h1>
         </PageTitle>
         <Divider />
 
