@@ -177,6 +177,10 @@ export const GridTestItem = styled.div`
   background-color: pink;
 `
 
+export const Section = styled.section`
+  margin-bottom: 2rem;
+`
+
 /*
 ====================================================
 

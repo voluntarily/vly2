@@ -1,6 +1,12 @@
 export default () =>
   [
     {
+      key: 'admin',
+      text: 'Admin',
+      href: '/admin',
+      authRequired: true
+    },
+    {
       key: 'facts',
       text: 'Activities',
       href: '/acts',
