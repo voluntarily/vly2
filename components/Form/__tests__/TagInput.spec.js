@@ -3,7 +3,6 @@ import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import TagInput from '../Input/TagInput'
 import sinon from 'sinon'
-import { wrap } from 'module'
 
 const originalWarn = console.warn
 
