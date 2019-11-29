@@ -17,7 +17,7 @@ export default (req, res) => {
     !req.session.me.role.includes(Role.ADMIN)) {
     return res.status(403).end()
   }
-  
+
   const result = {
     message: `${config.appName} (${process.env.REVISION || 'local_build'}) running on ${config.appUrl} ${config.env} / Be Awesome`,
     health: 'You are an authenticated Administrator',
