@@ -23,7 +23,8 @@ const PersonFields = {
   TWITTER: 'twitter',
   ROLE: 'role',
   STATUS: 'status',
-  PRONOUN: 'pronoun'
+  PRONOUN: 'pronoun',
+  EDUCATION: 'education'
 }
 
 module.exports = {

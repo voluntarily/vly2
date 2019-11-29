@@ -22,6 +22,7 @@ const personSchema = new Schema({
   website: { type: 'String', required: false },
   facebook: { type: 'String', required: false },
   twitter: { type: 'String', required: false },
+  education: { type: 'String', required: true },
   role: {
     type: [String],
     required: true,
@@ -56,15 +57,6 @@ const personSchema = new Schema({
       expiry: String
     }
   }
-  // education: {
-  //   NoFormalEducation: String,
-  //   HighSchoolGraduate: String,
-  //   SomeCollege: String,
-  //   AssoiateBachelorsDegree: String,
-  //   BachelorDegree: String,
-  //   Masters: String, 
-  //   Doctoral: String
-  // }
 })
 
 personSchema.plugin(idvalidator)
