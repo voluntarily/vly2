@@ -1,4 +1,4 @@
-const SchemaName = 'Goal'
+const SchemaName = 'PersonalGoal'
 const PersonalGoalStatus = {
   NONE: 'none', // no relationship
   QUEUED: 'queued', // goal has been issued but not started. initial state

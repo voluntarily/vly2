@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const PersonalGoalStatus = require('./personalGoal.constants')
+const { PersonalGoalStatus, SchemaName } = require('./personalGoal.constants')
 const Schema = mongoose.Schema
 
 const personalGoalSchema = new Schema({
@@ -30,9 +30,9 @@ const personalGoalSchema = new Schema({
 var PersonalGoal
 
 if (mongoose.models.PersonalGoal) {
-  PersonalGoal = mongoose.model('PersonalGoal')
+  PersonalGoal = mongoose.model(SchemaName)
 } else {
-  PersonalGoal = mongoose.model('PersonalGoal', personalGoalSchema)
+  PersonalGoal = mongoose.model(SchemaName, personalGoalSchema)
 }
 
 module.exports = PersonalGoal

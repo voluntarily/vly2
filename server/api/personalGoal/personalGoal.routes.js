@@ -1,7 +1,7 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const PersonalGoal = require('./personalGoal')
-const { listPersonalGoals, updatePersonalGoal, createPersonalGoal } = require('./personalgoal.controller')
+const { listPersonalGoals, updatePersonalGoal, createPersonalGoal } = require('./personalGoal.controller')
 
 module.exports = server => {
   // Docs: https://github.com/ryo718/mongoose-crudify

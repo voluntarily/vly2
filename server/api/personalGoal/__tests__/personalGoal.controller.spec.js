@@ -1,6 +1,6 @@
 import test from 'ava'
 import PersonalGoal from '../personalGoal'
-import PersonalGoalStatus from '../personalGoal.constants'
+import { PersonalGoalStatus } from '../personalGoal.constants'
 import { addPersonalGoal } from '../personalGoal.controller'
 import Goal from '../../goal/goal'
 import goals from '../../goal/__tests__/goal.fixture'

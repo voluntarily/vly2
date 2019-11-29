@@ -7,7 +7,7 @@ import Goal from '../../goal/goal'
 import goals from '../../goal/__tests__/goal.fixture'
 import PersonalGoal from '../personalGoal'
 import MemoryMongo from '../../../util/test-memory-mongo'
-import PersonalGoalStatus from '../personalGoal.constants'
+import { PersonalGoalStatus } from '../personalGoal.constants'
 
 test.before('before connect to database', async (t) => {
   try {
