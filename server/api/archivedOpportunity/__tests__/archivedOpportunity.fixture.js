@@ -1,8 +1,8 @@
-//const opList = require('../../opportunity/__tests__/opportunity.fixture')
-//const archivedOpportunityList = opList
+/* const opList = require('../../opportunity/__tests__/opportunity.fixture')
+const archivedOpportunityList = opList
 
-/*for (let i = 0; i < archivedOpportunityList.length; i++) {
- // archivedOpportunityList[i].status = 'completed'
+for (let i = 0; i < archivedOpportunityList.length; i++) {
+archivedOpportunityList[i].status = 'completed'
 } */
 
 const { OpportunityStatus } = require('../../opportunity/opportunity.constants')
@@ -83,4 +83,4 @@ const OpList = [
 
 module.exports = OpList
 
-//module.exports = archivedOpportunityList
+// module.exports = archivedOpportunityList
