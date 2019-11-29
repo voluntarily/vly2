@@ -441,52 +441,54 @@ class OrgDetailForm extends Component {
                     </TitleContainer>
                     <p>A few details about your school</p>
                   </DescriptionContainer>
-                  <ShortInputContainer>
-                    <Form.Item htmlId='decile' label={orgDecile}>
-                      {getFieldDecorator('decile', {})(
-                        <InputNumber min={1} max={10} className='decile' />
-                      )}
-                    </Form.Item>
+                  <InputContainer>
+                    <ShortInputContainer>
+                      <Form.Item htmlId='decile' label={orgDecile}>
+                        {getFieldDecorator('decile', {})(
+                          <InputNumber min={1} max={10} className='decile' />
+                        )}
+                      </Form.Item>
 
-                    <Form.Item htmlId='age-range' label={orgAgeRange}>
-                      {getFieldDecorator('ageRange', {
-                        rules: [
-                          {
-                            type: 'method',
-                            validator: (rule, value, callback) => {
-                              callback(validateAgeRange(value)
-                                ? undefined
-                                : (
-                                  <FormattedMessage
-                                    id='org.detail.ageRange'
-                                    defaultMessage='Please enter the age range of your students'
-                                    description='The age range specified on the organisation form is invalid'
-                                  />))
+                      <Form.Item htmlId='age-range' label={orgAgeRange}>
+                        {getFieldDecorator('ageRange', {
+                          rules: [
+                            {
+                              type: 'method',
+                              validator: (rule, value, callback) => {
+                                callback(validateAgeRange(value)
+                                  ? undefined
+                                  : (
+                                    <FormattedMessage
+                                      id='org.detail.ageRange'
+                                      defaultMessage='Please enter the age range of your students'
+                                      description='The age range specified on the organisation form is invalid'
+                                    />))
+                              }
                             }
-                          }
-                        ]
-                      })(
-                        <NumericRange
-                          fromPlaceholder='5'
-                          fromMin={0}
-                          fromMax={120}
-                          toPlaceholder='18'
-                          toMin={0}
-                          toMax={120}
-                        />
-                      )}
-                    </Form.Item>
-                    <Form.Item label={orgContactName}>
-                      {getFieldDecorator('contactName')(
-                        <Input />
-                      )}
-                    </Form.Item>
-                    <Form.Item label={orgContactPhoneNumber}>
-                      {getFieldDecorator('contactPhoneNumber')(
-                        <Input placeholder='01 123 456789' />
-                      )}
-                    </Form.Item>
-                  </ShortInputContainer>
+                          ]
+                        })(
+                          <NumericRange
+                            fromPlaceholder='5'
+                            fromMin={0}
+                            fromMax={120}
+                            toPlaceholder='18'
+                            toMin={0}
+                            toMax={120}
+                          />
+                        )}
+                      </Form.Item>
+                      <Form.Item label={orgContactName}>
+                        {getFieldDecorator('contactName')(
+                          <Input />
+                        )}
+                      </Form.Item>
+                      <Form.Item label={orgContactPhoneNumber}>
+                        {getFieldDecorator('contactPhoneNumber')(
+                          <Input placeholder='01 123 456789' />
+                        )}
+                      </Form.Item>
+                    </ShortInputContainer>
+                  </InputContainer>
                 </FormGrid>
                 <Divider />
               </>)
