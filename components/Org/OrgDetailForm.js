@@ -1,10 +1,12 @@
-import { Button, Checkbox, Divider, Form, Input } from 'antd'
+import { Button, Checkbox, Divider, Form, Input, InputNumber } from 'antd'
 import slug from 'limax'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import NumericRange from '../VTheme/NumericRange'
+import { Category as OrganisationCategory } from '../../server/api/organisation/organisation.constants'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
 import {
   DescriptionContainer,
@@ -60,7 +62,11 @@ class OrgDetailForm extends Component {
         org.twitter = values.twitter
         org.facebook = values.facebook
         org.contactEmail = values.contactEmail
+        org.contactName = values.contactName
+        org.contactPhoneNumber = values.contactPhoneNumber
         org.category = values.category
+        org.ageRange = values.ageRange
+        org.decile = values.decile
 
         window.scrollTo(0, 0)
         this.props.onSubmit(this.props.org)
@@ -148,8 +154,37 @@ class OrgDetailForm extends Component {
         description='organisation Description label in OrgDetails Form'
       />
     )
+    const orgAgeRange = (
+      <FormattedMessage
+        id='orgAgeRange'
+        defaultMessage='Age range'
+        description='Age range of students at the school'
+      />
+    )
+    const orgDecile = (
+      <FormattedMessage
+        id='orgDecile'
+        defaultMessage='Decile'
+        description='Decile of school'
+      />
+    )
+    const orgContactName = (
+      <FormattedMessage
+        id='orgContactName'
+        defaultMessage='Contact name'
+        description='Contact name'
+      />
+    )
+    const orgContactPhoneNumber = (
+      <FormattedMessage
+        id='orgContactPhoneNumber'
+        defaultMessage='Contact phone number'
+        description='Contact phone number'
+      />
+    )
 
     // TODO translate
+    // TODO Use constant values from server/api/organisation/organisation.constants.js
     const categoryOptions = [
       { label: 'Business', value: 'vp' },
       { label: 'School', value: 'op' },
@@ -162,7 +197,8 @@ class OrgDetailForm extends Component {
       getFieldDecorator,
       getFieldsError,
       getFieldError,
-      isFieldTouched
+      isFieldTouched,
+      getFieldValue
     } = this.props.form
 
     // Only show error after a field is touched.
@@ -394,8 +430,69 @@ class OrgDetailForm extends Component {
               </Form.Item>
             </InputContainer>
           </FormGrid>
-
           <Divider />
+          {(getFieldValue('category') || []).includes(OrganisationCategory.SCHOOL)
+            ? (
+              <>
+                <FormGrid>
+                  <DescriptionContainer>
+                    <TitleContainer>
+                      <h3>School details</h3>
+                    </TitleContainer>
+                    <p>A few details about your school</p>
+                  </DescriptionContainer>
+                  <InputContainer>
+                    <ShortInputContainer>
+                      <Form.Item htmlId='decile' label={orgDecile}>
+                        {getFieldDecorator('decile', {})(
+                          <InputNumber min={1} max={10} className='decile' />
+                        )}
+                      </Form.Item>
+
+                      <Form.Item htmlId='age-range' label={orgAgeRange}>
+                        {getFieldDecorator('ageRange', {
+                          rules: [
+                            {
+                              type: 'method',
+                              validator: (rule, value, callback) => {
+                                callback(validateAgeRange(value)
+                                  ? undefined
+                                  : (
+                                    <FormattedMessage
+                                      id='org.detail.ageRange'
+                                      defaultMessage='Please enter the age range of your students'
+                                      description='The age range specified on the organisation form is invalid'
+                                    />))
+                              }
+                            }
+                          ]
+                        })(
+                          <NumericRange
+                            fromPlaceholder='5'
+                            fromMin={0}
+                            fromMax={120}
+                            toPlaceholder='18'
+                            toMin={0}
+                            toMax={120}
+                          />
+                        )}
+                      </Form.Item>
+                      <Form.Item label={orgContactName}>
+                        {getFieldDecorator('contactName')(
+                          <Input />
+                        )}
+                      </Form.Item>
+                      <Form.Item label={orgContactPhoneNumber}>
+                        {getFieldDecorator('contactPhoneNumber')(
+                          <Input placeholder='01 123 456789' />
+                        )}
+                      </Form.Item>
+                    </ShortInputContainer>
+                  </InputContainer>
+                </FormGrid>
+                <Divider />
+              </>)
+            : null}
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -458,7 +555,10 @@ OrgDetailForm.propTypes = {
     contactEmail: PropTypes.string,
     facebook: PropTypes.string,
     twitter: PropTypes.string,
-    _id: PropTypes.string
+    _id: PropTypes.string,
+    ageRange: PropTypes.object,
+    contactName: PropTypes.string,
+    contactPhoneNumber: PropTypes.string
   }).isRequired,
   form: PropTypes.object,
   params: PropTypes.shape({
@@ -510,7 +610,29 @@ export default Form.create({
       }),
       facebook: Form.createFormField({ ...org.facebook, value: org.facebook }),
       twitter: Form.createFormField({ ...org.twitter, value: org.twitter }),
-      category: Form.createFormField({ ...org.category, value: org.category })
+      category: Form.createFormField({ ...org.category, value: org.category }),
+      ageRange: Form.createFormField({ ...org.ageRange, value: org.ageRange }),
+      decile: Form.createFormField({ ...org.decile, value: org.decile }),
+      contactName: Form.createFormField({ ...org.contactName, value: org.contactName }),
+      contactPhoneNumber: Form.createFormField({ ...org.contactPhoneNumber, value: org.contactPhoneNumber })
     }
   }
 })(OrgDetailForm)
+
+/**
+ * Validates the age range field.
+ * @param {{ from: Number, to: Number }?} value The value in the age range field.
+ * @returns {boolean} True if the field is valid based on the input, False otherwise.
+ */
+export const validateAgeRange = (value) => {
+  // Allow an empty age range
+  if (!value) { return true }
+
+  const from = Number(value.from)
+  const to = Number(value.to)
+
+  // Only compare age ranges if both are specified
+  if (from && to) { return (from <= to) }
+
+  return true
+}
