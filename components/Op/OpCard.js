@@ -15,7 +15,7 @@ const getOpPageURL = (isArchived, opid) => {
   }
 }
 // todo if image is not present then use a fallback.
-const OpCard = ({ op }) => {
+  const OpCard = ({ op }) => {
   const cardImage = op.imgUrl ? op.imgUrl : '.././static/missingimage.svg'
   const draft = op.status === 'draft' ? 'DRAFT: ' : ''
   const isArchived = op.status === 'completed' || op.status === 'cancelled'

@@ -50,6 +50,7 @@ class PersonHomePage extends Component {
 
   myOpsList() {
     const myops = this.props.opportunities.data // list of ops I own
+    
     const ops = [...myops]
     return ops
 
@@ -141,6 +142,7 @@ class PersonHomePage extends Component {
     }
 
     const ops = this.myOpsList()
+
     const vops = this.volOpsList()
 
     const opsTab = (
@@ -210,12 +212,10 @@ class PersonHomePage extends Component {
                     </H3Black>
                   </SectionTitleWrapper>
                   {ops && (
-                    <OpList
-                      
-                   ops={ops.filter(op => 
-                    ['active', 'draft'].includes(op.status)
-                   )}
-                    
+                    <OpList 
+                      ops={ops.filter(op => 
+                        ['active', 'draft'].includes(op.status)
+                      )}
                     />
 
                   )}
@@ -230,7 +230,7 @@ class PersonHomePage extends Component {
                     </H3Black>
                   </SectionTitleWrapper>
                   {ops && (
-                    <OpList
+                    <OpList id='MyOpportunities'
                       ops={vops.filter(op =>
                         ['active', 'draft'].includes(op.status)
                       )}
