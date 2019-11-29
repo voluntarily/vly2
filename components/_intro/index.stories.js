@@ -3,7 +3,7 @@ import { Divider } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import { ColorContainer, ColorGrid, ColorSwatch, StoryIntroContainer } from '../VTheme/VStoryTheme'
-import { BigQuote, BigQuoteAuthor, Grid, h1, H3, H3Black, H3Bold, h4, p, PBold, TextBigTitle } from '../VTheme/VTheme'
+import { BigQuote, BigQuoteAuthor, Grid, H3, H3Black, H3Bold, PBold, TextBigTitle } from '../VTheme/VTheme'
 
 storiesOf('Welcome', module)
   .add('Getting Started', () => (
@@ -44,6 +44,16 @@ storiesOf('Welcome', module)
       <br />
       <PBold>Code</PBold>
       <code>{TextH1Text}</code>
+      <Divider />
+      <h4>h2 Text - Page Titles</h4>
+      <h2>I am a h2 heading.</h2>
+      <PBold>Notes</PBold>
+      <p>
+        I am used as a heading on components under the page title like in forms, and sections of content
+      </p>
+      <br />
+      <PBold>Code</PBold>
+      <code>{TextH2Text}</code>
       <Divider />
       <h4>H3 Text Heading Black</h4> <br />
       <H3Black>I am a H3 Text Heading Black</H3Black>
@@ -426,6 +436,7 @@ const TestWidthItem = styled.div`
 
 const TextHeroText = '<TextBigTitle>I am a hero title</TextBigTitle>'
 const TextH1Text = '<h1>I am a h1 heading</h1>'
+const TextH2Text = '<h2>I am a h1 heading</h2>'
 const SubtitleText = '<h4>I am subtitle text</h4>'
 const TextH4Text = '<H3>I am H3 Text</H3>'
 const TextH4BoldText = '<H3Bold>I am H3 Text Bold</H3Bold>'

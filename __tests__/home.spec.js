@@ -178,8 +178,8 @@ test.serial('render volunteer home page - Active tab', t => {
     </Provider>)
   t.is(wrapper.find('h1').first().text(), t.context.me.nickname + "'s Requests")
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Discover')
-  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 13)
+  t.is(wrapper.find('.ant-tabs-tabpane-active h1').first().text(), 'Tell us about your school')
+  t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 14)
 })
 
 test.serial('render volunteer home page - History tab', t => {
