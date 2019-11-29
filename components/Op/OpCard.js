@@ -24,8 +24,8 @@ const ImageWrapper = styled.div`
 const StyledIcon = styled(Icon)`
   font-size: 2rem;
   position: absolute;
-  top: 1rem;
-  right: 2rem;    
+  top: 0.5rem;
+  right: 0.5rem;    
 `
 
 // todo if image is not present then use a fallback.
