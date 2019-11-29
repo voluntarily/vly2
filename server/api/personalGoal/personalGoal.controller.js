@@ -15,67 +15,59 @@ const getPersonalGoalbyId = id => {
 const listPersonalGoals = async (req, res) => {
   const sort = 'status'
   let got
-  try {
-    if (req.query.meid) {
-      // a person is asking for a list of PersonalGoals
-      const query = { person: req.query.meid }
-      // Return enough info for a goalCard
-      got = await PersonalGoal.find(query).populate({ path: 'goal' }).sort(sort).exec()
-    } else {
-      // list all relationships
-      got = await PersonalGoal.find().sort(sort).exec()
-    }
-    res.json(got)
-  } catch (err) {
-    res.status(404).send(err)
+  // try {
+  if (req.query.meid) {
+    // a person is asking for a list of PersonalGoals
+    const query = { person: req.query.meid }
+    // Return enough info for a goalCard
+    got = await PersonalGoal.find(query).populate({ path: 'goal' }).sort(sort).exec()
+  } else {
+    // list all relationships
+    got = await PersonalGoal.find().sort(sort).exec()
   }
+  res.json(got)
+  // } catch (err) {
+  //   res.status(404).send(err)
+  // }
 }
 
 const updatePersonalGoal = async (req, res) => {
-  try {
-    await PersonalGoal.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
-    // TODO: update the dates on goal state changes
-    // TODO: notify the person of their status change in the Goal
-    const got = await getPersonalGoalbyId(req.body._id)
-    res.json(got)
-  } catch (err) {
-    res.status(404).send(err)
-  }
+  // try {
+  await PersonalGoal.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
+  // TODO: update the dates on goal state changes
+  // TODO: notify the person of their status change in the Goal
+  const got = await getPersonalGoalbyId(req.body._id)
+  res.json(got)
+  // } catch (err) {
+  //   res.status(404).send(err)
+  // }
 }
 
 // creates a new PersonalGoal or updates status of existing PersonalGoal
 const addPersonalGoal = async (personalGoal) => {
-  console.log('addPersonalGoal')
-  try {
-    const found = await PersonalGoal.findOneAndUpdate(
-      { // check for a match
-        person: personalGoal.person,
-        goal: personalGoal.goal
-      },
-      personalGoal, // create or upsert
-      { new: true, upsert: true }
-    )
-    // get populated out PersonalGoal record
-    const got = await getPersonalGoalbyId(found._id)
-    return got
-  } catch (e) {
-    console.error(e)
-    return false
-  }
+  const found = await PersonalGoal.findOneAndUpdate(
+    { // check for a match
+      person: personalGoal.person,
+      goal: personalGoal.goal
+    },
+    personalGoal, // create or upsert
+    { new: true, upsert: true }
+  )
+  // get populated out PersonalGoal record
+  return getPersonalGoalbyId(found._id)
 }
 
 const createPersonalGoal = async (req, res) => {
   const newPersonalGoal = new PersonalGoal(req.body)
-  newPersonalGoal.save(async (err, saved) => {
-    if (err) {
-      return res.status(500).send(err)
-    }
-
+  try {
+    await newPersonalGoal.save()
     // TODO: [VP-424] email new PersonalGoals or followers of an Goal
     // return the PersonalGoal record with the org name filled in.
     const got = await getPersonalGoalbyId(newPersonalGoal._id)
-    res.json(got)
-  })
+    return res.json(got)
+  } catch (e) {
+    return res.status(400).send(e)
+  }
 }
 
 module.exports = {

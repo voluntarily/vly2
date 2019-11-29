@@ -19,7 +19,7 @@ export default [
     startLink: '/home', // should be /profile#edit
     language: 'en',
     category: 'Getting Started',
-    evaluation: () => { console.log('Complete your profile'); return false },
+    evaluation: "() => { console.log('Complete your profile'); return false }",
     dateAdded: '2019-11-27T10:00:00.000Z'
   },
   {
@@ -52,7 +52,7 @@ export default [
     startLink: '/home', // should be /profile#edit
     language: 'en',
     category: 'Getting Started',
-    evaluation: () => { console.log('does person have school ready badge'); return false },
+    evaluation: "() => { console.log('does person have school ready badge'); return false }",
     dateAdded: '2019-11-27T10:00:00.000Z'
   },
   {
@@ -88,7 +88,7 @@ export default [
     startLink: '/search',
     language: 'en',
     category: 'First Activity',
-    evaluation: () => { console.log('does person have first-volunteer-activity badge'); return false },
+    evaluation: "() => { console.log('does person have first-volunteer-activity badge'); return false }",
     dateAdded: '2019-11-27T10:00:00.000Z'
   }
 

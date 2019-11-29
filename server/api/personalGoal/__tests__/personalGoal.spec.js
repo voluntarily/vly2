@@ -1,12 +1,12 @@
 import test from 'ava'
 import request from 'supertest'
-import { server, appReady } from '../../../server'
-import Person from '../../person/person'
-import people from '../../person/__tests__/person.fixture'
+import { appReady, server } from '../../../server'
+import MemoryMongo from '../../../util/test-memory-mongo'
 import Goal from '../../goal/goal'
 import goals from '../../goal/__tests__/goal.fixture'
+import Person from '../../person/person'
+import people from '../../person/__tests__/person.fixture'
 import PersonalGoal from '../personalGoal'
-import MemoryMongo from '../../../util/test-memory-mongo'
 import { PersonalGoalStatus } from '../personalGoal.constants'
 
 test.before('before connect to database', async (t) => {
@@ -113,27 +113,27 @@ test.serial('Should return 404 code when queried non existing personalgoal', asy
   t.is(res.status, expectedResponseStatus)
 })
 
-// test.serial(
-//   'Should not add personalgoal where referenced person or goal is not in DB',
-//   async t => {
-//     const newPersonalGoal = new PersonalGoal({
-//       person: '5cc8d60b8b16812b5babcdef',
-//       goal: '5cc8d60b8b16812b5babcdef'
-//     })
+test.serial(
+  'Should not add personalgoal where referenced person or goal is not in DB',
+  async t => {
+    const newPersonalGoal = new PersonalGoal({
+      person: '5cc8d60b8b16812b5babcdef',
+      goal: '5cc8d60b8b16812b5babcdef'
+    })
 
-//     await request(server)
-//       .post('/api/personalGoals')
-//       .send(newPersonalGoal)
-//       .set('Accept', 'application/json')
+    await request(server)
+      .post('/api/personalGoals')
+      .send(newPersonalGoal)
+      .set('Accept', 'application/json')
 
-//     const savedPersonalGoal = await PersonalGoal.findOne({
-//       person: newPersonalGoal.person,
-//       goal: newPersonalGoal.goal
-//     }).exec()
+    const savedPersonalGoal = await PersonalGoal.findOne({
+      person: newPersonalGoal.person,
+      goal: newPersonalGoal.goal
+    }).exec()
 
-//     t.is(null, savedPersonalGoal)
-//   }
-// )
+    t.is(null, savedPersonalGoal)
+  }
+)
 
 test.serial('Should add a valid goal', async t => {
   const person = t.context.people[4]

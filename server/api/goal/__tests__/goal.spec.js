@@ -85,20 +85,6 @@ test.serial('Should correctly give subset of goals matching slug', async t => {
   t.is(got.length, 1)
 })
 
-// test.only('Should correctly give a list with only name field', async t => {
-//   const nameGoal = "OMGTech";
-//   //p={"name": 1"} when applied on url, json is undefined
-//   const res = await request(server)
-//     .get('/api/goals?q={"name":"' + nameGoal + '"}&p={"name": "1"}')
-//     .set('Accept', 'application/json')
-//     .expect(200)
-//     .expect('Content-Type', /json/)
-//   const got = res.body
-//   ('got', got[0].name)
-//   t.is(got[0].name, nameGoal)
-//   t.is(got[0].about, null)
-// })
-
 test.serial('Should find no matches', async t => {
   const res = await request(server)
     .get('/api/goals?q={"slug":"nomatches"}')
@@ -144,20 +130,6 @@ test.serial('Should correctly give reverse sorted goals of category', async t =>
   t.is(got.length, 2)
   t.is(got[0].slug, 'goal-school-ready')
 })
-
-// Searching for something in the subtitle (case insensitive)
-// [VP-508] Add searching for goals by category, name and tags
-// test.serial('Should correctly give opportunity 2 when searching by "helpers"', async t => {
-//   const res = await request(server)
-//     .get('/api/opportunities?search=HeLPErs')
-//     .set('Accept', 'application/json')
-//     .expect(200)
-//     .expect('Content-Type', /json/)
-//   const got = res.body
-//   (got)
-//   // t.is(goals[1].name, got[0].name)
-//   t.is(2, got.length)
-// })
 
 const queryString = params => Object.keys(params).map((key) => {
   return key + '=' + params[key]

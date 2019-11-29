@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const { PersonalGoalStatus, SchemaName } = require('./personalGoal.constants')
 const Schema = mongoose.Schema
+const idvalidator = require('mongoose-id-validator')
 
 const personalGoalSchema = new Schema({
   person: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
@@ -25,14 +26,15 @@ const personalGoalSchema = new Schema({
   // date when they move to completed status
   dateCompleted: { type: 'Date', required: false }
 })
+personalGoalSchema.plugin(idvalidator)
 
 // protect multiple imports
-var PersonalGoal
+// var PersonalGoal
 
-if (mongoose.models.PersonalGoal) {
-  PersonalGoal = mongoose.model(SchemaName)
-} else {
-  PersonalGoal = mongoose.model(SchemaName, personalGoalSchema)
-}
-
+// if (mongoose.models.PersonalGoal) {
+//   PersonalGoal = mongoose.model(SchemaName)
+// } else {
+//   PersonalGoal = mongoose.model(SchemaName, personalGoalSchema)
+// }
+const PersonalGoal = mongoose.model(SchemaName, personalGoalSchema)
 module.exports = PersonalGoal

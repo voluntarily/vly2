@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const idvalidator = require('mongoose-id-validator')
 
 const goalSchema = new Schema({
   //   name - a short name that indicates what needs to be done - these use verbs and active voice.
@@ -41,13 +42,15 @@ const goalSchema = new Schema({
   dateAdded: { type: 'Date', default: Date.now, required: true }
 })
 
-// protect multiple imports
-var Goal
+goalSchema.plugin(idvalidator)
 
-if (mongoose.models.Goal) {
-  Goal = mongoose.model('Goal')
-} else {
-  Goal = mongoose.model('Goal', goalSchema)
-}
+// protect multiple imports
+// var Goal
+// if (mongoose.models.Goal) {
+//   Goal = mongoose.model('Goal')
+// } else {
+//   Goal = mongoose.model('Goal', goalSchema)
+// }
+const Goal = mongoose.model('Goal', goalSchema)
 
 module.exports = Goal
