@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import PersonalGoalStatus from './personalGoal.constants'
+const mongoose = require('mongoose')
+const PersonalGoalStatus = require('./personalGoal.constants')
 const Schema = mongoose.Schema
 
 const personalGoalSchema = new Schema({

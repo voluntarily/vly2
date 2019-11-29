@@ -1,3 +1,4 @@
+const SchemaName = 'Goal'
 const PersonalGoalStatus = {
   NONE: 'none', // no relationship
   QUEUED: 'queued', // goal has been issued but not started. initial state
@@ -7,4 +8,7 @@ const PersonalGoalStatus = {
   CANCELLED: 'cancelled' // goal has been cancelled.
 }
 
-export default PersonalGoalStatus
+module.exports = {
+  SchemaName,
+  PersonalGoalStatus
+}
