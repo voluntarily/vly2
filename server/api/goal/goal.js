@@ -45,12 +45,12 @@ const goalSchema = new Schema({
 goalSchema.plugin(idvalidator)
 
 // protect multiple imports
-// var Goal
-// if (mongoose.models.Goal) {
-//   Goal = mongoose.model('Goal')
-// } else {
-//   Goal = mongoose.model('Goal', goalSchema)
-// }
-const Goal = mongoose.model('Goal', goalSchema)
+var Goal
+if (mongoose.models.Goal) {
+  Goal = mongoose.model('Goal')
+} else {
+  Goal = mongoose.model('Goal', goalSchema)
+}
+// const Goal = mongoose.model('Goal', goalSchema)
 
 module.exports = Goal
