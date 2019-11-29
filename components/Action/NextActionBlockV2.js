@@ -13,11 +13,23 @@ const NextActionBlockV2 = ({ ...props }) => (
   <BlockContainer>
     <SectionTitleWrapper>
       <h2>Getting Started</h2>
-      <h5>
-        To get started, try an activity below.
-      </h5>
+      <h5>To get started, try an activity below.</h5>
     </SectionTitleWrapper>
     <Grid>
+
+    <ActionCard
+        image='/static/img/actions/teacherSetup.png'
+        name='Tell us about your school'
+        description='Tell the world about your awesome school - Complete profiles attract more volunteers!'
+      />
+
+    <ActionCard
+        image='/static/img/actions/itf.png'
+        name='Call in Industry Volunteers'
+        description='Invite volunteers into your school to talk about their careers.
+        Inspire. Excite. Ignite.'
+      />
+
       <ActionCard
         image='/static/img/actions/discoverActs.png'
         name='Discover'
@@ -48,12 +60,7 @@ const NextActionBlockV2 = ({ ...props }) => (
         description='Tell the world about yourself and your skills. Complete profiles score more opportunities to help out!'
       />
 
-      <ActionCard
-        image='/static/img/actions/tec.png'
-        name='Call in Industry Volunteers'
-        description='Invite volunteers into your school to talk about their careers.
-        Inspire. Excite. Ignite.'
-      />
+
 
       <ActionCard
         image='/static/img/actions/createOp.png'
@@ -66,6 +73,8 @@ const NextActionBlockV2 = ({ ...props }) => (
         name='Find Activities'
         description='See templates that other educators have created for you to copy'
       />
+
+
     </Grid>
   </BlockContainer>
 )
