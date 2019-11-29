@@ -22,7 +22,7 @@ export function ComingSoon ({ children }) {
   return (
     <ComingsoonContainer>
       <ComingSoonGrid>
-        <Icon spin style={{ fontSize: '40px', color: '#333' }} type='setting' />
+        <Icon spin style={{ fontSize: '40px', color: '#333' }} type='deployment-unit' />
         <div>
           <PBold>Needs Work</PBold>
           <p>{children}</p>

@@ -17,7 +17,6 @@ const ExamplePurple = styled.div`
 `
 
 storiesOf('Test Components', module)
-  .add('Confirm details', () => <div />)
   .add('Test Coming soon', () => (
     <div>
       <TestContainer>
@@ -35,7 +34,7 @@ storiesOf('Test Components', module)
           <TestItem>
             {' '}
             <ComingSoon>
-              VP-123 - Free Ice Cream for participating volunteers
+              VP-9000 - Police vetting for dogs
             </ComingSoon>
           </TestItem>
         </div>
