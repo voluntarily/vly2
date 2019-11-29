@@ -51,7 +51,7 @@ class TagInput extends React.Component {
       const val = value.trim()
       const matchingTags = (val && this.props.existingTags)
         ? this.props.existingTags
-          .filter(tag => tag.toLowerCase().indexOf(val.toLowerCase()) !== -1)
+          .filter(tag => tag.toLowerCase().indexOf(val.toLowerCase()) !== -1 && !this.props.value.includes(tag.toLowerCase()))
         : []
       this.setState({
         inputvalue: value,

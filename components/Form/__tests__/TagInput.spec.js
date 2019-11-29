@@ -3,6 +3,7 @@ import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import TagInput from '../Input/TagInput'
 import sinon from 'sinon'
+import { wrap } from 'module'
 
 const originalWarn = console.warn
 
@@ -72,6 +73,28 @@ test('render the op with a few pre-existing tags, and add a tag fully, to re-ren
 
   t.true(mockOnChange.calledOnce)
   t.true(mockOnChange.calledWith(expectedNewValue))
+})
+
+test('render the op with a few pre-existing tags, and search does not show existing tags', t => {
+  const firstTag = 'csharp'
+  const secondTag = 'c#'
+  const thirdTag = 'dog'
+  const searchValue = 'c'
+
+  const mockOnChange = sinon.spy()
+  const value = [firstTag]
+  const existingTags = [firstTag, secondTag, thirdTag]
+
+  const wrapper = mountWithIntl(
+    <TagInput onChange={mockOnChange} value={value} existingTags={existingTags} />
+  )
+
+  const wrapperInstance = wrapper.instance()
+
+  wrapperInstance.handleSearch(searchValue)
+
+  t.is(wrapperInstance.state.matchingTags.length, 1)
+  t.is(wrapperInstance.state.matchingTags[0], 'c#')
 })
 
 test('render the op with a few pre-existing tags, and remove a tag from them', t => {
