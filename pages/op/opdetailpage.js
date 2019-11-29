@@ -6,8 +6,10 @@ import { FormattedMessage } from 'react-intl'
 import Loading from '../../components/Loading'
 import OpDetail from '../../components/Op/OpDetail'
 import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
-import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
-import { FullPage } from '../../components/VTheme/VTheme'
+import {
+  FullPage,
+  OpSectionGrid
+} from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
@@ -29,12 +31,11 @@ const blankOp = {
 }
 
 export class OpDetailPage extends Component {
-  state = {
-    editing: false
-  }
-
   constructor (props) {
     super(props)
+    this.state = {
+      editing: false
+    }
     this.confirmOpportunity = this.confirmOpportunity.bind(this)
     this.cancelOpportunity = this.cancelOpportunity.bind(this)
     this.isAdmin = this.isAdmin.bind(this)
@@ -95,27 +96,35 @@ export class OpDetailPage extends Component {
 
   async updateOpportunity (op) {
     const res = await this.props.dispatch(
-      reduxApi.actions.opportunities.post(
-        {},
-        { body: JSON.stringify(op) }
-      )
+      reduxApi.actions.opportunities.post({}, { body: JSON.stringify(op) })
     )
     return res[0]
   }
 
   stopEditing = () => {
     this.setState({ editing: false })
-    if (this.props.isNew) { // return to previous
+    if (this.props.isNew) {
+      // return to previous
       Router.back()
     }
   }
 
   async confirmOpportunity (op) {
-    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.COMPLETED }) }))
+    await this.props.dispatch(
+      reduxApi.actions.opportunities.put(
+        { id: op._id },
+        { body: JSON.stringify({ status: OpportunityStatus.COMPLETED }) }
+      )
+    )
   }
 
   async cancelOpportunity (op) {
-    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.CANCELLED }) }))
+    await this.props.dispatch(
+      reduxApi.actions.opportunities.put(
+        { id: op._id },
+        { body: JSON.stringify({ status: OpportunityStatus.CANCELLED }) }
+      )
+    )
   }
 
   isAdmin () {
@@ -123,25 +132,34 @@ export class OpDetailPage extends Component {
   }
 
   isOwner (op) {
-    return this.props.isNew || (this.props.me && op.requestor && this.props.me._id === op.requestor._id)
+    return (
+      this.props.isNew ||
+      (this.props.me && op.requestor && this.props.me._id === op.requestor._id)
+    )
   }
 
   canEdit (op) {
     const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
-    return (this.isOwner(op) || isOrgAdmin || this.isAdmin())
+    return this.isOwner(op) || isOrgAdmin || this.isAdmin()
   }
 
   canManageInterests (op) {
-    return (this.isOwner(op) || this.isAdmin())
+    return this.isOwner(op) || this.isAdmin()
   }
 
   canRegisterInterest (op) {
-    return (this.props.isAuthenticated && !this.isOwner(op))
+    return this.props.isAuthenticated && !this.isOwner(op)
   }
 
   retrieveOpportunity () {
-    if (this.props.members.sync && this.props.members.data.length > 0 && this.props.me) {
-      this.props.me.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
+    if (
+      this.props.members.sync &&
+      this.props.members.data.length > 0 &&
+      this.props.me
+    ) {
+      this.props.me.orgMembership = this.props.members.data.filter(m =>
+        [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)
+      )
     }
 
     let op
@@ -165,7 +183,10 @@ export class OpDetailPage extends Component {
       op.requestor = this.props.me
 
       // set init offerOrg to first membership result
-      if (this.props.me.orgMembership && this.props.me.orgMembership.length > 0) {
+      if (
+        this.props.me.orgMembership &&
+        this.props.me.orgMembership.length > 0
+      ) {
         op.offerOrg = {
           _id: this.props.me.orgMembership[0].organisation._id
         }
@@ -181,20 +202,26 @@ export class OpDetailPage extends Component {
     return op
   }
 
+  handleEditClicked = () => {
+    this.setState({
+      editing: !this.state.editing
+    })
+  }
+
   render () {
     // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
     if (!this.props.isNew) {
       if (this.props.opportunities.loading) {
-        return (<Loading />)
+        return <Loading />
       }
       if (this.props.opportunities.data.length !== 1) {
-        return (<OpUnavailablePage />)
+        return <OpUnavailablePage />
       }
     }
 
     const op = this.retrieveOpportunity()
 
-    if ((op && this.state.editing)) {
+    if (op && this.state.editing) {
       return (
         <OpEditPage
           op={op}
@@ -207,33 +234,52 @@ export class OpDetailPage extends Component {
         />
       )
     } else {
-      return (!this.props.isNew &&
-        <FullPage>
-          {this.canEdit(op) &&
-            <Button
-              id='editOpBtn'
-              style={{ float: 'right' }}
-              type='primary'
-              shape='round'
-              onClick={() => this.setState({ editing: true })}
-            >
-              <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
-            </Button>}
-          <OpDetail op={op} />
-          <Divider />
-          <OpVolunteerInterestSection
-            isAuthenticated={this.props.isAuthenticated}
-            canRegisterInterest={this.canRegisterInterest(op)}
-            op={op}
-            meID={this.props.me && this.props.me._id}
-          />
-          <OpOwnerManageInterests
-            canManageInterests={this.canManageInterests(op)}
-            op={op}
-            confirmOpportunity={this.confirmOpportunity}
-            cancelOpportunity={this.cancelOpportunity}
-          />
-        </FullPage>
+      return (
+        !this.props.isNew && (
+          <FullPage>
+            <OpDetail
+              op={op}
+              onEditClicked={this.handleEditClicked}
+              canEdit={this.canEdit(op)}
+              canRegisterInterest={this.canRegisterInterest(op)}
+              isAuthenticated={this.props.isAuthenticated}
+              me={this.me}
+              {...this.props}
+            />
+            <Divider />
+            {this.canEdit(op) && (
+              <OpSectionGrid>
+                <h2>Danger zone</h2>
+                <div>
+                  <h4>
+                    {' '}
+                    These buttons will permanantly end your activity - be
+                    careful!
+                  </h4>
+                  <OpOwnerManageInterests
+                    canManageInterests={this.canManageInterests(op)}
+                    op={op}
+                    confirmOpportunity={this.confirmOpportunity}
+                    cancelOpportunity={this.cancelOpportunity}
+                  />
+                  <Button
+                    id='editOpBtn'
+                    style={{ marginBottom: '1rem' }}
+                    type='primary'
+                    shape='round'
+                    onClick={() => this.setState({ editing: true })}
+                  >
+                    <FormattedMessage
+                      id='op.edit'
+                      defaultMessage='Edit'
+                      description='Button to edit an opportunity'
+                    />
+                  </Button>
+                </div>
+              </OpSectionGrid>
+            )}
+          </FullPage>
+        )
       )
     }
   }
