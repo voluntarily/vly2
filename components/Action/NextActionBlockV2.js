@@ -16,14 +16,13 @@ const NextActionBlockV2 = ({ ...props }) => (
       <h5>To get started, try an activity below.</h5>
     </SectionTitleWrapper>
     <Grid>
-
-    <ActionCard
+      <ActionCard
         image='/static/img/actions/teacherSetup.png'
         name='Tell us about your school'
         description='Tell the world about your awesome school - Complete profiles attract more volunteers!'
       />
 
-    <ActionCard
+      <ActionCard
         image='/static/img/actions/itf.png'
         name='Call in Industry Volunteers'
         description='Invite volunteers into your school to talk about their careers.
@@ -60,8 +59,6 @@ const NextActionBlockV2 = ({ ...props }) => (
         description='Tell the world about yourself and your skills. Complete profiles score more opportunities to help out!'
       />
 
-
-
       <ActionCard
         image='/static/img/actions/createOp.png'
         name='Create an Opportunity'
@@ -73,8 +70,6 @@ const NextActionBlockV2 = ({ ...props }) => (
         name='Find Activities'
         description='See templates that other educators have created for you to copy'
       />
-
-
     </Grid>
   </BlockContainer>
 )
