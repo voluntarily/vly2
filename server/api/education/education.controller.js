@@ -1,13 +1,13 @@
-const { sortededucation, education } = require('./educationData')
+const { sortedEducation, education } = require('./educationData')
 
 const geteducation = function (req, res) {
   if (req.query.withRelationships) {
     const typesOfEducation = { education: education }
     res.json(typesOfEducation)
   } else {
-    const returnLocation = sortededucation.filter(element => element !== 'Online')
-    returnLocation.unshift('Online')
-    res.json(returnLocation)
+    const returnEducation = sortedEducation.filter(element => element !== 'Online')
+    returnEducation.unshift('Online')
+    res.json(returnEducation)
   }
 }
 
