@@ -102,7 +102,7 @@ test('Get person by id', async t => {
   t.is(res.body.email, p.email)
 })
 
-test.serial('add a person', async t => {
+test('add a person', async t => {
   t.plan(5)
 
   const p = {
@@ -113,13 +113,6 @@ test.serial('add a person', async t => {
     role: ['tester'],
     tags: ['tag1', 'tag2', 'tag3']
   }
-
-  const res = await request(server)
-    .post('/api/people')
-    .send(p)
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
-    .expect(200)
 
   try {
     // anon user can add a new person
@@ -157,7 +150,7 @@ test.serial('add a person', async t => {
   }
 })
 
-test.serial('Update people', async t => {
+test('Update people', async t => {
   // update the person
   const p = t.context.people[0]
   const id = p._id
@@ -195,7 +188,7 @@ test.serial('Update people', async t => {
   t.is(resUpdated.body.phone, p.phone)
 })
 
-test.serial('Should correctly add a person and sanitise inputs', async t => {
+test('Should correctly add a person and sanitise inputs', async t => {
   t.plan(6)
   const p = {
     name: 'Bobby; DROP TABLES', // is allowed
@@ -226,7 +219,7 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
   await Person.deleteOne({ email: p.email })
 })
 
-test.serial('Anon user cannot remove a user', async t => {
+test('Anon user cannot remove a user', async t => {
   const p = t.context.people[3]
 
   // try to delete the record anonymously
@@ -241,40 +234,7 @@ test.serial('Anon user cannot remove a user', async t => {
   t.is(queriedPerson.email, p.email)
 })
 
-test.serial('Should be block to find a person by email when not authorized', async t => {
-  t.plan(1)
-  const p = t.context.people[4]
-  const email = p.email
-  const res = await request(server)
-    .get(`/api/person/by/email/${email}`)
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(403)
-  t.is(res.body.name, undefined)
-})
-
-test.serial('Should be block to find a person by nickname when not authorized', async t => {
-  t.plan(1)
-  const p = t.context.people[5]
-  const res = await request(server)
-    .get(`/api/person/by/nickname/${p.nickname}`)
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(403)
-  t.is(res.body.name, undefined)
-})
-
-test.serial('Should find no person', async t => {
-  t.plan(1)
-
-  const res = await request(server)
-    .get('/api/person/by/email/not_a_real_email@voluntarily.nz')
-    .set('Accept', 'application/json')
-    .expect(404)
-  t.is(res.body.error, 'person not found')
-})
-
-test.serial('Should correctly handle missing inputs', async t => {
+test('Should correctly handle missing inputs', async t => {
   const p = {
     name: 'Testy McTestFace',
     nickname: 'Testy',

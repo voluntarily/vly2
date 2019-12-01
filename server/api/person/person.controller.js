@@ -62,7 +62,7 @@ async function updatePersonDetail (req, res, next) {
 }
 
 /**
- * Why use this? Well, using the Get method for api/people endpoint with a query param
+ * Why? The Get method for api/people endpoint with a query param
  * will return an array in the db record which is fine. But the middleware job is only remove fields
  * After removing field the response return will still be in an array of 1 element which is not what the front end
  * expects. It expects the same record which is a json object only. The function bellow is used to convert array of object with 1 function
