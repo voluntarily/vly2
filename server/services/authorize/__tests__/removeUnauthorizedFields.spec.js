@@ -1,6 +1,7 @@
 import test from 'ava'
 import sinon from 'sinon'
 import removeUnauthorizedFields from '../removeUnauthorizedFields'
+import ObjectID from 'bson-objectid'
 import { FakeSchema, SchemaName, Fields } from './removeUnauthorizedFields.fixture'
 import { AbilityBuilder } from '@casl/ability'
 import { Action } from '../../../services/abilities/ability.constants'
@@ -9,12 +10,18 @@ test.serial('Only authorized fields returned for single get', async t => {
   const expectedTitle = 'foo'
   const nextMiddleware = sinon.fake()
   const mockDataObject = {
+    _id: ObjectID(),
     name: expectedTitle,
     subtitle: 'This should be filtered out'
   }
   const ability = AbilityBuilder.define(can => can(Action.READ, SchemaName, [Fields.NAME]))
 
   const mockRequestObject = {
+    session: {
+      me: {
+        _id: ObjectID()
+      }
+    },
     ability: ability,
     method: 'GET',
     crudify: {
@@ -33,15 +40,22 @@ test.serial('Only authorized fields returned for list get', async t => {
   const expectedTitleB = 'bar'
   const nextMiddleware = sinon.fake()
   const mongooseCrudifyResult = [{
+    _id: ObjectID(),
     name: expectedTitleA,
     subtitle: 'This subtitle will be filtered out'
   }, {
+    _id: ObjectID(),
     name: expectedTitleB,
     subtitle: 'This subtitle will be filtered out'
   }]
   const ability = AbilityBuilder.define(can => can(Action.READ, SchemaName, [Fields.NAME]))
   const mockRequestObject = {
     method: 'GET',
+    session: {
+      me: {
+        _id: ObjectID()
+      }
+    },
     ability: ability,
     crudify: {
       result: mongooseCrudifyResult

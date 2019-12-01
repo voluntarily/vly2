@@ -30,9 +30,15 @@ module.exports = function (server) {
         update: updatePersonDetail
       },
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
-      afterActions: [{ middlewares: [removeUnauthorizedFields(Person), helpers.formatResponse] }]
+      afterActions: [
+        {
+          middlewares: [removeUnauthorizedFields(Person)],
+          except: ['create']
+        },
+        {
+          middlewares: [helpers.formatResponse]
+        }
+      ]
     })
   )
-
-  server.get('/api/person/by/:by/:value', getPersonBy)
 }
