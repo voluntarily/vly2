@@ -15,7 +15,7 @@ import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import thunk from 'redux-thunk'
 import { API_URL } from '../lib/callApi'
-import OpCard from '../components/Op/OpCard'
+// import OpCard from '../components/Op/OpCard'
 const { sortedLocations, regions } = require('../server/api/location/locationData')
 
 test.before('Setup fixtures', (t) => {
@@ -33,7 +33,6 @@ test.before('Setup fixtures', (t) => {
     op._id = objectid().toString()
     op.requestor = me._id
   })
- 
 
   // setup list of interests, i'm interested in first 5 ops except the one for which I am requestor
   const interestStates = ['interested', 'invited', 'committed', 'declined', 'completed', 'cancelled']
@@ -139,7 +138,7 @@ test.before('Setup fixtures', (t) => {
         loading: false,
         data: [recommendedOps],
         request: null
-      }, 
+      },
       locations: {
         data: [
           {
@@ -189,18 +188,16 @@ test.serial('render volunteer home page - Active tab', t => {
   t.is(oplists.length, 3)
 
   const cards1 = oplists.at(0).find('OpCard')
-  t.is(cards1.length, 1) 
+  t.is(cards1.length, 1)
   t.is(cards1.first().find('h1').first().text(), t.context.ops[0].name)
-  
+
   const cards2 = oplists.at(1).find('OpCard')
-  t.is(cards2.length, 4) 
+  t.is(cards2.length, 4)
   t.is(cards2.first().find('h1').first().text(), t.context.ops[1].name)
 
   const cards3 = oplists.last().find('OpCard')
   t.is(cards3.length, 5)
-  t.is(cards3.at(1).find('h1').first().text(), t.context.ops[1].name) 
-
-
+  t.is(cards3.at(1).find('h1').first().text(), t.context.ops[1].name)
 })
 
 test.serial('render volunteer home page - History tab', t => {
@@ -212,30 +209,27 @@ test.serial('render volunteer home page - History tab', t => {
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
     </Provider>)
-    
+
   wrapper.find('.ant-tabs-tab').at(1).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'History')
 
   const historyPane = wrapper.find('.ant-tabs-tabpane-active').first()
   t.is(historyPane.find('h3').first().text(), 'Completed Requests')
   t.is(historyPane.find('h3').at(1).text(), 'Cancelled Requests')
-  
+
   const oplists = historyPane.find('OpList')
   t.is(oplists.length, 2) // The number of oplists on history tab
 
   const completedRequests = oplists.at(0)
   const cards1 = completedRequests.find('OpCard')
-  t.is(cards1.length, 3) //Number of opcards in archivedops fixture
+  t.is(cards1.length, 3) // Number of opcards in archivedops fixture
   t.is(cards1.first().find('h1').first().text(), t.context.archivedOpportunities[0].name) // Tests the name of the first archived op in the first oplist
 
   const cancelledRequests = oplists.at(1)
   const cards2 = cancelledRequests.find('OpCard')
   t.is(cards2.length, 2)
-  t.is(cards2.first().find('h1').first().text(), t.context.archivedOpportunities[3].name) 
-  
- 
-}) 
-
+  t.is(cards2.first().find('h1').first().text(), t.context.archivedOpportunities[3].name)
+})
 
 test.serial('render volunteer home page - Profile tab', t => {
   const props = {
@@ -262,10 +256,10 @@ test.serial('render Edit Profile ', async t => {
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Profile')
   t.is(wrapper.find('Button').first().text(), 'Edit')
   wrapper.find('Button').first().simulate('click')
-  //t.is(wrapper.find('Button').first().text(), 'Cancel')
+  // t.is(wrapper.find('Button').first().text(), 'Cancel')
   wrapper.find('Button').first().simulate('click') // cancel edit
   wrapper.find('Button').first().simulate('click') // edit again
- // t.is(wrapper.find('Button').last().text(), 'Save')
+  // t.is(wrapper.find('Button').last().text(), 'Save')
   wrapper.find('Form').first().simulate('submit')
 })
 

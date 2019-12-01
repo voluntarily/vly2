@@ -26,7 +26,7 @@ const SectionWrapper = styled.div`
 
 const TitleContainer = styled.div``
 
-function callback(key) {
+function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
 }
 
@@ -35,20 +35,20 @@ class PersonHomePage extends Component {
     editProfile: false
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.getArchivedOpportunitiesByStatus = this.getArchivedOpportunitiesByStatus.bind(
       this
     )
   }
 
-  getArchivedOpportunitiesByStatus(status) {
+  getArchivedOpportunitiesByStatus (status) {
     return this.props.archivedOpportunities.data.filter(
       op => op.status === status && op.requestor === this.props.me._id
     )
   }
 
-  myOpsList() {
+  myOpsList () {
     const myops = this.props.opportunities.data // list of ops I own
     return myops
   }
@@ -71,14 +71,9 @@ class PersonHomePage extends Component {
       .filter(op => op)
     const ops = [...volops]
     return ops
-  } 
+  }
 
-
-
-
-
-
-  static async getInitialProps({ store }) {
+  static async getInitialProps ({ store }) {
     try {
       const me = store.getState().session.me
       const requestor = { requestor: me._id }
@@ -131,7 +126,7 @@ class PersonHomePage extends Component {
     return role
   }
 
-  render() {
+  render () {
     const shadowStyle = { overflow: 'visible' }
     if (this.props.members.sync && this.props.members.data.length > 0) {
       this.props.me.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
@@ -209,14 +204,14 @@ class PersonHomePage extends Component {
                     </H3Black>
                   </SectionTitleWrapper>
                   {ops && (
-                    <OpList 
-                      ops={ops.filter(op => 
+                    <OpList
+                      ops={ops.filter(op =>
                         ['active', 'draft'].includes(op.status)
                       )}
                     />
 
                   )}
-               
+
                   <SectionTitleWrapper>
                     <H3Black>
                       <FormattedMessage
@@ -227,22 +222,20 @@ class PersonHomePage extends Component {
                     </H3Black>
                   </SectionTitleWrapper>
                   {ops && (
-                    <OpList id='MyOpportunities'
+                    <OpList
+                      id='MyOpportunities'
                       ops={vops.filter(op =>
                         ['active', 'draft'].includes(op.status)
                       )}
 
                     />
 
-
                   )}
 
                 </SectionWrapper>
-                
+
               )
             }
-
-
 
             <SectionWrapper>
               <SectionTitleWrapper>
@@ -294,22 +287,22 @@ class PersonHomePage extends Component {
                   onCancel={this.handleCancel}
                 />
               ) : (
-                  <div>
-                    <Button
-                      style={{ float: 'right' }}
-                      type='secondary'
-                      shape='round'
-                      onClick={() => this.setState({ editProfile: true })}
-                    >
-                      <FormattedMessage
-                        id='editPerson'
-                        defaultMessage='Edit'
-                        description='Button to edit an person on PersonDetails page'
-                      />
-                    </Button>
-                    <PersonDetail person={this.props.me} />
-                  </div>
-                )}
+                <div>
+                  <Button
+                    style={{ float: 'right' }}
+                    type='secondary'
+                    shape='round'
+                    onClick={() => this.setState({ editProfile: true })}
+                  >
+                    <FormattedMessage
+                      id='editPerson'
+                      defaultMessage='Edit'
+                      description='Button to edit an person on PersonDetails page'
+                    />
+                  </Button>
+                  <PersonDetail person={this.props.me} />
+                </div>
+              )}
             </SectionWrapper>
           </TabPane>
         </Tabs>
