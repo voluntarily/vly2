@@ -191,13 +191,11 @@ test.serial('render volunteer home page - Active tab', t => {
   const cards1 = oplists.at(0).find('OpCard')
   t.is(cards1.length, 1) 
   t.is(cards1.first().find('h1').first().text(), t.context.ops[0].name)
-   
   
   const cards2 = oplists.at(1).find('OpCard')
   t.is(cards2.length, 4) 
   t.is(cards2.first().find('h1').first().text(), t.context.ops[1].name)
 
-  
   const cards3 = oplists.last().find('OpCard')
   t.is(cards3.length, 5)
   t.is(cards3.at(1).find('h1').first().text(), t.context.ops[1].name) 
@@ -219,19 +217,16 @@ test.serial('render volunteer home page - History tab', t => {
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'History')
 
   const historyPane = wrapper.find('.ant-tabs-tabpane-active').first()
-
-  //console.log(historyPane.html())
   t.is(historyPane.find('h3').first().text(), 'Completed Requests')
-  // t.is(wrapper.find('.ant-tabs-tabpane-active img').length, 1)  Redundant code
   t.is(historyPane.find('h3').at(1).text(), 'Cancelled Requests')
   
   const oplists = historyPane.find('OpList')
-  t.is(oplists.length, 2)
+  t.is(oplists.length, 2) // The number of oplists on history tab
 
   const completedRequests = oplists.at(0)
   const cards1 = completedRequests.find('OpCard')
-  t.is(cards1.length, 3)
-  t.is(cards1.first().find('h1').first().text(), t.context.archivedOpportunities[0].name)
+  t.is(cards1.length, 3) //Number of opcards in archivedops fixture
+  t.is(cards1.first().find('h1').first().text(), t.context.archivedOpportunities[0].name) // Tests the name of the first archived op in the first oplist
 
   const cancelledRequests = oplists.at(1)
   const cards2 = cancelledRequests.find('OpCard')

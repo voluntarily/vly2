@@ -50,10 +50,7 @@ class PersonHomePage extends Component {
 
   myOpsList() {
     const myops = this.props.opportunities.data // list of ops I own
-    
-    const ops = [...myops]
-    return ops
-
+    return myops
   }
 
   volOpsList () {
