@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import LocationSelector from '../Form/Input/LocationSelector'
+import EducationSelector from '../Form/Input/EducationSelector'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import TagInput from '../Form/Input/TagInput'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
@@ -317,7 +318,7 @@ class PersonDetailForm extends Component {
                 {getFieldDecorator('education', {
                   rules: []
                 })(
-                  <LocationSelector existingLocations={this.props.locations} />
+                  <EducationSelector existingEducations={this.props.education} />
                 )}
               </Form.Item>
             </InputContainer>
