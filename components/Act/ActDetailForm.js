@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import { H3Bold, P } from '../VTheme/VTheme'
+
 import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
 import { DynamicFieldSet } from '../DynamicFieldSet/DynamicFieldSet'
@@ -17,6 +17,7 @@ import {
   ShortInputContainer,
   TitleContainer
 } from '../VTheme/FormStyles'
+import PageTitle from '../LandingPageComponents/PageTitle'
 
 const { TextArea } = Input
 
@@ -24,7 +25,7 @@ function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
 }
 
-const isTest = (process.env.NODE_ENV === 'test')
+const isTest = process.env.NODE_ENV === 'test'
 
 class ActDetailForm extends Component {
   constructor (props) {
@@ -45,18 +46,17 @@ class ActDetailForm extends Component {
   componentDidMount () {
     // Call validateFields here to disable the submit button when on a blank form.
     // empty callback supresses a default which prints to the console.
-    this.props.form.validateFields(() => { })
+    this.props.form.validateFields(() => {})
     if (this.props.act.volunteers === 0) {
       this.actRadio('option1')
-    } else
-    if (this.props.act.volunteers < 1) {
+    } else if (this.props.act.volunteers < 1) {
       this.actRadio('option2')
     } else {
       this.actRadio('option1')
     }
   }
 
-  actRadio = (event) => {
+  actRadio = event => {
     if (event === 'option1') {
       this.setState({
         input1Disabled: false,
@@ -74,7 +74,7 @@ class ActDetailForm extends Component {
     }
   }
 
-  handleChange = (event) => {
+  handleChange = event => {
     const textname = event.target.name
     if (textname === 'resourceinput1') {
       this.setState({
@@ -87,11 +87,11 @@ class ActDetailForm extends Component {
     }
   }
 
-  setImgUrl = (value) => {
+  setImgUrl = value => {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -101,7 +101,9 @@ class ActDetailForm extends Component {
         act.subtitle = values.subtitle
         act.duration = values.duration
         act.resource = values.resource
-        act.volunteers = !this.state.input1Disabled ? this.state.totalVolunteerRequired : (1 / this.state.volunteerPerStudent)
+        act.volunteers = !this.state.input1Disabled
+          ? this.state.totalVolunteerRequired
+          : 1 / this.state.volunteerPerStudent
         act.space = values.space
         act.equipment = values.equipment
         act.description = values.description
@@ -112,7 +114,9 @@ class ActDetailForm extends Component {
         // act.owner = (this.props.act.owner && this.props.op.owner._id) || this.props.me._id
         act.owner = this.props.me._id
         // TODO: [VP-305] should the owner of the activity be preserved or set to the last person who edits it?
-        if (!isTest) { window.scrollTo(0, 0) }
+        if (!isTest) {
+          window.scrollTo(0, 0)
+        }
         this.props.onSubmit(this.props.act)
       }
     })
@@ -250,36 +254,57 @@ class ActDetailForm extends Component {
       />
     )
     const {
-      getFieldDecorator, getFieldsError, getFieldError, isFieldTouched
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched
     } = this.props.form
 
     // Only show error after a field is touched.
     const titleError = isFieldTouched('name') && getFieldError('name')
-    const durationError = isFieldTouched('duration') && getFieldError('duration')
+
+    const durationError =
+      isFieldTouched('duration') && getFieldError('duration')
     const orgMembership =
-    this.props.me.orgMembership &&
-    this.props.me.orgMembership.map(member => member.organisation)
+      this.props.me.orgMembership &&
+      this.props.me.orgMembership.map(member => member.organisation)
     return (
       <div className='ActDetailForm'>
+        <PageTitle>
+          <h1>
+            <FormattedMessage
+              defaultMessage='Create an Activity'
+              id='actDetailForm.Title.New'
+              description='actdetailform title'
+            />
+          </h1>
+          <h5>
+            <FormattedMessage
+              defaultMessage='Create a template that teachers can use to bring in volunteers'
+              id='actDetailForm.Subtitle'
+              description='actdetailform subtitle'
+            />
+          </h5>
+        </PageTitle>
         <Form colon={false}>
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>
+                <h3>
                   <FormattedMessage
-                    defaultMessage='Tell everyone about this Activity?'
+                    defaultMessage='About this Activity'
                     id='actDetailForm.AboutSection.subtitle'
                     description='first section subtitle on actdetailform that asks for title and about details'
                   />
-                </H3Bold>
+                </h3>
               </TitleContainer>
-              <P>
+              <p>
                 <FormattedMessage
                   defaultMessage='Attract people to this activity with a snappy name, use the subtitle to layout the basic idea.'
                   id='actDetailForm.AboutSection.instructions'
                   description='first section instructions on actdetailform that asks for title and about details'
                 />
-              </P>
+              </p>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -305,9 +330,14 @@ class ActDetailForm extends Component {
                 {getFieldDecorator('description', {
                   rules: []
                 })(
-                  isTest
-                    ? <TextArea rows={20} placeholder='All the details about the activity, you can use HTML or Markdown here' />
-                    : <RichTextEditor />
+                  isTest ? (
+                    <TextArea
+                      rows={20}
+                      placeholder='All the details about the activity, you can use HTML or Markdown here'
+                    />
+                  ) : (
+                    <RichTextEditor />
+                  )
                 )}
               </Form.Item>
               {orgMembership && (
@@ -324,32 +354,28 @@ class ActDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>
+                <h3>
                   <FormattedMessage
-                    defaultMessage='What topics and learning outcomes does this activity cover?'
+                    defaultMessage='Topics'
                     id='actDetailForm.TagsSection.subtitle'
                     description='Tag section subtitle on actdetailform that asks for topics and outcomes'
                   />
-                </H3Bold>
+                </h3>
               </TitleContainer>
-              <P>
+              <p>
                 <FormattedMessage
                   defaultMessage='Make this activity searchable by classifying it with subject, age group, and technology keywords.'
                   id='actDetailForm.TagsSection.instructions'
                   description='Tag section instructions on actdetailform that asks for title and about details'
                 />
-              </P>
+              </p>
             </DescriptionContainer>
             <InputContainer>
               <Form.Item label={actTags}>
                 {getFieldDecorator('tags', {
                   initialValue: [],
                   rules: []
-                })(
-                  <TagInput
-                    existingTags={this.props.existingTags}
-                  />
-                )}
+                })(<TagInput existingTags={this.props.existingTags} />)}
               </Form.Item>
             </InputContainer>
           </FormGrid>
@@ -358,15 +384,15 @@ class ActDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>
+                <h3>
                   <FormattedMessage
-                    defaultMessage='What resources are required to run this activity?'
+                    defaultMessage='Requirements'
                     id='actDetailForm.ResourceSection.subtitle'
                     description='section subtitle on actdetail form for resources'
                   />
-                </H3Bold>
+                </h3>
               </TitleContainer>
-              <P>
+              <p>
                 <FormattedMessage
                   defaultMessage='What is the time commitment?
                     How many people do you need to help?
@@ -376,7 +402,7 @@ class ActDetailForm extends Component {
                   id='actDetailForm.ResourceSection.instructions'
                   description='section instructions on actdetail form for resources'
                 />
-              </P>
+              </p>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -395,10 +421,17 @@ class ActDetailForm extends Component {
                   })(<Input placeholder='4 hours' required />)}
                 </Form.Item>
                 <Form.Item label={actResource}>
-                  {getFieldDecorator('resource')(<Input placeholder='5 people, classroom, projector' />)}
+                  {getFieldDecorator('resource')(
+                    <Input placeholder='5 people, classroom, projector' />
+                  )}
                 </Form.Item>
                 <Form.Item>
-                  <Radio name='volunteer' value='option1' checked={this.state.option1} onClick={this.actRadio.bind(this, 'option1')}>
+                  <Radio
+                    name='volunteer'
+                    value='option1'
+                    checked={this.state.option1}
+                    onClick={this.actRadio.bind(this, 'option1')}
+                  >
                     <FormattedMessage
                       id='act.detail.volunteercount'
                       defaultMessage='Total number of volunteers required'
@@ -407,12 +440,20 @@ class ActDetailForm extends Component {
                   </Radio>
                   {getFieldDecorator('totalVolunteerRequired')(
                     <Input
-                      name='resourceinput1' onChange={this.handleChange}
-                      disabled={this.state.input1Disabled} placeholder='Select from 1 to 100'
-                    />)}
+                      name='resourceinput1'
+                      onChange={this.handleChange}
+                      disabled={this.state.input1Disabled}
+                      placeholder='Select from 1 to 100'
+                    />
+                  )}
                 </Form.Item>
                 <Form.Item>
-                  <Radio name='volunteer' value='option2' checked={this.state.option2} onClick={this.actRadio.bind(this, 'option2')}>
+                  <Radio
+                    name='volunteer'
+                    value='option2'
+                    checked={this.state.option2}
+                    onClick={this.actRadio.bind(this, 'option2')}
+                  >
                     <FormattedMessage
                       id='act.detailform.volunteerratio'
                       defaultMessage='Number of students per volunteer'
@@ -423,11 +464,15 @@ class ActDetailForm extends Component {
                     <Input
                       name='resourceinput2'
                       onChange={this.handleChange}
-                      disabled={this.state.input2Disabled} placeholder='Specify the number of students'
-                    />)}
+                      disabled={this.state.input2Disabled}
+                      placeholder='Specify the number of students'
+                    />
+                  )}
                 </Form.Item>
                 <Form.Item label={actSpace}>
-                  {getFieldDecorator('space')(<Input name='space' placeholder='40 sqm' />)}
+                  {getFieldDecorator('space')(
+                    <Input name='space' placeholder='40 sqm' />
+                  )}
                 </Form.Item>
               </ShortInputContainer>
             </InputContainer>
@@ -438,21 +483,21 @@ class ActDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>
+                <h3>
                   <FormattedMessage
                     id='actDetailForm.addEquipment.title'
                     defaultMessage='Do you need any equipment or materials for this opportunity? (Optional)'
                     description='subtitle for add equipment section in act detail form'
                   />
-                </H3Bold>
+                </h3>
               </TitleContainer>
-              <P>
+              <p>
                 <FormattedMessage
                   id='actDetailForm.addEquipment.instructions'
                   defaultMessage='Let volunteers and businesses know what you need to make the opportunity happen.'
                   description='instructions to add equipment in act detail form'
                 />
-              </P>
+              </p>
             </DescriptionContainer>
             <InputContainer>
               <MediumInputContainer>
@@ -479,22 +524,26 @@ class ActDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>
+                <h3>
                   <FormattedMessage
                     id='actDetailForm.addImageSection.title'
                     defaultMessage='Add an image'
                     description='subtitle for add image section in act detail form'
                   />
-                </H3Bold>
+                </h3>
               </TitleContainer>
-              <P>
+              <p>
                 <FormattedMessage
                   id='actDetailForm.addImageSection.instructions'
                   defaultMessage="Activities with illustrations get more responses. If you don't have a photo click suggest and we can provide one based on the tags."
                   description='instructions for add image section in actdetail form'
                 />
-              </P>
-              <img style={{ width: '50%', float: 'right' }} src={this.props.act.imgUrl} alt='' />
+              </p>
+              <img
+                style={{ width: '50%', float: 'right' }}
+                src={this.props.act.imgUrl}
+                alt=''
+              />
             </DescriptionContainer>
             <InputContainer>
               <MediumInputContainer>
@@ -513,21 +562,21 @@ class ActDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>
+                <h3>
                   <FormattedMessage
                     id='actDetailForm.SaveActivityButton'
                     defaultMessage='Save Activity'
                     description='Subtitle for save activity section on ActDetailForm'
                   />
-                </H3Bold>
+                </h3>
               </TitleContainer>
-              <P>
+              <p>
                 <FormattedMessage
                   id='act.SaveInstructions'
                   defaultMessage='Save as draft will allow you to preview the activity while Publish will make it available to everyone to view.'
                   description='Instructions for save and publish on activity details form'
                 />
-              </P>
+              </p>
             </DescriptionContainer>
             <InputContainer>
               <Button
@@ -573,7 +622,6 @@ class ActDetailForm extends Component {
               </Button>
             </InputContainer>
           </FormGrid>
-
         </Form>
       </div>
     )
@@ -636,24 +684,56 @@ export default Form.create({
     }
     return {
       name: Form.createFormField({ ...props.act.name, value: props.act.name }),
-      subtitle: Form.createFormField({ ...props.act.subtitle, value: props.act.subtitle }),
-      description: Form.createFormField({ ...props.act.description, value: props.act.description }),
+      subtitle: Form.createFormField({
+        ...props.act.subtitle,
+        value: props.act.subtitle
+      }),
+      description: Form.createFormField({
+        ...props.act.description,
+        value: props.act.description
+      }),
       offerOrg: Form.createFormField({
         ...props.act.offerOrg,
         value: { key: props.act.offerOrg ? props.act.offerOrg._id : '' }
       }),
-      duration: Form.createFormField({ ...props.act.duration, value: props.act.duration }),
-      location: Form.createFormField({ ...props.act.location, value: props.act.location }),
-      imgUrl: Form.createFormField({ ...props.act.imgUrl, value: props.act.imgUrl }),
+      duration: Form.createFormField({
+        ...props.act.duration,
+        value: props.act.duration
+      }),
+      location: Form.createFormField({
+        ...props.act.location,
+        value: props.act.location
+      }),
+      imgUrl: Form.createFormField({
+        ...props.act.imgUrl,
+        value: props.act.imgUrl
+      }),
       time: Form.createFormField({ ...props.act.time, value: props.act.time }),
-      resource: Form.createFormField({ ...props.act.resource, value: props.act.resource }),
-      status: Form.createFormField({ ...props.act.status, value: props.act.status }),
+      resource: Form.createFormField({
+        ...props.act.resource,
+        value: props.act.resource
+      }),
+      status: Form.createFormField({
+        ...props.act.status,
+        value: props.act.status
+      }),
       tags: Form.createFormField({ ...props.act.tags, value: props.act.tags }),
-      totalVolunteerRequired: Form.createFormField({ ...totalVolunteerRequired, value: totalVolunteerRequired }),
-      volunteerPerStudent: Form.createFormField({ ...volunteerPerStudent, value: volunteerPerStudent }),
-      space: Form.createFormField({ ...props.act.space, value: props.act.space }),
-      equipment: Form.createFormField({ ...props.act.equipment, value: props.act.equipment })
+      totalVolunteerRequired: Form.createFormField({
+        ...totalVolunteerRequired,
+        value: totalVolunteerRequired
+      }),
+      volunteerPerStudent: Form.createFormField({
+        ...volunteerPerStudent,
+        value: volunteerPerStudent
+      }),
+      space: Form.createFormField({
+        ...props.act.space,
+        value: props.act.space
+      }),
+      equipment: Form.createFormField({
+        ...props.act.equipment,
+        value: props.act.equipment
+      })
     }
   }
-
 })(ActDetailForm)
