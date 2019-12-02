@@ -34,7 +34,7 @@ const OpArchivedHeader = ({ date }) => (
     </IconContainer>
     <TextContainer>
       <h4>
-        This activity has already happened, but you can still get involved{' '}
+        This activity has already happened, but you can still get involved with{' '}
         <Link href='/'>
           <a style={{ color: '#CFBCF2' }}>similar activities here</a>
         </Link>
