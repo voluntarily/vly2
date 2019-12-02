@@ -50,8 +50,12 @@ class PersonHomePage extends Component {
     )
   }
 
-  mergeOpsList () {
+  myOpsList () {
     const myops = this.props.opportunities.data // list of ops I own
+    return myops
+  }
+
+  volOpsList () {
     const interests = this.props.interests.data // list of ops I'm volunteering for
     const volops = interests
       .map((interest, index) => {
@@ -67,7 +71,7 @@ class PersonHomePage extends Component {
         }
       })
       .filter(op => op)
-    const ops = [...volops, ...myops]
+    const ops = [...volops]
     return ops
   }
 
@@ -131,7 +135,9 @@ class PersonHomePage extends Component {
       this.props.me.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
     }
 
-    const ops = this.mergeOpsList()
+    const ops = this.myOpsList()
+
+    const vops = this.volOpsList()
 
     const opsTab = (
       <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
@@ -194,8 +200,8 @@ class PersonHomePage extends Component {
                     <h2>
                       <FormattedMessage
                         id='home.liveOpportunities'
-                        defaultMessage='Active Requests'
-                        decription='subtitle on volunteer home page for active requests and opportunities'
+                        defaultMessage='Active Opportunities'
+                        decription='subtitle on teacher home page for active opportunities that have been hosted'
                       />
                     </h2>
                   </SectionTitleWrapper>
@@ -207,7 +213,29 @@ class PersonHomePage extends Component {
                     />
 
                   )}
+
+                  <SectionTitleWrapper>
+                    <h2>
+                      <FormattedMessage
+                        id='home.myOpportunities'
+                        defaultMessage='My Opportunities'
+                        decription='subtitle on teacher home page for signed up opportunities by the volunteers'
+                      />
+                    </h2>
+                  </SectionTitleWrapper>
+                  {ops && (
+                    <OpList
+                      id='MyOpportunities'
+                      ops={vops.filter(op =>
+                        ['active', 'draft'].includes(op.status)
+                      )}
+
+                    />
+
+                  )}
+
                 </SectionWrapper>
+
               )
             }
 
@@ -216,7 +244,7 @@ class PersonHomePage extends Component {
                 <h2>
                   <FormattedMessage
                     id='home.recommendedOpportunities'
-                    defaultMessage='Recommended for you'
+                    defaultMessage='Recommended for You'
                     decription='Title on volunteer home page for recommended opportunities'
                   />
                   <P>
