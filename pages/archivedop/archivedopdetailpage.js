@@ -53,6 +53,7 @@ export class ArchivedOpDetailPage extends OpDetailPage {
         </Helmet>
         <OpDetail
           op={op}
+          {...this.props}
         />
         <Divider />
         <InterestArchivedSection opid={op._id} />

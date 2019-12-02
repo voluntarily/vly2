@@ -59,7 +59,6 @@ export default async (req, res) => {
       category: frag.querySelector('.register-category').textContent,
       expiry: frag.querySelector('.register-expiry').textContent
     }
-    console.log(reg)
     // is this the person you are looking for?
     const matchNames = intersect([...reg.firstname.split(' '), ...reg.lastname.split(' ')], me.name.split(' '))
 
@@ -78,7 +77,7 @@ export default async (req, res) => {
     await me.save()
     res.json(me)
   } catch (e) {
-    console.log('registerRequestor:', e)
+    console.error('registerRequestor:', e)
     res.status(500).end()
   }
 }

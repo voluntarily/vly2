@@ -180,7 +180,7 @@ PersonDetail.propTypes = {
     nickname: PropTypes.string,
     about: PropTypes.string,
     location: PropTypes.string,
-    email: PropTypes.string.isRequired,
+    email: PropTypes.string,
     phone: PropTypes.string,
     facebook: PropTypes.string,
     twitter: PropTypes.string,
@@ -197,12 +197,7 @@ PersonDetail.propTypes = {
       ])
     ),
     status: PropTypes.oneOf(['active', 'inactive', 'hold']),
-    tags: PropTypes.arrayOf(
-      PropTypes.shape({
-        tag: PropTypes.string.isRequired,
-        _id: PropTypes.string
-      })
-    )
+    tags: PropTypes.arrayOf(PropTypes.string)
   }).isRequired
 }
 

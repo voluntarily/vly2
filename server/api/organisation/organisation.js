@@ -24,7 +24,23 @@ const organisationSchema = new Schema({
     members: String,
     outsiders: String
   },
-  dateAdded: { type: 'Date', default: Date.now, required: true }
+  dateAdded: { type: 'Date', default: Date.now, required: true },
+  ageRange: {
+    from: Number,
+    to: Number
+  },
+  decile: Number,
+  contactName: String,
+  contactPhoneNumber: String
 })
 
-module.exports = mongoose.model('Organisation', organisationSchema)
+// protect multiple imports
+var Organisation
+
+if (mongoose.models.Organisation) {
+  Organisation = mongoose.model('Organisation')
+} else {
+  Organisation = mongoose.model('Organisation', organisationSchema)
+}
+
+module.exports = Organisation

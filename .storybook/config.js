@@ -1,4 +1,4 @@
-import '../assets/voluntarily.less'
+
 import { configure, addParameters } from '@storybook/react'
 import vStoryTheme from './vStoryTheme'
 

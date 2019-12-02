@@ -11,7 +11,6 @@ import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, ShortInputContainer, TitleContainer } from '../VTheme/FormStyles'
-import { H3Bold, P } from '../VTheme/VTheme'
 
 const { TextArea } = Input
 
@@ -280,27 +279,27 @@ class OpDetailForm extends Component {
             )}{' '}
             a request
           </h1>
-          <p>
+          <h5>
             <FormattedMessage
               id='opdetail.pagesubtitle'
               description='subTitle for creating Ops'
               defaultMessage='Ask volunteers for assistance with anything related to tech - there
                 are (get number) of volunteers looking for opportunities to help out'
             />
-          </p>
+          </h5>
         </PageTitle>
         <Divider />
         <Form hideRequiredMark colon={false}>
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>What are you looking for?</H3Bold>
+                <h3>What are you looking for?</h3>
               </TitleContainer>
-              <P>
+              <p>
                 Before our skilled volunteers get involved, they need to know
                 how they can help. Add a title and description that tell
                 volunteers how they can help you.
-              </P>
+              </p>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -350,13 +349,13 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>Do you need any specific skills? (optional)</H3Bold>
+                <h3>Do you need any specific skills? (optional)</h3>
               </TitleContainer>
-              <P>
+              <p>
                 Does what you're asking for fit into any specific categories
                 like programming, electronics, or robots? Enter them here to
                 make it easier for volunteers to find you.
-              </P>
+              </p>
             </DescriptionContainer>
             <InputContainer>
               <Form.Item label={opTags}>
@@ -372,12 +371,12 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>Where and when? (optional)</H3Bold>
+                <h3>Where and when? (optional)</h3>
               </TitleContainer>
-              <P>
+              <p>
                 More skilled volunteers will offer to help you if you know when,
                 or where you need help.
-              </P>
+              </p>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -443,12 +442,12 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>Add an image (optional)</H3Bold>
+                <h3>Add an image (optional)</h3>
               </TitleContainer>
-              <P>
+              <p>
                 Requests with photos get more responses. If you don't have a
                 photo leave blank and we will provide one based on the category.
-              </P>
+              </p>
               <img
                 style={{ width: '50%', float: 'right' }}
                 src={this.props.op.imgUrl}
@@ -470,15 +469,15 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>Confirm request</H3Bold>
+                <h3>Confirm request</h3>
               </TitleContainer>
-              <P>
+              <p>
                 <FormattedMessage
                   id='op.SaveInstructions'
                   defaultMessage='Save as Draft will allow you to preview the request while Publish will make it available to everyone to view.'
                   description='Instructions for save and publish on opportunity details form'
                 />
-              </P>
+              </p>
             </DescriptionContainer>
             <InputContainer>
               <Button
@@ -546,12 +545,7 @@ OpDetailForm.propTypes = {
     status: PropTypes.string,
 
     // requestor: PropTypes.string,
-    tags: PropTypes.arrayOf(
-      PropTypes.shape({
-        tag: PropTypes.string.isRequired,
-        _id: PropTypes.string
-      })
-    )
+    tags: PropTypes.arrayOf(PropTypes.string)
   }),
   me: PropTypes.shape({
     _id: PropTypes.string,
@@ -568,12 +562,7 @@ OpDetailForm.propTypes = {
   }),
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  existingTags: PropTypes.arrayOf(
-    PropTypes.shape({
-      tag: PropTypes.string.isRequired,
-      _id: PropTypes.string
-    })
-  ).isRequired,
+  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired
   // dispatch: PropTypes.func.isRequired,
 }

@@ -22,17 +22,14 @@ export function TagDisplay ({ tags }) {
   return (
     <span>
       {tags.map(tag => {
-        return <TagStyle key={tag.tag}>{tag.tag}</TagStyle>
+        return <TagStyle key={tag}>{tag}</TagStyle>
       })}
     </span>
   )
 }
 
 TagDisplay.propTypes = {
-  tags: PropTypes.arrayOf(PropTypes.shape({
-    tag: PropTypes.string.isRequired,
-    _id: PropTypes.string
-  }))
+  tags: PropTypes.arrayOf(PropTypes.string)
 }
 
 export default TagDisplay

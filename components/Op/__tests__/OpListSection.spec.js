@@ -320,13 +320,13 @@ test.serial('Test sort by date', async t => {
 
     const opsModified = ops.map((op, index) => {
       if (index === 0) {
-        op.date = ['2019-05-23T12:26:18.000Z', '2019-05-23T12:26:18.000Z']
+        op.date = ['2019-11-22T10:15:38.972Z', '2019-11-23T10:15:59.110Z']
       } else if (index === 1) {
         op.date = [null, 'undefined']
       } else if (index === 2) {
-        op.date = [null, '2019-05-23T12:26:18.000Z']
+        op.date = [null, '2019-11-25T10:21:12.614Z']
       } else if (index === 3) {
-        op.date[0] = '2019-05-23T12:26:18.000Z'
+        op.date[0] = '2019-11-28T10:23:24.823Z'
         delete op.date[1]
       }
       return op
@@ -341,12 +341,12 @@ test.serial('Test sort by date', async t => {
     await sleep(1)
     wrapper.update()
     // Checking first and last name of an opportunity in opcard list based on their dates
-    t.is(wrapper.find('OpCard').first().text().includes('1 Mentor'), true)
-    t.is(wrapper.find('OpCard').last().text().includes('4 The first 100'), true)
+    t.is(wrapper.find('OpCard').at(0).text().includes('1 Mentor a year 12 business Impact Project'), true)
+    t.is(wrapper.find('OpCard').at(4).text().includes('4 The first 100 metres'), true)
     t.truthy(myMock.done())
     myMock.restore()
   } catch (e) {
-    console.log(e)
+    console.error(e)
   }
 })
 test.serial('Test sort by commitment', async t => {
