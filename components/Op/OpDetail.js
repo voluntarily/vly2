@@ -133,17 +133,6 @@ export function OpDetail ({
             <ShareLinks url={appUrl} />
           </ActionContainer>
 
-<<<<<<< HEAD
-          <ShareLinks url={appUrl} />
-        </Left>
-        <Right>
-          <Spacer />
-          <img style={{ width: '100%', zIndex: 2 }} src={img} alt={op.name} />
-          <TagContainer>
-            <TagDisplay tags={op.tags} />
-          </TagContainer>
-=======
->>>>>>> c55b35b91c1ad3893c792b1caed661c1502b7f1e
         </Right>
       </HalfGrid>
       <TabContainer>
