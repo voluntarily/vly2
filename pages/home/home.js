@@ -10,7 +10,7 @@ import OpList from '../../components/Op/OpList'
 import OpRecommendations from '../../components/Op/OpRecommendations'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
-import { FullPage, H3Black, P, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
+import { FullPage, P, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withArchivedOpportunities, withInterests, withMembers, withOps, withPeople, withRecommendedOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
@@ -24,7 +24,9 @@ const SectionWrapper = styled.div`
   margin: 4rem 0 6rem 0;
 `
 
-const TitleContainer = styled.div``
+const TitleContainer = styled.div`
+text-transform: capitalize;
+`
 
 function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
@@ -48,8 +50,12 @@ class PersonHomePage extends Component {
     )
   }
 
-  mergeOpsList () {
+  myOpsList () {
     const myops = this.props.opportunities.data // list of ops I own
+    return myops
+  }
+
+  volOpsList () {
     const interests = this.props.interests.data // list of ops I'm volunteering for
     const volops = interests
       .map((interest, index) => {
@@ -65,7 +71,7 @@ class PersonHomePage extends Component {
         }
       })
       .filter(op => op)
-    const ops = [...volops, ...myops]
+    const ops = [...volops]
     return ops
   }
 
@@ -129,10 +135,12 @@ class PersonHomePage extends Component {
       this.props.me.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
     }
 
-    const ops = this.mergeOpsList()
+    const ops = this.myOpsList()
+
+    const vops = this.volOpsList()
 
     const opsTab = (
-      <span>
+      <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
         <Icon type='inbox' />
         <FormattedMessage
           id='home.liveops'
@@ -142,7 +150,7 @@ class PersonHomePage extends Component {
       </span>
     )
     const searchTab = (
-      <span>
+      <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
         <Icon type='history' />
         <FormattedMessage
           id='home.pastops'
@@ -152,7 +160,7 @@ class PersonHomePage extends Component {
       </span>
     )
     const profileTab = (
-      <span>
+      <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
         <Icon type='setting' />
         <FormattedMessage
           id='home.profile'
@@ -168,15 +176,15 @@ class PersonHomePage extends Component {
         </Helmet>
         <PageHeaderContainer>
           <TitleContainer>
-            <H3Black>
+            <h1>
               {this.props.me.nickname}'s Requests
-            </H3Black>
+            </h1>
           </TitleContainer>
           <RequestButtonContainer>
             <OpAdd {...this.props} />
             <ActAdd {...this.props} />
           </RequestButtonContainer>
-          <p>See the requests you have signed up for here</p>
+          <h5>See the requests you have signed up for here</h5>
         </PageHeaderContainer>
 
         <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
@@ -189,13 +197,13 @@ class PersonHomePage extends Component {
               this.props.opportunities.data.length !== 0 && (
                 <SectionWrapper>
                   <SectionTitleWrapper>
-                    <H3Black>
+                    <h2>
                       <FormattedMessage
                         id='home.liveOpportunities'
-                        defaultMessage='Active Requests'
-                        decription='subtitle on volunteer home page for active requests and opportunities'
+                        defaultMessage='Active Opportunities'
+                        decription='subtitle on teacher home page for active opportunities that have been hosted'
                       />
-                    </H3Black>
+                    </h2>
                   </SectionTitleWrapper>
                   {ops && (
                     <OpList
@@ -205,16 +213,38 @@ class PersonHomePage extends Component {
                     />
 
                   )}
+
+                  <SectionTitleWrapper>
+                    <h2>
+                      <FormattedMessage
+                        id='home.myOpportunities'
+                        defaultMessage='My Opportunities'
+                        decription='subtitle on teacher home page for signed up opportunities by the volunteers'
+                      />
+                    </h2>
+                  </SectionTitleWrapper>
+                  {ops && (
+                    <OpList
+                      id='MyOpportunities'
+                      ops={vops.filter(op =>
+                        ['active', 'draft'].includes(op.status)
+                      )}
+
+                    />
+
+                  )}
+
                 </SectionWrapper>
+
               )
             }
 
             <SectionWrapper>
               <SectionTitleWrapper>
-                <H3Black>
+                <h2>
                   <FormattedMessage
                     id='home.recommendedOpportunities'
-                    defaultMessage='Recommended for you'
+                    defaultMessage='Recommended for You'
                     decription='Title on volunteer home page for recommended opportunities'
                   />
                   <P>
@@ -224,7 +254,7 @@ class PersonHomePage extends Component {
                       decription='Subtitle on volunteer home page for recommended opportunities'
                     />
                   </P>
-                </H3Black>
+                </h2>
               </SectionTitleWrapper>
               <OpRecommendations
                 recommendedOps={this.props.recommendedOps.data[0]}
@@ -235,13 +265,13 @@ class PersonHomePage extends Component {
           <TabPane tab={searchTab} key='2'>
             <SectionWrapper>
               <SectionTitleWrapper>
-                <H3Black>Completed Requests</H3Black>
+                <h2>Completed Requests</h2>
               </SectionTitleWrapper>
               <OpList
                 ops={this.getArchivedOpportunitiesByStatus('completed')}
               />
               <SectionTitleWrapper>
-                <H3Black>Cancelled Requests</H3Black>
+                <h2>Cancelled Requests</h2>
               </SectionTitleWrapper>
               <OpList
                 ops={this.getArchivedOpportunitiesByStatus('cancelled')}

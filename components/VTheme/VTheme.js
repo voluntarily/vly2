@@ -39,12 +39,47 @@ export const Spacer = styled.div`
   height: 4rem;
 ` // end spacer
 
+export const ControlGrid = styled.div`
+display: grid;
+grid-template-columns: 5fr 2fr;
+
+align-self: center;
+
+@media screen and (min-width: 768px) and (max-width: 1281px) {
+    grid-template-columns: 1fr 13rem;
+    grid-column-gap: 2rem;
+  }
+
+
+@media screen and (max-width: 768px) {
+    grid-template-columns: calc(100vw - 2rem);
+  }
+
+`
+
+export const OpSectionGrid = styled.div`
+  margin: 2rem 0;
+  display: grid;
+  grid-template-columns: 25rem 1fr;
+  gap: 5rem;
+  text-align: left;
+  @media screen and (min-width: 768px) and (max-width: 1281px) {
+    grid-template-columns: calc(50vw - 4rem) calc(50vw - 4rem);
+    grid-column-gap: 2rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: calc(100vw - 2rem);
+  }
+`// end OpSection
+
 export const HalfGrid = styled.div`
   display: grid;
   position: relative;
   margin: 0;
   grid-template-columns: 39rem 39rem;
   grid-column-gap: 2rem;
+  margin: 8rem 0 4rem 0;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: calc(50vw - 4rem) calc(50vw - 4rem);
@@ -140,6 +175,10 @@ export const ActivityContainer = styled.div`
 
 export const GridTestItem = styled.div`
   background-color: pink;
+`
+
+export const Section = styled.section`
+  margin-bottom: 2rem;
 `
 
 /*
@@ -375,6 +414,7 @@ a { text-decoration: none; }
 
 figcaption {
   -webkit-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 :hover {
@@ -405,6 +445,7 @@ h1 {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   -webkit-transition: all 0.28s;
+  transition: all 0.28s;
   font-weight: 700;
   font-size: 20px;
   line-height: 1.4;
@@ -413,14 +454,15 @@ h1 {
 }
 
 img {
+  transition: all 0.2s;
   -webkit-transition: all 0.2s;
   width: 100%;
   height: auto;
   max-height: 10rem;
   background-color: rgba(0, 0, 0, 0);
-  object-fit: scale-down;
+  object-fit: cover;
   overflow: hidden;
-  object-position: center;
+  object-position: top;
 }
 
 time {

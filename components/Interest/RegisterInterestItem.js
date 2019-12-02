@@ -60,7 +60,7 @@ class RegisterInterestItem extends Component {
           {options.formAlwaysVisible || options.headerAlwaysVisible || this.state.isFormVisible
             ? (
               <Row>
-                <h1>{options.headingText}</h1>
+                <h4>{options.headingText}</h4>
                 <p>{options.subHeadingText}</p>
               </Row>) : null}
 
@@ -116,6 +116,7 @@ class RegisterInterestItem extends Component {
                   </Form.Item>
                   <Button
                     type='primary'
+                    size='large'
                     disabled={hasErrors(getFieldsError()) || !this.state.termsAccepted}
                     shape='round'
                     onClick={this.handleChangeStateButtonClicked.bind(this)}
@@ -144,6 +145,7 @@ class RegisterInterestItem extends Component {
                 <span>
                   <Button
                     type='primary'
+                    size='large'
                     shape='round'
                     onClick={() => this.setState({ isFormVisible: true })}
                   >

@@ -180,7 +180,7 @@ PersonDetail.propTypes = {
     nickname: PropTypes.string,
     about: PropTypes.string,
     location: PropTypes.string,
-    email: PropTypes.string.isRequired,
+    email: PropTypes.string,
     phone: PropTypes.string,
     facebook: PropTypes.string,
     twitter: PropTypes.string,

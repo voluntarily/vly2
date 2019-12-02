@@ -2,6 +2,8 @@ import { Button, Divider, message, Popconfirm } from 'antd'
 import Router from 'next/router'
 import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
+
+import { ControlGrid, Spacer } from '../../components/VTheme/VTheme'
 import InterestSection from '../../components/Interest/InterestSection'
 
 export default class OpOwnerManageInterests extends Component {
@@ -39,18 +41,26 @@ export default class OpOwnerManageInterests extends Component {
     return (
       this.props.canManageInterests &&
         <section>
-          <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' onConfirm={this.handleCompleted} onCancel={this.handleCompletedCancelled} okText='Yes' cancelText='No'>
-            <Button type='primary' shape='round'>
-              <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
-            </Button>
-          </Popconfirm>
-        &nbsp;
-          <Popconfirm id='cancelOpPopConfirm' title='Confirm cancel of this opportunity.' onConfirm={this.handleCancel} onCancel={this.handleCancelButtonCancelled} okText='Yes' cancelText='No'>
-            <Button type='danger' shape='round'>
-              <FormattedMessage id='cancelOp' defaultMessage='Cancel Request' description='Button to cancel an opportunity on OpDetails page' />
-            </Button>
-          </Popconfirm>
           <Divider />
+          <ControlGrid>
+            <h5><strong>Finish this activity</strong><br />Only use this button once your activity is complete</h5>
+            <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' onConfirm={this.handleCompleted} onCancel={this.handleCompletedCancelled} okText='Yes' cancelText='No'>
+              <Button type='primary' shape='round' size='large'>
+                <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
+              </Button>
+            </Popconfirm>
+          </ControlGrid>
+          <Divider />
+          <ControlGrid>
+            <h5><strong>Cancel this activity</strong><br />This will end the activity and stop volunteers from seeing it</h5>
+            <Popconfirm id='cancelOpPopConfirm' title='Confirm cancel of this opportunity.' onConfirm={this.handleCancel} onCancel={this.handleCancelButtonCancelled} okText='Yes' cancelText='No'>
+              <Button type='danger' shape='round' size='large'>
+                <FormattedMessage id='cancelOp' defaultMessage='Cancel Request' description='Button to cancel an opportunity on OpDetails page' />
+              </Button>
+            </Popconfirm>
+          </ControlGrid>
+          <Divider />
+          <Spacer />
           <InterestSection opid={this.props.op._id} />
         </section>
     )
