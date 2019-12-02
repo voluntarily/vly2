@@ -6,8 +6,8 @@ const { Option } = Select
 
 class EducationSelector extends React.Component {
   render () {
-    const { existingLocations, onChange, value, width } = this.props
-    const children = existingLocations.map(location => <Option key={location}>{location}</Option>)
+    const { existingEducation, onChange, value, width } = this.props
+    const children = existingEducation.map(education => <Option key={education}>{education}</Option>)
     return (
       <Select
         showSearch
@@ -25,7 +25,7 @@ class EducationSelector extends React.Component {
 EducationSelector.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
-  existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired,
+  existingEducation: PropTypes.arrayOf(PropTypes.string).isRequired,
   width: PropTypes.string
 }
 

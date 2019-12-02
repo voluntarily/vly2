@@ -318,7 +318,7 @@ class PersonDetailForm extends Component {
                 {getFieldDecorator('education', {
                   rules: []
                 })(
-                  <EducationSelector existingEducations={this.props.education} />
+                  <EducationSelector existingEducation={this.props.education} />
                 )}
               </Form.Item>
             </InputContainer>
