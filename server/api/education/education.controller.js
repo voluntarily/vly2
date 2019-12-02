@@ -10,5 +10,4 @@ const geteducation = function (req, res) {
     res.json(returnEducation)
   }
 }
-
 module.exports = geteducation
