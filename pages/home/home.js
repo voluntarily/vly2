@@ -215,13 +215,13 @@ class PersonHomePage extends Component {
                   )}
 
                   <SectionTitleWrapper>
-                    <H3Black>
+                    <h2>
                       <FormattedMessage
                         id='home.myOpportunities'
                         defaultMessage='My Opportunities'
                         decription='subtitle on teacher home page for signed up opportunities by the volunteers'
                       />
-                    </H3Black>
+                    </h2>
                   </SectionTitleWrapper>
                   {ops && (
                     <OpList
