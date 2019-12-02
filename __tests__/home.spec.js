@@ -180,9 +180,9 @@ test.serial('render volunteer home page - Active tab', t => {
       <PersonHomePageTest {...props} />
     </Provider>)
 
-  t.is(wrapper.find('h3').first().text(), t.context.me.nickname + "'s Requests")
+  t.is(wrapper.find('h1').first().text(), t.context.me.nickname + "'s Requests")
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h3').first().text(), 'Getting Started')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h2').first().text(), 'Getting Started')
 
   const oplists = wrapper.find('OpList')
   t.is(oplists.length, 3)
@@ -214,8 +214,8 @@ test.serial('render volunteer home page - History tab', t => {
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'History')
 
   const historyPane = wrapper.find('.ant-tabs-tabpane-active').first()
-  t.is(historyPane.find('h3').first().text(), 'Completed Requests')
-  t.is(historyPane.find('h3').at(1).text(), 'Cancelled Requests')
+  t.is(historyPane.find('h2').first().text(), 'Completed Requests')
+  t.is(historyPane.find('h2').at(1).text(), 'Cancelled Requests')
 
   const oplists = historyPane.find('OpList')
   t.is(oplists.length, 2) // The number of oplists on history tab
