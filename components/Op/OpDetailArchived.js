@@ -24,10 +24,8 @@ import {
 } from '../VTheme/ItemList'
 import { OpQuestion } from './OpQuestion'
 import OpUpdate from './OpUpdate'
-import OpVolunteerInterestSection from './OpVolunteerInterestSection'
 import { withRouter } from 'next/router'
 import { config } from '../../config/config'
-import { ShareLinks } from './OpShareLinks'
 
 const { TabPane } = Tabs
 
@@ -123,8 +121,7 @@ export function OpDetailArchived ({
             <ItemDate startDate={startDate} endDate={endDate} />
             <ItemStatus status={op.status} />
           </ItemContainer>
-          <ActionContainer>
-          </ActionContainer>
+          <ActionContainer />
 
         </Right>
       </HalfGrid>

@@ -52,7 +52,7 @@ export class ArchivedOpDetailPage extends OpDetailPage {
         <Helmet>
           <title>Voluntarily - Archived Opportunity Details</title>
         </Helmet>
-        <OpArchivedHeader></OpArchivedHeader>
+        <OpArchivedHeader />
         <OpDetailArchived
           op={op}
           {...this.props}
