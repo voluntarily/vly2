@@ -71,7 +71,7 @@ test('archivedOpDetailPage should have an OpDetail component', t => {
     </Provider>
   )
 
-  t.is(wrapper.find('OpDetail').length, 1)
+  t.is(wrapper.find('OpDetailArchived').length, 1)
 })
 
 test('archivedOpDetailPage should have an InterestSection component', t => {
