@@ -522,7 +522,7 @@ class OrgDetailForm extends Component {
                               value={getFieldValue('address')}
                               onChange={e => this.setAddress(e.target.value)}
                             />
-                            {getFieldValue('address') &&
+                            {OrgDetailForm.createGoogleMapsAddressUrl(getFieldValue('address')) &&
                               <a href={OrgDetailForm.createGoogleMapsAddressUrl(getFieldValue('address'))} target='_blank' rel='noopener noreferrer'>
                                 <FormattedMessage
                                   id='org.detail.viewAddressInGoogleMaps'
