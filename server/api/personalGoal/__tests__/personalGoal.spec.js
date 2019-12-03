@@ -67,7 +67,6 @@ test.after.always(async (t) => {
 })
 
 test.serial('Should not return any personal goals without a person id', async t => {
-
   const res = await request(server)
     .get('/api/personalGoals')
     .set('Accept', 'application/json')
