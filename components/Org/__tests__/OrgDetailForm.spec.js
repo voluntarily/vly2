@@ -166,11 +166,11 @@ test('createGoogleMapsAddressUrl - whitespace', t => {
   t.is(OrgDetailForm.createGoogleMapsAddressUrl(''), undefined)
 })
 test('createGoogleMapsAddressUrl - single line', t => {
-  t.is(OrgDetailForm.createGoogleMapsAddressUrl('44 The terrace'), '44%20The%20terrace')
+  t.is(OrgDetailForm.createGoogleMapsAddressUrl('44 The terrace'), 'https://www.google.com/maps/search/?api=1&query=44%20The%20terrace')
 })
 test('createGoogleMapsAddressUrl - multiple lines', t => {
   t.is(OrgDetailForm.createGoogleMapsAddressUrl(
 `44 The terrace
 Wellington
-New Zealand`), '44%20The%20terrace%0AWellington%0ANew%20Zealand')
+New Zealand`), 'https://www.google.com/maps/search/?api=1&query=44%20The%20terrace%20Wellington%20New%20Zealand')
 })
