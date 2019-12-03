@@ -1,5 +1,5 @@
 const PersonalGoal = require('./personalGoal')
-const Goal = require('../Goal/Goal')
+const Goal = require('../goal/goal')
 /* Note These library functions call the database.
 They can fail and throw exceptions, we don't catch them here but
 allow them to be caught at the API layer where we can return a 4xx result
