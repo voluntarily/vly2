@@ -130,7 +130,7 @@ export function OpDetail ({
               op={op}
               meID={me && me._id}
             />
-            <ShareLinks url={appUrl} />
+            <ShareLinks url={appUrl} op={op} />
           </ActionContainer>
 
         </Right>
