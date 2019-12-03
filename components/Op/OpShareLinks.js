@@ -1,5 +1,15 @@
 import React from 'react'
-import { FacebookShareButton, LinkedinShareButton, TwitterShareButton, WhatsappShareButton, FacebookIcon, TwitterIcon, WhatsappIcon, LinkedinIcon } from 'react-share'
+import { 
+  FacebookShareButton, 
+  LinkedinShareButton, 
+  TwitterShareButton, 
+  WhatsappShareButton, 
+  FacebookIcon, 
+  TwitterIcon, 
+  WhatsappIcon, 
+  LinkedinIcon,
+  EmailShareButton,
+  EmailIcon } from 'react-share'
 
 const shareLinkStyle = {
   display: 'inline-block',
@@ -8,7 +18,7 @@ const shareLinkStyle = {
   outline: 'none'
 }
 
-export const ShareLinks = ({ url }) => (
+export const ShareLinks = ({ url, op }) => (
   <div>
     <FacebookShareButton
       style={shareLinkStyle}
@@ -37,5 +47,13 @@ export const ShareLinks = ({ url }) => (
     >
       <WhatsappIcon size={48} round />
     </WhatsappShareButton>
+
+    <EmailShareButton
+      style={shareLinkStyle}
+      url={url}
+      subject={op.name}
+      >
+      <EmailIcon size={48} round />
+    </EmailShareButton>
   </div>
 )
