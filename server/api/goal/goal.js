@@ -39,6 +39,7 @@ const goalSchema = new Schema({
 
   // evaluation - function that checks whether the goal has been completed - e.g. badge presents, status value etc.
   evaluation: { type: 'String' },
+  rank: { type: 'Number', default: 99, required: true },
   dateAdded: { type: 'Date', default: Date.now, required: true }
 })
 

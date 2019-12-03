@@ -91,7 +91,7 @@ const listAllBadge = async (req, res) => {
 
 const listUserBadge = async (req, res) => {
   const { user } = req.params
-  const badgeResponse = await Badge.find({ person: user })
+  const badgeResponse = await Badge.find({ person: user }).exec()
   if (badgeResponse == null) return res.json([]).status(200)
   return res.json(badgeResponse)
 }

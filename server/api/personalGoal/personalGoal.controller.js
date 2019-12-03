@@ -1,34 +1,16 @@
 const PersonalGoal = require('./personalGoal')
-
-/* get a single PersonalGoal record with org and person populated out */
-const getPersonalGoalbyId = id => {
-  return PersonalGoal.findOne({ _id: id })
-    .populate({ path: 'person', select: 'nickname' })
-    .populate({ path: 'goal' })
-    .exec()
-}
+const { getPersonalGoalbyId } = require('./personalGoal.lib')
 
 /**
-  api/PersonalGoals -> list all PersonalGoals
-  api/PersonalGoals?meid='personid' -> list all the goals assigned to me and get the goal details
+  api/PersonalGoals -> list all the goals assigned to me and get the goal details
  */
 const listPersonalGoals = async (req, res) => {
-  const sort = 'status'
-  let got
-  // try {
-  if (req.query.meid) {
-    // a person is asking for a list of PersonalGoals
-    const query = { person: req.query.meid }
-    // Return enough info for a goalCard
-    got = await PersonalGoal.find(query).populate({ path: 'goal' }).sort(sort).exec()
-  } else {
-    // list all relationships
-    got = await PersonalGoal.find().sort(sort).exec()
-  }
+  // Return enough info for a goalCard
+  const got = await PersonalGoal.find({ person: req.query.meid })
+    .populate({ path: 'goal' })
+    .populate({ path: 'person', select: 'nickname name imgUrl' })
+    .sort('status').exec()
   res.json(got)
-  // } catch (err) {
-  //   res.status(404).send(err)
-  // }
 }
 
 const updatePersonalGoal = async (req, res) => {
@@ -41,20 +23,6 @@ const updatePersonalGoal = async (req, res) => {
   // } catch (err) {
   //   res.status(404).send(err)
   // }
-}
-
-// creates a new PersonalGoal or updates status of existing PersonalGoal
-const addPersonalGoal = async (personalGoal) => {
-  const found = await PersonalGoal.findOneAndUpdate(
-    { // check for a match
-      person: personalGoal.person,
-      goal: personalGoal.goal
-    },
-    personalGoal, // create or upsert
-    { new: true, upsert: true }
-  )
-  // get populated out PersonalGoal record
-  return getPersonalGoalbyId(found._id)
 }
 
 const createPersonalGoal = async (req, res) => {
@@ -73,6 +41,5 @@ const createPersonalGoal = async (req, res) => {
 module.exports = {
   listPersonalGoals,
   updatePersonalGoal,
-  createPersonalGoal,
-  addPersonalGoal
+  createPersonalGoal
 }

@@ -19,6 +19,7 @@ export default [
     startLink: '/home', // should be /profile#edit
     language: 'en',
     category: 'Getting Started',
+    rank: 1,
     evaluation: "() => { console.log('Complete your profile'); return false }",
     dateAdded: '2019-11-27T10:00:00.000Z'
   },
@@ -52,6 +53,7 @@ export default [
     startLink: '/home', // should be /profile#edit
     language: 'en',
     category: 'Getting Started',
+    rank: 2,
     evaluation: "() => { console.log('does person have school ready badge'); return false }",
     dateAdded: '2019-11-27T10:00:00.000Z'
   },
