@@ -177,6 +177,8 @@ export class ActDetailPage extends Component {
       } else {
         content =
           <>
+
+            <ActDetail act={act} />
             {createOpportunitySection()}
             {canEdit &&
               <Button
@@ -187,7 +189,6 @@ export class ActDetailPage extends Component {
                 <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
               </Button>}
             <Spacer />
-            <ActDetail act={act} />
           </>
       }
     }
