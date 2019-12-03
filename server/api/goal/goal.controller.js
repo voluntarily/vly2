@@ -14,7 +14,7 @@ const Goal = require('./goal')
 
 const getGoals = async (req, res) => {
   let query = {}
-  let sort = 'name'
+  let sort = 'rank'
   let select = null
   try {
     query = req.query.q ? JSON.parse(req.query.q) : query

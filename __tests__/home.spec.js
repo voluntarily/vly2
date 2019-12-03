@@ -161,6 +161,20 @@ test.before('Setup fixtures', (t) => {
         loading: false,
         data: orgs,
         request: null
+      },
+      goals: {
+        sync: false,
+        syncing: false,
+        loading: false,
+        data: [],
+        request: null
+      },
+      personalGoals: {
+        sync: false,
+        syncing: false,
+        loading: false,
+        data: [],
+        request: null
       }
     }
   )
