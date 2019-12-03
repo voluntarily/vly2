@@ -46,9 +46,9 @@ margin-top: 4rem;
 
   @media screen and (max-width: 768px) {
     margin-top: 0rem;
-    grid-template-columns: 100vw;
+    grid-template-columns: 100%;
     height: auto;
-    width: 100vw;
+    width: 100%;
   }
 
 
@@ -93,7 +93,7 @@ const HeroLeft = styled.div`
   @media screen and (max-width: 768px) {
     margin-top: 0rem;
     margin-left: 0rem;
-    width: 100vw;
+    width: 100%;
     height: 15rem;
     border-radius: 0px;
   }
@@ -149,7 +149,7 @@ const AwesomeVideo = styled.video`
   z-index: 1;
 
   @media screen and (max-width: 768px) {
-    width: 100vw;
+    width: 100%;
     object-fit: cover;
     object-position: top;
   }
