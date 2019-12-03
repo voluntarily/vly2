@@ -25,6 +25,7 @@ class OrgDetailForm extends Component {
   constructor (props) {
     super(props)
     this.setImgUrl = this.setImgUrl.bind(this)
+    this.setAddress = this.setAddress.bind(this)
   }
 
   componentDidMount () {
@@ -35,12 +36,28 @@ class OrgDetailForm extends Component {
   setImgUrl = value => {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
+
+  setAddress = value => {
+    this.props.form.setFieldsValue({ address: value })
+  }
   // setWebsite = (value) => {
   //   this.props.form.setWebsite({ contactEmail: value })
   // }
   // setContactEmailUrl = (value) => {
   //   this.props.form.setFieldsValue({ contactEmail: value })
   // }
+
+  /**
+   * Creates a link to google maps for the supplied address.
+   * @param {string} address
+   */
+  static createGoogleMapsAddressUrl (address) {
+    address = (address || '').trim()
+    if (!address) { return undefined }
+
+    address = address.replace(/\n/g, ' ')
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
+  }
 
   handleSubmit = e => {
     e.preventDefault()
@@ -67,6 +84,7 @@ class OrgDetailForm extends Component {
         org.category = values.category
         org.ageRange = values.ageRange
         org.decile = values.decile
+        org.address = values.address
 
         window.scrollTo(0, 0)
         this.props.onSubmit(this.props.org)
@@ -180,6 +198,13 @@ class OrgDetailForm extends Component {
         id='orgContactPhoneNumber'
         defaultMessage='Contact phone number'
         description='Contact phone number'
+      />
+    )
+    const orgAddress = (
+      <FormattedMessage
+        id='orgAddress'
+        defaultMessage='Address'
+        description='Address of the organisation'
       />
     )
 
@@ -487,6 +512,27 @@ class OrgDetailForm extends Component {
                           <Input placeholder='01 123 456789' />
                         )}
                       </Form.Item>
+                      <Form.Item label={orgAddress}>
+                        {getFieldDecorator('address')(
+                          <>
+                            <Input.TextArea
+                              id='address'
+                              rows={4}
+                              maxLength={512}
+                              value={getFieldValue('address')}
+                              onChange={e => this.setAddress(e.target.value)}
+                            />
+                            {getFieldValue('address') &&
+                              <a href={OrgDetailForm.createGoogleMapsAddressUrl(getFieldValue('address'))} target='_blank' rel='noopener noreferrer'>
+                                <FormattedMessage
+                                  id='org.detail.viewAddressInGoogleMaps'
+                                  defaultMessage='View in Google maps'
+                                  description='Link to view the address in Google maps'
+                                />
+                              </a>}
+                          </>
+                        )}
+                      </Form.Item>
                     </ShortInputContainer>
                   </InputContainer>
                 </FormGrid>
@@ -558,7 +604,8 @@ OrgDetailForm.propTypes = {
     _id: PropTypes.string,
     ageRange: PropTypes.object,
     contactName: PropTypes.string,
-    contactPhoneNumber: PropTypes.string
+    contactPhoneNumber: PropTypes.string,
+    address: PropTypes.string
   }).isRequired,
   form: PropTypes.object,
   params: PropTypes.shape({
@@ -614,7 +661,8 @@ export default Form.create({
       ageRange: Form.createFormField({ ...org.ageRange, value: org.ageRange }),
       decile: Form.createFormField({ ...org.decile, value: org.decile }),
       contactName: Form.createFormField({ ...org.contactName, value: org.contactName }),
-      contactPhoneNumber: Form.createFormField({ ...org.contactPhoneNumber, value: org.contactPhoneNumber })
+      contactPhoneNumber: Form.createFormField({ ...org.contactPhoneNumber, value: org.contactPhoneNumber }),
+      address: Form.createFormField({ ...org.address, value: org.address })
     }
   }
 })(OrgDetailForm)

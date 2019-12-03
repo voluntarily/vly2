@@ -108,6 +108,10 @@ test('Fields are submitted', async t => {
   setInputValue('input#organisation_detail_form_contactName', 'John stevens')
   // Contact phone number
   setInputValue('input#organisation_detail_form_contactPhoneNumber', '021 123 456789')
+  // Address
+  setInputValue('textarea#address', `44 The terrace
+Wellington
+New Zealand`)
 
   // Submit the form
   wrapper.find('Form').first().simulate('submit')
@@ -122,7 +126,10 @@ test('Fields are submitted', async t => {
     },
     decile: 8,
     contactName: 'John stevens',
-    contactPhoneNumber: '021 123 456789'
+    contactPhoneNumber: '021 123 456789',
+    address: `44 The terrace
+Wellington
+New Zealand`
   }))
 })
 
@@ -150,4 +157,20 @@ test('validateAgeRange - to less than from', t => {
     from: 10,
     to: 5
   }))
+})
+
+test('createGoogleMapsAddressUrl - empty', t => {
+  t.is(OrgDetailForm.createGoogleMapsAddressUrl(''), undefined)
+})
+test('createGoogleMapsAddressUrl - whitespace', t => {
+  t.is(OrgDetailForm.createGoogleMapsAddressUrl(''), undefined)
+})
+test('createGoogleMapsAddressUrl - single line', t => {
+  t.is(OrgDetailForm.createGoogleMapsAddressUrl('44 The terrace'), '44%20The%20terrace')
+})
+test('createGoogleMapsAddressUrl - multiple lines', t => {
+  t.is(OrgDetailForm.createGoogleMapsAddressUrl(
+`44 The terrace
+Wellington
+New Zealand`), '44%20The%20terrace%0AWellington%0ANew%20Zealand')
 })
