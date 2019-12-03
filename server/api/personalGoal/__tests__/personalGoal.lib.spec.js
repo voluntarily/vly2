@@ -1,7 +1,11 @@
 import test from 'ava'
 import PersonalGoal from '../personalGoal'
 import { PersonalGoalStatus } from '../personalGoal.constants'
-import { addPersonalGoal } from '../personalGoal.controller'
+import {
+  getPersonalGoalbyId,
+  addPersonalGoal,
+  addPersonalGoalGroup
+} from '../personalGoal.lib'
 import Goal from '../../goal/goal'
 import goals from '../../goal/__tests__/goal.fixture'
 import Person from '../../person/person'
@@ -29,7 +33,7 @@ test.after.always(async (t) => {
   await t.context.memMongo.stop()
 })
 
-test('Should add a personalGoal when they are not there already', async t => {
+test.serial('Should add a personalGoal when they are not there already', async t => {
   const personalGoalQuery = {
     person: t.context.alice._id,
     goal: t.context.goal._id
@@ -51,6 +55,11 @@ test('Should add a personalGoal when they are not there already', async t => {
   t.truthy(personalGoal)
   t.is(personalGoal.status, PersonalGoalStatus.QUEUED)
 
+  // test getter is populated
+  const alice2 = await getPersonalGoalbyId(personalGoal._id)
+  t.is(alice2.person.nickname, t.context.alice.nickname)
+  t.is(alice2.goal.name, t.context.goal.name)
+
   // now update to be a ACTIVE
   personalGoal.status = PersonalGoalStatus.ACTIVE
   newPersonalGoal = await addPersonalGoal(personalGoal)
@@ -60,4 +69,21 @@ test('Should add a personalGoal when they are not there already', async t => {
   personalGoal = await PersonalGoal.findOne(personalGoalQuery).exec()
   t.truthy(personalGoal)
   t.is(personalGoal.status, PersonalGoalStatus.ACTIVE)
+})
+
+test.serial('Should add a personalGoal Group to the person', async t => {
+  const q = { person: t.context.dali._id }
+  // Dali has no goals
+  let dalisGoals = await PersonalGoal.find(q).exec()
+  t.is(dalisGoals.length, 0)
+
+  // try with an invalid category
+  await addPersonalGoalGroup('This should fail', t.context.dali._id)
+  dalisGoals = await PersonalGoal.find(q).exec()
+  t.is(dalisGoals.length, 0)
+
+  await addPersonalGoalGroup('Getting Started', t.context.dali._id)
+  // Dali now has 2 goals
+  dalisGoals = await PersonalGoal.find(q).exec()
+  t.is(dalisGoals.length, 2)
 })
