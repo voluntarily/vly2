@@ -66,16 +66,14 @@ test.after.always(async (t) => {
   await t.context.memMongo.stop()
 })
 
-test.serial('Should give number of personalGoals', async t => {
-  t.plan(2)
+test.serial('Should not return any personal goals without a person id', async t => {
 
   const res = await request(server)
     .get('/api/personalGoals')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200)
-  t.is(res.status, 200)
-  t.deepEqual(6, res.body.length)
+  t.deepEqual(0, res.body.length)
 })
 
 test.serial('Should give a list of goals for a person', async t => {

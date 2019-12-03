@@ -9,7 +9,7 @@ const listPersonalGoals = async (req, res) => {
   const got = await PersonalGoal.find({ person: req.query.meid })
     .populate({ path: 'goal' })
     .populate({ path: 'person', select: 'nickname name imgUrl' })
-    .sort('sort').exec()
+    .sort('status').exec()
   res.json(got)
 }
 
