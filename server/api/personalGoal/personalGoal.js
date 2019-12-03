@@ -29,12 +29,11 @@ const personalGoalSchema = new Schema({
 personalGoalSchema.plugin(idvalidator)
 
 // protect multiple imports
-// var PersonalGoal
-
-// if (mongoose.models.PersonalGoal) {
-//   PersonalGoal = mongoose.model(SchemaName)
-// } else {
-//   PersonalGoal = mongoose.model(SchemaName, personalGoalSchema)
-// }
-const PersonalGoal = mongoose.model(SchemaName, personalGoalSchema)
+var PersonalGoal
+if (mongoose.models.PersonalGoal) {
+  PersonalGoal = mongoose.model(SchemaName)
+} else {
+  PersonalGoal = mongoose.model(SchemaName, personalGoalSchema)
+}
+// const PersonalGoal = mongoose.model(SchemaName, personalGoalSchema)
 module.exports = PersonalGoal
