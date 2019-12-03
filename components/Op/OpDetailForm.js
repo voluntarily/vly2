@@ -293,7 +293,7 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <h3>Where and when? (optional)</h3>
+                <h3>Where and when?</h3>
               </TitleContainer>
               <p>
                 More skilled volunteers will offer to help you if you know when,
