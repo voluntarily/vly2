@@ -54,7 +54,7 @@ test.serial('verify fixture database has goals', async t => {
   })
 })
 
-test.serial('Should correctly give count of all goals sorted alpha', async t => {
+test.serial('Should correctly give count of all goals sorted by rank', async t => {
   const res = await request(server)
     .get('/api/goals')
     .set('Accept', 'application/json')
@@ -63,7 +63,7 @@ test.serial('Should correctly give count of all goals sorted alpha', async t => 
   const got = res.body
   t.is(goals.length, got.length)
 
-  t.is(got[0].name, 'Complete first volunteering activity')
+  t.is(got[0].name, 'Complete your profile')
 })
 
 test.serial('Should handle bad JSON', async t => {
