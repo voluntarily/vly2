@@ -7,6 +7,6 @@ test('shallow the list with goals', t => {
   const wrapper = shallowWithIntl(
     <GoalSection goals={goals} />
   )
-  t.is(wrapper.find('VTheme__H3Black').first().text(), goals[0].category)
+  t.is(wrapper.find('h2').first().text(), goals[0].category)
   t.is(wrapper.find('GoalList').length, 1)
 })
