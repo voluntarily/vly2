@@ -7,7 +7,7 @@ import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
-import { HalfGrid, Spacer, OpSectionGrid } from '../VTheme/VTheme'
+import { HalfGrid, OpSectionGrid } from '../VTheme/VTheme'
 import {
   Left,
   Right,
@@ -17,14 +17,16 @@ import {
   ItemDuration,
   ItemStatus,
   ItemIdLine,
-  ItemDate,
   ItemVolunteers,
   ItemSpace,
   EquipmentList,
   ItemImage
 } from '../VTheme/ItemList'
-export function ActDetail ({ act }) {
+import { Role } from '../../server/services/authorize/role'
+
+export function ActDetail ({ act, me }) {
   const img = act.imgUrl || '/static/missingimage.svg'
+  const isOP = me && me.role.includes(Role.OPPORTUNITY_PROVIDER)
   return (
     <>
       <Head>
@@ -38,20 +40,17 @@ export function ActDetail ({ act }) {
           <h1>{act.name}</h1>
           <ItemIdLine item={act.offerOrg} path='orgs' />
           <ItemContainer>
-          <ItemDuration duration={act.duration} />
-          <ItemVolunteers volunteers={act.volunteers} />
+            <ItemDuration duration={act.duration} />
+            <ItemVolunteers volunteers={act.volunteers} />
             <ItemStatus status={act.status} />
 
           </ItemContainer>
-          <Divider/>
-          <Button size='large' shape='round' type='primary'>Create Activity</Button>
+          <Divider />
+          {isOP && <Button size='large' shape='round' type='primary' href={`/op/new?act=${act._id}`}>Run Activity</Button>}
         </Right>
       </HalfGrid>
- 
 
       <Divider />
- 
-
 
       <OpSectionGrid>
         <div>
@@ -67,16 +66,16 @@ export function ActDetail ({ act }) {
             }}
           />
           <TagContainer>
-                  <Divider />
-                  <h5>
-                    <FormattedMessage
-                      id='opTags'
-                      defaultMessage='Tags'
-                      description='Tags on an opportunity'
-                    />
-                  </h5>
-                  <TagDisplay tags={act.tags} />
-                </TagContainer>
+            <Divider />
+            <h5>
+              <FormattedMessage
+                id='opTags'
+                defaultMessage='Tags'
+                description='Tags on an opportunity'
+              />
+            </h5>
+            <TagDisplay tags={act.tags} />
+          </TagContainer>
         </ItemDescription>
       </OpSectionGrid>
 
@@ -84,12 +83,12 @@ export function ActDetail ({ act }) {
 
       <OpSectionGrid>
         <div>
-          <h2>What you'll need</h2>
+          <h2>What you will need</h2>
         </div>
         <ItemDescription>
-        <ItemVolunteers volunteers={act.volunteers} />
-        <ItemSpace space={act.space} />
-      <EquipmentList equipment={act.equipment} />
+          <ItemVolunteers volunteers={act.volunteers} />
+          <ItemSpace space={act.space} />
+          <EquipmentList equipment={act.equipment} />
         </ItemDescription>
       </OpSectionGrid>
       <Divider />
@@ -99,17 +98,15 @@ export function ActDetail ({ act }) {
           <h2>Written by</h2>
         </div>
         <ItemDescription>
-       
+
           <ItemIdLine item={act.owner} path='people' />
           <ItemIdLine item={act.offerOrg} path='orgs' />
         </ItemDescription>
       </OpSectionGrid>
-      
+
       <Divider />
 
-      <TagContainer>
-
-      </TagContainer>
+      <TagContainer />
     </>
   )
 }

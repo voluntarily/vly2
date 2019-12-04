@@ -183,11 +183,12 @@ export class ActDetailPage extends Component {
         content =
           <>
 
-            <ActDetail act={act}
-            onEditClicked={this.handleEditClicked}
-            canEdit={this.canEdit}
-            me={this.me}
-            {...this.props}
+            <ActDetail
+              act={act}
+              onEditClicked={this.handleEditClicked}
+              canEdit={this.canEdit}
+              me={this.props.me}
+              {...this.props}
             />
             {createOpportunitySection()}
             {canEdit &&
