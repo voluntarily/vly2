@@ -1,7 +1,6 @@
 import { Button, Row, Col } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
-import { Grid } from '../VTheme/VTheme'
 
 const PersonaBox = styled.div`
   margin-bottom: 8rem;
@@ -101,30 +100,30 @@ const AboutSection = () => (
             <Button>Learn More</Button>
           </PersonaContainer>
         </a>
-        </Col>
-        <Col sm={12} lg={6}>
-          <a href='/content' target='_blank' rel='noopener noreferrer'>
-            <PersonaContainer>
-              <Image src='/static/img/contentCard.png' />
-              <Title>Content Providers</Title>
-              <Text>We help you get more people involved with your movement.</Text>
-              <Button>Learn More</Button>
-            </PersonaContainer>
-          </a>
-        </Col>
-        <Col sm={12} lg={6}>
-          <a href='/business' target='_blank' rel='noopener noreferrer'>
-            <PersonaContainer>
-              <Image src='/static/img/businessCard.png' />
-              <Title>Businesses</Title>
-              <Text>
+      </Col>
+      <Col sm={12} lg={6}>
+        <a href='/content' target='_blank' rel='noopener noreferrer'>
+          <PersonaContainer>
+            <Image src='/static/img/contentCard.png' />
+            <Title>Content Providers</Title>
+            <Text>We help you get more people involved with your movement.</Text>
+            <Button>Learn More</Button>
+          </PersonaContainer>
+        </a>
+      </Col>
+      <Col sm={12} lg={6}>
+        <a href='/business' target='_blank' rel='noopener noreferrer'>
+          <PersonaContainer>
+            <Image src='/static/img/businessCard.png' />
+            <Title>Businesses</Title>
+            <Text>
                 We handle HR, admin, and discovery so your staff have more impact on
                 the community.
-              </Text>
-              <Button>Learn More</Button>
-            </PersonaContainer>
-          </a>
-        </Col>
+            </Text>
+            <Button>Learn More</Button>
+          </PersonaContainer>
+        </a>
+      </Col>
     </Row>
   </PersonaBox>
 )
