@@ -95,6 +95,11 @@ export class ActDetailPage extends Component {
   }
 
   handleDeleteCancel = () => { message.error('Delete Cancelled') }
+  handleEditClicked = () => {
+    this.setState({
+      editing: !this.state.editing
+    })
+  }
 
   render () {
     const me = this.props.me
@@ -178,7 +183,12 @@ export class ActDetailPage extends Component {
         content =
           <>
 
-            <ActDetail act={act} />
+            <ActDetail act={act}
+            onEditClicked={this.handleEditClicked}
+            canEdit={this.canEdit}
+            me={this.me}
+            {...this.props}
+            />
             {createOpportunitySection()}
             {canEdit &&
               <Button
