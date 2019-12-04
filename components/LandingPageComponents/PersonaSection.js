@@ -52,8 +52,6 @@ const Title = styled.div`
 
 const Text = styled.div`
   margin: 0rem 0rem 0.5rem 0rem;
-
-  width: 16.5rem;
   font-size: 1rem;
   font-weight: 400;
   color: black;
@@ -61,18 +59,16 @@ const Text = styled.div`
   line-height: 24px;
 
   @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
-  /* iPhone X */
-  font-size: 1rem;
-      line-height: 1.4;
-      width: calc(90vw - 2rem);
-      height: auto;
-      margin-bottom: 1rem;
+    /* iPhone X */
+    font-size: 1rem;
+    line-height: 1.4;
+    height: auto;
+    margin-bottom: 1rem;
   }
 
   @media screen and (max-width: 480px) {
     font-size: 1rem;
     line-height: 1.4;
-    width: calc(90vw - 2rem);
     height: auto;
     margin-bottom: 1rem;
   }
