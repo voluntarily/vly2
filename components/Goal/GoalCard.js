@@ -1,5 +1,8 @@
+import { Icon } from 'antd'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { PersonalGoalStatus } from '../../server/api/personalGoal/personalGoal.constants'
+import reduxApi, { withPersonalGoals } from '../../lib/redux/reduxApi'
 
 const CardContainer = styled.a`
   width: 18.5rem;
@@ -19,6 +22,7 @@ const CardContainer = styled.a`
           margin-bottom: 1rem;
           height: auto;
   }
+  position: relative;
 ` // end card container
 
 const CardImage = styled.img`
@@ -51,15 +55,47 @@ const CardSubtitle = styled.p`
 //   margin: 0 1rem 1rem 1rem;
 // ` // CardDescription
 
-const GoalCard = ({ goal }) => (
+const StyledIconRight = styled(Icon)`
+  font-size: 1rem;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;    
+`
+const StyledIconLeft = styled(Icon)`
+  font-size: 3rem;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;    
+`
 
-  <CardContainer href={goal.startLink} target='_blank' rel='noopener noreferrer'>
-    <CardImage src={goal.imgUrl} />
-    <CardTitle>{goal.name}</CardTitle>
-    <CardSubtitle>{goal.subtitle}</CardSubtitle>
-  </CardContainer>
+const GoalStatusIcon = ({ status }) => {
+  if (!status) { return '' }
+  console.log('GoalStatusIcon', status)
+  switch (status) {
+    case PersonalGoalStatus.ACTIVE: return <StyledIconLeft type='paper-clip' />
+    case PersonalGoalStatus.COMPLETED: return <StyledIconLeft type='trophy' />
+    default: return ''
+  }
+}
 
-)
+const GoalCard = ({ goal }) => {
+  const handleClose = e => {
+    e.stopPropagation()
+    console.log('handleClose:', goal)
+  }
+  const handleClickCard = e => {
+    console.log('handleClickCard:', goal)
+  }
+  return (
+    <CardContainer onClick={handleClickCard}>
+      <CardImage src={goal.imgUrl} />
+      <CardTitle>{goal.name}</CardTitle>
+      <GoalStatusIcon status={goal.status} />
+      <StyledIconRight type='close-circle' onClick={handleClose} />
+      <CardSubtitle>{goal.subtitle}</CardSubtitle>
+    </CardContainer>
+  )
+}
 
 GoalCard.propTypes = {
   goal: PropTypes.shape({
@@ -72,4 +108,4 @@ GoalCard.propTypes = {
     category: PropTypes.string
   })
 }
-export default GoalCard
+export default withPersonalGoals(GoalCard)
