@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Tag } from 'antd'
 
 /*
 ====================================================
@@ -504,4 +505,13 @@ export const Li = styled.li`
   opacity: 1;
   color: initial;
   margin-bottom: 0.3rem;
+`
+export const TagStyle = styled(Tag)`
+width: auto;
+padding: 0.2rem 0.5rem;
+margin: 0.1rem;
+vertical-align: middle;
+font-size: 1.2rem;
+font-weight: 500;
+background-color: #e8e8e8;
 `
