@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 const PageTitleContainer = styled.div`
   width: auto;
+  background: pink;
   margin: 3rem 0 5rem 0;
 
   @media (min-width: 1025px) and (max-width: 1280px) {

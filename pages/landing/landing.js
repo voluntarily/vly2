@@ -19,14 +19,11 @@ class Landing extends Component {
           <Helmet>
             <title>Voluntarily</title>
           </Helmet>
-          <Spacer />
-          <div className='spacer' />
           <TitleSection
             title='Who we help'
 
           />
           <PersonaSection />
-          <div className='spacer' />
           <TitleSection
             title='Happening Soon'
 
