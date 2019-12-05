@@ -5,7 +5,7 @@ import PersonaSection from '../../components/LandingPageComponents/PersonaSectio
 import OpListSection from '../../components/Op/OpListSection'
 import OpAdd from '../../components/Op/OpAdd'
 import TitleSection from '../../components/LandingPageComponents/TitleSection'
-import { FullPage, Spacer } from '../../components/VTheme/VTheme'
+import { FullPage } from '../../components/VTheme/VTheme'
 // import bigimage from './landing-page-bg.jpg'
 // import schoolsactivity from './schoolsactivity.png'
 import { Helmet } from 'react-helmet'
@@ -19,14 +19,11 @@ class Landing extends Component {
           <Helmet>
             <title>Voluntarily</title>
           </Helmet>
-          <Spacer />
-          <div className='spacer' />
           <TitleSection
             title='Who we help'
 
           />
           <PersonaSection />
-          <div className='spacer' />
           <TitleSection
             title='Happening Soon'
 
