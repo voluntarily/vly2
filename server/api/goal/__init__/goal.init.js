@@ -20,7 +20,7 @@ export default [
       activities you should volunteer for and helps teachers select 
       the range of helpers they need for an activity`,
     preconditions: [],
-    startLink: '/home', // should be /profile#edit
+    startLink: '/my/person',
     language: 'en',
     category: 'Getting Started',
     rank: 1,
@@ -51,7 +51,7 @@ Don't worry if you have started the process but don't think it will be
 completed in time - there are ways we can handle that.
 `,
     preconditions: [],
-    startLink: '/home', // should be /profile#edit
+    startLink: '/todo',
     language: 'en',
     category: 'Getting Started',
     rank: 2,
@@ -95,7 +95,7 @@ Once you have done that return to this page by clicking the
 This card will disappear when the profile is complete
 `,
     imgUrl: '/static/img/actions/teacherSetup.png',
-    startLink: '/orgs/5d9fe6804eb179218c8d1d32',
+    startLink: '/my/org/op',
     category: 'Get Started for Teachers',
     rank: 1,
     evaluation: () => { console.log('Tell us about your school'); return false }
@@ -114,7 +114,7 @@ This creates a new Activity page where you can setup the time and place details
 Once Published we will start finding volunteers
 `,
     imgurl: '/static/img/actions/itf.png',
-    startLink: '/acts/5dbb7c0550ebca11d9866859',
+    startLink: '/acts',
     category: 'Get Started for Teachers',
     rank: 2,
     evaluation: () => { console.log('does person have first-volunteer-activity badge'); return false }
