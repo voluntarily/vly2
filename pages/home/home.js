@@ -134,12 +134,13 @@ class PersonHomePage extends Component {
     const ops = this.props.opportunities.data // list of ops I own
     const vops = this.interestedOps()
     // console.log(this.props.personalGoals.data)
+    // create inverted list of goals with the pg as a child.
+    // this lets us use the same goal cards
     const personalGoals = this.props.personalGoals.data.map(pg => {
       return ({
         ...pg.goal,
-        person: pg.person,
-        status: pg.status,
-        personalGoalId: pg._id
+        personalGoal: pg,
+        status: pg.status
       })
     })
     // console.log(personalGoals)

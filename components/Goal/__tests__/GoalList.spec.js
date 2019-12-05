@@ -7,5 +7,5 @@ test('shallow the list with goals', t => {
   const wrapper = shallowWithIntl(
     <GoalList goals={goals} />
   )
-  t.is(wrapper.find('GoalCard').length, goals.length)
+  t.is(wrapper.find('Connect(GoalCard)').length, goals.length)
 })
