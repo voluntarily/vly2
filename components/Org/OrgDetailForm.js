@@ -240,9 +240,36 @@ class OrgDetailForm extends Component {
             />
           </h1>
         </PageTitle>
-        <Divider />
 
         <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <h3>
+                  <FormattedMessage
+                    id='orgDetail.form.category'
+                    defaultMessage='Choose your organisation'
+                    description='The type of organisation'
+                  />
+                </h3>
+              </TitleContainer>
+              <p>
+                <FormattedMessage
+                  id='orgDetail.form.category.description'
+                  defaultMessage='Let everyone know what type of organisation you are.'
+                  description='Description of the type of organisation'
+                />
+              </p>
+            </DescriptionContainer>
+            <InputContainer>
+              <Form.Item label={orgCategory}>
+                {getFieldDecorator('category', {
+                  rules: [{ required: true, message: 'category is required' }]
+                })(<Checkbox.Group options={categoryOptions} />)}
+              </Form.Item>
+            </InputContainer>
+          </FormGrid>
+          <Divider />
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -436,22 +463,6 @@ class OrgDetailForm extends Component {
                   // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
                   <RichTextEditor />
                 )}
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>
-          <Divider />
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <h3>God Mode controls</h3>
-              </TitleContainer>
-              <p>Admin section for changing orgtype</p>
-            </DescriptionContainer>
-            <InputContainer>
-              <Form.Item label={orgCategory}>
-                {getFieldDecorator('category', {
-                  rules: [{ required: true, message: 'category is required' }]
-                })(<Checkbox.Group options={categoryOptions} />)}
               </Form.Item>
             </InputContainer>
           </FormGrid>
