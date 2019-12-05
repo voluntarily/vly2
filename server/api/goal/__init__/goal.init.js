@@ -100,7 +100,11 @@ export default [
     name: 'Tell us about your school',
     slug: 'goal-complete-school-profile',
     subtitle: 'Tell the world about your awesome school - Complete profiles attract more volunteers!',
-    description: '',
+    description:
+      `Click the button below to goto you school profile page, 
+      click edit button and fill in more details. Then save it. 
+      Once you have done that return to this page by clicking the 
+      dashboard menu. This card will disappear when the profile is complete`,
     imgUrl: '/static/img/actions/teacherSetup.png',
     category: 'Get Started for Teachers',
     rank: 1,
