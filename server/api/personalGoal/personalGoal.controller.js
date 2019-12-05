@@ -18,7 +18,6 @@ const listPersonalGoals = async (req, res) => {
 }
 
 const updatePersonalGoal = async (req, res) => {
-  console.log('updatePersonalGoal', req.query, req.body)
   const status = req.body.status
   const set = { status }
   switch (status) {
