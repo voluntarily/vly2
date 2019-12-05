@@ -4,7 +4,8 @@ import { PersonalGoalStatus } from '../personalGoal.constants'
 import {
   getPersonalGoalbyId,
   addPersonalGoal,
-  addPersonalGoalGroup
+  addPersonalGoalGroup,
+  evaluatePersonalGoals
 } from '../personalGoal.lib'
 import Goal from '../../goal/goal'
 import goals from '../../goal/__tests__/goal.fixture'
@@ -69,6 +70,11 @@ test.serial('Should add a personalGoal when they are not there already', async t
   personalGoal = await PersonalGoal.findOne(personalGoalQuery).exec()
   t.truthy(personalGoal)
   t.is(personalGoal.status, PersonalGoalStatus.ACTIVE)
+
+  // clean up - check record is removed
+  personalGoal.remove()
+  personalGoal = await PersonalGoal.findOne(personalGoalQuery).exec()
+  t.falsy(personalGoal)
 })
 
 test.serial('Should add a personalGoal Group to the person', async t => {
@@ -86,4 +92,35 @@ test.serial('Should add a personalGoal Group to the person', async t => {
   // Dali now has 2 goals
   dalisGoals = await PersonalGoal.find(q).exec()
   t.is(dalisGoals.length, 2)
+})
+
+test.serial('Evaluate the personal goals - hidden and unhide', async t => {
+  const personalGoalAlice = {
+    person: t.context.alice._id,
+    goal: t.context.goal._id,
+    status: PersonalGoalStatus.HIDDEN,
+    dateHidden: Date.now()
+  }
+
+  let apg = await addPersonalGoal(personalGoalAlice)
+  t.truthy(apg)
+  t.is(apg.status, PersonalGoalStatus.HIDDEN)
+
+  // run the evaluation - not much should happen
+  evaluatePersonalGoals(t.context.alice._id)
+  apg = await PersonalGoal.findById(apg._id).exec()
+  t.is(apg.status, PersonalGoalStatus.HIDDEN)
+
+  // set date back in time
+  apg.dateHidden = '2019-01-01T00:00:00.000Z'
+  await apg.save()
+  // run the evaluation - record becomes unhidden
+  await evaluatePersonalGoals(t.context.alice._id)
+  apg = await PersonalGoal.findById(apg._id).exec()
+  t.is(apg.status, PersonalGoalStatus.QUEUED)
+
+  // clean up - check record is removed
+  await apg.remove()
+  apg = await PersonalGoal.findById(apg._id).exec()
+  t.falsy(apg)
 })
