@@ -14,7 +14,6 @@ const getAllowedLinks = isAuthenticated =>
 
 const FooterBackground = styled.div`
   margin-top: 5rem;
-  width: 100vw;
   background-color: #fefefe;
 `
 
@@ -23,11 +22,11 @@ const FooterContainer = styled.div`
   margin: 0 auto;
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
-    width: 100vw;
+    width: 100%;
   }
 
   @media screen and (max-width: 767px) {
-    width: 100vw;
+    width: 100%;
   }
 `
 const FooterLogo = styled.img`
