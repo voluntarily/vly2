@@ -26,7 +26,7 @@ test('renders the footer properly', t => {
       <RoutedFooter isAuthenticated={false} />
     </Provider>
   )
-  t.is(wrapper.find('div').length, 12)
+  t.is(wrapper.find('div').length, 16)
 
   t.snapshot()
 })
