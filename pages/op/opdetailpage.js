@@ -27,7 +27,6 @@ const blankOp = {
   endDate: null,
   tags: []
 }
-
 export class OpDetailPage extends Component {
   state = {
     editing: false
@@ -42,6 +41,7 @@ export class OpDetailPage extends Component {
     this.canManageInterests = this.canManageInterests.bind(this)
     this.canRegisterInterest = this.canRegisterInterest.bind(this)
     this.retrieveOpportunity = this.retrieveOpportunity.bind(this)
+    this.isOrgAdmin = this.isOrgAdmin.bind(this)
   }
 
   static async getInitialProps ({ store, query }) {
@@ -126,9 +126,17 @@ export class OpDetailPage extends Component {
     return this.props.isNew || (this.props.me && op.requestor && this.props.me._id === op.requestor._id)
   }
 
+  isOrgAdmin (orgid, meid) {
+    this.props.members.data.find(m => {
+      return console.log(orgid === m.organisation._id && meid === m.person && MemberStatus.ORGADMIN === m.status)
+    }
+    )
+  }
+
   canEdit (op) {
-    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
-    return (this.isOwner(op) || isOrgAdmin || this.isAdmin())
+    // const isOrgAdmin = this.isOrgAdmins() // TODO: is this person an admin for the org that person belongs to.
+    // console.log(6, this.isOrgAdmins())
+    return (this.isOwner(op) || this.isOrgAdmin() || this.isAdmin())
   }
 
   canManageInterests (op) {
@@ -193,6 +201,10 @@ export class OpDetailPage extends Component {
     }
 
     const op = this.retrieveOpportunity()
+
+    if (op.offerOrg && this.props.me._id) {
+      this.isOrgAdmin(op.offerOrg._id, this.props.me._id)
+    }
 
     if ((op && this.state.editing)) {
       return (
