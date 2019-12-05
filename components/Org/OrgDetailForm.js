@@ -357,6 +357,89 @@ class OrgDetailForm extends Component {
             </InputContainer>
           </FormGrid>
           <Divider />
+          {(getFieldValue('category') || []).includes(OrganisationCategory.SCHOOL)
+            ? (
+              <>
+                <FormGrid>
+                  <DescriptionContainer>
+                    <TitleContainer>
+                      <h3>School details</h3>
+                    </TitleContainer>
+                    <p>A few details about your school</p>
+                  </DescriptionContainer>
+                  <InputContainer>
+                    <ShortInputContainer>
+                      <Form.Item htmlId='decile' label={orgDecile}>
+                        {getFieldDecorator('decile', {})(
+                          <InputNumber min={1} max={10} className='decile' />
+                        )}
+                      </Form.Item>
+
+                      <Form.Item htmlId='age-range' label={orgAgeRange}>
+                        {getFieldDecorator('ageRange', {
+                          rules: [
+                            {
+                              type: 'method',
+                              validator: (rule, value, callback) => {
+                                callback(validateAgeRange(value)
+                                  ? undefined
+                                  : (
+                                    <FormattedMessage
+                                      id='org.detail.ageRange'
+                                      defaultMessage='Please enter the age range of your students'
+                                      description='The age range specified on the organisation form is invalid'
+                                    />))
+                              }
+                            }
+                          ]
+                        })(
+                          <NumericRange
+                            fromPlaceholder='5'
+                            fromMin={0}
+                            fromMax={120}
+                            toPlaceholder='18'
+                            toMin={0}
+                            toMax={120}
+                          />
+                        )}
+                      </Form.Item>
+                      <Form.Item label={orgContactName}>
+                        {getFieldDecorator('contactName')(
+                          <Input />
+                        )}
+                      </Form.Item>
+                      <Form.Item label={orgContactPhoneNumber}>
+                        {getFieldDecorator('contactPhoneNumber')(
+                          <Input placeholder='01 123 456789' />
+                        )}
+                      </Form.Item>
+                      <Form.Item label={orgAddress}>
+                        {getFieldDecorator('address')(
+                          <>
+                            <Input.TextArea
+                              id='address'
+                              rows={4}
+                              maxLength={512}
+                              value={getFieldValue('address')}
+                              onChange={e => this.setAddress(e.target.value)}
+                            />
+                            {OrgDetailForm.createGoogleMapsAddressUrl(getFieldValue('address')) &&
+                              <a href={OrgDetailForm.createGoogleMapsAddressUrl(getFieldValue('address'))} target='_blank' rel='noopener noreferrer'>
+                                <FormattedMessage
+                                  id='org.detail.viewAddressInGoogleMaps'
+                                  defaultMessage='View in Google maps'
+                                  description='Link to view the address in Google maps'
+                                />
+                              </a>}
+                          </>
+                        )}
+                      </Form.Item>
+                    </ShortInputContainer>
+                  </InputContainer>
+                </FormGrid>
+                <Divider />
+              </>)
+            : null}
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -466,90 +549,6 @@ class OrgDetailForm extends Component {
               </Form.Item>
             </InputContainer>
           </FormGrid>
-          <Divider />
-          {(getFieldValue('category') || []).includes(OrganisationCategory.SCHOOL)
-            ? (
-              <>
-                <FormGrid>
-                  <DescriptionContainer>
-                    <TitleContainer>
-                      <h3>School details</h3>
-                    </TitleContainer>
-                    <p>A few details about your school</p>
-                  </DescriptionContainer>
-                  <InputContainer>
-                    <ShortInputContainer>
-                      <Form.Item htmlId='decile' label={orgDecile}>
-                        {getFieldDecorator('decile', {})(
-                          <InputNumber min={1} max={10} className='decile' />
-                        )}
-                      </Form.Item>
-
-                      <Form.Item htmlId='age-range' label={orgAgeRange}>
-                        {getFieldDecorator('ageRange', {
-                          rules: [
-                            {
-                              type: 'method',
-                              validator: (rule, value, callback) => {
-                                callback(validateAgeRange(value)
-                                  ? undefined
-                                  : (
-                                    <FormattedMessage
-                                      id='org.detail.ageRange'
-                                      defaultMessage='Please enter the age range of your students'
-                                      description='The age range specified on the organisation form is invalid'
-                                    />))
-                              }
-                            }
-                          ]
-                        })(
-                          <NumericRange
-                            fromPlaceholder='5'
-                            fromMin={0}
-                            fromMax={120}
-                            toPlaceholder='18'
-                            toMin={0}
-                            toMax={120}
-                          />
-                        )}
-                      </Form.Item>
-                      <Form.Item label={orgContactName}>
-                        {getFieldDecorator('contactName')(
-                          <Input />
-                        )}
-                      </Form.Item>
-                      <Form.Item label={orgContactPhoneNumber}>
-                        {getFieldDecorator('contactPhoneNumber')(
-                          <Input placeholder='01 123 456789' />
-                        )}
-                      </Form.Item>
-                      <Form.Item label={orgAddress}>
-                        {getFieldDecorator('address')(
-                          <>
-                            <Input.TextArea
-                              id='address'
-                              rows={4}
-                              maxLength={512}
-                              value={getFieldValue('address')}
-                              onChange={e => this.setAddress(e.target.value)}
-                            />
-                            {OrgDetailForm.createGoogleMapsAddressUrl(getFieldValue('address')) &&
-                              <a href={OrgDetailForm.createGoogleMapsAddressUrl(getFieldValue('address'))} target='_blank' rel='noopener noreferrer'>
-                                <FormattedMessage
-                                  id='org.detail.viewAddressInGoogleMaps'
-                                  defaultMessage='View in Google maps'
-                                  description='Link to view the address in Google maps'
-                                />
-                              </a>}
-                          </>
-                        )}
-                      </Form.Item>
-                    </ShortInputContainer>
-                  </InputContainer>
-                </FormGrid>
-                <Divider />
-              </>)
-            : null}
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
