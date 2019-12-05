@@ -434,7 +434,7 @@ class ActDetailForm extends Component {
                   >
                     <FormattedMessage
                       id='act.detail.volunteercount'
-                      defaultMessage='Total number of volunteers required'
+                      defaultMessage='Number of volunteers required'
                       description='label for field volunteer numbers required'
                     />
                   </Radio>
@@ -635,7 +635,7 @@ ActDetailForm.propTypes = {
     subtitle: PropTypes.string,
     imgUrl: PropTypes.string,
     resource: PropTypes.string,
-    volunteers: PropTypes.number,
+    volunteers: PropTypes.string,
     space: PropTypes.string,
     equipment: PropTypes.Array,
     time: PropTypes.Array,
@@ -675,13 +675,13 @@ export default Form.create({
     let volunteerPerStudent
     if (props.act.volunteers === 0) {
       totalVolunteerRequired = 0
-    } else if (props.act.volunteers >= 1) {
-      totalVolunteerRequired = props.act.volunteers
-      // console.log(totalVolunteerRequired)
     } else if (props.act.volunteers < 1) {
       volunteerPerStudent = Math.round(1 / props.act.volunteers)
-      // console.log(volunteerPerStudent)
     }
+    else {
+      totalVolunteerRequired = props.act.volunteers
+    }
+
     return {
       name: Form.createFormField({ ...props.act.name, value: props.act.name }),
       subtitle: Form.createFormField({

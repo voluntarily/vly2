@@ -16,8 +16,8 @@ const ActivitySchema = new Schema({
     default: ''
   },
   volunteers: {
-    type: Number,
-    default: 1
+    type: String,
+    default: '1'
   },
   space: {
     type: String,

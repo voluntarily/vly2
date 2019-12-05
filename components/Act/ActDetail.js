@@ -59,7 +59,7 @@ ActDetail.propTypes = {
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     description: PropTypes.string,
-    volunteers: PropTypes.number,
+    volunteers: PropTypes.string,
     space: PropTypes.string,
     status: PropTypes.string,
     _id: PropTypes.string.isRequired
