@@ -1,4 +1,4 @@
-import { Icon } from 'antd'
+import { Icon, message } from 'antd'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { PersonalGoalStatus } from '../../server/api/personalGoal/personalGoal.constants'
@@ -64,13 +64,11 @@ const StyledIconRight = styled(Icon)`
 const StyledIconLeft = styled(Icon)`
   font-size: 3rem;
   position: absolute;
-  top: 0.5rem;
+  top: 0.5rem; 
   left: 0.5rem;    
 `
 
-const GoalStatusIcon = ({ status }) => {
-  if (!status) { return '' }
-  console.log('GoalStatusIcon', status)
+export const GoalStatusIcon = ({ status }) => {
   switch (status) {
     case PersonalGoalStatus.ACTIVE: return <StyledIconLeft type='paper-clip' />
     case PersonalGoalStatus.COMPLETED: return <StyledIconLeft type='trophy' />
@@ -78,20 +76,38 @@ const GoalStatusIcon = ({ status }) => {
   }
 }
 
-const GoalCard = ({ goal }) => {
-  const handleClose = e => {
+const GoalCard = ({ goal, dispatch }) => {
+  // if pg is set then show the personalGoal adornments, otherwise show the
+  // plain goal.
+  const pg = goal.personalGoal
+
+  const handleClose = async e => {
     e.stopPropagation()
-    console.log('handleClose:', goal)
+    pg.status = PersonalGoalStatus.HIDDEN
+    // update personalGoal on server
+    await dispatch(
+      reduxApi.actions.personalGoals.put(
+        { id: pg._id },
+        { body: JSON.stringify(pg) }
+      )
+    )
+    message.success('Goal hidden for 7 days')
   }
+
   const handleClickCard = e => {
-    console.log('handleClickCard:', goal)
+    // console.log('handleClickCard:', goal)
   }
+  // only show queued and active goals
+  if (pg && ![PersonalGoalStatus.QUEUED, PersonalGoalStatus.ACTIVE].includes(pg.status)) { return '' }
   return (
     <CardContainer onClick={handleClickCard}>
       <CardImage src={goal.imgUrl} />
       <CardTitle>{goal.name}</CardTitle>
-      <GoalStatusIcon status={goal.status} />
-      <StyledIconRight type='close-circle' onClick={handleClose} />
+      {pg &&
+        <>
+          <GoalStatusIcon status={goal.status} />
+          <StyledIconRight type='close-circle' onClick={handleClose} />
+        </>}
       <CardSubtitle>{goal.subtitle}</CardSubtitle>
     </CardContainer>
   )
@@ -108,4 +124,6 @@ GoalCard.propTypes = {
     category: PropTypes.string
   })
 }
+
+export const GoalCardTest = GoalCard
 export default withPersonalGoals(GoalCard)
