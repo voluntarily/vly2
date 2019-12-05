@@ -4,8 +4,8 @@ import Hero from '../../components/LandingPageComponents/Hero'
 import PersonaSection from '../../components/LandingPageComponents/PersonaSection'
 import OpListSection from '../../components/Op/OpListSection'
 import OpAdd from '../../components/Op/OpAdd'
-import TitleSectionSub from '../../components/LandingPageComponents/TitleSectionSub'
-import { FullPage, Spacer } from '../../components/VTheme/VTheme'
+import TitleSection from '../../components/LandingPageComponents/TitleSection'
+import { FullPage } from '../../components/VTheme/VTheme'
 // import bigimage from './landing-page-bg.jpg'
 // import schoolsactivity from './schoolsactivity.png'
 import { Helmet } from 'react-helmet'
@@ -17,19 +17,16 @@ class Landing extends Component {
         <Hero />
         <FullPage>
           <Helmet>
-            <title>Voluntarily - Welcome</title>
+            <title>Voluntarily</title>
           </Helmet>
-          <Spacer />
-          <div className='spacer' />
-          <TitleSectionSub
+          <TitleSection
             title='Who we help'
-            subtitle='We help these awesome people accomplish amazing things'
+
           />
           <PersonaSection />
-          <div className='spacer' />
-          <TitleSectionSub
+          <TitleSection
             title='Happening Soon'
-            subtitle='You are a few clicks away from getting involved with your community'
+
           />
 
           <OpListSection store={this.props.store} filter={{ date: '' }} />

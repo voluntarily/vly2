@@ -1,6 +1,7 @@
 import sanitize from 'sanitize-html'
 import styled from 'styled-components'
 import IdLine from './IdLine'
+import { Divider } from 'antd'
 import { FormattedMessage } from 'react-intl'
 /* These are used to create small lists of properties for
   orgs, ops and acts in their details pages
@@ -24,18 +25,27 @@ export const ItemListing = styled.li`
   color: initial;
   margin-bottom: 0.3rem;
 `
-export const ItemDescription = styled.article`
+export const ItemDescription = styled.div`
   letter-spacing: -0.02rem;
   font-weight: 400;
   font-size: 1rem;
   opacity: 1;
   color: initial;
   margin-bottom: 1rem;
+  text-align: left;
   `
 
 export const TagContainer = styled.div`
   margin-top: 0.2rem;
 `
+
+export const ItemImage = styled.img`
+width: 100%;
+height: 20rem;
+object-fit: cover;
+object-position: center;
+`
+
 export const ItemDuration = ({ duration }) =>
   <ItemListing>
   ⏱&nbsp;
@@ -62,22 +72,28 @@ export const ItemStatus = ({ status }) =>
     {sanitize(status)}
   </ItemListing>
 
+const EquipmentListItem = styled.li`
+margin: 0.5rem 0 1.5rem 0;
+font-size: 1.1rem;
+`
+
 export const EquipmentList = ({ equipment }) =>
   equipment
     ? (
-      <ItemListing>
-      🔧&nbsp;
-        <strong>
+      <div>
+        <Divider />
+
+        <h5><strong>
           <FormattedMessage
             id='itemlist.equipment'
-            defaultMessage='Equipment:'
+            defaultMessage='Equipment needed:'
             description='Equipment label for acts and ops'
-          />
-        </strong>
+          /></strong>
+        </h5>
         <ul>
-          {equipment.map((item, index) => <li key={index}>{item}</li>)}
+          {equipment.map((item, index) => <EquipmentListItem key={index}>{item}</EquipmentListItem>)}
         </ul>
-      </ItemListing>)
+      </div>)
     : ''
 
 export const ItemIdLine = ({ item, path }) =>

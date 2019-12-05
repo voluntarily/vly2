@@ -2,7 +2,7 @@ import { makeURLToken } from '../../../lib/sec/actiontoken'
 
 /* the api/doToken/getToken endpoint returns a valid token
   required to carry out the desired action.
-e.g https://localhost:3122/api/token/mintToken?action=log&data="hello world"
+e.g https://localhost:3122/api/token/cmd?
 */
 
 export default async (req, res) => {
@@ -13,7 +13,7 @@ export default async (req, res) => {
     payload.token = makeURLToken(payload)
     return res.json(payload)
   } catch (e) {
-    console.log('doToken:', e)
+    console.error('doToken:', e)
     res.status(500).end()
   }
 }

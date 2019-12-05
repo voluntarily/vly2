@@ -11,7 +11,6 @@ import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, ShortInputContainer, TitleContainer } from '../VTheme/FormStyles'
-import { H3Bold, P } from '../VTheme/VTheme'
 
 const { TextArea } = Input
 
@@ -280,104 +279,26 @@ class OpDetailForm extends Component {
             )}{' '}
             a request
           </h1>
-          <p>
+          <h5>
             <FormattedMessage
               id='opdetail.pagesubtitle'
               description='subTitle for creating Ops'
               defaultMessage='Ask volunteers for assistance with anything related to tech - there
                 are (get number) of volunteers looking for opportunities to help out'
             />
-          </p>
+          </h5>
         </PageTitle>
         <Divider />
         <Form hideRequiredMark colon={false}>
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>What are you looking for?</H3Bold>
+                <h3>Where and when?</h3>
               </TitleContainer>
-              <P>
-                Before our skilled volunteers get involved, they need to know
-                how they can help. Add a title and description that tell
-                volunteers how they can help you.
-              </P>
-            </DescriptionContainer>
-            <InputContainer>
-              <ShortInputContainer>
-                <Form.Item
-                  label={opTitle}
-                  validateStatus={nameError ? 'error' : ''}
-                  help={nameError || ''}
-                >
-                  {getFieldDecorator('name', {
-                    rules: [{ required: true, message: 'name is required' }]
-                  })(<Input placeholder='name' />)}
-                </Form.Item>
-
-                <Form.Item label={opSubtitle}>
-                  {getFieldDecorator('subtitle', {
-                    rules: []
-                  })(
-                    <Input placeholder='short summary that appears on the listing.' />
-                  )}
-                </Form.Item>
-              </ShortInputContainer>
-              <Form.Item label={opDescription}>
-                {getFieldDecorator('description', {
-                  rules: []
-                })(
-                  isTest ? (
-                    <TextArea
-                      rows={20}
-                      placeholder='All the details about the request. You can use markdown here.'
-                    />
-                  ) : (
-                    <RichTextEditor />
-                  )
-                )}
-              </Form.Item>
-              {orgMembership && (
-                <Form.Item label={opOrganisation}>
-                  {getFieldDecorator('offerOrg')(
-                    <OrgSelector orgs={orgMembership} />
-                  )}
-                </Form.Item>
-              )}
-            </InputContainer>
-          </FormGrid>
-
-          <Divider />
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <H3Bold>Do you need any specific skills? (optional)</H3Bold>
-              </TitleContainer>
-              <P>
-                Does what you're asking for fit into any specific categories
-                like programming, electronics, or robots? Enter them here to
-                make it easier for volunteers to find you.
-              </P>
-            </DescriptionContainer>
-            <InputContainer>
-              <Form.Item label={opTags}>
-                {getFieldDecorator('tags', {
-                  initialValue: [],
-                  rules: []
-                })(<TagInput existingTags={this.props.existingTags} />)}
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>
-          <Divider />
-
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <H3Bold>Where and when? (optional)</H3Bold>
-              </TitleContainer>
-              <P>
+              <p>
                 More skilled volunteers will offer to help you if you know when,
                 or where you need help.
-              </P>
+              </p>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -443,12 +364,91 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>Add an image (optional)</H3Bold>
+                <h3>What are you looking for?</h3>
               </TitleContainer>
-              <P>
+              <p>
+                Before our skilled volunteers get involved, they need to know
+                how they can help. Add a title and description that tell
+                volunteers how they can help you.
+              </p>
+            </DescriptionContainer>
+            <InputContainer>
+              <ShortInputContainer>
+                <Form.Item
+                  label={opTitle}
+                  validateStatus={nameError ? 'error' : ''}
+                  help={nameError || ''}
+                >
+                  {getFieldDecorator('name', {
+                    rules: [{ required: true, message: 'name is required' }]
+                  })(<Input placeholder='name' />)}
+                </Form.Item>
+
+                <Form.Item label={opSubtitle}>
+                  {getFieldDecorator('subtitle', {
+                    rules: []
+                  })(
+                    <Input placeholder='short summary that appears on the listing.' />
+                  )}
+                </Form.Item>
+              </ShortInputContainer>
+              <Form.Item label={opDescription}>
+                {getFieldDecorator('description', {
+                  rules: []
+                })(
+                  isTest ? (
+                    <TextArea
+                      rows={20}
+                      placeholder='All the details about the request. You can use markdown here.'
+                    />
+                  ) : (
+                    <RichTextEditor />
+                  )
+                )}
+              </Form.Item>
+              {orgMembership && (
+                <Form.Item label={opOrganisation}>
+                  {getFieldDecorator('offerOrg')(
+                    <OrgSelector orgs={orgMembership} />
+                  )}
+                </Form.Item>
+              )}
+            </InputContainer>
+          </FormGrid>
+
+          <Divider />
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <h3>Do you need any specific skills? (optional)</h3>
+              </TitleContainer>
+              <p>
+                Does what you're asking for fit into any specific categories
+                like programming, electronics, or robots? Enter them here to
+                make it easier for volunteers to find you.
+              </p>
+            </DescriptionContainer>
+            <InputContainer>
+              <Form.Item label={opTags}>
+                {getFieldDecorator('tags', {
+                  initialValue: [],
+                  rules: []
+                })(<TagInput existingTags={this.props.existingTags} />)}
+              </Form.Item>
+            </InputContainer>
+          </FormGrid>
+
+          <Divider />
+
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <h3>Add an image (optional)</h3>
+              </TitleContainer>
+              <p>
                 Requests with photos get more responses. If you don't have a
                 photo leave blank and we will provide one based on the category.
-              </P>
+              </p>
               <img
                 style={{ width: '50%', float: 'right' }}
                 src={this.props.op.imgUrl}
@@ -470,15 +470,15 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>Confirm request</H3Bold>
+                <h3>Confirm request</h3>
               </TitleContainer>
-              <P>
+              <p>
                 <FormattedMessage
                   id='op.SaveInstructions'
                   defaultMessage='Save as Draft will allow you to preview the request while Publish will make it available to everyone to view.'
                   description='Instructions for save and publish on opportunity details form'
                 />
-              </P>
+              </p>
             </DescriptionContainer>
             <InputContainer>
               <Button

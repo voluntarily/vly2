@@ -23,14 +23,6 @@ const isUrlBlacklisted = url => {
 const getCookie = (req) => {
   if (req.cookies.idToken != null) {
     return req.cookies
-  } else if (req.headers.cookie != null) {
-    let cookieInJSON
-    try {
-      cookieInJSON = JSON.parse(req.headers.cookie)
-    } catch (err) {
-      return undefined
-    }
-    return cookieInJSON
   }
   return undefined
 }

@@ -42,13 +42,15 @@ export default async (req, res) => {
       expiresIn: '2d'
     }
     payload.token = makeURLToken(payload)
-    const adminMsg = req.query.adminMsg || 'no special message from organisation admin'
+    const adminMsg = req.query.adminMsg || ''
+    const memberStatus = req.query.memberStatus || MemberStatus.FOLLOWER
     const buttonLabel = req.query.buttonLabel || 'Confirm Membership'
     // template expects
     //    to: person receiving email
     // -   from: person sending email - the orgAdmin
     // -   org: The organisation (with added href linkback)
     // -   adminMsg: text added by the orgAdmin
+    // -   memberStatus: follower, joiner, member etc.
     // -   buttonLabel: label for callback button
     // -   buttonHref: the callback button url
 
@@ -56,6 +58,7 @@ export default async (req, res) => {
       from: orgAdmin,
       org,
       adminMsg,
+      memberStatus,
       buttonLabel,
       buttonHref: payload.token
     })

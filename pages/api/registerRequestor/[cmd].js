@@ -28,7 +28,7 @@ export default async (req, res) => {
       res.status(400).end()
     }
   } catch (e) {
-    console.log('registerRequestor:', e)
+    console.error('registerRequestor:', e)
     res.status(500).end()
   }
 }

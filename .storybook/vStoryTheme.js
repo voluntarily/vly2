@@ -1,5 +1,6 @@
 import { create } from '@storybook/theming';
 import logo from "../public/static/vComponentLibrary.png";
+import voluntarily from "../assets/voluntarily.less";
 export default create({
   base: 'light',
 

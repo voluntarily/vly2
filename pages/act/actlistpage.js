@@ -10,7 +10,7 @@ import styled from 'styled-components'
 import ActList from '../../components/Act/ActList'
 import ActMenu from '../../components/Act/ActMenu'
 import NoResult from '../../components/NoResult'
-import { ActivityContainer, FullPage, GridContainer, H3Black, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
+import { ActivityContainer, FullPage, GridContainer, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 
@@ -43,7 +43,7 @@ class Acts extends Component {
       )
       return { acts, query }
     } catch (err) {
-      console.log('error in getting acts', err)
+      console.error('error in getting acts', err)
     }
   }
 
@@ -68,13 +68,13 @@ class Acts extends Component {
           <title>Voluntarily - Activities List</title>
         </Helmet>
         <PageHeaderContainer>
-          <H3Black>
+          <h1>
             <FormattedMessage
               id='resource'
               defaultMessage='Activities'
               description='Title of page listing activities'
             />
-          </H3Black>
+          </h1>
 
           <RequestButtonContainer>
             <Button type='primary' shape='round' size='large'>

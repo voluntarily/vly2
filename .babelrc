@@ -3,7 +3,8 @@
   "env": {
     "development": {
       "plugins": [
-        "react-intl"
+        "react-intl",
+        ["styled-components", { "ssr": true, "displayName": true, "preprocess": false } ]
       ]
     },
     "production": {

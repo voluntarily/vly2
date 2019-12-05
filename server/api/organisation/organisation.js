@@ -24,7 +24,15 @@ const organisationSchema = new Schema({
     members: String,
     outsiders: String
   },
-  dateAdded: { type: 'Date', default: Date.now, required: true }
+  dateAdded: { type: 'Date', default: Date.now, required: true },
+  ageRange: {
+    from: Number,
+    to: Number
+  },
+  decile: Number,
+  contactName: String,
+  contactPhoneNumber: String,
+  address: String
 })
 
 // protect multiple imports

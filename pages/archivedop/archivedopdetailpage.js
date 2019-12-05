@@ -1,13 +1,14 @@
 import { Divider } from 'antd'
 import { Helmet } from 'react-helmet'
 import InterestArchivedSection from '../../components/Interest/InterestArchivedSection'
-import OpDetail from '../../components/Op/OpDetail'
+import OpDetailArchived from '../../components/Op/OpDetailArchived'
+import OpDetailPage from '../../pages/op/opdetailpage'
 import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withArchivedOpportunities } from '../../lib/redux/reduxApi.js'
-import { OpDetailPage } from '../op/opdetailpage'
 import Loading from '../../components/Loading'
 import OpUnavailablePage from '../op/opunavailablepage'
+import OpArchivedHeader from '../../components/Op/OpArchivedHeader'
 
 export class ArchivedOpDetailPage extends OpDetailPage {
   constructor (props) {
@@ -51,8 +52,10 @@ export class ArchivedOpDetailPage extends OpDetailPage {
         <Helmet>
           <title>Voluntarily - Archived Opportunity Details</title>
         </Helmet>
-        <OpDetail
+        <OpArchivedHeader />
+        <OpDetailArchived
           op={op}
+          {...this.props}
         />
         <Divider />
         <InterestArchivedSection opid={op._id} />
