@@ -1,0 +1,18 @@
+//- expects locals of {
+//-   inviteeName: person receiving email
+//-   schoolName: school to be activated
+//-   adminMsg: custom additional message from administrator to invitee
+//-   inviteButtonLink: link to invite person to sign up and activate school
+//- }
+extends ../theme/layout.pug
+
+block copy
+  p Hi #{inviteeName},
+  p #{schoolName} has been selected to be one of the first schools to take part in our Inspiring the Future New Zealand trials.
+  p By now you should know all about Inspiring the Future and how the program can benefit you and your school.
+  p Before we start finding you volunteers for your Inspiring the Future activity, #{schoolName} needs to be set up on our online platform.
+  p Click the button below to sign up, activate #{schoolName} on the platform and create an Inspiring the Future activity to run.
+  p #{adminMsg}
+
+block copybutton
+  a(href=inviteButtonLink class='mobile-button') Sign up and activate your school
