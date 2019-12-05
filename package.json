@@ -172,6 +172,7 @@
     ]
   },
   "nyc": {
+    "all": true,
     "include": [
       "pages/**/*.js",
       "components/**/*.js",
