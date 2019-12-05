@@ -46,7 +46,7 @@ test('render the detail with full act', t => {
   t.is(wrapper.find('h1').text(), actMax.name)
   t.is(wrapper.find({ space: actMax.space }).length, 1)
   t.is(wrapper.find({ volunteers: actMax.volunteers }).length, 2)
-  t.is(wrapper.find('li').length, 12)
+  t.is(wrapper.find('li').length, 11)
 })
 
 test('render the detail with no picture ', t => {
