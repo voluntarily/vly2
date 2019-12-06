@@ -230,6 +230,24 @@ test.serial('Should correctly give activity 3 when searching by "garden"', async
   t.is(acts[3].name, got[0].name)
 })
 
+// Searching by something in the name (case insensitive)
+test.serial('Should redirect when using slug', async t => {
+  const slug = '5-going-to-the-moon'
+  const res = await request(server)
+    .get(`/activity/${slug}`)
+    .set('Accept', 'application/json')
+  t.is(res.status, 307)
+  t.is(res.headers.location, `/acts/${t.context.activities[2]._id}`)
+})
+
+test.serial('Should 404 when using bad slug', async t => {
+  const slug = 'xxxxx'
+  const res = await request(server)
+    .get(`/activity/${slug}`)
+    .set('Accept', 'application/json')
+  t.is(res.status, 404)
+})
+
 // Searching for something in the description (case insensitive)
 test.serial('Should correctly give activity 2 when searching by "Algorithms"', async t => {
   const res = await request(server)

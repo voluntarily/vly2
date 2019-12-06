@@ -207,7 +207,7 @@ export class ActDetailPage extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Voluntarily - Activity Detail</title>
+          <title>Voluntarily - {act.name}</title>
         </Helmet>
         {content}
       </FullPage>
