@@ -185,6 +185,7 @@
       "**/*.spec.js",
       "**/*.fixture.js",
       "**/*.init.js",
+      "**/__init__/*.js",
       "server/util/*.js",
       "server/util/__tests__/*.js",
       "lib/react-intl-test*.js",
