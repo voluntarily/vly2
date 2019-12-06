@@ -50,6 +50,7 @@ test.serial('verify fixture database has acts', async t => {
   // can find by things
   const q = await Activity.findOne({ name: '4 The first 100 metres' })
   t.is(q && q.duration, '2 hours')
+  t.is(q.slug, '4-the-first-100-metres')
 })
 
 test.serial('Should correctly give count of all acts sorted by name', async t => {
@@ -169,6 +170,29 @@ test.serial('Should correctly add an activity with default image', async t => {
 
   // activity has been given the default image
   t.is(savedActivity.imgUrl, '/static/img/activity/activity.png')
+})
+
+test('Should correctly update an activity', async t => {
+  t.plan(2)
+
+  const sky1 = {
+    name: 'The first 1000 metres',
+    subtitle: 'Launching into space step 4',
+    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+    description: 'Project to build a simple rocket that will reach 1000m',
+    duration: '4 hours'
+  }
+  const activity = new Activity(sky1)
+  await activity.save()
+
+  // change the name - the slug should update
+  activity.name = 'The sky is the limit'
+  const res = await request(server)
+    .put(`/api/activities/${activity._id}`)
+    .send(activity)
+    .set('Accept', 'application/json')
+  t.is(res.status, 200)
+  t.is(res.body.name, activity.name)
 })
 
 test.serial('Should correctly delete an activity', async t => {
