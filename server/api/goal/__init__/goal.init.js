@@ -3,11 +3,7 @@
   /api/xadmin/loadGoals
 */
 export default [
-  { //   name - a short name that indicates what needs to be done - these use verbs and active voice.
-    //   e.g  Complete your profile,
-    //        Get Police Vetted
-    //        Attend your first event
-    //        Complete your safety training
+  {
     name: 'Complete your profile',
     slug: 'goal-complete-profile',
     subtitle: 'Help us recommend volunteering opportunities relevant to you',
@@ -61,7 +57,7 @@ completed in time - there are ways we can handle that.
     name: 'Complete first volunteering activity',
     subtitle: 'Its time to find your first volunteering opportunity.',
     slug: 'goal-complete-first-activity',
-    imgUrl: '/static/img/goal/goal-school-ready.png',
+    imgUrl: '/static/img/goal/goal-first-volunteer.png',
     description: `
 Its time to find your first volunteering opportunity.
 
@@ -94,7 +90,7 @@ Once you have done that return to this page by clicking the
 
 This card will disappear when the profile is complete
 `,
-    imgUrl: '/static/img/actions/teacherSetup.png',
+    imgUrl: '/static/img/goal/goal-teacherSetup.png',
     startLink: '/my/org/op',
     category: 'Get Started for Teachers',
     rank: 1,
@@ -102,7 +98,8 @@ This card will disappear when the profile is complete
   },
   {
     name: 'Run Inspiring the Future',
-    slug: 'goal-run-itf',
+    slug: 'goal-run-itfb',
+    imgUrl: '/static/img/goal/goal-itf.png',
     subtitle: 'Connect children and young people with volunteers from the world of work through this fun in-school activity.',
     description:
 `Click Start below to open the Inspiring the Future Activity Template, 
@@ -113,8 +110,7 @@ This creates a new Activity page where you can setup the time and place details
 
 Once Published we will start finding volunteers
 `,
-    imgurl: '/static/img/actions/itf.png',
-    startLink: '/acts',
+    startLink: '/activity/inspiring-the-future',
     category: 'Get Started for Teachers',
     rank: 2,
     evaluation: () => { console.log('does person have first-volunteer-activity badge'); return false }
@@ -123,7 +119,7 @@ Once Published we will start finding volunteers
     name: 'Confirm Teacher ID',
     slug: 'goal-confirm-teacher-id',
     subtitle: 'If you are a teacher, click here to enable creating new requests for volunteers.',
-    imgurl: '/static/img/actions/profile2.png',
+    imgurl: '/static/img/goal/goal-profile2.png',
     description: `
 If you have not been automatically joined to a school you can enter your teacher
 registration number to confirm that you are a teacher and thus enable the ability
