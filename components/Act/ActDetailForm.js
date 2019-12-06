@@ -8,6 +8,7 @@ import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
 import { DynamicFieldSet } from '../DynamicFieldSet/DynamicFieldSet'
+import slug from 'limax'
 
 import {
   DescriptionContainer,
@@ -95,9 +96,10 @@ class ActDetailForm extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const act = this.props.act
+        const act = this.props.act // copy any non form values like _id
         act.time = values.time
         act.name = values.name
+        act.slug = slug(act.name)
         act.subtitle = values.subtitle
         act.duration = values.duration
         act.resource = values.resource
