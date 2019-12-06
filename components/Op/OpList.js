@@ -4,20 +4,27 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import OpCard from './OpCard'
 import { FormattedMessage } from 'react-intl'
-import { Grid } from '../VTheme/VTheme'
+import { Row, Col } from 'antd'
+import styled from 'styled-components'
+
+const CardWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+`
 
 const OpList = ({ ops, ...props }) => (
-  <Grid>
-    {ops ? (
-      ops.map((op, index) => <OpCard size='Small' op={op} key={index} />)
-    ) : (
-      <FormattedMessage
-        id='op.list.empty'
-        defaultMessage='No matching opportunities'
-        description='no opportunities message in OpList'
-      />
-    )}
-  </Grid>
+  <Row>
+      {ops ? (
+        ops.map((op, index) => <Col xs={24} md={12} lg={8} xl={6}><CardWrapper><OpCard size='Small' op={op} key={index} /></CardWrapper></Col>)
+      ) : (
+        <FormattedMessage
+          id='op.list.empty'
+          defaultMessage='No matching opportunities'
+          description='no opportunities message in OpList'
+        />
+      )}
+  </Row>
 )
 
 OpList.propTypes = {
