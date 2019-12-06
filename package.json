@@ -142,7 +142,7 @@
       "__tests__/**/*.spec.js",
       "server/**/__tests__/*.spec.js",
       "components/**/__tests__/*.spec.js",
-      "lib/**/__test__/*.spec.js"
+      "lib/**/__tests__/*.spec.js"
     ],
     "helpers": [
       "**/__tests__/**/*.fixture.js",
@@ -180,18 +180,34 @@
       "lib/**/*.js"
     ],
     "exclude": [
+      "**/__tests__/*.js",
+      "**/*.stories.js",
       "**/*.spec.js",
-      "server/util/setup-test-env.js",
-      "server/util/test-helpers.js",
-      "server/util/mockRouter.js",
-      "server/util/test-memory-mongo.js",
+      "**/*.fixture.js",
+      "**/*.init.js",
+      "**/__init__/*.js",
+      "server/util/*.js",
+      "server/util/__tests__/*.js",
       "lib/react-intl-test*.js",
       "lib/auth/auth0.js",
       "server/config.js",
       "components/examples/**/*.js",
+      "**/*-md.js",
+      "pages/_*.js",
+      "pages/test/**/*.js",
+      "pages/todo.js",
+      "pages/admin/admin.js",
+      "pages/admin/goals",
+      "pages/teachers/*.js",
+      "pages/business/*.js",
+      "pages/content/*.js",
       "server/api/db/db.controller.js",
       "server/api/image/cloudImageUpload.js",
-      "server/services/email/email.js"
+      "server/services/email/email.js",
+      "reference",
+      "systemtest",
+      "x",
+      "public"
     ],
     "reporter": [
       "lcov",
