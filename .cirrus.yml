@@ -24,7 +24,7 @@ test_task:
     fingerprint_script: cat package-lock.json
     populate_script: MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" MONGOMS_VERSION="4.0.5" MONGOMS_DISABLE_POSTINSTALL=1 npm ci
   test_script:
-    - npm test -- --tap --verbose --serial --fail-fast
+    - npm run test-all -- --tap --verbose --serial --fail-fast
     - unset CIRRUS_CI
     - ./node_modules/codecov/bin/codecov --disable=gcov
 
