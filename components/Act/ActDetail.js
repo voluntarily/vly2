@@ -113,7 +113,7 @@ export function ActDetail ({ act, me }) {
 
 ActDetail.propTypes = {
   act: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     description: PropTypes.string,
