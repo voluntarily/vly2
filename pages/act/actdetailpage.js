@@ -14,7 +14,7 @@ import { Role } from '../../server/services/authorize/role'
 import { MemberStatus } from '../../server/api/member/member.constants'
 
 const blankAct = {
-  title: '',
+  name: '',
   subtitle: '',
   imgUrl: '',
   duration: '',
@@ -26,7 +26,6 @@ const blankAct = {
 export const ActDetailPage = (props) => {
   const [editing, setEditing] = useState(false)
   useEffect(() => {
-    console.log('useEffect')
     if (props.isNew) {
       setEditing(true)
     }
