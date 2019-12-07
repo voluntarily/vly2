@@ -46,7 +46,7 @@ function isDaysAgo (momentDate, days) {
   const daysAgo = moment().subtract(days, 'days').startOf('day')
   return daysAgo.isAfter(momentDate)
 }
-const evaluatePersonalGoals = async (person) => {
+const evaluatePersonalGoals = async (person, req) => {
   const pgs = await PersonalGoal
     .find({ person })
     .populate({ path: 'goal' })
@@ -58,12 +58,24 @@ const evaluatePersonalGoals = async (person) => {
        isDaysAgo(moment(pg.dateHidden), 7)) {
       pg.status = PersonalGoalStatus.QUEUED
       delete pg.dateHidden
-      return pg.save()
+      return Promise.resolve(pg.save())
     }
     // dump the evaluation
-    // console.log(pg.goal.evaluation)
-    // const ev = eval(pg.goal.evaluation)
-    // console.log(ev())
+    if (pg.goal.evaluation) {
+      try {
+        console.log('Evaluating Goal:', pg.goal.evaluation)
+        /* eslint-disable no-eval */
+        const ev = eval(pg.goal.evaluation)
+        const isCompleted = await ev(pg, req.session)
+        console.log('isCompleted', isCompleted)
+        if (isCompleted) {
+          pg.status = PersonalGoalStatus.COMPLETED
+          return Promise.resolve(pg.save())
+        }
+      } catch (e) {
+        return Promise.reject(e)
+      }
+    }
   }))
 }
 

@@ -94,7 +94,14 @@ This card will disappear when the profile is complete
     startLink: '/my/org/op',
     category: 'Get Started for Teachers',
     rank: 1,
-    evaluation: () => { console.log('Tell us about your school'); return false }
+    evaluation: (personalGoal, session) => {
+      console.log('GoalCard Evaluation: Tell us about your school')
+      // call personalGoal.lib function to
+      // get org from person id.
+      // see if that org profile is completed.
+      // console.log(personalGoal, session)
+      return true
+    }
   },
   {
     name: 'Run Inspiring the Future',

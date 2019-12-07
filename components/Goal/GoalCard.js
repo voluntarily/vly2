@@ -149,7 +149,7 @@ const GoalCard = ({ goal, dispatch }) => {
     )
   }
   // only show queued and active goals
-  if (pg && ![PersonalGoalStatus.QUEUED, PersonalGoalStatus.ACTIVE].includes(pg.status)) { return '' }
+  if (pg && ![PersonalGoalStatus.QUEUED, PersonalGoalStatus.ACTIVE, PersonalGoalStatus.COMPLETED].includes(pg.status)) { return '' }
   return (
     <CardContainer className='open' onClick={handleClickCard}>
       {front ? (

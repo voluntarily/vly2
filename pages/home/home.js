@@ -93,7 +93,7 @@ class PersonHomePage extends Component {
         store.dispatch(reduxApi.actions.recommendedOps.get({ me: me._id }))
       ])
     } catch (err) {
-      console.error('error in getting ops', err)
+      console.error('error in getting home page data', err)
     }
   }
 
