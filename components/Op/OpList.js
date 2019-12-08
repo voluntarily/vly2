@@ -16,7 +16,12 @@ const CardWrapper = styled.div`
 const OpList = ({ ops, ...props }) => (
   <Row>
     {ops ? (
-      ops.map((op, index) => <Col xs={24} md={12} lg={8} xl={6}><CardWrapper><OpCard size='Small' op={op} key={index} /></CardWrapper></Col>)
+      ops.map((op, index) =>
+      <Col key={index} xs={24} md={12} lg={8} xl={6}>
+        <CardWrapper>
+          <OpCard size='Small' op={op}/>
+        </CardWrapper>
+      </Col>)
     ) : (
       <FormattedMessage
         id='op.list.empty'
