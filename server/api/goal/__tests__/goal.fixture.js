@@ -20,7 +20,7 @@ export default [
     language: 'en',
     category: 'Getting Started',
     rank: 1,
-    evaluation: "() => { console.log('Complete your profile'); return false }",
+    evaluation: () => { console.log('evaluates to false'); return false },
     dateAdded: '2019-11-27T10:00:00.000Z'
   },
   {
@@ -54,7 +54,7 @@ export default [
     language: 'en',
     category: 'Getting Started',
     rank: 2,
-    evaluation: "() => { console.log('does person have school ready badge'); return true }",
+    evaluation: () => { console.log('evaluates to true'); return true },
     dateAdded: '2019-11-27T10:00:00.000Z'
   },
   {
@@ -90,7 +90,10 @@ export default [
     startLink: '/search',
     language: 'en',
     category: 'First Activity',
-    evaluation: "() => { console.log('does person have first-volunteer-activity badge'); return false }",
+    evaluation: () => {
+      console.log('Throws an error')
+      throw new Error('testing')
+    },
     dateAdded: '2019-11-27T10:00:00.000Z'
   }
 

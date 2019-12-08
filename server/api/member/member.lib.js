@@ -1,7 +1,6 @@
 const Member = require('./member')
 
 const findOrgByPersonIdAndCategory = async (personId, category) => {
-  console.log('real findOrgByPersonIdAndCategory')
   // search membership table for org matching category and person id
   const query = { person: personId }
   let myorgs = await Member.find(query).populate({ path: 'organisation', select: 'name category' }).exec()
