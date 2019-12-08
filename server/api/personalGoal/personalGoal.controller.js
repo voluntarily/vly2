@@ -6,8 +6,10 @@ const { PersonalGoalStatus } = require('./personalGoal.constants')
   api/PersonalGoals -> list all the goals assigned to me and get the goal details
  */
 const listPersonalGoals = async (req, res) => {
+  // if (!req.session || !req.session.isAuthenticated) { return res.status(403).end() }
+
   const me = req.query.meid
-  await evaluatePersonalGoals(me)
+  await evaluatePersonalGoals(me, req)
   // Return enough info for a goalCard
   const got = await PersonalGoal.find({ person: me })
     .populate({ path: 'goal' })

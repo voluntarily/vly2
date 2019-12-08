@@ -6,7 +6,7 @@ import GoalCard from '../Goal/GoalCard'
 
 const GoalList = ({ goals }) => (
   <Grid>
-    {goals.map(goal => <GoalCard key={goal.slug} goal={goal} />)}
+    {goals.map((goal, index) => <GoalCard key={index} goal={goal} />)}
   </Grid>
 )
 

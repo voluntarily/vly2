@@ -153,7 +153,6 @@ test.before('Setup fixtures', (t) => {
         loading: false,
         data: tags,
         request: null
-
       },
       orgs: {
         sync: false,

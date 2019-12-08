@@ -8,7 +8,7 @@ import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import GoalSection from '../../components/Goal/GoalSection'
-import { FullPage } from '../../components/VTheme/VTheme'
+import { FullPage, Section } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withGoals } from '../../lib/redux/reduxApi.js'
 import { Button, message } from 'antd'
@@ -30,6 +30,12 @@ const handleAssignGoalCategory = async (category) => {
   } catch (e) { console.error('handleAssignGoalCategory Failed', e) }
 }
 
+const handleLoadGoals = async () => {
+  try {
+    await callApi('xadmin/loadGoals')
+    message.success('done')
+  } catch (e) { console.error('loadGoals Failed', e) }
+}
 class GoalListPage extends Component {
   static async getInitialProps ({ store, req }) {
     const cookies = req ? req.cookies : Cookie.get()
@@ -53,8 +59,13 @@ class GoalListPage extends Component {
           <title>Voluntarily - Goals Index</title>
         </Helmet>
         <h1><FormattedMessage id='goalListTitle' defaultMessage='Goals Index' description='title on Goal index page' /></h1>
+        <Section>
+          <h2>Load Goals</h2>
+          <p>Clear goals from the database and reload from the sources goals.init.js file</p>
+          <Button shape='round' type='primary' onClick={handleLoadGoals}>Load Goals</Button>
+        </Section>
         {Object.keys(categories).map(key =>
-          <div key={key}>
+          <Section key={key}>
             <GoalSection goals={categories[key]} />
             <Button
               shape='round'
@@ -66,7 +77,7 @@ class GoalListPage extends Component {
                 description='TEST: button title that assigns the listed group of goals to the current person'
               />
             </Button>
-          </div>
+          </Section>
         )}
       </FullPage>
     )
