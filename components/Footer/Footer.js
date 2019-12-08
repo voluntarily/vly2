@@ -145,20 +145,24 @@ const Footer = ({ isAuthenticated, ...props }) => (
                 href='https://voluntarily.nz/blog'
                 target='_blank'
                 rel='noopener noreferrer'
-              >Blog</a>
+              >Blog
+              </a>
             </MenuItem>
             <MenuItem>
-              <a 
+              <a
                 href='https://voluntarily.atlassian.net/servicedesk/customer/portals'
                 target='_blank'
                 rel='noopener noreferrer'
-              >Help centre</a>
+              >Help centre
+              </a>
             </MenuItem>
             <MenuItem>
-              <a href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/12'
-              target='_blank'
-              rel='noopener noreferrer'
-              >Contact Support</a>
+              <a
+                href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/12'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Contact Support
+              </a>
             </MenuItem>
           </MenuWrapper>
         </Col>
@@ -167,46 +171,52 @@ const Footer = ({ isAuthenticated, ...props }) => (
           <MenuWrapper>
             <FooterGridItemTitle>Social</FooterGridItemTitle>
             <MenuItem>
-              <a 
+              <a
                 href='http://twitter.com/voluntarilyhq'
                 target='_blank'
                 rel='noopener noreferrer'
-              >Twitter</a>
+              >Twitter
+              </a>
             </MenuItem>
             <MenuItem>
-              <a 
+              <a
                 href='https://www.linkedin.com/groups/13709208/'
                 target='_blank'
                 rel='noopener noreferrer'
-              >LinkedIn</a>
+              >LinkedIn
+              </a>
             </MenuItem>
             <MenuItem>
               <a
                 href='https://www.youtube.com/channel/UCEDwH63ojQSq-S8us3iRZAA'
                 target='_blank'
                 rel='noopener noreferrer'
-              >Youtube</a>
+              >Youtube
+              </a>
             </MenuItem>
             <MenuItem>
               <a
                 href='https://www.facebook.com/voluntarilyAotearoa/'
                 target='_blank'
                 rel='noopener noreferrer'
-              >Facebook</a>
+              >Facebook
+              </a>
             </MenuItem>
             <MenuItem>
               <a
                 href='https://www.messenger.com/t/voluntarilyAotearoa'
                 target='_blank'
                 rel='noopener noreferrer'
-              >Messenger</a>
+              >Messenger
+              </a>
             </MenuItem>
             <MenuItem>
               <a
                 href='https://www.instagram.com/voluntarilyhq/'
                 target='_blank'
                 rel='noopener noreferrer'
-              >Instagram</a>
+              >Instagram
+              </a>
             </MenuItem>
           </MenuWrapper>
         </Col>
@@ -220,21 +230,24 @@ const Footer = ({ isAuthenticated, ...props }) => (
                 href='https://github.com/voluntarily/vly2'
                 target='_blank'
                 rel='noopener noreferrer'
-              >Github Repo</a>
+              >Github Repo
+              </a>
             </MenuItem>
             <MenuItem>
               <a
                 href='https://voluntarily.atlassian.net/wiki'
                 target='_blank'
                 rel='noopener noreferrer'
-              >Developer resources</a>
+              >Developer resources
+              </a>
             </MenuItem>
             <MenuItem>
               <a
                 href='/terms'
                 target='_blank'
                 rel='noopener noreferrer'
-              >Terms and Conditions</a>
+              >Terms and Conditions
+              </a>
             </MenuItem>
           </MenuWrapper>
         </Col>
