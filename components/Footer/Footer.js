@@ -40,15 +40,16 @@ const FooterText = styled.div`
   margin-top: 1rem;
 `
 
-const FooterGridItemTitle = styled.h1`
+const FooterGridItemTitle = styled.li`
   font-weight: 700;
   font-size: 1.5rem;
   letter-spacing: -0.8px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   color: black;
+  list-style: none;
 `
 
-const MenuWrapper = styled.div`
+const MenuWrapper = styled.ul`
   margin-bottom: 2rem;
   
   @media screen and (min-width: 576px) {
@@ -56,12 +57,13 @@ const MenuWrapper = styled.div`
   }
 `
 
-const MenuItem = styled.a`
+const MenuItem = styled.li`
   font-weight: 700;
   font-size: 1.2rem;
   color: #333333;
   letter-spacing: -1.07px;
-  line-height: 40px;
+  line-height: 20px;
+  list-style: none;
 `
 const Footer = ({ isAuthenticated, ...props }) => (
   <FooterBackground>
