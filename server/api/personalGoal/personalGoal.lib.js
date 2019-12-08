@@ -2,10 +2,19 @@ const PersonalGoal = require('./personalGoal')
 const Goal = require('../goal/goal')
 const moment = require('moment')
 const { PersonalGoalStatus } = require('./personalGoal.constants')
+const { orgProfileCompletenessById } = require('../organisation/organisation.lib')
+const { findOrgByPersonIdAndCategory } = require('../member/member.lib')
 /* Note These library functions call the database.
 They can fail and throw exceptions, we don't catch them here but
 allow them to be caught at the API layer where we can return a 4xx result
 */
+class GoalTests {
+  static orgCompleteness = async (personalGoal, category) => {
+    const personId = personalGoal.person._id
+    const orgid = await findOrgByPersonIdAndCategory(personId, category)
+    return orgProfileCompletenessById(orgid)
+  }
+}
 
 /* get a single PersonalGoal record with org and person populated out */
 const getPersonalGoalbyId = id =>
@@ -63,11 +72,9 @@ const evaluatePersonalGoals = async (person, req) => {
     // dump the evaluation
     if (pg.goal.evaluation) {
       try {
-        console.log('Evaluating Goal:', pg.goal.evaluation)
         /* eslint-disable no-eval */
         const ev = eval(pg.goal.evaluation)
-        const isCompleted = await ev(pg, req.session)
-        console.log('isCompleted', isCompleted)
+        const isCompleted = await ev(pg)
         if (isCompleted) {
           pg.status = PersonalGoalStatus.COMPLETED
           return Promise.resolve(pg.save())
@@ -83,5 +90,6 @@ module.exports = {
   getPersonalGoalbyId,
   addPersonalGoal,
   addPersonalGoalGroup,
-  evaluatePersonalGoals
+  evaluatePersonalGoals,
+  GoalTests
 }

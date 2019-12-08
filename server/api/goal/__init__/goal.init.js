@@ -94,13 +94,12 @@ This card will disappear when the profile is complete
     startLink: '/my/org/op',
     category: 'Get Started for Teachers',
     rank: 1,
-    evaluation: (personalGoal, session) => {
+    /* eslint-disable no-undef */
+    evaluation: async (personalGoal, session) => {
       console.log('GoalCard Evaluation: Tell us about your school')
-      // call personalGoal.lib function to
-      // get org from person id.
-      // see if that org profile is completed.
-      // console.log(personalGoal, session)
-      return true
+      const { score, count } = await GoalTests.orgCompleteness(personalGoal, 'op')
+      console.log(score, count, score / count * 100)
+      return (score / count * 100 > 75)
     }
   },
   {
