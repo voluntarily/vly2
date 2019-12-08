@@ -97,6 +97,7 @@ const HeroRight = styled.div`
 
   @media screen and (min-width: 768px) {
     margin: 15% 0;
+    padding-left: 3rem;
   }
 
   @media screen and (min-width: 998px) {
@@ -134,7 +135,7 @@ const handleSearch = search => {
 // begin actual component
 const Hero = ({ ...props }) => (
   <AwesomeHeroContainer>
-    <Row gutter={[32]}>
+    <Row>
       <Col md={8}>
         <HeroLeft>
           <Notch />

@@ -292,7 +292,6 @@ export const H4 = styled.h4`
     font-size: 1.5rem;
   }
   @media screen and (max-width: 768px) {
-    width: 90vw;
     font-size: 1rem;
   }
 ` // H4
@@ -396,7 +395,6 @@ export const FullPage = styled.div`
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
     width: calc(100vw - 2rem);
-    margin-left: 1rem;
   }
 ` // end fullpage
 
@@ -463,6 +461,10 @@ img {
   object-fit: cover;
   overflow: hidden;
   object-position: top;
+
+  @media screen and (max-width: 768px) {
+    height: 12rem;
+  }
 }
 
 time {
@@ -477,16 +479,6 @@ time {
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   margin-block-start: 0;
-}
-
-@media screen and (max-width: 768px) {
-  width: calc(100vw - 2rem);
-  margin-bottom: 1.5rem;
-
-  img {
-    height: 12rem;
-  }
-
 }
 `
 
