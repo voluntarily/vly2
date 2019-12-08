@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import NextActionBlock from '../../components/Action/NextActionBlockV2'
 import GoalSection from '../../components/Goal/GoalSection'
 import ActAdd from '../../components/Act/ActAdd'
 import OpAdd from '../../components/Op/OpAdd'
@@ -197,10 +196,6 @@ class PersonHomePage extends Component {
             {!!personalGoals.length &&
               <SectionWrapper>
                 <GoalSection goals={personalGoals} />
-              </SectionWrapper>}
-            {!personalGoals.length &&
-              <SectionWrapper>
-                <NextActionBlock />
               </SectionWrapper>}
             {
               this.props.opportunities.data.length !== 0 && (

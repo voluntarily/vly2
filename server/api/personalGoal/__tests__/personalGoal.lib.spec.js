@@ -6,13 +6,17 @@ import {
   addPersonalGoal,
   addPersonalGoalGroup,
   evaluatePersonalGoals
+  // GoalTests
 } from '../personalGoal.lib'
+
 import Goal from '../../goal/goal'
 import goals from '../../goal/__tests__/goal.fixture'
 import Person from '../../person/person'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
-
+// import orglib from '../../organisation/organisation.lib'
+// import memberlib from '../../member/member.lib'
+// import sinon from 'sinon'
 test.before('before connect to database', async (t) => {
   try {
     t.context.memMongo = new MemoryMongo()
@@ -124,3 +128,28 @@ test.serial('Evaluate the personal goals - hidden and unhide', async t => {
   apg = await PersonalGoal.findById(apg._id).exec()
   t.falsy(apg)
 })
+
+test.serial('Evaluate the personal goals - true completes', async t => {
+  const personalGoalAlice = {
+    person: t.context.alice._id,
+    goal: t.context.goals[1]._id, // this returns true evaluation
+    status: PersonalGoalStatus.ACTIVE
+  }
+  let apg = await addPersonalGoal(personalGoalAlice)
+  t.truthy(apg)
+  t.is(apg.status, PersonalGoalStatus.ACTIVE)
+
+  // run the evaluation - goal should complete
+  await evaluatePersonalGoals(t.context.alice._id)
+  apg = await PersonalGoal.findById(apg._id).exec()
+  t.is(apg.status, PersonalGoalStatus.COMPLETED)
+})
+
+// test.only('GoalTests - orgCompleteness', async t => {
+//   sinon.replace(orglib, 'orgProfileCompletenessById', sinon.fake.returns(42))
+//   sinon.replace(memberlib, 'findOrgByPersonIdAndCategory', sinon.fake.returns(Promise.resolve(true)))
+//   const personalGoalAlice = {
+//     person: t.context.alice._id // the only bit that counts here
+//   }
+//   t.is(await GoalTests.orgCompleteness(personalGoalAlice, 'op'), true)
+// })

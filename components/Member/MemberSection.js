@@ -50,9 +50,6 @@ class MemberSection extends Component {
     if (this.props.members.loading) {
       return <Loading />
     }
-    if (!this.props.members.sync) {
-      return <Loading />
-    }
     const org = this.props.org
     const meid = this.props.me._id
     if (!org.info) { org.info = {} }

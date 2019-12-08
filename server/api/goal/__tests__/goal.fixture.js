@@ -54,7 +54,7 @@ export default [
     language: 'en',
     category: 'Getting Started',
     rank: 2,
-    evaluation: "() => { console.log('does person have school ready badge'); return false }",
+    evaluation: "() => { console.log('does person have school ready badge'); return true }",
     dateAdded: '2019-11-27T10:00:00.000Z'
   },
   {
