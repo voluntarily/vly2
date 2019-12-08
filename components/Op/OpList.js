@@ -15,15 +15,15 @@ const CardWrapper = styled.div`
 
 const OpList = ({ ops, ...props }) => (
   <Row>
-      {ops ? (
-        ops.map((op, index) => <Col xs={24} md={12} lg={8} xl={6}><CardWrapper><OpCard size='Small' op={op} key={index} /></CardWrapper></Col>)
-      ) : (
-        <FormattedMessage
-          id='op.list.empty'
-          defaultMessage='No matching opportunities'
-          description='no opportunities message in OpList'
-        />
-      )}
+    {ops ? (
+      ops.map((op, index) => <Col xs={24} md={12} lg={8} xl={6}><CardWrapper><OpCard size='Small' op={op} key={index} /></CardWrapper></Col>)
+    ) : (
+      <FormattedMessage
+        id='op.list.empty'
+        defaultMessage='No matching opportunities'
+        description='no opportunities message in OpList'
+      />
+    )}
   </Row>
 )
 
