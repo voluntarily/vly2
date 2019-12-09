@@ -56,4 +56,13 @@ ActivitySchema.plugin(accessibleRecordsPlugin)
 ActivitySchema.plugin(accessibleFieldsPlugin)
 ActivitySchema.index({ tags: 1 })
 
-module.exports = mongoose.model('Activity', ActivitySchema)
+// protect multiple imports
+var Activity
+
+if (mongoose.models.Activity) {
+  Activity = mongoose.model('Activity')
+} else {
+  Activity = mongoose.model('Activity', ActivitySchema)
+}
+
+module.exports = Activity

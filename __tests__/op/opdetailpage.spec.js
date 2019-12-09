@@ -238,6 +238,7 @@ test('display unavailable opportunity message when opportunity id is invalid on 
         isAuthenticated: false
       },
       opportunities: {
+        sync: true,
         loading: false,
         data: []
       },
