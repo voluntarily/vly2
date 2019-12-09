@@ -13,7 +13,11 @@ const getSchools = async (req, res) => {
     return res.status(400).send(e)
   }
   try {
-    const got = await SchoolLookUp.find(query, select).sort(sort).exec()
+    const got = await SchoolLookUp.find(query, select)
+      .sort(sort)
+      .collation({ locale: 'en_US', strength: 1 })
+      .exec()
+
     res.json(got)
   } catch (e) {
     // If we can't find a match return 404
