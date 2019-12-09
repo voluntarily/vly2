@@ -4,9 +4,15 @@
 */
 // import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import styled from 'styled-components';
 import InterestTable from './InterestTable'
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
-import Loading from '../Loading'
+import LoadingComponent from '../Loading'
+
+const Loading = styled(LoadingComponent)`
+  margin: 0 auto;
+  display: block;
+`
 
 class InterestSection extends Component {
   async componentDidMount () {
@@ -36,11 +42,7 @@ class InterestSection extends Component {
 
   render () {
     if (!this.props.interests || !this.props.interests.sync) {
-      return (
-        <section>
-          <Loading />
-        </section>
-      )
+      return <Loading />
     } else {
       return (
           <InterestTable
