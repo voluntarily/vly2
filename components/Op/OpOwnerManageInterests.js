@@ -3,7 +3,7 @@ import Router from 'next/router'
 import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import { ControlGrid, Spacer } from '../../components/VTheme/VTheme'
+import { ControlGrid } from '../../components/VTheme/VTheme'
 
 export default class OpOwnerManageInterests extends Component {
   constructor (props) {

@@ -4,7 +4,7 @@
 */
 // import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import styled from 'styled-components';
+import styled from 'styled-components'
 import InterestTable from './InterestTable'
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import LoadingComponent from '../Loading'
@@ -45,13 +45,13 @@ class InterestSection extends Component {
       return <Loading />
     } else {
       return (
-          <InterestTable
-            checkboxEnabled
-            interests={this.props.interests.data}
-            onInvite={this.handleInvite.bind(this)}
-            onWithdrawInvite={this.handleWithdrawInvite.bind(this)}
-            onDecline={this.handleDecline.bind(this)}
-          />
+        <InterestTable
+          checkboxEnabled
+          interests={this.props.interests.data}
+          onInvite={this.handleInvite.bind(this)}
+          onWithdrawInvite={this.handleWithdrawInvite.bind(this)}
+          onDecline={this.handleDecline.bind(this)}
+        />
       )
     }
   }

@@ -266,7 +266,7 @@ export class OpDetailPage extends Component {
                         <InterestSection opid={op._id} />
                       </div>
                     </OpSectionGrid>
-                    
+
                     <Divider />
                   </>}
 
