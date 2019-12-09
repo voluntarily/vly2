@@ -51,6 +51,7 @@ const FooterGridItemTitle = styled.li`
 
 const MenuWrapper = styled.ul`
   margin-bottom: 2rem;
+  padding: 0;
   
   @media screen and (min-width: 576px) {
     height: 300px;
