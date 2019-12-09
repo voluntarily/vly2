@@ -31,6 +31,7 @@
     "@casl/ability": "^3.2.0",
     "@casl/mongoose": "^2.3.2",
     "@storybook/addon-knobs": "^5.2.6",
+    "@types/react-intl": "^3.0.0",
     "@uppy/core": "^1.6.0",
     "@uppy/react": "^1.4.0",
     "@zeit/next-less": "^1.0.1",
