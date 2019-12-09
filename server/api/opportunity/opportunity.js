@@ -38,4 +38,13 @@ opportunitySchema.plugin(accessibleRecordsPlugin)
 opportunitySchema.plugin(accessibleFieldsPlugin)
 opportunitySchema.index({ tags: 1 })
 
-module.exports = mongoose.model(SchemaName, opportunitySchema)
+// protect multiple imports
+var Opportunity
+
+if (mongoose.models.Opportunity) {
+  Opportunity = mongoose.model(SchemaName)
+} else {
+  Opportunity = mongoose.model(SchemaName, opportunitySchema)
+}
+
+module.exports = Opportunity
