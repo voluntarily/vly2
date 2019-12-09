@@ -105,20 +105,24 @@ class SchoolInvite {
       transport: emailTransport
     })
 
-    const sentEmailInfo = await inviteEmail.send({
-      template: 'inviteSchool',
-      message: {
-        to: emailData.inviteeEmail
-      },
-      locals: {
-        inviteeName: emailData.inviteeName,
-        schoolName: emailData.schoolName,
-        adminMsg: emailData.invitationMessage,
-        inviteButtonLink: emailData.tokenUrl
-      }
-    })
+    try {
+      const sentEmailInfo = await inviteEmail.send({
+        template: 'inviteSchool',
+        message: {
+          to: emailData.inviteeEmail
+        },
+        locals: {
+          inviteeName: emailData.inviteeName,
+          schoolName: emailData.schoolName,
+          adminMsg: emailData.invitationMessage,
+          inviteButtonLink: emailData.tokenUrl
+        }
+      })
 
-    return (sentEmailInfo.accepted.length > 0)
+      return (sentEmailInfo.accepted.length > 0)
+    } catch (error) {
+      return false
+    }
   }
 }
 
