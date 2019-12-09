@@ -102,6 +102,11 @@ const appReady = app.prepare().then(() => {
     if (!controllerPath.includes('.spec.js')) require(controllerPath)(server)
   })
 
+  // Load all Subscriptions
+  glob.sync(rootPath + '/server/api/**/*.subscribe.js').forEach(sub => {
+    if (!sub.includes('.spec.js')) require(sub)(server)
+  })
+
   // Next.js page routes
   server.get('*', routerHandler)
   // Start server

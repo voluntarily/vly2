@@ -21,6 +21,6 @@ export default (req, res) => {
     method: req.method,
     app_url: process.env.APP_URL
   }
-  // res.status(200).json(result)
+
   res.send(result)
 }
