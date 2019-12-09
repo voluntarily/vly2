@@ -90,11 +90,20 @@ export default [
     startLink: '/search',
     language: 'en',
     category: 'First Activity',
+    evaluation: () => { return true },
+    dateAdded: '2019-11-27T10:00:00.000Z'
+  },
+  {
+    name: 'Test 3 Thrower',
+    slug: 'test-003',
+    imgUrl: '/static/img/goal/goal-school-ready.png',
+    subtitle: 'Test 3',
+    startLink: '/search',
+    category: 'Throwers',
     evaluation: () => {
       console.log('Throws an error')
       throw new Error('testing')
-    },
-    dateAdded: '2019-11-27T10:00:00.000Z'
+    }
   }
 
 ]

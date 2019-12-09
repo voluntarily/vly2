@@ -152,7 +152,7 @@ test.serial('Evaluate the personal goals - true completes', async t => {
 test.serial('Evaluate the personal goals - throw failure', async t => {
   const personalGoalAlice = {
     person: t.context.alice._id,
-    goal: t.context.goals[2]._id, // this throws evaluation
+    goal: t.context.goals[3]._id, // this throws evaluation
     status: PersonalGoalStatus.ACTIVE
   }
   let apg = await addPersonalGoal(personalGoalAlice)
