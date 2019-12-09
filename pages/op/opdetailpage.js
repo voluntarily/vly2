@@ -16,6 +16,7 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import OpEditPage from './opeditpage'
 import OpUnavailablePage from './opunavailablepage'
+import InterestSection from '../../components/Interest/InterestSection'
 
 const blankOp = {
   name: '',
@@ -249,35 +250,56 @@ export class OpDetailPage extends Component {
             />
             <Divider />
             {this.canEdit(op) && (
-              <OpSectionGrid>
-                <h2>Danger zone</h2>
-                <div>
-                  <h4>
-                    {' '}
-                    These buttons will permanantly end your activity - be
-                    careful!
-                  </h4>
-                  <OpOwnerManageInterests
-                    canManageInterests={this.canManageInterests(op)}
-                    op={op}
-                    confirmOpportunity={this.confirmOpportunity}
-                    cancelOpportunity={this.cancelOpportunity}
-                  />
-                  <Button
-                    id='editOpBtn'
-                    style={{ marginBottom: '1rem' }}
-                    type='primary'
-                    shape='round'
-                    onClick={() => this.setState({ editing: true })}
-                  >
-                    <FormattedMessage
-                      id='op.edit'
-                      defaultMessage='Edit'
-                      description='Button to edit an opportunity'
+              <>
+                {this.canManageInterests(op) &&
+                  <>
+                    <OpSectionGrid>
+                      <h2>
+                        <FormattedMessage
+                          id='interestSection.name'
+                          defaultMessage='Interested Volunteers'
+                          description='label for interest table on op detail page'
+                        />
+                      </h2>
+
+                      <div>
+                        <InterestSection opid={op._id} />
+                      </div>
+                    </OpSectionGrid>
+                    
+                    <Divider />
+                  </>}
+
+                <OpSectionGrid>
+                  <h2>Danger zone</h2>
+                  <div>
+                    <h4>
+                      {' '}
+                      These buttons will permanantly end your activity - be
+                      careful!
+                    </h4>
+                    <OpOwnerManageInterests
+                      canManageInterests={this.canManageInterests(op)}
+                      op={op}
+                      confirmOpportunity={this.confirmOpportunity}
+                      cancelOpportunity={this.cancelOpportunity}
                     />
-                  </Button>
-                </div>
-              </OpSectionGrid>
+                    <Button
+                      id='editOpBtn'
+                      style={{ marginBottom: '1rem' }}
+                      type='primary'
+                      shape='round'
+                      onClick={() => this.setState({ editing: true })}
+                    >
+                      <FormattedMessage
+                        id='op.edit'
+                        defaultMessage='Edit'
+                        description='Button to edit an opportunity'
+                      />
+                    </Button>
+                  </div>
+                </OpSectionGrid>
+              </>
             )}
           </FullPage>
         )

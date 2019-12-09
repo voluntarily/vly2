@@ -4,7 +4,6 @@ import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 
 import { ControlGrid, Spacer } from '../../components/VTheme/VTheme'
-import InterestSection from '../../components/Interest/InterestSection'
 
 export default class OpOwnerManageInterests extends Component {
   constructor (props) {
@@ -59,9 +58,6 @@ export default class OpOwnerManageInterests extends Component {
               </Button>
             </Popconfirm>
           </ControlGrid>
-          <Divider />
-          <Spacer />
-          <InterestSection opid={this.props.op._id} />
         </section>
     )
   }

@@ -5,10 +5,9 @@
 // import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import InterestTable from './InterestTable'
-import { FormattedMessage } from 'react-intl'
-
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
+
 class InterestSection extends Component {
   async componentDidMount () {
     // Get all interests
@@ -44,15 +43,6 @@ class InterestSection extends Component {
       )
     } else {
       return (
-        <section>
-          <h2>
-            <FormattedMessage
-              id='interestSection.name'
-              defaultMessage='Interested Volunteers'
-              description='label for interest table on op detail page'
-            />
-          </h2>
-
           <InterestTable
             checkboxEnabled
             interests={this.props.interests.data}
@@ -60,7 +50,6 @@ class InterestSection extends Component {
             onWithdrawInvite={this.handleWithdrawInvite.bind(this)}
             onDecline={this.handleDecline.bind(this)}
           />
-        </section>
       )
     }
   }
