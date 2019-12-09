@@ -52,7 +52,7 @@ class SchoolInvite {
     const emailSuccess = await SchoolInvite.sendInviteEmail({
       inviteeName: postData.inviteeName,
       inviteeEmail: postData.inviteeEmail,
-      invitationMessage: postData.invitationMessage,
+      invitationMessage: postData.invitationMessage || '',
       schoolName: school.name,
       tokenUrl: tokenUrl
     })
@@ -83,7 +83,7 @@ class SchoolInvite {
   static getMissingRequiredFields (postData) {
     const missingFields = []
 
-    for (const requiredField of ['schoolId', 'inviteeName', 'inviteeEmail', 'invitationMessage']) {
+    for (const requiredField of ['schoolId', 'inviteeName', 'inviteeEmail']) {
       if (!postData[requiredField]) {
         missingFields.push(requiredField)
       }

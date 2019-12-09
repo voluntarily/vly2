@@ -74,7 +74,7 @@ test('Valid login, missing required data', async (t) => {
 
   t.is(400, response.statusCode, `Received ${response.statusCode} instead of 400`)
   t.deepEqual({
-    message: 'Missing required fields (schoolId, inviteeName, inviteeEmail, invitationMessage)'
+    message: 'Missing required fields (schoolId, inviteeName, inviteeEmail)'
   }, response._getJSON())
 })
 
