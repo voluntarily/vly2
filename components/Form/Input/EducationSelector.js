@@ -25,7 +25,7 @@ class EducationSelector extends React.Component {
 EducationSelector.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
-  existingEducation: PropTypes.arrayOf(PropTypes.string).isRequired,
+  existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired,
   width: PropTypes.string
 }
 
