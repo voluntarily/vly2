@@ -9,11 +9,11 @@ class SchoolInvite {
   static async send (req, res) {
     res.setHeader('Content-Type', 'application/json')
 
-    if (!this.isPostRequest(req)) {
+    if (!SchoolInvite.isPostRequest(req)) {
       return res.status(404).end()
     }
 
-    if (!this.userCanSendInvite(req)) {
+    if (!SchoolInvite.userCanSendInvite(req)) {
       return res.status(403).end()
     }
 
@@ -23,7 +23,7 @@ class SchoolInvite {
 
     const postData = req.body
 
-    const missingFields = this.getMissingRequiredFields(postData)
+    const missingFields = SchoolInvite.getMissingRequiredFields(postData)
 
     if (missingFields.length > 0) {
       return res.status(400).send({
@@ -49,10 +49,10 @@ class SchoolInvite {
 
     const tokenUrl = makeURLToken(payload)
 
-    const emailSuccess = await this.sendInviteEmail({
+    const emailSuccess = await SchoolInvite.sendInviteEmail({
       inviteeName: postData.inviteeName,
       inviteeEmail: postData.inviteeEmail,
-      invitationMessage: postData.invitationMessage,
+      invitationMessage: postData.invitationMessage || '',
       schoolName: school.name,
       tokenUrl: tokenUrl
     })
@@ -83,7 +83,7 @@ class SchoolInvite {
   static getMissingRequiredFields (postData) {
     const missingFields = []
 
-    for (const requiredField of ['schoolId', 'inviteeName', 'inviteeEmail', 'invitationMessage']) {
+    for (const requiredField of ['schoolId', 'inviteeName', 'inviteeEmail']) {
       if (!postData[requiredField]) {
         missingFields.push(requiredField)
       }
@@ -105,20 +105,24 @@ class SchoolInvite {
       transport: emailTransport
     })
 
-    const sentEmailInfo = await inviteEmail.send({
-      template: 'inviteSchool',
-      message: {
-        to: emailData.inviteeEmail
-      },
-      locals: {
-        inviteeName: emailData.inviteeName,
-        schoolName: emailData.schoolName,
-        adminMsg: emailData.invitationMessage,
-        inviteButtonLink: emailData.tokenUrl
-      }
-    })
+    try {
+      const sentEmailInfo = await inviteEmail.send({
+        template: 'inviteSchool',
+        message: {
+          to: emailData.inviteeEmail
+        },
+        locals: {
+          inviteeName: emailData.inviteeName,
+          schoolName: emailData.schoolName,
+          adminMsg: emailData.invitationMessage,
+          inviteButtonLink: emailData.tokenUrl
+        }
+      })
 
-    return (sentEmailInfo.accepted.length > 0)
+      return (sentEmailInfo.accepted.length > 0)
+    } catch (error) {
+      return false
+    }
   }
 }
 
