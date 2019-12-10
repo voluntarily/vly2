@@ -160,8 +160,10 @@ class OrgDetailPage extends Component {
         </div>
       ) : (
         <div>
-          <OrgDetail org={org} meid={this.props.me._id} />
+          <OrgDetail org={org} meid={this.props.me._id} isAuthenticated={this.props.isAuthenticated} me={this.props.me} />
+           {/*//TODO: this commented out code will likely go in the new settings tab
           <Divider />
+         
           <h2>
             <FormattedMessage
               id='getInvolved'
@@ -171,8 +173,6 @@ class OrgDetailPage extends Component {
           </h2>
           <h5>Volunteer with {org.name}</h5>
           <OpListSection org={org._id} />
-          <Spacer />
-          <Divider />
           <div style={{ float: 'right' }}>
             <Button shape='round'>
               <Link href='/orgs'>
@@ -211,10 +211,7 @@ class OrgDetailPage extends Component {
                 </Button>
               </Popconfirm>
             )}
-          </div>
-          {this.props.isAuthenticated && (
-            <RegisterMemberSection orgid={org._id} meid={this.props.me._id} />
-          )}
+          </div> */}
         </div>
       )
     }

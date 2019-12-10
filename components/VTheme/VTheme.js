@@ -396,7 +396,6 @@ export const FullPage = styled.div`
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
     width: calc(100vw - 2rem);
-    margin-left: 1rem;
   }
 ` // end fullpage
 
