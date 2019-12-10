@@ -284,7 +284,7 @@ class OrgDetailForm extends Component {
               <p>
                 <FormattedMessage
                   id='orgDetail.form.about.description'
-                  values={{ br: <br />  }}
+                  values={{ br: <br /> }}
                   defaultMessage='Tell the world about your school or organisation.{br}{br}
                   This is your opportunity to ‘sell’ your school or organisation to the rest of the Voluntarily community. Who are you? What do you do? What are your values and your motivations for using Voluntarily?'
                   description='Title for about section of organisation edit form'
