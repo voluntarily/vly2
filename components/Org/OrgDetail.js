@@ -1,4 +1,4 @@
-import { Button, Tabs, Divider } from 'antd'
+import { Tabs, Divider } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
@@ -9,8 +9,6 @@ import MemberSection from '../Member/MemberSection'
 import RegisterMemberSection from '../Member/RegisterMemberSection'
 import { PageHeaderContainer } from '../VTheme/VTheme'
 import OrgDetailForm from '../Org/OrgDetailForm'
-
-const ButtonGroup = Button.Group
 
 function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
@@ -183,9 +181,9 @@ const OrgDetail = ({ org, ...props }) => (
       <TitleContainer>
         <OrgHeader>{org.name}</OrgHeader>
         <Markdown children={(org.info && org.info.about) || ''} />
-        <a href="{org.website}">{org.website}</a>
+        <a href='{org.website}'>{org.website}</a>
         {props.isAuthenticated && (
-            <RegisterMemberSection orgid={org._id} meid={props.me._id} />
+          <RegisterMemberSection orgid={org._id} meid={props.me._id} />
         )}
       </TitleContainer>
     </ProfileContainer>
@@ -194,17 +192,17 @@ const OrgDetail = ({ org, ...props }) => (
         <TabPane tab={orgTab} key='1'>
           <TabContainer>
             <h2>About</h2>
-            <Markdown style={{ fontSize: '1.5rem'}} children={(org.info && org.info.about) || ''} />
+            <Markdown style={{ fontSize: '1.5rem' }} children={(org.info && org.info.about) || ''} />
           </TabContainer>
           <Divider />
           <TabContainer>
             <h2>Contact</h2>
             <ContactList>
-              <li>Website<br/><a href={org.website} target='_blank'>{org.website}</a></li>
-              <li>Twitter<br/><a href={org.twitter} target='_blank'>{org.twitter}</a></li>
-              <li>Facebook<br/><a href={org.facebook} target='_blank'>{org.facebook}</a></li>
-              <li>Address<br/><a href={OrgDetailForm.createGoogleMapsAddressUrl(org.address)} target='_blank' rel='noopener noreferrer'>{org.address}</a></li>
-              <li>Phone<br/><a tel={org.contactPhoneNumber}>{org.contactPhoneNumber}</a></li>
+              <li>Website<br /><a href={org.website} target='_blank' rel='noopener noreferrer'>{org.website}</a></li>
+              <li>Twitter<br /><a href={org.twitter} target='_blank' rel='noopener noreferrer'>{org.twitter}</a></li>
+              <li>Facebook<br /><a href={org.facebook} target='_blank' rel='noopener noreferrer'>{org.facebook}</a></li>
+              <li>Address<br /><a href={OrgDetailForm.createGoogleMapsAddressUrl(org.address)} target='_blank' rel='noopener noreferrer'>{org.address}</a></li>
+              <li>Phone<br /><a tel={org.contactPhoneNumber}>{org.contactPhoneNumber}</a></li>
             </ContactList>
           </TabContainer>
         </TabPane>
