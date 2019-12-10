@@ -5,8 +5,6 @@ const { TOPIC_API__HEALTH } = require('../../../server/services/pubsub/topic.con
    publish a message on a certain topic
 */
 export default (req, res) => {
-  console.log('Publish:', req.query.msg)
-
   // Whenever the health endpoint is called we publish the result internally
   PubSub.publish(TOPIC_API__HEALTH, req.query)
 

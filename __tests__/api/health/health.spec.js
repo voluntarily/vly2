@@ -1,70 +1,72 @@
 import test from 'ava'
-import request from 'supertest'
-import { server, appReady } from '../../../server/server'
-import MemoryMongo from '../../../server/util/test-memory-mongo'
-
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-  await appReady
-})
+import MockExpressRequest from 'mock-express-request'
+import MockExpressResponse from 'mock-express-response'
+import health from '../../../pages/api/health/health'
+import param from '../../../pages/api/health/[param]'
+import log from '../../../pages/api/health/log'
+import pub from '../../../pages/api/health/pub'
+import sinon from 'sinon'
+import { TOPIC_API__HEALTH } from '../../../server/services/pubsub/topic.constants'
+import PubSub from 'pubsub-js'
 
 test('Should respond to health check', async t => {
-  const res = await request(server)
-    .get('/api/health')
-    .set('Accept', 'application/json')
-    .expect(200)
-    .expect('Content-Type', /json/)
+  const mockReq = new MockExpressRequest()
+  const mockRes = new MockExpressResponse()
 
-  const health = res.body
-  t.is(health.health, 'OK')
+  mockReq.query = { msg: 'Test' }
+  await health(mockReq, mockRes)
+  t.deepEqual(mockRes._getJSON().query, { msg: 'Test' })
+  t.is(200, mockRes.statusCode, 'OK Response')
 })
 
 test('Should respond to parameter check', async t => {
-  const res = await request(server)
-    .get('/api/health/test1')
-    .set('Accept', 'application/json')
-    .expect(200)
-    .expect('Content-Type', /json/)
+  const mockReq = new MockExpressRequest()
+  const mockRes = new MockExpressResponse()
 
-  const health = res.body
-  t.is(health.health, 'OK')
-  t.is(health.param, 'test1')
-})
-
-test('Should respond to query check', async t => {
-  const res = await request(server)
-    .get('/api/health?a=1&b=["one","two","three"]')
-    .set('Accept', 'application/json')
-    .expect(200)
-    .expect('Content-Type', /json/)
-
-  const health = res.body
-  t.is(health.health, 'OK')
-  t.is(health.query.a, '1')
-  t.is(health.query.b.length, 21) // its a string not an array
-  const arr = JSON.parse(health.query.b)
-  t.is(arr.length, 3)
+  mockReq.query = { param: 'Test' }
+  await param(mockReq, mockRes)
+  t.deepEqual(mockRes._getJSON().query, { param: 'Test' })
+  t.is(200, mockRes.statusCode, 'OK Response')
 })
 
 test('Should respond to log check', async t => {
-  const res = await request(server)
-    .get('/api/health/log?msg="test"')
-    .set('Accept', 'application/json')
-    .expect(200)
-    .expect('Content-Type', /json/)
-
-  const health = res.body
-  t.is(health, 'test')
+  const mockReq = new MockExpressRequest()
+  const mockRes = new MockExpressResponse()
+  mockReq.query = { msg: 'Log Test' }
+  await log(mockReq, mockRes)
+  t.deepEqual(mockRes._getJSON(), 'Log Test')
+  t.is(200, mockRes.statusCode, 'OK Response')
 })
 
+/* Example of testing Pub/Sub calls
+  The api handler will publish a TOPIC_API__HEALTH message
+  this doesn't usually have a handler so has no side effects
+  the test subscribes to the topic and calls a spy.
+  We validate that the spy gets called once the pub is called
+  we use sinon fake timers to allow the async to transact.
+  */
 test('Should respond to pub check', async t => {
-  const res = await request(server)
-    .get('/api/health/pub?msg="test"')
-    .set('Accept', 'application/json')
-    .expect(200)
-    .expect('Content-Type', /json/)
+  const spy = sinon.spy()
+  const clock = sinon.useFakeTimers()
 
-  const health = res.body
-  t.is(health, 'test')
+  PubSub.subscribe(TOPIC_API__HEALTH, spy)
+
+  const mockReq = new MockExpressRequest()
+  const mockRes = new MockExpressResponse()
+  mockReq.query = { msg: 'Pub Test' }
+  await pub(mockReq, mockRes)
+
+  t.is(spy.callCount, 0)
+  clock.tick(1)
+  t.is(spy.callCount, 1)
+  clock.restore()
+  t.deepEqual(spy.args[0][1], { msg: 'Pub Test' })
+  t.deepEqual(mockRes._getJSON(), 'Pub Test')
+  t.is(200, mockRes.statusCode, 'OK Response')
 })
+
+// mockReq.session = {
+//   isAuthenticated: false,
+//   me: {},
+//   user: {}
+// }

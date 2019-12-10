@@ -17,7 +17,7 @@
     "prod-build": "next build",
     "heroku-postbuild": "next build",
     "start": "NODE_ENV=production node --experimental-modules server/server.js",
-    "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
+    "check-coverage": "nyc check-coverage --statements 90 --branches 90 --functions 90 --lines 90",
     "docker-test:build": "docker build -t vly-test:latest -f Dockerfile-test . ",
     "docker-test": "npm run docker-test:build && docker run vly-test:latest ",
     "remote": "APP_URL=http://$(ifconfig | grep -A 1 ‘en0’ | tail -1 | cut -d ' ' -f 2):3122 nodemon -w server -w package.json server/server.js",
@@ -176,14 +176,22 @@
     ]
   },
   "nyc": {
+    "ignore-class-method": "GetInitialProps",
+    "watermarks": {
+      "lines": [80, 95],
+      "functions": [80, 95],
+      "branches": [80, 95],
+      "statements": [80, 95]
+    },
     "include": [
       "pages/**/*.js",
+      "pages/api/*.js",
       "components/**/*.js",
       "server/**/*.js",
       "lib/**/*.js"
     ],
     "exclude": [
-      "**/__tests__/*.js",
+      "**/__tests__/**",
       "**/*.stories.js",
       "**/*.spec.js",
       "**/*.fixture.js",
@@ -200,7 +208,7 @@
       "pages/test/**/*.js",
       "pages/todo.js",
       "pages/admin/admin.js",
-      "pages/admin/goals",
+      "pages/admin/goals/*.js",
       "pages/teachers/*.js",
       "pages/business/*.js",
       "pages/content/*.js",
