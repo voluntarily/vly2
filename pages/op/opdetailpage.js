@@ -85,6 +85,7 @@ export class OpDetailPage extends Component {
   }
 
   async createOpportunity (op) {
+    console.log('createOpportunity:', op)
     const res = await this.props.dispatch(
       reduxApi.actions.opportunities.put(
         { id: op._id },
@@ -177,7 +178,7 @@ export class OpDetailPage extends Component {
           imgUrl: act.imgUrl,
           duration: act.duration,
           tags: act.tags,
-          fromActivity: act._id
+          fromActivity: this.props.actid
         }
       }
       op.requestor = this.props.me
@@ -211,10 +212,10 @@ export class OpDetailPage extends Component {
   render () {
     // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
     if (!this.props.isNew) {
-      if (this.props.opportunities.loading) {
+      if (!this.props.opportunities.sync) {
         return <Loading />
       }
-      if (this.props.opportunities.data.length !== 1) {
+      if (this.props.opportunities.data.length === 0) {
         return <OpUnavailablePage />
       }
     }

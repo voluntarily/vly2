@@ -14,14 +14,13 @@ test('render OpList', async t => {
   // first test GetInitialProps
   const store = {
     dispatch: (ACTION) => {
-      console.log('dispatch', ACTION)
+      // console.log('dispatch', ACTION)
       return Promise.resolve(ops)
     }
   }
   const props = await OpListPage.getInitialProps({ store })
 
   const wrapper = shallowWithIntl(<OpListPage {...props} />)
-  console.log(wrapper.debug())
   t.is(wrapper.find('h1 FormattedMessage').first().props().id, 'opportunities')
   t.truthy(wrapper.find('Button'))
   t.truthy(wrapper.find('OpList'))
