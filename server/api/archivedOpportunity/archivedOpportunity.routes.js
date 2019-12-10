@@ -1,7 +1,7 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const archivedOpportunity = require('./archivedOpportunity')
-const { getArchivedOpportunity } = require('./archivedOpportunity.controller')
+const { getArchivedOpportunities, getArchivedOpportunity } = require('./archivedOpportunity.controller')
 
 module.exports = (server) => {
   server.use(
@@ -12,6 +12,7 @@ module.exports = (server) => {
       endResponseInAction: false,
 
       actions: {
+        list: getArchivedOpportunities,
         read: getArchivedOpportunity
       },
       afterActions: [

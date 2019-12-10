@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const Interest = require('../interest/interest')
-
 const InterestStatus = {
   INTERESTED: 'interested',
   INVITED: 'invited',
@@ -15,7 +14,7 @@ const InterestStatus = {
 
 const interestArchiveSchema = new Schema({
   ...Interest.schema.obj,
-  opportunity: { type: Schema.Types.ObjectId, ref: 'archivedOpportunity', required: true },
+  opportunity: { type: Schema.Types.ObjectId, ref: 'ArchivedOpportunity', required: true },
   status: {
     type: 'String',
     required: true,

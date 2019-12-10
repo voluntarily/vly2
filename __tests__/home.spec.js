@@ -46,6 +46,8 @@ test.before('Setup fixtures', (t) => {
     })
   })
 
+  // TODO: update ArchivedInterests fixture explicitly.
+
   const recommendedOps = {
     basedOnLocation: ops,
     basedOnSkills: []

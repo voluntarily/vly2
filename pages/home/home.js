@@ -14,7 +14,6 @@ import { FullPage, P, PageHeaderContainer, RequestButtonContainer } from '../../
 import securePage from '../../hocs/securePage'
 import reduxApi, { withArchivedOpportunities, withInterests, withMembers, withOps, withPeople, withRecommendedOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
-
 const { TabPane } = Tabs
 
 const SectionTitleWrapper = styled.div`
@@ -37,17 +36,22 @@ class PersonHomePage extends Component {
     editProfile: false
   }
 
-  constructor (props) {
-    super(props)
-    this.getArchivedOpportunitiesByStatus = this.getArchivedOpportunitiesByStatus.bind(
-      this
-    )
-  }
+  // constructor (props) {
+  //   super(props)
+  //   this.getArchivedOpportunitiesByStatus = this.getArchivedOpportunitiesByStatus.bind(
+  //     this
+  //   )
+  // }
 
   getArchivedOpportunitiesByStatus (status) {
-    return this.props.archivedOpportunities.data.filter(
-      op => op.status === status && op.requestor === this.props.me._id
-    )
+    return this.props.archivedOpportunities.data
+      .filter(op => op.status === status)
+  }
+
+  getArchivedOpsForVolunteer (status) {
+    return this.props.interestsArchived.data
+      .filter(op => op.status === status)
+      .map(interest => interest.opportunity)
   }
 
   myOpsList () {
@@ -78,22 +82,18 @@ class PersonHomePage extends Component {
   static async getInitialProps ({ store }) {
     try {
       const me = store.getState().session.me
-      const requestor = { requestor: me._id }
-      const filters = {
-        q: JSON.stringify(requestor)
-        // s: date
+      const myOpportunities = {
+        q: JSON.stringify({ requestor: me._id })
       }
 
-      await store.dispatch(reduxApi.actions.tags.get())
-
       await Promise.all([
-        store.dispatch(reduxApi.actions.opportunities.get(filters)),
+        store.dispatch(reduxApi.actions.tags.get()),
+        store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
         store.dispatch(reduxApi.actions.locations.get({ withRelationships: true })),
         store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
         store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
-        store.dispatch(
-          reduxApi.actions.archivedOpportunities.get({ requestor: me._id })
-        ),
+     //   store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),
+        store.dispatch(reduxApi.actions.interestsArchived.get({ me: me._id })),
         store.dispatch(reduxApi.actions.recommendedOps.get({ me: me._id }))
       ])
     } catch (err) {
@@ -271,10 +271,10 @@ class PersonHomePage extends Component {
                 ops={this.getArchivedOpportunitiesByStatus('completed')}
               />
               <SectionTitleWrapper>
-                <h2>Cancelled Requests</h2>
+                <h2>Attended Requests</h2>
               </SectionTitleWrapper>
               <OpList
-                ops={this.getArchivedOpportunitiesByStatus('cancelled')}
+                ops={this.getArchivedOpsForVolunteer('attended' || 'committed')}
               />
             </SectionWrapper>
           </TabPane>
