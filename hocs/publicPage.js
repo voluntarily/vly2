@@ -7,6 +7,7 @@ import Header from '../components/Header/Header'
 import { FillWindow } from '../components/VTheme/VTheme'
 import { getUserFromLocalCookie, getUserFromServerCookie, parseUserToSession } from '../lib/auth/auth'
 import { setSession } from '../lib/redux/actions'
+import { Role } from '../server/services/authorize/role'
 
 export default Page =>
   class DefaultPage extends React.Component {
@@ -31,6 +32,7 @@ export default Page =>
         ...pageProps,
         me: session.me || false,
         isAuthenticated: !!session.isAuthenticated,
+        isAdmin: session.me && session.me.role.includes(Role.ADMIN),
         isPlain: false
       }
     }
