@@ -26,7 +26,7 @@ test('OrgDetail renders properly', t => {
 
   t.is(
     wrapper
-      .find('p')
+      .find('h2')
       .at(0)
       .text(),
     'About'
