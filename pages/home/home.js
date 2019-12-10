@@ -38,12 +38,12 @@ class PersonHomePage extends Component {
 
   // constructor (props) {
   //   super(props)
-  //   this.getArchivedOpportunitiesByStatus = this.getArchivedOpportunitiesByStatus.bind(
+  //   this.getArchivedOpsForRequestor = this.getArchivedOpsForRequestor.bind(
   //     this
   //   )
   // }
 
-  getArchivedOpportunitiesByStatus (status) {
+  getArchivedOpsForRequestor (status) {
     return this.props.archivedOpportunities.data
       .filter(op => op.status === status)
   }
@@ -89,11 +89,11 @@ class PersonHomePage extends Component {
       await Promise.all([
         store.dispatch(reduxApi.actions.tags.get()),
         store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
+        store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),
         store.dispatch(reduxApi.actions.locations.get({ withRelationships: true })),
         store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
-        store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
-     //   store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),
         store.dispatch(reduxApi.actions.interestsArchived.get({ me: me._id })),
+        store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
         store.dispatch(reduxApi.actions.recommendedOps.get({ me: me._id }))
       ])
     } catch (err) {
@@ -149,7 +149,7 @@ class PersonHomePage extends Component {
         />
       </span>
     )
-    const searchTab = (
+    const historyTab = (
       <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
         <Icon type='history' />
         <FormattedMessage
@@ -262,19 +262,19 @@ class PersonHomePage extends Component {
             </SectionWrapper>
 
           </TabPane>
-          <TabPane tab={searchTab} key='2'>
+          <TabPane tab={historyTab} key='2'>
             <SectionWrapper>
               <SectionTitleWrapper>
                 <h2>Completed Requests</h2>
               </SectionTitleWrapper>
               <OpList
-                ops={this.getArchivedOpportunitiesByStatus('completed')}
+                ops={this.getArchivedOpsForRequestor('completed')}
               />
               <SectionTitleWrapper>
                 <h2>Attended Requests</h2>
               </SectionTitleWrapper>
               <OpList
-                ops={this.getArchivedOpsForVolunteer('attended' || 'committed')}
+                ops={this.getArchivedOpsForVolunteer('committed' || 'attended')}
               />
             </SectionWrapper>
           </TabPane>
