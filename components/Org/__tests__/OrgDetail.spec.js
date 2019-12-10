@@ -29,7 +29,7 @@ test('OrgDetail renders properly', t => {
       .find('p')
       .at(0)
       .text(),
-    'Social:'
+    'About'
   )
 
   t.is(
