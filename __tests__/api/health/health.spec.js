@@ -46,3 +46,25 @@ test('Should respond to query check', async t => {
   const arr = JSON.parse(health.query.b)
   t.is(arr.length, 3)
 })
+
+test('Should respond to log check', async t => {
+  const res = await request(server)
+    .get('/api/health/log?msg="test"')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+
+  const health = res.body
+  t.is(health, 'test')
+})
+
+test('Should respond to pub check', async t => {
+  const res = await request(server)
+    .get('/api/health/pub?msg="test"')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+
+  const health = res.body
+  t.is(health, 'test')
+})

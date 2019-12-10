@@ -103,10 +103,13 @@ const appReady = app.prepare().then(() => {
   })
 
   // Load all Subscriptions
-  glob.sync(rootPath + '/server/api/**/*.subscribe.js').forEach(sub => {
-    if (!sub.includes('.spec.js')) require(sub)(server)
-  })
-
+  // suppressed under test to avoid complex interactions.
+  // use direct tests of the handlers instead
+  if (process.env.NODE_ENV !== 'test') {
+    glob.sync(rootPath + '/server/api/**/*.subscribe.js').forEach(sub => {
+      if (!sub.includes('.spec.js')) require(sub)(server)
+    })
+  }
   // Next.js page routes
   server.get('*', routerHandler)
   // Start server
