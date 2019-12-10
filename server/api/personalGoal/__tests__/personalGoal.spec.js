@@ -66,16 +66,13 @@ test.after.always(async (t) => {
   await t.context.memMongo.stop()
 })
 
-test.serial('Should give number of personalGoals', async t => {
-  t.plan(2)
-
+test.serial('Should not return any personal goals without a person id', async t => {
   const res = await request(server)
     .get('/api/personalGoals')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200)
-  t.is(res.status, 200)
-  t.deepEqual(6, res.body.length)
+  t.deepEqual(0, res.body.length)
 })
 
 test.serial('Should give a list of goals for a person', async t => {
@@ -89,8 +86,9 @@ test.serial('Should give a list of goals for a person', async t => {
   const personalGoals = res.body
   t.deepEqual(3, personalGoals.length)
   // sorted by status
-  t.is(personalGoals[0].status, PersonalGoalStatus.ACTIVE)
+  t.is(personalGoals[0].status, PersonalGoalStatus.COMPLETED)
   t.is(personalGoals[1].status, PersonalGoalStatus.COMPLETED)
+  t.is(personalGoals[2].status, PersonalGoalStatus.QUEUED)
 })
 
 test.serial('Should send correct data when queried against a _id', async t => {
@@ -144,7 +142,7 @@ test.serial('Should add a valid goal', async t => {
     // status: don't set it should be defaulted to QUEUED
   }
 
-  const res = await request(server)
+  let res = await request(server)
     .post('/api/personalGoals')
     .send(newPersonalGoal)
     .set('Accept', 'application/json')
@@ -162,13 +160,31 @@ test.serial('Should add a valid goal', async t => {
 
   // update state to personalgoal
   returnedPersonalGoal.status = PersonalGoalStatus.ACTIVE
-  const res2 = await request(server)
+  res = await request(server)
     .put(`/api/personalGoals/${returnedPersonalGoal._id}`)
     .send(returnedPersonalGoal)
     .set('Accept', 'application/json')
   t.is(res.status, 200)
-  const updatedPersonalGoal = res2.body
+  const updatedPersonalGoal = res.body
   t.is(updatedPersonalGoal.status, PersonalGoalStatus.ACTIVE)
+
+  // update state to personalgoal
+  returnedPersonalGoal.status = PersonalGoalStatus.HIDDEN
+  res = await request(server)
+    .put(`/api/personalGoals/${returnedPersonalGoal._id}`)
+    .send(returnedPersonalGoal)
+    .set('Accept', 'application/json')
+  t.is(res.status, 200)
+  t.is(res.body.status, PersonalGoalStatus.HIDDEN)
+
+  // update state to personalgoal
+  returnedPersonalGoal.status = PersonalGoalStatus.COMPLETED
+  res = await request(server)
+    .put(`/api/personalGoals/${returnedPersonalGoal._id}`)
+    .send(returnedPersonalGoal)
+    .set('Accept', 'application/json')
+  t.is(res.status, 200)
+  t.is(res.body.status, PersonalGoalStatus.COMPLETED)
 
   await request(server)
     .delete(`/api/personalGoals/${returnedPersonalGoal._id}`)

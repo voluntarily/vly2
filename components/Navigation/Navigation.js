@@ -11,6 +11,10 @@ const StyledMenu = styled(Menu)`
 const StyledAvatar = styled(Avatar)`
   background-color: #fff;
 
+  .anticon-user {
+    margin-right: 0px;
+  }
+
   .ant-imgUrl > i {
     margin-right: 0px;
   }

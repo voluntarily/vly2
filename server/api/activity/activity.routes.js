@@ -2,10 +2,15 @@ const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Activity = require('./activity')
 const { getActivities, getActivity, putActivity } = require('./activity.controller')
+const { findActivity } = require('./findActivity')
 const initializeTags = require('../../util/initTags')
 
 module.exports = (server) => {
   // Docs: https://github.com/ryo718/mongoose-crudify
+  server.use(
+    '/activity/:slug',
+    findActivity
+  )
   server.use(
     '/api/activities',
     mongooseCrudify({

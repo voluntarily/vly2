@@ -19,7 +19,8 @@ export default [
     startLink: '/home', // should be /profile#edit
     language: 'en',
     category: 'Getting Started',
-    evaluation: "() => { console.log('Complete your profile'); return false }",
+    rank: 1,
+    evaluation: () => { console.log('evaluates to false'); return false },
     dateAdded: '2019-11-27T10:00:00.000Z'
   },
   {
@@ -52,7 +53,8 @@ export default [
     startLink: '/home', // should be /profile#edit
     language: 'en',
     category: 'Getting Started',
-    evaluation: "() => { console.log('does person have school ready badge'); return false }",
+    rank: 2,
+    evaluation: () => { console.log('evaluates to true'); return true },
     dateAdded: '2019-11-27T10:00:00.000Z'
   },
   {
@@ -88,8 +90,20 @@ export default [
     startLink: '/search',
     language: 'en',
     category: 'First Activity',
-    evaluation: "() => { console.log('does person have first-volunteer-activity badge'); return false }",
+    evaluation: () => { return true },
     dateAdded: '2019-11-27T10:00:00.000Z'
+  },
+  {
+    name: 'Test 3 Thrower',
+    slug: 'test-003',
+    imgUrl: '/static/img/goal/goal-school-ready.png',
+    subtitle: 'Test 3',
+    startLink: '/search',
+    category: 'Throwers',
+    evaluation: () => {
+      console.log('Throws an error')
+      throw new Error('testing')
+    }
   }
 
 ]

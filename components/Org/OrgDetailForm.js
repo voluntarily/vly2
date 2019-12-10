@@ -25,6 +25,7 @@ class OrgDetailForm extends Component {
   constructor (props) {
     super(props)
     this.setImgUrl = this.setImgUrl.bind(this)
+    this.setAddress = this.setAddress.bind(this)
   }
 
   componentDidMount () {
@@ -35,12 +36,28 @@ class OrgDetailForm extends Component {
   setImgUrl = value => {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
+
+  setAddress = value => {
+    this.props.form.setFieldsValue({ address: value })
+  }
   // setWebsite = (value) => {
   //   this.props.form.setWebsite({ contactEmail: value })
   // }
   // setContactEmailUrl = (value) => {
   //   this.props.form.setFieldsValue({ contactEmail: value })
   // }
+
+  /**
+   * Creates a link to google maps for the supplied address.
+   * @param {string} address
+   */
+  static createGoogleMapsAddressUrl (address) {
+    address = (address || '').trim()
+    if (!address) { return undefined }
+
+    address = address.replace(/\n/g, ' ')
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
+  }
 
   handleSubmit = e => {
     e.preventDefault()
@@ -67,6 +84,7 @@ class OrgDetailForm extends Component {
         org.category = values.category
         org.ageRange = values.ageRange
         org.decile = values.decile
+        org.address = values.address
 
         window.scrollTo(0, 0)
         this.props.onSubmit(this.props.org)
@@ -182,6 +200,13 @@ class OrgDetailForm extends Component {
         description='Contact phone number'
       />
     )
+    const orgAddress = (
+      <FormattedMessage
+        id='orgAddress'
+        defaultMessage='Address'
+        description='Address of the organisation'
+      />
+    )
 
     // TODO translate
     // TODO Use constant values from server/api/organisation/organisation.constants.js
@@ -215,9 +240,36 @@ class OrgDetailForm extends Component {
             />
           </h1>
         </PageTitle>
-        <Divider />
 
         <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <h3>
+                  <FormattedMessage
+                    id='orgDetail.form.category'
+                    defaultMessage='Choose your organisation'
+                    description='The type of organisation'
+                  />
+                </h3>
+              </TitleContainer>
+              <p>
+                <FormattedMessage
+                  id='orgDetail.form.category.description'
+                  defaultMessage='Let everyone know what type of organisation you are.'
+                  description='Description of the type of organisation'
+                />
+              </p>
+            </DescriptionContainer>
+            <InputContainer>
+              <Form.Item label={orgCategory}>
+                {getFieldDecorator('category', {
+                  rules: [{ required: true, message: 'category is required' }]
+                })(<Checkbox.Group options={categoryOptions} />)}
+              </Form.Item>
+            </InputContainer>
+          </FormGrid>
+          <Divider />
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -305,6 +357,89 @@ class OrgDetailForm extends Component {
             </InputContainer>
           </FormGrid>
           <Divider />
+          {(getFieldValue('category') || []).includes(OrganisationCategory.SCHOOL)
+            ? (
+              <>
+                <FormGrid>
+                  <DescriptionContainer>
+                    <TitleContainer>
+                      <h3>School details</h3>
+                    </TitleContainer>
+                    <p>A few details about your school</p>
+                  </DescriptionContainer>
+                  <InputContainer>
+                    <ShortInputContainer>
+                      <Form.Item htmlId='decile' label={orgDecile}>
+                        {getFieldDecorator('decile', {})(
+                          <InputNumber min={1} max={10} className='decile' />
+                        )}
+                      </Form.Item>
+
+                      <Form.Item htmlId='age-range' label={orgAgeRange}>
+                        {getFieldDecorator('ageRange', {
+                          rules: [
+                            {
+                              type: 'method',
+                              validator: (rule, value, callback) => {
+                                callback(validateAgeRange(value)
+                                  ? undefined
+                                  : (
+                                    <FormattedMessage
+                                      id='org.detail.ageRange'
+                                      defaultMessage='Please enter the age range of your students'
+                                      description='The age range specified on the organisation form is invalid'
+                                    />))
+                              }
+                            }
+                          ]
+                        })(
+                          <NumericRange
+                            fromPlaceholder='5'
+                            fromMin={0}
+                            fromMax={120}
+                            toPlaceholder='18'
+                            toMin={0}
+                            toMax={120}
+                          />
+                        )}
+                      </Form.Item>
+                      <Form.Item label={orgContactName}>
+                        {getFieldDecorator('contactName')(
+                          <Input />
+                        )}
+                      </Form.Item>
+                      <Form.Item label={orgContactPhoneNumber}>
+                        {getFieldDecorator('contactPhoneNumber')(
+                          <Input placeholder='01 123 456789' />
+                        )}
+                      </Form.Item>
+                      <Form.Item label={orgAddress}>
+                        {getFieldDecorator('address')(
+                          <>
+                            <Input.TextArea
+                              id='address'
+                              rows={4}
+                              maxLength={512}
+                              value={getFieldValue('address')}
+                              onChange={e => this.setAddress(e.target.value)}
+                            />
+                            {OrgDetailForm.createGoogleMapsAddressUrl(getFieldValue('address')) &&
+                              <a href={OrgDetailForm.createGoogleMapsAddressUrl(getFieldValue('address'))} target='_blank' rel='noopener noreferrer'>
+                                <FormattedMessage
+                                  id='org.detail.viewAddressInGoogleMaps'
+                                  defaultMessage='View in Google maps'
+                                  description='Link to view the address in Google maps'
+                                />
+                              </a>}
+                          </>
+                        )}
+                      </Form.Item>
+                    </ShortInputContainer>
+                  </InputContainer>
+                </FormGrid>
+                <Divider />
+              </>)
+            : null}
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -414,85 +549,6 @@ class OrgDetailForm extends Component {
               </Form.Item>
             </InputContainer>
           </FormGrid>
-          <Divider />
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <h3>God Mode controls</h3>
-              </TitleContainer>
-              <p>Admin section for changing orgtype</p>
-            </DescriptionContainer>
-            <InputContainer>
-              <Form.Item label={orgCategory}>
-                {getFieldDecorator('category', {
-                  rules: [{ required: true, message: 'category is required' }]
-                })(<Checkbox.Group options={categoryOptions} />)}
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>
-          <Divider />
-          {(getFieldValue('category') || []).includes(OrganisationCategory.SCHOOL)
-            ? (
-              <>
-                <FormGrid>
-                  <DescriptionContainer>
-                    <TitleContainer>
-                      <h3>School details</h3>
-                    </TitleContainer>
-                    <p>A few details about your school</p>
-                  </DescriptionContainer>
-                  <InputContainer>
-                    <ShortInputContainer>
-                      <Form.Item htmlId='decile' label={orgDecile}>
-                        {getFieldDecorator('decile', {})(
-                          <InputNumber min={1} max={10} className='decile' />
-                        )}
-                      </Form.Item>
-
-                      <Form.Item htmlId='age-range' label={orgAgeRange}>
-                        {getFieldDecorator('ageRange', {
-                          rules: [
-                            {
-                              type: 'method',
-                              validator: (rule, value, callback) => {
-                                callback(validateAgeRange(value)
-                                  ? undefined
-                                  : (
-                                    <FormattedMessage
-                                      id='org.detail.ageRange'
-                                      defaultMessage='Please enter the age range of your students'
-                                      description='The age range specified on the organisation form is invalid'
-                                    />))
-                              }
-                            }
-                          ]
-                        })(
-                          <NumericRange
-                            fromPlaceholder='5'
-                            fromMin={0}
-                            fromMax={120}
-                            toPlaceholder='18'
-                            toMin={0}
-                            toMax={120}
-                          />
-                        )}
-                      </Form.Item>
-                      <Form.Item label={orgContactName}>
-                        {getFieldDecorator('contactName')(
-                          <Input />
-                        )}
-                      </Form.Item>
-                      <Form.Item label={orgContactPhoneNumber}>
-                        {getFieldDecorator('contactPhoneNumber')(
-                          <Input placeholder='01 123 456789' />
-                        )}
-                      </Form.Item>
-                    </ShortInputContainer>
-                  </InputContainer>
-                </FormGrid>
-                <Divider />
-              </>)
-            : null}
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -558,7 +614,8 @@ OrgDetailForm.propTypes = {
     _id: PropTypes.string,
     ageRange: PropTypes.object,
     contactName: PropTypes.string,
-    contactPhoneNumber: PropTypes.string
+    contactPhoneNumber: PropTypes.string,
+    address: PropTypes.string
   }).isRequired,
   form: PropTypes.object,
   params: PropTypes.shape({
@@ -614,7 +671,8 @@ export default Form.create({
       ageRange: Form.createFormField({ ...org.ageRange, value: org.ageRange }),
       decile: Form.createFormField({ ...org.decile, value: org.decile }),
       contactName: Form.createFormField({ ...org.contactName, value: org.contactName }),
-      contactPhoneNumber: Form.createFormField({ ...org.contactPhoneNumber, value: org.contactPhoneNumber })
+      contactPhoneNumber: Form.createFormField({ ...org.contactPhoneNumber, value: org.contactPhoneNumber }),
+      address: Form.createFormField({ ...org.address, value: org.address })
     }
   }
 })(OrgDetailForm)
