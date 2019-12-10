@@ -4,11 +4,16 @@
 */
 // import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import styled from 'styled-components'
 import InterestTable from './InterestTable'
-import { FormattedMessage } from 'react-intl'
-
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
-import Loading from '../Loading'
+import LoadingComponent from '../Loading'
+
+const Loading = styled(LoadingComponent)`
+  margin: 0 auto;
+  display: block;
+`
+
 class InterestSection extends Component {
   async componentDidMount () {
     // Get all interests
@@ -37,30 +42,16 @@ class InterestSection extends Component {
 
   render () {
     if (!this.props.interests || !this.props.interests.sync) {
-      return (
-        <section>
-          <Loading />
-        </section>
-      )
+      return <Loading />
     } else {
       return (
-        <section>
-          <h2>
-            <FormattedMessage
-              id='interestSection.name'
-              defaultMessage='Interested Volunteers'
-              description='label for interest table on op detail page'
-            />
-          </h2>
-
-          <InterestTable
-            checkboxEnabled
-            interests={this.props.interests.data}
-            onInvite={this.handleInvite.bind(this)}
-            onWithdrawInvite={this.handleWithdrawInvite.bind(this)}
-            onDecline={this.handleDecline.bind(this)}
-          />
-        </section>
+        <InterestTable
+          checkboxEnabled
+          interests={this.props.interests.data}
+          onInvite={this.handleInvite.bind(this)}
+          onWithdrawInvite={this.handleWithdrawInvite.bind(this)}
+          onDecline={this.handleDecline.bind(this)}
+        />
       )
     }
   }
