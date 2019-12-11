@@ -74,7 +74,7 @@ test('Valid login, missing required data', async (t) => {
 
   t.is(400, response.statusCode, `Received ${response.statusCode} instead of 400`)
   t.deepEqual({
-    message: 'Missing required fields (schoolId, inviteeName, inviteeEmail, invitationMessage)'
+    message: 'Missing required fields (schoolId, inviteeName, inviteeEmail)'
   }, response._getJSON())
 })
 
@@ -102,7 +102,32 @@ test('Valid login, required data, invalid school id', async (t) => {
   t.deepEqual(response._getJSON(), { message: 'School not found' })
 })
 
-test('Valid login, required data, valid school id', async (t) => {
+test('Valid login, required data, valid school id, failed email', async (t) => {
+  const request = new MockExpressRequest({
+    method: 'POST',
+    session: {
+      isAuthenticated: true,
+      me: {
+        role: [Role.ADMIN]
+      }
+    },
+    body: {
+      schoolId: 1,
+      inviteeName: 'Test Testington',
+      inviteeEmail: 'test@example.com',
+      invitationMessage: 'Hello there'
+    }
+  })
+  const response = new MockExpressResponse()
+  nodemailerMock.mock.setShouldFailOnce()
+
+  await SchoolInvite.send(request, response)
+
+  t.is(500, response.statusCode, `Received ${response.statusCode} instead of 200`)
+  t.deepEqual(response._getJSON(), { message: 'Invitation email failed to send' })
+})
+
+test('Valid login, required data, valid school id, sent email', async (t) => {
   const request = new MockExpressRequest({
     method: 'POST',
     session: {
