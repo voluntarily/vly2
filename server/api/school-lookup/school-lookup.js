@@ -8,6 +8,7 @@ const schoolLookUpSchema = new Schema({
   telephone: { type: String },
   emailDomain: { type: String, required: true },
   contactName: { type: String },
+  contactEmail: { type: String },
   website: String,
   address: String,
   schoolType: {
