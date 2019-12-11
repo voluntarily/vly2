@@ -1,19 +1,22 @@
 const PubSub = require('pubsub-js')
-const { TOPIC_PERSON__CREATE } = require('./topic.constants')
 
 /*  middleware that will publish an event when a new entity is created
-*/
-const publishCreate = (Schema) => (req, res, next) => {
-  // need schema name here to generate topic dynamically
+  add this to an entity in entity.routes.js after actions e.g. person.routes.js
+  it will issue a new message each time a new item is created
 
-  if (Array.isArray(req.crudify.result)) {
-    req.crudify.result = req.crudify.result.map(
-      person =>
-        PubSub.publish(TOPIC_PERSON__CREATE, person)
-    )
+*/
+
+const OneOrMany = (obj, fn) => {
+  if (Array.isArray(obj)) {
+    obj.map(item => fn(item))
   } else {
-    PubSub.publish(TOPIC_PERSON__CREATE, req.crudify.result)
+    fn(obj)
   }
+}
+
+const publishCreate = (Model) => (req, res, next) => {
+  const topic = Symbol(`${Model.modelName.toUpperCase()}.CREATE`)
+  OneOrMany(req.crudify.result, item => PubSub.publish(topic, item))
   next()
 }
 

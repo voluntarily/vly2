@@ -105,7 +105,7 @@ test('Get person by id', async t => {
   t.is(res.body.email, p.email)
 })
 
-test('create a new person', async t => {
+test.only('create a new person', async t => {
   t.plan(7)
 
   // subscribe to published new person messages
@@ -114,11 +114,11 @@ test('create a new person', async t => {
   PubSub.subscribe(TOPIC_PERSON__CREATE, spy)
   const p = {
     name: 'Addy McAddFace',
-    nickname: 'Addy',
-    phone: '123 456789',
-    email: 'addy@omgtech.co.nz',
-    role: ['tester'],
-    tags: ['tag1', 'tag2', 'tag3']
+    // nickname: 'Addy',
+    // phone: '123 456789',
+    email: 'addy@omgtech.co.nz'
+    // role: ['tester'],
+    // tags: ['tag1', 'tag2', 'tag3']
   }
 
   try {
