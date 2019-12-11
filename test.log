@@ -1,0 +1,842 @@
+
+> @voluntarily/vly2@1.0.0 test-all /Users/watkinsav/workspace/voluntarily/vly2
+> cross-env NODE_ENV=test PORT=8080 node_modules/.bin/nyc --all node --no-deprecation node_modules/ava/cli.js --serial --fail-fast
+
+
+  ✔ 404 › render 404
+  ✔ 404 › render 200
+  ✔ 404 › render 500
+  ✔ lib › school-import › map-import-data-to-schema › map import data
+  ✔ lib › school-import › import › import script works
+  ✔ lib › school-import › get-domain-from-email › parse email
+  ✔ lib › school-import › filter-valid-school-records › empty email domains should be removed
+  ✔ lib › school-import › filter-valid-school-records › allowed email domain does not get filtered out
+  ✔ lib › school-import › filter-valid-school-records › email domains that don't match allow list should be removed
+  ✔ lib › school-import › filter-valid-school-records › multiple item array filters correct schools
+  ✔ lib › callApi › API_URL
+  ✔ lib › callApi › getAPI 
+  ✔ lib › callApi › getAPI handles data errors
+  ✔ lib › callApi › When server returns 500 status code then Promise should be rejected with the status
+  ✔ lib › callApi › When server throws an error then Promise should be rejected with the same error
+  ✔ lib › callApi › Can convert cookie object to cookie KVPs
+  ✔ lib › callApi › Can handle missing cookie object when converting to cookie KVPs
+  ✔ components › Person › Teacher › TeacherRegistrationRecord › TeacherRegistrationRecord renders properly
+  ✔ components › Person › Teacher › GetTeacherRegistration › TeacherRegistrationRecord renders properly
+  ✔ components › Person › Teacher › GetTeacherRegistration › TeacherRegistrationRecord receives error
+  ✔ components › Person › Teacher › GetTeacherRegistration › TeacherRegistrationRecord renders error
+  ✔ components › testredux › ReduxAsyncTest › api/health
+  ✔ components › testredux › ReduxAsyncTest › bad api/health
+  ✔ components › testredux › ReduxAsyncTest › mount, render add input and save
+  ✔ components › testredux › RealReduxStoreTest › mount, render add input and save
+  ✔ components › testredux › RealReduxStoreTest › reducer
+  ✔ components › testredux › MockReduxStoreTest › mount, render add input and save
+  ✔ components › testredux › MockReduxStoreTest › reducer
+  ✔ components › testredux › LocalStateTest › shallow properly
+  ✔ components › testredux › LocalStateTest › can input text and see result
+  - components › examples › Uploader › renders shallow
+  - components › examples › Uploader › renders deep
+  ✔ components › examples › LessStyled › renders properly
+  ✔ components › examples › IntlDemo › verify that plain input is translated EN
+  ✔ components › examples › IntlDemo › verify that plain input is translated MI
+  ✔ components › examples › Hello › Hello renders properly
+  ✔ components › examples › Hello › Hello Andrew renders properly
+  ✔ components › examples › Hello › Greet renders properly
+  ✔ components › examples › AntdType › renders shallow
+  ✔ components › examples › AntdType › renders deep
+  ✔ components › VTheme › NumericRange › NumericRange values are used from props
+  ✔ components › VTheme › NumericRange › NumericRange handles from and to being missing
+  ✔ components › VTheme › NumericRange › NumericRange handles no value from props
+  ✔ components › VTheme › NumericRange › NumericRange onChange called when input value changes due to user event
+  ✔ components › VTheme › ItemList › render Volunteers per student properly if the value is < 1
+  ✔ components › VTheme › ItemList › render volunteer properly if the value is >= 1
+  ✔ components › VTheme › ItemList › render volunteer values === 0 properly
+  ✔ components › VTheme › IdLine › IdLine renders properly
+  ✔ components › VTheme › IdLine › IdLine with no props is blank
+  ✔ components › Tags › TagDisplay › render tags
+  ✔ components › Person › PersonRole › Person Role renders properly
+  ✔ components › Person › PersonRole › Person Role list renders properly
+  ✔ components › Person › PersonList › renders the list
+  ✔ components › Person › PersonList › renders no people
+  ✔ components › Person › PersonDetailForm › shallow the detail with person
+  ✔ components › Person › PersonDetailForm › render the detail with op (374ms)
+  ✔ components › Person › PersonDetail › render person details
+  ✔ components › Person › PersonCard › PersonCard renders properly
+  ✔ components › Person › PersonBadge › PersonBadge renders properly
+  ✔ components › Org › SchoolInviteForm › Form renders
+  ✔ components › Org › SchoolInviteForm › Empty form fails validation, does not submit (105ms)
+  ✔ components › Org › SchoolInviteForm › Valid form submits with expected values (126ms)
+  ✔ components › Org › OrgList › renders the list
+  ✔ components › Org › OrgList › renders no orgs
+  ✔ components › Org › OrgDetailForm › shallow the detail with organisation
+  ✔ components › Org › OrgDetailForm › render the detail with op (262ms)
+  ✔ components › Org › OrgDetailForm › Age range field is shown when organisation category is school (185ms)
+  ✔ components › Org › OrgDetailForm › Fields are submitted (508ms)
+  ✔ components › Org › OrgDetailForm › validateAgeRange - no age range value
+  ✔ components › Org › OrgDetailForm › validateAgeRange - from and to fields valid
+  ✔ components › Org › OrgDetailForm › validateAgeRange - only from field
+  ✔ components › Org › OrgDetailForm › validateAgeRange - only to field
+  ✔ components › Org › OrgDetailForm › validateAgeRange - to less than from
+  ✔ components › Org › OrgDetailForm › createGoogleMapsAddressUrl - empty
+  ✔ components › Org › OrgDetailForm › createGoogleMapsAddressUrl - whitespace
+  ✔ components › Org › OrgDetailForm › createGoogleMapsAddressUrl - single line
+  ✔ components › Org › OrgDetailForm › createGoogleMapsAddressUrl - multiple lines
+  ✔ components › Org › OrgDetail › OrgDetail renders properly (112ms)
+  ✔ components › Org › OrgDetail › OrgDetail renders properly 2
+  ✔ components › Org › OrgCard › OrgCard has image, title and category icon
+  ✔ components › Op › OpShareLink › render social medias
+  ✔ components › Op › OpRecommendations › ensure recommendations component renders all locations when provided
+  ✔ components › Op › OpRecommendations › ensure recommendations component renders all recommendations on skills when provided
+  ✔ components › Op › OpRecommendations › ensure recommendations component renders all recommendations on skills and locations when provided
+  ✔ components › Op › OpRecommendations › ensure recommendations renders correctly with no matching locations or skills
+  ✔ components › Op › OpListSection › mount the list with ops (103ms)
+  ✔ components › Op › OpListSection › mount the list for Action Whizzy Felt should filtered three ops offered by that organization
+  ✔ components › Op › OpListSection › mount the list for OMGTech should filtered one ops offered by that organization
+  ✔ components › Op › OpListSection › mount the list with ops search with results
+  ✔ components › Op › OpListSection › mount the list with ops search with no results
+  ✔ components › Op › OpListSection › mount the list with ops query and search
+  ✔ components › Op › OpListSection › test filter by date is called, no op is shown
+  ✔ components › Op › OpListSection › test filter by month is called. There is 1 OP shown
+  ✔ components › Op › OpListSection › test filter by week is called. No opportunities shown
+  ✔ components › Op › OpListSection › Test filter by date range. No opportunities shown
+  ✔ components › Op › OpListSection › Test filter by date range. Filter result include open ended opportunity
+  ✔ components › Op › OpListSection › Test filter by week allow to add open end opportunity
+  ✔ components › Op › OpListSection › Test sort by name
+  ✔ components › Op › OpListSection › Test sort by date
+  ✔ components › Op › OpListSection › Test sort by commitment
+  ✔ components › Op › OpList › shallow the list with ops
+  ✔ components › Op › OpList › renders the list with ops to get card coverage
+  ✔ components › Op › OpList › renders the list with no ops
+  ✔ components › Op › OpDetailForm › shallow the detail with op
+  ✔ components › Op › OpDetailForm › render the detail with op (381ms)
+  ✔ components › Op › OpDetailForm › render the detail with new blank op (358ms)
+    ℹ ReactWrapper {
+        <Form(OpDetailForm)⍟
+          existingLocations={Array [ … ]}
+          existingTags={[]}
+          intl={Object { … }}
+          me={Object { … }}
+          onCancel={Function {}}
+          onSubmit={Function {}}
+          op={Object { … }}
+        />,
+      }
+  ✔ components › Op › OpDetailArchived › render the tabs (120ms)
+  ✔ components › Op › OpDetailArchived › render questions and updates
+  ✔ components › Op › OpDetailArchived › render tags on OpDetailArchived
+  ✔ components › Op › OpDetailArchived › Check Edit Button
+  ✔ components › Op › OpDetailArchived › Check Description Exists
+  ✔ components › Op › OpDetailArchived › render the detail with op
+  ✔ components › Op › OpDetailArchived › render the detail properly
+  ✔ components › Op › OpDetail › render the tabs (117ms)
+  ✔ components › Op › OpDetail › render questions and updates
+  ✔ components › Op › OpDetail › render tags on OpDetail
+  ✔ components › Op › OpDetail › Check Edit Button
+  ✔ components › Op › OpDetail › Check Description Exists
+  ✔ components › Op › OpDetail › render the detail with op
+  ✔ components › Op › OpDetail › render the detail properly
+  ✔ components › Op › OpCard › Card include name imgUrl location duration and subtitle
+  ✔ components › Op › OpCard › op without an image should be displayed with default image
+  ✔ components › Op › OpCard › draft ops should display name with prefix DRAFT: 
+  ✔ components › Op › OpCard › Link on card should point to ops/<opportunity_id>
+  ✔ components › Op › OpCard › Link on cards in history tab, points to archived Opportunities.
+  ✔ components › Op › OpCard › ops with start and end date should be display start date
+  ✔ components › Op › OpCard › op with an interest status should have related icon appear in card
+  ✔ components › Op › OpCard › op with uncatered interest status should not have related icon appear in card
+  ✔ components › Op › OpCard › op with no interest status should not have related icon appear in card
+  ✔ components › Op › OpCard › ops without location and duration should display P tags with blank
+  ✔ components › Op › OpAdd › do not render the opadd if not signed in 
+  ✔ components › Op › OpAdd › render the opadd as null if not opportunityProvider role
+  ✔ components › Op › OpAdd › render the opadd correctly if opportunityProvider role
+  ✔ components › Member › RegisterMemberSection › RegisterMemberSection follow and unfollow (119ms)
+  ✔ components › Member › RegisterMemberSection › RegisterMemberSection join and validate
+  ✔ components › Member › RegisterMemberSection › RegisterMemberSection as a Member
+  ✔ components › Member › RegisterMemberItem › initial state
+  ✔ components › Member › MemberUl › show nothing if empty list given
+  ✔ components › Member › MemberUl › show orgs for person 0
+  ✔ components › Member › MemberUl › show orgs for person 1
+  ✔ components › Member › MemberTable › MemberTable renders followers properly (210ms)
+  ✔ components › Member › MemberTable › MemberTable renders members properly (107ms)
+  ✔ components › Member › MemberTable › row click handler pushes to profile page
+  ✔ components › Member › MemberTable › expanded row render
+  ✔ components › Member › MemberSectionInfo › What instructions non members see
+  ✔ components › Member › MemberSectionInfo › What instructions followers see
+  ✔ components › Member › MemberSectionInfo › What instructions joiners see
+  ✔ components › Member › MemberSectionInfo › What instructions validators see
+  ✔ components › Member › MemberSectionInfo › What instructions members see
+  ✔ components › Member › MemberSectionInfo › What instructions non members see when no info
+  ✔ components › Member › MemberSectionInfo › When info is not set Follower
+  ✔ components › Member › MemberSectionInfo › When info is not set Joiner
+  ✔ components › Member › MemberSectionInfo › When info is not set Member
+  ✔ components › Member › MemberSectionInfo › When info is not set Outsider
+  ✔ components › Member › MemberSection › followers can become members and then be removed (570ms)
+  ✔ components › Member › MemberSection › joiners can become members  (528ms)
+  ✔ components › Member › MemberSection › members can become admins  (392ms)
+  ✔ components › Member › MemberSection › admins can see exportMembers button (270ms)
+  ✔ components › Member › MemberItem › constructs properly
+  ✔ components › Member › MemberExport › MemberExport button renders properly
+  ✔ components › Member › MemberExport › createCsv formats properly
+  ✔ components › Member › MemberExport › Click ExportMembers button
+  ✔ components › Member › InviteMembers › constructs properly
+  ✔ components › LandingPageComponents › FeaturedTwoSection › shallow the list with ops
+  ✔ components › LandingPageComponents › FeaturedTwoSection › renders the list with no ops
+  ✔ components › Interest › RegisterInterestSection › mount RegisterInterestSection with with no existing interest (184ms)
+  ✔ components › Interest › RegisterInterestSection › mount RegisterInterestSection with op and me
+  ✔ components › Interest › RegisterInterestItem › initial state (175ms)
+  ✔ components › Interest › RegisterInterestItem › interested state (560ms)
+  ✔ components › Interest › RegisterInterestItem › completed state
+  ✔ components › Interest › RegisterInterestItem › cancelled state
+  ✔ components › Interest › RegisterInterestItem › invited
+  ✔ components › Interest › RegisterInterestItem › committed
+  ✔ components › Interest › RegisterInterestItem › declined
+  ✔ components › Interest › InterestTable › InterestTable renders properly (150ms)
+  ✔ components › Interest › InterestTable › row click handler pushes to profile page
+  ✔ components › Interest › InterestTable › Invite button click handler calls correct callback
+  ✔ components › Interest › InterestTable › Withdraw invite button click handler calls correct callback
+  ✔ components › Interest › InterestTable › Decline invite button click handler calls correct callback
+  ✔ components › Interest › InterestTable › InterestTable renders undeclined button 
+  ✔ components › Interest › InterestTable › InterestTable renders completed label 
+  ✔ components › Interest › InterestTable › InterestTable renders invite button 
+  ✔ components › Interest › InterestSection › mount the InterestSection with two interests (1.1s)
+  ✔ components › Interest › InterestItem › constructs properly
+  ✔ components › Interest › InterestConfirmation › render confirmation card
+  ✔ components › Interest › InterestConfirmation › render confirmation card no number
+  ✔ components › Interest › InterestArchivedTable › InterestTable renders properly (134ms)
+  ✔ components › Interest › InterestArchivedTable › row click handler pushes to profile page
+  ✔ components › Interest › InterestArchivedTable › Attended button click handler calls correct callback
+  ✔ components › Interest › InterestArchivedTable › Not Attended button click handler calls correct callback
+  ✔ components › Interest › InterestArchivedSection › mount the InterestSection with two interests (288ms)
+  ✔ components › Interest › InterestArchivedSection › mount the InterestSection without opid
+  ✔ components › Goal › GoalSection › shallow the list with goals
+  ✔ components › Goal › GoalList › shallow the list with goals
+  ✔ components › Goal › GoalCard › shallow GoalStartButton
+  ✔ components › Goal › GoalCard › shallow GoalStatusIcon
+  ✔ components › Goal › GoalCard › shallow the card with goal
+  ✔ components › Goal › GoalCard › shallow the card with a personalGoal
+  ✔ components › Form › TagInput › render the op with a few pre-existing tags
+  ✔ components › Form › TagInput › render the op with a few pre-existing tags, and add a tag into the input field (363ms)
+  ✔ components › Form › TagInput › render the op with a few pre-existing tags, and add a tag fully, to re-render
+  ✔ components › Form › TagInput › render the op with a few pre-existing tags, and search does not show existing tags
+  ✔ components › Form › TagInput › render the op with a few pre-existing tags, and remove a tag from them
+  ✔ components › Form › TagInput › render when input value doesnt match any existing tags
+  ✔ components › Form › TagInput › search when there are no existing tags
+  ✔ components › Form › RichTextEditor › renders shallow
+  ✔ components › Form › RichTextEditor › renders deep
+  ✔ components › Form › LocationSelector › render the location component, with pre-existing location
+  ✔ components › Form › LocationSelector › render the location component, with an example input search (410ms)
+  ✔ components › Footer › WomensRefuge › Womens refuge button renders properly
+  ✔ components › DynamicFieldSet › DynamicFieldSet › No items
+  ✔ components › DynamicFieldSet › DynamicFieldSet › One item
+  ✔ components › DynamicFieldSet › DynamicFieldSet › Can add item
+  ✔ components › DynamicFieldSet › DynamicFieldSet › Can remove item
+  ✔ components › DynamicFieldSet › DynamicFieldSet › Values are persisted back to the form
+  ✔ components › Act › ActMenu › render the activity menu headers
+  ✔ components › Act › ActListSection › mount the list with acts
+  ✔ components › Act › ActList › shallow the list with acts
+  ✔ components › Act › ActList › renders the list with acts to get card coverage
+  ✔ components › Act › ActList › renders the list with no acts
+  ✔ components › Act › ActDetailForm › shallow the detail with act
+  ✔ components › Act › ActDetailForm › render the detail with act (397ms)
+  ✔ components › Act › ActDetailForm › toggle radio buttons (502ms)
+  ✔ components › Act › ActDetailForm › componentDidMount - set volunteer to 0.2 (123ms)
+  ✔ components › Act › ActDetailForm › componentDidMount - set volunteer to 10 (122ms)
+  ✔ components › Act › ActDetailForm › componentDidMount - set volunteer to 0 (118ms)
+  ✔ components › Act › ActDetailForm › render the detail with new blank act (235ms)
+  ✔ components › Act › ActDetail › render the detail with short act
+  ✔ components › Act › ActDetail › render the detail with full act
+  ✔ components › Act › ActDetail › render the detail with no picture 
+  ✔ components › Act › ActDetail › render Volunteers per student properly if the value is < 1
+  ✔ components › Act › ActCard › shallow the card with act
+  ✔ components › Act › ActCard › shallow the card with no pic
+  ✔ components › Act › ActAdd › render the opadd as null if not activity-provider role
+  ✔ components › Act › ActAdd › render the opadd correctly if  activityProvider role
+  ✔ components › Navigation › renders the Navigation and Navigation properly
+  ✔ components › Header › renders the Header and Navigation for anon user (127ms)
+  ✔ components › Header › renders the Header and Navigation for authenticated user
+  ✔ components › Footer › renders the footer properly (118ms)
+  ✔ server › services › email › email › Should setup and send test email
+  ✔ server › services › authorize › removeUnauthorizedFields › Only authorized fields returned for single get
+  ✔ server › services › authorize › removeUnauthorizedFields › Only authorized fields returned for list get
+  ✔ server › middleware › session › setSession › check fixture token
+  ✔ server › middleware › session › setSession › Check session set to default when user not logged in
+  ✔ server › middleware › session › setSession › Check session set to default when idToken is bad
+  ✔ server › middleware › session › setSession › Check session set to default when url is blacklisted
+  ✔ server › middleware › session › setSession › Check session set when user logged in
+  ✔ server › middleware › authorize › authorizeRequest › Request rejected if unauthorized
+  ✔ server › middleware › authorize › authorizeRequest › Request accepted if authorized
+  ✔ server › middleware › authorize › authorizeRequest › can provide custom action mapper
+  ✔ server › middleware › authorize › authorizeRequest › Default request action mapper can handle GET
+  ✔ server › middleware › authorize › authorizeRequest › Default request action mapper can handle POST
+  ✔ server › middleware › authorize › authorizeRequest › Default request action mapper can handle PUT
+  ✔ server › middleware › authorize › authorizeRequest › Default request action mapper can handle DELETE
+  ✔ server › middleware › authorize › authorizeRequest › Default request action mapper defaults to READ when unexpected method received
+  ✔ server › middleware › ability › getAbility › Get ability for anonymous user when no session found
+  ✔ server › middleware › ability › getAbility › Can combine multiple abilities
+  ✔ server › middleware › ability › getAbility › Default signed in abilities - Volunteer
+  ✔ server › middleware › ability › getAbility › Can combine multiple Role
+  ✔ server › middleware › ability › getAbility › Can get ability for user with invalid role
+  ✔ server › api › tag › tag › verify fixture database has tags
+  ✔ server › api › tag › tag › Should correctly give count of all tags
+  ✔ server › api › tag › tag.controller › list tags should return empty array when there are no tags in DB
+  ✔ server › api › tag › tag.controller › list tags should return array of strings when tags exists in DB
+  ✔ server › api › tag › tag.controller › error handled appropriately
+  ✔ server › api › school-lookup › school-lookup › fixture data loads
+  ✔ server › api › school-lookup › school-lookup › missing required fields throw error
+  ✔ server › api › school-lookup › school-lookup › school type creation with invalid schoolType throws error
+  ✔ server › api › school-invite › school-invite.controller › Invalid HTTP methods
+  ✔ server › api › school-invite › school-invite.controller › Not logged in
+  ✔ server › api › school-invite › school-invite.controller › Valid login, missing body
+  ✔ server › api › school-invite › school-invite.controller › Valid login, missing required data
+  ✔ server › api › school-invite › school-invite.controller › Valid login, required data, invalid school id
+  ✔ server › api › school-invite › school-invite.controller › Valid login, required data, valid school id, failed email (220ms)
+  ✔ server › api › school-invite › school-invite.controller › Valid login, required data, valid school id, sent email (129ms)
+  ✔ server › api › personalGoal › personalGoal › Should not return any personal goals without a person id
+  ✔ server › api › personalGoal › personalGoal › Should give a list of goals for a person
+  ✔ server › api › personalGoal › personalGoal › Should send correct data when queried against a _id
+  ✔ server › api › personalGoal › personalGoal › Should return 404 code when queried non existing personalgoal
+  ✔ server › api › personalGoal › personalGoal › Should not add personalgoal where referenced person or goal is not in DB
+  ✔ server › api › personalGoal › personalGoal › Should add a valid goal
+  ✔ server › api › personalGoal › personalGoal.lib › Should add a personalGoal when they are not there already
+  ✔ server › api › personalGoal › personalGoal.lib › Should add a personalGoal Group to the person
+  ✔ server › api › personalGoal › personalGoal.lib › Evaluate the personal goals - hidden and unhide
+  ✔ server › api › personalGoal › personalGoal.lib › Evaluate the personal goals - true completes
+  ✔ server › api › personalGoal › personalGoal.lib › Evaluate the personal goals - throw failure
+  ✔ server › api › personalGoal › GoalTests › GoalTests - orgCompleteness
+  ✔ server › api › personalGoal › GoalTests › GoalTests - activityStarted
+  ✔ server › api › person › personController › Should call send status function for null record 
+  ✔ server › api › person › personController › Should call next middleware when record is found
+  ✔ server › api › person › person.subscribe › Trigger PubSub
+  ✔ server › api › person › person › verify fixture database has people
+  ✔ server › api › person › person › list everyone - Anon user
+  ✔ server › api › person › person › list everyone - General User
+  ✔ server › api › person › person › list everyone - admin user
+  ✔ server › api › person › person › list everyone - bad filter
+  ✔ server › api › person › person › list everyone - filtered, sorted, produced
+  ✔ server › api › person › person › Get person by id
+  ✔ server › api › person › person › add a person
+  ✔ server › api › person › person › Update people
+  ✔ server › api › person › person › Should correctly add a person and sanitise inputs
+  ✔ server › api › person › person › Anon user cannot remove a user
+  ✔ server › api › person › person › Should correctly handle missing inputs
+  ✔ server › api › person › person.email › Send acknowledgeInterest email to person (253ms)
+  ✔ server › api › person › person.email › render acknowledgeInterest email to person (215ms)
+  ✔ server › api › person › person.email › Send invited email to person
+  ✔ server › api › person › person.email › Send committed email to person (101ms)
+  ✔ server › api › person › person.email › Send declined email to volunteer
+  ✔ server › api › person › person.email › Send person interested email to requestor
+  ✔ server › api › organisation › organisation › verify fixture database has orgs
+  ✔ server › api › organisation › organisation › Should correctly give count of all orgs sorted alpha
+  ✔ server › api › organisation › organisation › Should handle bad JSON
+  ✔ server › api › organisation › organisation › Should correctly give subset of orgs matching slug
+  ✔ server › api › organisation › organisation › Should find no matches
+  ✔ server › api › organisation › organisation › Should fail to find - invalid query
+  ✔ server › api › organisation › organisation › Should fail to find - Bad request 
+  ✔ server › api › organisation › organisation › Should correctly give subset of orgs of category
+  ✔ server › api › organisation › organisation › Should correctly give reverse sorted orgs of category
+  ✔ server › api › organisation › organisation › Should correctly select just the names and ids
+  ✔ server › api › organisation › organisation › Should send correct data when queried against an id
+  ✔ server › api › organisation › organisation › Should correctly add an organisation
+  ✔ server › api › organisation › organisation › Should load a organisation into the db and delete them via the api
+  ✔ server › api › organisation › organisation.lib › Should correctly score each org
+  ✔ server › api › organisation › organisation.lib › Should get and score from db id
+  ✔ server › api › opportunity › recommendedOps › Op recommendations based on location should include those nearby and not requested by me
+  ✔ server › api › opportunity › recommendedOps › Ops recommended based on skills should match at least one of my skills and be ranked
+  ✔ server › api › opportunity › recommendedOps › When I havent provided any skills, nothing should be recommended
+  ✔ server › api › opportunity › recommendedOps › Should return bad request when specified person does not exist in db
+  ✔ server › api › opportunity › opportunity › verify fixture database has ops
+  ✔ server › api › opportunity › opportunity › Should correctly give count of all active Ops sorted by name
+  ✔ server › api › opportunity › opportunity › Should correctly give subset of ops matching status
+  ✔ server › api › opportunity › opportunity › Should correctly select just the names and ids
+  ✔ server › api › opportunity › opportunity › Should correctly give number of active Opportunities
+  ✔ server › api › opportunity › opportunity › Should send correct data when queried against an _id
+  ✔ server › api › opportunity › opportunity › Should not find invalid _id
+  ✔ server › api › opportunity › opportunity › Should correctly add an opportunity with default image
+  ✔ server › api › opportunity › opportunity › Should correctly delete an opportunity
+  ✔ server › api › opportunity › opportunity › Should correctly give opportunity 1 when searching by "Mentor"
+  ✔ server › api › opportunity › opportunity › Should find no matches
+  ✔ server › api › opportunity › opportunity › Should fail to find - invalid query
+  ✔ server › api › opportunity › opportunity › Should correctly give opportunity 2 when searching by "Algorithms"
+  ✔ server › api › opportunity › opportunity › Should include description in search
+  ✔ server › api › opportunity › opportunity › Should return any opportunities with matching tags or name/desc/subtitle
+  ✔ server › api › opportunity › opportunity › Should update from draft to active
+  ✔ server › api › opportunity › opportunity › Should archive Opportunity when a completed update is sent
+  ✔ server › api › opportunity › opportunity › should archive interests associated with opportunity
+  ✔ server › api › opportunity › opportunity › should return 400 for a bad request
+  ✔ server › api › opportunity › opportunity › should return all matching opps within the specified region
+  ✔ server › api › opportunity › opportunity › should return opps at the specified territory
+  ✔ server › api › opportunity › opportunity › should return opps within the specified region that also match the search term
+  ✔ server › api › opportunity › opportunity › should permit titles with special characters
+  ✔ server › api › opportunity › opportunity › should permit descriptions with special characters
+  ✔ server › api › opportunity › opportunity › should strip script tags and contents from name
+  ✔ server › api › opportunity › opportunity › should strip "color:blue" and "font-size:2em" from style attribute
+  ✔ server › api › opportunity › opportunity › should allow iframes from youtube only, and allow height, src and width attributes
+  ✔ server › api › opportunity › opportunity.ability › Anonymous users should receive 200 from GET by ID endpoint
+  ✔ server › api › opportunity › opportunity.ability › Anonymous users should receive 404 from GET by ID endpoint if draft
+  ✔ server › api › opportunity › opportunity.ability › Anonymous users should receive 200 from GET all endpoint
+  ✔ server › api › opportunity › opportunity.ability › Anonymous users should only receive active ops from GET all endpoint
+  ✔ server › api › opportunity › econreset › Should save an op with no tags
+  ✔ server › api › opportunity › econreset › Should be able to upload an op with no tags (134ms)
+  ✔ server › api › member › member › Should give number of Members
+  ✔ server › api › member › member › Should give number of Members for an org
+  ✔ server › api › member › member › Should give a list of orgs for a person
+  ✔ server › api › member › member › Should give a specific membership for a person in org
+  ✔ server › api › member › member › Should send correct data when queried against a _id
+  ✔ server › api › member › member › Should return 404 code when queried non existing member
+  ✔ server › api › member › member › Should not add an invalid member where referenced person or opp is not in DB
+  ✔ server › api › member › member › Should add a valid follower
+  ✔ server › api › member › member.controller › Should add a member when they are not there already
+  ✔ server › api › member › member.controller › findOrgByPersonIdAndCategory
+  ✔ server › api › member › findMy › find my org - member of admin
+  ✔ server › api › member › findMy › find my org - no category
+  ✔ server › api › member › findMy › find my org - not a vp member
+  ✔ server › api › member › findMy › find my org - member of vp
+  ✔ server › api › member › findMy › find my org - not signed in 
+  ✔ server › api › member › findMy › find my person - not signed in 
+  ✔ server › api › member › findMy › find my person - signed in 
+  ✔ server › api › location › location › Should return the correct location data
+  ✔ server › api › interest-archive › interestArchive › Should correctly give number of Interests Arhived
+  ✔ server › api › interest-archive › interestArchive › Should correctly give interest when queried by opportunity
+  ✔ server › api › interest-archive › interestArchive › Should send correct data when queried against a _id
+  ✔ server › api › interest-archive › interestArchive › Should return 404 code when queried non existing interest
+  ✔ server › api › interest-archive › interestArchive › Should update the interest state from interested to attended
+  ✔ server › api › interest-archive › interestArchive › Should correctly delete an interest
+  ✔ server › api › interest › interest › Should correctly give number of Interests
+  ✔ server › api › interest › interest › Should find interests matching the op
+  ✔ server › api › interest › interest › Should find interests matching a person
+  ✔ server › api › interest › interest › Should find interests matching an op + person
+  ✔ server › api › interest › interest › Should not find interests matching an op + wrong person
+  ✔ server › api › interest › interest › Should 404 on invalid op search
+  ✔ server › api › interest › interest › Should send correct data when queried against a _id
+  ✔ server › api › interest › interest › Should return 404 code when queried non existing interest
+  ✔ server › api › interest › interest › Should not add an invalid interest where referenced person or opp is not in DB
+  ✔ server › api › interest › interest › Should correctly add a valid interest
+  ✔ server › api › interest › interest › Should update the interest state from interested to invited (352ms)
+  ✔ server › api › interest › interest › Should update the interest state from invited to committed (111ms)
+  ✔ server › api › interest › interest › Should update the interest state from to declined
+  ✔ server › api › interest › interest › Should correctly delete an interest
+  ✔ server › api › interest › interest › Should get 404 updating an interest with invalid id
+  ✔ server › api › image › image › can return image from static folder
+  ✔ server › api › image › image › Should upload a small file
+  ✔ server › api › image › image › Should fail to upload
+  ✔ server › api › goal › goal › verify fixture database has goals
+  ✔ server › api › goal › goal › Should correctly give count of all goals sorted by rank
+  ✔ server › api › goal › goal › Should handle bad JSON
+  ✔ server › api › goal › goal › Should correctly give subset of goals matching slug
+  ✔ server › api › goal › goal › Should find no matches
+  ✔ server › api › goal › goal › Should fail to find - invalid query
+  ✔ server › api › goal › goal › Should fail to find - Bad request 
+  ✔ server › api › goal › goal › Should correctly give subset of goals of category
+  ✔ server › api › goal › goal › Should correctly give reverse sorted goals of category
+  ✔ server › api › goal › goal › Should correctly select just the names and ids
+  ✔ server › api › goal › goal › Should send correct data when queried against an id
+  ✔ server › api › goal › goal › Should correctly add an goal
+  ✔ server › api › goal › goal › Should load a goal into the db and delete them via the api
+  ✔ server › api › badge › badge › Test request issue badge return information about badge
+  ✔ server › api › badge › badge › Successfully query all badge available 
+  ✔ server › api › badge › badge › Issue badge saved new badge record to database
+  - server › api › db › db ›  fixName entities
+  ✔ server › api › db › db › put message in logfile
+  ✔ server › api › db › db ›  list entities
+  ✔ server › api › activity › activity › verify fixture database has acts
+  ✔ server › api › activity › activity › Should correctly give count of all acts sorted by name
+  ✔ server › api › activity › activity › Get an invalid activity id
+  ✔ server › api › activity › activity › Should correctly give subset of acts matching status
+  ✔ server › api › activity › activity › Should correctly select just the titles and ids
+  ✔ server › api › activity › activity › Should correctly give number of active activities
+  ✔ server › api › activity › activity › Should send correct data when queried against an _id
+  ✔ server › api › activity › activity › Should not find invalid _id
+  ✔ server › api › activity › activity › activetest
+  ✔ server › api › activity › activity › Should correctly add an activity with default image
+  ✔ server › api › activity › activity › Should correctly delete an activity
+  ✔ server › api › activity › activity › Should correctly give activity 3 when searching by "garden"
+  ✔ server › api › activity › activity › Should redirect when using slug
+  ✔ server › api › activity › activity › Should 404 when using bad slug
+  ✔ server › api › activity › activity › Should correctly give activity 2 when searching by "Algorithms"
+  ✔ server › api › activity › activity › Should correctly give activity 1 when searching by Organization
+  ✔ server › api › activity › activity › Should correctly give 2 activities when searching by Tags
+  ✔ server › api › activity › activity › Should find no matches
+  ✔ server › api › activity › activity › Should fail to find - invalid query
+  ✔ server › api › activity › activity › Should return any activities with matching tags or name/desc/subtitle
+  ✔ server › api › activity › activity › will populate out the org id with name and img
+  ✔ server › api › activity › activity › Should correctly add and retrieve an activity with some equipment
+  ✔ server › api › activity › activity › Should correctly update an activity
+  ✔ server › api › archivedOpportunity › archivedOpportunity.controller › Should send correct data when queried against an _id
+  ✔ server › api › archivedOpportunity › archivedOpportunity.controller › Should return 404 when archivedOpportunity not found
+  ✔ server › util › initTags › Add tags to DB if needed
+  ✔ api › notify › org › notifyOrg › I can find my membership
+  ✔ api › notify › org › notifyOrg › Fail to access notify api as not signed in (508ms)
+  ✔ api › notify › org › notifyOrg › Fail to access notify api as not a member of org
+  ✔ api › notify › org › notifyOrg › Fail to access notify api as not an orgAdmin of org
+  ✔ api › notify › org › notifyOrg › trigger an email inviting the recipient to become a member of an organisation (232ms)
+  ✔ api › notify › org › action › token allows me to join org as a member  (461ms)
+  ✔ api › notify › org › action › token redirects non-signed in person to sign-thru 
+  ✔ api › notify › org › action › token with existing follower should update to member
+  ✔ api › registerRequestor › registerRequestor › Should respond to health check (313ms)
+  ✔ api › health › health › Should respond to health check (294ms)
+  ✔ api › health › health › Should respond to parameter check (219ms)
+  ✔ api › health › health › Should respond to query check
+  ✔ api › health › health › Should respond to log check (171ms)
+  ✔ api › health › health › Should respond to pub check (178ms)
+  ✔ action › registerTeacher › registerTeacher › render registerRequest with registered teacher
+  ✔ action › registerTeacher › registerTeacher › render registerRequest with un-registered teacher
+  ✔ action › registerTeacher › registerTeacher › render registerRequest with errors
+  ✔ action › registerTeacher › registerTeacher › render registerRequest with registered teacher and erros
+  ✔ op › oplistpage › render OpList
+  ✔ op › oplistpage › render ActList with dispatch error
+  ✔ op › opdetailpage › send "PUT" request to redux-api when opportunity is canceled and confirmed on OpDetailPage (158ms)
+  ✔ op › opdetailpage › does not send "PUT" request to redux-api when cancel opportunity button is cancelled on OpDetailPage
+  ✔ op › opdetailpage › send "PUT" request to redux-api when opportunity is completed on OpDetailPage
+  ✔ op › opdetailpage › does not send "PUT" request to redux-api when complete opportunity is cancelled on OpDetailPage
+  ✔ op › opdetailpage › can Edit the Op (441ms)
+  ✔ op › opdetailpage › display unavailable opportunity message when opportunity id is invalid on OpDetailPage
+  ✔ op › opdetailpage › display loading opportunity message when opportunity is loading
+  ✔ op › opdetailpage › can create new Op from blank (115ms)
+  ✔ op › opdetailpage › can cancel new Op from blank (126ms)
+  ✔ op › opdetailpage › can create new Op from Activity (130ms)
+  ✔ op › opdetailpage › page loads when user is not signed in but does not show edit VP-499
+  ✔ op › opdetailpage › page loads when op does not have a valid requestor VP-499
+  ✔ archivedop › archivedopdetailpage › archivedOpDetailPage should have an OpDetail component (144ms)
+  ✔ archivedop › archivedopdetailpage › archivedOpDetailPage should have an InterestSection component
+  ✔ archivedop › archivedopdetailpage › archivedOpDetailPage should display OpUnavalablePage when no opportunity can be retrieved
+  ✔ archivedop › archivedopdetailpage › archivedOpDetailPage should display Loading spinner when loading
+  ✔ act › actlistpage › render ActListPage
+  ✔ act › actlistpage › render ActListPage with no acts
+  ✔ act › actlistpage › render ActListPage with dispatch error
+  ✔ act › actdetailpage › render ActDetailPage
+  ✔ act › actdetailpage › render ActDetailPage - empty acts
+  ✔ act › actdetailpage › render ActDetailPage - loading
+  ✔ act › actdetailpage › Edit new ActDetailPage
+  ✔ act › actdetailpage › render ActDetailPage as Admin click Edit
+  ✔ terms › render english (110ms)
+  ✔ landing › render landing page  (188ms)
+  ✔ home › render volunteer home page - Active tab (165ms)
+  ✔ home › render volunteer home page - History tab (183ms)
+  ✔ home › render volunteer home page - Profile tab (194ms)
+  ✔ home › render Edit Profile  (891ms)
+  ✔ home › retrieve completed archived opportunities (117ms)
+  ✔ home › ensure oprecommendations is passed recommended ops retrieved from server
+  ✔ about › render english
+
+  498 tests passed
+  3 tests skipped
+
+------------------------------------|----------|----------|----------|----------|-------------------|
+File                                |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |
+------------------------------------|----------|----------|----------|----------|-------------------|
+All files                           |    81.46 |    69.11 |     73.4 |    81.92 |                   |
+ components                         |    66.67 |      100 |       50 |       50 |                   |
+  Loading.js                        |      100 |      100 |      100 |      100 |                   |
+  NotAuthorized.js                  |        0 |      100 |        0 |        0 |                 5 |
+ components/About                   |      100 |      100 |      100 |      100 |                   |
+  AboutCTA.js                       |      100 |      100 |      100 |      100 |                   |
+  AboutCTA2.js                      |        0 |        0 |        0 |        0 |                   |
+ components/Act                     |    98.19 |    85.71 |      100 |    98.14 |                   |
+  ActAdd.js                         |      100 |      100 |      100 |      100 |                   |
+  ActCard.js                        |      100 |      100 |      100 |      100 |                   |
+  ActDetail.js                      |      100 |    66.67 |      100 |      100 |             29,49 |
+  ActDetailForm.js                  |    98.77 |    86.96 |      100 |    98.75 |               120 |
+  ActList.js                        |      100 |      100 |      100 |      100 |                   |
+  ActListSection.js                 |    89.47 |    66.67 |      100 |    89.47 |             23,34 |
+  ActMenu.js                        |      100 |      100 |      100 |      100 |                   |
+ components/DynamicFieldSet         |      100 |      100 |      100 |      100 |                   |
+  DynamicFieldSet.js                |      100 |      100 |      100 |      100 |                   |
+ components/Footer                  |    97.06 |       70 |    88.89 |    96.97 |                   |
+  Footer.js                         |       96 |       70 |    83.33 |    95.83 |                14 |
+  FooterMenu.js                     |      100 |      100 |      100 |      100 |                   |
+  WomensRefuge.js                   |      100 |      100 |      100 |      100 |                   |
+ components/Form/Input              |    93.62 |    80.77 |    92.86 |    93.18 |                   |
+  LocationSelector.js               |      100 |       50 |      100 |      100 |                17 |
+  RichTextEditor.js                 |    83.33 |     62.5 |      100 |    83.33 |              7,30 |
+  TagInput.js                       |       96 |    93.75 |       90 |    95.65 |                34 |
+ components/Goal                    |      100 |      100 |      100 |      100 |                   |
+  GoalCard.js                       |      100 |      100 |      100 |      100 |                   |
+  GoalList.js                       |      100 |      100 |      100 |      100 |                   |
+  GoalSection.js                    |      100 |      100 |      100 |      100 |                   |
+ components/Header                  |    96.55 |      100 |     87.5 |     96.3 |                   |
+  Header.js                         |      100 |      100 |      100 |      100 |                   |
+  HeaderMenu.js                     |      100 |      100 |      100 |      100 |                   |
+  Vlogo.js                          |        0 |      100 |        0 |        0 |                 6 |
+ components/Interest                |    83.12 |    82.46 |    71.67 |    84.44 |                   |
+  InterestArchivedSection.js        |      100 |      100 |      100 |      100 |                   |
+  InterestArchivedTable.js          |    79.17 |    71.43 |    58.33 |    79.17 |    22,36,44,62,75 |
+  InterestConfirmationCard.js       |      100 |      100 |      100 |      100 |                   |
+  InterestItem.js                   |      100 |      100 |      100 |      100 |                   |
+  InterestSection.js                |       90 |      100 |       80 |       90 |             39,40 |
+  InterestTable.js                  |    67.39 |    82.05 |    47.06 |    73.81 |... 94,105,209,216 |
+  RegisterInterestItem.js           |    83.82 |    84.21 |    92.86 |    83.58 |... 51,252,253,254 |
+  RegisterInterestSection.js        |    81.25 |       75 |    83.33 |    81.25 |33,42,43,52,53,107 |
+ components/IssueBadge              |        0 |      100 |        0 |        0 |                   |
+  issueBadge.js                     |        0 |      100 |        0 |        0 |... 60,63,64,68,69 |
+ components/LandingPageComponents   |    89.47 |      100 |       75 |    89.19 |                   |
+  AboutSection.js                   |        0 |      100 |        0 |        0 |        7,47,70,71 |
+  FeaturedTwoSection.js             |      100 |      100 |      100 |      100 |                   |
+  Hero.js                           |      100 |      100 |       50 |      100 |                   |
+  PageTitle.js                      |      100 |      100 |      100 |      100 |                   |
+  PersonaSection.js                 |      100 |      100 |      100 |      100 |                   |
+  TitleSectionSub.js                |      100 |      100 |      100 |      100 |                   |
+ components/Member                  |    98.68 |    98.55 |      100 |    98.63 |                   |
+  InviteMembers.js                  |    94.74 |      100 |      100 |    94.74 |                25 |
+  MemberExport.js                   |      100 |      100 |      100 |      100 |                   |
+  MemberItem.js                     |      100 |      100 |      100 |      100 |                   |
+  MemberSection.js                  |      100 |      100 |      100 |      100 |                   |
+  MemberTable.js                    |      100 |      100 |      100 |      100 |                   |
+  MemberUl.js                       |      100 |      100 |      100 |      100 |                   |
+  RegisterMemberItem.js             |    94.12 |    88.89 |      100 |    94.12 |             95,96 |
+  RegisterMemberSection.js          |      100 |      100 |      100 |      100 |                   |
+ components/Navigation              |      100 |       50 |      100 |      100 |                   |
+  Navigation.js                     |      100 |       50 |      100 |      100 |             46,49 |
+ components/NoResult                |    66.67 |      100 |        0 |    66.67 |                   |
+  NoResult.js                       |    63.64 |      100 |        0 |    63.64 |       13,15,16,30 |
+  index.js                          |      100 |      100 |      100 |      100 |                   |
+ components/Op                      |    91.42 |    78.89 |    77.59 |    92.22 |                   |
+  DatePickerType.constant.js        |      100 |      100 |      100 |      100 |                   |
+  OpAdd.js                          |      100 |      100 |      100 |      100 |                   |
+  OpArchivedHeader.js               |      100 |      100 |      100 |      100 |                   |
+  OpCard.js                         |      100 |      100 |      100 |      100 |                   |
+  OpDetail.js                       |       95 |    83.33 |       50 |       95 |             93,94 |
+  OpDetailArchived.js               |    94.74 |    63.64 |       50 |    94.74 |             91,92 |
+  OpDetailForm.js                   |    80.26 |    67.57 |    55.56 |       80 |... 03,105,109,320 |
+  OpList.js                         |      100 |       50 |      100 |      100 |                19 |
+  OpListSection.js                  |    93.02 |    83.56 |      100 |    94.94 |      28,35,79,135 |
+  OpOrderby.js                      |        0 |      100 |        0 |        0 |            5,6,12 |
+  OpOwnerManageInterests.js         |    90.91 |    66.67 |      100 |      100 |             16,24 |
+  OpQuestion.js                     |    93.33 |      100 |        0 |    93.33 |               144 |
+  OpRecommendations.js              |      100 |      100 |      100 |      100 |                   |
+  OpShareLinks.js                   |      100 |      100 |      100 |      100 |                   |
+  OpUpdate.js                       |    85.71 |      100 |        0 |    85.71 |                53 |
+  OpVolunteerInterestSection.js     |      100 |       25 |      100 |      100 |             13,21 |
+ components/Org                     |    95.38 |       82 |    85.29 |    95.24 |                   |
+  OrgCard.js                        |      100 |      100 |      100 |      100 |                   |
+  OrgCategory.js                    |    92.31 |      100 |       80 |    92.31 |                25 |
+  OrgDetail.js                      |      100 |    78.57 |       50 |      100 |       126,146,180 |
+  OrgDetailForm.js                  |    97.67 |    82.14 |    93.33 |    97.56 |            37,637 |
+  OrgList.js                        |      100 |      100 |      100 |      100 |                   |
+  OrgSelector.js                    |      100 |      100 |      100 |      100 |                   |
+  SchoolInviteForm.js               |    78.26 |       75 |    71.43 |    78.26 |    18,58,59,61,92 |
+ components/Person                  |    98.43 |    68.75 |     87.5 |    98.41 |                   |
+  PersonBadge.js                    |      100 |      100 |      100 |      100 |                   |
+  PersonCard.js                     |      100 |      100 |      100 |      100 |                   |
+  PersonDetail.js                   |      100 |    83.33 |      100 |      100 |               102 |
+  PersonDetailForm.js               |    96.77 |    56.25 |       75 |    96.72 |             38,42 |
+  PersonList.js                     |      100 |      100 |      100 |      100 |                   |
+  PersonPronoun.js                  |      100 |       50 |      100 |      100 |                 4 |
+  PersonRole.js                     |      100 |       75 |      100 |      100 |                14 |
+ components/Person/Teacher          |      100 |      100 |      100 |      100 |                   |
+  GetTeacherRegistration.js         |      100 |      100 |      100 |      100 |                   |
+  TeacherRegistrationRecord.js      |      100 |      100 |      100 |      100 |                   |
+ components/Search                  |        0 |        0 |        0 |        0 |                   |
+  FilterContainer.js                |        0 |        0 |        0 |        0 |... 38,42,43,44,66 |
+  HeaderSearch.js                   |        0 |      100 |        0 |        0 |... 35,46,47,51,59 |
+  LocationFilter.js                 |        0 |      100 |        0 |        0 |          10,11,31 |
+ components/Tags                    |      100 |      100 |      100 |      100 |                   |
+  TagDisplay.js                     |      100 |      100 |      100 |      100 |                   |
+ components/UploadComponent         |     62.5 |       50 |    28.57 |    65.22 |                   |
+  ImageUploadComponent.js           |     62.5 |       50 |    28.57 |    65.22 |... 37,38,39,42,45 |
+ components/VTheme                  |    92.38 |    85.71 |    86.67 |    92.23 |                   |
+  ComingSoon.js                     |        0 |      100 |        0 |        0 |           4,15,22 |
+  FormStyles.js                     |      100 |      100 |      100 |      100 |                   |
+  IdLine.js                         |      100 |      100 |      100 |      100 |                   |
+  ItemList.js                       |    97.06 |       80 |    88.89 |    96.97 |               118 |
+  NumericRange.js                   |      100 |      100 |      100 |      100 |                   |
+  VStoryTheme.js                    |        0 |      100 |      100 |        0 |         3,8,18,21 |
+  VTheme.js                         |      100 |      100 |      100 |      100 |                   |
+ components/VolunteerHome           |        0 |      100 |        0 |        0 |                   |
+  PageHeader.js                     |        0 |      100 |        0 |        0 |         6,8,23,24 |
+ components/testredux               |      100 |      100 |      100 |      100 |                   |
+  LocalStateTest.js                 |      100 |      100 |      100 |      100 |                   |
+  ReduxAsyncTest.js                 |      100 |      100 |      100 |      100 |                   |
+  ReduxStoreTest.js                 |      100 |      100 |      100 |      100 |                   |
+ lib                                |    96.97 |    76.47 |      100 |    96.88 |                   |
+  callApi.js                        |       96 |    76.47 |      100 |       96 |                28 |
+  withIntl.js                       |      100 |      100 |      100 |      100 |                   |
+ lib/auth                           |    24.07 |        0 |        0 |    24.53 |                   |
+  auth.js                           |    24.07 |        0 |        0 |    24.53 |... 86,87,89,90,94 |
+ lib/redux                          |    88.89 |    72.22 |       72 |    93.15 |                   |
+  actions.js                        |    66.67 |      100 |        0 |    66.67 |              4,13 |
+  reducers.js                       |    81.82 |    66.67 |      100 |    81.82 |             12,30 |
+  reduxApi.js                       |    91.78 |       75 |    76.19 |    98.21 |                31 |
+ lib/school-import                  |      100 |      100 |      100 |      100 |                   |
+  filter-valid-school-records.js    |      100 |      100 |      100 |      100 |                   |
+  get-domain-from-email.js          |      100 |      100 |      100 |      100 |                   |
+  import.js                         |      100 |      100 |      100 |      100 |                   |
+  map-import-data-to-schema.js      |      100 |      100 |      100 |      100 |                   |
+ lib/sec                            |    69.57 |     62.5 |       50 |    71.43 |                   |
+  actiontoken.js                    |       60 |       25 |       50 |       60 | 30,33,35,36,37,39 |
+  keys.js                           |     87.5 |      100 |       50 |      100 |                   |
+ pages                              |        0 |        0 |        0 |        0 |                   |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+ pages/about                        |    90.48 |        0 |      100 |    90.48 |                   |
+  about.js                          |    90.48 |        0 |      100 |    90.48 |             16,19 |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+ pages/act                          |    95.41 |    84.75 |    83.33 |    97.17 |                   |
+  actdetailpage.js                  |    93.83 |    85.45 |    77.78 |     96.2 |          29,30,95 |
+  actlistpage.js                    |      100 |       75 |      100 |      100 |                91 |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+ pages/action                       |       96 |      100 |    83.33 |       96 |                   |
+  registerTeacher.js                |       96 |      100 |    83.33 |       96 |                65 |
+ pages/admin                        |        0 |        0 |        0 |        0 |                   |
+  goals.js                          |        0 |        0 |        0 |        0 |... 55,56,68,72,86 |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+  invite-school.js                  |        0 |      100 |        0 |        0 |    10,12,18,26,33 |
+ pages/api/health                   |        0 |        0 |        0 |        0 |                   |
+  [param].js                        |        0 |        0 |        0 |        0 |     1,14,17,19,27 |
+  config.js                         |        0 |        0 |        0 |        0 |       2,7,9,10,12 |
+  health.js                         |        0 |        0 |        0 |        0 |        1,14,16,25 |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+  log.js                            |        0 |      100 |        0 |        0 |               4,5 |
+  pub.js                            |        0 |      100 |        0 |        0 |       1,2,8,11,13 |
+ pages/api/notify                   |        0 |      100 |        0 |        0 |                   |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+  notify.js                         |        0 |      100 |        0 |        0 |                 3 |
+ pages/api/notify/org               |        0 |        0 |        0 |        0 |                   |
+  [notifyOrgId].js                  |        0 |        0 |        0 |        0 |... 57,65,72,74,75 |
+  action.js                         |        0 |      100 |        0 |        0 |             36,40 |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+  notifyOrg.js                      |        0 |      100 |        0 |        0 |                 2 |
+ pages/api/registerRequestor        |        0 |        0 |        0 |        0 |                   |
+  [cmd].js                          |        0 |        0 |        0 |        0 |... 24,26,28,31,32 |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+  registerRequestor.js              |        0 |        0 |        0 |        0 |... 76,77,78,80,81 |
+ pages/api/token                    |        0 |        0 |        0 |        0 |                   |
+  [cmd].js                          |        0 |        0 |        0 |        0 |... 12,13,14,16,17 |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+  token.js                          |        0 |        0 |        0 |        0 |... 22,23,27,28,31 |
+ pages/api/xadmin                   |        0 |        0 |        0 |        0 |                   |
+  assignPersonalGoals.js            |        0 |        0 |        0 |        0 |... 16,17,18,20,21 |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+  loadGoals.js                      |        0 |        0 |        0 |        0 |... 14,15,16,18,19 |
+  xadmin.js                         |        0 |        0 |        0 |        0 |  2,13,15,18,21,28 |
+ pages/archivedop                   |    82.14 |       50 |       75 |    82.14 |                   |
+  archivedopdetailpage.js           |    82.14 |       50 |       75 |    82.14 |    21,22,25,26,27 |
+ pages/auth                         |        0 |        0 |        0 |        0 |                   |
+  sign-in.js                        |        0 |      100 |        0 |        0 |        9,13,17,21 |
+  sign-off.js                       |        0 |      100 |        0 |        0 |            7,8,12 |
+  sign-thru.js                      |        0 |        0 |        0 |        0 |      5,6,7,8,9,12 |
+  signed-in.js                      |        0 |        0 |        0 |        0 |... 20,21,25,26,30 |
+ pages/home                         |    85.92 |    83.33 |    89.47 |    85.29 |                   |
+  home.js                           |    85.92 |    83.33 |    89.47 |    85.29 |... 95,113,115,139 |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+ pages/landing                      |      100 |      100 |      100 |      100 |                   |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+  landing.js                        |      100 |      100 |      100 |      100 |                   |
+ pages/op                           |    86.55 |    71.19 |     87.5 |    86.55 |                   |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+  opdetailpage.js                   |    82.14 |    71.93 |    83.33 |    82.14 |... 75,100,103,208 |
+  opeditpage.js                     |    92.86 |       50 |      100 |    92.86 |                13 |
+  oplistpage.js                     |      100 |      100 |      100 |      100 |                   |
+  opunavailablepage.js              |      100 |      100 |      100 |      100 |                   |
+ pages/org                          |        0 |        0 |        0 |        0 |                   |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+  orgdetailpage.js                  |        0 |        0 |        0 |        0 |... 31,153,192,221 |
+  orglistpage.js                    |        0 |        0 |        0 |        0 |... 16,18,23,24,25 |
+ pages/person                       |        0 |        0 |        0 |        0 |                   |
+  persondetailpage.js               |        0 |        0 |        0 |        0 |... 68,171,190,201 |
+  personlistpage.js                 |        0 |        0 |        0 |        0 |... 23,27,32,33,50 |
+ pages/search                       |        0 |        0 |        0 |        0 |                   |
+  DatePickerComponent.js            |        0 |        0 |        0 |        0 |... 32,34,36,38,40 |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+  searchpage.js                     |        0 |        0 |        0 |        0 |... 61,201,205,237 |
+ pages/terms                        |    90.48 |        0 |      100 |    90.48 |                   |
+  index.js                          |        0 |        0 |        0 |        0 |                   |
+  terms.js                          |    90.48 |        0 |      100 |    90.48 |             16,19 |
+ server                             |    89.04 |       50 |    77.78 |    90.14 |                   |
+  routes.js                         |      100 |      100 |      100 |      100 |                   |
+  server.js                         |    88.73 |       50 |    77.78 |    89.86 |... 09,110,117,118 |
+ server/api/activity                |    94.44 |    91.67 |      100 |    94.44 |                   |
+  activity.controller.js            |    92.31 |      100 |      100 |    92.31 |          20,64,75 |
+  activity.js                       |    93.75 |       50 |      100 |    93.75 |                63 |
+  activity.routes.js                |      100 |      100 |      100 |      100 |                   |
+  findActivity.js                   |      100 |      100 |      100 |      100 |                   |
+ server/api/archivedOpportunity     |    88.89 |       50 |      100 |    88.89 |                   |
+  archivedOpportunity.controller.js |    77.78 |       50 |      100 |    77.78 |             10,14 |
+  archivedOpportunity.js            |      100 |      100 |      100 |      100 |                   |
+  archivedOpportunity.routes.js     |      100 |      100 |      100 |      100 |                   |
+ server/api/badge                   |    85.71 |    57.14 |    83.33 |    87.27 |                   |
+  badge.controller.js               |    82.22 |    57.14 |       80 |    84.09 |... 79,93,94,95,96 |
+  badge.js                          |      100 |      100 |      100 |      100 |                   |
+  badge.routes.js                   |      100 |      100 |      100 |      100 |                   |
+ server/api/db                      |      100 |      100 |      100 |      100 |                   |
+  db.routes.js                      |      100 |      100 |      100 |      100 |                   |
+ server/api/goal                    |    96.67 |     87.5 |      100 |    96.67 |                   |
+  goal.controller.js                |      100 |      100 |      100 |      100 |                   |
+  goal.js                           |    88.89 |       50 |      100 |    88.89 |                51 |
+  goal.routes.js                    |      100 |      100 |      100 |      100 |                   |
+ server/api/image                   |    92.86 |       50 |      100 |     96.3 |                   |
+  image.controller.js               |       92 |       50 |      100 |    95.83 |                24 |
+  image.routes.js                   |      100 |      100 |      100 |      100 |                   |
+ server/api/interest                |      100 |    93.75 |      100 |      100 |                   |
+  interest.constants.js             |      100 |      100 |      100 |      100 |                   |
+  interest.controller.js            |      100 |    93.75 |      100 |      100 |               120 |
+  interest.js                       |      100 |      100 |      100 |      100 |                   |
+  interest.routes.js                |      100 |      100 |      100 |      100 |                   |
+ server/api/interest-archive        |    92.59 |      100 |      100 |    92.59 |                   |
+  interestArchive.controller.js     |    86.67 |      100 |      100 |    86.67 |             18,27 |
+  interestArchive.js                |      100 |      100 |      100 |      100 |                   |
+  interestArchive.routes.js         |      100 |      100 |      100 |      100 |                   |
+ server/api/location                |    88.46 |    66.67 |      100 |     87.5 |                   |
+  location.controller.js            |       80 |       50 |      100 |    77.78 |               5,6 |
+  location.routes.js                |      100 |      100 |      100 |      100 |                   |
+  locationData.js                   |    92.31 |       75 |      100 |    91.67 |               160 |
+ server/api/member                  |     95.4 |    92.86 |      100 |    96.51 |                   |
+  findMy.js                         |      100 |      100 |      100 |      100 |                   |
+  member.constants.js               |      100 |      100 |      100 |      100 |                   |
+  member.controller.js              |     92.5 |       90 |      100 |    94.87 |             46,67 |
+  member.js                         |       90 |       50 |      100 |       90 |                51 |
+  member.lib.js                     |      100 |      100 |      100 |      100 |                   |
+  member.routes.js                  |      100 |      100 |      100 |      100 |                   |
+ server/api/opportunity             |       95 |    90.16 |      100 |    95.35 |                   |
+  opportunity.ability.js            |      100 |      100 |      100 |      100 |                   |
+  opportunity.constants.js          |      100 |      100 |      100 |      100 |                   |
+  opportunity.controller.js         |    93.68 |    94.12 |      100 |    94.32 |   29,87,88,95,109 |
+  opportunity.js                    |    93.33 |       50 |      100 |    93.33 |                45 |
+  opportunity.routes.js             |    94.44 |    71.43 |      100 |    94.44 |                27 |
+  opportunity.util.js               |    97.06 |    94.44 |      100 |    96.97 |                34 |
+ server/api/organisation            |    98.25 |       95 |      100 |    98.21 |                   |
+  organisation.constants.js         |      100 |      100 |      100 |      100 |                   |
+  organisation.controller.js        |      100 |      100 |      100 |      100 |                   |
+  organisation.js                   |    85.71 |       50 |      100 |    85.71 |                42 |
+  organisation.lib.js               |      100 |      100 |      100 |      100 |                   |
+  organisation.routes.js            |      100 |      100 |      100 |      100 |                   |
+ server/api/person                  |       94 |    82.76 |      100 |       94 |                   |
+  person.ability.js                 |      100 |      100 |      100 |      100 |                   |
+  person.constants.js               |      100 |      100 |      100 |      100 |                   |
+  person.controller.js              |    91.11 |       80 |      100 |    91.11 |       11,18,55,73 |
+  person.email.js                   |    83.33 |    85.71 |      100 |    83.33 |             49,51 |
+  person.js                         |      100 |      100 |      100 |      100 |                   |
+  person.routes.js                  |      100 |      100 |      100 |      100 |                   |
+  person.subscribe.js               |      100 |      100 |      100 |      100 |                   |
+ server/api/personalGoal            |    97.06 |    92.31 |      100 |    97.03 |                   |
+  GoalTests.js                      |    90.48 |      100 |      100 |       90 |             34,35 |
+  personalGoal.constants.js         |      100 |      100 |      100 |      100 |                   |
+  personalGoal.controller.js        |      100 |      100 |      100 |      100 |                   |
+  personalGoal.js                   |       90 |       50 |      100 |       90 |                36 |
+  personalGoal.lib.js               |      100 |      100 |      100 |      100 |                   |
+  personalGoal.routes.js            |      100 |      100 |      100 |      100 |                   |
+ server/api/school-invite           |      100 |    90.48 |      100 |      100 |                   |
+  school-invite.controller.js       |      100 |    90.48 |      100 |      100 |            55,103 |
+  school-invite.routes.js           |      100 |      100 |      100 |      100 |                   |
+ server/api/school-lookup           |    57.14 |        0 |       50 |    57.14 |                   |
+  school-lookup.constants.js        |      100 |      100 |      100 |      100 |                   |
+  school-lookup.controller.js       |       20 |        0 |        0 |       20 |... 13,15,16,21,24 |
+  school-lookup.js                  |      100 |      100 |      100 |      100 |                   |
+  school-lookup.routes.js           |      100 |      100 |      100 |      100 |                   |
+ server/api/tag                     |      100 |      100 |      100 |      100 |                   |
+  tag.controller.js                 |      100 |      100 |      100 |      100 |                   |
+  tag.js                            |      100 |      100 |      100 |      100 |                   |
+  tag.routes.js                     |      100 |      100 |      100 |      100 |                   |
+  tagObj.js                         |      100 |      100 |      100 |      100 |                   |
+ server/middleware/ability          |      100 |       90 |      100 |      100 |                   |
+  getAbility.js                     |      100 |       90 |      100 |      100 |                15 |
+ server/middleware/authorize        |      100 |      100 |      100 |      100 |                   |
+  authorizeRequest.js               |      100 |      100 |      100 |      100 |                   |
+ server/middleware/session          |    96.88 |    92.31 |      100 |    96.77 |                   |
+  setSession.js                     |    96.88 |    92.31 |      100 |    96.77 |                39 |
+ server/services                    |      100 |      100 |      100 |      100 |                   |
+  helpers.js                        |      100 |      100 |      100 |      100 |                   |
+ server/services/abilities          |      100 |      100 |      100 |      100 |                   |
+  ability.constants.js              |      100 |      100 |      100 |      100 |                   |
+ server/services/authorize          |      100 |      100 |      100 |      100 |                   |
+  removeUnauthorizedFields.js       |      100 |      100 |      100 |      100 |                   |
+  role.js                           |      100 |      100 |      100 |      100 |                   |
+ server/services/pubsub             |      100 |      100 |      100 |      100 |                   |
+  topic.constants.js                |      100 |      100 |      100 |      100 |                   |
+------------------------------------|----------|----------|----------|----------|-------------------|

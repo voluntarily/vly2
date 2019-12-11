@@ -51,7 +51,6 @@ const createPerson = async (p) => {
       nickname: 'T',
       email: `testy${cuid()}@gmail.com`,
       about: 'tester',
-      gender: 'Male',
       language: 'English',
       role: ['volunteer', 'activityProvider'],
       status: 'active',
