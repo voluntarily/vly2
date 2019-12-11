@@ -135,14 +135,28 @@ class SchoolInvite {
   static async accept (request, response) {
     return handleToken(request, response, {
       join: async (props) => {
-        const organisation = await SchoolInvite.createOrganisationFromSchool(props.schoolId)
-        await SchoolInvite.linkPersonToOrganisationAsAdmin(organisation._id, request.session.me._id)
+        try {
+          const organisation = await SchoolInvite.createOrganisationFromSchool(props.schoolId)
+          await SchoolInvite.linkPersonToOrganisationAsAdmin(organisation._id, request.session.me._id)
+        } catch (error) {
+          // in the event something goes wrong during this process
+          // we don't want to stop the person's journey here because
+          // they will end up on a blank/500 error screen so for now
+          // we'll log this error and let the person continue on to
+          // the redirect URL (which should be /home in this case)
+          console.log(error)
+        }
       }
     })
   }
 
   static async createOrganisationFromSchool (schoolId) {
     const schoolData = await SchoolLookUp.findOne({ schoolId: schoolId })
+
+    if (!schoolData) {
+      throw new Error('School not found')
+    }
+
     const schoolToOrgMap = {
       name: 'name',
       contactName: 'contactName',

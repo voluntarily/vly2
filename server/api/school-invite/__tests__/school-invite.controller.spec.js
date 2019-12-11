@@ -176,6 +176,17 @@ test('Create organisation from school', async (t) => {
   t.is(organisation.decile, schoolData.decile)
 })
 
+test('Create organisation from non-existent school', async (t) => {
+  const nonExistentSchoolId = 9999
+
+  await t.throwsAsync(
+    async () => {
+      await SchoolInvite.createOrganisationFromSchool(nonExistentSchoolId)
+    },
+    'School not found'
+  )
+})
+
 test('Link person to organisation as admin', async (t) => {
   const schoolData = fixtures.schools[0]
   const organisation = await SchoolInvite.createOrganisationFromSchool(schoolData.schoolId)
