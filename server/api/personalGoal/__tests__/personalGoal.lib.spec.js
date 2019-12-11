@@ -34,8 +34,11 @@ test.before('before connect to database', async (t) => {
   t.context.alice = t.context.people[2]
 })
 
+test.afterEach.always(async (t) => {
+  await PersonalGoal.deleteMany()
+})
+
 test.after.always(async (t) => {
-  // await Person.deleteMany()
   await t.context.memMongo.stop()
 })
 
@@ -77,7 +80,7 @@ test.serial('Should add a personalGoal when they are not there already', async t
   t.is(personalGoal.status, PersonalGoalStatus.ACTIVE)
 
   // clean up - check record is removed
-  personalGoal.remove()
+  await personalGoal.remove()
   personalGoal = await PersonalGoal.findOne(personalGoalQuery).exec()
   t.falsy(personalGoal)
 })
