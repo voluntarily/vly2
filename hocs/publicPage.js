@@ -32,7 +32,7 @@ export default Page =>
         ...pageProps,
         me: session.me || false,
         isAuthenticated: !!session.isAuthenticated,
-        isAdmin: session.me && session.me.role.includes(Role.ADMIN),
+        isAdmin: session.me && session.me.role && session.me.role.includes(Role.ADMIN),
         isPlain: false
       }
     }

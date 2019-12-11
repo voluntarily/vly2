@@ -6,8 +6,8 @@ const { ensureSanitized, listPeople, getPersonBy, updatePersonDetail } = require
 const { SchemaName } = require('./person.constants')
 const removeUnauthorizedFields = require('../../services/authorize/removeUnauthorizedFields')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
+const { publishCreate } = require('../../services/pubsub/publishTopic')
 const initializeTags = require('../../util/initTags')
-
 module.exports = function (server) {
   // Docs: https://github.com/ryo718/mongoose-crudify
   server.use(
@@ -31,6 +31,10 @@ module.exports = function (server) {
       },
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       afterActions: [
+        {
+          middlewares: [publishCreate(Person)],
+          only: ['create']
+        },
         {
           middlewares: [removeUnauthorizedFields(Person)],
           except: ['create']
