@@ -5,7 +5,7 @@ const PubSub = require('pubsub-js')
   it will issue a new message each time a new item is created
 
 */
-
+// Run the given function on the object or if it is an array run it on each array item
 const OneOrMany = (obj, fn) => {
   if (Array.isArray(obj)) {
     obj.map(item => fn(item))

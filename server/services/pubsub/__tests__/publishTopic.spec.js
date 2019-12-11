@@ -30,9 +30,7 @@ test.serial('publish new Topic based on schema name - Single', async t => {
 
   const req = {
     method: 'POST',
-    crudify: {
-      result: newFoo
-    }
+    crudify: { result: newFoo }
   }
   publishCreate(FakeModel)(req, {}, next)
   t.assert(next.called)
