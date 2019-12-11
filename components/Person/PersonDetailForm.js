@@ -174,7 +174,7 @@ class PersonDetailForm extends Component {
         </Tooltip>
       </span>
     )
-    const education = (
+    const personEducation = (
       <span>
         {' '}
         <FormattedMessage
@@ -314,7 +314,7 @@ class PersonDetailForm extends Component {
                   <LocationSelector existingLocations={this.props.locations} />
                 )}
               </Form.Item>
-              <Form.Item label={education}>
+              <Form.Item label={personEducation}>
                 {getFieldDecorator('education', {
                   rules: []
                 })(

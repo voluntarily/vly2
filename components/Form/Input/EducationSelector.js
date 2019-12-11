@@ -19,7 +19,7 @@ class EducationSelector extends React.Component {
         {children}
       </Select>
     )
-  } 
+  }
 }
 
 EducationSelector.propTypes = {
