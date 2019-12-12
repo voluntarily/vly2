@@ -41,10 +41,22 @@ test.serial('Trigger PubSub', async t => {
   t.is(pgs.length, 0)
 
   t.true(PubSub.publishSync(TOPIC_PERSON__CREATE, newPerson))
+
   // validate that the goal cards have been allocated.
-  while (pgs.length === 0) {
-    await sleep(1)
+  let attempt = 0
+  const maxAttempts = 10
+
+  while (pgs.length !== 2) {
+    await sleep(10)
     pgs = await PersonalGoal.find()
+
+    if (attempt >= maxAttempts) {
+      t.fail(`Goals not created after ${attempt} checks`)
+      break
+    }
+
+    attempt += 1
   }
+
   t.is(pgs.length, 2)
 })
