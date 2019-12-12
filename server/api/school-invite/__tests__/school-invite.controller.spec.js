@@ -4,14 +4,17 @@ import MockExpressResponse from 'mock-express-response'
 import { SchoolInvite } from '../school-invite.controller'
 import { Role } from '../../../services/authorize/role'
 import MemoryMongo from '../../../util/test-memory-mongo'
-import schoolLookUpFixtures from '../../school-lookup/__tests__/school-lookup.fixture'
 import SchoolLookUp from '../../school-lookup/school-lookup'
 import nodemailerMock from 'nodemailer-mock'
+import fixtures from './school-invite.fixture'
+import Person from '../../person/person'
+import { MemberStatus } from '../../member/member.constants'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
-  await SchoolLookUp.create(schoolLookUpFixtures)
+  await SchoolLookUp.create(fixtures.schools)
+  await Person.create(fixtures.people)
 })
 
 test.after.always(async (t) => {
@@ -102,7 +105,7 @@ test('Valid login, required data, invalid school id', async (t) => {
   t.deepEqual(response._getJSON(), { message: 'School not found' })
 })
 
-test('Valid login, required data, valid school id, failed email', async (t) => {
+test.serial('Valid login, required data, valid school id, failed email', async (t) => {
   const request = new MockExpressRequest({
     method: 'POST',
     session: {
@@ -123,11 +126,11 @@ test('Valid login, required data, valid school id, failed email', async (t) => {
 
   await SchoolInvite.send(request, response)
 
-  t.is(500, response.statusCode, `Received ${response.statusCode} instead of 200`)
+  t.is(500, response.statusCode, `Received ${response.statusCode} instead of 500`)
   t.deepEqual(response._getJSON(), { message: 'Invitation email failed to send' })
 })
 
-test('Valid login, required data, valid school id, sent email', async (t) => {
+test.serial('Valid login, required data, valid school id, sent email', async (t) => {
   const request = new MockExpressRequest({
     method: 'POST',
     session: {
@@ -157,5 +160,42 @@ test('Valid login, required data, valid school id, sent email', async (t) => {
 
   t.truthy(email.text.includes('Test Testington'), 'Name should be in message')
   t.truthy(email.text.includes('Hello there'), 'Invitation message should be in message')
-  t.truthy(email.text.includes(schoolLookUpFixtures[0].name), 'School name should be in message')
+  t.truthy(email.text.includes(fixtures.schools[0].name), 'School name should be in message')
+})
+
+test('Create organisation from school', async (t) => {
+  const schoolData = fixtures.schools[0]
+  const organisation = await SchoolInvite.createOrganisationFromSchool(schoolData.schoolId)
+
+  t.is(organisation.name, schoolData.name)
+  t.is(organisation.contactName, schoolData.contactName)
+  t.is(organisation.contactEmail, schoolData.contactEmail)
+  t.is(organisation.contactPhoneNumber, schoolData.telephone)
+  t.is(organisation.website, schoolData.website)
+  t.is(organisation.address, schoolData.address)
+  t.is(organisation.decile, schoolData.decile)
+})
+
+test('Create organisation from non-existent school', async (t) => {
+  const nonExistentSchoolId = 9999
+
+  await t.throwsAsync(
+    async () => {
+      await SchoolInvite.createOrganisationFromSchool(nonExistentSchoolId)
+    },
+    'School not found'
+  )
+})
+
+test('Link person to organisation as admin', async (t) => {
+  const schoolData = fixtures.schools[0]
+  const organisation = await SchoolInvite.createOrganisationFromSchool(schoolData.schoolId)
+  const person = await Person.findOne()
+
+  const member = await SchoolInvite.linkPersonToOrganisationAsAdmin(organisation._id, person._id)
+
+  t.is(member.organisation, organisation._id)
+  t.is(member.person, person._id)
+  t.is(member.validation, 'orgAdmin')
+  t.is(member.status, MemberStatus.ORGADMIN)
 })
