@@ -55,7 +55,7 @@ export class SearchPage extends Component {
   constructor (props) {
     super(props)
     this.state.search = props.search
-    this.sortHandler = this.sortHandler.bind(this)
+    this.handleSort = this.handleSort.bind(this)
   }
 
   static getDerivedStateFromProps ({ search }) {
@@ -128,7 +128,7 @@ export class SearchPage extends Component {
     return formatDateBaseOn(this.state.datePickerType, this.state.filter.date)
   }
 
-  sortHandler = (value) => {
+  handleSort = (value) => {
     this.setState({
       opOrderBy: value
     })
@@ -182,7 +182,7 @@ export class SearchPage extends Component {
                 />
               }
             />
-            <OpOrderby handleSort={this.sortHandler} />
+            <OpOrderby onChange={this.handleSort} />
             <FilterContainer
               onClose={this.handleClose}
               filterName={LOCATION_FILTER_NAME}
