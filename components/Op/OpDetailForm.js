@@ -166,6 +166,34 @@ class OpDetailForm extends Component {
         </Tooltip>
       </span>
     )
+    const opSchoolName = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='opSchoolName'
+          defaultMessage='School or organisation Name'
+          description='school name label in OpDetails Form'
+        />
+        &nbsp;
+        <Tooltip title='Enter the school or organisation name'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+    const opAddress = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='opAdress'
+          defaultMessage='School or organisation address'
+          description='school or organisation address label in OpDetails Form'
+        />
+        &nbsp;
+        <Tooltip title='Enter the school or organisation address'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
     const opOrganisation = (
       <span>
         {' '}
@@ -354,6 +382,28 @@ class OpDetailForm extends Component {
                       existingLocations={this.props.existingLocations}
                     />
                   )}
+                </Form.Item>
+                <Form.Item label={opSchoolName}>
+                  {getFieldDecorator('School name organisation', {
+                    rules: [
+                      {
+                        required: true,
+                        message: 'A School name or organisation must be provided'
+                      }
+                    ]
+                  }
+                  )}<Input placeholder='Name' />
+                </Form.Item>
+                <Form.Item label={opAddress}>
+                  {getFieldDecorator('School or organisation address', {
+                    rules: [
+                      {
+                        required: true,
+                        message: 'A school or organisation address must be provided'
+                      }
+                    ]
+                  }
+                  )}<Input placeholder='Address' />
                 </Form.Item>
               </MediumInputContainer>
             </InputContainer>
