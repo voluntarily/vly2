@@ -40,7 +40,7 @@ test.serial('Trigger PubSub', async t => {
   let pgs = await PersonalGoal.find()
   t.is(pgs.length, 0)
 
-  t.true(await PubSub.publishSync(TOPIC_PERSON__CREATE, newPerson))
+  t.true(PubSub.publishSync(TOPIC_PERSON__CREATE, newPerson))
   // validate that the goal cards have been allocated.
   while (pgs.length === 0) {
     await sleep(1)
