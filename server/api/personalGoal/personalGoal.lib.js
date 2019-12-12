@@ -31,15 +31,16 @@ const addPersonalGoal = async (personalGoal) => {
 
 // creates a new PersonalGoal or updates status of existing PersonalGoal
 const addPersonalGoalGroup = async (category, personId) => {
-  const q = { category }
-  const goalSet = await Goal.find(q).select('name').exec()
-  await Promise.all(goalSet.map(async goal => {
-    const newPersonalGoal = new PersonalGoal({
+  // console.log('addPersonalGoalGroup', category, personId)
+  const goalSet = await Goal.find({ category }).select('name').exec()
+  const pgs = goalSet.map(goal => {
+    return {
       person: personId,
       goal: goal._id
-    })
-    return newPersonalGoal.save()
-  }))
+    }
+  })
+  return PersonalGoal.create(pgs)
+    .catch((err) => console.error('Unable to create personalGoals:', err))
 }
 
 // true when the momentDate entered is days older than present
