@@ -36,6 +36,18 @@ const defaultMessages = glob
     return messages
   }, {})
 
+// sort object by keys so the en.json file will always have a consistent order
+const sortedDefaultMessages = {}
+
+Object.keys(defaultMessages)
+  .sort((a, b) => {
+    // case insensitive a-z sort
+    return a.toLowerCase().localeCompare(b.toLowerCase())
+  })
+  .forEach((key) => {
+    sortedDefaultMessages[key] = defaultMessages[key]
+  })
+
 // Report on duplicate message ids
 Object.keys(messageIdToFileMap)
   .filter((messageId) => messageIdToFileMap[messageId].length > 1)
@@ -45,5 +57,5 @@ Object.keys(messageIdToFileMap)
     console.log(messageIdToFileMap[messageId].join('\n') + '\n')
   })
 
-writeFileSync('./lang/en.json', JSON.stringify(defaultMessages, null, 2))
+writeFileSync('./lang/en.json', JSON.stringify(sortedDefaultMessages, null, 2))
 console.log(`> Wrote default messages to: "${resolve('./lang/en.json')}"`)
