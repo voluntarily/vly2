@@ -13,7 +13,7 @@
     "fix": "standard --fix",
     "dev": "nodemon -w server -w package.json server/server.js",
     "build": "next build && node ./x/default-lang",
-    "build:lang": "node ./x/default-lang",
+    "build:lang": "formatjs extract --messages-dir lang/.messages $(find . -type f -name '*.js' ! -path './node_modules/*' ! -path './.next/*' ! -path './.storybook/*' ! -path './coverage/*' ! -path './docs/*' ! -path './x/*') && node ./x/default-lang",
     "prod-build": "next build",
     "heroku-postbuild": "next build",
     "start": "NODE_ENV=production node --experimental-modules server/server.js",
@@ -101,6 +101,7 @@
   },
   "devDependencies": {
     "@babel/register": "^7.6.2",
+    "@formatjs/cli": "^1.1.12",
     "@storybook/addon-actions": "^5.2.5",
     "@storybook/addon-links": "^5.2.5",
     "@storybook/addons": "^5.2.5",
