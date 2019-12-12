@@ -50,6 +50,8 @@ buildtest_task:
     folder: node_modules
     fingerprint_script: cat package-lock.json
     populate_script: npm ci --production
+  next_cache:
+    folder: .next/cache
   test_script:
     - npm run prod-build
 
