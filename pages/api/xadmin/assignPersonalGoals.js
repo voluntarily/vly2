@@ -4,7 +4,6 @@ import { addPersonalGoalGroup } from '../../../server/api/personalGoal/personalG
   /api/xadmin/assignPersonalGoals?category="name" - loads the given category into the signed in user
 */
 export default async (req, res) => {
-  console.log('AssignPersonalGoals:', req.query.category)
   res.setHeader('Content-Type', 'application/json')
   // person must be authenticated administrator
   if (!req.session || !req.session.isAuthenticated) {

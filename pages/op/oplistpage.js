@@ -41,14 +41,10 @@ export const OpListPage = ({ ops }) =>
 
 OpListPage.getInitialProps = async ({ store }) => {
   // Get all OpListPage
-  try {
-    // warning: not a good example, don't return the got data in props,
-    // let it be store in redux and you have the loading data too.
-    const ops = await store.dispatch(reduxApi.actions.opportunities.get())
-    return { ops }
-  } catch (err) {
-    console.error('error in getting ops', err)
-  }
+  // warning: not a good example, don't return the got data in props,
+  // let it be store in redux and you have the loading data too.
+  const ops = await store.dispatch(reduxApi.actions.opportunities.get())
+  return { ops }
 }
 
 OpListPage.propTypes = {

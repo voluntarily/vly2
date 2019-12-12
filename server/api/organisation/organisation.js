@@ -31,6 +31,7 @@ const organisationSchema = new Schema({
   },
   decile: Number,
   contactName: String,
+  contactEmail: String,
   contactPhoneNumber: String,
   address: String
 })

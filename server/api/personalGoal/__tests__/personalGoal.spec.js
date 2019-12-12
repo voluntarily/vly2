@@ -86,8 +86,9 @@ test.serial('Should give a list of goals for a person', async t => {
   const personalGoals = res.body
   t.deepEqual(3, personalGoals.length)
   // sorted by status
-  t.is(personalGoals[0].status, PersonalGoalStatus.ACTIVE)
+  t.is(personalGoals[0].status, PersonalGoalStatus.COMPLETED)
   t.is(personalGoals[1].status, PersonalGoalStatus.COMPLETED)
+  t.is(personalGoals[2].status, PersonalGoalStatus.QUEUED)
 })
 
 test.serial('Should send correct data when queried against a _id', async t => {

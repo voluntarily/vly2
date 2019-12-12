@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /*
   This list of goals is loaded into the database by calling
   /api/xadmin/loadGoals
@@ -94,7 +95,10 @@ This card will disappear when the profile is complete
     startLink: '/my/org/op',
     category: 'Get Started for Teachers',
     rank: 1,
-    evaluation: () => { console.log('Tell us about your school'); return false }
+    evaluation: async (personalGoal) => {
+      const { score, count } = await GoalTests.orgCompleteness(personalGoal, 'op')
+      return (score / count * 100 > 75)
+    }
   },
   {
     name: 'Run Inspiring the Future',
@@ -113,7 +117,7 @@ Once Published we will start finding volunteers
     startLink: '/activity/inspiring-the-future',
     category: 'Get Started for Teachers',
     rank: 2,
-    evaluation: () => { console.log('does person have first-volunteer-activity badge'); return false }
+    evaluation: (personalGoal) => GoalTests.activityStarted(personalGoal, 'inspiring-the-future')
   },
   {
     name: 'Confirm Teacher ID',

@@ -23,7 +23,6 @@ const blankPerson = {
   location: '',
   email: '',
   phone: '',
-  gender: '',
   pronoun: {
     subject: '',
     object: '',
@@ -207,7 +206,6 @@ PersonDetailPage.propTypes = {
     location: PropTypes.string,
     email: PropTypes.string,
     phone: PropTypes.string,
-    gender: PropTypes.string,
     pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
