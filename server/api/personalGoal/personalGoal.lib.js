@@ -2,6 +2,7 @@ const PersonalGoal = require('./personalGoal')
 const Goal = require('../goal/goal')
 const moment = require('moment')
 const { PersonalGoalStatus } = require('./personalGoal.constants')
+const { GoalTests } = require('./GoalTests')
 /* Note These library functions call the database.
 They can fail and throw exceptions, we don't catch them here but
 allow them to be caught at the API layer where we can return a 4xx result
@@ -58,12 +59,20 @@ const evaluatePersonalGoals = async (person) => {
        isDaysAgo(moment(pg.dateHidden), 7)) {
       pg.status = PersonalGoalStatus.QUEUED
       delete pg.dateHidden
-      return pg.save()
+      return Promise.resolve(pg.save())
     }
     // dump the evaluation
-    // console.log(pg.goal.evaluation)
-    // const ev = eval(pg.goal.evaluation)
-    // console.log(ev())
+    try {
+      /* eslint-disable no-eval */
+      const ev = eval(pg.goal.evaluation)
+      const isCompleted = await ev(pg)
+      if (isCompleted) {
+        pg.status = PersonalGoalStatus.COMPLETED
+        return Promise.resolve(pg.save())
+      }
+    } catch (e) {
+      return Promise.reject(e)
+    }
   }))
 }
 
@@ -71,5 +80,6 @@ module.exports = {
   getPersonalGoalbyId,
   addPersonalGoal,
   addPersonalGoalGroup,
-  evaluatePersonalGoals
+  evaluatePersonalGoals,
+  GoalTests
 }

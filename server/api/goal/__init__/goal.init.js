@@ -1,13 +1,10 @@
+/* eslint-disable no-undef */
 /*
   This list of goals is loaded into the database by calling
   /api/xadmin/loadGoals
 */
 export default [
-  { //   name - a short name that indicates what needs to be done - these use verbs and active voice.
-    //   e.g  Complete your profile,
-    //        Get Police Vetted
-    //        Attend your first event
-    //        Complete your safety training
+  {
     name: 'Complete your profile',
     slug: 'goal-complete-profile',
     subtitle: 'Help us recommend volunteering opportunities relevant to you',
@@ -20,7 +17,7 @@ export default [
       activities you should volunteer for and helps teachers select 
       the range of helpers they need for an activity`,
     preconditions: [],
-    startLink: '/home', // should be /profile#edit
+    startLink: '/my/person',
     language: 'en',
     category: 'Getting Started',
     rank: 1,
@@ -33,27 +30,25 @@ export default [
     // badge:
     imgUrl: '/static/img/goal/goal-school-ready.png',
     description: `
-  <section>
-    <p>We want you as a volunteer, and the young people and children
-        we work with to all to have brilliant experiences doing activities.
-        So we ask you to complete some training materials about what you can
-        and can't do in schools, how to behave and what to expect.
-    </p>
-    <p>
-        We also run a confidential background police check to verify that there
-        is no reason you should not be working with children.
-    </p>
-    <p>This goal will collect the required information and permission to run the check
-        and then send you on a short online training course to get you briefed.
-        Once completed you'll receive the 'School Ready' badge and teachers will know
-        you are someone they can trust in their classrooms.
-    </p>
-    <p>Don't worry if you have started the process but don't think it will be
-        completed in time - there are ways we can handle that.
-    </p>
-  </section>`,
+We want you as a volunteer, and the young people and children
+we work with to all to have brilliant experiences doing activities.
+
+So we ask you to complete some training materials about what you can
+and can't do in schools, how to behave and what to expect.
+
+We also run a confidential background police check to verify that there
+is no reason you should not be working with children.
+
+This goal will collect the required information and permission to run the check
+and then send you on a short online training course to get you briefed.
+Once completed you'll receive the 'School Ready' badge and teachers will know
+you are someone they can trust in their classrooms.
+
+Don't worry if you have started the process but don't think it will be
+completed in time - there are ways we can handle that.
+`,
     preconditions: [],
-    startLink: '/home', // should be /profile#edit
+    startLink: '/todo',
     language: 'en',
     category: 'Getting Started',
     rank: 2,
@@ -63,32 +58,18 @@ export default [
     name: 'Complete first volunteering activity',
     subtitle: 'Its time to find your first volunteering opportunity.',
     slug: 'goal-complete-first-activity',
-    imgUrl: '/static/img/goal/goal-school-ready.png',
+    imgUrl: '/static/img/goal/goal-first-volunteer.png',
     description: `
-  <section>
-    <p>
-      <strong>Its time to find your first volunteering opportunity.</strong>
-        If you have filled in location, skills &amp; interests in your profile
-        you will now see some recommendations for events that will be taking
-        place soon in your area, or might particularly interest you.
-        Alternatively you can click the startlink below to go to the search page.
-    </p>
-    <p>
-      Once you find some things you might be interested in click the
-      <strong>Interested</strong> button to follow the activity.
-      You can leave a message and the organiser will be notified.
-      This is not a firm commitment yet.
-    </p>
-    <p>
-      The organiser can review the profiles of interested people and send
-      out invitations to participate in the activity. You'll get an email
-      notification and can accept or decline the invitation.
-    </p>
-    <p>
-      Once you have attended the activity you'll get your first
-      <em>Volunteer</em> badge and this card will disappear.
-    </p>
-  </section>`,
+Its time to find your first volunteering opportunity.
+
+Below are some recommendations for events coming soon in your area. 
+Or you can click *Start* here to open the search page.
+
+Once you find something click the <strong>Interested</strong> button.
+You can leave a message and the organiser will be notified.
+
+You'll get an email notification and can accept or decline the invitation.
+`,
     preconditions: [],
     startLink: '/search',
     language: 'en',
@@ -101,25 +82,57 @@ export default [
     slug: 'goal-complete-school-profile',
     subtitle: 'Tell the world about your awesome school - Complete profiles attract more volunteers!',
     description:
-      `Click the button below to goto you school profile page, 
-      click edit button and fill in more details. Then save it. 
-      Once you have done that return to this page by clicking the 
-      dashboard menu. This card will disappear when the profile is complete`,
-    imgUrl: '/static/img/actions/teacherSetup.png',
+`Click Start below to open your school profile page, 
+
+Click the Edit button, fill in the profile details, Then Save it. 
+
+Once you have done that return to this page by clicking the 
+*dashboard* menu. 
+
+This card will disappear when the profile is complete
+`,
+    imgUrl: '/static/img/goal/goal-teacherSetup.png',
+    startLink: '/my/org/op',
     category: 'Get Started for Teachers',
     rank: 1,
-    evaluation: () => { console.log('Tell us about your school'); return false }
+    evaluation: async (personalGoal) => {
+      const { score, count } = await GoalTests.orgCompleteness(personalGoal, 'op')
+      return (score / count * 100 > 75)
+    }
   },
   {
-    name: 'Register as a Requestor',
-    slug: 'goal-confirm-teacher-id',
-    subtitle: 'If you are a teacher, click here to enable creating new requests for volunteers.',
-    imgurl: '/static/img/actions/profile2.png',
-    description: '',
-    startlink: '/action/registerTeacher',
+    name: 'Run Inspiring the Future',
+    slug: 'goal-run-itfb',
+    imgUrl: '/static/img/goal/goal-itf.png',
+    subtitle: 'Connect children and young people with volunteers from the world of work through this fun in-school activity.',
+    description:
+`Click Start below to open the Inspiring the Future Activity Template, 
+If it sounds like something you could run in your school then click 
+the DO THIS button. 
+
+This creates a new Activity page where you can setup the time and place details
+
+Once Published we will start finding volunteers
+`,
+    startLink: '/activity/inspiring-the-future',
     category: 'Get Started for Teachers',
     rank: 2,
-    evaluation: () => { console.log('Register as a Requestor'); return false }
+    evaluation: (personalGoal) => GoalTests.activityStarted(personalGoal, 'inspiring-the-future')
+  },
+  {
+    name: 'Confirm Teacher ID',
+    slug: 'goal-confirm-teacher-id',
+    subtitle: 'If you are a teacher, click here to enable creating new requests for volunteers.',
+    imgurl: '/static/img/goal/goal-profile2.png',
+    description: `
+If you have not been automatically joined to a school you can enter your teacher
+registration number to confirm that you are a teacher and thus enable the ability
+to view activity templates and create new activities.    
+`,
+    startlink: '/action/registerTeacher',
+    category: 'Register as a Teacher',
+    rank: 1,
+    evaluation: () => { console.log('Confirm Teacher ID'); return false }
   },
   {
     name: 'Find Activities',
@@ -127,8 +140,8 @@ export default [
     subtitle: 'See templates that other educators have created for you to copy',
     description: '',
     imgurl: '/static/img/actions/createAct.png',
-    category: 'Get Started for Teachers',
-    rank: 3,
+    category: 'Next Steps for Teachers',
+    rank: 1,
     evaluation: () => { console.log('Find Activities'); return false }
   },
   {
@@ -138,18 +151,7 @@ export default [
     description: '',
     imgurl: '/static/img/actions/createOp.png',
     startlink: '/opportunity/registerTeacher',
-    category: 'Organise an Activity',
-    rank: 1,
-    evaluation: () => { console.log('does person have first-volunteer-activity badge'); return false }
-  },
-  {
-    name: 'Call in Industry Volunteers',
-    slug: 'goal-request-volunteers',
-    subtitle: 'Invite volunteers into your school to talk about their careers.',
-    description: '',
-    imgurl: '/static/img/actions/itf.png',
-    startLink: '/todo',
-    category: 'Organise an Activity',
+    category: 'Next Steps for Teachers',
     rank: 2,
     evaluation: () => { console.log('does person have first-volunteer-activity badge'); return false }
   },

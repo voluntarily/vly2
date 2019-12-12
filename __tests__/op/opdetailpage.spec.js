@@ -1,20 +1,20 @@
 import React from 'react'
 import test from 'ava'
-import { OpDetailPageWithOps } from '../pages/op/opdetailpage'
-import { mountWithIntl } from '../lib/react-intl-test-helper'
+import { OpDetailPageWithOps } from '../../pages/op/opdetailpage'
+import { mountWithIntl } from '../../lib/react-intl-test-helper'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import objectid from 'objectid'
-import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
-import orgs from '../server/api/organisation/__tests__/organisation.fixture'
-import people from '../server/api/person/__tests__/person.fixture'
-import acts from '../server/api/activity/__tests__/activity.fixture'
-import tags from '../server/api/tag/__tests__/tag.fixture.js'
-import withMockRoute from '../server/util/mockRouter'
+import ops from '../../server/api/opportunity/__tests__/opportunity.fixture'
+import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
+import people from '../../server/api/person/__tests__/person.fixture'
+import acts from '../../server/api/activity/__tests__/activity.fixture'
+import tags from '../../server/api/tag/__tests__/tag.fixture.js'
+import withMockRoute from '../../server/util/mockRouter'
 import thunk from 'redux-thunk'
-import reduxApi from '../lib/redux/reduxApi'
+import reduxApi from '../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
-import { API_URL } from '../lib/callApi'
+import { API_URL } from '../../lib/callApi'
 
 const locations = ['Auckland, Wellington, Christchurch']
 
@@ -238,6 +238,7 @@ test('display unavailable opportunity message when opportunity id is invalid on 
         isAuthenticated: false
       },
       opportunities: {
+        sync: true,
         loading: false,
         data: []
       },

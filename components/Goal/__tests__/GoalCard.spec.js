@@ -1,6 +1,6 @@
 import test from 'ava'
 import { shallowWithIntl } from '../../../lib/react-intl-test-helper'
-import { GoalCardTest, GoalStatusIcon } from '../GoalCard'
+import { GoalCardTest, GoalStatusIcon, GoalStartButton } from '../GoalCard'
 import { PersonalGoalStatus } from '../../../server/api/personalGoal/personalGoal.constants'
 import objectid from 'objectid'
 import sinon from 'sinon'
@@ -19,6 +19,25 @@ const goal = {
   category: 'Test',
   evaluation: () => { console.log('Test Goal Card'); return false }
 }
+
+test('shallow GoalStartButton', t => {
+  const handleClick = sinon.spy()
+  let wrapper = shallowWithIntl(
+    <GoalStartButton status={PersonalGoalStatus.QUEUED} href='/test' onClick={handleClick} />
+  )
+  // t.is(wrapper.props().href, '/test')
+  t.is(wrapper.find('GoalCard__BottomRightButton').first().props().onClick, handleClick)
+  t.is(wrapper.find('FormattedMessage').first().props().defaultMessage, 'Start')
+
+  wrapper = shallowWithIntl(
+    <GoalStartButton status={PersonalGoalStatus.ACTIVE} href='/test' onClick={handleClick} />
+  )
+  t.is(wrapper.find('FormattedMessage').first().props().defaultMessage, 'Continue')
+  wrapper = shallowWithIntl(
+    <GoalStartButton status={PersonalGoalStatus.COMPLETED} href='/test' onClick={handleClick} />
+  )
+  t.is(wrapper.text(), '')
+})
 
 test('shallow GoalStatusIcon', t => {
   let wrapper = shallowWithIntl(
@@ -44,7 +63,7 @@ test('shallow the card with goal', t => {
   t.is(wrapper.find('GoalCard__CardImage').first().props().src, goal.imgUrl)
 })
 
-test('shallow the card with a personalGoal', t => {
+test('shallow the card with a personalGoal', async t => {
   const dispatch = sinon.spy()
   const goalID = objectid().toString()
   const personalGoal = {
@@ -59,10 +78,9 @@ test('shallow the card with a personalGoal', t => {
     slug: 'goal-show-test-card',
     subtitle: 'Call to action - lets test things',
     description: `
-    <div>
-      <h1>Test Heading</h1>
-      <p>Test paragraph with <strong>strong text</strong></p>
-    </div>`,
+# Test Heading
+Test paragraph with *strong text*
+`,
     imgUrl: '/static/img/goals/teacherSetup.png',
     startLink: '/test',
     category: 'Test',
@@ -82,10 +100,24 @@ test('shallow the card with a personalGoal', t => {
   const event = {
     stopPropagation: sinon.spy()
   }
-  closeBtn.props().onClick(event) // handleClose
-  wrapper.props().onClick(event) // handleClickCard
+  await wrapper.props().onClick(event) // handleClickCard
+  const startBtn = wrapper.find('GoalStartButton').first()
+  t.is(startBtn.props().href, goal.startLink)
+  await startBtn.props().onClick(event)
+  goal.status = PersonalGoalStatus.ACTIVE
+  wrapper = shallowWithIntl(
+    <GoalCardTest goal={goal} dispatch={dispatch} />
+  )
+  t.is(wrapper.find('GoalStatusIcon').first().props().status, PersonalGoalStatus.ACTIVE)
+
+  goal.status = PersonalGoalStatus.COMPLETED
+  wrapper = shallowWithIntl(
+    <GoalCardTest goal={goal} dispatch={dispatch} />
+  )
+  t.is(wrapper.find('GoalStatusIcon').first().props().status, PersonalGoalStatus.COMPLETED)
 
   // change state to HIDDEN - no card returned
+  await closeBtn.props().onClick(event) // handleClose
   goal.status = PersonalGoalStatus.HIDDEN
   wrapper = shallowWithIntl(
     <GoalCardTest goal={goal} dispatch={dispatch} />
