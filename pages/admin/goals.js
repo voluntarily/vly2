@@ -24,7 +24,7 @@ function groupBy (arr, property) {
 
 const handleAssignGoalCategory = async (group) => {
   try {
-    await fetch(`api/xadmin/assignPersonalGoals?group=${group}`)
+    await fetch(`/api/xadmin/assignPersonalGoals?group=${group}`)
     message.success('done')
   } catch (e) { console.error('handleAssignGoalCategory Failed', e) }
 }
