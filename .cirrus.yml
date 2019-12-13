@@ -38,22 +38,10 @@ systemtest_task:
     - apt-get install -y firefox-esr
     - npm run end-to-end-test
 
-buildtest_task:
+build_test_docker_builder:
   only_if: $CIRRUS_BRANCH != 'master'
-  env:
-    NEXT_TELEMETRY_DISABLED: 1
-    NODE_ENV: production
-    MONGOMS_DISABLE_POSTINSTALL: 1
-    MONGOMS_DOWNLOAD_MIRROR: "http://downloads.mongodb.org"
-    MONGOMS_VERSION: "4.0.5"
-  node_modules_cache:
-    folder: node_modules
-    fingerprint_script: cat package-lock.json
-    populate_script: npm ci --production
-  next_cache:
-    folder: .next/cache
   test_script:
-    - npm run prod-build
+    - docker build --target production_build .
 
 prod_docker_docker_builder:
   only_if: $CIRRUS_BRANCH == 'master'

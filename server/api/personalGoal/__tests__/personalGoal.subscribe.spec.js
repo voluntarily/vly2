@@ -1,7 +1,11 @@
 import test from 'ava'
 import express from 'express'
 import PubSub from 'pubsub-js'
-import { TOPIC_GOALGROUP__ADD, TOPIC_MEMBER__UPDATE, TOPIC_PERSON__CREATE } from '../../../services/pubsub/topic.constants'
+import {
+  TOPIC_GOALGROUP__ADD,
+  TOPIC_MEMBER__UPDATE,
+  TOPIC_PERSON__CREATE
+} from '../../../services/pubsub/topic.constants'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import Goal from '../../goal/goal'
 import goals from '../../goal/__tests__/goal.fixture'
@@ -34,25 +38,24 @@ test.after.always(async (t) => {
 })
 
 test.serial('Trigger TOPIC_PERSON__CREATE', async t => {
-  t.plan(4)
+  t.plan(3)
 
   const newPerson = t.context.people[0]
   let pgs = await PersonalGoal.find().exec()
-  t.is(pgs.length, 0)
+  const len = pgs.length
   const done = new Promise((resolve, reject) => {
-    const x = PubSub.subscribe(TOPIC_GOALGROUP__ADD, async (msg, gg) => {
+    PubSub.subscribe(TOPIC_GOALGROUP__ADD, async (msg, gg) => {
       t.is(gg.length, 3)
       pgs = await PersonalGoal.find().exec()
-      t.is(pgs.length, 3)
+      t.is(pgs.length, len + 3)
       resolve(true)
-      x.unsubscribe()
     })
   })
   t.true(PubSub.publish(TOPIC_PERSON__CREATE, newPerson))
   await done
 })
 
-test.only('Trigger TOPIC_MEMBER__UPDATE', async t => {
+test.serial('Trigger TOPIC_MEMBER__UPDATE', async t => {
   t.plan(3)
   const member = {
     person: t.context.andrew._id,
@@ -60,12 +63,13 @@ test.only('Trigger TOPIC_MEMBER__UPDATE', async t => {
     validation: 'Trigger TOPIC_MEMBER__UPDATE',
     status: MemberStatus.ORGADMIN
   }
-
+  const pgs = await PersonalGoal.find().exec()
+  const len = pgs.length
   const done = new Promise((resolve, reject) => {
     PubSub.subscribe(TOPIC_GOALGROUP__ADD, async (msg, gg) => {
       t.is(gg.length, 2)
       const pgs = await PersonalGoal.find().exec()
-      t.is(pgs.length, 2)
+      t.is(pgs.length, len + 2)
       resolve(true)
     })
   })
