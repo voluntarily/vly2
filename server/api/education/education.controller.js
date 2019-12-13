@@ -1,13 +1,13 @@
-const { sortedEducation, education } = require('./educationData')
 
 const geteducation = function (req, res) {
-  if (req.query.withRelationships) {
-    const typesOfEducation = { education: education }
-    res.json(typesOfEducation)
-  } else {
-    const returnEducation = sortedEducation.filter(element => element !== 'Online')
-    returnEducation.unshift('Online')
-    res.json(returnEducation)
-  }
+  const education = [
+    'High school Graduate',
+    'Some College',
+    'Associate and /Bachelor Degree',
+    'Bachelor Degree',
+    'Masters Degree',
+    'Doctoral or professional degree'
+  ]
+  res.json(education)
 }
 module.exports = geteducation

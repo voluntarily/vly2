@@ -318,7 +318,7 @@ class PersonDetailForm extends Component {
                 {getFieldDecorator('education', {
                   rules: []
                 })(
-                  <EducationSelector existingEducation={this.props.education} />
+                  <EducationSelector educationLevels={this.props.educationLevels} />
                 )}
               </Form.Item>
             </InputContainer>
@@ -491,6 +491,7 @@ PersonDetailForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   locations: PropTypes.arrayOf(PropTypes.string),
+  educationLevels: PropTypes.arrayOf(PropTypes.string),
   existingTags: PropTypes.arrayOf(PropTypes.string).isRequired
   // dispatch: PropTypes.func.isRequired,
 }
