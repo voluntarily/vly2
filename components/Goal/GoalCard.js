@@ -180,7 +180,7 @@ GoalCard.propTypes = {
     imgUrl: PropTypes.string,
     description: PropTypes.string,
     startLink: PropTypes.string,
-    category: PropTypes.string
+    group: PropTypes.string
   })
 }
 

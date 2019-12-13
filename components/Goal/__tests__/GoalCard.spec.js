@@ -16,7 +16,7 @@ const goal = {
   </div>`,
   imgUrl: '/static/img/goals/teacherSetup.png',
   startLink: '/test',
-  category: 'Test',
+  group: 'Test',
   evaluation: () => { console.log('Test Goal Card'); return false }
 }
 
@@ -83,7 +83,7 @@ Test paragraph with *strong text*
 `,
     imgUrl: '/static/img/goals/teacherSetup.png',
     startLink: '/test',
-    category: 'Test',
+    group: 'Test',
     personalGoal,
     status: personalGoal.status,
     evaluation: () => { console.log('Test Goal Card'); return false }

@@ -3,8 +3,14 @@
   This list of goals is loaded into the database by calling
   /api/xadmin/loadGoals
 */
+import { GoalGroup } from '../goalGroup'
+
 export default [
+  /*********************************************/
+  /* GROUP Getting Started as a Volunteer      */
+  /*********************************************/
   {
+    group: GoalGroup.VP_NEW,
     name: 'Complete your profile',
     slug: 'goal-complete-profile',
     subtitle: 'Help us recommend volunteering opportunities relevant to you',
@@ -19,11 +25,11 @@ export default [
     preconditions: [],
     startLink: '/my/person',
     language: 'en',
-    category: 'Getting Started',
     rank: 1,
     evaluation: () => { console.log('Complete your profile'); return false }
   },
   {
+    group: GoalGroup.VP_NEW,
     name: 'Get School Ready',
     slug: 'goal-school-ready',
     subtitle: 'Complete the training and vetting necessary to work with young people',
@@ -50,11 +56,11 @@ completed in time - there are ways we can handle that.
     preconditions: [],
     startLink: '/todo',
     language: 'en',
-    category: 'Getting Started',
     rank: 2,
     evaluation: () => { console.log('does person have school ready badge'); return false }
   },
   {
+    group: GoalGroup.VP_NEW,
     name: 'Complete first volunteering activity',
     subtitle: 'Its time to find your first volunteering opportunity.',
     slug: 'goal-complete-first-activity',
@@ -73,11 +79,15 @@ You'll get an email notification and can accept or decline the invitation.
     preconditions: [],
     startLink: '/search',
     language: 'en',
-    category: 'Getting Started',
     rank: 3,
     evaluation: () => { console.log('does person have first-volunteer-activity badge'); return false }
   },
+
+  /*********************************************/
+  /* GROUP First steps for a new school        */
+  /*********************************************/
   {
+    group: GoalGroup.ORG_OP_NEW,
     name: 'Tell us about your school',
     slug: 'goal-complete-school-profile',
     subtitle: 'Tell the world about your awesome school - Complete profiles attract more volunteers!',
@@ -93,7 +103,6 @@ This card will disappear when the profile is complete
 `,
     imgUrl: '/static/img/goal/goal-teacherSetup.png',
     startLink: '/my/org/op',
-    category: 'Get Started for Teachers',
     rank: 1,
     evaluation: async (personalGoal) => {
       const { score, count } = await GoalTests.orgCompleteness(personalGoal, 'op')
@@ -101,6 +110,7 @@ This card will disappear when the profile is complete
     }
   },
   {
+    group: GoalGroup.ORG_OP_NEW,
     name: 'Run Inspiring the Future',
     slug: 'goal-run-itfb',
     imgUrl: '/static/img/goal/goal-itf.png',
@@ -115,11 +125,15 @@ This creates a new Activity page where you can setup the time and place details
 Once Published we will start finding volunteers
 `,
     startLink: '/activity/inspiring-the-future',
-    category: 'Get Started for Teachers',
     rank: 2,
     evaluation: (personalGoal) => GoalTests.activityStarted(personalGoal, 'inspiring-the-future')
   },
+
+  /*********************************************/
+  /* GROUP Register as a Teacher               */
+  /*********************************************/
   {
+    group: GoalGroup.OP_REGISTER,
     name: 'Confirm Teacher ID',
     slug: 'goal-confirm-teacher-id',
     subtitle: 'If you are a teacher, click here to enable creating new requests for volunteers.',
@@ -130,39 +144,46 @@ registration number to confirm that you are a teacher and thus enable the abilit
 to view activity templates and create new activities.    
 `,
     startlink: '/action/registerTeacher',
-    category: 'Register as a Teacher',
     rank: 1,
     evaluation: () => { console.log('Confirm Teacher ID'); return false }
   },
+
+  /*********************************************/
+  /* GROUP First steps for teachers            */
+  /*********************************************/
   {
+    group: GoalGroup.OP_NEW,
     name: 'Find Activities',
     slug: 'goal-find-activities',
     subtitle: 'See templates that other educators have created for you to copy',
     description: '',
     imgurl: '/static/img/actions/createAct.png',
-    category: 'Next Steps for Teachers',
     rank: 1,
     evaluation: () => { console.log('Find Activities'); return false }
   },
   {
+    group: GoalGroup.OP_NEW,
     name: 'Create an Opportunity',
     slug: 'goal-create-new-opportunity',
     subtitle: 'Ask skilled volunteers for help by creating an opportunity to help out.',
     description: '',
     imgurl: '/static/img/actions/createOp.png',
     startlink: '/opportunity/registerTeacher',
-    category: 'Next Steps for Teachers',
     rank: 2,
     evaluation: () => { console.log('does person have first-volunteer-activity badge'); return false }
   },
+  /*********************************************/
+  /* GROUP More ways to help out               */
+  /*********************************************/
+
   {
+    group: GoalGroup.VP_MORE,
     name: 'Contribute to the platform',
     slug: 'goal-contribute-to-platform',
     subtitle: 'Help mobilise more volunteers by contributing. All skill levels are welcome, and training is provided.',
     description: '',
     imgurl: '/static/img/actions/github.png',
     startlink: 'https://github.com/voluntarily/vly2',
-    category: 'More ways to help out',
     rank: 1,
     evaluation: () => { console.log('Contribute to the platform'); return false }
   }
@@ -172,7 +193,7 @@ to view activity templates and create new activities.
 //   imgUrl: '/static/img/goal/goal-school-ready.png',
 //   subtitle: '',
 //   startLink: '/search',
-//   category: 'Getting Started',
+//   group: 'Getting Started',
 //   evaluation: () => { console.log('generic'); return false }
 // },
 ]

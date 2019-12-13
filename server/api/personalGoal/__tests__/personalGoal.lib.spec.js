@@ -15,6 +15,7 @@ import Organisation from '../../organisation/organisation'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
+import { GoalGroup } from '../../goal/goalGroup'
 
 test.before('before connect to database', async (t) => {
   try {
@@ -91,15 +92,15 @@ test.serial('Should add a personalGoal Group to the person', async t => {
   let dalisGoals = await PersonalGoal.find(q).exec()
   t.is(dalisGoals.length, 0)
 
-  // try with an invalid category
+  // try with an invalid group
   await addPersonalGoalGroup('This should fail', t.context.dali._id)
   dalisGoals = await PersonalGoal.find(q).exec()
   t.is(dalisGoals.length, 0)
 
-  await addPersonalGoalGroup('Getting Started', t.context.dali._id)
+  await addPersonalGoalGroup(GoalGroup.VP_NEW, t.context.dali._id)
   // Dali now has 2 goals
   dalisGoals = await PersonalGoal.find(q).exec()
-  t.is(dalisGoals.length, 2)
+  t.is(dalisGoals.length, 3)
 })
 
 test.serial('Evaluate the personal goals - hidden and unhide', async t => {
@@ -155,7 +156,7 @@ test.serial('Evaluate the personal goals - true completes', async t => {
 test.serial('Evaluate the personal goals - throw failure', async t => {
   const personalGoalAlice = {
     person: t.context.alice._id,
-    goal: t.context.goals[3]._id, // this throws evaluation
+    goal: t.context.goals[5]._id, // this throws evaluation
     status: PersonalGoalStatus.ACTIVE
   }
   let apg = await addPersonalGoal(personalGoalAlice)

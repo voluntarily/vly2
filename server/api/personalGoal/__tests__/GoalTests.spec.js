@@ -13,7 +13,7 @@ import Organisation from '../../organisation/organisation'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
-import { addMember } from '../../member/member.controller'
+import { addMember } from '../../member/member.lib'
 import { MemberStatus } from '../../member/member.constants'
 import { OpportunityStatus } from '../../opportunity/opportunity.constants'
 
