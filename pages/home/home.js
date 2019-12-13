@@ -274,7 +274,7 @@ class PersonHomePage extends Component {
                 <h2>Attended Requests</h2>
               </SectionTitleWrapper>
               <OpList
-                ops={this.getArchivedOpsForVolunteer('committed' || 'attended')}
+                ops={this.getArchivedOpsForVolunteer('attended' || 'committed')}
               />
             </SectionWrapper>
           </TabPane>
