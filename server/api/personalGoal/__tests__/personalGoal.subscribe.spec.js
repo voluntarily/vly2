@@ -1,19 +1,15 @@
 import test from 'ava'
 import express from 'express'
 import PubSub from 'pubsub-js'
-import {
-  TOPIC_GOALGROUP__ADD,
-  TOPIC_MEMBER__UPDATE,
-  TOPIC_PERSON__CREATE
-} from '../../../services/pubsub/topic.constants'
+import { TOPIC_GOALGROUP__ADD, TOPIC_MEMBER__UPDATE, TOPIC_PERSON__CREATE } from '../../../services/pubsub/topic.constants'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import Goal from '../../goal/goal'
 import goals from '../../goal/__tests__/goal.fixture'
+import { MemberStatus } from '../../member/member.constants'
 import Organisation from '../../organisation/organisation'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
-import { MemberStatus } from '../../member/member.constants'
 import PersonalGoal from '../personalGoal'
 import Subscribe from '../personalGoal.subscribe'
 
