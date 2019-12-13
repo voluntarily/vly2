@@ -13,7 +13,7 @@ const testGoal = {
   language: 'en',
   imgUrl: '/static/img/goal/goal-complete-profile.png',
   startLink: '/test', // should be /profile#edit
-  category: 'Test',
+  group: 'Test',
   evaluation: () => { return false }
 }
 
@@ -23,7 +23,7 @@ const testGoalDefaults = {
   subtitle: 'Test Subtitle',
   description: 'test goal description',
   startLink: '/test', // should be /profile#edit
-  category: 'Test',
+  group: 'Test',
   evaluation: () => { return false }
 }
 
@@ -110,9 +110,9 @@ test.serial('Should fail to find - Bad request ', async t => {
     .expect(400)
   t.is(res.status, 400)
 })
-test.serial('Should correctly give subset of goals of category', async t => {
+test.serial('Should correctly give subset of goals of group', async t => {
   const res = await request(server)
-    .get('/api/goals?q={"category":"First Activity"}')
+    .get('/api/goals?q={"group":"First Activity"}')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
@@ -120,9 +120,9 @@ test.serial('Should correctly give subset of goals of category', async t => {
   t.is(got.length, 1)
 })
 
-test.serial('Should correctly give reverse sorted goals of category', async t => {
+test.serial('Should correctly give reverse sorted goals of group', async t => {
   const res = await request(server)
-    .get('/api/goals?q={"category":"Getting Started"}&s="-name"')
+    .get('/api/goals?q={"group":"Getting Started"}&s="-name"')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
@@ -137,8 +137,8 @@ const queryString = params => Object.keys(params).map((key) => {
 
 test.serial('Should correctly select just the names and ids', async t => {
   const query = {
-    q: JSON.stringify({ category: 'Getting Started' }),
-    p: 'slug imgUrl category'
+    q: JSON.stringify({ group: 'Getting Started' }),
+    p: 'slug imgUrl group'
   }
   const res = await request(server)
     .get(`/api/goals?${queryString(query)}`)
@@ -204,7 +204,7 @@ test.serial('Should load a goal into the db and delete them via the api', async 
   const testGoalDelete = {
     name: 'Test Goal Delete',
     slug: 'test-goal-delete',
-    category: 'Delete'
+    group: 'Delete'
   }
 
   const goal = new Goal(testGoalDelete)
