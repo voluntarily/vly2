@@ -12,8 +12,7 @@ import { FullPage, Section } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withGoals } from '../../lib/redux/reduxApi.js'
 import { Button, message } from 'antd'
-// import Link from 'next/link'
-import callApi from '../../lib/callApi'
+import fetch from 'isomorphic-fetch'
 
 function groupBy (arr, property) {
   return arr.reduce(function (memo, x) {
@@ -23,16 +22,16 @@ function groupBy (arr, property) {
   }, {})
 }
 
-const handleAssignGoalCategory = async (category) => {
+const handleAssignGoalCategory = async (group) => {
   try {
-    await callApi(`xadmin/assignPersonalGoals?category=${category}`)
+    await fetch(`api/xadmin/assignPersonalGoals?group=${group}`)
     message.success('done')
   } catch (e) { console.error('handleAssignGoalCategory Failed', e) }
 }
 
 const handleLoadGoals = async () => {
   try {
-    await callApi('xadmin/loadGoals')
+    await fetch('/api/xadmin/loadGoals')
     message.success('done')
   } catch (e) { console.error('loadGoals Failed', e) }
 }
@@ -52,7 +51,7 @@ class GoalListPage extends Component {
 
   render () {
     const goals = this.props.goals.data
-    const categories = groupBy(goals, 'category')
+    const groups = groupBy(goals, 'group')
     return (
       <FullPage>
         <Helmet>
@@ -64,9 +63,9 @@ class GoalListPage extends Component {
           <p>Clear goals from the database and reload from the sources goals.init.js file</p>
           <Button shape='round' type='primary' onClick={handleLoadGoals}>Load Goals</Button>
         </Section>
-        {Object.keys(categories).map(key =>
+        {Object.keys(groups).map(key =>
           <Section key={key}>
-            <GoalSection goals={categories[key]} />
+            <GoalSection goals={groups[key]} />
             <Button
               shape='round'
               onClick={() => handleAssignGoalCategory(key)}
