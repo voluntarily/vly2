@@ -1,14 +1,17 @@
 import test from 'ava'
-import Person from '../../person/person'
-import PersonalGoal from '../personalGoal'
-import MemoryMongo from '../../../util/test-memory-mongo'
-import people from '../../person/__tests__/person.fixture'
-import Subscribe from '../personalGoal.subscribe'
 import express from 'express'
 import PubSub from 'pubsub-js'
-import { TOPIC_PERSON__CREATE } from '../../../services/pubsub/topic.constants'
+import { TOPIC_GOALGROUP__ADD, TOPIC_MEMBER__UPDATE, TOPIC_PERSON__CREATE } from '../../../services/pubsub/topic.constants'
+import MemoryMongo from '../../../util/test-memory-mongo'
 import Goal from '../../goal/goal'
 import goals from '../../goal/__tests__/goal.fixture'
+import { MemberStatus } from '../../member/member.constants'
+import Organisation from '../../organisation/organisation'
+import orgs from '../../organisation/__tests__/organisation.fixture'
+import Person from '../../person/person'
+import people from '../../person/__tests__/person.fixture'
+import PersonalGoal from '../personalGoal'
+import Subscribe from '../personalGoal.subscribe'
 
 test.before('before connect to database', async (t) => {
   try {
@@ -18,45 +21,54 @@ test.before('before connect to database', async (t) => {
     await t.context.memMongo.start()
     t.context.people = await Person.create(people).catch((err) => console.error('Unable to create people:', err))
     t.context.goals = await Goal.create(goals).catch((e) => console.error('Unable to create goals', e))
-    // t.context.clock = sinon.useFakeTimers()
+    t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create organisations: ${err}`)
+    t.context.org = t.context.orgs[0]
+    t.context.andrew = t.context.people[0]
   } catch (e) {
     console.error('personController.spec.js, before connect to database', e)
   }
 })
 
 test.after.always(async (t) => {
-  // t.context.clock.runAll()
-  // t.context.clock.restore()
   await t.context.memMongo.stop()
 })
 
-function sleep (ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
+test.serial('Trigger TOPIC_PERSON__CREATE', async t => {
+  t.plan(3)
 
-test.serial('Trigger PubSub', async t => {
-  // t.plan(2)
   const newPerson = t.context.people[0]
-  let pgs = await PersonalGoal.find()
-  t.is(pgs.length, 0)
+  let pgs = await PersonalGoal.find().exec()
+  const len = pgs.length
+  const done = new Promise((resolve, reject) => {
+    PubSub.subscribe(TOPIC_GOALGROUP__ADD, async (msg, gg) => {
+      t.is(gg.length, 3)
+      pgs = await PersonalGoal.find().exec()
+      t.is(pgs.length, len + 3)
+      resolve(true)
+    })
+  })
+  t.true(PubSub.publish(TOPIC_PERSON__CREATE, newPerson))
+  await done
+})
 
-  t.true(PubSub.publishSync(TOPIC_PERSON__CREATE, newPerson))
-
-  // validate that the goal cards have been allocated.
-  let attempt = 0
-  const maxAttempts = 10
-
-  while (pgs.length !== 2) {
-    await sleep(10)
-    pgs = await PersonalGoal.find()
-
-    if (attempt >= maxAttempts) {
-      t.fail(`Goals not created after ${attempt} checks`)
-      break
-    }
-
-    attempt += 1
+test.serial('Trigger TOPIC_MEMBER__UPDATE', async t => {
+  t.plan(3)
+  const member = {
+    person: t.context.andrew._id,
+    organisation: t.context.orgs[1]._id,
+    validation: 'Trigger TOPIC_MEMBER__UPDATE',
+    status: MemberStatus.ORGADMIN
   }
-
-  t.is(pgs.length, 2)
+  const pgs = await PersonalGoal.find().exec()
+  const len = pgs.length
+  const done = new Promise((resolve, reject) => {
+    PubSub.subscribe(TOPIC_GOALGROUP__ADD, async (msg, gg) => {
+      t.is(gg.length, 2)
+      const pgs = await PersonalGoal.find().exec()
+      t.is(pgs.length, len + 2)
+      resolve(true)
+    })
+  })
+  t.true(PubSub.publish(TOPIC_MEMBER__UPDATE, member))
+  await done
 })
