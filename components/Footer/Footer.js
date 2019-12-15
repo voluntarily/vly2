@@ -14,7 +14,6 @@ const getAllowedLinks = isAuthenticated =>
     .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
 
 const FooterBackground = styled.div`
-  margin-top: 5rem;
   background-color: #fefefe;
 `
 

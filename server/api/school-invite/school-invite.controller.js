@@ -8,7 +8,8 @@ const { config } = require('../../../config/config')
 const Organisation = require('../organisation/organisation')
 const slug = require('limax')
 const { MemberStatus } = require('../member/member.constants')
-const Member = require('../member/member')
+const { addMember } = require('../member/member.lib')
+const Person = require('../person/person')
 
 class SchoolInvite {
   static async send (req, res) {
@@ -137,6 +138,7 @@ class SchoolInvite {
       join: async (props) => {
         try {
           const organisation = await SchoolInvite.createOrganisationFromSchool(props.schoolId)
+          await SchoolInvite.makePersonOpportunityProvider(request.session.me._id)
           await SchoolInvite.linkPersonToOrganisationAsAdmin(organisation._id, request.session.me._id)
         } catch (error) {
           // in the event something goes wrong during this process
@@ -181,15 +183,27 @@ class SchoolInvite {
     return Organisation.create(initialOrganisationData)
   }
 
+  static async makePersonOpportunityProvider (personId) {
+    const person = await Person.findById(personId)
+
+    if (!person) {
+      throw new Error('Person not found')
+    }
+
+    // only add the OP role if the person doesn't already have it
+    if (!person.role.includes(Role.OPPORTUNITY_PROVIDER)) {
+      person.role.push(Role.OPPORTUNITY_PROVIDER)
+      await Person.updateOne({ _id: person._id }, person)
+    }
+  }
+
   static async linkPersonToOrganisationAsAdmin (organisationId, personId) {
-    const member = {
+    return addMember({
       person: personId,
       organisation: organisationId,
       validation: 'orgAdmin from school-invite controller',
       status: MemberStatus.ORGADMIN
-    }
-
-    return Member.create(member)
+    })
   }
 }
 

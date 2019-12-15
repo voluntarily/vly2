@@ -131,7 +131,6 @@ class RegisterMemberItem extends Component {
           {options.btns.map((btn, index) => {
             return (
               <span key={index}>
-                {btn.msg && <p>{btn.msg}</p>}
                 <Button type={btn.type} shape='round' onClick={this.handleMemberButton.bind(this, btn.action)}>
                   {btn.text}
                 </Button>
