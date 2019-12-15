@@ -11,7 +11,7 @@
     "testcafe-tests": "wait-on -t 60000 -w 2000 -l http://localhost:3122 && node node_modules/testcafe/bin/testcafe.js firefox:headless systemtest/landing.test.js",
     "lint": "standard",
     "fix": "standard --fix",
-    "dev": "nodemon -w server -w package.json server/server.js",
+    "dev": "nodemon -w lang -w server -w package.json server/server.js",
     "build": "next build && node ./x/default-lang",
     "build:lang": "formatjs extract --messages-dir lang/.messages $(find . -type f -name '*.js' ! -path './node_modules/*' ! -path './.next/*' ! -path './.storybook/*' ! -path './coverage/*' ! -path './docs/*' ! -path './x/*') && node ./x/default-lang",
     "prod-build": "next build",
