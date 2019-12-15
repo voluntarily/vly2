@@ -185,7 +185,7 @@ class SchoolInvite {
     const member = {
       person: personId,
       organisation: organisationId,
-      validation: 'orgAdmin',
+      validation: 'orgAdmin from school-invite controller',
       status: MemberStatus.ORGADMIN
     }
 

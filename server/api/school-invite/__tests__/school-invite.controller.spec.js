@@ -196,6 +196,6 @@ test('Link person to organisation as admin', async (t) => {
 
   t.is(member.organisation, organisation._id)
   t.is(member.person, person._id)
-  t.is(member.validation, 'orgAdmin')
+  t.is(member.validation, 'orgAdmin from school-invite controller')
   t.is(member.status, MemberStatus.ORGADMIN)
 })
