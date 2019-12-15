@@ -1,4 +1,32 @@
 const Member = require('./member')
+const PubSub = require('pubsub-js')
+const { TOPIC_MEMBER__UPDATE } = require('../../services/pubsub/topic.constants')
+
+/* get a single member record with org and person populated out */
+const getMemberbyId = id => {
+  return Member.findOne({ _id: id })
+    .populate({ path: 'person', select: 'nickname name imgUrl email' })
+    .populate({ path: 'organisation', select: 'name imgUrl category' })
+    .exec()
+}
+
+// creates a new member or updates status of existing member
+const addMember = async (member) => {
+  const found = await Member.findOneAndUpdate(
+    { // check for a match
+      person: member.person,
+      organisation: member.organisation
+    },
+    member, // create or upsert
+    { new: true, upsert: true }
+  )
+  if (found) {
+    PubSub.publish(TOPIC_MEMBER__UPDATE, found)
+  }
+  // get populated out member record
+  const got = await getMemberbyId(found._id)
+  return got
+}
 
 const findOrgByPersonIdAndCategory = async (personId, category) => {
   // search membership table for org matching category and person id
@@ -18,5 +46,7 @@ const findOrgByPersonIdAndCategory = async (personId, category) => {
 }
 
 module.exports = {
+  getMemberbyId,
+  addMember,
   findOrgByPersonIdAndCategory
 }
