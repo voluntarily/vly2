@@ -4,6 +4,7 @@ import { server, appReady } from '../../../server'
 import Goal from '../goal'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import goals from './goal.fixture.js'
+import { GoalGroup } from '../goalGroup'
 
 const testGoal = {
   name: 'Test Goal',
@@ -13,7 +14,7 @@ const testGoal = {
   language: 'en',
   imgUrl: '/static/img/goal/goal-complete-profile.png',
   startLink: '/test', // should be /profile#edit
-  category: 'Test',
+  group: 'Test',
   evaluation: () => { return false }
 }
 
@@ -23,7 +24,7 @@ const testGoalDefaults = {
   subtitle: 'Test Subtitle',
   description: 'test goal description',
   startLink: '/test', // should be /profile#edit
-  category: 'Test',
+  group: 'Test',
   evaluation: () => { return false }
 }
 
@@ -110,25 +111,16 @@ test.serial('Should fail to find - Bad request ', async t => {
     .expect(400)
   t.is(res.status, 400)
 })
-test.serial('Should correctly give subset of goals of category', async t => {
-  const res = await request(server)
-    .get('/api/goals?q={"category":"First Activity"}')
-    .set('Accept', 'application/json')
-    .expect(200)
-    .expect('Content-Type', /json/)
-  const got = res.body
-  t.is(got.length, 1)
-})
 
-test.serial('Should correctly give reverse sorted goals of category', async t => {
+test.serial('Should correctly give reverse sorted goals of group', async t => {
   const res = await request(server)
-    .get('/api/goals?q={"category":"Getting Started"}&s="-name"')
+    .get(`/api/goals?q={"group":"${GoalGroup.ORG_OP_NEW}"}&s="-name"`)
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
   t.is(got.length, 2)
-  t.is(got[0].slug, 'goal-school-ready')
+  t.is(got[0].slug, 'goal-complete-school-profile')
 })
 
 const queryString = params => Object.keys(params).map((key) => {
@@ -137,8 +129,8 @@ const queryString = params => Object.keys(params).map((key) => {
 
 test.serial('Should correctly select just the names and ids', async t => {
   const query = {
-    q: JSON.stringify({ category: 'Getting Started' }),
-    p: 'slug imgUrl category'
+    q: JSON.stringify({ group: GoalGroup.VP_NEW }),
+    p: 'slug imgUrl group'
   }
   const res = await request(server)
     .get(`/api/goals?${queryString(query)}`)
@@ -146,7 +138,7 @@ test.serial('Should correctly select just the names and ids', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(got.length, 2)
+  t.is(got.length, 3)
   t.is(got[0].name, undefined)
   t.is(got[0].slug, 'goal-complete-profile')
 })
@@ -204,7 +196,7 @@ test.serial('Should load a goal into the db and delete them via the api', async 
   const testGoalDelete = {
     name: 'Test Goal Delete',
     slug: 'test-goal-delete',
-    category: 'Delete'
+    group: 'Delete'
   }
 
   const goal = new Goal(testGoalDelete)

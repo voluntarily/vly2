@@ -63,7 +63,6 @@ test.serial('Should call next middleware when record is found', async t => {
     email: 'andrew@groat.nz',
     about: 'Voluntari.ly Product Lead',
     location: 'Auckland',
-    gender: 'male',
     language: 'EN',
     role: [
       'admin'

@@ -86,7 +86,6 @@ export class OpDetailPage extends Component {
   }
 
   async createOpportunity (op) {
-    console.log('createOpportunity:', op)
     const res = await this.props.dispatch(
       reduxApi.actions.opportunities.put(
         { id: op._id },

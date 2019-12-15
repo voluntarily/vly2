@@ -8,9 +8,9 @@ They can fail and throw exceptions, we don't catch them here but
 allow them to be caught at the API layer where we can return a 4xx result
 */
 const GoalTests = {
-  orgCompleteness: async (personalGoal, category) => {
+  orgCompleteness: async (personalGoal, group) => {
     const personId = personalGoal.person._id
-    const orgid = await findOrgByPersonIdAndCategory(personId, category)
+    const orgid = await findOrgByPersonIdAndCategory(personId, group)
     return orgProfileCompletenessById(orgid)
   },
   // test whether an op has been created from an activity for current person or org

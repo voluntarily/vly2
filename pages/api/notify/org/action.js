@@ -1,5 +1,5 @@
 import { handleToken } from '../../token/token'
-import { addMember } from '../../../../server/api/member/member.controller'
+import { addMember } from '../../../../server/api/member/member.lib'
 
 /* this url
 http://localhost:3122/api/notify/org/5d9fe64b4eb179218c8d1d30?memberStatus=member&memberValidation=%27test%20invitation%27
