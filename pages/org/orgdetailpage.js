@@ -1,17 +1,15 @@
-import { Button, Divider, message, Popconfirm } from 'antd'
+import { Button, message } from 'antd'
 import Link from 'next/link'
 import Router from 'next/router'
 import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import Loading from '../../components/Loading'
-import RegisterMemberSection from '../../components/Member/RegisterMemberSection'
-import OpListSection from '../../components/Op/OpListSection'
 import OrgDetail from '../../components/Org/OrgDetail'
 import OrgDetailForm from '../../components/Org/OrgDetailForm'
-import { FullPage, Spacer } from '../../components/VTheme/VTheme'
+import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
-import { MemberStatus } from '../../server/api/member/member.constants'
+// import { MemberStatus } from '../../server/api/member/member.constants'
 
 const blankOrg = {
   name: '',
@@ -107,12 +105,12 @@ class OrgDetailPage extends Component {
 
   render () {
     // TODO: [VP-274] identify if current person is an org Admin for this organisation
-    const isOrgAdmin =
-      this.props.members.data.length &&
-      this.props.members.data[0].status === MemberStatus.ORGADMIN
-    const isAdmin = this.props.me && this.props.me.role.includes('admin')
-    const canEdit = isOrgAdmin || isAdmin
-    const canRemove = isAdmin
+    // const isOrgAdmin =
+    //   this.props.members.data.length &&
+    //   this.props.members.data[0].status === MemberStatus.ORGADMIN
+    // const isAdmin = this.props.me && this.props.me.role.includes('admin')
+    // const canEdit = isOrgAdmin || isAdmin
+    // const canRemove = isAdmin
 
     let content = ''
     let org = null
@@ -160,8 +158,10 @@ class OrgDetailPage extends Component {
         </div>
       ) : (
         <div>
-          <OrgDetail org={org} meid={this.props.me._id} />
+          <OrgDetail org={org} meid={this.props.me._id} isAuthenticated={this.props.isAuthenticated} me={this.props.me} />
+          {/* //TODO: this commented out code will likely go in the new settings tab
           <Divider />
+
           <h2>
             <FormattedMessage
               id='getInvolved'
@@ -171,8 +171,6 @@ class OrgDetailPage extends Component {
           </h2>
           <h5>Volunteer with {org.name}</h5>
           <OpListSection org={org._id} />
-          <Spacer />
-          <Divider />
           <div style={{ float: 'right' }}>
             <Button shape='round'>
               <Link href='/orgs'>
@@ -211,10 +209,7 @@ class OrgDetailPage extends Component {
                 </Button>
               </Popconfirm>
             )}
-          </div>
-          {this.props.isAuthenticated && (
-            <RegisterMemberSection orgid={org._id} meid={this.props.me._id} />
-          )}
+          </div> */}
         </div>
       )
     }
