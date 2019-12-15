@@ -9,19 +9,31 @@ import nodemailerMock from 'nodemailer-mock'
 import fixtures from './school-invite.fixture'
 import Person from '../../person/person'
 import { MemberStatus } from '../../member/member.constants'
+import mongoose from 'mongoose'
+import { TOPIC_MEMBER__UPDATE } from '../../../services/pubsub/topic.constants'
+import PubSub from 'pubsub-js'
+import sinon from 'sinon'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+})
+
+test.beforeEach('Load fixtures', async (t) => {
   await SchoolLookUp.create(fixtures.schools)
   await Person.create(fixtures.people)
+})
+
+test.afterEach.always('Clear fixtures', async (t) => {
+  await SchoolLookUp.deleteMany({})
+  await Person.deleteMany({})
 })
 
 test.after.always(async (t) => {
   await t.context.memMongo.stop()
 })
 
-test('Invalid HTTP methods', async (t) => {
+test.serial('Invalid HTTP methods', async (t) => {
   for (const method of ['GET', 'PUT', 'DELETE']) {
     const request = new MockExpressRequest({ method })
     const response = new MockExpressResponse()
@@ -32,7 +44,7 @@ test('Invalid HTTP methods', async (t) => {
   }
 })
 
-test('Not logged in', async (t) => {
+test.serial('Not logged in', async (t) => {
   const request = new MockExpressRequest({ method: 'POST' })
   const response = new MockExpressResponse()
 
@@ -41,7 +53,7 @@ test('Not logged in', async (t) => {
   t.is(403, response.statusCode, `Received ${response.statusCode} instead of 403`)
 })
 
-test('Valid login, missing body', async (t) => {
+test.serial('Valid login, missing body', async (t) => {
   const request = new MockExpressRequest({
     method: 'POST',
     session: {
@@ -58,7 +70,7 @@ test('Valid login, missing body', async (t) => {
   t.is(400, response.statusCode, `Received ${response.statusCode} instead of 400`)
 })
 
-test('Valid login, missing required data', async (t) => {
+test.serial('Valid login, missing required data', async (t) => {
   const request = new MockExpressRequest({
     method: 'POST',
     session: {
@@ -81,7 +93,7 @@ test('Valid login, missing required data', async (t) => {
   }, response._getJSON())
 })
 
-test('Valid login, required data, invalid school id', async (t) => {
+test.serial('Valid login, required data, invalid school id', async (t) => {
   const request = new MockExpressRequest({
     method: 'POST',
     session: {
@@ -163,7 +175,7 @@ test.serial('Valid login, required data, valid school id, sent email', async (t)
   t.truthy(email.text.includes(fixtures.schools[0].name), 'School name should be in message')
 })
 
-test('Create organisation from school', async (t) => {
+test.serial('Create organisation from school', async (t) => {
   const schoolData = fixtures.schools[0]
   const organisation = await SchoolInvite.createOrganisationFromSchool(schoolData.schoolId)
 
@@ -176,7 +188,7 @@ test('Create organisation from school', async (t) => {
   t.is(organisation.decile, schoolData.decile)
 })
 
-test('Create organisation from non-existent school', async (t) => {
+test.serial('Create organisation from non-existent school', async (t) => {
   const nonExistentSchoolId = 9999
 
   await t.throwsAsync(
@@ -187,15 +199,51 @@ test('Create organisation from non-existent school', async (t) => {
   )
 })
 
-test('Link person to organisation as admin', async (t) => {
+test.serial('Link person to organisation as admin', async (t) => {
   const schoolData = fixtures.schools[0]
   const organisation = await SchoolInvite.createOrganisationFromSchool(schoolData.schoolId)
   const person = await Person.findOne()
+  const spy = sinon.spy()
+  PubSub.subscribe(TOPIC_MEMBER__UPDATE, spy)
 
   const member = await SchoolInvite.linkPersonToOrganisationAsAdmin(organisation._id, person._id)
 
-  t.is(member.organisation, organisation._id)
-  t.is(member.person, person._id)
+  t.is(member.organisation._id.toString(), organisation._id.toString())
+  t.is(member.person._id.toString(), person._id.toString())
   t.is(member.validation, 'orgAdmin from school-invite controller')
   t.is(member.status, MemberStatus.ORGADMIN)
+  t.true(spy.calledOnce)
+})
+
+test.serial('Make person opportunity provider', async (t) => {
+  const person = await Person.findOne()
+  await SchoolInvite.makePersonOpportunityProvider(person._id)
+
+  const updatedPerson = await Person.findById(person._id)
+  t.true(updatedPerson.role.includes(Role.OPPORTUNITY_PROVIDER))
+})
+
+test.serial('Make person opportunity provider with non-existent person id', async (t) => {
+  const nonExistentPersonId = mongoose.Types.ObjectId()
+
+  await t.throwsAsync(
+    async () => {
+      await SchoolInvite.makePersonOpportunityProvider(nonExistentPersonId)
+    },
+    'Person not found'
+  )
+})
+
+test.serial('Make person opportunity provider prevent duplicate roles', async (t) => {
+  const person = await Person.findOne()
+
+  await SchoolInvite.makePersonOpportunityProvider(person._id)
+  await SchoolInvite.makePersonOpportunityProvider(person._id)
+
+  const updatedPerson = await Person.findById(person._id)
+
+  t.is(
+    updatedPerson.role.filter((role) => role === Role.OPPORTUNITY_PROVIDER).length,
+    1
+  )
 })
