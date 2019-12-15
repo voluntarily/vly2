@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberSection from '../Member/MemberSection'
 import RegisterMemberSection from '../Member/RegisterMemberSection'
-import { PageHeaderContainer } from '../VTheme/VTheme'
+import { PageHeaderContainer, ContactList, OrgTabs, FullPage } from '../VTheme/VTheme'
 import OrgDetailForm from '../Org/OrgDetailForm'
 
 function callback (key) {
@@ -15,11 +15,6 @@ function callback (key) {
 }
 const shadowStyle = { overflow: 'visible', textAlign: 'center' }
 const { TabPane } = Tabs
-
-const OrgPageWrapper = styled.div`
-  padding-left: 2rem;
-  padding-right: 2rem;
-`
 
 const TitleContainer = styled.div`
   width: 100%;
@@ -43,14 +38,6 @@ const TitleContainer = styled.div`
     width: 140px;
     height: 50px;
   }
-`
-
-const OrgHeader = styled.h1`
-  font-size: 2rem;
-  letter-spacing: -1.1px;
-  font-weight: 700;
-  color: black;
-  padding-bottom: 1rem;
 `
 
 const ProfileContainer = styled.div`
@@ -91,87 +78,54 @@ const TabContainer = styled.div`
   }
 `
 
-const ContactList = styled.ul`
-  display: grid;
-  grid-template-columns: 45% 45%;
-  grid-column-gap: 5%;
-  padding: 0;
-
-  @media screen and (min-width: 767px) {
-    grid-template-columns: 30% 30% 30%;
-    grid-column-gap: 3%;
-  }
-
-  li {
-    list-style: none;
-    color: black;
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-
-    a {
-      font-size: 1rem;
-      overflow-wrap: break-word;
-
-      @media screen and (min-width: 767px) {
-        font-size: 1rem;;
-      }
-
-      @media screen and (min-width: 988px) {
-        font-size: 2rem;;
-      }
-    }
-  }
-`
-
 const orgTab = (
-  <span style={{ fontSize: '1rem', fontWeight: 'bold', color: '#6549AA' }}>
+  <OrgTabs>
     <FormattedMessage id='orgAbout' />
-  </span>
+  </OrgTabs>
 )
 
 const orgMemberTab = (
-  <span style={{ fontSize: '1rem', fontWeight: 'bold', color: '#6549AA' }}>
+  <OrgTabs>
     <FormattedMessage
       id='orgMembers'
       defaultMessage='Members'
       description='show opportunities list on volunteer home page'
     />
-  </span>
+  </OrgTabs>
 )
 
 const orgInstructionTab = (
-  <span style={{ fontSize: '1rem', fontWeight: 'bold', color: '#6549AA' }}>
+  <OrgTabs>
     <FormattedMessage
       id='orgInstructions'
       defaultMessage='Getting Started'
       description='show opportunities list on volunteer home page'
     />
-  </span>
+  </OrgTabs>
 )
 
 const orgOffersTab = (
-  <span style={{ fontSize: '1rem', fontWeight: 'bold', color: '#6549AA' }}>
+  <OrgTabs>
     <FormattedMessage
       id='orgOffers'
       defaultMessage='Offers'
       description='show opportunities list on volunteer home page'
     />
-  </span>
+  </OrgTabs>
 )
 
 const orgSettingsTab = (
-  <span style={{ fontSize: '1rem', fontWeight: 'bold', color: '#6549AA' }}>
+  <OrgTabs>
     <FormattedMessage
       id='orgSettings'
       defaultMessage='Settings'
       description='show opportunities list on volunteer home page'
     />
-  </span>
+  </OrgTabs>
 )
 
 const OrgDetail = ({ org, ...props }) => (
-  <OrgPageWrapper>
+  <FullPage>
     <Head>
       <title>Voluntarily - {org.name}</title>
     </Head>
@@ -179,7 +133,7 @@ const OrgDetail = ({ org, ...props }) => (
     <ProfileContainer>
       <ProfileImage src={org.imgUrl} alt={org.name} />
       <TitleContainer>
-        <OrgHeader>{org.name}</OrgHeader>
+        <h1>{org.name}</h1>
         <Markdown children={(org.info && org.info.about) || ''} />
         <a href='{org.website}'>{org.website}</a>
         {props.isAuthenticated && (
@@ -198,11 +152,24 @@ const OrgDetail = ({ org, ...props }) => (
           <TabContainer>
             <h2>Contact</h2>
             <ContactList>
-              <li>Website<br /><a href={org.website} target='_blank' rel='noopener noreferrer'>{org.website}</a></li>
-              <li>Twitter<br /><a href={org.twitter} target='_blank' rel='noopener noreferrer'>{org.twitter}</a></li>
-              <li>Facebook<br /><a href={org.facebook} target='_blank' rel='noopener noreferrer'>{org.facebook}</a></li>
-              <li>Address<br /><a href={OrgDetailForm.createGoogleMapsAddressUrl(org.address)} target='_blank' rel='noopener noreferrer'>{org.address}</a></li>
-              <li>Phone<br /><a tel={org.contactPhoneNumber}>{org.contactPhoneNumber}</a></li>
+              {org.website && (
+                <li>Website<br /><a href={org.website} target='_blank' rel='noopener noreferrer'>{org.website}</a></li>
+              )}
+              {org.twitter && (
+                <li>Twitter<br /><a href={org.twitter} target='_blank' rel='noopener noreferrer'>{org.twitter}</a></li>
+              )}
+              {org.facebook && (
+                <li>Facebook<br /><a href={org.facebook} target='_blank' rel='noopener noreferrer'>{org.facebook}</a></li>
+              )}
+              {org.contactEmail && (
+                <li>Email<br /><a href={`mailto:${org.contactEmail}`} target='_blank' rel='noopener noreferrer'>{org.contactEmail}</a></li>
+              )}
+              {org.address && (
+                <li>Address<br /><a href={OrgDetailForm.createGoogleMapsAddressUrl(org.address)} target='_blank' rel='noopener noreferrer'>{org.address}</a></li>
+              )}
+              {org.contactPhoneNumber && (
+                <li>Phone<br /><a tel={org.contactPhoneNumber}>{org.contactPhoneNumber}</a></li>
+              )}
             </ContactList>
           </TabContainer>
         </TabPane>
@@ -224,7 +191,7 @@ const OrgDetail = ({ org, ...props }) => (
         </TabPane>
       </Tabs>
     </ProfileContentContainer>
-  </OrgPageWrapper>
+  </FullPage>
 )
 
 OrgDetail.propTypes = {
