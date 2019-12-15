@@ -8,7 +8,7 @@ const { config } = require('../../../config/config')
 const Organisation = require('../organisation/organisation')
 const slug = require('limax')
 const { MemberStatus } = require('../member/member.constants')
-const Member = require('../member/member')
+const { addMember } = require('../member/member.lib')
 const Person = require('../person/person')
 
 class SchoolInvite {
@@ -198,14 +198,12 @@ class SchoolInvite {
   }
 
   static async linkPersonToOrganisationAsAdmin (organisationId, personId) {
-    const member = {
+    return addMember({
       person: personId,
       organisation: organisationId,
       validation: 'orgAdmin from school-invite controller',
       status: MemberStatus.ORGADMIN
-    }
-
-    return Member.create(member)
+    })
   }
 }
 

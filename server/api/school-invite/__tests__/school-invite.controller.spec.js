@@ -10,6 +10,9 @@ import fixtures from './school-invite.fixture'
 import Person from '../../person/person'
 import { MemberStatus } from '../../member/member.constants'
 import mongoose from 'mongoose'
+import { TOPIC_MEMBER__UPDATE } from '../../../services/pubsub/topic.constants'
+import PubSub from 'pubsub-js'
+import sinon from 'sinon'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -200,13 +203,16 @@ test.serial('Link person to organisation as admin', async (t) => {
   const schoolData = fixtures.schools[0]
   const organisation = await SchoolInvite.createOrganisationFromSchool(schoolData.schoolId)
   const person = await Person.findOne()
+  const spy = sinon.spy()
+  PubSub.subscribe(TOPIC_MEMBER__UPDATE, spy)
 
   const member = await SchoolInvite.linkPersonToOrganisationAsAdmin(organisation._id, person._id)
 
-  t.is(member.organisation, organisation._id)
-  t.is(member.person, person._id)
+  t.is(member.organisation._id.toString(), organisation._id.toString())
+  t.is(member.person._id.toString(), person._id.toString())
   t.is(member.validation, 'orgAdmin from school-invite controller')
   t.is(member.status, MemberStatus.ORGADMIN)
+  t.true(spy.calledOnce)
 })
 
 test.serial('Make person opportunity provider', async (t) => {
