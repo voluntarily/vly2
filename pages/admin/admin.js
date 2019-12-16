@@ -19,19 +19,8 @@ export const Admin = () => {
     return URL
   }
 
-  const handleLoadGoals = async () => {
-    try {
-      await callApi('xadmin/loadGoals')
-      message.success('done')
-    } catch (e) { console.error('loadGoals Failed', e) }
-  }
   return (
     <FullPage>
-      <Section>
-        <h2>Load Goals</h2>
-        <p>Clear goals from the database and reload from the sources goals.init.js file</p>
-        <Button shape='round' type='primary' onClick={handleLoadGoals}>Load Goals</Button>
-      </Section>
       <Section>
         <h2>Generate Test People and Opportunities</h2>
         <p>Use the fields below to populate a test database</p>

@@ -199,7 +199,7 @@ function ensureSanitized (req, res, next) {
   if (op.description) { op.description = sanitizeHtml(op.description, descriptionOptions) }
   if (op.duration) { op.duration = sanitizeHtml(op.duration) }
   if (op.location) { op.location = sanitizeHtml(op.location) }
-  if (op.offerOrg) { op.offerOrg = sanitizeHtml(op.offerOrg) }
+  // if (op.offerOrg) { op.offerOrg = sanitizeHtml(op.offerOrg) }
   req.body = op
   next()
 }

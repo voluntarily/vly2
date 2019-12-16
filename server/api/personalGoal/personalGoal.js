@@ -23,6 +23,8 @@ const personalGoalSchema = new Schema({
   dateAdded: { type: 'Date', default: Date.now, required: true },
   // date when they move to active status
   dateStarted: { type: 'Date', required: false },
+  // date when they move to hidden status
+  dateHidden: { type: 'Date', required: false },
   // date when they move to completed status
   dateCompleted: { type: 'Date', required: false }
 })

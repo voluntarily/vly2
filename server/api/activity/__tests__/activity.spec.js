@@ -50,6 +50,7 @@ test.serial('verify fixture database has acts', async t => {
   // can find by things
   const q = await Activity.findOne({ name: '4 The first 100 metres' })
   t.is(q && q.duration, '2 hours')
+  t.is(q.slug, '4-the-first-100-metres')
 })
 
 test.serial('Should correctly give count of all acts sorted by name', async t => {
@@ -171,6 +172,29 @@ test.serial('Should correctly add an activity with default image', async t => {
   t.is(savedActivity.imgUrl, '/static/img/activity/activity.png')
 })
 
+test('Should correctly update an activity', async t => {
+  t.plan(2)
+
+  const sky1 = {
+    name: 'The first 1000 metres',
+    subtitle: 'Launching into space step 4',
+    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+    description: 'Project to build a simple rocket that will reach 1000m',
+    duration: '4 hours'
+  }
+  const activity = new Activity(sky1)
+  await activity.save()
+
+  // change the name - the slug should update
+  activity.name = 'The sky is the limit'
+  const res = await request(server)
+    .put(`/api/activities/${activity._id}`)
+    .send(activity)
+    .set('Accept', 'application/json')
+  t.is(res.status, 200)
+  t.is(res.body.name, activity.name)
+})
+
 test.serial('Should correctly delete an activity', async t => {
   t.plan(2)
 
@@ -204,6 +228,24 @@ test.serial('Should correctly give activity 3 when searching by "garden"', async
   const got = res.body
   t.is(1, got.length)
   t.is(acts[3].name, got[0].name)
+})
+
+// Searching by something in the name (case insensitive)
+test.serial('Should redirect when using slug', async t => {
+  const slug = '5-going-to-the-moon'
+  const res = await request(server)
+    .get(`/activity/${slug}`)
+    .set('Accept', 'application/json')
+  t.is(res.status, 307)
+  t.is(res.headers.location, `/acts/${t.context.activities[2]._id}`)
+})
+
+test.serial('Should 404 when using bad slug', async t => {
+  const slug = 'xxxxx'
+  const res = await request(server)
+    .get(`/activity/${slug}`)
+    .set('Accept', 'application/json')
+  t.is(res.status, 404)
 })
 
 // Searching for something in the description (case insensitive)

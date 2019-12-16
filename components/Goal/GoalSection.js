@@ -4,26 +4,24 @@ import React from 'react'
 import GoalList from '../Goal/GoalList'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
+import { goalGroupHeading } from './GoalGroupHeading'
 
 const SectionTitleWrapper = styled.div`
   margin: 2rem 0rem;
 `
 
-const GoalSection = ({ goals }) => (
-  goals &&
+export const GoalSection = ({ goals }) => {
+  if (!goals.length) return ''
+  const heading = goalGroupHeading(goals[0].group)
+  return (
     <>
       <SectionTitleWrapper>
-        <h2>{goals[0].category}</h2>
-        <h5>
-          <FormattedMessage
-            id='GoalSection.subheading'
-            defaultMessage='Here are a few things we recommend doing:'
-            description='subheading under category title for list of goals'
-          />
-        </h5>
+        <h2><FormattedMessage {...heading.title} /></h2>
+        <h5><FormattedMessage {...heading.subtitle} /></h5>
       </SectionTitleWrapper>
       <GoalList goals={goals} />
     </>
-)
+  )
+}
 
 export default GoalSection

@@ -1,4 +1,4 @@
-import { Button, Icon, Input } from 'antd'
+import { Button, Icon, Input, Row, Col } from 'antd'
 import Router from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
@@ -9,98 +9,34 @@ const Search = Input.Search
 // this is the big container block that holds the container together lol
 const AwesomeHeroContainer = styled.div`
   margin: auto;
-margin-top: 4rem;
-  width: 80rem;
-  height: 72rem;
+  margin-top: 0;
+  height: auto;
+  width: 100%;
 
-  display: grid;
-  grid-template-columns: 30rem 50rem;
+  @media screen and (min-width: 768px) {
+    margin-top: 5rem;
+    padding: 2rem;
+  }
 
-  @media screen and (min-width: 1380px) and (max-width: 1920px) {
-    margin-top: 0rem;
-    height: 54rem;
+  @media screen and (min-width: 1200px) {
     width: 80rem;
   }
-
-  @media screen and (min-width: 1282px) and (max-width: 1380px) {
-    margin-top: 0rem;
-    height: 44rem;
-    width: calc(100vw - 2rem);
-  }
-
-  @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    margin-top: 0rem;
-    height: 44rem;
-    width: calc(100vw - 2rem);
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    width: calc(100vw - 4rem);
-    height: 30rem;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 30vw 70vw;
-  }
-
-
-
-  @media screen and (max-width: 768px) {
-    margin-top: 0rem;
-    grid-template-columns: 100%;
-    height: auto;
-    width: 100%;
-  }
-
-
-
 `
 // start left hand video side
 const HeroLeft = styled.div`
-  position: relative;
-  margin-top: 7rem;
-  width: 30rem;
-  height: 60rem;
-  overflow: hidden;
-  object-fit: cover;
-  border-radius: 24px 24px 24px 24px;
+  margin-top: 0rem;
+  margin-left: 0rem;
+  width: 100%;
+  height: 25rem;
+  border-radius: 0;
 
-  @media screen and (min-width: 1380px) and (max-width: 1920px) {
-    margin-top: 6rem;
-    margin-left: 6rem;
-    width: 24rem;
-    height: 48rem;
-  }
-  @media screen and (min-width: 1282px) and (max-width: 1380px) {
-    margin-top: 3rem;
-    margin-left: 8rem;
-    width: 18rem;
-    height: 36rem;
-  }
-  @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    margin-top: 3rem;
-    margin-left: 6rem;
-    width: 18rem;
-    height: 36rem;
-  }
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    margin-top: 2rem;
-    margin-left: 5rem;
-    width: 11rem;
-    height: 22rem;
-  }
-
-
-  @media screen and (max-width: 768px) {
-    margin-top: 0rem;
-    margin-left: 0rem;
+  @media screen and (min-width: 768px) {
+    position: relative;
+    //margin-top: 7rem;
     width: 100%;
-    height: 15rem;
-    border-radius: 0px;
-  }
-
-  @media only screen and (min-width : 320px) and (max-width : 568px) {
-    height: 45vh;
-    /* iphone 5 and below */
+    height: 100%;
+    overflow: hidden;
+    border-radius: 24px 24px 24px 24px;
   }
 `
 
@@ -115,24 +51,21 @@ const Notch = styled.div`
   background-color: white;
   border-radius: 0px 0px 24px 24px;
 
-  @media screen and (min-width: 1380px) and (max-width: 1920px) {
-    background-color: white;
-  }
   @media screen and (min-width: 1282px) and (max-width: 1380px) {
     width: 10rem;
     height: 1.5rem;
-    background-color: white;
   }
+
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
     width: 8rem;
     height: 1rem;
-    background-color: white;
   }
+
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     width: 4rem;
     height: 0.8rem;
-    background-color: white;
   }
+
   @media screen and (max-width: 768px) {
     display: none;
   }
@@ -142,14 +75,14 @@ const AwesomeVideo = styled.video`
   position: relative;
   text-align: center;
   margin: 0 auto;
-  height:100%;
+  width:100%;
+  height: 100%;
   overflow: hidden;
   object-fit: cover;
   background-color: white;
-  z-index: 1;
 
   @media screen and (max-width: 768px) {
-    width: 100%;
+    height: 100%;
     object-fit: cover;
     object-position: top;
   }
@@ -159,63 +92,29 @@ const AwesomeVideo = styled.video`
 // start right hand copy + search + button side
 
 const HeroRight = styled.div`
-  position: relative;
   color: #ffffff;
-  margin-top: 24rem;
-  left: 5rem;
+  padding: 1rem;
 
-  @media screen and (min-width: 1380px) and (max-width: 1920px) {
-    margin-top: 20rem;
-    margin-left: 0rem;
-    width: 32rem;
+  @media screen and (min-width: 768px) {
+    margin: 15% 0;
+    padding-left: 3rem;
   }
 
-  @media screen and (min-width: 1282px) and (max-width: 1380px) {
-    margin-top: 10rem;
-    margin-left: -4rem;
-    width: 32rem;
+  @media screen and (min-width: 998px) {
+    margin: 20% 0;
   }
 
-  @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    margin-top: 8rem;
-    margin-left: -6rem;
-    width: 35rem;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    margin-top: 3rem;
-    margin-left: -2rem;
-    width: 28rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    margin-top: 1rem;
-    margin-left: 1rem;
-    margin-bottom: 1rem;
-    width: calc(100vw - 4rem);
-
-    left: 0rem;
+  @media screen and (min-width: 1200px) {
+    margin: 25% 0;
   }
 `
-
 const SearchBox = styled.div`
   background-color: white;
   height: 4rem;
   margin-top: 1rem;
-  width: 40rem;
   border-radius: 0.25rem;
   padding: 8px;
   box-shadow: 2px 2px 12px 0 rgba(0, 0, 0, 0.5);
-
-  @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    width: 30rem;
-  }
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    width: 50vw;
-  }
-  @media screen and (max-width: 768px) {
-    width: 90vw;
-  }
 
   .ant-input-affix-wrapper .ant-input:not(:first-child) {
     padding-left: 40px;
@@ -236,41 +135,47 @@ const handleSearch = search => {
 // begin actual component
 const Hero = ({ ...props }) => (
   <AwesomeHeroContainer>
-    <HeroLeft>
-      <Notch />
-      <AwesomeVideo
-        poster='/static/img/hero.png'
-        autoPlay
-        loop
-        muted
-        playsInline
-      >
-        <source src='/static/test.mp4' type='video/mp4' />
-      </AwesomeVideo>
-    </HeroLeft>
-    <HeroRight>
-      <H1>volunteer yo—self.</H1>
-      <H4>
-        Find awesome ways to volunteer your skills.
-        <br />
-        Help your community do epic things.
-      </H4>
-      <SearchBox>
-        <Search
-          placeholder="try 'building robots'"
-          prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)' }} />}
-          enterButton='Search'
-          size='large'
-          // eslint-disable-next-line no-console
-          onSearch={handleSearch}
-        />
-      </SearchBox>
-      <br />
-      <br />
-      <Button type='secondary' shape='round' size='large' href='/about'>
-        Learn more
-      </Button>
-    </HeroRight>
+    <Row>
+      <Col md={8}>
+        <HeroLeft>
+          <Notch />
+          <AwesomeVideo
+            poster='/static/img/hero.png'
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src='/static/test.mp4' type='video/mp4' />
+          </AwesomeVideo>
+        </HeroLeft>
+      </Col>
+      <Col md={16}>
+        <HeroRight>
+          <H1>volunteer yo—self.</H1>
+          <H4>
+            Find awesome ways to volunteer your skills.
+            <br />
+            Help your community do epic things.
+          </H4>
+          <SearchBox>
+            <Search
+              placeholder="try 'building robots'"
+              prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)' }} />}
+              enterButton='Search'
+              size='large'
+              // eslint-disable-next-line no-console
+              onSearch={handleSearch}
+            />
+          </SearchBox>
+          <br />
+          <br />
+          <Button type='secondary' shape='round' size='large' href='/about'>
+            Learn more
+          </Button>
+        </HeroRight>
+      </Col>
+    </Row>
   </AwesomeHeroContainer>
 )
 // LAUNCH IT. WOOOSH!

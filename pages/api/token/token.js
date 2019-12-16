@@ -1,11 +1,11 @@
-import { handleURLToken } from '../../../lib/sec/actiontoken'
+const { handleURLToken } = require('../../../lib/sec/actiontoken')
 
 /* the doToken endpoint handles a URL token request
   and then forwards to the requested page.
 
 */
 
-export const handleToken = async (req, res, actionTable) => {
+const handleToken = async (req, res, actionTable) => {
   const { token } = req.query
   // request must have a ?token=
   if (!token) {
@@ -28,4 +28,5 @@ const testActionTable = {
   log: props => console.log('log', props)
 }
 
-export default (req, res) => handleToken(req, res, testActionTable)
+module.exports = (req, res) => handleToken(req, res, testActionTable)
+module.exports.handleToken = handleToken

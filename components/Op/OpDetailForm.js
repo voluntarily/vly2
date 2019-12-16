@@ -268,28 +268,97 @@ class OpDetailForm extends Component {
               <FormattedMessage
                 id='opEdit'
                 description='Title for editing Ops'
-                defaultMessage='Edit'
+                defaultMessage='Edit your activity'
               />
             ) : (
               <FormattedMessage
                 id='opCreate'
                 description='Title for creating Ops'
-                defaultMessage='Create'
+                defaultMessage='Create an activity'
               />
-            )}{' '}
-            a request
+            )}
           </h1>
           <h5>
             <FormattedMessage
               id='opdetail.pagesubtitle'
               description='subTitle for creating Ops'
-              defaultMessage='Ask volunteers for assistance with anything related to tech - there
-                are (get number) of volunteers looking for opportunities to help out'
+              defaultMessage='Check and update the details below including a time and a location for the activity you wish to run. Make sure you have all the information included for your volunteers.'
             />
           </h5>
         </PageTitle>
         <Divider />
         <Form hideRequiredMark colon={false}>
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <h3>Where and when?</h3>
+              </TitleContainer>
+              <p>
+                More skilled volunteers will offer to help you if you know when,
+                or where you need help.
+              </p>
+            </DescriptionContainer>
+            <InputContainer>
+              <ShortInputContainer>
+                <Form.Item label={opCommitment}>
+                  {getFieldDecorator('duration', {
+                    rules: [
+                      {
+                        required: false,
+                        message: 'Commitment level is required'
+                      }
+                    ]
+                  })(<Input placeholder='4 hours' />)}
+                </Form.Item>
+                <Form.Item label={opStartDate}>
+                  {getFieldDecorator('startDate', {})(
+                    <DatePicker
+                      showTime
+                      disabledDate={current => {
+                        return (
+                          moment().add(-1, 'days') >= current ||
+                          moment().add(1, 'year') <= current
+                        )
+                      }}
+                      format='DD-MM-YYYY HH:mm:ss'
+                      onChange={this.handleStartDateChange}
+                      style={{ width: '100%' }}
+                    />
+                  )}
+                </Form.Item>
+                <Form.Item label={opEndDate}>
+                  {getFieldDecorator('endDate', {})(
+                    <DatePicker
+                      showTime
+                      disabledDate={this.disabledEndDate}
+                      format='DD-MM-YYYY HH:mm:ss'
+                      onChange={this.handleEndDateChange}
+                      style={{ width: '100%' }}
+                    />
+                  )}
+                </Form.Item>
+              </ShortInputContainer>
+              <MediumInputContainer>
+                <Form.Item label={opLocation}>
+                  {getFieldDecorator('location', {
+                    rules: [
+                      {
+                        required: true,
+                        message: 'A region must be provided'
+                      }
+                    ]
+                  })(
+                    <LocationSelector
+                      existingLocations={this.props.existingLocations}
+                    />
+                  )}
+                </Form.Item>
+              </MediumInputContainer>
+            </InputContainer>
+          </FormGrid>
+
+          <Divider />
+
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -364,76 +433,6 @@ class OpDetailForm extends Component {
                   rules: []
                 })(<TagInput existingTags={this.props.existingTags} />)}
               </Form.Item>
-            </InputContainer>
-          </FormGrid>
-          <Divider />
-
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <h3>Where and when? (optional)</h3>
-              </TitleContainer>
-              <p>
-                More skilled volunteers will offer to help you if you know when,
-                or where you need help.
-              </p>
-            </DescriptionContainer>
-            <InputContainer>
-              <ShortInputContainer>
-                <Form.Item label={opCommitment}>
-                  {getFieldDecorator('duration', {
-                    rules: [
-                      {
-                        required: false,
-                        message: 'Commitment level is required'
-                      }
-                    ]
-                  })(<Input placeholder='4 hours' />)}
-                </Form.Item>
-                <Form.Item label={opStartDate}>
-                  {getFieldDecorator('startDate', {})(
-                    <DatePicker
-                      showTime
-                      disabledDate={current => {
-                        return (
-                          moment().add(-1, 'days') >= current ||
-                          moment().add(1, 'year') <= current
-                        )
-                      }}
-                      format='DD-MM-YYYY HH:mm:ss'
-                      onChange={this.handleStartDateChange}
-                      style={{ width: '100%' }}
-                    />
-                  )}
-                </Form.Item>
-                <Form.Item label={opEndDate}>
-                  {getFieldDecorator('endDate', {})(
-                    <DatePicker
-                      showTime
-                      disabledDate={this.disabledEndDate}
-                      format='DD-MM-YYYY HH:mm:ss'
-                      onChange={this.handleEndDateChange}
-                      style={{ width: '100%' }}
-                    />
-                  )}
-                </Form.Item>
-              </ShortInputContainer>
-              <MediumInputContainer>
-                <Form.Item label={opLocation}>
-                  {getFieldDecorator('location', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'A region must be provided'
-                      }
-                    ]
-                  })(
-                    <LocationSelector
-                      existingLocations={this.props.existingLocations}
-                    />
-                  )}
-                </Form.Item>
-              </MediumInputContainer>
             </InputContainer>
           </FormGrid>
 

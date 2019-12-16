@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import NextActionBlock from '../../components/Action/NextActionBlockV2'
 import GoalSection from '../../components/Goal/GoalSection'
 import ActAdd from '../../components/Act/ActAdd'
 import OpAdd from '../../components/Op/OpAdd'
@@ -93,7 +92,7 @@ class PersonHomePage extends Component {
         store.dispatch(reduxApi.actions.recommendedOps.get({ me: me._id }))
       ])
     } catch (err) {
-      console.error('error in getting ops', err)
+      console.error('error in getting home page data', err)
     }
   }
 
@@ -134,12 +133,13 @@ class PersonHomePage extends Component {
     const ops = this.props.opportunities.data // list of ops I own
     const vops = this.interestedOps()
     // console.log(this.props.personalGoals.data)
+    // create inverted list of goals with the pg as a child.
+    // this lets us use the same goal cards
     const personalGoals = this.props.personalGoals.data.map(pg => {
       return ({
         ...pg.goal,
-        person: pg.person,
-        status: pg.status,
-        personalGoalId: pg._id
+        personalGoal: pg,
+        status: pg.status
       })
     })
     // console.log(personalGoals)
@@ -196,10 +196,6 @@ class PersonHomePage extends Component {
             {!!personalGoals.length &&
               <SectionWrapper>
                 <GoalSection goals={personalGoals} />
-              </SectionWrapper>}
-            {!personalGoals.length &&
-              <SectionWrapper>
-                <NextActionBlock />
               </SectionWrapper>}
             {
               this.props.opportunities.data.length !== 0 && (
