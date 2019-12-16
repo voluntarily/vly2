@@ -229,7 +229,8 @@ export const H1 = styled.h1`
     letter-spacing: -0.03em;
     line-height: 3rem;
   }
-` // End H1
+`
+// End H1
 
 export const H3 = styled.h3`
   font-size: 2rem;
@@ -496,4 +497,46 @@ export const Li = styled.li`
   opacity: 1;
   color: initial;
   margin-bottom: 0.3rem;
+`
+/* Contact list displayed for organisations */
+
+export const ContactList = styled.ul`
+  display: grid;
+  grid-template-columns: 45% 45%;
+  grid-column-gap: 5%;
+  padding: 0;
+
+  @media screen and (min-width: 767px) {
+    grid-template-columns: 30% 30% 30%;
+    grid-column-gap: 3%;
+  }
+
+  li {
+    list-style: none;
+    color: black;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+
+    a {
+      font-size: 1rem;
+      overflow-wrap: break-word;
+
+      @media screen and (min-width: 767px) {
+        font-size: 1rem;
+      }
+
+      @media screen and (min-width: 988px) {
+        font-size: 2rem;
+      }
+    }
+  }
+`
+
+/* Organisation styled tabs */
+
+export const OrgTabs = styled.span`
+  font-size: 1rem;
+  font-weight: 700;
+  color: #6549AA;
 `

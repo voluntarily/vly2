@@ -296,23 +296,21 @@ class OpDetailForm extends Component {
               <FormattedMessage
                 id='opEdit'
                 description='Title for editing Ops'
-                defaultMessage='Edit'
+                defaultMessage='Edit your activity'
               />
             ) : (
               <FormattedMessage
                 id='opCreate'
                 description='Title for creating Ops'
-                defaultMessage='Create'
+                defaultMessage='Create an activity'
               />
-            )}{' '}
-            a request
+            )}
           </h1>
           <h5>
             <FormattedMessage
               id='opdetail.pagesubtitle'
               description='subTitle for creating Ops'
-              defaultMessage='Ask volunteers for assistance with anything related to tech - there
-                are (get number) of volunteers looking for opportunities to help out'
+              defaultMessage='Check and update the details below including a time and a location for the activity you wish to run. Make sure you have all the information included for your volunteers.'
             />
           </h5>
         </PageTitle>
