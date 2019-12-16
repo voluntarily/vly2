@@ -30,7 +30,9 @@ const opportunitySchema = new Schema({
   requestor: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
   dateAdded: { type: 'Date', default: Date.now, required: true },
   href: String,
-  tags: { type: [String], required: true, default: [] }
+  tags: { type: [String], required: true, default: [] },
+  organisationAddress: String,
+  organisationName: String
 })
 
 opportunitySchema.plugin(idvalidator)

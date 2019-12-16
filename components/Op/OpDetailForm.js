@@ -59,6 +59,8 @@ class OpDetailForm extends Component {
         op.offerOrg = values.offerOrg && values.offerOrg.key
         op.description = values.description
         op.imgUrl = values.imgUrl
+        op.organisationName = values.organisationName
+        op.organisationAddress = values.organisationAddress
 
         op.status =
           e.target.name === 'publish'
@@ -171,7 +173,7 @@ class OpDetailForm extends Component {
         {' '}
         <FormattedMessage
           id='opSchoolName'
-          defaultMessage='School or organisation Name'
+          defaultMessage='School or organisation name'
           description='school name label in OpDetails Form'
         />
         &nbsp;
@@ -184,7 +186,7 @@ class OpDetailForm extends Component {
       <span>
         {' '}
         <FormattedMessage
-          id='opAdress'
+          id='opAddress'
           defaultMessage='School or organisation address'
           description='school or organisation address label in OpDetails Form'
         />
@@ -382,7 +384,7 @@ class OpDetailForm extends Component {
                   )}
                 </Form.Item>
                 <Form.Item label={opSchoolName}>
-                  {getFieldDecorator('School name organisation', {
+                  {getFieldDecorator('organisationName', {
                     rules: [
                       {
                         required: true,
@@ -390,10 +392,10 @@ class OpDetailForm extends Component {
                       }
                     ]
                   }
-                  )}<Input placeholder='Name' />
+                  )(<Input placeholder='Name' />)}
                 </Form.Item>
                 <Form.Item label={opAddress}>
-                  {getFieldDecorator('School or organisation address', {
+                  {getFieldDecorator('organisationAddress', {
                     rules: [
                       {
                         required: true,
@@ -401,7 +403,7 @@ class OpDetailForm extends Component {
                       }
                     ]
                   }
-                  )}<Input placeholder='Address' />
+                  )(<Input placeholder='Address' />)}
                 </Form.Item>
               </MediumInputContainer>
             </InputContainer>
@@ -592,9 +594,11 @@ OpDetailForm.propTypes = {
     ]),
     date: PropTypes.array,
     status: PropTypes.string,
-
     // requestor: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.string)
+    tags: PropTypes.arrayOf(PropTypes.string),
+    organisationName: PropTypes.string,
+    organisationAddress: PropTypes.string
+    
   }),
   me: PropTypes.shape({
     _id: PropTypes.string,
@@ -664,6 +668,14 @@ export default Form.create({
       endDate: Form.createFormField({
         ...props.op.endDate,
         value: props.op.endDate != null ? moment(props.op.endDate) : null
+      }),
+      organisationAddress: Form.createFormField({
+        ...props.op.organisationAddress,
+        value: props.op.organisationAddress
+      }),
+      organisationName: Form.createFormField({
+        ...props.op.organisationName,
+        value: props.op.organisationName
       })
     }
   }
