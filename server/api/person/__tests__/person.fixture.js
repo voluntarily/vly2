@@ -3,7 +3,14 @@ const people = [
     name: 'Andrew Watkins',
     nickname: 'avowkind',
     email: 'andrew@groat.nz',
-    about: 'Voluntarily.NZ Product Lead',
+    about: `
+Voluntarily.NZ Product Lead
+30+ years in software development, product management, systems design and team leadership across a range of industries including science, technology, engineering, health, automotive, transport, mobile phone, and travel. I have a strong balance of technical and management skills.
+
+I have run my own company and led a start-up mobile phone company software team through a high growth period. I have created and developed multiple agile cross functional teams, managed DevOps processes and modernised IT platforms including migration to cloud services.
+
+I have a track record as a forward-thinking, customer focussed, innovative solutions designer and product development manager taking ideas from conception through implementation and delivery and into operation through a full business-process-aligned life cycle, managing teams using agile methodologies, leading-edge tools and technologies. 
+`,
     location: 'Auckland',
     pronoun: {
       subject: 'he',
@@ -17,7 +24,8 @@ const people = [
     status: 'active',
     imgUrl: 'https://avatars2.githubusercontent.com/u/1596437?v=4',
     phone: '+64 027 7031007',
-    tags: []
+    website: 'https://voluntarily.nz',
+    tags: ['javascript', 'programming', 'software', 'python', 'c++']
   },
   {
     nickname: 'Dali',

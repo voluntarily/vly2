@@ -26,7 +26,10 @@ export default [
     startLink: '/my/person',
     language: 'en',
     rank: 1,
-    evaluation: () => { console.log('Complete your profile'); return false }
+    evaluation: async (personalGoal) => {
+      const { score, count } = await GoalTests.personCompleteness(personalGoal)
+      return (score / count * 100 > 85)
+    }
   },
   {
     group: GoalGroup.VP_NEW,
