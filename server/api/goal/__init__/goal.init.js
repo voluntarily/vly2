@@ -159,7 +159,7 @@ to view activity templates and create new activities.
     name: 'Find Activities',
     slug: 'goal-find-activities',
     subtitle: 'See templates that other educators have created for you to copy',
-    description: '',
+    description: 'Search the curated activities page filtering by age and curriculum topic',
     imgurl: '/static/img/actions/createAct.png',
     rank: 1,
     evaluation: () => { console.log('Find Activities'); return false }
