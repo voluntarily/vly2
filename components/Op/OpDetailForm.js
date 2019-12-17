@@ -285,6 +285,8 @@ class OpDetailForm extends Component {
 
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
+    const organisationNameError = isFieldTouched('organisationName') && getFieldError('organisationName')
+    const organisationAddressError = isFieldTouched('organisationAddress') && getFieldError('organisationAddress')
     const isNewOp = this.props.op._id
     const orgMembership =
       this.props.me.orgMembership &&
@@ -383,7 +385,9 @@ class OpDetailForm extends Component {
                     />
                   )}
                 </Form.Item>
-                <Form.Item label={opSchoolName}>
+                <Form.Item label={opSchoolName}
+                  validateStatus={organisationNameError ? 'error' : ''}
+                  help={organisationNameError || ''}>
                   {getFieldDecorator('organisationName', {
                     rules: [
                       {
@@ -394,7 +398,9 @@ class OpDetailForm extends Component {
                   }
                   )(<Input placeholder='Name' />)}
                 </Form.Item>
-                <Form.Item label={opAddress}>
+                <Form.Item label={opAddress}
+                  validateStatus={organisationAddressError ? 'error' : ''}
+                  help={organisationAddressError || ''}>
                   {getFieldDecorator('organisationAddress', {
                     rules: [
                       {
