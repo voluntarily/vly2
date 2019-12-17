@@ -1,7 +1,8 @@
 import { message } from 'antd'
 import React, { Component } from 'react'
 import callApi from '../../lib/callApi'
-import './imageuploader.less'
+import '@uppy/core/dist/style.css'
+import '@uppy/dashboard/dist/style.css'
 
 const { Dashboard } = require('@uppy/react')
 const Uppy = require('@uppy/core')
@@ -48,7 +49,7 @@ class ImageUpload extends Component {
   render () {
     const up = (process.env.NODE_ENV !== 'test') &&
       <div onChange={this.handleChange}>
-        <Dashboard uppy={this.uppy} inline height={200} proudlyDisplayPoweredByUppy={false} hideUploadButton />
+        <Dashboard uppy={this.uppy} inline width="100%" height={200} proudlyDisplayPoweredByUppy={false} hideUploadButton />
       </div>
     return up
   }
