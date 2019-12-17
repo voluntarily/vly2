@@ -8,6 +8,9 @@ import objectid from 'objectid'
 import ActDetailForm from '../ActDetailForm'
 import sinon from 'sinon'
 import { MemberStatus } from '../../../server/api/member/member.constants'
+import { MockWindowScrollTo } from '../../../server/util/mock-dom-helpers'
+
+MockWindowScrollTo.replaceForTest(test, global)
 
 const noact = {
   name: '',

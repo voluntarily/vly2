@@ -16,6 +16,10 @@ import adapterFetch from 'redux-api/lib/adapters/fetch'
 import thunk from 'redux-thunk'
 import { API_URL } from '../lib/callApi'
 // import OpCard from '../components/Op/OpCard'
+import { MockWindowScrollTo } from '../server/util/mock-dom-helpers'
+
+MockWindowScrollTo.replaceForTest(test, global)
+
 const { sortedLocations, regions } = require('../server/api/location/locationData')
 
 test.before('Setup fixtures', (t) => {
