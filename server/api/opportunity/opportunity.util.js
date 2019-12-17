@@ -13,6 +13,8 @@ const getLocationRecommendations = async (me) => {
         location: { $in: [regionToMatch.name, ...regionToMatch.containedTerritories] },
         requestor: { $ne: me._id }
       })
+      .sort('name')
+      .collation({ locale: 'en_US', strength: 1 })
       .populate('requestor', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl category')
 
@@ -20,15 +22,10 @@ const getLocationRecommendations = async (me) => {
     // they are closest to the user.
     const userIsInTerritory = regionToMatch.name !== me.location
     if (userIsInTerritory) {
-      locationOps.sort((a, b) => {
-        if (a.location === me.location && b.location !== me.location) {
-          return -1
-        } else if (b.location === me.location && a.location !== me.location) {
-          return 1
-        } else {
-          return 0 // we don't care about the ordering if the location isn't matching
-        }
-      })
+      const closestOpportunities = locationOps.filter((opportunity) => opportunity.location === me.location)
+      const otherOpportunities = locationOps.filter((opportunity) => opportunity.location !== me.location)
+
+      locationOps = closestOpportunities.concat(otherOpportunities)
     }
   } else {
     locationOps = []
