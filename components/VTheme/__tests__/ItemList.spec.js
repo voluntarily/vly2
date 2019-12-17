@@ -1,6 +1,6 @@
 import test from 'ava'
 import { ItemVolunteers } from '../ItemList'
-import { renderWithIntl} from '../../../lib/react-intl-test-helper'
+import { renderWithIntl } from '../../../lib/react-intl-test-helper'
 
 test('render Volunteers per student properly if the value is < 1', t => {
 //   t.context.act.volunteers = 0.2
