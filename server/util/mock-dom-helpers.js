@@ -19,7 +19,7 @@ export class MockWindowScrollTo {
       global.window.scrollTo = new MockWindowScrollTo().scrollTo
     })
 
-    test.after('Restore window.scrollTo', (t) => {
+    test.after.always('Restore window.scrollTo', (t) => {
       global.window.scrollTo = originalScrollTo
     })
   }
