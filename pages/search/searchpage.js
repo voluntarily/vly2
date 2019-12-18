@@ -49,6 +49,7 @@ export class SearchPage extends Component {
     filter: {
       date: []
     },
+    locationFilterVisible: false,
     opOrderBy: 'date'
   }
 
