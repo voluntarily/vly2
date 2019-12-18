@@ -385,9 +385,11 @@ class OpDetailForm extends Component {
                     />
                   )}
                 </Form.Item>
-                <Form.Item label={opSchoolName}
+                <Form.Item
+                  label={opSchoolName}
                   validateStatus={organisationNameError ? 'error' : ''}
-                  help={organisationNameError || ''}>
+                  help={organisationNameError || ''}
+                >
                   {getFieldDecorator('organisationName', {
                     rules: [
                       {
@@ -398,9 +400,11 @@ class OpDetailForm extends Component {
                   }
                   )(<Input placeholder='Name' />)}
                 </Form.Item>
-                <Form.Item label={opAddress}
+                <Form.Item
+                  label={opAddress}
                   validateStatus={organisationAddressError ? 'error' : ''}
-                  help={organisationAddressError || ''}>
+                  help={organisationAddressError || ''}
+                >
                   {getFieldDecorator('organisationAddress', {
                     rules: [
                       {
@@ -604,7 +608,7 @@ OpDetailForm.propTypes = {
     tags: PropTypes.arrayOf(PropTypes.string),
     organisationName: PropTypes.string,
     organisationAddress: PropTypes.string
-    
+
   }),
   me: PropTypes.shape({
     _id: PropTypes.string,
