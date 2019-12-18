@@ -1,9 +1,9 @@
 import InterestItem from '../InterestItem'
 import test from 'ava'
-import { mount } from 'enzyme'
+import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 
 test('constructs properly', t => {
-  const wrapper = mount(
+  const wrapper = mountWithIntl(
     <InterestItem interest={{
       person: { nickname: 'Test Name' },
       opportunity: 'Test Opportunity',
