@@ -137,7 +137,6 @@ test('render the detail with new blank op', t => {
   const name = wrapper.find('input#opportunity_detail_form_name').first()
   const organisationName = wrapper.find('input#opportunity_detail_form_organisationName').first()
   const organisationAddress = wrapper.find('input#opportunity_detail_form_organisationAddress').first()
-  console.log(organisationAddress.debug());
   // name.node.value = 'Test'
   name
     .simulate('keydown', { which: 'a' })
@@ -146,11 +145,10 @@ test('render the detail with new blank op', t => {
   organisationName
     .simulate('keydown', { which: 'b' })
     .simulate('change', { target: { value: 'My new value' } })
-    
+
   organisationAddress
     .simulate('keydown', { which: 'c' })
     .simulate('change', { target: { value: 'My new value' } })
-   
 
   const locationInput = wrapper.find('LocationSelector').first()
   locationInput.props().onChange('Auckland')
