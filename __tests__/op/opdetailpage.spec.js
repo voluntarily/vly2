@@ -365,7 +365,7 @@ test('can create new Op from Activity', t => {
 
 test('page loads when user is not signed in but does not show edit VP-499', t => {
   const props = {
-    me: null,
+    me: '',
     dispatch: t.context.mockStore.dispatch
   }
   const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)

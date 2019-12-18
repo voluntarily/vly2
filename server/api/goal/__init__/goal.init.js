@@ -26,7 +26,10 @@ export default [
     startLink: '/my/person',
     language: 'en',
     rank: 1,
-    evaluation: () => { console.log('Complete your profile'); return false }
+    evaluation: async (personalGoal) => {
+      const { score, count } = await GoalTests.personCompleteness(personalGoal)
+      return (score / count * 100 > 85)
+    }
   },
   {
     group: GoalGroup.VP_NEW,
@@ -156,7 +159,7 @@ to view activity templates and create new activities.
     name: 'Find Activities',
     slug: 'goal-find-activities',
     subtitle: 'See templates that other educators have created for you to copy',
-    description: '',
+    description: 'Search the curated activities page filtering by age and curriculum topic',
     imgurl: '/static/img/actions/createAct.png',
     rank: 1,
     evaluation: () => { console.log('Find Activities'); return false }

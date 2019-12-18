@@ -2,6 +2,7 @@ const Activity = require('../activity/activity')
 const Opportunity = require('../opportunity/opportunity')
 const { OpportunityStatus } = require('../opportunity/opportunity.constants')
 const { orgProfileCompletenessById } = require('../organisation/organisation.lib')
+const { personProfileCompletenessById } = require('../person/person.lib')
 const { findOrgByPersonIdAndCategory } = require('../member/member.lib')
 /* Note These library functions call the database.
 They can fail and throw exceptions, we don't catch them here but
@@ -12,6 +13,10 @@ const GoalTests = {
     const personId = personalGoal.person._id
     const orgid = await findOrgByPersonIdAndCategory(personId, group)
     return orgProfileCompletenessById(orgid)
+  },
+  personCompleteness: async (personalGoal) => {
+    const personId = personalGoal.person._id
+    return personProfileCompletenessById(personId)
   },
   // test whether an op has been created from an activity for current person or org
   activityStarted: async (personalGoal, activitySlug) => {
