@@ -16,9 +16,7 @@ const interestSchema = new Schema({
       InterestStatus.INTERESTED,
       InterestStatus.INVITED,
       InterestStatus.COMMITTED,
-      InterestStatus.DECLINED,
-      InterestStatus.COMPLETED,
-      InterestStatus.CANCELLED
+      InterestStatus.DECLINED
     ]
   },
   dateAdded: { type: 'Date', default: Date.now, required: true }
