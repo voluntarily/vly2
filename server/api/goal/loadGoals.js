@@ -2,7 +2,7 @@ import Goal from './goal'
 import goals from './__init__/goal.init.js'
 
 export const loadGoals = async () => {
-  Promise.all(
+  return Promise.all(
     goals.map(async goal => {
       return Goal.findOneAndUpdate(
         { // check for a match
