@@ -19,7 +19,7 @@ test.after.always(async (t) => {
 test('Should correctly give count of all goals sorted by rank', async t => {
   let count = await Goal.countDocuments()
   t.is(count, goals.length)
-  loadGoals()
+  await loadGoals()
   count = await Goal.countDocuments()
   t.is(count, 10) // union of the two sources
 })
