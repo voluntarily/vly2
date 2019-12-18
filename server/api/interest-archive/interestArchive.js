@@ -18,14 +18,11 @@ const interestArchiveSchema = new Schema({
   status: {
     type: 'String',
     required: true,
-    default: InterestStatus.COMPLETED,
     enum: [
       InterestStatus.INTERESTED,
       InterestStatus.INVITED,
       InterestStatus.COMMITTED,
       InterestStatus.DECLINED,
-      InterestStatus.COMPLETED,
-      InterestStatus.CANCELLED,
       InterestStatus.ATTENDED,
       InterestStatus.NOTATTENDED
     ]
