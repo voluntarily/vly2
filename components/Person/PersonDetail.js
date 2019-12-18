@@ -1,3 +1,4 @@
+import { defaultToHttpScheme } from '../../lib/urlUtil'
 import { Divider, Icon } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import Head from 'next/head'
@@ -116,7 +117,7 @@ const PersonDetail = ({ person }, ...props) => (
             </a>
           </li>
           <li>
-            <a href={person.website} rel='noopener noreferrer' target='_blank'>
+            <a href={defaultToHttpScheme(person.website)} rel='noopener noreferrer' target='_blank'>
               <StyledIcon type='global' />
               {person.website}
             </a>
