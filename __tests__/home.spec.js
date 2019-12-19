@@ -9,13 +9,12 @@ import people from '../server/api/person/__tests__/person.fixture'
 import archivedOpportunities from '../server/api/archivedOpportunity/__tests__/archivedOpportunity.fixture'
 import tags from '../server/api/tag/__tests__/tag.fixture'
 import orgs from '../server/api/organisation/__tests__/organisation.fixture'
-
 import { MemberStatus } from '../server/api/member/member.constants'
 import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import thunk from 'redux-thunk'
 import { API_URL } from '../lib/callApi'
-// import OpCard from '../components/Op/OpCard'
+import { InterestStatus } from '../server/api/interest/interest.constants'
 const { sortedLocations, regions } = require('../server/api/location/locationData')
 
 test.before('Setup fixtures', (t) => {
@@ -28,12 +27,11 @@ test.before('Setup fixtures', (t) => {
     op._id = objectid().toString()
     op.requestor = people[index]
   })
-  // take ownership of 2nd event and set to done
+  // take ownership of 2nd event
   archivedOpportunities.map((op, index) => {
     op._id = objectid().toString()
     op.requestor = me._id
   })
-
   // setup list of interests, i'm interested in first 5 ops except the one for which I am requestor
   const interestStates = ['interested', 'invited', 'committed', 'declined', 'completed', 'cancelled']
   const interests = ops.filter(op => op.requestor._id !== me._id).map((op, index) => {
@@ -45,8 +43,37 @@ test.before('Setup fixtures', (t) => {
       status: index < interestStates.length ? interestStates[index] : 'interested'
     })
   })
-
-  // TODO: update ArchivedInterests fixture explicitly.
+  // This fixture is not used elsewhere, thus it's created here
+  const archivedInterestFixture = [
+    {
+      _id: objectid().toString(),
+      person: 'a',
+      opportunity: 'my op',
+      status: InterestStatus.INTERESTED,
+      comment: 'Interested'
+    },
+    {
+      _id: objectid().toString(),
+      person: me._id,
+      opportunity: archivedOpportunities[2],
+      status: InterestStatus.COMMITTED,
+      comment: 'Committed'
+    },
+    {
+      _id: objectid().toString(),
+      person: me._id,
+      opportunity: archivedOpportunities[3],
+      status: InterestStatus.NOTATTENDED,
+      comment: 'Not Attended'
+    },
+    {
+      _id: objectid().toString(),
+      person: me._id,
+      opportunity: archivedOpportunities[4],
+      status: InterestStatus.ATTENDED,
+      comment: 'Attended'
+    }
+  ]
 
   const recommendedOps = {
     basedOnLocation: ops,
@@ -96,7 +123,8 @@ test.before('Setup fixtures', (t) => {
     recommendedOps,
     tags,
     orgs,
-    members
+    members,
+    archivedInterestFixture
   }
 
   t.context.mockStore = configureStore([thunk])(
@@ -114,7 +142,7 @@ test.before('Setup fixtures', (t) => {
         request: null
       },
       interests: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
         data: interests,
@@ -125,6 +153,13 @@ test.before('Setup fixtures', (t) => {
         syncing: false,
         loading: false,
         data: t.context.members,
+        request: null
+      },
+      interestsArchived: {
+        sync: true,
+        syncing: false,
+        loading: false,
+        data: archivedInterestFixture,
         request: null
       },
       archivedOpportunities: {
@@ -172,7 +207,7 @@ test.after.always(() => {
 
 })
 
-test.serial('render volunteer home page - Active tab', t => {
+test.only('render volunteer home page - Active tab', t => {
   const props = {
     me: t.context.me
   }
@@ -185,13 +220,15 @@ test.serial('render volunteer home page - Active tab', t => {
   t.is(wrapper.find('h1').first().text(), t.context.me.nickname + "'s Requests")
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
   t.is(wrapper.find('.ant-tabs-tabpane-active h2').first().text(), 'Getting Started')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(1).text(), 'Active Opportunities')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(2).text(), 'My Opportunities')
 
-  const oplists = wrapper.find('OpList')
+  const oplists = wrapper.find('OpList') // find 3 oplitsts on the home page
   t.is(oplists.length, 3)
 
   const cards1 = oplists.at(0).find('OpCard')
   t.is(cards1.length, 1)
-  t.is(cards1.first().find('h1').first().text(), t.context.ops[0].name)
+  t.is(cards1.first().find('h1').first().text(), t.context.ops[0].name) // find the first opcard in the first oplist
 
   const cards2 = oplists.at(1).find('OpCard')
   t.is(cards2.length, 4)
@@ -211,16 +248,20 @@ test.serial('render volunteer home page - History tab', t => {
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
     </Provider>)
-
+  // console.log(wrapper.html())
   wrapper.find('.ant-tabs-tab').at(1).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'History')
 
   const historyPane = wrapper.find('.ant-tabs-tabpane-active').first()
-  t.is(historyPane.find('h2').first().text(), 'Completed Requests')
-  t.is(historyPane.find('h2').at(1).text(), 'Cancelled Requests')
+  t.is(historyPane.find('h2').first().text(), 'Completed Opportunities')
+  t.is(historyPane.find('h2').at(1).text(), 'Cancelled Opportunities')
+  t.is(historyPane.find('h2').at(2).text(), 'Attended Opportunities')
 
   const oplists = historyPane.find('OpList')
-  t.is(oplists.length, 2) // The number of oplists on history tab
+  t.is(oplists.length, 3) // The number of oplists on history tab
+
+  const interestlists = historyPane.find('OpList')
+  t.is(interestlists.length, 3) // The number of oplists on history tab
 
   const completedRequests = oplists.at(0)
   const cards1 = completedRequests.find('OpCard')
@@ -231,6 +272,11 @@ test.serial('render volunteer home page - History tab', t => {
   const cards2 = cancelledRequests.find('OpCard')
   t.is(cards2.length, 2)
   t.is(cards2.first().find('h1').first().text(), t.context.archivedOpportunities[3].name)
+
+  const attendedRequests = interestlists.at(0)
+  const cards3 = attendedRequests.find('OpCard')
+  t.is(cards3.length, 3)
+  // t.is(cards3.at(0).find('h1').first().text(), t.context.archivedInterestFixture[0].name)
 })
 
 test.serial('render volunteer home page - Profile tab', t => {
@@ -283,6 +329,19 @@ test.serial('retrieve completed archived opportunities', async t => {
   t.is(res[1], archivedOpportunities[1])
 })
 
+test.serial('get archived ops for volunteers returns only committed and attended results', async t => {
+  const props = {
+    me: t.context.me
+  }
+
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <PersonHomePageTest {...props} />
+    </Provider>)
+  const res = await wrapper.find('PersonHomePage').first().instance().getArchivedOpsForVolunteer()
+  t.is(res.length, 2)
+})
+
 test.serial('ensure oprecommendations is passed recommended ops retrieved from server', async t => {
   const props = {
     me: t.context.me
@@ -293,6 +352,5 @@ test.serial('ensure oprecommendations is passed recommended ops retrieved from s
       <PersonHomePageTest {...props} />
     </Provider>)
   const recommendedOps = await wrapper.find('OpRecommendations').first().instance().props.recommendedOps
-
   t.is(recommendedOps, t.context.recommendedOps)
 })
