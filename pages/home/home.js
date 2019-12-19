@@ -33,13 +33,6 @@ class PersonHomePage extends Component {
     editProfile: false
   }
 
-  constructor (props) {
-    super(props)
-    this.getArchivedOpportunitiesByStatus = this.getArchivedOpportunitiesByStatus.bind(
-      this
-    )
-  }
-
   getArchivedOpportunitiesByStatus (status) {
     return this.props.archivedOpportunities.data.filter(
       op => op.status === status && op.requestor === this.props.me._id
@@ -67,7 +60,6 @@ class PersonHomePage extends Component {
   }
 
   static async getInitialProps ({ store }) {
-    console.log('home GIP')
     try {
       const me = store.getState().session.me
       const requestor = { requestor: me._id }
@@ -129,7 +121,6 @@ class PersonHomePage extends Component {
 
     const ops = this.props.opportunities.data // list of ops I own
     const vops = this.interestedOps()
-    // console.log(this.props.personalGoals.data)
     // create inverted list of goals with the pg as a child.
     // this lets us use the same goal cards
     const personalGoals = this.props.personalGoals.data.map(pg => {
@@ -139,7 +130,6 @@ class PersonHomePage extends Component {
         status: pg.status
       })
     })
-    // console.log(personalGoals)
     const opsTab = (
       <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
         <Icon type='inbox' />
