@@ -2,14 +2,13 @@
 import { Button, Input } from 'antd'
 import Link from 'next/link'
 import Router from 'next/router'
-import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import ActList from '../../components/Act/ActList'
 import ActMenu from '../../components/Act/ActMenu'
 import NoResult from '../../components/NoResult'
-import { ActivityContainer, FullPage, GridContainer, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
+import { ActivityContainer, FullPage, GridContainer, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 
@@ -38,12 +37,12 @@ const handleSearch = (value) => {
   })
 }
 
-export const ActListPage = ({ acts }) =>
+export const ActListPage = ({ activities }) =>
   <FullPage>
     <Helmet>
       <title>Voluntarily - Activities List</title>
     </Helmet>
-    <PageHeaderContainer>
+    <PageBanner>
       <h1>
         <FormattedMessage
           id='ActListPage.Title'
@@ -52,7 +51,7 @@ export const ActListPage = ({ acts }) =>
         />
       </h1>
 
-      <RequestButtonContainer>
+      <PageBannerButtons>
         <Button type='primary' shape='round' size='large'>
           <Link href='/act/new'>
             <a>
@@ -64,17 +63,18 @@ export const ActListPage = ({ acts }) =>
             </a>
           </Link>
         </Button>
-      </RequestButtonContainer>
-      <p>
-        Find activity templates that make it easy to bring volunteers into your classroom
-      </p>
-    </PageHeaderContainer>
+      </PageBannerButtons>
+      <FormattedMessage
+        defaultMessage='Find activity templates that make it easy to bring volunteers into your classroom'
+        id='act.list.subtitle'
+      />
+    </PageBanner>
     {/* <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
       <TabPane tab={activityTab} key='1'> */}
     <ActivityContainer>
       <TabContainer>
         {' '}
-        <ActMenu acts={acts} />
+        <ActMenu acts={activities.data} />
       </TabContainer>
       <TabContainer>
         <SearchContainer>
@@ -87,8 +87,8 @@ export const ActListPage = ({ acts }) =>
           />
         </SearchContainer>
 
-        {acts.length > 0 ? (
-          <ActList acts={acts} />
+        {activities.data.length > 0 ? (
+          <ActList acts={activities.data} />
         ) : (
           <NoResult
             id='act.noresult'
@@ -110,27 +110,11 @@ export const ActListPage = ({ acts }) =>
 
 ActListPage.getInitialProps = async ({ store, query }) => {
   // Get all Acts
-  const acts = await store.dispatch(
+  return store.dispatch(
     reduxApi.actions.activities.get({
       ...query
     })
   )
-  return { acts, query }
-}
-ActListPage.propTypes = {
-  acts: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      subtitle: PropTypes.string,
-      imgUrl: PropTypes.any,
-      description: PropTypes.string,
-      duration: PropTypes.string,
-      status: PropTypes.string,
-      _id: PropTypes.string.isRequired
-    })
-  ).isRequired
-  //  showAddAct: PropTypes.bool.isRequired,
-  // dispatch: PropTypes.func.isRequired
 }
 
 export default publicPage(withActs(ActListPage))

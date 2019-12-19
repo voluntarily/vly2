@@ -12,10 +12,12 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 ====================================================
 */
 
-export const PageHeaderContainer = styled.div`
+export const PageBanner = styled.div`
   margin: 8rem 0 2rem 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  padding-bottom: 1rem;
+  border-bottom: thin solid rgba(101, 73, 170, 0.5);
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
     grid-template-columns: calc(100vw - 2rem);
@@ -23,7 +25,7 @@ export const PageHeaderContainer = styled.div`
   }
 `
 
-export const RequestButtonContainer = styled.div`
+export const PageBannerButtons = styled.div`
   justify-self: end;
   @media screen and (max-width: 767px) {
     margin-top: 1rem;

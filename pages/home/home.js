@@ -10,7 +10,7 @@ import OpList from '../../components/Op/OpList'
 import OpRecommendations from '../../components/Op/OpRecommendations'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
-import { FullPage, P, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
+import { FullPage, P, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withHomeData, withPeople } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
@@ -24,10 +24,6 @@ const SectionWrapper = styled.div`
   margin: 4rem 0 6rem 0;
 `
 
-const TitleContainer = styled.div`
-text-transform: capitalize;
-`
-
 function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
 }
@@ -35,13 +31,6 @@ function callback (key) {
 class PersonHomePage extends Component {
   state = {
     editProfile: false
-  }
-
-  constructor (props) {
-    super(props)
-    this.getArchivedOpportunitiesByStatus = this.getArchivedOpportunitiesByStatus.bind(
-      this
-    )
   }
 
   getArchivedOpportunitiesByStatus (status) {
@@ -132,7 +121,6 @@ class PersonHomePage extends Component {
 
     const ops = this.props.opportunities.data // list of ops I own
     const vops = this.interestedOps()
-    // console.log(this.props.personalGoals.data)
     // create inverted list of goals with the pg as a child.
     // this lets us use the same goal cards
     const personalGoals = this.props.personalGoals.data.map(pg => {
@@ -142,7 +130,6 @@ class PersonHomePage extends Component {
         status: pg.status
       })
     })
-    // console.log(personalGoals)
     const opsTab = (
       <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
         <Icon type='inbox' />
@@ -176,20 +163,25 @@ class PersonHomePage extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Voluntarily - Dashboard</title>
+          <title>Home / Voluntarily</title>
         </Helmet>
-        <PageHeaderContainer>
-          <TitleContainer>
-            <h1>
-              {this.props.me.nickname}'s Requests
-            </h1>
-          </TitleContainer>
-          <RequestButtonContainer>
+        <PageBanner>
+          <h1>
+            <FormattedMessage
+              id='home.title'
+              defaultMessage='Home'
+              description='Title on personal home page'
+            />
+          </h1>
+          <PageBannerButtons>
             <OpAdd {...this.props} />
             <ActAdd {...this.props} />
-          </RequestButtonContainer>
-          <h5>See the requests you have signed up for here</h5>
-        </PageHeaderContainer>
+          </PageBannerButtons>
+          <FormattedMessage
+            defaultMessage='Your current activities, goals and recommendations'
+            id='home.subtitle'
+          />
+        </PageBanner>
 
         <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={opsTab} key='1'>

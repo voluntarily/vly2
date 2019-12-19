@@ -9,13 +9,14 @@ import people from '../server/api/person/__tests__/person.fixture'
 import archivedOpportunities from '../server/api/archivedOpportunity/__tests__/archivedOpportunity.fixture'
 import tags from '../server/api/tag/__tests__/tag.fixture'
 import orgs from '../server/api/organisation/__tests__/organisation.fixture'
+import goals from '../server/api/goal/__tests__/goal.fixture'
+import { PersonalGoalStatus } from '../server/api/personalGoal/personalGoal.constants'
+import fetchMock from 'fetch-mock'
 
 import { MemberStatus } from '../server/api/member/member.constants'
 import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import thunk from 'redux-thunk'
-import { API_URL } from '../lib/callApi'
-// import OpCard from '../components/Op/OpCard'
 import { MockWindowScrollTo } from '../server/util/mock-dom-helpers'
 
 MockWindowScrollTo.replaceForTest(test, global)
@@ -26,6 +27,8 @@ test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
   people.map(p => { p._id = objectid().toString() })
   orgs.map(p => { p._id = objectid().toString() })
+  goals.map(p => { p._id = objectid().toString() })
+
   const me = people[0]
   // setup list of opportunities, I am owner for the first one
   ops.map((op, index) => {
@@ -88,6 +91,13 @@ test.before('Setup fixtures', (t) => {
       status: MemberStatus.MEMBER
     }
   ]
+  const personalGoals = [
+    {
+      person: me._id,
+      goal: goals[0],
+      status: PersonalGoalStatus.QUEUED
+    }
+  ]
 
   t.context = {
     me,
@@ -98,8 +108,18 @@ test.before('Setup fixtures', (t) => {
     recommendedOps,
     tags,
     orgs,
-    members
+    goals,
+    personalGoals,
+    members,
+    locations: [
+      {
+        regions: regions,
+        locations: sortedLocations
+      }
+    ]
   }
+  t.context.mockServer = fetchMock.sandbox()
+  global.fetch = t.context.mockServer
 
   t.context.mockStore = configureStore([thunk])(
     {
@@ -107,6 +127,13 @@ test.before('Setup fixtures', (t) => {
         isAuthenticated: true,
         user: { nickname: me.nickname },
         me
+      },
+      people: {
+        sync: true,
+        syncing: false,
+        loading: false,
+        data: [me],
+        request: null
       },
       opportunities: {
         sync: true,
@@ -116,10 +143,10 @@ test.before('Setup fixtures', (t) => {
         request: null
       },
       interests: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
-        data: interests,
+        data: t.context.interests,
         request: null
       },
       members: {
@@ -130,61 +157,67 @@ test.before('Setup fixtures', (t) => {
         request: null
       },
       archivedOpportunities: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
-        data: archivedOpportunities,
+        data: t.context.archivedOpportunities,
         request: null
       },
       recommendedOps: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
-        data: [recommendedOps],
+        data: [t.context.recommendedOps],
         request: null
       },
       locations: {
-        data: [
-          {
-            regions: regions,
-            locations: sortedLocations
-          }
-        ]
+        data: t.context.locations
       },
       tags: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
-        data: tags,
-        request: null
-      },
-      orgs: {
-        sync: false,
-        syncing: false,
-        loading: false,
-        data: orgs,
+        data: t.context.tags,
         request: null
       },
       goals: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
-        data: [],
+        data: t.context.goals,
         request: null
       },
       personalGoals: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
-        data: [],
+        data: t.context.personalGoals,
         request: null
       }
     }
   )
 })
 
+test.afterEach.always(t => t.context.mockServer.reset())
+
 test.after.always(() => {
 
+})
+
+test.serial('run GetInitialProps', async t => {
+  t.context.mockServer
+    .get('path:/api/tags/', { body: t.context.tags })
+    .get('path:/api/opportunities/', { body: [t.context.ops[0]] })
+    .get('path:/api/locations', { body: t.context.locations })
+    .get('path:/api/interests/', { body: t.context.interests })
+    .get('path:/api/personalGoals/', { body: t.context.personalGoals })
+    .get('path:/api/archivedOpportunities/', { body: t.context.archivedOpportunities })
+    .get('path:/api/members/', { body: t.context.members })
+    .get('path:/api/opportunities/recommended', { body: [t.context.recommendedOps] })
+  reduxApi.use('fetch', adapterFetch(t.context.mockServer))
+
+  await PersonHomePageTest.getInitialProps({ store: t.context.mockStore })
+  t.is(t.context.mockStore.getActions().length, 16)
 })
 
 test.serial('render volunteer home page - Active tab', t => {
@@ -197,7 +230,7 @@ test.serial('render volunteer home page - Active tab', t => {
       <PersonHomePageTest {...props} />
     </Provider>)
 
-  t.is(wrapper.find('h1').first().text(), t.context.me.nickname + "'s Requests")
+  t.is(wrapper.find('h1').first().text(), 'Home')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
   // t.is(wrapper.find('.ant-tabs-tabpane-active h2').first().text(), 'Getting Started')
 
@@ -249,6 +282,8 @@ test.serial('render volunteer home page - History tab', t => {
 })
 
 test.serial('render volunteer home page - Profile tab', t => {
+  t.context.mockServer
+    .get(`path:/api/badge/${t.context.me._id}`, { body: [] })
   const props = {
     me: t.context.me
   }
@@ -264,6 +299,10 @@ test.serial('render volunteer home page - Profile tab', t => {
 })
 
 test.serial('render Edit Profile ', async t => {
+  t.context.mockServer
+    .get(`path:/api/badge/${t.context.me._id}`, { body: [] })
+    .put(`path:/api/people/${t.context.me._id}`, {})
+
   const props = { me: t.context.me }
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
@@ -281,13 +320,12 @@ test.serial('render Edit Profile ', async t => {
 })
 
 test.serial('retrieve completed archived opportunities', async t => {
+  t.context.mockServer
+    .get(`path:/api/archivedOpportunities/${t.context.me._id}`, { body: archivedOpportunities })
+
   const props = {
     me: t.context.me
   }
-  const { fetchMock } = require('fetch-mock')
-  const myMock = fetchMock.sandbox()
-  myMock.get(API_URL + '/archivedOpportunities/', { body: { archivedOpportunities } })
-  reduxApi.use('fetch', adapterFetch(myMock))
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
