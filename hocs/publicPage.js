@@ -1,5 +1,4 @@
 import { Layout } from 'antd'
-import Router from 'next/router'
 import React from 'react'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
@@ -21,25 +20,6 @@ export default Page =>
         isPlain: false
       }
     }
-
-    // constructor (props) {
-    //   super(props)
-    //   this.logout = this.logout.bind(this)
-    // }
-
-    // logout (eve) {
-    //   if (eve.key === 'logout') {
-    //     Router.push(`/?logout=${eve.newValue}`)
-    //   }
-    // }
-
-    // componentDidMount () {
-    //   window.addEventListener('storage', this.logout, false)
-    // }
-
-    // componentWillUnmount () {
-    //   window.removeEventListener('storage', this.logout, false)
-    // }
 
     render () {
       return (

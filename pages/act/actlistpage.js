@@ -2,7 +2,6 @@
 import { Button, Input } from 'antd'
 import Link from 'next/link'
 import Router from 'next/router'
-import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
