@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import ActList from '../../components/Act/ActList'
 import ActMenu from '../../components/Act/ActMenu'
 import NoResult from '../../components/NoResult'
-import { ActivityContainer, FullPage, GridContainer, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
+import { ActivityContainer, FullPage, GridContainer, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 
@@ -43,7 +43,7 @@ export const ActListPage = ({ acts }) =>
     <Helmet>
       <title>Voluntarily - Activities List</title>
     </Helmet>
-    <PageHeaderContainer>
+    <PageBanner>
       <h1>
         <FormattedMessage
           id='ActListPage.Title'
@@ -52,7 +52,7 @@ export const ActListPage = ({ acts }) =>
         />
       </h1>
 
-      <RequestButtonContainer>
+      <PageBannerButtons>
         <Button type='primary' shape='round' size='large'>
           <Link href='/act/new'>
             <a>
@@ -64,11 +64,12 @@ export const ActListPage = ({ acts }) =>
             </a>
           </Link>
         </Button>
-      </RequestButtonContainer>
-      <p>
-        Find activity templates that make it easy to bring volunteers into your classroom
-      </p>
-    </PageHeaderContainer>
+      </PageBannerButtons>
+      <FormattedMessage
+        defaultMessage='Find activity templates that make it easy to bring volunteers into your classroom'
+        id='act.list.subtitle'
+      />
+    </PageBanner>
     {/* <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
       <TabPane tab={activityTab} key='1'> */}
     <ActivityContainer>
