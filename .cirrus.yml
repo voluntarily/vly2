@@ -27,6 +27,8 @@ test_task:
     - npm run test-all -- --tap
     - unset CIRRUS_CI
     - ./node_modules/codecov/bin/codecov --disable=gcov
+  container:
+    cpu: 4
 
 systemtest_task:
   node_modules_cache:
