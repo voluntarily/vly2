@@ -12,7 +12,6 @@ const RootPage = (props) => {
 }
 
 RootPage.getInitialProps = async (ctx) => {
-  console.log('Root GIP')
   const session = await getSession(ctx.req, ctx.store)
   const page = session.isAuthenticated ? Home : Landing
   if (page.getInitialProps) {
