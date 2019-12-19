@@ -31,7 +31,6 @@ const LogoContainer = styled.a`
     margin: 0;
   }
 `
-
 const Logo = styled.img`
   height: 3rem;
   width: 12rem;
@@ -51,7 +50,6 @@ const SearchInput = styled(Search)`
   width: 20rem;
   display: inline-block;
   margin-left: 0.5rem;
-
 
   padding: 4px;
   border-radius: 4px;
@@ -86,14 +84,14 @@ const Header = ({ isAuthenticated, ...props }) => (
           onSearch={handleSearch}
         />
       </div>
-      <LogoContainer>
-        <Link href={isAuthenticated ? '/' : '/'}>
+      <Link href='/landing'>
+        <LogoContainer>
           <Logo
             src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
             alt='Voluntarily logo'
           />
-        </Link>
-      </LogoContainer>
+        </LogoContainer>
+      </Link>
       <div>
         <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
       </div>
