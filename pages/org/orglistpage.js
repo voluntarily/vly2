@@ -1,10 +1,10 @@
-import { Button, Divider } from 'antd'
+import { Button } from 'antd'
 import Link from 'next/link'
 import { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import OrgList from '../../components/Org/OrgList'
-import { FullPage, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
+import { FullPage, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 
@@ -25,16 +25,16 @@ class OrgListPage extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Voluntarily - Organisation List</title>
+          <title>Organisations / Voluntarily</title>
         </Helmet>
-        <PageHeaderContainer>
+        <PageBanner>
           <h1>
             <FormattedMessage
               defaultMessage='Organisations'
               id='org.list.heading'
             />
           </h1>
-          <RequestButtonContainer>
+          <PageBannerButtons>
             {isAdmin &&
               <Button type='primary' size='large' shape='round'>
                 <Link href='/org/new'>
@@ -43,10 +43,12 @@ class OrgListPage extends Component {
                   </a>
                 </Link>
               </Button>}
-          </RequestButtonContainer>
-          <p>Check out organisations doing social good on the Voluntarily platform</p>
-        </PageHeaderContainer>
-        <Divider />
+          </PageBannerButtons>
+          <FormattedMessage
+            defaultMessage='Check out organisations doing social good on the Voluntarily platform'
+            id='org.list.subtitle'
+          />
+        </PageBanner>
         <OrgList orgs={orgs} />
 
       </FullPage>

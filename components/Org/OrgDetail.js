@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberSection from '../Member/MemberSection'
 import RegisterMemberSection from '../Member/RegisterMemberSection'
-import { PageHeaderContainer, ContactList, OrgTabs, FullPage } from '../VTheme/VTheme'
+import { ContactList, OrgTabs, FullPage } from '../VTheme/VTheme'
 import OrgDetailForm from '../Org/OrgDetailForm'
 
 function callback (key) {
@@ -127,9 +127,8 @@ const orgSettingsTab = (
 const OrgDetail = ({ org, ...props }) => (
   <FullPage>
     <Head>
-      <title>Voluntarily - {org.name}</title>
+      <title>{org.name} / Voluntarily</title>
     </Head>
-    <PageHeaderContainer />
     <ProfileContainer>
       <ProfileImage src={org.imgUrl} alt={org.name} />
       <TitleContainer>
@@ -211,8 +210,7 @@ OrgDetail.propTypes = {
     website: PropTypes.string,
     contactEmail: PropTypes.string,
     facebook: PropTypes.string,
-    twitter: PropTypes.string,
-    _id: PropTypes.string.isRequired
+    twitter: PropTypes.string
   }).isRequired
 }
 
