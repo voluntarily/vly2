@@ -38,7 +38,7 @@ const handleSearch = (value) => {
   })
 }
 
-export const ActListPage = ({ acts }) =>
+export const ActListPage = ({ activities }) =>
   <FullPage>
     <Helmet>
       <title>Voluntarily - Activities List</title>
@@ -75,7 +75,7 @@ export const ActListPage = ({ acts }) =>
     <ActivityContainer>
       <TabContainer>
         {' '}
-        <ActMenu acts={acts} />
+        <ActMenu acts={activities.data} />
       </TabContainer>
       <TabContainer>
         <SearchContainer>
@@ -88,8 +88,8 @@ export const ActListPage = ({ acts }) =>
           />
         </SearchContainer>
 
-        {acts.length > 0 ? (
-          <ActList acts={acts} />
+        {activities.data.length > 0 ? (
+          <ActList acts={activities.data} />
         ) : (
           <NoResult
             id='act.noresult'
@@ -111,27 +111,11 @@ export const ActListPage = ({ acts }) =>
 
 ActListPage.getInitialProps = async ({ store, query }) => {
   // Get all Acts
-  const acts = await store.dispatch(
+  return store.dispatch(
     reduxApi.actions.activities.get({
       ...query
     })
   )
-  return { acts, query }
-}
-ActListPage.propTypes = {
-  acts: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      subtitle: PropTypes.string,
-      imgUrl: PropTypes.any,
-      description: PropTypes.string,
-      duration: PropTypes.string,
-      status: PropTypes.string,
-      _id: PropTypes.string.isRequired
-    })
-  ).isRequired
-  //  showAddAct: PropTypes.bool.isRequired,
-  // dispatch: PropTypes.func.isRequired
 }
 
 export default publicPage(withActs(ActListPage))
