@@ -21,7 +21,7 @@ const SearchContainer = styled.div`
   padding: 1rem;
   margin-bottom: 2rem;
 `
-const TabContainer = styled.div`
+const ProfileSection = styled.div`
   margin: 1.5rem 0 0 0;
 `
 
@@ -72,11 +72,11 @@ export const ActListPage = ({ activities }) =>
     {/* <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
       <TabPane tab={activityTab} key='1'> */}
     <ActivityContainer>
-      <TabContainer>
+      <ProfileSection>
         {' '}
         <ActMenu acts={activities.data} />
-      </TabContainer>
-      <TabContainer>
+      </ProfileSection>
+      <ProfileSection>
         <SearchContainer>
           <p>Search activities</p>
           <Input.Search
@@ -96,7 +96,7 @@ export const ActListPage = ({ activities }) =>
             description='Message shown while no activities found'
           />
         )}
-      </TabContainer>
+      </ProfileSection>
     </ActivityContainer>
     {/* </TabPane>
     </Tabs> */}
