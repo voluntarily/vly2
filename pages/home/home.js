@@ -14,6 +14,7 @@ import { FullPage, P, PageHeaderContainer, RequestButtonContainer } from '../../
 import securePage from '../../hocs/securePage'
 import reduxApi, { withArchivedOpportunities, withInterests, withMembers, withOps, withPeople, withRecommendedOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
+import { InterestStatus } from '../../server/api/interest/interest.constants'
 const { TabPane } = Tabs
 
 const SectionTitleWrapper = styled.div`
@@ -31,27 +32,35 @@ function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
 }
 
+const OpListSubSection = ({ ops, children }) => {
+  if (ops.length === 0) return ''
+
+  return (
+    <>
+      <SectionTitleWrapper>
+        <h2>{children}</h2>
+      </SectionTitleWrapper>
+      <OpList ops={ops} />
+    </>)
+}
+
 class PersonHomePage extends Component {
   state = {
     editProfile: false
   }
-
-  // constructor (props) {
-  //   super(props)
-  //   this.getArchivedOpsForRequestor = this.getArchivedOpsForRequestor.bind(
-  //     this
-  //   )
-  // }
 
   getArchivedOpsForRequestor (status) {
     return this.props.archivedOpportunities.data
       .filter(op => op.status === status)
   }
 
-  getArchivedOpsForVolunteer (status) {
-    return this.props.interestsArchived.data
-      .filter(op => op.status === status)
+  getArchivedOpsForVolunteer () {
+    // console.log(this.props.interestsArchived.data)
+    const res = this.props.interestsArchived.data
+      .filter(interest => [InterestStatus.COMMITTED, InterestStatus.ATTENDED].includes(interest.status))
       .map(interest => interest.opportunity)
+    // console.log(res)
+    return res
   }
 
   myOpsList () {
@@ -189,93 +198,68 @@ class PersonHomePage extends Component {
 
         <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={opsTab} key='1'>
-
+          
             <SectionWrapper>
               <NextActionBlock />
-            </SectionWrapper>
-            {
-              this.props.opportunities.data.length !== 0 && (
-                <SectionWrapper>
-                  <SectionTitleWrapper>
-                    <h2>
-                      <FormattedMessage
-                        id='home.liveOpportunities'
-                        defaultMessage='Active Opportunities'
-                        decription='subtitle on teacher home page for active opportunities that have been hosted'
-                      />
-                    </h2>
-                  </SectionTitleWrapper>
-                  {ops && (
-                    <OpList
-                      ops={ops.filter(op =>
-                        ['active', 'draft'].includes(op.status)
-                      )}
-                    />
-
-                  )}
-
-                  <SectionTitleWrapper>
-                    <h2>
-                      <FormattedMessage
-                        id='home.myOpportunities'
-                        defaultMessage='My Opportunities'
-                        decription='subtitle on teacher home page for signed up opportunities by the volunteers'
-                      />
-                    </h2>
-                  </SectionTitleWrapper>
-                  {ops && (
-                    <OpList
-                      id='MyOpportunities'
-                      ops={vops.filter(op =>
-                        ['active', 'draft'].includes(op.status)
-                      )}
-
-                    />
-
-                  )}
-
-                </SectionWrapper>
-
-              )
-            }
-
-            <SectionWrapper>
+              <OpListSubSection ops={ops.filter(op => ['active', 'draft'].includes(op.status))}>
+                <FormattedMessage
+                  id='home.activeOpportunities'
+                  defaultMessage='Active Opportunities'
+                  decription='Subtitle for teacher home page for active opportunities that have been hosted'
+                />
+              </OpListSubSection>
+              <OpListSubSection ops={vops.filter(op => ['active', 'draft'].includes(op.status))}>
+                <FormattedMessage
+                  id='home.myOpportunities'
+                  defaultMessage='My Opportunities'
+                  description='Subtitle for teacher home page for signed up opportunities by the volunteers'
+                />
+              </OpListSubSection>
               <SectionTitleWrapper>
                 <h2>
                   <FormattedMessage
                     id='home.recommendedOpportunities'
                     defaultMessage='Recommended for You'
-                    decription='Title on volunteer home page for recommended opportunities'
+                    decription='Title for volunteer home page for recommended opportunities'
                   />
                   <P>
                     <FormattedMessage
                       id='home.recommendedOpportunitiesP'
                       defaultMessage='Here are some opportunities we think you might like'
-                      decription='Subtitle on volunteer home page for recommended opportunities'
+                      decription='Subtitle for volunteer home page for recommended opportunities'
                     />
                   </P>
                 </h2>
               </SectionTitleWrapper>
-              <OpRecommendations
-                recommendedOps={this.props.recommendedOps.data[0]}
-              />
+              <OpRecommendations recommendedOps={this.props.recommendedOps.data[0]} />
             </SectionWrapper>
 
           </TabPane>
           <TabPane tab={historyTab} key='2'>
             <SectionWrapper>
-              <SectionTitleWrapper>
-                <h2>Completed Requests</h2>
-              </SectionTitleWrapper>
-              <OpList
-                ops={this.getArchivedOpsForRequestor('completed')}
-              />
-              <SectionTitleWrapper>
-                <h2>Attended Requests</h2>
-              </SectionTitleWrapper>
-              <OpList
-                ops={this.getArchivedOpsForVolunteer('attended' || 'committed')}
-              />
+
+              <OpListSubSection ops={this.getArchivedOpsForRequestor('completed')}>
+                <FormattedMessage
+                  id='home.History.completedOpportunities'
+                  defaultMessage='Completed Opportunities'
+                  description='Subtitle for completed activites on home page history tab'
+                />
+              </OpListSubSection>
+              <OpListSubSection ops={this.getArchivedOpsForRequestor('cancelled')}>
+                <FormattedMessage
+                  id='home.History.cancelledOpportunities'
+                  defaultMessage='Cancelled Opportunities'
+                  description='Subtitle for teacher cancelled activites on home page history tab'
+                />
+              </OpListSubSection>
+              <OpListSubSection ops={this.getArchivedOpsForVolunteer()}>
+                <FormattedMessage
+                  id='home.History.attendedOpportunities'
+                  defaultMessage='Attended Opportunities'
+                  description='Subtitle for volunteer attended activites on home page history tab'
+                />
+              </OpListSubSection>
+
             </SectionWrapper>
           </TabPane>
           <TabPane tab={profileTab} key='3'>
