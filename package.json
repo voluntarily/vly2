@@ -24,6 +24,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "mongo": "mongod --dbpath ./data",
+    "pretest": "rm -rf .test",
+    "pretest-all": "rm -rf .test",
     "posttest": "rm -rf .test",
     "posttest-all": "rm -rf .test"
   },
