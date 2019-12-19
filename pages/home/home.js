@@ -198,7 +198,7 @@ class PersonHomePage extends Component {
 
         <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={opsTab} key='1'>
-          
+
             <SectionWrapper>
               <NextActionBlock />
               <OpListSubSection ops={ops.filter(op => ['active', 'draft'].includes(op.status))}>
