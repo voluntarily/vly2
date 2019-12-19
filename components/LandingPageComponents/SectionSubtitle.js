@@ -9,18 +9,18 @@ const TitleContainer = styled.div`
   position: relative;
 `
 
-const TitleSectionSub = ({ title, subtitle, ...props }) => (
+const SectionSubtitle = ({ title, subtitle, ...props }) => (
   <TitleContainer>
     <h2>{title}</h2>
     <H5>{subtitle}</H5>
   </TitleContainer>
 )
 
-TitleSectionSub.propTypes = {
+SectionSubtitle.propTypes = {
   op: PropTypes.shape({
     title: PropTypes.string.isRequired,
     subtitle: PropTypes.string.isRequired
   })
 }
 
-export default TitleSectionSub
+export default SectionSubtitle
