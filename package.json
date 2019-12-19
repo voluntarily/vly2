@@ -23,7 +23,9 @@
     "remote": "APP_URL=http://$(ifconfig | grep -A 1 ‘en0’ | tail -1 | cut -d ' ' -f 2):3122 nodemon -w server -w package.json server/server.js",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "mongo": "mongod --dbpath ./data"
+    "mongo": "mongod --dbpath ./data",
+    "posttest": "rm -rf .test",
+    "posttest-all": "rm -rf .test"
   },
   "dependencies": {
     "@babel/core": "^7.7.4",
