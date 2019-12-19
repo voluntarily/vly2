@@ -53,8 +53,8 @@ export default class IntlDocument extends Document {
             name='viewport'
             content='initial-scale=1.0, width=device-width'
           /> */}
-          {/* <link rel='stylesheet' href='https://rsms.me/inter/inter.css' /> */}
-          {/* <link rel='stylesheet' href='//cdn.quilljs.com/1.2.6/quill.snow.css' /> */}
+          <link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
+          <link rel='stylesheet' href='//cdn.quilljs.com/1.2.6/quill.snow.css' />
 
         </Head>
         <body>

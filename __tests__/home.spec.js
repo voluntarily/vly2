@@ -128,6 +128,13 @@ test.before('Setup fixtures', (t) => {
         user: { nickname: me.nickname },
         me
       },
+      people: {
+        sync: true,
+        syncing: false,
+        loading: false,
+        data: [me],
+        request: null
+      },
       opportunities: {
         sync: true,
         syncing: false,
@@ -294,7 +301,7 @@ test.serial('render volunteer home page - Profile tab', t => {
 test.serial('render Edit Profile ', async t => {
   t.context.mockServer
     .get(`path:/api/badge/${t.context.me._id}`, { body: [] })
-    .put(`path:/api/people/${t.context.me._id}`, { body: t.context.me })
+    .put(`path:/api/people/${t.context.me._id}`, {})
 
   const props = { me: t.context.me }
   const wrapper = mountWithIntl(
