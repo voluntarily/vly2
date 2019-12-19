@@ -197,7 +197,7 @@ test.serial('render volunteer home page - Active tab', t => {
       <PersonHomePageTest {...props} />
     </Provider>)
 
-  t.is(wrapper.find('h1').first().text(), t.context.me.nickname + "'s Requests")
+  t.is(wrapper.find('h1').first().text(), 'Home')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
   // t.is(wrapper.find('.ant-tabs-tabpane-active h2').first().text(), 'Getting Started')
 
