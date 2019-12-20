@@ -79,6 +79,7 @@ class OrgDetailPage extends Component {
 
   async handleSubmit (org) {
     if (!org) return
+
     // Actual data request
     let res = {}
     if (org._id) {
@@ -88,6 +89,8 @@ class OrgDetailPage extends Component {
           { body: JSON.stringify(org) }
         )
       )
+
+      this.setState({ editing: false })
     } else {
       res = await this.props.dispatch(
         reduxApi.actions.organisations.post({}, { body: JSON.stringify(org) })
@@ -95,7 +98,7 @@ class OrgDetailPage extends Component {
       org = res[0]
       Router.replace(`/orgs/${org._id}`)
     }
-    this.setState({ editing: false })
+
     message.success('Saved.')
   }
 
@@ -114,18 +117,19 @@ class OrgDetailPage extends Component {
 
     let content = ''
     let org = null
-    if (this.props.organisations.loading) {
+
+    if (this.props.organisations.data.length === 1 && this.props.isNew) {
+      // we've just submitted the form but haven't redirected to the org URL yet
+      content = <Loading />
+    } else if (this.props.organisations.data.length === 1) {
+      org = this.props.organisations.data[0]
+    } else if (this.props.organisations.loading) {
       content = <Loading />
     } else if (this.props.isNew) {
       org = blankOrg
-    } else {
-      const orgs = this.props.organisations.data
-      if (orgs.length === 1) {
-        org = orgs[0]
-      }
     }
 
-    if (!org) {
+    if (!org && !content) {
       content = (
         <div>
           <h2>Sorry this organisation is not available</h2>
@@ -147,7 +151,7 @@ class OrgDetailPage extends Component {
         </Button> */}
         </div>
       )
-    } else {
+    } else if (org) {
       content = (this.state.editing || this.props.isNew) ? (
         <div>
           <OrgDetailForm
@@ -213,6 +217,7 @@ class OrgDetailPage extends Component {
         </div>
       )
     }
+
     return <FullPage>{content}</FullPage>
   }
 }
