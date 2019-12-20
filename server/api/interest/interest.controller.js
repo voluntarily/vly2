@@ -24,12 +24,14 @@ const listInterests = async (req, res) => {
       }
       // Return the nickname in person field
       got = await Interest.find(query).populate({ path: 'person', select: 'nickname name imgUrl' }).sort(sort).exec()
+      got = got.filter((opportunity) => opportunity.person !== null)
     } else if (req.query.me) {
       const query = { person: req.query.me }
       got = await Interest.find(query).populate({ path: 'opportunity' }).sort(sort).exec()
     } else {
       got = await Interest.find().sort(sort).exec()
     }
+
     res.json(got)
   } catch (err) {
     // console.error(err)
