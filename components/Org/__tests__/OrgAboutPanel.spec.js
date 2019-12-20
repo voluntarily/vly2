@@ -17,6 +17,5 @@ test('renders the list no about data', t => {
   const wrapper = render(
     <OrgAboutPanel org={org} />
   )
-  console.log(wrapper.html())
   t.is(wrapper.find('li').length, 0)
 })
