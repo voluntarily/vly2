@@ -51,7 +51,7 @@ OrgAboutPanel.propTypes = {
   org: PropTypes.shape({
     name: PropTypes.string.isRequired,
     info: PropTypes.shape({
-      about: PropTypes.string.isRequired
+      about: PropTypes.string
     }),
     category: PropTypes.arrayOf(
       PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
