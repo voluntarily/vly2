@@ -148,7 +148,7 @@ class OrgDetailPage extends Component {
         </div>
       )
     } else {
-      content = this.state.editing ? (
+      content = (this.state.editing || this.props.isNew) ? (
         <div>
           <OrgDetailForm
             org={org}
