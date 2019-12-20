@@ -12,10 +12,12 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 ====================================================
 */
 
-export const PageHeaderContainer = styled.div`
+export const PageBanner = styled.div`
   margin: 8rem 0 2rem 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  padding-bottom: 1rem;
+  border-bottom: thin solid rgba(101, 73, 170, 0.5);
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
     grid-template-columns: calc(100vw - 2rem);
@@ -23,7 +25,7 @@ export const PageHeaderContainer = styled.div`
   }
 `
 
-export const RequestButtonContainer = styled.div`
+export const PageBannerButtons = styled.div`
   justify-self: end;
   @media screen and (max-width: 767px) {
     margin-top: 1rem;
@@ -229,7 +231,8 @@ export const H1 = styled.h1`
     letter-spacing: -0.03em;
     line-height: 3rem;
   }
-` // End H1
+`
+// End H1
 
 export const H3 = styled.h3`
   font-size: 2rem;
@@ -292,7 +295,6 @@ export const H4 = styled.h4`
     font-size: 1.5rem;
   }
   @media screen and (max-width: 768px) {
-    width: 90vw;
     font-size: 1rem;
   }
 ` // H4
@@ -396,7 +398,6 @@ export const FullPage = styled.div`
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
     width: calc(100vw - 2rem);
-    margin-left: 1rem;
   }
 ` // end fullpage
 
@@ -463,6 +464,10 @@ img {
   object-fit: cover;
   overflow: hidden;
   object-position: top;
+
+  @media screen and (max-width: 768px) {
+    height: 12rem;
+  }
 }
 
 time {
@@ -477,16 +482,6 @@ time {
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   margin-block-start: 0;
-}
-
-@media screen and (max-width: 768px) {
-  width: calc(100vw - 2rem);
-  margin-bottom: 1.5rem;
-
-  img {
-    height: 12rem;
-  }
-
 }
 `
 
@@ -504,4 +499,46 @@ export const Li = styled.li`
   opacity: 1;
   color: initial;
   margin-bottom: 0.3rem;
+`
+/* Contact list displayed for organisations */
+
+export const ContactList = styled.ul`
+  display: grid;
+  grid-template-columns: 45% 45%;
+  grid-column-gap: 5%;
+  padding: 0;
+
+  @media screen and (min-width: 767px) {
+    grid-template-columns: 30% 30% 30%;
+    grid-column-gap: 3%;
+  }
+
+  li {
+    list-style: none;
+    color: black;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+
+    a {
+      font-size: 1rem;
+      overflow-wrap: break-word;
+
+      @media screen and (min-width: 767px) {
+        font-size: 1rem;
+      }
+
+      @media screen and (min-width: 988px) {
+        font-size: 2rem;
+      }
+    }
+  }
+`
+
+/* Organisation styled tabs */
+
+export const OrgTabs = styled.span`
+  font-size: 1rem;
+  font-weight: 700;
+  color: #6549AA;
 `

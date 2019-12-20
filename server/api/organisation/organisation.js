@@ -15,6 +15,7 @@ const organisationSchema = new Schema({
     required: true,
     default: ['vp'],
     enum: ['admin', 'vp', 'op', 'ap', 'other']
+    // TODO: [VP-905] replace category strings with constants in ./organisation.constants.js
   },
   info: {
     about: String,
@@ -31,7 +32,9 @@ const organisationSchema = new Schema({
   },
   decile: Number,
   contactName: String,
-  contactPhoneNumber: String
+  contactEmail: String,
+  contactPhoneNumber: String,
+  address: String
 })
 
 // protect multiple imports

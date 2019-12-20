@@ -3,16 +3,16 @@ import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import NextActionBlock from '../../components/Action/NextActionBlockV2'
+import GoalSection from '../../components/Goal/GoalSection'
 import ActAdd from '../../components/Act/ActAdd'
 import OpAdd from '../../components/Op/OpAdd'
 import OpList from '../../components/Op/OpList'
 import OpRecommendations from '../../components/Op/OpRecommendations'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
-import { FullPage, P, PageHeaderContainer, RequestButtonContainer } from '../../components/VTheme/VTheme'
+import { FullPage, P, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
-import reduxApi, { withArchivedOpportunities, withInterests, withMembers, withOps, withPeople, withRecommendedOps } from '../../lib/redux/reduxApi.js'
+import reduxApi, { withHomeData, withPeople } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import { InterestStatus } from '../../server/api/interest/interest.constants'
 const { TabPane } = Tabs
@@ -22,10 +22,6 @@ const SectionTitleWrapper = styled.div`
 `
 const SectionWrapper = styled.div`
   margin: 4rem 0 6rem 0;
-`
-
-const TitleContainer = styled.div`
-text-transform: capitalize;
 `
 
 function callback (key) {
@@ -63,12 +59,7 @@ class PersonHomePage extends Component {
     return res
   }
 
-  myOpsList () {
-    const myops = this.props.opportunities.data // list of ops I own
-    return myops
-  }
-
-  volOpsList () {
+  interestedOps () {
     const interests = this.props.interests.data // list of ops I'm volunteering for
     const volops = interests
       .map((interest, index) => {
@@ -106,7 +97,7 @@ class PersonHomePage extends Component {
         store.dispatch(reduxApi.actions.recommendedOps.get({ me: me._id }))
       ])
     } catch (err) {
-      console.error('error in getting ops', err)
+      console.error('error in getting home page data', err)
     }
   }
 
@@ -144,10 +135,17 @@ class PersonHomePage extends Component {
       this.props.me.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
     }
 
-    const ops = this.myOpsList()
-
-    const vops = this.volOpsList()
-
+    const ops = this.props.opportunities.data // list of ops I own
+    const vops = this.interestedOps()
+    // create inverted list of goals with the pg as a child.
+    // this lets us use the same goal cards
+    const personalGoals = this.props.personalGoals.data.map(pg => {
+      return ({
+        ...pg.goal,
+        personalGoal: pg,
+        status: pg.status
+      })
+    })
     const opsTab = (
       <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
         <Icon type='inbox' />
@@ -181,24 +179,29 @@ class PersonHomePage extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Voluntarily - Dashboard</title>
+          <title>Home / Voluntarily</title>
         </Helmet>
-        <PageHeaderContainer>
-          <TitleContainer>
-            <h1>
-              {this.props.me.nickname}'s Requests
-            </h1>
-          </TitleContainer>
-          <RequestButtonContainer>
+        <PageBanner>
+          <h1>
+            <FormattedMessage
+              id='home.title'
+              defaultMessage='Home'
+              description='Title on personal home page'
+            />
+          </h1>
+          <PageBannerButtons>
             <OpAdd {...this.props} />
             <ActAdd {...this.props} />
-          </RequestButtonContainer>
-          <h5>See the requests you have signed up for here</h5>
-        </PageHeaderContainer>
+          </PageBannerButtons>
+          <FormattedMessage
+            defaultMessage='Your current activities, goals and recommendations'
+            id='home.subtitle'
+          />
+        </PageBanner>
 
         <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={opsTab} key='1'>
-
+      
             <SectionWrapper>
               <NextActionBlock />
               <OpListSubSection ops={ops.filter(op => ['active', 'draft'].includes(op.status))}>
@@ -233,7 +236,6 @@ class PersonHomePage extends Component {
               </SectionTitleWrapper>
               <OpRecommendations recommendedOps={this.props.recommendedOps.data[0]} />
             </SectionWrapper>
-
           </TabPane>
           <TabPane tab={historyTab} key='2'>
             <SectionWrapper>
@@ -296,7 +298,6 @@ class PersonHomePage extends Component {
     )
   }
 }
-export const PersonHomePageTest = withRecommendedOps(withMembers(withInterests(
-  withOps(withArchivedOpportunities(PersonHomePage))))
-) // for test
+export const PersonHomePageTest = withHomeData(PersonHomePage)
+
 export default securePage(withPeople(PersonHomePageTest))

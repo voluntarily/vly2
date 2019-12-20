@@ -2,7 +2,7 @@ import { Button, Divider } from 'antd'
 import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
-import TitleSection from '../../components/LandingPageComponents/TitleSection'
+import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
 import { BigQuote, BigQuoteAuthor, FullPage, H1, H3, H3Bold, H4, HalfGrid, P, PBold, Spacer, SpacerSmall, TripleGrid } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 
@@ -243,7 +243,7 @@ export class Teacher extends Component {
             </H3>
           </SectionContainer>
           <SectionContainer>
-            <TitleSection title='We are working with' />
+            <SectionTitle title='We are working with' />
             <SponsorContainer>
               <SponsorIcon src='static/img/partners/Spark.png' />
               <SponsorIcon src='static/img/partners/Westpac.png' />
@@ -341,7 +341,7 @@ export class Teacher extends Component {
             </BigQuoteContainer>
           </SectionContainer>
           <Divider />
-          <TitleSection title='Features' />
+          <SectionTitle title='Features' />
           <TripleGrid>
             <ItemContainer>
               <ItemIcon src='/static/img/icons/search.svg' />
@@ -395,7 +395,7 @@ export class Teacher extends Component {
           <Spacer />
           <Divider />
 
-          <TitleSection title='How to get involved' />
+          <SectionTitle title='How to get involved' />
           <HalfGrid>
             <ItemContainer>
               <H3>Sign up for updates</H3>

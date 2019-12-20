@@ -35,10 +35,11 @@ const goalSchema = new Schema({
   language: { type: 'String', default: 'en' },
 
   // Category - 'Getting Started', 'Prepare for volunteering'
-  category: { type: 'String' },
+  group: { type: 'String' },
 
   // evaluation - function that checks whether the goal has been completed - e.g. badge presents, status value etc.
-  evaluation: { type: 'String' },
+  evaluation: { type: 'String', required: true, default: '() => false' },
+  rank: { type: 'Number', default: 99, required: true },
   dateAdded: { type: 'Date', default: Date.now, required: true }
 })
 

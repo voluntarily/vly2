@@ -8,6 +8,7 @@ import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
 import { DynamicFieldSet } from '../DynamicFieldSet/DynamicFieldSet'
+import slug from 'limax'
 
 import {
   DescriptionContainer,
@@ -95,9 +96,10 @@ class ActDetailForm extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const act = this.props.act
+        const act = this.props.act // copy any non form values like _id
         act.time = values.time
         act.name = values.name
+        act.slug = slug(act.name)
         act.subtitle = values.subtitle
         act.duration = values.duration
         act.resource = values.resource
@@ -114,9 +116,7 @@ class ActDetailForm extends Component {
         // act.owner = (this.props.act.owner && this.props.op.owner._id) || this.props.me._id
         act.owner = this.props.me._id
         // TODO: [VP-305] should the owner of the activity be preserved or set to the last person who edits it?
-        if (!isTest) {
-          window.scrollTo(0, 0)
-        }
+        window.scrollTo(0, 0)
         this.props.onSubmit(this.props.act)
       }
     })

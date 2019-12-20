@@ -4,19 +4,20 @@
   "description": "Voluntari.ly Client based on Next.js",
   "main": "server/server.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test PORT=8080 node_modules/.bin/nyc node --no-deprecation node_modules/ava/cli.js",
+    "test": "cross-env NODE_ENV=test PORT=8080 node_modules/.bin/nyc node --no-deprecation node_modules/ava/cli.js --serial --fail-fast",
+    "test-all": "cross-env NODE_ENV=test PORT=8080 node_modules/.bin/nyc --all node --no-deprecation node_modules/ava/cli.js --serial --fail-fast",
     "watch:test": "npm run test -- --watch",
     "end-to-end-test": "run-p -r dev testcafe-tests",
     "testcafe-tests": "wait-on -t 60000 -w 2000 -l http://localhost:3122 && node node_modules/testcafe/bin/testcafe.js firefox:headless systemtest/landing.test.js",
     "lint": "standard",
     "fix": "standard --fix",
-    "dev": "nodemon -w server -w package.json server/server.js",
+    "dev": "nodemon -w lang -w server -w package.json server/server.js",
     "build": "next build && node ./x/default-lang",
-    "build:lang": "node ./x/default-lang",
+    "build:lang": "formatjs extract --messages-dir lang/.messages $(find . -type f -name '*.js' ! -path './node_modules/*' ! -path './.next/*' ! -path './.storybook/*' ! -path './coverage/*' ! -path './docs/*' ! -path './x/*') && node ./x/default-lang",
     "prod-build": "next build",
     "heroku-postbuild": "next build",
     "start": "NODE_ENV=production node --experimental-modules server/server.js",
-    "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
+    "check-coverage": "nyc check-coverage --statements 90 --branches 90 --functions 90 --lines 90",
     "docker-test:build": "docker build -t vly-test:latest -f Dockerfile-test . ",
     "docker-test": "npm run docker-test:build && docker run vly-test:latest ",
     "remote": "APP_URL=http://$(ifconfig | grep -A 1 ‘en0’ | tail -1 | cut -d ' ' -f 2):3122 nodemon -w server -w package.json server/server.js",
@@ -30,8 +31,10 @@
     "@casl/ability": "^3.2.0",
     "@casl/mongoose": "^2.3.2",
     "@storybook/addon-knobs": "^5.2.6",
+    "@types/react-intl": "^3.0.0",
     "@uppy/core": "^1.6.0",
     "@uppy/react": "^1.4.0",
+    "@zeit/next-css": "^1.0.1",
     "@zeit/next-less": "^1.0.1",
     "accepts": "^1.3.7",
     "acorn": "^6.3.0",
@@ -42,7 +45,6 @@
     "babel-plugin-import": "^1.12.2",
     "babel-plugin-react-intl": "^3.5.1",
     "babel-plugin-styled-components": "^1.10.6",
-    "bson-objectid": "^1.3.0",
     "cookie-parser": "^1.4.4",
     "cuid": "^2.1.6",
     "dotenv": "^8.2.0",
@@ -56,6 +58,7 @@
     "hoist-non-react-statics": "^3.3.1",
     "ical-generator": "^1.8.3",
     "intl": "^1.2.5",
+    "isomorphic-fetch": "^2.2.1",
     "js-cookie": "^2.2.1",
     "jsdom": "^15.2.1",
     "jsonwebtoken": "^8.5.1",
@@ -77,6 +80,7 @@
     "next-routes": "^1.4.2",
     "nodemailer": "^6.3.1",
     "nodemailer-mock": "^1.4.4",
+    "pubsub-js": "^1.7.0",
     "quill": "^1.3.7",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -94,10 +98,13 @@
     "sanitize-html": "^1.20.1",
     "slug": "^1.1.0",
     "storybook": "^5.1.11",
-    "styled-components": "^4.4.1"
+    "styled-components": "^4.4.1",
+    "webpack": "^4.41.2"
   },
   "devDependencies": {
     "@babel/register": "^7.6.2",
+    "@formatjs/cli": "^1.1.12",
+    "@istanbuljs/nyc-config-babel": "^2.1.1",
     "@storybook/addon-actions": "^5.2.5",
     "@storybook/addon-links": "^5.2.5",
     "@storybook/addons": "^5.2.5",
@@ -107,6 +114,7 @@
     "axios": "^0.19.0",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
+    "babel-plugin-istanbul": "^5.2.0",
     "codecov": "^3.6.1",
     "cross-env": "^6.0.3",
     "enzyme": "^3.10.0",
@@ -141,7 +149,7 @@
       "__tests__/**/*.spec.js",
       "server/**/__tests__/*.spec.js",
       "components/**/__tests__/*.spec.js",
-      "lib/**/__test__/*.spec.js"
+      "lib/**/__tests__/*.spec.js"
     ],
     "helpers": [
       "**/__tests__/**/*.fixture.js",
@@ -172,25 +180,62 @@
     ]
   },
   "nyc": {
+    "extends": "@istanbuljs/nyc-config-babel",
+    "ignore-class-method": "GetInitialProps",
+    "watermarks": {
+      "lines": [
+        80,
+        95
+      ],
+      "functions": [
+        80,
+        95
+      ],
+      "branches": [
+        80,
+        95
+      ],
+      "statements": [
+        80,
+        95
+      ]
+    },
     "include": [
       "pages/**/*.js",
+      "pages/api/*.js",
       "components/**/*.js",
       "server/**/*.js",
       "lib/**/*.js"
     ],
     "exclude": [
+      "**/__tests__/**",
+      "**/*.stories.js",
       "**/*.spec.js",
-      "server/util/setup-test-env.js",
-      "server/util/test-helpers.js",
-      "server/util/mockRouter.js",
-      "server/util/test-memory-mongo.js",
+      "**/*.fixture.js",
+      "**/*.init.js",
+      "**/__init__/*.js",
+      "server/util/*.js",
+      "server/util/__tests__/*.js",
       "lib/react-intl-test*.js",
       "lib/auth/auth0.js",
       "server/config.js",
       "components/examples/**/*.js",
+      "**/*-md.js",
+      "pages/_*.js",
+      "pages/test/**/*.js",
+      "pages/todo.js",
+      "pages/admin/admin.js",
+      "pages/admin/goals/*.js",
+      "pages/teachers/*.js",
+      "pages/business/*.js",
+      "pages/content/*.js",
       "server/api/db/db.controller.js",
       "server/api/image/cloudImageUpload.js",
-      "server/services/email/email.js"
+      "server/services/email/email.js",
+      "reference",
+      "systemtest",
+      "x",
+      "public"
     ],
     "reporter": [
       "lcov",

@@ -27,5 +27,5 @@ test('PersonBadge renders properly', async t => {
   }
   global.fetch = mockServer
   const PersonBadgeRendered = mount(<PersonBadgeSection person={person} />)
-  t.falsy(PersonBadgeRendered.isEmpty())
+  t.true(PersonBadgeRendered.exists())
 })

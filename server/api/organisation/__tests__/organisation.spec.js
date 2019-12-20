@@ -68,7 +68,7 @@ test.serial('Should correctly give count of all orgs sorted alpha', async t => {
   const got = res.body
   t.is(orgs.length, got.length)
 
-  t.is(got[0].name, 'Albany High School')
+  t.is(got[0].name, 'Albany Senior High School')
 })
 
 test.serial('Should handle bad JSON', async t => {
@@ -136,7 +136,7 @@ test.serial('Should correctly give subset of orgs of category', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(got.length, 4)
+  t.is(got.length, 3)
 })
 
 test.serial('Should correctly give reverse sorted orgs of category', async t => {
@@ -146,7 +146,7 @@ test.serial('Should correctly give reverse sorted orgs of category', async t => 
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(got.length, 4)
+  t.is(got.length, 3)
   t.is(got[0].slug, 'westpac')
 })
 
@@ -179,7 +179,7 @@ test.serial('Should correctly select just the names and ids', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(got.length, 4)
+  t.is(got.length, 3)
   t.is(got[0].slug, undefined)
   t.is(got[0].name, 'Datacom')
 })

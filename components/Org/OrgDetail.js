@@ -1,4 +1,4 @@
-import { Button, Icon, Tabs } from 'antd'
+import { Tabs, Divider } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
@@ -6,9 +6,9 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberSection from '../Member/MemberSection'
-import { FullPage, H3Bold, PageHeaderContainer, PBold } from '../VTheme/VTheme'
-import OrgCategory from './OrgCategory'
-const ButtonGroup = Button.Group
+import RegisterMemberSection from '../Member/RegisterMemberSection'
+import { ContactList, OrgTabs, FullPage } from '../VTheme/VTheme'
+import OrgDetailForm from '../Org/OrgDetailForm'
 
 function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
@@ -17,160 +17,159 @@ const shadowStyle = { overflow: 'visible', textAlign: 'center' }
 const { TabPane } = Tabs
 
 const TitleContainer = styled.div`
-  margin: 1rem auto 3.5rem auto;
   width: 100%;
+  padding-left: 0;
+  margin: 0 auto;
   text-align: center;
-`
 
-const SocialButton = styled(Button)`
-  margin-top: 0.5rem;
-  font-size: 2rem !important;
+  @media screen and (min-width: 767px) {
+    padding-left: 3rem;
+    text-align: left;
+  }
+  
+  a {
+    display: block;
+    padding: 1rem 0;
+  }
+
+  Button {
+    background: #6549AA;
+    color: white;
+    width: 140px;
+    height: 50px;
+  }
 `
 
 const ProfileContainer = styled.div`
-  margin: 0 auto;
-  position: relative;
-  @media screen and (min-width: 768px) and (max-width: 1280px) {
-    width: calc(100% - 4rem);
-    margin: initial;
-  }
+  display: grid;
+  grid-template-columns: 100%;
+  align-self: center;
+  justify-self: center;
 
-  @media screen and (max-width: 767px) {
-    width: calc(100% - 2rem);
-    margin: initial;
+  @media screen and (min-width: 767px) {
+    grid-template-columns: 25% 75%;
   }
 `
+
 const ProfileContentContainer = styled.div`
   width: 80rem;
-  margin: 4rem auto;
+  margin: 4rem auto 0;
   overflow: hidden;
-
-  @media screen and (min-width: 768px) and (max-width: 1280px) {
-    width: calc(100% - 4rem);
-    margin: initial;
-  }
-
-  @media screen and (max-width: 767px) {
-    width: calc(100% - 2rem);
-    margin: initial;
-  }
+  width: 100%;
 `
 
 const ProfileImage = styled.img`
-  margin: 0 calc(50% - 100px);
   width: 200px;
   object-fit: cover;
+  align-self: center;
+  justify-self: center;
 `
 
 const TabContainer = styled.div`
   text-align: left;
-  width: 50rem;
-  margin: 4rem auto;
-  overflow: hidden;
-  @media screen and (min-width: 768px) and (max-width: 1280px) {
-    width: calc(100% - 4rem);
-    margin: initial;
-  }
+  display: grid;
+  grid-template-columns: 100%;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  width: 100%;
 
-  @media screen and (max-width: 767px) {
-    width: calc(100% - 2rem);
-    margin: initial;
+  @media screen and (min-width: 767px) {
+    grid-template-columns: 20% 80%;
   }
 `
 
 const orgTab = (
-  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-    <Icon type='info-circle' />
+  <OrgTabs>
     <FormattedMessage id='orgAbout' />
-  </span>
+  </OrgTabs>
 )
 
 const orgMemberTab = (
-  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-    <Icon type='team' />
+  <OrgTabs>
     <FormattedMessage
       id='orgMembers'
       defaultMessage='Members'
       description='show opportunities list on volunteer home page'
     />
-  </span>
+  </OrgTabs>
 )
 
 const orgInstructionTab = (
-  <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-    <Icon type='info-circle' />
+  <OrgTabs>
     <FormattedMessage
       id='orgInstructions'
       defaultMessage='Getting Started'
       description='show opportunities list on volunteer home page'
     />
-  </span>
+  </OrgTabs>
+)
+
+const orgOffersTab = (
+  <OrgTabs>
+    <FormattedMessage
+      id='orgOffers'
+      defaultMessage='Offers'
+      description='show opportunities list on volunteer home page'
+    />
+  </OrgTabs>
+)
+
+const orgSettingsTab = (
+  <OrgTabs>
+    <FormattedMessage
+      id='orgSettings'
+      defaultMessage='Settings'
+      description='show opportunities list on volunteer home page'
+    />
+  </OrgTabs>
 )
 
 const OrgDetail = ({ org, ...props }) => (
   <FullPage>
     <Head>
-      <title>Voluntarily - {org.name}</title>
+      <title>{org.name} / Voluntarily</title>
     </Head>
-    <PageHeaderContainer />
     <ProfileContainer>
       <ProfileImage src={org.imgUrl} alt={org.name} />
       <TitleContainer>
-        <H3Bold>{org.name}</H3Bold>
+        <h1>{org.name}</h1>
+        <Markdown children={(org.info && org.info.about) || ''} />
+        <a href='{org.website}'>{org.website}</a>
+        {props.isAuthenticated && (
+          <RegisterMemberSection orgid={org._id} meid={props.me._id} />
+        )}
       </TitleContainer>
     </ProfileContainer>
     <ProfileContentContainer>
       <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
         <TabPane tab={orgTab} key='1'>
           <TabContainer>
-            <Markdown children={(org.info && org.info.about) || ''} />
-            <OrgCategory orgCategory={org.category} />
-            <br />
-            <PBold>
-              <FormattedMessage
-                id='orgdetail.social.label'
-                defaultMessage='Social:'
-                description='Label for social media links on organisation details'
-              />
-            </PBold>
-            <ButtonGroup size='medium'>
+            <h2>About</h2>
+            <Markdown style={{ fontSize: '1.5rem' }} children={(org.info && org.info.about) || ''} />
+          </TabContainer>
+          <Divider />
+          <TabContainer>
+            <h2>Contact</h2>
+            <ContactList>
               {org.website && (
-                <SocialButton
-                  type='link'
-                  href={`${org.website}`}
-                  icon='global'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                />
-              )}
-              {org.contactEmail && (
-                <SocialButton
-                  type='link'
-                  href={`mailto:${org.contactEmail}`}
-                  icon='mail'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                />
-              )}
-              {org.facebook && (
-                <SocialButton
-                  type='link'
-                  href={`https://www.facebook.com/${org.facebook}`}
-                  icon='facebook'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                />
+                <li>Website<br /><a href={org.website} target='_blank' rel='noopener noreferrer'>{org.website}</a></li>
               )}
               {org.twitter && (
-                <SocialButton
-                  type='link'
-                  href={`https://www.twitter.com/${org.twitter}`}
-                  icon='twitter'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                />
+                <li>Twitter<br /><a href={org.twitter} target='_blank' rel='noopener noreferrer'>{org.twitter}</a></li>
               )}
-            </ButtonGroup>
+              {org.facebook && (
+                <li>Facebook<br /><a href={org.facebook} target='_blank' rel='noopener noreferrer'>{org.facebook}</a></li>
+              )}
+              {org.contactEmail && (
+                <li>Email<br /><a href={`mailto:${org.contactEmail}`} target='_blank' rel='noopener noreferrer'>{org.contactEmail}</a></li>
+              )}
+              {org.address && (
+                <li>Address<br /><a href={OrgDetailForm.createGoogleMapsAddressUrl(org.address)} target='_blank' rel='noopener noreferrer'>{org.address}</a></li>
+              )}
+              {org.contactPhoneNumber && (
+                <li>Phone<br /><a tel={org.contactPhoneNumber}>{org.contactPhoneNumber}</a></li>
+              )}
+            </ContactList>
           </TabContainer>
         </TabPane>
         {/* <TabPane tab={orgResourcesTab} key='2' /> */}
@@ -181,6 +180,12 @@ const OrgDetail = ({ org, ...props }) => (
           </TabContainer>
         </TabPane>
         <TabPane tab={orgMemberTab} key='4'>
+          <MemberSection org={org} />
+        </TabPane>
+        <TabPane tab={orgOffersTab} key='5'>
+          <MemberSection org={org} />
+        </TabPane>
+        <TabPane tab={orgSettingsTab} key='6'>
           <MemberSection org={org} />
         </TabPane>
       </Tabs>
@@ -205,8 +210,7 @@ OrgDetail.propTypes = {
     website: PropTypes.string,
     contactEmail: PropTypes.string,
     facebook: PropTypes.string,
-    twitter: PropTypes.string,
-    _id: PropTypes.string.isRequired
+    twitter: PropTypes.string
   }).isRequired
 }
 

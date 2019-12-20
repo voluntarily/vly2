@@ -3,8 +3,9 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
-import { Grid, P, Spacer } from '../VTheme/VTheme'
+import { P, Spacer } from '../VTheme/VTheme'
 import links from './FooterMenu'
+import { Row, Col } from 'antd'
 // import WomensRefuge from './WomensRefuge.js'
 
 const getAllowedLinks = isAuthenticated =>
@@ -13,74 +14,60 @@ const getAllowedLinks = isAuthenticated =>
     .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
 
 const FooterBackground = styled.div`
-  margin-top: 5rem;
-  width: 100vw;
   background-color: #fefefe;
 `
 
 const FooterContainer = styled.div`
-  width: 80rem;
-  margin: 0 auto;
+  width: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
 
-  @media screen and (min-width: 768px) and (max-width: 1280px) {
-    width: 100vw;
-  }
-
-  @media screen and (max-width: 767px) {
-    width: 100vw;
+  @media screen and (min-width: 1300px) {
+    width: 80rem;
+    margin: auto;
+    padding: 0;
   }
 `
 const FooterLogo = styled.img`
   margin-top: 2rem;
   width: 2.5rem;
-  @media screen and (min-width: 768px) and (max-width: 1280px) {
-    margin-left: 2rem;
-  }
-
-  @media screen and (max-width: 767px) {
-    margin-left: 1rem;
-  }
 `
 
 const FooterText = styled.div`
   letter-spacing: -0.4px;
   font-size: 1rem;
   margin-top: 1rem;
-  @media screen and (min-width: 768px) and (max-width: 1280px) {
-    margin-left: 2rem;
-  }
-
-  @media screen and (max-width: 767px) {
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
 `
 
-const FooterGridItem = styled.div`
-  margin-bottom: 2rem;
-  @media screen and (max-width: 767px) {
-    margin-left: 1rem;
-  }
-`
-const FooterGridItemTitle = styled.h1`
-  font-weight: 400;
-  font-size: 1rem;
+const FooterGridItemTitle = styled.li`
+  font-weight: 700;
+  font-size: 1.5rem;
   letter-spacing: -0.8px;
   margin-bottom: 0.5rem;
+  color: black;
+  list-style: none;
 `
 
-const MenuItem = styled.a`
-  font-weight: 700;
-  font-size: 1.2rem;
-  color: #333333;
-  letter-spacing: -1.07px;
-  line-height: 40px;
-  @media screen and (max-width: 767px) {
-    line-height: 64px;
-    font-size: 2rem;
+const MenuWrapper = styled.ul`
+  margin-bottom: 2rem;
+  padding: 0;
+  
+  @media screen and (min-width: 576px) {
+    height: 300px;
   }
 `
 
+const MenuItem = styled.li`
+list-style: none;
+
+  a {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #333333;
+    letter-spacing: -1.07px;
+    line-height: 40px;
+  }
+`
 const Footer = ({ isAuthenticated, ...props }) => (
   <FooterBackground>
     <script
@@ -137,132 +124,134 @@ const Footer = ({ isAuthenticated, ...props }) => (
         </P>
       </FooterText>
       <Spacer />
-      <Grid>
-        <FooterGridItem>
-          <FooterGridItemTitle>How it works</FooterGridItemTitle>
-          <MenuItem href='/volunteers'>For Volunteers</MenuItem>
-          <br />
-          <MenuItem href='/teachers'>For Teachers</MenuItem>
-          <br />
-          <MenuItem href='/charities'>For Charities</MenuItem>
-          <br />
-          <MenuItem href='/business'>For Businesses</MenuItem>
-          <br />
-          <MenuItem href='/government'>For Governments</MenuItem>
-          <br />
-        </FooterGridItem>
+      <Row>
+        <Col sm={12} lg={6}>
+          <MenuWrapper>
+            <FooterGridItemTitle>How it works</FooterGridItemTitle>
+            <MenuItem><a href='/volunteers'>For Volunteers</a></MenuItem>
+            <MenuItem><a href='/teachers'>For Teachers</a></MenuItem>
+            <MenuItem><a href='/charities'>For Charities</a></MenuItem>
+            <MenuItem><a href='/business'>For Businesses</a></MenuItem>
+            <MenuItem><a href='/government'>For Governments</a></MenuItem>
+          </MenuWrapper>
+        </Col>
 
-        <FooterGridItem>
-          <FooterGridItemTitle>Resources</FooterGridItemTitle>
-          <MenuItem href='/about'>Getting started</MenuItem>
-          <br />
-          <MenuItem
-            href='https://voluntarily.nz/blog'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Blog
-          </MenuItem>
-          <br />
-          <MenuItem
-            href='https://voluntarily.atlassian.net/servicedesk/customer/portals'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Help centre
-          </MenuItem>
-          <br />
-          <MenuItem
-            href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/12'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Contact Support
-          </MenuItem>
-          <br />
-        </FooterGridItem>
+        <Col sm={12} lg={6}>
+          <MenuWrapper>
+            <FooterGridItemTitle>Resources</FooterGridItemTitle>
+            <MenuItem><a href='/about'>Getting started</a></MenuItem>
+            <MenuItem>
+              <a
+                href='https://voluntarily.nz/blog'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Blog
+              </a>
+            </MenuItem>
+            <MenuItem>
+              <a
+                href='https://voluntarily.atlassian.net/servicedesk/customer/portals'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Help centre
+              </a>
+            </MenuItem>
+            <MenuItem>
+              <a
+                href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/12'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Contact Support
+              </a>
+            </MenuItem>
+          </MenuWrapper>
+        </Col>
 
-        <FooterGridItem>
-          <FooterGridItemTitle>Social</FooterGridItemTitle>
-          <MenuItem
-            href='http://twitter.com/voluntarilyhq'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Twitter
-          </MenuItem>
-          <br />
-          <MenuItem
-            href='https://www.linkedin.com/groups/13709208/'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            LinkedIn
-          </MenuItem>
-          <br />
-          <MenuItem
-            href='https://www.youtube.com/channel/UCEDwH63ojQSq-S8us3iRZAA'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Youtube
-          </MenuItem>
-          <br />
-          <MenuItem
-            href='https://www.facebook.com/voluntarilyAotearoa/'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Facebook
-          </MenuItem>
-          <br />
-          <MenuItem
-            href='https://www.messenger.com/t/voluntarilyAotearoa'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Messenger
-          </MenuItem>
-          <br />
-          <MenuItem
-            href='https://www.instagram.com/voluntarilyhq/'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Instagram
-          </MenuItem>
-          <br />
-        </FooterGridItem>
+        <Col sm={12} lg={6}>
+          <MenuWrapper>
+            <FooterGridItemTitle>Social</FooterGridItemTitle>
+            <MenuItem>
+              <a
+                href='http://twitter.com/voluntarilyhq'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Twitter
+              </a>
+            </MenuItem>
+            <MenuItem>
+              <a
+                href='https://www.linkedin.com/groups/13709208/'
+                target='_blank'
+                rel='noopener noreferrer'
+              >LinkedIn
+              </a>
+            </MenuItem>
+            <MenuItem>
+              <a
+                href='https://www.youtube.com/channel/UCEDwH63ojQSq-S8us3iRZAA'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Youtube
+              </a>
+            </MenuItem>
+            <MenuItem>
+              <a
+                href='https://www.facebook.com/voluntarilyAotearoa/'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Facebook
+              </a>
+            </MenuItem>
+            <MenuItem>
+              <a
+                href='https://www.messenger.com/t/voluntarilyAotearoa'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Messenger
+              </a>
+            </MenuItem>
+            <MenuItem>
+              <a
+                href='https://www.instagram.com/voluntarilyhq/'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Instagram
+              </a>
+            </MenuItem>
+          </MenuWrapper>
+        </Col>
 
-        <FooterGridItem>
-          <FooterGridItemTitle>Project</FooterGridItemTitle>
-          <MenuItem href='/about'>About us</MenuItem>
-          <br />
-          <MenuItem
-            href='https://github.com/voluntarily/vly2'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Github Repo
-          </MenuItem>
-          <br />
-          <MenuItem
-            href='https://voluntarily.atlassian.net/wiki'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Developer resources
-          </MenuItem>
-          <br />
-          <MenuItem
-            href='/terms'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Terms and Conditions
-          </MenuItem>
-        </FooterGridItem>
-      </Grid>
+        <Col sm={12} lg={6}>
+          <MenuWrapper>
+            <FooterGridItemTitle>Project</FooterGridItemTitle>
+            <MenuItem><a href='/about'>About us</a></MenuItem>
+            <MenuItem>
+              <a
+                href='https://github.com/voluntarily/vly2'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Github Repo
+              </a>
+            </MenuItem>
+            <MenuItem>
+              <a
+                href='https://voluntarily.atlassian.net/wiki'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Developer resources
+              </a>
+            </MenuItem>
+            <MenuItem>
+              <a
+                href='/terms'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Terms and Conditions
+              </a>
+            </MenuItem>
+          </MenuWrapper>
+        </Col>
+      </Row>
       <Spacer />
       {/* <WomensRefuge /> */}
     </FooterContainer>

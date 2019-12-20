@@ -2,7 +2,7 @@ import React from 'react'
 import { Select } from 'antd'
 import { FormattedMessage } from 'react-intl'
 
-const OpOrderby = (props) => {
+const OpOrderby = ({ onChange }) => {
   const style = {
     width: 150,
     float: 'right',
@@ -10,7 +10,7 @@ const OpOrderby = (props) => {
     marginTop: -60
   }
   return (
-    <Select placeholder='Sort By' defaultValue='Date' style={style} onChange={props.handleSort}>
+    <Select placeholder='Sort By' defaultValue='Date' style={style} onChange={onChange}>
       <Select.Option name='date' value='date'>
         <FormattedMessage
           id='sortDate'

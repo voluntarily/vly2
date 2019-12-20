@@ -1,5 +1,5 @@
 import { Role } from '../../../server/services/authorize/role.js'
-import { loadGoals } from '../../../server/api/goal/__init__/loadGoals'
+import { loadGoals } from '../../../server/api/goal/loadGoals'
 /* The /api/admin endpoint provides some utility calls that
   /api/admin/initGoals - loads some initial goals from a designated file
 */

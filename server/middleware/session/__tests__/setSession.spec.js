@@ -9,10 +9,12 @@ import sinon from 'sinon'
 import jwt from 'jsonwebtoken'
 
 test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-  await appReady
-  await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  try {
+    t.context.memMongo = new MemoryMongo()
+    await t.context.memMongo.start()
+    await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+    await appReady
+  } catch (e) { console.error('setSession.spec.js test.before error:', e) }
 })
 
 test.after.always(async (t) => {
