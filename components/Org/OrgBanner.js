@@ -3,7 +3,7 @@ import React from 'react'
 import { ProfileBanner, ProfileBannerTitle } from '../VTheme/Profile'
 import OrgCategory from './OrgCategory'
 
-const OrgBanner = ({ org, children }) => 
+const OrgBanner = ({ org, children }) =>
   <ProfileBanner>
     <img src={org.imgUrl} alt={org.name} />
     <ProfileBannerTitle>

@@ -1,9 +1,8 @@
-import cuid from 'cuid'
+import objectid from 'objectid'
 
 export default [
-
   {
-    _id: cuid(),
+    _id: objectid(),
     dateAdded: '2019-04-28T19:03:39.908Z',
     name: 'Voluntarily NZ',
     slug: 'voluntarily-nz',
@@ -28,7 +27,7 @@ export default [
     twitter: 'voluntarilyHQ'
   },
   {
-    _id: cuid(),
+    _id: objectid(),
     name: 'OMGTech',
     slug: 'omgtech',
     category: ['ap', 'vp'],
@@ -38,7 +37,7 @@ export default [
     }
   },
   {
-    _id: cuid(),
+    _id: objectid(),
     name: 'Datacom',
     slug: 'datacom',
     category: ['vp'],
@@ -46,7 +45,7 @@ export default [
     info: { about: 'some of our most loyal helpers' }
   },
   {
-    _id: cuid(),
+    _id: objectid(),
     name: 'Spark Ltd',
     slug: 'spark',
     category: ['vp'],
@@ -54,14 +53,14 @@ export default [
     info: { about: 'more of our most loyal helpers' }
   },
   {
-    _id: cuid(),
+    _id: objectid(),
     name: 'Westpac Ltd',
     slug: 'westpac',
     category: ['vp'],
     info: { about: 'even more of our most loyal helpers' }
   },
   {
-    _id: cuid(),
+    _id: objectid(),
     name: 'Albany High School',
     slug: 'albany-high',
     category: ['op'],
