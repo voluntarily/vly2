@@ -27,4 +27,10 @@ config = withCSS({
   cssModules: false
 })
 
+if (process.env.NODE_ENV === 'test') {
+  // use a unique next distDir for each test
+  const uuid = require('uuid/v4')
+  config.distDir = path.join('.test', uuid())
+}
+
 module.exports = config
