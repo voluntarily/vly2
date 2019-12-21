@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { Button, message } from 'antd'
 import Link from 'next/link'
 import Router from 'next/router'
@@ -15,7 +15,7 @@ import RegisterMemberSection from '../../components/Member/RegisterMemberSection
 import { Helmet } from 'react-helmet'
 
 const blankOrg = {
-  name: '',
+  name: 'New Organisation',
   about: '',
   imgUrl: '/static/img/organisation/organisation.png',
   contactEmail: '',
@@ -45,14 +45,14 @@ export const OrgUnknown = () =>
     <h2>
       <FormattedMessage
         id='orgDetailPage.OrgNotFound'
-        defaultMessage='Sorry this organisation is not available'
+        defaultMessage='Sorry, this organisation is not available'
         description='Org not found message'
       />
     </h2>
     <Link href='/orgs'>
       <Button shape='round'>
         <FormattedMessage
-          id='showOrgs'
+          id='orgDetailPage.showOrgs'
           defaultMessage='Show All'
           description='Button to show all organisations'
         />
@@ -60,39 +60,40 @@ export const OrgUnknown = () =>
     </Link>
   </>
 
-const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isAuthenticated }) => {
+export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isAuthenticated }) => {
   const [editing, setEditing] = useState(false)
+  const handleCancel = useCallback(
+    () => {
+      setEditing(false)
+      if (isNew) { // return to previous
+        Router.back()
+      }
+    },
+    [isNew]
+  )
 
-  const handleCancel = () => {
-    setEditing(false)
-    if (isNew) {
-      // return to previous
-      Router.back()
-    }
-  }
-
-  const handleSubmit = async (org) => {
-    if (!org) return
-    let res = {}
-    if (org._id) {
+  const handleSubmit = useCallback(
+    async (org) => {
+      let res = {}
+      if (org._id) {
       // update existing organisation
-      res = await dispatch(
-        reduxApi.actions.organisations.put(
-          { id: org._id },
-          { body: JSON.stringify(org) }
+        res = await dispatch(
+          reduxApi.actions.organisations.put(
+            { id: org._id },
+            { body: JSON.stringify(org) }
+          )
         )
-      )
-    } else {
+      } else {
       // save new organisation
-      res = await dispatch(
-        reduxApi.actions.organisations.post({}, { body: JSON.stringify(org) })
-      )
-      org = res[0]
-      Router.replace(`/orgs/${org._id}`)
-    }
-    setEditing(false)
-    message.success('Saved.')
-  }
+        res = await dispatch(
+          reduxApi.actions.organisations.post({}, { body: JSON.stringify(org) })
+        )
+        org = res[0]
+        Router.replace(`/orgs/${org._id}`)
+      }
+      setEditing(false)
+      message.success('Saved.')
+    }, [])
 
   if (organisations.loading) {
     return <Loading />
@@ -158,7 +159,8 @@ OrgDetailPage.getInitialProps = async ({ store, query }) => {
   }
 }
 
-export default publicPage(withOrgs(OrgDetailPage))
+export const OrgDetailPageWithOrgs = withOrgs(OrgDetailPage)
+export default publicPage(OrgDetailPageWithOrgs)
 
 /* //TODO: this commented out code will likely go in the new settings tab
           <Divider />

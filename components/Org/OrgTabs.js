@@ -71,7 +71,7 @@ OrgTabs.propTypes = {
   org: PropTypes.shape({
     name: PropTypes.string.isRequired,
     info: PropTypes.shape({
-      about: PropTypes.string.isRequired,
+      about: PropTypes.string,
       followers: PropTypes.string,
       joiners: PropTypes.string,
       members: PropTypes.string,
