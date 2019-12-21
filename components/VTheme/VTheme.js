@@ -516,7 +516,6 @@ export const ContactList = styled.ul`
   li {
     list-style: none;
     color: black;
-    font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 2rem;
 
@@ -529,16 +528,8 @@ export const ContactList = styled.ul`
       }
 
       @media screen and (min-width: 988px) {
-        font-size: 2rem;
+        font-size: 1.5rem;
       }
     }
   }
-`
-
-/* Organisation styled tabs */
-
-export const OrgTabs = styled.span`
-  font-size: 1rem;
-  font-weight: 700;
-  color: #6549AA;
 `
