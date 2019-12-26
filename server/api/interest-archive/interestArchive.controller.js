@@ -5,11 +5,17 @@ const InterestArchive = require('./interestArchive')
   api/interests?op='opid' -> lists all interests associated with opid
  */
 const listInterests = async (req, res) => {
+  const sort = 'dateAdded' // todo sort by date.
   let got
   try {
     if (req.query.op) {
       const query = { opportunity: req.query.op }
-      got = await InterestArchive.find(query).populate({ path: 'person', select: 'nickname name imgUrl' }).exec()
+      got = await InterestArchive.find(query).populate({ path: 'person', select: 'nickname name imgUrl' }).sort(sort).exec()
+    } else if (req.query.me) {
+      const query = { person: req.query.me }
+      got = await InterestArchive.find(query)
+        .populate({ path: 'opportunity' })
+        .sort(sort).exec()
     } else {
       got = await InterestArchive.find().exec()
     }

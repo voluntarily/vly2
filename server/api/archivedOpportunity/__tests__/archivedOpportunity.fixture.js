@@ -1,4 +1,3 @@
-
 const { OpportunityStatus } = require('../../opportunity/opportunity.constants')
 const { regions } = require('../../location/locationData')
 
