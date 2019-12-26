@@ -1,5 +1,6 @@
 import { Icon } from 'antd'
 import styled from 'styled-components'
+import { Category } from '../../server/api/organisation/organisation.constants'
 
 const HorUl = styled.ul`
   margin:0;
@@ -9,23 +10,20 @@ const HorUl = styled.ul`
     display: inline;
     padding-right: 1em;
   }
-  
 `
 
 const OrgCategoryItem = ({ orgCategoryItem }) => {
   const categoryOptions = [
-    { label: <Icon type='bank' />, value: 'vp' },
-    { label: <Icon type='read' />, value: 'op' },
-    { label: <Icon type='thunderbolt' />, value: 'ap' },
-    { label: <Icon type='team' />, value: 'admin' },
-    { label: <Icon type='question-circle' />, value: 'other' }
+    { label: <Icon type='bank' />, value: Category.BUSINESS },
+    { label: <Icon type='read' />, value: Category.SCHOOL },
+    { label: <Icon type='thunderbolt' />, value: Category.ACTIVITYPROVIDER },
+    { label: <Icon type='team' />, value: Category.AGENCY },
+    { label: <Icon type='question-circle' />, value: Category.OTHER }
   ]
   const item = categoryOptions
-    .filter(category => category.value === orgCategoryItem)
-    .reduce(category => category.label)
-
+    .filter(category => category.value === orgCategoryItem)[0].label
   return (
-    <li>{item.label}</li>
+    <li>{item}</li>
   )
 }
 
