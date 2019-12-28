@@ -5,10 +5,10 @@ MY_DIR=$( dirname "${BASH_SOURCE[0]}" )
 source ${MY_DIR}/login-singapore
 
 # pull latest alpha image
-docker pull 585172581592.dkr.ecr.ap-southeast-1.amazonaws.com/vly2-alpha:master
+docker pull 585172581592.dkr.ecr.ap-southeast-1.amazonaws.com/vly-alpha:master
 
 # retag
-docker image tag 585172581592.dkr.ecr.ap-southeast-1.amazonaws.com/vly2-alpha:master 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-beta:master
+docker image tag 585172581592.dkr.ecr.ap-southeast-1.amazonaws.com/vly-alpha:master 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-beta:master
 
 # login to sydney
 source ${MY_DIR}/login-sydney
