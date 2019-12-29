@@ -18,3 +18,4 @@ public/static/upload/*
 public/static/upload-test/*
 .vs/
 /.test/
+dump
