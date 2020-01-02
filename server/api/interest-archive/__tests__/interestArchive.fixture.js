@@ -8,16 +8,12 @@ const interests = [
     comment: 'Invitation 2'
   },
   {
-    status: 'completed',
-    comment: 'Invitation3'
+    status: 'attended',
+    comment: 'Invitation 3'
   },
   {
-    status: 'interested',
-    comment: 'Invitation 4'
-  },
-  {
-    status: 'committed',
-    comment: 'invitation 5'
+    status: 'not attended',
+    comment: 'invitation 4'
   }
 ]
 
