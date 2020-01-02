@@ -14,6 +14,7 @@ import { FullPage, P, PageBanner, PageBannerButtons } from '../../components/VTh
 import securePage from '../../hocs/securePage'
 import reduxApi, { withHomeData, withPeople } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
+import { PersonalGoalStatus } from '../../server/api/personalGoal/personalGoal.constants'
 
 const { TabPane } = Tabs
 
@@ -123,13 +124,16 @@ class PersonHomePage extends Component {
     const vops = this.interestedOps()
     // create inverted list of goals with the pg as a child.
     // this lets us use the same goal cards
-    const personalGoals = this.props.personalGoals.data.map(pg => {
-      return ({
-        ...pg.goal,
-        personalGoal: pg,
-        status: pg.status
+    // also remove goals flagged as hidden
+    const personalGoals = this.props.personalGoals.data
+      .filter(pg => pg.status !== PersonalGoalStatus.HIDDEN)
+      .map(pg => {
+        return ({
+          ...pg.goal,
+          personalGoal: pg,
+          status: pg.status
+        })
       })
-    })
     const opsTab = (
       <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
         <Icon type='inbox' />
