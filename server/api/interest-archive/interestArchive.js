@@ -15,18 +15,15 @@ const InterestStatus = {
 
 const interestArchiveSchema = new Schema({
   ...Interest.schema.obj,
-  opportunity: { type: Schema.Types.ObjectId, ref: 'archivedOpportunity', required: true },
+  opportunity: { type: Schema.Types.ObjectId, ref: 'ArchivedOpportunity', required: true },
   status: {
     type: 'String',
     required: true,
-    default: InterestStatus.COMPLETED,
     enum: [
       InterestStatus.INTERESTED,
       InterestStatus.INVITED,
       InterestStatus.COMMITTED,
       InterestStatus.DECLINED,
-      InterestStatus.COMPLETED,
-      InterestStatus.CANCELLED,
       InterestStatus.ATTENDED,
       InterestStatus.NOTATTENDED
     ]

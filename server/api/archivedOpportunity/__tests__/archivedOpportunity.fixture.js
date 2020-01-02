@@ -1,10 +1,3 @@
-/* const opList = require('../../opportunity/__tests__/opportunity.fixture')
-const archivedOpportunityList = opList
-
-for (let i = 0; i < archivedOpportunityList.length; i++) {
-archivedOpportunityList[i].status = 'completed'
-} */
-
 const { OpportunityStatus } = require('../../opportunity/opportunity.constants')
 const { regions } = require('../../location/locationData')
 
@@ -82,5 +75,3 @@ const OpList = [
 ]
 
 module.exports = OpList
-
-// module.exports = archivedOpportunityList
