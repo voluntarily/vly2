@@ -68,6 +68,12 @@ const evaluatePersonalGoals = async (person) => {
       delete pg.dateHidden
       return Promise.resolve(pg.save())
     }
+    // close items after a week of being completed
+    if (pg.status === PersonalGoalStatus.COMPLETED &&
+      isDaysAgo(moment(pg.dateCompleted), 7)) {
+      pg.status = PersonalGoalStatus.CLOSED
+      return Promise.resolve(pg.save())
+    }
     // dump the evaluation
     try {
       /* eslint-disable no-eval */
