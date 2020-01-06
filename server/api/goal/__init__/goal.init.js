@@ -14,7 +14,7 @@ export default [
     name: 'Complete your profile',
     slug: 'goal-complete-profile',
     subtitle: 'Help us recommend volunteering opportunities relevant to you',
-    // badge:
+    // badgeclass:
     imgUrl: '/static/img/goal/goal-complete-profile.png',
     description: `Complete your profile by adding a picture, 
       skills list, where you are, your job, things you are interested 
@@ -36,7 +36,7 @@ export default [
     name: 'Get School Ready',
     slug: 'goal-school-ready',
     subtitle: 'Basic training for working with young people',
-    // badge:
+    badgeclass: 'Gp99Py5ERQGVeDFj63gizA',
     imgUrl: '/static/img/goal/goal-school-ready.png',
     description: `
 We want you as a volunteer, and the young people and children
@@ -52,14 +52,14 @@ volunteer opportunities.
     startLink: '/goal/school/ready',
     language: 'en',
     rank: 2,
-    evaluation: () => { console.log('does person have school ready badge'); return false }
+    evaluation: (personalGoal) => GoalTests.personBadged(personalGoal)
   },
   {
     group: GoalGroup.VP_NEW,
     name: 'Get School Safe',
     slug: 'goal-school-safe',
     subtitle: 'Complete the vetting required for in-school volunteering',
-    // badge:
+    // badgeclass:
     imgUrl: '/static/img/goal/goal-school-safe.png',
     description: `
 It is important that the young people and children

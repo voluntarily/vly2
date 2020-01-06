@@ -1,4 +1,5 @@
 const Person = require('./person')
+const Badge = require('../badge/badge')
 
 const personProfileCompletenessById = async (personId) => {
   const person = await Person.findById(personId).exec()
@@ -44,7 +45,13 @@ const personProfileCompleteness = (person) => {
   return { score, count }
 }
 
+const personHasBadge = async (person, badgeclass) => {
+  const count = await Badge.count({ person: person._id, badgeclass }).exec()
+  return count > 0
+}
+
 module.exports = {
   personProfileCompleteness,
-  personProfileCompletenessById
+  personProfileCompletenessById,
+  personHasBadge
 }

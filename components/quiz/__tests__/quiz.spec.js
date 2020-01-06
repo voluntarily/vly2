@@ -3,6 +3,16 @@ import { hashObj, hashObjVerify, Question, QuestionGroup, VideoQuiz } from '../q
 import quiz from './quiz.fixture'
 import { shallow } from 'enzyme'
 import sinon from 'sinon'
+import fetchMock from 'fetch-mock'
+
+// test.beforeEach(t => {
+//   t.context.mockServer = fetchMock.sandbox()
+//   global.fetch = t.context.mockServer
+// })
+
+// test.afterEach(t => {
+//   fetchMock.reset()
+// })
 
 test('Check hash', t => {
   const blankHash = hashObj({}, '')
@@ -108,19 +118,29 @@ test('Check QuestionGroup', t => {
   t.true(handleSubmit.calledWith(true))
 })
 
-test('Check VideoQuiz', t => {
-  const handleSubmit = sinon.spy()
+test('Check VideoQuiz', async t => {
+  const q = quiz[0]
+  const badgeclass = q.badgeclass
+  const mockServer = fetchMock.sandbox()
+  global.fetch = mockServer
+  const result = { status: 200 }
+  mockServer.post(`path:/api/badge/${badgeclass}`, JSON.stringify(result))
+
+  const handleCompleted = sinon.spy()
   const me = {
     email: 'testy@voluntarily.nz'
   }
 
-  const q = quiz[0]
-
   const wrapper = shallow(
-    <VideoQuiz vqa={q} me={me} onSubmit={handleSubmit} />
+    <VideoQuiz vqa={q} me={me} onCompleted={handleCompleted} />
   )
   t.is(wrapper.find('h1').first().text(), q.name)
   t.is(wrapper.find('p').first().text(), q.description)
   t.is(wrapper.find('iframe').props().src, q.src)
   t.true(wrapper.exists('QuestionGroup'))
+  const qg = wrapper.find('QuestionGroup').first()
+  await qg.props().onSubmit(false)
+  await qg.props().onSubmit(true)
+  t.true(handleCompleted.calledOnce)
+  t.true(mockServer.done())
 })

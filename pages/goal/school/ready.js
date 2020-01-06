@@ -1,14 +1,15 @@
 import securePage from '../../../hocs/securePage'
 import { FullPage } from '../../../components/VTheme/VTheme'
 import { VideoQuiz, hashObj } from '../../../components/quiz/quiz'
+import Router from 'next/router'
+import { Helmet } from 'react-helmet'
 
 const readyqs = [
   {
     name: 'Are you School Ready?',
     description: 'Watch this video to learn what you need to know when working in a school',
-    step: 1,
     src: 'https://www.youtube.com/embed/kv8GrLpfVNo',
-    next: 'ready2.qs.js',
+    badgeclass: 'Gp99Py5ERQGVeDFj63gizA',
     questions: [
       {
         name: 'tShirt',
@@ -38,15 +39,15 @@ const readyqs = [
 ]
 
 export const Ready = ({ vqa, me }) => {
-  const handleSubmit = success => {
-    if (success) {
-      // do the next thing
-      console.log('Test Passed issue badge')
-    }
+  const handleCompleted = () => {
+    Router.push('/')
   }
   return (
     <FullPage>
-      <VideoQuiz vqa={vqa} me={me} onSubmit={handleSubmit} />
+      <Helmet>
+        <title>SchoolReady - Voluntarily</title>
+      </Helmet>
+      <VideoQuiz vqa={vqa} me={me} onCompleted={handleCompleted} />
     </FullPage>
   )
 }

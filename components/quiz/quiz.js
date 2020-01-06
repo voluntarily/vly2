@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { sha256 } from 'js-sha256'
+import callApi from '../../lib/callApi'
 
 const radioStyle = {
   display: 'block',
@@ -60,15 +61,7 @@ export const QuestionGroup = ({ questions, answers, me, onSubmit }) => {
 
   const checkAnswers = e => {
     e.preventDefault()
-
-    if (hashObjVerify(form, me.email, answers)) {
-      message.success('Correct')
-      onSubmit(true)
-      // do the next thing
-    } else {
-      message.error('Incorrect - try again')
-      onSubmit(false)
-    }
+    onSubmit(hashObjVerify(form, me.email, answers))
   }
 
   const updateField = e => {
@@ -94,10 +87,31 @@ export const QuestionGroup = ({ questions, answers, me, onSubmit }) => {
     </div>)
 }
 
-export const VideoQuiz = ({ vqa, me, onSubmit }) =>
-  <>
-    <h1>{vqa.name}</h1>
-    <p>{vqa.description}</p>
-    <iframe style={{ margin: '2em' }} width='560' height='315' src={vqa.src} frameBorder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowFullScreen />
-    <QuestionGroup questions={vqa.questions} answers={vqa.hash} me={me} onSubmit={onSubmit} />
-  </>
+const issueBadge = async ({ _id, email }, badgeclass) => {
+  const body = {
+    _id,
+    email
+  }
+  await callApi(`badge/${badgeclass}`, 'POST', body)
+}
+
+/* Show a video followed by some questions,
+ when answers are correct issue a badge */
+export const VideoQuiz = ({ vqa, me, onCompleted }) => {
+  const handleSubmit = success => {
+    if (success) {
+      message.success('Success, issuing badge')
+      if (vqa.badgeclass) { issueBadge(me, vqa.badgeclass) }
+      onCompleted()
+    } else {
+      message.error('Incorrect - try again')
+    }
+  }
+  return (
+    <>
+      <h1>{vqa.name}</h1>
+      <p>{vqa.description}</p>
+      <iframe style={{ margin: '2em' }} width='560' height='315' src={vqa.src} frameBorder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowFullScreen />
+      <QuestionGroup questions={vqa.questions} answers={vqa.hash} me={me} onSubmit={handleSubmit} />
+    </>)
+}
