@@ -16,6 +16,7 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import OpEditPage from './opeditpage'
 import OpUnavailablePage from './opunavailablepage'
+import InterestSection from '../../components/Interest/InterestSection'
 
 const blankOp = {
   name: '',
@@ -43,6 +44,7 @@ export class OpDetailPage extends Component {
     this.canManageInterests = this.canManageInterests.bind(this)
     this.canRegisterInterest = this.canRegisterInterest.bind(this)
     this.retrieveOpportunity = this.retrieveOpportunity.bind(this)
+    this.isOrgAdmin = this.isOrgAdmin.bind(this)
   }
 
   static async getInitialProps ({ store, query }) {
@@ -85,7 +87,6 @@ export class OpDetailPage extends Component {
   }
 
   async createOpportunity (op) {
-    console.log('createOpportunity:', op)
     const res = await this.props.dispatch(
       reduxApi.actions.opportunities.put(
         { id: op._id },
@@ -139,9 +140,15 @@ export class OpDetailPage extends Component {
     )
   }
 
+  isOrgAdmin (orgid, meid) {
+    this.props.members.data.find(m => {
+      return orgid === m.organisation._id && meid === m.person && MemberStatus.ORGADMIN === m.status
+    }
+    )
+  }
+
   canEdit (op) {
-    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
-    return this.isOwner(op) || isOrgAdmin || this.isAdmin()
+    return (this.isOwner(op) || this.isOrgAdmin() || this.isAdmin())
   }
 
   canManageInterests (op) {
@@ -221,6 +228,9 @@ export class OpDetailPage extends Component {
     }
 
     const op = this.retrieveOpportunity()
+    if (op.offerOrg && this.props.me._id) {
+      this.isOrgAdmin(op.offerOrg._id, this.props.me._id)
+    }
 
     if (op && this.state.editing) {
       return (
@@ -249,35 +259,56 @@ export class OpDetailPage extends Component {
             />
             <Divider />
             {this.canEdit(op) && (
-              <OpSectionGrid>
-                <h2>Danger zone</h2>
-                <div>
-                  <h4>
-                    {' '}
-                    These buttons will permanantly end your activity - be
-                    careful!
-                  </h4>
-                  <OpOwnerManageInterests
-                    canManageInterests={this.canManageInterests(op)}
-                    op={op}
-                    confirmOpportunity={this.confirmOpportunity}
-                    cancelOpportunity={this.cancelOpportunity}
-                  />
-                  <Button
-                    id='editOpBtn'
-                    style={{ marginBottom: '1rem' }}
-                    type='primary'
-                    shape='round'
-                    onClick={() => this.setState({ editing: true })}
-                  >
-                    <FormattedMessage
-                      id='op.edit'
-                      defaultMessage='Edit'
-                      description='Button to edit an opportunity'
+              <>
+                {this.canManageInterests(op) &&
+                  <>
+                    <OpSectionGrid>
+                      <h2>
+                        <FormattedMessage
+                          id='interestSection.name'
+                          defaultMessage='Interested Volunteers'
+                          description='label for interest table on op detail page'
+                        />
+                      </h2>
+
+                      <div>
+                        <InterestSection opid={op._id} />
+                      </div>
+                    </OpSectionGrid>
+
+                    <Divider />
+                  </>}
+
+                <OpSectionGrid>
+                  <h2>Danger zone</h2>
+                  <div>
+                    <h4>
+                      {' '}
+                      These buttons will permanantly end your activity - be
+                      careful!
+                    </h4>
+                    <OpOwnerManageInterests
+                      canManageInterests={this.canManageInterests(op)}
+                      op={op}
+                      confirmOpportunity={this.confirmOpportunity}
+                      cancelOpportunity={this.cancelOpportunity}
                     />
-                  </Button>
-                </div>
-              </OpSectionGrid>
+                    <Button
+                      id='editOpBtn'
+                      style={{ marginBottom: '1rem' }}
+                      type='primary'
+                      shape='round'
+                      onClick={() => this.setState({ editing: true })}
+                    >
+                      <FormattedMessage
+                        id='op.edit'
+                        defaultMessage='Edit'
+                        description='Button to edit an opportunity'
+                      />
+                    </Button>
+                  </div>
+                </OpSectionGrid>
+              </>
             )}
           </FullPage>
         )

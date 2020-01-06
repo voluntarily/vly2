@@ -1,13 +1,12 @@
 import test from 'ava'
 import Member from '../member'
 import { MemberStatus } from '../member.constants'
-import { addMember } from '../member.controller'
 import Organisation from '../../organisation/organisation'
 import Person from '../../person/person'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
 import orgs from '../../organisation/__tests__/organisation.fixture'
-import { findOrgByPersonIdAndCategory } from '../member.lib'
+import { addMember, findOrgByPersonIdAndCategory } from '../member.lib'
 
 test.before('before connect to database', async (t) => {
   try {

@@ -15,7 +15,6 @@ const PersonFields = {
   NAME: 'name',
   ABOUT: 'about',
   PHONE: 'phone',
-  GENDER: 'gender',
   LANGUAGE: 'language',
   AVATAR: 'imgUrl',
   FACEBOOK: 'facebook',

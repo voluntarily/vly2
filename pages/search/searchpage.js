@@ -5,7 +5,7 @@ import { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import TitleSection from '../../components/LandingPageComponents/TitleSectionSub'
+import SectionTitle from '../../components/LandingPageComponents/SectionSubtitle'
 import DatePickerType from '../../components/Op/DatePickerType.constant'
 import OpListSection from '../../components/Op/OpListSection'
 import FilterContainer from '../../components/Search/FilterContainer'
@@ -49,13 +49,14 @@ export class SearchPage extends Component {
     filter: {
       date: []
     },
+    locationFilterVisible: false,
     opOrderBy: 'date'
   }
 
   constructor (props) {
     super(props)
     this.state.search = props.search
-    this.sortHandler = this.sortHandler.bind(this)
+    this.handleSort = this.handleSort.bind(this)
   }
 
   static getDerivedStateFromProps ({ search }) {
@@ -128,7 +129,7 @@ export class SearchPage extends Component {
     return formatDateBaseOn(this.state.datePickerType, this.state.filter.date)
   }
 
-  sortHandler = (value) => {
+  handleSort = (value) => {
     this.setState({
       opOrderBy: value
     })
@@ -173,7 +174,7 @@ export class SearchPage extends Component {
             <title>Voluntarily - Search Results</title>
           </Helmet>
           <SearchPageContainer>
-            <TitleSection
+            <SectionTitle
               title={
                 <FormattedMessage
                   defaultMessage={'Search results for "{search}"'}
@@ -182,7 +183,7 @@ export class SearchPage extends Component {
                 />
               }
             />
-            <OpOrderby handleSort={this.sortHandler} />
+            <OpOrderby onChange={this.handleSort} />
             <FilterContainer
               onClose={this.handleClose}
               filterName={LOCATION_FILTER_NAME}

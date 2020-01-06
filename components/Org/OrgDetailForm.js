@@ -281,7 +281,15 @@ class OrgDetailForm extends Component {
                   />
                 </h3>
               </TitleContainer>
-              <p>Tell the world a little bit about your organisation.</p>
+              <p>
+                <FormattedMessage
+                  id='orgDetail.form.about.description'
+                  values={{ br: <br /> }}
+                  defaultMessage='Tell the world about your school or organisation.{br}{br}
+                  This is your opportunity to ‘sell’ your school or organisation to the rest of the Voluntarily community. Who are you? What do you do? What are your values and your motivations for using Voluntarily?'
+                  description='Title for about section of organisation edit form'
+                />
+              </p>
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -369,13 +377,13 @@ class OrgDetailForm extends Component {
                   </DescriptionContainer>
                   <InputContainer>
                     <ShortInputContainer>
-                      <Form.Item htmlId='decile' label={orgDecile}>
+                      <Form.Item label={orgDecile}>
                         {getFieldDecorator('decile', {})(
                           <InputNumber min={1} max={10} className='decile' />
                         )}
                       </Form.Item>
 
-                      <Form.Item htmlId='age-range' label={orgAgeRange}>
+                      <Form.Item label={orgAgeRange}>
                         {getFieldDecorator('ageRange', {
                           rules: [
                             {
@@ -597,7 +605,7 @@ OrgDetailForm.propTypes = {
   org: PropTypes.shape({
     name: PropTypes.string,
     info: PropTypes.shape({
-      about: PropTypes.string.isRequired,
+      about: PropTypes.string,
       followers: PropTypes.string,
       joiners: PropTypes.string,
       members: PropTypes.string,

@@ -25,6 +25,12 @@ test.before('before connect to database', async (t) => {
     const members = [
       {
         person: t.context.andrew._id,
+        organisation: t.context.orgs[1]._id,
+        validation: 'follower',
+        status: MemberStatus.FOLLOWER
+      },
+      {
+        person: t.context.andrew._id,
         organisation: t.context.orgs[0]._id,
         validation: 'orgAdmin',
         status: MemberStatus.ORGADMIN

@@ -10,6 +10,8 @@ import organisations from '../../../server/api/organisation/__tests__/organisati
 import { Category } from '../../../server/api/organisation/organisation.constants'
 import { MockWindowScrollTo } from '../../../server/util/mock-dom-helpers'
 
+MockWindowScrollTo.replaceForTest(test, global)
+
 test.before('Setup Organisations fixtures', (t) => {
   // not using mongo or server here so faking ids
   organisations.map(p => { p._id = objectid().toString() })
@@ -77,8 +79,6 @@ test('Age range field is shown when organisation category is school', async t =>
 })
 
 test('Fields are submitted', async t => {
-  global.window.scrollTo = new MockWindowScrollTo().scrollTo
-
   const submitOp = sinon.spy()
 
   // Change the text value of an input

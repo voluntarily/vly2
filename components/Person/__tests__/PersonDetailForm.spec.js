@@ -8,8 +8,11 @@ import tagList from '../../../server/api/tag/__tests__/tag.fixture'
 import PersonDetailForm from '../PersonDetailForm'
 import sinon from 'sinon'
 import people from '../../../server/api/person/__tests__/person.fixture'
+import { MockWindowScrollTo } from '../../../server/util/mock-dom-helpers'
 
 const { sortedLocations } = require('../../../server/api/location/locationData')
+
+MockWindowScrollTo.replaceForTest(test, global)
 
 test.before('Setup People fixtures', (t) => {
   // not using mongo or server here so faking ids
