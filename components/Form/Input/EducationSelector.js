@@ -24,10 +24,11 @@ const EducationSelector = ({ onChange, value, width }) => {
 
 EducationSelector.GetInitialProps = async () => {
   const ed = await fetch('/api/education')
-  // setEducationLevels(ed)
-  console.log(ed)
-}
 
+  console.log(ed)
+
+  return { ed }
+}
 
 EducationSelector.propTypes = {
   value: PropTypes.string,
