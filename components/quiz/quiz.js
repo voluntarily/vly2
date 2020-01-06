@@ -17,8 +17,14 @@ const Q = styled.div`
     display: block;
   }
 `
+
+/* create a hash of the object by converting to a sorted array of
+ key-value pairs, adding the key and output as a JSON string
+ before using sha256 hash.
+ hash is the same for all objects 1 level deep.
+*/
 export const hashObj = (obj, key) => {
-  // must canonicalise the object
+  // canonicalise the object, so order of keys is consistent
   const canon = Object.keys(obj)
     .sort(function (a, b) { return a.localeCompare(b) })
     .map(key => [key, obj[key]])
@@ -27,7 +33,7 @@ export const hashObj = (obj, key) => {
   return answerhash
 }
 
-const checkObj = (obj, key, hash) => {
+export const hashObjVerify = (obj, key, hash) => {
   return hashObj(obj, key) === hash
 }
 
@@ -55,7 +61,7 @@ export const QuestionGroup = ({ questions, answers, me, onSubmit }) => {
   const checkAnswers = e => {
     e.preventDefault()
 
-    if (checkObj(form, me.email, answers)) {
+    if (hashObjVerify(form, me.email, answers)) {
       message.success('Correct')
       onSubmit(true)
       // do the next thing
@@ -88,7 +94,7 @@ export const QuestionGroup = ({ questions, answers, me, onSubmit }) => {
     </div>)
 }
 
-export const VideoQuestions = ({ vqa, me, onSubmit }) =>
+export const VideoQuiz = ({ vqa, me, onSubmit }) =>
   <>
     <h1>{vqa.name}</h1>
     <p>{vqa.description}</p>

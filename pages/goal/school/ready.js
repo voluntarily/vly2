@@ -1,6 +1,6 @@
 import securePage from '../../../hocs/securePage'
 import { FullPage } from '../../../components/VTheme/VTheme'
-import { VideoQuestions, hashObj } from '../../../components/quiz/quiz'
+import { VideoQuiz, hashObj } from '../../../components/quiz/quiz'
 
 const readyqs = [
   {
@@ -37,7 +37,7 @@ const readyqs = [
   }
 ]
 
-const Ready = ({ vqa, me }) => {
+export const Ready = ({ vqa, me }) => {
   const handleSubmit = success => {
     if (success) {
       // do the next thing
@@ -46,7 +46,7 @@ const Ready = ({ vqa, me }) => {
   }
   return (
     <FullPage>
-      <VideoQuestions vqa={vqa} me={me} onSubmit={handleSubmit} />
+      <VideoQuiz vqa={vqa} me={me} onSubmit={handleSubmit} />
     </FullPage>
   )
 }
