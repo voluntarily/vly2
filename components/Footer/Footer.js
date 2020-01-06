@@ -90,7 +90,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
       }}
     />
     <FooterContainer>
-      <FooterLogo src='.././static/vlogo.svg' />
+      <FooterLogo src='/static/vlogo.svg' />
       <FooterText>
         <P>
           <FormattedMessage
