@@ -370,7 +370,7 @@ class PersonDetailForm extends Component {
                     }
                   ]
                 })(<Input />)}
-                <ImageUpload setImgUrl={this.setImgUrl} />
+                <ImageUpload setImgUrl={this.setImgUrl} usages='profile-photo' />
               </Form.Item>
             </InputContainer>
           </FormGrid>
