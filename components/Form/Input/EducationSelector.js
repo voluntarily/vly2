@@ -2,6 +2,7 @@ import { Select } from 'antd'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import fetch from 'isomorphic-fetch'
+import renderEmpty from 'antd/lib/config-provider/renderEmpty';
 
 const { Option } = Select
 
@@ -24,8 +25,7 @@ const EducationSelector = ({ onChange, value, width }) => {
 
 EducationSelector.GetInitialProps = async () => {
   const ed = await fetch('/api/education')
-
-  console.log(ed)
+  // console.log(ed)
 
   return { ed }
 }
