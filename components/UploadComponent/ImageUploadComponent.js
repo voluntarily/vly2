@@ -31,7 +31,7 @@ class ImageUpload extends Component {
     this.uppy.addUploader(this.onUpload)
   }
 
-  onUpload (fileIDs, usages) {
+  onUpload (fileIDs) {
     const file = this.uppy.getFile(fileIDs[0])
     const FR = new window.FileReader()
     const setImgUrl = this.props.setImgUrl
