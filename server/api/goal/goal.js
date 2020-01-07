@@ -16,8 +16,8 @@ const goalSchema = new Schema({
   // subtitle - a sentence that describes the purpose of the goal
   subtitle: { type: 'String' },
 
-  // badge - the name and ID of the badge that will be issued on completion
-  badge: { type: Schema.Types.ObjectId, ref: 'Badge', required: false },
+  // badgeclass - the class of the badge that will be issued on completion
+  badgeclass: { type: 'String' },
 
   // imgUrl - a picture that illustrates the goal
   imgUrl: { type: 'String', default: '/static/img/goal/goal.png' },
