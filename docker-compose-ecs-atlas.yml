@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: 585172581592.dkr.ecr.ap-southeast-1.amazonaws.com/vly1-main-repo:latest
+    image: 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly1-main-repo:latest
     ports:
       - "${WEB_PORT:-80}:3122"
     environment:

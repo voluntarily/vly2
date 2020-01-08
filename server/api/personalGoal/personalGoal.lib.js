@@ -61,24 +61,35 @@ const evaluatePersonalGoals = async (person) => {
     .exec()
   // for each goal see it its status has changed
   await Promise.all(pgs.map(async pg => {
-    // unhide items after a delay
-    if (pg.status === PersonalGoalStatus.HIDDEN &&
-       isDaysAgo(moment(pg.dateHidden), 7)) {
-      pg.status = PersonalGoalStatus.QUEUED
-      delete pg.dateHidden
-      return Promise.resolve(pg.save())
-    }
-    // dump the evaluation
-    try {
-      /* eslint-disable no-eval */
-      const ev = eval(pg.goal.evaluation)
-      const isCompleted = await ev(pg)
-      if (isCompleted) {
-        pg.status = PersonalGoalStatus.COMPLETED
-        return Promise.resolve(pg.save())
-      }
-    } catch (e) {
-      return Promise.reject(e)
+    switch (pg.status) {
+      case PersonalGoalStatus.QUEUED: // goal has been issued but not started. initial state
+      case PersonalGoalStatus.ACTIVE: // goal has been started but not finished - in progress
+        try {
+          /* eslint-disable no-eval */
+          const ev = eval(pg.goal.evaluation)
+          const isCompleted = await ev(pg)
+          if (isCompleted) {
+            pg.status = PersonalGoalStatus.COMPLETED
+            return Promise.resolve(pg.save())
+          }
+        } catch (e) {
+          return Promise.reject(e)
+        }
+        break
+      case PersonalGoalStatus.COMPLETED: // goal has been completed - met its evaluation test
+        // close items after a week of being completed
+        if (isDaysAgo(moment(pg.dateCompleted), 7)) {
+          pg.status = PersonalGoalStatus.CLOSED
+          return Promise.resolve(pg.save())
+        }
+        break
+      case PersonalGoalStatus.HIDDEN: // goal has been hidden (but not deleted)
+        // unhide items after a delay
+        if (isDaysAgo(moment(pg.dateHidden), 7)) {
+          pg.status = PersonalGoalStatus.QUEUED
+          delete pg.dateHidden
+          return Promise.resolve(pg.save())
+        }
     }
   }))
 }

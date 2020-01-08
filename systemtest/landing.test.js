@@ -11,5 +11,5 @@ test('Test we can search from landing page', async t => { // eslint-disable-line
   await t
     .typeText(ReactSelector('Search'), 'robots')
     .pressKey('enter')
-    .expect(ReactSelector('SearchPage TitleSectionSub').innerText, { timeout: 10000 }).eql('Search results for "robots"')
+    .expect(ReactSelector('SearchPage SectionSubtitle').innerText, { timeout: 10000 }).eql('Search results for "robots"')
 })

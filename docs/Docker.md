@@ -18,7 +18,7 @@ Docker-compose allows you to run up multiple docker containers and links them to
 
 ### Start the Containers
 
-    docker-compose docker-compose.yml up -d --build
+    docker-compose -f docker-compose.yml up -d --build
 
 Note this may take a few minutes the first time you run it as it will download some images.
 Also once the command returns the services are still starting up so it will be a minute before you can visit the webpage.

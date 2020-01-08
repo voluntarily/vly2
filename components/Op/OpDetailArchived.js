@@ -53,7 +53,7 @@ const editTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Edit Activity</span>
 )
 
-const TabContainer = styled.div`
+const ProfileSection = styled.div`
   margin-top: 2rem;
 `
 
@@ -83,7 +83,7 @@ export function OpDetailArchived ({
   const endDate = op.date[1]
     ? '  →  ' + moment(op.date[1]).format('h:mmA · ddd DD/MM/YYYY')
     : ' '
-  const img = op.imgUrl || '.././static/missingimage.svg'
+  const img = op.imgUrl || '/static/missingimage.svg'
 
   const shadowStyle = { overflow: 'visible', textAlign: 'center' }
 
@@ -125,7 +125,7 @@ export function OpDetailArchived ({
 
         </Right>
       </HalfGrid>
-      <TabContainer>
+      <ProfileSection>
         <Tabs
           style={shadowStyle}
           defaultActiveKey='1'
@@ -185,7 +185,7 @@ export function OpDetailArchived ({
           {canEdit && <TabPane tab={manageTab} key='4' />}
           {canEdit && <TabPane tab={editTab} key='5' />}
         </Tabs>
-      </TabContainer>
+      </ProfileSection>
     </section>
   )
 }

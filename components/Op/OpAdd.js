@@ -8,7 +8,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 
-const OpAdd = ({ roles, ...props }) => {
+const OpAdd = ({ roles }) => {
   if (roles && roles.includes('opportunityProvider')) {
     return (
       <Link href='/op/new'>
