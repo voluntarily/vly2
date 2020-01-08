@@ -11,7 +11,7 @@ const resizeImage = async (imageBuffer, width, height) => {
 
     if (width || height)
         resizedImage = resizedImage.resize(width, height, {
-            fit: 'contain'
+            fit: 'inside'
         })
 
     return new Promise((resolve, reject) => {
