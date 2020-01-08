@@ -95,13 +95,16 @@ const storeFileSystemAsync = async (imageBuffer, filename) => {
 }
 /**
  * 
- * @param {Buffer} imageBuffer 
- * @param {String} originalFilename 
+ * @param {Buffer} imageBuffer A buffer object of the image data.
+ * @param {String} filename The filename to save the image as.
  */
-const storeAwsAsync = async (imageBuffer, originalFilename) => {
-  return await cloudUploadService({ image: imageBuffer, file: originalFilename })
+const storeAwsAsync = async (imageBuffer, filename) => {
+  return await cloudUploadService({ image: imageBuffer, file: filename })
 }
 
+/**
+ * Where should files be stored?
+ */
 const getStorageLocation = () => {
   // If AWS is configured, store there otherwise use the file system
   if (config.AWS_ACCESS_KEY_ID && config.AWS_SECRET_ACCESS_KEY) {
@@ -113,7 +116,7 @@ const getStorageLocation = () => {
 
 /**
  * 
- * @param {Buffer} imageBuffer 
+ * @param {Buffer} imageBuffer A buffer object of the image data.
  * @param {String} filename The filename to save the image as.
  */
 const storeAsync = async (imageBuffer, filename) => {
