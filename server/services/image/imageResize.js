@@ -9,8 +9,6 @@ const sharp = require('sharp')
 const resizeImage = async (imageBuffer, width, height) => {
     let resizedImage = sharp(imageBuffer)
 
-    console.log(`Resize to ${width} x ${height}`)
-
     if (width || height)
         resizedImage = resizedImage.resize(width, height, {
             fit: 'contain'
