@@ -188,6 +188,7 @@ PersonDetail.propTypes = {
     website: PropTypes.string,
     pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
+    imgUrlSm: PropTypes.string,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
         'admin',

@@ -46,7 +46,7 @@ const Navigation = ({ items, defaultItem, router, me, ...props }) => {
           <Link href={me && me._id ? `/people/${me._id}` : 'auth/sign-in'}>
             <Avatar
               size='small'
-              src={me && me.imgUrl}
+              src={me && me.imgUrlSm}
               icon='user'
             />
           </Link>

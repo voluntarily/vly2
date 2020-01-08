@@ -16,7 +16,8 @@ const personSchema = new Schema({
   about: { type: 'String', default: '' }, // person description
   location: { type: 'String', default: '' },
   phone: { type: 'String', required: false }, // +64 27 7031007
-  imgUrl: { type: 'String', default: '/static/img/person/person.png' }, // url to image
+  imgUrl: { type: 'String', default: '/static/img/person/person.png' }, // url to large profile image (256x256)
+  imgUrlSm: { type: 'String', default: '/static/img/person/person.png' }, // url to small profile image (24x24)
   pronoun: { type: 'Object', default: { subject: 'they', object: 'them', possessive: 'their' } },
   language: { type: 'String', default: 'EN', lowercase: true }, // en, mi, fr etc
   website: { type: 'String', required: false },

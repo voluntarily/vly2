@@ -37,7 +37,7 @@ class ImageUpload extends Component {
     const setImgUrl = this.props.setImgUrl
     FR.onloadend = e => {
       callApi('images', 'post', { image: e.currentTarget.result, file: file.name, usages: this.props.usages }).then(response => {
-        setImgUrl(response.imageUrl)
+        setImgUrl(response.imageUrl, response.sizeVariants)
       },
       error => {
         message.error('An error occured: ' + error.status + ' ' + error.statusText)
