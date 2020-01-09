@@ -15,14 +15,9 @@ function NoResult (props) {
   const FormattedMsg = () => {
     return (
       <FormattedMessage
-        id='{id}'
-        defaultMessage='{msg}'
-        description='{description}'
-        values={{
-          id: id,
-          msg: msg,
-          description: description
-        }}
+        id={id}
+        defaultMessage={msg}
+        description={description}
       />
     )
   }
