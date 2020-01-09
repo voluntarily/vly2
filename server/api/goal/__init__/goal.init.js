@@ -52,7 +52,7 @@ volunteer opportunities.
     startLink: '/goal/school/ready',
     language: 'en',
     rank: 2,
-    evaluation: (personalGoal) => GoalTests.personBadged(personalGoal)
+    evaluation: (personalGoal) => { return GoalTests.personBadged(personalGoal) }
   },
   {
     group: GoalGroup.VP_NEW,
@@ -79,9 +79,9 @@ This goal will collect the required information and your permission to run the c
   },
   {
     group: GoalGroup.VP_NEW,
-    name: 'Complete first volunteering activity',
+    name: 'Find first volunteering activity',
     subtitle: 'Its time to find your first volunteering opportunity.',
-    slug: 'goal-complete-first-activity',
+    slug: 'goal-find-first-activity',
     imgUrl: '/static/img/goal/goal-first-volunteer.png',
     description: `
 Its time to find your first volunteering opportunity.
@@ -91,14 +91,12 @@ Or you can click *Start* here to open the search page.
 
 Once you find something click the <strong>Interested</strong> button.
 You can leave a message and the organiser will be notified.
-
-You'll get an email notification and can accept or decline the invitation.
 `,
     preconditions: [],
     startLink: '/search',
     language: 'en',
     rank: 3,
-    evaluation: () => { console.log('does person have first-volunteer-activity badge'); return false }
+    evaluation: (personalGoal) => { return GoalTests.personInterested(personalGoal) }
   },
 
   /*********************************************/
