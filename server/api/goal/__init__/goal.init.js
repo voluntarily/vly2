@@ -59,7 +59,7 @@ volunteer opportunities.
     name: 'Get School Safe',
     slug: 'goal-school-safe',
     subtitle: 'Complete the vetting required for in-school volunteering',
-    // badgeclass:
+    badgeclass: 'I-1iMG8UT827wCrRXVDzzg', // schoolsafe-test
     imgUrl: '/static/img/goal/goal-school-safe.png',
     description: `
 It is important that the young people and children
@@ -75,7 +75,7 @@ This goal will collect the required information and your permission to run the c
     startLink: '/goal/school/safe',
     language: 'en',
     rank: 3,
-    evaluation: () => { console.log('does person have school safe badge'); return false }
+    evaluation: (personalGoal) => { return GoalTests.personBadged(personalGoal) }
   },
   {
     group: GoalGroup.VP_NEW,
