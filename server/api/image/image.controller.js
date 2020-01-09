@@ -7,6 +7,8 @@ const { cloudUploadService } = require('./cloudImageUpload')
 const { resizeImage } = require('../../services/image/imageResize')
 
 /**
+ * A list of predefined usages of images and their automatically generated sizes.
+ * 
  * @type {Map<String, {
     name: string,
     width: Number,
@@ -20,11 +22,11 @@ const uploadImage = async (req, res) => {
     const { image: imageBin, file: originalFilename } = req.body
     const imageBuffer = Buffer.from(imageBin, 'binary')
 
-    // 1. Store the original file - do this so we can always go back and re-process the raw file
+    // 1. Store the original file - do this so we can always go back and re-process the raw file.
     // 2. Then recreate it at full dimensions to strip out any embedded data and meta information (such as GPS coords.)
-    //    This is the file we will serve publicly and not the original file
+    //    This is the file we will serve publicly and not the original file.
     // 3. If the intended usage of this image is known, then produce specific size variants, such as for the
-    //    profile photo we need a tiny image and a full size image and the frontend will request the approp. one.
+    //    profile photo we need a tiny image and a large sized image.
 
     // Store the raw file
     const originalFile = storeAsync(imageBuffer, originalFilename)
@@ -42,7 +44,7 @@ const uploadImage = async (req, res) => {
     const [, imageUrl, ...usageUrls] = imageUrls
 
     const result = {
-      status: 200, // TODO: Remove - this as we should just use HTTP status code
+      status: 200, // TODO: Remove - we should just use HTTP status code
       message: 'OK', // TODO: Remove - the HTTP status code is enough to indicate success
       imageUrl,
       sizeVariants: Object.fromEntries(usageUrls.map((variant, index) => [usages[index].name, variant]))
