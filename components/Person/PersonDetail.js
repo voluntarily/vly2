@@ -34,7 +34,10 @@ const ProfileGrid = styled.div`
 `
 
 const ProfileImage = styled.img`
-  width: 100%;
+  max-width: 100%;
+  min-height: 256px;
+  display: block;
+  margin: 0 auto;
 `
 
 const DetailItem = styled.div`
