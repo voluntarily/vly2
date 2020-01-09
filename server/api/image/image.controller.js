@@ -1,5 +1,5 @@
 const fs = require('fs-extra')
-const path = require('path');
+const path = require('path')
 const cuid = require('cuid')
 const slug = require('slug')
 const { config } = require('../../../config/config')
@@ -33,13 +33,13 @@ const uploadImage = async (req, res) => {
 
     // Create any size variants
     const usages = _usages.get(req.body.usages) || []
-    const usageTasks = usages.map(usage => 
+    const usageTasks = usages.map(usage =>
       resizeAndStoreAsync(imageBuffer, usage.width, usage.height, originalFilename, usage.name)
     )
 
     // Wait for all our storage/resize operations to finish
     const imageUrls = await Promise.all([originalFile, originalRegenerated, ...usageTasks])
-    const [ , imageUrl, ...usageUrls ] = imageUrls
+    const [, imageUrl, ...usageUrls] = imageUrls
 
     const result = {
       status: 200, // TODO: Remove - this as we should just use HTTP status code
@@ -94,7 +94,7 @@ const storeFileSystemAsync = async (imageBuffer, filename) => {
   return publicPath
 }
 /**
- * 
+ *
  * @param {Buffer} imageBuffer A buffer object of the image data.
  * @param {String} filename The filename to save the image as.
  */
@@ -108,14 +108,14 @@ const storeAwsAsync = async (imageBuffer, filename) => {
 const getStorageLocation = () => {
   // If AWS is configured, store there otherwise use the file system
   if (config.AWS_ACCESS_KEY_ID && config.AWS_SECRET_ACCESS_KEY) {
-    return 'aws';
+    return 'aws'
   } else {
     return 'fs'
   }
 }
 
 /**
- * 
+ *
  * @param {Buffer} imageBuffer A buffer object of the image data.
  * @param {String} filename The filename to save the image as.
  */
@@ -134,13 +134,13 @@ const storeAsync = async (imageBuffer, filename) => {
 }
 
 /**
- * 
- * @param {string} name 
+ *
+ * @param {string} name
  * @param {{
     name: string,
     width: Number,
     height: Number
-  }[]} sizeVariants 
+  }[]} sizeVariants
  */
 const registerUsage = (name, sizeVariants) => {
   _usages.set(name, sizeVariants)

@@ -7,30 +7,30 @@ const sharp = require('sharp')
  * @param {Number} height The height of the resized image.
  */
 const resizeImage = async (imageBuffer, width, height) => {
-    let resizedImage = sharp(imageBuffer)
+  let resizedImage = sharp(imageBuffer)
 
-    if (width || height)
-        resizedImage = resizedImage.resize(width, height, {
-            fit: 'inside'
-        })
-
-    return new Promise((resolve, reject) => {
-        resizedImage
-            .png()
-            .toBuffer((err, data, info) => {
-                if (err) {
-                    reject(err)
-                }
-                else {
-                    resolve({
-                        data,
-                        info
-                    })
-                }
-            })
+  if (width || height) {
+    resizedImage = resizedImage.resize(width, height, {
+      fit: 'inside'
     })
+  }
+
+  return new Promise((resolve, reject) => {
+    resizedImage
+      .png()
+      .toBuffer((err, data, info) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve({
+            data,
+            info
+          })
+        }
+      })
+  })
 }
 
 module.exports = {
-    resizeImage
+  resizeImage
 }
