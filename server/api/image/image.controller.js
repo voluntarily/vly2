@@ -69,7 +69,7 @@ const resizeAndStoreAsync = async (imageBuffer, width, height, originalFilename,
   const name = path.parse(originalFilename).name
   const filename = `${name}_${sizeVariantName}.png`
 
-  return await storeAsync(resizedImage, filename)
+  return storeAsync(resizedImage, filename)
 }
 
 /***
@@ -92,14 +92,6 @@ const storeFileSystemAsync = async (imageBuffer, filename) => {
   await fs.writeFile(serverPath, imageBuffer)
 
   return publicPath
-}
-/**
- *
- * @param {Buffer} imageBuffer A buffer object of the image data.
- * @param {String} filename The filename to save the image as.
- */
-const storeAwsAsync = async (imageBuffer, filename) => {
-  return await cloudUploadService({ image: imageBuffer, file: filename })
 }
 
 /**
@@ -124,9 +116,9 @@ const storeAsync = async (imageBuffer, filename) => {
 
   switch (location) {
     case 'fs':
-      return await storeFileSystemAsync(imageBuffer, filename)
+      return storeFileSystemAsync(imageBuffer, filename)
     case 'aws':
-      return await storeAwsAsync(imageBuffer, filename)
+      return cloudUploadService({ image: imageBuffer, file: filename })
 
     default:
       throw new Error(`Unknown storage location key: '${location}'`)
