@@ -55,6 +55,7 @@
     "email-templates": "^6.0.4",
     "enzyme-adapter-react-16": "^1.15.1",
     "eslint-plugin-html": "^6.0.0",
+    "exif-reader": "^1.0.3",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "fs-extra": "^8.1.0",
