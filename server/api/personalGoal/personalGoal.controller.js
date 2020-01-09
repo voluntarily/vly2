@@ -9,7 +9,11 @@ const listPersonalGoals = async (req, res) => {
   // if (!req.session || !req.session.isAuthenticated) { return res.status(403).end() }
 
   const me = req.query.meid
-  await evaluatePersonalGoals(me, req)
+  try {
+    await evaluatePersonalGoals(me, req)
+  } catch (err) {
+    res.status(500)
+  }
   // Return enough info for a goalCard
   const got = await PersonalGoal.find({ person: me })
     .populate({ path: 'goal' })
