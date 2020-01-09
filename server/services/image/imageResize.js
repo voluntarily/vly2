@@ -3,8 +3,8 @@ const sharp = require('sharp')
 /**
  * Resize an image.
  * @param {Buffer} imageBuffer A buffer object of the image data.
- * @param {Number} width
- * @param {Number} height
+ * @param {Number} width The width of the resized image.
+ * @param {Number} height The height of the resized image.
  */
 const resizeImage = async (imageBuffer, width, height) => {
     let resizedImage = sharp(imageBuffer)
@@ -19,7 +19,7 @@ const resizeImage = async (imageBuffer, width, height) => {
             .png()
             .toBuffer((err, data, info) => {
                 if (err) {
-                    reject()
+                    reject(err)
                 }
                 else {
                     resolve({
