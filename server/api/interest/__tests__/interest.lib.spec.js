@@ -1,6 +1,5 @@
 import test from 'ava'
 import Interest from '../interest'
-import { InterestStatus } from '../interest.constants'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
@@ -8,9 +7,7 @@ import Opportunity from '../../opportunity/opportunity'
 import ops from '../../opportunity/__tests__/opportunity.fixture'
 import Organisation from '../../organisation/organisation'
 import orgs from '../../organisation/__tests__/organisation.fixture'
-
 import { personInterestCount } from '../interest.lib'
-import objectid from 'objectid'
 
 test.before('before connect to database', async (t) => {
   try {
@@ -62,5 +59,4 @@ test.serial('personInterestCount ', async t => {
 
   count = await personInterestCount(t.context.alice._id)
   t.is(count, 1)
-
 })
