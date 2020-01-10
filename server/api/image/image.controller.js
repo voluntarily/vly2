@@ -75,6 +75,8 @@ const resizeAndStoreAsync = async (imageBuffer, width, height, originalFilename,
 }
 
 /***
+ * Store an image on the file system.
+ * 
  * @param {Buffer} imageBuffer A buffer object of the image data.
  * @param {String} filename The filename to save the image as.
  */
@@ -109,7 +111,8 @@ const getStorageLocation = () => {
 }
 
 /**
- *
+ * Store the image file.
+ * 
  * @param {Buffer} imageBuffer A buffer object of the image data.
  * @param {String} filename The filename to save the image as.
  */
@@ -128,7 +131,8 @@ const storeAsync = async (imageBuffer, filename) => {
 }
 
 /**
- *
+ * Register a usage of an image and any required sizes to be automatically generated.
+ * 
  * @param {string} name
  * @param {{
     name: string,
@@ -140,6 +144,7 @@ const registerUsage = (name, sizeVariants) => {
   _usages.set(name, sizeVariants)
 }
 
+// Register our known usages
 registerUsage('profile-photo', [
   {
     name: 'sm',
@@ -154,5 +159,6 @@ registerUsage('profile-photo', [
 ])
 
 module.exports = {
-  uploadImage
+  uploadImage,
+  registerUsage
 }
