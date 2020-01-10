@@ -28,7 +28,7 @@ const blankOrg = {
 
 export const OrgEditButton = ({ onClick }) =>
   <Button
-    type='secondary'
+    type='primary'
     shape='round'
     onClick={onClick}
     style={{ float: 'right' }}
@@ -37,6 +37,20 @@ export const OrgEditButton = ({ onClick }) =>
       id='orgDetailPage.button.edit'
       defaultMessage='Edit'
       description='Button to edit an organisation on orgDetailPage'
+    />
+  </Button>
+
+export const HomeButton = () =>
+  <Button
+    type='secondary'
+    shape='round'
+    href='/'
+    style={{ float: 'right' }}
+  >
+    <FormattedMessage
+      id='orgDetailPage.button.home'
+      defaultMessage='Return Home'
+      description='Button to return home after editing'
     />
   </Button>
 
@@ -62,6 +76,7 @@ export const OrgUnknown = () =>
 
 export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isAuthenticated }) => {
   const [editing, setEditing] = useState(false)
+  const [saved, setSaved] = useState(false)
   const handleCancel = useCallback(
     () => {
       setEditing(false)
@@ -92,6 +107,7 @@ export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isA
         Router.replace(`/orgs/${org._id}`)
       }
       setEditing(false)
+      setSaved(true)
       message.success('Saved.')
     }, [])
 
@@ -127,8 +143,10 @@ export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isA
       <Helmet>
         <title>{org.name} / Voluntarily</title>
       </Helmet>
+
       <OrgBanner org={org}>
         {isAuthenticated && <RegisterMemberSection orgid={org._id} meid={me._id} />}
+        {saved && <HomeButton />}
         {canEdit && <OrgEditButton onClick={() => setEditing(true)} />}
       </OrgBanner>
       <OrgTabs org={org} />
