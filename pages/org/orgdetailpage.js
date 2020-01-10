@@ -77,6 +77,7 @@ export const OrgUnknown = () =>
 export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isAuthenticated }) => {
   const [editing, setEditing] = useState(false)
   const [saved, setSaved] = useState(false)
+
   const handleCancel = useCallback(
     () => {
       setEditing(false)
@@ -141,7 +142,7 @@ export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isA
   return (
     <FullPage>
       <Helmet>
-        <title>{org.name} / Voluntarily</title>
+        <title>{org.name} - Voluntarily</title>
       </Helmet>
 
       <OrgBanner org={org}>
