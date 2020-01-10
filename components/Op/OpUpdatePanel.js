@@ -49,7 +49,7 @@ const ContentCard = styled.div`
   }
 `
 
-export function OpUpdate ({ op }) {
+export function OpUpdatePanel ({ op }) {
   return (
     <>
       <OpSectionGrid>
@@ -73,4 +73,4 @@ A stress management will be best positioned to re-imagine unmatched, cognitive a
   )
 }
 
-export default OpUpdate
+export default OpUpdatePanel
