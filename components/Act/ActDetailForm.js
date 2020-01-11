@@ -677,10 +677,8 @@ export default Form.create({
       totalVolunteerRequired = 0
     } else if (props.act.volunteers >= 1) {
       totalVolunteerRequired = props.act.volunteers
-      // console.log(totalVolunteerRequired)
     } else if (props.act.volunteers < 1) {
       volunteerPerStudent = Math.round(1 / props.act.volunteers)
-      // console.log(volunteerPerStudent)
     }
     return {
       name: Form.createFormField({ ...props.act.name, value: props.act.name }),

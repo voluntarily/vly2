@@ -8,7 +8,7 @@ import { OpportunityStatus } from '../../server/api/opportunity/opportunity.cons
 
 export const OpCloseOpportunity = ({ op, dispatch }) => {
   const handleCompleteOpportunity = useCallback(
-    async (op) => {
+    async () => {
       await dispatch(
         reduxApi.actions.opportunities.put(
           { id: op._id },
@@ -16,12 +16,12 @@ export const OpCloseOpportunity = ({ op, dispatch }) => {
         )
       )
       message.success('Opportunity Confirmed')
-      Router.replace(`/archivedops/${this.props.op._id}`)
+      Router.replace(`/archivedops/${op._id}`)
       // MAYBE: publish topic for completed op
     }, [])
 
   const handleCancelOpportunity = useCallback(
-    async (op) => {
+    async () => {
       await dispatch(
         reduxApi.actions.opportunities.put(
           { id: op._id },

@@ -15,9 +15,8 @@ import {
 } from '../VTheme/ItemList'
 import moment from 'moment'
 import { ShareLinks } from './OpShareLinks'
-import { withRouter } from 'next/router'
 
-const OpBanner = ({ op, children, router }) => {
+const OpBanner = ({ op, children }) => {
   const startDate = op.date[0]
     ? moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
     : 'Negotiable'
@@ -26,18 +25,20 @@ const OpBanner = ({ op, children, router }) => {
     : ' '
 
   // SEO Metadata
-  const appUrl = `${config.appUrl}${router.asPath}`
-
+  const appUrl = `${config.appUrl}/ops/op._id`
+  const description = op.description || ''
+  const requestor = op.requestor || ''
+  const creator = `@${requestor.name || ''}`
   return (
     <>
       <Helmet>
-        <title>Voluntarily - {op.name}</title>
+        <title>{op.name} - Voluntarily</title>
         <meta name='twitter:card' content='summary' />
         <meta name='twitter:site' content='@voluntarilyHQ' />
-        <meta name='twitter:creator' content={op.requestor.name} />
+        <meta name='twitter:creator' content={creator} />
         <meta property='og:url' content={appUrl} />
         <meta property='og:title' content={op.name} />
-        <meta property='og:description' content={op.description} />
+        <meta property='og:description' content={description} />
         <meta property='og:image' content={op.imgUrl} />
       </Helmet>
       <HalfGrid>
@@ -75,8 +76,7 @@ OpBanner.propTypes = {
     duration: PropTypes.string,
     location: PropTypes.string,
     _id: PropTypes.string.isRequired
-  }),
-  router: PropTypes.object.isRequired
+  })
 }
 
-export default withRouter(OpBanner)
+export default OpBanner

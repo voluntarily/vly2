@@ -16,7 +16,6 @@ module.exports = (server) => {
     // issue new cards accordingly.
     const orgid = member.organisation
     const org = await Organisation.findById(orgid)
-    // console.log(msg, member, org)
     switch (member.status) {
       case MemberStatus.ORGADMIN:
         if (org.category.includes('vp')) { await addPersonalGoalGroup(GoalGroup.ORG_VP_NEW, member.person) }

@@ -157,8 +157,6 @@ export const OpDetailPage = ({
   const isOwner =
       isNew ||
       (me && op.requestor && me._id === op.requestor._id)
-  console.log('isAdmin', isAdmin)
-  console.log('isOwner', isOwner)
 
   let isOrgAdmin = false
   // add org membership to me so it can be used for offerOrg
@@ -167,15 +165,12 @@ export const OpDetailPage = ({
       [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)
     )
     isOrgAdmin = me.orgMembership.find(m => {
-      console.log('member', m, op.offerOrg)
       return (m.status === MemberStatus.ORGADMIN &&
         m.organisation._id === op.offerOrg._id).length > 0
     }
     )
-    console.log('isOrgAdmin', isOrgAdmin)
   }
   const canManage = isOwner || isAdmin || isOrgAdmin
-  console.log('canManage', canManage)
   const canRegisterInterest = isAuthenticated && !isOwner
 
   if (editing) {
@@ -194,7 +189,6 @@ export const OpDetailPage = ({
         />
       </FullPage>)
   }
-  console.log('editing', editing)
   return (
     <FullPage>
       <Helmet>

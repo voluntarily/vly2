@@ -32,7 +32,7 @@ OpAboutPanel.propTypes = {
       PropTypes.string
     ).isRequired,
     description: PropTypes.string,
-    requestor: PropTypes.string
+    requestor: PropTypes.object
   }).isRequired
 }
 

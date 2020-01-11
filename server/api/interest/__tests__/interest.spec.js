@@ -40,17 +40,6 @@ test.before('before connect to database', async (t) => {
   })
   t.context.interests = await Interest.create(interests).catch(() => 'Unable to create interests')
 })
-// test.afterEach.always(async (t) => {
-//   console.log(t, 'completed')
-// })
-// test.after.always(async (t) => {
-//   console.log('stopping mongo')
-//   await Interest.deleteMany()
-//   await Opportunity.deleteMany()
-//   await Person.deleteMany()
-//   await Organisation.deleteMany()
-//   await t.context.memMongo.stop()
-// })
 
 test.serial('Should correctly give number of Interests', async t => {
   t.plan(2)
