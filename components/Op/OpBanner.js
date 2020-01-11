@@ -24,12 +24,8 @@ const OpBanner = ({ op, children, router }) => {
   const endDate = op.date[1]
     ? '  →  ' + moment(op.date[1]).format('h:mmA · ddd DD/MM/YYYY')
     : ' '
-  const img = op.imgUrl || '/static/missingimage.svg'
 
   // SEO Metadata
-  const description = op.description || ''
-  const requestor = op.requestor || ''
-  const creator = `@${requestor.name || ''}`
   const appUrl = `${config.appUrl}${router.asPath}`
 
   return (
@@ -38,15 +34,15 @@ const OpBanner = ({ op, children, router }) => {
         <title>Voluntarily - {op.name}</title>
         <meta name='twitter:card' content='summary' />
         <meta name='twitter:site' content='@voluntarilyHQ' />
-        <meta name='twitter:creator' content={creator} />
+        <meta name='twitter:creator' content={op.requestor.name} />
         <meta property='og:url' content={appUrl} />
         <meta property='og:title' content={op.name} />
-        <meta property='og:description' content={description} />
-        <meta property='og:image' content={op.img} />
+        <meta property='og:description' content={op.description} />
+        <meta property='og:image' content={op.imgUrl} />
       </Helmet>
       <HalfGrid>
         <Left>
-          <ItemImage src={img} alt={op.name} />
+          <ItemImage src={op.imgUrl} alt={op.name} />
         </Left>
         <Right>
           <h1>{op.name}</h1>
@@ -80,10 +76,7 @@ OpBanner.propTypes = {
     location: PropTypes.string,
     _id: PropTypes.string.isRequired
   }),
-  router: PropTypes.object.isRequired,
-  params: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  })
+  router: PropTypes.object.isRequired
 }
 
 export default withRouter(OpBanner)
