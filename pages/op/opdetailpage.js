@@ -13,6 +13,7 @@ import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import Link from 'next/link'
 import OpBanner from '../../components/Op/OpBanner'
+import OpUnknown from '../../components/Op/OpUnknown'
 import OpDetailForm from '../../components/Op/OpDetailForm'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import { Helmet } from 'react-helmet'
@@ -29,26 +30,6 @@ const blankOp = {
   endDate: null,
   tags: []
 }
-
-export const OpUnknown = () =>
-  <>
-    <h2>
-      <FormattedMessage
-        id='opDetailPage.OpNotFound'
-        defaultMessage='Sorry, this opportunity is not available'
-        description='Op not found message'
-      />
-    </h2>
-    <Link href='/search'>
-      <Button shape='round'>
-        <FormattedMessage
-          id='opDetailPage.showOps'
-          defaultMessage='Search for more'
-          description='Button to show all opportunities'
-        />
-      </Button>
-    </Link>
-  </>
 
 export const OpDetailPage = ({
   members,
