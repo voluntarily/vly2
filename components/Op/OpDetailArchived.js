@@ -22,8 +22,8 @@ import {
   ItemDate,
   ItemImage
 } from '../VTheme/ItemList'
-import { OpQuestion } from './OpQuestion'
-import OpUpdate from './OpUpdate'
+import { OpQuestionPanel } from './OpQuestionPanel'
+import OpUpdatePanel from './OpUpdatePanel'
 import { withRouter } from 'next/router'
 import { config } from '../../config/config'
 
@@ -174,12 +174,12 @@ export function OpDetailArchived ({
           </TabPane>
           {isNotProd && (
             <TabPane tab={questionTab} key='2'>
-              <OpQuestion />
+              <OpQuestionPanel />
             </TabPane>
           )}
           {isNotProd && (
             <TabPane tab={updateTab} key='3'>
-              <OpUpdate />
+              <OpUpdatePanel />
             </TabPane>
           )}
           {canEdit && <TabPane tab={manageTab} key='4' />}

@@ -140,7 +140,7 @@ display: none;
 
 // end date block
 
-export function OpQuestion ({ op }) {
+export function OpQuestionPanel ({ op }) {
   return (
     <>
       <OpSectionGrid>
@@ -287,4 +287,4 @@ export function OpQuestion ({ op }) {
   )
 }
 
-export default OpQuestion
+export default OpQuestionPanel

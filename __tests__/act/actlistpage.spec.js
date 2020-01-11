@@ -28,7 +28,6 @@ test.before('Setup fixtures', (t) => {
       })
     },
     dispatch: (ACTION) => {
-      // console.log('dispatch', ACTION)
       return Promise.resolve(t.context.props)
     }
   }

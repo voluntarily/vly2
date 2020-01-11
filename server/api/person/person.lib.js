@@ -14,13 +14,11 @@ const personProfileCompleteness = (person) => {
   const scoreStr = (str, len) => {
     score += str ? str.length >= len && 1 : 0
     count += 1
-    // console.log('scoreStr', str, score, count)
   }
 
   const scoreArr = (arr, len) => {
     score += arr.length >= len && 1
     count += 1
-    // console.log('scoreStr', str, score, count)
   }
 
   scoreStr(person.name, 4)

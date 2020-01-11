@@ -183,7 +183,7 @@ test('render OrgDetailPage anon ', async t => {
   const wrapper = shallowWithIntl(
     <OrgDetailPage {...props} />
   )
-  t.is(wrapper.find('title').text(), 'OMGTech / Voluntarily')
+  t.is(wrapper.find('title').text(), 'OMGTech - Voluntarily')
   t.true(wrapper.exists('OrgBanner'))
   t.true(wrapper.exists('OrgTabs'))
   t.false(wrapper.exists('Connect(RegisterMemberSection)'))
@@ -209,7 +209,7 @@ test('render OrgDetailPage member ', async t => {
   const wrapper = shallowWithIntl(
     <OrgDetailPage {...props} />
   )
-  t.is(wrapper.find('title').text(), 'OMGTech / Voluntarily')
+  t.is(wrapper.find('title').text(), 'OMGTech - Voluntarily')
   t.true(wrapper.exists('OrgBanner'))
   t.true(wrapper.exists('OrgTabs'))
   t.true(wrapper.exists('Connect(RegisterMemberSection)'))
@@ -228,7 +228,7 @@ test('render OrgDetailPage OrgAdmin ', async t => {
   const wrapper = shallowWithIntl(
     <OrgDetailPage {...props} />
   )
-  t.is(wrapper.find('title').text(), 'OMGTech / Voluntarily')
+  t.is(wrapper.find('title').text(), 'OMGTech - Voluntarily')
   t.true(wrapper.exists('OrgBanner'))
   t.true(wrapper.exists('OrgTabs'))
   t.true(wrapper.exists('OrgEditButton'))
