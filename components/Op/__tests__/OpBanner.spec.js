@@ -3,6 +3,7 @@ import test from 'ava'
 import { shallowWithIntl } from '../../../lib/react-intl-test-helper'
 import OpBanner from '../OpBanner'
 import ops from './Op.fixture'
+import moment from 'moment'
 
 test.before('Setup fixtures', (t) => {
   // Initial opportunities
@@ -34,7 +35,8 @@ test('Banner for op with open date', t => {
   )
   t.is(wrapper.find('ItemList__Right').find('h1').text(), op.name)
   t.is(wrapper.find('ItemDuration').props().duration, op.duration)
-  t.is(wrapper.find('ItemDate').props().startDate, '12:26AM · Fri 24/05/19')
+  const dateStr = moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
+  t.is(wrapper.find('ItemDate').props().startDate, dateStr)
 })
 
 test('Banner for op with date range', t => {
@@ -49,6 +51,9 @@ test('Banner for op with date range', t => {
   t.is(img.props().src, op.imgUrl)
   t.is(wrapper.find('ItemList__Right').find('h1').text(), op.name)
   t.is(wrapper.find('ItemDuration').props().duration, op.duration)
-  t.is(wrapper.find('ItemDate').props().startDate, '12:26AM · Fri 24/05/19')
-  t.is(wrapper.find('ItemDate').props().endDate, '  →  4:55PM · Wed 12/06/2019')
+  const startDateStr = moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
+  const endDateStr = moment(op.date[1]).format('  →  h:mmA · ddd DD/MM/YY')
+
+  t.is(wrapper.find('ItemDate').props().startDate, startDateStr)
+  t.is(wrapper.find('ItemDate').props().endDate, endDateStr)
 })
