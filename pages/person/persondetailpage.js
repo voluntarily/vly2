@@ -23,7 +23,6 @@ const blankPerson = {
   location: '',
   email: '',
   phone: '',
-  gender: '',
   pronoun: {
     subject: '',
     object: '',
@@ -82,15 +81,14 @@ export class PersonDetailPage extends Component {
   }
 
   handleCancelEdit = () => {
-    this.setState({ editing: false })
     if (this.props.isNew) { // return to previous
-      Router.back()
+      return Router.back()
     }
+    this.setState({ editing: false })
   }
 
   // TODO: [VP-209] only show person delete button for admins
-  async handleDelete (person) {
-    if (!person) return
+  async handleDeletePerson (person) {
     await this.props.dispatch(reduxApi.actions.people.delete({ id: person._id }))
     // TODO error handling - how can this fail?
     message.success('Deleted. ')
@@ -98,17 +96,16 @@ export class PersonDetailPage extends Component {
   }
 
   async handleSubmit (person) {
-    if (!person) return
     // Actual data request
     let res = {}
     if (person._id) {
       res = await this.props.dispatch(reduxApi.actions.people.put({ id: person._id }, { body: JSON.stringify(person) }))
+      this.setState({ editing: false })
     } else {
       res = await this.props.dispatch(reduxApi.actions.people.post({}, { body: JSON.stringify(person) }))
       person = res[0]
       Router.replace(`/people/${person._id}`)
     }
-    this.setState({ editing: false })
     message.success('Saved.')
   }
 
@@ -117,7 +114,6 @@ export class PersonDetailPage extends Component {
   render () {
     const isOrgAdmin = false // TODO: [VP-473] is this person an admin for the org that person belongs to.
     const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
-    const canEdit = (isOrgAdmin || isAdmin)
     const canRemove = isAdmin
     const showPeopleButton = isAdmin
 
@@ -133,6 +129,7 @@ export class PersonDetailPage extends Component {
         person = people[0]
       }
     }
+    const canEdit = (isOrgAdmin || isAdmin || (person && person._id === this.props.me._id))
 
     if (this.props.members.sync && this.props.members.data.length > 0) {
       person.orgMembership = this.props.members.data.filter(m => m.status === MemberStatus.MEMBER)
@@ -168,15 +165,15 @@ export class PersonDetailPage extends Component {
           content =
             <>
               {canEdit &&
-                <Button style={{ float: 'right' }} type='secondary' shape='round' onClick={() => this.setState({ editing: true })}>
+                <Button id='editPersonBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })}>
                   <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
                 </Button>}
               <PersonDetail person={person} />
             &nbsp;
               {canRemove &&
-                <Popconfirm title='Confirm removal of this person.' onConfirm={this.handleDeletePerson} onCancel={this.handleCancelDelete.bind(this)} okText='Yes' cancelText='No'>
-                  <Button type='danger' shape='round'>
-                    <FormattedMessage id='deletePerson' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
+                <Popconfirm id='deletePersonConfirm' title='Confirm removal of this person.' onConfirm={this.handleDeletePerson.bind(this, person)} onCancel={this.handleCancelDelete.bind(this)} okText='Yes' cancelText='No'>
+                  <Button id='deletePersonBtn' type='danger' shape='round'>
+                    <FormattedMessage id='person.delete' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
                   </Button>
                 </Popconfirm>}
             &nbsp;
@@ -190,7 +187,7 @@ export class PersonDetailPage extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Voluntarily - Person Details</title>
+          <title>Person Details - Voluntarily</title>
         </Helmet>
         {content}
       </FullPage>
@@ -207,7 +204,6 @@ PersonDetailPage.propTypes = {
     location: PropTypes.string,
     email: PropTypes.string,
     phone: PropTypes.string,
-    gender: PropTypes.string,
     pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),

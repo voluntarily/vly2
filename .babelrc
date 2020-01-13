@@ -3,7 +3,9 @@
   "env": {
     "development": {
       "plugins": [
-        "react-intl",
+        ["react-intl", {
+          "messagesDir": "lang/.messages/"
+        }],
         ["styled-components", { "ssr": true, "displayName": true, "preprocess": false } ]
       ]
     },
@@ -15,7 +17,8 @@
       ]
     },
     "test": {
-      "presets": ["next/babel"]
+      "presets": ["next/babel"],
+      "plugins": ["istanbul"]
     }
   },
   "plugins": [
@@ -28,7 +31,8 @@
     [ "babel-plugin-styled-components",
       {
         "ssr": true,
-        "displayName": true
+        "displayName": true,
+        "preprocess": false
       }
     ]
   ]

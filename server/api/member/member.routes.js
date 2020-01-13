@@ -2,8 +2,13 @@ const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Member = require('./member')
 const { listMembers, updateMember, createMember } = require('./member.controller')
+const { findMyOrg, findMyPerson } = require('./findMy')
 
 module.exports = server => {
+  server.use('/my/org/:category', findMyOrg)
+  server.use('/my/org', findMyOrg)
+  server.use('/my/person', findMyPerson)
+
   // Docs: https://github.com/ryo718/mongoose-crudify
   server.use(
     '/api/members',

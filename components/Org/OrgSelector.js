@@ -4,20 +4,21 @@ import React from 'react'
 
 const { Option } = Select
 
-class OrgSelector extends React.Component {
-  render () {
-    const { orgs, onChange, value } = this.props
-    const children = orgs && orgs.map(org => <Option key={org._id} value={org._id}>{org.name}</Option>)
-    return (
-      <Select
-        labelInValue
-        onChange={onChange}
-        value={value}
-      >
-        {children}
-      </Select>
-    )
-  }
+const OrgSelector = ({ orgs, onChange, value }) => {
+  if (!orgs || orgs.length === 0) { return '' }
+  return (
+    <Select
+      labelInValue
+      onChange={onChange}
+      value={value}
+    >
+      {orgs.map(
+        org =>
+          <Option key={org._id}>
+            {org.name}
+          </Option>)}
+    </Select>
+  )
 }
 
 OrgSelector.propTypes = {

@@ -77,13 +77,8 @@ const getActivity = async (req, res) => {
 }
 
 const putActivity = async (req, res) => {
-  try {
-    await Activity.findByIdAndUpdate(req.params._id, { $set: req.body })
-    getActivity(req, res)
-  } catch (e) {
-    console.error(e)
-    res.status(500).send(e)
-  }
+  await Activity.findByIdAndUpdate(req.params._id, { $set: req.body })
+  getActivity(req, res)
 }
 
 module.exports = {

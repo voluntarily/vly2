@@ -1,27 +1,44 @@
+import { FormattedMessage } from 'react-intl'
+
 export default () => [
   {
     key: 'home',
     href: '/home',
-    text: 'Dashboard',
+    text:
+  <FormattedMessage
+    id='HeaderMenu.home'
+    defaultMessage='Home'
+  />,
     authRequired: true
   },
   {
     key: 'acts',
     href: '/acts',
-    text: 'Activities',
+    text:
+  <FormattedMessage
+    id='HeaderMenu.activities'
+    defaultMessage='Activities'
+  />,
     authRequired: true
   },
   {
     key: 'habout',
-    text: 'About',
     href: '/about',
+    text:
+  <FormattedMessage
+    id='HeaderMenu.about'
+    defaultMessage='About'
+  />,
     anonymousOnly: true
   },
   {
     key: 'orgs',
     href: '/orgs',
-    text: 'Organisations'
-
+    text:
+  <FormattedMessage
+    id='HeaderMenu.organisations'
+    defaultMessage='Organisations'
+  />
   },
   // {
   //   key: 'help',
@@ -30,20 +47,22 @@ export default () => [
   // },
   {
     key: 'hsignin',
-    href: '/auth/sign-in',
-    text: 'Log in',
-    anonymousOnly: true
-  },
-  {
-    key: 'hsignup',
-    href: '/auth/sign-in',
-    text: 'Sign up',
+    href: '/home',
+    text:
+  <FormattedMessage
+    id='HeaderMenu.sign-in'
+    defaultMessage='Sign in'
+  />,
     anonymousOnly: true
   },
   {
     key: 'hsignoff',
     href: '/auth/sign-off',
-    text: 'Sign Out',
+    text:
+  <FormattedMessage
+    id='HeaderMenu.sign-out'
+    defaultMessage='Sign out'
+  />,
     authRequired: true
   }
 ]

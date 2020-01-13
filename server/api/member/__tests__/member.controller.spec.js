@@ -1,12 +1,12 @@
 import test from 'ava'
 import Member from '../member'
 import { MemberStatus } from '../member.constants'
-import { addMember } from '../member.controller'
 import Organisation from '../../organisation/organisation'
 import Person from '../../person/person'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
 import orgs from '../../organisation/__tests__/organisation.fixture'
+import { addMember, findOrgByPersonIdAndCategory } from '../member.lib'
 
 test.before('before connect to database', async (t) => {
   try {
@@ -62,4 +62,23 @@ test.serial('Should add a member when they are not there already', async t => {
   membership = await Member.findOne(membershipQuery).exec()
   t.truthy(membership)
   t.is(membership.status, MemberStatus.MEMBER)
+})
+
+test.serial('findOrgByPersonIdAndCategory', async t => {
+  const member = {
+    person: t.context.andrew._id,
+    organisation: t.context.orgs[1]._id, // omgtech is an op
+    validation: 'test follower',
+    status: MemberStatus.MEMBER
+  }
+
+  await addMember(member)
+
+  let orgid = await findOrgByPersonIdAndCategory(t.context.alice._id, 'op')
+  t.is(orgid, null)
+  orgid = await findOrgByPersonIdAndCategory(t.context.andrew._id, 'op')
+  t.deepEqual(orgid, t.context.orgs[1]._id)
+  // try with no category
+  orgid = await findOrgByPersonIdAndCategory(t.context.andrew._id, null)
+  t.deepEqual(orgid, t.context.orgs[1]._id)
 })

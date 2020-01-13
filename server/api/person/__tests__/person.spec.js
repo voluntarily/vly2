@@ -5,6 +5,9 @@ import Person from '../person'
 import { jwtData, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../__tests__/person.fixture'
+import sinon from 'sinon'
+import { TOPIC_PERSON__CREATE } from '../../../services/pubsub/topic.constants'
+import PubSub from 'pubsub-js'
 
 test.before('before connect to database', async (t) => {
   try {
@@ -102,16 +105,20 @@ test('Get person by id', async t => {
   t.is(res.body.email, p.email)
 })
 
-test('add a person', async t => {
-  t.plan(5)
+test.serial('create a new person', async t => {
+  t.plan(7)
 
+  // subscribe to published new person messages
+  const spy = sinon.spy()
+  const clock = sinon.useFakeTimers()
+  PubSub.subscribe(TOPIC_PERSON__CREATE, spy)
   const p = {
     name: 'Addy McAddFace',
-    nickname: 'Addy',
-    phone: '123 456789',
-    email: 'addy@omgtech.co.nz',
-    role: ['tester'],
-    tags: ['tag1', 'tag2', 'tag3']
+    // nickname: 'Addy',
+    // phone: '123 456789',
+    email: 'addy@omgtech.co.nz'
+    // role: ['tester'],
+    // tags: ['tag1', 'tag2', 'tag3']
   }
 
   try {
@@ -121,6 +128,12 @@ test('add a person', async t => {
       .send(p)
       .set('Accept', 'application/json')
       .expect(200)
+
+    // confirm message published, sub called
+    t.is(spy.callCount, 0)
+    clock.tick(1)
+    t.is(spy.callCount, 1)
+    clock.restore()
 
     // can find by id
     const id = res.body._id
@@ -188,7 +201,7 @@ test('Update people', async t => {
   t.is(resUpdated.body.phone, p.phone)
 })
 
-test('Should correctly add a person and sanitise inputs', async t => {
+test.serial('Should correctly add a person and sanitise inputs', async t => {
   t.plan(6)
   const p = {
     name: 'Bobby; DROP TABLES', // is allowed

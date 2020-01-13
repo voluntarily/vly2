@@ -62,6 +62,7 @@ test('Invite button click handler calls correct callback', t => {
       onInvite={onInviteCallback}
       onWithdrawInvite={onWithdrawInviteCallback}
       onDecline={onDeclineCallback}
+      interests={[]}
     />)
 
   // test default status
@@ -82,6 +83,7 @@ test('Withdraw invite button click handler calls correct callback', t => {
       onInvite={onInviteCallback}
       onWithdrawInvite={onWithdrawInviteCallback}
       onDecline={onDeclineCallback}
+      interests={[]}
     />)
 
   // test default status
@@ -102,6 +104,7 @@ test('Decline invite button click handler calls correct callback', t => {
       onInvite={onInviteCallback}
       onWithdrawInvite={onWithdrawInviteCallback}
       onDecline={onDeclineCallback}
+      interests={[]}
     />)
 
   // test default status
@@ -167,4 +170,31 @@ test('InterestTable renders invite button ', t => {
   // Confirm table data
   t.is(wrapper.find('button').first().text(), 'Invite')
   t.is(wrapper.find('button').last().text(), 'Decline')
+})
+
+test('InterestTable filters out interest records with no person', t => {
+  const wrapper = mountWithIntl(
+    <InterestTable
+      onInvite={() => {}}
+      onWithdrawInvite={() => {}}
+      onDecline={() => {}}
+      interests={[{
+        person: null,
+        opportunity: 'Test Opportunity 1',
+        comment: 'Test Comment 1',
+        status: 'interested',
+        _id: '11223343'
+      }, {
+        person: { nickname: 'Test Name' },
+        opportunity: 'Test Opportunity 1',
+        comment: 'Test Comment 2',
+        status: 'interested',
+        _id: '11223344'
+      }]}
+    />
+  )
+
+  t.is(wrapper.find('tbody tr').length, 1)
+  t.is(wrapper.find('tbody tr td').at(1).text().trim(), 'Test Name')
+  t.is(wrapper.find('tbody tr td').at(2).text().trim(), 'Test Comment 2')
 })

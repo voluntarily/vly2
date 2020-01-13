@@ -40,17 +40,6 @@ test.before('before connect to database', async (t) => {
   })
   t.context.interests = await Interest.create(interests).catch(() => 'Unable to create interests')
 })
-// test.afterEach.always(async (t) => {
-//   console.log(t, 'completed')
-// })
-// test.after.always(async (t) => {
-//   console.log('stopping mongo')
-//   await Interest.deleteMany()
-//   await Opportunity.deleteMany()
-//   await Person.deleteMany()
-//   await Organisation.deleteMany()
-//   await t.context.memMongo.stop()
-// })
 
 test.serial('Should correctly give number of Interests', async t => {
   t.plan(2)
@@ -276,4 +265,47 @@ test.serial('Should get 404 updating an interest with invalid id', async t => {
     .send(reqData)
     .set('Accept', 'application/json')
   t.is(res.status, 404)
+})
+
+test.serial('Should not return interests with null person field', async t => {
+  const newPerson = await Person.create({
+    name: 'Test McTest',
+    email: 'testy@example.com'
+  })
+
+  const newInterest = await Interest.create({
+    person: newPerson._id,
+    opportunity: t.context.ops[0]._id,
+    comment: 'XYZ test comment',
+    status: 'interested'
+  })
+
+  const firstResponse = await request(server)
+    .get(`/api/interests/?op=${t.context.ops[0]._id}`)
+    .set('Accept', 'application/json')
+    .send()
+
+  t.is(firstResponse.status, 200)
+  t.is(
+    firstResponse.body.filter((opportunity) => opportunity.comment === 'XYZ test comment').length,
+    1
+  )
+
+  await Person.deleteOne(newPerson)
+
+  // at this point we now have an interest with no associated person record
+  // so the Interests API should not return that interest any more
+  const secondResponse = await request(server)
+    .get(`/api/interests/?op=${t.context.ops[0]._id}`)
+    .set('Accept', 'application/json')
+    .send()
+
+  // clean up the new interest record created just for this test
+  await Interest.deleteOne(newInterest)
+
+  t.is(secondResponse.status, 200)
+  t.is(
+    secondResponse.body.filter((opportunity) => opportunity.comment === 'XYZ test comment').length,
+    0
+  )
 })

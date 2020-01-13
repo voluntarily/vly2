@@ -93,7 +93,6 @@ function ensureSanitized (req, res, next) {
   p.name = sanitizeHtml(p.name)
   p.nickname = sanitizeHtml(p.nickname)
   p.phone = p.phone && sanitizeHtml(p.phone)
-  p.gender = p.gender && sanitizeHtml(p.gender)
   p.about = p.about && sanitizeHtml(p.about, szAbout)
   req.body = p
   next()
