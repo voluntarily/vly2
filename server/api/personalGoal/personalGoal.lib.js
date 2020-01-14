@@ -69,10 +69,12 @@ const evaluatePersonalGoals = async (person) => {
           const ev = eval(pg.goal.evaluation)
           const isCompleted = await ev(pg)
           if (isCompleted) {
+            pg.dateCompleted = Date.now()
             pg.status = PersonalGoalStatus.COMPLETED
             return Promise.resolve(pg.save())
           }
         } catch (e) {
+          console.error('PersonalGoal eval failed:', e)
           return Promise.reject(e)
         }
         break

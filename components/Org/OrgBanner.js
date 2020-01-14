@@ -7,9 +7,8 @@ const OrgBanner = ({ org, children }) =>
   <ProfileBanner>
     <img src={org.imgUrl} alt={org.name} />
     <ProfileBannerTitle>
-      <h1>{org.name}</h1>
-      <OrgCategory orgCategory={org.category} />
-      {org.website && <a href='{org.website}'>{org.website}</a>}
+      <h1><OrgCategory orgCategory={org.category} />{org.name}</h1>
+      {/* {org.website && <a href='{org.website}'>{org.website}</a>} */}
       {children}
     </ProfileBannerTitle>
   </ProfileBanner>

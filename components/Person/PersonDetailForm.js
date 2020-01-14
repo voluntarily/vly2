@@ -1,8 +1,9 @@
 import { Button, Checkbox, Divider, Form, Icon, Input, Radio, Tooltip, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { Component, forwardRef } from 'react'
 import { FormattedMessage } from 'react-intl'
 import LocationSelector from '../Form/Input/LocationSelector'
+import EducationSelector from '../Form/Input/EducationSelector'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import TagInput from '../Form/Input/TagInput'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
@@ -15,6 +16,8 @@ import {
 } from '../VTheme/FormStyles'
 import { H3Bold, P } from '../VTheme/VTheme'
 
+const EducationSelectorRef = forwardRef(EducationSelector)
+
 const { TextArea } = Input
 
 // TODO - only the owner and admins should be able to edit the person record.
@@ -25,17 +28,12 @@ function hasErrors (fieldsError) {
 class PersonDetailForm extends Component {
   constructor (props) {
     super(props)
-    this.handleChangeAbout = this.handleChangeAbout.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
   }
 
   componentDidMount () {
     // To disabled submit button at the beginning.
     this.props.form.validateFields()
-  }
-
-  handleChangeAbout (value) {
-    this.props.form.setFieldsValue({ about: value })
   }
 
   setImgUrl = (imgUrl, sizeVariants) => {
@@ -68,6 +66,7 @@ class PersonDetailForm extends Component {
         person.facebook = values.facebook
         person.role = values.role
         person.status = values.status
+        person.education = values.education
         window.scrollTo(0, 0)
         this.props.onSubmit(this.props.person)
       }
@@ -176,6 +175,20 @@ class PersonDetailForm extends Component {
         </Tooltip>
       </span>
     )
+    const personEducation = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='education'
+          defaultMessage='Select your education '
+          description='Education'
+        />
+        &nbsp;
+        <Tooltip title='Select your education'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
 
     const personTags = (
       <FormattedMessage
@@ -199,11 +212,9 @@ class PersonDetailForm extends Component {
       { label: 'Content provider', value: 'activityProvider' },
       { label: 'Tester', value: 'tester' }
     ]
-
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
     const isTest = process.env.NODE_ENV === 'test'
-
     return (
       <div className='PersonDetailForm'>
         <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
@@ -293,15 +304,18 @@ class PersonDetailForm extends Component {
                       placeholder='You can use markdown here.'
                     />
                   ) : (
-                    <RichTextEditor onChange={this.handleChangeAbout} />
+                    <RichTextEditor />
                   )
                 )}
               </Form.Item>
               <Form.Item label={personLocation}>
-                {getFieldDecorator('location', {
-                  rules: []
-                })(
+                {getFieldDecorator('location')(
                   <LocationSelector existingLocations={this.props.locations} />
+                )}
+              </Form.Item>
+              <Form.Item label={personEducation}>
+                {getFieldDecorator('education')(
+                  <EducationSelectorRef />
                 )}
               </Form.Item>
             </InputContainer>
@@ -494,6 +508,10 @@ export default Form.create({
       location: Form.createFormField({
         ...props.person.location,
         value: props.person.location
+      }),
+      education: Form.createFormField({
+        ...props.person.education,
+        value: props.person.education
       }),
       email: Form.createFormField({
         ...props.person.email,

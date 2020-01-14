@@ -27,7 +27,6 @@ test('OrgCategory with many item', t => {
 test('OrgCategory with zero items', t => {
   const none = []
   const wrapper = render(<OrgCategory orgCategory={none} />)
-  console.log(wrapper.html())
 
   t.is(wrapper.find('li').length, 0)
 })

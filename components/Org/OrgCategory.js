@@ -5,7 +5,7 @@ import { Category } from '../../server/api/organisation/organisation.constants'
 const HorUl = styled.ul`
   margin:0;
   padding:0;
-
+  display inline-block;
   li {
     display: inline;
     padding-right: 1em;

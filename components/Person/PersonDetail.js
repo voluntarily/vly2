@@ -149,6 +149,10 @@ const PersonDetail = ({ person }, ...props) => (
             <StyledIcon type='coffee' />
             <PersonRoles roles={person.role} />
           </li>
+          <li>
+            <StyledIcon type='book' />
+            {person.education}
+          </li>
 
         </PersonUl>
       </InfoSection>

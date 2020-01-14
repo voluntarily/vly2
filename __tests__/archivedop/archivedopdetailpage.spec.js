@@ -95,7 +95,7 @@ test('archivedOpDetailPage should have an InterestSection component', t => {
   t.is(wrapper.find('InterestArchivedSection').length, 1)
 })
 
-test('archivedOpDetailPage should display OpUnavalablePage when no opportunity can be retrieved', t => {
+test('archivedOpDetailPage should display OpUnknown when no opportunity can be retrieved', t => {
   const myStore = { ...t.context.mockStore }
   myStore.getState().archivedOpportunities.data = []
 
@@ -114,7 +114,7 @@ test('archivedOpDetailPage should display OpUnavalablePage when no opportunity c
       <RoutedArchivedOpDetailPage {...props} />
     </Provider>
   )
-  t.is(wrapper.find('OpUnavailablePage').length, 1)
+  t.is(wrapper.find('OpUnknown').length, 1)
 })
 
 test('archivedOpDetailPage should display Loading spinner when loading', t => {

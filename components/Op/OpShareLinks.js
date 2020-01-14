@@ -14,28 +14,28 @@ export const ShareLinks = ({ url }) => (
       style={shareLinkStyle}
       url={url}
     >
-      <FacebookIcon size={48} round />
+      <FacebookIcon size={32} round />
     </FacebookShareButton>
 
     <TwitterShareButton
       style={shareLinkStyle}
       url={url}
     >
-      <TwitterIcon size={48} round />
+      <TwitterIcon size={32} round />
     </TwitterShareButton>
 
     <LinkedinShareButton
       style={shareLinkStyle}
       url={url}
     >
-      <LinkedinIcon size={48} round />
+      <LinkedinIcon size={32} round />
     </LinkedinShareButton>
 
     <WhatsappShareButton
       style={shareLinkStyle}
       url={url}
     >
-      <WhatsappIcon size={48} round />
+      <WhatsappIcon size={32} round />
     </WhatsappShareButton>
   </div>
 )

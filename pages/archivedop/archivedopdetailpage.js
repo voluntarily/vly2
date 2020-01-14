@@ -1,16 +1,16 @@
+import { Component } from 'react'
 import { Divider } from 'antd'
 import { Helmet } from 'react-helmet'
 import InterestArchivedSection from '../../components/Interest/InterestArchivedSection'
 import OpDetailArchived from '../../components/Op/OpDetailArchived'
-import OpDetailPage from '../../pages/op/opdetailpage'
 import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withArchivedOpportunities } from '../../lib/redux/reduxApi.js'
 import Loading from '../../components/Loading'
-import OpUnavailablePage from '../op/opunavailablepage'
 import OpArchivedHeader from '../../components/Op/OpArchivedHeader'
+import OpUnknown from '../../components/Op/OpUnknown'
 
-export class ArchivedOpDetailPage extends OpDetailPage {
+export class ArchivedOpDetailPage extends Component {
   constructor (props) {
     super(props)
     this.retrieveOpportunity = this.retrieveOpportunity.bind(this)
@@ -42,7 +42,7 @@ export class ArchivedOpDetailPage extends OpDetailPage {
         return (<Loading />)
       }
       if (this.props.archivedOpportunities.data.length !== 1) {
-        return (<OpUnavailablePage />)
+        return (<OpUnknown />)
       }
     }
 
