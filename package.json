@@ -80,7 +80,7 @@
     "mongoose": "^5.7.12",
     "mongoose-crudify": "^0.2.0",
     "mongoose-id-validator": "^0.5.3",
-    "next": "^9.1.7",
+    "next": "^9.1.6",
     "next-redux-wrapper": "^4.0.1",
     "next-routes": "^1.4.2",
     "nodemailer": "^6.3.1",
