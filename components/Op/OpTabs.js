@@ -46,30 +46,30 @@ const opEditTab =
 
 const isNotProd = process.env.NODE_ENV !== 'production'
 
-export const OpTabs = ({ op, onChange, canManage }) => (
+export const OpTabs = ({ op, onChange, canManage, defaultTab }) => (
   <>
-    <Tabs style={shadowStyle} defaultActiveKey='1' onChange={onChange}>
-      <TabPane tab={opAboutTab} key='1'>
+    <Tabs style={shadowStyle} size='large' defaultActiveKey={defaultTab} onChange={onChange}>
+      <TabPane tab={opAboutTab} key='about'>
         <OpAboutPanel op={op} />
       </TabPane>
 
       {isNotProd && (
-        <TabPane tab={opForumTab} key='2'>
+        <TabPane tab={opForumTab} key='question'>
           <OpQuestionPanel op={op} />
         </TabPane>
       )}
       {isNotProd && (
-        <TabPane tab={opNewsTab} key='3'>
+        <TabPane tab={opNewsTab} key='news'>
           <OpUpdatePanel op={op} />
         </TabPane>
       )}
       {canManage && (
-        <TabPane tab={opManageTab} key='4'>
+        <TabPane tab={opManageTab} key='manage'>
           <OpManagePanel op={op} />
         </TabPane>
       )}
       {canManage && (
-        <TabPane tab={opEditTab} key='5' />
+        <TabPane tab={opEditTab} key='edit' />
       )}
     </Tabs>
   </>
@@ -78,22 +78,16 @@ export const OpTabs = ({ op, onChange, canManage }) => (
 OpTabs.propTypes = {
   op: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    info: PropTypes.shape({
-      about: PropTypes.string,
-      followers: PropTypes.string,
-      joiners: PropTypes.string,
-      forum: PropTypes.string,
-      outsiders: PropTypes.string
-    }),
-    category: PropTypes.arrayOf(
-      PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
-    ).isRequired,
-    imgUrl: PropTypes.string,
-    website: PropTypes.string,
-    contactEmail: PropTypes.string,
-    facebook: PropTypes.string,
-    twitter: PropTypes.string
-  }).isRequired
+    subtitle: PropTypes.string,
+    imgUrl: PropTypes.any,
+    duration: PropTypes.string,
+    location: PropTypes.string,
+    _id: PropTypes.string
+  }),
+  canManage: PropTypes.bool.isRequired,
+  onChange: PropTypes.func,
+  params: PropTypes.shape({
+    id: PropTypes.string.isRequired
+  })
 }
-
 export default OpTabs

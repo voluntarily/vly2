@@ -75,7 +75,7 @@ OpBanner.propTypes = {
     imgUrl: PropTypes.any,
     duration: PropTypes.string,
     location: PropTypes.string,
-    _id: PropTypes.string.isRequired
+    _id: PropTypes.string
   })
 }
 

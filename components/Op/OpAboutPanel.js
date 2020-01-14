@@ -30,7 +30,7 @@ OpAboutPanel.propTypes = {
   op: PropTypes.shape({
     tags: PropTypes.arrayOf(
       PropTypes.string
-    ).isRequired,
+    ),
     description: PropTypes.string,
     requestor: PropTypes.object
   }).isRequired

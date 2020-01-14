@@ -10,15 +10,32 @@ import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import people from '../../server/api/person/__tests__/person.fixture'
 import acts from '../../server/api/activity/__tests__/activity.fixture'
 import tags from '../../server/api/tag/__tests__/tag.fixture.js'
-import withMockRoute from '../../server/util/mockRouter'
 import thunk from 'redux-thunk'
 import reduxApi from '../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { API_URL } from '../../lib/callApi'
+import sinon from 'sinon'
+import * as nextRouter from 'next/router'
+import { MockWindowScrollTo } from '../../server/util/mock-dom-helpers'
 
 const locations = ['Auckland, Wellington, Christchurch']
 
 const fetchMock = require('fetch-mock')
+MockWindowScrollTo.replaceForTest(test, global)
+
+const orginalWarn = console.warn
+const originalError = console.error
+test.before('before test silence async-validator', () => {
+  console.warn = (...args) => {
+    if (typeof args[0] === 'string' && args[0].startsWith('async-validator:')) return
+    orginalWarn(...args)
+  }
+  console.error = () => {}
+})
+test.after.always(() => {
+  console.warn = orginalWarn
+  console.error = originalError
+})
 
 test.before('Setup fixtures', (t) => {
   // This gives all the people fake ids to better represent a fake mongo db
@@ -105,6 +122,25 @@ test.before('Setup fixtures', (t) => {
   t.context.mockStore = configureStore([thunk])(t.context.defaultstore)
 })
 
+test.before('Setup Route', (t) => {
+  const router = () => {
+    return ({
+      pathname: '/test',
+      route: '/test',
+      query: { id: 12345 },
+      asPath: '/test/12345',
+      initialProps: {},
+      pageLoader: sinon.fake(),
+      App: sinon.fake(),
+      Component: sinon.fake(),
+      replace: sinon.fake(),
+      push: sinon.fake(),
+      back: sinon.fake()
+    })
+  }
+  sinon.replace(nextRouter, 'useRouter', router)
+})
+
 function makeFetchMock (opportunityId) {
   const myMock = fetchMock.sandbox()
   myMock.get(API_URL + '/interests/?op=' + opportunityId, { body: { status: 200 } })
@@ -120,10 +156,9 @@ test('send "PUT" request to redux-api when opportunity is canceled and confirmed
     me: t.context.me,
     dispatch: t.context.mockStore.dispatch
   }
-  const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
-      <RoutedOpDetailPage {...props} />
+      <OpDetailPageWithOps {...props} />
     </Provider>
   )
   // click on management tab
@@ -145,10 +180,9 @@ test('send "PUT" request to redux-api when opportunity is completed on OpDetailP
     me: t.context.me,
     dispatch: t.context.mockStore.dispatch
   }
-  const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
-      <RoutedOpDetailPage {...props} />
+      <OpDetailPageWithOps {...props} />
     </Provider>
   )
   // click on management tab
@@ -171,10 +205,9 @@ test('can Edit the Op', t => {
     me: t.context.me,
     dispatch: t.context.mockStore.dispatch
   }
-  const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
-      <RoutedOpDetailPage {...props} />
+      <OpDetailPageWithOps {...props} />
     </Provider>
   )
   // click on edit tab
@@ -216,10 +249,9 @@ test('display unavailable opportunity message when opportunity id is invalid on 
     }
   )
 
-  const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)
   const wrapper = mountWithIntl(
     <Provider store={mockStore}>
-      <RoutedOpDetailPage {...props} />
+      <OpDetailPageWithOps {...props} />
     </Provider>
   )
   t.is(wrapper.find('h2').first().text(), 'Sorry, this opportunity is not available')
@@ -243,10 +275,9 @@ test('display loading opportunity message when opportunity is loading', t => {
     }
   )
 
-  const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)
   const wrapper = mountWithIntl(
     <Provider store={mockStore}>
-      <RoutedOpDetailPage {...props} />
+      <OpDetailPageWithOps {...props} />
     </Provider>
   )
   t.is(wrapper.find('img').prop('src'), '/static/loading.svg')
@@ -264,10 +295,9 @@ test('can create new Op from blank', t => {
     me: t.context.me,
     dispatch: t.context.mockStore.dispatch
   }
-  const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
-      <RoutedOpDetailPage {...props} />
+      <OpDetailPageWithOps {...props} />
     </Provider>
   )
   const saveButton = wrapper.find('#saveOpBtn').first()
@@ -287,10 +317,9 @@ test('can cancel new Op from blank', t => {
     me: t.context.me,
     dispatch: t.context.mockStore.dispatch
   }
-  const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
-      <RoutedOpDetailPage {...props} />
+      <OpDetailPageWithOps {...props} />
     </Provider>
   )
   const saveButton = wrapper.find('#saveOpBtn').first()
@@ -300,11 +329,11 @@ test('can cancel new Op from blank', t => {
   cancelButton.simulate('click')
 })
 
-test('can create new Op from Activity', t => {
+test.serial('can create new Op from Activity', t => {
   const opportunityToEdit = t.context.op
   const fromActivity = t.context.acts[0]
   const myMock = makeFetchMock(opportunityToEdit._id)
-  myMock.post(API_URL + '/tags/', { body: { status: 200 } })
+  myMock.post(API_URL + '/tags/', { body: ['one', 'two', 'three'] })
   myMock.put(API_URL + '/opportunities/' + opportunityToEdit._id, { body: { status: 200 } })
   reduxApi.use('fetch', adapterFetch(myMock))
 
@@ -314,10 +343,9 @@ test('can create new Op from Activity', t => {
     dispatch: t.context.mockStore.dispatch,
     actid: fromActivity._id
   }
-  const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
-      <RoutedOpDetailPage {...props} />
+      <OpDetailPageWithOps {...props} />
     </Provider>
   )
   // check fields are initialised
@@ -333,32 +361,28 @@ test('page loads when user is not signed in but does not show edit VP-499', t =>
     me: '',
     dispatch: t.context.mockStore.dispatch
   }
-  const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
-      <RoutedOpDetailPage {...props} />
+      <OpDetailPageWithOps {...props} />
     </Provider>
   )
   t.is(wrapper.find('.ant-tabs-tab').length, 3)
 })
 
 test('page loads when op does not have a valid requestor VP-499', t => {
-  const op2 = t.context.ops[2]
-  op2.requestor = null
+  const op = t.context.ops[2]
+  op.requestor = null
   const store = t.context.defaultstore
-  store.opportunities.data = [op2]
+  store.opportunities.data = [op]
   const mockStore = configureStore([thunk])(store)
   const props = {
     me: t.context.me,
     dispatch: mockStore.dispatch
   }
-
-  const RoutedOpDetailPage = withMockRoute(OpDetailPageWithOps)
   const wrapper = mountWithIntl(
     <Provider store={mockStore}>
-      <RoutedOpDetailPage {...props} />
-    </Provider>
-  )
-
+      <OpDetailPageWithOps {...props} />
+    </Provider>)
+  t.true(wrapper.exists('OpDetailPage'))
   t.is(wrapper.find('.ant-tabs-tab').length, 5)
 })
