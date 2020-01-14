@@ -315,7 +315,7 @@ class ActDetailForm extends Component {
                 >
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'Title is required' }]
-                  })(<Input placeholder='Title' required />)}
+                  })(<Input placeholder='Title' maxlength='100' required />)}
                 </Form.Item>
 
                 <Form.Item label={actSubtitle}>
