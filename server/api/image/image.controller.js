@@ -8,7 +8,7 @@ const { resizeImage } = require('../../services/image/imageResize')
 
 /**
  * A list of predefined usages of images and their automatically generated sizes.
- * 
+ *
  * @type {Map<String, {
     name: string,
     width: Number,
@@ -76,7 +76,7 @@ const resizeAndStoreAsync = async (imageBuffer, width, height, originalFilename,
 
 /***
  * Store an image on the file system.
- * 
+ *
  * @param {Buffer} imageBuffer A buffer object of the image data.
  * @param {String} filename The filename to save the image as.
  */
@@ -112,7 +112,7 @@ const getStorageLocation = () => {
 
 /**
  * Store the image file.
- * 
+ *
  * @param {Buffer} imageBuffer A buffer object of the image data.
  * @param {String} filename The filename to save the image as.
  */
@@ -132,7 +132,7 @@ const storeAsync = async (imageBuffer, filename) => {
 
 /**
  * Register a usage of an image and any required sizes to be automatically generated.
- * 
+ *
  * @param {string} name
  * @param {{
     name: string,
