@@ -14,7 +14,7 @@ export default [
     name: 'Complete your profile',
     slug: 'goal-complete-profile',
     subtitle: 'Help us recommend volunteering opportunities relevant to you',
-    // badge:
+    // badgeclass:
     imgUrl: '/static/img/goal/goal-complete-profile.png',
     description: `Complete your profile by adding a picture, 
       skills list, where you are, your job, things you are interested 
@@ -35,38 +35,53 @@ export default [
     group: GoalGroup.VP_NEW,
     name: 'Get School Ready',
     slug: 'goal-school-ready',
-    subtitle: 'Complete the training and vetting necessary to work with young people',
-    // badge:
+    subtitle: 'Basic training for working with young people',
+    badgeclass: 'Gp99Py5ERQGVeDFj63gizA',
     imgUrl: '/static/img/goal/goal-school-ready.png',
     description: `
 We want you as a volunteer, and the young people and children
 we work with to all to have brilliant experiences doing activities.
 
-So we ask you to complete some training materials about what you can
-and can't do in schools, how to behave and what to expect.
+This goal will link you to some training materials that will 
+help you feel more confident participating in school based activities..
 
-We also run a confidential background police check to verify that there
-is no reason you should not be working with children.
-
-This goal will collect the required information and permission to run the check
-and then send you on a short online training course to get you briefed.
-Once completed you'll receive the 'School Ready' badge and teachers will know
-you are someone they can trust in their classrooms.
-
-Don't worry if you have started the process but don't think it will be
-completed in time - there are ways we can handle that.
+Completing this goal will make you eligible for a wider range of 
+volunteer opportunities.
 `,
     preconditions: [],
-    startLink: '/todo',
+    startLink: '/goal/school/ready',
     language: 'en',
     rank: 2,
-    evaluation: () => { console.log('does person have school ready badge'); return false }
+    evaluation: (personalGoal) => { return GoalTests.personBadged(personalGoal) }
   },
   {
     group: GoalGroup.VP_NEW,
-    name: 'Complete first volunteering activity',
+    name: 'Get School Safe',
+    slug: 'goal-school-safe',
+    subtitle: 'Complete the vetting required for in-school volunteering',
+    badgeclass: 'I-1iMG8UT827wCrRXVDzzg', // schoolsafe-test
+    imgUrl: '/static/img/goal/goal-school-safe.png',
+    description: `
+It is important that the young people and children
+we work with to all be safe and secure while engaging in activities. 
+
+This is why we run a confidential police check to verify that there
+are no reasons you should not be working with children.
+
+This goal will collect the required information and your permission to run the check.
+
+`,
+    preconditions: [],
+    startLink: '/goal/school/safe',
+    language: 'en',
+    rank: 3,
+    evaluation: (personalGoal) => { return GoalTests.personBadged(personalGoal) }
+  },
+  {
+    group: GoalGroup.VP_NEW,
+    name: 'Find first volunteering activity',
     subtitle: 'Its time to find your first volunteering opportunity.',
-    slug: 'goal-complete-first-activity',
+    slug: 'goal-find-first-activity',
     imgUrl: '/static/img/goal/goal-first-volunteer.png',
     description: `
 Its time to find your first volunteering opportunity.
@@ -76,14 +91,12 @@ Or you can click *Start* here to open the search page.
 
 Once you find something click the <strong>Interested</strong> button.
 You can leave a message and the organiser will be notified.
-
-You'll get an email notification and can accept or decline the invitation.
 `,
     preconditions: [],
     startLink: '/search',
     language: 'en',
     rank: 3,
-    evaluation: () => { console.log('does person have first-volunteer-activity badge'); return false }
+    evaluation: (personalGoal) => { return GoalTests.personInterested(personalGoal) }
   },
 
   /*********************************************/

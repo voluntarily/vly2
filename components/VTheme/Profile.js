@@ -12,6 +12,7 @@ justify-self: center;
 
 img {
   width: 16rem;
+  max-height: 12rem;
   object-fit: cover;
   align-self: center;
   justify-self: center;
@@ -24,10 +25,6 @@ export const ProfileBannerTitle = styled.div`
   text-align: left;
 }
 
-a {
-  display: block;
-  padding: 1rem 0;
-}
 `
 export const ProfileTabs = styled.nav`
   text-align: left;
