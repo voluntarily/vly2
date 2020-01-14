@@ -1,6 +1,5 @@
 // [@TODO] - remove Input once actual search component is done
-import { Button, Input } from 'antd'
-import Link from 'next/link'
+import { Input } from 'antd'
 import Router from 'next/router'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
@@ -11,6 +10,7 @@ import NoResult from '../../components/NoResult'
 import { ActivityContainer, FullPage, GridContainer, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
+import ActAdd from '../../components/Act/ActAdd'
 
 const escapeRegex = require('../../server/util/regexUtil')
 
@@ -52,17 +52,7 @@ export const ActListPage = ({ activities }) =>
       </h1>
 
       <PageBannerButtons>
-        <Button type='primary' shape='round' size='large'>
-          <Link href='/act/new'>
-            <a>
-              <FormattedMessage
-                id='act.new'
-                defaultMessage='New activity'
-                description='Button to create a new activity'
-              />
-            </a>
-          </Link>
-        </Button>
+        <ActAdd />
       </PageBannerButtons>
       <FormattedMessage
         defaultMessage='Find activity templates that make it easy to bring volunteers into your classroom'
