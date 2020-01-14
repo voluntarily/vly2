@@ -1,40 +1,39 @@
 import { Select } from 'antd'
-import PropTypes from 'prop-types'
-import React, { useState } from 'react'
-import fetch from 'isomorphic-fetch'
-import renderEmpty from 'antd/lib/config-provider/renderEmpty';
+import { useState, useEffect } from 'react'
+import callApi from '../../../lib/callApi'
 
 const { Option } = Select
 
-const EducationSelector = ({ onChange, value, width }) => {
-  const [educationLevels, setEducationLevels] = useState([])
-  if (!educationLevels) return 'There should be some education levels'
-  const children = educationLevels.map(education => <Option key={education}>{education}</Option>)
+export const EducationSelector = ({ onChange, value }, ref) => {
+  const [educationOptions, seteducationOptions] = useState('')
+
+  useEffect(() => {
+    const getEducationOptions = async () => {
+      const edLevels = await callApi('education')
+      seteducationOptions(edLevels.map(education => <Option value={education} key={education}>{education}</Option>))
+    }
+    getEducationOptions()
+  }, [])
+
+  // console.log('EducationSelector', educationOptions)
   return (
     <Select
       showSearch
       placeholder='Select your education'
       onChange={onChange}
       value={value}
-      style={width && { width: width }}
+      style={{ width: '100%' }}
+      // style={width && { width: width }}
     >
-      {children}
+      {educationOptions}
     </Select>
   )
 }
 
-EducationSelector.GetInitialProps = async () => {
-  const ed = await fetch('/api/education')
-  // console.log(ed)
-
-  return { ed }
-}
-
-EducationSelector.propTypes = {
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-  educationLevels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  width: PropTypes.string
-}
+// EducationSelector.propTypes = {
+//   value: PropTypes.string,
+//   onChange: PropTypes.func,
+//   width: PropTypes.string
+// }
 
 export default EducationSelector

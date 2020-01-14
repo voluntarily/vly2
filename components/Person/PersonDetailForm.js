@@ -1,6 +1,6 @@
 import { Button, Checkbox, Divider, Form, Icon, Input, Radio, Tooltip, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { Component, forwardRef } from 'react'
 import { FormattedMessage } from 'react-intl'
 import LocationSelector from '../Form/Input/LocationSelector'
 import EducationSelector from '../Form/Input/EducationSelector'
@@ -16,6 +16,8 @@ import {
 } from '../VTheme/FormStyles'
 import { H3Bold, P } from '../VTheme/VTheme'
 
+const EducationSelectorRef = forwardRef(EducationSelector)
+
 const { TextArea } = Input
 
 // TODO - only the owner and admins should be able to edit the person record.
@@ -26,17 +28,12 @@ function hasErrors (fieldsError) {
 class PersonDetailForm extends Component {
   constructor (props) {
     super(props)
-    this.handleChangeAbout = this.handleChangeAbout.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
   }
 
   componentDidMount () {
     // To disabled submit button at the beginning.
     this.props.form.validateFields()
-  }
-
-  handleChangeAbout (value) {
-    this.props.form.setFieldsValue({ about: value })
   }
 
   setImgUrl = value => {
@@ -66,6 +63,7 @@ class PersonDetailForm extends Component {
         person.facebook = values.facebook
         person.role = values.role
         person.status = values.status
+        person.education = values.education
         window.scrollTo(0, 0)
         this.props.onSubmit(this.props.person)
       }
@@ -303,22 +301,18 @@ class PersonDetailForm extends Component {
                       placeholder='You can use markdown here.'
                     />
                   ) : (
-                    <RichTextEditor onChange={this.handleChangeAbout} />
+                    <RichTextEditor />
                   )
                 )}
               </Form.Item>
               <Form.Item label={personLocation}>
-                {getFieldDecorator('location', {
-                  rules: []
-                })(
+                {getFieldDecorator('location')(
                   <LocationSelector existingLocations={this.props.locations} />
                 )}
               </Form.Item>
               <Form.Item label={personEducation}>
-                {getFieldDecorator('education', {
-                  rules: []
-                })(
-                  <EducationSelector educationLevels={this.props.educationLevels} />
+                {getFieldDecorator('education')(
+                  <EducationSelectorRef />
                 )}
               </Form.Item>
             </InputContainer>
@@ -491,7 +485,6 @@ PersonDetailForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   locations: PropTypes.arrayOf(PropTypes.string),
-  educationLevels: PropTypes.arrayOf(PropTypes.string),
   existingTags: PropTypes.arrayOf(PropTypes.string).isRequired
   // dispatch: PropTypes.func.isRequired,
 }
@@ -518,6 +511,10 @@ export default Form.create({
       location: Form.createFormField({
         ...props.person.location,
         value: props.person.location
+      }),
+      education: Form.createFormField({
+        ...props.person.education,
+        value: props.person.education
       }),
       email: Form.createFormField({
         ...props.person.email,
