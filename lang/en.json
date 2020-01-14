@@ -61,6 +61,7 @@
   "declineVolunteer": "Decline",
   "demo.greeting": "Replace in translation with Hello World!",
   "editPerson": "Edit",
+  "education": "Select your education",
   "error.pagenotfound.contribute": "If you can write code you can help fix that by becoming a contributor to the project.",
   "error.pagenotfound.description": "The page you are looking for is not here. We have looked everywhere but it doesn't seem to exist. Perhaps it just hasn't been built yet.",
   "error.pagenotfound.title": "Oh no! Page not found",
