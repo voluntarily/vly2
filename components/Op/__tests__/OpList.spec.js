@@ -63,5 +63,5 @@ test('renders the list with no ops', t => {
     <OpList handleShowOp={() => {}} handleDeleteOp={() => {}} ops={[]} />
   )
   t.is(wrapper.find('OpCard').length, 0)
-  t.is(wrapper.find('span').text(), '')
+  t.is(wrapper.text(), '')
 })

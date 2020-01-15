@@ -15,6 +15,5 @@ test('Person Role renders properly', t => {
 
 test('Person Role list renders properly', t => {
   const wrapper = renderWithIntl(<PersonRoles roles={roles} />)
-  t.is(wrapper.find('span').first().text(), 'Volunteer ')
-  t.is(wrapper.find('span').last().text(), 'Test')
+  t.is(wrapper.find('span').first().text(), 'Volunteer Test ')
 })
