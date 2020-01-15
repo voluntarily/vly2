@@ -5,15 +5,15 @@ import { renderWithIntl } from '../../../lib/react-intl-test-helper'
 test('render Volunteers per student properly if the value is < 1', t => {
 //   t.context.act.volunteers = 0.2
   const wrapper = renderWithIntl(<ItemVolunteers volunteers={0.2} type='act' />)
-  t.is(wrapper.find('span').first().text(), 'Volunteers per student:')
+  t.is(wrapper.text(), '🙋 Volunteers per student:5')
 })
 test('render volunteer properly if the value is >= 1', t => {
 //   t.context.act.volunteers = 5
   const wrapper = renderWithIntl(<ItemVolunteers volunteers={5} type='act' />)
-  t.is(wrapper.find('span').first().text(), 'Volunteers:')
+  t.is(wrapper.text(), '🙋 Volunteers:   5')
 })
 test('render volunteer values === 0 properly', t => {
 //   t.context.volunteers = 0
   const wrapper = renderWithIntl(<ItemVolunteers volunteers={0} type='act' />)
-  t.is(wrapper.find('span').first().text(), '')
+  t.is(wrapper.text(), '')
 })
