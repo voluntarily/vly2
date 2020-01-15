@@ -17,10 +17,10 @@ import { API_URL } from '../../lib/callApi'
 import sinon from 'sinon'
 import * as nextRouter from 'next/router'
 import { MockWindowScrollTo } from '../../server/util/mock-dom-helpers'
+import fetchMock from 'fetch-mock'
 
 const locations = ['Auckland, Wellington, Christchurch']
 
-const fetchMock = require('fetch-mock')
 MockWindowScrollTo.replaceForTest(test, global)
 
 const orginalWarn = console.warn

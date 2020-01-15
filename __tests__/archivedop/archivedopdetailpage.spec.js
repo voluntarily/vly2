@@ -12,8 +12,7 @@ import withMockRoute from '../../server/util/mockRouter'
 import reduxApi from '../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { API_URL } from '../../lib/callApi'
-
-const fetchMock = require('fetch-mock')
+import fetchMock from 'fetch-mock'
 
 test.before('Setup fixtures', (t) => {
   // This gives all the people fake ids to better represent a fake mongo db

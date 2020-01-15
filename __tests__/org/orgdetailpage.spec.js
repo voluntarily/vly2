@@ -10,8 +10,8 @@ import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import people from '../../server/api/person/__tests__/person.fixture'
 import withMockRoute from '../../server/util/mockRouter'
 import { MockWindowScrollTo } from '../../server/util/mock-dom-helpers'
+import fetchMock from 'fetch-mock'
 
-const fetchMock = require('fetch-mock')
 MockWindowScrollTo.replaceForTest(test, global)
 
 test.before('Setup fixtures', (t) => {

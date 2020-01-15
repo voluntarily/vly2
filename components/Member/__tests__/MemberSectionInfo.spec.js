@@ -12,8 +12,7 @@ import { API_URL } from '../../../lib/callApi'
 import fixture from './member.fixture.js'
 import { MemberStatus } from '../../../server/api/member/member.constants'
 import objectid from 'objectid'
-
-const { fetchMock } = require('fetch-mock')
+import fetchMock from 'fetch-mock'
 
 test.before('Setup fixtures', t => {
   fixture(t)
