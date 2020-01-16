@@ -1,3 +1,3 @@
-import StoryListPage from '../story/StoryListPage'
+import storylistpage from '../story/storylistpage'
 
-export default StoryListPage
+export default storylistpage
