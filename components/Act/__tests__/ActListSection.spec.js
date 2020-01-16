@@ -7,8 +7,7 @@ import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 
 import { API_URL } from '../../../lib/callApi'
-
-const { fetchMock } = require('fetch-mock')
+import fetchMock from 'fetch-mock'
 
 // Initial activities added into test db
 const acts = [

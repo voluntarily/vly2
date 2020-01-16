@@ -1,7 +1,7 @@
 import '../assets/voluntarily.less'
 import React from 'react'
 import App from 'next/app'
-import { IntlProvider, addLocaleData } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import { Provider } from 'react-redux'
 import withRedux from 'next-redux-wrapper'
 import { makeStore } from '../lib/redux/reduxApi'
@@ -14,11 +14,11 @@ const theme = {
 // Register React Intl's locale data for the user's locale in the browser. This
 // locale data was added to the page by `pages/_document.js`. This only happens
 // once, on initial page load in the browser.
-if (typeof window !== 'undefined' && window.ReactIntlLocaleData) {
-  Object.keys(window.ReactIntlLocaleData).forEach(lang => {
-    addLocaleData(window.ReactIntlLocaleData[lang])
-  })
-}
+// if (typeof window !== 'undefined' && window.ReactIntlLocaleData) {
+//   Object.keys(window.ReactIntlLocaleData).forEach(lang => {
+//     addLocaleData(window.ReactIntlLocaleData[lang])
+//   })
+// }
 
 class MyApp extends App {
   static async getInitialProps ({ Component, router, ctx }) {

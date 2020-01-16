@@ -47,5 +47,5 @@ test('renders the list with no acts', t => {
     <ActList handleShowAct={() => {}} handleDeleteAct={() => {}} />
   )
   t.is(wrapper.find('ActCard').length, 0)
-  t.is(wrapper.find('span').text(), 'No matching activities')
+  t.is(wrapper.text(), 'No matching activities')
 })

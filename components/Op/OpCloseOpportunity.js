@@ -1,12 +1,13 @@
 import { useCallback } from 'react'
 import { Button, Divider, message, Popconfirm } from 'antd'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 import { FormattedMessage } from 'react-intl'
 import { ControlGrid } from '../VTheme/VTheme'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 
 export const OpCloseOpportunity = ({ op, dispatch }) => {
+  const router = useRouter()
   const handleCompleteOpportunity = useCallback(
     async () => {
       await dispatch(
@@ -16,7 +17,7 @@ export const OpCloseOpportunity = ({ op, dispatch }) => {
         )
       )
       message.success('Opportunity Confirmed')
-      Router.replace(`/archivedops/${op._id}`)
+      router.replace(`/archivedops/${op._id}`)
       // MAYBE: publish topic for completed op
     }, [])
 
@@ -29,7 +30,7 @@ export const OpCloseOpportunity = ({ op, dispatch }) => {
         )
       )
       message.success('Request Cancelled')
-      Router.replace('/home')
+      router.replace('/home')
       // MAYBE: publish topic for completed op
     }, [])
 

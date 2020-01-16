@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import { message } from 'antd'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import Loading from '../../components/Loading'
 import OpTabs from '../../components/Op/OpTabs'
@@ -41,18 +41,28 @@ export const OpDetailPage = ({
   tags,
   locations
 }) => {
-  const [editing, setEditing] = useState(!!isNew)
+  const router = useRouter()
+  const [tab, setTab] = useState(isNew ? 'edit' : router.query.tab)
 
+  const updateTab = (key, top) => {
+    setTab(key)
+    if (top) window.scrollTo(0, 0)
+    //  else { window.scrollTo(0, 400) }
+    const newpath = `/ops/${op._id}?tab=${key}`
+    router.replace(router.pathname, newpath, { shallow: true })
+  }
+  const handleTabChange = (key, e) => {
+    updateTab(key, key === 'edit')
+  }
   const handleCancel = useCallback(
     () => {
-      setEditing(false)
+      updateTab('about', true)
       if (isNew) { // return to previous
-        Router.back()
+        router.back()
       }
     },
     [isNew]
   )
-
   const handleSubmit = useCallback(
     async (op) => {
       let res = {}
@@ -72,17 +82,11 @@ export const OpDetailPage = ({
             { body: JSON.stringify(op) })
         )
         op = res[0] // get new id
-        Router.replace(`/ops/${op._id}`) // reload to the new id page
+        router.replace(`/ops/${op._id}`) // reload to the new id page
       }
-      setEditing(false)
+      updateTab('about', true)
       message.success('Saved.')
     }, [])
-
-  const handleTabChange = (key, e) => {
-    if (key === '5') {
-      setEditing(true)
-    }
-  }
 
   // bail early if no data
   if (opportunities.loading) {
@@ -138,25 +142,27 @@ export const OpDetailPage = ({
       (me && op.requestor && me._id === op.requestor._id)
 
   let isOrgAdmin = false
+
   // add org membership to me so it can be used for offerOrg
   if (me && members.sync && members.data.length > 0) {
     me.orgMembership = members.data.filter(m =>
       [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)
     )
-    isOrgAdmin = me.orgMembership.find(m => {
-      return (m.status === MemberStatus.ORGADMIN &&
+    if (op.offerOrg) {
+      isOrgAdmin = me.orgMembership.find(m => {
+        return (m.status === MemberStatus.ORGADMIN &&
         m.organisation._id === op.offerOrg._id).length > 0
+      })
     }
-    )
   }
   const canManage = isOwner || isAdmin || isOrgAdmin
   const canRegisterInterest = isAuthenticated && !isOwner
 
-  if (editing) {
+  if (tab === 'edit') {
     return (
       <FullPage>
         <Helmet>
-          <title>Edit {op.name} - Voluntarily</title>
+          <title>Edit {op.name}  - Voluntarily</title>
         </Helmet>
         <OpDetailForm
           op={op}
@@ -181,7 +187,7 @@ export const OpDetailPage = ({
           meID={me && me._id}
         />
       </OpBanner>
-      <OpTabs op={op} canManage={canManage} onChange={handleTabChange} />
+      <OpTabs op={op} canManage={canManage} defaultTab={tab} onChange={handleTabChange} />
     </FullPage>)
 }
 

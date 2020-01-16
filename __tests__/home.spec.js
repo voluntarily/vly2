@@ -253,10 +253,11 @@ test.serial('run GetInitialProps', async t => {
     .get('path:/api/archivedOpportunities/', { body: t.context.archivedOpportunities })
     .get('path:/api/members/', { body: t.context.members })
     .get('path:/api/opportunities/recommended', { body: [t.context.recommendedOps] })
+    .get('path:/api/interestsArchived/', { body: t.context.archivedInterestFixture })
   reduxApi.use('fetch', adapterFetch(t.context.mockServer))
 
   await PersonHomePageTest.getInitialProps({ store: t.context.mockStore })
-  t.is(t.context.mockStore.getActions().length, 10)
+  t.is(t.context.mockStore.getActions().length, 18)
 })
 
 test.serial('render volunteer home page - Active tab', t => {
@@ -350,6 +351,7 @@ test.serial('render volunteer home page - Profile tab', t => {
 test.serial('render Edit Profile ', async t => {
   t.context.mockServer
     .get(`path:/api/badge/${t.context.me._id}`, { body: [] })
+    .get('path:/api/education', { body: ['small', 'medium', 'large'] })
     .put(`path:/api/people/${t.context.me._id}`, {})
 
   const props = { me: t.context.me }
