@@ -8,8 +8,7 @@ import adapterFetch from 'redux-api/lib/adapters/fetch'
 
 import { API_URL } from '../../../lib/callApi'
 import people from '../../../server/api/person/__tests__/person.fixture'
-
-const { fetchMock } = require('fetch-mock')
+import fetchMock from 'fetch-mock'
 
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
