@@ -21,7 +21,7 @@ class InterestSection extends Component {
     try {
       await this.props.dispatch(reduxApi.actions.interests.get({ id: '', op: opid }))
     } catch (err) {
-      // console.log('error in getting interests', err)
+      // console.error('error in getting interests', err)
     }
   }
 

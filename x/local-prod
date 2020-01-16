@@ -1,2 +1,2 @@
-docker run -it -p 3122:3122 -e 'APP_URL=http://localhost:3122' -e 'BASE_URL=http://localhost:3122' -e 'NODE_ENV=production' -e 'MONGODB_URI=mongodb+srv://vly-client:ZhF3BUDiwpy8C3xK@cluster0-kwmsu.mongodb.net/vly2-dev?retryWrites=true' 585172581592.dkr.ecr.ap-southeast-1.amazonaws.com/vly2-alpha:master
+docker run -it -p 3122:3122 -e 'APP_URL=http://localhost:3122' -e 'BASE_URL=http://localhost:3122' -e 'NODE_ENV=production' -e 'MONGODB_URI=mongodb+srv://vly-client:ZhF3BUDiwpy8C3xK@cluster0-kwmsu.mongodb.net/vly2-dev?retryWrites=true' 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-alpha:master
 

@@ -12,10 +12,12 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 ====================================================
 */
 
-export const PageHeaderContainer = styled.div`
+export const PageBanner = styled.div`
   margin: 8rem 0 2rem 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  padding-bottom: 1rem;
+  border-bottom: thin solid rgba(101, 73, 170, 0.5);
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
     grid-template-columns: calc(100vw - 2rem);
@@ -23,7 +25,7 @@ export const PageHeaderContainer = styled.div`
   }
 `
 
-export const RequestButtonContainer = styled.div`
+export const PageBannerButtons = styled.div`
   justify-self: end;
   @media screen and (max-width: 767px) {
     margin-top: 1rem;
@@ -514,7 +516,6 @@ export const ContactList = styled.ul`
   li {
     list-style: none;
     color: black;
-    font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 2rem;
 
@@ -527,16 +528,8 @@ export const ContactList = styled.ul`
       }
 
       @media screen and (min-width: 988px) {
-        font-size: 2rem;
+        font-size: 1.5rem;
       }
     }
   }
-`
-
-/* Organisation styled tabs */
-
-export const OrgTabs = styled.span`
-  font-size: 1rem;
-  font-weight: 700;
-  color: #6549AA;
 `

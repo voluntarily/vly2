@@ -27,7 +27,7 @@ test.beforeEach('connect and set up test fixture', async (t) => {
     interest.opportunity = t.context.opportunities[index]._id
     interest.person = t.context.people[index]._id
   })
-  t.context.interests = await InterestArchive.create(interests).catch(() => 'Unable to create archived interest')
+  t.context.interests = await InterestArchive.create(interests).catch((err) => console.error('Unable to create archived interest', err))
 })
 
 test.afterEach.always(async () => {
@@ -36,7 +36,7 @@ test.afterEach.always(async () => {
   await Person.deleteMany()
 })
 
-test.serial('Should correctly give number of Interests Arhived', async t => {
+test.serial('Should correctly give number of Interests Archived', async t => {
   t.plan(2)
   const res = await request(server)
     .get('/api/interestsArchived')
@@ -96,6 +96,7 @@ test.serial('Should correctly delete an interest', async t => {
   const newInterestArchive = new InterestArchive({
     _id: '5cc8d60b8b16812b5b3920c9',
     person: t.context.people[0]._id,
+    status: 'not attended',
     opportunity: t.context.opportunities[0]._id,
     comment: 'hello there'
   })

@@ -238,7 +238,7 @@ class InterestTable extends Component {
         </Dropdown>
         <Table
           columns={columns}
-          dataSource={this.props.interests}
+          dataSource={this.props.interests.filter((interest) => interest.person !== null)}
           rowKey='_id'
           pagination={false}
           onChange={this.handleTableChange}
@@ -253,7 +253,7 @@ InterestTable.propTypes = {
   onInvite: PropTypes.func.isRequired,
   onWithdrawInvite: PropTypes.func.isRequired,
   onDecline: PropTypes.func.isRequired,
-  interests: PropTypes.array
+  interests: PropTypes.array.isRequired
 }
 
 function getEnabledButtons (interest) {

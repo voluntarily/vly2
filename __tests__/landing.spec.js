@@ -1,5 +1,5 @@
 import test from 'ava'
-import { LandingTest } from '../pages/landing/landing'
+import { Landing } from '../pages/landing/landing'
 import { mountWithIntl } from '../lib/react-intl-test-helper'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -82,7 +82,7 @@ test('render landing page ', t => {
 
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
-      <LandingTest {...props} />
+      <Landing {...props} />
     </Provider>)
   t.is(wrapper.find('h1').first().text(), 'volunteer yo—self.')
   // there should be a list of ops each with a link pointing to detailed op page

@@ -7,8 +7,8 @@ import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import people from '../../../server/api/person/__tests__/person.fixture'
 import { API_URL } from '../../../lib/callApi'
-
-const { fetchMock } = require('fetch-mock')
+import mongoose from 'mongoose'
+import fetchMock from 'fetch-mock'
 
 // Initial opportunities added into test db
 const opid = '5cc903e5f94141437622cea7'
@@ -112,14 +112,15 @@ test.serial('mount the InterestSection with two interests', async t => {
   t.is(wrapper.find('tbody tr td').at(2).text().trim(), 'not attended')
 })
 
-test.serial('mount the InterestSection without opid', async t => {
+test.serial('mount the InterestSection with no interests', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
+  const fakeObjectId = mongoose.Types.ObjectId().toString()
   reduxApi.use('fetch', adapterFetch(myMock))
-  myMock.getOnce(`${API_URL}/interestsArchived/?`, 404)
+  myMock.getOnce(`${API_URL}/interestsArchived/?op=${fakeObjectId}`, [])
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
-      <InterestArchivedSection />
+      <InterestArchivedSection opid={fakeObjectId} />
     </Provider>
   )
   t.is(wrapper.find('p').text(), 'No Data')

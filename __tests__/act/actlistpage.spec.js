@@ -9,7 +9,16 @@ import sinon from 'sinon'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
-  t.context.acts = acts.map(p => { p._id = objectid().toString() })
+  acts.map(p => { p._id = objectid().toString() })
+  t.context.props = {
+    activities: {
+      sync: true,
+      syncing: false,
+      loading: false,
+      data: acts,
+      request: null
+    }
+  }
   t.context.store = {
     getState: () => {
       return ({
@@ -19,8 +28,7 @@ test.before('Setup fixtures', (t) => {
       })
     },
     dispatch: (ACTION) => {
-      // console.log('dispatch', ACTION)
-      return Promise.resolve([])
+      return Promise.resolve(t.context.props)
     }
   }
 })

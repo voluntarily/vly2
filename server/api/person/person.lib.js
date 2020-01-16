@@ -1,4 +1,5 @@
 const Person = require('./person')
+const Badge = require('../badge/badge')
 
 const personProfileCompletenessById = async (personId) => {
   const person = await Person.findById(personId).exec()
@@ -13,13 +14,11 @@ const personProfileCompleteness = (person) => {
   const scoreStr = (str, len) => {
     score += str ? str.length >= len && 1 : 0
     count += 1
-    // console.log('scoreStr', str, score, count)
   }
 
   const scoreArr = (arr, len) => {
     score += arr.length >= len && 1
     count += 1
-    // console.log('scoreStr', str, score, count)
   }
 
   scoreStr(person.name, 4)
@@ -44,7 +43,13 @@ const personProfileCompleteness = (person) => {
   return { score, count }
 }
 
+const personHasBadge = async (person, badgeclass) => {
+  const count = await Badge.count({ person: person._id, badgeclass }).exec()
+  return count > 0
+}
+
 module.exports = {
   personProfileCompleteness,
-  personProfileCompletenessById
+  personProfileCompletenessById,
+  personHasBadge
 }

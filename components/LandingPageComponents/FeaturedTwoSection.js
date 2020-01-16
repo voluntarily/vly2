@@ -3,12 +3,12 @@ import { HalfGrid } from '../VTheme/VTheme'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
-import TitleSectionSub from './TitleSectionSub'
+import SectionSubtitle from './SectionSubtitle'
 import OpCard from '../Op/OpCard'
 
 const FeaturedTwoSection = ({ ops, title, subtitle, ...props }) => (
   <div>
-    <TitleSectionSub
+    <SectionSubtitle
       title={title}
       subtitle={subtitle}
     />

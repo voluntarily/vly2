@@ -1,29 +1,24 @@
 import '../assets/voluntarily.less'
 import React from 'react'
 import App from 'next/app'
-import { IntlProvider, addLocaleData } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import { Provider } from 'react-redux'
 import withRedux from 'next-redux-wrapper'
 import { makeStore } from '../lib/redux/reduxApi'
-import Router from 'next/router'
-import { setRouting } from '../lib/redux/actions'
+import { ThemeProvider } from 'styled-components'
+
+const theme = {
+  primary: 'green'
+}
 
 // Register React Intl's locale data for the user's locale in the browser. This
 // locale data was added to the page by `pages/_document.js`. This only happens
 // once, on initial page load in the browser.
-if (typeof window !== 'undefined' && window.ReactIntlLocaleData) {
-  Object.keys(window.ReactIntlLocaleData).forEach(lang => {
-    addLocaleData(window.ReactIntlLocaleData[lang])
-  })
-}
-
-const updateRoutingInRedux = (store, redirectUrl) => {
-  // TODO: Refactor to some HOC where boundry pages participating in 3rd party redirects can
-  // register themselves for exclusion
-  if (redirectUrl !== '/auth/sign-in') {
-    store.dispatch(setRouting({ redirectUrl }))
-  }
-}
+// if (typeof window !== 'undefined' && window.ReactIntlLocaleData) {
+//   Object.keys(window.ReactIntlLocaleData).forEach(lang => {
+//     addLocaleData(window.ReactIntlLocaleData[lang])
+//   })
+// }
 
 class MyApp extends App {
   static async getInitialProps ({ Component, router, ctx }) {
@@ -33,8 +28,6 @@ class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx)
     }
 
-    updateRoutingInRedux(ctx.store, router.asPath)
-
     // Get the `locale` and `messages` from the request object on the server.
     // In the browser, use the same values that the server serialized.
     const { req } = ctx
@@ -42,18 +35,6 @@ class MyApp extends App {
     const initialNow = Date.now()
 
     return { pageProps, locale, messages, initialNow }
-  }
-
-  onHistoryChange = url => {
-    updateRoutingInRedux(this.props.store, url)
-  }
-
-  componentDidMount () {
-    Router.events.on('beforeHistoryChange', this.onHistoryChange)
-  }
-
-  componentWillUnmount () {
-    Router.events.off('beforeHistoryChange', this.onHistoryChange)
   }
 
   render () {
@@ -66,7 +47,9 @@ class MyApp extends App {
           messages={messages}
           initialNow={initialNow}
         >
-          <Component {...pageProps} />
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
         </IntlProvider>
       </Provider>
     )

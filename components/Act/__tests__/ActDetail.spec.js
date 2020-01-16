@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import { mountWithIntl, renderWithIntl } from '../../../lib/react-intl-test-helper'
+import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import { ItemVolunteers } from '../../VTheme/ItemList'
 import ActDetail from '../ActDetail'
 
@@ -61,13 +61,13 @@ test('render the detail with no picture ', t => {
     tags: []
   }
 
-  const wrapper = renderWithIntl(<ActDetail act={actNoPic} onPress={() => {}} />)
+  const wrapper = mountWithIntl(<ActDetail act={actNoPic} onPress={() => {}} />)
   t.truthy(wrapper.find('Head'))
   t.is(wrapper.find({ space: '1 acre' }).length, 0)
   t.is(wrapper.find('li').length, 5)
 })
 
 test('render Volunteers per student properly if the value is < 1', t => {
-  const wrapper = renderWithIntl(<ItemVolunteers volunteers={0.2} type='act' />)
-  t.is(wrapper.find('span').first().text(), 'Volunteers per student:')
+  const wrapper = mountWithIntl(<ItemVolunteers volunteers={0.2} type='act' />)
+  t.is(wrapper.text(), '🙋 Volunteers per student:5')
 })
