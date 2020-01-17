@@ -20,17 +20,18 @@ const storySchema = new Schema({
   allowComments: { type: Boolean, default: true, required: true },
   parent: { type: Schema.Types.ObjectId },
   tags: [String]
-})​
+})
+
 storySchema.plugin(idvalidator)
 storySchema.index({ tags: 1 })
-​
+
 // protect multiple imports
 var Story
-​
+
 if (mongoose.models.Story) {
   Story = mongoose.model(SchemaName)
 } else {
   Story = mongoose.model(SchemaName, storySchema)
 }
-​
+
 module.exports = Story
