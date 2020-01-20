@@ -13,6 +13,7 @@ const opportunitySchema = new Schema({
   description: String, // "Project to grow something in the garden",
   duration: String, // "15 Minutes",
   location: String, // "Newmarket, Auckland",
+  venue: String,
   status: {
     type: String,
     required: true,
@@ -30,9 +31,7 @@ const opportunitySchema = new Schema({
   requestor: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
   dateAdded: { type: 'Date', default: Date.now, required: true },
   href: String,
-  tags: { type: [String], required: true, default: [] },
-  organisationAddress: String,
-  organisationName: String
+  tags: { type: [String], required: true, default: [] }
 })
 
 opportunitySchema.plugin(idvalidator)

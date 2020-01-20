@@ -59,8 +59,7 @@ class OpDetailForm extends Component {
         op.offerOrg = values.offerOrg && values.offerOrg.key
         op.description = values.description
         op.imgUrl = values.imgUrl
-        op.organisationName = values.organisationName
-        op.organisationAddress = values.organisationAddress
+        op.venue = values.venue
 
         op.status =
           e.target.name === 'publish'
@@ -168,30 +167,16 @@ class OpDetailForm extends Component {
         </Tooltip>
       </span>
     )
-    const opSchoolName = (
+    const opVenue = (
       <span>
         {' '}
         <FormattedMessage
-          id='opSchoolName'
-          defaultMessage='School or organisation name'
-          description='school name label in OpDetails Form'
+          id='opVenue'
+          defaultMessage='Venue'
+          description='Venue label in OpDetails Form'
         />
         &nbsp;
-        <Tooltip title='Enter the school or organisation name'>
-          <Icon type='question-circle-o' />
-        </Tooltip>
-      </span>
-    )
-    const opAddress = (
-      <span>
-        {' '}
-        <FormattedMessage
-          id='opAddress'
-          defaultMessage='School or organisation address'
-          description='school or organisation address label in OpDetails Form'
-        />
-        &nbsp;
-        <Tooltip title='Enter the school or organisation address'>
+        <Tooltip title='Enter the address where the event will be held at'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -285,8 +270,6 @@ class OpDetailForm extends Component {
 
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
-    const organisationNameError = isFieldTouched('organisationName') && getFieldError('organisationName')
-    const organisationAddressError = isFieldTouched('organisationAddress') && getFieldError('organisationAddress')
     const isNewOp = this.props.op._id
     const orgMembership =
       this.props.me.orgMembership &&
@@ -385,35 +368,16 @@ class OpDetailForm extends Component {
                     />
                   )}
                 </Form.Item>
-                <Form.Item
-                  label={opSchoolName}
-                  validateStatus={organisationNameError ? 'error' : ''}
-                  help={organisationNameError || ''}
-                >
-                  {getFieldDecorator('organisationName', {
+                <Form.Item label={opVenue}>
+                  {getFieldDecorator('venue', {
                     rules: [
                       {
-                        required: true,
-                        message: 'A School name or organisation must be provided'
+                        required: false,
+                        message: 'A venue or address of event must be provided'
                       }
                     ]
-                  }
-                  )(<Input placeholder='Name' />)}
-                </Form.Item>
-                <Form.Item
-                  label={opAddress}
-                  validateStatus={organisationAddressError ? 'error' : ''}
-                  help={organisationAddressError || ''}
-                >
-                  {getFieldDecorator('organisationAddress', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'A school or organisation address must be provided'
-                      }
-                    ]
-                  }
-                  )(<Input placeholder='Address' />)}
+                  })(<Input placeholder='Venue' />
+                  )}
                 </Form.Item>
               </MediumInputContainer>
             </InputContainer>
@@ -606,8 +570,7 @@ OpDetailForm.propTypes = {
     status: PropTypes.string,
     // requestor: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string),
-    organisationName: PropTypes.string,
-    organisationAddress: PropTypes.string
+    organisationVenue: PropTypes.string
 
   }),
   me: PropTypes.shape({
@@ -679,13 +642,9 @@ export default Form.create({
         ...props.op.endDate,
         value: props.op.endDate != null ? moment(props.op.endDate) : null
       }),
-      organisationAddress: Form.createFormField({
-        ...props.op.organisationAddress,
-        value: props.op.organisationAddress
-      }),
-      organisationName: Form.createFormField({
-        ...props.op.organisationName,
-        value: props.op.organisationName
+      venue: Form.createFormField({
+        ...props.op.venue,
+        value: props.op.venue || ''
       })
     }
   }

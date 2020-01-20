@@ -28,8 +28,7 @@ const op = {
   startDate: null,
   endDate: null,
   tags: tagList,
-  organisationName: 'name',
-  organisationAddress: 'street'
+  venue: 'street'
 }
 
 const noop = {
@@ -135,19 +134,9 @@ test('render the detail with new blank op', t => {
   wrapper.update()
   // find name field.
   const name = wrapper.find('input#opportunity_detail_form_name').first()
-  const organisationName = wrapper.find('input#opportunity_detail_form_organisationName').first()
-  const organisationAddress = wrapper.find('input#opportunity_detail_form_organisationAddress').first()
   // name.node.value = 'Test'
   name
     .simulate('keydown', { which: 'a' })
-    .simulate('change', { target: { value: 'My new value' } })
-
-  organisationName
-    .simulate('keydown', { which: 'b' })
-    .simulate('change', { target: { value: 'My new value' } })
-
-  organisationAddress
-    .simulate('keydown', { which: 'c' })
     .simulate('change', { target: { value: 'My new value' } })
 
   const locationInput = wrapper.find('LocationSelector').first()
