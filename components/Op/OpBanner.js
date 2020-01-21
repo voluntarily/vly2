@@ -7,6 +7,7 @@ import {
   Left,
   Right,
   ItemContainer,
+  ItemVenue,
   ItemDuration,
   ItemStatus,
   ItemDate,
@@ -54,6 +55,7 @@ const OpBanner = ({ op, children }) => {
           </h4>
           <ItemContainer>
             <ItemDuration duration={op.duration} />
+            <ItemVenue venue={op.venue} />
             <ItemDate startDate={startDate} endDate={endDate} />
             <ItemStatus status={op.status} />
 
@@ -74,6 +76,7 @@ OpBanner.propTypes = {
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     duration: PropTypes.string,
+    venue: PropTypes.string,
     location: PropTypes.string,
     _id: PropTypes.string
   })
