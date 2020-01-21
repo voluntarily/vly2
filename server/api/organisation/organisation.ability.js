@@ -14,7 +14,7 @@ interface Rule {
 }
 */
 
-const ruleBuilder = session => {
+const ruleBuilder = () => {
   const defaultAbilities = [{
     subject: SchemaName,
     action: Action.READ

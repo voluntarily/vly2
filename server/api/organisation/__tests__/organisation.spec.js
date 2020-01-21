@@ -4,6 +4,7 @@ import { server, appReady } from '../../../server'
 import Organisation from '../organisation'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import orgs from './organisation.fixture.js'
+import { Role } from '../../../services/authorize/role'
 
 const testOrg = {
   name: 'Test Organisation',
@@ -33,12 +34,12 @@ const testOrgNoImg = {
 }
 
 test.before('before connect to database', async (t) => {
-  try {
+  // try {
     t.context.memMongo = new MemoryMongo()
     await t.context.memMongo.start()
     await appReady
-    await Organisation.create(orgs).catch(() => 'Unable to create orgs')
-  } catch (e) { console.error('organisation.spec.js before error:', e) }
+    await Organisation.create(orgs) //.catch(() => 'Unable to create orgs')
+  // } catch (e) { console.error('organisation.spec.js before error:', e) }
 })
 
 test.after.always(async (t) => {
@@ -270,4 +271,63 @@ test.serial('Should load a organisation into the db and delete them via the api'
   // check organisation is gone
   const q = await Organisation.findOne({ slug: testOrgDelete.slug }).exec()
   t.is(q, null)
+})
+
+// Test organisation permissions/abilities
+test.serial('Permissions', async t => {
+  const matrix = [
+    { name: 'Admin', roles: [Role.ADMIN], verbs: ['DELETE'] },
+    { name: 'Op pro', roles: [Role.OPPORTUNITY_PROVIDER], verbs: [] }
+  ]
+
+  for (const { name, roles, verbs } of matrix) {
+    // const db = new MemoryMongo()
+    // await db.start()
+    // await appReady
+
+    const user = {
+      name,
+      nickname: 'a',
+      email: `${name}@test.com`,
+      about: '',
+      location: '',
+      language: 'EN',
+      role: roles,
+      status: 'active',
+      imgUrl: '',
+      phone: ''
+    }
+
+    await Person.create(user)
+
+    const createJwtIdToken = (email) => {
+      const jwt = {
+        accessToken: 'IGs4bjO5WLjsulmjKiW2-VLeetlgykUP',
+        idTokenPayload: {
+          name: 'Alice Niceteacher',
+          nickname: 'niceteacheralice',
+          email,
+          email_verified: true,
+          exp: Math.floor(Date.now() / 1000) + (60 * 60),
+          iat: Math.floor(Date.now() / 1000),
+          picture: 'https://publicdomainvectors.org/photos/teacher.png'
+        },
+        refreshToken: null,
+        state: 'Nz_CgRTnYPO5CbD4ueKmkdCiuk2z3psk',
+        expiresIn: 3600,
+        tokenType: 'Bearer',
+        scope: null
+      }
+
+      return jwt.sign(jwt.idTokenPayload, 'secret')
+    }
+
+    const jwtIdToken = createJwtIdToken()
+
+    const res = await request(server)
+      .get('/')
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${jwtIdToken}`])
+      .expect(200)
+  }
 })
