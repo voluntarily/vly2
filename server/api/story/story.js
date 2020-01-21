@@ -5,10 +5,10 @@ const SchemaName = 'Story'
 
 // simplified version without Auth
 const storySchema = new Schema({
-  name: { type: 'String', required: true }, // title of story
+  name: { type: 'String' }, // title of story
   body: { type: 'String', default: '' }, // story content
   imgUrl: { type: 'String' }, // url to image
-  author: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
+  author: { type: Schema.Types.ObjectId, ref: 'Person' },
   status: {
     type: String,
     required: true,

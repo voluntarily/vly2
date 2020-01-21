@@ -1,24 +1,22 @@
 const Story = require('./story')
 
-/**
- * Creates one or more stories and sends a JSON response of the created objects
- */
-async function listStories (req, res) {
+const getStory = async (req, res) => {
   try {
-    const fetched = await Story.findOne({}, 'stories', { lean: true })
-
-    let responseData = []
-
-    if (fetched && fetched.stories) {
-      responseData = fetched.stories
-    }
-
-    res.json(responseData)
-  } catch (error) {
-    res.status(500).send(error)
+    const got = await Story.findOne(req.params)
+      .populate('author', 'name body imgUrl')
+      .exec()
+    res.json(got)
+  } catch (e) {
+    res.status(404).send(e)
   }
 }
 
+const putStory = async (req, res) => {
+  await Story.findByIdAndUpdate(req.params._id, { $set: req.body })
+  getStory(req, res)
+}
+
 module.exports = {
-  listStories
+  getStory,
+  putStory
 }
