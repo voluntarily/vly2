@@ -25,6 +25,8 @@ module.exports.emailPerson = async (template, to, props, renderOnly = false) => 
       transport
     })
 
+    props.appUrl = config.appUrl
+
     if (to._id) {
       props.unsubscribeLink = getUnsubscribeLink(to)
     }
