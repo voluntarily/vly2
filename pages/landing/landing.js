@@ -7,6 +7,7 @@ import OpAdd from '../../components/Op/OpAdd'
 import OpListSection from '../../components/Op/OpListSection'
 import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
+import moment from 'moment'
 
 export const Landing = (props) =>
   <>
@@ -28,7 +29,7 @@ export const Landing = (props) =>
           defaultMessage='Happening Soon'
         />
       </SectionTitle>
-      <OpListSection store={props.store} filter={{ date: '' }} />
+      <OpListSection store={props.store} filter={{ date: [moment().subtract(1, 'days'), moment().add(60, 'days')] }} />
       <OpAdd {...props} />
     </FullPage>
   </>

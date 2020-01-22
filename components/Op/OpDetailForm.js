@@ -59,6 +59,7 @@ class OpDetailForm extends Component {
         op.offerOrg = values.offerOrg && values.offerOrg.key
         op.description = values.description
         op.imgUrl = values.imgUrl
+        op.venue = values.venue
 
         op.status =
           e.target.name === 'publish'
@@ -162,6 +163,20 @@ class OpDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='set the region to help find local volunteers'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+    const opVenue = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='opVenue'
+          defaultMessage='Venue'
+          description='Venue label in OpDetails Form'
+        />
+        &nbsp;
+        <Tooltip title='Enter the address where the event will be held at'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -353,6 +368,17 @@ class OpDetailForm extends Component {
                     />
                   )}
                 </Form.Item>
+                <Form.Item label={opVenue}>
+                  {getFieldDecorator('venue', {
+                    rules: [
+                      {
+                        required: false,
+                        message: 'A venue or address of event must be provided'
+                      }
+                    ]
+                  })(<Input placeholder='Venue' />
+                  )}
+                </Form.Item>
               </MediumInputContainer>
             </InputContainer>
           </FormGrid>
@@ -542,9 +568,10 @@ OpDetailForm.propTypes = {
     ]),
     date: PropTypes.array,
     status: PropTypes.string,
-
     // requestor: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.string)
+    tags: PropTypes.arrayOf(PropTypes.string),
+    organisationVenue: PropTypes.string
+
   }),
   me: PropTypes.shape({
     _id: PropTypes.string,
@@ -614,6 +641,10 @@ export default Form.create({
       endDate: Form.createFormField({
         ...props.op.endDate,
         value: props.op.endDate != null ? moment(props.op.endDate) : null
+      }),
+      venue: Form.createFormField({
+        ...props.op.venue,
+        value: props.op.venue || ''
       })
     }
   }
