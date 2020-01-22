@@ -15,3 +15,7 @@ table(width="100%")
                           span This email was sent to #{to.email}. You're receiving this email because you expressed interest in Voluntarily Opportunities.
                           span If you'd rather not see us in your inbox in the future, please set your
                             a(href=to.href) profile to inactive.
+
+                    if (unsubscribeLink)
+                      p
+                        a(href=unsubscribeLink) Unsubscribe

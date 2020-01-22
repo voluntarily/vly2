@@ -1,5 +1,6 @@
 const Person = require('./person')
 const Badge = require('../badge/badge')
+const { config } = require('../../../config/config')
 
 const personProfileCompletenessById = async (personId) => {
   const person = await Person.findById(personId).exec()
@@ -48,8 +49,17 @@ const personHasBadge = async (person, badgeclass) => {
   return count > 0
 }
 
+const getUnsubscribeLink = (person) => {
+  if (!person._id) {
+    throw new Error('Expected a person object with an _id field')
+  }
+
+  return new URL(`people/${person._id}`, config.appUrl).toString()
+}
+
 module.exports = {
   personProfileCompleteness,
   personProfileCompletenessById,
-  personHasBadge
+  personHasBadge,
+  getUnsubscribeLink
 }
