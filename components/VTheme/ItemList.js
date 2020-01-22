@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import IdLine from './IdLine'
 import { Divider } from 'antd'
 import { FormattedMessage } from 'react-intl'
+import { StreetAddressLinkLi } from '../Address/StreetAddress'
 /* These are used to create small lists of properties for
   orgs, ops and acts in their details pages
 */
@@ -130,6 +131,19 @@ export const ItemLocation = ({ location }) =>
       </ItemListing>
     )
     : ''
+
+export const ItemVenue = ({ venue }) =>
+  <ItemListing>
+    🏫&nbsp;
+    <strong>
+      <FormattedMessage
+        id='itemlist.venue'
+        defaultMessage='Venue:'
+        description='Venue label for acts and ops'
+      />
+    </strong>&nbsp;&nbsp;&nbsp;
+    <StreetAddressLinkLi address={sanitize(venue) || ''} />
+  </ItemListing>
 
 export const ItemVolunteers = ({ volunteers }) => {
   if (!volunteers) return ''

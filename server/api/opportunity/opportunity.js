@@ -13,6 +13,7 @@ const opportunitySchema = new Schema({
   description: String, // "Project to grow something in the garden",
   duration: String, // "15 Minutes",
   location: String, // "Newmarket, Auckland",
+  venue: String,
   status: {
     type: String,
     required: true,
