@@ -23,6 +23,9 @@ module.exports.emailPerson = async (template, to, props, renderOnly = false) => 
       textOnly: config.onlyEmailText, // The value onlyEmailText has a Boolean type not string
       transport
     })
+
+    props.appUrl = config.appUrl
+
     if (renderOnly) {
       return await email.render(
         template + '/html',
