@@ -123,7 +123,8 @@ class SchoolInvite {
           inviteeName: emailData.inviteeName,
           schoolName: emailData.schoolName,
           adminMsg: emailData.invitationMessage,
-          inviteButtonLink: emailData.tokenUrl
+          inviteButtonLink: emailData.tokenUrl,
+          appUrl: config.appUrl
         }
       })
 
