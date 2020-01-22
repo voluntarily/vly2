@@ -5,6 +5,10 @@ import Organisation from '../organisation'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import orgs from './organisation.fixture.js'
 import { Role } from '../../../services/authorize/role'
+import Person from '../../../../server/api/person/person'
+import jsonwebtoken from 'jsonwebtoken'
+import uuid from 'uuid'
+import { jwtData } from '../../../../server/middleware/session/__tests__/setSession.fixture'
 
 const testOrg = {
   name: 'Test Organisation',
@@ -34,12 +38,12 @@ const testOrgNoImg = {
 }
 
 test.before('before connect to database', async (t) => {
-  // try {
+  try {
     t.context.memMongo = new MemoryMongo()
     await t.context.memMongo.start()
     await appReady
-    await Organisation.create(orgs) //.catch(() => 'Unable to create orgs')
-  // } catch (e) { console.error('organisation.spec.js before error:', e) }
+    // await Organisation.create(orgs).catch(() => 'Unable to create orgs')
+  } catch (e) { console.error('organisation.spec.js before error:', e) }
 })
 
 test.after.always(async (t) => {
@@ -275,59 +279,159 @@ test.serial('Should load a organisation into the db and delete them via the api'
 
 // Test organisation permissions/abilities
 test.serial('Permissions', async t => {
-  const matrix = [
-    { name: 'Admin', roles: [Role.ADMIN], verbs: ['DELETE'] },
-    { name: 'Op pro', roles: [Role.OPPORTUNITY_PROVIDER], verbs: [] }
-  ]
+  const endpointUrl = '/api/organisations'
 
-  for (const { name, roles, verbs } of matrix) {
-    // const db = new MemoryMongo()
-    // await db.start()
-    // await appReady
+  const createJwtIdToken = (email) => {
+    const jwt = jwtData
+    jwt.idTokenPayload.email = email
 
+    return jsonwebtoken.sign(jwt.idTokenPayload, 'secret')
+  }
+
+  const createPersonAndAuthenticate = async (roles) => {
+    // Create a new user in the database directly
     const user = {
-      name,
-      nickname: 'a',
-      email: `${name}@test.com`,
-      about: '',
-      location: '',
-      language: 'EN',
+      name: 'name',
+      email: `${uuid()}@test.com`,
       role: roles,
-      status: 'active',
-      imgUrl: '',
-      phone: ''
+      status: 'active'
     }
 
     await Person.create(user)
 
-    const createJwtIdToken = (email) => {
-      const jwt = {
-        accessToken: 'IGs4bjO5WLjsulmjKiW2-VLeetlgykUP',
-        idTokenPayload: {
-          name: 'Alice Niceteacher',
-          nickname: 'niceteacheralice',
-          email,
-          email_verified: true,
-          exp: Math.floor(Date.now() / 1000) + (60 * 60),
-          iat: Math.floor(Date.now() / 1000),
-          picture: 'https://publicdomainvectors.org/photos/teacher.png'
-        },
-        refreshToken: null,
-        state: 'Nz_CgRTnYPO5CbD4ueKmkdCiuk2z3psk',
-        expiresIn: 3600,
-        tokenType: 'Bearer',
-        scope: null
-      }
+    // Create a JWT token to use in our HTTP header
+    const jwtIdToken = createJwtIdToken(user.email)
 
-      return jwt.sign(jwt.idTokenPayload, 'secret')
+    return jwtIdToken
+  }
+
+  const createOrganisation = async () => {
+    // Create a new organisation directly in the database
+    return Organisation.create({
+      name: 'Test org',
+      slug: 'test-organisation',
+      category: ['vp']
+    })
+  }
+
+  const applyHeaders = (request, jwtIdToken) => {
+    request = request
+      .set('Accept', 'application/json')
+
+    // Set the authentiction header if supplied, otherwise the request will be anonymous
+    if (jwtIdToken) {
+      request = request.set('Cookie', [`idToken=${jwtIdToken}`])
     }
 
-    const jwtIdToken = createJwtIdToken()
+    return request
+  }
 
-    const res = await request(server)
-      .get('/')
-      .set('Accept', 'application/json')
-      .set('Cookie', [`idToken=${jwtIdToken}`])
-      .expect(200)
+  const getAll = async (roles) => {
+    const jwtIdToken = await createPersonAndAuthenticate(roles)
+
+    let req = request(server).get(endpointUrl)
+    req = applyHeaders(req, jwtIdToken)
+    return req.send()
+  }
+  const getById = async (roles) => {
+    const org = await createOrganisation()
+    const jwtIdToken = await createPersonAndAuthenticate(roles)
+
+    let req = request(server).get(`${endpointUrl}/${org._id}`)
+    req = applyHeaders(req, jwtIdToken)
+    return req.send()
+  }
+  const delete_ = async (roles) => {
+    // Create an organisation and then DELETE it by ID
+    const org = await createOrganisation()
+    const jwtIdToken = await createPersonAndAuthenticate(roles)
+    
+    let req = request(server).delete(`${endpointUrl}/${org._id}`)
+    req = applyHeaders(req, jwtIdToken)
+    return req.send()
+  }
+  const post = async (roles) => {
+    const jwtIdToken = await createPersonAndAuthenticate(roles)
+    
+    let req = request(server).post(endpointUrl)
+    req = applyHeaders(req, jwtIdToken)
+    return req.send({
+      name: 'Test org - POST',
+      slug: 'test-organisation',
+      category: ['vp'],
+    })
+  }
+  const put = async (roles) => {
+    // Create an organisation and update its details with a PUT request using its ID
+    const org = await createOrganisation()
+
+    const jwtIdToken = await createPersonAndAuthenticate(roles)
+    
+    let req = request(server).put(`${endpointUrl}/${org._id}`)
+    req = applyHeaders(req, jwtIdToken)
+    return req.send({
+      name: 'Test org - PUT',
+      slug: 'test-organisation',
+      category: ['vp'],
+    })
+  }
+
+  // All roles and their allowed and disallowed REST operations
+  //
+  // Each REST operation will create a new user, authenticate as that user, create a new organisation and perform
+  // the HTTP call and assert the response code
+  const matrix = [
+    {
+      roles: [Role.ADMIN],
+      permitted: [getAll, getById, delete_, post, put],
+      forbidden: []
+    },
+    {
+      roles: [Role.TESTER], 
+      permitted: [getAll, getById],
+      forbidden: [delete_, post, put]
+    },
+    {
+      roles: [Role.ACTIVITY_PROVIDER], 
+      permitted: [getAll, getById],
+      forbidden: [delete_, post, put]
+    },
+    {
+      roles: [Role.OPPORTUNITY_PROVIDER], 
+      permitted: [getAll, getById],
+      forbidden: [delete_, post, put]
+    },
+    {
+      roles: [Role.VOLUNTEER_PROVIDER], 
+      permitted: [getAll, getById],
+      forbidden: [delete_, post, put]
+    },
+    {
+      roles: [Role.ORG_ADMIN], 
+      permitted: [getAll, getById, put],
+      forbidden: [delete_, post]
+    },
+    {
+      roles: undefined, // Anonymous
+      permitted: [getAll, getById],
+      forbidden: [delete_, post, put]
+    }
+  ]
+
+  for (const { roles, permitted, forbidden } of matrix) {
+    // Assert each permitted REST call returns a 200 status code
+    for (const fn of permitted) {
+      const res = await fn(roles)
+      
+      t.is(res.statusCode, 200, `Failed when running '${fn.name}' for user with roles: ${(roles || []).join(', ')}`)
+    }
+
+    // Assert each forbidden REST call returns a 403 status code
+    for (const fn of forbidden) {
+      const res = await fn(roles)
+
+      // Forbidden
+      t.is(res.statusCode, 403, `Failed when running '${fn.name}' for user with roles: ${(roles || []).join(', ')}`)
+    }
   }
 })

@@ -61,6 +61,7 @@ const ruleBuilder = () => {
 
   return {
     [Role.ANON]: defaultAbilities,
+    [Role.ACTIVITY_PROVIDER]: defaultAbilities,
     [Role.VOLUNTEER_PROVIDER]: defaultAbilities,
     [Role.OPPORTUNITY_PROVIDER]: defaultAbilities,
     [Role.TESTER]: defaultAbilities,
