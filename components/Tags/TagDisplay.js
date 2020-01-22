@@ -19,6 +19,7 @@ color: #666;
 `
 
 export function TagDisplay ({ tags }) {
+  if (!tags) return ''
   return (
     <span>
       {tags.map(tag => {

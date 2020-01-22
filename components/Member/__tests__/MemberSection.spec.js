@@ -8,8 +8,7 @@ import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { API_URL } from '../../../lib/callApi'
 import fixture from './member.fixture.js'
 import { MemberStatus } from '../../../server/api/member/member.constants'
-
-const { fetchMock } = require('fetch-mock')
+import fetchMock from 'fetch-mock'
 
 const MTF = {
   ID: 0,

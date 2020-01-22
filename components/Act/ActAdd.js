@@ -15,7 +15,7 @@ const ActAdd = ({ roles, ...props }) => {
       <Link href='/act/new'>
         <Button type='primary' shape='round' size='large'>
           <FormattedMessage
-            id='landing.newAct'
+            id='act.new'
             defaultMessage='New Activity'
             description='Button to create a new activity on Landing page'
           />

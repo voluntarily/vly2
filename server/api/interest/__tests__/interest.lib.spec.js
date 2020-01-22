@@ -42,7 +42,6 @@ test.before('before connect to database', async (t) => {
     }
   })
   t.context.interests = await Interest.create(interests).catch(() => 'Unable to create interests')
-  console.log(t.context.interests)
 })
 
 test.afterEach.always(async (t) => {

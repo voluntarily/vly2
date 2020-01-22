@@ -89,7 +89,6 @@ class PersonHomePage extends Component {
 
       await Promise.all([
         store.dispatch(reduxApi.actions.tags.get()),
-        // store.dispatch(reduxApi.actions.opportunities.get(filters)),
         store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
         store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),
         store.dispatch(reduxApi.actions.locations.get({ withRelationships: true })),

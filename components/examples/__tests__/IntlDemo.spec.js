@@ -8,8 +8,8 @@ test('verify that plain input is translated EN', t => {
   const wrapper = mountWithIntl(
     <IntlDemo />
   )
-  t.is(wrapper.find('span').first().prop('children'), 'Replace in translation with Hello World!')
-  t.is(wrapper.find('span').at(1).prop('children'), '1,000')
+  t.is(wrapper.find('span').first().text(), 'Replace in translation with Hello World!')
+  t.is(wrapper.find('span').at(1).text(), '1,000')
 })
 
 test('verify that plain input is translated MI', t => {
@@ -17,6 +17,6 @@ test('verify that plain input is translated MI', t => {
     <IntlDemo />
   )
 
-  t.is(wrapper.find('span').first().prop('children'), 'He Tāngata')
-  t.is(wrapper.find('span').at(1).prop('children'), '1,000')
+  t.is(wrapper.find('span').first().text(), 'He Tāngata')
+  t.is(wrapper.find('span').at(1).text(), '1,000')
 })

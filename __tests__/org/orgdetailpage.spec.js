@@ -10,8 +10,8 @@ import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import people from '../../server/api/person/__tests__/person.fixture'
 import withMockRoute from '../../server/util/mockRouter'
 import { MockWindowScrollTo } from '../../server/util/mock-dom-helpers'
+import fetchMock from 'fetch-mock'
 
-const fetchMock = require('fetch-mock')
 MockWindowScrollTo.replaceForTest(test, global)
 
 test.before('Setup fixtures', (t) => {
@@ -183,7 +183,7 @@ test('render OrgDetailPage anon ', async t => {
   const wrapper = shallowWithIntl(
     <OrgDetailPage {...props} />
   )
-  t.is(wrapper.find('title').text(), 'OMGTech / Voluntarily')
+  t.is(wrapper.find('title').text(), 'OMGTech - Voluntarily')
   t.true(wrapper.exists('OrgBanner'))
   t.true(wrapper.exists('OrgTabs'))
   t.false(wrapper.exists('Connect(RegisterMemberSection)'))
@@ -209,7 +209,7 @@ test('render OrgDetailPage member ', async t => {
   const wrapper = shallowWithIntl(
     <OrgDetailPage {...props} />
   )
-  t.is(wrapper.find('title').text(), 'OMGTech / Voluntarily')
+  t.is(wrapper.find('title').text(), 'OMGTech - Voluntarily')
   t.true(wrapper.exists('OrgBanner'))
   t.true(wrapper.exists('OrgTabs'))
   t.true(wrapper.exists('Connect(RegisterMemberSection)'))
@@ -228,7 +228,7 @@ test('render OrgDetailPage OrgAdmin ', async t => {
   const wrapper = shallowWithIntl(
     <OrgDetailPage {...props} />
   )
-  t.is(wrapper.find('title').text(), 'OMGTech / Voluntarily')
+  t.is(wrapper.find('title').text(), 'OMGTech - Voluntarily')
   t.true(wrapper.exists('OrgBanner'))
   t.true(wrapper.exists('OrgTabs'))
   t.true(wrapper.exists('OrgEditButton'))

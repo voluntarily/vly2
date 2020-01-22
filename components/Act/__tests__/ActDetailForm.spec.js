@@ -168,7 +168,6 @@ test('componentDidMount - set volunteer to 0.2', t => {
   const radioAct = sinon.spy()
   const volunteerInputAct = sinon.spy()
   t.context.act.volunteers = 0.2
-  // console.log(t.context.act.volunteers)
   const wrapper = mountWithIntl(
     <ActDetailForm
       act={t.context.act}
@@ -190,7 +189,6 @@ test('componentDidMount - set volunteer to 10', t => {
   const radioAct = sinon.spy()
   const volunteerInputAct = sinon.spy()
   t.context.act.volunteers = 10
-  // console.log(t.context.act.volunteers)
   const wrapper = mountWithIntl(
     <ActDetailForm
       act={t.context.act}
@@ -213,7 +211,6 @@ test('componentDidMount - set volunteer to 0', t => {
   const radioAct = sinon.spy()
   const volunteerInputAct = sinon.spy()
   t.context.act.volunteers = 0
-  // console.log(t.context.act.volunteers)
   const wrapper = mountWithIntl(
     <ActDetailForm
       act={t.context.act}

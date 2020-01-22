@@ -23,7 +23,9 @@ const PersonFields = {
   ROLE: 'role',
   STATUS: 'status',
   PRONOUN: 'pronoun',
-  TAGS: 'tags'
+  TAGS: 'tags',
+  EDUCATION: 'education'
+
 }
 
 module.exports = {
