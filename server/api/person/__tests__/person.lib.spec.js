@@ -2,7 +2,7 @@ import test from 'ava'
 import Person from '../person'
 import people from './person.fixture.js'
 import MemoryMongo from '../../../util/test-memory-mongo'
-import { personProfileCompleteness, personProfileCompletenessById } from '../person.lib'
+import { personProfileCompleteness, personProfileCompletenessById, getUnsubscribeLink } from '../person.lib'
 import objectid from 'objectid'
 
 test.before('before connect to database', async (t) => {
@@ -30,4 +30,17 @@ test.serial('Should get and score from db id', async t => {
 
   const res = await personProfileCompletenessById(t.context.people[0]._id)
   t.deepEqual(res, { score: 9, count: 9 })
+})
+
+test('getUnsubscribeLink - with _id', (t) => {
+  const link = getUnsubscribeLink({ _id: 'test-id' })
+  t.truthy(link.includes('/people/test-id'))
+})
+
+test('getUnsubscribeLink - without _id', (t) => {
+  const error = t.throws(() => {
+    getUnsubscribeLink({})
+  })
+
+  t.is(error.message, 'Expected a person object with an _id field')
 })
