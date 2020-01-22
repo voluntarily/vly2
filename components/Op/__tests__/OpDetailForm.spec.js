@@ -27,7 +27,8 @@ const op = {
   status: 'draft',
   startDate: null,
   endDate: null,
-  tags: tagList
+  tags: tagList,
+  venue: 'street'
 }
 
 const noop = {
@@ -90,13 +91,13 @@ test('render the detail with op', t => {
   )
   t.is(wrapper.find('OpDetailForm').length, 1)
   t.is(wrapper.find('button').length, 3)
-  wrapper.find('button').first().simulate('click')
+  wrapper.find('#cancelOpBtn').first().simulate('click')
   t.truthy(cancelOp.calledOnce)
-  wrapper.find('button').at(1).simulate('click')
+  wrapper.find('#saveOpBtn').first().simulate('click')
   t.truthy(submitOp.calledOnce)
   t.truthy(submitOp.calledWith(op))
 
-  wrapper.find('button').at(2).simulate('click')
+  wrapper.find('#publishOpBtn').first().simulate('click')
   t.truthy(submitOp.calledTwice)
   t.truthy(submitOp.calledWith(op))
 })
@@ -146,6 +147,6 @@ test('render the detail with new blank op', t => {
   const duration = wrapper.find('input#opportunity_detail_form_duration').first()
   duration.simulate('change', { target: { value: '10 hours' } })
 
-  wrapper.find('button').at(1).simulate('click')
+  wrapper.find('#saveOpBtn').first().simulate('click')
   t.truthy(submitOp.calledOnce)
 })
