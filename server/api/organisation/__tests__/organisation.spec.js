@@ -42,7 +42,7 @@ test.before('before connect to database', async (t) => {
     t.context.memMongo = new MemoryMongo()
     await t.context.memMongo.start()
     await appReady
-    // await Organisation.create(orgs).catch(() => 'Unable to create orgs')
+    await Organisation.create(orgs).catch(() => 'Unable to create orgs')
   } catch (e) { console.error('organisation.spec.js before error:', e) }
 })
 
