@@ -9,26 +9,33 @@ import people from '../server/api/person/__tests__/person.fixture'
 import archivedOpportunities from '../server/api/archivedOpportunity/__tests__/archivedOpportunity.fixture'
 import tags from '../server/api/tag/__tests__/tag.fixture'
 import orgs from '../server/api/organisation/__tests__/organisation.fixture'
-
+import goals from '../server/api/goal/__tests__/goal.fixture'
+import { PersonalGoalStatus } from '../server/api/personalGoal/personalGoal.constants'
+import fetchMock from 'fetch-mock'
+import { InterestStatus } from '../server/api/interest/interest.constants'
 import { MemberStatus } from '../server/api/member/member.constants'
 import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import thunk from 'redux-thunk'
-import { API_URL } from '../lib/callApi'
-// import OpCard from '../components/Op/OpCard'
+import { MockWindowScrollTo } from '../server/util/mock-dom-helpers'
+
+MockWindowScrollTo.replaceForTest(test, global)
+
 const { sortedLocations, regions } = require('../server/api/location/locationData')
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
   people.map(p => { p._id = objectid().toString() })
   orgs.map(p => { p._id = objectid().toString() })
+  goals.map(p => { p._id = objectid().toString() })
+
   const me = people[0]
   // setup list of opportunities, I am owner for the first one
   ops.map((op, index) => {
     op._id = objectid().toString()
     op.requestor = people[index]
   })
-  // take ownership of 2nd event and set to done
+  // take ownership of 2nd event
   archivedOpportunities.map((op, index) => {
     op._id = objectid().toString()
     op.requestor = me._id
@@ -45,6 +52,37 @@ test.before('Setup fixtures', (t) => {
       status: index < interestStates.length ? interestStates[index] : 'interested'
     })
   })
+  // This fixture is not used elsewhere, thus it's created here
+  const archivedInterestFixture = [
+    {
+      _id: objectid().toString(),
+      person: 'a',
+      opportunity: 'my op',
+      status: InterestStatus.INTERESTED,
+      comment: 'Interested'
+    },
+    {
+      _id: objectid().toString(),
+      person: me._id,
+      opportunity: archivedOpportunities[2],
+      status: InterestStatus.COMMITTED,
+      comment: 'Committed'
+    },
+    {
+      _id: objectid().toString(),
+      person: me._id,
+      opportunity: archivedOpportunities[3],
+      status: InterestStatus.NOTATTENDED,
+      comment: 'Not Attended'
+    },
+    {
+      _id: objectid().toString(),
+      person: me._id,
+      opportunity: archivedOpportunities[4],
+      status: InterestStatus.ATTENDED,
+      comment: 'Attended'
+    }
+  ]
 
   const recommendedOps = {
     basedOnLocation: ops,
@@ -84,6 +122,13 @@ test.before('Setup fixtures', (t) => {
       status: MemberStatus.MEMBER
     }
   ]
+  const personalGoals = [
+    {
+      person: me._id,
+      goal: goals[0],
+      status: PersonalGoalStatus.QUEUED
+    }
+  ]
 
   t.context = {
     me,
@@ -94,8 +139,19 @@ test.before('Setup fixtures', (t) => {
     recommendedOps,
     tags,
     orgs,
-    members
+    goals,
+    personalGoals,
+    members,
+    archivedInterestFixture,
+    locations: [
+      {
+        regions: regions,
+        locations: sortedLocations
+      }
+    ]
   }
+  t.context.mockServer = fetchMock.sandbox()
+  global.fetch = t.context.mockServer
 
   t.context.mockStore = configureStore([thunk])(
     {
@@ -103,6 +159,13 @@ test.before('Setup fixtures', (t) => {
         isAuthenticated: true,
         user: { nickname: me.nickname },
         me
+      },
+      people: {
+        sync: true,
+        syncing: false,
+        loading: false,
+        data: [me],
+        request: null
       },
       opportunities: {
         sync: true,
@@ -112,10 +175,10 @@ test.before('Setup fixtures', (t) => {
         request: null
       },
       interests: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
-        data: interests,
+        data: t.context.interests,
         request: null
       },
       members: {
@@ -125,62 +188,76 @@ test.before('Setup fixtures', (t) => {
         data: t.context.members,
         request: null
       },
-      archivedOpportunities: {
-        sync: false,
+      interestsArchived: {
+        sync: true,
         syncing: false,
         loading: false,
-        data: archivedOpportunities,
+        data: archivedInterestFixture,
+        request: null
+      },
+      archivedOpportunities: {
+        sync: true,
+        syncing: false,
+        loading: false,
+        data: t.context.archivedOpportunities,
         request: null
       },
       recommendedOps: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
-        data: [recommendedOps],
+        data: [t.context.recommendedOps],
         request: null
       },
       locations: {
-        data: [
-          {
-            regions: regions,
-            locations: sortedLocations
-          }
-        ]
+        data: t.context.locations
       },
       tags: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
-        data: tags,
-        request: null
-      },
-      orgs: {
-        sync: false,
-        syncing: false,
-        loading: false,
-        data: orgs,
+        data: t.context.tags,
         request: null
       },
       goals: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
-        data: [],
+        data: t.context.goals,
         request: null
       },
       personalGoals: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
-        data: [],
+        data: t.context.personalGoals,
         request: null
       }
     }
   )
 })
 
+test.afterEach.always(t => t.context.mockServer.reset())
+
 test.after.always(() => {
 
+})
+
+test.serial('run GetInitialProps', async t => {
+  t.context.mockServer
+    .get('path:/api/tags/', { body: t.context.tags })
+    .get('path:/api/opportunities/', { body: [t.context.ops[0]] })
+    .get('path:/api/locations', { body: t.context.locations })
+    .get('path:/api/interests/', { body: t.context.interests })
+    .get('path:/api/personalGoals/', { body: t.context.personalGoals })
+    .get('path:/api/archivedOpportunities/', { body: t.context.archivedOpportunities })
+    .get('path:/api/members/', { body: t.context.members })
+    .get('path:/api/opportunities/recommended', { body: [t.context.recommendedOps] })
+    .get('path:/api/interestsArchived/', { body: t.context.archivedInterestFixture })
+  reduxApi.use('fetch', adapterFetch(t.context.mockServer))
+
+  await PersonHomePageTest.getInitialProps({ store: t.context.mockStore })
+  t.is(t.context.mockStore.getActions().length, 18)
 })
 
 test.serial('render volunteer home page - Active tab', t => {
@@ -193,16 +270,17 @@ test.serial('render volunteer home page - Active tab', t => {
       <PersonHomePageTest {...props} />
     </Provider>)
 
-  t.is(wrapper.find('h1').first().text(), t.context.me.nickname + "'s Requests")
+  t.is(wrapper.find('h1').first().text(), 'Home')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
-  // t.is(wrapper.find('.ant-tabs-tabpane-active h2').first().text(), 'Getting Started')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(1).text(), 'Active Opportunities')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(2).text(), 'My Opportunities')
 
-  const oplists = wrapper.find('OpList')
+  const oplists = wrapper.find('OpList') // find 3 oplitsts on the home page
   t.is(oplists.length, 3)
 
   const cards1 = oplists.at(0).find('OpCard')
   t.is(cards1.length, 1)
-  t.is(cards1.first().find('h1').first().text(), t.context.ops[0].name)
+  t.is(cards1.first().find('h1').first().text(), t.context.ops[0].name) // find the first opcard in the first oplist
 
   const cards2 = oplists.at(1).find('OpCard')
   t.is(cards2.length, 4)
@@ -227,11 +305,15 @@ test.serial('render volunteer home page - History tab', t => {
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'History')
 
   const historyPane = wrapper.find('.ant-tabs-tabpane-active').first()
-  t.is(historyPane.find('h2').first().text(), 'Completed Requests')
-  t.is(historyPane.find('h2').at(1).text(), 'Cancelled Requests')
+  t.is(historyPane.find('h2').first().text(), 'Completed Opportunities')
+  t.is(historyPane.find('h2').at(1).text(), 'Cancelled Opportunities')
+  t.is(historyPane.find('h2').at(2).text(), 'Attended Opportunities')
 
   const oplists = historyPane.find('OpList')
-  t.is(oplists.length, 2) // The number of oplists on history tab
+  t.is(oplists.length, 3) // The number of oplists on history tab
+
+  const interestlists = historyPane.find('OpList')
+  t.is(interestlists.length, 3) // The number of oplists on history tab
 
   const completedRequests = oplists.at(0)
   const cards1 = completedRequests.find('OpCard')
@@ -242,9 +324,16 @@ test.serial('render volunteer home page - History tab', t => {
   const cards2 = cancelledRequests.find('OpCard')
   t.is(cards2.length, 2)
   t.is(cards2.first().find('h1').first().text(), t.context.archivedOpportunities[3].name)
+
+  const attendedRequests = interestlists.at(0)
+  const cards3 = attendedRequests.find('OpCard')
+  t.is(cards3.length, 3)
+  // t.is(cards3.at(0).find('h1').first().text(), t.context.archivedInterestFixture[0].name)
 })
 
 test.serial('render volunteer home page - Profile tab', t => {
+  t.context.mockServer
+    .get(`path:/api/badge/${t.context.me._id}`, { body: [] })
   const props = {
     me: t.context.me
   }
@@ -260,6 +349,11 @@ test.serial('render volunteer home page - Profile tab', t => {
 })
 
 test.serial('render Edit Profile ', async t => {
+  t.context.mockServer
+    .get(`path:/api/badge/${t.context.me._id}`, { body: [] })
+    .get('path:/api/education', { body: ['small', 'medium', 'large'] })
+    .put(`path:/api/people/${t.context.me._id}`, {})
+
   const props = { me: t.context.me }
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
@@ -277,21 +371,33 @@ test.serial('render Edit Profile ', async t => {
 })
 
 test.serial('retrieve completed archived opportunities', async t => {
+  t.context.mockServer
+    .get(`path:/api/archivedOpportunities/${t.context.me._id}`, { body: archivedOpportunities })
+
   const props = {
     me: t.context.me
   }
-  const { fetchMock } = require('fetch-mock')
-  const myMock = fetchMock.sandbox()
-  myMock.get(API_URL + '/archivedOpportunities/', { body: { archivedOpportunities } })
-  reduxApi.use('fetch', adapterFetch(myMock))
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
       <PersonHomePageTest {...props} />
     </Provider>)
-  const res = await wrapper.find('PersonHomePage').first().instance().getArchivedOpportunitiesByStatus('completed')
+  const res = await wrapper.find('PersonHomePage').first().instance().getArchivedOpsForRequestor('completed')
   t.is(res.length, 3)
   t.is(res[0], archivedOpportunities[0])
   t.is(res[1], archivedOpportunities[1])
+})
+
+test.serial('get archived ops for volunteers returns only committed and attended results', async t => {
+  const props = {
+    me: t.context.me
+  }
+
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <PersonHomePageTest {...props} />
+    </Provider>)
+  const res = await wrapper.find('PersonHomePage').first().instance().getArchivedOpsForVolunteer()
+  t.is(res.length, 2)
 })
 
 test.serial('ensure oprecommendations is passed recommended ops retrieved from server', async t => {
@@ -304,6 +410,5 @@ test.serial('ensure oprecommendations is passed recommended ops retrieved from s
       <PersonHomePageTest {...props} />
     </Provider>)
   const recommendedOps = await wrapper.find('OpRecommendations').first().instance().props.recommendedOps
-
   t.is(recommendedOps, t.context.recommendedOps)
 })

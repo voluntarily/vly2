@@ -123,7 +123,8 @@ class SchoolInvite {
           inviteeName: emailData.inviteeName,
           schoolName: emailData.schoolName,
           adminMsg: emailData.invitationMessage,
-          inviteButtonLink: emailData.tokenUrl
+          inviteButtonLink: emailData.tokenUrl,
+          appUrl: config.appUrl
         }
       })
 
@@ -146,7 +147,7 @@ class SchoolInvite {
           // they will end up on a blank/500 error screen so for now
           // we'll log this error and let the person continue on to
           // the redirect URL (which should be /home in this case)
-          console.log(error)
+          console.error(error)
         }
       }
     })

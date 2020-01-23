@@ -16,7 +16,8 @@ const personalGoalSchema = new Schema({
       PersonalGoalStatus.ACTIVE,
       PersonalGoalStatus.COMPLETED,
       PersonalGoalStatus.HIDDEN,
-      PersonalGoalStatus.CANCELLED
+      PersonalGoalStatus.CANCELLED,
+      PersonalGoalStatus.CLOSED
     ]
   },
   // date when goal added to persons queue

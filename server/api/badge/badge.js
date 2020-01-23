@@ -1,7 +1,9 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const idvalidator = require('mongoose-id-validator')
-const Badge = new Schema({
+
+const SchemaName = 'Badge'
+const badgeSchema = new Schema({
   entityType: {
     type: String
   },
@@ -42,5 +44,15 @@ const Badge = new Schema({
   }
 })
 
-Badge.plugin(idvalidator)
-module.exports = mongoose.model('Badge', Badge)
+badgeSchema.plugin(idvalidator)
+
+// protect multiple imports
+var Badge
+
+if (mongoose.models.Badge) {
+  Badge = mongoose.model(SchemaName)
+} else {
+  Badge = mongoose.model(SchemaName, badgeSchema)
+}
+
+module.exports = Badge

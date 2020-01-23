@@ -377,13 +377,13 @@ class OrgDetailForm extends Component {
                   </DescriptionContainer>
                   <InputContainer>
                     <ShortInputContainer>
-                      <Form.Item htmlId='decile' label={orgDecile}>
+                      <Form.Item label={orgDecile}>
                         {getFieldDecorator('decile', {})(
                           <InputNumber min={1} max={10} className='decile' />
                         )}
                       </Form.Item>
 
-                      <Form.Item htmlId='age-range' label={orgAgeRange}>
+                      <Form.Item label={orgAgeRange}>
                         {getFieldDecorator('ageRange', {
                           rules: [
                             {
@@ -605,7 +605,7 @@ OrgDetailForm.propTypes = {
   org: PropTypes.shape({
     name: PropTypes.string,
     info: PropTypes.shape({
-      about: PropTypes.string.isRequired,
+      about: PropTypes.string,
       followers: PropTypes.string,
       joiners: PropTypes.string,
       members: PropTypes.string,

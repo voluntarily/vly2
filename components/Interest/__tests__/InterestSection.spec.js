@@ -7,8 +7,7 @@ import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import people from '../../../server/api/person/__tests__/person.fixture'
 import { API_URL } from '../../../lib/callApi'
-
-const { fetchMock } = require('fetch-mock')
+import fetchMock from 'fetch-mock'
 
 // Initial opportunities added into test db
 const opid = '5cc903e5f94141437622cea7'

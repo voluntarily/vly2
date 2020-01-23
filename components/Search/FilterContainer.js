@@ -68,7 +68,7 @@ FilterContainer.propTypes = {
   onFilterApplied: PropTypes.func.isRequired,
   filterName: PropTypes.string.isRequired,
   isShowing: PropTypes.bool.isRequired,
-  onClosed: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired
 }
 
 export default FilterContainer

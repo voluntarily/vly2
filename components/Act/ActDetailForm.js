@@ -116,9 +116,7 @@ class ActDetailForm extends Component {
         // act.owner = (this.props.act.owner && this.props.op.owner._id) || this.props.me._id
         act.owner = this.props.me._id
         // TODO: [VP-305] should the owner of the activity be preserved or set to the last person who edits it?
-        if (!isTest) {
-          window.scrollTo(0, 0)
-        }
+        window.scrollTo(0, 0)
         this.props.onSubmit(this.props.act)
       }
     })
@@ -317,7 +315,7 @@ class ActDetailForm extends Component {
                 >
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'Title is required' }]
-                  })(<Input placeholder='Title' required />)}
+                  })(<Input placeholder='Title' maxlength='100' required />)}
                 </Form.Item>
 
                 <Form.Item label={actSubtitle}>
@@ -679,10 +677,8 @@ export default Form.create({
       totalVolunteerRequired = 0
     } else if (props.act.volunteers >= 1) {
       totalVolunteerRequired = props.act.volunteers
-      // console.log(totalVolunteerRequired)
     } else if (props.act.volunteers < 1) {
       volunteerPerStudent = Math.round(1 / props.act.volunteers)
-      // console.log(volunteerPerStudent)
     }
     return {
       name: Form.createFormField({ ...props.act.name, value: props.act.name }),

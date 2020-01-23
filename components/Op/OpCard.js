@@ -30,7 +30,7 @@ const StyledIcon = styled(Icon)`
 
 // todo if image is not present then use a fallback.
 const OpCard = ({ op }) => {
-  const cardImage = op.imgUrl ? op.imgUrl : '.././static/missingimage.svg'
+  const cardImage = op.imgUrl ? op.imgUrl : '/static/missingimage.svg'
   const draft = op.status === 'draft' ? 'DRAFT: ' : ''
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
   const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA - ddd DD/MM/YY') : ''

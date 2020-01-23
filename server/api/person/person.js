@@ -22,6 +22,7 @@ const personSchema = new Schema({
   website: { type: 'String', required: false },
   facebook: { type: 'String', required: false },
   twitter: { type: 'String', required: false },
+  education: { type: 'String' },
   role: {
     type: [String],
     required: true,
@@ -64,4 +65,13 @@ personSchema.plugin(accessibleRecordsPlugin)
 personSchema.index({ tags: 1 })
 // personSchema.plugin(accessibleFieldsPlugin)
 
-module.exports = mongoose.model(SchemaName, personSchema)
+// protect multiple imports
+var Person
+
+if (mongoose.models.Person) {
+  Person = mongoose.model(SchemaName)
+} else {
+  Person = mongoose.model(SchemaName, personSchema)
+}
+
+module.exports = Person

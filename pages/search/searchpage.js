@@ -5,7 +5,7 @@ import { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import TitleSection from '../../components/LandingPageComponents/TitleSectionSub'
+import SectionTitle from '../../components/LandingPageComponents/SectionSubtitle'
 import DatePickerType from '../../components/Op/DatePickerType.constant'
 import OpListSection from '../../components/Op/OpListSection'
 import FilterContainer from '../../components/Search/FilterContainer'
@@ -49,6 +49,7 @@ export class SearchPage extends Component {
     filter: {
       date: []
     },
+    locationFilterVisible: false,
     opOrderBy: 'date'
   }
 
@@ -173,7 +174,7 @@ export class SearchPage extends Component {
             <title>Voluntarily - Search Results</title>
           </Helmet>
           <SearchPageContainer>
-            <TitleSection
+            <SectionTitle
               title={
                 <FormattedMessage
                   defaultMessage={'Search results for "{search}"'}

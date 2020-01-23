@@ -10,7 +10,7 @@ export default [
     name: 'Complete your profile',
     slug: 'goal-complete-profile',
     subtitle: 'Help us recommend volunteering opportunities relevant to you',
-    // badge:
+    // badgeclass:
     imgUrl: '/static/img/goal/goal-complete-profile.png',
     description: `Complete your profile by adding a picture, 
       skills list, where you are, your job, things you are interested 
@@ -30,7 +30,7 @@ export default [
     name: 'Get School Ready',
     slug: 'goal-school-ready',
     subtitle: 'Complete the training and vetting necessary to work with young people',
-    // badge:
+    // badgeclass:
     imgUrl: '/static/img/goal/goal-school-ready.png',
     description: `
   <section>
@@ -45,7 +45,7 @@ export default [
     </p>
     <p>This goal will collect the required information and permission to run the check
         and then send you on a short online training course to get you briefed.
-        Once completed you'll receive the 'School Ready' badge and teachers will know
+        Once completed you'll receive the 'School Ready' badgeclass and teachers will know
         you are someone they can trust in their classrooms.
     </p>
     <p>Don't worry if you have started the process but don't think it will be
@@ -86,7 +86,7 @@ export default [
     </p>
     <p>
       Once you have attended the activity you'll get your first
-      <em>Volunteer</em> badge and this card will disappear.
+      <em>Volunteer</em> badgeclass and this card will disappear.
     </p>
   </section>`,
     preconditions: [],

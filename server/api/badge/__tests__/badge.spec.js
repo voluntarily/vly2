@@ -1,5 +1,4 @@
 import test from 'ava'
-import { fetchMock } from 'fetch-mock'
 import MockExpressRequest from 'mock-express-request'
 import MockExpressResponse from 'mock-express-response'
 import { issueNewBadge, listAllBadge } from '../badge.controller'
@@ -9,6 +8,7 @@ import MemoryMongo from '../../../util/test-memory-mongo'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import badges from './badges.fixture'
+import fetchMock from 'fetch-mock'
 const { BADGR_API } = config
 
 const expectedBadgeResult = [{

@@ -1,5 +1,5 @@
 import test from 'ava'
-import { LandingTest } from '../pages/landing/landing'
+import { Landing } from '../pages/landing/landing'
 import { mountWithIntl } from '../lib/react-intl-test-helper'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import objectid from 'objectid'
 import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
 import people from '../server/api/person/__tests__/person.fixture'
+import moment from 'moment'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
@@ -18,6 +19,11 @@ test.before('Setup fixtures', (t) => {
     op.requestor = people[index]
   })
 
+  // set date for one of the ops into the future
+  ops[4].date = [
+    moment().add(5, 'days').format(),
+    moment().add(6, 'days').format()
+  ]
   // setup list of interests, i'm interested in first 5 ops
   const interestStates = ['interested', 'invited', 'committed', 'declined', 'completed', 'cancelled']
   const interests = ops.filter(op => op.requestor !== me._id).map((op, index) => {
@@ -81,12 +87,10 @@ test('render landing page ', t => {
   }
 
   const wrapper = mountWithIntl(
+
     <Provider store={t.context.mockStore}>
-      <LandingTest {...props} />
+      <Landing {...props} />
     </Provider>)
   t.is(wrapper.find('h1').first().text(), 'volunteer yo—self.')
-  // there should be a list of ops each with a link pointing to detailed op page
-  for (const op of ops) {
-    t.is(wrapper.find(`a[href='/ops/${op._id}']`).length, 1)
-  }
+  t.is(wrapper.find('OpCard').length, 1)
 })

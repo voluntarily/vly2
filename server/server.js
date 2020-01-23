@@ -4,7 +4,6 @@ const IntlPolyfill = require('intl')
 Intl.NumberFormat = IntlPolyfill.NumberFormat
 Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
 
-const { readFileSync } = require('fs-extra')
 const { basename } = require('path')
 
 const UPLOAD_LIMIT = '6000kb'
@@ -31,17 +30,17 @@ const { config } = require('../config/config')
 
 // We need to expose React Intl's locale data on the request for the user's
 // locale. This function will also cache the scripts by lang in memory.
-const localeDataCache = new Map()
-const getLocaleDataScript = locale => {
-  // const lang = locale.split('-')[0]
-  const lang = locale || 'en'
-  if (!localeDataCache.has(lang)) {
-    const localeDataFile = require.resolve(`react-intl/locale-data/${lang}`)
-    const localeDataScript = readFileSync(localeDataFile, 'utf8')
-    localeDataCache.set(lang, localeDataScript)
-  }
-  return localeDataCache.get(lang)
-}
+// const localeDataCache = new Map()
+// const getLocaleDataScript = locale => {
+//   // const lang = locale.split('-')[0]
+//   const lang = locale || 'en'
+//   if (!localeDataCache.has(lang)) {
+//     const localeDataFile = require.resolve(`react-intl/locale-data/${lang}`)
+//     const localeDataScript = readFileSync(localeDataFile, 'utf8')
+//     localeDataCache.set(lang, localeDataScript)
+//   }
+//   return localeDataCache.get(lang)
+// }
 
 // We need to load and expose the translations on the request for the user's
 // locale. These will only be used in production, in dev the `defaultMessage` in
@@ -63,7 +62,7 @@ const appReady = app.prepare().then(() => {
   server.use(function (req, res, next) {
     req.locale = req.acceptsLanguages(supportedLanguages)
     req.locale = req.locale || 'en'
-    req.localeDataScript = getLocaleDataScript(req.locale)
+    // req.localeDataScript = getLocaleDataScript(req.locale)
     // req.messages = dev ? {} : getMessages(req.locale)
     req.messages = getMessages(req.locale)
     // const { gitDescribeSync } = require('git-describe')

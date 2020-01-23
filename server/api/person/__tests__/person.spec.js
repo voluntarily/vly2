@@ -105,7 +105,7 @@ test('Get person by id', async t => {
   t.is(res.body.email, p.email)
 })
 
-test.only('create a new person', async t => {
+test.serial('create a new person', async t => {
   t.plan(7)
 
   // subscribe to published new person messages
@@ -201,7 +201,7 @@ test('Update people', async t => {
   t.is(resUpdated.body.phone, p.phone)
 })
 
-test('Should correctly add a person and sanitise inputs', async t => {
+test.serial('Should correctly add a person and sanitise inputs', async t => {
   t.plan(6)
   const p = {
     name: 'Bobby; DROP TABLES', // is allowed

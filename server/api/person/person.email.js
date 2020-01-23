@@ -1,6 +1,7 @@
 const { getTransport } = require('../../services/email/email')
 const Email = require('email-templates')
 const { config } = require('../../../config/config')
+const { getUnsubscribeLink } = require('./person.lib')
 /*
   format and send a email to the given address
   @to {person Object} the target of the email
@@ -23,6 +24,13 @@ module.exports.emailPerson = async (template, to, props, renderOnly = false) => 
       textOnly: config.onlyEmailText, // The value onlyEmailText has a Boolean type not string
       transport
     })
+
+    props.appUrl = config.appUrl
+
+    if (to._id) {
+      props.unsubscribeLink = getUnsubscribeLink(to)
+    }
+
     if (renderOnly) {
       return await email.render(
         template + '/html',

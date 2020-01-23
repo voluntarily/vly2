@@ -30,8 +30,7 @@ test.serial('Should save an op with no tags', async t => {
     requestor: t.context.people[0]._id
   })
 
-  const res = await op.save()
-  console.log(res)
+  await op.save()
   const q = await Opportunity.findOne({ name: 'Op with No tags' })
   t.deepEqual(q && q.requestor, t.context.people[0]._id)
 })

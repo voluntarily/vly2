@@ -134,6 +134,37 @@ test.serial('Evaluate the personal goals - hidden and unhide', async t => {
   t.falsy(apg)
 })
 
+test.serial('Evaluate the personal goals - complete to closed ', async t => {
+  const personalGoalAlice = {
+    person: t.context.alice._id,
+    goal: t.context.goal._id,
+    status: PersonalGoalStatus.COMPLETED,
+    dateCompleted: Date.now()
+  }
+
+  let apg = await addPersonalGoal(personalGoalAlice)
+  t.truthy(apg)
+  t.is(apg.status, PersonalGoalStatus.COMPLETED)
+
+  // run the evaluation - not much should happen
+  evaluatePersonalGoals(t.context.alice._id)
+  apg = await PersonalGoal.findById(apg._id).exec()
+  t.is(apg.status, PersonalGoalStatus.COMPLETED)
+
+  // set date back in time
+  apg.dateCompleted = '2019-01-01T00:00:00.000Z'
+  await apg.save()
+  // run the evaluation - record becomes unhidden
+  await evaluatePersonalGoals(t.context.alice._id)
+  apg = await PersonalGoal.findById(apg._id).exec()
+  t.is(apg.status, PersonalGoalStatus.CLOSED)
+
+  // clean up - check record is removed
+  await apg.remove()
+  apg = await PersonalGoal.findById(apg._id).exec()
+  t.falsy(apg)
+})
+
 test.serial('Evaluate the personal goals - true completes', async t => {
   const personalGoalAlice = {
     person: t.context.alice._id,

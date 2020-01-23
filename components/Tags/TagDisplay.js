@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import { TagStyle } from '../VTheme/VTheme'
 
 export function TagDisplay ({ tags }) {
+  if (!tags) return ''
   return (
     <span>
       {tags.map(tag => {

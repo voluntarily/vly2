@@ -5,7 +5,8 @@ const PersonalGoalStatus = {
   ACTIVE: 'active', // goal has been started but not finished - in progress
   COMPLETED: 'completed', // goal has been completed - met its evaluation test
   HIDDEN: 'hidden', // goal has been hidden (but not deleted)
-  CANCELLED: 'cancelled' // goal has been cancelled.
+  CANCELLED: 'cancelled', // goal has been cancelled.
+  CLOSED: 'closed' // completed and expired
 }
 
 module.exports = {

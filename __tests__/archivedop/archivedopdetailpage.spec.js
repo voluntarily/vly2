@@ -12,8 +12,7 @@ import withMockRoute from '../../server/util/mockRouter'
 import reduxApi from '../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { API_URL } from '../../lib/callApi'
-
-const fetchMock = require('fetch-mock')
+import fetchMock from 'fetch-mock'
 
 test.before('Setup fixtures', (t) => {
   // This gives all the people fake ids to better represent a fake mongo db
@@ -95,7 +94,7 @@ test('archivedOpDetailPage should have an InterestSection component', t => {
   t.is(wrapper.find('InterestArchivedSection').length, 1)
 })
 
-test('archivedOpDetailPage should display OpUnavalablePage when no opportunity can be retrieved', t => {
+test('archivedOpDetailPage should display OpUnknown when no opportunity can be retrieved', t => {
   const myStore = { ...t.context.mockStore }
   myStore.getState().archivedOpportunities.data = []
 
@@ -114,7 +113,7 @@ test('archivedOpDetailPage should display OpUnavalablePage when no opportunity c
       <RoutedArchivedOpDetailPage {...props} />
     </Provider>
   )
-  t.is(wrapper.find('OpUnavailablePage').length, 1)
+  t.is(wrapper.find('OpUnknown').length, 1)
 })
 
 test('archivedOpDetailPage should display Loading spinner when loading', t => {

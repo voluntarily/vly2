@@ -1,6 +1,7 @@
 const Member = require('./member')
 const PubSub = require('pubsub-js')
 const { TOPIC_MEMBER__UPDATE } = require('../../services/pubsub/topic.constants')
+const { MemberStatus } = require('./member.constants')
 
 /* get a single member record with org and person populated out */
 const getMemberbyId = id => {
@@ -41,8 +42,23 @@ const findOrgByPersonIdAndCategory = async (personId, category) => {
   if (!myorgs.length) { // failed to find matching org
     return null
   }
+
+  // sort to give most important level of membership first.
+  const orgAdminOrgs = myorgs.filter((member) => member.status === MemberStatus.ORGADMIN)
+  const memberOrgs = myorgs.filter((member) => member.status === MemberStatus.MEMBER)
+  const followerOrgs = myorgs.filter((member) => member.status === MemberStatus.FOLLOWER)
+  const otherOrgs = myorgs.filter((member) => {
+    return [
+      MemberStatus.ORGADMIN,
+      MemberStatus.MEMBER,
+      MemberStatus.FOLLOWER
+    ].includes(member.status) === false
+  })
+
+  const sortedOrgs = [].concat(orgAdminOrgs, memberOrgs, followerOrgs, otherOrgs)
+
   // get id of Organisation
-  return myorgs[0].organisation._id
+  return sortedOrgs[0].organisation._id
 }
 
 module.exports = {
