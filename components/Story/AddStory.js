@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 import { Role } from '../../server/services/authorize/role.js'
 // todo if image is not present then use a fallback.
 const AddStory = ({ roles, ...props }) => {
-  if (roles && roles.includes(Role.ADMIN || Role.ORG_ADMIN)) {
+  if (roles && (roles.includes(Role.ADMIN) || roles.includes(Role.ORG_ADMIN))) {
     return (
       <Link href=''>
         <Button type='primary' shape='round' size='large'>
