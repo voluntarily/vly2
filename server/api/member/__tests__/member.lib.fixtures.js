@@ -11,10 +11,6 @@ module.exports = {
     {
       name: 'Test name 3',
       email: 'test3@example.com'
-    },
-    {
-      name: 'Test name 4',
-      email: 'test4@example.com'
     }
   ],
   organisations: [
