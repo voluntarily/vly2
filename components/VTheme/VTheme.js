@@ -429,6 +429,8 @@ figcaption {
   }
   img {
     border-radius: 8px 8px 0 0;
+    
+    
   }
   figcaption {
     transform: scale(0.9091);
@@ -459,7 +461,7 @@ img {
   transition: all 0.2s;
   -webkit-transition: all 0.2s;
   width: 100%;
-  height: auto;
+  height: 10rem;
   max-height: 10rem;
   background-color: rgba(0, 0, 0, 0);
   object-fit: cover;
