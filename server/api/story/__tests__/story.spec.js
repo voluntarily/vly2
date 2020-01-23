@@ -53,5 +53,3 @@ test.serial('Should correctly give count of all stories sorted by name', async t
   t.is(t.context.stories.length, got.length)
   t.is(got.name, stories.name) // TODO: have to sort with datePublished to prove the oldest stories
 })
-
-

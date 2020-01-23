@@ -60,8 +60,8 @@ class RegisterInterestSection extends Component {
       return (<Loading />)
     }
 
-    // If we have access to the interests section of the Redux store...
-    // Get the interest out of the store, if any.
+    //  If we have access to the interests section of the Redux store.
+    //  Get the interest out of the store, if any.
     let interest = null
 
     if (this.props.interests.sync && this.props.interests.data.length > 0) {

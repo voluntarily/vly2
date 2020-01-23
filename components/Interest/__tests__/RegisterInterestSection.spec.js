@@ -59,8 +59,8 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
-  //const getmyinterests = `${API_URL}/interests/?op=${opid}&me=${meid}`
-  const getmyinterests='path:/api/interests/'
+  // const getmyinterests = `${API_URL}/interests/?op=${opid}&me=${meid}`
+  const getmyinterests = 'path:/api/interests/'
   myMock.getOnce(getmyinterests, [])
 
   const wrapper = await mountWithIntl(
