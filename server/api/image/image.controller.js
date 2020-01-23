@@ -44,8 +44,6 @@ const uploadImage = async (req, res) => {
     const [, imageUrl, ...usageUrls] = imageUrls
 
     const result = {
-      status: 200, // TODO: Remove - we should just use HTTP status code
-      message: 'OK', // TODO: Remove - the HTTP status code is enough to indicate success
       imageUrl,
       sizeVariants: Object.fromEntries(usageUrls.map((variant, index) => [usages[index].name, variant]))
     }
