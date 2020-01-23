@@ -81,7 +81,7 @@ export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isA
   const setEditingOfPage = (editing) => {
     setEditing(editing)
     window.scrollTo({
-      top: 0,
+      top: 0
     })
   }
 

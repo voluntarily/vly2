@@ -24,7 +24,6 @@ const blankAct = {
   tags: []
 }
 
-
 export const ActDetailPage = (props) => {
   const [editing, setEditing] = useState(false)
   useEffect(() => {
@@ -43,7 +42,7 @@ export const ActDetailPage = (props) => {
   const setEditingOfPage = (editing) => {
     setEditing(editing)
     window.scrollTo({
-      top: 0,
+      top: 0
     })
   }
 
@@ -136,7 +135,6 @@ export const ActDetailPage = (props) => {
   //       </Button>
   //   )
   // }
-
 
   if (!content) {
     if ((act && editing) || props.isNew) {
