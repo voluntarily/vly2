@@ -44,6 +44,7 @@ export const Spacer = styled.div`
 export const ControlGrid = styled.div`
 display: grid;
 grid-template-columns: 5fr 2fr;
+margin: 2rem 0 1rem 0;
 
 align-self: center;
 

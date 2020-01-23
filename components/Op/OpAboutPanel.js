@@ -5,24 +5,43 @@ import TagDisplay from '../Tags/TagDisplay'
 import Html from '../VTheme/Html'
 import { ItemIdLine, TagContainer } from '../VTheme/ItemList'
 import { ProfilePanel, ProfileSection } from '../VTheme/Profile'
-
+import { OpSectionGrid, Spacer } from '../VTheme/VTheme'
+import { Divider } from 'antd'
+import { ShareLinks } from './OpShareLinks'
+import { config } from '../../config/config'
 export function OpAboutPanel ({ op }) {
   const description = op.description || ''
-
+  const appUrl = `${config.appUrl}/ops/op._id`
   return (
     <ProfilePanel>
-      <ProfileSection>
-        <ItemIdLine item={op.requestor} path='people' />
-        <TagContainer>
-          <TagDisplay tags={op.tags} />
-        </TagContainer>
-      </ProfileSection>
-      <ProfileSection>
+      
+     
+    <OpSectionGrid>
+      <h2>About this activity</h2>
+ <div>
         <Html>
           {description}
         </Html>
-      </ProfileSection>
+        <Divider />
+        <TagContainer>
+        <h5>Categories</h5>
+          <TagDisplay tags={op.tags} />
+        </TagContainer>
 
+        <Divider />
+        <h5>Share</h5>
+        <ShareLinks url={appUrl} />
+        </div>
+        </OpSectionGrid>
+        <Divider />
+      <OpSectionGrid>
+      <h2>About the organisers</h2>
+      <ProfileSection>
+        <ItemIdLine item={op.requestor} path='people' />
+
+      </ProfileSection>
+      </OpSectionGrid>
+     <Spacer />
     </ProfilePanel>)
 }
 

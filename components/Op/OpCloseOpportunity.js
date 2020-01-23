@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { Button, Divider, message, Popconfirm } from 'antd'
 import { useRouter } from 'next/router'
 import { FormattedMessage } from 'react-intl'
-import { ControlGrid } from '../VTheme/VTheme'
+import { ControlGrid, OpSectionGrid, SpacerSmall } from '../VTheme/VTheme'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 
@@ -35,7 +35,7 @@ export const OpCloseOpportunity = ({ op, dispatch }) => {
     }, [])
 
   return (
-    <section>
+    <OpSectionGrid>
       <h2>
         <FormattedMessage
           id='OpCloseOpportunity.title'
@@ -43,6 +43,7 @@ export const OpCloseOpportunity = ({ op, dispatch }) => {
           description='warning about the buttons to close an op'
         />
       </h2>
+      <div>
       <h4>
         <FormattedMessage
           id='OpCloseOpportunity.warning'
@@ -50,6 +51,7 @@ export const OpCloseOpportunity = ({ op, dispatch }) => {
           description='warning about the buttons to close an op'
         />
       </h4>
+
       <ControlGrid>
         <h5><strong>Finish this activity</strong><br />Only use this button once your activity is complete</h5>
         <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' onConfirm={handleCompleteOpportunity} okText='Yes' cancelText='No'>
@@ -67,7 +69,8 @@ export const OpCloseOpportunity = ({ op, dispatch }) => {
           </Button>
         </Popconfirm>
       </ControlGrid>
-    </section>
+      </div>
+    </OpSectionGrid>
   )
 }
 
