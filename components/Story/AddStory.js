@@ -12,7 +12,7 @@ import { Role } from '../../server/services/authorize/role.js'
 const AddStory = ({ roles, ...props }) => {
   if (roles && roles.includes(Role.ADMIN || Role.ORG_ADMIN)) {
     return (
-      <Link href='/act/new'>
+      <Link href=''>
         <Button type='primary' shape='round' size='large'>
           <FormattedMessage
             id='story.new'
