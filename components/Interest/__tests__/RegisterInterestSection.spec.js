@@ -59,7 +59,8 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
-  const getmyinterests = `${API_URL}/interests/?op=${opid}&me=${meid}`
+  //const getmyinterests = `${API_URL}/interests/?op=${opid}&me=${meid}`
+  const getmyinterests='path:/api/interests/'
   myMock.getOnce(getmyinterests, [])
 
   const wrapper = await mountWithIntl(
@@ -100,7 +101,7 @@ test.serial('mount RegisterInterestSection with op and me', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
-  const getmyinterests = `${API_URL}/interests/?op=${opid}&me=${meid}`
+  const getmyinterests = 'path:/api/interests/'
   myMock.getOnce(getmyinterests, interests[0])
 
   const wrapper = await mountWithIntl(

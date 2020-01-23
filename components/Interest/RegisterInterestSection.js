@@ -8,6 +8,7 @@ import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
 import InterestConfirmationCard from './InterestConfirmationCard'
 import RegisterInterestItem from './RegisterInterestItem'
+import cuid from 'cuid'
 
 // Helper function to generate a blank interest.
 function getNewInterest (me, op) {
@@ -24,10 +25,10 @@ class RegisterInterestSection extends Component {
   // When component mounts, make initial API call.
   // TODO do we need to change this to getInitialProps?
   async componentDidMount () {
-    const op = this.props.op
+    const op = this.props.op._id
     const me = this.props.meID
     try {
-      await this.props.dispatch(reduxApi.actions.interests.get({ id: '', op, me }))
+      await this.props.dispatch(reduxApi.actions.interests.get({ op, me, z: cuid() }))
     } catch (err) {
       console.error('error in getting interests', err)
     }
