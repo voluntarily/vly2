@@ -14,7 +14,7 @@ class MemberTable extends Component {
       key: 'imgUrl',
       render: (text, record) => {
         return (
-          <span>
+          <a>
             <Avatar
               style={{ marginRight: '1rem' }}
               size='large'
@@ -24,7 +24,7 @@ class MemberTable extends Component {
               icon='user'
             />
             {record.person.nickname}
-          </span>
+          </a>
         )
       }
     },
