@@ -9,6 +9,7 @@ import { OpSectionGrid, Spacer } from '../VTheme/VTheme'
 import { Divider } from 'antd'
 import { ShareLinks } from './OpShareLinks'
 import { config } from '../../config/config'
+import { FormattedMessage } from 'react-intl'
 export function OpAboutPanel ({ op }) {
   const description = op.description || ''
   const appUrl = `${config.appUrl}/ops/op._id`
@@ -17,25 +18,25 @@ export function OpAboutPanel ({ op }) {
       
      
     <OpSectionGrid>
-      <h2>About this activity</h2>
+      <h2><FormattedMessage id="actDetailForm.AboutSection.subtitle" /></h2>
  <div>
         <Html>
           {description}
         </Html>
         <Divider />
         <TagContainer>
-        <h5>Categories</h5>
+        <h5><FormattedMessage id="actCategories" /></h5>
           <TagDisplay tags={op.tags} />
         </TagContainer>
 
         <Divider />
-        <h5>Share</h5>
+        <h5><FormattedMessage id="actShare" /></h5>
         <ShareLinks url={appUrl} />
         </div>
         </OpSectionGrid>
         <Divider />
       <OpSectionGrid>
-      <h2>About the organisers</h2>
+      <h2><FormattedMessage id="actDetailForm.AboutSection.organisersubtitle" /></h2>
       <ProfileSection>
         <ItemIdLine item={op.requestor} path='people' />
 
