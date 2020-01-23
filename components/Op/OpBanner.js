@@ -15,7 +15,6 @@ import {
   ItemIdLine
 } from '../VTheme/ItemList'
 import moment from 'moment'
-import { ShareLinks } from './OpShareLinks'
 
 const OpBanner = ({ op, children }) => {
   const startDate = op.date[0]
@@ -57,8 +56,6 @@ const OpBanner = ({ op, children }) => {
             <ItemVenue venue={op.venue} />
             <ItemDate startDate={startDate} endDate={endDate} />
             <ItemStatus status={op.status} />
-
-       
 
           </ItemContainer>
           <>

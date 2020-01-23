@@ -15,34 +15,33 @@ export function OpAboutPanel ({ op }) {
   const appUrl = `${config.appUrl}/ops/op._id`
   return (
     <ProfilePanel>
-      
-     
-    <OpSectionGrid>
-      <h2><FormattedMessage id="actDetailForm.AboutSection.subtitle" /></h2>
- <div>
-        <Html>
-          {description}
-        </Html>
-        <Divider />
-        <TagContainer>
-        <h5><FormattedMessage id="actCategories" /></h5>
-          <TagDisplay tags={op.tags} />
-        </TagContainer>
 
-        <Divider />
-        <h5><FormattedMessage id="actShare" /></h5>
-        <ShareLinks url={appUrl} />
-        </div>
-        </OpSectionGrid>
-        <Divider />
       <OpSectionGrid>
-      <h2><FormattedMessage id="actDetailForm.AboutSection.organisersubtitle" /></h2>
-      <ProfileSection>
-        <ItemIdLine item={op.requestor} path='people' />
+        <h2><FormattedMessage id='actDetailForm.AboutSection.subtitle' /></h2>
+        <div>
+          <Html>
+            {description}
+          </Html>
+          <Divider />
+          <TagContainer>
+            <h5><FormattedMessage id='actCategories' /></h5>
+            <TagDisplay tags={op.tags} />
+          </TagContainer>
 
-      </ProfileSection>
+          <Divider />
+          <h5><FormattedMessage id='actShare' /></h5>
+          <ShareLinks url={appUrl} />
+        </div>
       </OpSectionGrid>
-     <Spacer />
+      <Divider />
+      <OpSectionGrid>
+        <h2><FormattedMessage id='actDetailForm.AboutSection.organisersubtitle' /></h2>
+        <ProfileSection>
+          <ItemIdLine item={op.requestor} path='people' />
+
+        </ProfileSection>
+      </OpSectionGrid>
+      <Spacer />
     </ProfilePanel>)
 }
 
