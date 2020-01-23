@@ -1,6 +1,8 @@
+const { AbilityBuilder } = require('@casl/ability')
 const { SchemaName } = require('./organisation.constants')
 const { Role } = require('../../services/authorize/role')
 const { Action } = require('../../services/abilities/ability.constants')
+const Member = require('../member/member')
 
 /*
 // TypeScript definition
@@ -14,7 +16,7 @@ interface Rule {
 }
 */
 
-const ruleBuilder = () => {
+const ruleBuilder = (session) => {
   const defaultAbilities = [{
     subject: SchemaName,
     action: Action.READ
@@ -59,6 +61,7 @@ const ruleBuilder = () => {
     inverted: true
   }]
 
+  console.log(session)
   return {
     [Role.ANON]: defaultAbilities,
     [Role.ACTIVITY_PROVIDER]: defaultAbilities,
@@ -66,8 +69,29 @@ const ruleBuilder = () => {
     [Role.OPPORTUNITY_PROVIDER]: defaultAbilities,
     [Role.TESTER]: defaultAbilities,
     [Role.ADMIN]: adminAbilities,
-    [Role.ORG_ADMIN]: orgAdminAbilities
+    [Role.ORG_ADMIN]: defineAbilitiesFor(session.me)
   }
+}
+
+function defineAbilitiesFor(user, orgId) {
+  return AbilityBuilder.define(async (can, cannot) => {
+    if (!user) {
+      return can('read', 'all')
+    }
+
+    const membership = await Member
+      .findOne({
+        person: user._id,
+        organisation: orgId
+      })
+      .exec()
+
+    if (membership) {
+      can('manage', 'all')
+    } else {
+      can('read', 'all')
+    }
+  })
 }
 
 module.exports = ruleBuilder
