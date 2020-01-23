@@ -448,115 +448,120 @@ class OrgDetailForm extends Component {
                 <Divider />
               </>)
             : null}
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <h3>Staff Instructions</h3>
-              </TitleContainer>
-              <p>
-                What processes do you want staff to do before they start
-                volunteering? Should they fill in a form? Ask for approval from
-                their manager? Specify your instructions here.
-              </p>
-            </DescriptionContainer>
-            <InputContainer>
-              <Form.Item label={orgInfoInstructions}>
-                {getFieldDecorator('instructions', {
-                  rules: []
-                })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
-                  <RichTextEditor />
-                )}
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>
-          <Divider />
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <h3>Partner Instructions</h3>
-              </TitleContainer>
-              <p>
-                Is there anything you want partners who collaborate on CSR
-                activities with you to know? Write it here
-              </p>
-            </DescriptionContainer>
-            <InputContainer>
-              <Form.Item label={orgInfoFollowers}>
-                {getFieldDecorator('followers', {
-                  rules: []
-                })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
-                  <RichTextEditor />
-                )}
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>
+          {(getFieldValue('category') || []).includes(OrganisationCategory.SCHOOL)
+            ? null
+            : (
+              <>
+                <FormGrid>
+                  <DescriptionContainer>
+                    <TitleContainer>
+                      <h3>Staff Instructions</h3>
+                    </TitleContainer>
+                    <p>
+                        What processes do you want staff to do before they start
+                        volunteering? Should they fill in a form? Ask for approval from
+                        their manager? Specify your instructions here.
+                    </p>
+                  </DescriptionContainer>
+                  <InputContainer>
+                    <Form.Item label={orgInfoInstructions}>
+                      {getFieldDecorator('instructions', {
+                        rules: []
+                      })(
+                        // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+                        <RichTextEditor />
+                      )}
+                    </Form.Item>
+                  </InputContainer>
+                </FormGrid>
+                <Divider />
+                <FormGrid>
+                  <DescriptionContainer>
+                    <TitleContainer>
+                      <h3>Partner Instructions</h3>
+                    </TitleContainer>
+                    <p>
+                        Is there anything you want partners who collaborate on CSR
+                        activities with you to know? Write it here
+                    </p>
+                  </DescriptionContainer>
+                  <InputContainer>
+                    <Form.Item label={orgInfoFollowers}>
+                      {getFieldDecorator('followers', {
+                        rules: []
+                      })(
+                        // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+                        <RichTextEditor />
+                      )}
+                    </Form.Item>
+                  </InputContainer>
+                </FormGrid>
 
-          <Divider />
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <h3>How to join</h3>
-              </TitleContainer>
-              <p>
-                How do you want teachers and schools to get in touch with you?
-              </p>
-            </DescriptionContainer>
-            <InputContainer>
-              <Form.Item label={orgInfoJoiners}>
-                {getFieldDecorator('joiners', {
-                  rules: []
-                })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
-                  <RichTextEditor />
-                )}
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>
-          <Divider />
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <h3>Staff Section</h3>
-              </TitleContainer>
-              <p>
-                Anything you want to only tell staff about? ie: Where to get
-                Company T-Shirts before volunteering
-              </p>
-            </DescriptionContainer>
-            <InputContainer>
-              <Form.Item label={orgInfoMembers}>
-                {getFieldDecorator('members', {
-                  rules: []
-                })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
-                  <RichTextEditor />
-                )}
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>
-          <Divider />
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <h3>Public Section</h3>
-              </TitleContainer>
-              <p>
-                How do you want teachers and schools to get in touch with you?
-              </p>
-            </DescriptionContainer>
-            <InputContainer>
-              <Form.Item label={orgInfoOutsiders}>
-                {getFieldDecorator('outsiders', {
-                  rules: []
-                })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
-                  <RichTextEditor />
-                )}
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>
+                <Divider />
+                <FormGrid>
+                  <DescriptionContainer>
+                    <TitleContainer>
+                      <h3>How to join</h3>
+                    </TitleContainer>
+                    <p>
+                        How do you want teachers and schools to get in touch with you?
+                    </p>
+                  </DescriptionContainer>
+                  <InputContainer>
+                    <Form.Item label={orgInfoJoiners}>
+                      {getFieldDecorator('joiners', {
+                        rules: []
+                      })(
+                        // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+                        <RichTextEditor />
+                      )}
+                    </Form.Item>
+                  </InputContainer>
+                </FormGrid>
+                <Divider />
+                <FormGrid>
+                  <DescriptionContainer>
+                    <TitleContainer>
+                      <h3>Staff Section</h3>
+                    </TitleContainer>
+                    <p>
+                        Anything you want to only tell staff about? ie: Where to get
+                        Company T-Shirts before volunteering
+                    </p>
+                  </DescriptionContainer>
+                  <InputContainer>
+                    <Form.Item label={orgInfoMembers}>
+                      {getFieldDecorator('members', {
+                        rules: []
+                      })(
+                        // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+                        <RichTextEditor />
+                      )}
+                    </Form.Item>
+                  </InputContainer>
+                </FormGrid>
+                <Divider />
+                <FormGrid>
+                  <DescriptionContainer>
+                    <TitleContainer>
+                      <h3>Public Section</h3>
+                    </TitleContainer>
+                    <p>
+                        How do you want teachers and schools to get in touch with you?
+                    </p>
+                  </DescriptionContainer>
+                  <InputContainer>
+                    <Form.Item label={orgInfoOutsiders}>
+                      {getFieldDecorator('outsiders', {
+                        rules: []
+                      })(
+                        // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
+                        <RichTextEditor />
+                      )}
+                    </Form.Item>
+                  </InputContainer>
+                </FormGrid>
+              </>)}
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
