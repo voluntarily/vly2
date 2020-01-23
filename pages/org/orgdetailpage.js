@@ -78,6 +78,13 @@ export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isA
   const [editing, setEditing] = useState(false)
   const [saved, setSaved] = useState(false)
 
+  const setEditingOfPage = (editing) => {
+    setEditing(editing)
+    window.scrollTo({
+      top: 0,
+    })
+  }
+
   const handleCancel = useCallback(
     () => {
       setEditing(false)
@@ -148,7 +155,7 @@ export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isA
       <OrgBanner org={org}>
         {isAuthenticated && <RegisterMemberSection orgid={org._id} meid={me._id} />}
         {saved && <HomeButton />}
-        {canEdit && <OrgEditButton onClick={() => setEditing(true)} />}
+        {canEdit && <OrgEditButton onClick={() => setEditingOfPage(true)} />}
       </OrgBanner>
       <OrgTabs org={org} />
     </FullPage>)
