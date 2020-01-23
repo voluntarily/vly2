@@ -2,33 +2,13 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 
-const Demo = styled.div`
-
-  p {
-    width: 40rem;
-    margin-bottom: 1rem;
-  }
-  label {
-    text-align: right;
-    margin-bottom: 1rem;
-    display: inline-block;
-    width: 5rem;
-  }    
-  input {
-    display: inline-block;
-    width: 4rem;
-    margin-left: 0.2rem;
-  }
-`
 const Article = styled.article`
   width: 40rem;
   background-color: #f8f8f0;
-  color: white;
   margin: 1rem 0 ;
+  padding: 1rem;
   display: block;
   vertical-align: middle;
-  text-align: center;
-  font-size: 1.8em;
 
   h1 {
     font-size: 2rem;
@@ -36,8 +16,44 @@ const Article = styled.article`
   p {
     color: #404000;
   }
+  button {
+    margin: 1rem;
+  }
 `
 
+const EditableArticle = styled.div`
+  width: 40rem;
+  background-color: #f8f8f0;
+  padding: 1rem;
+  margin: 1rem 0 ;
+  display: block;
+  vertical-align: middle;
+  font-size: 1rem;
+
+  h1 {
+    font-size: 2rem;
+  }
+  p {
+    color: #404000;
+  }
+  label {
+    text-align: right;
+    margin-bottom: 1rem;
+    display: inline-block;
+    width: 5rem;
+  }   
+  textarea {
+    margin-left: 5rem;
+  } 
+  input {
+    display: inline-block;
+    width: 80%;
+    margin-left: 0.2rem;
+  }
+  button {
+    margin: 1rem;
+  }
+`
 const newStory = {
   title: '',
   body: ''
@@ -45,17 +61,33 @@ const newStory = {
 
 export const stories = [
   {
-    title: 'things to do',
-    body: 'a;sdlkfja ;dsjkfalksjdf laksdjf lasdkdfh alksjfdh alskf halskfh ',
+    title: 'things to come',
+    body: 'In the city of Everytown in southern England, businessman John Cabal (Raymond Massey) cannot enjoy Christmas Day, 1940, with the news everywhere of possible war. His guest, Harding (Maurice Braddell), shares his worries, while another friend, the over-optimistic Pippa Passworthy (Edward Chapman), believes it will not come to pass, and if it does, it will accelerate technological progress. An aerial bombing raid on the city that night results in general mobilisation and then global war.',
     editable: true
   },
   {
-    title: 'More things to do',
-    body: 'a;sdlkfja ;dsjkfalksjdf laksdjf lasdkdfh alksjfdh alskf halskfh '
+    title: 'things to look forward to',
+    body: `
+    To get you thinking, here are some things you could look forward to on a weekly or daily basis:
+a half-hour of peace to mediate or write in a journal.
+a walk with a friend.
+a bike ride through the park.
+a bubble bath.
+seeing a play or going to the theatre.
+trying out a new restaurant.
+calling a friend to chat.
+reading a book.
+`
   },
   {
-    title: 'Even More things to do',
-    body: 'a;sdlkfja ;dsjkfalksjdf laksdjf lasdkdfh alksjfdh alskf halskfh ',
+    title: 'Things to be thankful for',
+    body: `
+    Let's have a look at 100 things to be thankful for today.
+Your family and friends. Your health and wellbeing. The opportunity to have an education. ...
+Fresh countryside walks. Cameras to capture amazing memories. Hitting the snooze button on your alarm. ...
+Waking up every morning. Access to medication. ...
+Comfortable clothes. Who you are.
+`,
     editable: true
 
   }
@@ -74,13 +106,13 @@ export const StoryForm = ({ story, onSubmit }) => {
   const [storyed, setStoryed] = useState(story)
 
   return (
-    <div>
+    <EditableArticle>
       <label>Title:</label>
       <input value={storyed.title} onChange={(e) => setStoryed({ title: e.target.value, body: storyed.body })} /><br />
-      <input value={storyed.body} onChange={(e) => setStoryed({ title: storyed.title, body: e.target.value })} />
+      <textarea rows='5' cols='33' value={storyed.body} onChange={(e) => setStoryed({ title: storyed.title, body: e.target.value })} />
       <button onClick={() => onSubmit(storyed)}>Save</button>
       {/* <StoryDetail story={storyed} /> */}
-    </div>)
+    </EditableArticle>)
 }
 
 export const EditableStory = ({ story }) => {
@@ -123,9 +155,9 @@ export const StoryStackWithNew = ({ stories }) => {
     setStoryList([story, ...storyList])
   }
   return (
-    <Demo>
+    <>
       <StoryForm story={newStory} onSubmit={handleSave} />
       <StoryStack stories={storyList} />
-    </Demo>
+    </>
   )
 }
