@@ -19,6 +19,7 @@ const getOpPageURL = (isArchived, opid) => {
 
 const ImageWrapper = styled.div`
   position: relative;
+
 `
 
 const StyledIcon = styled(Icon)`

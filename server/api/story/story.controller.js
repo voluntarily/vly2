@@ -3,7 +3,7 @@ const Story = require('./story')
 const getStory = async (req, res) => {
   try {
     const got = await Story.findOne(req.params)
-      .populate('author', 'name body imgUrl') // TODO: add test that will check name and imgURL are populated
+      .populate('author', 'name imgUrl')
       .exec()
     res.json(got)
   } catch (e) {

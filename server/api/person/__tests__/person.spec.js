@@ -264,3 +264,28 @@ test('Should correctly handle missing inputs', async t => {
   t.is(res.body.message, 'Person validation failed: email: Path `email` is required.')
   t.is(res.body.name, 'ValidationError')
 })
+
+test.serial('Email notifications flag set correctly', async (t) => {
+  const people = await Person.create([
+    {
+      name: 'Test default flag',
+      email: 'test1@example.com'
+    },
+    {
+      name: 'Test true flag',
+      email: 'test2@example.com',
+      sendEmailNotifications: true
+    },
+    {
+      name: 'Test false flag',
+      email: 'test3@example.com',
+      sendEmailNotifications: false
+    }
+  ])
+
+  t.is(people[0].sendEmailNotifications, true)
+  t.is(people[1].sendEmailNotifications, true)
+  t.is(people[2].sendEmailNotifications, false)
+
+  await Person.remove({ _id: { $in: people.map(person => person._id) } })
+})
