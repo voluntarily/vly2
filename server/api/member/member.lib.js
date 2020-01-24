@@ -29,19 +29,6 @@ const addMember = async (member) => {
   return got
 }
 
-function compareMemberStatus (a, b) {
-  if (a.status === b.status) return 0
-  if (a.status === MemberStatus.ORGADMIN) return -1
-  if (b.status === MemberStatus.ORGADMIN) return 1
-  if (a.status === MemberStatus.MEMBER) return -1
-  if (b.status === MemberStatus.MEMBER) return 1
-  if (a.status === MemberStatus.FOLLOWER) return -1
-  if (b.status === MemberStatus.FOLLOWER) return 1
-
-  // all others return arbitary a
-  return -1
-}
-
 const findOrgByPersonIdAndCategory = async (personId, category) => {
   // search membership table for org matching category and person id
   const query = { person: personId }
@@ -55,10 +42,23 @@ const findOrgByPersonIdAndCategory = async (personId, category) => {
   if (!myorgs.length) { // failed to find matching org
     return null
   }
+
   // sort to give most important level of membership first.
-  myorgs.sort(compareMemberStatus)
+  const orgAdminOrgs = myorgs.filter((member) => member.status === MemberStatus.ORGADMIN)
+  const memberOrgs = myorgs.filter((member) => member.status === MemberStatus.MEMBER)
+  const followerOrgs = myorgs.filter((member) => member.status === MemberStatus.FOLLOWER)
+  const otherOrgs = myorgs.filter((member) => {
+    return [
+      MemberStatus.ORGADMIN,
+      MemberStatus.MEMBER,
+      MemberStatus.FOLLOWER
+    ].includes(member.status) === false
+  })
+
+  const sortedOrgs = [].concat(orgAdminOrgs, memberOrgs, followerOrgs, otherOrgs)
+
   // get id of Organisation
-  return myorgs[0].organisation._id
+  return sortedOrgs[0].organisation._id
 }
 
 module.exports = {
