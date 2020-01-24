@@ -6,7 +6,7 @@ import { OpAboutPanel } from './OpAboutPanel'
 import { OpQuestionPanel } from './OpQuestionPanel'
 import { OpUpdatePanel } from './OpUpdatePanel'
 import { OpManagePanel } from './OpManagePanel'
-const shadowStyle = { overflow: 'visible', textAlign: 'center' }
+const shadowStyle = { overflow: 'visible', textAlign: 'center', fontWeight: 'bold', color: '#6549AA' }
 const { TabPane } = Tabs
 
 const opAboutTab =

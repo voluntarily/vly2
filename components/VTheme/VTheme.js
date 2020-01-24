@@ -44,6 +44,7 @@ export const Spacer = styled.div`
 export const ControlGrid = styled.div`
 display: grid;
 grid-template-columns: 5fr 2fr;
+margin: 2rem 0 1rem 0;
 
 align-self: center;
 
@@ -466,6 +467,8 @@ figcaption {
   }
   img {
     border-radius: 8px 8px 0 0;
+    
+    
   }
   figcaption {
     transform: scale(0.9091);
@@ -496,7 +499,7 @@ img {
   transition: all 0.2s;
   -webkit-transition: all 0.2s;
   width: 100%;
-  height: auto;
+  height: 10rem;
   max-height: 10rem;
   background-color: rgba(0, 0, 0, 0);
   object-fit: cover;
