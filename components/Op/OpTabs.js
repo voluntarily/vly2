@@ -23,7 +23,7 @@ const opForumTab =
     description='Tab label for Question panel on Opportunity'
   />
 
-const opNewsTab =
+const opUpdateTab =
   <FormattedMessage
     id='opTabs.update'
     defaultMessage='Updates'
@@ -59,7 +59,7 @@ export const OpTabs = ({ op, onChange, canManage, defaultTab }) => (
         </TabPane>
       )}
       {isNotProd && (
-        <TabPane tab={opNewsTab} key='news'>
+        <TabPane tab={opUpdateTab} key='news'>
           <OpUpdatePanel op={op} />
         </TabPane>
       )}
