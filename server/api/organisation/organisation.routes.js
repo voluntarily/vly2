@@ -20,7 +20,7 @@ module.exports = function (server) {
         }],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       actions: {
-        list: getOrganisations
+        list: getOrganisations,
       },
       afterActions: [
         { middlewares: [helpers.formatResponse] }

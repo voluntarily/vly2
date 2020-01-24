@@ -32,6 +32,7 @@ const hasSessionInQueryRequest = (req) => {
 }
 
 const setSession = async (req, res, next) => {
+  console.log(req.query)
   req.session = { ...DEFAULT_SESSION } // Default session object will get mutated after logged in. Deconstructing the objec will only get the attribute of it
   const cookie = getCookie(req)
 

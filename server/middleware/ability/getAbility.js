@@ -3,6 +3,9 @@ const { Ability } = require('@casl/ability')
 const { Role } = require('../../services/authorize/role')
 
 module.exports = options => (req, res, next) => {
+  console.log('getAbility: ')
+  console.log(req.params)
+
   const rootPath = require('path').join(__dirname, '/../../..')
   const pattern = rootPath + options.searchPattern
   const userRoles = req.session && req.session.me ? req.session.me.role : [Role.ANON]
@@ -18,6 +21,10 @@ module.exports = options => (req, res, next) => {
       if (role === 'admin') break
     }
   })
+
+  console.log('getAbility2: ')
+  console.log(req.params)
+
   req.ability = new Ability(allRules)
   next()
 }

@@ -16,7 +16,7 @@ interface Rule {
 }
 */
 
-const ruleBuilder = (session) => {
+const ruleBuilder = (session, params) => {
   const defaultAbilities = [{
     subject: SchemaName,
     action: Action.READ
@@ -61,7 +61,10 @@ const ruleBuilder = (session) => {
     inverted: true
   }]
 
-  console.log(session)
+  console.debug(params)
+  console.log('')
+  console.log('')
+  console.log('')
   return {
     [Role.ANON]: defaultAbilities,
     [Role.ACTIVITY_PROVIDER]: defaultAbilities,
@@ -69,12 +72,18 @@ const ruleBuilder = (session) => {
     [Role.OPPORTUNITY_PROVIDER]: defaultAbilities,
     [Role.TESTER]: defaultAbilities,
     [Role.ADMIN]: adminAbilities,
-    [Role.ORG_ADMIN]: defineAbilitiesFor(session.me)
+    // [Role.ORG_ADMIN]: defineAbilitiesFor(session.me, req.session)
   }
 }
 
 function defineAbilitiesFor(user, orgId) {
+  console.log('org ability: ' + user._id + ", " + orgId)
+  console.debug(orgId)
+
   return AbilityBuilder.define(async (can, cannot) => {
+    if (!orgId) {
+      return
+    }
     if (!user) {
       return can('read', 'all')
     }

@@ -16,6 +16,8 @@ const defaultConvertRequestToAction = (req) => {
 }
 
 const authorizeActions = (subject, convertRequestToAction = defaultConvertRequestToAction) => (req, res, next) => {
+  console.log('authorizeActions: ')
+  console.debug(req.params)
   const action = convertRequestToAction(req)
   const authorized = req.ability.can(action, subject)
   if (authorized) {
