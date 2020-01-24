@@ -17,25 +17,25 @@ export function OpAboutPanel ({ op }) {
     <ProfilePanel>
 
       <OpSectionGrid>
-        <h2><FormattedMessage id='actDetailForm.AboutSection.subtitle' /></h2>
+        <h2><FormattedMessage id='actDetailForm.AboutSection.subtitle' defaultMessage='About this activity' /></h2>
         <div>
           <Html>
             {description}
           </Html>
           <Divider />
           <TagContainer>
-            <h5><FormattedMessage id='actCategories' /></h5>
+            <h5><FormattedMessage id='actCategories' defaultMessage='Categories' /></h5>
             <TagDisplay tags={op.tags} />
           </TagContainer>
 
           <Divider />
-          <h5><FormattedMessage id='actShare' /></h5>
+          <h5><FormattedMessage id='actShare' defaultMessage='Share' /></h5>
           <ShareLinks url={appUrl} />
         </div>
       </OpSectionGrid>
       <Divider />
       <OpSectionGrid>
-        <h2><FormattedMessage id='actDetailForm.AboutSection.organisersubtitle' /></h2>
+        <h2><FormattedMessage id='actDetailForm.AboutSection.organisersubtitle' defaultMessage='About the organisers' /></h2>
         <ProfileSection>
           <ItemIdLine item={op.requestor} path='people' />
 
