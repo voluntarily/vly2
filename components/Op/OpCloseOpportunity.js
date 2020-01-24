@@ -39,7 +39,7 @@ export const OpCloseOpportunity = ({ op, dispatch }) => {
       <h2>
         <FormattedMessage
           id='OpCloseOpportunity.title'
-          defaultMessage='Danger Zone'
+          defaultMessage='End Activity'
           description='warning about the buttons to close an op'
         />
       </h2>
