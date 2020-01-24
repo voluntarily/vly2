@@ -13,12 +13,15 @@ import { FormattedMessage } from 'react-intl'
 export function OpAboutPanel ({ op }) {
   const description = op.description || ''
   const appUrl = `${config.appUrl}/ops/op._id`
+  const subtitle = op.subtitle ? <div><p>{op.subtitle}</p><Divider/></div> : '';
   return (
     <ProfilePanel>
 
       <OpSectionGrid>
         <h2><FormattedMessage id='actDetailForm.AboutSection.subtitle' defaultMessage='About this activity' /></h2>
         <div>
+          {subtitle}
+ 
           <Html>
             {description}
           </Html>
