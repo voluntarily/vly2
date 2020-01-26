@@ -75,7 +75,7 @@ test('row click handler pushes to profile page', t => {
     />, '/test')
   const row1 = wrapper.find('tr').at(1)
   t.regex(row1.find('td').at(1).text(), /avowkind/)
-  row1.find('.ant-avatar').first().simulate('click')
+  row1.find('.avatar-profile').first().simulate('click')
 })
 
 test('expanded row render', t => {

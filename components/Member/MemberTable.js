@@ -1,11 +1,11 @@
 /* display a table of members for an organisation
  */
-import { Avatar, Button, Table } from 'antd'
-import Router from 'next/router'
+import { Button, Table } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { MemberStatus } from '../../server/api/member/member.constants'
+import { AvatarProfile } from '../VTheme/AvatarProfileLink'
 
 class MemberTable extends Component {
   columns = [
@@ -14,17 +14,7 @@ class MemberTable extends Component {
       key: 'imgUrl',
       render: (text, record) => {
         return (
-          <a>
-            <Avatar
-              style={{ marginRight: '1rem' }}
-              size='large'
-              shape='square'
-              onClick={() => Router.push(`/people/${record.person._id}`)}
-              src={record.person.imgUrl}
-              icon='user'
-            />
-            {record.person.nickname}
-          </a>
+          <AvatarProfile person={record.person} />
         )
       }
     },
