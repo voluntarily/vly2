@@ -177,3 +177,43 @@ test('Email to anonymous user does not include unsubscribe link', async (t) => {
 
   t.falsy(sentMail[0].text.includes(expectedUnsubscribeText))
 })
+
+test('sendNotificationEmails flag is respected', async (t) => {
+  const props = {
+    from: t.context.me,
+    op: t.context.op,
+    comment: 'Test comment'
+  }
+
+  const optedInPerson = Object.assign({}, t.context.to)
+  optedInPerson.sendEmailNotifications = true
+
+  const optedOutPerson = Object.assign({}, t.context.to)
+  optedOutPerson.sendEmailNotifications = false
+
+  const anonymousPerson = Object.assign({}, t.context.to)
+  delete anonymousPerson._id
+
+  const testPeople = [
+    {
+      person: optedInPerson,
+      expectedMailCount: 1
+    },
+    {
+      person: optedOutPerson,
+      expectedMailCount: 0
+    },
+    {
+      person: anonymousPerson,
+      expectedMailCount: 1
+    }
+  ]
+
+  for (const testPerson of testPeople) {
+    await emailPerson('interested', testPerson.person, props)
+    const sentMail = nodemailerMock.mock.getSentMail()
+
+    t.is(sentMail.length, testPerson.expectedMailCount)
+    nodemailerMock.mock.reset()
+  }
+})

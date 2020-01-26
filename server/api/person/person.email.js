@@ -9,6 +9,10 @@ const { getUnsubscribeLink } = require('./person.lib')
   @props includes details of the opportunity, requestor etc
 */
 module.exports.emailPerson = async (template, to, props, renderOnly = false) => {
+  if (to._id && !to.sendEmailNotifications) {
+    return null
+  }
+
   try {
     const transport = getTransport()
     const email = new Email({
