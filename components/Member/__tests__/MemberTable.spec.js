@@ -1,5 +1,4 @@
 import MemberTable from '../MemberTable'
-import { AvatarProfile } from '../../VTheme/AvatarProfileLink'
 import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import sinon from 'sinon'
