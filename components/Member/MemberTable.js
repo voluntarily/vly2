@@ -14,7 +14,7 @@ class MemberTable extends Component {
       key: 'imgUrl',
       render: (text, record) => {
         return (
-          <AvatarProfile person={record.person} />
+          <AvatarProfile className='avatar-profile' person={record.person} />
         )
       }
     },
