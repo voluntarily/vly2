@@ -31,7 +31,7 @@ test('MemberTable renders followers properly', t => {
   t.is(wrapper.find('tbody tr').length, members.length)
   // Confirm table data
   const row1 = wrapper.find('tbody tr').first()
-  const row2 = wrapper.find('tbody tr a').first()
+  const row2 = wrapper.find('tbody tr a')
   t.is(row2.find('.nickname').at(MTF.NAME).text(), members[0].person.nickname)
   t.is(row1.find('td').at(MTF.STATUS).text(), MemberStatus.FOLLOWER)
 
