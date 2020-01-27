@@ -66,7 +66,6 @@ personSchema.plugin(accessibleRecordsPlugin)
 personSchema.index({ tags: 1 })
 // personSchema.plugin(accessibleFieldsPlugin)
 
-
 // protect multiple imports
 var Person
 
