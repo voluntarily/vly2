@@ -14,7 +14,7 @@ export function AvatarProfile ({ person }) {
           src={person.imgUrl}
           icon='user'
         />&nbsp;&nbsp;
-        {person.nickname}
+        <span className="nickname">{person.nickname}</span>
       </a>
     </Link>
   )

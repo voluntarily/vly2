@@ -31,7 +31,7 @@ test('MemberTable renders followers properly', t => {
   t.is(wrapper.find('tbody tr').length, members.length)
   // Confirm table data
   const row1 = wrapper.find('tbody tr').first()
-  t.is(row1.find('td a span').at(MTF.NAME).text(), members[0].person.nickname)
+  t.is(row1.find('.nickname').at(MTF.NAME).text(), members[0].person.nickname)
   t.is(row1.find('td').at(MTF.STATUS).text(), MemberStatus.FOLLOWER)
 
   const inviteBtn = row1.find('button').first()
@@ -53,7 +53,7 @@ test('MemberTable renders members properly', t => {
   t.is(wrapper.find('tbody tr').length, members.length)
   // Confirm table data
   const row1 = wrapper.find('tbody tr').first()
-  t.is(row1.find('td a span').at(MTF.NAME).text(), members[0].person.nickname)
+  t.is(row1.find('.nickname').at(MTF.NAME).text(), members[0].person.nickname)
   t.is(row1.find('td').at(MTF.STATUS).text(), MemberStatus.MEMBER)
 
   const inviteBtn = row1.find('button').first()
