@@ -1,4 +1,5 @@
 var jwt = require('jsonwebtoken')
+const { Role } = require('../../../services/authorize/role')
 
 const jwtData = {
   accessToken: 'IGs4bjO5WLjsulmjKiW2-VLeetlgykUP',
@@ -68,9 +69,11 @@ jwtDataAlice.idToken = jwt.sign(jwtDataAlice.idTokenPayload, 'secret')
 const DEFAULT_SESSION = {
   isAuthenticated: false,
   user: null,
-  me: null
+  me: {
+    role: [Role.ANON]
+  },
+  idToken: ''
 }
-
 module.exports = {
   jwtData, // represents andrew an admin
   jwtDataDali, // represents dali a normal volunteer
