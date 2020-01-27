@@ -139,8 +139,8 @@ class SchoolInvite {
       join: async (props) => {
         try {
           const organisation = await SchoolInvite.createOrganisationFromSchool(props.schoolId)
-          await SchoolInvite.makePersonOpportunityProvider(request.session.me._id)
-          await SchoolInvite.linkPersonToOrganisationAsAdmin(organisation._id, request.session.me._id)
+          await SchoolInvite.makePersonOpportunityProvider(request.session.toString())
+          await SchoolInvite.linkPersonToOrganisationAsAdmin(organisation._id, request.session.me._id.toString())
         } catch (error) {
           // in the event something goes wrong during this process
           // we don't want to stop the person's journey here because
