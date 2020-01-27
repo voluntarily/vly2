@@ -193,7 +193,7 @@ ActDetailPage.getInitialProps = async ({ store, query }) => {
   const isNew = query && query.new && query.new === 'new'
   const actExists = !!(query && query.id) // !! converts to a boolean value
   await Promise.all([
-    store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
+    store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })),
     store.dispatch(reduxApi.actions.tags.get())
   ])
 

@@ -198,7 +198,7 @@ export class PersonDetailPage extends Component {
 
 PersonDetailPage.propTypes = {
   person: PropTypes.shape({
-    _id: PropTypes.string,
+    _id: PropTypes.object,
     name: PropTypes.string,
     nickname: PropTypes.string,
     about: PropTypes.string,

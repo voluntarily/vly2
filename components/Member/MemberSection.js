@@ -51,7 +51,7 @@ class MemberSection extends Component {
       return <Loading />
     }
     const org = this.props.org
-    const meid = this.props.me._id
+    const meid = this.props.me._id.toString()
     if (!org.info) { org.info = {} }
     // check if I am in the members list
     // TODO: [VP-440] members ability I am orgadmin then I get all members list, else I get just my own membership status

@@ -82,9 +82,10 @@ class PersonHomePage extends Component {
   static async getInitialProps ({ store }) {
     try {
       const me = store.getState().session.me
-
+      const meid = me._id.toString()
+      console.log('home GIP', meid)
       const myOpportunities = {
-        q: JSON.stringify({ requestor: me._id })
+        q: JSON.stringify({ requestor: meid })
       }
 
       await Promise.all([
@@ -92,11 +93,11 @@ class PersonHomePage extends Component {
         store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
         store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),
         store.dispatch(reduxApi.actions.locations.get({ withRelationships: true })),
-        store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
-        store.dispatch(reduxApi.actions.personalGoals.get({ meid: me._id })),
-        store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
-        store.dispatch(reduxApi.actions.interestsArchived.get({ me: me._id })),
-        store.dispatch(reduxApi.actions.recommendedOps.get({ me: me._id }))
+        store.dispatch(reduxApi.actions.interests.get({ me: meid })),
+        store.dispatch(reduxApi.actions.personalGoals.get({ meid: meid })),
+        store.dispatch(reduxApi.actions.members.get({ meid: meid })),
+        store.dispatch(reduxApi.actions.interestsArchived.get({ me: meid })),
+        store.dispatch(reduxApi.actions.recommendedOps.get({ me: meid }))
       ])
     } catch (err) {
       console.error('error in getting home page data', err)
