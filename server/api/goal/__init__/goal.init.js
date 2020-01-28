@@ -3,9 +3,9 @@
   This list of goals is loaded into the database by calling
   /api/xadmin/loadGoals
 */
-import { GoalGroup } from '../goalGroup'
+const { GoalGroup } = require('../goalGroup')
 
-export default [
+module.exports = [
   /*********************************************/
   /* GROUP Getting Started as a Volunteer      */
   /*********************************************/

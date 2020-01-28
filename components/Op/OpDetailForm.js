@@ -405,7 +405,7 @@ class OpDetailForm extends Component {
                 >
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'name is required' }]
-                  })(<Input placeholder='name' maxlength='100' />)}
+                  })(<Input placeholder='name' maxLength='100' />)}
                 </Form.Item>
 
                 <Form.Item label={opSubtitle}>

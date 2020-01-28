@@ -49,6 +49,7 @@ class PersonDetailForm extends Component {
         person.nickname = values.nickname
         person.email = values.email
         person.phone = values.phone
+        person.sendEmailNotifications = values.sendEmailNotifications
         person.pronoun = {
           subject: values.pronoun_subject,
           object: values.pronoun_object,
@@ -106,6 +107,13 @@ class PersonDetailForm extends Component {
         id='personPhone'
         defaultMessage='Phone'
         description='person phone label in personDetails Form'
+      />
+    )
+    const personSendEmailNotifications = (
+      <FormattedMessage
+        id='personSendEmailNotifications'
+        defaultMessage='Get email notifications from Voluntarily'
+        description='send email notifications label in personDetails form'
       />
     )
     const personAbout = (
@@ -366,6 +374,11 @@ class PersonDetailForm extends Component {
                   })(<Input placeholder='000 000 0000' />)}
                 </Form.Item>
               </ShortInputContainer>
+              <Form.Item>
+                {getFieldDecorator('sendEmailNotifications', {
+                  valuePropName: 'checked'
+                })(<Checkbox>{personSendEmailNotifications}</Checkbox>)}
+              </Form.Item>
             </InputContainer>
           </FormGrid>
           <Divider />
@@ -461,6 +474,7 @@ PersonDetailForm.propTypes = {
     location: PropTypes.string,
     email: PropTypes.string,
     phone: PropTypes.string,
+    sendEmailNotifications: PropTypes.bool,
     facebook: PropTypes.string,
     twitter: PropTypes.string,
     website: PropTypes.string,
@@ -523,6 +537,10 @@ export default Form.create({
       phone: Form.createFormField({
         ...props.person.phone,
         value: props.person.phone
+      }),
+      sendEmailNotifications: Form.createFormField({
+        ...props.person.sendEmailNotifications,
+        value: props.person.sendEmailNotifications
       }),
       pronoun_subject: Form.createFormField({
         ...props.person.pronoun,

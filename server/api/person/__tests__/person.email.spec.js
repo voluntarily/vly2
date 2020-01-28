@@ -8,6 +8,7 @@ import { config } from '../../../../config/config'
 import nodemailerMock from 'nodemailer-mock'
 import { JSDOM } from 'jsdom'
 import { getByText } from '@testing-library/dom'
+import { getUnsubscribeLink } from '../person.lib'
 
 test.before(t => {
   process.env.mockEmails = true
@@ -130,4 +131,89 @@ test('Send person interested email to requestor', async t => {
   t.is(sentMail.length, 1)
   t.truthy(sentMail[0].text.includes('Andrew Watkins just expressed interest in your opportunity'))
   t.regex(sentMail[0].subject, /Andrew Watkins is interested in 1 Mentor/)
+})
+
+test('Email to Voluntarily user includes unsubscribe link', async (t) => {
+  const props = {
+    from: t.context.me,
+    op: t.context.op,
+    comment: 'Test comment'
+  }
+
+  const info = await emailPerson('interested', t.context.to, props)
+  const sentMail = nodemailerMock.mock.getSentMail()
+
+  t.true(info.accepted[0] === 'accepted')
+
+  const expectedUnsubscribeLink = getUnsubscribeLink(t.context.to)
+  const expectedUnsubscribeText = 'Unsubscribe'
+
+  t.truthy(sentMail[0].text.includes(expectedUnsubscribeLink))
+  t.truthy(sentMail[0].text.includes(expectedUnsubscribeText))
+
+  t.truthy(sentMail[0].html.includes(expectedUnsubscribeLink))
+  t.truthy(sentMail[0].html.includes(expectedUnsubscribeText))
+})
+
+test('Email to anonymous user does not include unsubscribe link', async (t) => {
+  const props = {
+    from: t.context.me,
+    op: t.context.op,
+    comment: 'Test comment'
+  }
+
+  const to = Object.assign({}, t.context.to)
+
+  // unsubscribe link is generated based on existence of _id
+  // so it not being present should result in no unsubscribe link
+  delete to._id
+
+  const info = await emailPerson('interested', to, props)
+  const sentMail = nodemailerMock.mock.getSentMail()
+
+  t.true(info.accepted[0] === 'accepted')
+
+  const expectedUnsubscribeText = 'Unsubscribe'
+
+  t.falsy(sentMail[0].text.includes(expectedUnsubscribeText))
+})
+
+test('sendNotificationEmails flag is respected', async (t) => {
+  const props = {
+    from: t.context.me,
+    op: t.context.op,
+    comment: 'Test comment'
+  }
+
+  const optedInPerson = Object.assign({}, t.context.to)
+  optedInPerson.sendEmailNotifications = true
+
+  const optedOutPerson = Object.assign({}, t.context.to)
+  optedOutPerson.sendEmailNotifications = false
+
+  const anonymousPerson = Object.assign({}, t.context.to)
+  delete anonymousPerson._id
+
+  const testPeople = [
+    {
+      person: optedInPerson,
+      expectedMailCount: 1
+    },
+    {
+      person: optedOutPerson,
+      expectedMailCount: 0
+    },
+    {
+      person: anonymousPerson,
+      expectedMailCount: 1
+    }
+  ]
+
+  for (const testPerson of testPeople) {
+    await emailPerson('interested', testPerson.person, props)
+    const sentMail = nodemailerMock.mock.getSentMail()
+
+    t.is(sentMail.length, testPerson.expectedMailCount)
+    nodemailerMock.mock.reset()
+  }
 })

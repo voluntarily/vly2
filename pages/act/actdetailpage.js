@@ -8,7 +8,7 @@ import ActDetail from '../../components/Act/ActDetail'
 import ActDetailForm from '../../components/Act/ActDetailForm'
 import Loading from '../../components/Loading'
 import { FullPage, Spacer } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+import securePage from '../../hocs/securePage'
 import reduxApi, { withActs, withMembers } from '../../lib/redux/reduxApi.js'
 import { Role } from '../../server/services/authorize/role'
 import { MemberStatus } from '../../server/api/member/member.constants'
@@ -23,6 +23,7 @@ const blankAct = {
   status: 'draft',
   tags: []
 }
+
 export const ActDetailPage = (props) => {
   const [editing, setEditing] = useState(false)
   useEffect(() => {
@@ -36,6 +37,13 @@ export const ActDetailPage = (props) => {
     if (props.isNew) { // return to previous
       Router.back()
     }
+  }
+
+  const setEditingOfPage = (editing) => {
+    setEditing(editing)
+    window.scrollTo({
+      top: 0
+    })
   }
 
   // // Called when the user confirms they want to delete an act
@@ -164,7 +172,7 @@ export const ActDetailPage = (props) => {
             <Button
               id='editActBtn' style={{ float: 'right' }}
               type='primary' shape='round'
-              onClick={() => setEditing(true)}
+              onClick={() => setEditingOfPage(true)}
             >
               <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
             </Button>}
@@ -185,10 +193,9 @@ ActDetailPage.getInitialProps = async ({ store, query }) => {
   const isNew = query && query.new && query.new === 'new'
   const actExists = !!(query && query.id) // !! converts to a boolean value
   await Promise.all([
-    store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
+    store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })),
     store.dispatch(reduxApi.actions.tags.get())
   ])
-
   if (isNew) {
     return {
       isNew,
@@ -196,7 +203,6 @@ ActDetailPage.getInitialProps = async ({ store, query }) => {
     }
   } else {
     if (actExists) {
-      query.session = store.getState().session //  Inject session with query that restricted api access
       await store.dispatch(reduxApi.actions.activities.get(query))
     }
     return {
@@ -221,4 +227,4 @@ ActDetailPage.propTypes = {
   })
 }
 export const ActDetailPageWithActs = withMembers(withActs(ActDetailPage))
-export default publicPage(withMembers(withActs(ActDetailPage)))
+export default securePage(withMembers(withActs(ActDetailPage)))
