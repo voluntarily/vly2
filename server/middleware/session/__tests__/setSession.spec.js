@@ -1,6 +1,5 @@
 import test from 'ava'
 import setSession from '../setSession'
-import { appReady } from '../../../server'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import Person from '../../../api/person/person'
 import people from '../../../api/person/__tests__/person.fixture'
@@ -13,7 +12,7 @@ test.before('before connect to database', async (t) => {
     t.context.memMongo = new MemoryMongo()
     await t.context.memMongo.start()
     await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-    await appReady
+    // await appReady
   } catch (e) { console.error('setSession.spec.js test.before error:', e) }
 })
 
@@ -35,15 +34,11 @@ test('Check session set to default when user not logged in', async t => {
 
 test('Check session set to default when idToken is bad', async t => {
   const next = sinon.spy()
-  const errlog = console.error
-  console.error = sinon.spy()
 
   const req = { url: '/api/foo', cookies: { idToken: 'foo' } }
   await setSession(req, null, next)
   t.deepEqual(req.session, DEFAULT_SESSION)
   t.truthy(next.calledOnce)
-  t.truthy(console.error.calledOnce)
-  console.error = errlog
 })
 
 test('Check session set to default when url is blacklisted', async t => {
