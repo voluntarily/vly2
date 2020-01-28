@@ -25,7 +25,6 @@ export default async (req, res) => {
       console.error('you are not an orgadmin of this organisation')
       return res.status(403).json({ error: 'signed-in person is not an orgadmin of the requested organisation' })
     }
-    const orgAdmin = me
     // make org links canonical
     org.imgUrl = `${config.appUrl}${org.imgUrl}`
     org.href = `${config.appUrl}/orgs/${orgid}`
