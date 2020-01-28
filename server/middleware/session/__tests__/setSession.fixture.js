@@ -66,6 +66,25 @@ const jwtDataAlice = {
 }
 jwtDataAlice.idToken = jwt.sign(jwtDataAlice.idTokenPayload, 'secret')
 
+const jwtDataBob = {
+  accessToken: 'IGs4bjO5WLjsulmjKiW2-VLeetlgykUP',
+  idTokenPayload: {
+    name: 'Bob Invalid Email',
+    nickname: 'badbob',
+    email: 'btesty@voluntarily.nz',
+    email_verified: false,
+    exp: Math.floor(Date.now() / 1000) + (60 * 60),
+    iat: Math.floor(Date.now() / 1000),
+    picture: 'https://publicdomainvectors.org/photos/teacher.png'
+  },
+  refreshToken: null,
+  state: 'Nz_CgRTnYPO5CbD4ueKmkdCiuk2z3psk',
+  expiresIn: 3600,
+  tokenType: 'Bearer',
+  scope: null
+}
+jwtDataBob.idToken = jwt.sign(jwtDataBob.idTokenPayload, 'secret')
+
 const DEFAULT_SESSION = {
   isAuthenticated: false,
   user: null,
@@ -78,5 +97,6 @@ module.exports = {
   jwtData, // represents andrew an admin
   jwtDataDali, // represents dali a normal volunteer
   jwtDataAlice, // represents Alice a teacher
+  jwtDataBob, // represents someone with non validated email
   DEFAULT_SESSION
 }
