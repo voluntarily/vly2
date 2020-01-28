@@ -15,6 +15,7 @@ import styled from 'styled-components'
 import Markdown from 'markdown-to-jsx'
 import MemberExport from './MemberExport'
 import InviteMembers from './InviteMembers'
+import { Role } from '../../server/services/authorize/role.js'
 
 const SubSection = styled.section`
   margin-bottom: 2.0rem;
@@ -49,6 +50,9 @@ class MemberSection extends Component {
   render () {
     if (this.props.members.loading) {
       return <Loading />
+    }
+    if (this.props.me.role.includes(Role.ANON)) {
+      return '' // blank page for anon users
     }
     const org = this.props.org
     const meid = this.props.me._id.toString()
