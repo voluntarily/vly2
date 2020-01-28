@@ -70,7 +70,7 @@ test.serial('followers can become members and then be removed', async t => {
   const orgFollowers = orgMembers.filter(member => member.status === MemberStatus.FOLLOWER)
   const firstFollower = orgFollowers[0]
 
-  t.is(firstFollowerRow.find('td a .nickname').at(MTF.NAME).text(), firstFollower.person.nickname)
+  t.is(firstFollowerRow.find('td a span').at(MTF.NAME).text(), firstFollower.person.nickname)
   t.is(firstFollowerRow.find('td').at(MTF.STATUS).text(), MemberStatus.FOLLOWER)
 
   // test Add button
@@ -89,13 +89,13 @@ test.serial('followers can become members and then be removed', async t => {
   firstFollowerRow = followersSection.find('tbody tr').first()
 
   t.is(firstFollowerRow.find('td').at(MTF.STATUS).text(), MemberStatus.FOLLOWER)
-  t.is(firstFollowerRow.find('td').at(MTF.NAME).text(), orgFollowers[1].person.nickname)
+  t.is(firstFollowerRow.find('td a span').at(MTF.NAME).text(), orgFollowers[1].person.nickname)
 
   // there should now be 2 members and Dali should be the second one
   membersSection = wrapper.find('section').at(2)
   t.is(membersSection.find('tbody tr').length, 2)
   const member2 = membersSection.find('tbody tr').at(1)
-  t.is(member2.find('td').at(MTF.NAME).text(), firstFollower.person.nickname)
+  t.is(member2.find('td').at(MTF.NAME).text().trim(), firstFollower.person.nickname)
 
   // test Remove button
   const removeButton = member2.find('button').first()
@@ -149,7 +149,7 @@ test.serial('joiners can become members ', async t => {
   const orgjoiners = orgMembers.filter(member => member.status === MemberStatus.JOINER)
   const firstJoiner = orgjoiners[0]
 
-  t.is(firstJoinerRow.find('td a .nickname').at(MTF.NAME).text(), firstJoiner.person.nickname)
+  t.is(firstJoinerRow.find('td a span').at(MTF.NAME).text(), firstJoiner.person.nickname)
   t.is(firstJoinerRow.find('td').at(MTF.STATUS).text(), MemberStatus.JOINER)
 
   // test Add button
@@ -167,7 +167,7 @@ test.serial('joiners can become members ', async t => {
   membersSection = wrapper.find('section').at(2)
   t.is(membersSection.find('tbody tr').length, memberCount + 1)
   const member2 = membersSection.find('tbody tr').at(1)
-  t.is(member2.find('td').at(MTF.NAME).text(), firstJoiner.person.nickname)
+  t.is(member2.find('td a span').at(MTF.NAME).text(), firstJoiner.person.nickname)
 
   // one joiner left
   joinersSection = wrapper.find('section').at(1)
@@ -176,7 +176,7 @@ test.serial('joiners can become members ', async t => {
   const orgValidators = orgMembers.filter(member => member.status === MemberStatus.VALIDATOR)
   const firstValidator = orgValidators[0]
 
-  t.is(firstJoinerRow.find('td').at(MTF.NAME).text(), firstValidator.person.nickname)
+  t.is(firstJoinerRow.find('td').at(MTF.NAME).text().trim(), firstValidator.person.nickname)
   t.is(firstJoinerRow.find('td').at(MTF.STATUS).text(), MemberStatus.VALIDATOR)
 
   // test Reject button
@@ -230,7 +230,7 @@ test.serial('members can become admins ', async t => {
   t.is(memberRow2.find('td').at(MTF.STATUS).text(), MemberStatus.MEMBER)
 
   const firstMember = trueMembers[0]
-  t.is(memberRow2.find('td a .nickname').at(MTF.NAME).text(), firstMember.person.nickname)
+  t.is(memberRow2.find('td a span').at(MTF.NAME).text(), firstMember.person.nickname)
 
   // test Make Admin button
   const adminButton = memberRow2.find('button').last()
