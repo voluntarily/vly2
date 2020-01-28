@@ -133,8 +133,7 @@ export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isA
     members.data.length &&
     members.data[0].status === MemberStatus.ORGADMIN
   const isAdmin = me && me.role.includes('admin')
-  const canEdit = isOrgAdmin || isAdmin
-
+  const canEdit = isAuthenticated && (isOrgAdmin || isAdmin)
   if (editing) {
     return (
       <FullPage>
