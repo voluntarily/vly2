@@ -1,7 +1,7 @@
-import Goal from './goal'
-import goals from './__init__/goal.init.js'
+const Goal = require('./goal')
+const goals = require('./__init__/goal.init.js')
 
-export const loadGoals = async () => {
+const loadGoals = async () => {
   return Promise.all(
     goals.map(async goal => {
       return Goal.findOneAndUpdate(
@@ -14,3 +14,5 @@ export const loadGoals = async () => {
     })
   )
 }
+
+module.exports = { loadGoals }
