@@ -23,6 +23,7 @@ const blankAct = {
   status: 'draft',
   tags: []
 }
+
 export const ActDetailPage = (props) => {
   const [editing, setEditing] = useState(false)
   useEffect(() => {
@@ -36,6 +37,13 @@ export const ActDetailPage = (props) => {
     if (props.isNew) { // return to previous
       Router.back()
     }
+  }
+
+  const setEditingOfPage = (editing) => {
+    setEditing(editing)
+    window.scrollTo({
+      top: 0
+    })
   }
 
   // // Called when the user confirms they want to delete an act
@@ -164,7 +172,7 @@ export const ActDetailPage = (props) => {
             <Button
               id='editActBtn' style={{ float: 'right' }}
               type='primary' shape='round'
-              onClick={() => setEditing(true)}
+              onClick={() => setEditingOfPage(true)}
             >
               <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
             </Button>}
