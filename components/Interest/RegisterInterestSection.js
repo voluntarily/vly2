@@ -28,7 +28,7 @@ class RegisterInterestSection extends Component {
     const op = this.props.op._id
     const me = this.props.meID
     try {
-      await this.props.dispatch(reduxApi.actions.interests.get({ op, me, z: cuid() }))
+      await this.props.dispatch(reduxApi.actions.interests.get({ op, me, cacheBreak: cuid() })) // Function of 'cacheBreak: cuid()': Solves the browser caching issue
     } catch (err) {
       console.error('error in getting interests', err)
     }
