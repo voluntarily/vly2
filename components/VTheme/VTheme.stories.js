@@ -1,6 +1,5 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import IdLine from './IdLine'
 import { StoryIntroContainer } from './VStoryTheme'
 
 import { Button, Icon, Divider } from 'antd'
@@ -14,7 +13,7 @@ storiesOf('Minor Components', module)
       <br />
       <br />
       <p>Single line link to an opportunity requestor</p>
-    
+
     </StoryIntroContainer>
   ))
 
