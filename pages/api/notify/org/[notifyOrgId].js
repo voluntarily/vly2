@@ -34,7 +34,6 @@ export default async (req, res) => {
       redirectUrl: `/orgs/${orgid}`,
       data: {
         orgid,
-        orgAdmin,
         memberStatus: req.query.memberStatus,
         memberValidation: req.query.memberValidation
       },
@@ -54,8 +53,8 @@ export default async (req, res) => {
     // -   buttonLabel: label for callback button
     // -   buttonHref: the callback button url
 
-    const info = await emailPerson('inviteMember', orgAdmin, {
-      from: orgAdmin,
+    const info = await emailPerson('inviteMember', me, {
+      from: me,
       org,
       adminMsg,
       memberStatus,
