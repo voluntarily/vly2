@@ -15,6 +15,7 @@ import styled from 'styled-components'
 import Markdown from 'markdown-to-jsx'
 import MemberExport from './MemberExport'
 import InviteMembers from './InviteMembers'
+import { Role } from '../../server/services/authorize/role.js'
 
 const SubSection = styled.section`
   margin-bottom: 2.0rem;
@@ -50,8 +51,11 @@ class MemberSection extends Component {
     if (this.props.members.loading) {
       return <Loading />
     }
+    if (this.props.me.role.includes(Role.ANON)) {
+      return '' // blank page for anon users
+    }
     const org = this.props.org
-    const meid = this.props.me._id
+    const meid = this.props.me._id.toString()
     if (!org.info) { org.info = {} }
     // check if I am in the members list
     // TODO: [VP-440] members ability I am orgadmin then I get all members list, else I get just my own membership status

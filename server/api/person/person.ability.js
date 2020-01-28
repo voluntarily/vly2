@@ -16,7 +16,7 @@ const ruleBuilder = session => {
     action: Action.CREATE
   }]
 
-  const userID = session.me ? session.me._id : undefined
+  const userID = session && session.me && session.me._id ? session.me._id : undefined
   const allAbilities = [{
     subject: SchemaName,
     action: Action.READ,
