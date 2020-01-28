@@ -83,7 +83,6 @@ class PersonHomePage extends Component {
     try {
       const me = store.getState().session.me
       const meid = me._id.toString()
-      console.log('home GIP', meid)
       const myOpportunities = {
         q: JSON.stringify({ requestor: meid })
       }

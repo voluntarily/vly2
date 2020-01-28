@@ -89,7 +89,7 @@ const setSession = async (req, res, next) => {
   try {
     me = await Person.findOne({ email: user.email }).exec()
     if (!me) {
-      console.error(`failed to find ${user.email} - creating new person`)
+      // console.error(`failed to find ${user.email} - creating new person`)
       me = await createPersonFromUser(user)
     }
   } catch (err) {
