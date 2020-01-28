@@ -14,7 +14,7 @@ export default async (req, res) => {
     return res.status(400).json({ error: 'group expected' })
   }
   try {
-    await addPersonalGoalGroup(req.query.group, req.session.me._id)
+    await addPersonalGoalGroup(req.query.group, req.session.me._id.toString())
     return res.json({ status: 'OK' })
   } catch (e) {
     console.error('Error in assignPersonalGoals', e)

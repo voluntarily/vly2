@@ -5,19 +5,23 @@ import { Role } from '../../../services/authorize/role'
 
 test.beforeEach(t => {
   t.context.REQ_AUTHENTICATED_TEMPLATE = {
+    url: '/home',
     session: {
       isAuthenticated: true,
       user: {},
       me: {
         role: []
-      }
+      },
+      idToken: ''
     }
   }
   t.context.REQ_UNAUTHENTICATED_TEMPLATE = {
+    url: '/home',
     session: {
       isAuthenticated: false,
       user: null,
-      me: null
+      me: null,
+      idToken: ''
     }
   }
 })

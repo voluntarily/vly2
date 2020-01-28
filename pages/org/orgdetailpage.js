@@ -133,8 +133,7 @@ export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isA
     members.data.length &&
     members.data[0].status === MemberStatus.ORGADMIN
   const isAdmin = me && me.role.includes('admin')
-  const canEdit = isOrgAdmin || isAdmin
-
+  const canEdit = isAuthenticated && (isOrgAdmin || isAdmin)
   if (editing) {
     return (
       <FullPage>
@@ -173,7 +172,7 @@ OrgDetailPage.getInitialProps = async ({ store, query }) => {
     await store.dispatch(reduxApi.actions.organisations.get(query))
     if (store.getState().session.isAuthenticated) {
       // get my membership of this org
-      const meid = store.getState().session.me._id
+      const meid = store.getState().session.me._id.toString()
       await store.dispatch(
         reduxApi.actions.members.get({ orgid: query.id, meid: meid })
       )
