@@ -8,7 +8,7 @@ import ActList from '../../components/Act/ActList'
 import ActMenu from '../../components/Act/ActMenu'
 import NoResult from '../../components/NoResult'
 import { ActivityContainer, FullPage, GridContainer, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+import securePage from '../../hocs/securePage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 import ActAdd from '../../components/Act/ActAdd'
 
@@ -107,4 +107,4 @@ ActListPage.getInitialProps = async ({ store, query }) => {
   )
 }
 
-export default publicPage(withActs(ActListPage))
+export default securePage(withActs(ActListPage))

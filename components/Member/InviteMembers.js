@@ -13,15 +13,17 @@ import {
 export default ({ org }) => {
   const [adminMsg, setAdminMsg] = useState('')
 
-  const handleInviteMember = (e) => {
+  const handleInviteMember = async (e) => {
     const memberStatus = e.target.value
     const memberValidation = `${org.name} Invitation`
     const url = `notify/org/${org._id}?memberStatus=${memberStatus}&memberValidation=${memberValidation}&adminMsg=${adminMsg}`
     try {
-      callApi(url)
-      message
-        .loading('Sending email..', 2.5)
+      message.loading('Sending email..', 2.5)
+      await callApi(url)
+      message.success('Done')
     } catch {
+      message
+        .error('There was a problem, try again later.')
       console.error('handleInviteMember', e)
     }
   }

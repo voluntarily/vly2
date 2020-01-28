@@ -98,7 +98,6 @@ class OpListSection extends Component {
     const { hasValue } = this
     if (!hasValue(filterdate)) return true // The reason is that if the date filter value is empty all of the ops found is correct for display
     const startDateOpportunities = moment(opDateArray[0])
-    console.log(this.props.dateFilterType)
     switch (this.props.dateFilterType) {
       case DatePickerType.IndividualDate:
         return filterdate[0].isSame(startDateOpportunities, 'day') // This only compare the start date to the filter. Not included things like end date of the opportunity

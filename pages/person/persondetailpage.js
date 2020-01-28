@@ -22,6 +22,7 @@ const blankPerson = {
   about: '',
   location: '',
   email: '',
+  sendEmailNotifications: true,
   phone: '',
   pronoun: {
     subject: '',
@@ -197,13 +198,14 @@ export class PersonDetailPage extends Component {
 
 PersonDetailPage.propTypes = {
   person: PropTypes.shape({
-    _id: PropTypes.string,
+    _id: PropTypes.object,
     name: PropTypes.string,
     nickname: PropTypes.string,
     about: PropTypes.string,
     location: PropTypes.string,
     email: PropTypes.string,
     phone: PropTypes.string,
+    sendEmailNotifications: PropTypes.bool,
     pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
