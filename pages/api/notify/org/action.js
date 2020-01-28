@@ -38,7 +38,7 @@ export default (req, res) => handleToken(req, res, {
     // join the signed in person to the org in the request.
 
     await addMember({
-      person: req.session.me._id,
+      person: req.session.me._id.toString(),
       organisation: props.orgid,
       validation: props.memberValidation,
       status: props.memberStatus
