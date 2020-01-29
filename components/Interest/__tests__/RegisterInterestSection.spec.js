@@ -65,7 +65,7 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
       <RegisterInterestSection
-        op={opid}
+        opID={opid}
         meID={meid}
       />
     </Provider>
@@ -106,7 +106,7 @@ test.serial('mount RegisterInterestSection with op and me', async t => {
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
       <RegisterInterestSection
-        op={opid}
+        opID={opid}
         meID={meid}
       />
     </Provider>

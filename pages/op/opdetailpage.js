@@ -183,7 +183,7 @@ export const OpDetailPage = ({
         <OpVolunteerInterestSection
           isAuthenticated={isAuthenticated}
           canRegisterInterest={canRegisterInterest}
-          op={op}
+          opID={op && op._id}
           meID={me && me._id}
         />
       </OpBanner>

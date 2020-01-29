@@ -25,10 +25,10 @@ class RegisterInterestSection extends Component {
   // When component mounts, make initial API call.
   // TODO do we need to change this to getInitialProps?
   async componentDidMount () {
-    const op = this.props.op._id
-    const me = this.props.meID
+    const opid = this.props.opID
+    const meid = this.props.meID
     try {
-      await this.props.dispatch(reduxApi.actions.interests.get({ op, me, cacheBreak: cuid() })) // Function of 'cacheBreak: cuid()': Solves the browser caching issue
+      await this.props.dispatch(reduxApi.actions.interests.get({ op: opid, me: meid, cacheBreak: cuid() }))
     } catch (err) {
       console.error('error in getting interests', err)
     }
@@ -56,7 +56,7 @@ class RegisterInterestSection extends Component {
   // Render the component depending on whether we've completed the initial api call, and what information is contained in the store.
   render () {
     // If we haven't finished making the API request to the server yet...
-    if (this.props.interests.loading) {
+    if (!this.props.interests.sync) {
       return (<Loading />)
     }
 
