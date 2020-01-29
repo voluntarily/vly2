@@ -24,10 +24,10 @@ class RegisterInterestSection extends Component {
   // When component mounts, make initial API call.
   // TODO do we need to change this to getInitialProps?
   async componentDidMount () {
-    const op = this.props.op
-    const me = this.props.meID
+    const opid = this.props.op._id
+    const meid = this.props.meID
     try {
-      await this.props.dispatch(reduxApi.actions.interests.get({ id: '', op, me }))
+      await this.props.dispatch(reduxApi.actions.interests.get({ op: opid, me: meid }))
     } catch (err) {
       console.error('error in getting interests', err)
     }
