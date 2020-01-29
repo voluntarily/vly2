@@ -69,6 +69,7 @@ const appReady = app.prepare().then(() => {
     // const gitInfo = gitDescribeSync()
     // req.messages.revision = process.env.REVISION || gitInfo.raw
     req.messages.revision = process.env.REVISION
+    req.messages.notice = process.env.NOTICE
     next()
   })
 

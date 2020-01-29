@@ -1,5 +1,5 @@
 // import { FormattedMessage } from 'react-intl'
-import { Input, Layout } from 'antd'
+import { Icon, Input, Layout } from 'antd'
 import Link from 'next/link'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
 import links from './HeaderMenu'
+import { useIntl } from 'react-intl'
 
 const Search = Input.Search
 
@@ -15,6 +16,13 @@ const Brand = styled.h1`
   font-weight: 300;
   font-size: 2em;
   float: left;
+`
+const Notice = styled.div`
+  font-weight: 600;
+  font-size: 1.2em;
+  width: 100%;
+  background-color: blanchedalmond;
+  padding-left: 1rem;
 `
 
 const MenuGrid = styled.div`
@@ -74,30 +82,38 @@ const getAllowedLinks = isAuthenticated =>
     .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
 
 // eslint-disable-next-line no-unused-vars
-const Header = ({ isAuthenticated, ...props }) => (
-  <Layout.Header style={{ position: 'fixed', zIndex: 10, width: '100%', backgroundColor: 'white', boxShadow: '1px 1px 12px 0 rgba(0, 0, 0, 0.1)' }}>
-    <MenuGrid>
-      <div>
-        <Brand className='site-name' />
-        <SearchInput
-          placeholder='Search for cool ways to help out'
-          onSearch={handleSearch}
-        />
-      </div>
-      <Link href='/landing'>
-        <LogoContainer>
-          <Logo
-            src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
-            alt='Voluntarily logo'
+const Header = ({ isAuthenticated, ...props }) => {
+  const intl = useIntl()
+  let notice = intl.formatMessage({ id: 'notice', defaultMessage: 'none' })
+  console.log('notice', notice)
+  if (notice === 'none') notice = '' // wipe notice if its set to none
+  const height = notice ? '112px' : '56px'
+  return (
+    <Layout.Header style={{ position: 'fixed', height: height, zIndex: 10, width: '100%', backgroundColor: 'white', boxShadow: '1px 1px 12px 0 rgba(0, 0, 0, 0.1)' }}>
+      {notice && <Notice><Icon type='warning' /> {notice}</Notice>}
+      <MenuGrid>
+        <div>
+          <Brand className='site-name' />
+          <SearchInput
+            placeholder='Search for cool ways to help out'
+            onSearch={handleSearch}
           />
-        </LogoContainer>
-      </Link>
-      <div>
-        <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
-      </div>
-    </MenuGrid>
-  </Layout.Header>
-)
+        </div>
+        <Link href='/landing'>
+          <LogoContainer>
+            <Logo
+              src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+              alt='Voluntarily logo'
+            />
+          </LogoContainer>
+        </Link>
+        <div>
+          <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
+        </div>
+      </MenuGrid>
+    </Layout.Header>
+  )
+}
 Header.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
 }
