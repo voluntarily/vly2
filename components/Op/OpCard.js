@@ -35,7 +35,7 @@ const OpCard = ({ op }) => {
   const draft = op.status === 'draft' ? 'DRAFT: ' : ''
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
   const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA - ddd DD/MM/YY') : ''
-  const startLocation = op.location ? `🏫 ${op.location}` : ''
+  const startLocation = op.location ? `📍 ${op.location}` : ''
   const startDuration = op.duration ? `⏱ ${op.duration}` : ''
   const interestIcon = ((interest) => {
     if (!interest) { return '' }
@@ -47,6 +47,12 @@ const OpCard = ({ op }) => {
       default: return ''
     }
   })(op.interest)
+
+  let orgName = ''
+
+  if (op.offerOrg) {
+    orgName = <span>{op.offerOrg.name}</span>
+  }
 
   return (
     <Card>
@@ -61,6 +67,7 @@ const OpCard = ({ op }) => {
               {draft}
               {op.name}
             </h1>
+            {orgName}
             <p> {startLocation}</p>
             <p> {startTime} </p>
             <p> {startDuration}</p>

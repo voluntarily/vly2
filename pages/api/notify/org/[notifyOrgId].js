@@ -25,7 +25,6 @@ export default async (req, res) => {
       console.error('you are not an orgadmin of this organisation')
       return res.status(403).json({ error: 'signed-in person is not an orgadmin of the requested organisation' })
     }
-    const orgAdmin = me
     // make org links canonical
     org.imgUrl = `${config.appUrl}${org.imgUrl}`
     org.href = `${config.appUrl}/orgs/${orgid}`
@@ -34,7 +33,6 @@ export default async (req, res) => {
       redirectUrl: `/orgs/${orgid}`,
       data: {
         orgid,
-        orgAdmin,
         memberStatus: req.query.memberStatus,
         memberValidation: req.query.memberValidation
       },
@@ -54,8 +52,8 @@ export default async (req, res) => {
     // -   buttonLabel: label for callback button
     // -   buttonHref: the callback button url
 
-    const info = await emailPerson('inviteMember', orgAdmin, {
-      from: orgAdmin,
+    const info = await emailPerson('inviteMember', me, {
+      from: me,
       org,
       adminMsg,
       memberStatus,

@@ -119,7 +119,7 @@ export const ItemLocation = ({ location }) =>
   location
     ? (
       <ItemListing>
-    🏫&nbsp;
+   📍&nbsp;
         <strong>
           <FormattedMessage
             id='itemlist.location'
