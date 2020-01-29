@@ -24,7 +24,7 @@ class RegisterInterestSection extends Component {
   // When component mounts, make initial API call.
   // TODO do we need to change this to getInitialProps?
   async componentDidMount () {
-    const opid = this.props.op._id
+    const opid = this.props.opID
     const meid = this.props.meID
     try {
       await this.props.dispatch(reduxApi.actions.interests.get({ op: opid, me: meid }))
@@ -55,7 +55,7 @@ class RegisterInterestSection extends Component {
   // Render the component depending on whether we've completed the initial api call, and what information is contained in the store.
   render () {
     // If we haven't finished making the API request to the server yet...
-    if (this.props.interests.loading) {
+    if (!this.props.interests.sync) {
       return (<Loading />)
     }
 
