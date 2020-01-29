@@ -429,8 +429,8 @@ class PersonDetailForm extends Component {
                 )}
               </Form.Item>
             </InputContainer>
-          </FormGrid> )}
-          {isNotProd && (<Divider /> )}
+          </FormGrid>)}
+          {isNotProd && (<Divider />)}
           <FormGrid>
             <DescriptionContainer />
             <InputContainer>
