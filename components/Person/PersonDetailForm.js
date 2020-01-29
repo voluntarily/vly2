@@ -402,34 +402,36 @@ class PersonDetailForm extends Component {
             </InputContainer>
           </FormGrid>
           <Divider />
-          {isNotProd && (<FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <H3Bold>Admin section</H3Bold>
-              </TitleContainer>
-              <P>Please be careful on this part</P>
-            </DescriptionContainer>
-            <InputContainer>
-              {' '}
-              <Form.Item label={personRole}>
-                {getFieldDecorator('role', {
-                  rules: [{ required: true, message: 'role is required' }]
-                })(<Checkbox.Group options={roleOptions} />)}
-              </Form.Item>
-              <Form.Item label={personStatus}>
-                {getFieldDecorator('status', {
-                  rules: [{ required: true, message: 'status is required' }]
-                })(
-                  <Radio.Group buttonStyle='solid'>
-                    <Radio.Button value='inactive'>Not Available</Radio.Button>
-                    <Radio.Button value='active'>Available</Radio.Button>
-                    {/* // TODO: [VP-212] on person detail form only show Hold button to admins */}
-                    <Radio.Button value='hold'>Hold</Radio.Button>
-                  </Radio.Group>
-                )}
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>)}
+          {isNotProd && (
+            <FormGrid>
+              <DescriptionContainer>
+                <TitleContainer>
+                  <H3Bold>Admin section</H3Bold>
+                </TitleContainer>
+                <P>Please be careful on this part</P>
+              </DescriptionContainer>
+              <InputContainer>
+                {' '}
+                <Form.Item label={personRole}>
+                  {getFieldDecorator('role', {
+                    rules: [{ required: true, message: 'role is required' }]
+                  })(<Checkbox.Group options={roleOptions} />)}
+                </Form.Item>
+                <Form.Item label={personStatus}>
+                  {getFieldDecorator('status', {
+                    rules: [{ required: true, message: 'status is required' }]
+                  })(
+                    <Radio.Group buttonStyle='solid'>
+                      <Radio.Button value='inactive'>Not Available</Radio.Button>
+                      <Radio.Button value='active'>Available</Radio.Button>
+                      {/* // TODO: [VP-212] on person detail form only show Hold button to admins */}
+                      <Radio.Button value='hold'>Hold</Radio.Button>
+                    </Radio.Group>
+                  )}
+                </Form.Item>
+              </InputContainer>
+            </FormGrid>
+          )}
           {isNotProd && (<Divider />)}
           <FormGrid>
             <DescriptionContainer />
