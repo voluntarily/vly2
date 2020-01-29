@@ -25,7 +25,7 @@ test('Card include name imgUrl location duration and subtitle', t => {
   t.is(wrapper.find('img').prop('src'), op.imgUrl)
   // four p tags for location time duration subtitle+interest
   t.is(wrapper.find('figcaption').find('p').length, 4)
-  t.is(wrapper.find('figcaption').find('p').first().text(), ` 🏫 ${op.location}`)
+  t.is(wrapper.find('figcaption').find('p').first().text(), ` 📍 ${op.location}`)
   // second p for time and should be blank as time is not set
   t.is(wrapper.find('figcaption').find('p').at(1).text().trim().length, 0)
   t.is(wrapper.find('figcaption').find('p').at(2).text(), ` ⏱ ${op.duration}`)

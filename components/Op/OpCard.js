@@ -48,6 +48,12 @@ const OpCard = ({ op }) => {
     }
   })(op.interest)
 
+  let orgName = ''
+
+  if (op.offerOrg) {
+    orgName = <span>{op.offerOrg.name}</span>
+  }
+
   return (
     <Card>
       <Link href={getOpPageURL(isArchived, op._id)}>
@@ -61,7 +67,7 @@ const OpCard = ({ op }) => {
               {draft}
               {op.name}
             </h1>
-            <span>{op.offerOrg.name}</span>
+            {orgName}
             <p> {startLocation}</p>
             <p> {startTime} </p>
             <p> {startDuration}</p>
