@@ -9,7 +9,6 @@ import reduxApi, { withPeople, withLocations } from '../../lib/redux/reduxApi.js
 
 export class TestPerson extends Component {
   static async getInitialProps ({ store, query, req }) {
-    console.log('TestPerson GIP', query)
     if (query && query.id) {
       try {
         await Promise.all([

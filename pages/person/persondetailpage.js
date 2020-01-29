@@ -1,5 +1,4 @@
 import { Button, message, Popconfirm } from 'antd'
-import Cookie from 'js-cookie'
 import Link from 'next/link'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
@@ -55,13 +54,8 @@ export class PersonDetailPage extends Component {
       }
     } else if (query && query.id) {
       const meid = query.id
-      const cookies = req ? req.cookies : Cookie.get()
-      const cookiesStr = JSON.stringify(cookies)
-      query.session = store.getState().session
       try {
-        await store.dispatch(reduxApi.actions.people.get(query, {
-          params: cookiesStr
-        }))
+        await store.dispatch(reduxApi.actions.people.get(query))
         await store.dispatch(reduxApi.actions.members.get({ meid }))
       } catch (err) {
         // this can return a 403 forbidden if not signed in
