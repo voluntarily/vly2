@@ -17,7 +17,7 @@ import {
 import { H3Bold, P } from '../VTheme/VTheme'
 
 const EducationSelectorRef = forwardRef(EducationSelector)
-
+const isNotProd = process.env.NODE_ENV !== 'production'
 const { TextArea } = Input
 
 // TODO - only the owner and admins should be able to edit the person record.
@@ -402,7 +402,7 @@ class PersonDetailForm extends Component {
             </InputContainer>
           </FormGrid>
           <Divider />
-          <FormGrid>
+          {isNotProd && (<FormGrid>
             <DescriptionContainer>
               <TitleContainer>
                 <H3Bold>Admin section</H3Bold>
@@ -429,8 +429,8 @@ class PersonDetailForm extends Component {
                 )}
               </Form.Item>
             </InputContainer>
-          </FormGrid>
-          <Divider />
+          </FormGrid> )}
+          {isNotProd && (<Divider /> )}
           <FormGrid>
             <DescriptionContainer />
             <InputContainer>
