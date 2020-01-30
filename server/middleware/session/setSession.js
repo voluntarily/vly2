@@ -1,8 +1,8 @@
-const jwtDecode = require('jwt-decode')
 const Person = require('../../api/person/person')
 const { Role } = require('../../services/authorize/role')
 const { TOPIC_PERSON__CREATE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
+const { jwtVerify } = require('./jwtVerify')
 
 const DEFAULT_SESSION = {
   isAuthenticated: false,
@@ -70,9 +70,10 @@ const setSession = async (req, res, next) => {
   }
   let user
   try {
-    user = jwtDecode(idToken)
+    user = await jwtVerify(idToken)
     // TODO: fully validate the token
   } catch (e) {
+    console.error('Jwt Verify failed', e)
     user = false
   }
   if (!user) {
