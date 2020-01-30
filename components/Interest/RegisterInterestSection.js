@@ -66,7 +66,7 @@ class RegisterInterestSection extends Component {
     if (this.props.interests.sync && this.props.interests.data.length > 0) {
       interest = this.props.interests.data[0]
     } else { // If not, use a blank interest.
-      interest = getNewInterest(this.props.meID, this.props.op)
+      interest = getNewInterest(this.props.meID, this.props.opID)
     }
     return (
       <section>
