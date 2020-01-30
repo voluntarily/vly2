@@ -1,10 +1,8 @@
 const { Role } = require('../../services/authorize/role')
 const { Action } = require('../../services/abilities/ability.constants')
-const { ActivityStatus } = require('./activity.constants')
+const { ActivityStatus, SchemaName } = require('./activity.constants')
 
 const ruleBuilder = session => {
-  const SchemaName = 'Activity'
-
   const anonAbilities = [{
     subject: SchemaName,
     action: Action.LIST,
