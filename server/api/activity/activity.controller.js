@@ -55,7 +55,12 @@ const getActivities = async (req, res) => {
     }
 
     try {
-      const got = await Activity.find(query, select).sort(sort).exec()
+      const got = await Activity
+        .accessibleBy(req.ability)
+        .find(query)
+        .select(select)
+        .sort(sort)
+        .exec()
       res.json(got)
     } catch (e) {
       res.status(404).send(e)
@@ -66,10 +71,17 @@ const getActivities = async (req, res) => {
 }
 const getActivity = async (req, res) => {
   try {
-    const got = await Activity.findOne(req.params)
+    const got = await Activity
+      .accessibleBy(req.ability)
+      .findOne(req.params)
       .populate('owner', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl category')
       .exec()
+
+    if (got === null) {
+      return res.status(404).send()
+    }
+
     res.json(got)
   } catch (e) {
     res.status(404).send(e)
