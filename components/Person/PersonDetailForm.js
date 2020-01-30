@@ -36,14 +36,16 @@ class PersonDetailForm extends Component {
     this.props.form.validateFields()
   }
 
-  setImgUrl = value => {
-    this.props.form.setFieldsValue({ imgUrl: value })
+  setImgUrl = (imgUrl, sizeVariants) => {
+    this.avatar = sizeVariants
   }
 
   handleSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        const avatar = this.avatar || {}
+
         const person = this.props.person
         person.name = values.name
         person.nickname = values.nickname
@@ -58,7 +60,8 @@ class PersonDetailForm extends Component {
         person.about = values.about
         person.location = values.location
         person.tags = values.tags
-        person.imgUrl = values.imgUrl
+        person.imgUrl = avatar.lg
+        person.imgUrlSm = avatar.sm
         person.website = values.website
         person.twitter = values.twitter
         person.facebook = values.facebook
@@ -147,7 +150,7 @@ class PersonDetailForm extends Component {
     const personAvatar = (
       <FormattedMessage
         id='personAvatar'
-        defaultMessage='Image Link'
+        defaultMessage='Image'
         description='person Image URL label in personDetails Form'
       />
     )
@@ -390,14 +393,7 @@ class PersonDetailForm extends Component {
             </DescriptionContainer>
             <InputContainer>
               <Form.Item label={personAvatar}>
-                {getFieldDecorator('imgUrl', {
-                  rules: [
-                    {
-                      /* { type: 'url', message: 'a URL is required' } */
-                    }
-                  ]
-                })(<Input />)}
-                <ImageUpload setImgUrl={this.setImgUrl} />
+                <ImageUpload setImgUrl={this.setImgUrl} usages='profile-photo' />
               </Form.Item>
             </InputContainer>
           </FormGrid>
@@ -482,7 +478,8 @@ PersonDetailForm.propTypes = {
     twitter: PropTypes.string,
     website: PropTypes.string,
     pronoun: PropTypes.object,
-    imgUrl: PropTypes.any,
+    imgUrl: PropTypes.string,
+    imgUrlSm: PropTypes.string,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
         'admin',
@@ -556,10 +553,6 @@ export default Form.create({
       pronoun_possessive: Form.createFormField({
         ...props.person.pronoun,
         value: props.person.pronoun ? props.person.pronoun.possessive : ''
-      }),
-      imgUrl: Form.createFormField({
-        ...props.person.imgUrl,
-        value: props.person.imgUrl
       }),
       facebook: Form.createFormField({
         ...props.person.facebook,

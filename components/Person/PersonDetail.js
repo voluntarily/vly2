@@ -34,7 +34,10 @@ const ProfileGrid = styled.div`
 `
 
 const ProfileImage = styled.img`
-  width: 100%;
+  max-width: 100%;
+  min-height: 256px;
+  display: block;
+  margin: 0 auto;
 `
 
 const DetailItem = styled.div`
@@ -191,6 +194,7 @@ PersonDetail.propTypes = {
     website: PropTypes.string,
     pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
+    imgUrlSm: PropTypes.string,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
         'admin',
