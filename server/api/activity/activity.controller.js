@@ -1,6 +1,7 @@
 const Activity = require('./activity')
 const Organisation = require('../organisation/organisation')
 const escapeRegex = require('../../util/regexUtil')
+const { Action } = require('../../services/abilities/ability.constants')
 /**
  * Get all orgs
  * @param req
@@ -56,7 +57,7 @@ const getActivities = async (req, res) => {
 
     try {
       const got = await Activity
-        .accessibleBy(req.ability)
+        .accessibleBy(req.ability, Action.LIST)
         .find(query)
         .select(select)
         .sort(sort)
@@ -72,7 +73,7 @@ const getActivities = async (req, res) => {
 const getActivity = async (req, res) => {
   try {
     const got = await Activity
-      .accessibleBy(req.ability)
+      .accessibleBy(req.ability, Action.READ)
       .findOne(req.params)
       .populate('owner', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl category')
@@ -89,7 +90,16 @@ const getActivity = async (req, res) => {
 }
 
 const putActivity = async (req, res) => {
-  await Activity.findByIdAndUpdate(req.params._id, { $set: req.body })
+  const activityToUpdate = await Activity
+    .accessibleBy(req.ability, Action.UPDATE)
+    .findOne({ _id: req.params._id })
+
+  if (activityToUpdate === null) {
+    return res.status(403).send()
+  }
+
+  await Activity.updateOne({ _id: req.params._id }, { $set: req.body })
+
   getActivity(req, res)
 }
 

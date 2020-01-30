@@ -27,6 +27,35 @@ const ruleBuilder = session => {
 
   const allAbilities = anonAbilities
 
+  const activityProviderAbilities = [{
+    subject: SchemaName,
+    action: Action.LIST,
+    conditions: { status: ActivityStatus.ACTIVE }
+  }, {
+    subject: SchemaName,
+    action: Action.LIST,
+    conditions: { owner: session.me._id }
+  }, {
+    subject: SchemaName,
+    action: Action.CREATE
+  }, {
+    subject: SchemaName,
+    action: Action.READ,
+    conditions: { status: ActivityStatus.ACTIVE }
+  }, {
+    subject: SchemaName,
+    action: Action.READ,
+    conditions: { owner: session.me._id }
+  }, {
+    subject: SchemaName,
+    action: Action.UPDATE,
+    conditions: { owner: session.me._id }
+  }, {
+    subject: SchemaName,
+    action: Action.DELETE,
+    inverted: true
+  }]
+
   const adminAbilities = [{
     subject: SchemaName,
     action: Action.LIST
@@ -48,6 +77,7 @@ const ruleBuilder = session => {
     [Role.ANON]: anonAbilities,
     [Role.VOLUNTEER_PROVIDER]: allAbilities,
     [Role.OPPORTUNITY_PROVIDER]: allAbilities,
+    [Role.ACTIVITY_PROVIDER]: activityProviderAbilities,
     [Role.ADMIN]: adminAbilities
   }
 }
