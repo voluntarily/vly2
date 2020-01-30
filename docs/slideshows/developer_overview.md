@@ -354,7 +354,7 @@ or you can use a docker container
 
 and set the connect string in the environment
 
-    MONGO_URL: mongodb://db:27017/vly-dev
+    MONGODB_URI: mongodb://db:27017/vly-dev
 
 ----
 # Mongo in UAT & Prod
@@ -364,7 +364,7 @@ MongoDB Atlas. https://docs.atlas.mongodb.com/
 
 and need this connect string:
 
-    MONGO_URL: mongodb+srv://vly-client:ZhF3BUDiwpy8C3xK@cluster0-kwmsu.mongodb.net/vly-test?retryWrites=true
+    MONGODB_URI: mongodb+srv://vly-client:<PASSWORD@voluntarily-mongo-cluster-test-r6dzi.mongodb.net/vly-alpha?retryWrites=true&w=majority
 ----
 
 # Mongoose
