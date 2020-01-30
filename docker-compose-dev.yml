@@ -22,6 +22,8 @@ services:
       VLY_SMTP_PORT: 1025
   db:
     image: mongo:4.2.1
+    ports:
+      - "27017:27017"
     volumes:
       - dbdata:/data/db
   mail:
