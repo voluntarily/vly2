@@ -4,6 +4,9 @@ const jwt = require('jsonwebtoken')
 
 const client = jwksClient({
   strictSsl: true, // Default value
+  cache: true,
+  rateLimit: true,
+  jwksRequestsPerMinute: 10, // Default value
   jwksUri: `https://${config.auth.AUTH0_CLIENT_DOMAIN}/.well-known/jwks.json`,
   requestHeaders: {}, // Optional
   requestAgentOptions: {} // Optional
