@@ -9,7 +9,7 @@ import people from '../../person/__tests__/person.fixture'
 import Organisation from '../../organisation/organisation'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 import tagList from '../../tag/__tests__/tag.fixture'
-import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
+import { jwtData, jwtDataAlice } from '../../../middleware/session/__tests__/setSession.fixture'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -74,7 +74,7 @@ test.serial('Activity API - anon - create', async t => {
   t.is(response.statusCode, 403)
 })
 
-test.serial('Activity API - anon - view - active', async t => {
+test.serial('Activity API - anon - read (active)', async t => {
   const activeActivity = t.context.activities
     .filter(activity => activity.status === 'active')
     .pop()
@@ -86,7 +86,7 @@ test.serial('Activity API - anon - view - active', async t => {
   t.is(response.statusCode, 200)
 })
 
-test.serial('Activity API - anon - view - draft', async t => {
+test.serial('Activity API - anon - read (draft)', async t => {
   const draftActivity = t.context.activities
     .filter(activity => activity.status === 'draft')
     .pop()
@@ -149,7 +149,7 @@ test.serial('Activity API - admin - create', async t => {
   t.is(response.statusCode, 200)
 })
 
-test.serial('Activity API - admin - view - active', async t => {
+test.serial('Activity API - admin - read (active)', async t => {
   const activeActivity = t.context.activities
     .filter(activity => activity.status === 'active')
     .pop()
@@ -162,7 +162,7 @@ test.serial('Activity API - admin - view - active', async t => {
   t.is(response.statusCode, 200)
 })
 
-test.serial('Activity API - admin - view - draft', async t => {
+test.serial('Activity API - admin - read (draft)', async t => {
   const draftActivity = t.context.activities
     .filter(activity => activity.status === 'draft')
     .pop()
@@ -196,4 +196,83 @@ test.serial('Activity API - admin - delete', async t => {
     .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(response.statusCode, 200)
+})
+
+test.serial('Activity API - volunteer/op - list', async t => {
+  const response = await request(server)
+    .get('/api/activities')
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
+
+  const actualActivities = response.body
+  const expectedActivities = t.context.activities.filter(activity => activity.status === 'active')
+
+  t.is(response.statusCode, 200)
+  t.is(actualActivities.length, expectedActivities.length)
+})
+
+test.serial('Activity API - volunteer/op - create', async t => {
+  const response = await request(server)
+    .post('/api/activities')
+    .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
+    .send({
+      name: 'Test activity name',
+      subtitle: 'Subtitle',
+      description: 'Description',
+      duration: 'Duration',
+      status: 'active',
+      offerOrg: t.context.orgs[0]._id,
+      owner: t.context.people[0]._id
+    })
+
+  t.is(response.statusCode, 403)
+})
+
+test.serial('Activity API - volunteer/op - read (active)', async t => {
+  const activeActivity = t.context.activities
+    .filter(activity => activity.status === 'active')
+    .pop()
+
+  const response = await request(server)
+    .get(`/api/activities/${activeActivity._id}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
+
+  t.is(response.statusCode, 200)
+})
+
+test.serial('Activity API - volunteer/op - read (draft)', async t => {
+  const draftActivity = t.context.activities
+    .filter(activity => activity.status === 'draft')
+    .pop()
+
+  const response = await request(server)
+    .get(`/api/activities/${draftActivity._id}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
+
+  t.is(response.statusCode, 404)
+})
+
+test.serial('Activity API - volunteer/op - update', async t => {
+  const activity = t.context.activities[0]
+
+  const response = await request(server)
+    .put(`/api/activities/${activity._id}`)
+    .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
+    .send({
+      name: `Updated ${activity.name}`
+    })
+
+  t.is(response.statusCode, 403)
+})
+
+test.serial('Activity API - volunteer/op - delete', async t => {
+  const activity = t.context.activities[0]
+
+  const response = await request(server)
+    .delete(`/api/activities/${activity._id}`)
+    .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
+
+  t.is(response.statusCode, 403)
 })

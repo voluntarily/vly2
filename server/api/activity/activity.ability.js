@@ -25,6 +25,8 @@ const ruleBuilder = session => {
     inverted: true
   }]
 
+  const allAbilities = anonAbilities
+
   const adminAbilities = [{
     subject: SchemaName,
     action: Action.LIST
@@ -44,6 +46,8 @@ const ruleBuilder = session => {
 
   return {
     [Role.ANON]: anonAbilities,
+    [Role.VOLUNTEER_PROVIDER]: allAbilities,
+    [Role.OPPORTUNITY_PROVIDER]: allAbilities,
     [Role.ADMIN]: adminAbilities
   }
 }
