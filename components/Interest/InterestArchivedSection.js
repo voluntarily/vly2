@@ -16,7 +16,7 @@ class InterestArchivedSection extends Component {
     // Get all interests
     const opid = this.props.opid
     try {
-      await this.props.dispatch(reduxApi.actions.interestsArchived.get({ id: '', op: opid }))
+      await this.props.dispatch(reduxApi.actions.interestsArchived.get({ op: opid }))
     } catch (err) {
       console.error('error in getting interests', err)
     }

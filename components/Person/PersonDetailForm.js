@@ -17,7 +17,7 @@ import {
 import { H3Bold, P } from '../VTheme/VTheme'
 
 const EducationSelectorRef = forwardRef(EducationSelector)
-
+const isNotProd = process.env.NODE_ENV !== 'production'
 const { TextArea } = Input
 
 // TODO - only the owner and admins should be able to edit the person record.
@@ -51,6 +51,7 @@ class PersonDetailForm extends Component {
         person.nickname = values.nickname
         person.email = values.email
         person.phone = values.phone
+        person.sendEmailNotifications = values.sendEmailNotifications
         person.pronoun = {
           subject: values.pronoun_subject,
           object: values.pronoun_object,
@@ -109,6 +110,13 @@ class PersonDetailForm extends Component {
         id='personPhone'
         defaultMessage='Phone'
         description='person phone label in personDetails Form'
+      />
+    )
+    const personSendEmailNotifications = (
+      <FormattedMessage
+        id='personSendEmailNotifications'
+        defaultMessage='Get email notifications from Voluntarily'
+        description='send email notifications label in personDetails form'
       />
     )
     const personAbout = (
@@ -369,6 +377,11 @@ class PersonDetailForm extends Component {
                   })(<Input placeholder='000 000 0000' />)}
                 </Form.Item>
               </ShortInputContainer>
+              <Form.Item>
+                {getFieldDecorator('sendEmailNotifications', {
+                  valuePropName: 'checked'
+                })(<Checkbox>{personSendEmailNotifications}</Checkbox>)}
+              </Form.Item>
             </InputContainer>
           </FormGrid>
           <Divider />
@@ -385,35 +398,38 @@ class PersonDetailForm extends Component {
             </InputContainer>
           </FormGrid>
           <Divider />
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <H3Bold>Admin section</H3Bold>
-              </TitleContainer>
-              <P>Please be careful on this part</P>
-            </DescriptionContainer>
-            <InputContainer>
-              {' '}
-              <Form.Item label={personRole}>
-                {getFieldDecorator('role', {
-                  rules: [{ required: true, message: 'role is required' }]
-                })(<Checkbox.Group options={roleOptions} />)}
-              </Form.Item>
-              <Form.Item label={personStatus}>
-                {getFieldDecorator('status', {
-                  rules: [{ required: true, message: 'status is required' }]
-                })(
-                  <Radio.Group buttonStyle='solid'>
-                    <Radio.Button value='inactive'>Not Available</Radio.Button>
-                    <Radio.Button value='active'>Available</Radio.Button>
-                    {/* // TODO: [VP-212] on person detail form only show Hold button to admins */}
-                    <Radio.Button value='hold'>Hold</Radio.Button>
-                  </Radio.Group>
-                )}
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>
-          <Divider />
+          {isNotProd && (
+            <div>
+              <FormGrid>
+                <DescriptionContainer>
+                  <TitleContainer>
+                    <H3Bold>Admin section</H3Bold>
+                  </TitleContainer>
+                  <P>Please be careful on this part</P>
+                </DescriptionContainer>
+                <InputContainer>
+                  {' '}
+                  <Form.Item label={personRole}>
+                    {getFieldDecorator('role', {
+                      rules: [{ required: true, message: 'role is required' }]
+                    })(<Checkbox.Group options={roleOptions} />)}
+                  </Form.Item>
+                  <Form.Item label={personStatus}>
+                    {getFieldDecorator('status', {
+                      rules: [{ required: true, message: 'status is required' }]
+                    })(
+                      <Radio.Group buttonStyle='solid'>
+                        <Radio.Button value='inactive'>Not Available</Radio.Button>
+                        <Radio.Button value='active'>Available</Radio.Button>
+                        {/* // TODO: [VP-212] on person detail form only show Hold button to admins */}
+                        <Radio.Button value='hold'>Hold</Radio.Button>
+                      </Radio.Group>
+                    )}
+                  </Form.Item>
+                </InputContainer>
+              </FormGrid>
+              <Divider />
+            </div>)}
           <FormGrid>
             <DescriptionContainer />
             <InputContainer>
@@ -457,6 +473,7 @@ PersonDetailForm.propTypes = {
     location: PropTypes.string,
     email: PropTypes.string,
     phone: PropTypes.string,
+    sendEmailNotifications: PropTypes.bool,
     facebook: PropTypes.string,
     twitter: PropTypes.string,
     website: PropTypes.string,
@@ -520,6 +537,10 @@ export default Form.create({
       phone: Form.createFormField({
         ...props.person.phone,
         value: props.person.phone
+      }),
+      sendEmailNotifications: Form.createFormField({
+        ...props.person.sendEmailNotifications,
+        value: props.person.sendEmailNotifications
       }),
       pronoun_subject: Form.createFormField({
         ...props.person.pronoun,

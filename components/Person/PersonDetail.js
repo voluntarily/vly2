@@ -183,7 +183,6 @@ const PersonDetail = ({ person }, ...props) => (
 
 PersonDetail.propTypes = {
   person: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     nickname: PropTypes.string,
     about: PropTypes.string,

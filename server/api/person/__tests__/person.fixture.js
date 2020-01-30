@@ -24,6 +24,7 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     status: 'active',
     imgUrl: 'https://avatars2.githubusercontent.com/u/1596437?v=4',
     phone: '+64 027 7031007',
+    sendEmailNotifications: true,
     website: 'https://voluntarily.nz',
     tags: ['javascript', 'programming', 'software', 'python', 'c++']
   },
@@ -45,6 +46,7 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     name: 'Salvador Domingo Felipe Jacinto Dalí i Domènech, 1st Marquis of Dalí de Púbol ',
     email: 'salvador@voluntarily.nz',
     phone: '000 000 0000',
+    sendEmailNotifications: true,
     imgUrl: 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg',
     tags: []
   },
@@ -55,6 +57,7 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     location: 'Napier',
     email: 'atesty@voluntarily.nz',
     phone: '027 444 5558',
+    sendEmailNotifications: true,
     pronoun: {
       subject: 'she',
       object: 'her',
@@ -81,6 +84,7 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     location: 'Waikato',
     email: 'btesty@voluntarily.nz',
     phone: '027 444 5557',
+    sendEmailNotifications: true,
     pronoun: {
       subject: 'they',
       object: 'them',
@@ -98,6 +102,7 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     location: 'Waikato District',
     email: 'ctesty@voluntarily.nz',
     phone: '027 444 5556',
+    sendEmailNotifications: true,
     pronoun: { subject: 'they', object: 'them', possesive: 'ȁǹy' },
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer'],
@@ -111,6 +116,7 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     location: 'Opotiki District',
     email: 'dtesty@voluntarily.nz',
     phone: '027 444 5555',
+    sendEmailNotifications: true,
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer'],
     status: 'active',
@@ -123,6 +129,7 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     location: 'South Taranaki District',
     email: 'etesty@voluntarily.nz',
     phone: '027 444 5554',
+    sendEmailNotifications: true,
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer'],
     status: 'active',
@@ -135,6 +142,7 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     location: 'Wellington',
     email: 'ftesty@voluntarily.nz',
     phone: '027 444 5553',
+    sendEmailNotifications: true,
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['tester', 'volunteer'],
     status: 'active',

@@ -9,13 +9,13 @@ import {
   ItemContainer,
   ItemVenue,
   ItemDuration,
+  ItemLocation,
   ItemStatus,
   ItemDate,
   ItemImage,
   ItemIdLine
 } from '../VTheme/ItemList'
 import moment from 'moment'
-import { ShareLinks } from './OpShareLinks'
 
 const OpBanner = ({ op, children }) => {
   const startDate = op.date[0]
@@ -49,17 +49,13 @@ const OpBanner = ({ op, children }) => {
         <Right>
           <h1>{op.name}</h1>
           <ItemIdLine item={op.offerOrg} path='orgs' />
-          <h4>
-            {op.subtitle} <br />
-            {op.location}
-          </h4>
+
           <ItemContainer>
+            <ItemLocation location={op.location} />
             <ItemDuration duration={op.duration} />
             <ItemVenue venue={op.venue} />
             <ItemDate startDate={startDate} endDate={endDate} />
             <ItemStatus status={op.status} />
-
-            <ShareLinks url={appUrl} />
 
           </ItemContainer>
           <>

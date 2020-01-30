@@ -44,6 +44,7 @@ export const Spacer = styled.div`
 export const ControlGrid = styled.div`
 display: grid;
 grid-template-columns: 5fr 2fr;
+margin: 2rem 0 1rem 0;
 
 align-self: center;
 
@@ -181,6 +182,44 @@ export const GridTestItem = styled.div`
 
 export const Section = styled.section`
   margin-bottom: 2rem;
+`
+export const ContentCard = styled.div`
+  background-color: #ffffff;
+  box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
+  border-radius: 8px;
+  width: 100%;
+  padding: 1rem;
+  text-align: left;
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    letter-spacing: -0.38px;
+    line-height: 32px;
+
+    margin-bottom: 1rem
+  }
+
+  h4 {
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: -0.38px;
+    line-height: 32px;
+
+    margin-bottom: 1rem
+  }
+
+  p {
+
+  }
+
+  img {
+    height: 2rem;
+    width: 2rem;
+
+    background-color: purple;
+    border-radius: 150px;
+  }
 `
 
 /*
@@ -428,6 +467,8 @@ figcaption {
   }
   img {
     border-radius: 8px 8px 0 0;
+    
+    
   }
   figcaption {
     transform: scale(0.9091);
@@ -458,7 +499,7 @@ img {
   transition: all 0.2s;
   -webkit-transition: all 0.2s;
   width: 100%;
-  height: auto;
+  height: 10rem;
   max-height: 10rem;
   background-color: rgba(0, 0, 0, 0);
   object-fit: cover;

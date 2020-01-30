@@ -24,6 +24,7 @@ const personSchema = new Schema({
   facebook: { type: 'String', required: false },
   twitter: { type: 'String', required: false },
   education: { type: 'String' },
+  sendEmailNotifications: { type: 'Boolean', default: true, required: true },
   role: {
     type: [String],
     required: true,
@@ -69,7 +70,7 @@ personSchema.index({ tags: 1 })
 // protect multiple imports
 var Person
 
-if (mongoose.models.Person) {
+if (mongoose.models && mongoose.models.Person) {
   Person = mongoose.model(SchemaName)
 } else {
   Person = mongoose.model(SchemaName, personSchema)
