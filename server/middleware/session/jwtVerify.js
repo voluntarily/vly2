@@ -10,12 +10,17 @@ const client = jwksClient({
 })
 
 const getSigningKey = (header, callback) => {
-  client.getSigningKey(header.kid, (err, key) => {
-    if (err) { console.log(err); callback(err, null) }
-    const signingKey = key.publicKey || key.rsaPublicKey
-    callback(null, signingKey)
-  })
+  if (process.env.NODE_ENV === 'test') {
+    callback(null, 'secret')
+  } else {
+    client.getSigningKey(header.kid, (err, key) => {
+      if (err) { console.log(err); callback(err, null) }
+      const signingKey = key.publicKey || key.rsaPublicKey
+      callback(null, signingKey)
+    })
+  }
 }
+
 const jwtVerify = idToken => {
   return new Promise((resolve, reject) => {
     jwt.verify(idToken, getSigningKey, {}, (err, decoded) => {
@@ -24,6 +29,7 @@ const jwtVerify = idToken => {
     })
   })
 }
+
 module.exports = {
   jwtVerify,
   getSigningKey
