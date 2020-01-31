@@ -47,8 +47,10 @@ const personSchema = new Schema({
     enum: ['active', 'inactive', 'hold']
   },
   dateAdded: { type: 'Date', default: Date.now, required: true },
-  href: String,
   tags: [String],
+  // helper fields - these are only in the schema and don't need to be stored
+  href: String,
+  orgAdminFor: [{ type: Schema.Types.ObjectId, ref: 'Organisation' }],
   // Teacher Specific fields
   teacher: {
     registration: {

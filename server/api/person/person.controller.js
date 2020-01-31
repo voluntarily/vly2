@@ -1,7 +1,7 @@
 const Person = require('./person')
 const sanitizeHtml = require('sanitize-html')
 const Action = require('../../services/abilities/ability.constants')
-
+const { getPersonRoles } = require('../member/member.lib')
 /* find a single person by searching for a key field.
 This is a convenience function usually used to call
 */
@@ -13,11 +13,12 @@ function getPersonBy (req, res, next) {
     query = req.params
   }
 
-  Person.findOne(query).exec((_err, got) => {
-    if (!got) { // person does not exist
+  Person.findOne(query).exec(async (_err, person) => {
+    if (!person) { // person does not exist
       return res.status(404).send({ error: 'person not found' })
     }
-    req.crudify = { result: got }
+    await getPersonRoles(person)
+    req.crudify = { result: person }
     return next()
   })
 }
@@ -46,18 +47,22 @@ function listPeople (req, res, next) {
 }
 
 async function updatePersonDetail (req, res, next) {
-  const { ability: userAbility } = req
-  const userID = req.body._id
+  const { ability: userAbility, body: person } = req
+  const personId = person._id
+  delete person.role // cannot save role - its virtual
   let resultUpdate
   try {
-    resultUpdate = await Person.accessibleBy(userAbility, Action.UPDATE).updateOne({ _id: userID }, req.body)
+    resultUpdate = await Person.accessibleBy(userAbility, Action.UPDATE).updateOne({ _id: personId }, req.body)
   } catch (e) {
     return res.sendStatus(400) // 400 error for any bad request body. This also prevent error to propagate and crash server
   }
   if (resultUpdate.n === 0) {
     return res.sendStatus(404)
   }
-  req.crudify.result = req.body
+  // return the updated person
+  const updatedPerson = await Person.findById(personId).exec()
+  getPersonRoles(updatedPerson)
+  req.crudify.result = updatedPerson
   next()
 }
 

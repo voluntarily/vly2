@@ -88,6 +88,7 @@ class PersonHomePage extends Component {
       }
 
       await Promise.all([
+        store.dispatch(reduxApi.actions.people.get({ id: meid })),
         store.dispatch(reduxApi.actions.tags.get()),
         store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
         store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),
@@ -108,7 +109,7 @@ class PersonHomePage extends Component {
   }
 
   handleUpdate = async () => {
-    const person = this.props.me
+    const person = this.props.people.data[0] // this.props.me
     const role = this.sortRoleByPower(person)
     const personData = { ...person, role }
     await this.props.dispatch(
@@ -280,7 +281,7 @@ class PersonHomePage extends Component {
             <SectionWrapper>
               {this.state.editProfile ? (
                 <PersonDetailForm
-                  person={this.props.me}
+                  person={this.props.people.data[0]}
                   existingTags={this.props.tags.data}
                   locations={this.props.locations.data[0].locations}
                   onSubmit={this.handleUpdate}
@@ -300,7 +301,7 @@ class PersonHomePage extends Component {
                       description='Button to edit an person on PersonDetails page'
                     />
                   </Button>
-                  <PersonDetail person={this.props.me} />
+                  <PersonDetail person={this.props.people.data[0]} />
                 </div>
               )}
             </SectionWrapper>
