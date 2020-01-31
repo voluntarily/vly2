@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import GoalSection from '../../components/Goal/GoalSection'
 import { FullPage, Section } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
+import adminPage from '../../hocs/adminPage'
 import reduxApi, { withGoals } from '../../lib/redux/reduxApi.js'
 import { Button, message } from 'antd'
 import fetch from 'isomorphic-fetch'
@@ -83,4 +83,4 @@ class GoalListPage extends Component {
   }
 }
 export const GoalListPageTest = GoalListPage
-export default securePage(withGoals(GoalListPage))
+export default adminPage(withGoals(GoalListPage))
