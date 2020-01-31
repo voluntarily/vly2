@@ -1,0 +1,1 @@
+mongo "mongodb+srv://voluntarily-mongo-cluster-test-r6dzi.mongodb.net/vly-alpha"  --username vly-client
