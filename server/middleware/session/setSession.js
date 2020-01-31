@@ -33,9 +33,9 @@ const openPath = url => {
 const getIdToken = (req) => {
   if (req && req.cookies && req.cookies.idToken) { return req.cookies.idToken }
 
-  if (req.headers.authentication) {
+  if (req.headers.Authorization) {
     const regex = /Bearer (.*)/
-    const found = req.headers.authentication.match(regex)
+    const found = req.headers.Authorization.match(regex)
     return found[1]
   }
 }
@@ -53,7 +53,7 @@ const createPersonFromUser = async (user) => {
     PubSub.publish(TOPIC_PERSON__CREATE, p)
     return p
   } catch (err) {
-    // will fail if email is a duplicate
+    // will fail if email is a duplicate or database gone
     console.error('create person failed', err)
     return false
   }
@@ -79,18 +79,16 @@ const setSession = async (req, res, next) => {
   if (!user) {
     return next()
   }
-  console.log('User', user)
   req.session.idToken = idToken
   req.session.user = user
   if (!user.email_verified) {
-    console.error('setSession Warning: user email not verified')
+    // console.error('setSession Warning: user email not verified')
     return next()
   }
   let me = false
   try {
-    me = await Person.findOne({ email: user.email }, 'name role imgUrlSm').exec()
+    me = await Person.findOne({ email: user.email }, 'name nickname role imgUrlSm').exec()
     if (!me) {
-      console.log('creating new person')
       me = await createPersonFromUser(user)
     } else {
       await getPersonRoles(me)
@@ -104,7 +102,7 @@ const setSession = async (req, res, next) => {
     me,
     idToken
   }
-  console.log('setting session from IdToken', req.url, req.session.isAuthenticated, 'user', req.session.user.email, 'me', req.session.me.name, req.session.me.role)
+  // console.log('setting session from IdToken', req.url, req.session.isAuthenticated, 'user', req.session.user.email, 'me', req.session.me.name, req.session.me.role)
   next()
 }
 
