@@ -126,10 +126,10 @@ export class PersonDetailPage extends Component {
     }
     const canEdit = (isOrgAdmin || isAdmin || (person && person._id === this.props.me._id))
 
-    if (this.props.members.sync && this.props.members.data.length > 0) {
-      person.orgMembership = this.props.members.data.filter(m => m.status === MemberStatus.MEMBER)
-    }
     if (!this.props.people.loading) {
+      if (this.props.members.sync && this.props.members.data.length > 0) {
+        person.orgMembership = this.props.members.data.filter(m => m.status === MemberStatus.MEMBER)
+      }
       if (!person) {
         content =
           <div>
