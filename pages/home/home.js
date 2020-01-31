@@ -311,6 +311,6 @@ class PersonHomePage extends Component {
     )
   }
 }
-export const PersonHomePageTest = withHomeData(PersonHomePage)
+export const PersonHomePageTest = withPeople(withHomeData(PersonHomePage))
 
-export default securePage(withPeople(PersonHomePageTest))
+export default securePage(PersonHomePageTest)
