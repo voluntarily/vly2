@@ -435,9 +435,6 @@ class PersonDetailForm extends Component {
                 <FormattedMessage
                   id='PersonDetailForm.SectionDescription.SocialLinks'
                   defaultMessage='Optional: Share your social media links so the groups you work with can follow your social network.'
-                  values={{
-                    p: (...chunks) => <p>{chunks}</p>
-                  }}
                 />
               </P>
             </DescriptionContainer>
