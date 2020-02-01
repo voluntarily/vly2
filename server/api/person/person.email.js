@@ -1,5 +1,6 @@
 const { getTransport } = require('../../services/email/email')
 const Email = require('email-templates')
+const Person = require('./person')
 const { config } = require('../../../config/config')
 const { getUnsubscribeLink } = require('./person.lib')
 /*
@@ -8,11 +9,13 @@ const { getUnsubscribeLink } = require('./person.lib')
   @template the template to format html
   @props includes details of the opportunity, requestor etc
 */
-module.exports.emailPerson = async (template, to, props, renderOnly = false) => {
+module.exports.emailPerson = async (template, tod, props, renderOnly = false) => {
+  // ensure the target person record is populated with the items needed for emails and nothing else.
+  const to = await Person.findById(tod._id, 'name email imgUrl status sendEmailNotifications').lean().exec()
+
   if (to._id && !to.sendEmailNotifications) {
     return null
   }
-
   try {
     const transport = getTransport()
     const email = new Email({
