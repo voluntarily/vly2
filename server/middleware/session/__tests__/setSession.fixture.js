@@ -85,7 +85,6 @@ const jwtDataBob = {
 }
 jwtDataBob.idToken = jwt.sign(jwtDataBob.idTokenPayload, 'secret')
 
-
 const jwtDataCharles = {
   accessToken: 'IGs4bjO5WLjsulmjKiW2-VLeetlgykUP',
   idTokenPayload: {

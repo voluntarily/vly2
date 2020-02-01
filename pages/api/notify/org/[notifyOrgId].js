@@ -13,7 +13,7 @@ export default async (req, res) => {
     // verify the org
     const orgid = req.query.notifyOrgId
     const org = await Organisation.findById(orgid, 'name imgUrl').lean().exec()
-    
+
     // verify I am orgAdmin of org
     const me = req.session.me // signed in person
     const membershipQuery = {
