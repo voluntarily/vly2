@@ -46,10 +46,12 @@ function listPeople (req, res, next) {
   }
 }
 
+const isProd = process.env.NODE_ENV === 'production'
+
 async function updatePersonDetail (req, res, next) {
   const { ability: userAbility, body: person } = req
   const personId = person._id
-  delete person.role // cannot save role - its virtual
+  if (isProd) { delete person.role } // cannot save role - its virtual
   let resultUpdate
   try {
     resultUpdate = await Person.accessibleBy(userAbility, Action.UPDATE).updateOne({ _id: personId }, req.body)
