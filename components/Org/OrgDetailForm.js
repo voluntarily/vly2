@@ -81,10 +81,10 @@ class OrgDetailForm extends Component {
         org.contactEmail = values.contactEmail
         org.contactName = values.contactName
         org.contactPhoneNumber = values.contactPhoneNumber
-        org.category = values.category
         org.ageRange = values.ageRange
         org.decile = values.decile
         org.address = values.address
+        if (values.category) org.category = values.category
 
         window.scrollTo(0, 0)
         this.props.onSubmit(this.props.org)
