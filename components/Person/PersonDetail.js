@@ -173,7 +173,13 @@ const PersonDetail = ({ person }, ...props) => (
         <p><Icon type='safety' /> </p>
       </DetailItemMobile>
       <InfoSection>
-        <H3Bold>Latest Activities</H3Bold>
+        <H3Bold>
+          <FormattedMessage
+            defaultMessage='Latest Activities'
+            id='PersonDetail.title.CurrentActivities'
+            description='subheading for activity list on person details page'
+          />
+        </H3Bold>
         <Divider />
       </InfoSection>
     </GridContainer>
