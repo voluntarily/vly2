@@ -59,9 +59,9 @@ async function updatePersonDetail (req, res, next) {
   if (resultUpdate.n === 0) {
     return res.sendStatus(404)
   }
-  // return the updated person
-  const updatedPerson = await Person.findById(personId).exec()
-  getPersonRoles(updatedPerson)
+  // return the updated person - lean'ed to simple object for result
+  const updatedPerson = await Person.findById(personId).lean().exec()
+  await getPersonRoles(updatedPerson)
   req.crudify.result = updatedPerson
   next()
 }
