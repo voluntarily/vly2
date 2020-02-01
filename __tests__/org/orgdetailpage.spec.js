@@ -244,7 +244,7 @@ test('OrgUnknown', t => {
   t.is(wrapper.find('FormattedMessage').last().props().id, 'orgDetailPage.showOrgs')
 })
 
-test.only('edit and save existing org', async t => {
+test('edit and save existing org', async t => {
   const props = {
     isNew: false,
     orgid: t.context.orgs[0],
