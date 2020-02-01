@@ -70,8 +70,6 @@ const orgToRoleTable = {
   test: Role.TESTER
 }
 const getPersonRoles = async person => {
-  console.log('getPersonRoles', person)
-
   const membershipQuery = { person: person._id }
   const membership = await Member
     .find(membershipQuery)
