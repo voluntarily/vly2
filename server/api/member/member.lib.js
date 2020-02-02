@@ -76,7 +76,7 @@ const getPersonRoles = async person => {
     .populate({ path: 'organisation', select: 'name category' })
     .lean()
     .exec()
-  const role = person.role.toObject() // role is required and has a defult
+  const role = person.role // role is required and has a defult
   const orgAdminFor = []
   membership.map(m => {
     if (m.status === MemberStatus.ORGADMIN) {
