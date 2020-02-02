@@ -244,7 +244,9 @@ test.after.always(() => {
 })
 
 test.serial('run GetInitialProps', async t => {
+  const me = t.context.people[0]
   t.context.mockServer
+    .get(`path:/api/people/${me._id}`, { body: [me] })
     .get('path:/api/tags/', { body: t.context.tags })
     .get('path:/api/opportunities/', { body: [t.context.ops[0]] })
     .get('path:/api/locations', { body: t.context.locations })
@@ -257,7 +259,8 @@ test.serial('run GetInitialProps', async t => {
   reduxApi.use('fetch', adapterFetch(t.context.mockServer))
 
   await PersonHomePageTest.getInitialProps({ store: t.context.mockStore })
-  t.is(t.context.mockStore.getActions().length, 18)
+  // why is this double the number expected?
+  t.is(t.context.mockStore.getActions().length, 20)
 })
 
 test.serial('render volunteer home page - Active tab', t => {

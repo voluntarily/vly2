@@ -81,10 +81,10 @@ class OrgDetailForm extends Component {
         org.contactEmail = values.contactEmail
         org.contactName = values.contactName
         org.contactPhoneNumber = values.contactPhoneNumber
-        org.category = values.category
         org.ageRange = values.ageRange
         org.decile = values.decile
         org.address = values.address
+        if (values.category) org.category = values.category
 
         window.scrollTo(0, 0)
         this.props.onSubmit(this.props.org)
@@ -214,7 +214,7 @@ class OrgDetailForm extends Component {
       { label: 'Business', value: 'vp' },
       { label: 'School', value: 'op' },
       { label: 'Activity provider', value: 'ap' },
-      { label: 'Agency', value: 'admin' },
+      { label: 'Admin', value: 'admin' },
       { label: 'Other', value: 'other' }
     ]
 
@@ -242,34 +242,37 @@ class OrgDetailForm extends Component {
         </PageTitle>
 
         <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <h3>
-                  <FormattedMessage
-                    id='orgDetail.form.category'
-                    defaultMessage='Choose your organisation'
-                    description='The type of organisation'
-                  />
-                </h3>
-              </TitleContainer>
-              <p>
-                <FormattedMessage
-                  id='orgDetail.form.category.description'
-                  defaultMessage='Let everyone know what type of organisation you are.'
-                  description='Description of the type of organisation'
-                />
-              </p>
-            </DescriptionContainer>
-            <InputContainer>
-              <Form.Item label={orgCategory}>
-                {getFieldDecorator('category', {
-                  rules: [{ required: true, message: 'category is required' }]
-                })(<Checkbox.Group options={categoryOptions} />)}
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>
-          <Divider />
+          {this.props.isAdmin &&
+            <>
+              <FormGrid>
+                <DescriptionContainer>
+                  <TitleContainer>
+                    <h3>
+                      <FormattedMessage
+                        id='orgDetail.form.category'
+                        defaultMessage='Set organisation category'
+                        description='The type of organisation'
+                      />
+                    </h3>
+                  </TitleContainer>
+                  <p>
+                    <FormattedMessage
+                      id='orgDetail.form.category.description'
+                      defaultMessage='System Admin feature: Let everyone know what type of organisation you are.'
+                      description='Description of the type of organisation'
+                    />
+                  </p>
+                </DescriptionContainer>
+                <InputContainer>
+                  <Form.Item label={orgCategory}>
+                    {getFieldDecorator('category', {
+                      rules: [{ required: true, message: 'category is required' }]
+                    })(<Checkbox.Group options={categoryOptions} />)}
+                  </Form.Item>
+                </InputContainer>
+              </FormGrid>
+              <Divider />
+            </>}
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
