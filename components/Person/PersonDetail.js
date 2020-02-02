@@ -207,7 +207,8 @@ PersonDetail.propTypes = {
         'opportunityProvider',
         'volunteer',
         'activityProvider',
-        'tester'
+        'tester',
+        'orgAdmin'
       ])
     ),
     status: PropTypes.oneOf(['active', 'inactive', 'hold']),

@@ -62,7 +62,7 @@ test('render the detail with op', t => {
 
 test('Age range field is shown when organisation category is school', async t => {
   const wrapper = mountWithIntl(
-    <OrgDetailForm org={t.context.org} onSubmit={() => {}} onCancel={() => {}} />
+    <OrgDetailForm org={t.context.org} isAdmin onSubmit={() => {}} onCancel={() => {}} />
   )
 
   const categories = wrapper.find('#organisation_detail_form_category').first()
@@ -78,7 +78,7 @@ test('Age range field is shown when organisation category is school', async t =>
   t.is(wrapper.find('label[htmlFor="organisation_detail_form_ageRange"]').length, 1)
 })
 
-test('Fields are submitted', async t => {
+test('School Fields are submitted', async t => {
   const submitOp = sinon.spy()
 
   // Change the text value of an input
@@ -90,7 +90,7 @@ test('Fields are submitted', async t => {
   }
 
   const wrapper = mountWithIntl(
-    <OrgDetailForm org={t.context.org} onSubmit={submitOp} onCancel={() => {}} />
+    <OrgDetailForm org={t.context.org} isAdmin onSubmit={submitOp} onCancel={() => {}} />
   )
 
   // Organisation name

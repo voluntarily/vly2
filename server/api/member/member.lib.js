@@ -2,6 +2,7 @@ const Member = require('./member')
 const PubSub = require('pubsub-js')
 const { TOPIC_MEMBER__UPDATE } = require('../../services/pubsub/topic.constants')
 const { MemberStatus } = require('./member.constants')
+const { Role } = require('../../services/authorize/role')
 
 /* get a single member record with org and person populated out */
 const getMemberbyId = id => {
@@ -61,8 +62,42 @@ const findOrgByPersonIdAndCategory = async (personId, category) => {
   return sortedOrgs[0].organisation._id
 }
 
+const orgToRoleTable = {
+  admin: Role.ADMIN,
+  op: Role.OPPORTUNITY_PROVIDER,
+  ap: Role.ACTIVITY_PROVIDER,
+  other: Role.RESOURCE_PROVIDER,
+  test: Role.TESTER
+}
+const getPersonRoles = async person => {
+  const membershipQuery = { person: person._id }
+  const membership = await Member
+    .find(membershipQuery)
+    .populate({ path: 'organisation', select: 'name category' })
+    .exec()
+  const role = person.role || [Role.VOLUNTEER_PROVIDER]
+  const orgAdminFor = []
+  membership.map(m => {
+    if (m.status === MemberStatus.ORGADMIN) {
+      role.push(Role.ORG_ADMIN)
+      orgAdminFor.push(m.organisation._id)
+    }
+    if (m.status === MemberStatus.MEMBER) {
+      m.organisation.category.map(category => {
+        const r = orgToRoleTable[category]
+        if (r) role.push(r)
+      })
+    }
+  })
+  console.log('getPersonRoles', role, orgAdminFor)
+  person.orgAdminFor = orgAdminFor
+  person.role = role
+  return [role, orgAdminFor]
+}
+
 module.exports = {
   getMemberbyId,
   addMember,
-  findOrgByPersonIdAndCategory
+  findOrgByPersonIdAndCategory,
+  getPersonRoles
 }
