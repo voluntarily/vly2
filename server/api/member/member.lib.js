@@ -89,7 +89,6 @@ const getPersonRoles = async person => {
       })
     }
   })
-  console.log('getPersonRoles', role, orgAdminFor)
   person.orgAdminFor = orgAdminFor
   person.role = role
   return [role, orgAdminFor]
