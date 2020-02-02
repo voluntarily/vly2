@@ -16,7 +16,8 @@ const personSchema = new Schema({
   about: { type: 'String', default: '' }, // person description
   location: { type: 'String', default: '' },
   phone: { type: 'String', required: false }, // +64 27 7031007
-  imgUrl: { type: 'String', default: '/static/img/person/person.png' }, // url to image
+  imgUrl: { type: 'String', default: '/static/img/person/person.png' }, // url to large profile image (256x256)
+  imgUrlSm: { type: 'String', default: '/static/img/person/person.png' }, // url to small profile image (24x24)
   pronoun: { type: 'Object', default: { subject: 'they', object: 'them', possessive: 'their' } },
   language: { type: 'String', default: 'EN', lowercase: true }, // en, mi, fr etc
   website: { type: 'String', required: false },
@@ -46,8 +47,10 @@ const personSchema = new Schema({
     enum: ['active', 'inactive', 'hold']
   },
   dateAdded: { type: 'Date', default: Date.now, required: true },
-  href: String,
   tags: [String],
+  // helper fields - these are only in the schema and don't need to be stored
+  href: String,
+  orgAdminFor: [{ type: Schema.Types.ObjectId, ref: 'Organisation' }],
   // Teacher Specific fields
   teacher: {
     registration: {

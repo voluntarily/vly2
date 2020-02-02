@@ -8,6 +8,7 @@ import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
 import InterestConfirmationCard from './InterestConfirmationCard'
 import RegisterInterestItem from './RegisterInterestItem'
+import cuid from 'cuid'
 
 // Helper function to generate a blank interest.
 function getNewInterest (me, op) {
@@ -27,7 +28,7 @@ class RegisterInterestSection extends Component {
     const opid = this.props.opID
     const meid = this.props.meID
     try {
-      await this.props.dispatch(reduxApi.actions.interests.get({ op: opid, me: meid }))
+      await this.props.dispatch(reduxApi.actions.interests.get({ op: opid, me: meid, cacheBreak: cuid() }))
     } catch (err) {
       console.error('error in getting interests', err)
     }
@@ -59,14 +60,14 @@ class RegisterInterestSection extends Component {
       return (<Loading />)
     }
 
-    // If we have access to the interests section of the Redux store...
-    // Get the interest out of the store, if any.
+    //  If we have access to the interests section of the Redux store.
+    //  Get the interest out of the store, if any.
     let interest = null
 
     if (this.props.interests.sync && this.props.interests.data.length > 0) {
       interest = this.props.interests.data[0]
     } else { // If not, use a blank interest.
-      interest = getNewInterest(this.props.meID, this.props.op)
+      interest = getNewInterest(this.props.meID, this.props.opID)
     }
     return (
       <section>

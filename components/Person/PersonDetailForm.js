@@ -1,4 +1,4 @@
-import { Button, Checkbox, Divider, Form, Icon, Input, Radio, Tooltip, Row, Col } from 'antd'
+import { Avatar, Button, Checkbox, Divider, Form, Icon, Input, Radio, Tooltip, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component, forwardRef } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -17,7 +17,7 @@ import {
 import { H3Bold, P } from '../VTheme/VTheme'
 
 const EducationSelectorRef = forwardRef(EducationSelector)
-const isNotProd = process.env.NODE_ENV !== 'production'
+const developerSettings = process.env.NODE_ENV !== 'production'
 const { TextArea } = Input
 
 // TODO - only the owner and admins should be able to edit the person record.
@@ -36,8 +36,8 @@ class PersonDetailForm extends Component {
     this.props.form.validateFields()
   }
 
-  setImgUrl = value => {
-    this.props.form.setFieldsValue({ imgUrl: value })
+  setImgUrl = (imgUrl, sizeVariants) => {
+    this.avatar = sizeVariants
   }
 
   handleSubmit = e => {
@@ -58,11 +58,18 @@ class PersonDetailForm extends Component {
         person.about = values.about
         person.location = values.location
         person.tags = values.tags
-        person.imgUrl = values.imgUrl
+
         person.website = values.website
         person.twitter = values.twitter
         person.facebook = values.facebook
-        person.role = values.role
+        if (this.avatar) {
+          person.imgUrl = this.avatar.lg
+          person.imgUrlSm = this.avatar.sm
+        }
+
+        if (developerSettings) {
+          person.role = values.role
+        }
         person.status = values.status
         person.education = values.education
         window.scrollTo(0, 0)
@@ -76,14 +83,14 @@ class PersonDetailForm extends Component {
     const personName = (
       <FormattedMessage
         id='personName'
-        defaultMessage='Full Name'
+        defaultMessage='Formal name'
         description='person full name label in PersonDetails Form'
       />
     )
     const personnickname = (
       <FormattedMessage
         id='personnickname'
-        defaultMessage='Nickname'
+        defaultMessage='Short name'
         description='person nickname label in personDetails Form'
       />
     )
@@ -147,7 +154,7 @@ class PersonDetailForm extends Component {
     const personAvatar = (
       <FormattedMessage
         id='personAvatar'
-        defaultMessage='Image Link'
+        defaultMessage='Image'
         description='person Image URL label in personDetails Form'
       />
     )
@@ -170,12 +177,12 @@ class PersonDetailForm extends Component {
       <span>
         {' '}
         <FormattedMessage
-          id='personLocation'
-          defaultMessage='Where are you based'
+          id='PersonDetailForm.Label.Location'
+          defaultMessage='In what region do you want to volunteer'
           description='Person Location label in PersonDetails Form'
         />
         &nbsp;
-        <Tooltip title='Set your location to help find local opportunities'>
+        <Tooltip title='Lets us recommend you nearby opportunities'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -184,12 +191,12 @@ class PersonDetailForm extends Component {
       <span>
         {' '}
         <FormattedMessage
-          id='education'
-          defaultMessage='Select your education '
-          description='Education'
+          id='PersonDetailForm.Label.education'
+          defaultMessage='Education Level'
+          description='Select box label for education.'
         />
         &nbsp;
-        <Tooltip title='Select your education'>
+        <Tooltip title='So we can learn more about who volunteers'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -197,8 +204,8 @@ class PersonDetailForm extends Component {
 
     const personTags = (
       <FormattedMessage
-        id='personTags'
-        defaultMessage='Tags'
+        id='PersonDetailForm.Label.Tags'
+        defaultMessage='Skills &amp; Interests'
         description='Descriptions of general areas the person has skills in'
       />
     )
@@ -223,14 +230,31 @@ class PersonDetailForm extends Component {
     return (
       <div className='PersonDetailForm'>
         <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
-          <FormGrid>
+          <FormGrid> {/* // About You */}
             <DescriptionContainer>
               <TitleContainer>
-                <H3Bold>About you</H3Bold>
+                <H3Bold>
+                  <FormattedMessage
+                    id='PersonDetailForm.SectionTitle.AboutYou'
+                    defaultMessage='About you'
+                  />
+                </H3Bold>
               </TitleContainer>
-              <P>How do we get in touch?</P>
+              <P>
+                <FormattedMessage
+                  id='PersonDetailForm.SectionDescription.AboutYou'
+                  defaultMessage='Tell the people you will be volunteering for something about yourself. How we should address you, education and job etc.'
+                />
+              </P>
             </DescriptionContainer>
             <InputContainer>
+              <ShortInputContainer>
+                <Form.Item label={personnickname}>
+                  {getFieldDecorator('nickname', {
+                    rules: []
+                  })(<Input placeholder='e.g Dali' />)}
+                </Form.Item>
+              </ShortInputContainer>
               <ShortInputContainer>
                 <Form.Item
                   label={personName}
@@ -244,13 +268,7 @@ class PersonDetailForm extends Component {
                   )}
                 </Form.Item>
               </ShortInputContainer>
-              <ShortInputContainer>
-                <Form.Item label={personnickname}>
-                  {getFieldDecorator('nickname', {
-                    rules: []
-                  })(<Input placeholder='e.g Dali' />)}
-                </Form.Item>
-              </ShortInputContainer>
+
               <ShortInputContainer>
                 <Row>
                   <Col span={24}>
@@ -281,6 +299,146 @@ class PersonDetailForm extends Component {
                   </Col>
                 </Row>
               </ShortInputContainer>
+
+              <Form.Item label={personAbout}>
+                {getFieldDecorator('about', {
+                  rules: []
+                })(
+                  isTest ? (
+                    <TextArea
+                      rows={20}
+                      placeholder='You can use markdown here.'
+                    />
+                  ) : (
+                    <RichTextEditor />
+                  )
+                )}
+              </Form.Item>
+
+              <Form.Item label={personEducation}>
+                {getFieldDecorator('education')(
+                  <EducationSelectorRef />
+                )}
+              </Form.Item>
+            </InputContainer>
+          </FormGrid>
+          <Divider />
+
+          <FormGrid> {/* // Skills and Interests */}
+            <DescriptionContainer>
+              <TitleContainer>
+                <H3Bold>
+                  <FormattedMessage
+                    id='PersonDetailForm.SectionTitle.SkillsAndInterests'
+                    defaultMessage='Activity Recommendations'
+                  />
+                </H3Bold>
+              </TitleContainer>
+              <P>
+                <FormattedMessage
+                  id='PersonDetailForm.SectionDescription.SkillsAndInterests'
+                  defaultMessage='This section helps us find the right things for you to do
+                  Tell us the region you in and your skills and interests.
+                  Use keywords like: coding, robots, flight etc.'
+                />
+              </P>
+            </DescriptionContainer>
+
+            <InputContainer>
+              <Form.Item label={personLocation}>
+                {getFieldDecorator('location')(
+                  <LocationSelector existingLocations={this.props.locations} />
+                )}
+              </Form.Item>
+              <Form.Item label={personTags}>
+                {getFieldDecorator('tags', {
+                  initialValue: [],
+                  rules: []
+                })(<TagInput existingTags={this.props.existingTags} />)}
+              </Form.Item>
+            </InputContainer>
+          </FormGrid>
+          <Divider />
+
+          <FormGrid> {/* // Contact Details */}
+            <DescriptionContainer>
+              <TitleContainer>
+                <H3Bold>
+                  <FormattedMessage
+                    id='PersonDetailForm.SectionTitle.ContactDetails'
+                    defaultMessage='Contact details'
+                  />
+                </H3Bold>
+              </TitleContainer>
+              <P>
+                <FormattedMessage
+                  id='PersonDetailForm.SectionDescription.ContactDetails'
+                  defaultMessage='How do you want teachers and charities to get in touch with you? Other people can only see this if you let them 🤫'
+                />
+              </P>
+            </DescriptionContainer>
+            <InputContainer>
+              <ShortInputContainer>
+                <Form.Item label={personEmail}>
+                  {getFieldDecorator('email', {
+                    rules: []
+                  })(<Input placeholder='salvador@dali.com' />)}
+                </Form.Item>
+              </ShortInputContainer>
+              <ShortInputContainer>
+                <Form.Item label={personPhone}>
+                  {getFieldDecorator('phone', {
+                    rules: []
+                  })(<Input placeholder='000 000 0000' />)}
+                </Form.Item>
+              </ShortInputContainer>
+              <Divider />
+            </InputContainer>
+          </FormGrid>
+          <Divider />
+
+          <FormGrid> {/* // Avatar */}
+            <DescriptionContainer>
+              <H3Bold>
+                <FormattedMessage
+                  id='PersonDetailForm.SectionTitle.Avatar'
+                  defaultMessage='Avatar'
+                />
+              </H3Bold>
+              <FormattedMessage
+                id='PersonDetailForm.SectionDescription.Avatar'
+                defaultMessage='Help people to recognise you and reflect your character.'
+              />
+              {this.props.person.imgUrlSm &&
+                <p>
+                  <Avatar size={128} src={this.props.person.imgUrl} />
+                </p>}
+            </DescriptionContainer>
+            <InputContainer>
+              <Form.Item label={personAvatar}>
+                <ImageUpload setImgUrl={this.setImgUrl} usages='profile-photo' />
+              </Form.Item>
+            </InputContainer>
+          </FormGrid>
+          <Divider />
+          <FormGrid> {/* // Social Links - Optional */}
+            <DescriptionContainer>
+              <TitleContainer>
+                <H3Bold>
+                  <FormattedMessage
+                    id='PersonDetailForm.SectionTitle.SocialLinks'
+                    defaultMessage='Social Media'
+                  />
+                </H3Bold>
+              </TitleContainer>
+              <P>
+                <FormattedMessage
+                  id='PersonDetailForm.SectionDescription.SocialLinks'
+                  defaultMessage='Optional: Share your social media links so the groups you work with can follow your social network.'
+                />
+              </P>
+            </DescriptionContainer>
+            <InputContainer>
               <Form.Item label={personWebSite}>
                 {getFieldDecorator('website', {
                   rules: [
@@ -299,81 +457,38 @@ class PersonDetailForm extends Component {
               <Form.Item label={personTwitter}>
                 {getFieldDecorator('twitter', {})(<Input addonBefore='@' />)}
               </Form.Item>
-              <Form.Item label={personAbout}>
-                {getFieldDecorator('about', {
-                  rules: []
+
+            </InputContainer>
+          </FormGrid>
+          <Divider />
+          <FormGrid> {/* // Settings */}
+            <DescriptionContainer>
+              <TitleContainer>
+                <H3Bold>
+                  <FormattedMessage
+                    id='PersonDetailForm.SectionTitle.Settings'
+                    defaultMessage='Settings'
+                  />
+                </H3Bold>
+              </TitleContainer>
+              <P>
+                <FormattedMessage
+                  id='PersonDetailForm.SectionDescription.Settings'
+                  defaultMessage='Control your availability for volunteering and whether to receive emails.'
+                />
+              </P>
+            </DescriptionContainer>
+            <InputContainer>
+              <Form.Item label={personStatus}>
+                {getFieldDecorator('status', {
+                  rules: [{ required: true, message: 'availability is required' }]
                 })(
-                  isTest ? (
-                    <TextArea
-                      rows={20}
-                      placeholder='You can use markdown here.'
-                    />
-                  ) : (
-                    <RichTextEditor />
-                  )
+                  <Radio.Group buttonStyle='solid'>
+                    <Radio.Button value='inactive'>Not Available</Radio.Button>
+                    <Radio.Button value='active'>Available</Radio.Button>
+                  </Radio.Group>
                 )}
               </Form.Item>
-              <Form.Item label={personLocation}>
-                {getFieldDecorator('location')(
-                  <LocationSelector existingLocations={this.props.locations} />
-                )}
-              </Form.Item>
-              <Form.Item label={personEducation}>
-                {getFieldDecorator('education')(
-                  <EducationSelectorRef />
-                )}
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>
-          <Divider />
-
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <H3Bold>Do you have any specific skills? (optional)</H3Bold>
-              </TitleContainer>
-              <P>
-                Do you have skills in any specific categories like programming,
-                electronics, or robots? Enter them here to make it easier for us
-                to recommend suitable opportunities for you.
-              </P>
-            </DescriptionContainer>
-            <InputContainer>
-              <Form.Item label={personTags}>
-                {getFieldDecorator('tags', {
-                  initialValue: [],
-                  rules: []
-                })(<TagInput existingTags={this.props.existingTags} />)}
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>
-          <Divider />
-
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <H3Bold>Contact details</H3Bold>
-              </TitleContainer>
-              <P>
-                How do you want teachers and charities to get in touch with you?
-                Other people can only see this if you let them 🤫
-              </P>
-            </DescriptionContainer>
-            <InputContainer>
-              <ShortInputContainer>
-                <Form.Item label={personEmail}>
-                  {getFieldDecorator('email', {
-                    rules: []
-                  })(<Input placeholder='salvador@dali.com' />)}
-                </Form.Item>
-              </ShortInputContainer>
-              <ShortInputContainer>
-                <Form.Item label={personPhone}>
-                  {getFieldDecorator('phone', {
-                    rules: []
-                  })(<Input placeholder='000 000 0000' />)}
-                </Form.Item>
-              </ShortInputContainer>
               <Form.Item>
                 {getFieldDecorator('sendEmailNotifications', {
                   valuePropName: 'checked'
@@ -382,34 +497,14 @@ class PersonDetailForm extends Component {
             </InputContainer>
           </FormGrid>
           <Divider />
-
-          <FormGrid>
-            <DescriptionContainer>
-              <H3Bold>Avatar (optional)</H3Bold>
-              <p>Help people to recognise you or reflect your character.</p>
-            </DescriptionContainer>
-            <InputContainer>
-              <Form.Item label={personAvatar}>
-                {getFieldDecorator('imgUrl', {
-                  rules: [
-                    {
-                      /* { type: 'url', message: 'a URL is required' } */
-                    }
-                  ]
-                })(<Input />)}
-                <ImageUpload setImgUrl={this.setImgUrl} />
-              </Form.Item>
-            </InputContainer>
-          </FormGrid>
-          <Divider />
-          {isNotProd && (
-            <div>
-              <FormGrid>
+          {developerSettings && (
+            <>
+              <FormGrid> {/* // Dev Settings */}
                 <DescriptionContainer>
                   <TitleContainer>
-                    <H3Bold>Admin section</H3Bold>
+                    <H3Bold>Developer Settings</H3Bold>
                   </TitleContainer>
-                  <P>Please be careful on this part</P>
+                  <P>This section is only available to developers.</P>
                 </DescriptionContainer>
                 <InputContainer>
                   {' '}
@@ -418,23 +513,13 @@ class PersonDetailForm extends Component {
                       rules: [{ required: true, message: 'role is required' }]
                     })(<Checkbox.Group options={roleOptions} />)}
                   </Form.Item>
-                  <Form.Item label={personStatus}>
-                    {getFieldDecorator('status', {
-                      rules: [{ required: true, message: 'status is required' }]
-                    })(
-                      <Radio.Group buttonStyle='solid'>
-                        <Radio.Button value='inactive'>Not Available</Radio.Button>
-                        <Radio.Button value='active'>Available</Radio.Button>
-                        {/* // TODO: [VP-212] on person detail form only show Hold button to admins */}
-                        <Radio.Button value='hold'>Hold</Radio.Button>
-                      </Radio.Group>
-                    )}
-                  </Form.Item>
                 </InputContainer>
               </FormGrid>
               <Divider />
-            </div>)}
-          <FormGrid>
+            </>
+          )}
+
+          <FormGrid> {/* // Buttons */}
             <DescriptionContainer />
             <InputContainer>
               <Button
@@ -482,7 +567,8 @@ PersonDetailForm.propTypes = {
     twitter: PropTypes.string,
     website: PropTypes.string,
     pronoun: PropTypes.object,
-    imgUrl: PropTypes.any,
+    imgUrl: PropTypes.string,
+    imgUrlSm: PropTypes.string,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
         'admin',
@@ -556,10 +642,6 @@ export default Form.create({
       pronoun_possessive: Form.createFormField({
         ...props.person.pronoun,
         value: props.person.pronoun ? props.person.pronoun.possessive : ''
-      }),
-      imgUrl: Form.createFormField({
-        ...props.person.imgUrl,
-        value: props.person.imgUrl
       }),
       facebook: Form.createFormField({
         ...props.person.facebook,

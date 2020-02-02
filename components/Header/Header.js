@@ -85,7 +85,6 @@ const getAllowedLinks = isAuthenticated =>
 const Header = ({ isAuthenticated, ...props }) => {
   const intl = useIntl()
   let notice = intl.formatMessage({ id: 'notice', defaultMessage: 'none' })
-  console.log('notice', notice)
   if (notice === 'none') notice = '' // wipe notice if its set to none
   const height = notice ? '112px' : '56px'
   return (
