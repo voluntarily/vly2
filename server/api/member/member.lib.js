@@ -74,22 +74,22 @@ const getPersonRoles = async person => {
   const membership = await Member
     .find(membershipQuery)
     .populate({ path: 'organisation', select: 'name category' })
+    .lean()
     .exec()
-  const role = person.role || [Role.VOLUNTEER_PROVIDER]
+  const role = person.role.toObject() // role is required and has a defult
   const orgAdminFor = []
   membership.map(m => {
     if (m.status === MemberStatus.ORGADMIN) {
       role.push(Role.ORG_ADMIN)
       orgAdminFor.push(m.organisation._id)
     }
-    if (m.status === MemberStatus.MEMBER) {
+    if ([MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)) {
       m.organisation.category.map(category => {
         const r = orgToRoleTable[category]
-        if (r) role.push(r)
+        r && role.push(r)
       })
     }
   })
-  console.log('getPersonRoles', role, orgAdminFor)
   person.orgAdminFor = orgAdminFor
   person.role = role
   return [role, orgAdminFor]
