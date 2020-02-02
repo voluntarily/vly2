@@ -61,7 +61,7 @@ test.serial('Should call next middleware when record is found', async t => {
     name: 'Andrew Watkins',
     nickname: 'avowkind',
     email: 'andrew@groat.nz',
-    about: 'Voluntari.ly Product Lead',
+    about: 'New About Text',
     location: 'Auckland',
     language: 'EN',
     role: [
@@ -79,5 +79,5 @@ test.serial('Should call next middleware when record is found', async t => {
   response.sendStatus = (status) => { fakeSendStatus() }
   await updatePersonDetail(request, response, nextMiddleware)
   t.is(1, nextMiddleware.callCount)
-  t.deepEqual(request.crudify.result, request.body)
+  t.is(request.crudify.result.about, request.body.about)
 })
