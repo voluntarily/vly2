@@ -78,6 +78,7 @@ const sortRoles = roles => {
     Role.OPPORTUNITY_PROVIDER,
     Role.ACTIVITY_PROVIDER,
     Role.RESOURCE_PROVIDER,
+    Role.ORG_ADMIN,
     Role.TESTER,
     Role.ADMIN
   ]
