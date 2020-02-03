@@ -16,7 +16,7 @@ import reduxApi, { withHomeData, withPeople } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import { InterestStatus } from '../../server/api/interest/interest.constants'
 import { PersonalGoalStatus } from '../../server/api/personalGoal/personalGoal.constants'
-
+import VTabs from '../../components/VTheme/VTabs'
 const { TabPane } = Tabs
 
 const SectionTitleWrapper = styled.div`
@@ -132,7 +132,7 @@ class PersonHomePage extends Component {
   }
 
   render () {
-    const shadowStyle = { overflow: 'visible' }
+    const shadowStyle = { overflow: 'visible', textAlign: 'left' }
     if (this.props.members.sync && this.props.members.data.length > 0) {
       this.props.me.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
       this.props.me.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
@@ -153,7 +153,7 @@ class PersonHomePage extends Component {
         })
       })
     const opsTab = (
-      <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+      <span>
         <Icon type='inbox' />
         <FormattedMessage
           id='home.liveops'
@@ -163,7 +163,7 @@ class PersonHomePage extends Component {
       </span>
     )
     const historyTab = (
-      <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+      <span>
         <Icon type='history' />
         <FormattedMessage
           id='home.pastops'
@@ -173,7 +173,7 @@ class PersonHomePage extends Component {
       </span>
     )
     const profileTab = (
-      <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+      <span>
         <Icon type='setting' />
         <FormattedMessage
           id='home.profile'
@@ -205,7 +205,7 @@ class PersonHomePage extends Component {
           />
         </PageBanner>
 
-        <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
+        <VTabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={opsTab} key='1'>
             {!!personalGoals.length &&
               <SectionWrapper>
@@ -306,7 +306,7 @@ class PersonHomePage extends Component {
               )}
             </SectionWrapper>
           </TabPane>
-        </Tabs>
+        </VTabs>
       </FullPage>
     )
   }
