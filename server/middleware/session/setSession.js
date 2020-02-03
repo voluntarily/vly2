@@ -33,9 +33,9 @@ const openPath = url => {
 const getIdToken = (req) => {
   if (req && req.cookies && req.cookies.idToken) { return req.cookies.idToken }
 
-  if (req.headers.Authorization) {
+  if (req.headers.authorization) {
     const regex = /Bearer (.*)/
-    const found = req.headers.Authorization.match(regex)
+    const found = req.headers.authorization.match(regex)
     return found[1]
   }
 }

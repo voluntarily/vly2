@@ -238,7 +238,6 @@
       "pages/teachers/*.js",
       "pages/business/*.js",
       "pages/content/*.js",
-      "server/api/db/db.controller.js",
       "server/api/image/cloudImageUpload.js",
       "server/services/email/email.js",
       "reference",
