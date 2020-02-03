@@ -1,4 +1,5 @@
 var jwt = require('jsonwebtoken')
+const { Role } = require('../../../services/authorize/role')
 
 const jwtData = {
   accessToken: 'IGs4bjO5WLjsulmjKiW2-VLeetlgykUP',
@@ -65,15 +66,57 @@ const jwtDataAlice = {
 }
 jwtDataAlice.idToken = jwt.sign(jwtDataAlice.idTokenPayload, 'secret')
 
+const jwtDataBob = {
+  accessToken: 'IGs4bjO5WLjsulmjKiW2-VLeetlgykUP',
+  idTokenPayload: {
+    name: 'Bob Invalid Email',
+    nickname: 'badbob',
+    email: 'btesty@voluntarily.nz',
+    email_verified: false,
+    exp: Math.floor(Date.now() / 1000) + (60 * 60),
+    iat: Math.floor(Date.now() / 1000),
+    picture: 'https://publicdomainvectors.org/photos/teacher.png'
+  },
+  refreshToken: null,
+  state: 'Nz_CgRTnYPO5CbD4ueKmkdCiuk2z3psk',
+  expiresIn: 3600,
+  tokenType: 'Bearer',
+  scope: null
+}
+jwtDataBob.idToken = jwt.sign(jwtDataBob.idTokenPayload, 'secret')
+
+const jwtDataCharles = {
+  accessToken: 'IGs4bjO5WLjsulmjKiW2-VLeetlgykUP',
+  idTokenPayload: {
+    name: 'Charles new Person',
+    nickname: 'Charlie',
+    email: 'newperson@voluntarily.nz',
+    email_verified: true,
+    exp: Math.floor(Date.now() / 1000) + (60 * 60),
+    iat: Math.floor(Date.now() / 1000),
+    picture: 'https://publicdomainvectors.org/photos/teacher.png'
+  },
+  refreshToken: null,
+  state: 'Nz_CgRTnYPO5CbD4ueKmkdCiuk2z3psk',
+  expiresIn: 3600,
+  tokenType: 'Bearer',
+  scope: null
+}
+jwtDataCharles.idToken = jwt.sign(jwtDataCharles.idTokenPayload, 'secret')
+
 const DEFAULT_SESSION = {
   isAuthenticated: false,
   user: null,
-  me: null
+  me: {
+    role: [Role.ANON]
+  },
+  idToken: ''
 }
-
 module.exports = {
   jwtData, // represents andrew an admin
   jwtDataDali, // represents dali a normal volunteer
   jwtDataAlice, // represents Alice a teacher
+  jwtDataBob, // represents someone with non validated email
+  jwtDataCharles, // represents a new sign up
   DEFAULT_SESSION
 }

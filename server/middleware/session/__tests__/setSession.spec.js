@@ -1,10 +1,9 @@
 import test from 'ava'
 import setSession from '../setSession'
-import { appReady } from '../../../server'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import Person from '../../../api/person/person'
 import people from '../../../api/person/__tests__/person.fixture'
-import { jwtData, DEFAULT_SESSION } from './setSession.fixture'
+import { jwtData, jwtDataBob, jwtDataCharles, DEFAULT_SESSION } from './setSession.fixture'
 import sinon from 'sinon'
 import jwt from 'jsonwebtoken'
 
@@ -13,7 +12,7 @@ test.before('before connect to database', async (t) => {
     t.context.memMongo = new MemoryMongo()
     await t.context.memMongo.start()
     await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-    await appReady
+    // await appReady
   } catch (e) { console.error('setSession.spec.js test.before error:', e) }
 })
 
@@ -35,15 +34,11 @@ test('Check session set to default when user not logged in', async t => {
 
 test('Check session set to default when idToken is bad', async t => {
   const next = sinon.spy()
-  const errlog = console.error
-  console.error = sinon.spy()
 
   const req = { url: '/api/foo', cookies: { idToken: 'foo' } }
   await setSession(req, null, next)
   t.deepEqual(req.session, DEFAULT_SESSION)
   t.truthy(next.calledOnce)
-  t.truthy(console.error.calledOnce)
-  console.error = errlog
 })
 
 test('Check session set to default when url is blacklisted', async t => {
@@ -60,6 +55,34 @@ test('Check session set when user logged in', async t => {
   await setSession(req, null, next)
   t.true(req.session.isAuthenticated)
   t.is(req.session.user.email, jwtData.idTokenPayload.email)
-  t.is(req.session.me.email, jwtData.idTokenPayload.email)
+  t.is(req.session.me.nickname, jwtData.idTokenPayload.nickname)
+  t.truthy(next.calledOnce)
+})
+
+test('Check session set for API call with Bearer header', async t => {
+  const next = sinon.spy()
+  const req = { url: '/api/foo', headers: { Authorization: `Bearer ${jwtData.idToken}` } }
+  await setSession(req, null, next)
+  t.true(req.session.isAuthenticated)
+  t.is(req.session.user.email, jwtData.idTokenPayload.email)
+  t.is(req.session.me.nickname, jwtData.idTokenPayload.nickname)
+  t.truthy(next.calledOnce)
+})
+
+test('Check session not Auth if email not verified', async t => {
+  const next = sinon.spy()
+  const req = { url: '/api/foo', headers: { Authorization: `Bearer ${jwtDataBob.idToken}` } }
+  await setSession(req, null, next)
+  t.false(req.session.isAuthenticated)
+  t.truthy(next.calledOnce)
+})
+
+test('a person is created if new user signs in', async t => {
+  const next = sinon.spy()
+  const req = { url: '/api/foo', headers: { Authorization: `Bearer ${jwtDataCharles.idToken}` } }
+  await setSession(req, null, next)
+  t.true(req.session.isAuthenticated)
+  t.is(req.session.user.email, jwtDataCharles.idTokenPayload.email)
+  t.is(req.session.me.nickname, jwtDataCharles.idTokenPayload.nickname)
   t.truthy(next.calledOnce)
 })

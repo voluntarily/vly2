@@ -11,6 +11,7 @@ import people from '../../server/api/person/__tests__/person.fixture'
 import withMockRoute from '../../server/util/mockRouter'
 import { MockWindowScrollTo } from '../../server/util/mock-dom-helpers'
 import fetchMock from 'fetch-mock'
+import { Provider } from 'react-redux'
 
 MockWindowScrollTo.replaceForTest(test, global)
 
@@ -222,7 +223,8 @@ test('render OrgDetailPage OrgAdmin ', async t => {
     orgid: t.context.orgs[0],
     organisations: t.context.defaultstore.organisations,
     members: t.context.defaultstore.members,
-    me: t.context.people[1]
+    me: t.context.people[1],
+    isAuthenticated: true
   }
 
   const wrapper = shallowWithIntl(
@@ -255,15 +257,18 @@ test('edit and save existing org', async t => {
     },
     members: t.context.defaultstore.members,
     me: t.context.people[1],
+    isAuthenticated: true,
     dispatch: (p) => {
       return [t.context.orgs[0]]
     }
   }
 
   const wrapper = mountWithIntl(
-    <OrgDetailPage {...props} />
+    <Provider store={t.context.mockStore}>
+      <OrgDetailPage {...props} />
+    </Provider>
   )
-  let editButton = wrapper.find('button').first()
+  let editButton = wrapper.find('button').at(2)
   t.is(editButton.text(), 'Edit')
   editButton.simulate('click')
   wrapper.update()
@@ -272,7 +277,7 @@ test('edit and save existing org', async t => {
   t.is(cancelButton.text(), 'Cancel')
   cancelButton.simulate('click')
   wrapper.update()
-  editButton = wrapper.find('button').first()
+  editButton = wrapper.find('button').at(2)
   t.is(editButton.text(), 'Edit')
   editButton.simulate('click')
   wrapper.update()
@@ -280,7 +285,7 @@ test('edit and save existing org', async t => {
   t.is(saveButton.text(), 'Save')
   await wrapper.find('Form').first().simulate('submit')
   wrapper.update()
-  editButton = wrapper.find('button').first()
+  editButton = wrapper.find('button').at(2)
   t.is(editButton.text(), 'Edit')
 })
 
@@ -296,6 +301,7 @@ test('edit and save new org', async t => {
       data: newOrg,
       request: null
     },
+    isAuthenticated: true,
     members: t.context.defaultstore.members,
     me: t.context.people[1],
     dispatch: (p) => {
@@ -306,9 +312,11 @@ test('edit and save new org', async t => {
   const RoutedOrgDetailPage = withMockRoute(OrgDetailPage)
 
   const wrapper = mountWithIntl(
-    <RoutedOrgDetailPage {...props} />
+    <Provider store={t.context.mockStore}>
+      <RoutedOrgDetailPage {...props} />
+    </Provider>
   )
-  let editButton = wrapper.find('button').first()
+  let editButton = wrapper.find('button').at(2)
   t.is(editButton.text(), 'Edit')
   editButton.simulate('click')
   wrapper.update()
@@ -317,7 +325,7 @@ test('edit and save new org', async t => {
   t.is(cancelButton.text(), 'Cancel')
   cancelButton.simulate('click')
   wrapper.update()
-  editButton = wrapper.find('button').first()
+  editButton = wrapper.find('button').at(2)
   t.is(editButton.text(), 'Edit')
   editButton.simulate('click')
   wrapper.update()
@@ -325,7 +333,7 @@ test('edit and save new org', async t => {
   t.is(saveButton.text(), 'Save')
   await wrapper.find('Form').first().simulate('submit')
   wrapper.update()
-  editButton = wrapper.find('button').first()
+  editButton = wrapper.find('button').at(2)
   t.is(editButton.text(), 'Edit')
 })
 

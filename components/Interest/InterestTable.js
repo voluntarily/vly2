@@ -1,8 +1,8 @@
-import { Avatar, Button, Popconfirm, Table, Dropdown, Icon, Menu } from 'antd'
-import Router from 'next/router'
+import { Button, Popconfirm, Table, Dropdown, Icon, Menu } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
+import { AvatarProfile } from '../VTheme/AvatarProfileLink'
 
 class InterestTable extends Component {
   constructor (props) {
@@ -68,17 +68,7 @@ class InterestTable extends Component {
         sortOrder: sortedInfo.columnKey === 'imgUrl' && sortedInfo.order,
         render: (text, record) => {
           return (
-            <span>
-              <Avatar
-                size='large'
-                shape='square'
-                onClick={() => Router.push(`/people/${record.person._id}`)}
-                src={record.person.imgUrl}
-                icon='user'
-              />
-              &nbsp;&nbsp;
-              {record.person.nickname}
-            </span>
+            <AvatarProfile person={record.person} />
           )
         }
       },

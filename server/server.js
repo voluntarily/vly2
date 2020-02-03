@@ -19,8 +19,8 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const setSession = require('./middleware/session/setSession')
 const getAbility = require('./middleware/ability/getAbility')
-server.use(bodyParser.urlencoded({ limit: UPLOAD_LIMIT, extended: true }))
-server.use(bodyParser.json({ limit: UPLOAD_LIMIT, extended: true }))
+// server.use(bodyParser.urlencoded({ limit: UPLOAD_LIMIT, extended: true }))
+// server.use(bodyParser.json({ limit: UPLOAD_LIMIT, extended: true }))
 server.use(cookieParser())
 server.use(setSession)
 server.use(getAbility({ searchPattern: '/server/api/**/*.ability.js' }))
@@ -69,6 +69,7 @@ const appReady = app.prepare().then(() => {
     // const gitInfo = gitDescribeSync()
     // req.messages.revision = process.env.REVISION || gitInfo.raw
     req.messages.revision = process.env.REVISION
+    req.messages.notice = process.env.NOTICE
     next()
   })
 
@@ -89,7 +90,7 @@ const appReady = app.prepare().then(() => {
         useUnifiedTopology: true,
         useFindAndModify: false
       })
-      .then(console.log('mongodb connected at:', config.databaseUrl))
+      .then(console.log('mongodb connected'))
     const db = mongoose.connection
     db.on('error', console.error.bind(console, 'connection error:'))
     // use the x/db scripts to populate a test database

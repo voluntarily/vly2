@@ -82,21 +82,22 @@ class PersonHomePage extends Component {
   static async getInitialProps ({ store }) {
     try {
       const me = store.getState().session.me
-
+      const meid = me._id.toString()
       const myOpportunities = {
-        q: JSON.stringify({ requestor: me._id })
+        q: JSON.stringify({ requestor: meid })
       }
 
       await Promise.all([
+        store.dispatch(reduxApi.actions.people.get({ id: meid })),
         store.dispatch(reduxApi.actions.tags.get()),
         store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
         store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),
         store.dispatch(reduxApi.actions.locations.get({ withRelationships: true })),
-        store.dispatch(reduxApi.actions.interests.get({ me: me._id })),
-        store.dispatch(reduxApi.actions.personalGoals.get({ meid: me._id })),
-        store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
-        store.dispatch(reduxApi.actions.interestsArchived.get({ me: me._id })),
-        store.dispatch(reduxApi.actions.recommendedOps.get({ me: me._id }))
+        store.dispatch(reduxApi.actions.interests.get({ me: meid })),
+        store.dispatch(reduxApi.actions.personalGoals.get({ meid: meid })),
+        store.dispatch(reduxApi.actions.members.get({ meid: meid })),
+        store.dispatch(reduxApi.actions.interestsArchived.get({ me: meid })),
+        store.dispatch(reduxApi.actions.recommendedOps.get({ me: meid }))
       ])
     } catch (err) {
       console.error('error in getting home page data', err)
@@ -108,7 +109,7 @@ class PersonHomePage extends Component {
   }
 
   handleUpdate = async () => {
-    const person = this.props.me
+    const person = this.props.people.data[0] // this.props.me
     const role = this.sortRoleByPower(person)
     const personData = { ...person, role }
     await this.props.dispatch(
@@ -280,7 +281,7 @@ class PersonHomePage extends Component {
             <SectionWrapper>
               {this.state.editProfile ? (
                 <PersonDetailForm
-                  person={this.props.me}
+                  person={this.props.people.data[0]}
                   existingTags={this.props.tags.data}
                   locations={this.props.locations.data[0].locations}
                   onSubmit={this.handleUpdate}
@@ -300,7 +301,7 @@ class PersonHomePage extends Component {
                       description='Button to edit an person on PersonDetails page'
                     />
                   </Button>
-                  <PersonDetail person={this.props.me} />
+                  <PersonDetail person={this.props.people.data[0]} />
                 </div>
               )}
             </SectionWrapper>
@@ -310,6 +311,6 @@ class PersonHomePage extends Component {
     )
   }
 }
-export const PersonHomePageTest = withHomeData(PersonHomePage)
+export const PersonHomePageTest = withPeople(withHomeData(PersonHomePage))
 
-export default securePage(withPeople(PersonHomePageTest))
+export default securePage(PersonHomePageTest)

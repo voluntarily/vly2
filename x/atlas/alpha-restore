@@ -1,2 +1,0 @@
-# restores the vly-alpha database from dump/vly-alpha locally
-mongorestore --host Cluster0-shard-0/cluster0-shard-00-00-kwmsu.mongodb.net:27017,cluster0-shard-00-01-kwmsu.mongodb.net:27017,cluster0-shard-00-02-kwmsu.mongodb.net:27017 --ssl --username vly-client --password ZhF3BUDiwpy8C3xK --authenticationDatabase admin --db vly-alpha

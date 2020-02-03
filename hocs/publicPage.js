@@ -12,10 +12,11 @@ export default Page =>
       const session = await getSession(ctx.req, ctx.store)
       const pageProps =
         Page.getInitialProps && (await Page.getInitialProps(ctx))
+
       return {
         ...pageProps,
         me: session.me || false,
-        isAuthenticated: !!session.isAuthenticated,
+        isAuthenticated: session.isAuthenticated,
         isAdmin: session.me && session.me.role && session.me.role.includes(Role.ADMIN),
         isPlain: false
       }
