@@ -1,4 +1,6 @@
 const Organisation = require('./organisation')
+const { Action } = require('../../services/abilities/ability.constants')
+const { SchemaName } = require('./organisation.constants')
 // const Tag = require('../tag/tag')
 // const escapeRegex = require('../../util/regexUtil')
 
@@ -33,6 +35,17 @@ const getOrganisations = async (req, res) => {
   }
 }
 
+// Update
+const putOrganisation = async (req, res) => {
+  if (!req.ability.can(Action.UPDATE, SchemaName) && !req.me.orgAdminFor.includes(req.params._id)) {
+    return res(403)
+  }
+
+  await Organisation.findByIdAndUpdate(req.params._id, { $set: req.body })
+  res.json(await Organisation.findById(req.params._id).exec())
+}
+
 module.exports = {
-  getOrganisations
+  getOrganisations,
+  putOrganisation
 }
