@@ -139,6 +139,7 @@ export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isA
       <FullPage>
         <OrgDetailForm
           org={org}
+          isAdmin={isAdmin}
           onSubmit={handleSubmit}
           onCancel={handleCancel}
         />

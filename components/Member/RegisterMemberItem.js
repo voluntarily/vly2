@@ -146,7 +146,6 @@ class RegisterMemberItem extends Component {
 RegisterMemberItem.propTypes = {
   member: PropTypes.shape({
     person: PropTypes.any.isRequired,
-    organisation: PropTypes.any.isRequired,
     validation: PropTypes.string,
     status: PropTypes.string
   }).isRequired,

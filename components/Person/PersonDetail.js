@@ -34,7 +34,10 @@ const ProfileGrid = styled.div`
 `
 
 const ProfileImage = styled.img`
-  width: 100%;
+  max-width: 100%;
+  min-height: 256px;
+  display: block;
+  margin: 0 auto;
 `
 
 const DetailItem = styled.div`
@@ -170,7 +173,13 @@ const PersonDetail = ({ person }, ...props) => (
         <p><Icon type='safety' /> </p>
       </DetailItemMobile>
       <InfoSection>
-        <H3Bold>Latest Activities</H3Bold>
+        <H3Bold>
+          <FormattedMessage
+            defaultMessage='Latest Activities'
+            id='PersonDetail.title.CurrentActivities'
+            description='subheading for activity list on person details page'
+          />
+        </H3Bold>
         <Divider />
       </InfoSection>
     </GridContainer>
@@ -191,13 +200,15 @@ PersonDetail.propTypes = {
     website: PropTypes.string,
     pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
+    imgUrlSm: PropTypes.string,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
         'admin',
         'opportunityProvider',
         'volunteer',
         'activityProvider',
-        'tester'
+        'tester',
+        'orgAdmin'
       ])
     ),
     status: PropTypes.oneOf(['active', 'inactive', 'hold']),
