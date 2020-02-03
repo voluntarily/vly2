@@ -4,6 +4,8 @@ import { server, appReady } from '../../../server'
 import Activity from '../activity'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import acts from './activity.fixture.js'
+import Member from '../../member/member'
+import { MemberStatus } from '../../member/member.constants'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import Organisation from '../../organisation/organisation'
@@ -53,6 +55,7 @@ test.beforeEach('connect and add two activity entries', async (t) => {
 test.afterEach.always(async () => {
   await Promise.all([
     Activity.deleteMany(),
+    Member.deleteMany(),
     Organisation.deleteMany(),
     Person.deleteMany()
   ])
@@ -419,6 +422,235 @@ test.serial('Activity API - ap - delete', async t => {
     const response = await request(server)
       .delete(`/api/activities/${activity._id}`)
       .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
+
+    t.is(response.statusCode, 403)
+  }
+})
+
+test.serial('Activity API - org admin - list', async t => {
+  const orgAdmin = t.context.people[2]
+  const org = t.context.orgs[1]
+
+  await Member.create({
+    person: orgAdmin._id,
+    organisation: org._id,
+    status: MemberStatus.ORGADMIN
+  })
+
+  const response = await request(server)
+    .get('/api/activities')
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
+
+  const actualActivities = response.body
+  const expectedActivities = t.context.activities.filter(activity => {
+    return (
+      activity.status === 'active' || activity.offerOrg === org._id
+    )
+  })
+
+  t.is(response.statusCode, 200)
+  t.is(actualActivities.length, expectedActivities.length)
+})
+
+test.serial('Activity API - org admin - create (valid org + owner)', async t => {
+  const orgAdmin = t.context.people[2]
+  const org = t.context.orgs[1]
+
+  await Member.create({
+    person: orgAdmin._id,
+    organisation: org._id,
+    status: MemberStatus.ORGADMIN
+  })
+
+  const response = await request(server)
+    .post('/api/activities')
+    .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
+    .send({
+      name: 'Test activity name',
+      subtitle: 'Subtitle',
+      description: 'Description',
+      duration: 'Duration',
+      status: 'active',
+      offerOrg: org._id,
+      owner: orgAdmin._id
+    })
+
+  t.is(response.statusCode, 200)
+})
+
+test.serial('Activity API - org admin - create (valid org + invalid owner)', async t => {
+  // at this point I've assumed that the org admin can only
+  // create activities where they are the owner
+  // (they can't create on behalf of other people)
+  const invalidOwner = t.context.people[1]
+
+  const orgAdmin = t.context.people[2]
+  const org = t.context.orgs[1]
+
+  await Member.create({
+    person: orgAdmin._id,
+    organisation: org._id,
+    status: MemberStatus.ORGADMIN
+  })
+
+  const response = await request(server)
+    .post('/api/activities')
+    .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
+    .send({
+      name: 'Test activity name',
+      subtitle: 'Subtitle',
+      description: 'Description',
+      duration: 'Duration',
+      status: 'active',
+      offerOrg: org._id,
+      owner: invalidOwner._id
+    })
+
+  t.is(response.statusCode, 403)
+})
+
+test.serial('Activity API - org admin - create (invalid org + invalid owner)', async t => {
+  const invalidOrg = t.context.orgs[2]
+  const invalidOwner = t.context.people[1]
+
+  const orgAdmin = t.context.people[2]
+  const org = t.context.orgs[1]
+
+  await Member.create({
+    person: orgAdmin._id,
+    organisation: org._id,
+    status: MemberStatus.ORGADMIN
+  })
+
+  const response = await request(server)
+    .post('/api/activities')
+    .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
+    .send({
+      name: 'Test activity name',
+      subtitle: 'Subtitle',
+      description: 'Description',
+      duration: 'Duration',
+      status: 'active',
+      offerOrg: invalidOrg._id,
+      owner: invalidOwner._id
+    })
+
+  t.is(response.statusCode, 403)
+})
+
+test.serial('Activity API - org admin - read (active/org admin)', async t => {
+  const orgAdmin = t.context.people[2]
+  const org = t.context.orgs[1]
+
+  await Member.create({
+    person: orgAdmin._id,
+    organisation: org._id,
+    status: MemberStatus.ORGADMIN
+  })
+
+  const readableActivities = t.context.activities
+    .filter(activity => activity.status === 'active' || activity.offerOrg === org._id)
+
+  for (const readableActivity of readableActivities) {
+    const response = await request(server)
+      .get(`/api/activities/${readableActivity._id}`)
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
+
+    t.is(response.statusCode, 200)
+  }
+})
+
+test.serial('Activity API - org admin - read (draft/not org admin)', async t => {
+  const orgAdmin = t.context.people[2]
+  const org = t.context.orgs[1]
+
+  await Member.create({
+    person: orgAdmin._id,
+    organisation: org._id,
+    status: MemberStatus.ORGADMIN
+  })
+
+  const unreadableActivities = t.context.activities
+    .filter(activity => activity.status === 'draft' && activity.offerOrg !== org._id)
+
+  for (const unreadableActivity of unreadableActivities) {
+    const response = await request(server)
+      .get(`/api/activities/${unreadableActivity._id}`)
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
+
+    t.is(response.statusCode, 404)
+  }
+})
+
+test.serial('Activity API - org admin - update (org admin)', async t => {
+  const orgAdmin = t.context.people[2]
+  const org = t.context.orgs[1]
+
+  await Member.create({
+    person: orgAdmin._id,
+    organisation: org._id,
+    status: MemberStatus.ORGADMIN
+  })
+
+  const ownedActivities = t.context.activities
+    .filter(activity => activity.offerOrg === org._id)
+
+  for (const ownedActivity of ownedActivities) {
+    const response = await request(server)
+      .put(`/api/activities/${ownedActivity._id}`)
+      .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
+      .send({
+        name: `Updated ${ownedActivity.name}`
+      })
+
+    t.is(response.statusCode, 200)
+  }
+})
+
+test.serial('Activity API - org admin - update (not org admin)', async t => {
+  const orgAdmin = t.context.people[2]
+  const org = t.context.orgs[1]
+
+  await Member.create({
+    person: orgAdmin._id,
+    organisation: org._id,
+    status: MemberStatus.ORGADMIN
+  })
+
+  const notOwnedActivities = t.context.activities
+    .filter(activity => activity.offerOrg !== org._id)
+
+  for (const notOwnedActivity of notOwnedActivities) {
+    const response = await request(server)
+      .put(`/api/activities/${notOwnedActivity._id}`)
+      .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
+      .send({
+        name: `Updated ${notOwnedActivity.name}`
+      })
+
+    t.is(response.statusCode, 403)
+  }
+})
+
+test.serial('Activity API - org admin - delete', async t => {
+  const orgAdmin = t.context.people[2]
+  const org = t.context.orgs[1]
+
+  await Member.create({
+    person: orgAdmin._id,
+    organisation: org._id,
+    status: MemberStatus.ORGADMIN
+  })
+
+  const activities = t.context.activities
+
+  for (const activity of activities) {
+    const response = await request(server)
+      .delete(`/api/activities/${activity._id}`)
+      .set('Cookie', [`idToken=${jwtDataAlice.idToken}`])
 
     t.is(response.statusCode, 403)
   }

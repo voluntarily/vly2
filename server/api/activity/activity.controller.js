@@ -2,6 +2,7 @@ const Activity = require('./activity')
 const Organisation = require('../organisation/organisation')
 const escapeRegex = require('../../util/regexUtil')
 const { Action } = require('../../services/abilities/ability.constants')
+const { Role } = require('../../services/authorize/role')
 /**
  * Get all orgs
  * @param req
@@ -103,8 +104,40 @@ const putActivity = async (req, res) => {
   getActivity(req, res)
 }
 
+const createActivity = async (req, res) => {
+  const personId = req.session.me._id.toString()
+  const personRoles = req.session.me.role
+  const orgAdminOrgs = req.session.me.orgAdminFor
+
+  const canCreate = (
+    personRoles.includes(Role.ADMIN) ||
+    (
+      personRoles.includes(Role.ORG_ADMIN) &&
+      req.body.owner === personId &&
+      orgAdminOrgs.includes(req.body.offerOrg)
+    ) ||
+    (
+      personRoles.includes(Role.ACTIVITY_PROVIDER) &&
+      req.body.owner === personId
+    )
+  )
+
+  if (!canCreate) {
+    return res.status(403).send()
+  }
+
+  try {
+    const activity = await Activity.create(req.body)
+    res.status(200).send(activity)
+  } catch (error) {
+    console.log(error)
+    res.status(500).send()
+  }
+}
+
 module.exports = {
   getActivities,
   getActivity,
-  putActivity
+  putActivity,
+  createActivity
 }

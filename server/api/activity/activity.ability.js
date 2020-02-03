@@ -25,7 +25,7 @@ const ruleBuilder = session => {
     inverted: true
   }]
 
-  const allAbilities = anonAbilities
+  const allAbilities = anonAbilities.slice(0)
 
   const activityProviderAbilities = [{
     subject: SchemaName,
@@ -56,6 +56,31 @@ const ruleBuilder = session => {
     inverted: true
   }]
 
+  const orgAdminAbilities = anonAbilities.slice(0)
+
+  if (session.me._id && session.me.orgAdminFor.length > 0) {
+    orgAdminAbilities.push({
+      subject: SchemaName,
+      action: Action.LIST,
+      conditions: { offerOrg: { $in: session.me.orgAdminFor } }
+    }, {
+      subject: SchemaName,
+      action: Action.CREATE
+    }, {
+      subject: SchemaName,
+      action: Action.READ,
+      conditions: { offerOrg: { $in: session.me.orgAdminFor } }
+    }, {
+      subject: SchemaName,
+      action: Action.UPDATE,
+      conditions: { offerOrg: { $in: session.me.orgAdminFor } }
+    }, {
+      subject: SchemaName,
+      action: Action.DELETE,
+      inverted: true
+    })
+  }
+
   const adminAbilities = [{
     subject: SchemaName,
     action: Action.LIST
@@ -78,6 +103,7 @@ const ruleBuilder = session => {
     [Role.VOLUNTEER_PROVIDER]: allAbilities,
     [Role.OPPORTUNITY_PROVIDER]: allAbilities,
     [Role.ACTIVITY_PROVIDER]: activityProviderAbilities,
+    [Role.ORG_ADMIN]: orgAdminAbilities,
     [Role.ADMIN]: adminAbilities
   }
 }
