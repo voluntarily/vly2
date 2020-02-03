@@ -69,6 +69,25 @@ const orgToRoleTable = {
   other: Role.RESOURCE_PROVIDER,
   test: Role.TESTER
 }
+// desired sort order for roles
+// ANON, VP, OP,AP, ORG_ADMIN, ADMIN
+const sortRoles = roles => {
+  const desiredOrder = [
+    Role.ANON,
+    Role.VOLUNTEER_PROVIDER,
+    Role.OPPORTUNITY_PROVIDER,
+    Role.ACTIVITY_PROVIDER,
+    Role.RESOURCE_PROVIDER,
+    Role.TESTER,
+    Role.ADMIN
+  ]
+  const sortedRoles = []
+  desiredOrder.map(r => {
+    if (roles.includes(r)) sortedRoles.push(r)
+  })
+  return sortedRoles
+}
+
 const getPersonRoles = async person => {
   const membershipQuery = { person: person._id }
   const membership = await Member
@@ -91,7 +110,7 @@ const getPersonRoles = async person => {
     }
   })
   person.orgAdminFor = orgAdminFor
-  person.role = role
+  person.role = sortRoles(role)
   return [role, orgAdminFor]
 }
 
@@ -99,5 +118,6 @@ module.exports = {
   getMemberbyId,
   addMember,
   findOrgByPersonIdAndCategory,
-  getPersonRoles
+  getPersonRoles,
+  sortRoles
 }

@@ -5,11 +5,14 @@ import Member from '../member'
 import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
 import { MemberStatus } from '../member.constants'
+import { Role } from '../../../services/authorize/role'
+
 import {
   findOrgByPersonIdAndCategory,
   getPersonRoles,
   getMemberbyId,
-  addMember
+  addMember,
+  sortRoles
 } from '../member.lib'
 
 test.before('Database start', async (t) => {
@@ -167,4 +170,31 @@ test.serial('role of person with various memberships.', async (t) => {
   t.is(role[3], 'admin') // because org[3] is admin category
   t.is(orgAdminFor.length, 1)
   t.deepEqual(orgAdminFor[0], t.context.organisations[3]._id)
+})
+
+test.serial('roles are sorted and deduplicated', t => {
+  const desiredOrder = [
+    Role.ANON,
+    Role.VOLUNTEER_PROVIDER,
+    Role.OPPORTUNITY_PROVIDER,
+    Role.ACTIVITY_PROVIDER,
+    Role.RESOURCE_PROVIDER,
+    Role.TESTER,
+    Role.ADMIN
+  ]
+
+  const mixedRoles = [
+    Role.ADMIN,
+    Role.VOLUNTEER_PROVIDER,
+    Role.OPPORTUNITY_PROVIDER,
+    Role.ACTIVITY_PROVIDER,
+    Role.TESTER,
+    Role.OPPORTUNITY_PROVIDER,
+    Role.ANON,
+    Role.RESOURCE_PROVIDER,
+    Role.OPPORTUNITY_PROVIDER
+  ]
+
+  const sortedRoles = sortRoles(mixedRoles)
+  t.deepEqual(desiredOrder, sortedRoles)
 })
