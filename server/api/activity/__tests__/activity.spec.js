@@ -8,6 +8,7 @@ import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 import tagList from '../../tag/__tests__/tag.fixture'
+import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 
 import acts from './activity.fixture.js'
 
@@ -57,6 +58,7 @@ test.serial('Should correctly give count of all acts sorted by name', async t =>
   const res = await request(server)
     .get('/api/activities')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -78,6 +80,7 @@ test.serial('Should correctly give subset of acts matching status', async t => {
   const res = await request(server)
     .get('/api/activities?q={"status":"draft"}')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -88,6 +91,7 @@ test.serial('Should correctly select just the titles and ids', async t => {
   const res = await request(server)
     .get('/api/activities?p={"name": 1}')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -135,6 +139,7 @@ test.serial('activetest', async t => {
 
   const res = await request(server)
     .post('/api/activities')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .send({
       name: 'The first 400 metres',
       subtitle: 'Launching into space step 3',
@@ -155,6 +160,7 @@ test.serial('Should correctly add an activity with default image', async t => {
 
   const res = await request(server)
     .post('/api/activities')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .send({
       name: 'The first 400 metres',
       subtitle: 'Launching into space step 3',
@@ -189,6 +195,7 @@ test('Should correctly update an activity', async t => {
   activity.name = 'The sky is the limit'
   const res = await request(server)
     .put(`/api/activities/${activity._id}`)
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .send(activity)
     .set('Accept', 'application/json')
   t.is(res.status, 200)
@@ -210,6 +217,7 @@ test.serial('Should correctly delete an activity', async t => {
 
   const res = await request(server)
     .delete(`/api/activities/${activity._id}`)
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .set('Accept', 'application/json')
 
   t.is(res.status, 200)
@@ -353,6 +361,7 @@ test.serial('will populate out the org id with name and img', async t => {
 test.serial('Should correctly add and retrieve an activity with some equipment', async t => {
   const res = await request(server)
     .post('/api/activities')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .send({
       name: 'We need three things',
       subtitle: 'to succeed in life',
