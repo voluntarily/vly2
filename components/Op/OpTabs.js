@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { OpAboutPanel } from './OpAboutPanel'
-import { OpQuestionPanel } from './OpQuestionPanel'
+import OpQuestionPanel from './OpQuestionPanel'
 import { OpUpdatePanel } from './OpUpdatePanel'
 import { OpManagePanel } from './OpManagePanel'
 const shadowStyle = { overflow: 'visible', textAlign: 'center', fontWeight: 'bold', color: '#6549AA' }

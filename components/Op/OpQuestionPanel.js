@@ -1,290 +1,95 @@
 /* Dumb React component Shows contents of an opportunity
  */
-
-import { Button, Input } from 'antd'
-
-import styled from 'styled-components'
-
 import React from 'react'
-
+import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import moment from 'moment';
 import { OpSectionGrid } from '../VTheme/VTheme'
+const { TextArea } = Input;
 
-const { TextArea } = Input
+const CommentList = ({ comments }) => (
+  <List
+    dataSource={comments}
+    header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
+    itemLayout="horizontal"
+    renderItem={props => <Comment {...props} />}
+  />
+);
 
-const AskContainer = styled.div`
-  padding: 1rem;
-  width: 100%;
-  background: #ffffff;
-  box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
-  border-radius: 8px;
-`
+const Editor = ({ onChange, onSubmit, submitting, value }) => (
+  <div>
+    <Form.Item>
+      <TextArea rows={4} onChange={onChange} value={value} />
+    </Form.Item>
+    <Form.Item>
+      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
+        Add Questions
+      </Button>
+    </Form.Item>
+  </div>
+);
 
-const ButtonContainer = styled.div`
-  margin-top: 0.5rem;
-`
+export default class OpQuestionPanel {
+  state = {
+    comments: [],
+    submitting: false,
+    value: '',
+  };
 
-const QuestionSection = styled.div`
+  handleSubmit = () => {
+    if (!this.state.value) {
+      return;
+    }
 
-`
-// start question
-const ContentCard = styled.div`
-  background-color: #ffffff;
-  box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
-  border-radius: 8px;
-  width: 100%;
-  padding: 1rem;
-  text-align: left;
+    this.setState({
+      submitting: true,
+    });
 
-  h3 {
-    font-size: 1.25rem;
-    font-weight: bold;
-    letter-spacing: -0.38px;
-    line-height: 32px;
+    setTimeout(() => {
+      this.setState({
+        submitting: false,
+        value: '',
+        comments: [
+          {
+            author: 'Han Solo',
+            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+            content: <p>{this.state.value}</p>,
+            datetime: moment().fromNow(),
+          },
+          ...this.state.comments,
+        ],
+      });
+    }, 1000);
+  };
 
-    margin-bottom: 1rem;
+  handleChange = e => {
+    this.setState({
+      value: e.target.value,
+    });
+  };
+
+  render() {
+    const { comments, submitting, value } = this.state;
+
+    return (
+      <div>
+        {comments.length > 0 && <CommentList comments={comments} />}
+        <Comment
+          avatar={
+            <Avatar
+              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+              alt="Han Solo"
+            />
+          }
+          content={
+            <Editor
+              onChange={this.handleChange}
+              onSubmit={this.handleSubmit}
+              submitting={submitting}
+              value={value}
+            />
+          }
+        />
+      </div>
+    );
   }
-
-  h4 {
-    font-size: 1.25rem;
-    font-weight: 400;
-    letter-spacing: -0.38px;
-    line-height: 32px;
-
-    margin-bottom: 1rem;
-  }
-
-  p {
-    width: 50%;
-    margin-top: 0.2rem;
-    margin-left: 0.5rem;
-  }
-
-  img {
-    height: 2rem;
-    width: 2rem;
-
-    background-color: purple;
-    border-radius: 150px;
-  }
-`
-
-const Question = styled.div`
-  display: grid;
-  grid-template-columns: 8rem 1fr;
-  gap: 1rem;
-  float: right;
-  margin-top: 2rem;
-  width: 59rem;
-
-  @media screen and (min-width: 768px) and (max-width: 1281px) {
-    width: calc(100vw - 2rem);
-  }
-
-  @media screen and (max-width: 768px) {
-    width: calc(100vw - 2rem);
-    grid-template-columns: 1fr;
-    margin-top: 1rem;
-    float: left;
-  }
-`
-
-const QuestionDetail = styled.div`
-  display: grid;
-  grid-template-columns: 2rem 1fr 7rem;
-  @media screen and (max-width: 768px) {
-    grid-template-columns: 2rem 1fr 6rem;
-  
-  }
-`
-// end question
-
-// start response
-const Response = styled.div`
-  margin-top: 1rem;
-  display: grid;
-  grid-template-columns: 8rem 45rem;
-  gap: 1rem;
-  float: right;
-
-  @media screen and (min-width: 768px) and (max-width: 1281px) {
-    width: calc(100vw - 2rem);
-    grid-template-columns: 8rem calc(100vw - 14rem);
-
-  }
-
-  @media screen and (max-width: 768px) {
-    margin-top: 0rem;
-    width: calc(100vw - 5rem);
-    grid-template-columns: calc(100vw - 5rem);
-    float: right;
-  }
-`
-
-// end response
-
-// start date block
-const DateBlock = styled.div`
-  p {
-    padding-top: 2rem;
-    color: #555555;
-    letter-spacing: -0.3px;
-    text-align: right;
-    line-height: 24px;
-
-
-  @media screen and (max-width: 768px) {
-display: none;
-  }
-  }
-`
-
-// end date block
-
-export function OpQuestionPanel ({ op }) {
-  return (
-    <>
-      <OpSectionGrid>
-        <div>
-          <h2>Questions</h2>
-        </div>
-        <AskContainer>
-          <TextArea rows={3} placeholder='Ask a question here' />
-          <ButtonContainer>
-            <Button shape='round' size='large' type='primary'>
-              Submit
-            </Button>
-          </ButtonContainer>
-        </AskContainer>
-      </OpSectionGrid>
-
-      <QuestionSection>
-        <Question>
-          <DateBlock>
-            <p>
-              29 Jan 2019
-              <br />
-              11:59PM
-            </p>
-          </DateBlock>
-          <ContentCard>
-            <h3>Can I get free parking at the school? </h3>
-            <QuestionDetail>
-              <img />
-              <p>Legitimate Name</p>
-
-              <Button shape='round' size='large' type='secondary' block>
-                Reply
-              </Button>
-            </QuestionDetail>
-          </ContentCard>
-        </Question>
-        <Response>
-          <DateBlock>
-            <p>
-              29 Jan 2019
-              <br />
-              11:59PM
-            </p>
-          </DateBlock>
-          <ContentCard>
-            <h4>
-              Yeah, text me at 027 123 4567 when you get close to the school
-            </h4>
-            <QuestionDetail>
-              <img />
-              <p>Legitimate teacher</p>
-              <Button shape='round' size='large' type='secondary' block>
-                Reply
-              </Button>
-            </QuestionDetail>
-          </ContentCard>
-        </Response>
-        <Question>
-          <DateBlock>
-            <p>
-              29 Jan 2019
-              <br />
-              11:59PM
-            </p>
-          </DateBlock>
-          <ContentCard>
-            <h3>Can I get free parking at the school? </h3>
-            <QuestionDetail>
-              <img />
-              <p>Legitimate Name</p>
-
-              <Button shape='round' size='large' type='secondary' block>
-                Reply
-              </Button>
-            </QuestionDetail>
-          </ContentCard>
-        </Question>
-        <Response>
-          <DateBlock>
-            <p>
-              29 Jan 2019
-              <br />
-              11:59PM
-            </p>
-          </DateBlock>
-          <ContentCard>
-            <h4>
-              Yeah, text me at 027 123 4567 when you get close to the school
-            </h4>
-            <QuestionDetail>
-              <img />
-              <p>Legitimate teacher</p>
-              <Button shape='round' size='large' type='secondary' block>
-                Reply
-              </Button>
-            </QuestionDetail>
-          </ContentCard>
-        </Response>
-        <Question>
-          <DateBlock>
-            <p>
-              29 Jan 2019
-              <br />
-              11:59PM
-            </p>
-          </DateBlock>
-          <ContentCard>
-            <h3>Can I get free parking at the school? </h3>
-            <QuestionDetail>
-              <img />
-              <p>Legitimate Name</p>
-
-              <Button shape='round' size='large' type='secondary' block>
-                Reply
-              </Button>
-            </QuestionDetail>
-          </ContentCard>
-        </Question>
-        <Response>
-          <DateBlock>
-            <p>
-              29 Jan 2019
-              <br />
-              11:59PM
-            </p>
-          </DateBlock>
-          <ContentCard>
-            <h4>
-              Yeah, text me at 027 123 4567 when you get close to the school
-            </h4>
-            <QuestionDetail>
-              <img />
-              <p>Legitimate teacher</p>
-              <Button shape='round' size='large' type='secondary' block>
-                Reply
-              </Button>
-            </QuestionDetail>
-          </ContentCard>
-        </Response>
-
-      </QuestionSection>
-    </>
-  )
 }
-
-export default OpQuestionPanel
