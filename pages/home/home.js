@@ -30,20 +30,47 @@ const SectionWrapper = styled.div`
 function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
 }
+export const OpListFixture = [
+  {
+    name: 'd The second 500 metres',
+    subtitle: 'Launching into nowhere',
+    imgUrl: 'https://images.sunlive.co.nz/images/170705-st-marys-school-rockets1.jpg',
+    description: 'Project to build a simple rocket that will reach 100m',
+    duration: '2 hours',
 
-const LimitOpList = ({ limit, ops, blocks }) => {
+    tags: [],
+    date: [
+      null,
+      '2010-01-30T22:00:00.000Z'
+    ]
+  },
+  {
+    name: 'e How to travel to the sun',
+    subtitle: 'Travelling up',
+    imgUrl: 'https://images.sunlive.co.nz/images/170705-st-marys-school-rockets1.jpg',
+    description: 'Attempting to go where no man has gone before',
+    duration: '2 days',
+    tags: [],
+    date: [
+      null,
+      null
+    ]
+  }
+]
+
+export const LimitOpList = ({ limit, ops, blocks }) => {
   return (
     <>
       {blocks
         .filter((_a, index) => limit === '0' || (index < limit))
         .map((index) => {
-          return (<OpList ops={ops} key={index} />)
+          return (<OpListFixture ops={ops} key={index} />)
         })}
     </>
   )
 }
 
-const ExpandOpList = () => {
+export const ExpandOpList = () => {
   const [expand, setExpand] = useState(false)
   const [limit] = useState('4')
   const [count] = useState('10')
@@ -51,7 +78,11 @@ const ExpandOpList = () => {
 
   useEffect(() => {
     const arr = Array.from({ length: [count] }, (v, k) => k + 1)
-    setBlocks(arr)
+    const makeList = arr.map((ops) =>
+      (ops)
+    )
+
+    setBlocks(makeList)
   }, [count])
 
   return (

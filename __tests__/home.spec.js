@@ -1,5 +1,5 @@
 import test from 'ava'
-import { PersonHomePageTest } from '../pages/home/home'
+import {LimitOpList, PersonHomePageTest } from '../pages/home/home'
 import { mountWithIntl } from '../lib/react-intl-test-helper'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
@@ -292,7 +292,11 @@ test.serial('render volunteer home page - Active tab', t => {
   const cards3 = oplists.last().find('OpCard')
   t.is(cards3.length, 5)
   t.is(cards3.at(1).find('h1').first().text(), t.context.ops[1].name)
-})
+
+  const limitedOps = LimitOpList.at(0)
+  const cards4 = limitedOps.find('OpCard')
+  t.is(cards4.length, 10)
+  
 
 test.serial('render volunteer home page - History tab', t => {
   const props = {
@@ -332,6 +336,7 @@ test.serial('render volunteer home page - History tab', t => {
   const cards3 = attendedRequests.find('OpCard')
   t.is(cards3.length, 3)
   // t.is(cards3.at(0).find('h1').first().text(), t.context.archivedInterestFixture[0].name)
+
 })
 
 test.serial('render volunteer home page - Profile tab', t => {
