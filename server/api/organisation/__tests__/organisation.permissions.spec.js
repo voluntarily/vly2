@@ -49,8 +49,7 @@ const createPersonAndGetToken = async (roles) => {
 
   if (!roles) {
     return undefined
-  }
-  else {
+  } else {
     // Create a JWT token to use in our HTTP header
     return createJwtIdToken(user.email)
   }
@@ -104,7 +103,7 @@ test.serial('Permissions - Roles matrix', async t => {
     return req.send({
       name: 'Test org - POST',
       slug: 'test-organisation',
-      category: ['vp'],
+      category: ['vp']
     })
   }
   const put = async (roles) => {
@@ -118,7 +117,7 @@ test.serial('Permissions - Roles matrix', async t => {
     return req.send({
       name: 'Test org - PUT',
       slug: 'test-organisation',
-      category: ['vp'],
+      category: ['vp']
     })
   }
 
@@ -191,7 +190,7 @@ test.serial('Permissions - ORG_ADMIN can update their own organisation', async (
   const organisation = await createOrganisation()
 
   // Set our new user as the 'org admin' of the organisation
-  const member = await Member.create({
+  await Member.create({
     person,
     organisation,
     status: MemberStatus.ORGADMIN
@@ -207,7 +206,7 @@ test.serial('Permissions - ORG_ADMIN can update their own organisation', async (
     .send({
       name: 'Test org - PUT',
       slug: 'test-organisation',
-      category: ['vp'],
+      category: ['vp']
     })
 
   t.is(res.status, 200)
@@ -223,7 +222,7 @@ test.serial('Permissions - ORG_ADMIN cannot update other organisations', async (
   const organisation2 = await createOrganisation()
 
   // Set our new user as the 'org admin' of organisation1 but not organisation2
-  const member = await Member.create({
+  await Member.create({
     person,
     organisation: organisation1,
     status: MemberStatus.ORGADMIN
@@ -240,7 +239,7 @@ test.serial('Permissions - ORG_ADMIN cannot update other organisations', async (
     .send({
       name: 'Organisation2',
       slug: 'test-organisation',
-      category: ['vp'],
+      category: ['vp']
     })
 
   // Response should be FORBIDDEN

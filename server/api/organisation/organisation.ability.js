@@ -35,9 +35,9 @@ const ruleBuilder = (session) => {
     inverted: true
   }]
 
-  const adminAbilities = [{ 
-    subject: SchemaName, 
-    action: Action.MANAGE 
+  const adminAbilities = [{
+    subject: SchemaName,
+    action: Action.MANAGE
   }]
 
   return {
