@@ -85,17 +85,34 @@ const PersonDetail = ({ person }, ...props) => (
       <ProfileImage src={person.imgUrl} alt={person.nickname} />
       {person.orgMembership &&
         <DetailItem>
-          <h3><FormattedMessage id='person.memberof' defaultMessage='Member of' description='Header for list of orgs I belong to' /></h3>
+          <H4>
+            <FormattedMessage
+              id='PersonDetail.subheading.membership'
+              defaultMessage='Member of'
+              description='Header for list of orgs I belong to'
+            />
+          </H4>
           <MemberUl members={person.orgMembership} />
         </DetailItem>}
       {person.orgFollowership &&
         <DetailItem>
-          <h3><FormattedMessage id='person.following' defaultMessage='Following' description='Header for list of orgs I follow' /></h3>
+          <H4>
+            <FormattedMessage
+              id='PersonDetail.subheading.following'
+              defaultMessage='Following'
+              description='Header for list of orgs I follow'
+            />
+          </H4>
           <MemberUl members={person.orgFollowership} />
         </DetailItem>}
       <DetailItem>
-        <H4>Latest Achievements</H4>
-        <Divider />
+        <H4>
+          <FormattedMessage
+            id='PersonDetail.subheading.achievements'
+            defaultMessage='Recognition'
+            description='Header for list of badges I have obtained'
+          />
+        </H4>
         <PersonBadgeSection person={person} />
       </DetailItem>
     </GridContainer>
