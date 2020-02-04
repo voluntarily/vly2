@@ -26,7 +26,7 @@ test.after.always(async (t) => {
 const endpointUrl = '/api/organisations'
 
 const createJwtIdToken = (email) => {
-  const jwt = jwtData
+  const jwt = { ...jwtData }
   jwt.idTokenPayload.email = email
 
   return jsonwebtoken.sign(jwt.idTokenPayload, 'secret')
@@ -44,11 +44,16 @@ const createPerson = (roles) => {
   return Person.create(person)
 }
 
-const createPersonAndAuthenticate = async (roles) => {
+const createPersonAndGetToken = async (roles) => {
   const user = await createPerson(roles)
 
-  // Create a JWT token to use in our HTTP header
-  return createJwtIdToken(user.email)
+  if (!roles) {
+    return undefined
+  }
+  else {
+    // Create a JWT token to use in our HTTP header
+    return createJwtIdToken(user.email)
+  }
 }
 
 const createOrganisation = () => {
@@ -73,36 +78,29 @@ const applyHeaders = (request, jwtIdToken) => {
 }
 
 // Test organisation permissions/abilities
-test.serial('Permissions - Roles', async t => {
+test.serial('Permissions - Roles matrix', async t => {
   const getAll = async (roles) => {
-    const jwtIdToken = await createPersonAndAuthenticate(roles)
-
     let req = request(server).get(endpointUrl)
-    req = applyHeaders(req, jwtIdToken)
+    req = applyHeaders(req, await createPersonAndGetToken(roles))
     return req.send()
   }
   const getById = async (roles) => {
     const org = await createOrganisation()
-    const jwtIdToken = await createPersonAndAuthenticate(roles)
-
     let req = request(server).get(`${endpointUrl}/${org._id}`)
-    req = applyHeaders(req, jwtIdToken)
+    req = applyHeaders(req, await createPersonAndGetToken(roles))
     return req.send()
   }
   const delete_ = async (roles) => {
     // Create an organisation and then DELETE it by ID
     const org = await createOrganisation()
-    const jwtIdToken = await createPersonAndAuthenticate(roles)
 
     let req = request(server).delete(`${endpointUrl}/${org._id}`)
-    req = applyHeaders(req, jwtIdToken)
+    req = applyHeaders(req, await createPersonAndGetToken(roles))
     return req.send()
   }
   const post = async (roles) => {
-    const jwtIdToken = await createPersonAndAuthenticate(roles)
-
     let req = request(server).post(endpointUrl)
-    req = applyHeaders(req, jwtIdToken)
+    req = applyHeaders(req, await createPersonAndGetToken(roles))
     return req.send({
       name: 'Test org - POST',
       slug: 'test-organisation',
@@ -113,7 +111,7 @@ test.serial('Permissions - Roles', async t => {
     // Create an organisation and update its details with a PUT request using its ID
     const org = await createOrganisation()
 
-    const jwtIdToken = await createPersonAndAuthenticate(roles)
+    const jwtIdToken = await createPersonAndGetToken(roles)
 
     let req = request(server).put(`${endpointUrl}/${org._id}`)
     req = applyHeaders(req, jwtIdToken)
@@ -156,8 +154,9 @@ test.serial('Permissions - Roles', async t => {
     },
     {
       roles: [Role.ORG_ADMIN],
-      permitted: [getAll, getById, put],
+      permitted: [getAll, getById],
       forbidden: [delete_, post]
+      // PUT/Update is handled below separately
     },
     {
       roles: undefined, // Anonymous
@@ -171,7 +170,7 @@ test.serial('Permissions - Roles', async t => {
     for (const fn of permitted) {
       const res = await fn(roles)
 
-      t.is(res.statusCode, 200, `Failed when running '${fn.name}' for user with roles: ${(roles || []).join(', ')}`)
+      t.true(res.statusCode === 200 || res.statusCode === 204, `Failed when running '${fn.name}' for user with roles: ${roles ? roles.join(', ') : 'none'}. Status code was: ${res.statusCode}`)
     }
 
     // Assert each forbidden REST call returns a 403 status code
@@ -179,12 +178,12 @@ test.serial('Permissions - Roles', async t => {
       const res = await fn(roles)
 
       // Forbidden
-      t.is(res.statusCode, 403, `Failed when running '${fn.name}' for user with roles: ${(roles || []).join(', ')}`)
+      t.is(res.statusCode, 403, `Failed when running '${fn.name}' for user with roles: ${roles ? roles.join(', ') : 'none'}. Status code was: ${res.statusCode}`)
     }
   }
 })
 
-test.serial('Permissions - Admin of an organisation', async (t) => {
+test.serial('Permissions - ORG_ADMIN can update their own organisation', async (t) => {
   // Create new user
   const person = await createPerson()
 
@@ -212,5 +211,40 @@ test.serial('Permissions - Admin of an organisation', async (t) => {
     })
 
   t.is(res.status, 200)
-  t.is(Organisation.findOne({ id: organisation._id }).name, 'Test org - PUT')
+  t.is((await Organisation.findOne({ _id: organisation._id })).name, 'Test org - PUT')
+})
+
+test.serial('Permissions - ORG_ADMIN cannot update other organisations', async (t) => {
+  // Create new user
+  const person = await createPerson()
+
+  // Create an organisation
+  const organisation1 = await createOrganisation()
+  const organisation2 = await createOrganisation()
+
+  // Set our new user as the 'org admin' of organisation1 but not organisation2
+  const member = await Member.create({
+    person,
+    organisation: organisation1,
+    status: MemberStatus.ORGADMIN
+  })
+
+  // Update fields of our organisation
+  const jwtIdToken = createJwtIdToken(person.email)
+
+  // PUT/update organisation2
+  const res = await request(server)
+    .put(`${endpointUrl}/${organisation2._id}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtIdToken}`])
+    .send({
+      name: 'Organisation2',
+      slug: 'test-organisation',
+      category: ['vp'],
+    })
+
+  // Response should be FORBIDDEN
+  t.is(res.status, 403)
+  // The organisation name should not have updated
+  t.is((await Organisation.findOne({ _id: organisation1._id })).name, 'Test org')
 })

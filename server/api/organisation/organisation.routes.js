@@ -1,7 +1,7 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Organisation = require('./organisation')
-const { getOrganisations, putOrganisation } = require('./organisation.controller')
+const { getOrganisations, putOrganisation, postOrganisation, deleteOrganisation } = require('./organisation.controller')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 const { SchemaName } = require('./organisation.constants')
 
@@ -21,7 +21,9 @@ module.exports = function (server) {
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       actions: {
         list: getOrganisations,
-        update: putOrganisation
+        update: putOrganisation,
+        create: postOrganisation,
+        delete: deleteOrganisation
       },
       afterActions: [
         { middlewares: [helpers.formatResponse] }
