@@ -1,5 +1,5 @@
 import { Button, Icon, message, Tabs } from 'antd'
-import React, { Component } from 'react'
+import React, { Component, useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
@@ -17,6 +17,7 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 import { InterestStatus } from '../../server/api/interest/interest.constants'
 import { PersonalGoalStatus } from '../../server/api/personalGoal/personalGoal.constants'
 import VTabs from '../../components/VTheme/VTabs'
+
 const { TabPane } = Tabs
 
 const SectionTitleWrapper = styled.div`
@@ -30,15 +31,49 @@ function callback (key) {
   // TODO: [VP-300] on tab change update the path so that the page is bookmark and reloadable
 }
 
+const LimitOpList = ({ limit, ops, blocks }) => {
+  return (
+    <>
+      {blocks
+        .filter((_a, index) => limit === '0' || (index < limit))
+        .map((index) => {
+          return (<OpList ops={ops} key={index} />)
+        })}
+    </>
+  )
+}
+
+const ExpandOpList = () => {
+  const [expand, setExpand] = useState(false)
+  const [limit] = useState('4')
+  const [count] = useState('10')
+  const [blocks, setBlocks] = useState([])
+
+  useEffect(() => {
+    const arr = Array.from({ length: [count] }, (v, k) => k + 1)
+    setBlocks(arr)
+  }, [count])
+
+  return (
+    <>
+      <LimitOpList limit={expand ? '0' : limit} blocks={blocks} />
+
+      <Button onClick={() => setExpand(!expand)}> {expand ? 'Show Less' : 'Show More'}</Button>
+
+    </>
+  )
+}
+
 const OpListSubSection = ({ ops, children }) => {
-  if (ops.length === 0) return ''
+  if (ops.length === 0) return '' // if there is no oplist, show nothing (including the header titles)
 
   return (
     <>
       <SectionTitleWrapper>
-        <h2>{children}</h2>
+        <h2> {children} </h2>
       </SectionTitleWrapper>
       <OpList ops={ops} />
+      <ExpandOpList />
     </>)
 }
 
