@@ -113,7 +113,6 @@ const PersonDetail = ({ person }, ...props) => (
             description='Header for list of badges I have obtained'
           />
         </H4>
-        <Divider />
         <PersonBadgeSection person={person} />
       </DetailItem>
     </GridContainer>
