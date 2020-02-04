@@ -69,29 +69,49 @@ const orgToRoleTable = {
   other: Role.RESOURCE_PROVIDER,
   test: Role.TESTER
 }
+// desired sort order for roles
+// ANON, VP, OP,AP, ORG_ADMIN, ADMIN
+const sortRoles = roles => {
+  const desiredOrder = [
+    Role.ANON,
+    Role.VOLUNTEER_PROVIDER,
+    Role.OPPORTUNITY_PROVIDER,
+    Role.ACTIVITY_PROVIDER,
+    Role.RESOURCE_PROVIDER,
+    Role.ORG_ADMIN,
+    Role.TESTER,
+    Role.ADMIN
+  ]
+  const sortedRoles = []
+  desiredOrder.map(r => {
+    if (roles.includes(r)) sortedRoles.push(r)
+  })
+  return sortedRoles
+}
+
 const getPersonRoles = async person => {
   const membershipQuery = { person: person._id }
   const membership = await Member
     .find(membershipQuery)
     .populate({ path: 'organisation', select: 'name category' })
+    .lean()
     .exec()
-  const role = person.role || [Role.VOLUNTEER_PROVIDER]
+  const role = person.role // role is required and has a defult
   const orgAdminFor = []
   membership.map(m => {
     if (m.status === MemberStatus.ORGADMIN) {
       role.push(Role.ORG_ADMIN)
       orgAdminFor.push(m.organisation._id)
     }
-    if (m.status === MemberStatus.MEMBER) {
+    if ([MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)) {
       m.organisation.category.map(category => {
         const r = orgToRoleTable[category]
-        if (r) role.push(r)
+        r && role.push(r)
       })
     }
   })
-  console.log('getPersonRoles', role, orgAdminFor)
   person.orgAdminFor = orgAdminFor
-  person.role = role
+  person.role = sortRoles(role)
   return [role, orgAdminFor]
 }
 
@@ -99,5 +119,6 @@ module.exports = {
   getMemberbyId,
   addMember,
   findOrgByPersonIdAndCategory,
-  getPersonRoles
+  getPersonRoles,
+  sortRoles
 }

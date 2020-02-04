@@ -6,7 +6,7 @@ import { OpAboutPanel } from './OpAboutPanel'
 import OpQuestionPanel from './OpQuestionPanel'
 import { OpUpdatePanel } from './OpUpdatePanel'
 import { OpManagePanel } from './OpManagePanel'
-const shadowStyle = { overflow: 'visible', textAlign: 'center', fontWeight: 'bold', color: '#6549AA' }
+import VTabs from '../VTheme/VTabs'
 const { TabPane } = Tabs
 
 const opAboutTab =
@@ -48,7 +48,7 @@ const isNotProd = process.env.NODE_ENV !== 'production'
 
 export const OpTabs = ({ op, onChange, canManage, defaultTab }) => (
   <>
-    <Tabs style={shadowStyle} size='large' defaultActiveKey={defaultTab} onChange={onChange}>
+    <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
       <TabPane tab={opAboutTab} key='about'>
         <OpAboutPanel op={op} />
       </TabPane>
@@ -71,7 +71,7 @@ export const OpTabs = ({ op, onChange, canManage, defaultTab }) => (
       {canManage && (
         <TabPane tab={opEditTab} key='edit' />
       )}
-    </Tabs>
+    </VTabs>
   </>
 )
 

@@ -15,14 +15,14 @@ const personSchema = new Schema({
   nickname: { type: 'String', default: '' }, // how we should address you - eg. Andrew
   about: { type: 'String', default: '' }, // person description
   location: { type: 'String', default: '' },
-  phone: { type: 'String', required: false }, // +64 27 7031007
+  phone: { type: 'String' }, // +64 27 7031007
   imgUrl: { type: 'String', default: '/static/img/person/person.png' }, // url to large profile image (256x256)
   imgUrlSm: { type: 'String', default: '/static/img/person/person.png' }, // url to small profile image (24x24)
   pronoun: { type: 'Object', default: { subject: 'they', object: 'them', possessive: 'their' } },
   language: { type: 'String', default: 'EN', lowercase: true }, // en, mi, fr etc
-  website: { type: 'String', required: false },
-  facebook: { type: 'String', required: false },
-  twitter: { type: 'String', required: false },
+  website: { type: 'String' },
+  facebook: { type: 'String' },
+  twitter: { type: 'String' },
   education: { type: 'String' },
   sendEmailNotifications: { type: 'Boolean', default: true, required: true },
   role: {

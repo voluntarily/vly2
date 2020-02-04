@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { accessibleRecordsPlugin } = require('@casl/mongoose')
 const Schema = mongoose.Schema
 
 const organisationSchema = new Schema({
@@ -36,6 +37,8 @@ const organisationSchema = new Schema({
   contactPhoneNumber: String,
   address: String
 })
+
+organisationSchema.plugin(accessibleRecordsPlugin)
 
 // protect multiple imports
 var Organisation

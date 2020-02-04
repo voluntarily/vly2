@@ -1,6 +1,8 @@
 const Activity = require('./activity')
 const Organisation = require('../organisation/organisation')
 const escapeRegex = require('../../util/regexUtil')
+const { Action } = require('../../services/abilities/ability.constants')
+const { Role } = require('../../services/authorize/role')
 /**
  * Get all orgs
  * @param req
@@ -55,7 +57,12 @@ const getActivities = async (req, res) => {
     }
 
     try {
-      const got = await Activity.find(query, select).sort(sort).exec()
+      const got = await Activity
+        .accessibleBy(req.ability, Action.LIST)
+        .find(query)
+        .select(select)
+        .sort(sort)
+        .exec()
       res.json(got)
     } catch (e) {
       res.status(404).send(e)
@@ -66,10 +73,17 @@ const getActivities = async (req, res) => {
 }
 const getActivity = async (req, res) => {
   try {
-    const got = await Activity.findOne(req.params)
+    const got = await Activity
+      .accessibleBy(req.ability, Action.READ)
+      .findOne(req.params)
       .populate('owner', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl category')
       .exec()
+
+    if (got === null) {
+      return res.status(404).send()
+    }
+
     res.json(got)
   } catch (e) {
     res.status(404).send(e)
@@ -77,12 +91,53 @@ const getActivity = async (req, res) => {
 }
 
 const putActivity = async (req, res) => {
-  await Activity.findByIdAndUpdate(req.params._id, { $set: req.body })
+  const activityToUpdate = await Activity
+    .accessibleBy(req.ability, Action.UPDATE)
+    .findOne({ _id: req.params._id })
+
+  if (activityToUpdate === null) {
+    return res.status(403).send()
+  }
+
+  await Activity.updateOne({ _id: req.params._id }, { $set: req.body })
+
   getActivity(req, res)
+}
+
+const createActivity = async (req, res) => {
+  const personId = req.session.me._id.toString()
+  const personRoles = req.session.me.role
+  const orgAdminOrgs = req.session.me.orgAdminFor
+
+  const canCreate = (
+    personRoles.includes(Role.ADMIN) ||
+    (
+      personRoles.includes(Role.ORG_ADMIN) &&
+      req.body.owner === personId &&
+      orgAdminOrgs.includes(req.body.offerOrg)
+    ) ||
+    (
+      personRoles.includes(Role.ACTIVITY_PROVIDER) &&
+      req.body.owner === personId
+    )
+  )
+
+  if (!canCreate) {
+    return res.status(403).send()
+  }
+
+  try {
+    const activity = await Activity.create(req.body)
+    res.status(200).send(activity)
+  } catch (error) {
+    console.log(error)
+    res.status(500).send()
+  }
 }
 
 module.exports = {
   getActivities,
   getActivity,
-  putActivity
+  putActivity,
+  createActivity
 }

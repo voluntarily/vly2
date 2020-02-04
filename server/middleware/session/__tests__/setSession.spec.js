@@ -61,7 +61,7 @@ test('Check session set when user logged in', async t => {
 
 test('Check session set for API call with Bearer header', async t => {
   const next = sinon.spy()
-  const req = { url: '/api/foo', headers: { Authorization: `Bearer ${jwtData.idToken}` } }
+  const req = { url: '/api/foo', headers: { authorization: `Bearer ${jwtData.idToken}` } }
   await setSession(req, null, next)
   t.true(req.session.isAuthenticated)
   t.is(req.session.user.email, jwtData.idTokenPayload.email)
@@ -71,7 +71,7 @@ test('Check session set for API call with Bearer header', async t => {
 
 test('Check session not Auth if email not verified', async t => {
   const next = sinon.spy()
-  const req = { url: '/api/foo', headers: { Authorization: `Bearer ${jwtDataBob.idToken}` } }
+  const req = { url: '/api/foo', headers: { authorization: `Bearer ${jwtDataBob.idToken}` } }
   await setSession(req, null, next)
   t.false(req.session.isAuthenticated)
   t.truthy(next.calledOnce)
@@ -79,7 +79,7 @@ test('Check session not Auth if email not verified', async t => {
 
 test('a person is created if new user signs in', async t => {
   const next = sinon.spy()
-  const req = { url: '/api/foo', headers: { Authorization: `Bearer ${jwtDataCharles.idToken}` } }
+  const req = { url: '/api/foo', headers: { authorization: `Bearer ${jwtDataCharles.idToken}` } }
   await setSession(req, null, next)
   t.true(req.session.isAuthenticated)
   t.is(req.session.user.email, jwtDataCharles.idTokenPayload.email)
