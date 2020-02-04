@@ -6,4 +6,6 @@ const Category = {
   OTHER: 'other'
 }
 
-export { Category }
+module.exports = {
+  Category
+}
