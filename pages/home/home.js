@@ -17,6 +17,8 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 import { InterestStatus } from '../../server/api/interest/interest.constants'
 import { PersonalGoalStatus } from '../../server/api/personalGoal/personalGoal.constants'
 import VTabs from '../../components/VTheme/VTabs'
+import Loading from '../../components/Loading'
+
 const { TabPane } = Tabs
 
 const SectionTitleWrapper = styled.div`
@@ -132,10 +134,12 @@ class PersonHomePage extends Component {
   }
 
   render () {
+    if (!this.props.people.sync) { return <Loading /> }
+    const person = this.props.people.data[0]
     const shadowStyle = { overflow: 'visible', textAlign: 'left' }
     if (this.props.members.sync && this.props.members.data.length > 0) {
-      this.props.me.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
-      this.props.me.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
+      person.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
+      person.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
     }
 
     const ops = this.props.opportunities.data // list of ops I own
@@ -185,7 +189,7 @@ class PersonHomePage extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Home / Voluntarily</title>
+          <title>Home - Voluntarily</title>
         </Helmet>
         <PageBanner>
           <h1>
@@ -281,7 +285,7 @@ class PersonHomePage extends Component {
             <SectionWrapper>
               {this.state.editProfile ? (
                 <PersonDetailForm
-                  person={this.props.people.data[0]}
+                  person={person}
                   existingTags={this.props.tags.data}
                   locations={this.props.locations.data[0].locations}
                   onSubmit={this.handleUpdate}
@@ -301,7 +305,7 @@ class PersonHomePage extends Component {
                       description='Button to edit an person on PersonDetails page'
                     />
                   </Button>
-                  <PersonDetail person={this.props.people.data[0]} />
+                  <PersonDetail person={person} />
                 </div>
               )}
             </SectionWrapper>

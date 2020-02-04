@@ -4,6 +4,10 @@ import { server, appReady } from '../../../server'
 import Organisation from '../organisation'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import orgs from './organisation.fixture.js'
+import uuid from 'uuid'
+import Person from '../../../../server/api/person/person'
+import { jwtData } from '../../../../server/middleware/session/__tests__/setSession.fixture'
+import jsonwebtoken from 'jsonwebtoken'
 
 const testOrg = {
   name: 'Test Organisation',
@@ -30,6 +34,27 @@ const testOrgNoImg = {
     joiners: 'You are a nearly a member of Test Organisation.',
     outsiders: 'You could be a member of Test Organisation.'
   }
+}
+
+/**
+ * Create a new user with the 'admin' role.
+ * @param {string[]} roles Array of roles.
+ */
+const createAdminAndGetToken = async () => {
+  // Create a new user in the database directly
+  const person = {
+    name: 'name',
+    email: `${uuid()}@test.com`,
+    role: ['admin'],
+    status: 'active'
+  }
+
+  await Person.create(person)
+
+  const jwt = { ...jwtData }
+  jwt.idTokenPayload.email = person.email
+
+  return jsonwebtoken.sign(jwt.idTokenPayload, 'secret')
 }
 
 test.before('before connect to database', async (t) => {
@@ -207,6 +232,7 @@ test.serial('Should correctly add an organisation', async t => {
     .post('/api/organisations')
     .send(testOrgNoImg)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${await createAdminAndGetToken()}`])
     .expect(200)
 
   try {
@@ -256,6 +282,7 @@ test.serial('Should load a organisation into the db and delete them via the api'
   const res = await request(server)
     .get(`/api/organisations/${id}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${await createAdminAndGetToken()}`])
     .expect('Content-Type', /json/)
     .expect(200)
 
@@ -265,7 +292,8 @@ test.serial('Should load a organisation into the db and delete them via the api'
   await request(server)
     .delete(`/api/organisations/${organisation._id}`)
     .set('Accept', 'application/json')
-    .expect(200)
+    .set('Cookie', [`idToken=${await createAdminAndGetToken()}`])
+    .expect(204)
 
   // check organisation is gone
   const q = await Organisation.findOne({ slug: testOrgDelete.slug }).exec()

@@ -73,7 +73,7 @@ const setSession = async (req, res, next) => {
   try {
     user = await jwtVerify(idToken)
   } catch (e) {
-    console.error('Jwt Verify failed', e)
+    // console.error('Jwt Verify failed', e)
     user = false
   }
   if (!user) {

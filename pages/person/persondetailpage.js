@@ -37,6 +37,31 @@ const blankPerson = {
   tags: []
 }
 
+const PersonNotAvailable = ({ isAdmin }) =>
+  <FullPage>
+    <Helmet>
+      <title>Person Unavailable - Voluntarily</title>
+    </Helmet>
+    <h2><FormattedMessage id='person.notavailable' defaultMessage='Sorry, this person is not available' description='message on person not found page' /></h2>
+    {isAdmin &&
+      <>
+        <Button shape='round'>
+          <Link href='/people'>
+            <a>
+              <FormattedMessage id='showPeople' defaultMessage='Show All' description='Button to show all People' />
+            </a>
+          </Link>
+        </Button>
+        <Button shape='round'>
+          <Link href='/person/new'>
+            <a>
+              <FormattedMessage id='person.altnew' defaultMessage='New Person' description='Button to create a new person' />
+            </a>
+          </Link>
+        </Button>
+      </>}
+  </FullPage>
+
 export class PersonDetailPage extends Component {
   state = {
     editing: false
@@ -107,84 +132,62 @@ export class PersonDetailPage extends Component {
   handleCancelDelete = () => { message.error('Delete Cancelled') }
 
   render () {
-    const isOrgAdmin = false // TODO: [VP-473] is this person an admin for the org that person belongs to.
-    const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
-    const canRemove = isAdmin
-    const showPeopleButton = isAdmin
+    if (!this.props.people.sync) {
+      return <Loading />
+    }
 
-    let content = ''
     let person = null
-    if (this.props.people.loading) {
-      content = <Loading />
-    } else if (this.props.isNew) {
+    if (this.props.isNew) {
       person = blankPerson
     } else {
       const people = this.props.people.data
-      if (people.length === 1) {
+      if (people.length > 0) {
         person = people[0]
-      }
-    }
-    const canEdit = (isOrgAdmin || isAdmin || (person && person._id === this.props.me._id))
-
-    if (!this.props.people.loading) {
-      if (this.props.members.sync && this.props.members.data.length > 0) {
-        person.orgMembership = this.props.members.data.filter(m => m.status === MemberStatus.MEMBER)
-      }
-      if (!person) {
-        content =
-          <div>
-            <h2><FormattedMessage id='person.notavailable' defaultMessage='Sorry, this person is not available' description='message on person not found page' /></h2>
-            {showPeopleButton &&
-              <Button shape='round'>
-                <Link href='/people'>
-                  <a>
-                    <FormattedMessage id='showPeople' defaultMessage='Show All' description='Button to show all People' />
-                  </a>
-                </Link>
-              </Button>}
-            {isAdmin &&
-              <>
-                <Button shape='round'>
-                  <Link href='/person/new'>
-                    <a>
-                      <FormattedMessage id='person.altnew' defaultMessage='New Person' description='Button to create a new person' />
-                    </a>
-                  </Link>
-                </Button>
-              </>}
-          </div>
-      } else {
-        if (this.state.editing) {
-          content = <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancelEdit.bind(this)} locations={this.props.locations.data} existingTags={this.props.tags.data} />
-        } else {
-          content =
-            <>
-              {canEdit &&
-                <Button id='editPersonBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })}>
-                  <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
-                </Button>}
-              <PersonDetail person={person} />
-            &nbsp;
-              {canRemove &&
-                <Popconfirm id='deletePersonConfirm' title='Confirm removal of this person.' onConfirm={this.handleDeletePerson.bind(this, person)} onCancel={this.handleCancelDelete.bind(this)} okText='Yes' cancelText='No'>
-                  <Button id='deletePersonBtn' type='danger' shape='round'>
-                    <FormattedMessage id='person.delete' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
-                  </Button>
-                </Popconfirm>}
-            &nbsp;
-              {
-                (isAdmin) && <IssueBadgeButton person={this.props.people.data[0]} />
-              }
-            </>
+        if (this.props.members.sync && this.props.members.data.length > 0) {
+          person.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
+          person.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
         }
       }
     }
+
+    if (!person) {
+      return <PersonNotAvailable isAdmin />
+    }
+    const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
+    const canRemove = isAdmin
+    const isOrgAdmin = false // TODO: [VP-473] is this person an admin for the org that person belongs to.
+    const canEdit = (isOrgAdmin || isAdmin || (person && person._id === this.props.me._id))
+
+    if (this.state.editing) {
+      return (
+        <FullPage>
+          <Helmet>
+            <title>Edit {person.name} - Voluntarily</title>
+          </Helmet>
+          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancelEdit.bind(this)} locations={this.props.locations.data} existingTags={this.props.tags.data} />
+        </FullPage>)
+    }
+
     return (
       <FullPage>
         <Helmet>
-          <title>Person Details - Voluntarily</title>
+          <title>{person.nickname} - Voluntarily</title>
         </Helmet>
-        {content}
+        {canEdit &&
+          <Button id='editPersonBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })}>
+            <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
+          </Button>}
+        <PersonDetail person={person} />
+            &nbsp;
+        {canRemove &&
+          <Popconfirm id='deletePersonConfirm' title='Confirm removal of this person.' onConfirm={this.handleDeletePerson.bind(this, person)} onCancel={this.handleCancelDelete.bind(this)} okText='Yes' cancelText='No'>
+            <Button id='deletePersonBtn' type='danger' shape='round'>
+              <FormattedMessage id='person.delete' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
+            </Button>
+          </Popconfirm>}
+            &nbsp;
+        {isAdmin &&
+          <IssueBadgeButton person={this.props.people.data[0]} />}
       </FullPage>
     )
   }
