@@ -56,8 +56,12 @@ function BadgeList ({ badgeList, setBadgeChosen }) {
 }
 
 const setAvailableBadgeData = async (setBadgeList) => {
-  const badgeList = await callApi('badges')
-  setBadgeList(badgeList)
+  try {
+    const badgeList = await callApi('badges')
+    setBadgeList(badgeList)
+  } catch (e) {
+    console.error('Either Badgr server is down or you have not set BADGR credentials in environment', e)
+  }
 }
 
 const sendIssuingBadgeRequest = async ({ _id, email }, badgeId) => {
