@@ -14,7 +14,10 @@ const OpList = [
     date: [
       '2015-07-30T09:00:00.000Z',
       '2015-07-30T16:00:00.000Z'
-    ]
+    ],
+    offerOrg: null,
+    requestor: null,
+    fromActivity: null
   },
   {
     name: 'b Self driving destructive cars',
@@ -28,7 +31,10 @@ const OpList = [
     date: [
       '2025-07-30T09:00:00.000Z',
       '2012-07-30T16:00:00.000Z'
-    ]
+    ],
+    offerOrg: null,
+    requestor: null,
+    fromActivity: null
   },
   {
     name: 'c Reducing plants in the garden',
@@ -42,7 +48,10 @@ const OpList = [
     date: [
       '2020-01-30T09:00:00.000Z',
       '2017-01-30T22:00:00.000Z'
-    ]
+    ],
+    offerOrg: null,
+    requestor: null,
+    fromActivity: null
   },
   {
     name: 'd The second 500 metres',
@@ -56,7 +65,10 @@ const OpList = [
     date: [
       null,
       '2010-01-30T22:00:00.000Z'
-    ]
+    ],
+    offerOrg: null,
+    requestor: null,
+    fromActivity: null
   },
   {
     name: 'e How to travel to the sun',
@@ -70,7 +82,10 @@ const OpList = [
     date: [
       null,
       null
-    ]
+    ],
+    offerOrg: null,
+    requestor: null,
+    fromActivity: null
   }
 ]
 
