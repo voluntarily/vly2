@@ -13,7 +13,7 @@ import {
 export default ({ org }) => {
   const [adminMsg, setAdminMsg] = useState('')
 
-  const handleInviteMember = async (e) => {
+  const handleInviteMember = async e => {
     const memberStatus = e.target.value
     const memberValidation = `${org.name} Invitation`
     const url = `notify/org/${org._id}?memberStatus=${memberStatus}&memberValidation=${memberValidation}&adminMsg=${adminMsg}`
@@ -22,8 +22,7 @@ export default ({ org }) => {
       await callApi(url)
       message.success('Done')
     } catch {
-      message
-        .error('There was a problem, try again later.')
+      message.error('There was a problem, try again later.')
       console.error('handleInviteMember', e)
     }
   }
@@ -39,25 +38,27 @@ export default ({ org }) => {
       </h2>
       <FormGrid>
         <DescriptionContainer>
-          <FormattedMessage
-            defaultMessage={
-            `Use these buttons to send yourself an email that 
+          <p>
+            <FormattedMessage
+              defaultMessage={`Use these buttons to send yourself an email that 
               you can forward to people in your school or business.
               Each button will send you an email containing a link 
               that will automatically add the recipient to your 
-              organisation as a follower or member. `
-            }
-            id='InviteMembers.description'
-            description='inform orgAdmin how to send emails to staff'
-          />
+              organisation as a follower or member. `}
+              id='InviteMembers.description'
+              description='inform orgAdmin how to send emails to staff'
+            />
+          </p>
         </DescriptionContainer>
         <InputContainer>
           <label>
-            <FormattedMessage
-              defaultMessage='Add a personal message to the people you are inviting'
-              id='InviteMembers.adminMessage'
-              description='label for text box for admin personal message'
-            />
+            <p>
+              <FormattedMessage
+                defaultMessage='Add a personal message to the people you are inviting'
+                id='InviteMembers.adminMessage'
+                description='label for text box for admin personal message'
+              />
+            </p>
           </label>
           <TextArea
             value={adminMsg}
@@ -65,16 +66,16 @@ export default ({ org }) => {
           />
         </InputContainer>
         <DescriptionContainer>
-          <FormattedMessage
-            defaultMessage={
-            `Use Joiner if you want to review new members 
+          <p>
+            <FormattedMessage
+              defaultMessage={`Use Joiner if you want to review new members 
               before accepting them and Administrator to give 
               people permission to edit the organisation pages 
-              and add new members. Once people join they will appear in the tables below.`
-            }
-            id='InviteMembers.description2'
-            description='continued inform orgAdmin how to send emails to staff'
-          />
+              and add new members. Once people join they will appear in the tables below.`}
+              id='InviteMembers.description2'
+              description='continued inform orgAdmin how to send emails to staff'
+            />
+          </p>
         </DescriptionContainer>
         <InputContainer>
           <label>
@@ -83,8 +84,13 @@ export default ({ org }) => {
               id='InviteMembers.InviteBtnPrompt'
               description='prompt for which invitation button to use'
             />
-          </label><br />
-          <Radio.Group buttonStyle='solid' size='large' onChange={handleInviteMember}>
+          </label>
+          <br />
+          <Radio.Group
+            buttonStyle='solid'
+            size='large'
+            onChange={handleInviteMember}
+          >
             <Radio.Button value={MemberStatus.FOLLOWER}>
               <FormattedMessage
                 defaultMessage='Follower'
@@ -111,8 +117,7 @@ export default ({ org }) => {
             </Radio.Button>
           </Radio.Group>
         </InputContainer>
-
       </FormGrid>
-
-    </>)
+    </>
+  )
 }
