@@ -378,3 +378,24 @@ test.serial('Should correctly add and retrieve an activity with some equipment',
   t.is(savedActivity.subtitle, 'to succeed in life')
   t.truthy(savedActivity.equipment.includes('backbone'))
 })
+
+test.serial('should permit activity titles with special characters', async t => {
+  const res = await request(server)
+    .post('/api/activities/')
+    .send({
+      // Testing some special chars. Stray < and > always get encoded to &lt; and &gt; by sanitizeHtml().
+      name: 'Travel to the moon " / % ^ ( ) * @ # &',
+      subtitle: 'Have you been to the moon?',
+      description: 'On March 11, everyone is travelling to the moon.',
+      location: 'Moon',
+      owner: t.context.people[0]._id,
+      tags: ['moon']
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+
+  t.is(res.status, 200)
+  const queriedAct = await Activity.findOne({ subtitle: 'Have you been to the moon?' }).exec()
+  t.is(queriedAct.name, 'Travel to the moon " / % ^ ( ) * @ # &')
+})

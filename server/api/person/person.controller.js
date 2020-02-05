@@ -97,9 +97,6 @@ function ensureSanitized (req, res, next) {
   // if user puts html in their inputs - remove stuff we don't want.
   // TODO - Also sanitize mongo $ commands. see mongo-sanitize
   const p = req.body
-  p.name = sanitizeHtml(p.name)
-  p.nickname = sanitizeHtml(p.nickname)
-  p.phone = p.phone && sanitizeHtml(p.phone)
   p.about = p.about && sanitizeHtml(p.about, szAbout)
   req.body = p
   next()
