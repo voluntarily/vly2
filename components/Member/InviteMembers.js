@@ -78,12 +78,12 @@ export default ({ org }) => {
           </p>
         </DescriptionContainer>
         <InputContainer>
-          <label>
+          <label><p>
             <FormattedMessage
               defaultMessage='Set membership status and send email'
               id='InviteMembers.InviteBtnPrompt'
               description='prompt for which invitation button to use'
-            />
+            /></p>
           </label>
           <br />
           <Radio.Group
