@@ -1,20 +1,21 @@
 const ArchivedOpportunity = require('./archivedOpportunity')
+const { Action } = require('../../services/abilities/ability.constants')
 
-const getArchivedOpportunity = async (req, res) => {
-  try {
-    const got = await ArchivedOpportunity
-      .findOne(req.params)
-      .populate('requestor')
-      .exec()
-    if (got == null) {
-      throw Error()
-    }
-    return res.json(got)
-  } catch (e) {
-    res.status(404).send(e)
+const getArchivedOpportunity = async (req, res, next) => {
+  const got = await ArchivedOpportunity
+    .findOne(req.params)
+    .populate('requestor')
+    .exec()
+
+  if (got === null) {
+    return res.status(404)
   }
+
+  req.crudify = { result: got }
+  return next()
 }
-const getArchivedOpportunities = async (req, res) => {
+
+const getArchivedOpportunities = async (req, res, next) => {
   // limit to Active ops unless one of the params overrides
   let query = { }
   let sort = 'name'
@@ -30,11 +31,14 @@ const getArchivedOpportunities = async (req, res) => {
 
   try {
     const got = await ArchivedOpportunity
+      .accessibleBy(req.ability, Action.LIST)
       .find(query)
       .select(select)
       .sort(sort)
       .exec()
-    res.json(got)
+
+    req.crudify = { result: got }
+    return next()
   } catch (e) {
     return res.status(404).send(e)
   }
