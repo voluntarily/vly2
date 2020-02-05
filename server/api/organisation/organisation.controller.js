@@ -31,9 +31,16 @@ const getOrganisations = async (req, res) => {
 
 // Update
 const putOrganisation = async (req, res) => {
+  const isAdmin = req.session.me.role.includes(Role.ADMIN)
+
   // The current user must be; an ADMIN, or an ORG_ADMIN of the requested organisation
-  if (!req.session.me.role.includes(Role.ADMIN) && !req.session.me.orgAdminFor.includes(req.params._id)) {
+  if (!isAdmin && !req.session.me.orgAdminFor.includes(req.params._id)) {
     return res.status(403).end()
+  }
+
+  // Category field can only be set by ADMIN
+  if (!isAdmin) {
+    delete req.body.category
   }
 
   await Organisation.findByIdAndUpdate(req.params._id, { $set: req.body })

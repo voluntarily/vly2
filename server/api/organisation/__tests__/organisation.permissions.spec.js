@@ -247,3 +247,69 @@ test.serial('Permissions - ORG_ADMIN cannot update other organisations', async (
   // The organisation name should not have updated
   t.is((await Organisation.findOne({ _id: organisation1._id })).name, 'Test org')
 })
+
+test.serial('Only admin can update the category field - can update as admin', async t => {
+  // Create new user
+  const person = await createPerson(['admin'])
+
+  // Create an organisation
+  const org = await createOrganisation()
+
+  // Update fields of our organisation
+  const jwtIdToken = createJwtIdToken(person.email)
+
+  // PUT/update organisation
+  const res = await request(server)
+    .put(`${endpointUrl}/${org._id}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtIdToken}`])
+    .send({
+      name: 'Organisation',
+      slug: 'test-organisation',
+      category: ['rp']
+    })
+
+  t.true(res.ok)
+  const updatedOrg = await Organisation.findOne({ _id: org._id })
+  t.truthy(updatedOrg.category)
+  t.is(1, updatedOrg.category.length)
+  t.is('rp', updatedOrg.category[0])
+})
+
+test('Only admin can update the category field - orgadmin of request org cannot update category', async t => {
+  // Create new user
+  const person = await createPerson()
+
+  // Create an organisation
+  const organisation = await createOrganisation()
+
+  // Set our new user as the 'org admin' of the organisation
+  await Member.create({
+    person,
+    organisation,
+    status: MemberStatus.ORGADMIN
+  })
+
+  // Update fields of our organisation
+  const jwtIdToken = createJwtIdToken(person.email)
+
+  // PUT/update organisation
+  const res = await request(server)
+    .put(`${endpointUrl}/${organisation._id}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtIdToken}`])
+    .send({
+      name: 'Organisation',
+      slug: 'test-organisation',
+      category: ['rp']
+    })
+
+  // Whilst we've sent the category field in the body, the category field will be
+  // ignored, but the request can complete otherwise
+  t.true(res.ok)
+  // Make sure the category field is unchanged after the PUT
+  const updatedOrg = await Organisation.findOne({ _id: organisation._id })
+  t.truthy(updatedOrg.category)
+  t.is(1, updatedOrg.category.length)
+  t.is('vp', updatedOrg.category[0])
+})
