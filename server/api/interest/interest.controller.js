@@ -42,11 +42,11 @@ const listInterests = async (req, res) => {
 const getInterestDetail = async (interestID) => {
   // Get the interest and populate out key information needed for emailing
   const interestDetail = await Interest.findById(interestID)
-    .populate({ path: 'person', select: 'nickname name email pronoun language' })
+    .populate({ path: 'person', select: 'nickname name email pronoun language sendEmailNotifications' })
     .populate({ path: 'opportunity', select: 'name requestor imgUrl date duration' })
     .exec()
 
-  const requestorDetail = await Person.findById(interestDetail.opportunity.requestor, 'name nickname email imgUrl')
+  const requestorDetail = await Person.findById(interestDetail.opportunity.requestor, 'name nickname email imgUrl sendEmailNotifications')
   interestDetail.opportunity.requestor = requestorDetail
   interestDetail.opportunity.imgUrl = `${config.appUrl}${interestDetail.opportunity.imgUrl}`
   interestDetail.opportunity.href = `${config.appUrl + '/ops/' + interestDetail.opportunity._id}`
