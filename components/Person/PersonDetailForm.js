@@ -332,8 +332,9 @@ class PersonDetailForm extends Component {
               </Form.Item>
               <ShortInputContainer>
                 <Form.Item label={personJob}>
-                  {getFieldDecorator('job')}
-                  <Input placeholder='Enter your job title here' />
+                  {getFieldDecorator('job')(
+                    <Input placeholder='Enter your job title here' />
+                  )}
                 </Form.Item>
               </ShortInputContainer>
             </InputContainer>
