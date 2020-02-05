@@ -23,6 +23,7 @@ const personSchema = new Schema({
   facebook: { type: 'String', required: false },
   twitter: { type: 'String', required: false },
   education: { type: 'String' },
+  job: { type: 'String', default: '' },
   sendEmailNotifications: { type: 'Boolean', default: true, required: true },
   role: {
     type: [String],

@@ -24,7 +24,8 @@ const PersonFields = {
   STATUS: 'status',
   PRONOUN: 'pronoun',
   TAGS: 'tags',
-  EDUCATION: 'education'
+  EDUCATION: 'education',
+  JOB: 'job'
 
 }
 
