@@ -2,6 +2,7 @@ require('isomorphic-fetch') /* global fetch */
 const { config } = require('../../../config/config')
 const queryString = require('querystring')
 const Badge = require('./badge')
+const { Role } = require('../../services/authorize/role')
 
 const getToken = async () => {
   const { BADGR_PASSWORD, BADGR_USERNAME, BADGR_API } = config
@@ -20,6 +21,12 @@ const getToken = async () => {
 }
 
 const issueNewBadge = async (req, res) => {
+  const currentUser = req.session.me
+
+  if (!(currentUser && currentUser.role.includes(Role.ADMIN))) {
+    return res.status(403).send()
+  }
+
   const { badgeID } = req.params
   const { email, _id } = req.body
   let accessToken
