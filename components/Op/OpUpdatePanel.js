@@ -3,7 +3,6 @@ import { OpSectionGrid, ContentCard } from '../VTheme/VTheme'
 import AddStory from '../../components/Story/AddStory'
 import { StoryStackWithNew } from '../../components/Story/StoryStack'
 import { stories } from '../../components/Story/EditableStory'
-import { CreateSory } from '../../components/Story/StoryForm'
 
 // start question
 
@@ -13,12 +12,8 @@ export const OpUpdatePanel = ({ op }) =>
       <div>
         <h2>Updates</h2>
         <>
-          <>
-            <AddStory />
-          </>
-          <>
-            <CreateSory />
-          </>
+          <AddStory />
+
         </>
 
       </div>
