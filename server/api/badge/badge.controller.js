@@ -23,7 +23,7 @@ const getToken = async () => {
 const issueNewBadge = async (req, res) => {
   const currentUser = req.session.me
 
-  if (!(currentUser && currentUser.role.includes(Role.ADMIN))) {
+  if (!(currentUser && Array.isArray(currentUser.role) && currentUser.role.includes(Role.ADMIN))) {
     return res.status(403).send()
   }
 
