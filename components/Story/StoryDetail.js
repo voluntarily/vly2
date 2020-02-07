@@ -12,7 +12,7 @@ export const StoryDetail = ({ story, children }) =>
 
     <footer>
       <span item={story.author} path='author'>{story.author && story.author.name}</span> &nbsp;
-      <span>{moment(story.dateAdded).format('DD-MM-YYYY HH:mm')}</span>
+      <span>{moment(story.dateAdded).fromNow()}</span>
       {children}
     </footer>
     <br />

@@ -302,6 +302,8 @@
   "sortName": "Name",
   "story.new": "New Blog",
   "story.cancel": "Cancel",
+  "storyName" : "Title",
+  "storyDescription": "Description",
   "StreetAddress.label": "Address",
   "TeacherRegistrationRecord.Category": "Category",
   "TeacherRegistrationRecord.Expiry": "Expiry",
