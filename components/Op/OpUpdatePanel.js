@@ -11,14 +11,15 @@ const OpUpdatePanel = ({ op, dispatch, stories }) => {
   // const [stories, setStories] = useState([{ name: 'name', body: 'description' }])
 
   useEffect(() => {
-    const getStories = async () => { await dispatch(reduxApi.actions.stories.get()) }
+    const getStories = async () => { await dispatch(reduxApi.actions.stories.get({ parentId: op._id })) }
     getStories()
   }, [])
 
   const setStory = async (story) => {
     // save back to redux and mongo
-    console.log('setStory', story)
+    console.log('setStory', story, op._id)
     story.parent = op._id
+
     await dispatch(reduxApi.actions.stories.post(
       {},
       { body: JSON.stringify(story) })

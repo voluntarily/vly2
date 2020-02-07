@@ -1,28 +1,24 @@
 const Story = require('./story')
+
 /**
-  api/stories/ -> list all the stories assigned to the opportunity and get the sytory details
+  api/stories/ -> list all the stories assigned to the opportunity and get the story details
  */
 
-// const listPersonalGoals = async (req, res) => {
-//   // if (!req.session || !req.session.isAuthenticated) { return res.status(403).end() }
+const listStory = async (req, res) => {
+  const parentId = req.query.parentId
+  const query = { parent: parentId }
+  console.log('listStory', req.query, query)
+  // Return enough info for a blog post
+  const got = await Story.find(query)
+    .populate({ path: 'author', select: 'name imgUrl' })
+    .sort('dateAdded').exec()
 
-//   const me = req.query.parentId
-//   try {
-//     await evaluatePersonalGoals(me, req)
-//   } catch (err) {
-//     res.status(500)
-//   }
-//   // Return enough info for a goalCard
-//   const got = await PersonalGoal.find({ parent=parentId })
-//     .populate({ path: 'goal' })
-//     .populate({ path: 'person', select: 'nickname name imgUrl' })
-//     .sort('status').exec()
+  res.json(got)
+}
 
-//   res.json(got)
-// }
 const getStory = async (req, res) => {
   try {
-    const got = await Story.findOne(req.params)
+    const got = await Story.findbyId(req.params.id)
       .populate('author', 'name imgUrl')
       .exec()
     res.json(got)
@@ -31,13 +27,13 @@ const getStory = async (req, res) => {
   }
 }
 
-const putStory = async (req, res) => {
-  await Story.findByIdAndUpdate(req.params._id, { $set: req.body })
-  getStory(req, res)
-}
-// list stories,
+// const putStory = async (req, res) => {
+//   await Story.findByIdAndUpdate(req.params.id, { $set: req.body })
+//   getStory(req, res)
+// }
 
 module.exports = {
-  getStory,
-  putStory
+  listStory,
+  getStory
+  // putStory
 }
