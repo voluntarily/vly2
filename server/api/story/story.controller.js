@@ -10,7 +10,7 @@ const listStory = async (req, res) => {
   console.log('listStory', req.query, query)
   // Return enough info for a blog post
   const got = await Story.find(query)
-    .populate({ path: 'author', select: 'name imgUrl' })
+    .populate('author', 'name imgUrl')
     .sort('dateAdded').exec()
 
   res.json(got)

@@ -1,20 +1,22 @@
-import Html from '../VTheme/Html'
+import { H3, P } from '../VTheme/VTheme'
+import Button from 'antd/lib/button'
+import moment from 'moment'
 
 export const StoryDetail = ({ story, children }) =>
 
   <article>
-    <h1>{story.name}</h1>
+    <H3>{story.name}</H3>
     {story.imgUrl && <img src={story.imgUrl} />}
-    <Html>
-      {story.body}
-    </Html>
+    <P> {story.body} </P>
     {children}
+
     <footer>
-      <span>{story.author && story.author.name}</span>
-      <span>{story.publishedDate}</span>
+      <span item={story.author} path='author'>{story.author && story.author.name}</span> &nbsp;
+      <span>{moment(story.dateAdded).format('DD-MM-YYYY HH:mm')}</span>
       {children}
     </footer>
-    <button>Reply</button>
+    <br />
+    <Button shape='round' type='secondary'>Reply</Button>
   </article>
 
 export default StoryDetail

@@ -187,7 +187,7 @@ export const OpDetailPage = ({
           meID={me && me._id}
         />
       </OpBanner>
-      <OpTabs op={op} canManage={canManage} defaultTab={tab} onChange={handleTabChange} />
+      <OpTabs op={op} canManage={canManage} defaultTab={tab} onChange={handleTabChange} author={me._id} />
     </FullPage>)
 }
 
