@@ -3,14 +3,19 @@
 */
 import { Button } from 'antd'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { Role } from '../../server/services/authorize/role.js'
-import { CreateStory } from '../../components/Story/StoryForm'
+import { StoryForm } from '../../components/Story/StoryForm'
 
-const AddStory = ({ roles, ...props }) => {
+const AddStory = ({ roles, onSubmit }) => {
+  const blankStory = { name: '', body: '' }
   const [showForm, setShowForm] = useState(false)
+  const handleSave = story => {
+    setShowForm(false)
+    onSubmit(story)
+  }
   if (roles && (roles.includes(Role.ADMIN) || roles.includes(Role.ORG_ADMIN))) {
     return (
       <>
@@ -19,7 +24,7 @@ const AddStory = ({ roles, ...props }) => {
             ? <FormattedMessage id='story.cancel' defaultMessage='Cancel' description='Button to hide the blog creation form' />
             : <FormattedMessage id='story.new' defaultMessage='New Blog' description='Button to create a new blog post' />}
         </Button>
-        {showForm && <CreateStory />}
+        {showForm && <StoryForm story={blankStory} onSubmit={handleSave} />}
       </>
     )
   } else {
@@ -28,7 +33,8 @@ const AddStory = ({ roles, ...props }) => {
 }
 
 AddStory.propTypes = {
-  roles: PropTypes.array
+  roles: PropTypes.array,
+  onSubmit: PropTypes.func
 }
 
 const mapStateToProps = store => ({
