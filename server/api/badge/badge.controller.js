@@ -55,11 +55,11 @@ const issueNewBadge = async (req, res) => {
     }
   })
   const data = await response.json()
-  await insertNewBageIntoDatabase(data.result, _id)
+  await insertNewBadgeIntoDatabase(data.result, _id)
   return res.json(data)
 }
 
-const insertNewBageIntoDatabase = async (result, id) => {
+const insertNewBadgeIntoDatabase = async (result, id) => {
   const newBadgeIssue = result[0]
   const { entityType, image, badgeclass, issuer, issuerOpenBadgeId, createdAt, issuedOn, badgeclassOpenBadgeId, entityId } = newBadgeIssue
   const newBadge = {
