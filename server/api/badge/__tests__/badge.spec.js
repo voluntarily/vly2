@@ -74,8 +74,8 @@ test.serial('Test request issue badge return information about badge', async t =
   const mockReq = new MockExpressRequest()
   const mockRes = new MockExpressResponse()
   mockReq.session = {
-    isAuthenticated: false,
-    me: {},
+    isAuthenticated: true,
+    me: { role: ['admin'] },
     user: {}
   }
   const andrew = await Person.findOne({ email: 'andrew@groat.nz' })
@@ -135,8 +135,8 @@ test.serial('Issue badge saved new badge record to database', async t => {
   const mockReq = new MockExpressRequest()
   const mockRes = new MockExpressResponse()
   mockReq.session = {
-    isAuthenticated: false,
-    me: {},
+    isAuthenticated: true,
+    me: { role: ['admin'] },
     user: {}
   }
   const andrew = await Person.findOne({ email: 'andrew@groat.nz' })
