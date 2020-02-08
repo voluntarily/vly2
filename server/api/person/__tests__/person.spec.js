@@ -202,17 +202,6 @@ test.serial('Update people', async t => {
     .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
     .expect(404)
 
-  // right id, invalid body, bad request
-  p.sendEmailNotifications = 'String instead of boolean'
-
-  await request(server)
-    .put(`/api/people/${id}`)
-    .send(p)
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
-    .expect(400)
-  p.status = 'active'
-
   const resUpdated = await request(server)
     .put(`/api/people/${id}`)
     .send(p)
