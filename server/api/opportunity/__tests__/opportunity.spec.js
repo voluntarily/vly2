@@ -527,29 +527,6 @@ test.serial('should permit descriptions with special characters', async t => {
   const queriedOpp = await Opportunity.findOne({ name: 'Lego Robots' })
   t.is(queriedOpp.description, 'Build and program Lego robots. " / % ^ ( ) * @ #')
 })
-// following test fails as name is not sanitized anymore
-
-// test.serial('should strip script tags and contents from name', async t => {
-//   const res = await request(server)
-//     .post('/api/opportunities/')
-//     .send({
-//       name: 'Lego Robots<script>var xhr = new XMLHttpRequest();</script>',
-//       subtitle: 'Build and program Lego robots with Mindstorms EV3.',
-//       description: '-',
-//       location: 'Wellington City',
-//       status: OpportunityStatus.ACTIVE,
-//       requestor: t.context.people[0]._id,
-//       tags: ['lego', 'robot']
-
-//     })
-//     .set('Accept', 'application/json')
-//     .set('Cookie', [`idToken=${jwtData.idToken}`])
-//     .expect(200)
-
-//   t.is(res.status, 200)
-//   const queriedOpp = await Opportunity.findOne({ subtitle: 'Build and program Lego robots with Mindstorms EV3.' }).exec()
-//   t.is(queriedOpp.name, 'Lego Robots')
-// })
 
 test.serial('should strip "color:blue" and "font-size:2em" from style attribute', async t => {
   const res = await request(server)
