@@ -4,9 +4,10 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { OpAboutPanel } from './OpAboutPanel'
 import { OpQuestionPanel } from './OpQuestionPanel'
-import { OpUpdatePanel } from './OpUpdatePanel'
+import OpUpdatePanel from './OpUpdatePanel'
 import { OpManagePanel } from './OpManagePanel'
 import VTabs from '../VTheme/VTabs'
+
 const { TabPane } = Tabs
 
 const opAboutTab =
@@ -46,7 +47,7 @@ const opEditTab =
 
 const isNotProd = process.env.NODE_ENV !== 'production'
 
-export const OpTabs = ({ op, onChange, canManage, defaultTab }) => (
+export const OpTabs = ({ op, onChange, canManage, defaultTab, author }) => (
   <>
     <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
       <TabPane tab={opAboutTab} key='about'>
@@ -60,7 +61,7 @@ export const OpTabs = ({ op, onChange, canManage, defaultTab }) => (
       )}
       {isNotProd && (
         <TabPane tab={opUpdateTab} key='news'>
-          <OpUpdatePanel op={op} />
+          <OpUpdatePanel op={op} author={author} />
         </TabPane>
       )}
       {canManage && (
