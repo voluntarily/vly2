@@ -22,7 +22,7 @@ export default [
     startLink: '/home', // should be /profile#edit
     language: 'en',
     rank: 1,
-    evaluation: () => { console.log('evaluates to false'); return false },
+    evaluation: "() => { console.log('evaluates to false'); return false }",
     dateAdded: '2019-11-27T10:00:00.000Z'
   },
   {
@@ -56,7 +56,7 @@ export default [
     startLink: '/home', // should be /profile#edit
     language: 'en',
     rank: 2,
-    evaluation: () => { console.log('evaluates to true'); return true },
+    evaluation: "() => { console.log('evaluates to true'); return true }",
     dateAdded: '2019-11-27T10:00:00.000Z'
   },
   {
@@ -92,7 +92,7 @@ export default [
     preconditions: [],
     startLink: '/search',
     language: 'en',
-    evaluation: () => { return true },
+    evaluation: '() => { return true }',
     dateAdded: '2019-11-27T10:00:00.000Z'
   },
   /*********************************************/
@@ -116,7 +116,7 @@ This card will disappear when the profile is complete
     imgUrl: '/static/img/goal/goal-teacherSetup.png',
     startLink: '/my/org/op',
     rank: 1,
-    evaluation: async (personalGoal) => { return false }
+    evaluation: 'async (personalGoal) => { return false }'
   },
   {
     group: GoalGroup.ORG_OP_NEW,
@@ -135,7 +135,7 @@ Once Published we will start finding volunteers
 `,
     startLink: '/activity/inspiring-the-future',
     rank: 2,
-    evaluation: async (personalGoal) => { return true }
+    evaluation: 'async (personalGoal) => { return true }'
   },
 
   {
@@ -145,10 +145,10 @@ Once Published we will start finding volunteers
     imgUrl: '/static/img/goal/goal-school-ready.png',
     subtitle: 'Test 3',
     startLink: '/search',
-    evaluation: () => {
-      console.log('Throws an error')
+    evaluation: `() => {
+      console.log('Throws an error');
       throw new Error('testing')
-    }
+    }`
   }
 
 ]

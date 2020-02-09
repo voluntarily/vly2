@@ -7,7 +7,7 @@ const { Role } = require('../../services/authorize/role')
 /* get a single member record with org and person populated out */
 const getMemberbyId = id => {
   return Member.findOne({ _id: id })
-    .populate({ path: 'person', select: 'nickname name imgUrl email' })
+    .populate({ path: 'person', select: 'nickname name imgUrl email sendEmailNotifications' })
     .populate({ path: 'organisation', select: 'name imgUrl category' })
     .exec()
 }
