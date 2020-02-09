@@ -60,7 +60,7 @@ const setAvailableBadgeData = async (setBadgeList) => {
     const badgeList = await callApi('badges')
     setBadgeList(badgeList)
   } catch (e) {
-    console.error('Either Badgr server is down or you have not set BADGR credentials in environment', e)
+    console.error('failed to get list of badges', e)
   }
 }
 
