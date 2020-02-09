@@ -7,7 +7,6 @@ const Story = require('./story')
 const listStory = async (req, res) => {
   const parentId = req.query.parentId
   const query = { parent: parentId }
-  console.log('listStory', req.query, query)
   // Return enough info for a blog post
   const got = await Story.find(query)
     .populate('author', 'name imgUrl')
