@@ -2,7 +2,7 @@ const mongooseCrudify = require('mongoose-crudify')
 
 const helpers = require('../../services/helpers')
 const Person = require('./person')
-const { ensureSanitized, listPeople, getPersonBy, updatePersonDetail } = require('./person.controller')
+const { ensureSanitized, listPeople, getPerson, updatePersonDetail } = require('./person.controller')
 const { SchemaName } = require('./person.constants')
 const removeUnauthorizedFields = require('../../services/authorize/removeUnauthorizedFields')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
@@ -26,7 +26,7 @@ module.exports = function (server) {
         }],
       actions: {
         list: listPeople,
-        read: getPersonBy,
+        read: getPerson,
         update: updatePersonDetail
       },
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
