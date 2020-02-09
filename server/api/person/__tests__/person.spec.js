@@ -8,7 +8,7 @@ import people from '../__tests__/person.fixture'
 import sinon from 'sinon'
 import { TOPIC_PERSON__CREATE } from '../../../services/pubsub/topic.constants'
 import PubSub from 'pubsub-js'
-
+import objectid from 'objectid'
 test.before('before connect to database', async (t) => {
   try {
     t.context.memMongo = new MemoryMongo()
@@ -105,6 +105,16 @@ test('Get person by id', async t => {
   t.is(res.body.email, p.email)
 })
 
+test('Get person who doesnt exist', async t => {
+  // fetch the person - no auth
+  const notPersonId = objectid().toString()
+  const res = await request(server)
+    .get(`/api/people/${notPersonId}`)
+    .set('Accept', 'application/json')
+
+  t.is(res.status, 404)
+})
+
 test.serial('create a new person', async t => {
   t.plan(7)
 
@@ -163,7 +173,7 @@ test.serial('create a new person', async t => {
   }
 })
 
-test('Update people', async t => {
+test.serial('Update people', async t => {
   // update the person
   const p = t.context.people[0]
   const id = p._id

@@ -5,19 +5,13 @@ const { getPersonRoles } = require('../member/member.lib')
 /* find a single person by searching for a key field.
 This is a convenience function usually used to call
 */
-function getPersonBy (req, res, next) {
-  let query
-  if (req.params.by) {
-    query = { [req.params.by]: req.params.value }
-  } else {
-    query = req.params
-  }
+function getPerson (req, res, next) {
+  const query = req.params
 
   Person.findOne(query).exec(async (_err, person) => {
-    if (!person) { // person does not exist
-      return res.status(404).send({ error: 'person not found' })
+    if (person) { // note if person does not exist middle ware will already have 404d the result
+      await getPersonRoles(person)
     }
-    await getPersonRoles(person)
     req.crudify = { result: person }
     return next()
   })
@@ -97,8 +91,6 @@ function ensureSanitized (req, res, next) {
   // if user puts html in their inputs - remove stuff we don't want.
   // TODO - Also sanitize mongo $ commands. see mongo-sanitize
   const p = req.body
-  p.name = sanitizeHtml(p.name)
-  p.nickname = sanitizeHtml(p.nickname)
   p.phone = p.phone && sanitizeHtml(p.phone)
   p.about = p.about && sanitizeHtml(p.about, szAbout)
   req.body = p
@@ -108,6 +100,6 @@ function ensureSanitized (req, res, next) {
 module.exports = {
   ensureSanitized,
   listPeople,
-  getPersonBy,
+  getPerson,
   updatePersonDetail
 }
