@@ -3,6 +3,7 @@ const Organisation = require('../organisation/organisation')
 const escapeRegex = require('../../util/regexUtil')
 const { Action } = require('../../services/abilities/ability.constants')
 const { Role } = require('../../services/authorize/role')
+const sanitizeHtml = require('sanitize-html')
 /**
  * Get all orgs
  * @param req
@@ -134,8 +135,43 @@ const createActivity = async (req, res) => {
     res.status(500).send()
   }
 }
+function ensureSanitized (req, res, next) {
+  const actDescriptionOptions = {
+    allowedTags: ['a', 'b', 'br', 'caption', 'code', 'div', 'blockquote', 'em',
+      'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'iframe', 'img', 'li', 'ol',
+      'p', 'pre', 's', 'span', 'strike', 'strong', 'table', 'tbody', 'td', 'th',
+      'thead', 'tr', 'u', 'ul'],
+    allowedAttributes: {
+      a: ['href'],
+      iframe: ['height', 'src', 'width'],
+      img: ['src'],
+      pre: ['spellcheck'],
+      span: ['style']
+    },
+    allowedClasses: {
+      '*': ['ql-align-center', 'ql-align-right', 'ql-align-justify', 'ql-syntax']
+    },
+    allowedStyles: {
+      span: {
+        // permits values for color and background-color CSS properties that look like 'rgb(230,0,50)'
+        color: [/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/],
+        backgroundColor: [/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/]
+      }
+    },
+    allowedIframeHostnames: ['www.youtube.com'],
+    // Should prevent any iframes using something other than https for their src.
+    allowedSchemesByTag: { iframe: ['https'] },
+    allowProtocolRelative: false
+  }
+
+  const act = req.body
+  act.description = act.description && sanitizeHtml(act.description, actDescriptionOptions)
+  req.body = act
+  next()
+}
 
 module.exports = {
+  ensureSanitized,
   getActivities,
   getActivity,
   putActivity,
