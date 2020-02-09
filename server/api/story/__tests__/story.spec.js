@@ -6,6 +6,7 @@ import MemoryMongo from '../../../util/test-memory-mongo'
 import stories from './story.fixture.js'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
+import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 
 test.before('before connecting to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -15,21 +16,6 @@ test.before('before connecting to database', async (t) => {
 
 test.after.always(async (t) => {
   await t.context.memMongo.stop()
-})
-
-test.beforeEach('connect and add story entries', async (t) => {
-  // save people
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-  // assign person as author
-  stories.map((story, index) => {
-    story.author = t.context.people[index]._id
-  })
-  // t.context.stories = await Story.create({ stories: stories }).catch((err) => console.error('Unable to create stories', err))
-  t.context.stories = await Story.create(stories).catch((err) => console.error('Unable to create stories', err))
-})
-
-test.afterEach.always(async () => {
-  await Story.deleteMany()
 })
 
 test.serial('verify fixture database has stories', async t => {
@@ -43,13 +29,40 @@ test.serial('verify fixture database has stories', async t => {
   t.is(q && q.status, 'published')
 })
 
+test.beforeEach('connect and add story entries', async (t) => {
+  // save people
+  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  // assign person as author
+  stories.map((story, index) => {
+    story.author = t.context.people[index]._id
+  })
+  t.context.stories = await Story.create(stories).catch((err) => console.error('Unable to create stories', err))
+})
+
+test.afterEach.always(async () => {
+  await Story.deleteMany()
+})
+
+test.serial('Should correctly give story 1 when searching by "wins"', async t => {
+  const res = await request(server)
+    .get('/api/stories?search=wins')
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  t.is(stories[0].name, got[0].name)
+  t.is(2, got.length)
+})
+
 test.serial('Should correctly give count of all stories sorted by name', async t => {
   const res = await request(server)
     .get('/api/stories')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(t.context.stories.length, got.length)
-  // t.is(got.name, stories.name) // TODO: have to sort with datePublished to prove the oldest stories
+  t.is(2, got.length)
+  t.is(got[0].name, 'Voluntarily wins Open Source Web prize')
 })

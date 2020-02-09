@@ -488,7 +488,7 @@ test.serial('should permit titles with special characters', async t => {
     .post('/api/opportunities/')
     .send({
       // Testing some special chars. Stray < and > always get encoded to &lt; and &gt; by sanitizeHtml().
-      name: 'Lego Robots " / % ^ ( ) * @ #',
+      name: 'Lego Robots " / % ^ ( ) * @ # &',
       subtitle: 'Lego Mindstorms EV3',
       description: 'Building with Lego Mindstorms EV3.',
       location: 'Wellington City',
@@ -503,7 +503,7 @@ test.serial('should permit titles with special characters', async t => {
   t.is(res.status, 200)
   const queriedOpp = await Opportunity.findOne({ subtitle: 'Lego Mindstorms EV3' }).exec()
   //
-  t.is(queriedOpp.name, 'Lego Robots " / % ^ ( ) * @ #')
+  t.is(queriedOpp.name, 'Lego Robots " / % ^ ( ) * @ # &')
 })
 
 test.serial('should permit descriptions with special characters', async t => {
@@ -526,28 +526,6 @@ test.serial('should permit descriptions with special characters', async t => {
   t.is(res.status, 200)
   const queriedOpp = await Opportunity.findOne({ name: 'Lego Robots' })
   t.is(queriedOpp.description, 'Build and program Lego robots. " / % ^ ( ) * @ #')
-})
-
-test.serial('should strip script tags and contents from name', async t => {
-  const res = await request(server)
-    .post('/api/opportunities/')
-    .send({
-      name: 'Lego Robots<script>var xhr = new XMLHttpRequest();</script>',
-      subtitle: 'Build and program Lego robots with Mindstorms EV3.',
-      description: '-',
-      location: 'Wellington City',
-      status: OpportunityStatus.ACTIVE,
-      requestor: t.context.people[0]._id,
-      tags: ['lego', 'robot']
-
-    })
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
-    .expect(200)
-
-  t.is(res.status, 200)
-  const queriedOpp = await Opportunity.findOne({ subtitle: 'Build and program Lego robots with Mindstorms EV3.' }).exec()
-  t.is(queriedOpp.name, 'Lego Robots')
 })
 
 test.serial('should strip "color:blue" and "font-size:2em" from style attribute', async t => {
