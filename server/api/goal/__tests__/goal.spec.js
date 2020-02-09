@@ -18,16 +18,6 @@ const testGoal = {
   evaluation: () => { return false }
 }
 
-const testGoalDefaults = {
-  name: 'Test Goal',
-  slug: 'goal-test-defaults',
-  subtitle: 'Test Subtitle',
-  description: 'test goal description',
-  startLink: '/test', // should be /profile#edit
-  group: 'Test',
-  evaluation: () => { return false }
-}
-
 test.before('before connect to database', async (t) => {
   try {
     t.context.memMongo = new MemoryMongo()
