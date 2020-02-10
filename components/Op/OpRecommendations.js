@@ -10,13 +10,13 @@ class OpRecommendations extends React.Component {
         {recommendedOps.basedOnLocation.length !== 0 &&
           <div>
             <h2>Nearby opportunities</h2>
-            <OpList ops={recommendedOps.basedOnLocation} />
+            <OpList ops={recommendedOps.basedOnLocation.filter(op => ['active'].includes(op.status))} />
           </div>}
 
         {recommendedOps.basedOnSkills.length !== 0 &&
           <div>
             <h2>Based on your skills</h2>
-            <OpList ops={recommendedOps.basedOnSkills} />
+            <OpList ops={recommendedOps.basedOnSkills.filter(op => ['active'].includes(op.status))} />
           </div>}
       </>)
   }
