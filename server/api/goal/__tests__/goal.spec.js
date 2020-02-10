@@ -18,16 +18,6 @@ const testGoal = {
   evaluation: () => { return false }
 }
 
-const testGoalDefaults = {
-  name: 'Test Goal',
-  slug: 'goal-test-defaults',
-  subtitle: 'Test Subtitle',
-  description: 'test goal description',
-  startLink: '/test', // should be /profile#edit
-  group: 'Test',
-  evaluation: () => { return false }
-}
-
 test.before('before connect to database', async (t) => {
   try {
     t.context.memMongo = new MemoryMongo()
@@ -157,68 +147,4 @@ test.serial('Should send correct data when queried against an id', async t => {
     .expect(200)
 
   t.is(res.body.name, testGoal.name)
-})
-
-test.serial('Should correctly add an goal', async t => {
-  t.plan(4)
-  const res = await request(server)
-    .post('/api/goals')
-    .send(testGoalDefaults)
-    .set('Accept', 'application/json')
-    .expect(200)
-
-  try {
-  // can find by id
-    const id = res.body._id
-    await Goal.findById(id).then((goal) => {
-      t.is(id, goal._id.toString())
-    })
-
-    // can find by slug with then
-    await Goal.findOne({ slug: testGoalDefaults.slug }).then((goal) => {
-      t.is(goal.name, testGoalDefaults.name)
-    })
-
-    // can find by slug using await
-    const saved = await Goal.findOne({ slug: testGoalDefaults.slug }).exec()
-    t.is(saved.name, testGoalDefaults.name)
-
-    // goal has been given the default image
-    t.is(saved.imgUrl, '/static/img/goal/goal.png')
-  } catch (err) {
-    console.error(err)
-  }
-})
-
-test.serial('Should load a goal into the db and delete them via the api', async t => {
-  t.plan(2)
-
-  const testGoalDelete = {
-    name: 'Test Goal Delete',
-    slug: 'test-goal-delete',
-    group: 'Delete'
-  }
-
-  const goal = new Goal(testGoalDelete)
-  await goal.save()
-  const id = goal._id
-
-  // check goal is there.
-  const res = await request(server)
-    .get(`/api/goals/${id}`)
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200)
-
-  t.is(res.body.name, testGoalDelete.name)
-
-  // delete the record
-  await request(server)
-    .delete(`/api/goals/${goal._id}`)
-    .set('Accept', 'application/json')
-    .expect(200)
-
-  // check goal is gone
-  const q = await Goal.findOne({ slug: testGoalDelete.slug }).exec()
-  t.is(q, null)
 })
