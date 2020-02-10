@@ -19,6 +19,10 @@ const _usages = new Map()
 
 const uploadImage = async (req, res) => {
   try {
+    if (!req.session.isAuthenticated) {
+      return res.send(403)
+    }
+
     const { image: imageBin, file: originalFilename } = req.body
     const imageBuffer = Buffer.from(imageBin, 'binary')
 
