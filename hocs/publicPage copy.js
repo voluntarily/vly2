@@ -32,7 +32,6 @@ export const PublicPage = Page =>
         isAuthenticated: session.isAuthenticated,
         isAdmin: session.me && session.me.role && session.me.role.includes(Role.ADMIN),
         isPlain: false,
-        user: session.user,
         locale,
         messages,
         initialNow
