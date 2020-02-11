@@ -179,8 +179,8 @@ test('Get person by id - admin', async t => {
   }
 })
 
-test.serial('create a new person', async t => {
-  t.plan(7)
+test.serial(`Create a new person - anonymous`, async t => {
+  t.plan(9)
 
   // subscribe to published new person messages
   const spy = sinon.spy()
@@ -188,11 +188,7 @@ test.serial('create a new person', async t => {
   PubSub.subscribe(TOPIC_PERSON__CREATE, spy)
   const p = {
     name: 'Addy McAddFace',
-    // nickname: 'Addy',
-    // phone: '123 456789',
     email: 'addy@omgtech.co.nz'
-    // role: ['tester'],
-    // tags: ['tag1', 'tag2', 'tag3']
   }
 
   try {
@@ -201,8 +197,8 @@ test.serial('create a new person', async t => {
       .post('/api/people')
       .send(p)
       .set('Accept', 'application/json')
-      .expect(200)
 
+    t.is(res.status, 200)
     // confirm message published, sub called
     t.is(spy.callCount, 0)
     clock.tick(1)
@@ -221,19 +217,86 @@ test.serial('create a new person', async t => {
     // person has been given the default image
     t.is(foundEmail.imgUrl, '/static/img/person/person.png')
 
-    // get the new person
+    // Anonymous user cannot request the user they just created
+    // Check it as an ADMIN
     const resPerson = await request(server)
       .get(`/api/people/${id}`)
       .set('Accept', 'application/json')
       .set('Cookie', [`idToken=${jwtData.idToken}`])
-      .expect(200)
+    
+    t.is(resPerson.status, 200)
     t.is(resPerson.body.name, p.name)
     t.is(resPerson.body.email, p.email)
   } finally {
-    // clean up
+  // clean up
     await Person.deleteOne({ email: p.email })
   }
 })
+
+for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.TESTER, Role.ADMIN]) {
+  test.serial(`Create a new person - ${role}`, async t => {
+    t.plan(11)
+
+    // subscribe to published new person messages
+    const spy = sinon.spy()
+    const clock = sinon.useFakeTimers()
+    PubSub.subscribe(TOPIC_PERSON__CREATE, spy)
+    const p = {
+      name: 'Addy McAddFace',
+      email: 'addy@omgtech.co.nz'
+    }
+
+    try {
+      // Even authenticated users can create new users
+      const res = await request(server)
+        .post('/api/people')
+        .send(p)
+        .set('Accept', 'application/json')
+        .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
+
+      t.is(res.status, 200)
+      // confirm message published, sub called
+      t.is(spy.callCount, 0)
+      clock.tick(1)
+      t.is(spy.callCount, 1)
+      clock.restore()
+
+      // can find by id
+      const id = res.body._id
+      const foundId = await Person.findById(id).exec()
+      t.is(foundId.name, p.name)
+
+      // can find by email
+      const foundEmail = await Person.findOne({ email: p.email }).exec()
+      t.is(foundEmail.name, p.name)
+
+      // person has been given the default image
+      t.is(foundEmail.imgUrl, '/static/img/person/person.png')
+
+      // get the new person as the current role (note some fields are trimmed from the response due to permissions)
+      const resPerson = await request(server)
+        .get(`/api/people/${id}`)
+        .set('Accept', 'application/json')
+        .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
+
+      t.is(resPerson.status, 200)
+      t.is(resPerson.body.name, p.name)
+
+      // get the new person as admin
+      const resPersonAsAdmin = await request(server)
+        .get(`/api/people/${id}`)
+        .set('Accept', 'application/json')
+        .set('Cookie', [`idToken=${jwtData.idToken}`])
+
+      t.is(resPersonAsAdmin.status, 200)
+      t.is(resPersonAsAdmin.body.name, p.name)
+      t.is(resPersonAsAdmin.body.email, p.email)
+    } finally {
+      // clean up
+      await Person.deleteOne({ email: p.email })
+    }
+  })
+}
 
 test.serial('Update people', async t => {
   // update the person
