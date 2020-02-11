@@ -60,7 +60,7 @@ test('List - anonymous', async t => {
     .get('/api/people')
     .set('Accept', 'application/json')
 
-  t.is(resAnon.status, 403) // Return data response will be undefined for 403 response
+  t.is(resAnon.status, 403)
   // Ensure there is no data in the response body
   t.true(Object.entries(resAnon.body).length === 0)
 })
@@ -92,7 +92,7 @@ test('List - admin', async t => {
     .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.ADMIN])}`])
     .expect(200)
 
-  t.is(res.body.length, await Person.count())
+  t.is(res.body.length, await Person.countDocuments())
 
   // All fields should be returned. Spot check a single user we know has data for each key.
   const andrew = res.body.find(user => user.email === 'andrew@groat.nz')
@@ -115,28 +115,33 @@ test('List - admin', async t => {
     'tags'
   ]
   for (const expectedField of expectedFields) {
-    t.truthy(andrew[expectedField], `The '${expectedField}' field of the response body object should contain data`)
+    t.true(Object.keys(andrew).includes(expectedField), `The '${expectedField}' field of the response body object should contain data`)
   }
 })
 
-test('Get person by id', async t => {
-  const p = t.context.people[2] // Testy A.
-  const id = p._id
+test('Get person by id - anonymous', async t => {
+  const person = t.context.people[2] // Testy A.
+
   // fetch the person - no auth
-  await request(server)
-    .get(`/api/people/${id}`)
-    .set('Accept', 'application/json')
-    .expect(403)
-
-  // fetch the person - with auth
   const res = await request(server)
-    .get(`/api/people/${id}`)
+    .get(`/api/people/${person._id}`)
     .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
-    .expect(200)
 
-  t.is(res.body.name, p.name)
-  t.is(res.body.email, p.email)
+  t.is(res.status, 403)
+})
+
+test('Get person by id - volunteer', async t => {
+  const person = t.context.people[2] // Testy A.
+
+  const res = await request(server)
+    .get(`/api/people/${person._id}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.VOLUNTEER_PROVIDER])}`])
+
+  t.is(res.status, 200)
+  // Make sure blacklisted keys have been removed
+  t.false(Object.keys(res.body).includes('email'))
+  t.is(res.body.name, person.name)
 })
 
 test.serial('create a new person', async t => {
