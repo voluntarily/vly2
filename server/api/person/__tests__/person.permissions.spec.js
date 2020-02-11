@@ -229,11 +229,9 @@ test.serial('create a new person', async t => {
       .expect(200)
     t.is(resPerson.body.name, p.name)
     t.is(resPerson.body.email, p.email)
-
+  } finally {
     // clean up
     await Person.deleteOne({ email: p.email })
-  } catch (err) {
-    console.error(err)
   }
 })
 
