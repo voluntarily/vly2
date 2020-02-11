@@ -115,7 +115,7 @@ test('List - admin', async t => {
     'tags'
   ]
   for (const expectedField of expectedFields) {
-    t.true(Object.keys(andrew).includes(expectedField), `The '${expectedField}' field of the response body object should contain data`)
+    t.truthy(andrew[expectedField], `The '${expectedField}' field of the response body object should contain data`)
   }
 })
 
@@ -130,18 +130,53 @@ test('Get person by id - anonymous', async t => {
   t.is(res.status, 403)
 })
 
-test('Get person by id - volunteer', async t => {
-  const person = t.context.people[2] // Testy A.
+for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.TESTER]) {
+  test(`Get person by id - ${role}`, async t => {
+    const person = t.context.people[2] // Testy A.
+
+    const res = await request(server)
+      .get(`/api/people/${person._id}`)
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
+
+    t.is(res.status, 200)
+    // Make sure blacklisted keys have been removed
+    t.false(Object.keys(res.body).includes('email'))
+    t.false(Object.keys(res.body).includes('phone'))
+    t.is(res.body.name, person.name)
+  })
+}
+
+test('Get person by id - admin', async t => {
+  const person = t.context.people.find(p => p.email === 'andrew@groat.nz')
 
   const res = await request(server)
     .get(`/api/people/${person._id}`)
     .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.VOLUNTEER_PROVIDER])}`])
+    .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.ADMIN])}`])
 
+  // All fields should be returned
   t.is(res.status, 200)
-  // Make sure blacklisted keys have been removed
-  t.false(Object.keys(res.body).includes('email'))
-  t.is(res.body.name, person.name)
+  
+  const expectedFields = [
+    'name',
+    'nickname',
+    'email',
+    'about',
+    'location',
+    'pronoun',
+    'language',
+    'role',
+    'status',
+    'imgUrl',
+    'phone',
+    'sendEmailNotifications',
+    'website',
+    'tags'
+  ]
+  for (const expectedField of expectedFields) {
+    t.truthy(res.body[expectedField], `The '${expectedField}' field of the response body object should contain data`)
+  }
 })
 
 test.serial('create a new person', async t => {
