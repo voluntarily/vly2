@@ -1,6 +1,7 @@
 import { H3, P } from '../VTheme/VTheme'
 import Button from 'antd/lib/button'
 import moment from 'moment'
+import DeleteStory from '../../components/Story/DeleteStory'
 
 export const StoryDetail = ({ story, children }) =>
 
@@ -17,6 +18,8 @@ export const StoryDetail = ({ story, children }) =>
     </footer>
     <br />
     <Button shape='round' type='secondary'>Reply</Button>
+    <Button shape='round' type='secondary'>Edit</Button>
+    <DeleteStory story={story} />
   </article>
 
 export default StoryDetail

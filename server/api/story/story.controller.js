@@ -26,13 +26,13 @@ const getStory = async (req, res) => {
   }
 }
 
-// const putStory = async (req, res) => {
-//   await Story.findByIdAndUpdate(req.params.id, { $set: req.body })
-//   getStory(req, res)
-// }
+const putStory = async (req, res) => {
+  await Story.findByIdAndUpdate(req.params.id, { $set: req.body })
+  getStory(req, res)
+}
 
 module.exports = {
   listStory,
-  getStory
-  // putStory
+  getStory,
+  putStory
 }
