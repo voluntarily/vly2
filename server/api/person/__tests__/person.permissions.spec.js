@@ -179,7 +179,7 @@ test('Get person by id - admin', async t => {
   }
 })
 
-test.serial(`Create a new person - anonymous`, async t => {
+test.serial('Create a new person - anonymous', async t => {
   t.plan(9)
 
   // subscribe to published new person messages
@@ -301,22 +301,22 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
 test.serial('Update - anonymous user cannot update', async t => {
   const person = t.context.people[0]
 
-    const res = await request(server)
-      .put(`/api/people/${person._id}`)
-      .send({
-        name: 'testname',
-        email: 'test@email.nz',
-        role: ['admin'],
-        status: 'active',
-        phone: 'testphone'
-      })
-      .set('Accept', 'application/json')
+  const res = await request(server)
+    .put(`/api/people/${person._id}`)
+    .send({
+      name: 'testname',
+      email: 'test@email.nz',
+      role: ['admin'],
+      status: 'active',
+      phone: 'testphone'
+    })
+    .set('Accept', 'application/json')
 
-    // Forbidden
-    t.is(res.status, 403)
-    // Make sure the person in the database hasn't changed
-    const person2 = await Person.findById(person._id)
-    t.is(person2.phone, person.phone)
+  // Forbidden
+  t.is(res.status, 403)
+  // Make sure the person in the database hasn't changed
+  const person2 = await Person.findById(person._id)
+  t.is(person2.phone, person.phone)
 })
 
 for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER]) {
@@ -366,7 +366,7 @@ for (const role of [Role.ADMIN, Role.ORG_ADMIN, Role.TESTER]) {
       .set('Cookie', `idToken=${await createPersonAndGetToken([role])}`)
 
     t.is(res.status, 200)
-    
+
     const person2 = await Person.findById(person._id)
     t.is(person2.name, 'testname')
     t.is(person2.email, email)
@@ -376,7 +376,7 @@ for (const role of [Role.ADMIN, Role.ORG_ADMIN, Role.TESTER]) {
   })
 }
 
-test.serial(`Update - can update self - even with role which denies update`, async t => {
+test.serial('Update - can update self - even with role which denies update', async t => {
   const person = await createPerson([Role.VOLUNTEER_PROVIDER])
 
   const res = await request(server)
@@ -392,7 +392,7 @@ test.serial(`Update - can update self - even with role which denies update`, asy
     .set('Cookie', `idToken=${createJwtIdToken(person.email)}`)
 
   t.is(res.status, 200)
-  
+
   const person2 = await Person.findById(person._id)
   t.is(person2.name, 'testname')
   t.is(person2.email, 'test@self.com')
