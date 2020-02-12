@@ -52,6 +52,9 @@ async function updatePersonDetail (req, res, next) {
   if (!me) {
     return res.sendStatus(401)
   }
+  if (!personId) {
+    return res.sendStatus(400)
+  }
 
   // ADMIN, TESTER, ORG_ADMIN or the owner of the person record is allowed to update it, otherwise forbidden
   const allowed = (me.role &&
@@ -60,7 +63,7 @@ async function updatePersonDetail (req, res, next) {
                     me.role.includes(Role.TESTER) ||
                     me.role.includes(Role.ORG_ADMIN)
                   )) ||
-                  me._id == personId
+                  (me._id && personId === me._id.toString())
 
   if (!allowed) {
     return res.sendStatus(403)
