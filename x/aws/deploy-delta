@@ -1,17 +1,14 @@
 #!/bin/bash
 MY_DIR=$( dirname "${BASH_SOURCE[0]}" )
 
-# Get a docker login and run it
-source ${MY_DIR}/login-singapore
+# login to sydney
+source ${MY_DIR}/login-sydney
 
 # pull latest alpha image
-docker pull 585172581592.dkr.ecr.ap-southeast-1.amazonaws.com/vly-alpha:master
+docker pull 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-alpha:master
 
 # retag
-docker image tag 585172581592.dkr.ecr.ap-southeast-1.amazonaws.com/vly-alpha:master 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-delta:master
-
-# login to signapore
-source ${MY_DIR}/login-sydney
+docker image tag 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-alpha:master 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-delta:master
 
 # push the new image
 docker push 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-delta:master
