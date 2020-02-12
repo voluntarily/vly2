@@ -3,7 +3,7 @@ const { Action } = require('../../services/abilities/ability.constants')
 const defaultConvertRequestToAction = (req) => {
   switch (req.method) {
     case 'GET':
-      return Action.READ
+      return (req.route && req.route.path === '/') ? Action.LIST : Action.READ
     case 'POST':
       return Action.CREATE
     case 'PUT':
