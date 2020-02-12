@@ -6,6 +6,7 @@ const { InterestStatus } = require('./interest.constants')
 const ical = require('ical-generator')
 const htmlSanitizer = require('sanitize-html')
 const moment = require('moment')
+const { Action } = require('../../services/abilities/ability.constants')
 
 /**
   api/interests -> list all interests
@@ -15,24 +16,34 @@ const moment = require('moment')
  */
 const listInterests = async (req, res) => {
   const sort = 'dateAdded' // todo sort by date.
-  let got
+
   try {
+    const find = {}
+    const populateList = []
+
     if (req.query.op) {
-      const query = { opportunity: req.query.op }
-      if (req.query.me) {
-        query.person = req.query.me
-      }
-      // Return the nickname in person field
-      got = await Interest.find(query).populate({ path: 'person', select: 'nickname name imgUrl' }).sort(sort).exec()
-      got = got.filter((opportunity) => opportunity.person !== null)
-    } else if (req.query.me) {
-      const query = { person: req.query.me }
-      got = await Interest.find(query).populate({ path: 'opportunity' }).sort(sort).exec()
-    } else {
-      got = await Interest.find().sort(sort).exec()
+      find.opportunity = req.query.op
+      populateList.push({ path: 'person', select: 'nickname name imgUrl' })
     }
 
-    res.json(got)
+    if (req.query.me) {
+      find.person = req.query.me
+      populateList.push({ path: 'opportunity' })
+    }
+
+    const query = Interest.find(find)
+
+    for (const populate of populateList) {
+      query.populate(populate)
+    }
+
+    const interests = (await query
+      .accessibleBy(req.ability, Action.LIST)
+      .sort(sort)
+      .exec())
+      .filter(opportunity => opportunity.person !== null)
+
+    res.json(interests)
   } catch (err) {
     // console.error(err)
     res.status(404).send(err)
