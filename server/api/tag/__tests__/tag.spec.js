@@ -119,9 +119,11 @@ test('Tag API - admin - CRUD', async t => {
 
   // get by id - non admin check
   response = await request(server)
-    .put(`/api/tags/${id}`)
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .get(`/api/tags/${id}`)
+    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
+
   t.is(response.statusCode, 200)
+  t.is(response.body.tags.length, 3)
 
   // update
   response = await request(server)
