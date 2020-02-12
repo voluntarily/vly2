@@ -2,6 +2,8 @@ const Person = require('./person')
 const sanitizeHtml = require('sanitize-html')
 const Action = require('../../services/abilities/ability.constants')
 const { getPersonRoles } = require('../member/member.lib')
+const { Role } = require('../../services/authorize/role')
+
 /* find a single person by searching for a key field.
 This is a convenience function usually used to call
 */
@@ -44,7 +46,26 @@ const isProd = process.env.NODE_ENV === 'production'
 
 async function updatePersonDetail (req, res, next) {
   const { ability: userAbility, body: person } = req
-  const personId = person._id
+  const me = req.session.me
+  const personId = req.params._id
+
+  if (!me) {
+    return res.sendStatus(401)
+  }
+
+  // ADMIN, TESTER, ORG_ADMIN or the owner of the person record is allowed to update it, otherwise forbidden
+  const allowed = (me.role &&
+                  (
+                    me.role.includes(Role.ADMIN) ||
+                    me.role.includes(Role.TESTER) ||
+                    me.role.includes(Role.ORG_ADMIN)
+                  )) ||
+                  me._id == personId
+
+  if (!allowed) {
+    return res.sendStatus(403)
+  }
+
   if (isProd) { delete person.role } // cannot save role - its virtual
   let resultUpdate
   try {

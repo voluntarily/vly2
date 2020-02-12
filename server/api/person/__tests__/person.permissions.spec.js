@@ -157,7 +157,7 @@ test('Get person by id - admin', async t => {
 
   // All fields should be returned
   t.is(res.status, 200)
-  
+
   const expectedFields = [
     'name',
     'nickname',
@@ -223,12 +223,12 @@ test.serial(`Create a new person - anonymous`, async t => {
       .get(`/api/people/${id}`)
       .set('Accept', 'application/json')
       .set('Cookie', [`idToken=${jwtData.idToken}`])
-    
+
     t.is(resPerson.status, 200)
     t.is(resPerson.body.name, p.name)
     t.is(resPerson.body.email, p.email)
   } finally {
-  // clean up
+    // clean up
     await Person.deleteOne({ email: p.email })
   }
 })
@@ -298,42 +298,117 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
   })
 }
 
-test.serial('Update people', async t => {
-  // update the person
+test.serial('Update - anonymous user cannot update', async t => {
+  const person = t.context.people[0]
+
+    const res = await request(server)
+      .put(`/api/people/${person._id}`)
+      .send({
+        ...person,
+        phone: '000 0000 000'
+      })
+      .set('Accept', 'application/json')
+
+    // Forbidden
+    t.is(res.status, 403)
+    // Make sure the person in the database hasn't changed
+    const person2 = await Person.findById(person._id)
+    t.is(person2.phone, person.phone)
+})
+
+for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER]) {
+  test.serial(`Update - ${role} cannot update person`, async t => {
+    const person = t.context.people[0]
+
+    const res = await request(server)
+      .put(`/api/people/${person._id}`)
+      .send({
+        name: 'testname',
+        email: 'test@email.nz',
+        role: ['admin'],
+        status: 'active',
+        phone: 'testphone'
+      })
+      .set('Accept', 'application/json')
+      .set('Cookie', `idToken=${await createPersonAndGetToken([role])}`)
+
+    // Forbidden
+    t.is(res.status, 403)
+    // Make sure the person in the database hasn't changed
+    const person2 = await Person.findById(person._id)
+    t.is(person2.name, person.name)
+    t.is(person2.email, person.email)
+    t.is(person2.role[0], person.role[0])
+    t.is(person2.status, person.status)
+    t.is(person2.phone, person.phone)
+  })
+}
+
+for (const role of [Role.ADMIN, Role.ORG_ADMIN, Role.TESTER]) {
+  test.serial(`Update - ${role} can update person`, async t => {
+    const person = await createPerson([Role.ADMIN])
+
+    const email = `${uuid()}@email.nz`
+
+    const res = await request(server)
+      .put(`/api/people/${person._id}`)
+      .send({
+        name: 'testname',
+        email,
+        role: ['vp'],
+        status: 'active',
+        phone: 'testphone'
+      })
+      .set('Accept', 'application/json')
+      .set('Cookie', `idToken=${await createPersonAndGetToken([role])}`)
+
+    t.is(res.status, 200)
+    
+    const person2 = await Person.findById(person._id)
+    t.is(person2.name, 'testname')
+    t.is(person2.email, email)
+    t.is(person2.role[0], 'vp')
+    t.is(person2.status, 'active')
+    t.is(person2.phone, 'testphone')
+  })
+}
+
+test.serial(`Update - can update self - even with role which denies update`, async t => {
+  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+
+  const res = await request(server)
+    .put(`/api/people/${person._id}`)
+    .send({
+      name: 'testname',
+      email: 'test@self.com',
+      role: ['rp'],
+      status: 'active',
+      phone: 'testphone'
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', `idToken=${createJwtIdToken(person.email)}`)
+
+  t.is(res.status, 200)
+  
+  const person2 = await Person.findById(person._id)
+  t.is(person2.name, 'testname')
+  t.is(person2.email, 'test@self.com')
+  t.is(person2.role[0], 'rp')
+  t.is(person2.status, 'active')
+  t.is(person2.phone, 'testphone')
+})
+
+test.serial('Update - admin - bad id cannot update, not found', async t => {
   const p = t.context.people[0]
-  const id = p._id
   p.phone = '000 0000 000'
 
-  // anon user cannot update
-  await request(server)
-    .put(`/api/people/${id}`)
-    .send(p)
-    .set('Accept', 'application/json')
-    .expect(403)
-
-  // bad id cannot update, not found
-  await request(server)
+  const res = await request(server)
     .put('/api/people/notapersonid')
     .send(p)
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
-    .expect(404)
 
-  // wrong id cannot update, bad request
-  await request(server)
-    .put('/api/people/5d9fe53e4eb179218c8d1d2b')
-    .send(p)
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
-    .expect(404)
-
-  const resUpdated = await request(server)
-    .put(`/api/people/${id}`)
-    .send(p)
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
-    .expect(200)
-  t.is(resUpdated.body.phone, p.phone)
+  t.is(res.status, 404)
 })
 
 test('Anon user cannot remove a user', async t => {
