@@ -19,18 +19,11 @@ test.before('before connect to database', async (t) => {
   ]
   t.context.people = await Person.create(people).catch((err) => console.error('Unable to create people', err))
   t.context.tags = await Tag.create(tagCollection).catch((err) => console.error('Unable to create tags', err))
-  console.log(t.context.tags)
 })
 
 test.after.always(async (t) => {
   await Tag.deleteMany()
   await t.context.memMongo.stop()
-})
-
-test('verify fixture database has tags', async t => {
-  const p = await Tag.find()
-  t.is(2, p.length)
-  t.truthy(p[0].tags.includes('robots'))
 })
 
 /* -- Anon person */
