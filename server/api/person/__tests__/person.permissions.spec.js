@@ -304,8 +304,11 @@ test.serial('Update - anonymous user cannot update', async t => {
     const res = await request(server)
       .put(`/api/people/${person._id}`)
       .send({
-        ...person,
-        phone: '000 0000 000'
+        name: 'testname',
+        email: 'test@email.nz',
+        role: ['admin'],
+        status: 'active',
+        phone: 'testphone'
       })
       .set('Accept', 'application/json')
 
