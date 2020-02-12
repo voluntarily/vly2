@@ -27,9 +27,19 @@ const ruleBuilder = session => {
 
   const allAbilities = anonAbilities.slice(0)
 
+  const volunteerAbilities = []
+
+  if (session.me && session.me._id) {
+    volunteerAbilities.push({
+      subject: SchemaName,
+      action: Action.LIST,
+      conditions: { person: session.me._id }
+    })
+  }
+
   return {
     [Role.ANON]: anonAbilities,
-    [Role.VOLUNTEER_PROVIDER]: allAbilities,
+    [Role.VOLUNTEER_PROVIDER]: volunteerAbilities,
     [Role.OPPORTUNITY_PROVIDER]: allAbilities,
     [Role.ACTIVITY_PROVIDER]: allAbilities,
     [Role.ORG_ADMIN]: allAbilities,
