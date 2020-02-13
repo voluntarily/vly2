@@ -59,16 +59,30 @@ const ruleBuilder = session => {
     inverted: true
   }, {
     subject: SchemaName,
-    action: Action.CREATE
+    action: Action.CREATE,
+    inverted: true
   }, {
     subject: SchemaName,
-    action: Action.UPDATE,
-    conditions: {
-      _id: userID
-    }
+    action: Action.UPDATE
   }]
 
-  const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
+  const adminAbilities = [{
+    subject: SchemaName,
+    action: Action.READ
+  }, {
+    subject: SchemaName,
+    action: Action.LIST
+  }, {
+    subject: SchemaName,
+    action: Action.DELETE,
+  }, {
+    subject: SchemaName,
+    action: Action.CREATE,
+    inverted: true
+  }, {
+    subject: SchemaName,
+    action: Action.UPDATE
+  }]
 
   return {
     [Role.ANON]: anonAbilities,

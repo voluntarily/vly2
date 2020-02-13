@@ -1,6 +1,6 @@
 const Person = require('./person')
 const sanitizeHtml = require('sanitize-html')
-const Action = require('../../services/abilities/ability.constants')
+const { Action } = require('../../services/abilities/ability.constants')
 const { getPersonRoles } = require('../member/member.lib')
 const { Role } = require('../../services/authorize/role')
 

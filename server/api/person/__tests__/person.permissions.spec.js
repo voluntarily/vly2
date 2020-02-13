@@ -179,122 +179,18 @@ test('Get person by id - admin', async t => {
   }
 })
 
-test.serial('Create a new person - anonymous', async t => {
-  t.plan(9)
-
-  // subscribe to published new person messages
-  const spy = sinon.spy()
-  const clock = sinon.useFakeTimers()
-  PubSub.subscribe(TOPIC_PERSON__CREATE, spy)
-  const p = {
-    name: 'Addy McAddFace',
-    email: 'addy@omgtech.co.nz'
-  }
-
-  try {
-    // anon user can add a new person
+for (const role of [undefined, Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.TESTER, Role.ADMIN]) {
+  test.serial(`Create a new person - ${role || 'Anonymous'} is denied`, async t => {
     const res = await request(server)
       .post('/api/people')
-      .send(p)
+      .send({
+        name: 'Addy McAddFace',
+        email: 'addy@omgtech.co.nz'
+      })
       .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
 
-    t.is(res.status, 200)
-    // confirm message published, sub called
-    t.is(spy.callCount, 0)
-    clock.tick(1)
-    t.is(spy.callCount, 1)
-    clock.restore()
-
-    // can find by id
-    const id = res.body._id
-    const foundId = await Person.findById(id).exec()
-    t.is(foundId.name, p.name)
-
-    // can find by email
-    const foundEmail = await Person.findOne({ email: p.email }).exec()
-    t.is(foundEmail.name, p.name)
-
-    // person has been given the default image
-    t.is(foundEmail.imgUrl, '/static/img/person/person.png')
-
-    // Anonymous user cannot request the user they just created
-    // Check it as an ADMIN
-    const resPerson = await request(server)
-      .get(`/api/people/${id}`)
-      .set('Accept', 'application/json')
-      .set('Cookie', [`idToken=${jwtData.idToken}`])
-
-    t.is(resPerson.status, 200)
-    t.is(resPerson.body.name, p.name)
-    t.is(resPerson.body.email, p.email)
-  } finally {
-    // clean up
-    await Person.deleteOne({ email: p.email })
-  }
-})
-
-for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.TESTER, Role.ADMIN]) {
-  test.serial(`Create a new person - ${role}`, async t => {
-    t.plan(11)
-
-    // subscribe to published new person messages
-    const spy = sinon.spy()
-    const clock = sinon.useFakeTimers()
-    PubSub.subscribe(TOPIC_PERSON__CREATE, spy)
-    const p = {
-      name: 'Addy McAddFace',
-      email: 'addy@omgtech.co.nz'
-    }
-
-    try {
-      // Even authenticated users can create new users
-      const res = await request(server)
-        .post('/api/people')
-        .send(p)
-        .set('Accept', 'application/json')
-        .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
-
-      t.is(res.status, 200)
-      // confirm message published, sub called
-      t.is(spy.callCount, 0)
-      clock.tick(1)
-      t.is(spy.callCount, 1)
-      clock.restore()
-
-      // can find by id
-      const id = res.body._id
-      const foundId = await Person.findById(id).exec()
-      t.is(foundId.name, p.name)
-
-      // can find by email
-      const foundEmail = await Person.findOne({ email: p.email }).exec()
-      t.is(foundEmail.name, p.name)
-
-      // person has been given the default image
-      t.is(foundEmail.imgUrl, '/static/img/person/person.png')
-
-      // get the new person as the current role (note some fields are trimmed from the response due to permissions)
-      const resPerson = await request(server)
-        .get(`/api/people/${id}`)
-        .set('Accept', 'application/json')
-        .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
-
-      t.is(resPerson.status, 200)
-      t.is(resPerson.body.name, p.name)
-
-      // get the new person as admin
-      const resPersonAsAdmin = await request(server)
-        .get(`/api/people/${id}`)
-        .set('Accept', 'application/json')
-        .set('Cookie', [`idToken=${jwtData.idToken}`])
-
-      t.is(resPersonAsAdmin.status, 200)
-      t.is(resPersonAsAdmin.body.name, p.name)
-      t.is(resPersonAsAdmin.body.email, p.email)
-    } finally {
-      // clean up
-      await Person.deleteOne({ email: p.email })
-    }
+    t.is(res.status, 403)
   })
 }
 

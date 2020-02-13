@@ -1,5 +1,4 @@
 const mongooseCrudify = require('mongoose-crudify')
-
 const helpers = require('../../services/helpers')
 const Person = require('./person')
 const { ensureSanitized, listPeople, getPerson, updatePersonDetail } = require('./person.controller')
@@ -8,6 +7,7 @@ const removeUnauthorizedFields = require('../../services/authorize/removeUnautho
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 const { publishCreate } = require('../../services/pubsub/publishTopic')
 const initializeTags = require('../../util/initTags')
+
 module.exports = function (server) {
   // Docs: https://github.com/ryo718/mongoose-crudify
   server.use(
