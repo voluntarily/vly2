@@ -34,6 +34,10 @@ const ruleBuilder = session => {
       subject: SchemaName,
       action: Action.LIST,
       conditions: { person: session.me._id }
+    }, {
+      subject: SchemaName,
+      action: Action.READ,
+      conditions: { person: session.me._id }
     })
   }
 

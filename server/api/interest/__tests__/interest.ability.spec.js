@@ -121,7 +121,7 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[2].idToken}`])
     },
     assertions: (t, response) => {
-      t.is(response.statusCode, 403)
+      t.is(response.statusCode, 404)
     }
   },
   {

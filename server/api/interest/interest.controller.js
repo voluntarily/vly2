@@ -50,6 +50,22 @@ const listInterests = async (req, res) => {
   }
 }
 
+const getInterest = async (req, res, next) => {
+  try {
+    const interest = await Interest
+      .accessibleBy(req.ability, Action.READ)
+      .findOne(req.params)
+
+    if (interest === null) {
+      return res.status(404).send()
+    }
+
+    res.json(interest)
+  } catch (e) {
+    res.status(500).send()
+  }
+}
+
 const getInterestDetail = async (interestID) => {
   // Get the interest and populate out key information needed for emailing
   const interestDetail = await Interest.findById(interestID)
@@ -175,6 +191,7 @@ const sendInterestedEmail = async (template, to, interest, props) => {
 
 module.exports = {
   listInterests,
+  getInterest,
   updateInterest,
   createInterest
 }
