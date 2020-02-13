@@ -191,7 +191,7 @@ const testScenarios = [
   },
   {
     role: 'volunteer',
-    action: 'delete',
+    action: 'delete (own interest)',
     makeRequest: async (context) => {
       return request(server)
         .delete(`/api/interests/${context.fixtures.interests[0]._id}`)
@@ -199,6 +199,18 @@ const testScenarios = [
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 200)
+    }
+  },
+  {
+    role: 'volunteer',
+    action: 'delete (other\'s interest)',
+    makeRequest: async (context) => {
+      return request(server)
+        .delete(`/api/interests/${context.fixtures.interests[1]._id}`)
+        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 404)
     }
   },
   {

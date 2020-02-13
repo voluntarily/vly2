@@ -200,9 +200,27 @@ const sendInterestedEmail = async (template, to, interest, props) => {
   })
 }
 
+const deleteInterest = async (req, res, next) => {
+  try {
+    const result = await Interest
+      .accessibleBy(req.ability, Action.DELETE)
+      .deleteOne(req.params)
+
+    if (result.deletedCount === 0) {
+      return res.sendStatus(404)
+    }
+
+    return res.status(200).send(req.params)
+  } catch (e) {
+    console.log(e)
+    return res.sendStatus(500)
+  }
+}
+
 module.exports = {
   listInterests,
   getInterest,
   updateInterest,
-  createInterest
+  createInterest,
+  deleteInterest
 }

@@ -46,6 +46,10 @@ const ruleBuilder = session => {
       subject: SchemaName,
       action: Action.UPDATE,
       inverted: true
+    }, {
+      subject: SchemaName,
+      action: Action.DELETE,
+      conditions: { person: session.me._id }
     })
   }
 
