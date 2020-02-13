@@ -6,23 +6,44 @@ import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
 import { BigQuote, BigQuoteAuthor, FullPage, H1, H3, H3Bold, H4, HalfGrid, P, PBold, Spacer, SpacerSmall, TripleGrid } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 
-const GridContainer = styled.div`
-  position: relative;
-  height: auto;
-`
+
 
 const ButtonContainer = styled.div`
   margin-top: 1rem;
 `
+const TextHeroTitle = styled.h1`
+font-family: Inter-Bold;
+font-size: 72px;
+color: #000000;
+letter-spacing: -4.05px;
+line-height: 96px;
 
-// const TextHeaderTitle = styled.h1`
-//   font-size: 2rem;
-//   letter-spacing: -2.2px;
-//   font-weight: 700;
-//   line-height: 3.5rem;
-//   color: black;
-//   margin-bottom: 0;
-// `
+
+@media screen and (min-width: 1026px) and (max-width: 1281px) {
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+  }
+  @media screen and (max-width: 768px) {
+
+  }
+`
+
+
+const TextHeroDescription = styled.h1`
+font-weight: 400;
+font-size: 2.5rem;
+letter-spacing: -1.67px;
+line-height: 56px;
+
+
+@media screen and (min-width: 1026px) and (max-width: 1281px) {
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+  }
+  @media screen and (max-width: 768px) {
+
+  }
+`
 
 const TextMiniTitle = styled.p`
   margin-top: 2rem;
@@ -46,26 +67,7 @@ const TextMiniTitle = styled.p`
 `
 // Page-Specific Images
 
-const HeroImage = styled.img`
-  width: 624px;
-  position: relative;
-  object-fit: cover;
-  height: auto;
-  @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    width: calc(50vw - 4rem);
-    height: auto;
-  }
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    width: calc(50vw - 4rem);
-    height: auto;
-  }
-  @media screen and (max-width: 768px) {
-    margin-top: 2rem;
-    width: 0;
-    height: 0;
-  display: none;
-  }
-`
+
 const AboutImage = styled.img`
   width: 80rem;
   height: 987px;
@@ -121,10 +123,10 @@ const SponsorIcon = styled.img`
 // Page-Specific Containers
 
 const HeroContainer = styled.div`
-  height: 45rem;
-  padding-top: 20rem;
+
+  margin: 10rem 0;
   position: relative;
-  padding-bottom: 30rem;
+  
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
     padding-top: 8rem;
     padding-bottom: 1rem;
@@ -142,8 +144,8 @@ const HeroContainer = styled.div`
   }
 `
 const SectionContainer = styled.div`
-  margin-bottom: 10rem;
-  margin-top: 10rem;
+  margin: 10rem 0;
+ 
   position: relative;
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
     margin-top: 5rem;
@@ -210,137 +212,48 @@ export class Teacher extends Component {
             <title>Voluntarily - for Teachers</title>
           </Helmet>
           <HeroContainer>
-            <HalfGrid>
-              <GridContainer>
-                <TextMiniTitle>Voluntarily for Business</TextMiniTitle>
-                <H1>Do more social good in your community</H1>
-                <H4>
+     
 
-                  Launch gas-powered rockets from rural schools. <br />
-                  Get your staff building robots that shoot lazors. <br />
-                  Make video games with no prior experience.
-                </H4>
+                <TextMiniTitle>Voluntarily for Teachers</TextMiniTitle>
+                <TextHeroTitle>Get industry volunteers to help teachers and students in your school.</TextHeroTitle>
+                
                 <ButtonContainer>
-                  <Button type='primary'>Sign up</Button>&nbsp;&nbsp;
-                  <Button>Learn more</Button>
+                  <Button shape='round' size='large' type='primary'>Learn More</Button>&nbsp;&nbsp;
+                  <Button shape='round' size='large' >Teacher Sign up</Button>
                 </ButtonContainer>
-              </GridContainer>
-              <GridContainer>
-                <HeroImage src='/static/img/business/hero2.png' />
-              </GridContainer>
-            </HalfGrid>
+    
           </HeroContainer>
           <SectionContainer>
             <AboutImage src='/static/test2.png' />
-            <H3Bold>
-              Enable your staff to become role models for future innovators.
-            </H3Bold>
-            <H3>
-              We help facilitate and automate your corporate social
-              responsibility initiatives. Get your staff to teach kids robotics
-              by playing maze games and having a good time. See the impact your
-              initiatives and resources have on the local community.
-            </H3>
+   
+                  <TextHeroDescription>
+                  Voluntarily helps teachers get assistance and support in their teaching from industry volunteers. All you need to do is list 
+what kind of skills you want or need, and volunteers will come.
+                  </TextHeroDescription>
           </SectionContainer>
           <SectionContainer>
-            <SectionTitle title='We are working with' />
+          <HalfGrid>
+            <img src='static/img/landing-pages/teachers/resources.png'/>
+            <div>aaaaa</div>
+          </HalfGrid>
+
+          </SectionContainer>
+          <SectionContainer>
+            <h3> We are working with</h3>
             <SponsorContainer>
               <SponsorIcon src='static/img/partners/Spark.png' />
               <SponsorIcon src='static/img/partners/Westpac.png' />
               <SponsorIcon src='static/img/partners/Datacom.png' />
               <SponsorIcon src='static/img/partners/innovationfund.png' />
               <SponsorIcon src='static/img/partners/MOE.png' />
+              <SponsorIcon src='static/img/partners/MOE.png' />
+              <SponsorIcon src='static/img/partners/innovationfund.png' />
+              <SponsorIcon src='static/img/partners/MOE.png' />
+              <SponsorIcon src='static/img/partners/MOE.png' />              
+
             </SponsorContainer>
           </SectionContainer>
-
-          <SectionContainer>
-            <HalfGrid>
-              <GridContainer>
-                <ListItemImage src='/static/img/business/item1.png' />
-              </GridContainer>
-              <GridContainer>
-                <AboutListContainer>
-                  <H3Bold>Identify talent early</H3Bold>
-                  <H3>
-                    By deploying staff into schools to train students and
-                    teachers, you get first pick of the next generation of
-                    talent
-                  </H3>
-                </AboutListContainer>
-              </GridContainer>
-            </HalfGrid>
-          </SectionContainer>
-
-          <SectionContainer>
-            <HalfGrid>
-              <GridContainer>
-                <ListItemImage src='/static/img/business/item2.png' />
-              </GridContainer>
-              <GridContainer>
-                <AboutListContainer>
-                  <H3Bold>
-                    Great for employee engagement
-                  </H3Bold>
-                  <H3>
-                    By deploying staff into schools to train students and
-                    teachers, you get first pick of the next generation of
-                    talent
-                  </H3>
-                </AboutListContainer>
-              </GridContainer>
-            </HalfGrid>
-          </SectionContainer>
-
-          {/* <SectionContainer>
-            <HalfGrid>
-              <GridContainer>
-              <AboutListContainer>
-                  <H3Bold>Great for employee engagement</H3Bold>
-                  <H3>
-                    By deploying staff into schools to train students and
-                    teachers, you get first pick of the next generation of
-                    talent
-                  </H3>
-                </AboutListContainer>
-              </GridContainer>
-              <GridContainer>
-              <ListItemImage />
-              </GridContainer>
-            </HalfGrid>
-          </SectionContainer> */}
-
-          <SectionContainer>
-            <HalfGrid>
-              <GridContainer>
-                <ListItemImage src='/static/img/business/item3.png' />
-              </GridContainer>
-              <GridContainer>
-                <AboutListContainer>
-                  <H3Bold>
-                    A cheaper way to automate and track your CSR and PR
-                    initiatives
-                  </H3Bold>
-                  <H3>
-                    If you have a corporate volunteer day programme, we can make
-                    it cheaper to run, and give you hard stats your social
-                    impact
-                  </H3>
-                </AboutListContainer>
-              </GridContainer>
-            </HalfGrid>
-          </SectionContainer>
-          <Divider />
-          <SectionContainer>
-            <BigQuoteContainer>
-              <BigQuote>
-                &ldquo;Voluntarily made it easier to empower local communities
-                and increased volunteer engagement by 90000000%&rdquo;
-              </BigQuote>
-              <BigQuoteAuthor>Leeeroy Jenkins</BigQuoteAuthor>
-              <BigQuoteAuthor>CEO, Westpac Ventures</BigQuoteAuthor>
-            </BigQuoteContainer>
-          </SectionContainer>
-          <Divider />
+         
           <SectionTitle title='Features' />
           <TripleGrid>
             <ItemContainer>
