@@ -73,6 +73,11 @@ async function updatePersonDetail (req, res, next) {
   if (person.role.includes(Role.ADMIN) && !me.role.includes(Role.ADMIN)) {
     return res.sendStatus(403)
   }
+  // Only a subset of the Role enum can be set via the API. Some value are computed and set such as ORG_ADMIN.
+  const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]
+  if (person.role.find(role => !applicableRoles.includes(role))) {
+    return res.sendStatus(400)
+  }
 
   if (isProd) { delete person.role } // cannot save role - its virtual
   let resultUpdate

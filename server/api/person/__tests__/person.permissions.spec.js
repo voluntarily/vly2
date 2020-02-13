@@ -251,7 +251,7 @@ for (const role of [Role.ADMIN, Role.ORG_ADMIN, Role.TESTER]) {
       .send({
         name: 'testname',
         email,
-        role: ['vp'],
+        role: [Role.VOLUNTEER_PROVIDER],
         status: 'active',
         phone: 'testphone'
       })
@@ -263,7 +263,7 @@ for (const role of [Role.ADMIN, Role.ORG_ADMIN, Role.TESTER]) {
     const person2 = await Person.findById(person._id)
     t.is(person2.name, 'testname')
     t.is(person2.email, email)
-    t.is(person2.role[0], 'vp')
+    t.is(person2.role[0], Role.VOLUNTEER_PROVIDER)
     t.is(person2.status, 'active')
     t.is(person2.phone, 'testphone')
   })
@@ -277,7 +277,7 @@ test.serial('Update - can update self (even with role which denies update)', asy
     .send({
       name: 'testname',
       email: 'test@self.com',
-      role: ['rp'],
+      role: [Role.RESOURCE_PROVIDER],
       status: 'active',
       phone: 'testphone'
     })
@@ -289,7 +289,7 @@ test.serial('Update - can update self (even with role which denies update)', asy
   const person2 = await Person.findById(person._id)
   t.is(person2.name, 'testname')
   t.is(person2.email, 'test@self.com')
-  t.is(person2.role[0], 'rp')
+  t.is(person2.role[0], Role.RESOURCE_PROVIDER)
   t.is(person2.status, 'active')
   t.is(person2.phone, 'testphone')
 })
@@ -390,3 +390,26 @@ test.serial(`Update - ADMIN can assign the ADMIN role to a user`, async t => {
   const person2 = await Person.findById(person._id)
   t.is(person2.role[0], Role.ADMIN)
 })
+
+for (const role of [Role.ORG_ADMIN, Role.ANON, Role.ALL, 'undefined', 'null']) {
+  test.serial(`Update - ${role} is not a role which can be set via the API`, async t => {
+    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+
+    const res = await request(server)
+      .put(`/api/people/${person._id}`)
+      .send({
+        name: 'testname',
+        email: `${uuid()}@test.com`,
+        role: [role], // Bad role
+        status: 'active',
+        phone: 'testphone'
+      })
+      .set('Accept', 'application/json')
+      .set('Cookie', `idToken=${await createPersonAndGetToken([Role.ADMIN])}`)
+
+    t.is(res.status, 400)
+
+    const person2 = await Person.findById(person._id)
+    t.is(person2.role[0], Role.VOLUNTEER_PROVIDER)
+  })
+}
