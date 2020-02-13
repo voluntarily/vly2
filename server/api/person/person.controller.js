@@ -52,7 +52,7 @@ async function updatePersonDetail (req, res, next) {
   if (!me) {
     return res.sendStatus(401)
   }
-  if (!personId) {
+  if (!personId || !person) {
     return res.sendStatus(400)
   }
 
@@ -69,10 +69,15 @@ async function updatePersonDetail (req, res, next) {
     return res.sendStatus(403)
   }
 
+  // Only an ADMIN can update the role field to ADMIN
+  if (person.role.includes(Role.ADMIN) && !me.role.includes(Role.ADMIN)) {
+    return res.sendStatus(403)
+  }
+
   if (isProd) { delete person.role } // cannot save role - its virtual
   let resultUpdate
   try {
-    resultUpdate = await Person.accessibleBy(userAbility, Action.UPDATE).updateOne({ _id: personId }, req.body)
+    resultUpdate = await Person.accessibleBy(userAbility, Action.UPDATE).updateOne({ _id: personId }, person)
   } catch (e) {
     return res.sendStatus(400) // 400 error for any bad request body. This also prevent error to propagate and crash server
   }

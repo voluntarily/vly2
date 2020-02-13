@@ -269,7 +269,7 @@ for (const role of [Role.ADMIN, Role.ORG_ADMIN, Role.TESTER]) {
   })
 }
 
-test.serial('Update - can update self - even with role which denies update', async t => {
+test.serial('Update - can update self (even with role which denies update)', async t => {
   const person = await createPerson([Role.VOLUNTEER_PROVIDER])
 
   const res = await request(server)
@@ -320,4 +320,73 @@ test('Anon user cannot remove a user', async t => {
   const queriedPerson = await Person.findOne({ email: p.email }).exec()
   t.is(queriedPerson.name, p.name)
   t.is(queriedPerson.email, p.email)
+})
+
+for (const role of [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
+  test.serial(`Update - ADMIN can change a persons role to ${role}`, async t => {
+    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+
+    const res = await request(server)
+      .put(`/api/people/${person._id}`)
+      .send({
+        name: 'testname',
+        email: `${uuid()}@test.com`,
+        role: [role],
+        status: 'active',
+        phone: 'testphone'
+      })
+      .set('Accept', 'application/json')
+      .set('Cookie', `idToken=${await createPersonAndGetToken([Role.ADMIN])}`)
+
+    t.is(res.status, 200)
+
+    const person2 = await Person.findById(person._id)
+    t.is(person2.role[0], role)
+  })
+}
+
+for (const currentUserRole of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
+  test.serial(`Update - ${currentUserRole} cannot assign the ADMIN role to a user`, async t => {
+    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+
+    const res = await request(server)
+      .put(`/api/people/${person._id}`)
+      .send({
+        name: 'testname',
+        email: `${uuid()}@test.com`,
+        role: [Role.ADMIN], // Try and become an ADMIN
+        status: 'active',
+        phone: 'testphone'
+      })
+      .set('Accept', 'application/json')
+      .set('Cookie', `idToken=${await createPersonAndGetToken([currentUserRole])}`)
+
+    // Forbidden to change to the ADMIN role
+    t.is(res.status, 403)
+
+    // Assert the user's role has remained as is
+    const person2 = await Person.findById(person._id)
+    t.is(person2.role[0], Role.VOLUNTEER_PROVIDER)
+  })
+}
+
+test.serial(`Update - ADMIN can assign the ADMIN role to a user`, async t => {
+  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+
+  const res = await request(server)
+    .put(`/api/people/${person._id}`)
+    .send({
+      name: 'testname',
+      email: `${uuid()}@test.com`,
+      role: [Role.ADMIN], // Allowed to become an ADMIN
+      status: 'active',
+      phone: 'testphone'
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', `idToken=${await createPersonAndGetToken([Role.ADMIN])}`)
+
+  t.is(res.status, 200)
+
+  const person2 = await Person.findById(person._id)
+  t.is(person2.role[0], Role.ADMIN)
 })
