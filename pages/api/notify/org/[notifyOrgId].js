@@ -26,7 +26,7 @@ export default async (req, res) => {
       return res.status(403).json({ error: 'signed-in person is not an orgadmin of the requested organisation' })
     }
     // make org links canonical
-    org.imgUrl = `${config.appUrl}${org.imgUrl}`
+    org.imgUrl = new URL(org.imgUrl).href
     org.href = `${config.appUrl}/orgs/${orgid}`
     const payload = {
       landingUrl: '/api/notify/org/action',

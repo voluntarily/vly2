@@ -87,7 +87,7 @@ const setSession = async (req, res, next) => {
   }
   let me = false
   try {
-    me = await Person.findOne({ email: user.email }, 'name nickname role imgUrlSm sendEmailNotifications').exec()
+    me = await Person.findOne({ email: user.email }, 'name nickname email role imgUrlSm sendEmailNotifications').exec()
     if (!me) {
       me = await createPersonFromUser(user)
     } else {
