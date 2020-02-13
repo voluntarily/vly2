@@ -3,45 +3,52 @@ import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
 import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
-import { BigQuote, BigQuoteAuthor, FullPage, H1, H3, H3Bold, H4, HalfGrid, P, PBold, Spacer, SpacerSmall, TripleGrid } from '../../components/VTheme/VTheme'
+import {
+  BigQuote,
+  BigQuoteAuthor,
+  FullPage,
+  H1,
+  H3,
+  H3Bold,
+  H4,
+  HalfGrid,
+  P,
+  PBold,
+  Spacer,
+  SpacerSmall,
+  TripleGrid
+} from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
-
-
 
 const ButtonContainer = styled.div`
   margin-top: 1rem;
 `
 const TextHeroTitle = styled.h1`
-font-family: Inter-Bold;
-font-size: 72px;
-color: #000000;
-letter-spacing: -4.05px;
-line-height: 96px;
+  font-family: Inter-Bold;
+  font-size: 72px;
+  color: #000000;
+  letter-spacing: -4.05px;
+  line-height: 96px;
 
-
-@media screen and (min-width: 1026px) and (max-width: 1281px) {
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
   }
   @media screen and (max-width: 768px) {
-
   }
 `
 
-
 const TextHeroDescription = styled.h1`
-font-weight: 400;
-font-size: 2.5rem;
-letter-spacing: -1.67px;
-line-height: 56px;
+  font-weight: 400;
+  font-size: 2.5rem;
+  letter-spacing: -1.67px;
+  line-height: 1.5;
 
-
-@media screen and (min-width: 1026px) and (max-width: 1281px) {
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
   }
   @media screen and (max-width: 768px) {
-
   }
 `
 
@@ -67,10 +74,9 @@ const TextMiniTitle = styled.p`
 `
 // Page-Specific Images
 
-
 const AboutImage = styled.img`
-  width: 80rem;
-  height: 987px;
+  width: 100%;
+
   margin: 0 auto;
   margin-bottom: 0.5rem;
   object-fit: fill;
@@ -114,19 +120,18 @@ const SponsorIcon = styled.img`
   width: 10rem;
   @media screen and (max-width: 768px) {
     height: 5rem;
-  width: 5rem;
-  margin-right: 1rem;
-  margin-bottom: 1rem;
+    width: 5rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
   }
 `
 
 // Page-Specific Containers
 
 const HeroContainer = styled.div`
-
   margin: 10rem 0;
   position: relative;
-  
+
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
     padding-top: 8rem;
     padding-bottom: 1rem;
@@ -145,7 +150,7 @@ const HeroContainer = styled.div`
 `
 const SectionContainer = styled.div`
   margin: 10rem 0;
- 
+
   position: relative;
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
     margin-top: 5rem;
@@ -162,13 +167,9 @@ const SectionContainer = styled.div`
   }
 `
 
-const AboutListContainer = styled.div`
-  margin-top: 0rem;
-  margin-left: 0rem;
-`
-
-const BigQuoteContainer = styled.div`
-  margin: auto auto;
+const SectionGridItem = styled.div`
+  display: grid;
+  align-self: center;
 `
 
 const SponsorContainer = styled.div`
@@ -176,19 +177,12 @@ const SponsorContainer = styled.div`
   grid-template-columns: repeat(auto-fit, 10rem);
   grid-gap: 4rem;
   @media screen and (max-width: 768px) {
-
     grid-template-columns: repeat(auto-fit, 5rem);
     grid-gap: 2rem;
     margin-top: 2rem;
     margin-bottom: 4rem;
   }
 `
-
-// const CentreTitleContainer = styled.div`
-//   width: 40rem;
-//   margin: 4rem auto 2rem auto;
-//   text-align: center;
-// ` // end CentreTitle
 
 const ItemContainer = styled.div`
   height: 10rem;
@@ -212,56 +206,73 @@ export class Teacher extends Component {
             <title>Voluntarily - for Teachers</title>
           </Helmet>
           <HeroContainer>
-     
+            <TextMiniTitle>Voluntarily for Teachers</TextMiniTitle>
+            <TextHeroTitle>
+              Get industry volunteers to help teachers and students in your
+              school.
+            </TextHeroTitle>
 
-                <TextMiniTitle>Voluntarily for Teachers</TextMiniTitle>
-                <TextHeroTitle>Get industry volunteers to help teachers and students in your school.</TextHeroTitle>
-                
-                <ButtonContainer>
-                  <Button shape='round' size='large' type='primary'>Learn More</Button>&nbsp;&nbsp;
-                  <Button shape='round' size='large' >Teacher Sign up</Button>
-                </ButtonContainer>
-    
+            <ButtonContainer>
+              <Button shape='round' size='large' type='primary'>
+                Learn More
+              </Button>
+              &nbsp;&nbsp;
+              <Button shape='round' size='large'>
+                Teacher Sign up
+              </Button>
+            </ButtonContainer>
           </HeroContainer>
           <SectionContainer>
             <AboutImage src='/static/test2.png' />
-   
-                  <TextHeroDescription>
-                  Voluntarily helps teachers get assistance and support in their teaching from industry volunteers. All you need to do is list 
-what kind of skills you want or need, and volunteers will come.
-                  </TextHeroDescription>
-          </SectionContainer>
-          <SectionContainer>
-          <HalfGrid>
-            <img src='static/img/landing-pages/teachers/resources.png'/>
-            <div>aaaaa</div>
-          </HalfGrid>
 
+            <TextHeroDescription>
+              Voluntarily helps teachers get assistance and support in their
+              teaching from industry volunteers. All you need to do is list what
+              kind of skills you want or need, and volunteers will come.
+            </TextHeroDescription>
           </SectionContainer>
+
           <SectionContainer>
-            <h3> We are working with</h3>
+            <SectionTitle>We are working with</SectionTitle>
             <SponsorContainer>
+              <SponsorIcon src='static/img/partners/MOE.png' />
+              <SponsorIcon src='static/img/partners/tec.png' />
               <SponsorIcon src='static/img/partners/Spark.png' />
               <SponsorIcon src='static/img/partners/Westpac.png' />
               <SponsorIcon src='static/img/partners/Datacom.png' />
               <SponsorIcon src='static/img/partners/innovationfund.png' />
-              <SponsorIcon src='static/img/partners/MOE.png' />
-              <SponsorIcon src='static/img/partners/MOE.png' />
-              <SponsorIcon src='static/img/partners/innovationfund.png' />
-              <SponsorIcon src='static/img/partners/MOE.png' />
-              <SponsorIcon src='static/img/partners/MOE.png' />              
-
+              <SponsorIcon src='static/img/partners/ateed.png' />
+              {/* <SponsorIcon src='static/img/partners/xero.png' /> */}
+              <SponsorIcon src='static/img/partners/uni.png' />
             </SponsorContainer>
           </SectionContainer>
-         
-          <SectionTitle title='Features' />
+
+          <SectionContainer>
+            <HalfGrid>
+              <img src='static/img/landing-pages/teachers/resources.png' />
+              <SectionGridItem>
+                <h2>Free resources</h2>
+                <h4>
+                  Organize activities in a few clicks with free educational
+                  activity templates and resources
+                </h4>
+                <ButtonContainer>
+                  <Button shape='round' size='large'>
+                    See resources
+                  </Button>
+                </ButtonContainer>
+              </SectionGridItem>
+            </HalfGrid>
+          </SectionContainer>
+
+          <SectionTitle>aaaaa</SectionTitle>
           <TripleGrid>
             <ItemContainer>
               <ItemIcon src='/static/img/icons/search.svg' />
-              <PBold>Volunteering Management</PBold>
+              <PBold>Placeholder Title</PBold>
               <P>
-                V provides you and your staff with an easy way to find schools
-                and charities that need help with tech.{' '}
+                Voluntarily is an awesome project and this is placeholder copy
+                that will be filled soon
               </P>
             </ItemContainer>
             <ItemContainer>
