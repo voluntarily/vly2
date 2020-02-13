@@ -22,7 +22,6 @@ const getStory = async (req, res) => {
       .exec()
     res.json(got)
   } catch (e) {
-    console.error(e)
     res.status(404).send(e)
   }
 }

@@ -6,16 +6,18 @@ import MemoryMongo from '../../../util/test-memory-mongo'
 import stories from './story.fixture.js'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
+import { StoryStatus } from '../../story/story.constants'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 
 test.before('before connecting to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
   await appReady
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
+  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  stories.map((story, index) => {
+    story.author = t.context.people[index]._id
+  })
+  t.context.stories = await Story.create(stories).catch((err) => console.error('Unable to create stories', err))
 })
 
 test.serial('verify fixture database has stories', async t => {
@@ -24,45 +26,82 @@ test.serial('verify fixture database has stories', async t => {
   // Find all stories
   const p = await Story.find()
   t.is(t.context.stories.length, p.length)
-  // Find stories by things
+  // Find stories by name
   const q = await Story.findOne({ name: 'Voluntarily wins Open Source Web prize' })
   t.is(q && q.status, 'published')
 })
 
-test.beforeEach('connect and add story entries', async (t) => {
-  // save people
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-  // assign person as author
-  stories.map((story, index) => {
-    story.author = t.context.people[index]._id
-  })
-  t.context.stories = await Story.create(stories).catch((err) => console.error('Unable to create stories', err))
-})
-
-test.afterEach.always(async () => {
-  await Story.deleteMany()
-})
-
-test.serial('Should correctly give story 1 when searching by "wins"', async t => {
-  const res = await request(server)
-    .get('/api/stories?search=wins')
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
-    .expect(200)
-    .expect('Content-Type', /json/)
-  const got = res.body
-  t.is(stories[0].name, got[0].name)
-  t.is(2, got.length)
-})
-
-test.serial('Should correctly give count of all stories sorted by name', async t => {
+test.serial('Should give list of all stories', async t => {
   const res = await request(server)
     .get('/api/stories')
     .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(2, got.length)
-  t.is(got[0].name, 'Voluntarily wins Open Source Web prize')
+  t.is(1, got.length)
+})
+
+test.serial('Should correctly give list of all stories belonging to parent', async t => {
+  const res = await request(server)
+    .get('/api/stories/?parentId=5df0265916dc014f404ce0a0')
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  t.is(1, got.length)
+})
+
+test.serial('Get an invalid story id', async t => {
+  const res = await request(server)
+    .get(`/api/stories/${t.context.people[0]._id}`)
+    .set('Accept', 'application/json')
+    .expect(404)
+  t.is(res.status, 404)
+})
+
+test.serial('Should not find invalid _id', async t => {
+  const res = await request(server)
+    .get('/api/stories/5ce8acae1fbf56001027b254')
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+  t.is(res.status, 404)
+})
+
+test.serial('Should correctly edit a story', async t => {
+  const story1 = new Story({
+    name: 'How to make a robot',
+    description: 'To make a robot, you need to be a human.',
+    status: StoryStatus.DRAFT,
+    author: t.context.people[0]._id
+  })
+  await story1.save()
+
+  story1.name = 'I am a robot'
+  const res = await request(server)
+    .put(`/api/stories/${story1._id}`)
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .send(story1)
+    .set('Accept', 'application/json')
+  t.is(res.status, 200)
+  t.is(res.body.name, story1.name)
+})
+
+test.serial('Should correctly delete a story', async t => {
+  const story2 = new Story({
+    name: 'Who are you?',
+    body: 'Are you a human?',
+    status: StoryStatus.PUBLISHED,
+    author: t.context.people[0]._id
+  })
+  await story2.save()
+
+  const res = await request(server)
+    .delete(`/api/stories/${story2._id}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
+  t.is(res.status, 200)
+
+  const queriedStory = await Story.findOne({ _id: story2._id }).exec()
+  t.is(queriedStory, null)
 })

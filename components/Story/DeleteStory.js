@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl'
 import reduxApi, { withStories } from '../../lib/redux/reduxApi.js'
 
 export const DeleteStory = ({ story, dispatch }) => {
-
   // default delete
   const handleDeleteStory = async () => {
     await dispatch(reduxApi.actions.stories.delete({ id: story._id }))
