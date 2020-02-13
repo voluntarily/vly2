@@ -6,13 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
 import PersonaSection from '../../components/LandingPageComponents/PersonaSection'
 import {
-  BigQuote,
-  BigQuoteAuthor,
   FullPage,
-  H1,
-  H3,
-  H3Bold,
-  H4,
   HalfGrid,
   P,
   PBold,
@@ -33,14 +27,13 @@ const TextHeroTitle = styled.h1`
   line-height: 96px;
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
-
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
   }
   @media screen and (max-width: 768px) {
     font-size: 2.5rem;
     letter-spacing: -2.4px;
-  line-height: 1.5;
+    line-height: 1.5;
   }
 `
 
@@ -59,7 +52,7 @@ const TextHeroDescription = styled.h1`
   @media screen and (max-width: 768px) {
     font-size: 2rem;
     letter-spacing: -2px;
-  line-height: 1.5;
+    line-height: 1.5;
   }
 `
 
@@ -243,8 +236,6 @@ export class Teacher extends Component {
             </TextHeroDescription>
           </SectionContainer>
 
-         
-
           <SectionContainer>
             <HalfGrid>
               <ListItemImage src='static/img/landing-pages/teachers/resources.png' />
@@ -273,14 +264,14 @@ export class Teacher extends Component {
                 </h4>
                 <ButtonContainer>
                   <Button shape='round' size='large'>
-                  Sign up
+                    Sign up
                   </Button>
                 </ButtonContainer>
               </SectionGridItem>
               <ListItemImage src='static/img/landing-pages/teachers/volunteers.png' />
             </HalfGrid>
           </SectionContainer>
-        
+
           <Divider />
           <SectionContainer>
             <SectionTitle>We are working with</SectionTitle>
@@ -297,60 +288,60 @@ export class Teacher extends Component {
             </SponsorContainer>
           </SectionContainer>
 
-<SectionContainer>
-          <SectionTitle>Features</SectionTitle>
-          <TripleGrid>
-            <ItemContainer>
-              <ItemIcon src='/static/img/icons/search.svg' />
-              <PBold>Placeholder Title</PBold>
-              <P>
-                Voluntarily is an awesome project and this is placeholder copy
-                that will be filled soon
-              </P>
-            </ItemContainer>
-            <ItemContainer>
-              <ItemIcon src='/static/img/icons/search.svg' />
-              <PBold>Impact reporting</PBold>
-              <P>
-                V measures the impact your actions have on New Zealand. See how
-                your business ranks in social impact on our leaderboard.
-              </P>
-            </ItemContainer>
-            <ItemContainer>
-              <ItemIcon src='/static/img/icons/search.svg' />
-              <PBold>HR system integration</PBold>
-              <P>
-                V supports single sign on, so you don't have to remember extra
-                credentials if you're a large corp
-              </P>
-            </ItemContainer>
-            <ItemContainer>
-              <ItemIcon src='/static/img/icons/search.svg' />
-              <PBold>Automated police vetting</PBold>
-              <P>
-                V provides you and your staff with an easy way to find schools
-                and charities that need help with tech.
-              </P>
-            </ItemContainer>
-            <ItemContainer>
-              <ItemIcon src='/static/img/icons/search.svg' />
-              <PBold>Cause Targeting</PBold>
-              <P>
-                Our systems enable you to target specific causes you want to
-                support
-              </P>
-            </ItemContainer>
-            <ItemContainer>
-              <ItemIcon src='/static/img/icons/search.svg' />
-              <PBold>Integration</PBold>
-              <P>
-                V supports single sign on, so you don't have to remember extra
-                credentials if you're a large corp
-              </P>
-            </ItemContainer>
-          </TripleGrid>
+          <SectionContainer>
+            <SectionTitle>Features</SectionTitle>
+            <TripleGrid>
+              <ItemContainer>
+                <ItemIcon src='/static/img/icons/search.svg' />
+                <PBold>Placeholder Title</PBold>
+                <P>
+                  Voluntarily is an awesome project and this is placeholder copy
+                  that will be filled soon
+                </P>
+              </ItemContainer>
+              <ItemContainer>
+                <ItemIcon src='/static/img/icons/search.svg' />
+                <PBold>Impact reporting</PBold>
+                <P>
+                  V measures the impact your actions have on New Zealand. See
+                  how your business ranks in social impact on our leaderboard.
+                </P>
+              </ItemContainer>
+              <ItemContainer>
+                <ItemIcon src='/static/img/icons/search.svg' />
+                <PBold>HR system integration</PBold>
+                <P>
+                  V supports single sign on, so you don't have to remember extra
+                  credentials if you're a large corp
+                </P>
+              </ItemContainer>
+              <ItemContainer>
+                <ItemIcon src='/static/img/icons/search.svg' />
+                <PBold>Automated police vetting</PBold>
+                <P>
+                  V provides you and your staff with an easy way to find schools
+                  and charities that need help with tech.
+                </P>
+              </ItemContainer>
+              <ItemContainer>
+                <ItemIcon src='/static/img/icons/search.svg' />
+                <PBold>Cause Targeting</PBold>
+                <P>
+                  Our systems enable you to target specific causes you want to
+                  support
+                </P>
+              </ItemContainer>
+              <ItemContainer>
+                <ItemIcon src='/static/img/icons/search.svg' />
+                <PBold>Integration</PBold>
+                <P>
+                  V supports single sign on, so you don't have to remember extra
+                  credentials if you're a large corp
+                </P>
+              </ItemContainer>
+            </TripleGrid>
           </SectionContainer>
- 
+
           <Divider />
 
           <SectionTitle>Get Involved</SectionTitle>
@@ -379,16 +370,15 @@ export class Teacher extends Component {
               <ButtonContainer />
             </ItemContainer>
           </HalfGrid>
-          <Divider/>
+          <Divider />
           <Spacer />
           <SectionTitle>
-        <FormattedMessage
-          id='landing.sectiontitle.persona'
-          defaultMessage='Who we help'
-        />
-      </SectionTitle>
-          <PersonaSection/>
-          
+            <FormattedMessage
+              id='landing.sectiontitle.persona'
+              defaultMessage='Who we help'
+            />
+          </SectionTitle>
+          <PersonaSection />
         </FullPage>
       </div>
     )
