@@ -10,7 +10,7 @@ import Goal from '../../goal/goal'
 import goals from '../../goal/__tests__/goal.fixture'
 import { PersonalGoalStatus } from '../personalGoal.constants'
 
-import { jwtData, jwtDataAlice, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
+import { jwtData, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -140,18 +140,18 @@ test('PersonalGoal API - normal - cannot post', async t => {
 test.serial('PersonalGoal API - normal - can update status', async t => {
   // can update status
   const id = t.context.personalGoals[1]._id
-  console.log(t.context.personalGoals[1])
   const response = await request(server)
     .put(`/api/personalGoals/${id}`)
     .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
     .send({
       status: PersonalGoalStatus.ACTIVE
     })
-
+  const pg = response.body
   t.is(response.statusCode, 200)
+  t.is(pg.status, PersonalGoalStatus.ACTIVE)
 })
 
-test.only('PersonalGoal API - normal - cannot update anything but status ', async t => {
+test.serial('PersonalGoal API - normal - cannot update anything but status ', async t => {
   // cannot update other fields
   const id = t.context.personalGoals[1]._id
 
@@ -161,12 +161,13 @@ test.only('PersonalGoal API - normal - cannot update anything but status ', asyn
     .send({
       dateCompleted: '2000-01-01T00:00:00.0000Z'
     })
-  console.log(response.error)
+  const pg = response.body
 
-  t.is(response.statusCode, 403)
+  t.is(response.statusCode, 200)
+  t.not(pg.dateCompleted, '2000-01-01T00:00:00.0000Z')
 })
 
-test.only('PersonalGoal API - normal - cannot delete', async t => {
+test.serial('PersonalGoal API - normal - cannot delete', async t => {
   const id = t.context.personalGoals[1]._id
 
   const response = await request(server)
@@ -204,46 +205,54 @@ test('PersonalGoal API - admin - list other', async t => {
   t.is(actualPersonalGoals[0].person._id, id.toString())
 })
 
-test('PersonalGoal API - admin - can write', async t => {
+test.serial('PersonalGoal API - admin - can write', async t => {
   let response = await request(server)
     .post('/api/personalGoals')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .send({
       person: t.context.people[3]._id,
       goal: t.context.goals[1]._id
     })
 
   t.is(response.statusCode, 200)
-  t.is(response.body.status, PersonalGoalStatus.QUERY)
+  let pg = response.body
+  t.is(pg.status, PersonalGoalStatus.QUEUED)
 
-  const id = response.body._id
+  const id = pg._id
   response = await request(server)
     .get(`/api/personalGoals/${id}`)
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
+  pg = response.body
   t.is(response.statusCode, 200)
-  t.is(response.body.person._id, id)
+  t.is(pg.person, t.context.people[3]._id.toString())
 
   // check can change status
   response = await request(server)
     .put(`/api/personalGoals/${id}`)
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .send({
       status: PersonalGoalStatus.ACTIVE
     })
-
+  pg = response.body
   t.is(response.statusCode, 200)
-  t.is(response.body.status, PersonalGoalStatus.QUERY)
+  t.is(pg.status, PersonalGoalStatus.ACTIVE)
 
-  // admin can change other fields
+  // admin cannot change other fields
   response = await request(server)
     .put(`/api/personalGoals/${id}`)
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .send({
       status: PersonalGoalStatus.COMPLETED,
       dateCompleted: '2000-01-01T00:00:00.0000Z'
     })
-
+  pg = response.body
   t.is(response.statusCode, 200)
-  t.is(response.body.status, PersonalGoalStatus.QUERY)
+  t.is(pg.status, PersonalGoalStatus.COMPLETED)
+  t.not(pg.dateCompleted, '2000-01-01T00:00:00.0000Z')
 
   response = await request(server)
     .delete(`/api/personalGoals/${id}`)
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(response.statusCode, 200)
 })

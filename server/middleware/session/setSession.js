@@ -82,6 +82,7 @@ const setSession = async (req, res, next) => {
   req.session.idToken = idToken
   req.session.user = user
   if (!user.email_verified) {
+    // remove login token here
     // console.error('setSession Warning: user email not verified')
     return next()
   }
@@ -102,7 +103,7 @@ const setSession = async (req, res, next) => {
     me,
     idToken
   }
-  console.log('setting session from IdToken', req.url, req.session.isAuthenticated, 'user', req.session.user.email, 'me', req.session.me.name, req.session.me.role)
+  // console.log('setting session from IdToken', req.url, req.session.isAuthenticated, 'user', req.session.user.email, 'me', req.session.me.name, req.session.me.role)
   next()
 }
 

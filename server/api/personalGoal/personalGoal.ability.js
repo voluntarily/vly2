@@ -1,6 +1,6 @@
 const { Role } = require('../../services/authorize/role')
 const { Action } = require('../../services/abilities/ability.constants')
-const { SchemaName, PersonalGoalFields, PersonalGoalStatus } = require('./personalGoal.constants')
+const { SchemaName, PersonalGoalFields } = require('./personalGoal.constants')
 
 // WIKI rules : https://voluntarily.atlassian.net/wiki/spaces/VP/pages/18677761/API+Access+Security+Rules
 const ruleBuilder = (session, query) => {
@@ -14,15 +14,17 @@ const ruleBuilder = (session, query) => {
   const personId = session && session.me && session.me._id ? session.me._id.toString() : undefined
   const authedAbilities = []
   const { meid } = query
-  console.log('pg Abilities', meid, personId, personId && meid && (meid === personId.toString()))
 
   if (meid && meid === personId) { // if there is a meid query param we are listing someones pgs
-    console.log('adding list permission')
     authedAbilities.push({
       subject: SchemaName,
       action: Action.LIST,
       reason: 'You can only list your own goals'
-
+    })
+    authedAbilities.push({
+      subject: SchemaName,
+      action: Action.READ,
+      reason: 'You can only read your own goals'
     })
   }
   // allow update only status fields. put verifies person
@@ -30,7 +32,6 @@ const ruleBuilder = (session, query) => {
     subject: SchemaName,
     action: Action.UPDATE,
     reason: 'You can only change status',
-    // conditions: { person: { _id: personId } },
     conditions: {
       person: personId
     },

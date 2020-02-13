@@ -1,7 +1,6 @@
 const PersonalGoal = require('./personalGoal')
 const { getPersonalGoalbyId, evaluatePersonalGoals } = require('./personalGoal.lib')
 const { PersonalGoalStatus } = require('./personalGoal.constants')
-const Action = require('../../services/abilities/ability.constants')
 
 /**
   api/PersonalGoals -> list all the goals assigned to me and get the goal details
@@ -23,8 +22,8 @@ const listPersonalGoals = async (req, res) => {
 }
 
 const updatePersonalGoal = async (req, res) => {
-  const { ability: userAbility, body: pg } = req
-  console.log('updatePersonalGoal', userAbility, pg)
+  const { body: pg } = req
+  const id = req.params._id
   const status = pg.status
   const set = { status }
   switch (status) {
@@ -40,16 +39,16 @@ const updatePersonalGoal = async (req, res) => {
   }
   try {
     await PersonalGoal
-      .accessibleBy(userAbility, Action.UPDATE)
-      .updateOne({ _id: pg._id }, { $set: set }).exec()
+      // .accessibleBy(userAbility, Action.UPDATE)
+      .updateOne({ _id: id }, { $set: set }).exec()
+    const got = await getPersonalGoalbyId(id)
+    res.json(got)
   } catch (e) {
-    console.log(e)
+    console.error(e)
     return res.sendStatus(400) // 400 error for any bad request body. This also prevent error to propagate and crash server
   }
   // TODO: update the dates on goal state changes
   // TODO: notify the person of their status change in the Goal
-  const got = await getPersonalGoalbyId(req.body._id)
-  res.json(got)
 }
 
 const createPersonalGoal = async (req, res) => {
