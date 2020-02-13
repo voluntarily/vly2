@@ -76,6 +76,7 @@ test('PersonalGoal API - anon - cannot read', async t => {
 })
 
 test('PersonalGoal API - anon - cannot write', async t => {
+  // POST
   let response = await request(server)
     .post('/api/personalGoals')
     .send({
@@ -84,24 +85,23 @@ test('PersonalGoal API - anon - cannot write', async t => {
     })
 
   t.is(response.statusCode, 403)
+  // PUT
   const id = t.context.personalGoals[1]._id
   response = await request(server)
-    .get(`/api/personalGoals/${id}`)
+    .put(`/api/personalGoals/${id}`)
     .send({
       status: PersonalGoalStatus.ACTIVE
     })
 
   t.is(response.statusCode, 403)
 
+  // DELETE
   response = await request(server)
-    .get(`/api/personalGoals/${id}`)
-    .send({
-      status: PersonalGoalStatus.ACTIVE
-    })
+    .delete(`/api/personalGoals/${id}`)
 
   t.is(response.statusCode, 403)
 })
-// NORMAL
+// NORMAL - signed in person
 test('PersonalGoal API - normal - list self', async t => {
   const id = t.context.people[1]._id
   const response = await request(server)
@@ -116,16 +116,18 @@ test('PersonalGoal API - normal - list self', async t => {
   t.is(actualPersonalGoals[0].person._id, id.toString())
 })
 
-test('PersonalGoal API - normal - do not list others', async t => {
+test('PersonalGoal API - normal - cannot list other peoples goals', async t => {
+  // an attempt to list someone else's goals returns OK and an empty array.
   const id = t.context.people[0]._id
   const response = await request(server)
     .get(`/api/personalGoals?meid=${id}`)
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
-  t.is(response.statusCode, 403)
+  t.is(response.statusCode, 200)
+  t.is(response.body.length, 0)
 })
 
-test('PersonalGoal API - normal - cannot post', async t => {
+test('PersonalGoal API - normal - cannot create a new personalGoal directly', async t => {
   // cannot create new personalGoals
   const response = await request(server)
     .post('/api/personalGoals')
@@ -149,6 +151,19 @@ test.serial('PersonalGoal API - normal - can update status', async t => {
   const pg = response.body
   t.is(response.statusCode, 200)
   t.is(pg.status, PersonalGoalStatus.ACTIVE)
+})
+
+test('PersonalGoal API - normal - cannot update some one elses status', async t => {
+  // can update status, OK is returned but no changes made.
+  const id = t.context.personalGoals[2]._id
+  const response = await request(server)
+    .put(`/api/personalGoals/${id}`)
+    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
+    .send({
+      status: PersonalGoalStatus.COMPLETED
+    })
+  t.is(response.statusCode, 200)
+  t.is(response.body.status, t.context.personalGoals[2].status) // unchanged
 })
 
 test.serial('PersonalGoal API - normal - cannot update anything but status ', async t => {

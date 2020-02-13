@@ -1,6 +1,7 @@
 const PersonalGoal = require('./personalGoal')
 const { getPersonalGoalbyId, evaluatePersonalGoals } = require('./personalGoal.lib')
 const { PersonalGoalStatus } = require('./personalGoal.constants')
+const { Action } = require('../../services/abilities/ability.constants')
 
 /**
   api/PersonalGoals -> list all the goals assigned to me and get the goal details
@@ -14,6 +15,7 @@ const listPersonalGoals = async (req, res) => {
   }
   // Return enough info for a goalCard
   const got = await PersonalGoal.find({ person: me })
+    .accessibleBy(req.ability, Action.LIST)
     .populate({ path: 'goal' })
     .populate({ path: 'person', select: 'nickname name imgUrl' })
     .sort('status').exec()
@@ -22,7 +24,7 @@ const listPersonalGoals = async (req, res) => {
 }
 
 const updatePersonalGoal = async (req, res) => {
-  const { body: pg } = req
+  const pg = req.body
   const id = req.params._id
   const status = pg.status
   const set = { status }
@@ -39,7 +41,7 @@ const updatePersonalGoal = async (req, res) => {
   }
   try {
     await PersonalGoal
-      // .accessibleBy(userAbility, Action.UPDATE)
+      .accessibleBy(req.ability, Action.UPDATE)
       .updateOne({ _id: id }, { $set: set }).exec()
     const got = await getPersonalGoalbyId(id)
     res.json(got)
