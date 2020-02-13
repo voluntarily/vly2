@@ -6,8 +6,7 @@ import MemberSection from '../Member/MemberSection'
 import { ProfilePanel } from '../VTheme/Profile'
 import { OrgAboutPanel } from './OrgAboutPanel'
 import Html from '../VTheme/Html'
-
-const shadowStyle = { overflow: 'visible', textAlign: 'center' }
+import VTabs from '../VTheme/VTabs'
 const { TabPane } = Tabs
 
 const orgTab =
@@ -46,7 +45,7 @@ const orgOffersTab =
 //   />
 
 export const OrgTabs = ({ org, onChange }) => (
-  <Tabs style={shadowStyle} defaultActiveKey='1' onChange={onChange}>
+  <VTabs defaultActiveKey='1' onChange={onChange}>
     <TabPane tab={orgTab} key='1'>
       <OrgAboutPanel org={org} />
     </TabPane>
@@ -64,7 +63,7 @@ export const OrgTabs = ({ org, onChange }) => (
     </TabPane>
     <TabPane tab={orgOffersTab} key='5' />
     {/* <TabPane tab={orgSettingsTab} key='6' /> */}
-  </Tabs>
+  </VTabs>
 )
 
 OrgTabs.propTypes = {

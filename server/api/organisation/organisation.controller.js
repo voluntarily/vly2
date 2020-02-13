@@ -1,9 +1,5 @@
 const Organisation = require('./organisation')
-// const Tag = require('../tag/tag')
-// const escapeRegex = require('../../util/regexUtil')
-
-// import slug from 'limax'
-// import sanitizeHtml from 'sanitize-html'
+const { Role } = require('../../services/authorize/role')
 
 /**
  * Get all orgs
@@ -33,6 +29,51 @@ const getOrganisations = async (req, res) => {
   }
 }
 
+// Update
+const putOrganisation = async (req, res) => {
+  const isAdmin = req.session.me.role.includes(Role.ADMIN)
+
+  // The current user must be; an ADMIN, or an ORG_ADMIN of the requested organisation
+  if (!isAdmin && !req.session.me.orgAdminFor.includes(req.params._id)) {
+    return res.status(403).end()
+  }
+
+  // Category field can only be set by ADMIN
+  if (!isAdmin) {
+    delete req.body.category
+  }
+
+  await Organisation.findByIdAndUpdate(req.params._id, { $set: req.body })
+  res.json(await Organisation.findById(req.params._id).exec())
+}
+
+// Create
+const postOrganisation = async (req, res) => {
+  if (!req.session.me.role.includes(Role.ADMIN)) {
+    return res.status(403).end()
+  }
+
+  const org = await new Organisation(req.body).save()
+  return res.json(org)
+}
+
+// Delete
+const deleteOrganisation = async (req, res) => {
+  if (!req.session.me.role.includes(Role.ADMIN)) {
+    return res.status(403).end()
+  }
+
+  if (!req.params._id) {
+    return res.status(400).end()
+  }
+
+  await Organisation.deleteOne({ _id: req.params._id })
+  return res.status(204).end()
+}
+
 module.exports = {
-  getOrganisations
+  getOrganisations,
+  putOrganisation,
+  postOrganisation,
+  deleteOrganisation
 }

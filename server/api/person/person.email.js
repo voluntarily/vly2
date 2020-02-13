@@ -12,7 +12,6 @@ module.exports.emailPerson = async (template, to, props, renderOnly = false) => 
   if (to._id && !to.sendEmailNotifications) {
     return null
   }
-
   try {
     const transport = getTransport()
     const email = new Email({

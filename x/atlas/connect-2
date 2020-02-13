@@ -1,0 +1,3 @@
+# Connects to db in singapore
+#mongo "mongodb+srv://cluster0-kwmsu.mongodb.net/vly2-alpha"  --username vly-client --password ZhF3BUDiwpy8C3xK
+mongo "mongodb+srv://cluster0-kwmsu.mongodb.net/vly2-alpha"  --username vly-admin --password 7rUSSy8lUQM8Q4Wx

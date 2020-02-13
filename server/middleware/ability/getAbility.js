@@ -34,6 +34,7 @@ module.exports = options => (req, res, next) => {
       if (role === 'admin') break
     }
   })
+
   req.ability = new Ability(allRules)
   next()
 }

@@ -181,25 +181,17 @@ function ensureSanitized (req, res, next) {
     },
     allowedStyles: {
       span: {
-        // permits values for color and background-color CSS properties that look like 'rgb(230,0,50)'
         color: [/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/],
         backgroundColor: [/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/]
       }
     },
     allowedIframeHostnames: ['www.youtube.com'],
-    // Should prevent any iframes using something other than https for their src.
     allowedSchemesByTag: { iframe: ['https'] },
     allowProtocolRelative: false
   }
 
   const op = req.body
-  if (op.name) { op.name = sanitizeHtml(op.name) }
-  if (op.subtitle) { op.subtitle = sanitizeHtml(op.subtitle) }
-  if (op.imgUrl) { op.imgUrl = sanitizeHtml(op.imgUrl) }
   if (op.description) { op.description = sanitizeHtml(op.description, descriptionOptions) }
-  if (op.duration) { op.duration = sanitizeHtml(op.duration) }
-  if (op.location) { op.location = sanitizeHtml(op.location) }
-  // if (op.offerOrg) { op.offerOrg = sanitizeHtml(op.offerOrg) }
   req.body = op
   next()
 }

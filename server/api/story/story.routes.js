@@ -1,7 +1,7 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Story = require('./story')
-const { getStory, putStory } = require('./story.controller')
+const { listStory, getStory } = require('./story.controller')
 const initializeTags = require('../../util/initTags')
 
 module.exports = (server) => {
@@ -15,10 +15,11 @@ module.exports = (server) => {
         middlewares: [initializeTags],
         only: ['create', 'update']
       }],
-      // actions: {}, // read (GET), update (PUT)
+      // actions: {}, // read (GET), update (PUT), list (LIST)
       actions: {
-        read: getStory,
-        update: putStory
+        list: listStory,
+        read: getStory
+        // update: putStory
       },
       afterActions: [
         // this is the place to require user be authed.

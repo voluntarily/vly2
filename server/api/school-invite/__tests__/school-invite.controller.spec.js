@@ -9,7 +9,6 @@ import nodemailerMock from 'nodemailer-mock'
 import fixtures from './school-invite.fixture'
 import Person from '../../person/person'
 import { MemberStatus } from '../../member/member.constants'
-import mongoose from 'mongoose'
 import { TOPIC_MEMBER__UPDATE } from '../../../services/pubsub/topic.constants'
 import PubSub from 'pubsub-js'
 import sinon from 'sinon'
@@ -213,37 +212,4 @@ test.serial('Link person to organisation as admin', async (t) => {
   t.is(member.validation, 'orgAdmin from school-invite controller')
   t.is(member.status, MemberStatus.ORGADMIN)
   t.true(spy.calledOnce)
-})
-
-test.serial('Make person opportunity provider', async (t) => {
-  const person = await Person.findOne()
-  await SchoolInvite.makePersonOpportunityProvider(person._id)
-
-  const updatedPerson = await Person.findById(person._id)
-  t.true(updatedPerson.role.includes(Role.OPPORTUNITY_PROVIDER))
-})
-
-test.serial('Make person opportunity provider with non-existent person id', async (t) => {
-  const nonExistentPersonId = mongoose.Types.ObjectId()
-
-  await t.throwsAsync(
-    async () => {
-      await SchoolInvite.makePersonOpportunityProvider(nonExistentPersonId)
-    },
-    'Person not found'
-  )
-})
-
-test.serial('Make person opportunity provider prevent duplicate roles', async (t) => {
-  const person = await Person.findOne()
-
-  await SchoolInvite.makePersonOpportunityProvider(person._id)
-  await SchoolInvite.makePersonOpportunityProvider(person._id)
-
-  const updatedPerson = await Person.findById(person._id)
-
-  t.is(
-    updatedPerson.role.filter((role) => role === Role.OPPORTUNITY_PROVIDER).length,
-    1
-  )
 })

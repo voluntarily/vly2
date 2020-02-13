@@ -20,7 +20,7 @@ const handleToken = async (req, res, actionTable) => {
     return res.redirect(payload.redirectUrl)
   } catch (e) {
     console.error('handleToken:', e)
-    res.status(500).end()
+    res.status(404).send(e.message)
   }
 }
 

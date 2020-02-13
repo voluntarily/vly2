@@ -1,8 +1,8 @@
-import { Avatar, Button, Table } from 'antd'
-import Router from 'next/router'
+import { Button, Table } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
+import { AvatarProfile } from '../VTheme/AvatarProfileLink'
 
 class InterestArchivedTable extends Component {
   state = {
@@ -37,16 +37,7 @@ class InterestArchivedTable extends Component {
         sortOrder: sortedInfo.columnKey === 'imgUrl' && sortedInfo.order,
         render: (text, record) => {
           return (
-            <span>
-              <Avatar
-                size='large'
-                shape='square'
-                onClick={() => Router.push(`/people/${record.person._id}`)}
-                src={record.person.imgUrl}
-                icon='user'
-              />&nbsp;&nbsp;
-              {record.person.nickname}
-            </span>
+            <AvatarProfile person={record.person} />
           )
         }
       },
