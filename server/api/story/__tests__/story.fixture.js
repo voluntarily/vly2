@@ -11,7 +11,7 @@ export default [
     status: 'published',
     datePublished: '2020-01-01T12:23:00.000Z',
     allowComments: true,
-    parent: null,
+    parent: '5df0265916dc014f404ce0a0',
     tags: ['featured', 'voluntarily', 'opensource']
   },
   {

@@ -13,13 +13,14 @@ const storySchema = new Schema({
     type: String,
     required: true,
     default: 'draft',
-    enum: ['draft', 'published', 'cancelled']
+    enum: ['draft', 'published', 'deleted']
   },
   dateAdded: { type: 'Date', default: Date.now, required: true },
   datePublished: { type: 'Date' },
   allowComments: { type: Boolean, default: true, required: true },
   parent: { type: Schema.Types.ObjectId },
-  tags: [String]
+  tags: [String],
+  albumKey: [String]
 })
 
 storySchema.plugin(idvalidator)

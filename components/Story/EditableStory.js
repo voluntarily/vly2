@@ -22,9 +22,9 @@ export const EditableStory = ({ roles, story }) => {
   return (
     editing
       ? (
-          <>
-            <StoryForm story={story} onSubmit={handleSave} />
-          </>)
+        <>
+          <StoryForm story={story} onSubmit={handleSave} />
+        </>)
       : (
         <StoryDetail story={story}>
           <Button shape='round' type='primary' onClick={() => setEditing(true)}>Edit</Button>
