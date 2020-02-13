@@ -1,8 +1,9 @@
 const { Role } = require('../../services/authorize/role')
 const { Action } = require('../../services/abilities/ability.constants')
 const { InterestStatus, SchemaName } = require('./interest.constants')
+const Opportunity = require('../opportunity/opportunity')
 
-const ruleBuilder = session => {
+const ruleBuilder = async (session) => {
   const anonAbilities = [{
     subject: SchemaName,
     action: Action.LIST,
@@ -53,10 +54,23 @@ const ruleBuilder = session => {
     })
   }
 
+  const opportunityProviderRules = []
+
+  if (session.me && session.me._id && session.me.role.includes(Role.OPPORTUNITY_PROVIDER)) {
+    const myOpportunities = await Opportunity.find({ requestor: session.me._id })
+    const myOpportunityIds = myOpportunities.map(opportunity => opportunity._id.toString())
+
+    opportunityProviderRules.push({
+      subject: SchemaName,
+      action: Action.LIST,
+      conditions: { opportunity: { $in: myOpportunityIds } }
+    })
+  }
+
   return {
     [Role.ANON]: anonAbilities,
     [Role.VOLUNTEER_PROVIDER]: volunteerAbilities,
-    [Role.OPPORTUNITY_PROVIDER]: allAbilities,
+    [Role.OPPORTUNITY_PROVIDER]: opportunityProviderRules,
     [Role.ACTIVITY_PROVIDER]: allAbilities,
     [Role.ORG_ADMIN]: allAbilities,
     [Role.ADMIN]: allAbilities
