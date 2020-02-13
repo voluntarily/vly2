@@ -1,6 +1,6 @@
 const { Role } = require('../../services/authorize/role')
 const { Action } = require('../../services/abilities/ability.constants')
-const { SchemaName } = require('./interest.constants')
+const { InterestStatus, SchemaName } = require('./interest.constants')
 
 const ruleBuilder = session => {
   const anonAbilities = [{
@@ -38,6 +38,10 @@ const ruleBuilder = session => {
       subject: SchemaName,
       action: Action.READ,
       conditions: { person: session.me._id }
+    }, {
+      subject: SchemaName,
+      action: Action.CREATE,
+      conditions: { person: session.me._id, status: InterestStatus.INTERESTED }
     })
   }
 

@@ -142,6 +142,40 @@ const testScenarios = [
   },
   {
     role: 'volunteer',
+    action: 'create (invalid status)',
+    makeRequest: async (context) => {
+      return request(server)
+        .post('/api/interests')
+        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .send({
+          opportunity: context.fixtures.opportunities[0]._id,
+          comment: 'Test comment',
+          status: InterestStatus.INVITED
+        })
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 403)
+    }
+  },
+  {
+    role: 'volunteer',
+    action: 'create (for other user)',
+    makeRequest: async (context) => {
+      return request(server)
+        .post('/api/interests')
+        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .send({
+          person: context.fixtures.people[3]._id,
+          opportunity: context.fixtures.opportunities[0]._id,
+          comment: 'Test comment'
+        })
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 403)
+    }
+  },
+  {
+    role: 'volunteer',
     action: 'update',
     makeRequest: async (context) => {
       return request(server)

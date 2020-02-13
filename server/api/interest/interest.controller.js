@@ -82,11 +82,22 @@ const getInterestDetail = async (interestID) => {
 }
 
 const createInterest = async (req, res) => {
-  const newInterest = new Interest(req.body)
-  try {
-    await newInterest.save()
+  const interestData = req.body
 
-    const interestDetail = await getInterestDetail(newInterest._id)
+  if (!interestData.person) {
+    interestData.person = (req.session.me && req.session.me._id) ? req.session.me._id : undefined
+  }
+
+  const interest = new Interest(interestData)
+
+  if (!req.ability.can(Action.CREATE, interest)) {
+    return res.sendStatus(403)
+  }
+
+  try {
+    await interest.save()
+
+    const interestDetail = await getInterestDetail(interest._id)
     sendInterestedEmail('acknowledgeInterest', interestDetail.person, interestDetail)
     sendInterestedEmail('interested', interestDetail.opportunity.requestor, interestDetail)
     res.json(interestDetail)
