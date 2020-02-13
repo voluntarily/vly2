@@ -2,7 +2,9 @@ import { Button, Divider } from 'antd'
 import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
+import { FormattedMessage } from 'react-intl'
 import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
+import PersonaSection from '../../components/LandingPageComponents/PersonaSection'
 import {
   BigQuote,
   BigQuoteAuthor,
@@ -25,20 +27,26 @@ const ButtonContainer = styled.div`
 `
 const TextHeroTitle = styled.h1`
   font-family: Inter-Bold;
-  font-size: 72px;
+  font-size: 4.5rem;
   color: #000000;
   letter-spacing: -4.05px;
   line-height: 96px;
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
+
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
   }
   @media screen and (max-width: 768px) {
+    font-size: 2.5rem;
+    letter-spacing: -2.4px;
+  line-height: 1.5;
   }
 `
 
 const TextHeroDescription = styled.h1`
+  margin-top: 1rem;
+
   font-weight: 400;
   font-size: 2.5rem;
   letter-spacing: -1.67px;
@@ -49,6 +57,9 @@ const TextHeroDescription = styled.h1`
   @media screen and (min-width: 768px) and (max-width: 1025px) {
   }
   @media screen and (max-width: 768px) {
+    font-size: 2rem;
+    letter-spacing: -2px;
+  line-height: 1.5;
   }
 `
 
@@ -97,8 +108,8 @@ const AboutImage = styled.img`
   }
 `
 const ListItemImage = styled.img`
-  width: 39rem;
-  height: 25rem;
+  width: 100%;
+
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
     width: calc(45vw - 2rem);
     height: auto;
@@ -149,7 +160,7 @@ const HeroContainer = styled.div`
   }
 `
 const SectionContainer = styled.div`
-  margin: 10rem 0;
+  margin: 8rem 0;
 
   position: relative;
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
@@ -232,24 +243,11 @@ export class Teacher extends Component {
             </TextHeroDescription>
           </SectionContainer>
 
-          <SectionContainer>
-            <SectionTitle>We are working with</SectionTitle>
-            <SponsorContainer>
-              <SponsorIcon src='static/img/partners/MOE.png' />
-              <SponsorIcon src='static/img/partners/tec.png' />
-              <SponsorIcon src='static/img/partners/Spark.png' />
-              <SponsorIcon src='static/img/partners/Westpac.png' />
-              <SponsorIcon src='static/img/partners/Datacom.png' />
-              <SponsorIcon src='static/img/partners/innovationfund.png' />
-              <SponsorIcon src='static/img/partners/ateed.png' />
-              {/* <SponsorIcon src='static/img/partners/xero.png' /> */}
-              <SponsorIcon src='static/img/partners/uni.png' />
-            </SponsorContainer>
-          </SectionContainer>
+         
 
           <SectionContainer>
             <HalfGrid>
-              <img src='static/img/landing-pages/teachers/resources.png' />
+              <ListItemImage src='static/img/landing-pages/teachers/resources.png' />
               <SectionGridItem>
                 <h2>Free resources</h2>
                 <h4>
@@ -265,7 +263,41 @@ export class Teacher extends Component {
             </HalfGrid>
           </SectionContainer>
 
-          <SectionTitle>aaaaa</SectionTitle>
+          <SectionContainer>
+            <HalfGrid>
+              <SectionGridItem>
+                <h2>Bring in Expert Volunteers</h2>
+                <h4>
+                  Skilled volunteers want to help you out with your teaching by
+                  sharing their skills
+                </h4>
+                <ButtonContainer>
+                  <Button shape='round' size='large'>
+                  Sign up
+                  </Button>
+                </ButtonContainer>
+              </SectionGridItem>
+              <ListItemImage src='static/img/landing-pages/teachers/volunteers.png' />
+            </HalfGrid>
+          </SectionContainer>
+          <Divider />
+          <SectionContainer>
+            <SectionTitle>We are working with</SectionTitle>
+            <SponsorContainer>
+              <SponsorIcon src='static/img/partners/MOE.png' />
+              <SponsorIcon src='static/img/partners/tec.png' />
+              <SponsorIcon src='static/img/partners/Spark.png' />
+              <SponsorIcon src='static/img/partners/Westpac.png' />
+              <SponsorIcon src='static/img/partners/Datacom.png' />
+              <SponsorIcon src='static/img/partners/innovationfund.png' />
+              <SponsorIcon src='static/img/partners/ateed.png' />
+              {/* <SponsorIcon src='static/img/partners/xero.png' /> */}
+              <SponsorIcon src='static/img/partners/uni.png' />
+            </SponsorContainer>
+          </SectionContainer>
+
+<SectionContainer>
+          <SectionTitle>Features</SectionTitle>
           <TripleGrid>
             <ItemContainer>
               <ItemIcon src='/static/img/icons/search.svg' />
@@ -316,13 +348,14 @@ export class Teacher extends Component {
               </P>
             </ItemContainer>
           </TripleGrid>
-          <Spacer />
+          </SectionContainer>
+ 
           <Divider />
 
-          <SectionTitle title='How to get involved' />
+          <SectionTitle>Get Involved</SectionTitle>
           <HalfGrid>
             <ItemContainer>
-              <H3>Sign up for updates</H3>
+              <h4>Sign up for updates</h4>
               <SpacerSmall />
               <P>Voluntarily is currently in beta and will launch soon.</P>
               <ButtonContainer>
@@ -332,7 +365,7 @@ export class Teacher extends Component {
               </ButtonContainer>
             </ItemContainer>
             <ItemContainer>
-              <H3>Contact us</H3>
+              <h4>Contact us</h4>
               <SpacerSmall />
               <P>
                 Want to get more involved in the project? Get in touch below.
@@ -345,6 +378,15 @@ export class Teacher extends Component {
               <ButtonContainer />
             </ItemContainer>
           </HalfGrid>
+          <Divider/>
+          <SectionTitle>
+        <FormattedMessage
+          id='landing.sectiontitle.persona'
+          defaultMessage='Who we help'
+        />
+      </SectionTitle>
+          <PersonaSection/>
+          
         </FullPage>
       </div>
     )
