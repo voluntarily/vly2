@@ -280,6 +280,7 @@ export class Teacher extends Component {
               <ListItemImage src='static/img/landing-pages/teachers/volunteers.png' />
             </HalfGrid>
           </SectionContainer>
+        
           <Divider />
           <SectionContainer>
             <SectionTitle>We are working with</SectionTitle>
@@ -379,6 +380,7 @@ export class Teacher extends Component {
             </ItemContainer>
           </HalfGrid>
           <Divider/>
+          <Spacer />
           <SectionTitle>
         <FormattedMessage
           id='landing.sectiontitle.persona'
