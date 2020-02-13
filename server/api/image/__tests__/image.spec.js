@@ -3,6 +3,7 @@ import request from 'supertest'
 import { server, appReady } from '../../../server'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import fs from 'fs-extra'
+import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 
 test.before('before connect to database', async (t) => {
   try {
@@ -31,8 +32,14 @@ const sendImageToAPI = (path, filename) => {
     .send(JSON.stringify({ image: file, file: filename }))
 }
 
-test.serial.failing('Should upload a small file', async t => {
+test.serial('Upload image - anonymous', async t => {
+  const response = await sendImageToAPI(__dirname, '194px-Testcard_F.jpg')
+  t.is(response.statusCode, 403)
+})
+
+test.serial('Upload image - authenticated', async t => {
   const res = await sendImageToAPI(__dirname, '194px-Testcard_F.jpg')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   t.regex(res.body.imageUrl, /-194px-testcard_f_full\.png/i)
@@ -45,14 +52,15 @@ test.serial.failing('Should upload a small file', async t => {
       .expect(200)
       .expect('Content-Type', /image/)
 
-    t.is(img.body.length, 64714)
+    t.is(img.body.length, 15185)
   }
 })
 
-test.serial('Should fail to upload', async t => {
+test.serial('Empty image should fail to upload', async t => {
   const res = await request(server)
     .post('/api/images')
     .set('content-type', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .send(JSON.stringify({ image: {}, file: 'okfilename' }))
     .expect('Content-Type', /json/)
   t.is(res.status, 400)

@@ -5,6 +5,8 @@ const Tag = require('./tag')
  */
 async function listTags (req, res) {
   try {
+    // note: currently we just return the first tag collection.
+    // there's no way to identify other dictionaries.
     const fetched = await Tag.findOne({}, 'tags', { lean: true })
 
     let responseData = []
