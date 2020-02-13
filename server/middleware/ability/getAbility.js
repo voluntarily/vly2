@@ -15,7 +15,7 @@ const openPath = url => {
   return false
 }
 
-module.exports = options => (req, res, next) => {
+module.exports = options => async (req, res, next) => {
   if (openPath(req.url)) {
     return next()
   }
@@ -23,9 +23,10 @@ module.exports = options => (req, res, next) => {
   const pattern = rootPath + options.searchPattern
   const userRoles = req.session && req.session.me ? req.session.me.role : [Role.ANON]
   let allRules = []
-  glob.sync(pattern).forEach(abilityRuleBuilderPath => {
+
+  for (const abilityRuleBuilderPath of glob.sync(pattern)) {
     const ruleBuilder = require(abilityRuleBuilderPath)
-    const rules = ruleBuilder(req.session)
+    const rules = await ruleBuilder(req.session)
     for (const role of userRoles) {
       if (rules[role] == null) continue
       if (role) {
@@ -33,7 +34,7 @@ module.exports = options => (req, res, next) => {
       }
       if (role === 'admin') break
     }
-  })
+  }
 
   req.ability = new Ability(allRules)
   next()
