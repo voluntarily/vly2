@@ -10,24 +10,25 @@ const listStory = async (req, res) => {
   // Return enough info for a blog post
   const got = await Story.find(query)
     .populate('author', 'name imgUrl')
-    .sort('dateAdded').exec()
+    .sort('-dateAdded').exec() // sorts the data by date in the server
 
   res.json(got)
 }
 
 const getStory = async (req, res) => {
   try {
-    const got = await Story.findbyId(req.params.id)
+    const got = await Story.findById(req.params._id)
       .populate('author', 'name imgUrl')
       .exec()
     res.json(got)
   } catch (e) {
+    console.error(e)
     res.status(404).send(e)
   }
 }
 
 const putStory = async (req, res) => {
-  await Story.findByIdAndUpdate(req.params.id, { $set: req.body })
+  await Story.findByIdAndUpdate(req.params._id, { $set: req.body })
   getStory(req, res)
 }
 

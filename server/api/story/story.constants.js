@@ -1,16 +1,14 @@
 const { Action } = require('../../services/abilities/ability.constants')
 
 const StoryRoutes = {
-  [Action.LIST]: '/orgs',
-  [Action.READ]: '/orgs/:id',
-  [Action.UPDATE]: '/orgs/:id/edit',
-  [Action.CREATE]: '/org/new'
+  [Action.READ]: 'api/stories/:id'
 }
 
 const StoryStatus = {
   DRAFT: 'draft',
-  PUBLISH: 'publish',
-  CANCELLED: 'cancelled'
+  PUBLISHED: 'published',
+  CANCELLED: 'cancelled',
+  DELETED: 'deleted'
 }
 
 const StoryFields = {
