@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { OpSectionGrid, ContentCard, P } from '../VTheme/VTheme'
 import AddStory from '../../components/Story/AddStory'
-import { StoryStack, StoryStackWithNew } from '../../components/Story/StoryStack'
+import { StoryStack } from '../../components/Story/StoryStack'
 import reduxApi, { withStories } from '../../lib/redux/reduxApi'
 import { FormattedMessage } from 'react-intl'
 
