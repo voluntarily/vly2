@@ -244,13 +244,12 @@ for (const role of [Role.ADMIN, Role.ORG_ADMIN, Role.TESTER]) {
   test.serial(`Update - ${role} can update person`, async t => {
     const person = await createPerson([Role.ADMIN])
 
-    const email = `${uuid()}@email.nz`
+    const newName = uuid()
 
     const res = await request(server)
       .put(`/api/people/${person._id}`)
       .send({
-        name: 'testname',
-        email,
+        name: newName,
         role: [Role.VOLUNTEER_PROVIDER],
         status: 'active',
         phone: 'testphone'
@@ -261,8 +260,8 @@ for (const role of [Role.ADMIN, Role.ORG_ADMIN, Role.TESTER]) {
     t.is(res.status, 200)
 
     const person2 = await Person.findById(person._id)
-    t.is(person2.name, 'testname')
-    t.is(person2.email, email)
+    t.is(person2.name, newName)
+    t.is(person2.email, person.email)
     t.is(person2.role[0], Role.VOLUNTEER_PROVIDER)
     t.is(person2.status, 'active')
     t.is(person2.phone, 'testphone')
@@ -271,12 +270,12 @@ for (const role of [Role.ADMIN, Role.ORG_ADMIN, Role.TESTER]) {
 
 test.serial('Update - can update self (even with role which denies update)', async t => {
   const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const originalEmail = person.email
 
   const res = await request(server)
     .put(`/api/people/${person._id}`)
     .send({
       name: 'testname',
-      email: 'test@self.com',
       role: [Role.RESOURCE_PROVIDER],
       status: 'active',
       phone: 'testphone'
@@ -288,7 +287,7 @@ test.serial('Update - can update self (even with role which denies update)', asy
 
   const person2 = await Person.findById(person._id)
   t.is(person2.name, 'testname')
-  t.is(person2.email, 'test@self.com')
+  t.is(person2.email, originalEmail)
   t.is(person2.role[0], Role.RESOURCE_PROVIDER)
   t.is(person2.status, 'active')
   t.is(person2.phone, 'testphone')
@@ -413,3 +412,49 @@ for (const role of [Role.ORG_ADMIN, Role.ANON, Role.ALL, 'undefined', 'null']) {
     t.is(person2.role[0], Role.VOLUNTEER_PROVIDER)
   })
 }
+
+for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
+  test.serial(`Update - Only ADMIN can change a users email field - ${role} cannot`, async t => {
+    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const originalEmail = person.email
+
+    const res = await request(server)
+      .put(`/api/people/${person._id}`)
+      .send({
+        name: 'testname',
+        email: `${uuid()}@test.com`, // Update the users email to a new value
+        role: person.role,
+        status: 'active',
+        phone: 'testphone'
+      })
+      .set('Accept', 'application/json')
+      .set('Cookie', `idToken=${await createPersonAndGetToken([role])}`)
+
+    t.is(res.status, 403)
+
+    const person2 = await Person.findById(person._id)
+    t.is(person2.email, originalEmail)
+  })
+}
+test.serial(`Update - Only ADMIN can change a users email field`, async t => {
+  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+
+  const payload = {
+    name: 'testname',
+    email: `${uuid()}@test.com`, // Update the users email to a new value
+    role: person.role,
+    status: 'active',
+    phone: 'testphone'
+  }
+
+  const res = await request(server)
+    .put(`/api/people/${person._id}`)
+    .send(payload)
+    .set('Accept', 'application/json')
+    .set('Cookie', `idToken=${await createPersonAndGetToken([Role.ADMIN])}`)
+
+  t.is(res.status, 200)
+
+  const person2 = await Person.findById(person._id)
+  t.is(person2.email, payload.email)
+})

@@ -46,15 +46,23 @@ const isProd = process.env.NODE_ENV === 'production'
 
 async function updatePersonDetail (req, res, next) {
   const { ability: userAbility, body: person } = req
-  const me = req.session.me
-  const personId = req.params._id
 
+  const me = req.session.me
   if (!me) {
     return res.sendStatus(401)
   }
+
+  const personId = req.params._id
   if (!personId || !person) {
     return res.sendStatus(400)
   }
+
+  const currentPerson = await Person.findById(personId).lean().exec()
+  if (!currentPerson) {
+    return res.sendStatus(404)
+  }
+
+  const updatingSelf = me._id && personId === me._id.toString()
 
   // ADMIN, TESTER, ORG_ADMIN or the owner of the person record is allowed to update it, otherwise forbidden
   const allowed = (me.role &&
@@ -63,7 +71,7 @@ async function updatePersonDetail (req, res, next) {
                     me.role.includes(Role.TESTER) ||
                     me.role.includes(Role.ORG_ADMIN)
                   )) ||
-                  (me._id && personId === me._id.toString())
+                  updatingSelf
 
   if (!allowed) {
     return res.sendStatus(403)
@@ -77,6 +85,11 @@ async function updatePersonDetail (req, res, next) {
   const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]
   if (person.role.find(role => !applicableRoles.includes(role))) {
     return res.sendStatus(400)
+  }
+
+  // Only ADMIN can change the email field
+  if (person.email && !me.role.includes(Role.ADMIN)) {
+    return res.sendStatus(403)
   }
 
   if (isProd) { delete person.role } // cannot save role - its virtual
