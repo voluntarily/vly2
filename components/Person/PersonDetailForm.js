@@ -72,6 +72,7 @@ class PersonDetailForm extends Component {
         }
         person.status = values.status
         person.education = values.education
+        person.placeOfWork = values.placeOfWork
         window.scrollTo(0, 0)
         this.props.onSubmit(this.props.person)
       }
@@ -201,7 +202,13 @@ class PersonDetailForm extends Component {
         </Tooltip>
       </span>
     )
-
+    const personplaceOfWork = (
+      <FormattedMessage
+        id='placeOfWork'
+        defaultMessage='Where is your place of Work'
+        description='persons location of work if they do not come from a organisation'
+      />
+    )
     const personTags = (
       <FormattedMessage
         id='PersonDetailForm.Label.Tags'
@@ -318,6 +325,11 @@ class PersonDetailForm extends Component {
               <Form.Item label={personEducation}>
                 {getFieldDecorator('education')(
                   <EducationSelectorRef />
+                )}
+              </Form.Item>
+              <Form.Item label={personplaceOfWork}>
+                {getFieldDecorator('placeOfWork')(
+                  <Input placeholder='Enter your place of work here' />
                 )}
               </Form.Item>
             </InputContainer>
@@ -566,6 +578,7 @@ PersonDetailForm.propTypes = {
     facebook: PropTypes.string,
     twitter: PropTypes.string,
     website: PropTypes.string,
+    placeOfWork: PropTypes.string,
     pronoun: PropTypes.object,
     imgUrl: PropTypes.string,
     imgUrlSm: PropTypes.string,
@@ -618,6 +631,10 @@ export default Form.create({
       education: Form.createFormField({
         ...props.person.education,
         value: props.person.education
+      }),
+      placeOfWork: Form.createFormField({
+        ...props.person.placeOfWork,
+        value: props.person.placeOfWork
       }),
       email: Form.createFormField({
         ...props.person.email,
