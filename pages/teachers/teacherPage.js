@@ -18,9 +18,16 @@ import publicPage from '../../hocs/publicPage'
 
 const ButtonContainer = styled.div`
   margin-top: 1rem;
+  @media screen and (max-width: 768px) {
+    margin-top: 0;
+  }
+Button {
+  margin-top: 1rem;
+}
 `
+
 const TextHeroTitle = styled.h1`
-  font-family: Inter-Bold;
+  font-weight: 700;
   font-size: 4.5rem;
   color: #000000;
   letter-spacing: -4.05px;
@@ -31,8 +38,8 @@ const TextHeroTitle = styled.h1`
   @media screen and (min-width: 768px) and (max-width: 1025px) {
   }
   @media screen and (max-width: 768px) {
-    font-size: 2.5rem;
-    letter-spacing: -2.4px;
+    font-size: 2rem;
+    letter-spacing: -2px;
     line-height: 1.5;
   }
 `
@@ -41,8 +48,8 @@ const TextHeroDescription = styled.h1`
   margin-top: 1rem;
 
   font-weight: 400;
-  font-size: 2.5rem;
-  letter-spacing: -1.67px;
+  font-size: 2.2rem;
+  letter-spacing: -1.2px;
   line-height: 1.5;
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
@@ -50,8 +57,8 @@ const TextHeroDescription = styled.h1`
   @media screen and (min-width: 768px) and (max-width: 1025px) {
   }
   @media screen and (max-width: 768px) {
-    font-size: 2rem;
-    letter-spacing: -2px;
+    font-size: 1.5rem;
+    letter-spacing: -1.1px;
     line-height: 1.5;
   }
 `
@@ -110,10 +117,12 @@ const ListItemImage = styled.img`
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     width: calc(45vw - 2rem);
     height: auto;
+   
   }
   @media screen and (max-width: 768px) {
     width: calc(100vw - 2rem);
     height: auto;
+    order: -2;
   }
 `
 const SponsorIcon = styled.img`
@@ -123,8 +132,8 @@ const SponsorIcon = styled.img`
   height: 10rem;
   width: 10rem;
   @media screen and (max-width: 768px) {
-    height: 5rem;
-    width: 5rem;
+    width: 100%;
+    object-fit: contain;
     margin-right: 1rem;
     margin-bottom: 1rem;
   }
@@ -137,18 +146,17 @@ const HeroContainer = styled.div`
   position: relative;
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    padding-top: 8rem;
+    margin-top: 8rem;
     padding-bottom: 1rem;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1025px) {
-    padding-top: 4rem;
+    margin-top: 2rem;
     padding-bottom: 2rem;
   }
 
   @media screen and (max-width: 768px) {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    margin: 5rem 0 4rem 0;
     height: auto;
   }
 `
@@ -176,12 +184,20 @@ const SectionGridItem = styled.div`
   align-self: center;
 `
 
+const SectionGridItemLeft = styled.div`
+  display: grid;
+  align-self: center;
+  @media screen and (max-width: 768px) {
+   order: -1;
+  }
+`
+
 const SponsorContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, 10rem);
   grid-gap: 4rem;
   @media screen and (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, 5rem);
+    grid-template-columns: 1fr 1fr;
     grid-gap: 2rem;
     margin-top: 2rem;
     margin-bottom: 4rem;
@@ -230,6 +246,7 @@ export class Teacher extends Component {
             <AboutImage src='/static/test2.png' />
 
             <TextHeroDescription>
+              <strong>Call in support from experts</strong><br />
               Voluntarily helps teachers get assistance and support in their
               teaching from industry volunteers. All you need to do is list what
               kind of skills you want or need, and volunteers will come.
@@ -240,7 +257,7 @@ export class Teacher extends Component {
             <HalfGrid>
               <ListItemImage src='static/img/landing-pages/teachers/resources.png' />
               <SectionGridItem>
-                <h2>Free resources</h2>
+                <h2><strong>Free resources</strong></h2>
                 <h4>
                   Organize activities in a few clicks with free educational
                   activity templates and resources
@@ -256,8 +273,8 @@ export class Teacher extends Component {
 
           <SectionContainer>
             <HalfGrid>
-              <SectionGridItem>
-                <h2>Bring in Expert Volunteers</h2>
+              <SectionGridItemLeft>
+                <h2><strong>Bring in Expert Volunteers</strong></h2>
                 <h4>
                   Skilled volunteers want to help you out with your teaching by
                   sharing their skills
@@ -267,7 +284,7 @@ export class Teacher extends Component {
                     Sign up
                   </Button>
                 </ButtonContainer>
-              </SectionGridItem>
+              </SectionGridItemLeft>
               <ListItemImage src='static/img/landing-pages/teachers/volunteers.png' />
             </HalfGrid>
           </SectionContainer>
@@ -287,7 +304,7 @@ export class Teacher extends Component {
               <SponsorIcon src='static/img/partners/uni.png' />
             </SponsorContainer>
           </SectionContainer>
-
+          <Divider />
           <SectionContainer>
             <SectionTitle>Features</SectionTitle>
             <TripleGrid>
