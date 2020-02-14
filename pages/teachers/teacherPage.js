@@ -15,6 +15,7 @@ import {
   TripleGrid
 } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
+import Hero2 from '../../components/LandingPageComponents/Hero2'
 
 const ButtonContainer = styled.div`
   margin-top: 1rem;
@@ -24,24 +25,6 @@ const ButtonContainer = styled.div`
 Button {
   margin-top: 1rem;
 }
-`
-
-const TextHeroTitle = styled.h1`
-  font-weight: 700;
-  font-size: 4.5rem;
-  color: #000000;
-  letter-spacing: -4.05px;
-  line-height: 96px;
-
-  @media screen and (min-width: 1026px) and (max-width: 1281px) {
-  }
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-  }
-  @media screen and (max-width: 768px) {
-    font-size: 2rem;
-    letter-spacing: -2px;
-    line-height: 1.5;
-  }
 `
 
 const TextHeroDescription = styled.h1`
@@ -60,27 +43,6 @@ const TextHeroDescription = styled.h1`
     font-size: 1.5rem;
     letter-spacing: -1.1px;
     line-height: 1.5;
-  }
-`
-
-const TextMiniTitle = styled.p`
-  margin-top: 2rem;
-  width: 12.8rem;
-  color: gray;
-  font-size: 1rem;
-  letter-spacing: -0.5px;
-
-  font-weight: 400;
-  margin-bottom: -0.5rem;
-  border-radius: 12px;
-
-  @media screen and (min-width: 1026px) and (max-width: 1281px) {
-  }
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-  }
-  @media screen and (max-width: 768px) {
-    margin-top: 4rem;
-    margin-bottom: 0.5rem;
   }
 `
 // Page-Specific Images
@@ -141,25 +103,6 @@ const SponsorIcon = styled.img`
 
 // Page-Specific Containers
 
-const HeroContainer = styled.div`
-  margin: 10rem 0;
-  position: relative;
-
-  @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    margin-top: 8rem;
-    padding-bottom: 1rem;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    margin-top: 2rem;
-    padding-bottom: 2rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    margin: 5rem 0 4rem 0;
-    height: auto;
-  }
-`
 const SectionContainer = styled.div`
   margin: 8rem 0;
 
@@ -225,23 +168,13 @@ export class Teacher extends Component {
           <Helmet>
             <title>Voluntarily - for Teachers</title>
           </Helmet>
-          <HeroContainer>
-            <TextMiniTitle>Voluntarily for Teachers</TextMiniTitle>
-            <TextHeroTitle>
-              Get industry volunteers to help teachers and students in your
-              school.
-            </TextHeroTitle>
 
-            <ButtonContainer>
-              <Button shape='round' size='large' type='primary'>
-                Learn More
-              </Button>
-              &nbsp;&nbsp;
-              <Button shape='round' size='large'>
-                Teacher Sign up
-              </Button>
-            </ButtonContainer>
-          </HeroContainer>
+          <Hero2
+          subheader='Voluntarily for Teachers'
+          title='Get industry volunteers to help teachers and students in your
+          school.'
+          />
+        
           <SectionContainer>
             <AboutImage src='/static/test2.png' />
 
@@ -293,8 +226,8 @@ export class Teacher extends Component {
           <SectionContainer>
             <SectionTitle>We are working with</SectionTitle>
             <SponsorContainer>
-              <SponsorIcon src='static/img/partners/MOE.png' />
-              <SponsorIcon src='static/img/partners/tec.png' />
+              {/* <SponsorIcon src='static/img/partners/MOE.png' />*/}
+              <SponsorIcon src='static/img/partners/tec.png' /> 
               <SponsorIcon src='static/img/partners/Spark.png' />
               <SponsorIcon src='static/img/partners/Westpac.png' />
               <SponsorIcon src='static/img/partners/Datacom.png' />
