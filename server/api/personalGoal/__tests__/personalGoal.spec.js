@@ -8,6 +8,7 @@ import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import PersonalGoal from '../personalGoal'
 import { PersonalGoalStatus } from '../personalGoal.constants'
+import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 
 test.before('before connect to database', async (t) => {
   try {
@@ -71,6 +72,7 @@ test.serial('Should not return any personal goals without a person id', async t 
     .get('/api/personalGoals')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
   t.deepEqual(0, res.body.length)
 })
@@ -82,6 +84,7 @@ test.serial('Should give a list of goals for a person', async t => {
     .get(`/api/personalGoals?meid=${personid}`)
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
   const personalGoals = res.body
   t.deepEqual(3, personalGoals.length)
@@ -96,6 +99,8 @@ test.serial('Should send correct data when queried against a _id', async t => {
   const res = await request(server)
     .get(`/api/personalGoals/${personalgoal._id}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
   t.is(200, res.status)
   t.is(personalgoal.person.toString(), res.body.person)
   t.is(personalgoal.goal.toString(), res.body.goal)
@@ -146,6 +151,7 @@ test.serial('Should add a valid goal', async t => {
     .post('/api/personalGoals')
     .send(newPersonalGoal)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 200)
   const returnedPersonalGoal = res.body
@@ -164,6 +170,8 @@ test.serial('Should add a valid goal', async t => {
     .put(`/api/personalGoals/${returnedPersonalGoal._id}`)
     .send(returnedPersonalGoal)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
   t.is(res.status, 200)
   const updatedPersonalGoal = res.body
   t.is(updatedPersonalGoal.status, PersonalGoalStatus.ACTIVE)
@@ -174,6 +182,8 @@ test.serial('Should add a valid goal', async t => {
     .put(`/api/personalGoals/${returnedPersonalGoal._id}`)
     .send(returnedPersonalGoal)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
   t.is(res.status, 200)
   t.is(res.body.status, PersonalGoalStatus.HIDDEN)
 
@@ -183,11 +193,14 @@ test.serial('Should add a valid goal', async t => {
     .put(`/api/personalGoals/${returnedPersonalGoal._id}`)
     .send(returnedPersonalGoal)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
   t.is(res.status, 200)
   t.is(res.body.status, PersonalGoalStatus.COMPLETED)
 
   await request(server)
     .delete(`/api/personalGoals/${returnedPersonalGoal._id}`)
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .set('Accept', 'application/json')
 
   t.is(res.status, 200)
