@@ -142,7 +142,7 @@ const SponsorIcon = styled.img`
 // Page-Specific Containers
 
 const HeroContainer = styled.div`
-  margin: 10rem 0 0 0;
+  margin: 10rem 0;
   position: relative;
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
