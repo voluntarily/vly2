@@ -83,12 +83,25 @@ const ruleBuilder = async (session) => {
     })
   }
 
+  const orgAdminRules = []
+
+  if (session.me && session.me._id && session.me.role.includes(Role.ORG_ADMIN)) {
+    const myOpportunities = await Opportunity.find({ offerOrg: { $in: session.me.orgAdminFor } })
+    const myOpportunityIds = myOpportunities.map(opportunity => opportunity._id.toString())
+
+    orgAdminRules.push({
+      subject: SchemaName,
+      action: Action.LIST,
+      conditions: { opportunity: { $in: myOpportunityIds } }
+    })
+  }
+
   return {
     [Role.ANON]: anonAbilities,
     [Role.VOLUNTEER_PROVIDER]: volunteerAbilities,
     [Role.OPPORTUNITY_PROVIDER]: opportunityProviderRules,
     [Role.ACTIVITY_PROVIDER]: allAbilities,
-    [Role.ORG_ADMIN]: allAbilities,
+    [Role.ORG_ADMIN]: orgAdminRules,
     [Role.ADMIN]: allAbilities
   }
 }
