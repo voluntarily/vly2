@@ -4,6 +4,7 @@ const { Action } = require('../../services/abilities/ability.constants')
 const { getPersonRoles } = require('../member/member.lib')
 const { Role } = require('../../services/authorize/role')
 const { languages } = require('../../../lang/lang.constants')
+const { websiteRegex } = require('./person.validation')
 
 /* find a single person by searching for a key field.
 This is a convenience function usually used to call
@@ -102,6 +103,13 @@ async function updatePersonDetail (req, res, next) {
   // Must be a valid language
   if (Object.keys(person).includes('language') && !languages.includes(person.language)) {
     return res.status(400).send('You have specified an invalid language value')
+  }
+
+  // Website string validation
+  if (Object.keys(person).includes('website')) {
+    if (!(person.website || '').match(websiteRegex)) {
+      return res.status(400).send('The \'website\' field does not match the validation rule')
+    }
   }
 
   if (isProd) { delete person.role } // cannot save role - its virtual

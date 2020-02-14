@@ -15,6 +15,7 @@ import {
   TitleContainer
 } from '../VTheme/FormStyles'
 import { H3Bold, P } from '../VTheme/VTheme'
+import { websiteRegex } from '../../server/api/person/person.validation'
 
 const EducationSelectorRef = forwardRef(EducationSelector)
 const developerSettings = process.env.NODE_ENV !== 'production'
@@ -443,7 +444,7 @@ class PersonDetailForm extends Component {
                 {getFieldDecorator('website', {
                   rules: [
                     {
-                      pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/,
+                      pattern: websiteRegex,
                       message: 'Enter valid URL'
                     }
                   ]

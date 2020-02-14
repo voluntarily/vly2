@@ -23,7 +23,8 @@ const createPerson = (roles) => {
     email: `${uuid()}@test.com`,
     role: roles || [],
     status: 'active',
-    language: 'en'
+    language: 'en',
+    website: 'https://reddit.com'
   }
 
   return Person.create(person)
@@ -568,4 +569,73 @@ test.serial(`Update - language value is case sensitive`, async t => {
 
   const person2 = await Person.findById(person._id)
   t.is(person2.language, 'en')
+})
+
+for (const website of ['http://space.com', 'https://space.com', 'http://sls.rockets.nasa', 'space.com']) {
+  test.serial(`Update - website field validation rules - valid - '${website}'`, async t => {
+    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+
+    const res = await request(server)
+      .put(`/api/people/${person._id}`)
+      .send({
+        name: 'testname',
+        status: 'active',
+        phone: 'testphone',
+        website
+      })
+      .set('Accept', 'application/json')
+      .set('Cookie', `idToken=${createJwtIdToken(person.email)}`)
+
+    t.is(res.status, 200)
+
+    const person2 = await Person.findById(person._id)
+    t.is(person2.website, website)
+  })
+}
+for (const website of [null, '', 'abc', '123']) {
+  test.serial(`Update - website field validation rules - invalid - '${website}'`, async t => {
+    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const originalWebsite = person.website
+
+    const res = await request(server)
+      .put(`/api/people/${person._id}`)
+      .send({
+        name: 'testname',
+        status: 'active',
+        phone: 'testphone',
+        website
+      })
+      .set('Accept', 'application/json')
+      .set('Cookie', `idToken=${createJwtIdToken(person.email)}`)
+
+    t.is(res.status, 400)
+
+    const person2 = await Person.findById(person._id)
+    t.is(person2.website, originalWebsite)
+  })
+}
+test.serial(`Update - website field validation rules - invalid - too long`, async t => {
+  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const originalWebsite = person.website
+
+  let website = ''
+  for (let i = 0; i < 3000; i++) {
+    website += i
+  }
+
+  const res = await request(server)
+    .put(`/api/people/${person._id}`)
+    .send({
+      name: 'testname',
+      status: 'active',
+      phone: 'testphone',
+      website
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', `idToken=${createJwtIdToken(person.email)}`)
+
+  t.is(res.status, 400)
+
+  const person2 = await Person.findById(person._id)
+  t.is(person2.website, originalWebsite)
 })
