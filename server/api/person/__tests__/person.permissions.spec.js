@@ -484,25 +484,28 @@ for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDE
   })
 }
 
-test.serial(`Update - only permitted languages can be set - invalid language - current user`, async t => {
-  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+// Test invalid language values, including empty string and falsey
+for (const lang of ['TEST', '  ', '']) {
+  test.serial(`Update - only permitted languages can be set - invalid language value: '${lang}' - current user`, async t => {
+    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
 
-  const res = await request(server)
-    .put(`/api/people/${person._id}`)
-    .send({
-      name: 'testname',
-      status: 'active',
-      phone: 'testphone',
-      language: 'TEST'
-    })
-    .set('Accept', 'application/json')
-    .set('Cookie', `idToken=${createJwtIdToken(person.email)}`)
+    const res = await request(server)
+      .put(`/api/people/${person._id}`)
+      .send({
+        name: 'testname',
+        status: 'active',
+        phone: 'testphone',
+        language: 'TEST'
+      })
+      .set('Accept', 'application/json')
+      .set('Cookie', `idToken=${createJwtIdToken(person.email)}`)
 
-  t.is(res.status, 400)
+    t.is(res.status, 400)
 
-  const person2 = await Person.findById(person._id)
-  t.is(person2.language, 'en')
-})
+    const person2 = await Person.findById(person._id)
+    t.is(person2.language, 'en')
+  })
+}
 
 test.serial(`Update - only permitted languages can be set - valid language - current user`, async t => {
   const person = await createPerson([Role.VOLUNTEER_PROVIDER])

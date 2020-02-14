@@ -100,7 +100,7 @@ async function updatePersonDetail (req, res, next) {
   }
   
   // Must be a valid language
-  if (person.language && !languages.includes(person.language)) {
+  if (Object.keys(person).includes('language') && !languages.includes(person.language)) {
     return res.status(400).send('You have specified an invalid language value')
   }
 
