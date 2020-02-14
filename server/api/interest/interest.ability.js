@@ -4,7 +4,7 @@ const { InterestStatus, SchemaName } = require('./interest.constants')
 const Opportunity = require('../opportunity/opportunity')
 
 const ruleBuilder = async (session) => {
-  const anonAbilities = [{
+  const anonRules = [{
     subject: SchemaName,
     action: Action.LIST,
     inverted: true
@@ -26,12 +26,12 @@ const ruleBuilder = async (session) => {
     inverted: true
   }]
 
-  const allAbilities = anonAbilities.slice(0)
+  const allRules = anonRules.slice(0)
 
-  const volunteerAbilities = []
+  const volunteerRules = []
 
   if (session.me && session.me._id) {
-    volunteerAbilities.push({
+    volunteerRules.push({
       subject: SchemaName,
       action: Action.LIST,
       conditions: { person: session.me._id }
@@ -118,10 +118,10 @@ const ruleBuilder = async (session) => {
   }]
 
   return {
-    [Role.ANON]: anonAbilities,
-    [Role.VOLUNTEER_PROVIDER]: volunteerAbilities,
+    [Role.ANON]: anonRules,
+    [Role.VOLUNTEER_PROVIDER]: volunteerRules,
     [Role.OPPORTUNITY_PROVIDER]: opportunityProviderRules,
-    [Role.ACTIVITY_PROVIDER]: allAbilities,
+    [Role.ACTIVITY_PROVIDER]: allRules,
     [Role.ORG_ADMIN]: orgAdminRules,
     [Role.ADMIN]: adminRules
   }
