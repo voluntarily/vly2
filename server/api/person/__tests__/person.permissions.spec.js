@@ -371,7 +371,7 @@ for (const currentUserRole of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER
   })
 }
 
-test.serial(`Update - ADMIN can assign the ADMIN role to a user`, async t => {
+test.serial('Update - ADMIN can assign the ADMIN role to a user', async t => {
   const person = await createPerson([Role.VOLUNTEER_PROVIDER])
 
   const res = await request(server)
@@ -438,7 +438,7 @@ for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_
     t.is(person2.email, originalEmail)
   })
 }
-test.serial(`Update - Only ADMIN can change a users email field`, async t => {
+test.serial('Update - Only ADMIN can change a users email field', async t => {
   const person = await createPerson([Role.VOLUNTEER_PROVIDER])
 
   const payload = {
@@ -473,7 +473,7 @@ for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDE
         role: person.role,
         status: 'active',
         phone: 'testphone',
-        dateAdded: "2030-12-18T00:14:42.432Z"
+        dateAdded: '2030-12-18T00:14:42.432Z'
       })
       .set('Accept', 'application/json')
       .set('Cookie', `idToken=${await createPersonAndGetToken([role])}`)
@@ -531,7 +531,7 @@ for (const lang of ['TEST', '  ', '']) {
   })
 }
 
-test.serial(`Update - only permitted languages can be set - valid language - current user`, async t => {
+test.serial('Update - only permitted languages can be set - valid language - current user', async t => {
   const person = await createPerson([Role.VOLUNTEER_PROVIDER])
 
   const res = await request(server)
@@ -551,7 +551,7 @@ test.serial(`Update - only permitted languages can be set - valid language - cur
   t.is(person2.language, 'fr')
 })
 
-test.serial(`Update - language value is case sensitive`, async t => {
+test.serial('Update - language value is case sensitive', async t => {
   const person = await createPerson([Role.VOLUNTEER_PROVIDER])
 
   const res = await request(server)
@@ -614,7 +614,7 @@ for (const website of [null, '', 'abc', '123']) {
     t.is(person2.website, originalWebsite)
   })
 }
-test.serial(`Update - website field validation rules - invalid - too long`, async t => {
+test.serial('Update - website field validation rules - invalid - too long', async t => {
   const person = await createPerson([Role.VOLUNTEER_PROVIDER])
   const originalWebsite = person.website
 

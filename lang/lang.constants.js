@@ -1,9 +1,9 @@
 const languages = [
-    'en',
-    'fr',
-    'mi'
+  'en',
+  'fr',
+  'mi'
 ]
 
 module.exports = {
-    languages
+  languages
 }

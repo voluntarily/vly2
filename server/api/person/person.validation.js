@@ -9,7 +9,7 @@ const validationRules = {
   }
 }
 
-module.exports = { 
+module.exports = {
   validationRules,
   websiteRegex
 }

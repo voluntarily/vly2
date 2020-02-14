@@ -78,28 +78,28 @@ async function updatePersonDetail (req, res, next) {
   if (!allowed) {
     return res.status(403).send('You do not have the required role to update this person')
   }
-  
+
   // Only an ADMIN can update the role field to ADMIN
   if (person.role && person.role.includes(Role.ADMIN) && !me.role.includes(Role.ADMIN)) {
     return res.status(403).send('You do not have the required role to change the \'role\' field')
   }
-  
+
   // Only a subset of the Role enum can be set via the API. Some value are computed and set such as ORG_ADMIN.
   const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]
   if (person.role && person.role.find(role => !applicableRoles.includes(role))) {
     return res.status(400).send('You have specified an invalid role value')
   }
-  
+
   // Only ADMIN can change the email field
   if (person.email && !me.role.includes(Role.ADMIN)) {
     return res.status(403).send('You do not have the required role to change the \'email\' field')
   }
-  
+
   // Cannot change dateAdded
   if (Object.keys(person).includes('dateAdded')) {
     return res.status(403).send('The dateAdded field cannot be changed')
   }
-  
+
   // Must be a valid language
   if (Object.keys(person).includes('language') && !languages.includes(person.language)) {
     return res.status(400).send('You have specified an invalid language value')
