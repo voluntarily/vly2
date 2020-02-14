@@ -3,6 +3,7 @@ const sanitizeHtml = require('sanitize-html')
 const { Action } = require('../../services/abilities/ability.constants')
 const { getPersonRoles } = require('../member/member.lib')
 const { Role } = require('../../services/authorize/role')
+const { languages } = require('../../../lang/lang.constants')
 
 /* find a single person by searching for a key field.
 This is a convenience function usually used to call
@@ -76,23 +77,31 @@ async function updatePersonDetail (req, res, next) {
   if (!allowed) {
     return res.sendStatus(403)
   }
-
+  
   // Only an ADMIN can update the role field to ADMIN
-  if (person.role.includes(Role.ADMIN) && !me.role.includes(Role.ADMIN)) {
+  if (person.role && person.role.includes(Role.ADMIN) && !me.role.includes(Role.ADMIN)) {
     return res.sendStatus(403)
   }
+  
   // Only a subset of the Role enum can be set via the API. Some value are computed and set such as ORG_ADMIN.
   const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]
-  if (person.role.find(role => !applicableRoles.includes(role))) {
+  if (person.role && person.role.find(role => !applicableRoles.includes(role))) {
     return res.sendStatus(400)
   }
-
+  
   // Only ADMIN can change the email field
   if (person.email && !me.role.includes(Role.ADMIN)) {
     return res.sendStatus(403)
   }
+  
+  // Cannot change dateAdded
   if (person.dateAdded) {
     return res.sendStatus(403)
+  }
+  
+  // Must be a valid language
+  if (person.language && !languages.includes(person.language)) {
+    return res.sendStatus(400)
   }
 
   if (isProd) { delete person.role } // cannot save role - its virtual

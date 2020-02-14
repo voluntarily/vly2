@@ -22,7 +22,8 @@ const createPerson = (roles) => {
     name: 'name',
     email: `${uuid()}@test.com`,
     role: roles || [],
-    status: 'active'
+    status: 'active',
+    language: 'en'
   }
 
   return Person.create(person)
@@ -482,3 +483,43 @@ for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDE
     t.is(person2.dateAdded.toISOString(), originalDateAdded)
   })
 }
+
+test.serial(`Update - only permitted languages can be set - invalid language - current user`, async t => {
+  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+
+  const res = await request(server)
+    .put(`/api/people/${person._id}`)
+    .send({
+      name: 'testname',
+      status: 'active',
+      phone: 'testphone',
+      language: 'TEST'
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', `idToken=${createJwtIdToken(person.email)}`)
+
+  t.is(res.status, 400)
+
+  const person2 = await Person.findById(person._id)
+  t.is(person2.language, 'en')
+})
+
+test.serial(`Update - only permitted languages can be set - valid language - current user`, async t => {
+  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+
+  const res = await request(server)
+    .put(`/api/people/${person._id}`)
+    .send({
+      name: 'testname',
+      status: 'active',
+      phone: 'testphone',
+      language: 'fr'
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', `idToken=${createJwtIdToken(person.email)}`)
+
+  t.is(res.status, 200)
+
+  const person2 = await Person.findById(person._id)
+  t.is(person2.language, 'fr')
+})
