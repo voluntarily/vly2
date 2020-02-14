@@ -9,6 +9,7 @@ import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import Organisation from '../../organisation/organisation'
 import orgs from '../../organisation/__tests__/organisation.fixture'
+import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -47,6 +48,7 @@ test.serial('Should correctly give number of Interests', async t => {
   const res = await request(server)
     .get('/api/interests')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect('Content-Type', /json/)
     .expect(200)
   t.is(res.status, 200)
@@ -59,6 +61,7 @@ test.serial('Should find interests matching the op', async t => {
   const res = await request(server)
     .get(`/api/interests?op=${opid}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect('Content-Type', /json/)
     .expect(200)
   t.is(res.status, 200)
@@ -73,6 +76,7 @@ test.serial('Should find interests matching a person', async t => {
   const res = await request(server)
     .get(`/api/interests?me=${personid}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect('Content-Type', /json/)
   t.is(res.status, 200)
   t.is(res.body.length, 1)
@@ -87,6 +91,7 @@ test.serial('Should find interests matching an op + person', async t => {
   const res = await request(server)
     .get(`/api/interests?me=${personid}&op=${opid}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect('Content-Type', /json/)
   t.is(res.status, 200)
   t.is(res.body.length, 1)
@@ -100,6 +105,7 @@ test.serial('Should not find interests matching an op + wrong person', async t =
   const res = await request(server)
     .get(`/api/interests?me=${personid}&op=${opid}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect('Content-Type', /json/)
   t.is(res.status, 200)
   t.is(res.body.length, 0)
@@ -109,6 +115,7 @@ test.serial('Should 404 on invalid op search', async t => {
   const res = await request(server)
     .get('/api/interests?op=rubbish')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect('Content-Type', /json/)
   t.is(res.status, 404)
 })
@@ -118,6 +125,7 @@ test.serial('Should send correct data when queried against a _id', async t => {
   const res = await request(server)
     .get(`/api/interests/${interest._id}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(200, res.status)
   t.is(interest.person.toString(), res.body.person)
   t.is(interest.opportunity.toString(), res.body.opportunity)
@@ -128,6 +136,7 @@ test.serial('Should return 404 code when queried non existing interest', async t
   // use a valid objectid but one that is not an interest record
     .get('/api/interests/5cc8d60b8b16812b5babcdef')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   const expectedResponseStatus = 404
   t.is(res.status, expectedResponseStatus)
@@ -144,6 +153,7 @@ test.serial('Should not add an invalid interest where referenced person or opp i
       .post('/api/interests')
       .send(newInterest)
       .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${jwtData.idToken}`])
       .expect(422)
 
     const savedInterest = await Interest.findOne({
@@ -168,6 +178,7 @@ test.serial('Should correctly add a valid interest', async t => {
     .post('/api/interests')
     .send(newInterest)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 200)
   const savedInterest = await Interest.findOne({
@@ -192,6 +203,7 @@ test.serial('Should update the interest state from interested to invited', async
     .put(`/api/interests/${interest._id}`)
     .send(reqData)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 200)
   t.is(res.body.status, 'invited')
 })
@@ -207,6 +219,7 @@ test.serial('Should update the interest state from invited to committed', async 
     .put(`/api/interests/${interest._id}`)
     .send(reqData)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 200)
   t.is(res.body.status, 'committed')
@@ -224,6 +237,7 @@ test.serial('Should update the interest state from to declined', async t => {
     .put(`/api/interests/${interest._id}`)
     .send(reqData)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 200)
   t.is(res.body.status, 'declined')
 })
@@ -244,6 +258,7 @@ test.serial('Should correctly delete an interest', async t => {
   const res = await request(server)
     .delete(`/api/interests/${newInterest._id}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 200)
 
@@ -254,16 +269,16 @@ test.serial('Should correctly delete an interest', async t => {
 })
 
 test.serial('Should get 404 updating an interest with invalid id', async t => {
-  const interest = t.context.interests[4]
   const reqData = {
     _id: '5d2905d9a792f000114a557b',
     status: 'invited'
   }
 
   const res = await request(server)
-    .put(`/api/interests/${interest._id}`)
+    .put(`/api/interests/${reqData._id}`)
     .send(reqData)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 404)
 })
 
@@ -283,6 +298,7 @@ test.serial('Should not return interests with null person field', async t => {
   const firstResponse = await request(server)
     .get(`/api/interests/?op=${t.context.ops[0]._id}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .send()
 
   t.is(firstResponse.status, 200)
@@ -298,6 +314,7 @@ test.serial('Should not return interests with null person field', async t => {
   const secondResponse = await request(server)
     .get(`/api/interests/?op=${t.context.ops[0]._id}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .send()
 
   // clean up the new interest record created just for this test
