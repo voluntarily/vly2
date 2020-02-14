@@ -363,13 +363,8 @@ const testScenarios = [
   },
   {
     role: 'org admin',
-    action: 'update',
+    action: 'update (own interest)',
     makeRequest: async (context) => {
-      /**
-       * TODO: Need more tests:
-       * - can't update other fields
-       * - can't update other org's interests
-       */
       return request(server)
         .put(`/api/interests/${context.fixtures.interests[0]._id}`)
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
@@ -379,6 +374,21 @@ const testScenarios = [
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 200)
+    }
+  },
+  {
+    role: 'org admin',
+    action: 'update (other\'s interest)',
+    makeRequest: async (context) => {
+      return request(server)
+        .put(`/api/interests/${context.fixtures.interests[2]._id}`)
+        .set('Cookie', [`idToken=${sessions[4].idToken}`])
+        .send({
+          status: InterestStatus.INVITED
+        })
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 404)
     }
   },
   {
