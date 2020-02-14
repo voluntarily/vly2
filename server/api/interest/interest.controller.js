@@ -109,8 +109,15 @@ const createInterest = async (req, res) => {
 
 const updateInterest = async (req, res) => {
   try {
-    await Interest.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
-    const interestDetail = await getInterestDetail(req.body._id)
+    const result = await Interest
+      .accessibleBy(req.ability, Action.UPDATE)
+      .updateOne(req.params, { $set: { status: req.body.status } })
+
+    if (result.nModified === 0) {
+      return res.sendStatus(404)
+    }
+
+    const interestDetail = await getInterestDetail(req.params._id)
     processStatusToSendEmail(interestDetail.status, interestDetail)
     res.json(interestDetail)
   } catch (err) {
