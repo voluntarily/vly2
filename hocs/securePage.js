@@ -12,13 +12,11 @@ const securePageHoc = Page => class SecurePage extends React.Component {
     if (!session || !session.user) {
       // no session or not auth - redirect to sign in
       if (ctx.isServer) {
-        console.log('securePage - redirect to sign-thru')
         const redirectUrl = encodeURIComponent(ctx.req.url)
         const signThruUrl = `/auth/sign-thru?redirect=${redirectUrl}`
         ctx.res.writeHead(302, { Location: signThruUrl })
         ctx.res.end()
       } else {
-        console.log('securePage - router push to sign-thru')
         const redirectUrl = encodeURIComponent(ctx.asPath)
         const signThruUrl = `/auth/sign-thru?redirect=${redirectUrl}`
         Router.push(signThruUrl)
