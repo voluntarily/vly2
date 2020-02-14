@@ -305,6 +305,7 @@
   "story.new": "New Blog",
   "story.cancel": "Cancel",
   "story.delete": "Delete",
+  "story.edit": "Edit",
   "story.publish": "Publish",
   "storyName" : "Title",
   "storyDescription": "Description",

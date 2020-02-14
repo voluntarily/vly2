@@ -4,6 +4,7 @@ import Button from 'antd/lib/button'
 import reduxApi from '../../lib/redux/reduxApi'
 import { useDispatch } from 'react-redux'
 import { StoryDetail } from '../../components/Story/StoryDetail'
+import { FormattedMessage } from 'react-intl'
 
 export const stories = []
 
@@ -22,12 +23,13 @@ export const EditableStory = ({ story }) => {
   return (
     editing
       ? (
-        <>
-          <StoryForm story={story} onSubmit={handleSave} />
-        </>)
+        <StoryForm story={story} onSubmit={handleSave} />
+      )
       : (
         <StoryDetail story={story}>
-          <Button shape='round' type='primary' onClick={() => setEditing(true)}>Edit</Button>
+          <Button shape='round' type='primary' onClick={() => setEditing(true)}>
+            <FormattedMessage id='story.edit' defaultMessage='Edit' description='Button to edit a story on updates tab' />
+          </Button>
         </StoryDetail>
       )
 
