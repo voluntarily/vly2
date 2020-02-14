@@ -105,6 +105,10 @@ const ruleBuilder = async (session) => {
       subject: SchemaName,
       action: Action.UPDATE,
       conditions: { opportunity: { $in: myOpportunityIds } }
+    }, {
+      subject: SchemaName,
+      action: Action.DELETE,
+      inverted: true
     })
   }
 
