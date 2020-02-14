@@ -21,8 +21,8 @@ const people = [
   },
   {
     _id: generateObjectId(),
-    name: 'Opportunity Provider',
-    email: 'opportunity.provider@example.com',
+    name: 'Opportunity Provider 1',
+    email: 'opportunity.provider.1@example.com',
     role: [Role.OPPORTUNITY_PROVIDER]
   },
   {
@@ -42,14 +42,26 @@ const people = [
     name: 'Org Admin',
     email: 'org.admin@example.com',
     role: [Role.ORG_ADMIN]
+  },
+  {
+    _id: generateObjectId(),
+    name: 'Opportunity Provider 2',
+    email: 'opportunity.provider.2@example.com',
+    role: [Role.OPPORTUNITY_PROVIDER]
   }
 ]
 
 const organisations = [
   {
     _id: generateObjectId(),
-    name: 'Opportunity Provider',
-    slug: 'opportunity-provider',
+    name: 'Opportunity Provider 1',
+    slug: 'opportunity-provider-1',
+    category: ['op']
+  },
+  {
+    _id: generateObjectId(),
+    name: 'Opportunity Provider 2',
+    slug: 'opportunity-provider-2',
     category: ['op']
   }
 ]
@@ -66,6 +78,12 @@ const members = [
     person: people[4]._id,
     organisation: organisations[0]._id,
     status: MemberStatus.ORGADMIN
+  },
+  {
+    _id: generateObjectId(),
+    person: people[5]._id,
+    organisation: organisations[1]._id,
+    status: MemberStatus.MEMBER
   }
 ]
 
@@ -75,6 +93,12 @@ const opportunities = [
     status: OpportunityStatus.ACTIVE,
     requestor: people[1]._id,
     offerOrg: organisations[0]._id
+  },
+  {
+    _id: generateObjectId(),
+    status: OpportunityStatus.ACTIVE,
+    requestor: people[5]._id,
+    offerOrg: organisations[1]._id
   }
 ]
 
@@ -89,6 +113,12 @@ const interests = [
     person: people[3]._id,
     opportunity: opportunities[0]._id,
     comment: 'Test comment',
+    status: InterestStatus.INTERESTED
+  },
+  {
+    person: people[3]._id,
+    opportunity: opportunities[1]._id,
+    comment: 'Test comment 2',
     status: InterestStatus.INTERESTED
   }
 ]

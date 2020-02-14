@@ -64,6 +64,10 @@ const ruleBuilder = async (session) => {
       subject: SchemaName,
       action: Action.LIST,
       conditions: { opportunity: { $in: myOpportunityIds } }
+    }, {
+      subject: SchemaName,
+      action: Action.READ,
+      conditions: { opportunity: { $in: myOpportunityIds } }
     })
   }
 
