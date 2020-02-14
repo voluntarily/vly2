@@ -458,3 +458,27 @@ test.serial(`Update - Only ADMIN can change a users email field`, async t => {
   const person2 = await Person.findById(person._id)
   t.is(person2.email, payload.email)
 })
+
+for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
+  test.serial(`Update - no one can update dateAdded field - ${role}`, async t => {
+    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const originalDateAdded = person.dateAdded.toISOString()
+
+    const res = await request(server)
+      .put(`/api/people/${person._id}`)
+      .send({
+        name: 'testname',
+        role: person.role,
+        status: 'active',
+        phone: 'testphone',
+        dateAdded: "2030-12-18T00:14:42.432Z"
+      })
+      .set('Accept', 'application/json')
+      .set('Cookie', `idToken=${await createPersonAndGetToken([role])}`)
+
+    t.is(res.status, 403)
+
+    const person2 = await Person.findById(person._id)
+    t.is(person2.dateAdded.toISOString(), originalDateAdded)
+  })
+}

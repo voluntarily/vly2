@@ -91,6 +91,9 @@ async function updatePersonDetail (req, res, next) {
   if (person.email && !me.role.includes(Role.ADMIN)) {
     return res.sendStatus(403)
   }
+  if (person.dateAdded) {
+    return res.sendStatus(403)
+  }
 
   if (isProd) { delete person.role } // cannot save role - its virtual
   let resultUpdate
