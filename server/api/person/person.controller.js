@@ -95,7 +95,7 @@ async function updatePersonDetail (req, res, next) {
   }
   
   // Cannot change dateAdded
-  if (person.dateAdded) {
+  if (Object.keys(person).includes('dateAdded')) {
     return res.status(403).send('The dateAdded field cannot be changed')
   }
   

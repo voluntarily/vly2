@@ -483,6 +483,29 @@ for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDE
     t.is(person2.dateAdded.toISOString(), originalDateAdded)
   })
 }
+for (const dateAdded of ['', '   ', null]) {
+  test.serial(`Update - cannot set dateAdded to falsey values - '${dateAdded}'`, async t => {
+    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const originalDateAdded = person.dateAdded.toISOString()
+
+    const res = await request(server)
+      .put(`/api/people/${person._id}`)
+      .send({
+        name: 'testname',
+        role: person.role,
+        status: 'active',
+        phone: 'testphone',
+        dateAdded
+      })
+      .set('Accept', 'application/json')
+      .set('Cookie', `idToken=${createJwtIdToken(person.email)}`)
+
+    t.is(res.status, 403)
+
+    const person2 = await Person.findById(person._id)
+    t.is(person2.dateAdded.toISOString(), originalDateAdded)
+  })
+}
 
 // Test invalid language values, including empty string and falsey
 for (const lang of ['TEST', '  ', '']) {
