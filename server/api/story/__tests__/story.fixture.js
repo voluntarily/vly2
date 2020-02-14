@@ -14,6 +14,7 @@ export default [
     parent: '5df0265916dc014f404ce0a0',
     tags: ['featured', 'voluntarily', 'opensource']
   },
+
   {
     _id: '5df0265916dc014f404ce0a6',
     body: 'So GOOD! :)',
@@ -21,8 +22,13 @@ export default [
     datePublished: '2020-01-01T12:23:00.000Z',
     parent: '5df0265916dc014f404ce0a5'
   },
+
   {
     _id: '5df0265916dc014f404ce0a7',
-    author: '5df0265916dc014f404ce0ab'
+    name: 'Cold breezy wind',
+    body: 'Not a bad day',
+    author: '5df0265916dc014f404ce0ab',
+    parent: '5df0265916dc014f404ce0a5'
+
   }
 ]

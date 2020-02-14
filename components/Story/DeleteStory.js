@@ -2,7 +2,7 @@ import { Button, message, Popconfirm } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import reduxApi, { withStories } from '../../lib/redux/reduxApi.js'
 
-export const DeleteStory = ({ story, dispatch }) => {
+export const DeleteStoryButton = ({ story, dispatch }) => {
   // default delete
   const handleDeleteStory = async () => {
     await dispatch(reduxApi.actions.stories.delete({ id: story._id }))
@@ -21,4 +21,4 @@ export const DeleteStory = ({ story, dispatch }) => {
   )
 }
 
-export default withStories(DeleteStory)
+export default withStories(DeleteStoryButton)

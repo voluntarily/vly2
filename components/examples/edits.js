@@ -3,22 +3,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 
 const Article = styled.article`
-  width: 40rem;
-  background-color: #f8f8f0;
-  margin: 1rem 0 ;
-  padding: 1rem;
-  display: block;
-  vertical-align: middle;
-
-  h1 {
-    font-size: 2rem;
-  }
-  p {
-    color: #404000;
-  }
-  button {
-    margin: 1rem;
-  }
+ 
 `
 
 const EditableArticle = styled.div`

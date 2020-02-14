@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { StoryForm } from '../../components/Story/StoryForm'
 import Button from 'antd/lib/button'
-import reduxApi, { withStories } from '../../lib/redux/reduxApi'
+import reduxApi from '../../lib/redux/reduxApi'
 import { useDispatch } from 'react-redux'
 import { StoryDetail } from '../../components/Story/StoryDetail'
 
 export const stories = []
 
-export const EditableStory = ({ roles, story }) => {
+export const EditableStory = ({ story }) => {
   const [editing, setEditing] = useState(false)
   const dispatch = useDispatch()
 
@@ -33,4 +33,3 @@ export const EditableStory = ({ roles, story }) => {
 
   )
 }
-export default withStories(EditableStory)

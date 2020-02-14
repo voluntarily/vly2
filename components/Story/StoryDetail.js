@@ -1,36 +1,23 @@
-import { H3, P } from '../VTheme/VTheme'
+import { H3 } from '../VTheme/VTheme'
 import Button from 'antd/lib/button'
-import { Divider } from 'antd'
+import styled from 'styled-components'
 import moment from 'moment'
-import DeleteStory from '../../components/Story/DeleteStory'
-import { useState } from 'react'
+import DeleteStoryButton from '../../components/Story/DeleteStory'
+import { ExpandText } from '../Story/ExpandText'
 
-export const StoryDetail = ({ story, children }) => {
-  const SeeMore = ({ storyBody, maxLength }) => {
-    const [expand, setExpand] = useState(true)
-
-    if (storyBody <= maxLength) {
-      return (
-        <P> {storyBody} </P>
-      )
-    }
-    return (
-      <P>
-        {expand ? `${storyBody.substr(0, maxLength).trim()} ...` : storyBody}
-        {expand ? (
-          <a onClick={() => setExpand(false)}> read more </a>
-        ) : (
-          <a onClick={() => setExpand(true)}> read less </a>
-        )}
-      </P>
-    )
+const Article = styled.article`
+  padding: 1rem;
+  button {
+    margin: 3px;
   }
-
+  border-bottom: 1px solid;
+`
+export const StoryDetail = ({ story, children }) => {
   return (
-    <article>
+    <Article>
       <H3>{story.name}</H3>
       {story.imgUrl && <img src={story.imgUrl} />}
-      <SeeMore storyBody={story.body} maxLength={250} />
+      <ExpandText storyBody={story.body} maxLength={250} />
       <footer>
         <span item={story.author} path='author'> By {story.author && story.author.name}</span> &nbsp;
         <span>{moment(story.dateAdded).fromNow()}</span>
@@ -38,9 +25,8 @@ export const StoryDetail = ({ story, children }) => {
       <br />
       <Button shape='round' type='secondary'>Reply</Button>
       {children}
-      <DeleteStory story={story} />
-      <Divider />
-    </article>
+      <DeleteStoryButton story={story} />
+    </Article>
   )
 }
 export default StoryDetail

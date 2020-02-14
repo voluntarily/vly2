@@ -31,14 +31,14 @@ test.serial('verify fixture database has stories', async t => {
   t.is(q && q.status, 'published')
 })
 
-test.serial('Should give list of all stories', async t => {
+test.serial('Should give list of no stories', async t => {
   const res = await request(server)
     .get('/api/stories')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(1, got.length)
+  t.is(0, got.length)
 })
 
 test.serial('Should correctly give list of all stories belonging to parent', async t => {
@@ -49,6 +49,7 @@ test.serial('Should correctly give list of all stories belonging to parent', asy
     .expect('Content-Type', /json/)
   const got = res.body
   t.is(1, got.length)
+  t.is(got.parent, stories.parent)
 })
 
 test.serial('Get an invalid story id', async t => {

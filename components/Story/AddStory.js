@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { Role } from '../../server/services/authorize/role.js'
 import { StoryForm } from '../../components/Story/StoryForm'
 
-const AddStory = ({ roles, onSubmit, stories }) => {
+const AddStory = ({ roles, onSubmit }) => {
   const blankStory = { name: '', body: '' }
   const [showForm, setShowForm] = useState(false)
 
@@ -18,7 +18,7 @@ const AddStory = ({ roles, onSubmit, stories }) => {
     onSubmit(story)
   }
 
-  if (roles && (roles.includes(Role.ADMIN) || roles.includes(Role.ORG_ADMIN) || roles.includes(Role.OPPORTUNITY_PROVIDER))) {
+  if (roles && (roles.includes(Role.ADMIN) || roles.includes(Role.ORG_ADMIN))) {
     return (
       <>
         <Button type='primary' shape='round' size='large' onClick={() => setShowForm(!showForm)}>
@@ -36,8 +36,7 @@ const AddStory = ({ roles, onSubmit, stories }) => {
 
 AddStory.propTypes = {
   roles: PropTypes.array,
-  onSubmit: PropTypes.func,
-  stories: PropTypes.object
+  onSubmit: PropTypes.func
 }
 
 const mapStateToProps = store => ({

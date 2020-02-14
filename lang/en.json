@@ -293,6 +293,8 @@
   "registerTeacher.methods": "You can validate as a teacher using your teacher registration number:",
   "resourceProvider": "Resource Provider",
   "revision": "local-build",
+  "readMore": " read more",
+  "readLess": " read less",
   "savePerson": "Save",
   "schoolInvite.mainHeading": "Invite school",
   "search.title": "Search results for \"{search}\"",
