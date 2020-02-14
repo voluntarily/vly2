@@ -335,15 +335,14 @@ const testScenarios = [
   },
   {
     role: 'org admin',
-    action: 'read (others interest)',
+    action: 'read (other\'s interest)',
     makeRequest: async (context) => {
       return request(server)
-        .get(`/api/interests/${context.fixtures.interests[1]._id}`)
+        .get(`/api/interests/${context.fixtures.interests[2]._id}`)
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
     },
     assertions: (t, response) => {
-      t.fail('Need to define another organisation + opportunity + interest fixture to test this properly')
-      t.is(response.statusCode, 403)
+      t.is(response.statusCode, 404)
     }
   },
   {
