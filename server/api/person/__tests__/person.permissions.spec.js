@@ -526,3 +526,23 @@ test.serial(`Update - only permitted languages can be set - valid language - cur
   const person2 = await Person.findById(person._id)
   t.is(person2.language, 'fr')
 })
+
+test.serial(`Update - language value is case sensitive`, async t => {
+  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+
+  const res = await request(server)
+    .put(`/api/people/${person._id}`)
+    .send({
+      name: 'testname',
+      status: 'active',
+      phone: 'testphone',
+      language: 'FR'
+    })
+    .set('Accept', 'application/json')
+    .set('Cookie', `idToken=${createJwtIdToken(person.email)}`)
+
+  t.is(res.status, 400)
+
+  const person2 = await Person.findById(person._id)
+  t.is(person2.language, 'en')
+})
