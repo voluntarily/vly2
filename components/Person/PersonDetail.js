@@ -171,7 +171,7 @@ const PersonDetail = ({ person }, ...props) => (
             {person.education}
           </li>
           <li>
-            <StyledIcon type='interaction'/>
+            <StyledIcon type='bank' />
             {person.placeOfWork}
           </li>
         </PersonUl>
@@ -221,6 +221,7 @@ PersonDetail.propTypes = {
     pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
     imgUrlSm: PropTypes.string,
+    placeOfWork: PropTypes.string,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
         'admin',
