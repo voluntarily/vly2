@@ -8,17 +8,15 @@ import { FormattedMessage } from 'react-intl'
 
 // start question
 
-const OpUpdatePanel = ({ op, dispatch, stories, author }) => {
-  // const [stories, setStories] = useState([{ name: 'name', body: 'description' }])
-
+const OpUpdatePanel = ({ albumId, dispatch, stories, author }) => {
   useEffect(() => {
-    const getStories = async () => { await dispatch(reduxApi.actions.stories.get({ parentId: op._id })) }
+    const getStories = async () => { await dispatch(reduxApi.actions.stories.get({ parentId: albumId })) }
     getStories()
   }, [])
 
   const setStory = async (story) => {
     // save back to redux and mongo
-    story.parent = op._id
+    story.parent = albumId
     story.author = author
     await dispatch(reduxApi.actions.stories.post(
       {},
