@@ -209,7 +209,7 @@ class PersonDetailForm extends Component {
         defaultMessage='Where is your place of Work'
         description='persons location of work if they do not come from a organisation'
       />
-     )
+    )
     const personJob = (
       <FormattedMessage
         id='job'

@@ -173,7 +173,7 @@ const PersonDetail = ({ person }, ...props) => (
           <li>
             <StyledIcon type='bank' />
             {person.placeOfWork}
-         </li>
+          </li>
           <li>
             <StyledIcon type='coffee' />
             {person.job}
