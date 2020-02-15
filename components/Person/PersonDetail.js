@@ -170,7 +170,10 @@ const PersonDetail = ({ person }, ...props) => (
             <StyledIcon type='book' />
             {person.education}
           </li>
-
+          <li>
+            <StyledIcon type='interaction'/>
+            {person.placeOfWork}
+          </li>
         </PersonUl>
       </InfoSection>
       <InfoSection>
