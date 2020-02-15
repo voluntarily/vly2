@@ -173,6 +173,10 @@ const PersonDetail = ({ person }, ...props) => (
           <li>
             <StyledIcon type='bank' />
             {person.placeOfWork}
+         </li>
+          <li>
+            <StyledIcon type='coffee' />
+            {person.job}
           </li>
         </PersonUl>
       </InfoSection>
@@ -218,6 +222,7 @@ PersonDetail.propTypes = {
     facebook: PropTypes.string,
     twitter: PropTypes.string,
     website: PropTypes.string,
+    job: PropTypes.string,
     pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
     imgUrlSm: PropTypes.string,

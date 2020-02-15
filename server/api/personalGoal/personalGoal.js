@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const { PersonalGoalStatus, SchemaName } = require('./personalGoal.constants')
 const Schema = mongoose.Schema
 const idvalidator = require('mongoose-id-validator')
+const {
+  accessibleRecordsPlugin,
+  accessibleFieldsPlugin
+} = require('@casl/mongoose')
 
 const personalGoalSchema = new Schema({
   person: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
@@ -30,7 +34,8 @@ const personalGoalSchema = new Schema({
   dateCompleted: { type: 'Date', required: false }
 })
 personalGoalSchema.plugin(idvalidator)
-
+personalGoalSchema.plugin(accessibleFieldsPlugin)
+personalGoalSchema.plugin(accessibleRecordsPlugin)
 // protect multiple imports
 var PersonalGoal
 if (mongoose.models.PersonalGoal) {
