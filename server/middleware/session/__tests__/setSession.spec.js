@@ -3,7 +3,7 @@ import setSession from '../setSession'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import Person from '../../../api/person/person'
 import people from '../../../api/person/__tests__/person.fixture'
-import { jwtData, DEFAULT_SESSION } from './setSession.fixture'
+import { jwtData, jwtDataBob, jwtDataCharles, DEFAULT_SESSION } from './setSession.fixture'
 import sinon from 'sinon'
 import jwt from 'jsonwebtoken'
 
@@ -55,6 +55,34 @@ test('Check session set when user logged in', async t => {
   await setSession(req, null, next)
   t.true(req.session.isAuthenticated)
   t.is(req.session.user.email, jwtData.idTokenPayload.email)
-  t.is(req.session.me.email, jwtData.idTokenPayload.email)
+  t.is(req.session.me.nickname, jwtData.idTokenPayload.nickname)
+  t.truthy(next.calledOnce)
+})
+
+test('Check session set for API call with Bearer header', async t => {
+  const next = sinon.spy()
+  const req = { url: '/api/foo', headers: { authorization: `Bearer ${jwtData.idToken}` } }
+  await setSession(req, null, next)
+  t.true(req.session.isAuthenticated)
+  t.is(req.session.user.email, jwtData.idTokenPayload.email)
+  t.is(req.session.me.nickname, jwtData.idTokenPayload.nickname)
+  t.truthy(next.calledOnce)
+})
+
+test('Check session not Auth if email not verified', async t => {
+  const next = sinon.spy()
+  const req = { url: '/api/foo', headers: { authorization: `Bearer ${jwtDataBob.idToken}` } }
+  await setSession(req, null, next)
+  t.false(req.session.isAuthenticated)
+  t.truthy(next.calledOnce)
+})
+
+test('a person is created if new user signs in', async t => {
+  const next = sinon.spy()
+  const req = { url: '/api/foo', headers: { authorization: `Bearer ${jwtDataCharles.idToken}` } }
+  await setSession(req, null, next)
+  t.true(req.session.isAuthenticated)
+  t.is(req.session.user.email, jwtDataCharles.idTokenPayload.email)
+  t.is(req.session.me.nickname, jwtDataCharles.idTokenPayload.nickname)
   t.truthy(next.calledOnce)
 })

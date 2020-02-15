@@ -1,9 +1,10 @@
-const jwtDecode = require('jwt-decode')
 const Person = require('../../api/person/person')
 const { Role } = require('../../services/authorize/role')
+
 const { TOPIC_PERSON__CREATE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
-
+const { jwtVerify } = require('./jwtVerify')
+const { getPersonRoles } = require('../../api/member/member.lib')
 const DEFAULT_SESSION = {
   isAuthenticated: false,
   user: null,
@@ -32,9 +33,9 @@ const openPath = url => {
 const getIdToken = (req) => {
   if (req && req.cookies && req.cookies.idToken) { return req.cookies.idToken }
 
-  if (req.headers.authentication) {
+  if (req.headers.authorization) {
     const regex = /Bearer (.*)/
-    const found = req.headers.authentication.match(regex)
+    const found = req.headers.authorization.match(regex)
     return found[1]
   }
 }
@@ -52,7 +53,7 @@ const createPersonFromUser = async (user) => {
     PubSub.publish(TOPIC_PERSON__CREATE, p)
     return p
   } catch (err) {
-    // will fail if email is a duplicate
+    // will fail if email is a duplicate or database gone
     console.error('create person failed', err)
     return false
   }
@@ -70,9 +71,9 @@ const setSession = async (req, res, next) => {
   }
   let user
   try {
-    user = jwtDecode(idToken)
-    // TODO: fully validate the token
+    user = await jwtVerify(idToken)
   } catch (e) {
+    // console.error('Jwt Verify failed', e)
     user = false
   }
   if (!user) {
@@ -81,16 +82,17 @@ const setSession = async (req, res, next) => {
   req.session.idToken = idToken
   req.session.user = user
   if (!user.email_verified) {
-    console.error('setSession Warning: user email not verified')
+    // remove login token here
+    // console.error('setSession Warning: user email not verified')
     return next()
   }
-  // TODO: validate token and put all token decodes together
   let me = false
   try {
-    me = await Person.findOne({ email: user.email }).exec()
+    me = await Person.findOne({ email: user.email }, 'name nickname email role imgUrlSm sendEmailNotifications').exec()
     if (!me) {
-      // console.error(`failed to find ${user.email} - creating new person`)
       me = await createPersonFromUser(user)
+    } else {
+      await getPersonRoles(me)
     }
   } catch (err) {
     console.error(`failed to find or create ${user.email}`, err)
@@ -101,7 +103,7 @@ const setSession = async (req, res, next) => {
     me,
     idToken
   }
-  // console.log('setting session from IdToken', req.url, req.session.isAuthenticated, 'user', req.session.user.email, 'me', req.session.me.name)
+  // console.log('setting session from IdToken', req.url, req.session.isAuthenticated, 'user', req.session.user.email, 'me', req.session.me.name, req.session.me.role)
   next()
 }
 

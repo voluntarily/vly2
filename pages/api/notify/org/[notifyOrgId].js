@@ -12,10 +12,10 @@ export default async (req, res) => {
   try {
     // verify the org
     const orgid = req.query.notifyOrgId
-    const org = await Organisation.findById(orgid)
+    const org = await Organisation.findById(orgid, 'name imgUrl').lean().exec()
 
     // verify I am orgAdmin of org
-    const me = req.session.me
+    const me = req.session.me // signed in person
     const membershipQuery = {
       person: me._id,
       organisation: orgid

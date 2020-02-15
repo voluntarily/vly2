@@ -183,11 +183,11 @@ export const OpDetailPage = ({
         <OpVolunteerInterestSection
           isAuthenticated={isAuthenticated}
           canRegisterInterest={canRegisterInterest}
-          op={op}
+          opID={op && op._id}
           meID={me && me._id}
         />
       </OpBanner>
-      <OpTabs op={op} canManage={canManage} defaultTab={tab} onChange={handleTabChange} />
+      <OpTabs op={op} canManage={canManage} defaultTab={tab} onChange={handleTabChange} author={me._id} />
     </FullPage>)
 }
 

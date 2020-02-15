@@ -69,6 +69,7 @@ const appReady = app.prepare().then(() => {
     // const gitInfo = gitDescribeSync()
     // req.messages.revision = process.env.REVISION || gitInfo.raw
     req.messages.revision = process.env.REVISION
+    req.messages.notice = process.env.NOTICE
     next()
   })
 
@@ -89,7 +90,7 @@ const appReady = app.prepare().then(() => {
         useUnifiedTopology: true,
         useFindAndModify: false
       })
-      .then(console.log('mongodb connected at:', config.databaseUrl))
+      .then(console.log('mongodb connected'))
     const db = mongoose.connection
     db.on('error', console.error.bind(console, 'connection error:'))
     // use the x/db scripts to populate a test database

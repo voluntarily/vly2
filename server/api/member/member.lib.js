@@ -2,11 +2,12 @@ const Member = require('./member')
 const PubSub = require('pubsub-js')
 const { TOPIC_MEMBER__UPDATE } = require('../../services/pubsub/topic.constants')
 const { MemberStatus } = require('./member.constants')
+const { Role } = require('../../services/authorize/role')
 
 /* get a single member record with org and person populated out */
 const getMemberbyId = id => {
   return Member.findOne({ _id: id })
-    .populate({ path: 'person', select: 'nickname name imgUrl email' })
+    .populate({ path: 'person', select: 'nickname name imgUrl email sendEmailNotifications' })
     .populate({ path: 'organisation', select: 'name imgUrl category' })
     .exec()
 }
@@ -61,8 +62,63 @@ const findOrgByPersonIdAndCategory = async (personId, category) => {
   return sortedOrgs[0].organisation._id
 }
 
+const orgToRoleTable = {
+  admin: Role.ADMIN,
+  op: Role.OPPORTUNITY_PROVIDER,
+  ap: Role.ACTIVITY_PROVIDER,
+  other: Role.RESOURCE_PROVIDER,
+  test: Role.TESTER
+}
+// desired sort order for roles
+// ANON, VP, OP,AP, ORG_ADMIN, ADMIN
+const sortRoles = roles => {
+  const desiredOrder = [
+    Role.ANON,
+    Role.VOLUNTEER_PROVIDER,
+    Role.OPPORTUNITY_PROVIDER,
+    Role.ACTIVITY_PROVIDER,
+    Role.RESOURCE_PROVIDER,
+    Role.ORG_ADMIN,
+    Role.TESTER,
+    Role.ADMIN
+  ]
+  const sortedRoles = []
+  desiredOrder.map(r => {
+    if (roles.includes(r)) sortedRoles.push(r)
+  })
+  return sortedRoles
+}
+
+const getPersonRoles = async person => {
+  const membershipQuery = { person: person._id }
+  const membership = await Member
+    .find(membershipQuery)
+    .populate({ path: 'organisation', select: 'name category' })
+    .lean()
+    .exec()
+  const role = person.role // role is required and has a defult
+  const orgAdminFor = []
+  membership.map(m => {
+    if (m.status === MemberStatus.ORGADMIN) {
+      role.push(Role.ORG_ADMIN)
+      orgAdminFor.push(m.organisation._id)
+    }
+    if ([MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)) {
+      m.organisation.category.map(category => {
+        const r = orgToRoleTable[category]
+        r && role.push(r)
+      })
+    }
+  })
+  person.orgAdminFor = orgAdminFor
+  person.role = sortRoles(role)
+  return [role, orgAdminFor]
+}
+
 module.exports = {
   getMemberbyId,
   addMember,
-  findOrgByPersonIdAndCategory
+  findOrgByPersonIdAndCategory,
+  getPersonRoles,
+  sortRoles
 }

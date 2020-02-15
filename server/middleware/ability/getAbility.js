@@ -25,7 +25,7 @@ module.exports = options => (req, res, next) => {
   let allRules = []
   glob.sync(pattern).forEach(abilityRuleBuilderPath => {
     const ruleBuilder = require(abilityRuleBuilderPath)
-    const rules = ruleBuilder(req.session)
+    const rules = ruleBuilder(req.session, req.query)
     for (const role of userRoles) {
       if (rules[role] == null) continue
       if (role) {
@@ -34,6 +34,7 @@ module.exports = options => (req, res, next) => {
       if (role === 'admin') break
     }
   })
+
   req.ability = new Ability(allRules)
   next()
 }

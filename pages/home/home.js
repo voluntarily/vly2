@@ -16,6 +16,8 @@ import reduxApi, { withHomeData, withPeople } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import { InterestStatus } from '../../server/api/interest/interest.constants'
 import { PersonalGoalStatus } from '../../server/api/personalGoal/personalGoal.constants'
+import VTabs from '../../components/VTheme/VTabs'
+import Loading from '../../components/Loading'
 
 const { TabPane } = Tabs
 
@@ -88,6 +90,7 @@ class PersonHomePage extends Component {
       }
 
       await Promise.all([
+        store.dispatch(reduxApi.actions.people.get({ id: meid })),
         store.dispatch(reduxApi.actions.tags.get()),
         store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
         store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),
@@ -108,7 +111,7 @@ class PersonHomePage extends Component {
   }
 
   handleUpdate = async () => {
-    const person = this.props.me
+    const person = this.props.people.data[0] // this.props.me
     const role = this.sortRoleByPower(person)
     const personData = { ...person, role }
     await this.props.dispatch(
@@ -131,10 +134,12 @@ class PersonHomePage extends Component {
   }
 
   render () {
-    const shadowStyle = { overflow: 'visible' }
+    if (!this.props.people.sync) { return <Loading /> }
+    const person = this.props.people.data[0]
+    const shadowStyle = { overflow: 'visible', textAlign: 'left' }
     if (this.props.members.sync && this.props.members.data.length > 0) {
-      this.props.me.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
-      this.props.me.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
+      person.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
+      person.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
     }
 
     const ops = this.props.opportunities.data // list of ops I own
@@ -152,7 +157,7 @@ class PersonHomePage extends Component {
         })
       })
     const opsTab = (
-      <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+      <span>
         <Icon type='inbox' />
         <FormattedMessage
           id='home.liveops'
@@ -162,7 +167,7 @@ class PersonHomePage extends Component {
       </span>
     )
     const historyTab = (
-      <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+      <span>
         <Icon type='history' />
         <FormattedMessage
           id='home.pastops'
@@ -172,7 +177,7 @@ class PersonHomePage extends Component {
       </span>
     )
     const profileTab = (
-      <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+      <span>
         <Icon type='setting' />
         <FormattedMessage
           id='home.profile'
@@ -184,7 +189,7 @@ class PersonHomePage extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Home / Voluntarily</title>
+          <title>Home - Voluntarily</title>
         </Helmet>
         <PageBanner>
           <h1>
@@ -204,7 +209,7 @@ class PersonHomePage extends Component {
           />
         </PageBanner>
 
-        <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
+        <VTabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
           <TabPane tab={opsTab} key='1'>
             {!!personalGoals.length &&
               <SectionWrapper>
@@ -280,7 +285,7 @@ class PersonHomePage extends Component {
             <SectionWrapper>
               {this.state.editProfile ? (
                 <PersonDetailForm
-                  person={this.props.me}
+                  person={person}
                   existingTags={this.props.tags.data}
                   locations={this.props.locations.data[0].locations}
                   onSubmit={this.handleUpdate}
@@ -300,16 +305,16 @@ class PersonHomePage extends Component {
                       description='Button to edit an person on PersonDetails page'
                     />
                   </Button>
-                  <PersonDetail person={this.props.me} />
+                  <PersonDetail person={person} />
                 </div>
               )}
             </SectionWrapper>
           </TabPane>
-        </Tabs>
+        </VTabs>
       </FullPage>
     )
   }
 }
-export const PersonHomePageTest = withHomeData(PersonHomePage)
+export const PersonHomePageTest = withPeople(withHomeData(PersonHomePage))
 
-export default securePage(withPeople(PersonHomePageTest))
+export default securePage(PersonHomePageTest)

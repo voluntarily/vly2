@@ -4,9 +4,10 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { OpAboutPanel } from './OpAboutPanel'
 import { OpQuestionPanel } from './OpQuestionPanel'
-import { OpUpdatePanel } from './OpUpdatePanel'
+import OpUpdatePanel from './OpUpdatePanel'
 import { OpManagePanel } from './OpManagePanel'
-const shadowStyle = { overflow: 'visible', textAlign: 'center', fontWeight: 'bold', color: '#6549AA' }
+import VTabs from '../VTheme/VTabs'
+
 const { TabPane } = Tabs
 
 const opAboutTab =
@@ -46,9 +47,9 @@ const opEditTab =
 
 const isNotProd = process.env.NODE_ENV !== 'production'
 
-export const OpTabs = ({ op, onChange, canManage, defaultTab }) => (
+export const OpTabs = ({ op, onChange, canManage, defaultTab, author }) => (
   <>
-    <Tabs style={shadowStyle} size='large' defaultActiveKey={defaultTab} onChange={onChange}>
+    <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
       <TabPane tab={opAboutTab} key='about'>
         <OpAboutPanel op={op} />
       </TabPane>
@@ -60,7 +61,7 @@ export const OpTabs = ({ op, onChange, canManage, defaultTab }) => (
       )}
       {isNotProd && (
         <TabPane tab={opUpdateTab} key='news'>
-          <OpUpdatePanel op={op} />
+          <OpUpdatePanel op={op} author={author} />
         </TabPane>
       )}
       {canManage && (
@@ -71,7 +72,7 @@ export const OpTabs = ({ op, onChange, canManage, defaultTab }) => (
       {canManage && (
         <TabPane tab={opEditTab} key='edit' />
       )}
-    </Tabs>
+    </VTabs>
   </>
 )
 

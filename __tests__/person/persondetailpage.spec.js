@@ -161,7 +161,8 @@ test('render unknown person PersonDetailPage ', async t => {
   const wrapper = outer.dive()
 
   t.false(wrapper.exists('PersonDetail'))
-  t.is(wrapper.find('FormattedMessage').first().props().id, 'person.notavailable')
+  t.true(wrapper.exists('PersonNotAvailable'))
+  t.is(wrapper.dive().find('FormattedMessage').first().props().id, 'person.notavailable')
 })
 
 test('render Dalis PersonDetailPage as non admin random person alice', async t => {

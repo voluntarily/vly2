@@ -9,6 +9,7 @@ import {
   ItemContainer,
   ItemVenue,
   ItemDuration,
+  ItemLocation,
   ItemStatus,
   ItemDate,
   ItemImage,
@@ -48,10 +49,9 @@ const OpBanner = ({ op, children }) => {
         <Right>
           <h1>{op.name}</h1>
           <ItemIdLine item={op.offerOrg} path='orgs' />
-          <h4>
-            {op.location}
-          </h4>
+
           <ItemContainer>
+            <ItemLocation location={op.location} />
             <ItemDuration duration={op.duration} />
             <ItemVenue venue={op.venue} />
             <ItemDate startDate={startDate} endDate={endDate} />

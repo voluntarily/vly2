@@ -9,8 +9,13 @@ module.exports = {
       email: 'test2@example.com'
     },
     {
-      name: 'Test name 3',
-      email: 'test3@example.com'
+      name: 'System Admin hard coded',
+      email: 'admin3@example.com',
+      role: ['admin']
+    },
+    {
+      name: 'Member of None',
+      email: 'test4@example.com'
     }
   ],
   organisations: [
@@ -26,11 +31,15 @@ module.exports = {
     },
     {
       name: 'Test organisation 3',
-      slug: 'test-org-3'
+      slug: 'test-org-3',
+      category: 'op'
+
     },
     {
       name: 'Test organisation 4',
-      slug: 'test-org-4'
+      slug: 'test-org-4',
+      category: 'admin'
+
     }
   ]
 }
