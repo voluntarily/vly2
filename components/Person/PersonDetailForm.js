@@ -495,6 +495,7 @@ PersonDetailForm.propTypes = {
     pronoun: PropTypes.object,
     job: PropTypes.string,
     imgUrl: PropTypes.any,
+    imgUrlSm: PropTypes.string,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
         'admin',
