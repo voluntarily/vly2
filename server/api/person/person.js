@@ -24,7 +24,7 @@ const personSchema = new Schema({
   facebook: { type: 'String' },
   twitter: { type: 'String' },
   education: { type: 'String' },
-  job: { type: 'String', default: '' },
+  job: { type: 'String' },
   sendEmailNotifications: { type: 'Boolean', default: true, required: true },
   role: {
     type: [String],
