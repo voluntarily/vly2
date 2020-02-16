@@ -2,6 +2,8 @@ const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const InterestArchive = require('./interestArchive')
 const { listInterests, updateInterest } = require('./interestArchive.controller')
+const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
+const { SchemaName } = require('./interestArchive.constants')
 
 module.exports = server => {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -11,6 +13,9 @@ module.exports = server => {
       Model: InterestArchive,
       selectFields: '-__v', // Hide '__v' property
       endResponseInAction: false,
+      beforeActions: [{
+        middlewares: [authorizeActions(SchemaName)]
+      }],
       actions: {
         list: listInterests,
         update: updateInterest
