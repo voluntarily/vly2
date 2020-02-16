@@ -113,10 +113,30 @@ class PersonHomePage extends Component {
   handleUpdate = async () => {
     const person = this.props.people.data[0] // this.props.me
     const role = this.sortRoleByPower(person)
-    const personData = { ...person, role }
+
+    // Only a subset of fields can be updated on the server
+    const personData = {
+      name: person.name,
+      nickname: person.nickname,
+      phone: person.phone,
+      sendEmailNotifications: person.sendEmailNotifications,
+      pronoun: person.pronoun,
+      about: person.about,
+      location: person.location,
+      tags: person.tags,
+      website: person.website,
+      twitter: person.twitter,
+      facebook: person.facebook,
+      imgUrl: person.imgUrl,
+      imgUrlSm: person.imgUrlSm,
+      role,
+      status: person.status,
+      education: person.education
+    }
+
     await this.props.dispatch(
       reduxApi.actions.people.put(
-        { id: personData._id },
+        { id: person._id },
         { body: JSON.stringify(personData) }
       )
     )
