@@ -383,7 +383,7 @@ class PersonDetailForm extends Component {
                 <Form.Item label={personEmail}>
                   {getFieldDecorator('email', {
                     rules: []
-                  })(<Input placeholder='salvador@dali.com' />)}
+                  })(<Input placeholder='salvador@dali.com' readOnly />)}
                 </Form.Item>
               </ShortInputContainer>
               <ShortInputContainer>
