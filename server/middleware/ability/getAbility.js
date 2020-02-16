@@ -26,7 +26,7 @@ module.exports = options => async (req, res, next) => {
 
   for (const abilityRuleBuilderPath of glob.sync(pattern)) {
     const ruleBuilder = require(abilityRuleBuilderPath)
-    const rules = ruleBuilder(req.session, req.query)
+    const rules = await ruleBuilder(req.session)
     for (const role of userRoles) {
       if (rules[role] == null) continue
       if (role) {
