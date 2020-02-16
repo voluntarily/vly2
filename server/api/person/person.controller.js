@@ -3,7 +3,7 @@ const sanitizeHtml = require('sanitize-html')
 const { Action } = require('../../services/abilities/ability.constants')
 const { getPersonRoles } = require('../member/member.lib')
 const { Role } = require('../../services/authorize/role')
-const { languages } = require('../../../lang/lang.constants')
+const { supportedLanguages } = require('../../../lang/lang')
 const { websiteRegex } = require('./person.validation')
 
 /* find a single person by searching for a key field.
@@ -101,7 +101,7 @@ async function updatePersonDetail (req, res, next) {
   }
 
   // Must be a valid language
-  if (Object.keys(person).includes('language') && !languages.includes(person.language)) {
+  if (Object.keys(person).includes('language') && !supportedLanguages.includes(person.language)) {
     return res.status(400).send('You have specified an invalid language value')
   }
 
