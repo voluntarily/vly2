@@ -1,5 +1,5 @@
 import test from 'ava'
-import { PersonHomePageTest } from '../pages/home/home'
+import { PersonHomePage } from '../pages/home/home'
 import { mountWithIntl } from '../lib/react-intl-test-helper'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
@@ -281,7 +281,7 @@ test.serial('run GetInitialProps', async t => {
     .get('path:/api/interestsArchived/', { body: t.context.archivedInterestFixture })
   reduxApi.use('fetch', adapterFetch(t.context.mockServer))
 
-  await PersonHomePageTest.getInitialProps({ store: t.context.mockStore })
+  await PersonHomePage.getInitialProps({ store: t.context.mockStore })
   // 2 actions for each call and success
   t.is(t.context.mockStore.getActions().length, 16)
 })
@@ -293,7 +293,7 @@ test('render volunteer home page - Active tab', t => {
 
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
-      <PersonHomePageTest {...props} />
+      <PersonHomePage {...props} />
     </Provider>)
 
   t.is(wrapper.find('h1').first().text(), 'Home')
@@ -320,7 +320,7 @@ test('render volunteer home page - Discover tab', t => {
 
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
-      <PersonHomePageTest {...props} />
+      <PersonHomePage {...props} />
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(tabIndex.discover).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Discover')
@@ -341,7 +341,7 @@ test.serial('render volunteer home page - History tab', t => {
 
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
-      <PersonHomePageTest {...props} />
+      <PersonHomePage {...props} />
     </Provider>)
 
   wrapper.find('.ant-tabs-tab').at(tabIndex.history).simulate('click')
@@ -386,7 +386,7 @@ test.serial('render volunteer home page - Profile tab', t => {
 
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
-      <PersonHomePageTest {...props} />
+      <PersonHomePage {...props} />
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(tabIndex.profile).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Profile')
@@ -405,7 +405,7 @@ test.serial('render Edit Profile ', async t => {
   const props = { me: t.context.me }
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
-      <PersonHomePageTest {...props} />
+      <PersonHomePage {...props} />
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(tabIndex.profile).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Profile')

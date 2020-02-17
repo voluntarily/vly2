@@ -9,13 +9,14 @@ import Loading from '../../components/Loading'
 import OpAdd from '../../components/Op/OpAdd'
 import { FullPage, PageBannerButtons } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
-import reduxApi, { withHomeData, withPeople } from '../../lib/redux/reduxApi.js'
+import reduxApi from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
+import { useSelector } from 'react-redux'
 
-export const PersonHomePage = ({
-  people,
-  members
-}) => {
+export const PersonHomePage = () => {
+  const [people, members] = useSelector(
+    state => [state.people, state.members]
+  )
   const router = useRouter()
   const [tab, setTab] = useState((router.query && router.query.tab) || 'active')
 
@@ -83,6 +84,4 @@ PersonHomePage.getInitialProps = async ({ store, query }) => {
   }
 }
 
-export const PersonHomePageTest = withPeople(withHomeData(PersonHomePage))
-
-export default securePage(PersonHomePageTest)
+export default securePage(PersonHomePage)
