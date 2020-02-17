@@ -1,7 +1,6 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Opportunity = require('./opportunity')
-const { Action } = require('../../services/abilities/ability.constants')
 const {
   ensureSanitized,
   getOpportunities,
@@ -9,24 +8,9 @@ const {
   putOpportunity,
   getOpportunityRecommendations
 } = require('./opportunity.controller')
-const { SchemaName, OpportunityRoutes } = require('./opportunity.constants')
+const { SchemaName } = require('./opportunity.constants')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 const initializeTags = require('../../util/initTags')
-
-const convertRequestToAction = (req) => {
-  switch (req.method) {
-    case 'GET':
-      return req.route.path === OpportunityRoutes[Action.READ] ? Action.READ : Action.LIST
-    case 'POST':
-      return Action.CREATE
-    case 'PUT':
-      return Action.UPDATE
-    case 'DELETE':
-      return Action.DELETE
-    default:
-      return Action.READ
-  }
-}
 
 module.exports = (server) => {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -38,7 +22,7 @@ module.exports = (server) => {
       selectFields: '-__v', // Hide '__v' property
       endResponseInAction: false,
       beforeActions: [{
-        middlewares: [authorizeActions(SchemaName, convertRequestToAction), ensureSanitized]
+        middlewares: [authorizeActions(SchemaName), ensureSanitized]
       }, {
         middlewares: [initializeTags],
         only: ['create', 'update']

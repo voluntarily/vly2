@@ -72,6 +72,8 @@ class PersonDetailForm extends Component {
         }
         person.status = values.status
         person.education = values.education
+        person.placeOfWork = values.placeOfWork
+        person.job = values.job
         window.scrollTo(0, 0)
         this.props.onSubmit(this.props.person)
       }
@@ -201,7 +203,20 @@ class PersonDetailForm extends Component {
         </Tooltip>
       </span>
     )
-
+    const personplaceOfWork = (
+      <FormattedMessage
+        id='placeOfWork'
+        defaultMessage='Where is your place of Work'
+        description='persons location of work if they do not come from a organisation'
+      />
+    )
+    const personJob = (
+      <FormattedMessage
+        id='job'
+        defaultMessage='What is your Job Title?'
+        description='person Job label in personDetails Form'
+      />
+    )
     const personTags = (
       <FormattedMessage
         id='PersonDetailForm.Label.Tags'
@@ -320,6 +335,18 @@ class PersonDetailForm extends Component {
                   <EducationSelectorRef />
                 )}
               </Form.Item>
+              <Form.Item label={personplaceOfWork}>
+                {getFieldDecorator('placeOfWork')(
+                  <Input placeholder='Enter your place of work here' />
+                )}
+              </Form.Item>
+              <ShortInputContainer>
+                <Form.Item label={personJob}>
+                  {getFieldDecorator('job')(
+                    <Input placeholder='Enter your job title here' />
+                  )}
+                </Form.Item>
+              </ShortInputContainer>
             </InputContainer>
           </FormGrid>
           <Divider />
@@ -566,8 +593,10 @@ PersonDetailForm.propTypes = {
     facebook: PropTypes.string,
     twitter: PropTypes.string,
     website: PropTypes.string,
+    placeOfWork: PropTypes.string,
     pronoun: PropTypes.object,
-    imgUrl: PropTypes.string,
+    job: PropTypes.string,
+    imgUrl: PropTypes.any,
     imgUrlSm: PropTypes.string,
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
@@ -618,6 +647,14 @@ export default Form.create({
       education: Form.createFormField({
         ...props.person.education,
         value: props.person.education
+      }),
+      placeOfWork: Form.createFormField({
+        ...props.person.placeOfWork,
+        value: props.person.placeOfWork
+      }),
+      job: Form.createFormField({
+        ...props.person.job,
+        value: props.person.job
       }),
       email: Form.createFormField({
         ...props.person.email,
