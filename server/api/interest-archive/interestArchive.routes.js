@@ -1,7 +1,7 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const InterestArchive = require('./interestArchive')
-const { listInterests, updateInterest } = require('./interestArchive.controller')
+const { listInterests, updateInterest, getInterest } = require('./interestArchive.controller')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 const { SchemaName } = require('./interestArchive.constants')
 
@@ -18,6 +18,7 @@ module.exports = server => {
       }],
       actions: {
         list: listInterests,
+        read: getInterest,
         update: updateInterest
       },
       afterActions: [

@@ -40,6 +40,22 @@ const listInterests = async (req, res) => {
   }
 }
 
+const getInterest = async (req, res, next) => {
+  try {
+    const interest = await InterestArchive
+      .accessibleBy(req.ability, Action.READ)
+      .findOne(req.params)
+
+    if (interest === null) {
+      return res.status(404).send()
+    }
+
+    res.json(interest)
+  } catch (e) {
+    res.status(500).send()
+  }
+}
+
 const updateInterest = async (req, res) => {
   try {
     await InterestArchive.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
@@ -51,5 +67,6 @@ const updateInterest = async (req, res) => {
 
 module.exports = {
   listInterests,
+  getInterest,
   updateInterest
 }
