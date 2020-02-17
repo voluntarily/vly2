@@ -29,7 +29,7 @@ const ruleBuilder = (session) => {
   const defaultAbilities = [
     {
       subject: SchemaName,
-      action: Action.READ
+      action: [Action.LIST, Action.READ]
     }
   ]
 

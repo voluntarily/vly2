@@ -1,30 +1,37 @@
 import { useState } from 'react'
 import { StoryForm } from '../../components/Story/StoryForm'
+import Button from 'antd/lib/button'
+import reduxApi from '../../lib/redux/reduxApi'
+import { useDispatch } from 'react-redux'
 import { StoryDetail } from '../../components/Story/StoryDetail'
+import { FormattedMessage } from 'react-intl'
 
 export const stories = []
 
 export const EditableStory = ({ story }) => {
   const [editing, setEditing] = useState(false)
-  const [storyview, setStoryview] = useState(story)
+  const dispatch = useDispatch()
 
-  const handleSave = (story) => {
-    // should write to database
-    setStoryview(story)
+  const handleSave = async (story) => {
+    await dispatch(reduxApi.actions.stories.put(
+      { id: story._id },
+      { body: JSON.stringify(story) })
+    )
     setEditing(false)
   }
+
   return (
     editing
       ? (
-        <>
-          <StoryForm story={storyview} onSubmit={handleSave} />
-        </>)
+        <StoryForm story={story} onSubmit={handleSave} />
+      )
       : (
-        <>
-          <StoryDetail story={storyview}>
-            <button onClick={() => setEditing(true)}>Edit Story</button>
-          </StoryDetail>
-        </>)
+        <StoryDetail story={story}>
+          <Button shape='round' type='primary' onClick={() => setEditing(true)}>
+            <FormattedMessage id='story.edit' defaultMessage='Edit' description='Button to edit a story on updates tab' />
+          </Button>
+        </StoryDetail>
+      )
 
   )
 }

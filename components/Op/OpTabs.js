@@ -61,7 +61,7 @@ export const OpTabs = ({ op, onChange, canManage, defaultTab, author }) => (
       )}
       {isNotProd && (
         <TabPane tab={opUpdateTab} key='news'>
-          <OpUpdatePanel op={op} author={author} />
+          <OpUpdatePanel albumId={op._id} author={author} />
         </TabPane>
       )}
       {canManage && (

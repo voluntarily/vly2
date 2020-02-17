@@ -8,8 +8,19 @@ const PersonalGoalStatus = {
   CANCELLED: 'cancelled', // goal has been cancelled.
   CLOSED: 'closed' // completed and expired
 }
+const PersonalGoalFields = {
+  ID: '_id',
+  PERSON: 'person',
+  GOAL: 'goal',
+  STATUS: 'status',
+  DATE_ADDED: 'dateAdded',
+  DATE_STARTED: 'dateStarted',
+  DATE_HIDDEN: 'dateHidden',
+  DATE_COMPLETED: 'dateCompleted'
+}
 
 module.exports = {
   SchemaName,
+  PersonalGoalFields,
   PersonalGoalStatus
 }

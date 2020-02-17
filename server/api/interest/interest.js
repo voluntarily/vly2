@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const idvalidator = require('mongoose-id-validator')
+const { accessibleRecordsPlugin } = require('@casl/mongoose')
 const { InterestStatus } = require('./interest.constants')
 
 const interestSchema = new Schema({
@@ -48,6 +49,8 @@ const interestSchema = new Schema({
 */
 
 interestSchema.plugin(idvalidator)
+interestSchema.plugin(accessibleRecordsPlugin)
+
 // protect multiple imports
 var Interest
 

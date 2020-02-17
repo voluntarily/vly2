@@ -5,23 +5,7 @@ const { getActivities, getActivity, putActivity, createActivity } = require('./a
 const { findActivity } = require('./findActivity')
 const initializeTags = require('../../util/initTags')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
-const { Action } = require('../../services/abilities/ability.constants')
 const { SchemaName } = require('./activity.constants')
-
-const convertRequestToAction = (req) => {
-  switch (req.method) {
-    case 'GET':
-      return req.route.path === '/' ? Action.LIST : Action.READ
-    case 'POST':
-      return Action.CREATE
-    case 'PUT':
-      return Action.UPDATE
-    case 'DELETE':
-      return Action.DELETE
-    default:
-      return Action.READ
-  }
-}
 
 module.exports = (server) => {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -37,7 +21,7 @@ module.exports = (server) => {
       endResponseInAction: false,
       beforeActions: [
         {
-          middlewares: [authorizeActions(SchemaName, convertRequestToAction)]
+          middlewares: [authorizeActions(SchemaName)]
         },
         {
           middlewares: [initializeTags],

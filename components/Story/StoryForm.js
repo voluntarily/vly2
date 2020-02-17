@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Button, Form, Input } from 'antd'
 import { FormGrid, InputContainer } from '../VTheme/FormStyles'
 import { FormattedMessage } from 'react-intl'
@@ -31,12 +31,14 @@ export const StoryForm = ({ story, onSubmit }) => {
       <FormGrid>
         <InputContainer>
           <Form.Item label={storyName}>
-            <input value={storyed.name} onChange={(e) => setStoryed({ name: e.target.value, body: storyed.body })} />
+            <input value={storyed.name} onChange={(e) => setStoryed({ ...storyed, name: e.target.value })} />
           </Form.Item>
           <Form.Item label={storyDescription}>
-            <TextArea cols='35' value={storyed.body} onChange={(e) => setStoryed({ name: storyed.name, body: e.target.value })} />
+            <TextArea cols='35' value={storyed.body} onChange={(e) => setStoryed({ ...storyed, body: e.target.value })} />
           </Form.Item>
-          <Button type='primary' onClick={() => onSubmit(storyed)}>Save</Button>
+          <Button type='primary' onClick={() => onSubmit(storyed)}>
+            <FormattedMessage id='story.publish' defaultMessage='Publish' description='Button to publish a story on updates tab' />
+          </Button>
         </InputContainer>
       </FormGrid>
     </Form>)
