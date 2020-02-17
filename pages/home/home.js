@@ -8,7 +8,7 @@ import { HomeTabs } from '../../components/Home/HomeTabs.js'
 import Loading from '../../components/Loading'
 import OpAdd from '../../components/Op/OpAdd'
 import { FullPage, PageBannerButtons } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+import securePage from '../../hocs/securePage'
 import reduxApi, { withHomeData, withPeople } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 
@@ -113,4 +113,4 @@ PersonHomePage.getInitialProps = async ({ store, query }) => {
 
 export const PersonHomePageTest = withPeople(withHomeData(PersonHomePage))
 
-export default publicPage(PersonHomePageTest)
+export default securePage(PersonHomePageTest)
