@@ -1,9 +1,6 @@
 import styled from 'styled-components'
 import { Button } from 'antd'
 
-
-
-
 const HeroContainer = styled.div`
   margin: 10rem 0;
   position: relative;
@@ -68,19 +65,16 @@ const ButtonContainer = styled.div`
   @media screen and (max-width: 768px) {
     margin-top: 0;
   }
-Button {
-  margin-top: 1rem;
-}
+  button {
+    margin-top: 1rem;
+  }
 `
 
-//@TODO: [SUP-58] add teacher signup logic here
-const Hero2 = ({subheader, title, buttonText}) => ( 
-
-    <HeroContainer>
+// @TODO: [SUP-58] add teacher signup logic here
+const Hero2 = ({ subheader, title, buttonText }) => (
+  <HeroContainer>
     <TextMiniTitle>{subheader}</TextMiniTitle>
-    <TextHeroTitle>
-    {title}
-    </TextHeroTitle>
+    <TextHeroTitle>{title}</TextHeroTitle>
 
     <ButtonContainer>
       <Button shape='round' size='large' type='primary'>
@@ -94,4 +88,4 @@ const Hero2 = ({subheader, title, buttonText}) => (
   </HeroContainer>
 )
 
-export default Hero2;
+export default Hero2

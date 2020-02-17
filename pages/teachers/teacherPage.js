@@ -22,9 +22,9 @@ const ButtonContainer = styled.div`
   @media screen and (max-width: 768px) {
     margin-top: 0;
   }
-Button {
-  margin-top: 1rem;
-}
+  button {
+    margin-top: 1rem;
+  }
 `
 
 const TextHeroDescription = styled.h1`
@@ -80,7 +80,6 @@ const ListItemImage = styled.img`
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     width: calc(45vw - 2rem);
     height: auto;
-   
   }
   @media screen and (max-width: 768px) {
     width: calc(100vw - 2rem);
@@ -127,7 +126,6 @@ const SectionGridItem = styled.div`
   display: grid;
   align-self: center;
   @media screen and (max-width: 768px) {
-  
     margin-bottom: 4rem;
   }
 `
@@ -136,8 +134,8 @@ const SectionGridItemLeft = styled.div`
   display: grid;
   align-self: center;
   @media screen and (max-width: 768px) {
-   order: -1;
-   margin-bottom: 4rem;
+    order: -1;
+    margin-bottom: 4rem;
   }
 `
 
@@ -176,16 +174,17 @@ export class Teacher extends Component {
           </Helmet>
 
           <Hero2
-          subheader='Voluntarily for Teachers'
-          title='Get industry volunteers to help teachers and students in your
+            subheader='Voluntarily for Teachers'
+            title='Get industry volunteers to help teachers and students in your
           school.'
           />
-        
+
           <SectionContainer>
             <AboutImage src='/static/test2.png' />
 
             <TextHeroDescription>
-              <strong>Call in support from experts</strong><br />
+              <strong>Call in support from experts</strong>
+              <br />
               Voluntarily helps teachers get assistance and support in their
               teaching from industry volunteers. All you need to do is list what
               kind of skills you want or need, and volunteers will come.
@@ -196,7 +195,9 @@ export class Teacher extends Component {
             <HalfGrid>
               <ListItemImage src='static/img/landing-pages/teachers/resources.png' />
               <SectionGridItem>
-                <h2><strong>Free resources</strong></h2>
+                <h2>
+                  <strong>Free resources</strong>
+                </h2>
                 <h4>
                   Organize activities in a few clicks with free educational
                   activity templates and resources
@@ -213,7 +214,9 @@ export class Teacher extends Component {
           <SectionContainer>
             <HalfGrid>
               <SectionGridItemLeft>
-                <h2><strong>Bring in Expert Volunteers</strong></h2>
+                <h2>
+                  <strong>Bring in Expert Volunteers</strong>
+                </h2>
                 <h4>
                   Skilled volunteers want to help you out with your teaching by
                   sharing their skills
@@ -232,8 +235,8 @@ export class Teacher extends Component {
           <SectionContainer>
             <SectionTitle>We are working with</SectionTitle>
             <SponsorContainer>
-              {/* <SponsorIcon src='static/img/partners/MOE.png' />*/}
-              <SponsorIcon src='static/img/partners/tec.png' /> 
+              {/* <SponsorIcon src='static/img/partners/MOE.png' /> */}
+              <SponsorIcon src='static/img/partners/tec.png' />
               <SponsorIcon src='static/img/partners/Spark.png' />
               <SponsorIcon src='static/img/partners/Westpac.png' />
               <SponsorIcon src='static/img/partners/Datacom.png' />
