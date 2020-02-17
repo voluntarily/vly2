@@ -2,14 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 
 const TitleContainer = styled.div`
-  margin-top: 4rem;
-  height: 5rem;
-  padding: 15px;
+  margin: 2rem 0;
+
+ 
+
 `
 
 const SectionTitle = ({ children }) => (
   <TitleContainer>
-    <h2>{children}</h2>
+    <h3>{children}</h3>
   </TitleContainer>
 )
 
