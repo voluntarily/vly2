@@ -2,9 +2,8 @@ import React from 'react'
 import publicPage from './publicPage'
 import Router from 'next/router'
 import { FullPage } from '../components/VTheme/VTheme'
-import Link from 'next/link'
 import { getSession } from '../lib/auth/auth'
-import { Button } from 'antd'
+import { Unverified } from '../components/Warnings/Unverified'
 // TODO: Does this result in GetInitialProps being called multiple times?
 const securePageHoc = Page => class SecurePage extends React.Component {
   static async getInitialProps (ctx) {
@@ -25,8 +24,11 @@ const securePageHoc = Page => class SecurePage extends React.Component {
     }
     // we have a session - check user validation
     if (!session.user.email_verified) {
+      // do not allow page props to be fetched if email not verified.
       return {
-        isAuthenticated: false
+        isAuthenticated: false,
+        isAdmin: false,
+        user: session.user
       }
     }
     // securePage always wraps publicPage so we know GIP exists.
@@ -39,12 +41,7 @@ const securePageHoc = Page => class SecurePage extends React.Component {
     }
     return (
       <FullPage>
-        <h1>Voluntarily Authentication Issue</h1>
-        <p>You are signed in, but your account is not currently enabled. </p>
-        <p>Please check you have responded to any email address verification requests and then try again</p>
-        <p>If problems continue please contact technical support.</p>
-
-        <Link href='/auth/sign-off'><Button>OK</Button></Link>
+        <Unverified {...this.props} />
       </FullPage>
     )
   }
