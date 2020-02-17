@@ -40,9 +40,10 @@ const TextHeroDescription = styled.h1`
   @media screen and (min-width: 768px) and (max-width: 1025px) {
   }
   @media screen and (max-width: 768px) {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     letter-spacing: -1.1px;
     line-height: 1.5;
+    margin-bottom: 6rem;
   }
 `
 // Page-Specific Images
@@ -125,6 +126,10 @@ const SectionContainer = styled.div`
 const SectionGridItem = styled.div`
   display: grid;
   align-self: center;
+  @media screen and (max-width: 768px) {
+  
+    margin-bottom: 4rem;
+  }
 `
 
 const SectionGridItemLeft = styled.div`
@@ -132,6 +137,7 @@ const SectionGridItemLeft = styled.div`
   align-self: center;
   @media screen and (max-width: 768px) {
    order: -1;
+   margin-bottom: 4rem;
   }
 `
 
