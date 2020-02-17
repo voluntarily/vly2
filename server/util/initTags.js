@@ -1,11 +1,12 @@
 const Tag = require('../api/tag/tag')
+const { DefaultTagList } = require('../api/tag/tag.constants')
 
 const initializeTags = async (req, res, next) => {
   try {
     const { tags } = req.body
     if (tags) {
       try {
-        const tagset = await Tag.findOne().exec()
+        const tagset = await Tag.findOne({ name: DefaultTagList }).exec()
         if (tagset) {
           const currentTags = new Set(tagset.tags)
           tags.forEach(x => {
@@ -16,7 +17,7 @@ const initializeTags = async (req, res, next) => {
           })
           await tagset.save()
         } else {
-          await Tag.create({ tags: tags })
+          await Tag.create({ name: DefaultTagList, tags: tags })
         }
       } catch (error) {
         console.error('Failed to fetch tags to append to', error)
