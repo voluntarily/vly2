@@ -178,7 +178,7 @@ test('Get person by id - admin', async t => {
   }
 })
 
-for (const role of [undefined, Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.TESTER, Role.ADMIN]) {
+for (const role of [undefined, Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.TESTER]) {
   test.serial(`Create a new person - ${role || 'Anonymous'} is denied`, async t => {
     const res = await request(server)
       .post('/api/people')
