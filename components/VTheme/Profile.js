@@ -52,3 +52,6 @@ export const ProfilePanel = styled.article`
 export const ProfileSection = styled.section`
   margin: 1.5rem 0 0 0;
 `
+export const ProfileSectionTitle = styled.h2`
+  margin: 1.5rem 0 0 0;
+`
