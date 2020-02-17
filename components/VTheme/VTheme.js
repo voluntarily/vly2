@@ -569,7 +569,7 @@ export const ContactList = styled.ul`
       }
 
       @media screen and (min-width: 988px) {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
       }
     }
   }
