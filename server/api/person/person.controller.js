@@ -49,7 +49,7 @@ const isProd = process.env.NODE_ENV === 'production'
 async function updatePersonDetail (req, res, next) {
   const { ability: userAbility, body: person } = req
 
-  const me = req.session.me
+  const me = req && req.session && req.session.me
   if (!me) {
     return res.sendStatus(401)
   }
