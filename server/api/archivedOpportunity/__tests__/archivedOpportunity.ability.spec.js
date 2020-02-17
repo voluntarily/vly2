@@ -50,6 +50,9 @@ const limitedExpectedFields = [
   OpportunityFields.NAME,
   OpportunityFields.SUBTITLE,
   OpportunityFields.IMG_URL,
+  OpportunityFields.STATUS,
+  OpportunityFields.DATE,
+  OpportunityFields.LOCATION,
   OpportunityFields.DURATION
 ]
 

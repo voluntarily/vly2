@@ -8,7 +8,10 @@ const ruleBuilder = session => {
     subject: SchemaName,
     action: Action.LIST,
     conditions: { status: { $in: [OpportunityStatus.COMPLETED] } },
-    fields: [OpportunityFields.ID, OpportunityFields.NAME, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION, OpportunityFields.STATUS]
+    fields: [OpportunityFields.ID, OpportunityFields.NAME,
+      OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL,
+      OpportunityFields.DURATION, OpportunityFields.STATUS,
+      OpportunityFields.DATE, OpportunityFields.LOCATION]
   }, {
     subject: SchemaName,
     action: Action.READ,
