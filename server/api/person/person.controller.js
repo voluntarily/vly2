@@ -79,9 +79,17 @@ async function updatePersonDetail (req, res, next) {
     return res.status(403).send('You do not have the required role to update this person')
   }
 
-  // Only an ADMIN can update the role field to ADMIN
-  if (person.role && person.role.includes(Role.ADMIN) && !me.role.includes(Role.ADMIN)) {
-    return res.status(403).send('You do not have the required role to change the \'role\' field')
+  // If we are attempting to change the role field
+  if (person.role) {
+    // Only an ADMIN can update the role field to include ADMIN
+    if (person.role.includes(Role.ADMIN) && !me.role.includes(Role.ADMIN)) {
+      return res.status(403).send('You do not have the required role to change the \'role\' field')
+    }
+
+    // Only ADMIN can update the role field to include TESTER
+    if (person.role.includes(Role.TESTER) && !me.role.includes(Role.ADMIN)) {
+      return res.status(403).send('You do not have the required role to change the \'role\' field')
+    }
   }
 
   // Only a subset of the Role enum can be set via the API. Some value are computed and set such as ORG_ADMIN.
