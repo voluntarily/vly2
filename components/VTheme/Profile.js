@@ -54,4 +54,10 @@ export const ProfileSection = styled.section`
 `
 export const ProfileSectionTitle = styled.h2`
   margin: 1.5rem 0 0 0;
+
+  small {
+    display: block;
+    line-height: 2rem;
+    font-size: 50%;
+  }
 `

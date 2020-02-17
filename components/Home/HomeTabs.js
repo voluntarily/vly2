@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { ProfilePanel } from '../VTheme/Profile'
-import GoalSection from '../Goal/GoalSection'
+import PersonalGoalSection from '../Goal/PersonalGoalSection'
 import ActiveOpsSection from '../Op/ActiveOpsSection'
 import InterestedOpsSection from '../Op/InterestedOpsSection'
 import ArchivedOpsSection from '../Op/ArchivedOpsSection'
@@ -59,7 +59,7 @@ export const HomeTabs = ({ person, onChange }) => (
   <VTabs defaultActiveKey='active' onChange={onChange}>
     <TabPane tab={homeActiveTab} key='active'>
       <ProfilePanel>
-        <GoalSection />
+        <PersonalGoalSection />
         <ActiveOpsSection />
         <InterestedOpsSection />
       </ProfilePanel>
