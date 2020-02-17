@@ -7,7 +7,6 @@ import Loading from '../Loading'
 
 export const RecommendedOpsSection = () => {
   const recommendedOps = useSelector(state => state.recommendedOps)
-  console.log(recommendedOps)
   if (!recommendedOps.sync) return <Loading />
   const ops = recommendedOps.data[0]
 
