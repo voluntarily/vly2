@@ -58,7 +58,14 @@ const getInterest = async (req, res, next) => {
 
 const updateInterest = async (req, res) => {
   try {
-    await InterestArchive.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
+    const result = await InterestArchive
+      .accessibleBy(req.ability, Action.UPDATE)
+      .updateOne(req.params, { $set: { status: req.body.status } })
+
+    if (result.nModified === 0) {
+      return res.sendStatus(404)
+    }
+
     res.json(req.body)
   } catch (err) {
     res.status(404).send(err)
