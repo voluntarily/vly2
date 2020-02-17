@@ -12,10 +12,12 @@ import { StoryForm } from '../../components/Story/StoryForm'
 const AddStory = ({ roles, onSubmit }) => {
   const blankStory = { name: '', body: '' }
   const [showForm, setShowForm] = useState(false)
-  const handleSave = story => {
+
+  const handleSave = (story) => {
     setShowForm(false)
     onSubmit(story)
   }
+
   if (roles && (roles.includes(Role.ADMIN) || roles.includes(Role.ORG_ADMIN))) {
     return (
       <>

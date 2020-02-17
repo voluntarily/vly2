@@ -48,32 +48,30 @@ const opEditTab =
 const isNotProd = process.env.NODE_ENV !== 'production'
 
 export const OpTabs = ({ op, onChange, canManage, defaultTab, author }) => (
-  <>
-    <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
-      <TabPane tab={opAboutTab} key='about'>
-        <OpAboutPanel op={op} />
-      </TabPane>
+  <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
+    <TabPane tab={opAboutTab} key='about'>
+      <OpAboutPanel op={op} />
+    </TabPane>
 
-      {isNotProd && (
-        <TabPane tab={opForumTab} key='question'>
-          <OpQuestionPanel op={op} />
-        </TabPane>
-      )}
-      {isNotProd && (
-        <TabPane tab={opUpdateTab} key='news'>
-          <OpUpdatePanel op={op} author={author} />
-        </TabPane>
-      )}
-      {canManage && (
-        <TabPane tab={opManageTab} key='manage'>
-          <OpManagePanel op={op} />
-        </TabPane>
-      )}
-      {canManage && (
-        <TabPane tab={opEditTab} key='edit' />
-      )}
-    </VTabs>
-  </>
+    {isNotProd && (
+      <TabPane tab={opForumTab} key='question'>
+        <OpQuestionPanel op={op} />
+      </TabPane>
+    )}
+    {isNotProd && (
+      <TabPane tab={opUpdateTab} key='news'>
+        <OpUpdatePanel albumId={op._id} author={author} />
+      </TabPane>
+    )}
+    {canManage && (
+      <TabPane tab={opManageTab} key='manage'>
+        <OpManagePanel op={op} />
+      </TabPane>
+    )}
+    {canManage && (
+      <TabPane tab={opEditTab} key='edit' />
+    )}
+  </VTabs>
 )
 
 OpTabs.propTypes = {

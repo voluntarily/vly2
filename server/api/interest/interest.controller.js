@@ -6,6 +6,7 @@ const { InterestStatus } = require('./interest.constants')
 const ical = require('ical-generator')
 const htmlSanitizer = require('sanitize-html')
 const moment = require('moment')
+const { Action } = require('../../services/abilities/ability.constants')
 
 /**
   api/interests -> list all interests
@@ -15,27 +16,53 @@ const moment = require('moment')
  */
 const listInterests = async (req, res) => {
   const sort = 'dateAdded' // todo sort by date.
-  let got
+
   try {
+    const find = {}
+    const populateList = []
+
     if (req.query.op) {
-      const query = { opportunity: req.query.op }
-      if (req.query.me) {
-        query.person = req.query.me
-      }
-      // Return the nickname in person field
-      got = await Interest.find(query).populate({ path: 'person', select: 'nickname name imgUrl' }).sort(sort).exec()
-      got = got.filter((opportunity) => opportunity.person !== null)
-    } else if (req.query.me) {
-      const query = { person: req.query.me }
-      got = await Interest.find(query).populate({ path: 'opportunity' }).sort(sort).exec()
-    } else {
-      got = await Interest.find().sort(sort).exec()
+      find.opportunity = req.query.op
+      populateList.push({ path: 'person', select: 'nickname name imgUrl' })
     }
 
-    res.json(got)
+    if (req.query.me) {
+      find.person = req.query.me
+      populateList.push({ path: 'opportunity' })
+    }
+
+    const query = Interest.find(find)
+
+    for (const populate of populateList) {
+      query.populate(populate)
+    }
+
+    const interests = (await query
+      .accessibleBy(req.ability, Action.LIST)
+      .sort(sort)
+      .exec())
+      .filter(opportunity => opportunity.person !== null)
+
+    res.json(interests)
   } catch (err) {
     // console.error(err)
     res.status(404).send(err)
+  }
+}
+
+const getInterest = async (req, res, next) => {
+  try {
+    const interest = await Interest
+      .accessibleBy(req.ability, Action.READ)
+      .findOne(req.params)
+
+    if (interest === null) {
+      return res.status(404).send()
+    }
+
+    res.json(interest)
+  } catch (e) {
+    res.status(500).send()
   }
 }
 
@@ -55,11 +82,22 @@ const getInterestDetail = async (interestID) => {
 }
 
 const createInterest = async (req, res) => {
-  const newInterest = new Interest(req.body)
-  try {
-    await newInterest.save()
+  const interestData = req.body
 
-    const interestDetail = await getInterestDetail(newInterest._id)
+  if (!interestData.person) {
+    interestData.person = (req.session.me && req.session.me._id) ? req.session.me._id : undefined
+  }
+
+  const interest = new Interest(interestData)
+
+  if (!req.ability.can(Action.CREATE, interest)) {
+    return res.sendStatus(403)
+  }
+
+  try {
+    await interest.save()
+
+    const interestDetail = await getInterestDetail(interest._id)
     sendInterestedEmail('acknowledgeInterest', interestDetail.person, interestDetail)
     sendInterestedEmail('interested', interestDetail.opportunity.requestor, interestDetail)
     res.json(interestDetail)
@@ -71,8 +109,15 @@ const createInterest = async (req, res) => {
 
 const updateInterest = async (req, res) => {
   try {
-    await Interest.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
-    const interestDetail = await getInterestDetail(req.body._id)
+    const result = await Interest
+      .accessibleBy(req.ability, Action.UPDATE)
+      .updateOne(req.params, { $set: { status: req.body.status } })
+
+    if (result.nModified === 0) {
+      return res.sendStatus(404)
+    }
+
+    const interestDetail = await getInterestDetail(req.params._id)
     processStatusToSendEmail(interestDetail.status, interestDetail)
     res.json(interestDetail)
   } catch (err) {
@@ -162,8 +207,27 @@ const sendInterestedEmail = async (template, to, interest, props) => {
   })
 }
 
+const deleteInterest = async (req, res, next) => {
+  try {
+    const result = await Interest
+      .accessibleBy(req.ability, Action.DELETE)
+      .deleteOne(req.params)
+
+    if (result.deletedCount === 0) {
+      return res.sendStatus(404)
+    }
+
+    return res.status(200).send(req.params)
+  } catch (e) {
+    console.log(e)
+    return res.sendStatus(500)
+  }
+}
+
 module.exports = {
   listInterests,
+  getInterest,
   updateInterest,
-  createInterest
+  createInterest,
+  deleteInterest
 }

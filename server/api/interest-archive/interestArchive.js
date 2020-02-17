@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const Interest = require('../interest/interest')
+const { accessibleRecordsPlugin } = require('@casl/mongoose')
 
 const InterestStatus = {
   INTERESTED: 'interested',
@@ -29,5 +30,7 @@ const interestArchiveSchema = new Schema({
     ]
   }
 })
+
+interestArchiveSchema.plugin(accessibleRecordsPlugin)
 
 module.exports = mongoose.model('InterestArchive', interestArchiveSchema)

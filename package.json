@@ -103,6 +103,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "require-extension": "0.0.4",
+    "reselect": "^4.0.0",
     "sanitize-html": "^1.20.1",
     "slug": "^2.1.0",
     "styled-components": "^5.0.0",
