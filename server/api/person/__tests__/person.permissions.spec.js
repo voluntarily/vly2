@@ -323,7 +323,7 @@ test('Anon user cannot remove a user', async t => {
   t.is(queriedPerson.email, p.email)
 })
 
-for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
+for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.VOLUNTEER_PROVIDER]) {
   test.serial(`Delete - ${role} cannot delete users`, async t => {
     const person = await createPerson([Role.VOLUNTEER_PROVIDER])
 
@@ -340,16 +340,35 @@ for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.RESO
   })
 }
 
-test.serial('Delete - ADMIN can delete users', async t => {
+for (const role of [Role.ADMIN, Role.TESTER]) {
+  test.serial(`Delete - ${role} can delete any user`, async t => {
+    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+
+    const res = await request(server)
+      .delete(`/api/people/${person._id}`)
+      .send()
+      .set('Accept', 'application/json')
+      .set('Cookie', `idToken=${await createPersonAndGetToken([role])}`)
+
+    t.true(res.ok)
+
+    const person2 = await Person.findById(person._id)
+    t.falsy(person2)
+  })
+}
+
+test.serial('Delete - Owner can delete their account', async t => {
+  // Volunteer role normally cannot delete an account, so for this code to succeed it will trigger the check
+  // that this request is for the current user's account
   const person = await createPerson([Role.VOLUNTEER_PROVIDER])
 
   const res = await request(server)
     .delete(`/api/people/${person._id}`)
     .send()
     .set('Accept', 'application/json')
-    .set('Cookie', `idToken=${await createPersonAndGetToken([Role.ADMIN])}`)
+    .set('Cookie', `idToken=${createJwtIdToken(person.email)}`) // Current user
 
-  t.is(res.status, 200)
+  t.true(res.ok)
 
   const person2 = await Person.findById(person._id)
   t.falsy(person2)

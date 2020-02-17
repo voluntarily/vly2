@@ -5,6 +5,7 @@ const { getPersonRoles } = require('../member/member.lib')
 const { Role } = require('../../services/authorize/role')
 const { supportedLanguages } = require('../../../lang/lang')
 const { websiteRegex } = require('./person.validation')
+const mongoose = require('mongoose')
 
 /* find a single person by searching for a key field.
 This is a convenience function usually used to call
@@ -137,6 +138,46 @@ async function updatePersonDetail (req, res, next) {
   next()
 }
 
+async function deletePerson (req, res, next) {
+  const me = req && req.session && req.session.me
+  if (!me) {
+    return res.sendStatus(401)
+  }
+
+  const personId = req.params._id
+  if (!personId) {
+    return res.status(400).send('Missing person identifier')
+  }
+
+  const currentPerson = await Person.findById(personId).lean().exec()
+  if (!currentPerson) {
+    return res.sendStatus(404)
+  }
+
+  const isSelf = me._id && personId === me._id.toString()
+
+  const allowed = me.role.includes(Role.ADMIN) ||
+                  me.role.includes(Role.TESTER) ||
+                  isSelf
+
+  if (!allowed) {
+    return res.status(403).send('You do not have the required role to delete this person')
+  }
+
+  // VP-1297 - Anonymise user details instead of hard deleting their record
+  const result = await Person.deleteOne({ _id: mongoose.Types.ObjectId(personId) })
+
+  if (result.deletedCount === 0) {
+    return res.sendStatus(400)
+  }
+
+  res.status(204)
+  req.crudify = {
+    result: undefined
+  }
+  next()
+}
+
 /**
  * Why? The Get method for api/people endpoint with a query param
  * will return an array in the db record which is fine. But the middleware job is only remove fields
@@ -176,5 +217,6 @@ module.exports = {
   ensureSanitized,
   listPeople,
   getPerson,
-  updatePersonDetail
+  updatePersonDetail,
+  deletePerson
 }
