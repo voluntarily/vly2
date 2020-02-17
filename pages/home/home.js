@@ -131,7 +131,9 @@ class PersonHomePage extends Component {
       imgUrlSm: person.imgUrlSm,
       role,
       status: person.status,
-      education: person.education
+      education: person.education,
+      placeOfWork: person.placeOfWork,
+      job: person.job
     }
 
     await this.props.dispatch(
