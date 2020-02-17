@@ -2,10 +2,15 @@ import { Icon, Tabs } from 'antd'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import MemberSection from '../Member/MemberSection'
 import { ProfilePanel } from '../VTheme/Profile'
-import { personAboutPanel } from './personAboutPanel'
-import Html from '../VTheme/Html'
+import GoalSection from '../Goal/GoalSection'
+import ActiveOpsSection from '../Op/ActiveOpsSection'
+import InterestedOpsSection from '../Op/InterestedOpsSection'
+import ArchivedOpsSection from '../Op/ArchivedOpsSection'
+import ArchivedInterestedOpsSection from '../Op/ArchivedInterestedOpsSection'
+import RecommendedOpsSection from '../Op/RecommendedOpsSection'
+import PersonDetail from '../../components/Person/PersonDetail'
+
 import VTabs from '../VTheme/VTabs'
 const { TabPane } = Tabs
 
@@ -51,40 +56,36 @@ const homeDiscoverTab = (
 )
 
 export const HomeTabs = ({ person, onChange }) => (
-  <VTabs defaultActiveKey='1' onChange={onChange}>
+  <VTabs defaultActiveKey='active' onChange={onChange}>
     <TabPane tab={homeActiveTab} key='active'>
-      <HomeActivePanel person={person} />
+      <ProfilePanel>
+        <GoalSection />
+        <ActiveOpsSection />
+        <InterestedOpsSection />
+      </ProfilePanel>
     </TabPane>
     <TabPane tab={homeDiscoverTab} key='discover'>
-      <HomeDiscoverPanel person={person} />
+      <ProfilePanel>
+        <RecommendedOpsSection />
+      </ProfilePanel>
     </TabPane>
     <TabPane tab={homeHistoryTab} key='history'>
-      <HomeHistoryPanel />
+      <ProfilePanel>
+        <ArchivedOpsSection />
+        <ArchivedInterestedOpsSection />
+      </ProfilePanel>
     </TabPane>
-    <TabPane tab={homeProfileTab} key='profile' />
-      <HomeProfilePanel />
+    <TabPane tab={homeProfileTab} key='profile'>
+      <ProfilePanel>
+        <PersonDetail person={person} />
+      </ProfilePanel>
     </TabPane>
   </VTabs>
 )
 
 HomeTabs.propTypes = {
   person: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    info: PropTypes.shape({
-      about: PropTypes.string,
-      followers: PropTypes.string,
-      joiners: PropTypes.string,
-      members: PropTypes.string,
-      outsiders: PropTypes.string
-    }),
-    category: PropTypes.arrayOf(
-      PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
-    ).isRequired,
-    imgUrl: PropTypes.string,
-    website: PropTypes.string,
-    contactEmail: PropTypes.string,
-    facebook: PropTypes.string,
-    twitter: PropTypes.string
+    name: PropTypes.string.isRequired
   }).isRequired
 }
 
