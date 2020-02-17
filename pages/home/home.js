@@ -14,11 +14,11 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 
 export const PersonHomePage = ({
   people,
-  dispatch,
   members
 }) => {
   const router = useRouter()
-  const [tab, setTab] = useState(router.query.tab)
+  const [tab, setTab] = useState((router.query && router.query.tab) || 'active')
+
   const updateTab = (key, top) => {
     setTab(key)
     if (top) window.scrollTo(0, 0)
@@ -27,34 +27,8 @@ export const PersonHomePage = ({
     router.replace(router.pathname, newpath, { shallow: true })
   }
   const handleTabChange = (key, e) => {
-    updateTab(key, key === 'edit')
+    updateTab(key, true)
   }
-  // const handleEditProfileCancel = () => {
-  //   setTab('profile')
-  // }
-
-  // const handleUpdate = async () => {
-  //   const person = people.data[0] // me
-  //   const role = sortRoleByPower(person)
-  //   const personData = { ...person, role }
-  //   await dispatch(
-  //     reduxApi.actions.people.put(
-  //       { id: personData._id },
-  //       { body: JSON.stringify(personData) }
-  //     )
-  //   )
-  //   message.success('Saved.')
-  //   // go to details page
-  //   setTab('profile')
-  // }
-
-  // const sortRoleByPower = ({ role }) => {
-  //   if (role.includes('admin')) {
-  //     role = role.filter(element => { return element !== 'admin' })
-  //     role.push('admin')
-  //   }
-  //   return role
-  // }
 
   if (!people.sync) { return <Loading /> }
 
@@ -96,10 +70,8 @@ PersonHomePage.getInitialProps = async ({ store, query }) => {
 
     await Promise.all([
       store.dispatch(reduxApi.actions.people.get({ id: meid })),
-      store.dispatch(reduxApi.actions.tags.get()),
       store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
       store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),
-      store.dispatch(reduxApi.actions.locations.get({ withRelationships: true })),
       store.dispatch(reduxApi.actions.interests.get({ me: meid })),
       store.dispatch(reduxApi.actions.personalGoals.get({ meid: meid })),
       store.dispatch(reduxApi.actions.members.get({ meid: meid })),

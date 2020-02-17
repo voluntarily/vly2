@@ -9,7 +9,7 @@ import InterestedOpsSection from '../Op/InterestedOpsSection'
 import ArchivedOpsSection from '../Op/ArchivedOpsSection'
 import ArchivedInterestedOpsSection from '../Op/ArchivedInterestedOpsSection'
 import RecommendedOpsSection from '../Op/RecommendedOpsSection'
-import PersonDetail from '../../components/Person/PersonDetail'
+import EditablePersonPanel from '../../components/Person/EditablePersonPanel'
 
 import VTabs from '../VTheme/VTabs'
 const { TabPane } = Tabs
@@ -55,8 +55,8 @@ const homeDiscoverTab = (
   </span>
 )
 
-export const HomeTabs = ({ person, onChange }) => (
-  <VTabs defaultActiveKey='active' onChange={onChange}>
+export const HomeTabs = ({ person, onChange, defaultTab }) =>
+  <VTabs defaultActiveKey={defaultTab} onChange={onChange}>
     <TabPane tab={homeActiveTab} key='active'>
       <ProfilePanel>
         <PersonalGoalSection />
@@ -77,11 +77,10 @@ export const HomeTabs = ({ person, onChange }) => (
     </TabPane>
     <TabPane tab={homeProfileTab} key='profile'>
       <ProfilePanel>
-        <PersonDetail person={person} />
+        <EditablePersonPanel person={person} />
       </ProfilePanel>
     </TabPane>
   </VTabs>
-)
 
 HomeTabs.propTypes = {
   person: PropTypes.shape({
