@@ -71,7 +71,7 @@ const ButtonContainer = styled.div`
 `
 
 // @TODO: [SUP-58] add teacher signup logic here
-const Hero2 = ({ subheader, title, buttonText }) => (
+const Hero2 = ({ subheader, title }) => (
   <HeroContainer>
     <TextMiniTitle>{subheader}</TextMiniTitle>
     <TextHeroTitle>{title}</TextHeroTitle>
