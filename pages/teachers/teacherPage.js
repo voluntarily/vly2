@@ -22,7 +22,7 @@ import {
   SponsorIcon
 } from '../../components/LandingPageComponents/Partners'
 
-//annoying hack to make sure buttons dont inherit block width
+// annoying hack to make sure buttons dont inherit block width
 const ButtonContainer = styled.div`
   margin-top: 1rem;
   @media screen and (max-width: 768px) {
