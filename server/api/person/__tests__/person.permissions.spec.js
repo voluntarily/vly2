@@ -340,7 +340,7 @@ for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.RESO
   })
 }
 
-test.serial(`Delete - ADMIN can delete users`, async t => {
+test.serial('Delete - ADMIN can delete users', async t => {
   const person = await createPerson([Role.VOLUNTEER_PROVIDER])
 
   const res = await request(server)

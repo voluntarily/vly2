@@ -78,7 +78,7 @@ test.serial('Should call next middleware when record is found', async t => {
   }
   request.session = {
     me: {
-      _id : idToQuery,
+      _id: idToQuery,
       role: [Role.ADMIN]
     }
   }
