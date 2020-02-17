@@ -323,6 +323,38 @@ test('Anon user cannot remove a user', async t => {
   t.is(queriedPerson.email, p.email)
 })
 
+for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
+  test.serial(`Delete - ${role} cannot delete users`, async t => {
+    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+
+    const res = await request(server)
+      .delete(`/api/people/${person._id}`)
+      .send()
+      .set('Accept', 'application/json')
+      .set('Cookie', `idToken=${await createPersonAndGetToken([role])}`)
+
+    t.is(res.status, 403)
+
+    const person2 = await Person.findById(person._id)
+    t.truthy(person2)
+  })
+}
+
+test.serial(`Delete - ADMIN can delete users`, async t => {
+  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+
+  const res = await request(server)
+    .delete(`/api/people/${person._id}`)
+    .send()
+    .set('Accept', 'application/json')
+    .set('Cookie', `idToken=${await createPersonAndGetToken([Role.ADMIN])}`)
+
+  t.is(res.status, 200)
+
+  const person2 = await Person.findById(person._id)
+  t.falsy(person2)
+})
+
 for (const role of [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
   test.serial(`Update - ADMIN can change a persons role to ${role}`, async t => {
     const person = await createPerson([Role.VOLUNTEER_PROVIDER])
