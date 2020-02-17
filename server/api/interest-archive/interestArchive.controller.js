@@ -1,4 +1,5 @@
 const InterestArchive = require('./interestArchive')
+const { Action } = require('../../services/abilities/ability.constants')
 
 /**
   api/interestsArchived -> list all interests
@@ -6,28 +7,65 @@ const InterestArchive = require('./interestArchive')
  */
 const listInterests = async (req, res) => {
   const sort = 'dateAdded' // todo sort by date.
-  let got
+
   try {
+    const find = {}
+    const populateList = []
+
     if (req.query.op) {
-      const query = { opportunity: req.query.op }
-      got = await InterestArchive.find(query).populate({ path: 'person', select: 'nickname name imgUrl' }).sort(sort).exec()
-    } else if (req.query.me) {
-      const query = { person: req.query.me }
-      got = await InterestArchive.find(query)
-        .populate({ path: 'opportunity' })
-        .sort(sort).exec()
-    } else {
-      got = await InterestArchive.find().exec()
+      find.opportunity = req.query.op
+      populateList.push({ path: 'person', select: 'nickname name imgUrl' })
     }
-    res.json(got)
+
+    if (req.query.me) {
+      find.person = req.query.me
+      populateList.push({ path: 'opportunity' })
+    }
+
+    const query = InterestArchive.find(find)
+
+    for (const populate of populateList) {
+      query.populate(populate)
+    }
+
+    const archivedInterests = (await query
+      .accessibleBy(req.ability, Action.LIST)
+      .sort(sort)
+      .exec())
+      .filter(opportunity => opportunity.person !== null)
+
+    res.json(archivedInterests)
   } catch (err) {
     res.status(404).send(err)
   }
 }
 
+const getInterest = async (req, res, next) => {
+  try {
+    const interest = await InterestArchive
+      .accessibleBy(req.ability, Action.READ)
+      .findOne(req.params)
+
+    if (interest === null) {
+      return res.status(404).send()
+    }
+
+    res.json(interest)
+  } catch (e) {
+    res.status(500).send()
+  }
+}
+
 const updateInterest = async (req, res) => {
   try {
-    await InterestArchive.updateOne({ _id: req.body._id }, { $set: { status: req.body.status } }).exec()
+    const result = await InterestArchive
+      .accessibleBy(req.ability, Action.UPDATE)
+      .updateOne(req.params, { $set: { status: req.body.status } })
+
+    if (result.nModified === 0) {
+      return res.sendStatus(404)
+    }
+
     res.json(req.body)
   } catch (err) {
     res.status(404).send(err)
@@ -36,5 +74,6 @@ const updateInterest = async (req, res) => {
 
 module.exports = {
   listInterests,
+  getInterest,
   updateInterest
 }
