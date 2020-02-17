@@ -9,7 +9,7 @@ const { DefaultTagList } = require('./tag.constants')
 async function listTags (req, res) {
   try {
     // note: currently we just return the first tag collection.
-    const q = { name: req.query.name || DefaultTagList }
+    const q = { name: (req.query && req.query.name) || DefaultTagList }
     const fetched = await Tag.findOne(q, 'tags', { lean: true })
     let responseData = []
 
