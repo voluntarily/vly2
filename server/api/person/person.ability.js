@@ -16,53 +16,39 @@ const ruleBuilder = session => {
     action: Action.CREATE
   }]
 
-  const allAbilities = [{
-    subject: SchemaName,
-    action: Action.READ,
-    fields: [
-      PersonFields.ID,
-      PersonFields.NICKNAME,
-      PersonFields.LANGUAGE,
-      PersonFields.NAME,
-      PersonFields.STATUS,
-      PersonFields.AVATAR,
-      PersonFields.ABOUT,
-      PersonFields.ROLE,
-      PersonFields.PRONOUN,
-      PersonFields.TAGS,
-      PersonFields.FACEBOOK,
-      PersonFields.WEBSITE,
-      PersonFields.TWITTER
-    ]
-  }, {
-    subject: SchemaName,
-    action: Action.LIST,
-    fields: [
-      PersonFields.ID,
-      PersonFields.NICKNAME,
-      PersonFields.LANGUAGE,
-      PersonFields.STATUS,
-      PersonFields.AVATAR,
-      PersonFields.NAME,
-      PersonFields.ROLE,
-      PersonFields.ABOUT,
-      PersonFields.PRONOUN,
-      PersonFields.TAGS,
-      PersonFields.FACEBOOK,
-      PersonFields.WEBSITE,
-      PersonFields.TWITTER
-    ]
-  }, {
-    subject: SchemaName,
-    action: Action.DELETE
-  }, {
-    subject: SchemaName,
-    action: Action.CREATE,
-    inverted: true
-  }, {
-    subject: SchemaName,
-    action: Action.UPDATE
-  }]
+  const allAbilities = [
+    {
+      subject: SchemaName,
+      action: Action.READ
+    }, {
+      subject: SchemaName,
+      action: Action.LIST,
+      fields: [
+        PersonFields.ID,
+        PersonFields.NICKNAME,
+        PersonFields.LANGUAGE,
+        PersonFields.STATUS,
+        PersonFields.AVATAR,
+        PersonFields.NAME,
+        PersonFields.ROLE,
+        PersonFields.ABOUT,
+        PersonFields.PRONOUN,
+        PersonFields.TAGS,
+        PersonFields.FACEBOOK,
+        PersonFields.WEBSITE,
+        PersonFields.TWITTER
+      ]
+    }, {
+      subject: SchemaName,
+      action: Action.DELETE
+    }, {
+      subject: SchemaName,
+      action: Action.CREATE,
+      inverted: true
+    }, {
+      subject: SchemaName,
+      action: Action.UPDATE
+    }]
 
   const adminAbilities = [{
     subject: SchemaName,

@@ -6,20 +6,68 @@ const { Role } = require('../../services/authorize/role')
 const { supportedLanguages } = require('../../../lang/lang')
 const { websiteRegex } = require('./person.validation')
 const mongoose = require('mongoose')
+const { PersonFields } = require('./person.constants')
+const pick = require('lodash.pick')
 
 /* find a single person by searching for a key field.
 This is a convenience function usually used to call
 */
-function getPerson (req, res, next) {
+async function getPerson (req, res, next) {
   const query = req.params
 
-  Person.findOne(query).exec(async (_err, person) => {
-    if (person) { // note if person does not exist middle ware will already have 404d the result
-      await getPersonRoles(person)
-    }
-    req.crudify = { result: person }
-    return next()
-  })
+  const me = req && req.session && req.session.me
+  if (!me) {
+    return res.sendStatus(401)
+  }
+
+  const personId = req.params._id
+  if (!personId) {
+    return res.status(400).send('Missing person identifier')
+  }
+
+  const isSelf = me._id && personId === me._id.toString()
+
+  Person
+    .accessibleBy(req.ability, Action.READ)
+    .findOne(query)
+    .exec(async (_err, person) => {
+      if (person) { // note if person does not exist middleware will already have 404d the result
+        await getPersonRoles(person)
+      }
+
+      const fields = [
+        PersonFields.ID,
+        PersonFields.NICKNAME,
+        PersonFields.LANGUAGE,
+        PersonFields.NAME,
+        PersonFields.STATUS,
+        PersonFields.AVATAR,
+        PersonFields.ABOUT,
+        PersonFields.ROLE,
+        PersonFields.PRONOUN,
+        PersonFields.TAGS,
+        PersonFields.FACEBOOK,
+        PersonFields.WEBSITE,
+        PersonFields.TWITTER,
+        PersonFields.SENDEMAILNOTIFICATIONS
+      ]
+
+      const includePersonalFields = (me.role &&
+        (
+          me.role.includes(Role.ADMIN) ||
+          me.role.includes(Role.TESTER)
+        )) ||
+        isSelf
+
+      if (includePersonalFields) {
+        fields.push(PersonFields.EMAIL, PersonFields.PHONE, PersonFields.EDUCATION, PersonFields.JOB, PersonFields.LOCATION)
+      }
+
+      const resPerson = pick(person, fields)
+
+      req.crudify = { result: resPerson }
+      return next()
+    })
 }
 
 /* return a list of people matching the search criteria

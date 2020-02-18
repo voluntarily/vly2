@@ -129,7 +129,7 @@ test('Get person by id - anonymous', async t => {
   t.is(res.status, 403)
 })
 
-for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.TESTER]) {
+for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER]) {
   test(`Get person by id - ${role}`, async t => {
     const person = t.context.people[2] // Testy A.
 
@@ -146,37 +146,86 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
   })
 }
 
-test('Get person by id - admin', async t => {
-  const person = t.context.people.find(p => p.email === 'andrew@groat.nz')
+// We trim certain fields (email, phone etc) from each user, however when asking for data for the current
+// user we should return all fields
+test('Get person by id - self returns all fields', async t => {
+  // Create a new user in the database directly
+  const email = `${uuid()}@test.com`
+
+  await Person.create({
+    email,
+    nickname: 'self',
+    name: 'Self Self',
+    about: 'About self',
+    phone: 'Phone self',
+    language: 'en',
+    imgUrl: 'https://img.com',
+    facebook: 'https://facebook.com/self',
+    website: 'https://self.com',
+    twitter: 'https://twitter.com/self',
+    role: [Role.ACTIVITY_PROVIDER],
+    status: 'active',
+    pronoun: {
+      subject: 'a2',
+      object: 'b2',
+      possessive: 'c2'
+    },
+    tags: ['cars', 'trucks'],
+    education: 'self university',
+    job: 'Self',
+    placeOfWork: 'POW Self'
+  })
+
+  const person = await Person.findOne({ email }).lean().exec()
 
   const res = await request(server)
     .get(`/api/people/${person._id}`)
     .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.ADMIN])}`])
+    .set('Cookie', [`idToken=${createJwtIdToken(email)}`]) // Self
 
-  // All fields should be returned
   t.is(res.status, 200)
 
-  const expectedFields = [
-    'name',
-    'nickname',
-    'email',
-    'about',
-    'location',
-    'pronoun',
-    'language',
-    'role',
-    'status',
-    'imgUrl',
-    'phone',
-    'sendEmailNotifications',
-    'website',
-    'tags'
-  ]
-  for (const expectedField of expectedFields) {
-    t.truthy(res.body[expectedField], `The '${expectedField}' field of the response body object should contain data`)
+  // Make sure all person fields are returned for a request about myself
+  t.is(res.body._id, person._id.toString())
+  const expectedKeys = ['email', 'nickname', 'name', 'about', 'phone', 'language', 'imgUrl', 'facebook', 'website', 'twitter', 'role', 'status', 'pronoun', 'tags', 'education', 'job']
+  for (const key of expectedKeys) {
+    t.deepEqual(res.body[key], person[key], `The '${key}' field on the person response object (when requesting as self) is invalid`)
   }
 })
+
+for (const role of [Role.ADMIN, Role.TESTER]) {
+  test(`Get person by id - ${role}`, async t => {
+    const person = t.context.people.find(p => p.email === 'andrew@groat.nz')
+
+    const res = await request(server)
+      .get(`/api/people/${person._id}`)
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
+
+    // All fields should be returned
+    t.is(res.status, 200)
+
+    const expectedFields = [
+      'name',
+      'nickname',
+      'email',
+      'about',
+      'location',
+      'pronoun',
+      'language',
+      'role',
+      'status',
+      'imgUrl',
+      'phone',
+      'sendEmailNotifications',
+      'website',
+      'tags'
+    ]
+    for (const expectedField of expectedFields) {
+      t.truthy(res.body[expectedField], `The '${expectedField}' field of the response body object should contain data`)
+    }
+  })
+}
 
 for (const role of [undefined, Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.TESTER]) {
   test.serial(`Create a new person - ${role || 'Anonymous'} is denied`, async t => {
