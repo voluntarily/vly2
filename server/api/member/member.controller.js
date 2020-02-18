@@ -1,7 +1,7 @@
 const Member = require('./member')
-// const Person = require('../person/person')
 const Organisation = require('../organisation/organisation')
 const { getMemberbyId } = require('./member.lib')
+const { Action } = require('../../services/abilities/ability.constants')
 
 /**
   api/members -> list all members
@@ -11,27 +11,33 @@ const { getMemberbyId } = require('./member.lib')
  */
 const listMembers = async (req, res) => {
   const sort = 'status'
-  let got
+
   try {
+    const find = {}
+    const populateList = []
+
     if (req.query.orgid) {
-      // an org is asking for a list of members/followers
-      const query = { organisation: req.query.orgid }
-      if (req.query.meid) {
-        // a person is asking for their relationship with an org
-        query.person = req.query.meid
-      }
-      // Return enough info for a personCard
-      got = await Member.find(query).populate({ path: 'person', select: 'nickname name imgUrl email phone sendEmailNotifications' }).sort(sort).exec()
-    } else if (req.query.meid) {
-      // a person is asking for the orgs they follow or are members of
-      const query = { person: req.query.meid }
-      // return info for an orgCard
-      got = await Member.find(query).populate({ path: 'organisation', select: 'name imgUrl category' }).sort(sort).exec()
-    } else {
-      // list all relationships
-      got = await Member.find().sort(sort).exec()
+      find.organisation = req.query.orgid
+      populateList.push({ path: 'person', select: 'nickname name imgUrl email phone sendEmailNotifications' })
     }
-    res.json(got)
+
+    if (req.query.meid) {
+      find.person = req.query.meid
+      populateList.push({ path: 'organisation', select: 'name imgUrl category' })
+    }
+
+    const query = Member.find(find)
+
+    for (const populate of populateList) {
+      query.populate(populate)
+    }
+
+    const members = await query
+      .accessibleBy(req.ability, Action.LIST)
+      .sort(sort)
+      .exec()
+
+    res.json(members)
   } catch (err) {
     res.status(404).send(err)
   }

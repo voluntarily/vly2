@@ -9,7 +9,15 @@ const ruleBuilder = async (session) => {
     inverted: true
   }]
 
-  const allRules = anonRules.slice(0)
+  const allRules = []
+
+  if (session.me && session.me._id) {
+    allRules.push({
+      subject: SchemaName,
+      action: Action.LIST,
+      conditions: { person: session.me._id }
+    })
+  }
 
   return {
     [Role.ANON]: anonRules,

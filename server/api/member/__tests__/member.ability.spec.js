@@ -354,7 +354,7 @@ const testScenarios = [
 ]
 
 for (const { role, action, makeRequest, assertions } of testScenarios) {
-  test.serial(`Interest Archive API - ${role} - ${action}`, async t => {
+  test.serial(`Member API - ${role} - ${action}`, async t => {
     const response = await makeRequest(t.context)
 
     assertions(t, response)
