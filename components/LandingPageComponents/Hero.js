@@ -40,36 +40,6 @@ const HeroLeft = styled.div`
   }
 `
 
-const Notch = styled.div`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  width: 12rem;
-  height: 2rem;
-  background-color: white;
-  border-radius: 0px 0px 24px 24px;
-
-  @media screen and (min-width: 1282px) and (max-width: 1380px) {
-    width: 10rem;
-    height: 1.5rem;
-  }
-
-  @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    width: 8rem;
-    height: 1rem;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    width: 4rem;
-    height: 0.8rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
-`
 
 const AwesomeVideo = styled.video`
   position: relative;
@@ -138,7 +108,7 @@ const Hero = ({ ...props }) => (
     <Row>
       <Col md={8}>
         <HeroLeft>
-          <Notch />
+       
           <AwesomeVideo
             poster='/static/img/hero.png'
             autoPlay
