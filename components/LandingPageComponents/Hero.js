@@ -36,12 +36,11 @@ const HeroLeft = styled.div`
     width: 100%;
     height: 100%;
     overflow: hidden;
-    border-radius: 24px 24px 24px 24px;
   }
 `
 
 
-const AwesomeVideo = styled.video`
+const AwesomeImage = styled.img`
   position: relative;
   text-align: center;
   margin: 0 auto;
@@ -109,15 +108,11 @@ const Hero = ({ ...props }) => (
       <Col md={8}>
         <HeroLeft>
        
-          <AwesomeVideo
-            poster='/static/img/hero.png'
-            autoPlay
-            loop
-            muted
-            playsInline
-          >
-            <source src='/static/test.mp4' type='video/mp4' />
-          </AwesomeVideo>
+          <AwesomeImage
+            src='/static/img/hero.png'
+            
+          />
+           
         </HeroLeft>
       </Col>
       <Col md={16}>
