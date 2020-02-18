@@ -138,7 +138,41 @@ const testScenarios = [
         })
     },
     assertions: (t, response) => {
-      t.fail('Need some additional tests around allowed status/person ids')
+      t.is(response.statusCode, 200)
+    }
+  },
+  {
+    role: 'authenticated',
+    action: 'create (invalid status)',
+    makeRequest: async (context) => {
+      return request(server)
+        .post('/api/members')
+        .set('Cookie', [`idToken=${sessions[1].idToken}`])
+        .send({
+          organisation: context.fixtures.organisations[0]._id,
+          validation: 'Test validation',
+          status: MemberStatus.ORGADMIN
+        })
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 403)
+    }
+  },
+  {
+    role: 'authenticated',
+    action: 'create (for other user)',
+    makeRequest: async (context) => {
+      return request(server)
+        .post('/api/members')
+        .set('Cookie', [`idToken=${sessions[1].idToken}`])
+        .send({
+          person: context.fixtures.people[2]._id,
+          organisation: context.fixtures.organisations[0]._id,
+          validation: 'Test validation',
+          status: MemberStatus.JOINER
+        })
+    },
+    assertions: (t, response) => {
       t.is(response.statusCode, 403)
     }
   },

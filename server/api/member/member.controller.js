@@ -81,17 +81,26 @@ const updateMember = async (req, res) => {
 }
 
 const createMember = async (req, res) => {
-  const newMember = new Member(req.body)
-  newMember.save(async (err, saved) => {
-    if (err) {
-      return res.status(500).send(err)
-    }
+  const memberData = req.body
 
-    // TODO: [VP-424] email new members or followers of an organisation
-    // return the member record with the org name filled in.
-    const got = await getMemberbyId(newMember._id)
-    res.json(got)
-  })
+  if (!memberData.person) {
+    memberData.person = (req.session.me && req.session.me._id) ? req.session.me._id : undefined
+  }
+
+  const member = new Member(req.body)
+
+  if (!req.ability.can(Action.CREATE, member)) {
+    return res.sendStatus(403)
+  }
+
+  try {
+    await member.save()
+
+    const createdMember = await getMemberbyId(member._id)
+    res.json(createdMember)
+  } catch (error) {
+    return res.status(500)
+  }
 }
 
 /**

@@ -1,6 +1,6 @@
 const { Role } = require('../../services/authorize/role')
 const { Action } = require('../../services/abilities/ability.constants')
-const { SchemaName } = require('./member.constants')
+const { SchemaName, MemberStatus } = require('./member.constants')
 
 const ruleBuilder = async (session) => {
   const anonRules = [{
@@ -16,6 +16,13 @@ const ruleBuilder = async (session) => {
       subject: SchemaName,
       action: [Action.LIST, Action.READ],
       conditions: { person: session.me._id }
+    }, {
+      subject: SchemaName,
+      action: Action.CREATE,
+      conditions: {
+        person: session.me._id,
+        status: { $in: [MemberStatus.JOINER, MemberStatus.FOLLOWER, MemberStatus.VALIDATOR] }
+      }
     })
   }
 
