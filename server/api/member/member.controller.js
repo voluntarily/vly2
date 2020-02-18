@@ -43,6 +43,22 @@ const listMembers = async (req, res) => {
   }
 }
 
+const getMember = async (req, res) => {
+  try {
+    const member = await Member
+      .accessibleBy(req.ability, Action.READ)
+      .findOne(req.params)
+
+    if (member === null) {
+      return res.status(404).send()
+    }
+
+    res.json(member)
+  } catch (e) {
+    res.status(500).send()
+  }
+}
+
 const updateMember = async (req, res) => {
   try {
     await Member.updateOne({ _id: req.body._id }, { $set: { status: req.body.status, validation: req.body.validation } }).exec()
@@ -111,6 +127,7 @@ const createMember = async (req, res) => {
 // }
 module.exports = {
   listMembers,
+  getMember,
   updateMember,
   createMember
 }

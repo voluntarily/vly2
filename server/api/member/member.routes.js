@@ -1,7 +1,7 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Member = require('./member')
-const { listMembers, updateMember, createMember } = require('./member.controller')
+const { listMembers, updateMember, createMember, getMember } = require('./member.controller')
 const { findMyOrg, findMyPerson } = require('./findMy')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 const { SchemaName } = require('./member.constants')
@@ -24,6 +24,7 @@ module.exports = server => {
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       actions: {
         list: listMembers,
+        read: getMember,
         update: updateMember,
         create: createMember
       },

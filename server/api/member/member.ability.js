@@ -14,7 +14,7 @@ const ruleBuilder = async (session) => {
   if (session.me && session.me._id) {
     allRules.push({
       subject: SchemaName,
-      action: Action.LIST,
+      action: [Action.LIST, Action.READ],
       conditions: { person: session.me._id }
     })
   }
