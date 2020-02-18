@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { Role } from '../../server/services/authorize/role.js'
 // todo if image is not present then use a fallback.
-const ActAdd = ({ roles, ...props }) => {
+const ActAdd = ({ roles }) => {
   if (roles && roles.includes(Role.ACTIVITY_PROVIDER)) {
     return (
       <Link href='/act/new'>

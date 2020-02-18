@@ -157,7 +157,7 @@ class PersonDetailForm extends Component {
     const personAvatar = (
       <FormattedMessage
         id='personAvatar'
-        defaultMessage='Image'
+        defaultMessage='Profile Photo'
         description='person Image URL label in personDetails Form'
       />
     )
@@ -430,12 +430,12 @@ class PersonDetailForm extends Component {
               <H3Bold>
                 <FormattedMessage
                   id='PersonDetailForm.SectionTitle.Avatar'
-                  defaultMessage='Avatar'
+                  defaultMessage='Profile Photo'
                 />
               </H3Bold>
               <FormattedMessage
                 id='PersonDetailForm.SectionDescription.Avatar'
-                defaultMessage='Help people to recognise you and reflect your character.'
+                defaultMessage='Upload a photo to help people to recognise you and reflect your character.'
               />
               {this.props.person.imgUrlSm &&
                 <p>

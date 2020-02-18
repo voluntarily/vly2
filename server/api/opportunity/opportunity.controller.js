@@ -19,7 +19,8 @@ const getOpportunities = async (req, res) => {
   // limit to Active ops unless one of the params overrides
   let query = { status: OpportunityStatus.ACTIVE }
   let sort = 'name'
-  let select = {}
+  // return only the summary needed for an OpCard
+  let select = 'name subtitle imgUrl status date location duration'
 
   try {
     query = req.query.q ? JSON.parse(req.query.q) : query

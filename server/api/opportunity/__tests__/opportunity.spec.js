@@ -246,7 +246,7 @@ test.serial('Should correctly give opportunity 2 when searching by "Algorithms"'
   t.is(1, got.length)
 })
 
-test.serial('Should include description in search', async t => {
+test.serial('Should not include description in search', async t => {
   const res = await request(server)
     .get('/api/opportunities?search=innovation')
     .set('Accept', 'application/json')
@@ -254,8 +254,8 @@ test.serial('Should include description in search', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(ops[1].description, got[0].description)
-  t.is(1, got.length)
+  t.is(got.length, 1)
+  t.is(got.description, undefined)
 })
 
 test.serial('Should return any opportunities with matching tags or name/desc/subtitle', async t => {

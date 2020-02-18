@@ -86,6 +86,8 @@ OpCard.propTypes = {
     name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
+    date: PropTypes.arrayOf.string,
+    location: PropTypes.string,
     duration: PropTypes.string,
     _id: PropTypes.string.isRequired
   })
