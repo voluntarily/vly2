@@ -161,7 +161,7 @@ class PersonHomePage extends Component {
         <Icon type='inbox' />
         <FormattedMessage
           id='home.liveops'
-          defaultMessage='Active'
+          defaultMessage='Upcoming'
           description='show opportunities list on volunteer home page'
         />
       </span>
@@ -189,13 +189,13 @@ class PersonHomePage extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Home - Voluntarily</title>
+          <title>Activities - Voluntarily</title>
         </Helmet>
         <PageBanner>
           <h1>
             <FormattedMessage
               id='home.title'
-              defaultMessage='Home'
+              defaultMessage='Activities'
               description='Title on personal home page'
             />
           </h1>
