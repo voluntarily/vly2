@@ -9,6 +9,20 @@ import { OpportunityStatus, OpportunityFields } from '../opportunity.constants'
 import people from '../../person/__tests__/person.fixture'
 import ops from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
+import { ObjectId } from 'mongodb'
+
+const assertContainsOnlyAnonymousFields = (test, obj) => {
+  const permittedFields = [
+    OpportunityFields.ID,
+    OpportunityFields.NAME,
+    OpportunityFields.SUBTITLE,
+    OpportunityFields.IMG_URL,
+    OpportunityFields.DURATION
+  ]
+  for (const key of Object.keys(obj)) {
+    test.true(permittedFields.includes(key), `The response contained an invalid field: '${key}'`)
+  }
+}
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -22,23 +36,13 @@ test.before('before connect to database', async (t) => {
   t.context.opportunities = await Opportunity.create(ops)
 })
 
-test.serial('Anonymous - can read by id', async t => {
+test.serial('Anonymous - READ by id', async t => {
   const res = await request(server)
     .get(`/api/opportunities/${t.context.opportunities[0]._id}`)
     .set('Accept', 'application/json')
 
   t.is(200, res.status)
-  
-  const permittedFields = [
-    OpportunityFields.ID,
-    OpportunityFields.NAME,
-    OpportunityFields.SUBTITLE,
-    OpportunityFields.IMG_URL,
-    OpportunityFields.DURATION
-  ]
-  for (const key of Object.keys(res.body)) {
-    t.true(permittedFields.includes(key), `The resonse contained an invalid field: '${key}'`)
-  }
+  assertContainsOnlyAnonymousFields(t, res.body)
 })
 
 test.serial('Anonymous users should receive 404 from GET by ID endpoint if draft', async t => {
@@ -48,16 +52,33 @@ test.serial('Anonymous users should receive 404 from GET by ID endpoint if draft
   t.is(404, res.status)
 })
 
-test.serial('Anonymous users should receive 200 from GET all endpoint', async t => {
+test.serial('Anonymous - LIST', async t => {
   const res = await request(server)
     .get('/api/opportunities')
     .set('Accept', 'application/json')
+  
   t.is(200, res.status)
+  for (const op of res.body) {
+    assertContainsOnlyAnonymousFields(t, op)
+  }
 })
 
 test.serial('Anonymous users should only receive active ops from GET all endpoint', async t => {
   const res = await request(server)
     .get('/api/opportunities')
     .set('Accept', 'application/json')
-  t.is(res.body.filter(op => op.status !== OpportunityStatus.ACTIVE).length, 0)
+
+  const resIds = res.body.map(op => op._id)
+
+  // Get ACTIVE ops from the database (for the IDs in the response)
+  const activeOpsForIds = await Opportunity.find(
+    {
+      _id: { 
+        $in: resIds.map(id => new ObjectId(id))
+      },
+      status: OpportunityStatus.ACTIVE
+    }
+  )
+
+  t.is(res.body.length, activeOpsForIds.length)
 })

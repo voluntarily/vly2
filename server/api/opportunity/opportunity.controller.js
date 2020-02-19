@@ -15,7 +15,7 @@ const { getLocationRecommendations, getSkillsRecommendations } = require('./oppo
  * @param res
  * @returns void
  */
-const getOpportunities = async (req, res) => {
+const getOpportunities = async (req, res, next) => {
   // limit to Active ops unless one of the params overrides
   let query = { status: OpportunityStatus.ACTIVE }
   let sort = 'name'
@@ -80,7 +80,9 @@ const getOpportunities = async (req, res) => {
         .populate('offerOrg', 'name imgUrl category')
         .sort(sort)
         .exec()
-      res.json(got)
+
+      req.crudify = { result: got }
+      return next()
     } catch (e) {
       return res.status(404).send(e)
     }
