@@ -117,11 +117,10 @@ const Hero = ({ ...props }) => (
       </Col>
       <Col md={16}>
         <HeroRight>
-          <H1>volunteer yo—self.</H1>
+          <H1>Industry in the classroom.</H1>
           <H4>
-            Find awesome ways to volunteer your skills.
-            <br />
-            Help your community do epic things.
+          We connect industry volunteers with teachers to teach science, technology, engineering, entrepreneurship, 
+art and design in the classroom.
           </H4>
           <SearchBox>
             <Search
