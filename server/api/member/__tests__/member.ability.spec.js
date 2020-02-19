@@ -263,7 +263,7 @@ const testScenarios = [
     action: 'read (other\'s membership)',
     makeRequest: async (context) => {
       return request(server)
-        .get(`/api/members/${context.fixtures.members[2]._id}`)
+        .get(`/api/members/${context.fixtures.members[1]._id}`)
         .set('Cookie', [`idToken=${sessions[3].idToken}`])
     },
     assertions: (t, response) => {
