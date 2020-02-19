@@ -38,6 +38,10 @@ const ruleBuilder = async (session) => {
           ]
         }
       }
+    }, {
+      subject: SchemaName,
+      action: Action.DELETE,
+      inverted: true
     })
   }
 
