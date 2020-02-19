@@ -45,12 +45,22 @@ const ruleBuilder = async (session) => {
     })
   }
 
+  const orgAdminRules = []
+
+  if (session.me && session.me._id && session.me.role.includes(Role.ORG_ADMIN)) {
+    orgAdminRules.push({
+      subject: SchemaName,
+      action: Action.LIST,
+      conditions: { organisation: { $in: session.me.orgAdminFor } }
+    })
+  }
+
   return {
     [Role.ANON]: anonRules,
     [Role.VOLUNTEER_PROVIDER]: allRules,
     [Role.OPPORTUNITY_PROVIDER]: allRules,
     [Role.ACTIVITY_PROVIDER]: allRules,
-    [Role.ORG_ADMIN]: allRules,
+    [Role.ORG_ADMIN]: orgAdminRules,
     [Role.ADMIN]: allRules
   }
 }
