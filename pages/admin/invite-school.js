@@ -6,8 +6,14 @@ import fetch from 'isomorphic-fetch'
 import callApi from '../../lib/callApi'
 
 class InviteSchool extends Component {
-  static async getInitialProps () {
-    const schools = await callApi('schools?p=schoolId%20name')
+  static async getInitialProps ({ req }) {
+    let cookies = {}
+
+    if (req) {
+      cookies = req.cookies
+    }
+
+    const schools = await callApi('schools?p=schoolId%20name', 'GET', null, cookies)
 
     return {
       schools: schools
