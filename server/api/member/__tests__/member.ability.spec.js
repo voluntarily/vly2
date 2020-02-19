@@ -278,8 +278,26 @@ const testScenarios = [
         .post('/api/members')
         .set('Cookie', [`idToken=${sessions[3].idToken}`])
         .send({
-          person: context.fixtures.people[1]._id,
+          person: context.fixtures.people[2]._id,
           organisation: context.fixtures.organisations[0]._id,
+          validation: 'Test validation',
+          status: MemberStatus.MEMBER
+        })
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 200)
+    }
+  },
+  {
+    role: 'org admin',
+    action: 'create (other org)',
+    makeRequest: async (context) => {
+      return request(server)
+        .post('/api/members')
+        .set('Cookie', [`idToken=${sessions[3].idToken}`])
+        .send({
+          person: context.fixtures.people[2]._id,
+          organisation: context.fixtures.organisations[1]._id,
           validation: 'Test validation',
           status: MemberStatus.MEMBER
         })

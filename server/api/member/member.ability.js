@@ -50,7 +50,7 @@ const ruleBuilder = async (session) => {
   if (session.me && session.me._id && session.me.role.includes(Role.ORG_ADMIN)) {
     orgAdminRules.push({
       subject: SchemaName,
-      action: [Action.LIST, Action.READ],
+      action: [Action.LIST, Action.READ, Action.CREATE],
       conditions: { organisation: { $in: session.me.orgAdminFor } }
     })
   }
