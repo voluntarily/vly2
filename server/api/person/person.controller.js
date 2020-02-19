@@ -7,7 +7,7 @@ const { supportedLanguages } = require('../../../lang/lang')
 const { websiteRegex } = require('./person.validation')
 const mongoose = require('mongoose')
 const { PersonFields } = require('./person.constants')
-const pick = require('lodash.pick')
+const { mapValues, keyBy } = require('lodash')
 
 /* find a single person by searching for a key field.
 This is a convenience function usually used to call
@@ -27,45 +27,48 @@ async function getPerson (req, res, next) {
 
   const isSelf = me._id && personId === me._id.toString()
 
+  const fields = [
+    PersonFields.ID,
+    PersonFields.NICKNAME,
+    PersonFields.LANGUAGE,
+    PersonFields.NAME,
+    PersonFields.STATUS,
+    PersonFields.AVATAR,
+    PersonFields.ABOUT,
+    PersonFields.ROLE,
+    PersonFields.PRONOUN,
+    PersonFields.TAGS,
+    PersonFields.FACEBOOK,
+    PersonFields.WEBSITE,
+    PersonFields.TWITTER,
+    PersonFields.SENDEMAILNOTIFICATIONS
+  ]
+
+  const includePersonalFields = (me.role &&
+    (
+      me.role.includes(Role.ADMIN) ||
+      me.role.includes(Role.TESTER)
+    )) ||
+    isSelf
+
+  if (includePersonalFields) {
+    fields.push(
+      PersonFields.EMAIL,
+      PersonFields.PHONE,
+      PersonFields.EDUCATION,
+      PersonFields.JOB,
+      PersonFields.LOCATION
+    )
+  }
+
   Person
     .accessibleBy(req.ability, Action.READ)
-    .findOne(query)
+    .findOne(query, mapValues(keyBy(fields), field => 1))
     .exec(async (_err, person) => {
       if (person) { // note if person does not exist middleware will already have 404d the result
         await getPersonRoles(person)
       }
-
-      const fields = [
-        PersonFields.ID,
-        PersonFields.NICKNAME,
-        PersonFields.LANGUAGE,
-        PersonFields.NAME,
-        PersonFields.STATUS,
-        PersonFields.AVATAR,
-        PersonFields.ABOUT,
-        PersonFields.ROLE,
-        PersonFields.PRONOUN,
-        PersonFields.TAGS,
-        PersonFields.FACEBOOK,
-        PersonFields.WEBSITE,
-        PersonFields.TWITTER,
-        PersonFields.SENDEMAILNOTIFICATIONS
-      ]
-
-      const includePersonalFields = (me.role &&
-        (
-          me.role.includes(Role.ADMIN) ||
-          me.role.includes(Role.TESTER)
-        )) ||
-        isSelf
-
-      if (includePersonalFields) {
-        fields.push(PersonFields.EMAIL, PersonFields.PHONE, PersonFields.EDUCATION, PersonFields.JOB, PersonFields.LOCATION)
-      }
-
-      const resPerson = pick(person, fields)
-
-      req.crudify = { result: resPerson }
+      req.crudify = { result: person }
       return next()
     })
 }
