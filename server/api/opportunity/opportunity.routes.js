@@ -11,6 +11,7 @@ const {
 const { SchemaName } = require('./opportunity.constants')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 const initializeTags = require('../../util/initTags')
+const removeUnauthorizedFields = require('../../services/authorize/removeUnauthorizedFields')
 
 module.exports = (server) => {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -34,7 +35,7 @@ module.exports = (server) => {
         update: putOpportunity
       },
       afterActions: [{
-        middlewares: [helpers.formatResponse]
+        middlewares: [removeUnauthorizedFields(Opportunity), helpers.formatResponse]
       }]
     })
   )

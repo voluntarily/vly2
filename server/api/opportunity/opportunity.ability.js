@@ -18,7 +18,8 @@ const ruleBuilder = session => {
   const anonAbilities = [{
     subject: SchemaName,
     action: Action.READ,
-    conditions: { status: OpportunityStatus.ACTIVE }
+    conditions: { status: OpportunityStatus.ACTIVE },
+    fields: [OpportunityFields.ID, OpportunityFields.NAME, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION]
   }, {
     subject: SchemaName,
     action: Action.LIST,

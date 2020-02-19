@@ -5,7 +5,7 @@ import MemoryMongo from '../../../util/test-memory-mongo'
 import Person from '../../person/person'
 import Tag from '../../tag/tag'
 import Opportunity from '../opportunity'
-import { OpportunityStatus } from '../opportunity.constants'
+import { OpportunityStatus, OpportunityFields } from '../opportunity.constants'
 import people from '../../person/__tests__/person.fixture'
 import ops from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
@@ -22,11 +22,23 @@ test.before('before connect to database', async (t) => {
   t.context.opportunities = await Opportunity.create(ops)
 })
 
-test.serial('Anonymous users should receive 200 from GET by ID endpoint', async t => {
+test.serial('Anonymous - can read by id', async t => {
   const res = await request(server)
     .get(`/api/opportunities/${t.context.opportunities[0]._id}`)
     .set('Accept', 'application/json')
+
   t.is(200, res.status)
+  
+  const permittedFields = [
+    OpportunityFields.ID,
+    OpportunityFields.NAME,
+    OpportunityFields.SUBTITLE,
+    OpportunityFields.IMG_URL,
+    OpportunityFields.DURATION
+  ]
+  for (const key of Object.keys(res.body)) {
+    t.true(permittedFields.includes(key), `The resonse contained an invalid field: '${key}'`)
+  }
 })
 
 test.serial('Anonymous users should receive 404 from GET by ID endpoint if draft', async t => {

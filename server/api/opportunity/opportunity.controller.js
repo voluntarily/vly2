@@ -111,7 +111,7 @@ const getOpportunityRecommendations = async (req, res) => {
   }
 }
 
-const getOpportunity = async (req, res) => {
+const getOpportunity = async (req, res, next) => {
   try {
     const got = await Opportunity
       .accessibleBy(req.ability)
@@ -124,7 +124,8 @@ const getOpportunity = async (req, res) => {
       // Also this error message is not helpful.  Catch and do something useful
       throw Error()
     }
-    res.json(got)
+    req.crudify = { result: got }
+    return next()
   } catch (e) {
     res.status(404).send(e)
   }
