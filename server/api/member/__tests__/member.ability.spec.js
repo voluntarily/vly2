@@ -359,7 +359,7 @@ const testScenarios = [
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 200)
-      t.is(response.body.length, 3)
+      t.is(response.body.length, 4)
     }
   },
   {

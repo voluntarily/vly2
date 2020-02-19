@@ -55,13 +55,18 @@ const ruleBuilder = async (session) => {
     })
   }
 
+  const adminRules = [{
+    subject: SchemaName,
+    action: Action.MANAGE
+  }]
+
   return {
     [Role.ANON]: anonRules,
     [Role.VOLUNTEER_PROVIDER]: allRules,
     [Role.OPPORTUNITY_PROVIDER]: allRules,
     [Role.ACTIVITY_PROVIDER]: allRules,
     [Role.ORG_ADMIN]: orgAdminRules,
-    [Role.ADMIN]: allRules
+    [Role.ADMIN]: adminRules
   }
 }
 
