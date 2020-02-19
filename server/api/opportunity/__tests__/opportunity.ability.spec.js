@@ -82,3 +82,12 @@ test.serial('Anonymous users should only receive active ops from GET all endpoin
 
   t.is(res.body.length, activeOpsForIds.length)
 })
+
+test.serial('Anonymous - CREATE is denied', async t => {
+  const res = await request(server)
+    .post('/api/opportunities')
+    .set('Accept', 'application/json')
+    .send({})
+
+  t.is(403, res.status)
+})
