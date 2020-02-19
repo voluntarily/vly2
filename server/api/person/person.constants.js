@@ -14,6 +14,7 @@ const PersonFields = {
   NICKNAME: 'nickname',
   NAME: 'name',
   ABOUT: 'about',
+  LOCATION: 'location',
   PHONE: 'phone',
   LANGUAGE: 'language',
   AVATAR: 'imgUrl',
@@ -25,8 +26,8 @@ const PersonFields = {
   PRONOUN: 'pronoun',
   TAGS: 'tags',
   EDUCATION: 'education',
-  JOB: 'job'
-
+  JOB: 'job',
+  SENDEMAILNOTIFICATIONS: 'sendEmailNotifications'
 }
 
 module.exports = {
