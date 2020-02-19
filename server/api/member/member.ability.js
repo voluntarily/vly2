@@ -23,6 +23,21 @@ const ruleBuilder = async (session) => {
         person: session.me._id,
         status: { $in: [MemberStatus.JOINER, MemberStatus.FOLLOWER, MemberStatus.VALIDATOR] }
       }
+    }, {
+      subject: SchemaName,
+      action: Action.UPDATE,
+      conditions: {
+        person: session.me._id,
+        status: {
+          $in: [
+            MemberStatus.NONE,
+            MemberStatus.JOINER,
+            MemberStatus.FOLLOWER,
+            MemberStatus.VALIDATOR,
+            MemberStatus.EXMEMBER
+          ]
+        }
+      }
     })
   }
 

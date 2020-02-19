@@ -193,6 +193,21 @@ const testScenarios = [
   },
   {
     role: 'authenticated',
+    action: 'update (own membership to org admin)',
+    makeRequest: async (context) => {
+      return request(server)
+        .put(`/api/members/${context.fixtures.members[0]._id}`)
+        .set('Cookie', [`idToken=${sessions[1].idToken}`])
+        .send({
+          status: MemberStatus.ORGADMIN
+        })
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 404)
+    }
+  },
+  {
+    role: 'authenticated',
     action: 'update (other\'s membership)',
     makeRequest: async (context) => {
       return request(server)

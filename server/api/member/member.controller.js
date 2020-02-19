@@ -1,5 +1,4 @@
 const Member = require('./member')
-const Organisation = require('../organisation/organisation')
 const { getMemberbyId } = require('./member.lib')
 const { Action } = require('../../services/abilities/ability.constants')
 
@@ -61,22 +60,20 @@ const getMember = async (req, res) => {
 
 const updateMember = async (req, res) => {
   try {
-    await Member.updateOne({ _id: req.body._id }, { $set: { status: req.body.status, validation: req.body.validation } }).exec()
-    const { organisation } = req.body // person in here is the volunteer-- quite not good naming here
-    Organisation.findById(organisation, (err, organisationFound) => {
-      if (err) console.error(err, organisationFound)
-      else {
-        // TODO: [VP-436] notify the person of their status change in the organisation
-        // const { organisation, status, person } = req.body // person in here is the volunteer-- quite not good naming here
-        // notify the person of their status change in the organisation
-        // processStatusToSendEmail(status, organisationFound, person)
-      }
-    })
-    const got = await getMemberbyId(req.body._id)
+    const member = await Member.findOne(req.params)
 
-    res.json(got)
+    const updatedMember = Object.assign(member, req.body)
+
+    if (!req.ability.can(Action.UPDATE, updatedMember)) {
+      return res.sendStatus(404)
+    }
+
+    await updatedMember.save()
+
+    res.json(updatedMember)
   } catch (err) {
-    res.status(404).send(err)
+    console.log(err)
+    res.status(500).send(err)
   }
 }
 
