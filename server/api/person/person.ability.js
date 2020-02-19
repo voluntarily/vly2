@@ -16,59 +16,56 @@ const ruleBuilder = session => {
     action: Action.CREATE
   }]
 
-  const userID = session && session.me && session.me._id ? session.me._id : undefined
-  const allAbilities = [{
+  const allAbilities = [
+    {
+      subject: SchemaName,
+      action: Action.READ
+    }, {
+      subject: SchemaName,
+      action: Action.LIST,
+      fields: [
+        PersonFields.ID,
+        PersonFields.NICKNAME,
+        PersonFields.LANGUAGE,
+        PersonFields.STATUS,
+        PersonFields.AVATAR,
+        PersonFields.NAME,
+        PersonFields.ROLE,
+        PersonFields.ABOUT,
+        PersonFields.PRONOUN,
+        PersonFields.TAGS,
+        PersonFields.FACEBOOK,
+        PersonFields.WEBSITE,
+        PersonFields.TWITTER
+      ]
+    }, {
+      subject: SchemaName,
+      action: Action.DELETE
+    }, {
+      subject: SchemaName,
+      action: Action.CREATE,
+      inverted: true
+    }, {
+      subject: SchemaName,
+      action: Action.UPDATE
+    }]
+
+  const adminAbilities = [{
     subject: SchemaName,
-    action: Action.READ,
-    fields: [
-      PersonFields.ID,
-      PersonFields.NICKNAME,
-      PersonFields.LANGUAGE,
-      PersonFields.NAME,
-      PersonFields.STATUS,
-      PersonFields.AVATAR,
-      PersonFields.ABOUT,
-      PersonFields.ROLE,
-      PersonFields.PRONOUN,
-      PersonFields.TAGS,
-      PersonFields.FACEBOOK,
-      PersonFields.WEBSITE,
-      PersonFields.TWITTER
-    ]
+    action: Action.READ
   }, {
     subject: SchemaName,
-    action: Action.LIST,
-    fields: [
-      PersonFields.ID,
-      PersonFields.NICKNAME,
-      PersonFields.LANGUAGE,
-      PersonFields.STATUS,
-      PersonFields.AVATAR,
-      PersonFields.NAME,
-      PersonFields.ROLE,
-      PersonFields.ABOUT,
-      PersonFields.PRONOUN,
-      PersonFields.TAGS,
-      PersonFields.FACEBOOK,
-      PersonFields.WEBSITE,
-      PersonFields.TWITTER
-    ]
+    action: Action.LIST
   }, {
     subject: SchemaName,
-    action: Action.DELETE,
-    inverted: true
+    action: Action.DELETE
   }, {
     subject: SchemaName,
     action: Action.CREATE
   }, {
     subject: SchemaName,
-    action: Action.UPDATE,
-    conditions: {
-      _id: userID
-    }
+    action: Action.UPDATE
   }]
-
-  const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
 
   return {
     [Role.ANON]: anonAbilities,
@@ -76,6 +73,7 @@ const ruleBuilder = session => {
     [Role.OPPORTUNITY_PROVIDER]: allAbilities,
     [Role.ADMIN]: adminAbilities,
     [Role.ACTIVITY_PROVIDER]: allAbilities,
+    [Role.TESTER]: allAbilities,
     [Role.ALL]: allAbilities,
     [Role.ORG_ADMIN]: adminAbilities
   }

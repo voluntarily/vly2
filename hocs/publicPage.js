@@ -18,7 +18,8 @@ export default Page =>
         me: session.me || false,
         isAuthenticated: session.isAuthenticated,
         isAdmin: session.me && session.me.role && session.me.role.includes(Role.ADMIN),
-        isPlain: false
+        isPlain: false,
+        user: session.user
       }
     }
 
