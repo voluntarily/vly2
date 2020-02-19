@@ -60,7 +60,13 @@ const getMember = async (req, res) => {
 
 const updateMember = async (req, res) => {
   try {
-    const member = await Member.findOne(req.params)
+    const member = await Member
+      .accessibleBy(req.ability, Action.READ)
+      .findOne(req.params)
+
+    if (!member) {
+      return res.sendStatus(404)
+    }
 
     const updatedMember = Object.assign(member, req.body)
 
@@ -72,7 +78,6 @@ const updateMember = async (req, res) => {
 
     res.json(updatedMember)
   } catch (err) {
-    console.log(err)
     res.status(500).send(err)
   }
 }

@@ -326,9 +326,10 @@ const testScenarios = [
     action: 'update (other\'s membership)',
     makeRequest: async (context) => {
       return request(server)
-        .put(`/api/members/${context.fixtures.members[2]._id}`)
+        .put(`/api/members/${context.fixtures.members[1]._id}`)
         .set('Cookie', [`idToken=${sessions[3].idToken}`])
         .send({
+          organisation: context.fixtures.organisations[0]._id,
           status: MemberStatus.ORGADMIN
         })
     },
