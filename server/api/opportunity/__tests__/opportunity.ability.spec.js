@@ -11,15 +11,15 @@ import ops from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
 
 test.before('before connect to database', async (t) => {
-  try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
-    await appReady
-    t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-    t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
-    ops.map((op, index) => { op.requestor = t.context.people[index]._id })
-    t.context.opportunities = await Opportunity.create(ops).catch((err) => console.error('Unable to create opportunities', err))
-  } catch (e) { console.error('opportunity.ability.spec.js before error', e) }
+  t.context.memMongo = new MemoryMongo()
+  await t.context.memMongo.start()
+  await appReady
+  t.context.people = await Person.create(people)
+  t.context.tags = await Tag.create({ tags })
+  for (let index = 0; index < ops.length; index++) {
+    ops[index].requestor = t.context.people[index]._id
+  }
+  t.context.opportunities = await Opportunity.create(ops)
 })
 
 test.serial('Anonymous users should receive 200 from GET by ID endpoint', async t => {
