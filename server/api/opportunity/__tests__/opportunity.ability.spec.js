@@ -91,3 +91,24 @@ test.serial('Anonymous - CREATE is denied', async t => {
 
   t.is(403, res.status)
 })
+
+test.serial('Anonymous - UPDATE is denied', async t => {
+  const id = t.context.opportunities[0]._id
+
+  const res = await request(server)
+    .put(`/api/opportunities/${id}`)
+    .set('Accept', 'application/json')
+    .send({})
+
+  t.is(403, res.status)
+})
+
+test.serial('Anonymous - DELETE is denied', async t => {
+  const id = t.context.opportunities[0]._id
+
+  const res = await request(server)
+    .delete(`/api/opportunities/${id}`)
+    .set('Accept', 'application/json')
+
+  t.is(403, res.status)
+})
