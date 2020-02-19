@@ -1,10 +1,10 @@
 const { Action } = require('../../services/abilities/ability.constants')
 
 const OpportunityRoutes = {
-  [Action.LIST]: '/opportunities',
-  [Action.READ]: '/opportunities/:id',
-  [Action.UPDATE]: '/opportunities/:id/edit',
-  [Action.CREATE]: '/opportunities/new'
+  [Action.LIST]: '/api/opportunities',
+  [Action.READ]: '/api/opportunities/:id',
+  [Action.UPDATE]: '/api/opportunities/:id/edit',
+  [Action.CREATE]: '/api/opportunities/new'
 }
 
 const OpportunityStatus = {
