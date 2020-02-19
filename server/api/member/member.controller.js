@@ -101,7 +101,7 @@ const createMember = async (req, res) => {
     const createdMember = await getMemberbyId(member._id)
     res.json(createdMember)
   } catch (error) {
-    return res.status(500)
+    return res.sendStatus(500)
   }
 }
 
