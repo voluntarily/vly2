@@ -14,12 +14,31 @@ const theme = {
   main: '#6549AA'
 }
 
-function MyApp ({ Component, store, locale, messages, initialNow, pageProps }) {
+function MyApp ({
+  Component,
+  store,
+  locale,
+  messages,
+  initialNow,
+  isPlain,
+  me,
+  isAuthenticated,
+  isAdmin,
+  user,
+  pageProps
+}) {
+  const docProps = {
+    isPlain,
+    me,
+    isAuthenticated,
+    isAdmin,
+    user
+  }
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <IntlProvider locale={locale} messages={messages} initialNow={initialNow}>
-          <Component {...pageProps} />
+          <Component {...pageProps} {...docProps} />
         </IntlProvider>
       </ThemeProvider>
     </Provider>
@@ -46,7 +65,7 @@ MyApp.getInitialProps = async (appContext) => {
     me: session.me || false,
     isAuthenticated: session.isAuthenticated,
     isAdmin: session.me && session.me.role && session.me.role.includes(Role.ADMIN),
-    // user: session.user,
+    user: session.user,
     locale,
     messages,
     initialNow: Date.now(),
