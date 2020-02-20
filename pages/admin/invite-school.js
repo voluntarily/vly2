@@ -13,7 +13,13 @@ class InviteSchool extends Component {
       cookies = req.cookies
     }
 
-    const schools = await callApi('schools?p=schoolId%20name', 'GET', null, cookies)
+    let schools = []
+
+    try {
+      schools = await callApi('schools?p=schoolId%20name', 'GET', null, cookies)
+    } catch (error) {
+      console.log(error)
+    }
 
     return {
       schools: schools
