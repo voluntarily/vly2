@@ -44,6 +44,40 @@ test.afterEach.always(async (t) => {
   await clearInterestFixtures()
 })
 
+// ADMIN Menu
+
+test.serial('Load admin  page as admin', async (t) => {
+  const response = await request(server)
+    .get('/admin')
+    .set('Cookie', [`idToken=${sessions[0].idToken}`])
+
+  t.is(response.status, 200, 'Should be allowed to view page')
+})
+
+test.serial('Load admin page as anon', async (t) => {
+  const response = await request(server)
+    .get('/admin')
+  t.is(response.status, 302, 'Should be redirected to login')
+})
+
+test.serial('Load admin page as authenticated', async (t) => {
+  const response = await request(server)
+    .get('/admin')
+    .set('Cookie', [`idToken=${sessions[1].idToken}`])
+
+  t.truthy(response.text.includes('<h1>Access denied</h1><p>You do not have permission to view this page.</p>'))
+})
+
+// GOALS
+test.serial('Load admin/goals  page as admin', async (t) => {
+  const response = await request(server)
+    .get('/admin/goals')
+    .set('Cookie', [`idToken=${sessions[0].idToken}`])
+
+  t.is(response.status, 200, 'Should be allowed to view page')
+})
+
+// INVITE-SCHOOL
 test.serial('Load invite school page as admin', async (t) => {
   t.context.mockServer.get(
     'end:/api/schools?p=schoolId%20name',
@@ -65,7 +99,7 @@ test.serial('Load invite school page as anon', async (t) => {
 
   const response = await request(server)
     .get('/admin/invite-school')
-
+  console.log('\nresponse', response)
   t.is(response.status, 302, 'Should be redirected to login')
 })
 
