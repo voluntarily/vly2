@@ -31,7 +31,10 @@ const { TabPane } = Tabs
 
 const aboutTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-    <FormattedMessage id='orgAbout' />
+    <FormattedMessage
+      id='OpDetailArchived.tab.about'
+      defaultMessage='About'
+    />
   </span>
 )
 
