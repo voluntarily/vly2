@@ -6,6 +6,7 @@ const {
   getOpportunities,
   getOpportunity,
   putOpportunity,
+  deleteOpportunity,
   getOpportunityRecommendations
 } = require('./opportunity.controller')
 const { SchemaName } = require('./opportunity.constants')
@@ -32,7 +33,8 @@ module.exports = (server) => {
       actions: {
         list: getOpportunities,
         read: getOpportunity,
-        update: putOpportunity
+        update: putOpportunity,
+        delete: deleteOpportunity
       },
       afterActions: [{
         middlewares: [removeUnauthorizedFields(Opportunity), helpers.formatResponse]

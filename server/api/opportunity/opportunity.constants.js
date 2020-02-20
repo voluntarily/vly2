@@ -14,6 +14,14 @@ const OpportunityStatus = {
   CANCELLED: 'cancelled'
 }
 
+/**
+ * An Opportunity is considered Published if it has one of these status.
+ */
+const OpportunityPublishedStatus = [
+  OpportunityStatus.ACTIVE,
+  OpportunityStatus.COMPLETED
+]
+
 const OpportunityFields = {
   ID: '_id',
   NAME: 'name',
@@ -34,6 +42,7 @@ const OpportunityFields = {
 module.exports = {
   SchemaName: 'Opportunity',
   OpportunityStatus,
+  OpportunityPublishedStatus,
   OpportunityFields,
   OpportunityRoutes
 }

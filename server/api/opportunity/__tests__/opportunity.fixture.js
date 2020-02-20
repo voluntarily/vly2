@@ -71,6 +71,20 @@ const opList = [
       null,
       null
     ]
+  },
+  {
+    name: '6 Building a race car',
+    subtitle: 'Racecar',
+    imgUrl: 'https://images.sunlive.co.nz/images/170705-st-marys-school-rockets1.jpg',
+    description: 'Attempting to go where no man has gone before',
+    duration: '2000 days',
+    location: regions[2].name,
+    status: OpportunityStatus.COMPLETED,
+    tags: [],
+    date: [
+      null,
+      null
+    ]
   }
 ]
 

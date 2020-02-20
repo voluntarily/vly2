@@ -1,4 +1,4 @@
-const { SchemaName, OpportunityStatus, OpportunityFields } = require('./opportunity.constants')
+const { SchemaName, OpportunityStatus, OpportunityFields, OpportunityPublishedStatus } = require('./opportunity.constants')
 const { Role } = require('../../services/authorize/role')
 const { Action } = require('../../services/abilities/ability.constants')
 
@@ -41,27 +41,45 @@ const ruleBuilder = session => {
 
   const allAbilities = [{
     subject: SchemaName,
-    action: Action.READ
+    action: Action.READ,
+    conditions: { status: { $in: OpportunityPublishedStatus } }
   }, {
     subject: SchemaName,
     action: Action.LIST
-  }]
-
-  const vpAbilities = allAbilities
-  const opAbilities = allAbilities.concat([{
-    subject: SchemaName,
-    action: Action.CREATE
   }, {
     subject: SchemaName,
-    action: Action.UPDATE
-  }])
+    action: Action.UPDATE,
+    conditions: { requestor: session.me && session.me._id }
+  }, {
+    subject: SchemaName,
+    action: Action.DELETE,
+    conditions: { requestor: session.me && session.me._id }
+  }]
+
+  const opAbilities = [{
+    subject: SchemaName,
+    action: Action.READ,
+    conditions: { status: { $in: OpportunityPublishedStatus } }
+  }, {
+    subject: SchemaName,
+    action: Action.LIST
+  }, {
+    subject: SchemaName,
+    action: Action.UPDATE,
+    conditions: { requestor: session.me && session.me._id }
+  }, {
+    subject: SchemaName,
+    action: Action.DELETE,
+    conditions: { requestor: session.me && session.me._id }
+  }]
   const testerAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
   const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
   const orgAdminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
 
   return {
     [Role.ANON]: anonAbilities,
-    [Role.VOLUNTEER_PROVIDER]: vpAbilities,
+    [Role.VOLUNTEER_PROVIDER]: allAbilities,
+    [Role.ACTIVITY_PROVIDER]: allAbilities,
     [Role.OPPORTUNITY_PROVIDER]: opAbilities,
     [Role.TESTER]: testerAbilities,
     [Role.ADMIN]: adminAbilities,
