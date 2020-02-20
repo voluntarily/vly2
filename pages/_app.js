@@ -52,13 +52,17 @@ function MyApp ({
   ctx: includes req, res, store.
 */
 MyApp.getInitialProps = async (appContext) => {
-  // calls page's `getInitialProps` and fills `appProps.pageProps`
-  const appProps = await App.getInitialProps(appContext)
   const { ctx } = appContext
+  // get the session early from the token and put in the redux store.
+  // must do this before calling wrapped pages.
   const session = await getSession(ctx.req, ctx.store)
+
   // Get the `locale` and `messages` from the request object on the server.
   // In the browser, use the same values that the server serialized.
   const { locale, messages } = ctx.req || window.__NEXT_DATA__.props.initialProps
+
+  // calls page's `getInitialProps` and fills `appProps.pageProps`
+  const appProps = await App.getInitialProps(appContext)
 
   return {
     isPlain: false,
