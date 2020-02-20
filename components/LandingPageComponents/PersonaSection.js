@@ -113,8 +113,8 @@ const AboutSection = () => (
         <a href='/content' target='_blank' rel='noopener noreferrer'>
           <PersonaContainer>
             <Image src='/static/img/contentCard.png' />
-            <Title>Content Providers</Title>
-            <Text>We help you get more people involved with your movement.</Text>
+            <Title>Content Creators</Title>
+            <Text>We help you get more people involved with your content.</Text>
             <Button>Learn More</Button>
           </PersonaContainer>
         </a>

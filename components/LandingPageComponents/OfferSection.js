@@ -81,7 +81,7 @@ const OfferSection = () => (
         <img src='/static/img/offers/recognition.png' />
         <figcaption>
           <h3>Recognition</h3>
-          <p>Get recognised for your volunteering when you use Voluntarily.</p>
+          <p>Get recognised for your volunteering when you use Voluntarily. <i>(Coming soon)</i></p>
         </figcaption>
       </OfferCard>
     </OfferContainer>
