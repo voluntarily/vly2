@@ -25,6 +25,12 @@ export const Landing = (props) =>
       <PersonaSection />
       <SectionTitle>
         <FormattedMessage
+          id='landing.sectiontitle.offers'
+          defaultMessage='What we offer'
+        />
+      </SectionTitle>
+      <SectionTitle>
+        <FormattedMessage
           id='landing.sectiontitle.oplist'
           defaultMessage='Happening Soon'
         />
