@@ -10,7 +10,7 @@ import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import moment from 'moment'
 
-export const Landing = (props) =>
+export const Landing = props => (
   <>
     <Hero />
     <FullPage>
@@ -19,16 +19,22 @@ export const Landing = (props) =>
       </Helmet>
 
       <PersonaSection />
-  
-      <OfferSection/>
+
+      <OfferSection />
       <SectionTitle>
         <FormattedMessage
           id='landing.sectiontitle.oplist'
           defaultMessage='Happening Soon'
         />
       </SectionTitle>
-      <OpListSection store={props.store} filter={{ date: [moment().subtract(1, 'days'), moment().add(60, 'days')] }} />
+      <OpListSection
+        store={props.store}
+        filter={{
+          date: [moment().subtract(1, 'days'), moment().add(60, 'days')]
+        }}
+      />
       <OpAdd {...props} />
     </FullPage>
   </>
+)
 export default publicPage(Landing)
