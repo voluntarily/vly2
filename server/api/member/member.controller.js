@@ -1,7 +1,6 @@
 const Member = require('./member')
-// const Person = require('../person/person')
-const Organisation = require('../organisation/organisation')
 const { getMemberbyId } = require('./member.lib')
+const { Action } = require('../../services/abilities/ability.constants')
 
 /**
   api/members -> list all members
@@ -11,65 +10,99 @@ const { getMemberbyId } = require('./member.lib')
  */
 const listMembers = async (req, res) => {
   const sort = 'status'
-  let got
+
   try {
+    const find = {}
+    const populateList = []
+
     if (req.query.orgid) {
-      // an org is asking for a list of members/followers
-      const query = { organisation: req.query.orgid }
-      if (req.query.meid) {
-        // a person is asking for their relationship with an org
-        query.person = req.query.meid
-      }
-      // Return enough info for a personCard
-      got = await Member.find(query).populate({ path: 'person', select: 'nickname name imgUrl email phone sendEmailNotifications' }).sort(sort).exec()
-    } else if (req.query.meid) {
-      // a person is asking for the orgs they follow or are members of
-      const query = { person: req.query.meid }
-      // return info for an orgCard
-      got = await Member.find(query).populate({ path: 'organisation', select: 'name imgUrl category' }).sort(sort).exec()
-    } else {
-      // list all relationships
-      got = await Member.find().sort(sort).exec()
+      find.organisation = req.query.orgid
+      populateList.push({ path: 'person', select: 'nickname name imgUrl email phone sendEmailNotifications' })
     }
-    res.json(got)
+
+    if (req.query.meid) {
+      find.person = req.query.meid
+      populateList.push({ path: 'organisation', select: 'name imgUrl category' })
+    }
+
+    const query = Member.find(find)
+
+    for (const populate of populateList) {
+      query.populate(populate)
+    }
+
+    const members = await query
+      .accessibleBy(req.ability, Action.LIST)
+      .sort(sort)
+      .exec()
+
+    res.json(members)
   } catch (err) {
     res.status(404).send(err)
+  }
+}
+
+const getMember = async (req, res) => {
+  try {
+    const member = await Member
+      .accessibleBy(req.ability, Action.READ)
+      .findOne(req.params)
+
+    if (member === null) {
+      return res.status(404).send()
+    }
+
+    res.json(member)
+  } catch (e) {
+    res.status(500).send()
   }
 }
 
 const updateMember = async (req, res) => {
   try {
-    await Member.updateOne({ _id: req.body._id }, { $set: { status: req.body.status, validation: req.body.validation } }).exec()
-    const { organisation } = req.body // person in here is the volunteer-- quite not good naming here
-    Organisation.findById(organisation, (err, organisationFound) => {
-      if (err) console.error(err, organisationFound)
-      else {
-        // TODO: [VP-436] notify the person of their status change in the organisation
-        // const { organisation, status, person } = req.body // person in here is the volunteer-- quite not good naming here
-        // notify the person of their status change in the organisation
-        // processStatusToSendEmail(status, organisationFound, person)
-      }
-    })
-    const got = await getMemberbyId(req.body._id)
+    const member = await Member
+      .accessibleBy(req.ability, Action.READ)
+      .findOne(req.params)
 
-    res.json(got)
+    if (!member) {
+      return res.sendStatus(404)
+    }
+
+    const updatedMember = Object.assign(member, req.body)
+
+    if (!req.ability.can(Action.UPDATE, updatedMember)) {
+      return res.sendStatus(404)
+    }
+
+    await updatedMember.save()
+
+    res.json(updatedMember)
   } catch (err) {
-    res.status(404).send(err)
+    res.status(500).send(err)
   }
 }
 
 const createMember = async (req, res) => {
-  const newMember = new Member(req.body)
-  newMember.save(async (err, saved) => {
-    if (err) {
-      return res.status(500).send(err)
-    }
+  const memberData = req.body
 
-    // TODO: [VP-424] email new members or followers of an organisation
-    // return the member record with the org name filled in.
-    const got = await getMemberbyId(newMember._id)
-    res.json(got)
-  })
+  if (!memberData.person) {
+    memberData.person = (req.session.me && req.session.me._id) ? req.session.me._id : undefined
+  }
+
+  const member = new Member(req.body)
+
+  if (!req.ability.can(Action.CREATE, member)) {
+    return res.sendStatus(403)
+  }
+
+  try {
+    await member.save()
+
+    const createdMember = await getMemberbyId(member._id)
+    res.json(createdMember)
+  } catch (error) {
+    return res.sendStatus(500)
+  }
 }
 
 /**
@@ -105,6 +138,7 @@ const createMember = async (req, res) => {
 // }
 module.exports = {
   listMembers,
+  getMember,
   updateMember,
   createMember
 }
