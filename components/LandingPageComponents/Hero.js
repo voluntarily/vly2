@@ -2,7 +2,7 @@ import { Button, Icon, Input, Row, Col } from 'antd'
 import Router from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
-import { H1, H4 } from '../VTheme/VTheme'
+import { HalfGrid, H4 } from '../VTheme/VTheme'
 
 const Search = Input.Search
 
@@ -26,15 +26,24 @@ const AwesomeHeroContainer = styled.div`
 const HeroLeft = styled.div`
   margin-top: 0rem;
   margin-left: 0rem;
-  width: 100%;
-  height: 25rem;
+  width: 35rem;
+  height: 35rem;
   border-radius: 0;
-
-  @media screen and (min-width: 768px) {
-    position: relative;
-    //margin-top: 7rem;
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
     width: 100%;
-    height: 100%;
+    height: auto;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    width: 100%;
+
+    height: auto;
+  }
+
+  @media screen and (max-width: 768px) {
+    position: relative;
+    height: 20rem;
+    width: 100vw;
     overflow: hidden;
   }
 `
@@ -44,14 +53,23 @@ const AwesomeImage = styled.img`
   position: relative;
   text-align: center;
   margin: 0 auto;
-  width:100%;
-  height: 100%;
+ 
   overflow: hidden;
   object-fit: cover;
   background-color: white;
 
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    width: inherit;
+
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    width: inherit;
+
+  }
+
   @media screen and (max-width: 768px) {
-    height: 100%;
+    height: 20rem;
+    width: 100%;
     object-fit: cover;
     object-position: top;
   }
@@ -62,31 +80,48 @@ const AwesomeImage = styled.img`
 
 const HeroRight = styled.div`
   color: #ffffff;
-  padding: 1rem;
+  display: grid;
+  align-self: center;
 
-  @media screen and (min-width: 768px) {
-    margin: 15% 0;
-    padding-left: 3rem;
-  }
+  @media screen and (max-width: 768px) {
+    margin: 1rem 1rem 0 1rem;
 
-  @media screen and (min-width: 998px) {
-    margin: 20% 0;
-  }
-
-  @media screen and (min-width: 1200px) {
-    margin: 25% 0;
   }
 `
+
+const HeroText = styled.h1`
+font-weight: 700;
+font-size: 4rem;
+letter-spacing: -1.2px;
+line-height: 1.4;
+
+@media screen and (min-width: 1026px) and (max-width: 1281px) {
+  font-size:3.5rem;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    font-size:2.5rem;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+
+  }
+`
+
 const SearchBox = styled.div`
   background-color: white;
   height: 4rem;
-  margin-top: 1rem;
+  margin: 1.5rem 0;
   border-radius: 0.25rem;
   padding: 8px;
   box-shadow: 2px 2px 12px 0 rgba(0, 0, 0, 0.5);
 
   .ant-input-affix-wrapper .ant-input:not(:first-child) {
     padding-left: 40px;
+  }
+  @media screen and (max-width: 768px) {
+   display: none;
   }
 `
 
@@ -104,8 +139,8 @@ const handleSearch = search => {
 // begin actual component
 const Hero = ({ ...props }) => (
   <AwesomeHeroContainer>
-    <Row>
-      <Col md={8}>
+    <HalfGrid>
+
         <HeroLeft>
        
           <AwesomeImage
@@ -114,14 +149,14 @@ const Hero = ({ ...props }) => (
           />
            
         </HeroLeft>
-      </Col>
-      <Col md={16}>
+
+   
         <HeroRight>
-          <H1>Industry in the classroom.</H1>
-          <H4>
+          <HeroText>Industry in<br/> the classroom.</HeroText>
+          <h5>
           We connect industry volunteers with teachers to teach science, technology, engineering, entrepreneurship, 
 art and design in the classroom.
-          </H4>
+          </h5>
           <SearchBox>
             <Search
               placeholder="try 'building robots'"
@@ -132,14 +167,13 @@ art and design in the classroom.
               onSearch={handleSearch}
             />
           </SearchBox>
-          <br />
-          <br />
+          <div>
           <Button type='secondary' shape='round' size='large' href='/about'>
             Learn more
-          </Button>
+          </Button></div>
         </HeroRight>
-      </Col>
-    </Row>
+ 
+    </HalfGrid>
   </AwesomeHeroContainer>
 )
 // LAUNCH IT. WOOOSH!
