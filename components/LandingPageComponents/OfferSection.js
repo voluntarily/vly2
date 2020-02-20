@@ -9,9 +9,22 @@ const OfferContainer = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
   margin-bottom: 8rem;
+  @media screen and (min-width: 1026px) and (max-width: 1289px) {
+    grid-template-columns: 1fr 1fr 1fr;
+
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `
 
 const OfferCard = styled.div`
+width: 100%;
   background: #ffffff;
   box-shadow: 2px 2px 16px 0 rgba(118, 118, 118, 0.5);
   border-radius: 8px;
@@ -37,13 +50,18 @@ const OfferCard = styled.div`
 
   img {
     border-radius: 8px;
+    width: 100%;
+    @media screen and (max-width: 768px) {
+    height: 14rem;
+  }
   }
 
   :hover {
-
     transform: scale(1.05);
-   
   }
+
+
+
 `
 
 const OfferSection = () => (
@@ -81,7 +99,10 @@ const OfferSection = () => (
         <img src='/static/img/offers/recognition.png' />
         <figcaption>
           <h3>Recognition</h3>
-          <p>Get recognised for your volunteering when you use Voluntarily. <i>(Coming soon)</i></p>
+          <p>
+            Get recognised for your volunteering when you use Voluntarily.{' '}
+            <i>(Coming soon)</i>
+          </p>
         </figcaption>
       </OfferCard>
     </OfferContainer>
