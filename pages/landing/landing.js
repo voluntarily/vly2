@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import Hero from '../../components/LandingPageComponents/Hero'
 import PersonaSection from '../../components/LandingPageComponents/PersonaSection'
+import OfferSection from '../../components/LandingPageComponents/OfferSection'
 import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
 import OpAdd from '../../components/Op/OpAdd'
 import OpListSection from '../../components/Op/OpListSection'
@@ -16,19 +17,10 @@ export const Landing = (props) =>
       <Helmet>
         <title>Voluntarily</title>
       </Helmet>
-      <SectionTitle>
-        <FormattedMessage
-          id='landing.sectiontitle.persona'
-          defaultMessage='Who we help'
-        />
-      </SectionTitle>
+
       <PersonaSection />
-      <SectionTitle>
-        <FormattedMessage
-          id='landing.sectiontitle.offers'
-          defaultMessage='What we offer'
-        />
-      </SectionTitle>
+  
+      <OfferSection/>
       <SectionTitle>
         <FormattedMessage
           id='landing.sectiontitle.oplist'

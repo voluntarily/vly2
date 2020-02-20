@@ -13,8 +13,7 @@ const AwesomeHeroContainer = styled.div`
   width: 100%;
 
   @media screen and (min-width: 768px) {
-    margin-top: 5rem;
-    padding: 2rem;
+    margin-top: 8rem;
   }
 
   @media screen and (min-width: 1200px) {
@@ -46,7 +45,6 @@ const HeroLeft = styled.div`
     overflow: hidden;
   }
 `
-
 
 const AwesomeImage = styled.img`
   position: relative;
@@ -146,38 +144,38 @@ const Hero = ({ ...props }) => (
   <AwesomeHeroContainer>
     <HalfGrid>
 
-        <HeroLeft>
-       
-          <AwesomeImage
-            src='/static/img/hero.png'
-            
-          />
-           
-        </HeroLeft>
+      <HeroLeft>
 
-   
-        <HeroRight>
-          <HeroText>Industry in<br/> the classroom.</HeroText>
-          <h5>
-          We connect industry volunteers with teachers to teach science, technology, engineering, entrepreneurship, 
+        <AwesomeImage
+          src='/static/img/hero.png'
+
+        />
+
+      </HeroLeft>
+
+      <HeroRight>
+        <HeroText>Industry in<br /> the classroom.</HeroText>
+        <h5>
+          We connect industry volunteers with teachers to teach science, technology, engineering, entrepreneurship,
 art and design in the classroom.
-          </h5>
-          <SearchBox>
-            <Search
-              placeholder="try 'building robots'"
-              prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)' }} />}
-              enterButton='Search'
-              size='large'
-              // eslint-disable-next-line no-console
-              onSearch={handleSearch}
-            />
-          </SearchBox>
-          <div>
+        </h5>
+        <SearchBox>
+          <Search
+            placeholder="try 'building robots'"
+            prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)' }} />}
+            enterButton='Search'
+            size='large'
+            // eslint-disable-next-line no-console
+            onSearch={handleSearch}
+          />
+        </SearchBox>
+        <div>
           <Button type='secondary' shape='round' size='large' href='/about'>
             Learn more
-          </Button></div>
-        </HeroRight>
- 
+          </Button>
+        </div>
+      </HeroRight>
+
     </HalfGrid>
   </AwesomeHeroContainer>
 )
