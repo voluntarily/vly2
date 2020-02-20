@@ -8,8 +8,7 @@ const Search = Input.Search
 
 // this is the big container block that holds the container together lol
 const AwesomeHeroContainer = styled.div`
-  margin: auto;
-  margin-top: 0;
+  margin: 0 auto;
   height: auto;
   width: 100%;
 
@@ -110,13 +109,19 @@ line-height: 1.4;
 `
 
 const SearchBox = styled.div`
+width: 80%;
   background-color: white;
   height: 4rem;
   margin: 1.5rem 0;
   border-radius: 0.25rem;
   padding: 8px;
   box-shadow: 2px 2px 12px 0 rgba(0, 0, 0, 0.5);
-
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
+  width: initial;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    width: initial;
+  }
   .ant-input-affix-wrapper .ant-input:not(:first-child) {
     padding-left: 40px;
   }
