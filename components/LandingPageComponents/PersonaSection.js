@@ -77,12 +77,12 @@ const Text = styled.div`
 
 const AboutSection = () => (
   <PersonaBox>
-          <SectionTitle>
-        <FormattedMessage
-          id='landing.sectiontitle.persona'
-          defaultMessage='Who we help'
-        />
-      </SectionTitle>
+    <SectionTitle>
+      <FormattedMessage
+        id='landing.sectiontitle.persona'
+        defaultMessage='Who we help'
+      />
+    </SectionTitle>
     <Row gutter={[32, 32]}>
       <Col sm={12} lg={6}>
         <a href='/about' target='_blank' rel='noopener noreferrer'>

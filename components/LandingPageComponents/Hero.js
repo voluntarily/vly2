@@ -1,8 +1,8 @@
-import { Button, Icon, Input, Row, Col } from 'antd'
+import { Button, Icon, Input } from 'antd'
 import Router from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
-import { HalfGrid, H4 } from '../VTheme/VTheme'
+import { HalfGrid } from '../VTheme/VTheme'
 
 const Search = Input.Search
 
