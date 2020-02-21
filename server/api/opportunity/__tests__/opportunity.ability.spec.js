@@ -270,31 +270,32 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
       await Opportunity.deleteOne({ _id: opId })
     }
   })
-
-  test.serial(`${role} - DELETE - Can delete an opportunity I own despite role which does not allow`, async t => {
-    let opId
-
-    try {
-      const op = await Opportunity.create({
-        name: 'Cool op',
-        status: OpportunityStatus.ACTIVE,
-        requestor: await Person.findOne({ email: 'andrew@groat.nz' })
-      })
-      opId = op._id
-
-      const res = await request(server)
-        .delete(`/api/opportunities/${opId}`)
-        .set('Accept', 'application/json')
-        .set('Cookie', [`idToken=${createJwtIdToken('andrew@groat.nz')}`])
-
-      t.is(204, res.status)
-
-      // Make sure the op has been deleted
-      const op2 = await Opportunity.findById(opId)
-      t.falsy(op2)
-    }
-    finally {
-      await Opportunity.deleteOne({ _id: opId })
-    }
-  })
 }
+
+test.serial(`DELETE - performing the DELETE verb on an opportunity I own marks it as CANCELLED`, async t => {
+  let opId
+
+  try {
+    const op = await Opportunity.create({
+      name: 'Cool op',
+      status: OpportunityStatus.ACTIVE,
+      requestor: await Person.findOne({ email: 'andrew@groat.nz' })
+    })
+    opId = op._id
+
+    const res = await request(server)
+      .delete(`/api/opportunities/${opId}`)
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${createJwtIdToken('andrew@groat.nz')}`])
+
+    t.is(204, res.status)
+
+    // Make sure the op is still present, but has instead changed to CANCELLED state
+    const op2 = await Opportunity.findById(opId)
+    t.truthy(op2)
+    t.is(op2.status, OpportunityStatus.CANCELLED)
+  }
+  finally {
+    await Opportunity.deleteOne({ _id: opId })
+  }
+})

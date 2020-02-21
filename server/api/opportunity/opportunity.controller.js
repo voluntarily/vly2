@@ -172,12 +172,21 @@ const putOpportunity = async (req, res, next) => {
 }
 
 const deleteOpportunity = async (req, res, next) => {
+  const me = req && req.session && req.session.me
+  if (!me) {
+    return res.sendStatus(401)
+  }
+
   try {
     const result = await Opportunity
-      .accessibleBy(req.ability, Action.DELETE)
-      .deleteOne({ _id: req.params._id })
+      .accessibleBy(req.ability, Action.UPDATE)
+      .updateOne({ _id: req.params._id }, { 
+        status: OpportunityStatus.CANCELLED
+       })
 
-    if (result.deletedCount === 0) {
+    console.log(result)
+
+    if (result.nModified === 0) {
       return res.sendStatus(404)
     }
   } catch (e) {
