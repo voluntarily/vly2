@@ -272,7 +272,55 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
   })
 }
 
-test.serial(`DELETE - performing the DELETE verb on an opportunity I own marks it as CANCELLED`, async t => {
+test.serial(`Owner - READ`, async t => {
+  let opId
+
+  try {
+    const op = await Opportunity.create({
+      name: 'Cool op',
+      status: OpportunityStatus.ACTIVE,
+      requestor: await Person.findOne({ email: 'andrew@groat.nz' })
+    })
+    opId = op._id
+
+    const res = await request(server)
+      .get(`/api/opportunities/${opId}`)
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${createJwtIdToken('andrew@groat.nz')}`])
+
+    t.is(200, res.status)
+    t.is(res.body._id, op._id.toString())
+  }
+  finally {
+    await Opportunity.deleteOne({ _id: opId })
+  }
+})
+
+test.serial(`Owner - READ - cannot read an op which has been cancelled`, async t => {
+  let opId
+
+  try {
+    const op = await Opportunity.create({
+      name: 'Cool op',
+      status: OpportunityStatus.CANCELLED,
+      requestor: await Person.findOne({ email: 'salvador@voluntarily.nz' })
+    })
+    opId = op._id
+
+    const res = await request(server)
+      .get(`/api/opportunities/${opId}`)
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${createJwtIdToken('salvador@voluntarily.nz')}`])
+
+    t.is(404, res.status)
+  }
+  finally {
+    await Opportunity.deleteOne({ _id: opId })
+  }
+})
+
+
+test.serial(`Owner - DELETE - performing the DELETE verb on an opportunity I own marks it as CANCELLED`, async t => {
   let opId
 
   try {

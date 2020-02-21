@@ -123,7 +123,7 @@ const getOpportunityRecommendations = async (req, res) => {
 const getOpportunity = async (req, res, next) => {
   try {
     const got = await Opportunity
-      .accessibleBy(req.ability)
+      .accessibleBy(req.ability, Action.READ)
       .findOne(req.params)
       .populate('requestor', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl category')
@@ -183,8 +183,6 @@ const deleteOpportunity = async (req, res, next) => {
       .updateOne({ _id: req.params._id }, { 
         status: OpportunityStatus.CANCELLED
        })
-
-    console.log(result)
 
     if (result.nModified === 0) {
       return res.sendStatus(404)
