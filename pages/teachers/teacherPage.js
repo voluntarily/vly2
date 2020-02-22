@@ -314,7 +314,7 @@ export class Teacher extends Component {
           <Spacer />
           <SectionTitle>
             <FormattedMessage
-              id='landing.sectiontitle.persona'
+              id='teacherPage.sectiontitle.whoWeHelp'
               defaultMessage='Who we help'
             />
           </SectionTitle>

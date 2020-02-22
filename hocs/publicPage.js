@@ -1,39 +1,37 @@
+/* This Wrapper adds the header and footer layout to a standard page
+  to inhibit rendering of the header/footer return isPlain = true from
+  the wrapped component GetInitialProps
+ */
 import { Layout } from 'antd'
 import React from 'react'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 import { FillWindow } from '../components/VTheme/VTheme'
-import { getSession } from '../lib/auth/auth'
-import { Role } from '../server/services/authorize/role'
 
-export default Page =>
-  class DefaultPage extends React.Component {
-    static async getInitialProps (ctx) {
-      const session = await getSession(ctx.req, ctx.store)
-      const pageProps =
-        Page.getInitialProps && (await Page.getInitialProps(ctx))
+export const PublicPage = Page => {
+  const DefaultPage = (props) => {
+    const isPlain = props.isPlain
+    return (
+      <Layout>
+        {!isPlain && <Header {...props} />}
+        <Layout.Content>
+          <FillWindow>
+            <Page {...props} />
+          </FillWindow>
+        </Layout.Content>
+        {!isPlain && <Footer {...props} />}
+      </Layout>
+    )
+  }
 
-      return {
-        ...pageProps,
-        me: session.me || false,
-        isAuthenticated: session.isAuthenticated,
-        isAdmin: session.me && session.me.role && session.me.role.includes(Role.ADMIN),
-        isPlain: false,
-        user: session.user
-      }
-    }
-
-    render () {
-      return (
-        <Layout>
-          {!this.props.isPlain && <Header {...this.props} />}
-          <Layout.Content>
-            <FillWindow>
-              <Page {...this.props} />
-            </FillWindow>
-          </Layout.Content>
-          {!this.props.isPlain && <Footer {...this.props} />}
-        </Layout>
-      )
+  DefaultPage.getInitialProps = async (ctx) => {
+    const pageProps = Page.getInitialProps && (await Page.getInitialProps(ctx))
+    const isPlain = false
+    return {
+      isPlain,
+      ...pageProps // page props can override these props
     }
   }
+  return DefaultPage
+}
+export default PublicPage

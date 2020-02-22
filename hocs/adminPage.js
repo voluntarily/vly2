@@ -1,72 +1,45 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import publicPage from './publicPage'
-import { FillWindow, FullPage } from '../components/VTheme/VTheme'
+import { FullPage } from '../components/VTheme/VTheme'
 import { FormattedMessage } from 'react-intl'
-import Router from 'next/router'
-import { Layout } from 'antd'
-import Header from '../components/Header/Header'
-import Footer from '../components/Footer/Footer'
+import { doSignThru } from './securePage'
 
-const adminPageHoc = Page => class AdminPage extends React.Component {
-  static async getInitialProps (ctx) {
-    if (Page.getInitialProps) {
-      const initialProps = await Page.getInitialProps(ctx)
+export const AccessDenied = () =>
+  <FullPage>
+    <h1>
+      <FormattedMessage
+        id='admin-page.access-denied.heading'
+        defaultMessage='Access denied'
+        description='Heading shown when a person does not have permission to view an admin page'
+      />
+    </h1>
+    <p>
+      <FormattedMessage
+        id='admin-page.access-denied.content'
+        defaultMessage='You do not have permission to view this page.'
+        description='Content shown when a person does not have permission to view an admin page'
+      />
+    </p>
+  </FullPage>
 
-      if (!initialProps.isAuthenticated) {
-        if (ctx.res) {
-          const redirectUrl = encodeURIComponent(ctx.req.url)
-          const signThruUrl = `/auth/sign-thru?redirect=${redirectUrl}`
-          ctx.res.writeHead(302, { Location: signThruUrl })
-          ctx.res.end()
-        } else {
-          const redirectUrl = encodeURIComponent(ctx.asPath)
-          const signThruUrl = `/auth/sign-thru?redirect=${redirectUrl}`
-          Router.push(signThruUrl)
-        }
-      }
+const AccessDeniedPage = publicPage(AccessDenied)
 
-      return initialProps
-    }
-  }
+const adminPageHoc = Page => {
+  const AdminPage = props =>
+    (props.isAuthenticated && props.isAdmin)
+      ? <Page {...props} />
+      : <AccessDeniedPage />
 
-  static propTypes = {
-    isAuthenticated: PropTypes.bool.isRequired,
-    isAdmin: PropTypes.bool.isRequired
-  }
-
-  render () {
-    if (this.props.isAuthenticated && this.props.isAdmin) {
-      return <Page {...this.props} />
+  AdminPage.getInitialProps = ctx => {
+    if (!ctx.store.getState().session.isAuthenticated) {
+      doSignThru(ctx)
+      return { isAuthenticated: false }
     }
 
-    return (
-      <Layout>
-        {!this.props.isPlain && <Header {...this.props} />}
-        <Layout.Content>
-          <FillWindow>
-            <FullPage>
-              <h1>
-                <FormattedMessage
-                  id='admin-page.access-denied.heading'
-                  defaultMessage='Access denied'
-                  description='Heading shown when a person does not have permission to view an admin page'
-                />
-              </h1>
-              <p>
-                <FormattedMessage
-                  id='admin-page.access-denied.content'
-                  defaultMessage='You do not have permission to view this page.'
-                  description='Content shown when a person does not have permission to view an admin page'
-                />
-              </p>
-            </FullPage>
-          </FillWindow>
-        </Layout.Content>
-        {!this.props.isPlain && <Footer {...this.props} />}
-      </Layout>
-    )
+    // securePage always wraps publicPage so we know GIP exists.
+    return Page.getInitialProps(ctx)
   }
+  return AdminPage
 }
 
 export default Page => adminPageHoc(publicPage(Page))

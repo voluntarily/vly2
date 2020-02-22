@@ -46,7 +46,7 @@ export class TestPerson extends Component {
       if (!person) {
         content =
           <>
-            <h2><FormattedMessage id='person.notavailable' defaultMessage='Sorry, this person is not available' description='message on person not found page' /></h2>
+            <h2><FormattedMessage id='test-person.notavailable' defaultMessage='Sorry, this person is not available' description='message on person not found page' /></h2>
           </>
       } else {
         content =
