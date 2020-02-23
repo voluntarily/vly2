@@ -7,7 +7,7 @@ export default () => [
     text:
   <FormattedMessage
     id='HeaderMenu.home'
-    defaultMessage='Home'
+    defaultMessage='Activities'
   />,
     authRequired: true
   },
@@ -16,8 +16,8 @@ export default () => [
     href: '/acts',
     text:
   <FormattedMessage
-    id='HeaderMenu.activities'
-    defaultMessage='Activities'
+    id='HeaderMenu.resorces'
+    defaultMessage='Resources'
   />,
     authRequired: true
   },
