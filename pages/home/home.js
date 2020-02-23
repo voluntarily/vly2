@@ -69,7 +69,6 @@ PersonHomePage.getInitialProps = async ({ store, query }) => {
       q: JSON.stringify({ requestor: meid })
     }
 
-
     await Promise.all([
       store.dispatch(reduxApi.actions.people.get({ id: meid })),
       store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
@@ -82,7 +81,6 @@ PersonHomePage.getInitialProps = async ({ store, query }) => {
     ])
   } catch (err) {
     console.error('error in getting home page data', err)
-
   }
 }
 

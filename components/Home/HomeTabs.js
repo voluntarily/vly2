@@ -57,7 +57,7 @@ const homeDiscoverTab = (
 
 export const HomeTabs = ({ person, onChange, defaultTab }) =>
   <VTabs defaultActiveKey={defaultTab} onChange={onChange}>
-        <TabPane tab={homeDiscoverTab} key='discover'>
+    <TabPane tab={homeDiscoverTab} key='discover'>
       <ProfilePanel>
         <RecommendedOpsSection />
       </ProfilePanel>
