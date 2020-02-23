@@ -6,7 +6,8 @@ import styled from 'styled-components'
 import AboutCTA from '../../components/About/AboutCTA.js'
 import { FullPage, Spacer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
-import withIntl from '../../lib/withIntl'
+import { injectIntl } from 'react-intl'
+
 import termEn from './term-en-md.js'
 import termMi from './term-mi-md.js'
 
@@ -106,4 +107,4 @@ class Terms extends Component {
 
 export const TermsTest = Terms // for test
 
-export default publicPage(withIntl(Terms))
+export default publicPage(injectIntl(Terms))

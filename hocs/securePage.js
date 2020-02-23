@@ -1,26 +1,35 @@
 import React from 'react'
 import publicPage from './publicPage'
 import Router from 'next/router'
-import { FullPage } from '../components/VTheme/VTheme'
-import { getSession } from '../lib/auth/auth'
 import { Unverified } from '../components/Warnings/Unverified'
-// TODO: Does this result in GetInitialProps being called multiple times?
-const securePageHoc = Page => class SecurePage extends React.Component {
-  static async getInitialProps (ctx) {
-    const session = await getSession(ctx.req, ctx.store)
+
+export const doSignThru = ctx => {
+  if (ctx.res) {
+    const redirectUrl = encodeURIComponent(ctx.req.url)
+    const signThruUrl = `/auth/sign-thru?redirect=${redirectUrl}`
+    ctx.res.writeHead(302, { Location: signThruUrl })
+    ctx.res.end()
+  } else {
+    const redirectUrl = encodeURIComponent(ctx.asPath)
+    const signThruUrl = `/auth/sign-thru?redirect=${redirectUrl}`
+    Router.push(signThruUrl)
+  }
+}
+
+const UnverifiedPage = publicPage(Unverified)
+
+const securePageHoc = Page => {
+  const SecurePage = props =>
+    props.isAuthenticated
+      ? <Page {...props} />
+      : <UnverifiedPage {...props} />
+
+  SecurePage.getInitialProps = ctx => {
+    const session = ctx.store.getState().session
     if (!session || !session.user) {
       // no session or not auth - redirect to sign in
-      if (ctx.isServer) {
-        const redirectUrl = encodeURIComponent(ctx.req.url)
-        const signThruUrl = `/auth/sign-thru?redirect=${redirectUrl}`
-        ctx.res.writeHead(302, { Location: signThruUrl })
-        ctx.res.end()
-      } else {
-        const redirectUrl = encodeURIComponent(ctx.asPath)
-        const signThruUrl = `/auth/sign-thru?redirect=${redirectUrl}`
-        Router.push(signThruUrl)
-      }
-      return {}
+      doSignThru(ctx)
+      return { isAuthenticated: false }
     }
     // we have a session - check user validation
     if (!session.user.email_verified) {
@@ -34,16 +43,6 @@ const securePageHoc = Page => class SecurePage extends React.Component {
     // securePage always wraps publicPage so we know GIP exists.
     return Page.getInitialProps(ctx)
   }
-
-  render () {
-    if (this.props.isAuthenticated) {
-      return <Page {...this.props} />
-    }
-    return (
-      <FullPage>
-        <Unverified {...this.props} />
-      </FullPage>
-    )
-  }
+  return SecurePage
 }
 export default Page => securePageHoc(publicPage(Page))
