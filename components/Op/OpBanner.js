@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { config } from '../../config/config'
+import { config } from '../../config/clientConfig'
 import { Helmet } from 'react-helmet'
 import { HalfGrid } from '../VTheme/VTheme'
 import {

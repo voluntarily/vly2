@@ -1,5 +1,5 @@
 require('isomorphic-fetch') /* global fetch */
-const { config } = require('../../../config/config')
+const { config } = require('../../../config/clientConfig')
 const queryString = require('querystring')
 const Badge = require('./badge')
 const { Role } = require('../../services/authorize/role')

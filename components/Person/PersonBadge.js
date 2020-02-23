@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import callApi from '../../lib/callApi'
 import styled from 'styled-components'
-import { config } from '../../config/config'
+import { config } from '../../config/clientConfig'
 
 const BadgeWrapper = styled.div`
     margin-top: 10px;
