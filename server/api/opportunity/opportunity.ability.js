@@ -53,7 +53,7 @@ const ruleBuilder = session => {
   }, {
     subject: SchemaName,
     action: Action.DELETE,
-    conditions: { requestor: session.me && session.me._id }
+    inverted: true
   }]
 
   const opAbilities = [{
@@ -70,7 +70,7 @@ const ruleBuilder = session => {
   }, {
     subject: SchemaName,
     action: Action.DELETE,
-    conditions: { requestor: session.me && session.me._id }
+    inverted: true
   }]
   const testerAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
   const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]

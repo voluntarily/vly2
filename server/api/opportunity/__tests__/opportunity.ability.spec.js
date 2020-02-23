@@ -2,11 +2,15 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import MemoryMongo from '../../../util/test-memory-mongo'
-import Person from '../../person/person'
 import Tag from '../../tag/tag'
 import Opportunity from '../opportunity'
 import { OpportunityStatus, OpportunityFields, OpportunityPublishedStatus } from '../opportunity.constants'
+import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
+import Activity from '../../activity/activity'
+import Activities from '../../activity/__tests__/activity.fixture'
+import Organisation from '../../organisation/organisation'
+import Organisations from '../../organisation/__tests__/organisation.fixture'
 import ops from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
 import { ObjectId } from 'mongodb'
@@ -68,6 +72,7 @@ test.before('before connect to database', async (t) => {
     ops[index].requestor = t.context.people[index]._id
   }
   t.context.opportunities = await Opportunity.create(ops)
+  await Organisation.create(Organisations)
 })
 
 test.serial('Anonymous - READ by id', async t => {
@@ -244,7 +249,7 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
     }
   })
 
-  test.serial(`${role} - DELETE - Can not delete an opportunity they do not own`, async t => {
+  test.serial(`${role} - DELETE - Can not delete an opportunity`, async t => {
     let opId
 
     try {
@@ -260,7 +265,7 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
         .set('Accept', 'application/json')
         .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
 
-      t.is(404, res.status)
+      t.true(res.status === 404 || res.status === 403)
 
       // Make sure the op hasn't been deleted
       const op2 = await Opportunity.findById(opId)
@@ -319,31 +324,199 @@ test.serial(`Owner - READ - cannot read an op which has been cancelled`, async t
   }
 })
 
-
-test.serial(`Owner - DELETE - performing the DELETE verb on an opportunity I own marks it as CANCELLED`, async t => {
+test.serial(`Owner - DELETE - Cannot delete an opportunity`, async t => {
   let opId
 
   try {
+    const requestor = await createPerson([Role.VOLUNTEER_PROVIDER])
+
     const op = await Opportunity.create({
       name: 'Cool op',
       status: OpportunityStatus.ACTIVE,
-      requestor: await Person.findOne({ email: 'andrew@groat.nz' })
+      requestor
     })
-    opId = op._id
 
     const res = await request(server)
-      .delete(`/api/opportunities/${opId}`)
+      .delete(`/api/opportunities/${op._id}`)
       .set('Accept', 'application/json')
-      .set('Cookie', [`idToken=${createJwtIdToken('andrew@groat.nz')}`])
+      .set('Cookie', [`idToken=${createJwtIdToken(requestor.email)}`])
 
-    t.is(204, res.status)
+    t.is(403, res.status)
 
-    // Make sure the op is still present, but has instead changed to CANCELLED state
-    const op2 = await Opportunity.findById(opId)
+    // Make sure the op is still present
+    const op2 = await Opportunity.findById(op._id)
     t.truthy(op2)
-    t.is(op2.status, OpportunityStatus.CANCELLED)
   }
   finally {
     await Opportunity.deleteOne({ _id: opId })
   }
+})
+
+test.serial('Admin - LIST - Should get all opportunities', async t => {
+  // Query for all opportunities
+  // We use an empty query in the querystring so no default filtering is applied
+  const res = await request(server)
+    .get(`/api/opportunities?q={}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.ADMIN])}`])
+
+  t.is(200, res.status)
+  t.is(res.body.length, await Opportunity.countDocuments())
+})
+
+test.serial('Admin - READ - Can read any opportunity', async t => {
+  // The opportunity fixture file contains a variety of ops in various states, make sure we can read all of these
+  const opsPromises = (await Opportunity.find()).map(async (op) => {
+    return request(server)
+      .get(`/api/opportunities/${op._id}`)
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.ADMIN])}`])
+  })
+
+  const ops = await Promise.all(opsPromises)
+
+  for (const op of ops) {
+    t.is(200, op.status)
+  }
+})
+
+test.serial('Admin - CREATE', async t => {
+  const org = (await Organisation.find())[0]
+  const requestor = (await Person.find())[0]
+  const activity = await Activity.create({
+    name: `${uuid()}`,
+    subtitle: 'Professionals talk about their work',
+    imgUrl: 'https://www.tvnz.co.nz',
+    description: 'abc',
+    duration: '12 weeks',
+    status: 'active',
+    offerOrg: org._id
+  })
+
+  const payload = {
+    name: uuid(),
+    title: uuid(),
+    subtitle: uuid(),
+    imgUrl: `https://img.com/1.png`,
+    description: 'Test op',
+    duration: '5 days',
+    location: 'Auckland',
+    venue: 'Business center',
+    status: OpportunityStatus.ACTIVE,
+    date: ['2019-05-23T12:26:18.000Z'],
+    fromActivity: activity._id,
+    offerOrg: org._id,
+    requestor: requestor._id,
+    href: 'https://vly.nz/123',
+    tags: ['a', 'b']
+  }
+
+  const res = await request(server)
+    .post('/api/opportunities')
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.ADMIN])}`])
+    .send(payload)
+
+  t.is(200, res.status)
+  
+  // Get the op from the database and compare
+  const op = await Opportunity.findById(res.body._id)
+  t.truthy(op)
+  for (const field of ['name', 'title', 'subtitle', 'imgUrl', 'description', 'duration', 'location', 'venue', 'status', 'href']) {
+    t.is(res.body[field], payload[field])
+  }
+  t.truthy(res.body.tags)
+  t.true(res.body.tags.includes('a'))
+  t.true(res.body.tags.includes('b'))
+  t.is(res.body.offerOrg, org._id.toString())
+  t.is(res.body.requestor, requestor._id.toString())
+})
+
+test.serial('Admin - UPDATE', async t => {
+  const org = (await Organisation.find())[0]
+  const requestor = (await Person.find())[0]
+  const activity = await Activity.create({
+    name: `op ${uuid()}`,
+    subtitle: 'Professionals talk about their work',
+    imgUrl: 'https://www.tvnz.co.nz',
+    description: 'abc',
+    duration: '12 weeks',
+    status: 'active',
+    offerOrg: org._id
+  })
+
+  const op = await Opportunity.create({
+    name: uuid(),
+    title: uuid(),
+    subtitle: uuid(),
+    imgUrl: `https://img.com/1.png`,
+    description: 'Test op',
+    duration: '5 days',
+    location: 'Auckland',
+    venue: 'Business center',
+    status: OpportunityStatus.ACTIVE,
+    date: ['2019-05-23T12:26:18.000Z'],
+    fromActivity: activity._id,
+    offerOrg: org._id,
+    requestor: requestor._id,
+    href: 'https://vly.nz/123',
+    tags: ['a', 'b']
+  })
+
+  // Update fields
+  const payload = {
+    name: uuid(),
+    title: uuid(),
+    subtitle: uuid(),
+    imgUrl: `https://img.com/2.png`,
+    description: 'Test op 2',
+    duration: '10 days',
+    location: 'Wellington',
+    venue: 'School',
+    status: OpportunityStatus.DRAFT,
+    date: ['2020-01-01T12:26:18.000Z'],
+    fromActivity: activity._id,
+    offerOrg: org._id,
+    requestor: requestor._id,
+    href: 'https://vly.nz/456',
+    tags: ['c', 'd']
+  }
+
+  const res = await request(server)
+    .put(`/api/opportunities/${op._id}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.ADMIN])}`])
+    .send(payload)
+
+  t.is(200, res.status)
+  
+  // Get the op from the database and compare
+  const op2 = await Opportunity.findById(op._id)
+  t.truthy(op2)
+  for (const field of ['name', 'title', 'subtitle', 'imgUrl', 'description', 'duration', 'location', 'venue', 'status', 'href']) {
+    t.is(op2[field], payload[field])
+  }
+  t.truthy(op2.tags)
+  t.true(op2.tags.includes('c'))
+  t.true(op2.tags.includes('d'))
+  t.is(op2.offerOrg._id.toString(), org._id.toString())
+  t.is(op2.requestor._id.toString(), requestor._id.toString())
+})
+
+test.serial('Admin - DELETE - Admin can delete ops', async t => {
+  const requestor = (await Person.find())[0]
+
+  const op = await Opportunity.create({
+    status: OpportunityStatus.ACTIVE,
+    requestor: requestor._id
+  })
+
+  const res = await request(server)
+    .delete(`/api/opportunities/${op._id}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.ADMIN])}`])
+
+  t.is(204, res.status)
+  const op2 = await Opportunity.findById(res.body._id)
+  t.falsy(op2)
 })
