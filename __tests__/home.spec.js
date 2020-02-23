@@ -323,14 +323,14 @@ test('render volunteer home page - Discover tab', t => {
       <PersonHomePage {...props} />
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(tabIndex.discover).simulate('click')
-  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Discover')
+  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Upcoming')
   const discoverPane = wrapper.find('.ant-tabs-tabpane-active').first()
 
   const oplists = discoverPane.find('OpList') // find 2 oplists on the home page
   t.is(oplists.length, 2)
 
   const cards1 = oplists.at(0).find('OpCard')
-  t.is(cards1.length, 2)
+  t.is(cards1.length, 1)
   t.is(cards1.first().find('h1').first().text(), t.context.ops[0].name) // find the first opcard in the first oplist
 })
 
