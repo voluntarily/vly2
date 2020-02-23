@@ -4,6 +4,7 @@ const completeConfig = {
 
   default: {
     appName: process.env.APPNAME || 'Voluntarily NZ',
+    serverPort,
     env: process.env.NODE_ENV || 'development',
     jsonOptions: {
       headers: {
