@@ -43,7 +43,7 @@ export const InterestedOpsSection = () => {
       <ProfileSectionTitle>
         <FormattedMessage
           id='interestedOpsSection.title'
-          defaultMessage='Activities you are interested in '
+          defaultMessage='My Activities'
           description='Subtitle for home page for the volunteers current ops'
         />
       </ProfileSectionTitle>

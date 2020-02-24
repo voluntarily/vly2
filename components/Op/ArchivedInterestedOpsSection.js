@@ -40,7 +40,7 @@ export const ArchivedInterestedOpsSection = () => {
       <ProfileSectionTitle>
         <FormattedMessage
           id='home.History.attendedOpportunities'
-          defaultMessage='Attended Opportunities'
+          defaultMessage='Attended Activities'
           description='Subtitle for volunteer attended activites on home page history tab'
         />
       </ProfileSectionTitle>

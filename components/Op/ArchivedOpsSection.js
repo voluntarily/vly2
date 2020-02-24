@@ -38,7 +38,7 @@ export const ArchivedOpsSection = () => {
         <ProfileSectionTitle>
           <FormattedMessage
             id='home.History.cancelledOpportunities'
-            defaultMessage='Cancelled Opportunities'
+            defaultMessage='Cancelled Activities'
             description='Subtitle for teacher cancelled activites on home page history tab'
           />
         </ProfileSectionTitle>

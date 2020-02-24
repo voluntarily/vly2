@@ -26,7 +26,7 @@ export const ActiveOpsSection = () => {
       <ProfileSectionTitle>
         <FormattedMessage
           id='ActivOpsSection.title'
-          defaultMessage='Activities you are managing'
+          defaultMessage='Active Activities'
           decription='Subtitle for teacher home page for active opportunities that have been hosted'
         />
       </ProfileSectionTitle>
