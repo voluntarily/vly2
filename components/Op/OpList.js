@@ -35,7 +35,7 @@ const OpList = ({ ops, ...props }) => (
     ) : (
       <FormattedMessage
         id='op.list.empty'
-        defaultMessage='No matching opportunities'
+        defaultMessage='No matching activities'
         description='no opportunities message in OpList'
       />
     )}

@@ -174,7 +174,7 @@
   "op.cancel": "Cancel",
   "op.editPublish": "Publish",
   "op.editSaveDraft": "Save as draft",
-  "op.list.empty": "No matching opportunities",
+  "op.list.empty": "No matching activities",
   "op.SaveInstructions": "Save as Draft will allow you to preview the request while Publish will make it available to everyone to view.",
   "OpAboutPanel.subtitle": "About this activity",
   "opAdd.new": "New Request",

@@ -28,7 +28,7 @@ export const ArchivedOpsSection = () => {
         <ProfileSectionTitle>
           <FormattedMessage
             id='home.History.completedOpportunities'
-            defaultMessage='Completed Opportunities'
+            defaultMessage='Completed Activities'
             description='Subtitle for completed activites on home page history tab'
           />
         </ProfileSectionTitle>
