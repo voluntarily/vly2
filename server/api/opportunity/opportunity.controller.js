@@ -189,6 +189,32 @@ const deleteOpportunity = async (req, res, next) => {
   next()
 }
 
+const createOpportunity = async (req, res, next) => {
+  const me = req && req.session && req.session.me
+  if (!me) {
+    return res.sendStatus(401)
+  }
+
+  const canCreate = (
+    me.role.includes(Role.ADMIN) ||
+    (me.role.includes(Role.ORG_ADMIN) && req.body.offerOrg && me.orgAdminFor.includes(req.body.offerOrg))
+  )
+
+  if (!canCreate) {
+    return res.sendStatus(403)
+  }
+
+  try {
+    const result = await Opportunity.create(req.body)
+
+    req.crudify = { result }
+    res.status(200)
+    next()
+  } catch (e) {
+    res.sendStatus(500)
+  }
+}
+
 const archiveOpportunity = async (id) => {
   const opportunity = await Opportunity.findById(id).exec()
   await new ArchivedOpportunity(opportunity.toJSON()).save()
@@ -244,5 +270,6 @@ module.exports = {
   getOpportunity,
   putOpportunity,
   deleteOpportunity,
-  getOpportunityRecommendations
+  getOpportunityRecommendations,
+  createOpportunity
 }

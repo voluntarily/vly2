@@ -211,14 +211,6 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
 
     t.is(200, res.status)
   })
-  test.serial(`${role} - READ - can not read DRAFT status`, async t => {
-    const res = await request(server)
-      .get(`/api/opportunities/${t.context.opportunities[2]._id}`)
-      .set('Accept', 'application/json')
-      .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.VOLUNTEER_PROVIDER])}`])
-
-    t.is(404, res.status)
-  })
 
   test.serial(`${role} - DELETE - Can not delete an opportunity`, async t => {
     let opId
@@ -249,6 +241,15 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
 }
 
 for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER]) {
+  test.serial(`${role} - READ - can not read DRAFT status`, async t => {
+    const res = await request(server)
+      .get(`/api/opportunities/${t.context.opportunities[2]._id}`)
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.VOLUNTEER_PROVIDER])}`])
+
+    t.is(404, res.status)
+  })
+  
   test.serial(`${role} - UPDATE - Can not update an opportunity they do not own`, async t => {
     let opId
 
@@ -311,6 +312,67 @@ test.serial(`orgAdmin - UPDATE - Can update ops for their org`, async t => {
 
   const op2 = await Opportunity.findById(op._id)
   t.is(op2.name, 'A new name')
+})
+
+test.serial('orgAdmin - CREATE', async t => {
+  const orgA = await Organisation.findOne({ name: 'OMGTech' })
+  const requestor = (await Person.find())[0]
+
+  // personA is an org admin for orgA
+  const personA = await createPerson([Role.VOLUNTEER_PROVIDER])
+  await Member.create({
+    person: personA,
+    organisation: orgA,
+    status: MemberStatus.ORGADMIN
+  })
+
+  // Create an op on my org
+  const res = await request(server)
+    .post('/api/opportunities')
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${createJwtIdToken(personA.email)}`])
+    .send({
+      status: OpportunityStatus.ACTIVE,
+      offerOrg: orgA._id,
+      requestor: requestor._id
+    })
+
+  t.is(200, res.status)
+})
+
+test.serial('orgAdmin - CREATE - attempt to create an op for an org I am not apart of', async t => {
+  const orgA = (await Organisation.find())[0]
+  const orgB = (await Organisation.find())[1]
+  const requestor = (await Person.find())[0]
+
+  // personA is an org admin for orgA
+  const personA = await createPerson([Role.VOLUNTEER_PROVIDER])
+  await Member.create({
+    person: personA,
+    organisation: orgA,
+    status: MemberStatus.ORGADMIN
+  })
+
+  // personB is an org admin for orgB
+  const personB = await createPerson([Role.VOLUNTEER_PROVIDER])
+  await Member.create({
+    person: personB,
+    organisation: orgB,
+    status: MemberStatus.MEMBER
+  })
+
+  // Try to create an op in orgB as user personA
+  const res = await request(server)
+    .post('/api/opportunities')
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${createJwtIdToken(personB.email)}`])
+    .send({
+      status: OpportunityStatus.ACTIVE,
+      offerOrg: orgB._id.toString(),
+      requestor: requestor._id.toString()
+    })
+
+  t.is(403, res.status)
 })
 
 test.serial(`Owner - READ`, async t => {

@@ -89,6 +89,9 @@ const ruleBuilder = session => {
     subject: SchemaName,
     action: Action.DELETE,
     inverted: true
+  }, {
+    subject: SchemaName,
+    action: Action.CREATE
   }]
 
   return {
