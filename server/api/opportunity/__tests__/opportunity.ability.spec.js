@@ -450,6 +450,37 @@ test.serial(`Owner - DELETE - Cannot delete an opportunity`, async t => {
   }
 })
 
+test.serial(`Owner - UPDATE - Can update an opportunity I created/own`, async t => {
+  let opId
+
+  try {
+    const requestor = await createPerson([Role.VOLUNTEER_PROVIDER])
+
+    const op = await Opportunity.create({
+      name: 'Cool op',
+      status: OpportunityStatus.ACTIVE,
+      requestor
+    })
+
+    const res = await request(server)
+      .put(`/api/opportunities/${op._id}`)
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${createJwtIdToken(requestor.email)}`])
+      .send({
+        name: 'Awesome op'
+      })
+
+    t.is(200, res.status)
+
+    const op2 = await Opportunity.findById(op._id)
+    t.truthy(op2)
+    t.is(op2.name, 'Awesome op')
+  }
+  finally {
+    await Opportunity.deleteOne({ _id: opId })
+  }
+})
+
 test.serial('Admin - LIST - Should get all opportunities', async t => {
   // Query for all opportunities
   // We use an empty query in the querystring so no default filtering is applied
@@ -573,7 +604,6 @@ test.serial('Admin - UPDATE', async t => {
     venue: 'School',
     status: OpportunityStatus.DRAFT,
     date: ['2020-01-01T12:26:18.000Z'],
-    fromActivity: activity._id,
     offerOrg: org._id,
     requestor: requestor._id,
     href: 'https://vly.nz/456',
@@ -618,3 +648,19 @@ test.serial('Admin - DELETE - Admin can delete ops', async t => {
   const op2 = await Opportunity.findById(res.body._id)
   t.falsy(op2)
 })
+
+for (const role of [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
+  test.serial(`${role} - UPDATE - Cannot set the fromActivity field`, async t => {
+    const op = (await Opportunity.find())[0]
+
+    const res = await request(server)
+      .put(`/api/opportunities/${op._id}`)
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.ADMIN])}`])
+      .send({
+        fromActivity: new ObjectId('54759eb3c090d83494e2d804')
+      })
+
+    t.is(400, res.status)
+  })
+}

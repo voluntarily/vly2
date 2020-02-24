@@ -142,6 +142,11 @@ const getOpportunity = async (req, res, next) => {
 
 const putOpportunity = async (req, res, next) => {
   try {
+    // Once an opportunity has been created we should not be able to change the activity it was based on
+    if (req.body.fromActivity) {
+      return res.status(400).send('Cannot change the fromActivity field')
+    }
+
     if (req.body.status === OpportunityStatus.COMPLETED || req.body.status === OpportunityStatus.CANCELLED) {
       await Opportunity
         .accessibleBy(req.ability, Action.UPDATE)
