@@ -716,8 +716,8 @@ export default Form.create({
 
 /**
  * Removes any fields from the person object which cannot be altered via the API.
- * @param {*} person
- * @param {string[]} roles
+ * @param {*} person The person object to alter.
+ * @param {string[]} roles The array of permission roles to use.
  */
 export const permissionTrimFields = (person, roles) => {
   if (!roles.includes(Role.ADMIN) && !roles.includes(Role.TESTER)) {
