@@ -1,7 +1,7 @@
 const orgList = [
   {
     name: 'Voluntarily Administrators',
-    slug: 'vly-admin',
+    slug: 'voluntarily-administrators',
     category: ['admin'],
     imgUrl: 'https://example.com/image1',
     info: {
@@ -45,14 +45,14 @@ const orgList = [
   },
   {
     name: 'Spark Ltd',
-    slug: 'spark',
+    slug: 'spark-ltd',
     category: ['vp'],
     imgUrl: 'https://example.com/image4',
     info: { about: 'more of our most loyal helpers' }
   },
   {
     name: 'Westpac Ltd',
-    slug: 'westpac',
+    slug: 'westpac-ltd',
     category: ['vp'],
     info: { about: 'even more of our most loyal helpers' }
   },
