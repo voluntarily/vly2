@@ -2,7 +2,7 @@ import { Button, message } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import PersonDetail from '../../components/Person/PersonDetail'
-import PersonDetailForm, { permissionTrimFields } from '../../components/Person/PersonDetailForm'
+import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import reduxApi from '../../lib/redux/reduxApi.js'
 import { useDispatch, useSelector } from 'react-redux'
 
