@@ -16,6 +16,7 @@ import {
 } from '../VTheme/FormStyles'
 import { H3Bold, P } from '../VTheme/VTheme'
 import { websiteRegex } from '../../server/api/person/person.validation'
+import { Role } from '../../server/services/authorize/role'
 
 const EducationSelectorRef = forwardRef(EducationSelector)
 const developerSettings = process.env.NODE_ENV !== 'production'
@@ -76,7 +77,8 @@ class PersonDetailForm extends Component {
         person.placeOfWork = values.placeOfWork
         person.job = values.job
         window.scrollTo(0, 0)
-        this.props.onSubmit(this.props.person)
+        permissionTrimFields(person, this.props.me.role)
+        this.props.onSubmit(person)
       }
     })
   }
@@ -618,8 +620,9 @@ PersonDetailForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   locations: PropTypes.arrayOf(PropTypes.string),
-  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired
+  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   // dispatch: PropTypes.func.isRequired,
+  me: PropTypes.object.isRequired
 }
 
 export default Form.create({
@@ -710,3 +713,15 @@ export default Form.create({
   onValuesChange (_, values) {
   }
 })(PersonDetailForm)
+
+/**
+ * Removes any fields from the person object which cannot be altered via the API.
+ * @param {*} person
+ * @param {string[]} roles
+ */
+export const permissionTrimFields = (person, roles) => {
+  if (!roles.includes(Role.ADMIN) && !roles.includes(Role.TESTER)) {
+    delete person.email
+  }
+  delete person.dateAdded
+}
