@@ -40,18 +40,15 @@ class ActListSection extends Component {
   }
 
   render () {
-    if (this.props.activities.loading) {
-      return (
-        <section>
-          <Loading />
-        </section>)
-    } else {
-      // TODO: [VP-130] take out the search filter here line in ActListSection and pass in a property instead
-      return (
-        <section>
-          <ActList acts={this.props.activities.data} />
-        </section>)
+    if (!this.props.activities.sync) {
+      return <Loading label='activities' entity={this.props.activities} />
     }
+
+    // TODO: [VP-130] take out the search filter here line in ActListSection and pass in a property instead
+    return (
+      <section>
+        <ActList acts={this.props.activities.data} />
+      </section>)
   }
 }
 

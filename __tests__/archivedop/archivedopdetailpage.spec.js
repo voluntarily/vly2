@@ -47,6 +47,11 @@ test.before('Setup fixtures', (t) => {
         loading: false,
         data: [archivedOpportunities[1]],
         request: null
+      },
+      interestsArchived: {
+        sync: true,
+        loading: false,
+        data: []
       }
     }
   )
@@ -119,6 +124,7 @@ test('archivedOpDetailPage should display OpUnknown when no opportunity can be r
 test('archivedOpDetailPage should display Loading spinner when loading', t => {
   const myStore = { ...t.context.mockStore }
   myStore.getState().archivedOpportunities.loading = true
+  myStore.getState().archivedOpportunities.sync = false
 
   const props = {
     me: t.context.me,

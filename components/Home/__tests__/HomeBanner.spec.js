@@ -9,6 +9,6 @@ const person = {
 test('HomeBanner has title and subtitle', t => {
   const children = <p>Test</p>
   const wrapper = shallowWithIntl(<HomeBanner person={person} children={children} />)
-  t.is(wrapper.find('FormattedMessage').first().props().defaultMessage, 'Home')
+  t.is(wrapper.find('FormattedMessage').first().props().defaultMessage, 'Activities')
   t.is(wrapper.find('p').first().text(), 'Test')
 })
