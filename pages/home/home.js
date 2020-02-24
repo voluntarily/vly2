@@ -31,7 +31,8 @@ export const PersonHomePage = () => {
     updateTab(key, true)
   }
 
-  if (!people.sync) { return <Loading /> }
+  if (!people.sync) { return <FullPage><Loading label='people' entity={people} /></FullPage> }
+  if (!members.sync) { return <FullPage><Loading label='members' entity={members} /></FullPage> }
 
   const person = people.data[0]
 

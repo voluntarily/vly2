@@ -1,6 +1,6 @@
 const Interest = require('./interest')
 const Person = require('../person/person')
-const { config } = require('../../../config/config')
+const { config } = require('../../../config/serverConfig')
 const { emailPerson } = require('../person/person.email')
 const { InterestStatus } = require('./interest.constants')
 const ical = require('ical-generator')

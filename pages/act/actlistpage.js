@@ -40,14 +40,14 @@ const handleSearch = (value) => {
 export const ActListPage = ({ activities }) =>
   <FullPage>
     <Helmet>
-      <title>Voluntarily - Activities List</title>
+      <title>Voluntarily - Resources List</title>
     </Helmet>
     <PageBanner>
       <h1>
         <FormattedMessage
           id='ActListPage.Title'
-          defaultMessage='Activities'
-          description='Title of page listing activities'
+          defaultMessage='Resources'
+          description='Title of page listing resources for teachers'
         />
       </h1>
 

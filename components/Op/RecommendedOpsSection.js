@@ -7,7 +7,7 @@ import Loading from '../Loading'
 
 export const RecommendedOpsSection = () => {
   const recommendedOps = useSelector(state => state.recommendedOps)
-  if (!recommendedOps.sync) return <Loading />
+  if (!recommendedOps.sync) return <Loading label='recommended activities' entity={recommendedOps} />
   const ops = recommendedOps.data[0]
 
   return (

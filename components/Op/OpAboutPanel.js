@@ -8,7 +8,7 @@ import { ProfilePanel, ProfileSection } from '../VTheme/Profile'
 import { OpSectionGrid, Spacer } from '../VTheme/VTheme'
 import { Divider } from 'antd'
 import { ShareLinks } from './OpShareLinks'
-import { config } from '../../config/config'
+import { config } from '../../config/clientConfig'
 import { FormattedMessage } from 'react-intl'
 export function OpAboutPanel ({ op }) {
   const description = op.description || ''

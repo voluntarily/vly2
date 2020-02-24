@@ -226,7 +226,7 @@ test('can Edit the Op', t => {
   saveButton.simulate('click')
 })
 
-test('display unavailable opportunity message when opportunity id is invalid on OpDetailPage', t => {
+test('display unavailable activity message when opportunity id is invalid on OpDetailPage', t => {
   const props = {
     me: t.context.me
   }
@@ -254,10 +254,10 @@ test('display unavailable opportunity message when opportunity id is invalid on 
       <OpDetailPageWithOps {...props} />
     </Provider>
   )
-  t.is(wrapper.find('h2').first().text(), 'Sorry, this opportunity is not available')
+  t.is(wrapper.find('h2').first().text(), 'Sorry, this activity is not available')
 })
 
-test('display loading opportunity message when opportunity is loading', t => {
+test('display loading opportunity message when activity is loading', t => {
   const props = {
     me: t.context.me
   }

@@ -6,6 +6,9 @@ const Category = {
   OTHER: 'other'
 }
 
+const SchemaName = 'Organisation'
+
 module.exports = {
-  Category
+  Category,
+  SchemaName
 }

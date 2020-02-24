@@ -105,7 +105,7 @@ export const ActDetailPage = (props) => {
       }
     }
   } else if (!props.activities.sync) {
-    content = <Loading />
+    content = <Loading label='activity' entity={props.activities} />
   } else {
     const acts = props.activities.data
     if (acts.length === 1) {

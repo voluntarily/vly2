@@ -15,6 +15,9 @@ const SCHOOL_TYPES = {
   TEEN_PARENT_UNIT: 'Teen Parent Unit'
 }
 
+const SchemaName = 'SchoolLookUp'
+
 module.exports = {
-  SCHOOL_TYPES
+  SCHOOL_TYPES,
+  SchemaName
 }

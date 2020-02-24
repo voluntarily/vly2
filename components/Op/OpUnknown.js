@@ -7,7 +7,7 @@ export const OpUnknown = () =>
     <h2>
       <FormattedMessage
         id='opDetailPage.OpNotFound'
-        defaultMessage='Sorry, this opportunity is not available'
+        defaultMessage='Sorry, this activity is not available'
         description='Op not found message'
       />
     </h2>
