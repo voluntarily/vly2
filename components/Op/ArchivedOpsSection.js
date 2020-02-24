@@ -19,7 +19,7 @@ export const ArchivedOpsSection = () => {
   const archivedOpportunities = useSelector(
     state => state.archivedOpportunities // list of ops I own
   )
-  if (!archivedOpportunities.sync) return <Loading />
+  if (!archivedOpportunities.sync) return <Loading label='archivedOpportunities' entity={archivedOpportunities} />
   const ops = archivedOpportunities.data
   if (!ops.length) return null
   return (

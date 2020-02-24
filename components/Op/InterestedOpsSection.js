@@ -34,7 +34,7 @@ const selectInterestedOps = createSelector(
 
 export const InterestedOpsSection = () => {
   const interests = useSelector(state => state.interests)
-  if (!interests.sync) return <Loading />
+  if (!interests.sync) return <Loading label='Interests' entity={interests} />
 
   const ops = useSelector(selectInterestedOps)
   if (!ops.length) return null

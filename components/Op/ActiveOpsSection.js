@@ -18,7 +18,7 @@ export const ActiveOpsSection = () => {
   const opportunities = useSelector(
     state => state.opportunities // list of ops I own
   )
-  if (!opportunities.sync) return <Loading />
+  if (!opportunities.sync) return <Loading label='opportunities' entity={opportunities} />
   const ops = opportunities.data
   if (!ops.length) return null
   return (

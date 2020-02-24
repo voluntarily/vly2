@@ -48,8 +48,8 @@ class MemberSection extends Component {
   }
 
   render () {
-    if (this.props.members.loading) {
-      return <Loading />
+    if (!this.props.members.sync) {
+      return <Loading label='members' entity={this.props.members} />
     }
     if (this.props.me.role.includes(Role.ANON)) {
       return '' // blank page for anon users

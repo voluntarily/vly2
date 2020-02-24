@@ -42,7 +42,7 @@ class OpListSection extends Component {
     }
     if (filter.date.length === 0) return this.props.opportunities.data
     const momentLists = filter.date.map(element => moment(element))
-    if (!this.props.opportunities.loading) {
+    if (this.props.opportunities.sync) {
       const filteredData = this.props.opportunities.data.filter(element => this.isDateFilterBetween(momentLists, element.date))
       return filteredData
     }
@@ -56,7 +56,7 @@ class OpListSection extends Component {
     if (!org) {
       return opData
     } else {
-      if (!this.props.opportunities.loading) {
+      if (this.props.opportunities.sync) {
         const filteredData = opData.filter(m => (m.offerOrg) && (m.offerOrg._id === org))
         return filteredData
       }
@@ -146,10 +146,10 @@ class OpListSection extends Component {
   render () {
     const opDataFilteredByDate = this.applyDateFilter(this.props.filter)
     const opData = this.appltOrganizationFilter(opDataFilteredByDate, this.props.org)
-    if (this.props.opportunities.loading) {
+    if (!this.props.opportunities.sync) {
       return (
         <section>
-          <Loading />
+          <Loading label='Opportunities' entity={this.props.opportunities} />
         </section>)
     } else {
       return (

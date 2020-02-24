@@ -38,8 +38,8 @@ export class ArchivedOpDetailPage extends Component {
   render () {
     // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
     if (!this.props.isNew) {
-      if (this.props.archivedOpportunities.loading) {
-        return (<Loading />)
+      if (!this.props.archivedOpportunities.sync) {
+        return (<Loading label='past activities' entity={this.props.archivedOpportunities} />)
       }
       if (this.props.archivedOpportunities.data.length !== 1) {
         return (<OpUnknown />)

@@ -119,8 +119,8 @@ export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isA
       message.success('Saved.')
     }, [])
 
-  if (organisations.loading) {
-    return <Loading />
+  if (!organisations.sync) {
+    return <Loading label='organisation' entity={organisations} />
   }
 
   const orgs = organisations.data
