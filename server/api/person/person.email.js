@@ -1,6 +1,6 @@
 const { getTransport } = require('../../services/email/email')
 const Email = require('email-templates')
-const { config } = require('../../../config/config')
+const { config } = require('../../../config/serverConfig')
 const { getUnsubscribeLink } = require('./person.lib')
 /*
   format and send a email to the given address

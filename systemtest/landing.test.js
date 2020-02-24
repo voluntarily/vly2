@@ -1,5 +1,5 @@
 import { ReactSelector, waitForReact } from 'testcafe-react-selectors'
-const { config } = require('../config/config')
+const { config } = require('../config/clientConfig')
 
 fixture`Getting Started` // eslint-disable-line no-undef
   .page`http://localhost:${config.serverPort}/`
