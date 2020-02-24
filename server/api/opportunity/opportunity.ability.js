@@ -74,7 +74,22 @@ const ruleBuilder = session => {
   }]
   const testerAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
   const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
-  const orgAdminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
+  
+  const orgAdminAbilities = [{
+    subject: SchemaName,
+    action: Action.READ
+  }, {
+    subject: SchemaName,
+    action: Action.LIST
+  }, {
+    subject: SchemaName,
+    action: Action.UPDATE,
+    conditions: { offerOrg: { $in: session.me.orgAdminFor } }
+  }, {
+    subject: SchemaName,
+    action: Action.DELETE,
+    inverted: true
+  }]
 
   return {
     [Role.ANON]: anonAbilities,

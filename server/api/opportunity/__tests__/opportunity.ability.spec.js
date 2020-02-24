@@ -8,7 +8,6 @@ import { OpportunityStatus, OpportunityFields, OpportunityPublishedStatus } from
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import Activity from '../../activity/activity'
-import Activities from '../../activity/__tests__/activity.fixture'
 import Organisation from '../../organisation/organisation'
 import Organisations from '../../organisation/__tests__/organisation.fixture'
 import ops from './opportunity.fixture.js'
@@ -18,6 +17,8 @@ import jsonwebtoken from 'jsonwebtoken'
 import { jwtData } from '../../../../server/middleware/session/__tests__/setSession.fixture'
 import uuid from 'uuid'
 import { Role } from '../../../services/authorize/role'
+import Member from '../../member/member'
+const { MemberStatus } = require('../../member/member.constants')
 
 const createJwtIdToken = (email) => {
   const jwt = { ...jwtData }
@@ -152,7 +153,7 @@ test.serial('Anonymous - DELETE is denied', async t => {
   t.is(403, res.status)
 })
 
-for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER]) {
+for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.ORG_ADMIN]) {
   test.serial(`${role} - LIST - get all published`, async t => {
     const q = {
       status: {
@@ -219,6 +220,35 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
     t.is(404, res.status)
   })
 
+  test.serial(`${role} - DELETE - Can not delete an opportunity`, async t => {
+    let opId
+
+    try {
+      const op = await Opportunity.create({
+        name: 'Cool op',
+        status: OpportunityStatus.ACTIVE,
+        requestor: await Person.findOne({ email: 'andrew@groat.nz' })
+      })
+      opId = op._id
+
+      const res = await request(server)
+        .delete(`/api/opportunities/${opId}`)
+        .set('Accept', 'application/json')
+        .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
+
+      t.true(res.status === 404 || res.status === 403)
+
+      // Make sure the op hasn't been deleted
+      const op2 = await Opportunity.findById(opId)
+      t.truthy(op2)
+    }
+    finally {
+      await Opportunity.deleteOne({ _id: opId })
+    }
+  })
+}
+
+for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER]) {
   test.serial(`${role} - UPDATE - Can not update an opportunity they do not own`, async t => {
     let opId
 
@@ -248,34 +278,40 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
       await Opportunity.deleteOne({ _id: opId })
     }
   })
-
-  test.serial(`${role} - DELETE - Can not delete an opportunity`, async t => {
-    let opId
-
-    try {
-      const op = await Opportunity.create({
-        name: 'Cool op',
-        status: OpportunityStatus.ACTIVE,
-        requestor: await Person.findOne({ email: 'andrew@groat.nz' })
-      })
-      opId = op._id
-
-      const res = await request(server)
-        .delete(`/api/opportunities/${opId}`)
-        .set('Accept', 'application/json')
-        .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
-
-      t.true(res.status === 404 || res.status === 403)
-
-      // Make sure the op hasn't been deleted
-      const op2 = await Opportunity.findById(opId)
-      t.truthy(op2)
-    }
-    finally {
-      await Opportunity.deleteOne({ _id: opId })
-    }
-  })
 }
+
+test.serial(`orgAdmin - UPDATE - Can update ops for their org`, async t => {
+  const omgTech = await Organisation.findOne({ name: 'OMGTech' })
+
+  // "atesty@voluntarily.nz" is now an org admin of "OMGTech"
+  await Member.create({
+    person: await Person.findOne({ email: 'atesty@voluntarily.nz' }),
+    organisation: omgTech,
+    status: MemberStatus.ORGADMIN
+  })
+
+  // Create an op as "btesty"
+  const op = await Opportunity.create({
+    name: 'Cool op',
+    status: OpportunityStatus.ACTIVE,
+    requestor: await Person.findOne({ email: 'btesty@voluntarily.nz' }),
+    offerOrg: omgTech
+  })
+
+  // Have "atesty" (the org admin) update the op
+  const res = await request(server)
+    .put(`/api/opportunities/${op._id}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${createJwtIdToken('atesty@voluntarily.nz')}`])
+    .send({
+      name: 'A new name' // Try and change the name of the op we do not own
+    })
+
+  t.is(200, res.status)
+
+  const op2 = await Opportunity.findById(op._id)
+  t.is(op2.name, 'A new name')
+})
 
 test.serial(`Owner - READ`, async t => {
   let opId
