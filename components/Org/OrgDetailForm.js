@@ -67,6 +67,7 @@ class OrgDetailForm extends Component {
         const org = this.props.org
         // update the rest from the form values.
         org.name = values.name
+        org.domainName = values.domainName
         org.slug = slug(values.name)
         org.info.about = values.about
         org.info.instructions = values.instructions
@@ -99,6 +100,13 @@ class OrgDetailForm extends Component {
         id='orgName'
         defaultMessage='Title'
         description='organisation Title label in OrgDetails Form'
+      />
+    )
+    const orgDomain = (
+      <FormattedMessage
+        id='orgDomain'
+        defaultMessage='Domain Name'
+        description='organisation Domain label in OrgDetails Form'
       />
     )
     const orgImgUrl = (
@@ -314,6 +322,15 @@ class OrgDetailForm extends Component {
                   <RichTextEditor />
                 )}
               </Form.Item>
+              <ShortInputContainer>
+                <Form.Item
+                  label={orgDomain}
+                >
+                  {getFieldDecorator('name', {
+                    rules: []
+                  })(<Input placeholder='Organisation Domain' />)}
+                </Form.Item>
+              </ShortInputContainer>
               <Form.Item label={orgImgUrl}>
                 {getFieldDecorator('imgUrl', {
                   rules: []
@@ -609,6 +626,7 @@ OrgDetailForm.propTypes = {
     name: PropTypes.string,
     info: PropTypes.shape({
       about: PropTypes.string,
+      domainName: PropTypes.string,
       followers: PropTypes.string,
       joiners: PropTypes.string,
       members: PropTypes.string,
