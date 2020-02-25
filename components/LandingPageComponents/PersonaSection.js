@@ -2,9 +2,11 @@ import { Button, Row, Col } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 
+import { FormattedMessage } from 'react-intl'
+import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
 const PersonaBox = styled.div`
-  margin-bottom: 8rem;
-  padding: 1rem;
+  margin-bottom: 4rem;
+
  
   @media screen and (max-width: 768px) {
     margin-bottom: 2rem;
@@ -75,6 +77,12 @@ const Text = styled.div`
 
 const AboutSection = () => (
   <PersonaBox>
+    <SectionTitle>
+      <FormattedMessage
+        id='landing.sectiontitle.persona'
+        defaultMessage='Who we help'
+      />
+    </SectionTitle>
     <Row gutter={[32, 32]}>
       <Col sm={12} lg={6}>
         <a href='/about' target='_blank' rel='noopener noreferrer'>
@@ -105,8 +113,8 @@ const AboutSection = () => (
         <a href='/content' target='_blank' rel='noopener noreferrer'>
           <PersonaContainer>
             <Image src='/static/img/contentCard.png' />
-            <Title>Content Providers</Title>
-            <Text>We help you get more people involved with your movement.</Text>
+            <Title>Content Creators</Title>
+            <Text>We help you get more people involved with your content.</Text>
             <Button>Learn More</Button>
           </PersonaContainer>
         </a>

@@ -3,7 +3,7 @@ import Member from '../../../../server/api/member/member'
 import { MemberStatus } from '../../../../server/api/member/member.constants'
 import { emailPerson } from '../../../../server/api/person/person.email'
 import { makeURLToken } from '../../../../lib/sec/actiontoken'
-import { config } from '../../../../config/config'
+import { config } from '../../../../config/clientConfig'
 
 export default async (req, res) => {
   // verify signed in

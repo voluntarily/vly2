@@ -8,7 +8,7 @@ import { jwtData } from '../../../middleware/session/__tests__/setSession.fixtur
 import Badge from '../badge'
 import fetchMock from 'fetch-mock'
 import badges from './badges.fixture'
-import { config } from '../../../../config/config'
+import { config } from '../../../../config/serverConfig'
 
 const { BADGR_API } = config
 

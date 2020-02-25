@@ -1,4 +1,4 @@
-const config = require('../../../config/config').config
+const config = require('../../../config/clientConfig').config
 
 /* The /api/health endpoint returns information about the health of the system
   it is the endpoint to call in docker or AWS container health monitoring

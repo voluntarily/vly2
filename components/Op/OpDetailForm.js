@@ -119,7 +119,7 @@ class OpDetailForm extends Component {
         <FormattedMessage
           id='opTitle'
           defaultMessage='Title'
-          description='opportunity Title label in OpDetails Form'
+          description='activity Title label in OpDetails Form'
         />
         &nbsp;
         <Tooltip title="Choose something interesting like 'we want to build robots' ">
@@ -133,7 +133,7 @@ class OpDetailForm extends Component {
         <FormattedMessage
           id='opSubtitle'
           defaultMessage='Subtitle'
-          description='opportunity Subtitle label in OpDetails Form'
+          description='activity Subtitle label in OpDetails Form'
         />{' '}
         <Tooltip title="Choose something interesting like 'we want to build robots' ">
           <Icon type='question-circle-o' />
@@ -145,7 +145,7 @@ class OpDetailForm extends Component {
         <FormattedMessage
           id='opCommitment'
           defaultMessage='Commitment'
-          description='opportunity Commitment label in OpDetails Form'
+          description='activity Commitment label in OpDetails Form'
         />
         &nbsp;
         <Tooltip title='How much time overall is likely to be required for the activity?'>
@@ -159,7 +159,7 @@ class OpDetailForm extends Component {
         <FormattedMessage
           id='opLocation'
           defaultMessage='Location'
-          description='opportunity Location label in OpDetails Form'
+          description='activity Location label in OpDetails Form'
         />
         &nbsp;
         <Tooltip title='set the region to help find local volunteers'>
@@ -187,10 +187,10 @@ class OpDetailForm extends Component {
         <FormattedMessage
           id='opOrganisation'
           defaultMessage='Offer Organisation'
-          description='label for Organisation offering the opportunity'
+          description='label for Organisation offering the activity'
         />
         &nbsp;
-        <Tooltip title='Which organisation is this opportunity for?'>
+        <Tooltip title='Which organisation is this activity for?'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -201,7 +201,7 @@ class OpDetailForm extends Component {
         <FormattedMessage
           id='opDescription'
           defaultMessage='Description'
-          description='opportunity Description label in OpDetails Form'
+          description='activity Description label in OpDetails Form'
         />
         &nbsp;
         <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML or Markdown here.'>
@@ -215,7 +215,7 @@ class OpDetailForm extends Component {
         <FormattedMessage
           id='opStartDate'
           defaultMessage='Start Date'
-          description='opportunity start date label in OpDetails Form'
+          description='activity start date label in OpDetails Form'
         />
         &nbsp;
         <Tooltip title='Choose your start date '>
@@ -230,7 +230,7 @@ class OpDetailForm extends Component {
         <FormattedMessage
           id='opEndDate'
           defaultMessage='End Date'
-          description='opportunity end date label in OpDetails Form'
+          description='activity end date label in OpDetails Form'
         />
         &nbsp;
         <Tooltip title='Choose your end date '>
@@ -244,7 +244,7 @@ class OpDetailForm extends Component {
         <FormattedMessage
           id='opImgUrl'
           defaultMessage='Image Link'
-          description='opportunity Image URL label in OpDetails Form'
+          description='activity Image URL label in OpDetails Form'
         />
         &nbsp;
         <Tooltip title="Choose something interesting like 'we want to build robots' ">
@@ -257,7 +257,7 @@ class OpDetailForm extends Component {
       <FormattedMessage
         id='opTags'
         defaultMessage='Tags'
-        description='Descriptions of general areas the opportunity relates to'
+        description='Descriptions of general areas the activity relates to'
       />
     )
 
@@ -500,7 +500,7 @@ class OpDetailForm extends Component {
                 <FormattedMessage
                   id='op.SaveInstructions'
                   defaultMessage='Save as Draft will allow you to preview the request while Publish will make it available to everyone to view.'
-                  description='Instructions for save and publish on opportunity details form'
+                  description='Instructions for save and publish on activity details form'
                 />
               </p>
             </DescriptionContainer>
@@ -514,7 +514,7 @@ class OpDetailForm extends Component {
                 <FormattedMessage
                   id='op.cancel'
                   defaultMessage='Cancel'
-                  description='Label for cancel button on opportunity details form'
+                  description='Label for cancel button on activity details form'
                 />
               </Button>
               <Button
@@ -527,7 +527,7 @@ class OpDetailForm extends Component {
                 <FormattedMessage
                   id='op.editSaveDraft'
                   defaultMessage='Save as draft'
-                  description='Label for save as draft button on opportunity details form'
+                  description='Label for save as draft button on activity details form'
                 />
               </Button>
               <Button
@@ -541,7 +541,7 @@ class OpDetailForm extends Component {
                 <FormattedMessage
                   id='op.editPublish'
                   defaultMessage='Publish'
-                  description='Label for submit button on opportunity details form'
+                  description='Label for submit button on activity details form'
                 />
               </Button>
             </InputContainer>

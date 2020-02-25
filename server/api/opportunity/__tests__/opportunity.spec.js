@@ -23,6 +23,8 @@ import { jwtData } from '../../../middleware/session/__tests__/setSession.fixtur
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create orgs: ${err}`)
   await appReady
 })
 
@@ -32,8 +34,6 @@ test.after.always(async (t) => {
 
 test.beforeEach('connect and add two oppo entries', async (t) => {
   // connect each oppo to a requestor.
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-  t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create orgs: ${err}`)
   ops.map((op, index) => {
     op.requestor = t.context.people[index]._id
     op.offerOrg = t.context.orgs[1]._id
@@ -44,7 +44,6 @@ test.beforeEach('connect and add two oppo entries', async (t) => {
 
 test.afterEach.always(async () => {
   await Opportunity.deleteMany()
-  await Person.deleteMany()
 })
 
 test.serial('verify fixture database has ops', async t => {
@@ -246,7 +245,7 @@ test.serial('Should correctly give opportunity 2 when searching by "Algorithms"'
   t.is(1, got.length)
 })
 
-test.serial('Should include description in search', async t => {
+test.serial('Should not include description in search', async t => {
   const res = await request(server)
     .get('/api/opportunities?search=innovation')
     .set('Accept', 'application/json')
@@ -254,8 +253,8 @@ test.serial('Should include description in search', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(ops[1].description, got[0].description)
-  t.is(1, got.length)
+  t.is(got.length, 1)
+  t.is(got.description, undefined)
 })
 
 test.serial('Should return any opportunities with matching tags or name/desc/subtitle', async t => {

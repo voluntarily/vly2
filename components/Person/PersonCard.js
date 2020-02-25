@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import { Card } from '../VTheme/VTheme'
 
-const PersonCard = ({ person, ...props }) => (
+const PersonCard = ({ person }) => (
   <Card>
     <Link href={`/people/${person._id}`}>
       <a>

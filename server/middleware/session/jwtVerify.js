@@ -1,4 +1,4 @@
-const { config } = require('../../../config/config')
+const { config } = require('../../../config/clientConfig')
 const jwksClient = require('jwks-rsa')
 const jwt = require('jsonwebtoken')
 

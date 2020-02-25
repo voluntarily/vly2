@@ -1,4 +1,5 @@
 
 module.exports = {
-  SchemaName: 'TagList'
+  SchemaName: 'TagList',
+  DefaultTagList: 'default'
 }
