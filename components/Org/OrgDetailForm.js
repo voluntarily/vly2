@@ -326,7 +326,7 @@ class OrgDetailForm extends Component {
                 <Form.Item
                   label={orgDomain}
                 >
-                  {getFieldDecorator('name', {
+                  {getFieldDecorator('domainName', {
                     rules: []
                   })(<Input placeholder='Organisation Domain' />)}
                 </Form.Item>
