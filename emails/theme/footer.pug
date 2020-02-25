@@ -9,13 +9,11 @@ table(width="100%")
                 td(align="center" valign="middle" style="font-size: 12px; line-height: 18px; color:#aaaaaa;")
                   span(class="appleFooter")
                     block footer
-                      p Voluntarily is an initiative run by the
-                        a( href="http://www.pamfergusson.co.nz/") Pam Fergusson Charitable Trust
+                      p Voluntarily is an initiative run by the 
+                        a( href="http://www.pamfergusson.co.nz/") 
+                          span Pam Fergusson Charitable Trust. 
                         if (to && to.email && to.href)
                           span This email was sent to #{to.email}. You're receiving this email because you expressed interest in Voluntarily Opportunities.
-                          span If you'd rather not see us in your inbox in the future, please set your
-                            a(href=to.href) profile to inactive.
-
-                    if (unsubscribeLink)
-                      p
-                        a(href=unsubscribeLink) Unsubscribe
+                      p If you'd rather not see us in your inbox in the future, 
+                        if (unsubscribeLink)
+                          a(href=unsubscribeLink) Unsubscribe
