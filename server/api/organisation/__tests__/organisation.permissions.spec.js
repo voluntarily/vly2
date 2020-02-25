@@ -11,6 +11,8 @@ import uuid from 'uuid'
 import { jwtData } from '../../../../server/middleware/session/__tests__/setSession.fixture'
 import { MemberStatus } from '../../member/member.constants'
 import Member from '../../member/member'
+import cuid from 'cuid'
+import slug from 'limax'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -57,9 +59,10 @@ const createPersonAndGetToken = async (roles) => {
 
 const createOrganisation = () => {
   // Create a new organisation directly in the database
+  const name = `Test Org ${cuid()}`
   return Organisation.create({
-    name: 'Test org',
-    slug: 'test-organisation',
+    name,
+    slug: slug(name),
     category: ['vp']
   })
 }
@@ -114,9 +117,10 @@ test.serial('Permissions - Roles matrix', async t => {
 
     let req = request(server).put(`${endpointUrl}/${org._id}`)
     req = applyHeaders(req, jwtIdToken)
+    const newName = 'Test org - PUT'
     return req.send({
-      name: 'Test org - PUT',
-      slug: 'test-organisation',
+      name: newName,
+      slug: slug(newName),
       category: ['vp']
     })
   }
@@ -198,19 +202,19 @@ test.serial('Permissions - ORG_ADMIN can update their own organisation', async (
 
   // Update fields of our organisation
   const jwtIdToken = createJwtIdToken(person.email)
-
+  const newName = 'Test org - PUT Admin'
   const res = await request(server)
     .put(`${endpointUrl}/${organisation._id}`)
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtIdToken}`])
     .send({
-      name: 'Test org - PUT',
-      slug: 'test-organisation',
+      name: newName,
+      slug: slug(newName),
       category: ['vp']
     })
 
   t.is(res.status, 200)
-  t.is((await Organisation.findOne({ _id: organisation._id })).name, 'Test org - PUT')
+  t.is((await Organisation.findOne({ _id: organisation._id })).name, newName)
 })
 
 test.serial('Permissions - ORG_ADMIN cannot update other organisations', async (t) => {
@@ -238,14 +242,14 @@ test.serial('Permissions - ORG_ADMIN cannot update other organisations', async (
     .set('Cookie', [`idToken=${jwtIdToken}`])
     .send({
       name: 'Organisation2',
-      slug: 'test-organisation',
+      slug: 'organisation2',
       category: ['vp']
     })
 
   // Response should be FORBIDDEN
   t.is(res.status, 403)
   // The organisation name should not have updated
-  t.is((await Organisation.findOne({ _id: organisation1._id })).name, 'Test org')
+  t.is((await Organisation.findOne({ _id: organisation1._id })).name, organisation1.name)
 })
 
 test.serial('Only admin can update the category field - can update as admin', async t => {
@@ -257,15 +261,15 @@ test.serial('Only admin can update the category field - can update as admin', as
 
   // Update fields of our organisation
   const jwtIdToken = createJwtIdToken(person.email)
-
+  const newName = 'Org Category Update 1'
   // PUT/update organisation
   const res = await request(server)
     .put(`${endpointUrl}/${org._id}`)
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtIdToken}`])
     .send({
-      name: 'Organisation',
-      slug: 'test-organisation',
+      name: newName,
+      slug: slug(newName),
       category: ['rp']
     })
 
@@ -294,13 +298,14 @@ test('Only admin can update the category field - orgadmin of request org cannot 
   const jwtIdToken = createJwtIdToken(person.email)
 
   // PUT/update organisation
+  const newName = 'Org Category Update 2'
   const res = await request(server)
     .put(`${endpointUrl}/${organisation._id}`)
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtIdToken}`])
     .send({
-      name: 'Organisation',
-      slug: 'test-organisation',
+      name: newName,
+      slug: slug(newName),
       category: ['rp']
     })
 
