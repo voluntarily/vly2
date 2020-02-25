@@ -13,7 +13,7 @@ import reduxApi from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import { useSelector } from 'react-redux'
 
-export const PersonHomePage = (me) => {
+export const PersonHomePage = () => {
   const [people, members] = useSelector(
     state => [state.people, state.members]
   )
@@ -57,7 +57,6 @@ export const PersonHomePage = (me) => {
         person={person}
         defaultTab={tab}
         onChange={handleTabChange}
-        me={me}
       />
     </FullPage>
   )
