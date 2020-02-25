@@ -30,6 +30,10 @@ const ruleBuilder = async (session) => {
         $in: [StoryStatus.DRAFT, StoryStatus.PUBLISHED]
       }
     }
+  }, {
+    subject: SchemaName,
+    action: Action.DELETE,
+    inverted: true
   }]
 
   const adminRules = []
