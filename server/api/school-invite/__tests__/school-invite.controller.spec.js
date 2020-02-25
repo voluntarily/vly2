@@ -185,6 +185,10 @@ test.serial('Create organisation from school', async (t) => {
   t.is(organisation.website, schoolData.website)
   t.is(organisation.address, schoolData.address)
   t.is(organisation.decile, schoolData.decile)
+
+  // try a second time - should get the same organisation back.
+  const org2 = await SchoolInvite.createOrganisationFromSchool(schoolData.schoolId)
+  t.deepEqual(organisation._id, org2._id)
 })
 
 test.serial('Create organisation from non-existent school', async (t) => {
@@ -212,4 +216,8 @@ test.serial('Link person to organisation as admin', async (t) => {
   t.is(member.validation, 'orgAdmin from school-invite controller')
   t.is(member.status, MemberStatus.ORGADMIN)
   t.true(spy.calledOnce)
+
+  // check second record is not created.
+  const dupMember = await SchoolInvite.linkPersonToOrganisationAsAdmin(organisation._id, person._id)
+  t.deepEqual(member._id, dupMember._id)
 })
