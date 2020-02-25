@@ -56,7 +56,8 @@ const assertContainsOnlyAnonymousFields = (test, obj) => {
     OpportunityFields.NAME,
     OpportunityFields.SUBTITLE,
     OpportunityFields.IMG_URL,
-    OpportunityFields.DURATION
+    OpportunityFields.DURATION,
+    OpportunityFields.DATE
   ]
   for (const key of Object.keys(obj)) {
     test.true(permittedFields.includes(key), `The response contained an invalid field: '${key}'`)

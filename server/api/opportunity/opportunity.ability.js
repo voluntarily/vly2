@@ -19,12 +19,12 @@ const ruleBuilder = session => {
     subject: SchemaName,
     action: Action.READ,
     conditions: { status: OpportunityStatus.ACTIVE },
-    fields: [OpportunityFields.ID, OpportunityFields.NAME, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION]
+    fields: [OpportunityFields.ID, OpportunityFields.NAME, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION, OpportunityFields.DATE]
   }, {
     subject: SchemaName,
     action: Action.LIST,
     conditions: { status: OpportunityStatus.ACTIVE },
-    fields: [OpportunityFields.ID, OpportunityFields.NAME, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION]
+    fields: [OpportunityFields.ID, OpportunityFields.NAME, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION, OpportunityFields.DATE]
   }, {
     subject: SchemaName,
     action: Action.UPDATE,
