@@ -15,11 +15,11 @@ const ruleBuilder = async (session) => {
 
   const allRules = [{
     subject: SchemaName,
-    action: Action.LIST,
+    action: [Action.LIST, Action.READ],
     conditions: { status: StoryStatus.PUBLISHED }
   }, {
     subject: SchemaName,
-    action: Action.LIST,
+    action: [Action.LIST, Action.READ],
     conditions: { author: session.me._id }
   }]
 

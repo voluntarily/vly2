@@ -193,7 +193,7 @@ const testScenarios = [
     assertions: (t, response) => {
       t.is(
         response.statusCode,
-        403,
+        404,
         'Authenticated users should not be able to read other people\'s draft stories'
       )
     }
