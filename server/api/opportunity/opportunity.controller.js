@@ -18,11 +18,6 @@ const { Role } = require('../../services/authorize/role')
  * @returns void
  */
 const getOpportunities = async (req, res, next) => {
-  const me = req && req.session && req.session.me
-  if (!me) {
-    return res.sendStatus(401)
-  }
-
   // Default to Active ops unless one of the params overrides
   let query = { status: OpportunityStatus.ACTIVE }
   let sort = 'name'
