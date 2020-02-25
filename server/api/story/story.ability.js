@@ -7,6 +7,10 @@ const ruleBuilder = async (session) => {
     subject: SchemaName,
     action: [Action.LIST, Action.READ],
     conditions: { status: StoryStatus.PUBLISHED }
+  }, {
+    subject: SchemaName,
+    action: [Action.UPDATE, Action.CREATE, Action.DELETE],
+    inverted: true
   }]
 
   const allRules = []
