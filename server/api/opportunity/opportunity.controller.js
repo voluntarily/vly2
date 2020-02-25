@@ -12,7 +12,7 @@ const { getLocationRecommendations, getSkillsRecommendations } = require('./oppo
 const { Role } = require('../../services/authorize/role')
 
 /**
- * Get all orgs
+ * Get all ops
  * @param req
  * @param res
  * @returns void
