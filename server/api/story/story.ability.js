@@ -1,9 +1,15 @@
 const { Role } = require('../../services/authorize/role')
+const { Action } = require('../../services/abilities/ability.constants')
+const { SchemaName, StoryStatus } = require('./story.constants')
 
 const ruleBuilder = async (session) => {
-  const anonRules = []
+  const anonRules = [{
+    subject: SchemaName,
+    action: Action.LIST,
+    conditions: { status: StoryStatus.PUBLISHED}
+  }]
 
-  const allRules = anonRules.slice(0)
+  const allRules = []
 
   return {
     [Role.ANON]: anonRules,

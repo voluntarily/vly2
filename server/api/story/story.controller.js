@@ -1,4 +1,5 @@
 const Story = require('./story')
+const { Action } = require('../../services/abilities/ability.constants')
 
 /**
   api/stories/ -> list all the stories assigned to the opportunity and get the story details
@@ -9,6 +10,7 @@ const listStory = async (req, res) => {
   const query = { parent: parentId }
   // Return enough info for a blog post
   const got = await Story.find(query)
+    .accessibleBy(req.ability, Action.LIST)
     .populate('author', 'name imgUrl')
     .sort('-dateAdded').exec() // sorts the data by date in the server
 
