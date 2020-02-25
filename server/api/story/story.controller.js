@@ -20,8 +20,14 @@ const listStory = async (req, res) => {
 const getStory = async (req, res) => {
   try {
     const got = await Story.findById(req.params._id)
+      .accessibleBy(req.ability, Action.READ)
       .populate('author', 'name imgUrl')
       .exec()
+
+    if (got === null) {
+      return res.sendStatus(404)
+    }
+
     res.json(got)
   } catch (e) {
     res.status(404).send(e)

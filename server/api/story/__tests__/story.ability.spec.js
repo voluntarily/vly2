@@ -63,7 +63,7 @@ const testScenarios = [
         .get(`/api/stories/${storyId}`)
     },
     assertions: (t, response) => {
-      t.is(response.statusCode, 403, 'Anonymous users should not be able to read stories that are draft')
+      t.is(response.statusCode, 404, 'Anonymous users should not be able to read stories that are draft')
     }
   },
   {

@@ -5,8 +5,8 @@ const { SchemaName, StoryStatus } = require('./story.constants')
 const ruleBuilder = async (session) => {
   const anonRules = [{
     subject: SchemaName,
-    action: Action.LIST,
-    conditions: { status: StoryStatus.PUBLISHED}
+    action: [Action.LIST, Action.READ],
+    conditions: { status: StoryStatus.PUBLISHED }
   }]
 
   const allRules = []
