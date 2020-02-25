@@ -132,7 +132,7 @@ test('render ActDetailPage - loading', async t => {
     activities: {
       sync: false,
       syncing: false,
-      loading: false,
+      loading: true,
       data: [],
       request: null
     }

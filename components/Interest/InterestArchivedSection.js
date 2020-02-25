@@ -33,32 +33,25 @@ class InterestArchivedSection extends Component {
   }
 
   render () {
-    if (!(this.props.interestsArchived && this.props.interestsArchived.data)) {
-      return (
-        <section>
-          <Loading>
-            <p>Loading interested volunteers...</p>
-          </Loading>
-        </section>
-      )
-    } else {
-      return (
-        <section>
-          <h2>
-            <FormattedMessage
-              id='interestArchiveSection.name'
-              defaultMessage='Volunteers'
-              description='label for interest table on op detail page'
-            />
-          </h2>
-          <InterestArchivedTable
-            interests={this.props.interestsArchived.data}
-            onPresent={this.markAsPresent.bind(this)}
-            onAbsent={this.markAsAbsent.bind(this)}
-          />
-        </section>
-      )
+    if (!this.props.interestsArchived.sync) {
+      return (<Loading label='interestsArchived' entity={this.props.interestsArchived} />)
     }
+    return (
+      <section>
+        <h2>
+          <FormattedMessage
+            id='interestArchiveSection.name'
+            defaultMessage='Volunteers'
+            description='label for interest table on op detail page'
+          />
+        </h2>
+        <InterestArchivedTable
+          interests={this.props.interestsArchived.data}
+          onPresent={this.markAsPresent.bind(this)}
+          onAbsent={this.markAsAbsent.bind(this)}
+        />
+      </section>
+    )
   }
 }
 InterestArchivedSection.propTypes = {

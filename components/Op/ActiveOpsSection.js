@@ -18,7 +18,7 @@ export const ActiveOpsSection = () => {
   const opportunities = useSelector(
     state => state.opportunities // list of ops I own
   )
-  if (!opportunities.sync) return <Loading />
+  if (!opportunities.sync) return <Loading label='opportunities' entity={opportunities} />
   const ops = opportunities.data
   if (!ops.length) return null
   return (
@@ -26,7 +26,7 @@ export const ActiveOpsSection = () => {
       <ProfileSectionTitle>
         <FormattedMessage
           id='ActivOpsSection.title'
-          defaultMessage='Activities you are managing'
+          defaultMessage='Active Activities'
           decription='Subtitle for teacher home page for active opportunities that have been hosted'
         />
       </ProfileSectionTitle>

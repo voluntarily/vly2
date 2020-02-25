@@ -19,7 +19,7 @@ export const ArchivedOpsSection = () => {
   const archivedOpportunities = useSelector(
     state => state.archivedOpportunities // list of ops I own
   )
-  if (!archivedOpportunities.sync) return <Loading />
+  if (!archivedOpportunities.sync) return <Loading label='archivedOpportunities' entity={archivedOpportunities} />
   const ops = archivedOpportunities.data
   if (!ops.length) return null
   return (
@@ -28,7 +28,7 @@ export const ArchivedOpsSection = () => {
         <ProfileSectionTitle>
           <FormattedMessage
             id='home.History.completedOpportunities'
-            defaultMessage='Completed Opportunities'
+            defaultMessage='Completed Activities'
             description='Subtitle for completed activites on home page history tab'
           />
         </ProfileSectionTitle>
@@ -38,7 +38,7 @@ export const ArchivedOpsSection = () => {
         <ProfileSectionTitle>
           <FormattedMessage
             id='home.History.cancelledOpportunities'
-            defaultMessage='Cancelled Opportunities'
+            defaultMessage='Cancelled Activities'
             description='Subtitle for teacher cancelled activites on home page history tab'
           />
         </ProfileSectionTitle>

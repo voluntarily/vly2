@@ -15,6 +15,9 @@ import acts from './activity.fixture.js'
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create organisations: ${err}`)
+
   await appReady
 })
 
@@ -24,8 +27,6 @@ test.after.always(async (t) => {
 
 test.beforeEach('connect and add two activity entries', async (t) => {
   // connect each activity to an owner and org
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-  t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create organisations: ${err}`)
   acts.map((act, index) => {
     act.owner = t.context.people[index]._id
     act.offerOrg = t.context.orgs[index]._id
@@ -38,7 +39,6 @@ test.beforeEach('connect and add two activity entries', async (t) => {
 
 test.afterEach.always(async () => {
   await Activity.deleteMany()
-  await Person.deleteMany()
 })
 
 test.serial('verify fixture database has acts', async t => {

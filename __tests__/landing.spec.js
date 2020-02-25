@@ -58,14 +58,14 @@ test.before('Setup fixtures', (t) => {
     {
       session: t.context.sessionAnon,
       opportunities: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
         data: ops,
         request: null
       },
       interests: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
         data: interests,
@@ -83,11 +83,9 @@ test('render landing page ', t => {
   const props = {
     me: false,
     isAuthenticated: false
-
   }
 
   const wrapper = mountWithIntl(
-
     <Provider store={t.context.mockStore}>
       <Landing {...props} />
     </Provider>)

@@ -133,7 +133,7 @@ export class PersonDetailPage extends Component {
 
   render () {
     if (!this.props.people.sync) {
-      return <Loading />
+      return <Loading label='person' entity={this.props.people} />
     }
 
     let person = null
