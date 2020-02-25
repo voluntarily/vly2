@@ -1,6 +1,7 @@
-import { AutoComplete, Tag } from 'antd'
+import { AutoComplete } from 'antd'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { TagStyle } from '../../VTheme/VTheme'
 const { Option } = AutoComplete
 
 class TagInput extends React.Component {
@@ -29,12 +30,12 @@ class TagInput extends React.Component {
             {children}
           </AutoComplete>
           {this.props.value ? this.props.value.map(tag =>
-            <Tag
+            <TagStyle
               closable
               onClose={() => this.removeTag(tag)}
               key={tag}
             >{tag}
-            </Tag>
+            </TagStyle>
           ) : null}
         </>)
     }
@@ -44,19 +45,24 @@ class TagInput extends React.Component {
       if (trimmedVal && !this.props.value.includes(trimmedVal)) {
         this.props.onChange([...this.props.value, trimmedVal])
       }
-      this.setState({ inputvalue: '' })
+      this.setState({ inputvalue: '', matchingTags: [] })
     }
 
     handleSearch = value => {
       const val = value.trim()
-      const matchingTags = (val && this.props.existingTags)
-        ? this.props.existingTags
-          .filter(tag => tag.toLowerCase().indexOf(val.toLowerCase()) !== -1 && !this.props.value.includes(tag.toLowerCase()))
-        : []
-      this.setState({
-        inputvalue: value,
-        matchingTags
-      })
+      if (val && val.endsWith(',')) {
+        const trimmedVal = val.slice(0, -1)
+        this.handleSelect(trimmedVal)
+      } else {
+        const matchingTags = (val && this.props.existingTags)
+          ? this.props.existingTags
+            .filter(tag => tag.toLowerCase().indexOf(val.toLowerCase()) !== -1 && !this.props.value.includes(tag.toLowerCase()))
+          : []
+        this.setState({
+          inputvalue: value,
+          matchingTags
+        })
+      }
     }
 
     removeTag = removedTag => {
