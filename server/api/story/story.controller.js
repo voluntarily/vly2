@@ -7,8 +7,12 @@ const { Role } = require('../../services/authorize/role')
  */
 
 const listStory = async (req, res) => {
-  const parentId = req.query.parentId
-  const query = { parent: parentId }
+  const query = {}
+
+  if (req.query.parentId) {
+    query.parent = req.query.parentId
+  }
+
   // Return enough info for a blog post
   const got = await Story.find(query)
     .accessibleBy(req.ability, Action.LIST)
