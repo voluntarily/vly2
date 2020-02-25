@@ -13,7 +13,17 @@ const ruleBuilder = async (session) => {
     inverted: true
   }]
 
-  const allRules = []
+  const allRules = [{
+    subject: SchemaName,
+    action: Action.LIST,
+    conditions: { status: StoryStatus.PUBLISHED }
+  }, {
+    subject: SchemaName,
+    action: Action.LIST,
+    conditions: { author: session.me._id }
+  }]
+
+  const adminRules = []
 
   return {
     [Role.ANON]: anonRules,
@@ -21,7 +31,7 @@ const ruleBuilder = async (session) => {
     [Role.OPPORTUNITY_PROVIDER]: allRules,
     [Role.ACTIVITY_PROVIDER]: allRules,
     [Role.ORG_ADMIN]: allRules,
-    [Role.ADMIN]: allRules
+    [Role.ADMIN]: adminRules
   }
 }
 
