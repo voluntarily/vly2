@@ -28,7 +28,7 @@ function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
 }
 
-class PersonDetailForm extends Component {
+class PersonDetail extends Component {
   constructor (props) {
     super(props)
     this.setImgUrl = this.setImgUrl.bind(this)
@@ -584,7 +584,7 @@ class PersonDetailForm extends Component {
   }
 }
 
-PersonDetailForm.propTypes = {
+PersonDetail.propTypes = {
   person: PropTypes.shape({
     cuid: PropTypes.string,
     name: PropTypes.string,
@@ -625,7 +625,7 @@ PersonDetailForm.propTypes = {
   // dispatch: PropTypes.func.isRequired,
 }
 
-const PersonDetailFormObj = Form.create({
+const PersonDetailForm = Form.create({
   name: 'person_detail_form',
   onFieldsChange (props, changedFields) {
     // props.onChange(changedFields);
@@ -712,9 +712,10 @@ const PersonDetailFormObj = Form.create({
   },
   onValuesChange (_, values) {
   }
-})(PersonDetailForm)
+})(PersonDetail)
 
-export default connect(store => ({ me: store.session.me }))(PersonDetailFormObj)
+export default connect(store => ({ me: store.session.me }))(PersonDetailForm)
+export { PersonDetailForm }
 
 /**
  * Removes any fields from the person object which cannot be altered via the API.

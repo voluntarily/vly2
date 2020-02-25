@@ -5,7 +5,7 @@ import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-hel
 import objectid from 'objectid'
 import tagList from '../../../server/api/tag/__tests__/tag.fixture'
 
-import PersonDetailForm, { permissionTrimFields } from '../PersonDetailForm'
+import { PersonDetailForm, permissionTrimFields } from '../PersonDetailForm'
 import sinon from 'sinon'
 import people from '../../../server/api/person/__tests__/person.fixture'
 import { MockWindowScrollTo } from '../../../server/util/mock-dom-helpers'
@@ -52,7 +52,7 @@ test('shallow the detail with person', t => {
   const wrapper = shallowWithIntl(
     <PersonDetailForm person={t.context.me} existingTags={tagList} locations={sortedLocations} onSubmit={() => {}} onCancel={() => {}} me={t.context.me} />
   )
-  t.is(wrapper.find('PersonDetailForm').length, 1)
+  t.is(wrapper.find('PersonDetail').length, 1)
 })
 
 test('render the detail with op', t => {
@@ -72,7 +72,7 @@ test('render the detail with op', t => {
   educationSelector.props().onChange('medium')
   wrapper.find('ImageUpload').first().props().setImgUrl('https://example.com/picture.png')
 
-  t.is(wrapper.find('PersonDetailForm').length, 1)
+  t.is(wrapper.find('PersonDetail').length, 1)
   t.is(wrapper.find('TagInput').length, 1)
   t.is(wrapper.find('button').length, 2)
   wrapper.find('button').first().simulate('click')
