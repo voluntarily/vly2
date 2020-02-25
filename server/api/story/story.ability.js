@@ -23,7 +23,7 @@ const ruleBuilder = async (session) => {
     conditions: { author: session.me._id }
   }, {
     subject: SchemaName,
-    action: Action.CREATE,
+    action: [Action.CREATE, Action.UPDATE],
     conditions: {
       author: session.me._id,
       status: {

@@ -294,7 +294,7 @@ const testScenarios = [
     assertions: (t, response) => {
       t.is(
         response.statusCode,
-        403,
+        404,
         'Authenticated user should not be able to update story to have a different author'
       )
     }
@@ -304,7 +304,7 @@ const testScenarios = [
     action: 'update (other person\'s story)',
     makeRequest: async (context) => {
       return request(server)
-        .put(`/api/stories/${context.fixtures.stories[5]._id}`)
+        .put(`/api/stories/${context.fixtures.stories[4]._id}`)
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
         .send({
           name: 'Updated test name'
@@ -313,7 +313,7 @@ const testScenarios = [
     assertions: (t, response) => {
       t.is(
         response.statusCode,
-        403,
+        404,
         'Authenticated user should not be able to update another person\'s story'
       )
     }

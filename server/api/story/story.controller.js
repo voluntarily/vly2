@@ -1,5 +1,6 @@
 const Story = require('./story')
 const { Action } = require('../../services/abilities/ability.constants')
+const { Role } = require('../../services/authorize/role')
 
 /**
   api/stories/ -> list all the stories assigned to the opportunity and get the story details
@@ -35,8 +36,37 @@ const getStory = async (req, res) => {
 }
 
 const putStory = async (req, res) => {
-  await Story.findByIdAndUpdate(req.params._id, { $set: req.body })
-  getStory(req, res)
+  const storyToUpdate = await Story.findOne(req.params)
+    .accessibleBy(req.ability, Action.READ)
+
+  if (storyToUpdate === null) {
+    return res.sendStatus(404)
+  }
+
+  const authorId = storyToUpdate.author ? storyToUpdate.author.toString() : undefined
+  const meId = req.session.me ? req.session.me._id.toString() : undefined
+
+  if (
+    authorId !== meId &&
+    !req.session.me.role.includes(Role.ADMIN)
+  ) {
+    // ensure non-admins can't take someone else's story and update the author to be themselves
+    return res.sendStatus(404)
+  }
+
+  storyToUpdate.set(req.body)
+
+  if (!req.ability.can(Action.UPDATE, storyToUpdate)) {
+    return res.sendStatus(404)
+  }
+
+  try {
+    await storyToUpdate.save()
+
+    res.json(storyToUpdate)
+  } catch (error) {
+    return res.sendStatus(500)
+  }
 }
 
 const createStory = async (req, res) => {
