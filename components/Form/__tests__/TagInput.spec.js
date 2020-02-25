@@ -157,3 +157,30 @@ test('search when there are no existing tags', t => {
 
   t.is(wrapperInstance.state.matchingTags.length, 0)
 })
+
+test('search with comma triggers submission of tag', t => {
+  const firstTag = 'csharp'
+  const secondTag = 'dog'
+  const searchValue = 'c#'
+  const searchValueComma = 'c#,'
+
+  const mockOnChange = sinon.spy()
+  const value = [firstTag]
+  const existingTags = [firstTag, secondTag]
+
+  const wrapper = mountWithIntl(
+    <TagInput onChange={mockOnChange} value={value} existingTags={existingTags} />
+  )
+
+  const wrapperInstance = wrapper.instance()
+
+  wrapperInstance.handleSearch(searchValue)
+
+  t.is(wrapperInstance.state.matchingTags.length, 0)
+
+  wrapperInstance.handleSearch(searchValueComma)
+
+  t.is(wrapperInstance.state.matchingTags.length, 0)
+  t.is(wrapperInstance.state.inputvalue, '')
+  t.true(mockOnChange.calledOnce)
+})
