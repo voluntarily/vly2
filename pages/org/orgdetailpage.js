@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 import { Button, message } from 'antd'
 import Link from 'next/link'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 import { FormattedMessage } from 'react-intl'
 import Loading from '../../components/Loading'
 import OrgBanner from '../../components/Org/OrgBanner'
@@ -74,22 +74,33 @@ export const OrgUnknown = () =>
     </Link>
   </>
 
-export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isAuthenticated }) => {
-  const [editing, setEditing] = useState(false)
+export const OrgDetailPage = ({
+  members,
+  me,
+  organisations,
+  isNew,
+  dispatch,
+  isAuthenticated
+}) => {
+  const router = useRouter()
   const [saved, setSaved] = useState(false)
+  const [tab, setTab] = useState(isNew ? 'edit' : router.query.tab)
 
-  const setEditingOfPage = (editing) => {
-    setEditing(editing)
-    window.scrollTo({
-      top: 0
-    })
+  const updateTab = (key, top) => {
+    setTab(key)
+    if (top) window.scrollTo(0, 0)
+    //  else { window.scrollTo(0, 400) }
+    const newpath = `/orgs/${org._id}?tab=${key}`
+    router.replace(router.pathname, newpath, { shallow: true })
   }
-
+  const handleTabChange = (key, e) => {
+    updateTab(key, key === 'edit')
+  }
   const handleCancel = useCallback(
     () => {
-      setEditing(false)
+      updateTab('about', true)
       if (isNew) { // return to previous
-        Router.back()
+        router.back()
       }
     },
     [isNew]
@@ -112,10 +123,10 @@ export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isA
           reduxApi.actions.organisations.post({}, { body: JSON.stringify(org) })
         )
         org = res[0]
-        Router.replace(`/orgs/${org._id}`)
+        router.replace(`/orgs/${org._id}`)
       }
-      setEditing(false)
       setSaved(true)
+      updateTab('about', true)
       message.success('Saved.')
     }, [])
 
@@ -129,14 +140,19 @@ export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isA
   }
   const org = isNew ? blankOrg : orgs[0]
 
+  // Who can edit?
+  const isAdmin = me && me.role.includes('admin')
   const isOrgAdmin =
     members.data.length &&
     members.data[0].status === MemberStatus.ORGADMIN
-  const isAdmin = me && me.role.includes('admin')
-  const canEdit = isAuthenticated && (isOrgAdmin || isAdmin)
-  if (editing) {
+  const canManage = isAuthenticated && (isOrgAdmin || isAdmin)
+
+  if (tab === 'edit') {
     return (
       <FullPage>
+        <Helmet>
+          <title>Edit {org.name} - Voluntarily</title>
+        </Helmet>
         <OrgDetailForm
           org={org}
           isAdmin={isAdmin}
@@ -153,11 +169,10 @@ export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isA
       </Helmet>
 
       <OrgBanner org={org}>
-        {isAuthenticated && <RegisterMemberSection orgid={org._id} meid={me._id} />}
+        {isAuthenticated && <RegisterMemberSection orgid={org._id} meid={me._id.toString()} />}
         {saved && <HomeButton />}
-        {canEdit && <OrgEditButton onClick={() => setEditingOfPage(true)} />}
       </OrgBanner>
-      <OrgTabs org={org} />
+      <OrgTabs org={org} canManage={canManage} isAuthenticated={isAuthenticated} defaultTab={tab} onChange={handleTabChange} />
     </FullPage>)
 }
 
@@ -187,48 +202,3 @@ OrgDetailPage.getInitialProps = async ({ store, query }) => {
 
 export const OrgDetailPageWithOrgs = withOrgs(OrgDetailPage)
 export default publicPage(OrgDetailPageWithOrgs)
-
-/* //TODO: this commented out code will likely go in the new settings tab
-          <Divider />
-
-          <h2>
-            <FormattedMessage
-              id='getInvolved'
-              defaultMessage='Get involved'
-              description='Header for org activities'
-            />
-          </h2>
-          <h5>Volunteer with {org.name}</h5>
-          <OpListSection org={org._id} />
-          <div style={{ float: 'right' }}>
-            <Button shape='round'>
-              <Link href='/orgs'>
-                <a>
-                  <FormattedMessage
-                    id='showOrgs'
-                    defaultMessage='Show All'
-                    description='Button to show all organisations'
-                  />
-                </a>
-              </Link>
-            </Button>
-
-            {canRemove && (
-              <Popconfirm
-                title='Confirm removal of this organisation.'
-                onConfirm={this.handleDelete.bind(this, org)}
-                onCancel={this.handleDeleteCancel.bind(this)}
-                okText='Yes'
-                cancelText='No'
-              >
-                <Button style={{ float: 'right' }} type='danger' shape='round'>
-                  <FormattedMessage
-                    id='deleteOrg'
-                    defaultMessage='Remove Organisation'
-                    description='Button to remove an Organisatino on OrgDetails page'
-                  />
-                </Button>
-              </Popconfirm>
-            )}
-          </div>
-*/
