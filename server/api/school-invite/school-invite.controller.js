@@ -51,7 +51,7 @@ class SchoolInvite {
         schoolId: school.schoolId
       },
       action: 'join',
-      expiresIn: '2d'
+      expiresIn: '2w' // invite is valid for 2 weeks
     }
 
     const tokenUrl = makeURLToken(payload)
@@ -178,7 +178,9 @@ class SchoolInvite {
 
     initialOrganisationData.category = ['op']
     initialOrganisationData.slug = slug(initialOrganisationData.name)
-
+    // check whether org already exists. - match slug.
+    const existingOrg = await Organisation.findOne({ slug: initialOrganisationData.slug })
+    if (existingOrg) return existingOrg
     return Organisation.create(initialOrganisationData)
   }
 
