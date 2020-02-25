@@ -130,7 +130,7 @@ export const OrgDetailPage = ({
       message.success('Saved.')
     }, [])
 
-  if (!organisations.sync) {
+  if (!organisations.sync && !isNew) {
     return <Loading label='organisation' entity={organisations} />
   }
 
