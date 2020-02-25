@@ -21,6 +21,15 @@ const ruleBuilder = async (session) => {
     subject: SchemaName,
     action: [Action.LIST, Action.READ],
     conditions: { author: session.me._id }
+  }, {
+    subject: SchemaName,
+    action: Action.CREATE,
+    conditions: {
+      author: session.me._id,
+      status: {
+        $in: [StoryStatus.DRAFT, StoryStatus.PUBLISHED]
+      }
+    }
   }]
 
   const adminRules = []

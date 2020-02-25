@@ -39,8 +39,25 @@ const putStory = async (req, res) => {
   getStory(req, res)
 }
 
+const createStory = async (req, res) => {
+  const story = new Story(req.body)
+
+  if (!req.ability.can(Action.CREATE, story)) {
+    return res.sendStatus(403)
+  }
+
+  try {
+    await story.save()
+
+    res.json(story)
+  } catch (error) {
+    return res.sendStatus(500)
+  }
+}
+
 module.exports = {
   listStory,
   getStory,
-  putStory
+  putStory,
+  createStory
 }
