@@ -55,7 +55,7 @@ const homeDiscoverTab = (
   </span>
 )
 
-export const HomeTabs = ({ person, onChange, defaultTab, me }) =>
+export const HomeTabs = ({ person, onChange, defaultTab }) =>
   <VTabs defaultActiveKey={defaultTab} onChange={onChange}>
     <TabPane tab={homeDiscoverTab} key='discover'>
       <ProfilePanel>
@@ -78,7 +78,7 @@ export const HomeTabs = ({ person, onChange, defaultTab, me }) =>
     </TabPane>
     <TabPane tab={homeProfileTab} key='profile'>
       <ProfilePanel>
-        <EditablePersonPanel person={person} me={me} />
+        <EditablePersonPanel person={person} />
       </ProfilePanel>
     </TabPane>
   </VTabs>

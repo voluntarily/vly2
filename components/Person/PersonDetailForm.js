@@ -1,6 +1,7 @@
 import { Avatar, Button, Checkbox, Divider, Form, Icon, Input, Radio, Tooltip, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component, forwardRef } from 'react'
+import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import LocationSelector from '../Form/Input/LocationSelector'
 import EducationSelector from '../Form/Input/EducationSelector'
@@ -622,10 +623,9 @@ PersonDetailForm.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.string),
   existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   // dispatch: PropTypes.func.isRequired,
-  me: PropTypes.object.isRequired
 }
 
-export default Form.create({
+const PersonDetailFormObj = Form.create({
   name: 'person_detail_form',
   onFieldsChange (props, changedFields) {
     // props.onChange(changedFields);
@@ -713,6 +713,8 @@ export default Form.create({
   onValuesChange (_, values) {
   }
 })(PersonDetailForm)
+
+export default connect(store => ({ me: store.session.me }))(PersonDetailFormObj)
 
 /**
  * Removes any fields from the person object which cannot be altered via the API.

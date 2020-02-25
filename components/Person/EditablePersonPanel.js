@@ -43,7 +43,6 @@ export const EditablePersonPanel = ({ person, me }) => {
         person={person}
         existingTags={tags.data}
         locations={locations.data[0].locations}
-        me={me.me}
         onSubmit={handleUpdate}
         onCancel={doneEditing}
       />)
