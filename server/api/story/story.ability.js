@@ -36,7 +36,10 @@ const ruleBuilder = async (session) => {
     inverted: true
   }]
 
-  const adminRules = []
+  const adminRules = [{
+    subject: SchemaName,
+    action: Action.MANAGE
+  }]
 
   return {
     [Role.ANON]: anonRules,
