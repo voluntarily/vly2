@@ -500,10 +500,10 @@ class OrgDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <h3>How to join</h3>
+                <h3>Signing up</h3>
               </TitleContainer>
               <p>
-                How do you want teachers and schools to get in touch with you?
+                How do you
               </p>
             </DescriptionContainer>
             <InputContainer>
