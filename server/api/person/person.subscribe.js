@@ -46,6 +46,8 @@ module.exports = (server) => {
   PubSub.subscribe(TOPIC_INTEREST__UPDATE, async (msg, interest) => {
     // a new interest has been created or a interest status has changed
     // send email to the volunteers
+    // console.log('vp', TOPIC_MEMBER__UPDATE, interest)
+
     if ([
       InterestStatus.INTERESTED,
       InterestStatus.INVITED,
@@ -68,6 +70,7 @@ module.exports = (server) => {
   PubSub.subscribe(TOPIC_INTEREST__UPDATE, async (msg, interest) => {
     // a new interest has been created or a interest status has changed
     // send email to the opportunity requestor
+    // console.log('op', TOPIC_MEMBER__UPDATE, interest)
     if ([
       InterestStatus.INTERESTED,
       InterestStatus.COMMITTED,
