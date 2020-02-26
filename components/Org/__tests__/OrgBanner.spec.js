@@ -22,7 +22,7 @@ test('OrgBanner has image, and title', t => {
   t.is(wrapper.find('h1').first().text(), `${org.name}`)
   t.is(wrapper.find('img').first().prop('src'), org.imgUrl)
   // t.is(wrapper.find('a').first().text(), org.website)
-  t.is(wrapper.find('p').first().text(), 'Test')
+  t.is(wrapper.find('p').last().text(), 'Test')
 })
 
 // test('OrgBanner with no website', t => {
