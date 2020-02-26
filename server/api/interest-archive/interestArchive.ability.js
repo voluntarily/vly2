@@ -10,7 +10,19 @@ const ruleBuilder = async (session) => {
     inverted: true
   }]
 
-  const allRules = anonRules.slice(0)
+  const allRules = [{
+    subject: SchemaName,
+    action: Action.LIST,
+    conditions: { person: session.me._id }
+  }, {
+    subject: SchemaName,
+    action: Action.READ,
+    conditions: { person: session.me._id }
+  }, {
+    subject: SchemaName,
+    action: [Action.CREATE, Action.UPDATE, Action.DELETE],
+    inverted: true
+  }]
 
   const opportunityProviderRules = []
 
