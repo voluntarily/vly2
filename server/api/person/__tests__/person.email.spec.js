@@ -47,11 +47,10 @@ test.afterEach(t => {
 
 test('Send acknowledgeInterest email to person', async t => {
   const props = {
-    send: true, // when true email is actually sent
     from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson('acknowledgeInterest', t.context.to, props)
+  const info = await emailPerson('interest_vp_interested', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
 
   const sentMail = nodemailerMock.mock.getSentMail()
@@ -60,14 +59,14 @@ test('Send acknowledgeInterest email to person', async t => {
   t.regex(sentMail[0].subject, /Confirming your interest/)
 })
 
-test('render acknowledgeInterest email to person', async t => {
+test.only('render acknowledgeInterest email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
     op: t.context.op,
     renderonly: true
   }
-  const html = await emailPerson('acknowledgeInterest', t.context.to, props, true)
+  const html = await emailPerson('interest_vp_interested', t.context.to, props, true)
   const document = (new JSDOM(html)).window.document
   t.truthy(getByText(document, 'Help make a difference'))
   t.truthy(getByText(document, t.context.op.name))
@@ -80,7 +79,7 @@ test('Send invited email to person', async t => {
     from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson('invited', t.context.to, props)
+  const info = await emailPerson('interests_vp_invited', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
 
   const sentMail = nodemailerMock.mock.getSentMail()
@@ -95,13 +94,14 @@ test('Send committed email to person', async t => {
     from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson('committed', t.context.to, props)
+  const info = await emailPerson('interest_vp_committed', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
 
   const sentMail = nodemailerMock.mock.getSentMail()
   t.is(sentMail.length, 1)
   t.truthy(sentMail[0].text.includes('Andrew Watkins just committed to your opportunity'))
   t.regex(sentMail[0].subject, /Andrew Watkins just committed to 1 Mentor a year 12 business Impact Project/)
+  // TODO: [VP-1341] verify ical attachment for committed email
 })
 
 test('Send declined email to volunteer', async t => {
@@ -110,7 +110,7 @@ test('Send declined email to volunteer', async t => {
     from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson('declined', t.context.to, props)
+  const info = await emailPerson('interest_vp_declined', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
   const sentMail = nodemailerMock.mock.getSentMail()
   t.is(sentMail.length, 1)
@@ -125,7 +125,7 @@ test('Send person interested email to requestor', async t => {
     op: t.context.op,
     comment: 'All your base belong to us'
   }
-  const info = await emailPerson('interested', t.context.to, props)
+  const info = await emailPerson('interest_op_interested', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
   const sentMail = nodemailerMock.mock.getSentMail()
   t.is(sentMail.length, 1)
@@ -140,7 +140,7 @@ test('Email to Voluntarily user includes unsubscribe link', async (t) => {
     comment: 'Test comment'
   }
 
-  const info = await emailPerson('interested', t.context.to, props)
+  const info = await emailPerson('interest_vp_interested', t.context.to, props)
   const sentMail = nodemailerMock.mock.getSentMail()
 
   t.true(info.accepted[0] === 'accepted')
@@ -168,7 +168,7 @@ test('Email to anonymous user does not include unsubscribe link', async (t) => {
   // so it not being present should result in no unsubscribe link
   delete to._id
 
-  const info = await emailPerson('interested', to, props)
+  const info = await emailPerson('interest_vp_interested', to, props)
   const sentMail = nodemailerMock.mock.getSentMail()
 
   t.true(info.accepted[0] === 'accepted')
@@ -210,7 +210,7 @@ test('sendNotificationEmails flag is respected', async (t) => {
   ]
 
   for (const testPerson of testPeople) {
-    await emailPerson('interested', testPerson.person, props)
+    await emailPerson('interest_vp_interested', testPerson.person, props)
     const sentMail = nodemailerMock.mock.getSentMail()
 
     t.is(sentMail.length, testPerson.expectedMailCount)

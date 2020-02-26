@@ -9,6 +9,7 @@ const { getUnsubscribeLink } = require('./person.lib')
   @props includes details of the opportunity, requestor etc
 */
 module.exports.emailPerson = async (template, to, props, renderOnly = false) => {
+  // console.log('emailPerson', template, to.email, props)
   if (to._id && !to.sendEmailNotifications) {
     return null
   }
@@ -21,8 +22,8 @@ module.exports.emailPerson = async (template, to, props, renderOnly = false) => 
     send: true,
     subjectPrefix: config.env === 'production' ? false : `[${config.env.toUpperCase()}] `,
 
-    // Comment the line below to see preview email
-    preview: false,
+    // uncomment the line below to see preview email
+    // preview: true,
     textOnly: config.onlyEmailText, // The value onlyEmailText has a Boolean type not string
     transport
   })
