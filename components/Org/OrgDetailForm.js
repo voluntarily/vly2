@@ -503,7 +503,7 @@ class OrgDetailForm extends Component {
                 <h3>Signing up</h3>
               </TitleContainer>
               <p>
-                Tell your members what they need to do to join the org<br/>ie: Talk to your manager or HR person for the magic code
+                Tell your members what they need to do to join the group<br/>ie: Talk to your manager or HR person for the magic code
               </p>
             </DescriptionContainer>
             <InputContainer>
