@@ -233,10 +233,10 @@
   "orgDetailPage.showOrgs": "Show All",
   "orgDetailPage.schoolDetail": "School details",
   "orgDetailPage.schoolDetail.description": "A few details about your school",
-
   "orgDetailPage.staff.join.title": "Staff Instructions",
   "orgDetailPage.staff.join.description": "What processes do you want staff to do before they start volunteering? Should they fill in a form? Ask for approval from their manager? Specify your instructions here.",
-
+  "orgDetailpage.staff.signup.title":"Signing up",
+  "orgDetailpage.staff.signup.description":"Tell your members what they need to do to join the group - ie: Talk to your manager or HR person for the magic code",
   "OrgEditPrompt": "Tell us something about your organisation and link to your home website.",
   "orgImgUrl": "Image Link",
   "orgInfoFollowers": "Followers",

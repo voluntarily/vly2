@@ -536,12 +536,21 @@ class OrgDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <h3>Signing up</h3>
+                <h3>
+                  <FormattedMessage
+                    id='orgDetailpage.staff.signup.title'
+                    defaultMessage='Signing up'
+                    description='title for joining employees section'
+                  />
+                </h3>
               </TitleContainer>
               <p>
-                Tell your members what they need to do to join the group
-                <br />
-                ie: Talk to your manager or HR person for the magic code
+                <FormattedMessage
+                  id='orgDetailpage.staff.signup.description'
+                  defaultMessage='Tell your members what they need to do to join the group - ie: Talk to your manager or HR person for the magic code'
+                  description='description for joining employees section'
+                />
+
               </p>
             </DescriptionContainer>
             <InputContainer>
