@@ -1,4 +1,4 @@
-import { Button, Checkbox, Divider, Form, Input, InputNumber } from 'antd'
+import { Button, Checkbox, Divider, Form, Input, InputNumber, Tooltip, Icon } from 'antd'
 import slug from 'limax'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
@@ -103,11 +103,17 @@ class OrgDetailForm extends Component {
       />
     )
     const orgDomain = (
-      <FormattedMessage
-        id='orgDomain'
-        defaultMessage='Domain Name'
-        description='organisation Domain label in OrgDetails Form'
-      />
+      <span>
+        <FormattedMessage
+          id='orgDomain'
+          defaultMessage='Domain Name'
+          description='organisation Domain label in OrgDetails Form'
+        />
+      &nbsp;
+        <Tooltip title='used to match emails of the form name@org.domain to your organisation automatically.'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
     )
     const orgImgUrl = (
       <FormattedMessage
