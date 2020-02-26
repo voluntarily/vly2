@@ -6,7 +6,7 @@ import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import reduxApi from '../../lib/redux/reduxApi.js'
 import { useDispatch, useSelector } from 'react-redux'
 
-export const EditablePersonPanel = ({ person }) => {
+export const EditablePersonPanel = ({ person, me }) => {
   const [editing, setEditing] = useState(false)
   const dispatch = useDispatch()
   const [tags, locations] = useSelector(
@@ -27,32 +27,10 @@ export const EditablePersonPanel = ({ person }) => {
     setEditing(false)
   }
   const handleUpdate = async (person) => {
-    // Only a subset of fields can be updated on the server
-    const personData = {
-      name: person.name,
-      nickname: person.nickname,
-      phone: person.phone,
-      sendEmailNotifications: person.sendEmailNotifications,
-      pronoun: person.pronoun,
-      about: person.about,
-      location: person.location,
-      tags: person.tags,
-      website: person.website,
-      twitter: person.twitter,
-      facebook: person.facebook,
-      imgUrl: person.imgUrl,
-      imgUrlSm: person.imgUrlSm,
-      role: person.role,
-      status: person.status,
-      education: person.education,
-      placeOfWork: person.placeOfWork,
-      job: person.job
-    }
-
     await dispatch(
       reduxApi.actions.people.put(
         { id: person._id },
-        { body: JSON.stringify(personData) }
+        { body: JSON.stringify(person) }
       )
     )
     message.success('Saved.')
