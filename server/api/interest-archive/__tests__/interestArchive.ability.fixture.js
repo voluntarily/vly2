@@ -7,8 +7,8 @@ import { InterestStatus } from '../../interest/interest.constants'
 import { Role } from '../../../services/authorize/role'
 import { MemberStatus } from '../../member/member.constants'
 import { OpportunityStatus } from '../../opportunity/opportunity.constants'
-import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
+import { generateTestSession } from '../../../util/test-generate-session'
 
 const generateObjectId = mongoose.Types.ObjectId
 
@@ -126,25 +126,7 @@ const archivedInterests = [
 const sessions = []
 
 for (const person of people) {
-  const session = {
-    accessToken: 'IGs4bjO5WLjsulmjKiW2-VLeetlgykUP',
-    idTokenPayload: {
-      email: person.email,
-      email_verified: true,
-      exp: Math.floor(Date.now() / 1000) + (60 * 60),
-      iat: Math.floor(Date.now() / 1000),
-      name: person.name,
-      nickname: '',
-      picture: ''
-    },
-    refreshToken: null,
-    state: 'Nz_CgRTnYPO5CbD4ueKmkdCiuk2z3psk',
-    expiresIn: 3600,
-    tokenType: 'Bearer',
-    scope: null
-  }
-
-  session.idToken = jwt.sign(session.idTokenPayload, 'secret')
+  const session = generateTestSession(person.name, person.email)
 
   sessions.push(session)
 }
