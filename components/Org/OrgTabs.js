@@ -37,32 +37,39 @@ const orgOffersTab =
     description='show opportunities list on volunteer home page'
   />
 
-// const orgSettingsTab =
-//   <FormattedMessage
-//     id='orgSettings'
-//     defaultMessage='Settings'
-//     description='show opportunities list on volunteer home page'
-//   />
+const orgEditTab =
+  <FormattedMessage
+    id='orgTabs.edit'
+    defaultMessage='Edit'
+    description='Tab label for org Editor panel on organisation page'
+  />
 
-export const OrgTabs = ({ org, onChange }) => (
-  <VTabs defaultActiveKey='1' onChange={onChange}>
-    <TabPane tab={orgTab} key='1'>
+// Warning do not try to group tabs under an isFlag TabPanes must be direct Children of Tabs.
+export const OrgTabs = ({ org, onChange, canManage, defaultTab, isAuthenticated }) => (
+  <VTabs defaultActiveKey={defaultTab} onChange={onChange}>
+    <TabPane tab={orgTab} key='about'>
       <OrgAboutPanel org={org} />
     </TabPane>
-    {/* <TabPane tab={orgResourcesTab} key='2' /> */}
-    {/* // TODO: [VP-554] move the OpList for this org from the parent page to a tab  */}
-    <TabPane tab={orgInstructionTab} key='3'>
-      <ProfilePanel>
-        <Html>
-          {(org.info && org.info.instructions) || ''}
-        </Html>
-      </ProfilePanel>
+    <TabPane tab={orgOffersTab} key='offers'>
+      {/* // TODO: [VP-554] move the OpList for this org from the parent page to a tab  */}
     </TabPane>
-    <TabPane tab={orgMemberTab} key='4'>
-      <MemberSection org={org} />
-    </TabPane>
-    <TabPane tab={orgOffersTab} key='5' />
-    {/* <TabPane tab={orgSettingsTab} key='6' /> */}
+    {isAuthenticated && (
+      <TabPane tab={orgInstructionTab} key='instructions'>
+        <ProfilePanel>
+          <Html>
+            {(org.info && org.info.instructions) || ''}
+          </Html>
+        </ProfilePanel>
+      </TabPane>)}
+    {isAuthenticated && (
+      <TabPane tab={orgMemberTab} key='members'>
+        <MemberSection org={org} />
+      </TabPane>)}
+
+    {canManage && (
+      <TabPane tab={orgEditTab} key='edit' />
+    )}
+
   </VTabs>
 )
 
