@@ -20,6 +20,7 @@ const cardHeading = {
 }
 
 const InterestConfirmationCard = ({ organizer, ...props }) => {
+  // TODO: [VP-1339] InterestConfirmationCard organizer is an id and needs to be populated.
   const emailHref = 'mailto:' + organizer.email
 
   return (
