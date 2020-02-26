@@ -26,20 +26,6 @@ const blankOrg = {
   category: ['vp']
 }
 
-export const OrgEditButton = ({ onClick }) =>
-  <Button
-    type='primary'
-    shape='round'
-    onClick={onClick}
-    style={{ float: 'right' }}
-  >
-    <FormattedMessage
-      id='orgDetailPage.button.edit'
-      defaultMessage='Edit'
-      description='Button to edit an organisation on orgDetailPage'
-    />
-  </Button>
-
 export const HomeButton = () =>
   <Button
     type='secondary'
