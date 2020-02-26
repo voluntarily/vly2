@@ -162,7 +162,7 @@ export const OpDetailPage = ({
     return (
       <FullPage>
         <Helmet>
-          <title>Edit {op.name}  - Voluntarily</title>
+          <title>Edit {op.name} - Voluntarily</title>
         </Helmet>
         <OpDetailForm
           op={op}
