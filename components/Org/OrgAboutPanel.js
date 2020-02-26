@@ -1,11 +1,11 @@
 import Html from '../VTheme/Html'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { ContactList } from '../VTheme/VTheme'
-import { ProfileSection, ProfilePanel } from '../VTheme/Profile'
+import { ContactList, ActivityContainer } from '../VTheme/VTheme'
+import { ProfilePanel } from '../VTheme/Profile'
 import { StreetAddressLinkLi } from '../Address/StreetAddress'
-import { Icon } from 'antd'
-
+import { Icon, Divider } from 'antd'
+import OrgCategory from './OrgCategory'
 const ContactIcon = ({ type }) =>
   <Icon
     // theme='twoTone'
@@ -16,7 +16,20 @@ const ContactIcon = ({ type }) =>
 
 export const OrgAboutPanel = ({ org, ...props }) => (
   <ProfilePanel>
-    <ProfileSection>
+
+    <ActivityContainer>
+      <h2>About</h2>
+      <div>
+        <Html>
+          {(org.info && org.info.about) || ''}
+        </Html>
+        <OrgCategory orgCategory={org.category} />
+      </div>
+    </ActivityContainer>
+
+    <Divider />
+    <ActivityContainer>
+      <h2>Contact</h2>
       <ContactList>
         {org.website && (
           <li><ContactIcon type='home' /><a href={org.website} target='_blank' rel='noopener noreferrer'>{org.website}</a></li>
@@ -37,13 +50,7 @@ export const OrgAboutPanel = ({ org, ...props }) => (
           <li><ContactIcon type='phone' /><a tel={org.contactPhoneNumber}>{org.contactPhoneNumber}</a></li>
         )}
       </ContactList>
-    </ProfileSection>
-    <ProfileSection>
-      <Html>
-        {(org.info && org.info.about) || ''}
-      </Html>
-
-    </ProfileSection>
+    </ActivityContainer>
   </ProfilePanel>
 )
 

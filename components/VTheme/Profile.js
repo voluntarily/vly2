@@ -1,27 +1,40 @@
 import styled from 'styled-components'
 
 export const ProfileBanner = styled.header`
+margin: 5rem 0 0rem 0;
 display: grid;
 grid-template-columns: 100%;
 align-self: center;
 justify-self: center;
 
 @media screen and (min-width: 767px) {
-  grid-template-columns: 25% 75%;
+  grid-template-columns: 15rem 1fr;
+  gap: 5rem;
+ 
 }
 
 img {
-  width: 16rem;
-  max-height: 12rem;
+  width: 20rem;
+  height: 20rem;
   object-fit: cover;
   align-self: center;
   justify-self: center;
+  padding: 2.5rem;
+  @media screen and (max-width: 767px) {
+    width: 15rem;
+  height: 15rem;
+ padding: 1rem 1rem 1rem 0;
+
+ 
+}
 }
 `
 export const ProfileBannerTitle = styled.div`
 
+align-self: center;
+
 @media screen and (min-width: 767px) {
-  padding-left: 3rem;
+
   text-align: left;
 }
 
@@ -47,6 +60,7 @@ export const ProfileTab = styled.span`
 
 export const ProfilePanel = styled.article`
   text-align: left;
+  margin: 2rem 0;
 `
 
 export const ProfileSection = styled.section`
