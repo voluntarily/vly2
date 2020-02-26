@@ -1,6 +1,8 @@
 const Member = require('./member')
 const { getMemberbyId } = require('./member.lib')
 const { Action } = require('../../services/abilities/ability.constants')
+const { TOPIC_MEMBER__UPDATE } = require('../../services/pubsub/topic.constants')
+const PubSub = require('pubsub-js')
 
 /**
   api/members -> list all members
@@ -75,8 +77,9 @@ const updateMember = async (req, res) => {
     }
 
     await updatedMember.save()
-
-    res.json(updatedMember)
+    const resMember = await getMemberbyId(member._id)
+    PubSub.publish(TOPIC_MEMBER__UPDATE, resMember)
+    res.json(resMember)
   } catch (err) {
     res.status(500).send(err)
   }
@@ -99,43 +102,13 @@ const createMember = async (req, res) => {
     await member.save()
 
     const createdMember = await getMemberbyId(member._id)
+    PubSub.publish(TOPIC_MEMBER__UPDATE, createdMember)
     res.json(createdMember)
   } catch (error) {
     return res.sendStatus(500)
   }
 }
 
-/**
- * This will be easier to add more status without having too much if. All we need is add another folder in email template folder and the status will reference to that folder
- * @param {string} template status will be used to indicate which email template to use
- * @param {object} to person email is for. (requestor or volunteer) with email populated.
- * @param {object} member populated out member with person and op. can be null
- * @param {object} org the current organisation
- * @param {object} props extra properties such as attachment
- */
-// const sendMemberEmail = async (template, to, from, interest, org, props) => {
-//   const op = interest.opportunity
-//   await emailPerson(template, to, {
-//     send: true,
-//     op,
-//     from,
-//     org,
-//     ...props
-//   })
-// }
-
-// const sendMemberInvitation = async () => {
-//   // template expects
-//   //    to: person receiving email
-//   // -   from: person sending email - the orgAdmin
-//   // -   org: The organisation (with added href linkback)
-//   // -   adminMsg: text added by the orgAdmin
-//   // -   buttonLabel: label for callback button
-//   // -   buttonHref: the callback button url
-
-//   const me = req.session.me
-//   sendMemberEmail('inviteMember', me)
-// }
 module.exports = {
   listMembers,
   getMember,

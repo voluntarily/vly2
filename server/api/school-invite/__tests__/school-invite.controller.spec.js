@@ -11,7 +11,6 @@ import Person from '../../person/person'
 import { MemberStatus } from '../../member/member.constants'
 import { TOPIC_MEMBER__UPDATE } from '../../../services/pubsub/topic.constants'
 import PubSub from 'pubsub-js'
-import sinon from 'sinon'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -203,19 +202,23 @@ test.serial('Create organisation from non-existent school', async (t) => {
 })
 
 test.serial('Link person to organisation as admin', async (t) => {
+  t.plan(6)
   const schoolData = fixtures.schools[0]
   const organisation = await SchoolInvite.createOrganisationFromSchool(schoolData.schoolId)
   const person = await Person.findOne()
-  const spy = sinon.spy()
-  PubSub.subscribe(TOPIC_MEMBER__UPDATE, spy)
-
+  const done = new Promise((resolve, reject) => {
+    PubSub.subscribe(TOPIC_MEMBER__UPDATE, async (msg, member) => {
+      t.is(member.status, MemberStatus.ORGADMIN)
+      resolve(true)
+    })
+  })
   const member = await SchoolInvite.linkPersonToOrganisationAsAdmin(organisation._id, person._id)
 
   t.is(member.organisation._id.toString(), organisation._id.toString())
   t.is(member.person._id.toString(), person._id.toString())
   t.is(member.validation, 'orgAdmin from school-invite controller')
   t.is(member.status, MemberStatus.ORGADMIN)
-  t.true(spy.calledOnce)
+  await done
 
   // check second record is not created.
   const dupMember = await SchoolInvite.linkPersonToOrganisationAsAdmin(organisation._id, person._id)
