@@ -1,0 +1,26 @@
+//- Welcome email sent when person first signs in
+//- expects locals of {
+//-   to: person receiving email
+//-   from: person sending email - the op requestor
+//- }
+extends ../theme/layout.pug
+
+block tagline
+  span You are now an organisation admin for #{org.name}
+
+block copy
+  p Kia ora #{to.nickname},
+  p You are now an organisation admin for #{org.name} and you may have some new goal cards allocated to you.
+  p This gives you access to the management pages of your organisation. You can edit the organisation profile and manage adding and removing other followers and members
+  p Ngā mihi, Voluntarily.NZ
+
+
+block copybutton
+  a(href=org.href class='mobile-button') #{org.name}
+  span &nbsp; 
+  a(href=to.href class='mobile-button') Your Profile
+      
+block copyimage
+  img(src=org.imgUrl alt=org.name width="100%" )
+              
+                          

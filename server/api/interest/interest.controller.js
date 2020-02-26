@@ -219,7 +219,7 @@ const deleteInterest = async (req, res, next) => {
 
     return res.status(200).send(req.params)
   } catch (e) {
-    console.log(e)
+    console.error(e)
     return res.sendStatus(500)
   }
 }
