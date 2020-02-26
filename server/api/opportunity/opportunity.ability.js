@@ -71,6 +71,9 @@ const ruleBuilder = session => {
     subject: SchemaName,
     action: Action.DELETE,
     inverted: true
+  }, {
+    subject: SchemaName,
+    action: Action.CREATE
   }]
   const testerAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
   const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]

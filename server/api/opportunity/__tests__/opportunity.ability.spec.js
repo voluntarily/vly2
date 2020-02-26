@@ -342,9 +342,8 @@ test.serial('orgAdmin - CREATE', async t => {
 })
 
 test.serial('orgAdmin - CREATE - attempt to create an op for an org I am not apart of', async t => {
-  const orgA = (await Organisation.find())[0]
-  const orgB = (await Organisation.find())[1]
-  const requestor = (await Person.find())[0]
+  const orgA = await Organisation.findOne({ name: 'OMGTech' })
+  const orgB = await Organisation.findOne({ name: 'Datacom' })
 
   // personA is an org admin for orgA
   const personA = await createPerson([Role.VOLUNTEER_PROVIDER])
@@ -366,11 +365,11 @@ test.serial('orgAdmin - CREATE - attempt to create an op for an org I am not apa
   const res = await request(server)
     .post('/api/opportunities')
     .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${createJwtIdToken(personB.email)}`])
+    .set('Cookie', [`idToken=${createJwtIdToken(personA.email)}`])
     .send({
       status: OpportunityStatus.ACTIVE,
       offerOrg: orgB._id.toString(),
-      requestor: requestor._id.toString()
+      requestor: personA._id.toString()
     })
 
   t.is(403, res.status)
@@ -482,7 +481,7 @@ test.serial(`Owner - UPDATE - Can update an opportunity I created/own`, async t 
   }
 })
 
-test.serial('Admin - LIST - Should get all opportunities', async t => {
+test.serial('admin - LIST - Should get all opportunities', async t => {
   // Query for all opportunities
   // We use an empty query in the querystring so no default filtering is applied
   const res = await request(server)
@@ -494,7 +493,7 @@ test.serial('Admin - LIST - Should get all opportunities', async t => {
   t.is(res.body.length, await Opportunity.countDocuments())
 })
 
-test.serial('Admin - READ - Can read any opportunity', async t => {
+test.serial('admin - READ - Can read any opportunity', async t => {
   // The opportunity fixture file contains a variety of ops in various states, make sure we can read all of these
   const opsPromises = (await Opportunity.find()).map(async (op) => {
     return request(server)
@@ -510,7 +509,7 @@ test.serial('Admin - READ - Can read any opportunity', async t => {
   }
 })
 
-test.serial('Admin - CREATE', async t => {
+test.serial('admin - CREATE', async t => {
   const org = (await Organisation.find())[0]
   const requestor = (await Person.find())[0]
   const activity = await Activity.create({
@@ -562,7 +561,7 @@ test.serial('Admin - CREATE', async t => {
   t.is(res.body.requestor, requestor._id.toString())
 })
 
-test.serial('Admin - UPDATE', async t => {
+test.serial('admin - UPDATE', async t => {
   const org = (await Organisation.find())[0]
   const requestor = (await Person.find())[0]
   const activity = await Activity.create({
@@ -632,7 +631,7 @@ test.serial('Admin - UPDATE', async t => {
   t.is(op2.requestor._id.toString(), requestor._id.toString())
 })
 
-test.serial('Admin - DELETE - Admin can delete ops', async t => {
+test.serial('admin - DELETE - Admin can delete ops', async t => {
   const requestor = (await Person.find())[0]
 
   const op = await Opportunity.create({
@@ -665,3 +664,49 @@ for (const role of [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDE
     t.is(400, res.status)
   })
 }
+
+test.serial('opportunityProvider - CREATE', async t => {
+  const org = await Organisation.create({
+    name: `${uuid()}`,
+    slug: `${uuid()}`
+  })
+  const requestor = await Person.findOne({ email: 'atesty@voluntarily.nz' })
+  await Member.create({
+    person: requestor,
+    organisation: org
+  })
+
+  const res = await request(server)
+    .post('/api/opportunities')
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${createJwtIdToken('atesty@voluntarily.nz')}`])
+    .send({
+      name: uuid(),
+      offerOrg: org._id,
+      requestor: requestor._id
+    })
+
+  t.is(200, res.status)
+})
+
+test.serial('opportunityProvider - CREATE - must be part of the organisation', async t => {
+  // Create an org, but do not join the user
+  const org = await Organisation.create({
+    name: `${uuid()}`,
+    slug: `${uuid()}`
+  })
+  const requestor = await Person.findOne({ email: 'atesty@voluntarily.nz' })
+
+  // Create an op for the newly created org, but because the user is not a member of this org it will not be allowed
+  const res = await request(server)
+    .post('/api/opportunities')
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${createJwtIdToken('atesty@voluntarily.nz')}`])
+    .send({
+      name: uuid(),
+      offerOrg: org._id,
+      requestor: requestor._id
+    })
+
+  t.is(403, res.status)
+})

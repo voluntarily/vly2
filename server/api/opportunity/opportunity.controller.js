@@ -10,6 +10,7 @@ const { regions } = require('../location/locationData')
 const sanitizeHtml = require('sanitize-html')
 const { getLocationRecommendations, getSkillsRecommendations } = require('./opportunity.util')
 const { Role } = require('../../services/authorize/role')
+const Member = require('../member/member')
 
 /**
  * Get all ops
@@ -195,12 +196,26 @@ const createOpportunity = async (req, res, next) => {
     return res.sendStatus(401)
   }
 
-  const canCreate = (
-    me.role.includes(Role.ADMIN) ||
-    (me.role.includes(Role.ORG_ADMIN) && req.body.offerOrg && me.orgAdminFor.includes(req.body.offerOrg))
-  )
+  const canCreate = async () => {
+    if (me.role.includes(Role.ADMIN)) {
+      return true
+    }
+    if (me.role.includes(Role.ORG_ADMIN) && req.body.offerOrg && me.orgAdminFor.includes(req.body.offerOrg)) {
+      return true
+    }
+    if (me.role.includes(Role.OPPORTUNITY_PROVIDER)) {
+      if (!req.body.offerOrg) {
+        return false
+      }
 
-  if (!canCreate) {
+      // The offerOrg must be one the current user is a member of
+      return (await Member.find({ person: me._id, organisation: req.body.offerOrg })).length > 0
+    }
+
+    return false
+  }
+
+  if (!(await canCreate())) {
     return res.sendStatus(403)
   }
 
