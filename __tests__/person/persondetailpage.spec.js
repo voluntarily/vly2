@@ -259,16 +259,16 @@ test('render Dalis PersonDetailPage as self dali', async t => {
   const editPerson = wrapper.find('Button#editPersonBtn')
   editPerson.props().onClick()
   // we should now be in edit mode
-  t.true(wrapper.exists('Form(PersonDetailForm)'))
+  t.true(wrapper.exists('Connect(Form(PersonDetail))'))
   // cancel the edit
-  wrapper.find('Form(PersonDetailForm)').first().props().onCancel()
+  wrapper.find('Connect(Form(PersonDetail))').first().props().onCancel()
   t.is(wrapper.find('Button').length, 1)
 
   // edit again
   editPerson.props().onClick()
-  t.true(wrapper.exists('Form(PersonDetailForm)'))
+  t.true(wrapper.exists('Connect(Form(PersonDetail))'))
   // save the edit
-  await wrapper.find('Form(PersonDetailForm)').first().props().onSubmit(dali)
+  await wrapper.find('Connect(Form(PersonDetail))').first().props().onSubmit(dali)
   t.true(wrapper.exists('#editPersonBtn'))
   t.is(props.dispatch.callCount, 1)
 })
@@ -299,13 +299,13 @@ test('render new PersonDetailPage as admin ', async t => {
   const wrapper = outer.dive()
 
   // we should start in edit mode
-  t.true(wrapper.exists('Form(PersonDetailForm)'))
+  t.true(wrapper.exists('Connect(Form(PersonDetail))'))
   // cancel the edit
-  wrapper.find('Form(PersonDetailForm)').first().props().onCancel()
+  wrapper.find('Connect(Form(PersonDetail))').first().props().onCancel()
   t.is(router.back.callCount, 1)
 
   // save the edit
-  await wrapper.find('Form(PersonDetailForm)').first().props().onSubmit(alice)
+  await wrapper.find('Connect(Form(PersonDetail))').first().props().onSubmit(alice)
   t.is(props.dispatch.callCount, 1)
   t.is(router.replace.lastArg, '/people')
 })
