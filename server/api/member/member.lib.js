@@ -22,11 +22,11 @@ const addMember = async (member) => {
     member, // create or upsert
     { new: true, upsert: true }
   )
-  if (found) {
-    PubSub.publish(TOPIC_MEMBER__UPDATE, found)
-  }
   // get populated out member record
   const got = await getMemberbyId(found._id)
+  if (found) {
+    PubSub.publish(TOPIC_MEMBER__UPDATE, got)
+  }
   return got
 }
 

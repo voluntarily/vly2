@@ -1,0 +1,21 @@
+//- Welcome email sent when person first signs in
+//- expects locals of {
+//-   to: person receiving email
+//-   from: person sending email - the op requestor
+//- }
+extends ../theme/layout.pug
+
+block tagline
+  span Thanks for following #{org.name}
+
+block copy
+  p Kia ora #{to.nickname},
+  p Thanks for following our organisation on Voluntarily. 
+
+block copybutton
+  a(href=org.href class='mobile-button') #{org.name}
+      
+block copyimage
+  img(src=org.imgUrl alt=org.name width="100%" )
+                                 
+                          
