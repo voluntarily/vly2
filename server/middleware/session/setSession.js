@@ -74,6 +74,11 @@ const setSession = async (req, res, next) => {
     user = await jwtVerify(idToken)
   } catch (e) {
     // console.error('Jwt Verify failed', e)
+
+    if (e.name === 'TokenExpiredError') {
+      res.clearCookie('idToken')
+    }
+
     user = false
   }
   if (!user) {
