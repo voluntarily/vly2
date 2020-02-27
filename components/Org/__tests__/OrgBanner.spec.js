@@ -1,5 +1,6 @@
 import test from 'ava'
 import OrgBanner from '../OrgBanner'
+import { VBannerImg } from '../../VTheme/Profile'
 import { shallow } from 'enzyme'
 import objectid from 'objectid'
 
@@ -20,7 +21,7 @@ test('OrgBanner has image, and title', t => {
   const children = <p>Test</p>
   const wrapper = shallow(<OrgBanner org={org} children={children} />)
   t.is(wrapper.find('h1').first().text(), `${org.name}`)
-  t.is(wrapper.find('img').first().prop('src'), org.imgUrl)
+  t.is(wrapper.find(VBannerImg).first().prop('src'), org.imgUrl)
   // t.is(wrapper.find('a').first().text(), org.website)
   t.is(wrapper.find('p').last().text(), 'Test')
 })
