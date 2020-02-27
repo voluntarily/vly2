@@ -79,7 +79,7 @@ test('Send invited email to person', async t => {
     from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson('interests_vp_invited', t.context.to, props)
+  const info = await emailPerson('interest_vp_invited', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
 
   const sentMail = nodemailerMock.mock.getSentMail()
@@ -88,13 +88,13 @@ test('Send invited email to person', async t => {
   t.regex(sentMail[0].subject, /You're invited to 1 Mentor a year 12 business Impact Project/)
 })
 
-test('Send committed email to person', async t => {
+test('Send committed email to requestor', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson('interest_vp_committed', t.context.to, props)
+  const info = await emailPerson('interest_op_committed', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
 
   const sentMail = nodemailerMock.mock.getSentMail()
@@ -123,7 +123,7 @@ test('Send person interested email to requestor', async t => {
     send: true, // when true email is actually sent
     from: t.context.me,
     op: t.context.op,
-    comment: 'All your base belong to us'
+    interest: { comment: 'All your base belong to us' }
   }
   const info = await emailPerson('interest_op_interested', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
@@ -137,7 +137,7 @@ test('Email to Voluntarily user includes unsubscribe link', async (t) => {
   const props = {
     from: t.context.me,
     op: t.context.op,
-    comment: 'Test comment'
+    interest: { comment: 'Test comment' }
   }
 
   const info = await emailPerson('interest_vp_interested', t.context.to, props)
