@@ -59,7 +59,7 @@ test('Send acknowledgeInterest email to person', async t => {
   t.regex(sentMail[0].subject, /Confirming your interest/)
 })
 
-test.only('render acknowledgeInterest email to person', async t => {
+test('render acknowledgeInterest email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
