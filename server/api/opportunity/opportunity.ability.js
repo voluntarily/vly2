@@ -39,7 +39,7 @@ const ruleBuilder = session => {
     inverted: true
   }]
 
-  const allAbilities = [{
+  const apAbilities = [{
     subject: SchemaName,
     action: Action.READ,
     conditions: { status: { $in: OpportunityPublishedStatus } }
@@ -57,6 +57,25 @@ const ruleBuilder = session => {
   }]
 
   const opAbilities = [{
+    subject: SchemaName,
+    action: Action.READ,
+    conditions: { status: { $in: OpportunityPublishedStatus } }
+  }, {
+    subject: SchemaName,
+    action: Action.LIST
+  }, {
+    subject: SchemaName,
+    action: Action.UPDATE,
+    conditions: { requestor: session.me && session.me._id }
+  }, {
+    subject: SchemaName,
+    action: Action.DELETE,
+    inverted: true
+  }, {
+    subject: SchemaName,
+    action: Action.CREATE
+  }]
+  const vpAbilities = [{
     subject: SchemaName,
     action: Action.READ,
     conditions: { status: { $in: OpportunityPublishedStatus } }
@@ -99,8 +118,8 @@ const ruleBuilder = session => {
 
   return {
     [Role.ANON]: anonAbilities,
-    [Role.VOLUNTEER_PROVIDER]: allAbilities,
-    [Role.ACTIVITY_PROVIDER]: allAbilities,
+    [Role.VOLUNTEER_PROVIDER]: vpAbilities,
+    [Role.ACTIVITY_PROVIDER]: apAbilities,
     [Role.OPPORTUNITY_PROVIDER]: opAbilities,
     [Role.TESTER]: testerAbilities,
     [Role.ADMIN]: adminAbilities,

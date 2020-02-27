@@ -665,48 +665,50 @@ for (const role of [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDE
   })
 }
 
-test.serial('opportunityProvider - CREATE', async t => {
-  const org = await Organisation.create({
-    name: `${uuid()}`,
-    slug: `${uuid()}`
-  })
-  const requestor = await Person.findOne({ email: 'atesty@voluntarily.nz' })
-  await Member.create({
-    person: requestor,
-    organisation: org
-  })
-
-  const res = await request(server)
-    .post('/api/opportunities')
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${createJwtIdToken('atesty@voluntarily.nz')}`])
-    .send({
-      name: uuid(),
-      offerOrg: org._id,
-      requestor: requestor._id
+for (const role of [Role.OPPORTUNITY_PROVIDER, Role.VOLUNTEER_PROVIDER]) {
+  test.serial(`${role} - CREATE`, async t => {
+    const org = await Organisation.create({
+      name: `${uuid()}`,
+      slug: `${uuid()}`
+    })
+    const requestor = await createPerson([role])
+    await Member.create({
+      person: requestor,
+      organisation: org
     })
 
-  t.is(200, res.status)
-})
+    const res = await request(server)
+      .post('/api/opportunities')
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${createJwtIdToken(requestor.email)}`])
+      .send({
+        name: uuid(),
+        offerOrg: org._id,
+        requestor: requestor._id
+      })
 
-test.serial('opportunityProvider - CREATE - must be part of the organisation', async t => {
-  // Create an org, but do not join the user
-  const org = await Organisation.create({
-    name: `${uuid()}`,
-    slug: `${uuid()}`
+    t.is(200, res.status)
   })
-  const requestor = await Person.findOne({ email: 'atesty@voluntarily.nz' })
 
-  // Create an op for the newly created org, but because the user is not a member of this org it will not be allowed
-  const res = await request(server)
-    .post('/api/opportunities')
-    .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${createJwtIdToken('atesty@voluntarily.nz')}`])
-    .send({
-      name: uuid(),
-      offerOrg: org._id,
-      requestor: requestor._id
+  test.serial(`${role} - CREATE - must be part of the organisation`, async t => {
+    // Create an org, but do not join the user
+    const org = await Organisation.create({
+      name: `${uuid()}`,
+      slug: `${uuid()}`
     })
+    const requestor = await createPerson([role])
 
-  t.is(403, res.status)
-})
+    // Create an op for the newly created org, but because the user is not a member of this org it will not be allowed
+    const res = await request(server)
+      .post('/api/opportunities')
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${createJwtIdToken(requestor.email)}`])
+      .send({
+        name: uuid(),
+        offerOrg: org._id,
+        requestor: requestor._id
+      })
+
+    t.is(403, res.status)
+  })
+}
