@@ -222,8 +222,11 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
     },
     assertions: (t, response) => {
+      const expectedInterests = t.context.fixtures.interests
+        .filter(interest => interest.opportunity === t.context.fixtures.opportunities[0]._id)
+
       t.is(response.statusCode, 200)
-      t.is(response.body.length, 2)
+      t.is(response.body.length, expectedInterests.length)
     }
   },
   {
@@ -309,6 +312,28 @@ const testScenarios = [
     }
   },
   {
+    role: 'volunteer + opportunity provider',
+    action: 'list',
+    makeRequest: async (context) => {
+      return request(server)
+        .get(`/api/interests?meid=${context.fixtures.people[6]._id}`)
+        .set('Cookie', [`idToken=${sessions[6].idToken}`])
+    },
+    assertions: (t, response) => {
+      const expectedInterests = t.context.fixtures.interests
+        .filter(interest => interest.person === t.context.fixtures.people[6]._id)
+
+      const expectedInterestIds = expectedInterests.map(interest => interest._id.toString())
+
+      t.is(response.statusCode, 200)
+      t.is(response.body.length, expectedInterests.length)
+
+      for (const actualInterest of response.body) {
+        t.truthy(expectedInterestIds.includes(actualInterest._id.toString()))
+      }
+    }
+  },
+  {
     role: 'org admin',
     action: 'list',
     makeRequest: async () => {
@@ -317,8 +342,11 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
     },
     assertions: (t, response) => {
+      const expectedInterests = t.context.fixtures.interests
+        .filter(interest => interest.opportunity === t.context.fixtures.opportunities[0]._id)
+
       t.is(response.statusCode, 200)
-      t.is(response.body.length, 2)
+      t.is(response.body.length, expectedInterests.length)
     }
   },
   {
@@ -413,7 +441,7 @@ const testScenarios = [
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 200)
-      t.is(response.body.length, 3)
+      t.is(response.body.length, t.context.fixtures.interests.length)
     }
   },
   {
