@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ProfileBanner = styled.header`
+export const VBanner = styled.header`
 margin: 5rem 0 0rem 0;
 display: grid;
 grid-template-columns: 100%;
@@ -13,21 +13,7 @@ margin-bottom: 2rem;
  
 }
 
-img {
-  width: 20rem;
-  height: 20rem;
-  object-fit: cover;
-  align-self: center;
-  justify-self: center;
-  padding: 2.5rem;
-  @media screen and (max-width: 767px) {
-    width: 15rem;
-  height: 15rem;
- padding: 1rem;
 
- 
-}
-}
 `
 export const ProfileBannerTitle = styled.div`
 
@@ -42,10 +28,21 @@ text-align: center;
 
 `
 
-export const ProfileBannerImageContainer = styled.div`
-@media screen and (max-width: 767px) {
+export const VBannerImg = styled.img`
+  width: 20rem;
+  height: 20rem;
+  object-fit: cover;
   align-self: center;
   justify-self: center;
+  padding: 2.5rem;
+  margin-left: 4rem;
+
+@media screen and (max-width: 767px) {
+  margin-left: initial;
+  width: 15rem;
+  height: 15rem;
+ padding: 1rem;
+
 
  
 }

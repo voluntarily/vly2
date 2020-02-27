@@ -1,19 +1,17 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { ProfileBanner, ProfileBannerImageContainer, ProfileBannerTitle } from '../VTheme/Profile'
+import { VBanner, VBannerImg, ProfileBannerTitle } from '../VTheme/Profile'
 
 const OrgBanner = ({ org, children }) =>
-  <ProfileBanner>
-    <ProfileBannerImageContainer>
-      <img src={org.imgUrl} alt={org.name} />
-    </ProfileBannerImageContainer>
+  <VBanner>
+    <VBannerImg src={org.imgUrl} alt={org.name} />
     <ProfileBannerTitle>
       <h1>{org.name}</h1>
       <p>{org.description}</p>
       <div>{org.website && <a href='{org.website}'>{org.website}</a>}</div>
       {children}
     </ProfileBannerTitle>
-  </ProfileBanner>
+  </VBanner>
 
 OrgBanner.propTypes = {
   org: PropTypes.shape({
