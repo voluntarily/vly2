@@ -1,15 +1,11 @@
 const { emailPerson } = require('./person.email')
 const { config } = require('../../../config/clientConfig')
 const PubSub = require('pubsub-js')
-const { TOPIC_PERSON__CREATE, TOPIC_MEMBER__UPDATE, TOPIC_PERSON__EMAIL_SENT } = require('../../services/pubsub/topic.constants')
+const { TOPIC_PERSON__CREATE, TOPIC_MEMBER__UPDATE, TOPIC_INTEREST__UPDATE, TOPIC_PERSON__EMAIL_SENT } = require('../../services/pubsub/topic.constants')
 const { MemberStatus } = require('../member/member.constants')
+const { InterestStatus } = require('../interest/interest.constants')
+const { getICalendar } = require('../opportunity/opportunity.calendar')
 
-/**
- * This will be easier to add more status without having too much if. All we need is add another folder in email template folder and the status will reference to that folder
- * @param {string} template status will be used to indicate which email template to use
- * @param {object} to person email is for. (requestor or volunteer) with email populated.
- * @param {object} props extra properties such as attachment
- */
 const welcomeFrom = {
   nickname: 'Welcome',
   name: 'The team at Voluntarily',
@@ -45,5 +41,47 @@ module.exports = (server) => {
       org
     })
     PubSub.publish(TOPIC_PERSON__EMAIL_SENT, info)
+  })
+
+  PubSub.subscribe(TOPIC_INTEREST__UPDATE, async (msg, interest) => {
+    // a new interest has been created or a interest status has changed
+    // send email to the volunteers
+    // console.log('vp', TOPIC_MEMBER__UPDATE, interest)
+
+    if ([
+      InterestStatus.INTERESTED,
+      InterestStatus.INVITED,
+      InterestStatus.DECLINED,
+      InterestStatus.ATTENDED,
+      InterestStatus.NOTATTENDED
+    ].includes(interest.status)) {
+      const op = interest.opportunity
+      interest.person.href = `${config.appUrl}/home`
+      const template = `interest_vp_${interest.status}`
+      const props = { from: op.requestor, op, interest }
+      if (interest.status === InterestStatus.INVITED) {
+        props.attachment = [getICalendar(op)]
+      }
+      const info = await emailPerson(template, interest.person, props)
+      PubSub.publish(TOPIC_PERSON__EMAIL_SENT, info)
+    }
+  })
+
+  PubSub.subscribe(TOPIC_INTEREST__UPDATE, async (msg, interest) => {
+    // a new interest has been created or a interest status has changed
+    // send email to the opportunity requestor
+    // console.log('op', TOPIC_MEMBER__UPDATE, interest)
+    if ([
+      InterestStatus.INTERESTED,
+      InterestStatus.COMMITTED,
+      InterestStatus.DECLINED
+    ].includes(interest.status)) {
+      const op = interest.opportunity
+      op.requestor.href = `${config.appUrl}/home`
+      const template = `interest_op_${interest.status}`
+      const props = { from: interest.person, op, interest }
+      const info = await emailPerson(template, op.requestor, props)
+      PubSub.publish(TOPIC_PERSON__EMAIL_SENT, info)
+    }
   })
 }

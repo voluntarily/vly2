@@ -1,5 +1,9 @@
 const InterestArchive = require('./interestArchive')
 const { Action } = require('../../services/abilities/ability.constants')
+const { TOPIC_INTEREST__UPDATE } = require('../../services/pubsub/topic.constants')
+const Person = require('../person/person')
+const { config } = require('../../../config/serverConfig')
+const PubSub = require('pubsub-js')
 
 /**
   api/interestsArchived -> list all interests
@@ -56,6 +60,21 @@ const getInterest = async (req, res, next) => {
   }
 }
 
+const getInterestDetail = async (interestID) => {
+  // Get the interest and populate out key information needed for emailing
+  const interestDetail = await InterestArchive.findById(interestID)
+    .populate({ path: 'person', select: 'nickname name email pronoun language sendEmailNotifications' })
+    .populate({ path: 'opportunity', select: 'name requestor imgUrl date duration' })
+    .exec()
+
+  const requestorDetail = await Person.findById(interestDetail.opportunity.requestor, 'name nickname email imgUrl sendEmailNotifications')
+  interestDetail.opportunity.requestor = requestorDetail
+  interestDetail.opportunity.href = `${config.appUrl}/ops/${interestDetail.opportunity._id}`
+  interestDetail.opportunity.imgUrl = new URL(interestDetail.opportunity.imgUrl, config.appUrl).href
+  interestDetail.person.href = `${config.appUrl}/people/${interestDetail.person._id}`
+  return interestDetail
+}
+
 const updateInterest = async (req, res) => {
   try {
     const result = await InterestArchive
@@ -65,6 +84,8 @@ const updateInterest = async (req, res) => {
     if (result.nModified === 0) {
       return res.sendStatus(404)
     }
+    const interestDetail = await getInterestDetail(req.params._id)
+    PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
 
     res.json(req.body)
   } catch (err) {
