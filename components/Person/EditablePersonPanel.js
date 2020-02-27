@@ -6,7 +6,7 @@ import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import reduxApi from '../../lib/redux/reduxApi.js'
 import { useDispatch, useSelector } from 'react-redux'
 
-export const EditablePersonPanel = ({ person }) => {
+export const EditablePersonPanel = ({ person, me }) => {
   const [editing, setEditing] = useState(false)
   const dispatch = useDispatch()
   const [tags, locations] = useSelector(

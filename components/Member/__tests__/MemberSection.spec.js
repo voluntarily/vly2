@@ -49,7 +49,7 @@ test.serial('followers can become members and then be removed', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={t.context.store}>
-      <MemberSection org={org} />
+      <MemberSection org={org} isAdmin />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -129,7 +129,7 @@ test.serial('joiners can become members ', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={t.context.store}>
-      <MemberSection org={org} />
+      <MemberSection org={org} isAdmin />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -210,7 +210,7 @@ test.serial('members can become admins ', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={t.context.store}>
-      <MemberSection org={org} />
+      <MemberSection org={org} isAdmin />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -257,7 +257,7 @@ test.serial('admins can see exportMembers button', async t => {
 
   const wrapper = await mountWithIntl(
     <Provider store={t.context.store}>
-      <MemberSection org={org} />
+      <MemberSection org={org} isAdmin />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
@@ -270,5 +270,3 @@ test.serial('admins can see exportMembers button', async t => {
 
   t.is(exportMembersButton.text(), 'Export Members')
 })
-
-// TODO: [VP-448] Add Separate set of tests for when logged in user is a joiner, member, follower etc

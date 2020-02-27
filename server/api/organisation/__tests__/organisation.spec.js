@@ -172,7 +172,7 @@ test.serial('Should correctly give reverse sorted orgs of category', async t => 
     .expect('Content-Type', /json/)
   const got = res.body
   t.is(got.length, 3)
-  t.is(got[0].slug, 'westpac')
+  t.is(got[0].slug, 'westpac-ltd')
 })
 
 // Searching for something in the subtitle (case insensitive)

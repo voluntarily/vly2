@@ -133,7 +133,7 @@ export class PersonDetailPage extends Component {
 
   render () {
     if (!this.props.people.sync) {
-      return <Loading />
+      return <Loading label='person' entity={this.props.people} />
     }
 
     let person = null
@@ -164,7 +164,7 @@ export class PersonDetailPage extends Component {
           <Helmet>
             <title>Edit {person.name} - Voluntarily</title>
           </Helmet>
-          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancelEdit.bind(this)} locations={this.props.locations.data} existingTags={this.props.tags.data} />
+          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancelEdit.bind(this)} locations={this.props.locations.data} existingTags={this.props.tags.data} me={this.props.me} />
         </FullPage>)
     }
 

@@ -31,7 +31,7 @@ const selectArchivedInterestedOps = createSelector(
 
 export const ArchivedInterestedOpsSection = () => {
   const interestsArchived = useSelector(state => state.interestsArchived)
-  if (!interestsArchived.sync) return <Loading />
+  if (!interestsArchived.sync) return <Loading label='interestsArchived' entity={interestsArchived} />
 
   const ops = useSelector(selectArchivedInterestedOps)
   if (!ops.length) return null
@@ -40,7 +40,7 @@ export const ArchivedInterestedOpsSection = () => {
       <ProfileSectionTitle>
         <FormattedMessage
           id='home.History.attendedOpportunities'
-          defaultMessage='Attended Opportunities'
+          defaultMessage='Attended Activities'
           description='Subtitle for volunteer attended activites on home page history tab'
         />
       </ProfileSectionTitle>

@@ -31,8 +31,8 @@ export class TestPerson extends Component {
   render () {
     let content = ''
     let person = null
-    if (this.props.people.loading) {
-      content = <Loading />
+    if (!this.props.people.sync) {
+      content = <Loading label='person' entity={this.props.people} />
     } else {
       const people = this.props.people.data
       if (people.length === 1) {
@@ -42,11 +42,11 @@ export class TestPerson extends Component {
       }
     }
 
-    if (!this.props.people.loading) {
+    if (this.props.people.sync) {
       if (!person) {
         content =
           <>
-            <h2><FormattedMessage id='person.notavailable' defaultMessage='Sorry, this person is not available' description='message on person not found page' /></h2>
+            <h2><FormattedMessage id='test-person.notavailable' defaultMessage='Sorry, this person is not available' description='message on person not found page' /></h2>
           </>
       } else {
         content =

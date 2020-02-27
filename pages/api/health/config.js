@@ -1,5 +1,5 @@
 
-const config = require('../../../config/config').config
+const config = require('../../../config/serverConfig').config
 
 /* prints the current config file and env vars. if signed in as admin
 */

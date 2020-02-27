@@ -23,6 +23,8 @@ import { jwtData } from '../../../middleware/session/__tests__/setSession.fixtur
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create orgs: ${err}`)
   await appReady
 })
 
@@ -32,8 +34,6 @@ test.after.always(async (t) => {
 
 test.beforeEach('connect and add two oppo entries', async (t) => {
   // connect each oppo to a requestor.
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-  t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create orgs: ${err}`)
   ops.map((op, index) => {
     op.requestor = t.context.people[index]._id
     op.offerOrg = t.context.orgs[1]._id
@@ -44,7 +44,6 @@ test.beforeEach('connect and add two oppo entries', async (t) => {
 
 test.afterEach.always(async () => {
   await Opportunity.deleteMany()
-  await Person.deleteMany()
 })
 
 test.serial('verify fixture database has ops', async t => {

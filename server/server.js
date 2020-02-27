@@ -4,8 +4,6 @@ const IntlPolyfill = require('intl')
 Intl.NumberFormat = IntlPolyfill.NumberFormat
 Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
 
-const { basename } = require('path')
-
 const UPLOAD_LIMIT = '6000kb'
 require('dotenv').config()
 const express = require('express')
@@ -26,7 +24,8 @@ server.use(setSession)
 server.use(getAbility({ searchPattern: '/server/api/**/*.ability.js' }))
 const routes = require('./routes')
 const routerHandler = routes.getRequestHandler(app)
-const { config } = require('../config/config')
+const { config } = require('../config/serverConfig')
+const { supportedLanguages } = require('../lang/lang')
 
 // We need to expose React Intl's locale data on the request for the user's
 // locale. This function will also cache the scripts by lang in memory.
@@ -48,11 +47,6 @@ const { config } = require('../config/config')
 const getMessages = locale => {
   return require(`../lang/${locale}.json`)
 }
-
-// Get the supported languages by looking for translations in the `lang/` dir.
-const supportedLanguages = glob
-  .sync('./lang/*.json')
-  .map(f => basename(f, '.json'))
 
 const appReady = app.prepare().then(() => {
   // Parse application/x-www-form-urlencoded

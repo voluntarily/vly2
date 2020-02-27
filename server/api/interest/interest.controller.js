@@ -1,6 +1,6 @@
 const Interest = require('./interest')
 const Person = require('../person/person')
-const { config } = require('../../../config/config')
+const { config } = require('../../../config/serverConfig')
 const { emailPerson } = require('../person/person.email')
 const { InterestStatus } = require('./interest.constants')
 const ical = require('ical-generator')
@@ -219,7 +219,7 @@ const deleteInterest = async (req, res, next) => {
 
     return res.status(200).send(req.params)
   } catch (e) {
-    console.log(e)
+    console.error(e)
     return res.sendStatus(500)
   }
 }

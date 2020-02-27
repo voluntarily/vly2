@@ -19,7 +19,7 @@ const homeActiveTab = (
     <Icon type='inbox' />
     <FormattedMessage
       id='home.tab.active'
-      defaultMessage='Active'
+      defaultMessage='Upcoming'
       description='show opportunities list on volunteer home page'
     />
   </span>
@@ -57,6 +57,11 @@ const homeDiscoverTab = (
 
 export const HomeTabs = ({ person, onChange, defaultTab }) =>
   <VTabs defaultActiveKey={defaultTab} onChange={onChange}>
+    <TabPane tab={homeDiscoverTab} key='discover'>
+      <ProfilePanel>
+        <RecommendedOpsSection />
+      </ProfilePanel>
+    </TabPane>
     <TabPane tab={homeActiveTab} key='active'>
       <ProfilePanel>
         <PersonalGoalSection />
@@ -64,11 +69,7 @@ export const HomeTabs = ({ person, onChange, defaultTab }) =>
         <InterestedOpsSection />
       </ProfilePanel>
     </TabPane>
-    <TabPane tab={homeDiscoverTab} key='discover'>
-      <ProfilePanel>
-        <RecommendedOpsSection />
-      </ProfilePanel>
-    </TabPane>
+
     <TabPane tab={homeHistoryTab} key='history'>
       <ProfilePanel>
         <ArchivedOpsSection />

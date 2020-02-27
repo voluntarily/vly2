@@ -2,7 +2,7 @@ const fs = require('fs-extra')
 const path = require('path')
 const cuid = require('cuid')
 const slug = require('slug')
-const { config } = require('../../../config/config')
+const { config } = require('../../../config/serverConfig')
 const { cloudUploadService } = require('./cloudImageUpload')
 const { resizeImage } = require('../../services/image/imageResize')
 

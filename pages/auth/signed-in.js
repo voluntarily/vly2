@@ -11,7 +11,6 @@ const SignedIn = () => {
         console.error('Something happened with the Sign In request')
         return
       }
-      console.log('SignedIn', result, Router.router.query.r)
       setToken(result.idToken, result.accessToken)
       window.location.replace(Router.router.query.r)
     })

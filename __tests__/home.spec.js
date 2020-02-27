@@ -296,10 +296,10 @@ test('render volunteer home page - Active tab', t => {
       <PersonHomePage {...props} />
     </Provider>)
 
-  t.is(wrapper.find('h1').first().text(), 'Home')
-  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Active')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(1).text(), 'Activities you are managing')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(2).text(), 'Activities you are interested in ')
+  t.is(wrapper.find('h1').first().text(), 'Activities')
+  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Upcoming')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(1).text(), 'Active Activities')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(2).text(), 'My Activities')
 
   const oplists = wrapper.find('OpList') // find 2 oplists on the home page
   t.is(oplists.length, 2)
@@ -323,14 +323,14 @@ test('render volunteer home page - Discover tab', t => {
       <PersonHomePage {...props} />
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(tabIndex.discover).simulate('click')
-  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Discover')
+  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Upcoming')
   const discoverPane = wrapper.find('.ant-tabs-tabpane-active').first()
 
   const oplists = discoverPane.find('OpList') // find 2 oplists on the home page
   t.is(oplists.length, 2)
 
   const cards1 = oplists.at(0).find('OpCard')
-  t.is(cards1.length, 2)
+  t.is(cards1.length, 1)
   t.is(cards1.first().find('h1').first().text(), t.context.ops[0].name) // find the first opcard in the first oplist
 })
 
@@ -348,9 +348,9 @@ test.serial('render volunteer home page - History tab', t => {
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'History')
 
   const historyPane = wrapper.find('.ant-tabs-tabpane-active').first()
-  t.is(historyPane.find('h2').first().text(), 'Completed Opportunities')
-  t.is(historyPane.find('h2').at(1).text(), 'Cancelled Opportunities')
-  t.is(historyPane.find('h2').at(2).text(), 'Attended Opportunities')
+  t.is(historyPane.find('h2').first().text(), 'Completed Activities')
+  t.is(historyPane.find('h2').at(1).text(), 'Cancelled Activities')
+  t.is(historyPane.find('h2').at(2).text(), 'Attended Activities')
 
   const oplists = historyPane.find('OpList')
   t.is(oplists.length, 3) // The number of oplists on history tab

@@ -8,6 +8,7 @@ import MockResponse from 'mock-res'
 import { updatePersonDetail } from '../person.controller'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../__tests__/person.fixture'
+import { Role } from '../../../../server/services/authorize/role'
 
 test.before('before connect to database', async (t) => {
   try {
@@ -24,7 +25,7 @@ test.after.always(async (t) => {
   await t.context.memMongo.stop()
 })
 
-test.serial('Should call send status function for null record ', async t => {
+test.serial('Should call sendStatus function for null record ', async t => {
   const userIDWantToUpdate = 'asdfasdfgadf'
   const fakeSendStatus = sinon.fake()
   const rawRules = [
@@ -63,7 +64,7 @@ test.serial('Should call next middleware when record is found', async t => {
     email: 'andrew@groat.nz',
     about: 'New About Text',
     location: 'Auckland',
-    language: 'EN',
+    language: 'en',
     role: [
       'admin'
     ],
@@ -75,9 +76,20 @@ test.serial('Should call next middleware when record is found', async t => {
   request.crudify = {
     result: {}
   }
+  request.session = {
+    me: {
+      _id: idToQuery,
+      role: [Role.ADMIN]
+    }
+  }
+  request.params = {
+    _id: idToQuery.toString()
+  }
+
   const response = new MockResponse()
   response.sendStatus = (status) => { fakeSendStatus() }
   await updatePersonDetail(request, response, nextMiddleware)
+
   t.is(1, nextMiddleware.callCount)
   t.is(request.crudify.result.about, request.body.about)
 })

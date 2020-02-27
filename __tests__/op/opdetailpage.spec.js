@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import { OpDetailPageWithOps } from '../../pages/op/opdetailpage'
+import { OpDetailPageWithOps, OpDetailPage } from '../../pages/op/opdetailpage'
 import { mountWithIntl } from '../../lib/react-intl-test-helper'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
@@ -18,9 +18,7 @@ import sinon from 'sinon'
 import * as nextRouter from 'next/router'
 import { MockWindowScrollTo } from '../../server/util/mock-dom-helpers'
 import fetchMock from 'fetch-mock'
-
 const locations = ['Auckland, Wellington, Christchurch']
-
 MockWindowScrollTo.replaceForTest(test, global)
 
 const orginalWarn = console.warn
@@ -75,7 +73,8 @@ test.before('Setup fixtures', (t) => {
     tags,
     acts,
     orgs,
-    orgMembership
+    orgMembership,
+    locations
   }
   t.context.defaultstore = {
     session: {
@@ -146,6 +145,47 @@ function makeFetchMock (opportunityId) {
   myMock.get(API_URL + '/interests/?op=' + opportunityId, { body: { status: 200 } })
   return myMock
 }
+
+test.serial('OpDetailPage GetInitialProps non member', async t => {
+  // first test GetInitialProps
+  const ctx = {
+    store: t.context.mockStore,
+    query: {
+      id: t.context.op._id
+    }
+  }
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  myMock
+    .get(`path:/api/opportunities/${t.context.op._id}`, { body: { status: 200 } })
+    .get('path:/api/locations', { body: t.context.locations })
+    .get('path:/api/tags/', { body: t.context.tags })
+    .get('path:/api/members/', { body: t.context.members })
+  const props = await OpDetailPage.getInitialProps(ctx)
+  t.falsy(props.isNew)
+  t.true(props.opExists)
+})
+
+test.serial('OpDetailPage GetInitialProps new', async t => {
+  // first test GetInitialProps
+  const ctx = {
+    store: t.context.mockStore,
+    query: {
+      new: 'new'
+    }
+  }
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  myMock
+    .get(`path:/api/opportunities/${t.context.op._id}`, { body: { status: 200 } })
+    .get('path:/api/locations', { body: t.context.locations })
+    .get('path:/api/tags/', { body: t.context.tags })
+    .get('path:/api/members/', { body: t.context.members })
+
+  const props = await OpDetailPage.getInitialProps(ctx)
+  t.true(props.isNew)
+  t.falsy(props.opExists)
+})
 
 test('send "PUT" request to redux-api when opportunity is canceled and confirmed on OpDetailPage', t => {
   const opportunityToCancel = t.context.op
@@ -226,7 +266,7 @@ test('can Edit the Op', t => {
   saveButton.simulate('click')
 })
 
-test('display unavailable opportunity message when opportunity id is invalid on OpDetailPage', t => {
+test('display unavailable activity message when opportunity id is invalid on OpDetailPage', t => {
   const props = {
     me: t.context.me
   }
@@ -254,10 +294,10 @@ test('display unavailable opportunity message when opportunity id is invalid on 
       <OpDetailPageWithOps {...props} />
     </Provider>
   )
-  t.is(wrapper.find('h2').first().text(), 'Sorry, this opportunity is not available')
+  t.is(wrapper.find('h2').first().text(), 'Sorry, this activity is not available')
 })
 
-test('display loading opportunity message when opportunity is loading', t => {
+test('display loading opportunity message when activity is loading', t => {
   const props = {
     me: t.context.me
   }

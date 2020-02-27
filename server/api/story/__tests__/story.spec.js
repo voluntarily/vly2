@@ -13,11 +13,11 @@ test.before('before connecting to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
   await appReady
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  t.context.people = await Person.create(people)
   stories.map((story, index) => {
     story.author = t.context.people[index]._id
   })
-  t.context.stories = await Story.create(stories).catch((err) => console.error('Unable to create stories', err))
+  t.context.stories = await Story.create(stories)
 })
 
 test.serial('verify fixture database has stories', async t => {
@@ -31,14 +31,14 @@ test.serial('verify fixture database has stories', async t => {
   t.is(q && q.status, 'published')
 })
 
-test.serial('Should give list of no stories', async t => {
+test.serial('Should give list of published stories', async t => {
   const res = await request(server)
     .get('/api/stories')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(0, got.length)
+  t.is(got.length, 1)
 })
 
 test.serial('Should correctly give list of all stories belonging to parent', async t => {

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Button } from 'antd'
 import { FormattedMessage } from 'react-intl'
+import { FullPage } from '../VTheme/VTheme'
 
 const warningMessage = `
   <h1>Email not verified</h1>
@@ -9,7 +10,7 @@ const warningMessage = `
   <p>If problems continue please contact technical support.</p>`
 
 export const Unverified = ({ user }) =>
-  <>
+  <FullPage>
     <FormattedMessage
       id='unverified.message'
       description='explanation for someone that their email is not verified'
@@ -31,6 +32,6 @@ export const Unverified = ({ user }) =>
       </Button>
     </Link>
 
-  </>
+  </FullPage>
 
 export default Unverified

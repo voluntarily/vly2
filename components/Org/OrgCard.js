@@ -4,7 +4,7 @@ import Link from 'next/link'
 import OrgCategory from './OrgCategory'
 import { Card } from '../VTheme/VTheme'
 
-const OrgCard = ({ org, ...props }) => (
+const OrgCard = ({ org }) => (
   <Card>
     <Link href={`/orgs/${org._id}`}>
       <a>

@@ -57,7 +57,7 @@ class RegisterInterestSection extends Component {
   render () {
     // If we haven't finished making the API request to the server yet...
     if (!this.props.interests.sync) {
-      return (<Loading />)
+      return (<Loading label='interests' entity={this.props.interests} />)
     }
 
     //  If we have access to the interests section of the Redux store.
