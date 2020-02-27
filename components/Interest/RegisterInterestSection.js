@@ -6,9 +6,10 @@ import { message } from 'antd'
 import React, { Component } from 'react'
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
-import InterestConfirmationCard from './InterestConfirmationCard'
+// import InterestConfirmationCard from './InterestConfirmationCard'
 import RegisterInterestItem from './RegisterInterestItem'
 import cuid from 'cuid'
+import { InterestStatus } from '../../server/api/interest/interest.constants'
 
 // Helper function to generate a blank interest.
 function getNewInterest (me, op) {
@@ -50,7 +51,7 @@ class RegisterInterestSection extends Component {
   // When the button is clicked to withdraw interest, make an appropriate api call.
   async handleWithdraw (interest) {
     await this.props.dispatch(reduxApi.actions.interests.delete({ id: interest._id }))
-    message.success('Interest deleted')
+    message.success('Interest withdrawn')
   }
 
   // Render the component depending on whether we've completed the initial api call, and what information is contained in the store.
@@ -76,12 +77,10 @@ class RegisterInterestSection extends Component {
           onChangeStatus={this.handleChangeStatus.bind(this)}
           onWithdraw={this.handleWithdraw.bind(this)}
         />
-        {
-          (interest.status === 'committed') &&
-              (
-                <InterestConfirmationCard organizer={this.props.op.requestor} />
-              )
-        }
+        {/* removed until InterestConfirmationCard works.
+          {(interest.status === InterestStatus.COMMITTED) && (
+          <InterestConfirmationCard organizer={interest.opportunity.requestor} />
+        )} */}
       </section>
     )
   }
@@ -91,10 +90,10 @@ class RegisterInterestSection extends Component {
 function getNextStatus (interest) {
   switch (interest.status) {
     case null:
-      return 'interested'
+      return InterestStatus.INTERESTED
 
-    case 'invited':
-      return 'committed'
+    case InterestStatus.INVITED:
+      return InterestStatus.COMMITTED
   }
 }
 
