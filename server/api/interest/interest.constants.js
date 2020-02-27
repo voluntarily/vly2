@@ -13,7 +13,7 @@ const InterestStatus = {
   COMMITTED: 'committed',
   DECLINED: 'declined',
   ATTENDED: 'attended',
-  NOTATTENDED: 'not attended'
+  NOTATTENDED: 'not_attended'
 }
 
 module.exports = {
