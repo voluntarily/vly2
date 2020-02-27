@@ -71,7 +71,7 @@ test('getInterestDetail returns full information including messages', async t =>
   t.is(dets.status, InterestStatus.INTERESTED)
   t.is(dets.person.name, t.context.people[2].name)
   t.is(dets.opportunity.name, t.context.ops[0].name)
-  t.is(dets.opportunity.requestor.name, t.context.people[1].name)
+  t.is(dets.opportunity.requestor.email, t.context.people[1].email)
   t.is(dets.messages.length, 2)
   t.is(dets.messages[0].author.nickname, t.context.people[2].nickname)
 })

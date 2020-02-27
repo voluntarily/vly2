@@ -1,5 +1,4 @@
 const Interest = require('./interest')
-const { config } = require('../../../config/serverConfig')
 const { Action } = require('../../services/abilities/ability.constants')
 const { getInterestDetail } = require('./interest.lib')
 const { TOPIC_INTEREST__UPDATE, TOPIC_INTEREST__DELETE } = require('../../services/pubsub/topic.constants')

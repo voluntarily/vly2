@@ -60,7 +60,7 @@ test.serial('Should correctly give interest when queried by opportunity', async 
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect('Content-Type', /json/)
   t.is(res.status, 200)
-  t.is(res.body[0].messages[0], t.context.interests[0].messages[0])
+  t.is(res.body[0].messages[0].body, t.context.interests[0].messages[0].body)
 })
 
 test.serial('Should send correct data when queried against a _id', async t => {

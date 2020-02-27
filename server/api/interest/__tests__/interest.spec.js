@@ -201,7 +201,7 @@ test.serial('Should correctly add a valid interest', async t => {
 
   // did the message get added?
   t.is(savedInterest.messages.length, 1)
-  t.is(savedInterest.messages[0].name, me.nickname)
+  t.deepEqual(savedInterest.messages[0].author, me._id)
 })
 
 test.serial('Should update the interest with message from volunteer ', async t => {
