@@ -3,9 +3,10 @@ import setSession from '../setSession'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import Person from '../../../api/person/person'
 import people from '../../../api/person/__tests__/person.fixture'
-import { jwtData, jwtDataBob, jwtDataCharles, DEFAULT_SESSION } from './setSession.fixture'
+import { jwtData, jwtDataBob, jwtDataCharles, jwtDataExpired, DEFAULT_SESSION } from './setSession.fixture'
 import sinon from 'sinon'
 import jwt from 'jsonwebtoken'
+import MockResponse from 'mock-express-response'
 
 test.before('before connect to database', async (t) => {
   try {
@@ -73,6 +74,22 @@ test('Check session not Auth if email not verified', async t => {
   const next = sinon.spy()
   const req = { url: '/api/foo', headers: { authorization: `Bearer ${jwtDataBob.idToken}` } }
   await setSession(req, null, next)
+  t.false(req.session.isAuthenticated)
+  t.truthy(next.calledOnce)
+})
+
+test('Check idToken cookie cleared for expired sessions', async t => {
+  const next = sinon.spy()
+  const req = { url: '/api/foo', headers: { authorization: `Bearer ${jwtDataExpired.idToken}` } }
+  const res = new MockResponse()
+
+  await setSession(req, res, next)
+  const headers = res.getHeaders()
+  t.is(
+    headers['set-cookie'],
+    'idToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT',
+    'idToken cookie should be cleared if expired JWT is found'
+  )
   t.false(req.session.isAuthenticated)
   t.truthy(next.calledOnce)
 })
