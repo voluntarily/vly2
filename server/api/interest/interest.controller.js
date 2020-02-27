@@ -87,16 +87,18 @@ const createInterest = async (req, res) => {
     sendInterestedEmail('interested', interestDetail.opportunity.requestor, interestDetail)
     res.json(interestDetail)
   } catch (err) {
-  // console.log(err)
+  // console.error(err)
     res.status(422).send(err)
   }
 }
 
 const updateInterest = async (req, res) => {
   try {
+    const interest = req.body
     const updates = {
-      $set: { status: req.body.status },
-      $push: { messages: req.body.messages }
+      // this ... conditionally adds the $set to the update if value is present
+      ...(interest.status && { $set: { status: interest.status } }),
+      ...(interest.messages && { $push: { messages: interest.messages } })
     }
     const result = await Interest
       .accessibleBy(req.ability, Action.UPDATE)

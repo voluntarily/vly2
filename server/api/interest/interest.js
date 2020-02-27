@@ -6,7 +6,6 @@ const { InterestStatus } = require('./interest.constants')
 
 // this is deliberately similar to the Story Schema.
 var messageSchema = new mongoose.Schema({
-  name: String,
   body: String,
   // who sent the message (op or vp?)
   author: { type: Schema.Types.ObjectId, ref: 'Person', required: true },

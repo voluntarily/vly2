@@ -27,6 +27,10 @@ test.beforeEach('connect and set up test fixture', async (t) => {
   interests.map((interest, index) => {
     interest.opportunity = t.context.opportunities[index]._id
     interest.person = t.context.people[index]._id
+    interest.messages = [{ // this works whether its an object or array.
+      body: `${t.context.people[index]._id.name} is interested.`,
+      author: t.context.people[index]._id
+    }]
   })
   t.context.interests = await InterestArchive.create(interests).catch((err) => console.error('Unable to create archived interest', err))
 })
@@ -56,7 +60,7 @@ test.serial('Should correctly give interest when queried by opportunity', async 
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect('Content-Type', /json/)
   t.is(res.status, 200)
-  t.is(res.body[0].comment, t.context.interests[0].comment)
+  t.is(res.body[0].messages[0], t.context.interests[0].messages[0])
 })
 
 test.serial('Should send correct data when queried against a _id', async t => {

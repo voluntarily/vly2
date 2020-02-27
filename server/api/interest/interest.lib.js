@@ -22,6 +22,7 @@ const getInterestDetail = async (interestID) => {
   const interestDetail = await Interest.findById(interestID)
     .populate({ path: 'person', select: 'nickname name email pronoun language sendEmailNotifications' })
     .populate({ path: 'opportunity', select: 'name requestor imgUrl date duration' })
+    .populate({ path: 'messages.author', select: 'nickname name email' })
     .exec()
 
   const requestorDetail = await Person.findById(interestDetail.opportunity.requestor, 'name nickname email imgUrl sendEmailNotifications')

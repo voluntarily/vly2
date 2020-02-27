@@ -49,7 +49,6 @@ test.before('before connect to database', async (t) => {
 test.serial('Append a message to an interest record via db call', async t => {
   // get an interest record
   const interest = t.context.interests[0]
-  console.log(interest)
   const meid = interest.person
   const message1 = {
     name: 'Welcome to Voluntarily',
@@ -65,19 +64,17 @@ test.serial('Append a message to an interest record via db call', async t => {
   t.is(newInterest.messages[1].body, message1.body)
 
   // add a second message
+  const testbody = 'I don\'t know but it seems fun'
   const message2 = {
-    name: 'Why do you want to work here?',
-    body: 'I don\'t know but it seems fun',
+    body: testbody,
     author: newInterest.opportunity.requestor._id
   }
   interest.messages.push(message2)
   await interest.save()
   newInterest = await getInterestDetail(interest._id)
-  t.is(newInterest.messages[2].name, message2.name)
-})
+  t.is(newInterest.messages[2].body, message2.body)
 
-test.serial('find interest based on message text ', async t => {
-// find message
-  const foundMessage = await Interest.findOne({ 'messages.name': 'B Testy' }).exec()
-  t.truthy(foundMessage.messages[0].name, 'B Testy')
+  // find message
+  const foundMessage = await Interest.findOne({ 'messages.body': testbody }).exec()
+  t.truthy(foundMessage.messages[0].body, testbody)
 })

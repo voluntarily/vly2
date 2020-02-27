@@ -2,6 +2,7 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Interest from '../interest'
+import { InterestStatus } from '../interest.constants'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import Opportunity from '../../opportunity/opportunity'
 import ops from '../../opportunity/__tests__/opportunity.fixture'
@@ -37,7 +38,7 @@ test.before('before connect to database', async (t) => {
     return {
       person: enquirer._id,
       opportunity: op._id,
-      comment: `${index} ${enquirer.nickname} interested in ${op.name}`,
+      // deprecated comment: `${index} ${enquirer.nickname} interested in ${op.name}`,
       messages: [{
         name: enquirer.nickname,
         body: `${index} ${enquirer.name} interested in ${op.name}`,
@@ -212,7 +213,6 @@ test.serial('Should update the interest with message from volunteer ', async t =
   // this request should append the new message into the array
   const reqData = {
     _id: interest._id,
-    status: interest.status,
     messages: [{ // this works whether its an object or array.
       name: from.nickname,
       body: `${from.name} has a message for ${to.name}`,
@@ -227,17 +227,17 @@ test.serial('Should update the interest with message from volunteer ', async t =
     .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 200)
   const updateInterest = res.body
-  t.is(updateInterest.status, 'interested')
+  t.is(updateInterest.status, InterestStatus.INTERESTED)
   t.is(updateInterest.messages.length, 2)
   t.is(updateInterest.messages[1].name, from.nickname)
 })
 
 test.serial('Should update the interest state from interested to invited', async t => {
   // interests 2 has a single date - so should trigger a calendar event to be attached
-  const interest = t.context.interests[2]
+  const interest = t.context.interests[4]
   const reqData = {
     _id: interest._id,
-    status: 'invited'
+    status: InterestStatus.INVITED
   }
 
   const res = await request(server)
@@ -246,14 +246,18 @@ test.serial('Should update the interest state from interested to invited', async
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 200)
-  t.is(res.body.status, 'invited')
+  const savedInterest = res.body
+  t.is(savedInterest.status, InterestStatus.INVITED)
+
+  // no extra message should be added.
+  t.is(savedInterest.messages.length, 1)
 })
 
 test.serial('Should update the interest state from invited to committed', async t => {
   const interest = t.context.interests[3]
   const reqData = {
     _id: interest._id,
-    status: 'committed'
+    status: InterestStatus.COMMITTED
   }
 
   const res = await request(server)
@@ -263,7 +267,7 @@ test.serial('Should update the interest state from invited to committed', async 
     .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 200)
-  t.is(res.body.status, 'committed')
+  t.is(res.body.status, InterestStatus.COMMITTED)
 })
 
 test.serial('Should update the interest state from to declined', async t => {
@@ -271,7 +275,7 @@ test.serial('Should update the interest state from to declined', async t => {
   const interest = t.context.interests[4]
   const reqData = {
     _id: interest._id,
-    status: 'declined'
+    status: InterestStatus.DECLINED
   }
 
   const res = await request(server)
@@ -280,7 +284,7 @@ test.serial('Should update the interest state from to declined', async t => {
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 200)
-  t.is(res.body.status, 'declined')
+  t.is(res.body.status, InterestStatus.DECLINED)
 })
 
 test.serial('Should correctly delete an interest', async t => {
@@ -290,8 +294,7 @@ test.serial('Should correctly delete an interest', async t => {
   const newInterest = new Interest({
     _id: '5cc8d60b8b16812b5b3920c9',
     person: me._id,
-    opportunity: op._id,
-    comment: 'delete me'
+    opportunity: op._id
   })
 
   await newInterest.save()
@@ -312,7 +315,7 @@ test.serial('Should correctly delete an interest', async t => {
 test.serial('Should get 404 updating an interest with invalid id', async t => {
   const reqData = {
     _id: '5d2905d9a792f000114a557b',
-    status: 'invited'
+    status: InterestStatus.INVITED
   }
 
   const res = await request(server)
@@ -332,8 +335,11 @@ test.serial('Should not return interests with null person field', async t => {
   const newInterest = await Interest.create({
     person: newPerson._id,
     opportunity: t.context.ops[0]._id,
-    comment: 'XYZ test comment',
-    status: 'interested'
+    messages: {
+      body: 'XYZ test comment',
+      author: newPerson._id
+    },
+    status: InterestStatus.INTERESTED
   })
 
   const firstResponse = await request(server)
@@ -344,7 +350,7 @@ test.serial('Should not return interests with null person field', async t => {
 
   t.is(firstResponse.status, 200)
   t.is(
-    firstResponse.body.filter((opportunity) => opportunity.comment === 'XYZ test comment').length,
+    firstResponse.body.filter((opportunity) => opportunity.messages[0].body === 'XYZ test comment').length,
     1
   )
 
@@ -363,7 +369,7 @@ test.serial('Should not return interests with null person field', async t => {
 
   t.is(secondResponse.status, 200)
   t.is(
-    secondResponse.body.filter((opportunity) => opportunity.comment === 'XYZ test comment').length,
+    secondResponse.body.filter((opportunity) => opportunity.messages[0].body === 'XYZ test comment').length,
     0
   )
 })
