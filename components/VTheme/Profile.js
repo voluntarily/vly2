@@ -6,7 +6,7 @@ display: grid;
 grid-template-columns: 100%;
 align-self: center;
 justify-self: center;
-
+margin-bottom: 2rem;
 @media screen and (min-width: 767px) {
   grid-template-columns: 15rem 1fr;
   gap: 5rem;
@@ -23,7 +23,7 @@ img {
   @media screen and (max-width: 767px) {
     width: 15rem;
   height: 15rem;
- padding: 1rem 1rem 1rem 0;
+ padding: 1rem;
 
  
 }
@@ -32,6 +32,8 @@ img {
 export const ProfileBannerTitle = styled.div`
 
 align-self: center;
+text-align: center;
+
 
 @media screen and (min-width: 767px) {
 
@@ -39,6 +41,16 @@ align-self: center;
 }
 
 `
+
+export const ProfileBannerImageContainer = styled.div`
+@media screen and (max-width: 767px) {
+  align-self: center;
+  justify-self: center;
+
+ 
+}
+`
+
 export const ProfileTabs = styled.nav`
   text-align: left;
   display: grid;

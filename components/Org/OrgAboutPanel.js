@@ -16,17 +16,19 @@ const ContactIcon = ({ type }) =>
 
 export const OrgAboutPanel = ({ org, ...props }) => (
   <ProfilePanel>
+    {org.info && (
+      <ActivityContainer>
 
-    <ActivityContainer>
-      <h2>About</h2>
-      <div>
-        <Html>
-          {(org.info && org.info.about) || ''}
-        </Html>
-        <OrgCategory orgCategory={org.category} />
-      </div>
-    </ActivityContainer>
+        <h2>About</h2>
+        <div>
+          <Html>
+            {(org.info && org.info.about) || ''}
+          </Html>
+          <OrgCategory orgCategory={org.category} />
+        </div>
 
+      </ActivityContainer>
+    )}
     <Divider />
     <ActivityContainer>
       <h2>Contact</h2>

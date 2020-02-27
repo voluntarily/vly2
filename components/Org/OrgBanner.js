@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { ProfileBanner, ProfileBannerTitle } from '../VTheme/Profile'
+import { ProfileBanner, ProfileBannerImageContainer, ProfileBannerTitle } from '../VTheme/Profile'
 
 const OrgBanner = ({ org, children }) =>
   <ProfileBanner>
-    <div>
+    <ProfileBannerImageContainer>
       <img src={org.imgUrl} alt={org.name} />
-    </div>
+    </ProfileBannerImageContainer>
     <ProfileBannerTitle>
       <h1>{org.name}</h1>
       <p>{org.description}</p>
