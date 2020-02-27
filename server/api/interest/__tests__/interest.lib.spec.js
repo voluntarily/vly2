@@ -11,14 +11,10 @@ import { personInterestCount, getInterestDetail } from '../interest.lib'
 import { InterestStatus } from '../interest.constants'
 
 test.before('before connect to database', async (t) => {
-  try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
-  } catch (e) {
-    console.error('Interest.spec.js - error in test setup', e)
-  }
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-  t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create organisations: ${err}`)
+  t.context.memMongo = new MemoryMongo()
+  await t.context.memMongo.start()
+  t.context.people = await Person.create(people)
+  t.context.orgs = await Organisation.create(orgs)
   t.context.me = t.context.people[0] // I am the first person.
   t.context.dali = t.context.people[1]
   t.context.alice = t.context.people[2]
@@ -30,7 +26,7 @@ test.before('before connect to database', async (t) => {
     // all the ops belong to the OMGTech org
     op.offerOrg = t.context.orgs[1]
   })
-  t.context.ops = await Opportunity.create(ops).catch((err) => console.error('Unable to create opportunities', err))
+  t.context.ops = await Opportunity.create(ops)
 
   // setup interests
   // each op has person + 2 interested.

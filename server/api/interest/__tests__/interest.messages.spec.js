@@ -15,9 +15,9 @@ test.before('before connect to database', async (t) => {
   await t.context.memMongo.start()
   await appReady
 
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  t.context.people = await Person.create(people)
   t.context.me = t.context.people[0] // I am the first person.
-  t.context.orgs = await Organisation.create(orgs).catch(() => 'Unable to create orgs')
+  t.context.orgs = await Organisation.create(orgs)
 
   // setup opportunities 5 items
   ops.map((op, index) => {
@@ -26,7 +26,7 @@ test.before('before connect to database', async (t) => {
     // all the ops belong to the OMGTech org
     op.offerOrg = t.context.orgs[1]._id
   })
-  t.context.ops = await Opportunity.create(ops).catch((err) => console.error('Unable to create opportunities', err))
+  t.context.ops = await Opportunity.create(ops)
 
   // setup interests
   // each op has person + 2 interested.

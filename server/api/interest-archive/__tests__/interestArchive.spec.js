@@ -21,9 +21,9 @@ test.after.always(async (t) => {
 })
 
 test.beforeEach('connect and set up test fixture', async (t) => {
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  t.context.people = await Person.create(people)
   archivedOps.map((op, index) => { op.requestor = t.context.people[0]._id })
-  t.context.opportunities = await ArchivedOpportunity.create(archivedOps).catch((err) => console.error('Unable to create opportunities', err))
+  t.context.opportunities = await ArchivedOpportunity.create(archivedOps)
   interests.map((interest, index) => {
     interest.opportunity = t.context.opportunities[index]._id
     interest.person = t.context.people[index]._id
@@ -32,7 +32,7 @@ test.beforeEach('connect and set up test fixture', async (t) => {
       author: t.context.people[index]._id
     }]
   })
-  t.context.interests = await InterestArchive.create(interests).catch((err) => console.error('Unable to create archived interest', err))
+  t.context.interests = await InterestArchive.create(interests)
 })
 
 test.afterEach.always(async () => {
