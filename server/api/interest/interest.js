@@ -4,11 +4,20 @@ const idvalidator = require('mongoose-id-validator')
 const { accessibleRecordsPlugin } = require('@casl/mongoose')
 const { InterestStatus } = require('./interest.constants')
 
-const interestSchema = new Schema({
+// this is deliberately similar to the Story Schema.
+var messageSchema = new mongoose.Schema({
+  name: String,
+  body: String,
+  // who sent the message (op or vp?)
+  author: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
+  dateAdded: { type: Date, default: Date.now, required: true }
+})
 
+const interestSchema = new Schema({
   person: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
   opportunity: { type: Schema.Types.ObjectId, ref: 'Opportunity', required: true },
-  comment: String,
+  comment: String, // deprecated in favour of messages
+  messages: [messageSchema],
   status: {
     type: 'String',
     required: true,
@@ -20,7 +29,7 @@ const interestSchema = new Schema({
       InterestStatus.DECLINED
     ]
   },
-  dateAdded: { type: 'Date', default: Date.now, required: true }
+  dateAdded: { type: Date, default: Date.now, required: true }
 })
 
 /*

@@ -1,5 +1,4 @@
 const Interest = require('./interest')
-const Person = require('../person/person')
 const { config } = require('../../../config/serverConfig')
 const { emailPerson } = require('../person/person.email')
 const { InterestStatus } = require('./interest.constants')
@@ -7,6 +6,7 @@ const ical = require('ical-generator')
 const htmlSanitizer = require('sanitize-html')
 const moment = require('moment')
 const { Action } = require('../../services/abilities/ability.constants')
+const { getInterestDetail } = require('./interest.lib')
 
 /**
   api/interests -> list all interests
@@ -66,21 +66,6 @@ const getInterest = async (req, res, next) => {
   }
 }
 
-const getInterestDetail = async (interestID) => {
-  // Get the interest and populate out key information needed for emailing
-  const interestDetail = await Interest.findById(interestID)
-    .populate({ path: 'person', select: 'nickname name email pronoun language sendEmailNotifications' })
-    .populate({ path: 'opportunity', select: 'name requestor imgUrl date duration' })
-    .exec()
-
-  const requestorDetail = await Person.findById(interestDetail.opportunity.requestor, 'name nickname email imgUrl sendEmailNotifications')
-  interestDetail.opportunity.requestor = requestorDetail
-  interestDetail.opportunity.imgUrl = `${config.appUrl}${interestDetail.opportunity.imgUrl}`
-  interestDetail.opportunity.href = `${config.appUrl + '/ops/' + interestDetail.opportunity._id}`
-  interestDetail.person.href = `${config.appUrl + '/people/' + interestDetail.person._id}`
-  return interestDetail
-}
-
 const createInterest = async (req, res) => {
   const interestData = req.body
 
@@ -109,10 +94,13 @@ const createInterest = async (req, res) => {
 
 const updateInterest = async (req, res) => {
   try {
+    const updates = {
+      $set: { status: req.body.status },
+      $push: { messages: req.body.messages }
+    }
     const result = await Interest
       .accessibleBy(req.ability, Action.UPDATE)
-      .updateOne(req.params, { $set: { status: req.body.status } })
-
+      .updateOne(req.params, updates)
     if (result.nModified === 0) {
       return res.sendStatus(404)
     }
