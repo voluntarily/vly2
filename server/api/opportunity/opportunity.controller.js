@@ -137,10 +137,21 @@ const getOpportunity = async (req, res, next) => {
 }
 
 const putOpportunity = async (req, res, next) => {
+  const me = req.session && req.session.me
+  if (!me) {
+    return res.sendStatus(401)
+  }
+
   try {
-    // Once an opportunity has been created we should not be able to change the activity it was based on
-    if (req.body.fromActivity) {
-      return res.status(400).send('Cannot change the fromActivity field')
+    if (!me.role.includes(Role.ADMIN)) {
+      // Once an opportunity has been created we should not be able to change the activity it was based on
+      if (req.body.fromActivity) {
+        return res.status(400).send('Cannot change the fromActivity field')
+      }
+      // Cannot change the organisation
+      if (req.body.offerOrg) {
+        return res.status(400).send('Cannot change the organisation of an opportunity')
+      }
     }
 
     if (req.body.status === OpportunityStatus.COMPLETED || req.body.status === OpportunityStatus.CANCELLED) {

@@ -481,6 +481,46 @@ test.serial(`Owner - UPDATE - Can update an opportunity I created/own`, async t 
   }
 })
 
+for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
+  test.serial(`${role} - UPDATE - Cannot set the offerOrg`, async t => {
+    const requestor = await createPerson([role])
+
+    const orgA = await Organisation.create({
+      name: `${uuid()}`,
+      slug: `${uuid()}`
+    })
+    const orgB = await Organisation.create({
+      name: `${uuid()}`,
+      slug: `${uuid()}`
+    })
+
+    // Create op in organisation A
+    const op = await Opportunity.create({
+      name: 'Cool op',
+      status: OpportunityStatus.ACTIVE,
+      requestor,
+      offerOrg: orgA
+    })
+
+    // Attempt to move it to organisation B
+    const res = await request(server)
+      .put(`/api/opportunities/${op._id}`)
+      .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${createJwtIdToken(requestor.email)}`])
+      .send({
+        name: 'Awesome op',
+        offerOrg: orgB._id
+      })
+
+    t.true(res.status === 400 || res.status === 403)
+
+    const op2 = await Opportunity.findById(op._id)
+    t.truthy(op2)
+    t.is(op2.name, 'Cool op')
+    t.is(op2.offerOrg._id.toString(), orgA._id.toString())
+  })
+}
+
 test.serial('admin - LIST - Should get all opportunities', async t => {
   // Query for all opportunities
   // We use an empty query in the querystring so no default filtering is applied
@@ -649,19 +689,21 @@ test.serial('admin - DELETE - Admin can delete ops', async t => {
   t.falsy(op2)
 })
 
-for (const role of [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
+for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
   test.serial(`${role} - UPDATE - Cannot set the fromActivity field`, async t => {
-    const op = (await Opportunity.find())[0]
+    const op = await Opportunity.create({
+      requestor: await createPerson([Role.ACTIVITY_PROVIDER])
+    })
 
     const res = await request(server)
       .put(`/api/opportunities/${op._id}`)
       .set('Accept', 'application/json')
-      .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.ADMIN])}`])
+      .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
       .send({
         fromActivity: new ObjectId('54759eb3c090d83494e2d804')
       })
 
-    t.is(400, res.status)
+    t.true(res.status === 400 || res.status === 403)
   })
 }
 
