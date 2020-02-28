@@ -39,7 +39,7 @@ class RegisterMemberItem extends Component {
         {
           type: 'secondary',
           msg: <FormattedMessage id='member.join.message' defaultMessage='If you are part of this organisation let us know' description='Message for volunteer to join an organisation' />,
-          text: <FormattedMessage id='member.join.button' defaultMessage='Join' description='Button for volunteer to join an organisation' />,
+          text: <FormattedMessage id='member.join.button' defaultMessage='Staff Signup' description='Button for volunteer to join an organisation' />,
           action: 'join'
         }
       ]

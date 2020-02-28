@@ -26,6 +26,7 @@ const getNewMember = (me, org) => {
 }
 const RegisterButtonBox = styled.section`
   display: inline-block;
+  margin-top: 1rem;
   button {
     margin-right: 1rem;
   }
