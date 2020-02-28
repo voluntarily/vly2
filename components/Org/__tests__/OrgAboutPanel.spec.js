@@ -9,7 +9,7 @@ test('renders the list', t => {
   const wrapper = render(
     <OrgAboutPanel org={org} />
   )
-  t.is(wrapper.find('li').length, 6)
+  t.is(wrapper.find('li').length, 11)
 })
 
 test('renders the list no about data', t => {
@@ -17,5 +17,5 @@ test('renders the list no about data', t => {
   const wrapper = render(
     <OrgAboutPanel org={org} />
   )
-  t.is(wrapper.find('li').length, 0)
+  t.is(wrapper.find('li').length, 1)
 })
