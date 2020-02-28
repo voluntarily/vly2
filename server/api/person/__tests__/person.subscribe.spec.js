@@ -91,7 +91,10 @@ test('Trigger TOPIC_INTEREST__UPDATE INTERESTED', async t => {
   const newInterest = {
     person: t.context.people[0],
     opportunity: t.context.ops[0],
-    comment: 'test update email',
+    messages: [{ // this works whether its an object or array.
+      body: 'testing TOPIC_INTEREST__UPDATE INTERESTED',
+      author: t.context.people[1]._id
+    }],
     status: InterestStatus.INTERESTED
   }
   const done = new Promise((resolve, reject) => {
@@ -114,7 +117,10 @@ test('Trigger TOPIC_INTEREST__UPDATE INVITED', async t => {
   const newInterest = {
     person: t.context.people[0],
     opportunity: t.context.ops[0],
-    comment: 'test update email',
+    messages: [{ // this works whether its an object or array.
+      body: 'testing TOPIC_INTEREST__UPDATE INTERESTED',
+      author: t.context.people[1]._id
+    }],
     status: InterestStatus.INVITED
   }
   const done = new Promise((resolve, reject) => {
@@ -136,7 +142,10 @@ test('Trigger TOPIC_INTEREST__UPDATE COMMITTED', async t => {
   const newInterest = {
     person: t.context.people[0],
     opportunity: t.context.ops[0],
-    comment: 'test update email',
+    messages: [{ // this works whether its an object or array.
+      body: 'testing TOPIC_INTEREST__UPDATE INTERESTED',
+      author: t.context.people[1]._id
+    }],
     status: InterestStatus.COMMITTED
   }
   const done = new Promise((resolve, reject) => {

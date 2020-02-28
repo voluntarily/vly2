@@ -1,10 +1,10 @@
 const { Action } = require('../../services/abilities/ability.constants')
 
 const OpportunityRoutes = {
-  [Action.LIST]: '/orgs',
-  [Action.READ]: '/orgs/:id',
-  [Action.UPDATE]: '/orgs/:id/edit',
-  [Action.CREATE]: '/org/new'
+  [Action.LIST]: '/api/opportunities',
+  [Action.READ]: '/api/opportunities/:id',
+  [Action.UPDATE]: '/api/opportunities/:id/edit',
+  [Action.CREATE]: '/api/opportunities/new'
 }
 
 const OpportunityStatus = {
@@ -13,6 +13,14 @@ const OpportunityStatus = {
   COMPLETED: 'completed',
   CANCELLED: 'cancelled'
 }
+
+/**
+ * An Opportunity is considered Published if it has one of these status.
+ */
+const OpportunityPublishedStatus = [
+  OpportunityStatus.ACTIVE,
+  OpportunityStatus.COMPLETED
+]
 
 const OpportunityFields = {
   ID: '_id',
@@ -34,6 +42,7 @@ const OpportunityFields = {
 module.exports = {
   SchemaName: 'Opportunity',
   OpportunityStatus,
+  OpportunityPublishedStatus,
   OpportunityFields,
   OpportunityRoutes
 }

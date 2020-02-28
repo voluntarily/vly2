@@ -58,7 +58,8 @@ module.exports = (server) => {
       const op = interest.opportunity
       interest.person.href = `${config.appUrl}/home`
       const template = `interest_vp_${interest.status}`
-      const props = { from: op.requestor, op, interest }
+      const message = interest.messages.slice(-1)[0] // last element should be most recent
+      const props = { from: op.requestor, op, interest, message }
       if (interest.status === InterestStatus.INVITED) {
         props.attachment = [getICalendar(op)]
       }
@@ -79,7 +80,8 @@ module.exports = (server) => {
       const op = interest.opportunity
       op.requestor.href = `${config.appUrl}/home`
       const template = `interest_op_${interest.status}`
-      const props = { from: interest.person, op, interest }
+      const message = interest.messages.slice(-1)[0] // last element should be most recent
+      const props = { from: interest.person, op, interest, message }
       const info = await emailPerson(template, op.requestor, props)
       PubSub.publish(TOPIC_PERSON__EMAIL_SENT, info)
     }
