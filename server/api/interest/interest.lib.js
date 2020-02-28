@@ -16,7 +16,7 @@ const personInterestCount = (personId) => {
   return Interest.countDocuments(query).exec()
 }
 
-const personFields = 'name nickname email imgUrl sendEmailNotifications'
+const personFields = 'name nickname email imgUrl pronoun sendEmailNotifications'
 const getInterestDetail = async (interestID) => {
   // Get the interest and populate out key information needed for emailing
   const interestDetail = await Interest.findById(interestID)
