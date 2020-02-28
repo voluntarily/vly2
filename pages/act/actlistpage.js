@@ -61,33 +61,27 @@ export const ActListPage = ({ activities }) =>
     </PageBanner>
     {/* <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
       <TabPane tab={activityTab} key='1'> */}
-    <ActivityContainer>
-      <ProfileSection>
-        {' '}
-        <ActMenu acts={activities.data} />
-      </ProfileSection>
-      <ProfileSection>
-        <SearchContainer>
-          <p>Search activities</p>
-          <Input.Search
-            placeholder='eg: activity'
-            enterButton='Search'
-            size='large'
-            onSearch={handleSearch}
-          />
-        </SearchContainer>
 
-        {activities.data.length > 0 ? (
-          <ActList acts={activities.data} />
-        ) : (
-          <NoResult
-            id='act.noresult'
-            msg='No activities found based on your search criteria'
-            description='Message shown while no activities found'
-          />
-        )}
-      </ProfileSection>
-    </ActivityContainer>
+    <SearchContainer>
+      <p><strong>Search resources</strong></p>
+      <Input.Search
+        placeholder='eg: activity'
+        enterButton='Search'
+        size='large'
+        onSearch={handleSearch}
+      />
+    </SearchContainer>
+
+    {activities.data.length > 0 ? (
+      <ActList acts={activities.data} />
+    ) : (
+      <NoResult
+        id='act.noresult'
+        msg='No activities found based on your search criteria'
+        description='Message shown while no activities found'
+      />
+    )}
+
     {/* </TabPane>
     </Tabs> */}
     <GridContainer>
