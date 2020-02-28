@@ -1,7 +1,6 @@
 const Interest = require('./interest')
-const Person = require('../person/person')
-const { config } = require('../../../config/serverConfig')
 const { Action } = require('../../services/abilities/ability.constants')
+const { getInterestDetail } = require('./interest.lib')
 const { TOPIC_INTEREST__UPDATE, TOPIC_INTEREST__DELETE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
 
@@ -63,21 +62,6 @@ const getInterest = async (req, res, next) => {
   }
 }
 
-const getInterestDetail = async (interestID) => {
-  // Get the interest and populate out key information needed for emailing
-  const interestDetail = await Interest.findById(interestID)
-    .populate({ path: 'person', select: 'nickname name email pronoun language sendEmailNotifications' })
-    .populate({ path: 'opportunity', select: 'name requestor imgUrl date duration' })
-    .exec()
-
-  const requestorDetail = await Person.findById(interestDetail.opportunity.requestor, 'name nickname email imgUrl sendEmailNotifications')
-  interestDetail.opportunity.requestor = requestorDetail
-  interestDetail.opportunity.href = `${config.appUrl}/ops/${interestDetail.opportunity._id}`
-  interestDetail.opportunity.imgUrl = new URL(interestDetail.opportunity.imgUrl, config.appUrl).href
-  interestDetail.person.href = `${config.appUrl}/people/${interestDetail.person._id}`
-  return interestDetail
-}
-
 const createInterest = async (req, res) => {
   const interestData = req.body
 
@@ -99,17 +83,22 @@ const createInterest = async (req, res) => {
 
     res.json(interestDetail)
   } catch (err) {
-  // console.log(err)
+  // console.error(err)
     res.status(422).send(err)
   }
 }
 
 const updateInterest = async (req, res) => {
   try {
+    const interest = req.body
+    const updates = {
+      // this ... conditionally adds the $set to the update if value is present
+      ...(interest.status && { $set: { status: interest.status } }),
+      ...(interest.messages && { $push: { messages: interest.messages } })
+    }
     const result = await Interest
       .accessibleBy(req.ability, Action.UPDATE)
-      .updateOne(req.params, { $set: { status: req.body.status } })
-
+      .updateOne(req.params, updates)
     if (result.nModified === 0) {
       return res.sendStatus(404)
     }

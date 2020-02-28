@@ -4,7 +4,8 @@ const InterestFields = {
   STATUS: 'status',
   DATE_ADDED: 'dateAdded',
   PERSON: 'person',
-  OPPORTUNITY: 'opportunity'
+  OPPORTUNITY: 'opportunity',
+  MESSAGES: 'messages'
 }
 
 const InterestStatus = {
