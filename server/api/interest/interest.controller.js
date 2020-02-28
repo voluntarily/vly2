@@ -1,6 +1,6 @@
 const Interest = require('./interest')
 const { Action } = require('../../services/abilities/ability.constants')
-const { getInterestDetail } = require('./interest.lib')
+const { getInterestDetail, getMyOpInterestDetail } = require('./interest.lib')
 const { TOPIC_INTEREST__UPDATE, TOPIC_INTEREST__DELETE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
 
@@ -14,6 +14,12 @@ const listInterests = async (req, res) => {
   const sort = 'dateAdded' // todo sort by date.
 
   try {
+    if (req.query.op && req.query.me) {
+      // this is a request for a single interest for one person and one op
+      // populate out ready for the opdetailspage display
+      const interest = await getMyOpInterestDetail(req.query.op, req.query.me)
+      return res.json(interest)
+    }
     const find = {}
     const populateList = []
 

@@ -3,8 +3,10 @@
   If no interest exists, it will allow one to be created. If one does exist, it will allow it to be updated or cancelled.
 */
 import { message } from 'antd'
-import React, { Component } from 'react'
-import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
+import reduxApi from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
 // import InterestConfirmationCard from './InterestConfirmationCard'
 import RegisterInterestItem from './RegisterInterestItem'
@@ -12,80 +14,14 @@ import cuid from 'cuid'
 import { InterestStatus } from '../../server/api/interest/interest.constants'
 
 // Helper function to generate a blank interest.
-function getNewInterest (me, op) {
+function getNewInterest (meid, opid) {
   return {
-    person: me,
-    opportunity: op,
-    comment: '',
+    person: meid,
+    opportunity: opid,
     status: null,
     dateAdded: Date.now()
   }
 }
-
-class RegisterInterestSection extends Component {
-  // When component mounts, make initial API call.
-  // TODO do we need to change this to getInitialProps?
-  async componentDidMount () {
-    const opid = this.props.opID
-    const meid = this.props.meID
-    try {
-      await this.props.dispatch(reduxApi.actions.interests.get({ op: opid, me: meid, cacheBreak: cuid() }))
-    } catch (err) {
-      console.error('error in getting interests', err)
-    }
-  }
-
-  // When the button is clicked to advance the interest status, make an appropriate api call.
-  async handleChangeStatus (interest) {
-    interest.status = getNextStatus(interest)
-
-    if (interest._id) {
-      await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
-      message.success('Interest updated')
-    } else {
-      await this.props.dispatch(reduxApi.actions.interests.post({}, { body: JSON.stringify(interest) }))
-      message.success('Interest added')
-    }
-  }
-
-  // When the button is clicked to withdraw interest, make an appropriate api call.
-  async handleWithdraw (interest) {
-    await this.props.dispatch(reduxApi.actions.interests.delete({ id: interest._id }))
-    message.success('Interest withdrawn')
-  }
-
-  // Render the component depending on whether we've completed the initial api call, and what information is contained in the store.
-  render () {
-    // If we haven't finished making the API request to the server yet...
-    if (!this.props.interests.sync) {
-      return (<Loading label='interests' entity={this.props.interests} />)
-    }
-
-    //  If we have access to the interests section of the Redux store.
-    //  Get the interest out of the store, if any.
-    let interest = null
-
-    if (this.props.interests.sync && this.props.interests.data.length > 0) {
-      interest = this.props.interests.data[0]
-    } else { // If not, use a blank interest.
-      interest = getNewInterest(this.props.meID, this.props.opID)
-    }
-    return (
-      <section>
-        <RegisterInterestItem
-          interest={interest}
-          onChangeStatus={this.handleChangeStatus.bind(this)}
-          onWithdraw={this.handleWithdraw.bind(this)}
-        />
-        {/* removed until InterestConfirmationCard works.
-          {(interest.status === InterestStatus.COMMITTED) && (
-          <InterestConfirmationCard organizer={interest.opportunity.requestor} />
-        )} */}
-      </section>
-    )
-  }
-}
-
 // Returns the next status, given the current status
 function getNextStatus (interest) {
   switch (interest.status) {
@@ -97,4 +33,65 @@ function getNextStatus (interest) {
   }
 }
 
-export default withInterests(RegisterInterestSection)
+const RegisterInterestSection = ({ meid, opid }) => {
+  const interests = useSelector(state => state.interests)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const getInterests = async () => {
+      await dispatch(reduxApi.actions.interests.get({ op: opid, me: meid, cacheBreak: cuid() }))
+    }
+    getInterests()
+  }, [opid, meid])
+
+  // When the button is clicked to advance the interest status, make an appropriate api call.
+  const handleChangeStatus = async (interest) => {
+    interest.status = getNextStatus(interest)
+
+    if (interest._id) {
+      await dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
+      message.success('Interest updated')
+    } else {
+      await dispatch(reduxApi.actions.interests.post({}, { body: JSON.stringify(interest) }))
+      message.success('Interest added')
+    }
+  }
+
+  // When the button is clicked to withdraw interest, make an appropriate api call.
+  const handleWithdraw = async (interest) => {
+    await dispatch(reduxApi.actions.interests.delete({ id: interest._id }))
+    message.success('Interest withdrawn')
+  }
+  // If we haven't finished making the API request to the server yet...
+  if (!interests.sync) {
+    return (<Loading label='interests' entity={interests} />)
+  }
+
+  // Render the component depending on whether we've completed the initial api call, and what information is contained in the store.
+
+  //  If we have access to the interests section of the Redux store.
+  //  Get the interest out of the store, if any.
+  let interest = null
+
+  if (interests.sync && interests.data.length > 0) {
+    interest = interests.data[0]
+  } else { // If not, use a blank interest.
+    interest = getNewInterest(meid, opid)
+  }
+
+  return (
+    <section>
+      <RegisterInterestItem
+        interest={interest}
+        onChangeStatus={handleChangeStatus}
+        onWithdraw={handleWithdraw}
+      />
+      {/* removed until InterestConfirmationCard works.
+          {(interest.status === InterestStatus.COMMITTED) && (
+          <InterestConfirmationCard organizer={interest.opportunity.requestor} />
+        )} */}
+    </section>
+  )
+}
+
+export default RegisterInterestSection
