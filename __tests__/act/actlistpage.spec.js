@@ -6,6 +6,7 @@ import acts from '../../server/api/activity/__tests__/activity.fixture'
 import objectid from 'objectid'
 import withMockRoute from '../../server/util/mockRouter'
 import sinon from 'sinon'
+import { Grid } from '../../components/VTheme/VTheme'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
@@ -44,6 +45,7 @@ test('render ActListPage', async t => {
   t.is(wrapper.find('h1 FormattedMessage').first().props().id, 'ActListPage.Title')
   t.truthy(wrapper.find('Button'))
   t.truthy(wrapper.find('ActListPage'))
+  t.truthy(wrapper.find(Grid))
 
   // handle search
   const search = wrapper.find('Search').first()
