@@ -309,7 +309,7 @@ test('render volunteer home page - Active tab', t => {
   t.is(cards1.first().find('h1').first().text(), t.context.ops[0].name) // find the first opcard in the first oplist
 
   const cards2 = oplists.at(1).find('OpCard')
-  t.is(cards2.length, 4)
+  t.is(cards2.length, 5)
   t.is(cards2.first().find('h1').first().text(), t.context.ops[1].name)
 })
 

@@ -193,7 +193,7 @@ test.serial('Should correctly delete an opportunity', async t => {
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
 
-  t.is(res.status, 200)
+  t.is(res.status, 204)
 
   const queriedOpportunity = await Opportunity.findOne({ _id: opp._id }).exec()
   t.is(queriedOpportunity, null)
