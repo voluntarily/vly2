@@ -516,6 +516,38 @@ for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_
   })
 }
 
+test.serial(`owner - UPDATE - updating an op with deeply equal payload returns success`, async t => {
+  const op = await Opportunity.create({
+    name: uuid(),
+    title: uuid(),
+    subtitle: uuid(),
+    imgUrl: `https://img.com/1.png`,
+    description: 'Test op',
+    duration: '5 days',
+    location: 'Auckland',
+    venue: 'Business center',
+    status: OpportunityStatus.ACTIVE,
+    date: ['2019-05-23T12:26:18.000Z'],
+    requestor: await Person.findOne({ email: 'btesty@voluntarily.nz' }),
+    href: 'https://vly.nz/123',
+    tags: ['a', 'b'],
+  })
+
+  // GET the op and immediately PUT it back
+  const get = await request(server)
+    .get(`/api/opportunities/${op._id}`)
+
+  t.is(get.status, 200)
+
+  const res = await request(server)
+    .put(`/api/opportunities/${op._id}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${createJwtIdToken('btesty@voluntarily.nz')}`])
+    .send(get.body)
+
+  t.is(res.status, 200)
+})
+
 test.serial('admin - LIST - Should get all opportunities', async t => {
   // Query for all opportunities
   // We use an empty query in the querystring so no default filtering is applied

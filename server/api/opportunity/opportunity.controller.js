@@ -170,7 +170,7 @@ const putOpportunity = async (req, res, next) => {
       const result = await Opportunity
         .accessibleBy(req.ability, Action.UPDATE)
         .updateOne({ _id: req.params._id }, { $set: req.body })
-      if (result.nModified === 0) {
+      if (result.n === 0) {
         return res.sendStatus(404)
       }
 
