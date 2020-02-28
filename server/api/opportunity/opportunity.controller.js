@@ -148,9 +148,9 @@ const putOpportunity = async (req, res, next) => {
       if (req.body.fromActivity) {
         return res.status(400).send('Cannot change the fromActivity field')
       }
-      // Cannot change the organisation
-      if (req.body.offerOrg) {
-        return res.status(400).send('Cannot change the organisation of an opportunity')
+      
+      if (req.body.offerOrg && (await Member.find({ person: me._id, organisation: req.body.offerOrg })).length === 0) {
+        return res.status(400).send('Invalid organisation')
       }
     }
 
@@ -170,7 +170,6 @@ const putOpportunity = async (req, res, next) => {
       const result = await Opportunity
         .accessibleBy(req.ability, Action.UPDATE)
         .updateOne({ _id: req.params._id }, { $set: req.body })
-
       if (result.nModified === 0) {
         return res.sendStatus(404)
       }

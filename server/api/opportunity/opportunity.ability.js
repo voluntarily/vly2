@@ -45,6 +45,10 @@ const ruleBuilder = session => {
     conditions: { status: { $in: OpportunityPublishedStatus } }
   }, {
     subject: SchemaName,
+    action: Action.READ,
+    conditions: { requestor: session.me && session.me._id }
+  }, {
+    subject: SchemaName,
     action: Action.LIST
   }, {
     subject: SchemaName,
@@ -62,6 +66,10 @@ const ruleBuilder = session => {
     conditions: { status: { $in: OpportunityPublishedStatus } }
   }, {
     subject: SchemaName,
+    action: Action.READ,
+    conditions: { requestor: session.me && session.me._id }
+  }, {
+    subject: SchemaName,
     action: Action.LIST
   }, {
     subject: SchemaName,
@@ -75,12 +83,17 @@ const ruleBuilder = session => {
     subject: SchemaName,
     action: Action.CREATE
   }]
+
   const vpAbilities = [{
     subject: SchemaName,
     action: Action.READ,
     conditions: { status: { $in: OpportunityPublishedStatus } }
   }, {
     subject: SchemaName,
+    action: Action.READ,
+    conditions: { requestor: session.me && session.me._id }
+  }, {
+    subject: SchemaName,
     action: Action.LIST
   }, {
     subject: SchemaName,
@@ -94,6 +107,7 @@ const ruleBuilder = session => {
     subject: SchemaName,
     action: Action.CREATE
   }]
+  
   const testerAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
   const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
   
