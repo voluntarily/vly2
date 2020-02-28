@@ -107,10 +107,10 @@ const ruleBuilder = session => {
     subject: SchemaName,
     action: Action.CREATE
   }]
-  
+
   const testerAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
   const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
-  
+
   const orgAdminAbilities = [{
     subject: SchemaName,
     action: Action.READ

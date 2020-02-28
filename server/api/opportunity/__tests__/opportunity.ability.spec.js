@@ -234,8 +234,7 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
       // Make sure the op hasn't been deleted
       const op2 = await Opportunity.findById(opId)
       t.truthy(op2)
-    }
-    finally {
+    } finally {
       await Opportunity.deleteOne({ _id: opId })
     }
   })
@@ -268,7 +267,7 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
     t.is(200, res.status)
     t.is(res.body._id, op._id.toString())
   })
-  
+
   test.serial(`${role} - UPDATE - Can not update an opportunity they do not own`, async t => {
     let opId
 
@@ -293,14 +292,13 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
       // Make sure the op hasn't updated
       const op2 = await Opportunity.findById(opId)
       t.is(op2.name, 'Cool op')
-    }
-    finally {
+    } finally {
       await Opportunity.deleteOne({ _id: opId })
     }
   })
 }
 
-test.serial(`orgAdmin - UPDATE - Can update ops for their org`, async t => {
+test.serial('orgAdmin - UPDATE - Can update ops for their org', async t => {
   const omgTech = await Organisation.findOne({ name: 'OMGTech' })
 
   // "atesty@voluntarily.nz" is now an org admin of "OMGTech"
@@ -393,7 +391,7 @@ test.serial('orgAdmin - CREATE - attempt to create an op for an org I am not apa
   t.is(403, res.status)
 })
 
-test.serial(`Owner - READ`, async t => {
+test.serial('Owner - READ', async t => {
   let opId
 
   try {
@@ -411,13 +409,12 @@ test.serial(`Owner - READ`, async t => {
 
     t.is(200, res.status)
     t.is(res.body._id, op._id.toString())
-  }
-  finally {
+  } finally {
     await Opportunity.deleteOne({ _id: opId })
   }
 })
 
-test.serial(`Owner - DELETE - Cannot delete an opportunity`, async t => {
+test.serial('Owner - DELETE - Cannot delete an opportunity', async t => {
   let opId
 
   try {
@@ -439,13 +436,12 @@ test.serial(`Owner - DELETE - Cannot delete an opportunity`, async t => {
     // Make sure the op is still present
     const op2 = await Opportunity.findById(op._id)
     t.truthy(op2)
-  }
-  finally {
+  } finally {
     await Opportunity.deleteOne({ _id: opId })
   }
 })
 
-test.serial(`Owner - UPDATE - Can update an opportunity I created/own`, async t => {
+test.serial('Owner - UPDATE - Can update an opportunity I created/own', async t => {
   let opId
 
   try {
@@ -470,8 +466,7 @@ test.serial(`Owner - UPDATE - Can update an opportunity I created/own`, async t 
     const op2 = await Opportunity.findById(op._id)
     t.truthy(op2)
     t.is(op2.name, 'Awesome op')
-  }
-  finally {
+  } finally {
     await Opportunity.deleteOne({ _id: opId })
   }
 })
@@ -516,12 +511,12 @@ for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_
   })
 }
 
-test.serial(`owner - UPDATE - updating an op with deeply equal payload returns success`, async t => {
+test.serial('owner - UPDATE - updating an op with deeply equal payload returns success', async t => {
   const op = await Opportunity.create({
     name: uuid(),
     title: uuid(),
     subtitle: uuid(),
-    imgUrl: `https://img.com/1.png`,
+    imgUrl: 'https://img.com/1.png',
     description: 'Test op',
     duration: '5 days',
     location: 'Auckland',
@@ -530,7 +525,7 @@ test.serial(`owner - UPDATE - updating an op with deeply equal payload returns s
     date: ['2019-05-23T12:26:18.000Z'],
     requestor: await Person.findOne({ email: 'btesty@voluntarily.nz' }),
     href: 'https://vly.nz/123',
-    tags: ['a', 'b'],
+    tags: ['a', 'b']
   })
 
   // GET the op and immediately PUT it back
@@ -552,7 +547,7 @@ test.serial('admin - LIST - Should get all opportunities', async t => {
   // Query for all opportunities
   // We use an empty query in the querystring so no default filtering is applied
   const res = await request(server)
-    .get(`/api/opportunities?q={}`)
+    .get('/api/opportunities?q={}')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.ADMIN])}`])
 
@@ -593,7 +588,7 @@ test.serial('admin - CREATE', async t => {
     name: uuid(),
     title: uuid(),
     subtitle: uuid(),
-    imgUrl: `https://img.com/1.png`,
+    imgUrl: 'https://img.com/1.png',
     description: 'Test op',
     duration: '5 days',
     location: 'Auckland',
@@ -614,7 +609,7 @@ test.serial('admin - CREATE', async t => {
     .send(payload)
 
   t.is(200, res.status)
-  
+
   // Get the op from the database and compare
   const op = await Opportunity.findById(res.body._id)
   t.truthy(op)
@@ -645,7 +640,7 @@ test.serial('admin - UPDATE', async t => {
     name: uuid(),
     title: uuid(),
     subtitle: uuid(),
-    imgUrl: `https://img.com/1.png`,
+    imgUrl: 'https://img.com/1.png',
     description: 'Test op',
     duration: '5 days',
     location: 'Auckland',
@@ -664,7 +659,7 @@ test.serial('admin - UPDATE', async t => {
     name: uuid(),
     title: uuid(),
     subtitle: uuid(),
-    imgUrl: `https://img.com/2.png`,
+    imgUrl: 'https://img.com/2.png',
     description: 'Test op 2',
     duration: '10 days',
     location: 'Wellington',
@@ -684,7 +679,7 @@ test.serial('admin - UPDATE', async t => {
     .send(payload)
 
   t.is(200, res.status)
-  
+
   // Get the op from the database and compare
   const op2 = await Opportunity.findById(op._id)
   t.truthy(op2)

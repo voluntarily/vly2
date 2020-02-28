@@ -148,7 +148,7 @@ const putOpportunity = async (req, res, next) => {
       if (req.body.fromActivity) {
         return res.status(400).send('Cannot change the fromActivity field')
       }
-      
+
       if (req.body.offerOrg && (await Member.find({ person: me._id, organisation: req.body.offerOrg })).length === 0) {
         return res.status(400).send('Invalid organisation')
       }
@@ -256,7 +256,7 @@ const archiveInterests = async (opId) => {
   }
 }
 
-function ensureSanitized(req, res, next) {
+function ensureSanitized (req, res, next) {
   const descriptionOptions = {
     allowedTags: ['a', 'b', 'br', 'caption', 'code', 'div', 'blockquote', 'em',
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'iframe', 'img', 'li', 'ol',
