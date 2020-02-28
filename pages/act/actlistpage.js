@@ -5,9 +5,8 @@ import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import ActList from '../../components/Act/ActList'
-import ActMenu from '../../components/Act/ActMenu'
 import NoResult from '../../components/NoResult'
-import { ActivityContainer, FullPage, GridContainer, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
+import { FullPage, GridContainer, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 import ActAdd from '../../components/Act/ActAdd'
@@ -21,10 +20,6 @@ const SearchContainer = styled.div`
   padding: 1rem;
   margin-bottom: 2rem;
 `
-const ProfileSection = styled.div`
-  margin: 1.5rem 0 0 0;
-`
-
 const handleSearch = (value) => {
   if (!value) { return false }
   value = escapeRegex(value)
