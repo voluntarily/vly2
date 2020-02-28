@@ -192,7 +192,7 @@ const deleteOpportunity = async (req, res, next) => {
       return res.sendStatus(404)
     }
   } catch (e) {
-    res.sendStatus(500)
+    return res.sendStatus(500)
   }
 
   req.crudify = { result: {} }
