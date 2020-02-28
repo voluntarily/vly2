@@ -45,7 +45,7 @@ test('render ActListPage', async t => {
   t.is(wrapper.find('h1 FormattedMessage').first().props().id, 'ActListPage.Title')
   t.truthy(wrapper.find('Button'))
   t.truthy(wrapper.find('ActListPage'))
-  t.truthy(wrapper.find(Grid)
+  t.truthy(wrapper.find(Grid))
 
   // handle search
   const search = wrapper.find('Search').first()
