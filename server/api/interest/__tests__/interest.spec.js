@@ -40,7 +40,6 @@ test.before('before connect to database', async (t) => {
       opportunity: op._id,
       // deprecated comment: `${index} ${enquirer.nickname} interested in ${op.name}`,
       messages: [{
-        name: enquirer.nickname,
         body: `${index} ${enquirer.name} interested in ${op.name}`,
         author: enquirer._id
       }]
@@ -179,7 +178,6 @@ test.serial('Should correctly add a valid interest', async t => {
     person: me._id,
     opportunity: op._id,
     messages: { // this works whether its an object or array.
-      name: me.nickname,
       body: `${me.name} is interested in ${op.name}`,
       author: me._id
     }
@@ -214,7 +212,6 @@ test.serial('Should update the interest with message from volunteer ', async t =
   const reqData = {
     _id: interest._id,
     messages: [{ // this works whether its an object or array.
-      name: from.nickname,
       body: `${from.name} has a message for ${to.name}`,
       author: from._id
     }]
@@ -229,11 +226,10 @@ test.serial('Should update the interest with message from volunteer ', async t =
   const updateInterest = res.body
   t.is(updateInterest.status, InterestStatus.INTERESTED)
   t.is(updateInterest.messages.length, 2)
-  t.is(updateInterest.messages[1].name, from.nickname)
+  t.is(updateInterest.messages[1].body, reqData.messages[0].body)
 })
 
 test.serial('Should update the interest state from interested to invited', async t => {
-  // interests 2 has a single date - so should trigger a calendar event to be attached
   const interest = t.context.interests[4]
   const reqData = {
     _id: interest._id,
@@ -271,7 +267,6 @@ test.serial('Should update the interest state from invited to committed', async 
 })
 
 test.serial('Should update the interest state from to declined', async t => {
-  // interests 2 has a single date - so should trigger a calendar event to be attached
   const interest = t.context.interests[4]
   const reqData = {
     _id: interest._id,

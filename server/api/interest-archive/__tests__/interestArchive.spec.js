@@ -28,7 +28,7 @@ test.beforeEach('connect and set up test fixture', async (t) => {
     interest.opportunity = t.context.opportunities[index]._id
     interest.person = t.context.people[index]._id
     interest.messages = [{ // this works whether its an object or array.
-      body: `${t.context.people[index]._id.name} is interested.`,
+      body: `${t.context.people[index].name} is interested.`,
       author: t.context.people[index]._id
     }]
   })
