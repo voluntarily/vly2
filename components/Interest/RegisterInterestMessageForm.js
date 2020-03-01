@@ -20,18 +20,16 @@ function hasErrors (fieldsError) {
 const RegisterInterestForm = ({
   form,
   visible,
-  values,
   prevAccepted,
   onSubmit,
-  placeholder,
-  title
+  title, prompt
 }) => {
   const [termsAccepted, setTermsAccepted] = useState(prevAccepted)
   const handleOk = (e) => {
     e.preventDefault()
     form.validateFields((err, values) => {
       if (!err) {
-        onSubmit(true, values)
+        onSubmit(true, values.message, termsAccepted)
       }
     })
   }
@@ -59,24 +57,17 @@ const RegisterInterestForm = ({
         </Button>
       ]}
     >
+      <p>{prompt}</p>
       <Form.Item>
-        {form.getFieldDecorator('message', {
-          rules: [
-            { required: true, message: 'message is required' }
-          ]
-        })(
-          <TextArea
-            rows='3'
-            placeholder={placeholder}
-            maxLength='200'
-          />
+        {form.getFieldDecorator('message')(
+          <TextArea rows='3' maxLength='200' />
         )}
       </Form.Item>
       {!termsAccepted && (
         <Form.Item>
           {form.getFieldDecorator('accepted', {
             rules: [
-              { required: true, message: 'message is required' }
+              { required: true, message: 'please read and accept the terms' }
             ]
           })(
             <Checkbox

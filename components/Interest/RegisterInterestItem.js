@@ -3,7 +3,7 @@
 //   Unlike InterestItem, this one is a Form allowing state changes.
 // */
 
-import { Button, Popconfirm, Row } from 'antd'
+import { Button, notification, Row } from 'antd'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -27,37 +27,74 @@ import RegisterInterestMessageForm from './RegisterInterestMessageForm'
 export const RegisterInterestItem = ({
   interest,
   onAccept,
-  onReject
+  onReject,
+  onMessage
 }) => {
-  const [showForm, setShowForm] = useState(false)
+  const [showAcceptForm, setShowAcceptForm] = useState(false)
+  const [showRejectForm, setShowRejectForm] = useState(false)
+  const [showMessageForm, setShowMessageForm] = useState(false)
+  // Options to configure the controls on this page based on the state of the interest.
+  const options = getOptions(interest)
 
-  const handleSubmit = (ok, msg) => {
-    setShowForm(false)
+  const handleAcceptSubmit = (ok, message, termsAccepted) => {
+    setShowAcceptForm(false)
     if (ok) {
-      onAccept(msg, true)
+      onAccept(message, termsAccepted)
+      if (options.acceptNotifyHeading) {
+        notification.success({
+          message: options.acceptNotifyHeading,
+          description: options.acceptNotifyMessage
+        })
+      }
     }
   }
 
   const handleAcceptClick = (e) => {
     e.preventDefault()
-    setShowForm(true)
+    setShowAcceptForm(true)
   }
 
+  const handleRejectSubmit = (ok, message) => {
+    setShowRejectForm(false)
+    if (ok) {
+      onReject(message)
+      if (options.rejectNotifyHeading) {
+        notification.success({
+          message: options.rejectNotifyHeading,
+          description: options.rejectNotifyMessage
+        })
+      }
+    }
+  }
   const handleRejectClick = (e) => {
     e.preventDefault()
-    onReject(interest)
+    setShowRejectForm(true)
+  }
+  const handleMessageClick = (e) => {
+    e.preventDefault()
+    setShowMessageForm(true)
   }
 
-  // Options to configure the controls on this page based on the state of the interest.
-  const options = getOptions(interest)
-
+  const handleMessageSubmit = (ok, message) => {
+    setShowMessageForm(false)
+    if (ok) {
+      onMessage(message)
+      notification.success({
+        message: <FormattedMessage id='messageNotify.title' defaultMessage='Done' description='Completed sending email notification' />,
+        description: <FormattedMessage id='messageNotify.description' defaultMessage="We've emailed your message" description='Completed sending email notification' />
+      })
+    }
+  }
+  const messageForm = {
+    title: <FormattedMessage id='messageForm.title' defaultMessage='Message organiser' description='Form title message the organiser' />,
+    prompt: <FormattedMessage id='messageForm.prompt' defaultMessage='This message will be emailed to the activity organiser' description='Form prompt message the organiser' />
+  }
   return (
     <>
       {/* Headers */}
-      {options.showHeader && (
+      {options.showStatus && (
         <Row>
-          <h4>{options.headingText}</h4>
-          <p>{options.subHeadingText}</p>
+          <p>{options.statusMessage}</p>
         </Row>
       )}
 
@@ -74,26 +111,41 @@ export const RegisterInterestItem = ({
         )}
         {/* Button to handle rejectal from op */}
         {options.showRejectButton && (
-          <Popconfirm
-            id='RejectInterestPopConfirm'
-            title='Confirm rejection of invitation'
-            onConfirm={handleRejectClick}
-            okText='Yes'
-            cancelText='No'
-          >
-            <Button shape='round'>
-              {options.rejectInterestButtonText}
-            </Button>
-          </Popconfirm>
+          <Button shape='round' onClick={handleRejectClick}>
+            {options.rejectButtonText}
+          </Button>
+        )}
+        {options.showMessageButton && (
+          <Button shape='round' onClick={handleMessageClick}>
+            <FormattedMessage
+              id='RegisterInterestItem.MessageOp'
+              defaultMessage='Message the Organiser'
+              description='Button allowing volunteer send a message to the organiser'
+            />
+          </Button>
         )}
       </Row>
 
       <RegisterInterestMessageForm
-        title={options.headingText}
+        title={options.acceptFormTitle}
+        prompt={options.acceptFormPrompt}
         prevAccepted={interest.termsAccepted}
-        onSubmit={handleSubmit}
-        placeholder={options.messagePlaceholder}
-        visible={showForm}
+        onSubmit={handleAcceptSubmit}
+        visible={showAcceptForm}
+      />
+      <RegisterInterestMessageForm
+        title={options.rejectFormTitle}
+        prompt={options.rejectFormPrompt}
+        prevAccepted
+        onSubmit={handleRejectSubmit}
+        visible={showRejectForm}
+      />
+      <RegisterInterestMessageForm
+        title={messageForm.title}
+        prompt={messageForm.prompt}
+        prevAccepted
+        onSubmit={handleMessageSubmit}
+        visible={showMessageForm}
       />
     </>
   )
@@ -111,71 +163,84 @@ RegisterInterestItem.propTypes = {
 }
 
 // Returns some config options for this component, depending on the state of the interest we're viewing.
-function getOptions (interest) {
-  const options = {
-    showHeader: true,
-    headingText: '',
-    subHeadingText: '',
-    showAcceptButton: true,
-    acceptButtonText: '',
-    showRejectButton: true,
-    rejectInterestButtonText: <FormattedMessage id='rejectInterestButton' defaultMessage='Withdraw Interest' description='Button for volunteer to reject interest in an opportunity' />,
-    messagePlaceholder: ''
-  }
-
+const getOptions = (interest) => {
   switch (interest.status) {
     case null:
-      options.showHeader = false
-      options.headingText = <FormattedMessage id='getInvolvedHeading' defaultMessage='How do you want to get involved?' description='Heading displayed on form allowing volunteer to express interest in an opportunity' />
-      options.subHeadingText = <FormattedMessage id='getInvolvedSubHeading' defaultMessage='Let us know how you want to get involved or what you have to offer and an organizer will get in touch with you.' description='Sub-heading displayed on form allowing volunteer to express interest in an opportunity' />
-      options.acceptButtonText = <FormattedMessage id='getInvolvedButton' defaultMessage='Get Involved' description='Button allowing volunteer to express interest in an opportunity' />
-      options.showFormButtonText = <FormattedMessage id='registerInterestShowForm' defaultMessage="I'm Interested" description='Button to allow volunteer to start expressing interest in an opportunity' />
-      options.messagePlaceholder = 'How do you want to help out? Got any questions?' // Can't use FormattedMessage here, is there something else I can use?
-      options.showRejectButton = false
-      break
+      return {
+        showStatus: false,
+        showAcceptButton: true,
+        acceptButtonText: <FormattedMessage id='nointerest.acceptButtonText' defaultMessage='Get Involved' description='Button allowing volunteer to express interest in an opportunity' />,
+        acceptFormTitle: <FormattedMessage id='nointerest.acceptFormTitle' defaultMessage='How do you want to get involved?' description='Heading displayed on form allowing volunteer to express interest in an opportunity' />,
+        acceptFormPrompt: <FormattedMessage id='nointerest.acceptFormPrompt' defaultMessage='Let us know how you want to get involved or what you have to offer and an organizer will get in touch with you.' description='Sub-heading displayed on form allowing volunteer to express interest in an opportunity' />,
+        acceptNotifyHeading: <FormattedMessage id='nointerest.acceptNotifyHeading' defaultMessage='Thank you for expressing your interest!' description='Heading on express-interest form when volunteer has already expressed interest' />,
+        acceptNotifyMessage: <FormattedMessage id='nointerest.acceptNotifyMessage' defaultMessage='The organizer will be in touch shortly.' description='Sub-heading on express-interest form when volunteer has already expressed interest' />,
+        showRejectButton: false,
+        showMessageButton: false
+      }
 
     case 'interested':
-      options.headingText = <FormattedMessage id='isInterestedHeading' defaultMessage='Thank you for expressing your interest!' description='Heading on express-interest form when volunteer has already expressed interest' />
-      options.subHeadingText = <FormattedMessage id='isInterestedSubHeading' defaultMessage='The organizer will be in touch shortly :)' description='Sub-heading on express-interest form when volunteer has already expressed interest' />
-      options.showAcceptButton = false
-      break
+      return {
+        showStatus: true,
+        statusMessage: <FormattedMessage id='interested.statusMessage' defaultMessage='Awaiting an invitation' description='message when volunteer has already expressed interest' />,
+        showAcceptButton: false,
+        showRejectButton: true,
+        rejectButtonText: <FormattedMessage id='interested.rejectButtonText' defaultMessage='Withdraw Interest' description='Button for volunteer to reject interest in an opportunity' />,
+        rejectFormTitle: <FormattedMessage id='interested.rejectFormTitle' defaultMessage='Is there something we can do?' description='title message form when interested person withdraws' />,
+        rejectFormPrompt: <FormattedMessage id='interested.rejectFormPrompt' defaultMessage='Leave a message for the organiser' description='prompt on message form when interested person withdraws' />,
+        rejectNotifyHeading: <FormattedMessage id='interested.rejectNotifyHeading' defaultMessage="You're not interested" description='title on popup after person withdraws interest' />,
+        rejectNotifyMessage: <FormattedMessage id='interested.rejectNotifyMessage' defaultMessage="That's sad but we understand - go look for something else" description='message on popup after person withdraws interest' />,
+        showMessageButton: true
+      }
 
     case 'invited':
-      options.headingText = <FormattedMessage id='isInvitedHeading' defaultMessage="You've been invited to participate!" description='Heading displayed on express-interest form when volunteer has been invited to participate' />
-      options.subHeadingText = <FormattedMessage id='isInvitedSubHeading' defaultMessage='Please let the organizer know whether you can attend.' description='Sub-heading displayed on express-interest form when volunteer has been invited to participate' />
-      options.acceptButtonText = <FormattedMessage id='isInvitedAcceptButton' defaultMessage='I can make it :)' description='Allows volunteer to accept invitation to participate in opportunity' />
-      options.rejectInterestButtonText = <FormattedMessage id='isInvitedRejectButton' defaultMessage="I can't make it :(" description='Allows volunteer to reject from an opportunity once they have been invited' />
-      break
+      return {
+        showStatus: true,
+        statusMessage: <FormattedMessage id='invited.statusMessage' defaultMessage='You have been invited to participate, awaiting your confirmation.' description='prompt when volunteer is invited' />,
 
+        showAcceptButton: true,
+        acceptFormTitle: <FormattedMessage id='invited.acceptFormTitle' defaultMessage="That's great. Thanks." description='Heading displayed on express-interest form when volunteer has been invited to participate' />,
+        acceptFormPrompt: <FormattedMessage id='invited.acceptFormPrompt' defaultMessage='Send a message to the organiser.' description='Sub-heading displayed on express-interest form when volunteer has been invited to participate' />,
+        acceptButtonText: <FormattedMessage id='invited.acceptButtonText' defaultMessage='I can do it :)' description='Allows volunteer to accept invitation to participate in opportunity' />,
+        acceptNotifyHeading: <FormattedMessage id='invited.acceptNotifyHeading' defaultMessage='Thank you so much!' description='Heading displayed when volunteer has committed to an op' />,
+        acceptNotifyMessage: <FormattedMessage id='invited.acceptNotifyMessage' defaultMessage='You have agreed to participate in this activty! Check out your home page for some things you might need to complete.' description='Sub-heading displayed when volunteer has committed to an op' />,
+
+        showRejectButton: true,
+        rejectButtonText: <FormattedMessage id='invited.rejectButtonText' defaultMessage="I can't make it :(" description='Allows volunteer to reject from an opportunity once they have been invited' />,
+        rejectFormTitle: <FormattedMessage id='invited.rejectFormTitle' defaultMessage='Is there something we can do?' description='title message form when interested person withdraws' />,
+        rejectFormPrompt: <FormattedMessage id='invited.rejectFormPrompt' defaultMessage='We will take you off the invite list but keep you as interested. Leave a message for the organiser' description='prompt on message form when interested person withdraws' />,
+        rejectNotifyHeading: <FormattedMessage id='invited.rejectNotifyHeading' defaultMessage="You can't make it" description='title on popup after person withdraws interest' />,
+        rejectNotifyMessage: <FormattedMessage id='invited.rejectNotifyMessage' defaultMessage="That's sad but we understand - go look for something else" description='message on popup after person withdraws interest' />,
+        showMessageButton: true
+      }
     case 'committed':
-      options.headingText = <FormattedMessage id='isCommittedHeading' defaultMessage='Thank you so much!' description='Heading displayed when volunteer has committed to an op' />
-      options.subHeadingText = <FormattedMessage id='isCommittedSubHeading' defaultMessage='You have agreed to participate in this event!' description='Sub-heading displayed when volunteer has committed to an op' />
-      options.showAcceptButton = false
-      break
-
+      return {
+        showStatus: true,
+        statusMessage: <FormattedMessage id='committed.statusMessage' defaultMessage='You are committed to this activity' description='prompt when volunteer is committed' />,
+        showAcceptButton: false,
+        showRejectButton: true,
+        rejectButtonText: <FormattedMessage id='committed.rejectButtonText' defaultMessage="I can't make it :(" description='Allows volunteer to reject from an opportunity once they have been invited' />,
+        rejectFormTitle: <FormattedMessage id='committed.rejectFormTitle' defaultMessage='Oh no!, Sorry to hear that.' description='title message form when interested person withdraws' />,
+        rejectFormPrompt: <FormattedMessage id='committed.rejectFormPrompt' defaultMessage="Send the organiser a message about why you can't be involved" description='prompt on message form when interested person withdraws' />,
+        rejectNotifyHeading: <FormattedMessage id='committed.rejectNotifyHeading' defaultMessage="You can't make it" description='title on popup after person withdraws interest' />,
+        rejectNotifyMessage: <FormattedMessage id='committed.rejectNotifyMessage' defaultMessage="That's sad but we understand - we will keep you listed as interested and let you know if anything changes." description='message on popup after person withdraws interest' />,
+        showMessageButton: true
+      }
     case 'declined':
-      options.headingText = <FormattedMessage id='isDeclinedHeading' defaultMessage='Our apologies' description='Heading displayed when volunteer has been declined by opportunity organizer' />
-      options.subHeadingText = <FormattedMessage id='isDeclinedSubHeading' defaultMessage='Thank you so much for registering your interest. However, all available spots for this event have been filled.' description='Sub-heading displayed when volunteer has been declined by opportunity organizer' />
-      options.showAcceptButton = false
-      options.showRejectButton = false
-      break
-
-    case 'completed':
-      options.headingText = <FormattedMessage id='isCompletedHeading' defaultMessage='Thank you so much!' description='Heading displayed when volunteer has participated in an op' />
-      options.subHeadingText = <FormattedMessage id='isCompletedSubHeading' defaultMessage='We hope you enjoyed your event, and we look forward to working with you in the future!' description='Sub-heading displayed when volunteer has participated in an op' />
-      options.showAcceptButton = false
-      options.showRejectButton = false
-      break
-
-    case 'cancelled':
-      options.headingText = <FormattedMessage id='isCancelledHeading' defaultMessage='Our apologies' description='Heading displayed to volunteer when opportunity is cancelled by organizer' />
-      options.subHeadingText = <FormattedMessage id='isCancelledSubHeading' defaultMessage='Thank you so much for registering your interest. However, unfortunately this event has been cancelled by the organizer.' description='Sub-heading displayed to volunteer when opportunity is cancelled by organizer' />
-      options.showAcceptButton = false
-      options.showRejectButton = false
-      break
+      return {
+        showStatus: true,
+        statusMessage: <FormattedMessage id='declined.statusMessage' defaultMessage='You have been declined for this activity. Try another' description='prompt when volunteer is declined' />,
+        showAcceptButton: false,
+        showRejectButton: false,
+        showMessageButton: false
+      }
+    default:
+      return {
+        showStatus: false,
+        showAcceptButton: false,
+        showRejectButton: false,
+        showMessageButton: false
+      }
   }
-
-  return options
 }
 
 export default RegisterInterestItem
