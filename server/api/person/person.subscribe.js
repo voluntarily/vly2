@@ -1,7 +1,13 @@
 const { emailPerson } = require('./person.email')
 const { config } = require('../../../config/clientConfig')
 const PubSub = require('pubsub-js')
-const { TOPIC_PERSON__CREATE, TOPIC_MEMBER__UPDATE, TOPIC_INTEREST__UPDATE, TOPIC_PERSON__EMAIL_SENT } = require('../../services/pubsub/topic.constants')
+const {
+  TOPIC_PERSON__CREATE,
+  TOPIC_MEMBER__UPDATE,
+  TOPIC_INTEREST__UPDATE,
+  TOPIC_INTEREST__MESSAGE,
+  TOPIC_PERSON__EMAIL_SENT
+} = require('../../services/pubsub/topic.constants')
 const { MemberStatus } = require('../member/member.constants')
 const { InterestStatus } = require('../interest/interest.constants')
 const { getICalendar } = require('../opportunity/opportunity.calendar')
@@ -56,9 +62,12 @@ module.exports = (server) => {
       InterestStatus.NOTATTENDED
     ].includes(interest.status)) {
       const op = interest.opportunity
+      op.href = `${config.appUrl}/ops/${op._id}`
+
       interest.person.href = `${config.appUrl}/home`
       const template = `interest_vp_${interest.status}`
       const message = interest.messages.slice(-1)[0] // last element should be most recent
+      console.log('interest message', message)
       const props = { from: op.requestor, op, interest, message }
       if (interest.status === InterestStatus.INVITED) {
         props.attachment = [getICalendar(op)]
@@ -79,6 +88,8 @@ module.exports = (server) => {
     ].includes(interest.status)) {
       const op = interest.opportunity
       op.requestor.href = `${config.appUrl}/home`
+      op.href = `${config.appUrl}/ops/${op._id}`
+
       const template = `interest_op_${interest.status}`
       const message = interest.messages.slice(-1)[0] // last element should be most recent
       const props = { from: interest.person, op, interest, message }
@@ -87,3 +98,23 @@ module.exports = (server) => {
     }
   })
 }
+
+PubSub.subscribe(TOPIC_INTEREST__MESSAGE, async (msg, interest) => {
+  // a new message from vp or op has been attached to an interest record
+  // send email to other person.
+  console.log('op', TOPIC_INTEREST__MESSAGE, interest)
+  const op = interest.opportunity
+  op.href = `${config.appUrl}/ops/${op._id}`
+
+  const vp = interest.person
+  const requestor = op.requestor
+  requestor.href = `${config.appUrl}/home`
+  const message = interest.messages.slice(-1)[0] // last element should be most recent
+
+  // from vp to op
+  const info = (message.author === vp._id)
+    ? emailPerson('interest_op_message', requestor, { from: vp, op, interest, message })
+    : emailPerson('interest_vp_message', vp, { from: requestor, op, interest, message })
+  await info
+  PubSub.publish(TOPIC_PERSON__EMAIL_SENT, info)
+})
