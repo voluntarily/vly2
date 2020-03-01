@@ -89,7 +89,7 @@ export const OpDetailPage = ({
     }, [])
 
   // bail early if no data
-  if (!opportunities.sync) {
+  if (!opportunities.sync && !isNew) {
     return <Loading label='activity' entity={opportunities} />
   }
   const ops = opportunities.data
