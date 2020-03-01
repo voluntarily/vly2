@@ -1,7 +1,7 @@
 const Interest = require('./interest')
 const { Action } = require('../../services/abilities/ability.constants')
 const { getInterestDetail, getMyOpInterestDetail } = require('./interest.lib')
-const { TOPIC_INTEREST__UPDATE, TOPIC_INTEREST__DELETE } = require('../../services/pubsub/topic.constants')
+const { TOPIC_INTEREST__UPDATE, TOPIC_INTEREST__MESSAGE, TOPIC_INTEREST__DELETE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
 
 /**
@@ -17,8 +17,13 @@ const listInterests = async (req, res) => {
     if (req.query.op && req.query.me) {
       // this is a request for a single interest for one person and one op
       // populate out ready for the opdetailspage display
-      const interest = await getMyOpInterestDetail(req.query.op, req.query.me)
-      return res.json(interest)
+      try {
+        const interest = await getMyOpInterestDetail(req.query.op, req.query.me)
+        return res.json(interest)
+      } catch (e) {
+        // its not an error to have no interests yet.
+        return res.json([])
+      }
     }
     const find = {}
     const populateList = []
@@ -97,11 +102,15 @@ const createInterest = async (req, res) => {
 const updateInterest = async (req, res) => {
   try {
     const interest = req.body
+    console.log('server updateInterest', interest)
+
     const updates = {
       // this ... conditionally adds the $set to the update if value is present
       ...(interest.status && { $set: { status: interest.status } }),
+      ...(interest.termsAccepted && { $set: { termsAccepted: interest.termsAccepted } }),
       ...(interest.messages && { $push: { messages: interest.messages } })
     }
+    console.log(updates)
     const result = await Interest
       .accessibleBy(req.ability, Action.UPDATE)
       .updateOne(req.params, updates)
@@ -110,7 +119,11 @@ const updateInterest = async (req, res) => {
     }
 
     const interestDetail = await getInterestDetail(req.params._id)
-    PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
+    if (interest.status) {
+      PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
+    } else {
+      PubSub.publish(TOPIC_INTEREST__MESSAGE, interestDetail)
+    }
 
     res.json(interestDetail)
   } catch (err) {
