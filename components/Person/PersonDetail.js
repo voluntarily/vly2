@@ -8,10 +8,11 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
 import TagDisplay from '../Tags/TagDisplay'
-import { GridContainer, H1, H3Bold, H4 } from '../VTheme/VTheme'
+import { GridContainer, H1, H3Bold, H4, ActivityContainer } from '../VTheme/VTheme'
 import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
 import { PersonBadgeSection } from './PersonBadge'
+import { VBanner, VBannerImg, ProfileBannerTitle } from '../VTheme/Profile'
 
 const ProfileGrid = styled.div`
   display: grid;
@@ -79,49 +80,36 @@ const PersonUl = styled.ul`
 `
 
 const PersonDetail = ({ person }, ...props) => (
-  <ProfileGrid>
-    <GridContainer> {/* Left Sidebar */}
-      <Head title={person.nickname} />
-      <ProfileImage src={person.imgUrl} alt={person.nickname} />
-      {person.orgMembership &&
-        <DetailItem>
-          <H4>
-            <FormattedMessage
-              id='PersonDetail.subheading.membership'
-              defaultMessage='Member of'
-              description='Header for list of orgs I belong to'
-            />
-          </H4>
-          <MemberUl members={person.orgMembership} />
-        </DetailItem>}
-      {person.orgFollowership &&
-        <DetailItem>
-          <H4>
-            <FormattedMessage
-              id='PersonDetail.subheading.following'
-              defaultMessage='Following'
-              description='Header for list of orgs I follow'
-            />
-          </H4>
-          <MemberUl members={person.orgFollowership} />
-        </DetailItem>}
-      <DetailItem>
-        <H4>
-          <FormattedMessage
-            id='PersonDetail.subheading.achievements'
-            defaultMessage='Recognition'
-            description='Header for list of badges I have obtained'
-          />
-        </H4>
-        <PersonBadgeSection person={person} />
-      </DetailItem>
-    </GridContainer>
-    <GridContainer> {/* Main Workspace */}
-      <InfoSection>
-        <H1>{person.name}</H1>
-        <Divider />
+  <div>
+    <Head title={person.nickname} />
+    <VBanner>
+      <VBannerImg src={person.imgUrl} alt={person.nickname} />
+      <ProfileBannerTitle>
+        <h1>{person.name}</h1>
+        <p> {person.job}, {person.placeOfWork}</p>
+
+      </ProfileBannerTitle>
+    </VBanner>
+    <Divider />
+    <ActivityContainer>
+      <h2>About</h2>
+      <div>
         <Markdown children={person.about || ''} />
-      </InfoSection>
+        <Divider />
+        <h5>
+          <FormattedMessage
+            defaultMessage='Interests and Skills'
+            id='person.skills.title'
+            description='subheading for tags on person details page'
+          />
+        </h5>
+        <TagDisplay tags={person.tags} />
+      </div>
+
+    </ActivityContainer>
+    <Divider />
+    <ActivityContainer>
+      <h2>Contact</h2>
       <InfoSection>
         <PersonUl>
           <li>
@@ -180,16 +168,44 @@ const PersonDetail = ({ person }, ...props) => (
           </li>
         </PersonUl>
       </InfoSection>
-      <InfoSection>
-        <H3Bold>
+    </ActivityContainer>
+
+    <GridContainer>
+      {person.orgMembership &&
+        <DetailItem>
+          <H4>
+            <FormattedMessage
+              id='PersonDetail.subheading.membership'
+              defaultMessage='Member of'
+              description='Header for list of orgs I belong to'
+            />
+          </H4>
+          <MemberUl members={person.orgMembership} />
+        </DetailItem>}
+      {person.orgFollowership &&
+        <DetailItem>
+          <H4>
+            <FormattedMessage
+              id='PersonDetail.subheading.following'
+              defaultMessage='Following'
+              description='Header for list of orgs I follow'
+            />
+          </H4>
+          <MemberUl members={person.orgFollowership} />
+        </DetailItem>}
+      <DetailItem>
+        <H4>
           <FormattedMessage
-            defaultMessage='Interests and Skills'
-            id='person.skills.title'
-            description='subheading for tags on person details page'
+            id='PersonDetail.subheading.achievements'
+            defaultMessage='Recognition'
+            description='Header for list of badges I have obtained'
           />
-        </H3Bold>
-        <TagDisplay tags={person.tags} />
-      </InfoSection>
+        </H4>
+        <PersonBadgeSection person={person} />
+      </DetailItem>
+    </GridContainer>
+    <GridContainer> {/* Main Workspace */}
+
       <DetailItemMobile>
         <p><Icon type='history' /> </p>
       </DetailItemMobile>
@@ -197,7 +213,7 @@ const PersonDetail = ({ person }, ...props) => (
         <p><Icon type='safety' /> </p>
       </DetailItemMobile>
     </GridContainer>
-  </ProfileGrid>
+  </div>
 
 )
 
