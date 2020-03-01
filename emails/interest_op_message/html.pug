@@ -1,21 +1,18 @@
 extends ../theme/layout.pug
 
 block tagline
-  span Heads-up #{from.nickname} can't make it
-  
-block copybig
-  a( href=op.href) #{op.name} 
+  span Message from #{from.nickname} 
 
 block copy
   p Kia ora #{to.nickname},
-  p #{from.name} can't make it to your activity. 
+  p #{from.name} sent you a message
   if message
     p saying: #{message.body}
-  p You can contact #{from.pronoun.object} at #{from.email}
+  p You can contact #{from.pronoun.object} at #{from.email} or review all messages on your activity page
   p Ngā mihi, Voluntarily.nz
    
 block copybutton
-  a(href=op.href class='mobile-button') Opportunity
+  a(href=op.href class='mobile-button') Activity
   span &nbsp; 
   a(href=from.href class='mobile-button') #{from.nickname}
              

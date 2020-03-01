@@ -8,11 +8,13 @@ block copybig
 
 block copy
   p Kia ora #{to.nickname},
-  p #{from.name} just committed to your opportunity.
-  p Remember to keep visiting your management page to review new interested people.
+  p #{from.name} just committed to your activity.
+  if message
+    p saying: #{message.body}
+  p Remember to keep visiting your activity management page to review new interested people.
 
 block copybutton
-  a(href=op.href class='mobile-button') Opportunity
+  a(href=op.href class='mobile-button') Activity
   span &nbsp; 
   a(href=to.href class='mobile-button') Profile
    

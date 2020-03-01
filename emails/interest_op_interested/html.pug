@@ -7,13 +7,13 @@ block copybig
 
 block copy
   p Kia ora #{to.nickname},
-  p #{from.name} just expressed interest in your opportunity.
+  p #{from.name} just expressed interest in your activity.
   if message
-    saying: #{message}
-  p Review them on the opportunity page and send them an invite if they match your requirements.
+    p saying: #{message.body}
+  p Review them on the activity page and send them an invite if they match your requirements.
   p Ngā mihi, Voluntarily.nz
 
 block copybutton
-  a(href=op.href class='mobile-button') Opportunity
+  a(href=op.href class='mobile-button') Activity
   span &nbsp; 
   a(href=to.href class='mobile-button') Profile
