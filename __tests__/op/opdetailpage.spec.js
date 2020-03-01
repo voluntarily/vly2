@@ -323,7 +323,18 @@ test('display loading opportunity message when activity is loading', t => {
   t.is(wrapper.find('img').prop('src'), '/static/loading.svg')
 })
 
-test('can create new Op from blank', t => {
+test.serial('can create new Op from blank', t => {
+  // imitate new op state
+  const newOpportunitiesData = {
+    sync: false,
+    syncing: false,
+    loading: false,
+    data: [],
+    request: null
+  }
+  const originalOpportunitiesData = t.context.defaultstore.opportunities
+  t.context.defaultstore.opportunities = newOpportunitiesData
+
   const opportunityToEdit = t.context.op
   const myMock = makeFetchMock(opportunityToEdit._id)
   myMock.post(API_URL + '/tags/', { body: { status: 200 } })
@@ -340,9 +351,13 @@ test('can create new Op from blank', t => {
       <OpDetailPageWithOps {...props} />
     </Provider>
   )
+
   const saveButton = wrapper.find('#saveOpBtn').first()
+
+  t.context.defaultstore.opportunities = originalOpportunitiesData
+
+  t.false(saveButton.isEmpty(), 'Save button should be found on page')
   t.is(saveButton.text(), 'Save as draft')
-  // saveButton.simulate('click')
 })
 
 test('can cancel new Op from blank', t => {
