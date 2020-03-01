@@ -46,7 +46,7 @@ const ruleBuilder = async (session) => {
     }, {
       subject: SchemaName,
       action: Action.UPDATE,
-      inverted: true
+      conditions: { person: session.me._id, status: { $in: [InterestStatus.INTERESTED, InterestStatus.COMMITTED] } }
     }, {
       subject: SchemaName,
       action: Action.DELETE,
