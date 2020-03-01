@@ -15,7 +15,7 @@ const client = jwksClient({
 const getSigningKey = (header, callback) => {
   if (process.env.NODE_ENV === 'test') {
     callback(null, 'secret')
-  } else if (process.env.NODE_ENV === 'development' /* && header.kid === 'dev' */) {
+  } else if (process.env.NODE_ENV === 'development' && header.kid === 'dev') {
     // we are using a dev signed key for testing purposes
     callback(null, 'dev')
   } else {
