@@ -60,8 +60,8 @@ const PersonDetail = ({ person }, ...props) => (
       <ProfileBannerTitle>
         <h1>{person.name}</h1>
 
-        {person.job &&
-          <p> {person.job}<br />{person.placeOfWork}</p>}
+        <p>{person.job && `${person.job}`} {person.placeOfWork && `- ${person.placeOfWork}`}</p>
+
       </ProfileBannerTitle>
     </VBanner>
     <Divider />
@@ -193,15 +193,14 @@ const PersonDetail = ({ person }, ...props) => (
 
       <PersonBadgeSection person={person} />
     </ActivityContainer>
-    <GridContainer> {/* Main Workspace */}
 
-      <DetailItemMobile>
-        <p><Icon type='history' /> </p>
-      </DetailItemMobile>
-      <DetailItemMobile>
-        <p><Icon type='safety' /> </p>
-      </DetailItemMobile>
-    </GridContainer>
+    <DetailItemMobile>
+      <p><Icon type='history' /> </p>
+    </DetailItemMobile>
+    <DetailItemMobile>
+      <p><Icon type='safety' /> </p>
+    </DetailItemMobile>
+    <Divider />
   </div>
 
 )
