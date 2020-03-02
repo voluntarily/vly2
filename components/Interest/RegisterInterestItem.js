@@ -34,7 +34,7 @@ export const RegisterInterestItem = ({
   const [showRejectForm, setShowRejectForm] = useState(false)
   const [showMessageForm, setShowMessageForm] = useState(false)
   // Options to configure the controls on this page based on the state of the interest.
-  const options = getOptions(interest)
+  const options = getOptions(interest.status)
 
   const handleAcceptSubmit = (ok, message) => {
     setShowAcceptForm(false)
@@ -182,8 +182,8 @@ RegisterInterestItem.propTypes = {
 }
 
 // Returns some config options for this component, depending on the state of the interest we're viewing.
-const getOptions = (interest) => {
-  switch (interest.status) {
+const getOptions = (status) => {
+  switch (status) {
     case null:
       return {
         showStatus: false,
