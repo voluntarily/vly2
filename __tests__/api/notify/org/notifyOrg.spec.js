@@ -81,7 +81,7 @@ test.serial('Fail to access notify api as not an orgAdmin of org', async t => {
     .expect('Content-Type', /json/)
   t.is(res.status, 403)
 })
-test.only('trigger an email inviting the recipient to become a member of an organisation', async t => {
+test.serial('trigger an email inviting the recipient to become a member of an organisation', async t => {
   const res = await request(server)
     .get(t.context.url)
     .set('Accept', 'application/json')
@@ -89,5 +89,6 @@ test.only('trigger an email inviting the recipient to become a member of an orga
     .expect(200)
     .expect('Content-Type', /json/)
   t.is(res.status, 200)
-  t.truthy(res.body.info.message.includes('Confirm Membership'))
+  t.truthy(res.body.info.response, 'nodemailer-mock success')
+  t.truthy(res.body.info.originalMessage.subject.includes('Inviting you to join Voluntarily Administrators'))
 })
