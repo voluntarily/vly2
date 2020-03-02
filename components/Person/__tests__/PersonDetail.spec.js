@@ -24,5 +24,5 @@ test('render person details', t => {
   t.is(wrapper.find('h1').text(), t.context.me.name)
   t.truthy(wrapper.find(ActivityContainer))
   t.truthy(wrapper.find(VBanner))
-  t.truthy(wrapper.find(ProfileBannerTitle))
+  t.is(wrapper.find(ProfileBannerTitle).length, 1)
 })
