@@ -58,7 +58,7 @@ const RegisterInterestForm = ({
         <p>
           <FormattedMessage
             id='registerinterestitem.accepttcs'
-            defaultMessage='I accept the '
+            defaultMessage='By clicking Send you agree to the '
           />
           <a
             href='/terms'
