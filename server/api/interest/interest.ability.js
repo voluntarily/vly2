@@ -26,7 +26,7 @@ const ruleBuilder = async (session) => {
     inverted: true
   }]
 
-  const allRules = anonRules.slice(0)
+  // const allRules = anonRules.slice(0)
 
   const volunteerRules = []
 
@@ -119,9 +119,9 @@ const ruleBuilder = async (session) => {
 
   return {
     [Role.ANON]: anonRules,
+    [Role.ACTIVITY_PROVIDER]: volunteerRules,
     [Role.VOLUNTEER_PROVIDER]: volunteerRules,
     [Role.OPPORTUNITY_PROVIDER]: opportunityProviderRules,
-    [Role.ACTIVITY_PROVIDER]: allRules,
     [Role.ORG_ADMIN]: orgAdminRules,
     [Role.ADMIN]: adminRules
   }
