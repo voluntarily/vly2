@@ -107,6 +107,19 @@ const testScenarios = [
   },
   {
     role: 'volunteer',
+    action: 'list (no interests)',
+    makeRequest: async () => {
+      return request(server)
+        .get('/api/interests')
+        .set('Cookie', [`idToken=${sessions[7].idToken}`])
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 200)
+      t.is(response.body.length, 0)
+    }
+  },
+  {
+    role: 'volunteer',
     action: 'read (own interest)',
     makeRequest: async (context) => {
       return request(server)
