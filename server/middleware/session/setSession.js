@@ -81,6 +81,7 @@ const setSession = async (req, res, next) => {
       // Don't redirect user to an /api/ path if token is expred
       // otherwise after signing through they will be treated with a nice wall of json.
       // Should only happen if the access token expires while ajax is being exectued on a page.
+      // Unlikely to happen due to the client side token expiry check in getSession.
       const redirectUrl = req.originalUrl.startsWith('/api/') ? '/home/' : req.originalUrl;
 
       const qs = queryString.stringify({ redirect: redirectUrl });
