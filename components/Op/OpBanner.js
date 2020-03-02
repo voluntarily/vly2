@@ -42,7 +42,8 @@ const OpBanner = ({ op, children }) => {
         <meta property='og:description' content={description} />
         <meta property='og:image' content={op.imgUrl} />
       </Helmet>
-      <SideBarGrid>
+      {/* // add space for the action bar */}
+      <SideBarGrid style={{ paddingTop: '5rem' }}>
         <Left>
           <ItemImage src={op.imgUrl} alt={op.name} />
         </Left>

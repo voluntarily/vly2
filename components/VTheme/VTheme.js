@@ -606,3 +606,23 @@ export const ContactList = styled.ul`
     }
   }
 `
+
+/* dark banner across the page containing important information
+  e.g you have been invited - or event has been cancelled.
+  main text inside should contain an h4 title.
+*/
+export const PageAlert = styled.div`
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+
+  display: grid;
+  grid-template-columns: 3rem 3fr 1fr 1fr;
+
+  background-color: rgb(37, 15, 81);
+  margin-bottom: -5rem;
+  h4 {
+    color: white;
+    font-weight: 600;
+  }
+`
