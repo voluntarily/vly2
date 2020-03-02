@@ -4,6 +4,7 @@ const { Role } = require('../../services/authorize/role')
 const { TOPIC_PERSON__CREATE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
 const queryString = require('querystring')
+const { TokenExpiredError } = require('jsonwebtoken');
 const { jwtVerify } = require('./jwtVerify')
 const { getPersonRoles } = require('../../api/member/member.lib')
 const DEFAULT_SESSION = {
@@ -76,7 +77,7 @@ const setSession = async (req, res, next) => {
   } catch (e) {
     // console.error('Jwt Verify failed', e)
 
-    if (e.name === 'TokenExpiredError') {
+    if (e instanceof TokenExpiredError) {
       let redirectUrl;
 
       // Don't redirect user to an /api/ path if token is expred
