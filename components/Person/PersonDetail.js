@@ -1,6 +1,5 @@
 import { defaultToHttpScheme } from '../../lib/urlUtil'
 import { Divider, Icon } from 'antd'
-import Markdown from 'markdown-to-jsx'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -8,7 +7,8 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
 import TagDisplay from '../Tags/TagDisplay'
-import { ActivityContainer, Html } from '../VTheme/VTheme'
+import { ActivityContainer } from '../VTheme/VTheme'
+import Html from '../VTheme/Html'
 import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
 import { PersonBadgeSection } from './PersonBadge'
@@ -19,16 +19,6 @@ const DetailItem = styled.div`
   margin-bottom: 0.5rem;
   @media screen and (max-width: 767px) {
     display: none;
-  }
-`
-const DetailItemMobile = styled.div`
-  display: none;
-
-  @media screen and (max-width: 767px) {
-    display: initial;
-    margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  position: relative;
   }
 `
 
@@ -65,29 +55,32 @@ const PersonDetail = ({ person }, ...props) => (
       </ProfileBannerTitle>
     </VBanner>
     <Divider />
-    <ActivityContainer>
-      <h2><FormattedMessage defaultMessage='About' id='personAbout' description='About section header for a person profile' /> </h2>
+    {(person.about || person.tags) &&
       <>
-        {person.about &&
+        <ActivityContainer>
+          <h2><FormattedMessage defaultMessage='About' id='personAbout' description='About section header for a person profile' /> </h2>
           <>
-            <Html children={person.about || ''} />
-            <Divider />
-          </>}
-        {person.tags &&
-          <>
-            <h5>
-              <FormattedMessage
-                defaultMessage='Interests and Skills'
-                id='person.skills.title'
-                description='subheading for tags on person details page'
-              />
-            </h5>
-            <TagDisplay tags={person.tags} />
-          </>}
-      </>
+            {person.about &&
+              <>
+                <Html children={person.about || ''} />
+                <Divider />
+              </>}
+            {person.tags &&
+              <>
+                <h5>
+                  <FormattedMessage
+                    defaultMessage='Interests and Skills'
+                    id='person.skills.title'
+                    description='subheading for tags on person details page'
+                  />
+                </h5>
+                <TagDisplay tags={person.tags} />
+              </>}
+          </>
 
-    </ActivityContainer>
-    <Divider />
+        </ActivityContainer>
+        <Divider />
+      </>}
     <ActivityContainer>
       <h2>
         <FormattedMessage
