@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
 import TagDisplay from '../Tags/TagDisplay'
-import { ActivityContainer } from '../VTheme/VTheme'
+import { ActivityContainer, Html } from '../VTheme/VTheme'
 import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
 import { PersonBadgeSection } from './PersonBadge'
@@ -66,15 +66,15 @@ const PersonDetail = ({ person }, ...props) => (
     </VBanner>
     <Divider />
     <ActivityContainer>
-      <h2>About</h2>
-      <div>
+      <h2><FormattedMessage defaultMessage='About' id='personAbout' description='About section header for a person profile' /> </h2>
+      <>
         {person.about &&
-          <div>
-            <Markdown children={person.about || ''} />
+          <>
+            <Html children={person.about || ''} />
             <Divider />
-          </div>}
+          </>}
         {person.tags &&
-          <div>
+          <>
             <h5>
               <FormattedMessage
                 defaultMessage='Interests and Skills'
@@ -83,13 +83,19 @@ const PersonDetail = ({ person }, ...props) => (
               />
             </h5>
             <TagDisplay tags={person.tags} />
-          </div>}
-      </div>
+          </>}
+      </>
 
     </ActivityContainer>
     <Divider />
     <ActivityContainer>
-      <h2>Contact</h2>
+      <h2>
+        <FormattedMessage
+          defaultMessage='Contact'
+          id='personContact'
+          description='Heading for contact details on person details page'
+        />
+      </h2>
       <InfoSection>
         <PersonUl>
 
@@ -210,12 +216,6 @@ const PersonDetail = ({ person }, ...props) => (
       <PersonBadgeSection person={person} />
     </ActivityContainer>
 
-    <DetailItemMobile>
-      <p><Icon type='history' /> </p>
-    </DetailItemMobile>
-    <DetailItemMobile>
-      <p><Icon type='safety' /> </p>
-    </DetailItemMobile>
     <Divider />
   </div>
 
