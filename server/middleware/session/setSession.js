@@ -3,6 +3,7 @@ const { Role } = require('../../services/authorize/role')
 
 const { TOPIC_PERSON__CREATE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
+const queryString = require('querystring')
 const { jwtVerify } = require('./jwtVerify')
 const { getPersonRoles } = require('../../api/member/member.lib')
 const DEFAULT_SESSION = {
@@ -76,7 +77,26 @@ const setSession = async (req, res, next) => {
     // console.error('Jwt Verify failed', e)
 
     if (e.name === 'TokenExpiredError') {
-      res.clearCookie('idToken')
+      let redirectUrl;
+
+      // Don't redirect user to an /api/ path if token is expred
+      // otherwise after signing through they will be treated with a nice wall of json.
+      // Should only happen if the access token expires while ajax is being exectued on a page.
+      const redirectUrl = req.originalUrl.startsWith('/api/') ? '/home/' : req.originalUrl;
+
+      const qs = queryString.stringify({ redirect: redirectUrl });
+      // Can't use res.clearCookie or res.redirect functions together
+      // they both set HEAD to be finished in express.
+
+      // Have to set location and set-cookie header manually.
+
+      // Must clear idToken header otherwise we create a infinite loop of redirects since next page load
+      // will throw the same TokenExpiredError
+      res.setHeader('Location', `/auth/sign-thru?${qs}`);
+      res.setHeader('Set-Cookie', 'idToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;')
+      res.statusCode = 301;
+      res.end();
+      return;
     }
 
     user = false

@@ -30,6 +30,9 @@ const getSigningKey = (header, callback) => {
 const jwtVerify = idToken => {
   return new Promise((resolve, reject) => {
     jwt.verify(idToken, getSigningKey, {}, (err, decoded) => {
+      // const e = new Error();
+      // e.name = "TokenExpiredError";
+      // return reject(e)
       if (err) { return reject(err) }
       resolve(decoded)
     })
