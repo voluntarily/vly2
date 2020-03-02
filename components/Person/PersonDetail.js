@@ -59,12 +59,12 @@ const PersonDetail = ({ person }, ...props) => (
       <>
         <ActivityContainer>
           <h2><FormattedMessage defaultMessage='About' id='personAbout' description='About section header for a person profile' /> </h2>
-          <>
+          <div>
             {person.about &&
-              <>
+              <div>
                 <Html children={person.about || ''} />
                 <Divider />
-              </>}
+              </div>}
             {person.tags &&
               <div>
                 <h5>
@@ -76,7 +76,7 @@ const PersonDetail = ({ person }, ...props) => (
                 </h5>
                 <TagDisplay tags={person.tags} />
               </div>}
-          </>
+          </div>
 
         </ActivityContainer>
         <Divider />
