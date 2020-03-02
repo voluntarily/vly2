@@ -50,7 +50,7 @@ const interests = [
     _id: '5cc903e5f94141437622ceaa',
     person: people[0],
     opportunity: ops[0],
-    comment: "I'm Interested",
+    messages: [],
     status: 'interested'
   }
 ]
@@ -65,8 +65,8 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
       <RegisterInterestSection
-        opID={opid}
-        meID={meid}
+        opid={opid}
+        meid={meid}
       />
     </Provider>
   )
@@ -105,8 +105,8 @@ test.serial('mount RegisterInterestSection with op and me', async t => {
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
       <RegisterInterestSection
-        opID={opid}
-        meID={meid}
+        opid={opid}
+        meid={meid}
       />
     </Provider>
   )
