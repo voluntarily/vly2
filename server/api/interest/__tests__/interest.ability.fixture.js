@@ -54,6 +54,12 @@ const people = [
     name: 'Volunteer + Opportunity Provider 1',
     email: 'volunteer.opportunity.provider.1@example.com',
     role: [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER]
+  },
+  {
+    _id: generateObjectId(),
+    name: 'Volunteer 3',
+    email: 'volunteer.3@example.com',
+    role: [Role.VOLUNTEER_PROVIDER]
   }
 ]
 
