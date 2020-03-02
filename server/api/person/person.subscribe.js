@@ -52,7 +52,6 @@ module.exports = (server) => {
   PubSub.subscribe(TOPIC_INTEREST__UPDATE, async (msg, interest) => {
     // a new interest has been created or a interest status has changed
     // send email to the volunteers
-    // console.log('vp', TOPIC_MEMBER__UPDATE, interest)
 
     if ([
       InterestStatus.INTERESTED,
@@ -66,9 +65,7 @@ module.exports = (server) => {
 
       interest.person.href = `${config.appUrl}/home`
       const template = `interest_vp_${interest.type}_${interest.status}`
-      console.log('vp template', template)
       const message = interest.messages.slice(-1)[0] // last element should be most recent
-      console.log('interest message', message)
       const props = { from: op.requestor, op, interest, message }
       if (interest.status === InterestStatus.INVITED) {
         props.attachment = [getICalendar(op)]
@@ -81,7 +78,6 @@ module.exports = (server) => {
   PubSub.subscribe(TOPIC_INTEREST__UPDATE, async (msg, interest) => {
     // a new interest has been created or a interest status has changed
     // send email to the opportunity requestor
-    // console.log('op', TOPIC_MEMBER__UPDATE, interest)
     if ([
       InterestStatus.INTERESTED,
       InterestStatus.COMMITTED
@@ -92,7 +88,6 @@ module.exports = (server) => {
       op.href = `${config.appUrl}/ops/${op._id}`
 
       const template = `interest_op_${interest.type}_${interest.status}`
-      console.log('template', template)
       const message = interest.messages.slice(-1)[0] // last element should be most recent
       const props = { from: interest.person, op, interest, message }
       const info = await emailPerson(template, op.requestor, props)
@@ -104,7 +99,6 @@ module.exports = (server) => {
 PubSub.subscribe(TOPIC_INTEREST__MESSAGE, async (msg, interest) => {
   // a new message from vp or op has been attached to an interest record
   // send email to other person.
-  console.log('op', TOPIC_INTEREST__MESSAGE, interest)
   const op = interest.opportunity
   op.href = `${config.appUrl}/ops/${op._id}`
 

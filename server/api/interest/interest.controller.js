@@ -108,7 +108,6 @@ const updateInterest = async (req, res) => {
       ...(interest.status && { $set: { status: interest.status } }),
       ...(interest.messages && { $push: { messages: interest.messages } })
     }
-    console.log(updates)
     const result = await Interest
       .accessibleBy(req.ability, Action.UPDATE)
       .updateOne(req.params, updates)

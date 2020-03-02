@@ -42,7 +42,7 @@ test('Trigger TOPIC_PERSON__CREATE', async t => {
   const newPerson = t.context.people[0]
   const done = new Promise((resolve, reject) => {
     PubSub.subscribe(TOPIC_PERSON__EMAIL_SENT, async (msg, info) => {
-      t.is(info.response, 'nodemailer-mock success')
+      t.is(info.originalMessage.to, t.context.people[0].email)
       resolve(true)
     })
   })
@@ -61,7 +61,7 @@ test('Trigger TOPIC_MEMBER__UPDATE', async t => {
   }
   const done = new Promise((resolve, reject) => {
     PubSub.subscribe(TOPIC_PERSON__EMAIL_SENT, async (msg, info) => {
-      t.is(info.response, 'nodemailer-mock success')
+      t.is(info.originalMessage.to, t.context.people[0].email)
       resolve(true)
     })
   })
@@ -95,11 +95,12 @@ test('Trigger TOPIC_INTEREST__UPDATE INTERESTED', async t => {
       body: 'testing TOPIC_INTEREST__UPDATE INTERESTED',
       author: t.context.people[1]._id
     }],
+    type: 'accept',
     status: InterestStatus.INTERESTED
   }
   const done = new Promise((resolve, reject) => {
     PubSub.subscribe(TOPIC_PERSON__EMAIL_SENT, async (msg, info) => {
-      t.is(info.response, 'nodemailer-mock success')
+      t.is(info.originalMessage.to, t.context.people[0].email)
       spy()
       callcount++
       if (callcount === 2) { resolve(true) }
@@ -121,11 +122,12 @@ test('Trigger TOPIC_INTEREST__UPDATE INVITED', async t => {
       body: 'testing TOPIC_INTEREST__UPDATE INTERESTED',
       author: t.context.people[1]._id
     }],
+    type: 'accept',
     status: InterestStatus.INVITED
   }
   const done = new Promise((resolve, reject) => {
     PubSub.subscribe(TOPIC_PERSON__EMAIL_SENT, async (msg, info) => {
-      t.is(info.response, 'nodemailer-mock success')
+      t.is(info.originalMessage.to, t.context.people[0].email)
       spy()
       callcount++
       if (callcount === 2) { resolve(true) }
@@ -146,11 +148,12 @@ test('Trigger TOPIC_INTEREST__UPDATE COMMITTED', async t => {
       body: 'testing TOPIC_INTEREST__UPDATE INTERESTED',
       author: t.context.people[1]._id
     }],
+    type: 'accept',
     status: InterestStatus.COMMITTED
   }
   const done = new Promise((resolve, reject) => {
     PubSub.subscribe(TOPIC_PERSON__EMAIL_SENT, async (msg, info) => {
-      t.is(info.response, 'nodemailer-mock success')
+      t.is(info.originalMessage.to, t.context.people[0].email)
       spy()
       resolve(true)
     })
