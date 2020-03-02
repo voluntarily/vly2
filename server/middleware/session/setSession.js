@@ -78,8 +78,6 @@ const setSession = async (req, res, next) => {
     // console.error('Jwt Verify failed', e)
 
     if (e instanceof TokenExpiredError) {
-      let redirectUrl;
-
       // Don't redirect user to an /api/ path if token is expred
       // otherwise after signing through they will be treated with a nice wall of json.
       // Should only happen if the access token expires while ajax is being exectued on a page.
