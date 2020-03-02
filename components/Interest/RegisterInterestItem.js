@@ -19,10 +19,10 @@ import { InterestStatus } from '../../server/api/interest/interest.constants'
 5. display new status
 */
 
-const MyAffix = ({ children }) => {
+const SafeAffix = ({ children }) => {
   return (process.env.NODE_ENV === 'test')
     ? <>{children}</>
-    : (children) => <Affix style={{ width: '100%', position: 'absolute', top: 0, left: 0 }} offsetTop={55}>{children}</Affix>
+    : <Affix style={{ width: '100%', position: 'absolute', top: 0, left: 0 }} offsetTop={55}>{children}</Affix>
 }
 export const RegisterInterestItem = ({
   interest,
@@ -132,13 +132,13 @@ export const RegisterInterestItem = ({
     <>
       {options.showStatus
         ? (
-          <MyAffix>
+          <SafeAffix>
             <PageAlert>
               <Icon type='history' style={{ fontSize: '32px', color: 'white' }} />
               <h4>{options.statusMessage}</h4>
               <RegisterButtons />
             </PageAlert>
-          </MyAffix>
+          </SafeAffix>
         )
         : <RegisterButtons />}
 
