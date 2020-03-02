@@ -26,7 +26,7 @@ const ruleBuilder = async (session) => {
     inverted: true
   }]
 
-  const allRules = anonRules.slice(0)
+  // const allRules = anonRules.slice(0)
 
   const volunteerRules = []
 
