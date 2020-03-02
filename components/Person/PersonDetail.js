@@ -66,7 +66,7 @@ const PersonDetail = ({ person }, ...props) => (
                 <Divider />
               </>}
             {person.tags &&
-              <>
+              <div>
                 <h5>
                   <FormattedMessage
                     defaultMessage='Interests and Skills'
@@ -75,7 +75,7 @@ const PersonDetail = ({ person }, ...props) => (
                   />
                 </h5>
                 <TagDisplay tags={person.tags} />
-              </>}
+              </div>}
           </>
 
         </ActivityContainer>
