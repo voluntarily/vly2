@@ -58,7 +58,8 @@ const testScenarios = [
         .send({
           person: context.fixtures.people[0]._id,
           opportunity: context.fixtures.opportunities[0]._id,
-          comment: 'Test comment',
+          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          type: 'accept',
           status: InterestStatus.INTERESTED
         })
     },
@@ -73,7 +74,8 @@ const testScenarios = [
       return request(server)
         .put(`/api/interests/${context.fixtures.interests[0]._id}`)
         .send({
-          comment: 'Updated test comment'
+          message: [{ body: 'updated test comment', author: context.fixtures.people[0]._id }],
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -136,7 +138,8 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[2].idToken}`])
         .send({
           opportunity: context.fixtures.opportunities[0]._id,
-          comment: 'Test comment'
+          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -152,7 +155,8 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[2].idToken}`])
         .send({
           opportunity: context.fixtures.opportunities[0]._id,
-          comment: 'Test comment',
+          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          type: 'accept',
           status: InterestStatus.INVITED
         })
     },
@@ -170,7 +174,8 @@ const testScenarios = [
         .send({
           person: context.fixtures.people[3]._id,
           opportunity: context.fixtures.opportunities[0]._id,
-          comment: 'Test comment'
+          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -188,7 +193,8 @@ const testScenarios = [
           messages: {
             body: 'Updated message',
             author: ObjectId()
-          }
+          },
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -208,7 +214,8 @@ const testScenarios = [
           messages: {
             body: 'Committed message',
             author: ObjectId()
-          }
+          },
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -288,7 +295,8 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
         .send({
           opportunity: context.fixtures.opportunities[0]._id,
-          comment: 'Test comment'
+          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -303,7 +311,9 @@ const testScenarios = [
         .put(`/api/interests/${context.fixtures.interests[0]._id}`)
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
         .send({
-          status: InterestStatus.INVITED
+          status: InterestStatus.INVITED,
+          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -408,7 +418,8 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
         .send({
           opportunity: context.fixtures.opportunities[0]._id,
-          comment: 'Test comment'
+          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -423,7 +434,9 @@ const testScenarios = [
         .put(`/api/interests/${context.fixtures.interests[0]._id}`)
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
         .send({
-          status: InterestStatus.INVITED
+          status: InterestStatus.INVITED,
+          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -438,7 +451,9 @@ const testScenarios = [
         .put(`/api/interests/${context.fixtures.interests[2]._id}`)
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
         .send({
-          status: InterestStatus.INVITED
+          status: InterestStatus.INVITED,
+          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -492,7 +507,8 @@ const testScenarios = [
         .send({
           person: context.fixtures.people[1]._id,
           opportunity: context.fixtures.opportunities[0]._id,
-          comment: 'Test comment',
+          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          type: 'accept',
           status: InterestStatus.INVITED
         })
     },
@@ -508,7 +524,9 @@ const testScenarios = [
         .put(`/api/interests/${context.fixtures.interests[0]._id}`)
         .set('Cookie', [`idToken=${sessions[0].idToken}`])
         .send({
-          status: InterestStatus.INVITED
+          status: InterestStatus.INVITED,
+          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          type: 'accept'
         })
     },
     assertions: (t, response) => {

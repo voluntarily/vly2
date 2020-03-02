@@ -118,31 +118,31 @@ const interests = [
   {
     person: people[2]._id,
     opportunity: opportunities[0]._id,
-    comment: 'Test comment',
+    message: [{ body: 'Test comment', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[3]._id,
     opportunity: opportunities[0]._id,
-    comment: 'Test comment',
+    message: [{ body: 'Test comment', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[3]._id,
     opportunity: opportunities[1]._id,
-    comment: 'Test comment 2',
+    message: [{ body: 'Test comment 2', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[6]._id,
     opportunity: opportunities[0]._id,
-    comment: 'Test comment 1',
+    message: [{ body: 'Test comment 1', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[6]._id,
     opportunity: opportunities[1]._id,
-    comment: 'Test comment 2',
+    message: [{ body: 'Test comment 2', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   }
 ]
