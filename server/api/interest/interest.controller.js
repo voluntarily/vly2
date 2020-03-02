@@ -19,7 +19,7 @@ const listInterests = async (req, res) => {
       // populate out ready for the opdetailspage display
       try {
         const interest = await getMyOpInterestDetail(req.query.op, req.query.me)
-        return res.json(interest)
+        return res.json([interest])
       } catch (e) {
         // its not an error to have no interests yet.
         return res.json([])
@@ -102,7 +102,6 @@ const createInterest = async (req, res) => {
 const updateInterest = async (req, res) => {
   try {
     const interest = req.body
-    console.log('server updateInterest', interest)
 
     const updates = {
       // this ... conditionally adds the $set to the update if value is present

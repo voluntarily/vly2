@@ -4,6 +4,9 @@ import { server, appReady } from '../../../server'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import { loadInterestFixtures, clearInterestFixtures, sessions } from './interest.ability.fixture'
 import { InterestStatus } from '../interest.constants'
+import mongoose from 'mongoose'
+
+const ObjectId = mongoose.Types.ObjectId
 
 test.before('setup database and app', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -176,17 +179,40 @@ const testScenarios = [
   },
   {
     role: 'volunteer',
+    action: 'update message',
+    makeRequest: async (context) => {
+      return request(server)
+        .put(`/api/interests/${context.fixtures.interests[0]._id}`)
+        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .send({
+          messages: {
+            body: 'Updated message',
+            author: ObjectId()
+          }
+        })
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 200)
+    }
+  },
+  {
+    // a volunteer can change status to COMMITTED
+    role: 'volunteer',
     action: 'update',
     makeRequest: async (context) => {
       return request(server)
         .put(`/api/interests/${context.fixtures.interests[0]._id}`)
         .set('Cookie', [`idToken=${sessions[2].idToken}`])
         .send({
-          comment: 'Updated test comment'
+          status: InterestStatus.COMMITTED,
+          messages: {
+            body: 'Committed message',
+            author: ObjectId()
+          }
         })
     },
     assertions: (t, response) => {
-      t.is(response.statusCode, 403)
+      t.is(response.statusCode, 200)
     }
   },
   {
