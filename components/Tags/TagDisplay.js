@@ -3,8 +3,10 @@ import { TagStyle } from '../VTheme/VTheme'
 import styled from 'styled-components'
 
 const TagContainer = styled.div`
-max-width: 100%;
-display: block;
+display: inline-block;
+position: relative;
+width: auto;
+
 `
 
 export function TagDisplay ({ tags }) {

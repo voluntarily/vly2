@@ -14,33 +14,6 @@ import PersonPronouns from './PersonPronoun'
 import { PersonBadgeSection } from './PersonBadge'
 import { VBanner, VBannerImg, ProfileBannerTitle } from '../VTheme/Profile'
 
-const ProfileGrid = styled.div`
-  display: grid;
-  grid-template-columns: 16rem 1fr;
-  gap: 5rem;
-
-  @media screen and (min-width: 768px) and (max-width: 1280px) {
-    grid-template-columns: 16rem 1fr;
-    gap: 5rem;
-  }
-
-  @media screen and (max-width: 767px) {
-    grid-template-columns: calc(100vw - 2rem);
-  }
-
-  @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
-    /* iPhone X */
-    grid-template-columns: calc(100vw - 2rem);
-  }
-`
-
-const ProfileImage = styled.img`
-  max-width: 100%;
-  min-height: 256px;
-  display: block;
-  margin: 0 auto;
-`
-
 const DetailItem = styled.div`
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -86,8 +59,9 @@ const PersonDetail = ({ person }, ...props) => (
       <VBannerImg src={person.imgUrl} alt={person.nickname} />
       <ProfileBannerTitle>
         <h1>{person.name}</h1>
-        <p> {person.job}, {person.placeOfWork}</p>
 
+        {person.job &&
+          <p> {person.job}<br />{person.placeOfWork}</p>}
       </ProfileBannerTitle>
     </VBanner>
     <Divider />
@@ -112,98 +86,113 @@ const PersonDetail = ({ person }, ...props) => (
       <h2>Contact</h2>
       <InfoSection>
         <PersonUl>
+
           <li>
             <a href={`mailto:${person.email}`}>
               <StyledIcon type='mail' />
               {person.email}
             </a>
           </li>
-          <li>
-            <a href={`tel:${person.phone}`}>
-              <StyledIcon type='phone' />
-              {person.phone}
-            </a>
-          </li>
-          <li>
-            <a href={defaultToHttpScheme(person.website)} rel='noopener noreferrer' target='_blank'>
-              <StyledIcon type='global' />
-              {person.website}
-            </a>
-          </li>
-          <li>
-            <a href={`https://www.facebook.com/${person.facebook}`} rel='noopener noreferrer' target='_blank'>
-              <StyledIcon type='facebook' />
-              {person.facebook}
-            </a>
-          </li>
-          <li>
-            <a href={`https://www.twitter.com/${person.twitter}`} rel='noopener noreferrer' target='_blank'>
-              <StyledIcon type='twitter' />
-              {person.twitter}
-            </a>
-          </li>
-          <li>
-            <StyledIcon type='compass' />
-            {person.location}
-          </li>
-          <li>
-            <StyledIcon type='idcard' />
-            <PersonPronouns pronoun={person.pronoun} />
-          </li>
-          <li>
-            <StyledIcon type='coffee' />
-            <PersonRoles roles={person.role} />
-          </li>
-          <li>
-            <StyledIcon type='book' />
-            {person.education}
-          </li>
-          <li>
-            <StyledIcon type='bank' />
-            {person.placeOfWork}
-          </li>
-          <li>
-            <StyledIcon type='coffee' />
-            {person.job}
-          </li>
+          {person.phone &&
+            <li>
+              <a href={`tel:${person.phone}`}>
+                <StyledIcon type='phone' />
+                {person.phone}
+              </a>
+            </li>}
+          {person.website &&
+            <li>
+              <a href={defaultToHttpScheme(person.website)} rel='noopener noreferrer' target='_blank'>
+                <StyledIcon type='global' />
+                {person.website}
+              </a>
+            </li>}
+          {person.facebook &&
+            <li>
+              <a href={`https://www.facebook.com/${person.facebook}`} rel='noopener noreferrer' target='_blank'>
+                <StyledIcon type='facebook' />
+                {person.facebook}
+              </a>
+            </li>}
+          {person.twitter &&
+            <li>
+              <a href={`https://www.twitter.com/${person.twitter}`} rel='noopener noreferrer' target='_blank'>
+                <StyledIcon type='twitter' />
+                {person.twitter}
+              </a>
+            </li>}
+          {person.location &&
+            <li>
+              <StyledIcon type='compass' />
+              {person.location}
+            </li>}
+          {person.pronoun &&
+            <li>
+              <StyledIcon type='idcard' />
+              <PersonPronouns pronoun={person.pronoun} />
+            </li>}
+          {person.role &&
+            <li>
+              <StyledIcon type='coffee' />
+              <PersonRoles roles={person.role} />
+            </li>}
+          {person.education &&
+            <li>
+              <StyledIcon type='book' />
+              {person.education}
+            </li>}
+          {person.placeOfWork &&
+            <li>
+              <StyledIcon type='bank' />
+              {person.placeOfWork}
+            </li>}
+          {person.job &&
+            <li>
+              <StyledIcon type='coffee' />
+              {person.job}
+            </li>}
         </PersonUl>
       </InfoSection>
     </ActivityContainer>
+    <Divider />
+    <ActivityContainer>
+      <h2>
+        <FormattedMessage
+          id='PersonDetail.subheading.membership'
+          defaultMessage='Member of'
+          description='Header for list of orgs I belong to'
+        />
+      </h2>
+      <div>
+        <MemberUl members={person.orgMembership} />
+        {person.orgMembership &&
+          <DetailItem />}
+        {person.orgFollowership &&
+          <DetailItem>
+            <h5>
+              <FormattedMessage
+                id='PersonDetail.subheading.following'
+                defaultMessage='Following'
+                description='Header for list of orgs I follow'
+              />
+            </h5>
+            <MemberUl members={person.orgFollowership} />
+          </DetailItem>}
+      </div>
+    </ActivityContainer>
+    <Divider />
+    <ActivityContainer>
 
-    <GridContainer>
-      {person.orgMembership &&
-        <DetailItem>
-          <H4>
-            <FormattedMessage
-              id='PersonDetail.subheading.membership'
-              defaultMessage='Member of'
-              description='Header for list of orgs I belong to'
-            />
-          </H4>
-          <MemberUl members={person.orgMembership} />
-        </DetailItem>}
-      {person.orgFollowership &&
-        <DetailItem>
-          <H4>
-            <FormattedMessage
-              id='PersonDetail.subheading.following'
-              defaultMessage='Following'
-              description='Header for list of orgs I follow'
-            />
-          </H4>
-          <MemberUl members={person.orgFollowership} />
-        </DetailItem>}
-      <DetailItem>
-        <H4>
-          <FormattedMessage
-            id='PersonDetail.subheading.achievements'
-            defaultMessage='Recognition'
-            description='Header for list of badges I have obtained'
-          />
-        </H4>
-        <PersonBadgeSection person={person} />
-      </DetailItem>
-    </GridContainer>
+      <h2>
+        <FormattedMessage
+          id='PersonDetail.subheading.achievements'
+          defaultMessage='Recognition'
+          description='Header for list of badges I have obtained'
+        />
+      </h2>
+
+      <PersonBadgeSection person={person} />
+    </ActivityContainer>
     <GridContainer> {/* Main Workspace */}
 
       <DetailItemMobile>
