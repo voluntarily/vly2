@@ -65,7 +65,8 @@ module.exports = (server) => {
       op.href = `${config.appUrl}/ops/${op._id}`
 
       interest.person.href = `${config.appUrl}/home`
-      const template = `interest_vp_${interest.status}`
+      const template = `interest_vp_${interest.type}_${interest.status}`
+      console.log('vp template', template)
       const message = interest.messages.slice(-1)[0] // last element should be most recent
       console.log('interest message', message)
       const props = { from: op.requestor, op, interest, message }
@@ -83,14 +84,15 @@ module.exports = (server) => {
     // console.log('op', TOPIC_MEMBER__UPDATE, interest)
     if ([
       InterestStatus.INTERESTED,
-      InterestStatus.COMMITTED,
-      InterestStatus.DECLINED
+      InterestStatus.COMMITTED
+      // InterestStatus.DECLINED
     ].includes(interest.status)) {
       const op = interest.opportunity
       op.requestor.href = `${config.appUrl}/home`
       op.href = `${config.appUrl}/ops/${op._id}`
 
-      const template = `interest_op_${interest.status}`
+      const template = `interest_op_${interest.type}_${interest.status}`
+      console.log('template', template)
       const message = interest.messages.slice(-1)[0] // last element should be most recent
       const props = { from: interest.person, op, interest, message }
       const info = await emailPerson(template, op.requestor, props)

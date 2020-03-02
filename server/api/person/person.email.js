@@ -19,7 +19,7 @@ module.exports.emailPerson = async (template, to, props, renderOnly = false) => 
       from: 'no-reply@voluntarily.nz'
     },
     // uncomment below to send emails in development/test env:
-    send: true,
+    // send: true,
     subjectPrefix: config.env === 'production' ? false : `[${config.env.toUpperCase()}] `,
 
     // uncomment the line below to see preview email

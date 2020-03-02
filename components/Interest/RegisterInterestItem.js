@@ -146,7 +146,7 @@ export const RegisterInterestItem = ({
         id='acceptRegisterInterestForm'
         title={options.acceptFormTitle}
         prompt={options.acceptFormPrompt}
-        showTerms={!interest.termsAccepted}
+        showTerms={!interest.status}
         onSubmit={handleAcceptSubmit}
         visible={showAcceptForm}
       />

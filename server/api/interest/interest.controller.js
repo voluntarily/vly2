@@ -90,6 +90,7 @@ const createInterest = async (req, res) => {
     await interest.save()
 
     const interestDetail = await getInterestDetail(interest._id)
+    interestDetail.type = 'accept'
     PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
 
     res.json(interestDetail)
@@ -102,11 +103,9 @@ const createInterest = async (req, res) => {
 const updateInterest = async (req, res) => {
   try {
     const interest = req.body
-
     const updates = {
       // this ... conditionally adds the $set to the update if value is present
       ...(interest.status && { $set: { status: interest.status } }),
-      ...(interest.termsAccepted && { $set: { termsAccepted: interest.termsAccepted } }),
       ...(interest.messages && { $push: { messages: interest.messages } })
     }
     console.log(updates)
@@ -118,10 +117,11 @@ const updateInterest = async (req, res) => {
     }
 
     const interestDetail = await getInterestDetail(req.params._id)
-    if (interest.status) {
-      PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
-    } else {
+    interestDetail.type = interest.type
+    if (interest.type === 'message') {
       PubSub.publish(TOPIC_INTEREST__MESSAGE, interestDetail)
+    } else {
+      PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
     }
 
     res.json(interestDetail)

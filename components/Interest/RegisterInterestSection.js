@@ -18,7 +18,7 @@ const newInterest = (meid, opid) => {
     person: meid,
     opportunity: opid,
     status: null,
-    dateAdded: Date.now(),
+    // dateAdded: Date.now(),
     messages: [],
     termsAccepted: false
   }
@@ -41,8 +41,8 @@ function getBackStatus (status) {
   switch (status) {
     case InterestStatus.INTERESTED:
       return null
-    case InterestStatus.INVITED:
-    case InterestStatus.COMMITTED:
+    case InterestStatus.INVITED: // op univites
+    case InterestStatus.COMMITTED: // vp I can't make it.
       return InterestStatus.INTERESTED
     default:
       return null
@@ -59,59 +59,46 @@ const RegisterInterestSection = ({ meid, opid }) => {
     }
     getInterests()
   }, [opid, meid])
-
   // If we haven't finished making the API request to the server yet...
   if (!interests.sync) {
     return (<Loading label='interests' entity={interests} />)
   }
 
   //  If we have access to the interests section of the Redux store.
-  //  Get the interest out of the store, if any.
-  let interest = null
+  //  Get the interest out of the store, if any. filter as there may be others present
+  const myinterests = interests.data.filter(interest => interest.person._id === meid)
+  const interest = myinterests.length ? myinterests[0] : newInterest(meid, opid)
 
-  if (interests.sync && interests.data.length > 0) {
-    interest = interests.data[0]
-  } else { // If not, use a blank interest.
-    interest = newInterest(meid, opid)
-  }
   // When the button is clicked to advance the interest status, make an appropriate api call.
-  const updateInterest = (id, status, message, termsAccepted) => {
-    console.log('updateInterest', id, status, message, termsAccepted)
-    const putInterest = { }
-    if (status && status !== interest.status) {
-      // only send if it changes.
-      putInterest.status = status
+  const updateInterest = (nextState, message, type) => {
+    const status = interest.status
+    const newStatus = nextState(status)
+    if (!newStatus) { // status is null, we have backed out of existance
+      // TODO: how does op learn of the withdrawal?
+      return dispatch(reduxApi.actions.interests.delete({ id: interest._id }))
     }
 
-    if (message) {
-      putInterest.messages = [{
-        body: message,
-        author: meid
-      }]
-      putInterest.termsAccepted = termsAccepted
+    const putInterest = {
+      ...((status !== newStatus) && { status: newStatus }),
+      ...(message && { messages: [{ body: message, author: meid }] }),
+      type
     }
 
     if (interest._id) {
-      console.log('putInterest', putInterest)
-      dispatch(reduxApi.actions.interests.put({ id }, { body: JSON.stringify(putInterest) }))
-    } else {
-      const postInterest = { ...interest, ...putInterest }
-      dispatch(reduxApi.actions.interests.post({}, { body: JSON.stringify(postInterest) }))
+      return dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(putInterest) }))
     }
+
+    const postInterest = { ...interest, ...putInterest }
+    dispatch(reduxApi.actions.interests.post({}, { body: JSON.stringify(postInterest) }))
   }
-  const handleAccept = (message, termsAccepted) => {
-    updateInterest(interest._id, getNextStatus(interest.status), message, termsAccepted)
+  const handleAccept = (message) => {
+    updateInterest(getNextStatus, message, 'accept')
   }
   const handleReject = (message) => {
-    const newStatus = getBackStatus(interest.status)
-    if (newStatus) {
-      updateInterest(interest._id, newStatus, message)
-    } else {
-      dispatch(reduxApi.actions.interests.delete({ id: interest._id }))
-    }
+    updateInterest(getBackStatus, message, 'reject')
   }
   const handleMessage = (message) => {
-    updateInterest(interest._id, interest.status, message, interest.termsAccepted)
+    updateInterest(status => status, message, 'message')
   }
 
   return (
@@ -121,7 +108,6 @@ const RegisterInterestSection = ({ meid, opid }) => {
         onAccept={handleAccept}
         onReject={handleReject}
         onMessage={handleMessage}
-
       />
       {/* removed until InterestConfirmationCard works.
           {(interest.status === InterestStatus.COMMITTED) && (
