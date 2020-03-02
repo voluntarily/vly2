@@ -17,7 +17,7 @@ const RegisterInterestForm = ({
   onSubmit,
   title, prompt, showTerms
 }) => {
-  const [message, setMessage] = useState('hello')
+  const [message, setMessage] = useState('')
   const handleOk = (e) => {
     onSubmit(true, message)
   }
