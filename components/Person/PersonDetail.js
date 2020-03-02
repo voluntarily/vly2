@@ -68,16 +68,22 @@ const PersonDetail = ({ person }, ...props) => (
     <ActivityContainer>
       <h2>About</h2>
       <div>
-        <Markdown children={person.about || ''} />
-        <Divider />
-        <h5>
-          <FormattedMessage
-            defaultMessage='Interests and Skills'
-            id='person.skills.title'
-            description='subheading for tags on person details page'
-          />
-        </h5>
-        <TagDisplay tags={person.tags} />
+        {person.about &&
+          <div>
+            <Markdown children={person.about || ''} />
+            <Divider />
+          </div>}
+        {person.tags &&
+          <div>
+            <h5>
+              <FormattedMessage
+                defaultMessage='Interests and Skills'
+                id='person.skills.title'
+                description='subheading for tags on person details page'
+              />
+            </h5>
+            <TagDisplay tags={person.tags} />
+          </div>}
       </div>
 
     </ActivityContainer>
@@ -159,14 +165,24 @@ const PersonDetail = ({ person }, ...props) => (
       <h2>
         <FormattedMessage
           id='PersonDetail.subheading.membership'
-          defaultMessage='Member of'
+          defaultMessage='Organisations'
           description='Header for list of orgs I belong to'
         />
       </h2>
       <div>
-        <MemberUl members={person.orgMembership} />
+
         {person.orgMembership &&
-          <DetailItem />}
+          <DetailItem>
+            <h5>
+              <FormattedMessage
+                id='PersonDetail.subheading.member'
+                defaultMessage='Member of'
+                description='Header for list of orgs I follow'
+              />
+            </h5>
+            <MemberUl members={person.orgMembership} />
+
+          </DetailItem>}
         {person.orgFollowership &&
           <DetailItem>
             <h5>
