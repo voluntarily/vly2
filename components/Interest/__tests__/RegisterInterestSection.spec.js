@@ -73,23 +73,22 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // we should see "i'm interested"
-  t.is(wrapper.find('button').first().text(), "I'm Interested")
+  t.is(wrapper.find('button').first().text(), 'Get Involved')
   wrapper.find('button').first().simulate('click')
-  t.is(wrapper.find('h4').first().text(), 'How do you want to get involved?')
 
   const postnewinterest = `${API_URL}/interests/`
   myMock.postOnce(postnewinterest, interests[0])
 
   // fill in comment on input field
-  const comment = wrapper.find('#register_interest_form_comment').first()
+  // add message
+  const comment = wrapper.find('textarea').first()
   comment.simulate('change', { target: { value: 'Test mount RegisterInterestSection with with no existing interest' } })
-  const checkbox = wrapper.find({ type: 'checkbox' }).last()
-  checkbox.simulate('change', { target: { checked: 'true' } })
+  wrapper.update()
 
-  wrapper.find('button').first().simulate('click')
+  wrapper.find('#sendBtn').first().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('h4').first().text(), 'Thank you for expressing your interest!')
+  // t.is(wrapper.find('h4').first().text(), 'Thank you for expressing your interest!')
 
   // press Get Involved! button
   t.truthy(myMock.done())
@@ -116,9 +115,7 @@ test.serial('mount RegisterInterestSection with op and me', async t => {
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // once loading completed should the thank you note
-  t.is(wrapper.find('h4').first().text(), 'Thank you for expressing your interest!')
+  t.is(wrapper.find('h4').first().text(), 'Awaiting an invitation')
   t.truthy(myMock.done())
   myMock.restore()
 })
-
-// showing status

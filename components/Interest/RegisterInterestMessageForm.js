@@ -1,13 +1,8 @@
 
-import { Button, Form, Modal, Checkbox } from 'antd'
+import { Button, Modal } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import { FormattedMessage } from 'react-intl'
 import { useState } from 'react'
-function hasErrors (fieldsError) {
-  return Object.keys(fieldsError).some(field => fieldsError[field])
-}
-// todo - get terms accepted from the interest record.
-
 /* when person clicks I'm Interested a popup form shows a text field
  and check box for accept terms, click the terms string to open terms in another window
  OK on the text box completes the interested record with the given message
@@ -18,20 +13,13 @@ function hasErrors (fieldsError) {
  */
 
 const RegisterInterestForm = ({
-  form,
   visible,
-  prevAccepted,
   onSubmit,
-  title, prompt
+  title, prompt, showTerms
 }) => {
-  const [termsAccepted, setTermsAccepted] = useState(prevAccepted)
+  const [message, setMessage] = useState('hello')
   const handleOk = (e) => {
-    e.preventDefault()
-    form.validateFields((err, values) => {
-      if (!err) {
-        onSubmit(true, values.message, termsAccepted)
-      }
-    })
+    onSubmit(true, message)
   }
   const handleCancel = (e) => {
     onSubmit(false)
@@ -45,12 +33,11 @@ const RegisterInterestForm = ({
       onCancel={handleCancel}
       width={380}
       footer={[
-        <Button key='esc' shape='round' onClick={handleCancel}>
+        <Button id='cancelBtn' key='esc' shape='round' onClick={handleCancel}>
           <FormattedMessage id='RegisterInterestMessageForm.cancel' defaultMessage='Cancel' description='Cancel button on popup form' />
         </Button>,
         <Button
-          key='submit' type='primary' shape='round'
-          disabled={hasErrors(form.getFieldsError()) || !termsAccepted}
+          key='submit' id='sendBtn' type='primary' shape='round'
           onClick={handleOk}
         >
           <FormattedMessage id='RegisterInterestMessageForm.send' defaultMessage='Send' description='Send button on popup form' />
@@ -58,55 +45,35 @@ const RegisterInterestForm = ({
       ]}
     >
       <p>{prompt}</p>
-      <Form.Item>
-        {form.getFieldDecorator('message')(
-          <TextArea rows='3' maxLength='200' />
-        )}
-      </Form.Item>
-      {!termsAccepted && (
-        <Form.Item>
-          {form.getFieldDecorator('accepted', {
-            rules: [
-              { required: true, message: 'please read and accept the terms' }
-            ]
-          })(
-            <Checkbox
-              defaultChecked={!!termsAccepted}
-              onChange={e => setTermsAccepted(e.target.checked)}
-            >
-              <FormattedMessage
-                id='registerinterestitem.accepttcs'
-                defaultMessage='I accept the '
-              />
-              <a
-                href='/terms'
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                <FormattedMessage
-                  id='registerinterestitem.termsandconditions'
-                  defaultMessage='Terms and Conditions'
-                />
-              </a>
-            </Checkbox>
-          )}
-
-        </Form.Item>
-      )}
+      <TextArea
+        rows='3'
+        maxLength='200'
+        value={message}
+        onChange={e => {
+          setMessage(e.target.value)
+        }}
+        style={{ marginBottom: '1rem' }}
+      />
+      {showTerms && (
+        <p>
+          <FormattedMessage
+            id='registerinterestitem.accepttcs'
+            defaultMessage='I accept the '
+          />
+          <a
+            href='/terms'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <FormattedMessage
+              id='registerinterestitem.termsandconditions'
+              defaultMessage='Terms and Conditions'
+            />
+          </a>
+        </p>)}
     </Modal>
 
   )
 }
 
-// Adds form logic to this component
-const RegisterInterestMessageForm = Form.create({
-  name: 'register_interest_form',
-  mapPropsToFields ({ defaultmessage, prevAccepted }) {
-    return {
-      message: Form.createFormField({ value: defaultmessage }),
-      accepted: Form.createFormField({ value: prevAccepted })
-    }
-  }
-})(RegisterInterestForm)
-
-export default RegisterInterestMessageForm
+export default RegisterInterestForm

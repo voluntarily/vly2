@@ -3,18 +3,13 @@
 //   Unlike InterestItem, this one is a Form allowing state changes.
 // */
 
-import { Button, notification, Row } from 'antd'
+import { Affix, Button, Icon, notification } from 'antd'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RegisterInterestMessageForm from './RegisterInterestMessageForm'
-
-// TODO - move some messages to popup confirmation box
-// add a status line for each state
-//   You've expressed Interest. You've been invited, You're Committed. etc.
-// Add a message organiser button
-// put the termsAccepted in the interest record.
-// replace the popup with a chance to leave a message - say why you can't make it.
+import { PageAlert } from '../VTheme/VTheme'
+import { InterestStatus } from '../../server/api/interest/interest.constants'
 
 /* Cycle is
 1. status message + accept [reject] buttons
@@ -24,6 +19,11 @@ import RegisterInterestMessageForm from './RegisterInterestMessageForm'
 5. display new status
 */
 
+const MyAffix = ({ children }) => {
+  return (process.env.NODE_ENV === 'test')
+    ? <>{children}</>
+    : (children) => <Affix style={{ width: '100%', position: 'absolute', top: 0, left: 0 }} offsetTop={55}>{children}</Affix>
+}
 export const RegisterInterestItem = ({
   interest,
   onAccept,
@@ -36,10 +36,10 @@ export const RegisterInterestItem = ({
   // Options to configure the controls on this page based on the state of the interest.
   const options = getOptions(interest)
 
-  const handleAcceptSubmit = (ok, message, termsAccepted) => {
+  const handleAcceptSubmit = (ok, message) => {
     setShowAcceptForm(false)
     if (ok) {
-      onAccept(message, termsAccepted)
+      onAccept(message)
       if (options.acceptNotifyHeading) {
         notification.success({
           message: options.acceptNotifyHeading,
@@ -76,6 +76,7 @@ export const RegisterInterestItem = ({
   }
 
   const handleMessageSubmit = (ok, message) => {
+    console.log('handleMessageSubmit', ok, message)
     setShowMessageForm(false)
     if (ok) {
       onMessage(message)
@@ -89,20 +90,13 @@ export const RegisterInterestItem = ({
     title: <FormattedMessage id='messageForm.title' defaultMessage='Message organiser' description='Form title message the organiser' />,
     prompt: <FormattedMessage id='messageForm.prompt' defaultMessage='This message will be emailed to the activity organiser' description='Form prompt message the organiser' />
   }
-  return (
-    <>
-      {/* Headers */}
-      {options.showStatus && (
-        <Row>
-          <p>{options.statusMessage}</p>
-        </Row>
-      )}
 
-      {/* buttons */}
-      <Row>
-        {/* Button to handle positive state change */}
+  const RegisterButtons = () => {
+    return (
+      <>
         {options.showAcceptButton && (
           <Button
+            id='acceptBtn'
             type='primary' shape='round'
             onClick={handleAcceptClick}
           >
@@ -111,12 +105,18 @@ export const RegisterInterestItem = ({
         )}
         {/* Button to handle rejectal from op */}
         {options.showRejectButton && (
-          <Button shape='round' onClick={handleRejectClick}>
+          <Button
+            id='rejectBtn'
+            shape='round' onClick={handleRejectClick}
+          >
             {options.rejectButtonText}
           </Button>
         )}
         {options.showMessageButton && (
-          <Button shape='round' onClick={handleMessageClick}>
+          <Button
+            id='messageBtn'
+            shape='round' onClick={handleMessageClick}
+          >
             <FormattedMessage
               id='RegisterInterestItem.MessageOp'
               defaultMessage='Message the Organiser'
@@ -124,26 +124,45 @@ export const RegisterInterestItem = ({
             />
           </Button>
         )}
-      </Row>
+      </>
+    )
+  }
+
+  return (
+    <>
+      {options.showStatus
+        ? (
+          <MyAffix>
+            <PageAlert>
+              <Icon type='history' style={{ fontSize: '32px', color: 'white' }} />
+              <h4>{options.statusMessage}</h4>
+              <RegisterButtons />
+            </PageAlert>
+          </MyAffix>
+        )
+        : <RegisterButtons />}
 
       <RegisterInterestMessageForm
+        id='acceptRegisterInterestForm'
         title={options.acceptFormTitle}
         prompt={options.acceptFormPrompt}
-        prevAccepted={interest.termsAccepted}
+        showTerms={!interest.termsAccepted}
         onSubmit={handleAcceptSubmit}
         visible={showAcceptForm}
       />
       <RegisterInterestMessageForm
+        id='rejectRegisterInterestForm'
         title={options.rejectFormTitle}
         prompt={options.rejectFormPrompt}
-        prevAccepted
+        showTerms
         onSubmit={handleRejectSubmit}
         visible={showRejectForm}
       />
       <RegisterInterestMessageForm
+        id='messageRegisterInterestForm'
         title={messageForm.title}
         prompt={messageForm.prompt}
-        prevAccepted
+        showTerms
         onSubmit={handleMessageSubmit}
         visible={showMessageForm}
       />
@@ -178,7 +197,7 @@ const getOptions = (interest) => {
         showMessageButton: false
       }
 
-    case 'interested':
+    case InterestStatus.INTERESTED:
       return {
         showStatus: true,
         statusMessage: <FormattedMessage id='interested.statusMessage' defaultMessage='Awaiting an invitation' description='message when volunteer has already expressed interest' />,
@@ -192,10 +211,10 @@ const getOptions = (interest) => {
         showMessageButton: true
       }
 
-    case 'invited':
+    case InterestStatus.INVITED:
       return {
         showStatus: true,
-        statusMessage: <FormattedMessage id='invited.statusMessage' defaultMessage='You have been invited to participate, awaiting your confirmation.' description='prompt when volunteer is invited' />,
+        statusMessage: <FormattedMessage id='invited.statusMessage' defaultMessage='You have been invited to participate - confirm?' description='prompt when volunteer is invited' />,
 
         showAcceptButton: true,
         acceptFormTitle: <FormattedMessage id='invited.acceptFormTitle' defaultMessage="That's great. Thanks." description='Heading displayed on express-interest form when volunteer has been invited to participate' />,
@@ -210,9 +229,9 @@ const getOptions = (interest) => {
         rejectFormPrompt: <FormattedMessage id='invited.rejectFormPrompt' defaultMessage='We will take you off the invite list but keep you as interested. Leave a message for the organiser' description='prompt on message form when interested person withdraws' />,
         rejectNotifyHeading: <FormattedMessage id='invited.rejectNotifyHeading' defaultMessage="You can't make it" description='title on popup after person withdraws interest' />,
         rejectNotifyMessage: <FormattedMessage id='invited.rejectNotifyMessage' defaultMessage="That's sad but we understand - go look for something else" description='message on popup after person withdraws interest' />,
-        showMessageButton: true
+        showMessageButton: false
       }
-    case 'committed':
+    case InterestStatus.COMMITTED:
       return {
         showStatus: true,
         statusMessage: <FormattedMessage id='committed.statusMessage' defaultMessage='You are committed to this activity' description='prompt when volunteer is committed' />,
@@ -225,17 +244,10 @@ const getOptions = (interest) => {
         rejectNotifyMessage: <FormattedMessage id='committed.rejectNotifyMessage' defaultMessage="That's sad but we understand - we will keep you listed as interested and let you know if anything changes." description='message on popup after person withdraws interest' />,
         showMessageButton: true
       }
-    case 'declined':
+    case InterestStatus.DECLINED:
       return {
         showStatus: true,
         statusMessage: <FormattedMessage id='declined.statusMessage' defaultMessage='You have been declined for this activity. Try another' description='prompt when volunteer is declined' />,
-        showAcceptButton: false,
-        showRejectButton: false,
-        showMessageButton: false
-      }
-    default:
-      return {
-        showStatus: false,
         showAcceptButton: false,
         showRejectButton: false,
         showMessageButton: false
