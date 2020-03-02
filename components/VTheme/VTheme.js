@@ -545,6 +545,11 @@ export const Li = styled.li`
 
 export const TagStyle = styled(Tag)`
 width: auto;
+max-width: 100%;
+overflow-wrap: break-word;
+white-space: pre-wrap; 
+
+
 padding: 0.2rem 0.5rem;
 margin: 0.1rem;
 vertical-align: middle;
