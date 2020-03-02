@@ -4,7 +4,7 @@ const { Role } = require('../../services/authorize/role')
 const { TOPIC_PERSON__CREATE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
 const queryString = require('querystring')
-const { TokenExpiredError } = require('jsonwebtoken');
+const { TokenExpiredError } = require('jsonwebtoken')
 const { jwtVerify } = require('./jwtVerify')
 const { getPersonRoles } = require('../../api/member/member.lib')
 const DEFAULT_SESSION = {
@@ -82,9 +82,9 @@ const setSession = async (req, res, next) => {
       // otherwise after signing through they will be treated with a nice wall of json.
       // Should only happen if the access token expires while ajax is being exectued on a page.
       // Unlikely to happen due to the client side token expiry check in getSession.
-      const redirectUrl = req.originalUrl.startsWith('/api/') ? '/home/' : req.originalUrl;
+      const redirectUrl = req.originalUrl.startsWith('/api/') ? '/home/' : req.originalUrl
 
-      const qs = queryString.stringify({ redirect: redirectUrl });
+      const qs = queryString.stringify({ redirect: redirectUrl })
       // Can't use res.clearCookie or res.redirect functions together
       // they both set HEAD to be finished in express.
 
@@ -92,11 +92,11 @@ const setSession = async (req, res, next) => {
 
       // Must clear idToken header otherwise we create a infinite loop of redirects since next page load
       // will throw the same TokenExpiredError
-      res.setHeader('Location', `/auth/sign-thru?${qs}`);
+      res.setHeader('Location', `/auth/sign-thru?${qs}`)
       res.setHeader('Set-Cookie', 'idToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;')
-      res.statusCode = 301;
-      res.end();
-      return;
+      res.statusCode = 301
+      res.end()
+      return
     }
 
     user = false
