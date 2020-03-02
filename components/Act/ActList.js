@@ -4,10 +4,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ActCard from './ActCard'
 import { FormattedMessage } from 'react-intl'
-import { ActivityGrid } from '../VTheme/VTheme'
+import { Grid } from '../VTheme/VTheme'
 
 const ActList = ({ acts, ...props }) => (
-  <ActivityGrid>
+  <Grid>
     {acts ? (
       acts.map((act, index) => <ActCard act={act} key={index} />)
     ) : (
@@ -17,7 +17,7 @@ const ActList = ({ acts, ...props }) => (
         description='no activities message in ActList'
       />
     )}
-  </ActivityGrid>
+  </Grid>
 )
 
 ActList.propTypes = {

@@ -1,4 +1,5 @@
 import cuid from 'cuid'
+
 const orgOmgTech = {
   _id: cuid(),
   name: 'OMGTech',
