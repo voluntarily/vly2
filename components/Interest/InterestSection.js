@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import InterestTable from './InterestTable'
 import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
 import LoadingComponent from '../Loading'
+import { InterestStatus } from '../../server/api/interest/interest.constants'
 
 const Loading = styled(LoadingComponent)`
   margin: 0 auto;
@@ -18,26 +19,31 @@ class InterestSection extends Component {
   async componentDidMount () {
     // Get all interests
     const opid = this.props.opid
-    try {
-      await this.props.dispatch(reduxApi.actions.interests.get({ op: opid }))
-    } catch (err) {
-      // console.error('error in getting interests', err)
-    }
+    await this.props.dispatch(reduxApi.actions.interests.get({ op: opid }))
   }
 
   async handleInvite (interest) {
-    interest.status = 'invited'
-    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
+    const updatedInterest = {
+      status: InterestStatus.INVITED,
+      type: 'accept'
+    }
+    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(updatedInterest) }))
   }
 
   async handleWithdrawInvite (interest) {
-    interest.status = 'interested'
-    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
+    const updatedInterest = {
+      status: InterestStatus.INTERESTED,
+      type: 'reject'
+    }
+    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(updatedInterest) }))
   }
 
   async handleDecline (interest) {
-    interest.status = 'declined'
-    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(interest) }))
+    const updatedInterest = {
+      status: InterestStatus.DECLINED,
+      type: 'reject'
+    }
+    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(updatedInterest) }))
   }
 
   render () {

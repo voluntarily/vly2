@@ -22,7 +22,7 @@ test('initial state', t => {
       onChangeStatus={changeStatus}
     />)
   t.is(wrapper.find('button').first().text(), 'Follow')
-  t.is(wrapper.find('button').at(1).text(), 'Staff signup')
+  t.is(wrapper.find('button').at(1).text(), 'Staff Signup')
 
   // // click button and get form
   // wrapper.find('button').simulate('click')

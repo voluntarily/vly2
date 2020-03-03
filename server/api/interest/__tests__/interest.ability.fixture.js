@@ -54,6 +54,12 @@ const people = [
     name: 'Volunteer + Opportunity Provider 1',
     email: 'volunteer.opportunity.provider.1@example.com',
     role: [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER]
+  },
+  {
+    _id: generateObjectId(),
+    name: 'Volunteer 3',
+    email: 'volunteer.3@example.com',
+    role: [Role.VOLUNTEER_PROVIDER, Role.ACTIVITY_PROVIDER]
   }
 ]
 
@@ -118,31 +124,31 @@ const interests = [
   {
     person: people[2]._id,
     opportunity: opportunities[0]._id,
-    comment: 'Test comment',
+    message: [{ body: 'Test comment', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[3]._id,
     opportunity: opportunities[0]._id,
-    comment: 'Test comment',
+    message: [{ body: 'Test comment', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[3]._id,
     opportunity: opportunities[1]._id,
-    comment: 'Test comment 2',
+    message: [{ body: 'Test comment 2', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[6]._id,
     opportunity: opportunities[0]._id,
-    comment: 'Test comment 1',
+    message: [{ body: 'Test comment 1', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[6]._id,
     opportunity: opportunities[1]._id,
-    comment: 'Test comment 2',
+    message: [{ body: 'Test comment 2', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   }
 ]

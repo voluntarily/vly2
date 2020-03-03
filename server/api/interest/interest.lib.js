@@ -17,6 +17,7 @@ const personInterestCount = (personId) => {
 }
 
 const personFields = 'name nickname email imgUrl pronoun sendEmailNotifications'
+
 const getInterestDetail = async (interestID) => {
   // Get the interest and populate out key information needed for emailing
   const interestDetail = await Interest.findById(interestID)
@@ -35,7 +36,24 @@ const getInterestDetail = async (interestID) => {
   return interestDetail
 }
 
+const getMyOpInterestDetail = async (opportunity, person) => {
+  // Get the interest and populate out key information needed for emailing
+  const interestDetail = await Interest.findOne({ opportunity, person })
+    .populate({ path: 'person', select: personFields })
+    .populate({
+      path: 'opportunity',
+      select: 'name imgUrl date duration',
+      populate: { path: 'requestor', select: personFields }
+    })
+    .populate({ path: 'messages.author', select: 'nickname imgUrl' }) // just enough to label the message
+    .exec()
+  interestDetail.opportunity.imgUrl = new URL(interestDetail.opportunity.imgUrl, config.appUrl).href
+  interestDetail.opportunity.href = `${config.appUrl + '/ops/' + interestDetail.opportunity._id}`
+  interestDetail.person.href = `${config.appUrl + '/people/' + interestDetail.person._id}`
+  return interestDetail
+}
 module.exports = {
   getInterestDetail,
+  getMyOpInterestDetail,
   personInterestCount
 }
