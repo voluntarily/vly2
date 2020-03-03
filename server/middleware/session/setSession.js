@@ -78,14 +78,12 @@ const setSession = async (req, res, next) => {
     // console.error('Jwt Verify failed', e)
 
     if (e instanceof TokenExpiredError) {
-      // Don't redirect user to an /api/ path if token is expred
-      // otherwise after signing through they will be treated with a nice wall of json.
-      // Should only happen if the access token expires while ajax is being exectued on a page.
-      // Unlikely to happen due to the client side token expiry check in getSession.
+      // Don't redirect user to an /api/ path after signing through,
+      // the user would be treated with a nice wall of json.
+      // This should only happen if the access token expires after page load but before ajax is exectued on a page.
       const redirectUrl = req.url.startsWith('/api/') ? '/home/' : req.url
 
       const qs = queryString.stringify({ redirect: redirectUrl })
-
 
       // Have to set location and set-cookie header manually without nodejs helper functions (res.clearCookie, res.redirect)
       // as the above functions make the header immutable.
