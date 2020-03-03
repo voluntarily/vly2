@@ -1,7 +1,7 @@
 const Interest = require('./interest')
 const { Action } = require('../../services/abilities/ability.constants')
-const { getInterestDetail } = require('./interest.lib')
-const { TOPIC_INTEREST__UPDATE, TOPIC_INTEREST__DELETE } = require('../../services/pubsub/topic.constants')
+const { getInterestDetail, getMyOpInterestDetail } = require('./interest.lib')
+const { TOPIC_INTEREST__UPDATE, TOPIC_INTEREST__MESSAGE, TOPIC_INTEREST__DELETE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
 
 /**
@@ -14,6 +14,17 @@ const listInterests = async (req, res) => {
   const sort = 'dateAdded' // todo sort by date.
 
   try {
+    if (req.query.op && req.query.me) {
+      // this is a request for a single interest for one person and one op
+      // populate out ready for the opdetailspage display
+      try {
+        const interest = await getMyOpInterestDetail(req.query.op, req.query.me)
+        return res.json([interest])
+      } catch (e) {
+        // its not an error to have no interests yet.
+        return res.json([])
+      }
+    }
     const find = {}
     const populateList = []
 
@@ -79,6 +90,7 @@ const createInterest = async (req, res) => {
     await interest.save()
 
     const interestDetail = await getInterestDetail(interest._id)
+    interestDetail.type = 'accept'
     PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
 
     res.json(interestDetail)
@@ -104,7 +116,15 @@ const updateInterest = async (req, res) => {
     }
 
     const interestDetail = await getInterestDetail(req.params._id)
-    PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
+    interestDetail.type = interest.type
+    if (!interest.type) {
+      console.log('no iterest type', interest)
+    }
+    if (interest.type === 'message') {
+      PubSub.publish(TOPIC_INTEREST__MESSAGE, interestDetail)
+    } else {
+      PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
+    }
 
     res.json(interestDetail)
   } catch (err) {

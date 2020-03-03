@@ -18,7 +18,7 @@ const interestSchema = new Schema({
   comment: String, // deprecated in favour of messages
   messages: [messageSchema],
   status: {
-    type: 'String',
+    type: String,
     required: true,
     default: InterestStatus.INTERESTED,
     enum: [
@@ -28,6 +28,7 @@ const interestSchema = new Schema({
       InterestStatus.DECLINED
     ]
   },
+  termsAccepted: Boolean,
   dateAdded: { type: Date, default: Date.now, required: true }
 })
 

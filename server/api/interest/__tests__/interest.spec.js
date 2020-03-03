@@ -42,7 +42,8 @@ test.before('before connect to database', async (t) => {
       messages: [{
         body: `${index} ${enquirer.name} interested in ${op.name}`,
         author: enquirer._id
-      }]
+      }],
+      type: 'accept'
     }
   })
   t.context.interests = await Interest.create(interests)
@@ -180,7 +181,8 @@ test.serial('Should correctly add a valid interest', async t => {
     messages: { // this works whether its an object or array.
       body: `${me.name} is interested in ${op.name}`,
       author: me._id
-    }
+    },
+    type: 'accept'
   }
 
   const res = await request(server)
@@ -214,7 +216,8 @@ test.serial('Should update the interest with message from volunteer ', async t =
     messages: [{ // this works whether its an object or array.
       body: `${from.name} has a message for ${to.name}`,
       author: from._id
-    }]
+    }],
+    type: 'accept'
   }
 
   const res = await request(server)
@@ -233,7 +236,8 @@ test.serial('Should update the interest state from interested to invited', async
   const interest = t.context.interests[4]
   const reqData = {
     _id: interest._id,
-    status: InterestStatus.INVITED
+    status: InterestStatus.INVITED,
+    type: 'accept'
   }
 
   const res = await request(server)
@@ -253,7 +257,8 @@ test.serial('Should update the interest state from invited to committed', async 
   const interest = t.context.interests[3]
   const reqData = {
     _id: interest._id,
-    status: InterestStatus.COMMITTED
+    status: InterestStatus.COMMITTED,
+    type: 'accept'
   }
 
   const res = await request(server)
@@ -270,7 +275,8 @@ test.serial('Should update the interest state from to declined', async t => {
   const interest = t.context.interests[4]
   const reqData = {
     _id: interest._id,
-    status: InterestStatus.DECLINED
+    status: InterestStatus.DECLINED,
+    type: 'reject'
   }
 
   const res = await request(server)
@@ -310,7 +316,8 @@ test.serial('Should correctly delete an interest', async t => {
 test.serial('Should get 404 updating an interest with invalid id', async t => {
   const reqData = {
     _id: '5d2905d9a792f000114a557b',
-    status: InterestStatus.INVITED
+    status: InterestStatus.INVITED,
+    type: 'accept'
   }
 
   const res = await request(server)
@@ -334,6 +341,7 @@ test.serial('Should not return interests with null person field', async t => {
       body: 'XYZ test comment',
       author: newPerson._id
     },
+    type: 'accept',
     status: InterestStatus.INTERESTED
   })
 
