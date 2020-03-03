@@ -31,6 +31,7 @@ test.beforeEach('connect and set up test fixture', async (t) => {
       body: `${t.context.people[index].name} is interested.`,
       author: t.context.people[index]._id
     }]
+    interest.type = 'accept'
   })
   t.context.interests = await InterestArchive.create(interests)
 })
@@ -81,7 +82,7 @@ test.serial('Should return 404 code when queried non existing interest', async t
   t.is(res.status, expectedResponseStatus)
 })
 
-test.serial('Should update the interest state from interested to attended', async t => {
+test.only('Should update the interest state from interested to attended', async t => {
   const reqData = {
     status: 'attended',
     _id: t.context.interests[1]._id,
@@ -89,7 +90,11 @@ test.serial('Should update the interest state from interested to attended', asyn
       nickname: t.context.people[0].nickname,
       _id: t.context.people[0]._id
     },
-    comment: 'lol',
+    messages: [{ // this works whether its an object or array.
+      body: 'Well done',
+      author: t.context.people[0]._id
+    }],
+    type: 'accept',
     opportunity: t.context.opportunities[2]._id,
     date: 'Sanitize it plz'
   }
@@ -108,8 +113,12 @@ test.serial('Should correctly delete an interest', async t => {
     _id: '5cc8d60b8b16812b5b3920c9',
     person: t.context.people[0]._id,
     status: 'not attended',
-    opportunity: t.context.opportunities[0]._id,
-    comment: 'hello there'
+    messages: [{ // this works whether its an object or array.
+      body: 'Well done',
+      author: t.context.people[0]._id
+    }],
+    type: 'accept',
+    opportunity: t.context.opportunities[0]._id
   })
   await newInterestArchive.save()
   const res = await request(server)

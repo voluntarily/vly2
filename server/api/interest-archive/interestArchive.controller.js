@@ -77,14 +77,17 @@ const getInterestDetail = async (interestID) => {
 
 const updateInterest = async (req, res) => {
   try {
+    const interest = req.body
+
     const result = await InterestArchive
       .accessibleBy(req.ability, Action.UPDATE)
-      .updateOne(req.params, { $set: { status: req.body.status } })
+      .updateOne(req.params, { $set: { status: interest.status } })
 
     if (result.nModified === 0) {
       return res.sendStatus(404)
     }
     const interestDetail = await getInterestDetail(req.params._id)
+    interestDetail.type = interest.type
     PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
 
     res.json(req.body)

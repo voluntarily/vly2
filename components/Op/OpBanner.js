@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { config } from '../../config/clientConfig'
 import { Helmet } from 'react-helmet'
-import { HalfGrid } from '../VTheme/VTheme'
+import { SideBarGrid } from '../VTheme/VTheme'
 import {
   Left,
   Right,
@@ -42,7 +42,8 @@ const OpBanner = ({ op, children }) => {
         <meta property='og:description' content={description} />
         <meta property='og:image' content={op.imgUrl} />
       </Helmet>
-      <HalfGrid>
+      {/* // add space for the action bar */}
+      <SideBarGrid style={{ paddingTop: '5rem' }}>
         <Left>
           <ItemImage src={op.imgUrl} alt={op.name} />
         </Left>
@@ -62,7 +63,7 @@ const OpBanner = ({ op, children }) => {
             {children}
           </>
         </Right>
-      </HalfGrid>
+      </SideBarGrid>
     </>)
 }
 

@@ -8,7 +8,10 @@ block copybig
 
 block copy
   p Kia ora #{to.nickname},
-  p #{from.name} can't make it to your activity. You can contact #{from.pronoun.object} at #{from.email}
+  p #{from.name} can't make it to your activity. 
+  if message
+    p saying: #{message.body}
+  p You can contact #{from.pronoun.object} at #{from.email}
   p Ngā mihi, Voluntarily.nz
    
 block copybutton
