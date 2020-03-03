@@ -78,7 +78,7 @@ test('Check session not Auth if email not verified', async t => {
   t.truthy(next.calledOnce)
 })
 
-test('Check idToken cookie cleared for expired sessions', async t => {
+test('Check headers and redirect location for expired session on API request', async t => {
   const next = sinon.spy()
   const req = { url: '/api/foo', headers: { authorization: `Bearer ${jwtDataExpired.idToken}` } }
   const res = new MockResponse()
@@ -87,11 +87,41 @@ test('Check idToken cookie cleared for expired sessions', async t => {
   const headers = res.getHeaders()
   t.is(
     headers['set-cookie'],
-    'idToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT',
+    'idToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT',
     'idToken cookie should be cleared if expired JWT is found'
   )
+
+  t.is(
+    headers.location,
+    '/auth/sign-thru?redirect=%2Fhome%2F',
+    'Location header should be set to /auth/sign-thru and redirect parameter to /home/'
+  )
+
+  t.is(res.statusCode, 301, 'Status code should be 301 for redirect')
   t.false(req.session.isAuthenticated)
-  t.truthy(next.calledOnce)
+})
+
+test('Check headers and redirect location for expired session on page request', async t => {
+  const next = sinon.spy()
+  const req = { url: '/ops/5e38dffdd346f6e81c590dfa', cookies: { idToken: jwtDataExpired.idToken } }
+  const res = new MockResponse()
+
+  await setSession(req, res, next)
+  const headers = res.getHeaders()
+  t.is(
+    headers['set-cookie'],
+    'idToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT',
+    'idToken cookie should be cleared if expired JWT is found'
+  )
+
+  t.is(
+    headers.location,
+    '/auth/sign-thru?redirect=%2Fops%2F5e38dffdd346f6e81c590dfa',
+    'Location header should be set to /auth/sign-thru and redirect parameter to the correct page'
+  )
+
+  t.is(res.statusCode, 301, 'Status code should be 301 for redirect')
+  t.false(req.session.isAuthenticated)
 })
 
 test('a person is created if new user signs in', async t => {
