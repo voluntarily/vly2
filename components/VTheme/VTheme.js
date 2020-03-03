@@ -103,7 +103,7 @@ export const SideBarGrid = styled.div`
   margin: 0;
   grid-template-columns: 29rem 49rem;
   grid-column-gap: 2rem;
-  margin: 4rem 0 ;
+  margin: 4rem 0 4rem 0 ;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: calc(40vw - 4rem) calc(60vw - 4rem);
@@ -622,6 +622,7 @@ export const PageAlert = styled.div`
   border-radius: 8px;
 
   display: grid;
+  gap: 1rem;
   grid-template-columns: 3rem 3fr 1fr 1fr;
 
   background-color: rgb(37, 15, 81);

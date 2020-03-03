@@ -22,7 +22,7 @@ import { InterestStatus } from '../../server/api/interest/interest.constants'
 const SafeAffix = ({ children }) => {
   return (process.env.NODE_ENV === 'test')
     ? <>{children}</>
-    : <Affix style={{ width: '100%', position: 'absolute', top: 0, left: 0 }} offsetTop={55}>{children}</Affix>
+    : <Affix style={{ width: '100%', position: 'absolute', top: 0, left: 0 }} offsetTop={32}>{children}</Affix>
 }
 export const RegisterInterestItem = ({
   interest,
