@@ -547,6 +547,13 @@ time {
 }
 `
 
+/* Fix for Op heading alignment */
+
+export const OpBannerDetail = styled.div`
+display: grid;
+align-self: center;
+`
+
 /* Item lists - tidy listings
 */
 export const Ul = styled.ul`

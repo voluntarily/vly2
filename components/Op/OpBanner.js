@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { config } from '../../config/clientConfig'
 import { Helmet } from 'react-helmet'
-import { SideBarGrid } from '../VTheme/VTheme'
+import { SideBarGrid, OpBannerDetail } from '../VTheme/VTheme'
 import {
   Left,
   Right,
@@ -47,7 +47,7 @@ const OpBanner = ({ op, children }) => {
         <Left>
           <ItemImage src={op.imgUrl} alt={op.name} />
         </Left>
-        <Right>
+        <OpBannerDetail>
           <h1>{op.name}</h1>
           <ItemIdLine item={op.offerOrg} path='orgs' />
 
@@ -62,7 +62,7 @@ const OpBanner = ({ op, children }) => {
           <>
             {children}
           </>
-        </Right>
+        </OpBannerDetail>
       </SideBarGrid>
     </>)
 }
