@@ -18,7 +18,20 @@ export const PageBanner = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding-bottom: 1rem;
-  border-bottom: thin solid rgba(101, 73, 170, 0.5);
+ 
+  @media screen and (max-width: 767px) {
+    margin-top: 4rem;
+    grid-template-columns: calc(100vw - 2rem);
+    grid-gap: 0rem;
+  }
+`
+
+export const PageBannerNoTabs = styled.div`
+  margin: 8rem 0 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-bottom: 1rem;
+  border-bottom: thin solid  #e8e8e8;
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
     grid-template-columns: calc(100vw - 2rem);
@@ -103,7 +116,8 @@ export const SideBarGrid = styled.div`
   margin: 0;
   grid-template-columns: 29rem 49rem;
   grid-column-gap: 2rem;
-  margin: 4rem 0 ;
+  margin: 2rem 0 4rem 0 ;
+  padding-top: 5rem;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: calc(40vw - 4rem) calc(60vw - 4rem);
@@ -547,6 +561,13 @@ time {
 }
 `
 
+/* Fix for Op heading alignment */
+
+export const OpBannerDetail = styled.div`
+display: grid;
+align-self: center;
+`
+
 /* Item lists - tidy listings
 */
 export const Ul = styled.ul`
@@ -617,11 +638,15 @@ export const ContactList = styled.ul`
   main text inside should contain an h4 title.
 */
 export const PageAlert = styled.div`
+
   width: 100%;
   padding: 1rem;
   border-radius: 8px;
+  box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
+
 
   display: grid;
+  gap: 1rem;
   grid-template-columns: 3rem 3fr 1fr 1fr;
 
   background-color: rgb(37, 15, 81);

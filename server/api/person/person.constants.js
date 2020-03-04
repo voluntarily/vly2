@@ -27,7 +27,8 @@ const PersonFields = {
   TAGS: 'tags',
   EDUCATION: 'education',
   JOB: 'job',
-  SENDEMAILNOTIFICATIONS: 'sendEmailNotifications'
+  SENDEMAILNOTIFICATIONS: 'sendEmailNotifications',
+  PLACEOFWORK: 'placeOfWork'
 }
 
 module.exports = {

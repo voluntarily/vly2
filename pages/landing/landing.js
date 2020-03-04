@@ -9,6 +9,8 @@ import OpListSection from '../../components/Op/OpListSection'
 import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import moment from 'moment'
+import { Divider } from 'antd'
+import ITFPromo from '../../components/LandingPageComponents/ITFPromo'
 
 export const Landing = props => (
   <>
@@ -17,22 +19,27 @@ export const Landing = props => (
       <Helmet>
         <title>Voluntarily</title>
       </Helmet>
-
+      <Divider />
       <PersonaSection />
-
+      <Divider />
       <OfferSection />
+      <Divider />
+      <ITFPromo />
+      <Divider />
       <SectionTitle>
         <FormattedMessage
           id='landing.sectiontitle.oplist'
           defaultMessage='Happening Soon'
         />
       </SectionTitle>
+
       <OpListSection
         store={props.store}
         filter={{
           date: [moment().subtract(1, 'days'), moment().add(60, 'days')]
         }}
       />
+
       <OpAdd {...props} />
     </FullPage>
   </>

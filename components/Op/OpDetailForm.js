@@ -303,6 +303,62 @@ class OpDetailForm extends Component {
         </PageTitle>
         <Divider />
         <Form hideRequiredMark colon={false}>
+
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <h3>What are you looking for?</h3>
+              </TitleContainer>
+              <p>
+                Before our skilled volunteers get involved, they need to know
+                how they can help. Add a title and description that tell
+                volunteers how they can help you.
+              </p>
+            </DescriptionContainer>
+            <InputContainer>
+              <ShortInputContainer>
+                <Form.Item
+                  label={opTitle}
+                  validateStatus={nameError ? 'error' : ''}
+                  help={nameError || ''}
+                >
+                  {getFieldDecorator('name', {
+                    rules: [{ required: true, message: 'name is required' }]
+                  })(<Input placeholder='name' maxLength='100' />)}
+                </Form.Item>
+
+                <Form.Item label={opSubtitle}>
+                  {getFieldDecorator('subtitle', {
+                    rules: []
+                  })(
+                    <Input placeholder='short summary that appears on the listing.' />
+                  )}
+                </Form.Item>
+              </ShortInputContainer>
+              <Form.Item label={opDescription}>
+                {getFieldDecorator('description', {
+                  rules: []
+                })(
+                  isTest ? (
+                    <TextArea
+                      rows={20}
+                      placeholder='All the details about the request. You can use markdown here.'
+                    />
+                  ) : (
+                    <RichTextEditor />
+                  )
+                )}
+              </Form.Item>
+              {orgMembership && (
+                <Form.Item label={opOrganisation}>
+                  {getFieldDecorator('offerOrg')(
+                    <OrgSelector orgs={orgMembership} />
+                  )}
+                </Form.Item>
+              )}
+            </InputContainer>
+          </FormGrid>
+          <Divider />
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -380,63 +436,6 @@ class OpDetailForm extends Component {
                   )}
                 </Form.Item>
               </MediumInputContainer>
-            </InputContainer>
-          </FormGrid>
-
-          <Divider />
-
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <h3>What are you looking for?</h3>
-              </TitleContainer>
-              <p>
-                Before our skilled volunteers get involved, they need to know
-                how they can help. Add a title and description that tell
-                volunteers how they can help you.
-              </p>
-            </DescriptionContainer>
-            <InputContainer>
-              <ShortInputContainer>
-                <Form.Item
-                  label={opTitle}
-                  validateStatus={nameError ? 'error' : ''}
-                  help={nameError || ''}
-                >
-                  {getFieldDecorator('name', {
-                    rules: [{ required: true, message: 'name is required' }]
-                  })(<Input placeholder='name' maxLength='100' />)}
-                </Form.Item>
-
-                <Form.Item label={opSubtitle}>
-                  {getFieldDecorator('subtitle', {
-                    rules: []
-                  })(
-                    <Input placeholder='short summary that appears on the listing.' />
-                  )}
-                </Form.Item>
-              </ShortInputContainer>
-              <Form.Item label={opDescription}>
-                {getFieldDecorator('description', {
-                  rules: []
-                })(
-                  isTest ? (
-                    <TextArea
-                      rows={20}
-                      placeholder='All the details about the request. You can use markdown here.'
-                    />
-                  ) : (
-                    <RichTextEditor />
-                  )
-                )}
-              </Form.Item>
-              {orgMembership && (
-                <Form.Item label={opOrganisation}>
-                  {getFieldDecorator('offerOrg')(
-                    <OrgSelector orgs={orgMembership} />
-                  )}
-                </Form.Item>
-              )}
             </InputContainer>
           </FormGrid>
 
