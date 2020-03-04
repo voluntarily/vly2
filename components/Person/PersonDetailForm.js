@@ -726,5 +726,11 @@ export const permissionTrimFields = (person, roles) => {
   if (!roles.includes(Role.ADMIN) && !roles.includes(Role.TESTER)) {
     delete person.email
   }
+
   delete person.dateAdded
+
+  const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]
+  if (person.role) {
+    person.role = person.role.filter(role => applicableRoles.includes(role))
+  }
 }
