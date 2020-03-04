@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import { HalfGrid } from '../VTheme/VTheme'
 import { Button } from 'antd'
