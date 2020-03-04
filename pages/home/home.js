@@ -31,7 +31,8 @@ export const PersonHomePage = () => {
     updateTab(key, true)
   }
 
-  if (!people.sync) { return <Loading /> }
+  if (!people.sync) { return <FullPage><Loading label='people' entity={people} /></FullPage> }
+  if (!members.sync) { return <FullPage><Loading label='members' entity={members} /></FullPage> }
 
   const person = people.data[0]
 
@@ -60,7 +61,15 @@ export const PersonHomePage = () => {
     </FullPage>
   )
 }
-
+const allSettled = (promises) => {
+  return Promise.all(promises.map(p => Promise.resolve(p).then(value => ({
+    state: 'fulfilled',
+    value
+  }), reason => ({
+    state: 'rejected',
+    reason
+  }))))
+}
 PersonHomePage.getInitialProps = async ({ store, query }) => {
   try {
     const me = store.getState().session.me
@@ -69,7 +78,7 @@ PersonHomePage.getInitialProps = async ({ store, query }) => {
       q: JSON.stringify({ requestor: meid })
     }
 
-    await Promise.all([
+    await allSettled([
       store.dispatch(reduxApi.actions.people.get({ id: meid })),
       store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
       store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),

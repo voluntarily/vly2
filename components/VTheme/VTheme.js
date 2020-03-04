@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Tag } from 'antd'
 
 /*
 ====================================================
@@ -95,6 +96,26 @@ export const HalfGrid = styled.div`
 ` // end halfgrid
 export const HalfGridContainer = styled.div``
 
+// 30% left, 60% right two column
+export const SideBarGrid = styled.div`
+  display: grid;
+  position: relative;
+  margin: 0;
+  grid-template-columns: 29rem 49rem;
+  grid-column-gap: 2rem;
+  margin: 4rem 0 ;
+
+  @media screen and (min-width: 768px) and (max-width: 1281px) {
+    grid-template-columns: calc(40vw - 4rem) calc(60vw - 4rem);
+    grid-column-gap: 2rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: calc(100vw - 2rem);
+  }
+`
+
+// end halfgrid
 export const TripleGrid = styled.div`
   display: grid;
   grid-template-columns: 25rem 25rem 25rem;
@@ -541,6 +562,22 @@ export const Li = styled.li`
   color: initial;
   margin-bottom: 0.3rem;
 `
+
+export const TagStyle = styled(Tag)`
+width: auto;
+max-width: 100%;
+overflow-wrap: break-word;
+white-space: pre-wrap; 
+
+
+padding: 0.2rem 0.5rem;
+margin: 0.1rem;
+vertical-align: middle;
+font-size: 1.2rem;
+font-weight: 500;
+background-color: #e8e8e8;
+`
+
 /* Contact list displayed for organisations */
 
 export const ContactList = styled.ul`
@@ -572,5 +609,25 @@ export const ContactList = styled.ul`
         font-size: 1.2rem;
       }
     }
+  }
+`
+
+/* dark banner across the page containing important information
+  e.g you have been invited - or event has been cancelled.
+  main text inside should contain an h4 title.
+*/
+export const PageAlert = styled.div`
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+
+  display: grid;
+  grid-template-columns: 3rem 3fr 1fr 1fr;
+
+  background-color: rgb(37, 15, 81);
+  margin-bottom: -5rem;
+  h4 {
+    color: white;
+    font-weight: 600;
   }
 `

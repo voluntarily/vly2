@@ -1,6 +1,6 @@
 const SchoolLookUp = require('../../server/api/school-lookup/school-lookup')
 const mongoose = require('mongoose')
-const { config } = require('../../config/config')
+const { config } = require('../../config/serverConfig')
 const schoolImport = require('../../lib/school-import/import')
 
 async function main () {

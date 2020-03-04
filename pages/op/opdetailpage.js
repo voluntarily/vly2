@@ -89,8 +89,8 @@ export const OpDetailPage = ({
     }, [])
 
   // bail early if no data
-  if (opportunities.loading) {
-    return <Loading />
+  if (!opportunities.sync && !isNew) {
+    return <Loading label='activity' entity={opportunities} />
   }
   const ops = opportunities.data
   if (ops.length === 0 && !isNew) {
@@ -162,7 +162,7 @@ export const OpDetailPage = ({
     return (
       <FullPage>
         <Helmet>
-          <title>Edit {op.name}  - Voluntarily</title>
+          <title>Edit {op.name} - Voluntarily</title>
         </Helmet>
         <OpDetailForm
           op={op}
@@ -183,8 +183,8 @@ export const OpDetailPage = ({
         <OpVolunteerInterestSection
           isAuthenticated={isAuthenticated}
           canRegisterInterest={canRegisterInterest}
-          opID={op && op._id}
-          meID={me && me._id}
+          opid={op && op._id}
+          meid={me && me._id}
         />
       </OpBanner>
       <OpTabs op={op} canManage={canManage} defaultTab={tab} onChange={handleTabChange} author={me._id} />

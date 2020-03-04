@@ -8,7 +8,7 @@ export const HomeBanner = ({ person, children }) =>
     <h1>
       <FormattedMessage
         id='home.title'
-        defaultMessage='Home'
+        defaultMessage='Activities'
         description='Title on personal home page'
       />
     </h1>

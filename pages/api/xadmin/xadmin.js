@@ -1,5 +1,5 @@
 import { Role } from '../../../server/services/authorize/role.js'
-const config = require('../../../config/config').config
+const config = require('../../../config/clientConfig').config
 /* The /api/admin endpoint provides some utility calls that
 can be used to setup a new database.
   all calls check for authorised user with admin status.

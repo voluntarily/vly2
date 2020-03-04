@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer')
 const nodemailerMock = require('nodemailer-mock')
 
-const { config } = require('../../../config/config')
+const { config } = require('../../../config/serverConfig')
 
 // const getTransportTest = () => {
 //   // Generate test SMTP service account from ethereal.email

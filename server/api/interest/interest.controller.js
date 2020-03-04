@@ -1,12 +1,8 @@
 const Interest = require('./interest')
-const Person = require('../person/person')
-const { config } = require('../../../config/config')
-const { emailPerson } = require('../person/person.email')
-const { InterestStatus } = require('./interest.constants')
-const ical = require('ical-generator')
-const htmlSanitizer = require('sanitize-html')
-const moment = require('moment')
 const { Action } = require('../../services/abilities/ability.constants')
+const { getInterestDetail, getMyOpInterestDetail } = require('./interest.lib')
+const { TOPIC_INTEREST__UPDATE, TOPIC_INTEREST__MESSAGE, TOPIC_INTEREST__DELETE } = require('../../services/pubsub/topic.constants')
+const PubSub = require('pubsub-js')
 
 /**
   api/interests -> list all interests
@@ -18,6 +14,17 @@ const listInterests = async (req, res) => {
   const sort = 'dateAdded' // todo sort by date.
 
   try {
+    if (req.query.op && req.query.me) {
+      // this is a request for a single interest for one person and one op
+      // populate out ready for the opdetailspage display
+      try {
+        const interest = await getMyOpInterestDetail(req.query.op, req.query.me)
+        return res.json([interest])
+      } catch (e) {
+        // its not an error to have no interests yet.
+        return res.json([])
+      }
+    }
     const find = {}
     const populateList = []
 
@@ -66,21 +73,6 @@ const getInterest = async (req, res, next) => {
   }
 }
 
-const getInterestDetail = async (interestID) => {
-  // Get the interest and populate out key information needed for emailing
-  const interestDetail = await Interest.findById(interestID)
-    .populate({ path: 'person', select: 'nickname name email pronoun language sendEmailNotifications' })
-    .populate({ path: 'opportunity', select: 'name requestor imgUrl date duration' })
-    .exec()
-
-  const requestorDetail = await Person.findById(interestDetail.opportunity.requestor, 'name nickname email imgUrl sendEmailNotifications')
-  interestDetail.opportunity.requestor = requestorDetail
-  interestDetail.opportunity.imgUrl = `${config.appUrl}${interestDetail.opportunity.imgUrl}`
-  interestDetail.opportunity.href = `${config.appUrl + '/ops/' + interestDetail.opportunity._id}`
-  interestDetail.person.href = `${config.appUrl + '/people/' + interestDetail.person._id}`
-  return interestDetail
-}
-
 const createInterest = async (req, res) => {
   const interestData = req.body
 
@@ -98,113 +90,47 @@ const createInterest = async (req, res) => {
     await interest.save()
 
     const interestDetail = await getInterestDetail(interest._id)
-    sendInterestedEmail('acknowledgeInterest', interestDetail.person, interestDetail)
-    sendInterestedEmail('interested', interestDetail.opportunity.requestor, interestDetail)
+    interestDetail.type = 'accept'
+    PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
+
     res.json(interestDetail)
   } catch (err) {
-  // console.log(err)
+  // console.error(err)
     res.status(422).send(err)
   }
 }
 
 const updateInterest = async (req, res) => {
   try {
+    const interest = req.body
+    const updates = {
+      // this ... conditionally adds the $set to the update if value is present
+      ...(interest.status && { $set: { status: interest.status } }),
+      ...(interest.messages && { $push: { messages: interest.messages } })
+    }
     const result = await Interest
       .accessibleBy(req.ability, Action.UPDATE)
-      .updateOne(req.params, { $set: { status: req.body.status } })
-
+      .updateOne(req.params, updates)
     if (result.nModified === 0) {
       return res.sendStatus(404)
     }
 
     const interestDetail = await getInterestDetail(req.params._id)
-    processStatusToSendEmail(interestDetail.status, interestDetail)
+    interestDetail.type = interest.type
+    if (!interest.type) {
+      console.log('no iterest type', interest)
+    }
+    if (interest.type === 'message') {
+      PubSub.publish(TOPIC_INTEREST__MESSAGE, interestDetail)
+    } else {
+      PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
+    }
+
     res.json(interestDetail)
   } catch (err) {
     // console.error(err)
     res.status(404).send(err)
   }
-}
-
-const processStatusToSendEmail = (template, interest) => {
-  const op = interest.opportunity
-  const volunteer = interest.person
-  const requestor = interest.opportunity.requestor
-
-  const calendar = ical({
-    prodId: { company: 'Voluntarily', product: 'Invitation' },
-    domain: 'voluntarily.nz',
-    name: 'Welcome'
-  })
-  if (isEvent1DayOnly(op)) {
-    addEventToIcalCalendar(calendar, op)
-  }
-  const icalString = calendar.toString()
-  switch (template) {
-    case InterestStatus.INVITED:
-      sendInterestedEmail(template, volunteer, interest, {
-        attachment: [{
-          filename: 'invitation.ics',
-          content: icalString
-        }]
-      })
-      break
-    case InterestStatus.DECLINED:
-      sendInterestedEmail(template, volunteer, interest)
-      break
-    case InterestStatus.COMMITTED:
-      sendInterestedEmail(template, requestor, interest)
-      break
-  }
-}
-
-const isEvent1DayOnly = (opportunity) => {
-  return opportunity.date && opportunity.date[1] == null && opportunity.date[0] != null
-}
-
-const addEventToIcalCalendar = (icalCalendar, opportunity) => {
-  const durationStringInISO = convertDurationStringToISO(opportunity.duration)
-  const duration = moment.duration(durationStringInISO).isValid() ? moment.duration(durationStringInISO) : moment(0, 'second')
-  const cleanEventDescription = htmlSanitizer(opportunity.description, {
-    allowedTags: [],
-    allowedAttributes: {}
-  })
-  const event = icalCalendar.createEvent({
-    start: moment(opportunity.date[0]),
-    end: moment(opportunity.date[0]).add(duration),
-    timestamp: moment(),
-    summary: `Voluntarily event: ${opportunity.name}`,
-    description: `${cleanEventDescription}`,
-    url: `${config.appUrl}/ops/${opportunity._id}`,
-    organizer: 'Voluntarily <team@voluntari.ly>'
-  })
-  event.createAlarm({
-    type: 'display',
-    trigger: moment.duration(1, 'hour') // Trigger alarm before event 1 hour
-  })
-}
-
-const convertDurationStringToISO = (durationString) => {
-  let filteredOutCharacter = durationString.replace(/[^mhy/\d]/g, '')
-  filteredOutCharacter = filteredOutCharacter.toUpperCase()
-  return `PT${filteredOutCharacter}` // ISO string for duration start with PT character first
-}
-
-/**
- * This will be easier to add more status without having too much if. All we need is add another folder in email template folder and the status will reference to that folder
- * @param {string} template status will be used to indicate which email template to use
- * @param {object} to person email is for. (requestor or volunteer) with email populated.
- * @param {object} interest populated out interest with person and op.
- * @param {object} props extra properties such as attachment
- */
-const sendInterestedEmail = async (template, to, interest, props) => {
-  const op = interest.opportunity
-  await emailPerson(template, to, {
-    send: true,
-    op,
-    from: op.requestor,
-    ...props
-  })
 }
 
 const deleteInterest = async (req, res, next) => {
@@ -216,10 +142,11 @@ const deleteInterest = async (req, res, next) => {
     if (result.deletedCount === 0) {
       return res.sendStatus(404)
     }
+    PubSub.publish(TOPIC_INTEREST__DELETE, req.params)
 
     return res.status(200).send(req.params)
   } catch (e) {
-    console.log(e)
+    console.error(e)
     return res.sendStatus(500)
   }
 }

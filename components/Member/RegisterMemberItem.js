@@ -19,10 +19,6 @@ class RegisterMemberItem extends Component {
     }
   }
 
-  componentDidMount () {
-    this.props.form.validateFields()
-  }
-
   handleMemberButton (action) {
     const member = this.props.member
     member.validation = this.props.form.getFieldValue('validation')
@@ -43,7 +39,7 @@ class RegisterMemberItem extends Component {
         {
           type: 'secondary',
           msg: <FormattedMessage id='member.join.message' defaultMessage='If you are part of this organisation let us know' description='Message for volunteer to join an organisation' />,
-          text: <FormattedMessage id='member.join.button' defaultMessage='Join' description='Button for volunteer to join an organisation' />,
+          text: <FormattedMessage id='member.join.button' defaultMessage='Staff Signup' description='Button for volunteer to join an organisation' />,
           action: 'join'
         }
       ]
@@ -101,7 +97,6 @@ class RegisterMemberItem extends Component {
 
   render () {
     const { getFieldDecorator } = this.props.form
-
     // Options to configure the controls on this page based on the state of the member.
     const options = this.getOptions(this.props.member)
 
@@ -115,13 +110,7 @@ class RegisterMemberItem extends Component {
               md={{ span: 12 }}
             >
               <Form.Item label='Enter your organisations validation code'>
-                {getFieldDecorator('validation', {
-                  // rules: [
-                  //   { required: true, message: 'Validation is required' }
-                  // ]
-                })(
-                  <Input />
-                )}
+                {getFieldDecorator('validation')(<Input />)}
               </Form.Item>
             </Col>
           </Row>}
@@ -130,11 +119,10 @@ class RegisterMemberItem extends Component {
         <Row>
           {options.btns.map((btn, index) => {
             return (
-              <span key={index}>
-                <Button type={btn.type} shape='round' onClick={this.handleMemberButton.bind(this, btn.action)}>
-                  {btn.text}
-                </Button>
-              </span>)
+              <Button key={index} type={btn.type} shape='round' onClick={this.handleMemberButton.bind(this, btn.action)}>
+                {btn.text}
+              </Button>
+            )
           })}
         </Row>
       </Form>
@@ -156,9 +144,6 @@ RegisterMemberItem.propTypes = {
 // Adds form logic to this component
 export default Form.create({
   name: 'register_member_form',
-  onFieldsChange (props, changedFields) {
-    // props.onChange(changedFields);
-  },
   mapPropsToFields (props) {
     return {
       validation: Form.createFormField({ ...props.member.validation, value: props.member.validation })

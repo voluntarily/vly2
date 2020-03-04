@@ -48,6 +48,18 @@ const people = [
     name: 'Opportunity Provider 2',
     email: 'opportunity.provider.2@example.com',
     role: [Role.OPPORTUNITY_PROVIDER]
+  },
+  {
+    _id: generateObjectId(),
+    name: 'Volunteer + Opportunity Provider 1',
+    email: 'volunteer.opportunity.provider.1@example.com',
+    role: [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER]
+  },
+  {
+    _id: generateObjectId(),
+    name: 'Volunteer 3',
+    email: 'volunteer.3@example.com',
+    role: [Role.VOLUNTEER_PROVIDER, Role.ACTIVITY_PROVIDER]
   }
 ]
 
@@ -84,6 +96,12 @@ const members = [
     person: people[5]._id,
     organisation: organisations[1]._id,
     status: MemberStatus.MEMBER
+  },
+  {
+    _id: generateObjectId(),
+    person: people[6]._id,
+    organisation: organisations[0]._id,
+    status: MemberStatus.MEMBER
   }
 ]
 
@@ -106,19 +124,31 @@ const interests = [
   {
     person: people[2]._id,
     opportunity: opportunities[0]._id,
-    comment: 'Test comment',
+    message: [{ body: 'Test comment', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[3]._id,
     opportunity: opportunities[0]._id,
-    comment: 'Test comment',
+    message: [{ body: 'Test comment', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[3]._id,
     opportunity: opportunities[1]._id,
-    comment: 'Test comment 2',
+    message: [{ body: 'Test comment 2', author: generateObjectId() }],
+    status: InterestStatus.INTERESTED
+  },
+  {
+    person: people[6]._id,
+    opportunity: opportunities[0]._id,
+    message: [{ body: 'Test comment 1', author: generateObjectId() }],
+    status: InterestStatus.INTERESTED
+  },
+  {
+    person: people[6]._id,
+    opportunity: opportunities[1]._id,
+    message: [{ body: 'Test comment 2', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   }
 ]

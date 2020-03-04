@@ -4,7 +4,8 @@ const InterestFields = {
   STATUS: 'status',
   DATE_ADDED: 'dateAdded',
   PERSON: 'person',
-  OPPORTUNITY: 'opportunity'
+  OPPORTUNITY: 'opportunity',
+  MESSAGES: 'messages'
 }
 
 const InterestStatus = {
@@ -13,7 +14,7 @@ const InterestStatus = {
   COMMITTED: 'committed',
   DECLINED: 'declined',
   ATTENDED: 'attended',
-  NOTATTENDED: 'not attended'
+  NOTATTENDED: 'not_attended'
 }
 
 module.exports = {

@@ -58,10 +58,14 @@ class OrgDetailForm extends Component {
    */
   static createGoogleMapsAddressUrl (address) {
     address = (address || '').trim()
-    if (!address) { return undefined }
+    if (!address) {
+      return undefined
+    }
 
     address = address.replace(/\n/g, ' ')
-    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+      address
+    )}`
   }
 
   handleSubmit = e => {
@@ -261,7 +265,7 @@ class OrgDetailForm extends Component {
         </PageTitle>
 
         <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
-          {this.props.isAdmin &&
+          {this.props.isAdmin && (
             <>
               <FormGrid>
                 <DescriptionContainer>
@@ -285,13 +289,16 @@ class OrgDetailForm extends Component {
                 <InputContainer>
                   <Form.Item label={orgCategory}>
                     {getFieldDecorator('category', {
-                      rules: [{ required: true, message: 'category is required' }]
+                      rules: [
+                        { required: true, message: 'category is required' }
+                      ]
                     })(<Checkbox.Group options={categoryOptions} />)}
                   </Form.Item>
                 </InputContainer>
               </FormGrid>
               <Divider />
-            </>}
+            </>
+          )}
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -401,98 +408,127 @@ class OrgDetailForm extends Component {
             </InputContainer>
           </FormGrid>
           <Divider />
-          {(getFieldValue('category') || []).includes(OrganisationCategory.SCHOOL)
-            ? (
-              <>
-                <FormGrid>
-                  <DescriptionContainer>
-                    <TitleContainer>
-                      <h3>School details</h3>
-                    </TitleContainer>
-                    <p>A few details about your school</p>
-                  </DescriptionContainer>
-                  <InputContainer>
-                    <ShortInputContainer>
-                      <Form.Item label={orgDecile}>
-                        {getFieldDecorator('decile', {})(
-                          <InputNumber min={1} max={10} className='decile' />
-                        )}
-                      </Form.Item>
+          {(getFieldValue('category') || []).includes(
+            OrganisationCategory.SCHOOL
+          ) ? (
+            <>
+              <FormGrid>
+                <DescriptionContainer>
+                  <TitleContainer>
+                    <h3>
+                      <FormattedMessage
+                        id='orgDetailpage.schoolDetail'
+                        defaultMessage='School Details'
+                        description='Title for school detail section of organisation edit form'
+                      />
+                    </h3>
+                  </TitleContainer>
+                  <FormattedMessage
+                    id='orgDetailPage.schoolDetail.description'
+                    defaultMessage='A few details about your school'
+                    description='description for school detail section of organisation edit form'
+                  />
+                  <p>l</p>
+                </DescriptionContainer>
+                <InputContainer>
+                  <ShortInputContainer>
+                    <Form.Item label={orgDecile}>
+                      {getFieldDecorator(
+                        'decile',
+                        {}
+                      )(<InputNumber min={1} max={10} className='decile' />)}
+                    </Form.Item>
 
-                      <Form.Item label={orgAgeRange}>
-                        {getFieldDecorator('ageRange', {
-                          rules: [
-                            {
-                              type: 'method',
-                              validator: (rule, value, callback) => {
-                                callback(validateAgeRange(value)
-                                  ? undefined
-                                  : (
-                                    <FormattedMessage
-                                      id='org.detail.ageRange'
-                                      defaultMessage='Please enter the age range of your students'
-                                      description='The age range specified on the organisation form is invalid'
-                                    />))
-                              }
+                    <Form.Item label={orgAgeRange}>
+                      {getFieldDecorator('ageRange', {
+                        rules: [
+                          {
+                            type: 'method',
+                            validator: (rule, value, callback) => {
+                              callback(
+                                validateAgeRange(value) ? (
+                                  undefined
+                                ) : (
+                                  <FormattedMessage
+                                    id='org.detail.ageRange'
+                                    defaultMessage='Please enter the age range of your students'
+                                    description='The age range specified on the organisation form is invalid'
+                                  />
+                                )
+                              )
                             }
-                          ]
-                        })(
-                          <NumericRange
-                            fromPlaceholder='5'
-                            fromMin={0}
-                            fromMax={120}
-                            toPlaceholder='18'
-                            toMin={0}
-                            toMax={120}
+                          }
+                        ]
+                      })(
+                        <NumericRange
+                          fromPlaceholder='5'
+                          fromMin={0}
+                          fromMax={120}
+                          toPlaceholder='18'
+                          toMin={0}
+                          toMax={120}
+                        />
+                      )}
+                    </Form.Item>
+                    <Form.Item label={orgContactName}>
+                      {getFieldDecorator('contactName')(<Input />)}
+                    </Form.Item>
+                    <Form.Item label={orgContactPhoneNumber}>
+                      {getFieldDecorator('contactPhoneNumber')(
+                        <Input placeholder='01 123 456789' />
+                      )}
+                    </Form.Item>
+                    <Form.Item label={orgAddress}>
+                      {getFieldDecorator('address')(
+                        <>
+                          <Input.TextArea
+                            id='address'
+                            rows={4}
+                            maxLength={512}
+                            value={getFieldValue('address')}
+                            onChange={e => this.setAddress(e.target.value)}
                           />
-                        )}
-                      </Form.Item>
-                      <Form.Item label={orgContactName}>
-                        {getFieldDecorator('contactName')(
-                          <Input />
-                        )}
-                      </Form.Item>
-                      <Form.Item label={orgContactPhoneNumber}>
-                        {getFieldDecorator('contactPhoneNumber')(
-                          <Input placeholder='01 123 456789' />
-                        )}
-                      </Form.Item>
-                      <Form.Item label={orgAddress}>
-                        {getFieldDecorator('address')(
-                          <>
-                            <Input.TextArea
-                              id='address'
-                              rows={4}
-                              maxLength={512}
-                              value={getFieldValue('address')}
-                              onChange={e => this.setAddress(e.target.value)}
-                            />
-                            {OrgDetailForm.createGoogleMapsAddressUrl(getFieldValue('address')) &&
-                              <a href={OrgDetailForm.createGoogleMapsAddressUrl(getFieldValue('address'))} target='_blank' rel='noopener noreferrer'>
-                                <FormattedMessage
-                                  id='org.detail.viewAddressInGoogleMaps'
-                                  defaultMessage='View in Google maps'
-                                  description='Link to view the address in Google maps'
-                                />
-                              </a>}
-                          </>
-                        )}
-                      </Form.Item>
-                    </ShortInputContainer>
-                  </InputContainer>
-                </FormGrid>
-                <Divider />
-              </>)
-            : null}
+                          {OrgDetailForm.createGoogleMapsAddressUrl(
+                            getFieldValue('address')
+                          ) && (
+                            <a
+                              href={OrgDetailForm.createGoogleMapsAddressUrl(
+                                getFieldValue('address')
+                              )}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                            >
+                              <FormattedMessage
+                                id='org.detail.viewAddressInGoogleMaps'
+                                defaultMessage='View in Google maps'
+                                description='Link to view the address in Google maps'
+                              />
+                            </a>
+                          )}
+                        </>
+                      )}
+                    </Form.Item>
+                  </ShortInputContainer>
+                </InputContainer>
+              </FormGrid>
+              <Divider />
+            </>
+            ) : null}
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <h3>Staff Instructions</h3>
+                <FormattedMessage
+                  id='orgDetailPage.staff.join.title'
+                  defaultMessage='Staff Instructions'
+                  description='title for staff joiner section'
+                />
               </TitleContainer>
               <p>
-                What processes do you want staff to do before they start
-                volunteering? Should they fill in a form? Ask for approval from
-                their manager? Specify your instructions here.
+                <FormattedMessage
+                  id='orgDetailPage.staff.join.description'
+                  defaultMessage='What processes do you want staff to do before they start volunteering? Should they fill in a form? Ask for approval from their manager? Specify your instructions here.'
+                  description='a place to write instructions regarding how to join the org for org managers'
+                />
               </p>
             </DescriptionContainer>
             <InputContainer>
@@ -533,10 +569,21 @@ class OrgDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <h3>How to join</h3>
+                <h3>
+                  <FormattedMessage
+                    id='orgDetailpage.staff.signup.title'
+                    defaultMessage='Signing up'
+                    description='title for joining employees section'
+                  />
+                </h3>
               </TitleContainer>
               <p>
-                How do you want teachers and schools to get in touch with you?
+                <FormattedMessage
+                  id='orgDetailpage.staff.signup.description'
+                  defaultMessage='Tell your members what they need to do to join the group - ie: Talk to your manager or HR person for the magic code'
+                  description='description for joining employees section'
+                />
+
               </p>
             </DescriptionContainer>
             <InputContainer>
@@ -716,8 +763,14 @@ export default Form.create({
       category: Form.createFormField({ ...org.category, value: org.category }),
       ageRange: Form.createFormField({ ...org.ageRange, value: org.ageRange }),
       decile: Form.createFormField({ ...org.decile, value: org.decile }),
-      contactName: Form.createFormField({ ...org.contactName, value: org.contactName }),
-      contactPhoneNumber: Form.createFormField({ ...org.contactPhoneNumber, value: org.contactPhoneNumber }),
+      contactName: Form.createFormField({
+        ...org.contactName,
+        value: org.contactName
+      }),
+      contactPhoneNumber: Form.createFormField({
+        ...org.contactPhoneNumber,
+        value: org.contactPhoneNumber
+      }),
       address: Form.createFormField({ ...org.address, value: org.address })
     }
   }
@@ -728,15 +781,19 @@ export default Form.create({
  * @param {{ from: Number, to: Number }?} value The value in the age range field.
  * @returns {boolean} True if the field is valid based on the input, False otherwise.
  */
-export const validateAgeRange = (value) => {
+export const validateAgeRange = value => {
   // Allow an empty age range
-  if (!value) { return true }
+  if (!value) {
+    return true
+  }
 
   const from = Number(value.from)
   const to = Number(value.to)
 
   // Only compare age ranges if both are specified
-  if (from && to) { return (from <= to) }
+  if (from && to) {
+    return from <= to
+  }
 
   return true
 }

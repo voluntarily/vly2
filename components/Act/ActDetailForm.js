@@ -486,7 +486,7 @@ class ActDetailForm extends Component {
                 <h3>
                   <FormattedMessage
                     id='actDetailForm.addEquipment.title'
-                    defaultMessage='Do you need any equipment or materials for this opportunity? (Optional)'
+                    defaultMessage='Do you need any equipment or materials for this activity? (Optional)'
                     description='subtitle for add equipment section in act detail form'
                   />
                 </h3>

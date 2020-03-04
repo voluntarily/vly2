@@ -4,7 +4,7 @@ const { Role } = require('../../services/authorize/role')
 const SchoolLookUp = require('../school-lookup/school-lookup')
 const { getTransport } = require('../../services/email/email')
 const Email = require('email-templates')
-const { config } = require('../../../config/config')
+const { config } = require('../../../config/serverConfig')
 const Organisation = require('../organisation/organisation')
 const slug = require('limax')
 const { MemberStatus } = require('../member/member.constants')
@@ -51,7 +51,7 @@ class SchoolInvite {
         schoolId: school.schoolId
       },
       action: 'join',
-      expiresIn: '2d'
+      expiresIn: '2w' // invite is valid for 2 weeks
     }
 
     const tokenUrl = makeURLToken(payload)
@@ -178,7 +178,9 @@ class SchoolInvite {
 
     initialOrganisationData.category = ['op']
     initialOrganisationData.slug = slug(initialOrganisationData.name)
-
+    // check whether org already exists. - match slug.
+    const existingOrg = await Organisation.findOne({ slug: initialOrganisationData.slug })
+    if (existingOrg) return existingOrg
     return Organisation.create(initialOrganisationData)
   }
 

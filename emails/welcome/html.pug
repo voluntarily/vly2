@@ -1,0 +1,22 @@
+//- Welcome email sent when person first signs in
+//- expects locals of {
+//-   to: person receiving email
+//-   from: person sending email - the op requestor
+//- }
+extends ../theme/layout.pug
+
+block tagline
+  span Welcome to Voluntarily
+
+block copy
+  p Kia ora #{to.nickname},
+  p Thanks for volunteering to help out. 
+  p We have setup your account and allocated your first set of goals. 
+  p Click the button below to open Voluntarily on your home page, complete your profile and start your training.
+  p Ngā mihi, Voluntarily.nz
+
+block copybutton
+  a(href=to.href class='mobile-button') Lets get things started
+      
+block copyimage
+                                 

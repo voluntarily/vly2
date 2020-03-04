@@ -1,31 +1,22 @@
 import PropTypes from 'prop-types'
+import { TagStyle } from '../VTheme/VTheme'
 import styled from 'styled-components'
 
-const TagStyle = styled.div`
-width: auto;
-
-padding: 0 0.5rem;
-margin: 0.1rem;
+const TagContainer = styled.div`
 display: inline-block;
 position: relative;
+width: auto;
 
-vertical-align: middle;
-font-size: 1.2rem;
-font-weight: 500;
-
-border-radius: 0.2rem;
-background-color: #e8e8e8;
-color: #666;
 `
 
 export function TagDisplay ({ tags }) {
   if (!tags) return ''
   return (
-    <span>
+    <TagContainer>
       {tags.map(tag => {
         return <TagStyle key={tag}>{tag}</TagStyle>
       })}
-    </span>
+    </TagContainer>
   )
 }
 

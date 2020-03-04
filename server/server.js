@@ -24,7 +24,7 @@ server.use(setSession)
 server.use(getAbility({ searchPattern: '/server/api/**/*.ability.js' }))
 const routes = require('./routes')
 const routerHandler = routes.getRequestHandler(app)
-const { config } = require('../config/config')
+const { config } = require('../config/serverConfig')
 const { supportedLanguages } = require('../lang/lang')
 
 // We need to expose React Intl's locale data on the request for the user's

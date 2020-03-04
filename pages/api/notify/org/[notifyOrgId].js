@@ -3,7 +3,7 @@ import Member from '../../../../server/api/member/member'
 import { MemberStatus } from '../../../../server/api/member/member.constants'
 import { emailPerson } from '../../../../server/api/person/person.email'
 import { makeURLToken } from '../../../../lib/sec/actiontoken'
-import { config } from '../../../../config/config'
+import { config } from '../../../../config/clientConfig'
 
 export default async (req, res) => {
   // verify signed in
@@ -26,7 +26,7 @@ export default async (req, res) => {
       return res.status(403).json({ error: 'signed-in person is not an orgadmin of the requested organisation' })
     }
     // make org links canonical
-    org.imgUrl = `${config.appUrl}${org.imgUrl}`
+    org.imgUrl = new URL(org.imgUrl, config.appUrl).href
     org.href = `${config.appUrl}/orgs/${orgid}`
     const payload = {
       landingUrl: '/api/notify/org/action',

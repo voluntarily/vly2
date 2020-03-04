@@ -104,6 +104,25 @@ const jwtDataCharles = {
 }
 jwtDataCharles.idToken = jwt.sign(jwtDataCharles.idTokenPayload, 'secret')
 
+const jwtDataExpired = {
+  accessToken: 'IGs4bjO5WLjsulmjKiW2-VLeetlgykUP',
+  idTokenPayload: {
+    name: 'Expired Person',
+    nickname: 'Expired',
+    email: 'expired@voluntarily.nz',
+    email_verified: true,
+    exp: Math.floor(Date.now() / 1000) - (60 * 60),
+    iat: Math.floor(Date.now() / 1000) - (2 * 60 * 60)
+  },
+  refreshToken: null,
+  state: 'Nz_CgRTnYPO5CbD4ueKmkdCiuk2z3psk',
+  expiresIn: 3600,
+  tokenType: 'Bearer',
+  scope: null
+}
+
+jwtDataExpired.idToken = jwt.sign(jwtDataExpired.idTokenPayload, 'secret')
+
 const DEFAULT_SESSION = {
   isAuthenticated: false,
   user: null,
@@ -118,5 +137,6 @@ module.exports = {
   jwtDataAlice, // represents Alice a teacher
   jwtDataBob, // represents someone with non validated email
   jwtDataCharles, // represents a new sign up
+  jwtDataExpired, // represents an expired session
   DEFAULT_SESSION
 }

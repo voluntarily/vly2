@@ -21,14 +21,19 @@ test.after.always(async (t) => {
 })
 
 test.beforeEach('connect and set up test fixture', async (t) => {
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  t.context.people = await Person.create(people)
   archivedOps.map((op, index) => { op.requestor = t.context.people[0]._id })
-  t.context.opportunities = await ArchivedOpportunity.create(archivedOps).catch((err) => console.error('Unable to create opportunities', err))
+  t.context.opportunities = await ArchivedOpportunity.create(archivedOps)
   interests.map((interest, index) => {
     interest.opportunity = t.context.opportunities[index]._id
     interest.person = t.context.people[index]._id
+    interest.messages = [{ // this works whether its an object or array.
+      body: `${t.context.people[index].name} is interested.`,
+      author: t.context.people[index]._id
+    }]
+    interest.type = 'accept'
   })
-  t.context.interests = await InterestArchive.create(interests).catch((err) => console.error('Unable to create archived interest', err))
+  t.context.interests = await InterestArchive.create(interests)
 })
 
 test.afterEach.always(async () => {
@@ -56,7 +61,7 @@ test.serial('Should correctly give interest when queried by opportunity', async 
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect('Content-Type', /json/)
   t.is(res.status, 200)
-  t.is(res.body[0].comment, t.context.interests[0].comment)
+  t.is(res.body[0].messages[0].body, t.context.interests[0].messages[0].body)
 })
 
 test.serial('Should send correct data when queried against a _id', async t => {
@@ -77,7 +82,7 @@ test.serial('Should return 404 code when queried non existing interest', async t
   t.is(res.status, expectedResponseStatus)
 })
 
-test.serial('Should update the interest state from interested to attended', async t => {
+test.only('Should update the interest state from interested to attended', async t => {
   const reqData = {
     status: 'attended',
     _id: t.context.interests[1]._id,
@@ -85,7 +90,11 @@ test.serial('Should update the interest state from interested to attended', asyn
       nickname: t.context.people[0].nickname,
       _id: t.context.people[0]._id
     },
-    comment: 'lol',
+    messages: [{ // this works whether its an object or array.
+      body: 'Well done',
+      author: t.context.people[0]._id
+    }],
+    type: 'accept',
     opportunity: t.context.opportunities[2]._id,
     date: 'Sanitize it plz'
   }
@@ -104,8 +113,12 @@ test.serial('Should correctly delete an interest', async t => {
     _id: '5cc8d60b8b16812b5b3920c9',
     person: t.context.people[0]._id,
     status: 'not attended',
-    opportunity: t.context.opportunities[0]._id,
-    comment: 'hello there'
+    messages: [{ // this works whether its an object or array.
+      body: 'Well done',
+      author: t.context.people[0]._id
+    }],
+    type: 'accept',
+    opportunity: t.context.opportunities[0]._id
   })
   await newInterestArchive.save()
   const res = await request(server)

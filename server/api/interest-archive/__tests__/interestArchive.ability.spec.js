@@ -55,7 +55,8 @@ const testScenarios = [
         .send({
           person: context.fixtures.people[0]._id,
           opportunity: context.fixtures.archivedOpportunities[0]._id,
-          comment: 'Test comment',
+          messages: [],
+          type: 'accept',
           status: InterestStatus.INTERESTED
         })
     },
@@ -70,7 +71,11 @@ const testScenarios = [
       return request(server)
         .put(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
         .send({
-          comment: 'Updated test comment'
+          messages: [{ // this works whether its an object or array.
+            body: 'Well done',
+            author: context.fixtures.people[0]._id
+          }],
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -82,6 +87,96 @@ const testScenarios = [
     action: 'delete',
     makeRequest: async (context) => {
       return request(server).delete(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 403)
+    }
+  },
+  {
+    role: 'volunteer',
+    action: 'list',
+    makeRequest: async () => {
+      return request(server)
+        .get('/api/interestsArchived')
+        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 200)
+      t.is(response.body.length, 1)
+    }
+  },
+  {
+    role: 'volunteer',
+    action: 'read (own interest)',
+    makeRequest: async (context) => {
+      return request(server)
+        .get(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 200)
+    }
+  },
+  {
+    role: 'volunteer',
+    action: 'read (other\'s interest)',
+    makeRequest: async (context) => {
+      return request(server)
+        .get(`/api/interestsArchived/${context.fixtures.archivedInterests[1]._id}`)
+        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 404)
+    }
+  },
+  {
+    role: 'volunteer',
+    action: 'create',
+    makeRequest: async (context) => {
+      return request(server)
+        .post('/api/interestsArchived')
+        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .send({
+          person: context.fixtures.people[0]._id,
+          opportunity: context.fixtures.archivedOpportunities[0]._id,
+          messages: [{ // this works whether its an object or array.
+            body: 'Well done',
+            author: context.fixtures.people[0]._id
+          }],
+          type: 'accept',
+          status: InterestStatus.INTERESTED
+        })
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 403)
+    }
+  },
+  {
+    role: 'volunteer',
+    action: 'update',
+    makeRequest: async (context) => {
+      return request(server)
+        .put(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .send({
+          messages: [{ // this works whether its an object or array.
+            body: 'Well done',
+            author: context.fixtures.people[0]._id
+          }],
+          type: 'message'
+        })
+    },
+    assertions: (t, response) => {
+      t.is(response.statusCode, 403)
+    }
+  },
+  {
+    role: 'volunteer',
+    action: 'delete',
+    makeRequest: async (context) => {
+      return request(server)
+        .delete(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .set('Cookie', [`idToken=${sessions[2].idToken}`])
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 403)
@@ -133,7 +228,11 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
         .send({
           opportunity: context.fixtures.archivedOpportunities[0]._id,
-          comment: 'Test comment'
+          messages: [{ // this works whether its an object or array.
+            body: 'Create to opportunity provider',
+            author: context.fixtures.people[0]._id
+          }],
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -148,7 +247,8 @@ const testScenarios = [
         .put(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
         .send({
-          status: InterestStatus.ATTENDED
+          status: InterestStatus.ATTENDED,
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -163,7 +263,8 @@ const testScenarios = [
         .put(`/api/interestsArchived/${context.fixtures.archivedInterests[2]._id}`)
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
         .send({
-          status: InterestStatus.NOTATTENDED
+          status: InterestStatus.NOTATTENDED,
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -228,7 +329,11 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
         .send({
           opportunity: context.fixtures.archivedOpportunities[0]._id,
-          comment: 'Test comment'
+          messages: [{ // this works whether its an object or array.
+            body: 'Create to org admin',
+            author: context.fixtures.people[0]._id
+          }],
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -243,7 +348,12 @@ const testScenarios = [
         .put(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
         .send({
-          status: InterestStatus.INVITED
+          status: InterestStatus.INVITED,
+          messages: [{ // this works whether its an object or array.
+            body: 'org admin - update (own interest)',
+            author: context.fixtures.people[0]._id
+          }],
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -258,7 +368,12 @@ const testScenarios = [
         .put(`/api/interestsArchived/${context.fixtures.archivedInterests[2]._id}`)
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
         .send({
-          status: InterestStatus.INVITED
+          status: InterestStatus.INVITED,
+          messages: [{ // this works whether its an object or array.
+            body: 'org admin - update (other\'s interest)',
+            author: context.fixtures.people[0]._id
+          }],
+          type: 'accept'
         })
     },
     assertions: (t, response) => {
@@ -312,7 +427,11 @@ const testScenarios = [
         .send({
           person: context.fixtures.people[1]._id,
           opportunity: context.fixtures.archivedOpportunities[0]._id,
-          comment: 'Test comment',
+          messages: [{ // this works whether its an object or array.
+            body: 'admin create',
+            author: context.fixtures.people[0]._id
+          }],
+          type: 'accept',
           status: InterestStatus.INVITED
         })
     },
