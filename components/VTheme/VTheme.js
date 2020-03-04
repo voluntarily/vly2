@@ -103,7 +103,7 @@ export const SideBarGrid = styled.div`
   margin: 0;
   grid-template-columns: 29rem 49rem;
   grid-column-gap: 2rem;
-  margin: 4rem 0 4rem 0 ;
+  margin: 2rem 0 4rem 0 ;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: calc(40vw - 4rem) calc(60vw - 4rem);
@@ -624,9 +624,12 @@ export const ContactList = styled.ul`
   main text inside should contain an h4 title.
 */
 export const PageAlert = styled.div`
+
   width: 100%;
   padding: 1rem;
   border-radius: 8px;
+  box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
+
 
   display: grid;
   gap: 1rem;

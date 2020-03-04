@@ -22,7 +22,7 @@ import { InterestStatus } from '../../server/api/interest/interest.constants'
 const SafeAffix = ({ children }) => {
   return (process.env.NODE_ENV === 'test')
     ? <>{children}</>
-    : <Affix style={{ width: '100%', position: 'absolute', top: 0, left: 0 }} offsetTop={32}>{children}</Affix>
+    : <Affix style={{ width: '100%', position: 'absolute', top: 0, left: 0 }} offsetTop={4}>{children}</Affix>
 }
 export const RegisterInterestItem = ({
   interest,
@@ -200,7 +200,7 @@ const getOptions = (status) => {
     case InterestStatus.INTERESTED:
       return {
         showStatus: true,
-        statusMessage: <FormattedMessage id='interested.statusMessage' defaultMessage='Awaiting an invitation' description='message when volunteer has already expressed interest' />,
+        statusMessage: <FormattedMessage id='interested.statusMessage' defaultMessage='The organiser will get back to you soon!' description='message when volunteer has already expressed interest' />,
         showAcceptButton: false,
         showRejectButton: true,
         rejectButtonText: <FormattedMessage id='interested.rejectButtonText' defaultMessage='Withdraw Interest' description='Button for volunteer to reject interest in an opportunity' />,
@@ -214,17 +214,17 @@ const getOptions = (status) => {
     case InterestStatus.INVITED:
       return {
         showStatus: true,
-        statusMessage: <FormattedMessage id='invited.statusMessage' defaultMessage='You have been invited to participate - confirm?' description='prompt when volunteer is invited' />,
+        statusMessage: <FormattedMessage id='invited.statusMessage' defaultMessage='You have been invited to this activity 🥳' description='prompt when volunteer is invited' />,
 
         showAcceptButton: true,
         acceptFormTitle: <FormattedMessage id='invited.acceptFormTitle' defaultMessage="That's great. Thanks." description='Heading displayed on express-interest form when volunteer has been invited to participate' />,
         acceptFormPrompt: <FormattedMessage id='invited.acceptFormPrompt' defaultMessage='Send a message to the organiser.' description='Sub-heading displayed on express-interest form when volunteer has been invited to participate' />,
-        acceptButtonText: <FormattedMessage id='invited.acceptButtonText' defaultMessage='I can do it :)' description='Allows volunteer to accept invitation to participate in opportunity' />,
+        acceptButtonText: <FormattedMessage id='invited.acceptButtonText' defaultMessage='Accept' description='Allows volunteer to accept invitation to participate in opportunity' />,
         acceptNotifyHeading: <FormattedMessage id='invited.acceptNotifyHeading' defaultMessage='Thank you so much!' description='Heading displayed when volunteer has committed to an op' />,
         acceptNotifyMessage: <FormattedMessage id='invited.acceptNotifyMessage' defaultMessage='You have agreed to participate in this activty! Check out your home page for some things you might need to complete.' description='Sub-heading displayed when volunteer has committed to an op' />,
 
         showRejectButton: true,
-        rejectButtonText: <FormattedMessage id='invited.rejectButtonText' defaultMessage="I can't make it :(" description='Allows volunteer to reject from an opportunity once they have been invited' />,
+        rejectButtonText: <FormattedMessage id='invited.rejectButtonText' defaultMessage='Decline' description='Allows volunteer to reject from an opportunity once they have been invited' />,
         rejectFormTitle: <FormattedMessage id='invited.rejectFormTitle' defaultMessage='Is there something we can do?' description='title message form when interested person withdraws' />,
         rejectFormPrompt: <FormattedMessage id='invited.rejectFormPrompt' defaultMessage='We will take you off the invite list but keep you as interested. Leave a message for the organiser' description='prompt on message form when interested person withdraws' />,
         rejectNotifyHeading: <FormattedMessage id='invited.rejectNotifyHeading' defaultMessage="You can't make it" description='title on popup after person withdraws interest' />,

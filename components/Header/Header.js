@@ -88,7 +88,7 @@ const Header = ({ isAuthenticated, ...props }) => {
   if (notice === 'none') notice = '' // wipe notice if its set to none
   const height = notice ? '112px' : '56px'
   return (
-    <Layout.Header style={{ position: 'fixed', height: height, zIndex: 10, width: '100%', backgroundColor: 'white', boxShadow: '1px 1px 12px 0 rgba(0, 0, 0, 0.1)' }}>
+    <Layout.Header style={{ position: 'relative', height: height, zIndex: 10, width: '100%', backgroundColor: 'white', boxShadow: '1px 1px 12px 0 rgba(0, 0, 0, 0.1)' }}>
       {notice && <Notice><Icon type='warning' /> {notice}</Notice>}
       <MenuGrid>
         <div>
