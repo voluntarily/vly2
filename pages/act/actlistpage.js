@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import ActList from '../../components/Act/ActList'
 import NoResult from '../../components/NoResult'
-import { FullPage, GridContainer, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
+import { FullPage, GridContainer, PageBannerNoTabs, PageBannerButtons } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 import ActAdd from '../../components/Act/ActAdd'
@@ -37,7 +37,7 @@ export const ActListPage = ({ activities }) =>
     <Helmet>
       <title>Voluntarily - Resources List</title>
     </Helmet>
-    <PageBanner>
+    <PageBannerNoTabs>
       <h1>
         <FormattedMessage
           id='ActListPage.Title'
@@ -53,7 +53,7 @@ export const ActListPage = ({ activities }) =>
         defaultMessage='Find activity templates that make it easy to bring volunteers into your classroom'
         id='act.list.subtitle'
       />
-    </PageBanner>
+    </PageBannerNoTabs>
     {/* <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
       <TabPane tab={activityTab} key='1'> */}
 

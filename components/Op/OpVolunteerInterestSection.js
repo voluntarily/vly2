@@ -8,9 +8,11 @@ export const OpVolunteerInterestSection = ({ isAuthenticated, canRegisterInteres
   if (!isAuthenticated) {
     return (
       <Link href={`/auth/sign-thru?redirect=/ops/${opid}`}>
-        <Button type='primary' size='large' shape='round'>
+
+        <Button type='primary' style={{ width: '50%' }} size='large' shape='round'>
           <FormattedMessage id='iminterested-anon' defaultMessage="I'm Interested" description="I'm interested button that leads to sign in page" />
         </Button>
+
       </Link>
     )
   }

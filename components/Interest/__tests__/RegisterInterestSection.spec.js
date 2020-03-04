@@ -115,7 +115,7 @@ test.serial('mount RegisterInterestSection with op and me', async t => {
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // once loading completed should the thank you note
-  t.is(wrapper.find('h4').first().text(), 'Awaiting an invitation')
+  t.is(wrapper.find('h4').first().text(), 'The organiser will get back to you soon!')
   t.truthy(myMock.done())
   myMock.restore()
 })
