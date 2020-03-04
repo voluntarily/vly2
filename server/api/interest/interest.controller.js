@@ -117,13 +117,13 @@ const updateInterest = async (req, res) => {
 
     const interestDetail = await getInterestDetail(req.params._id)
     interestDetail.type = interest.type
-    if (!interest.type) {
-      console.log('no iterest type', interest)
-    }
-    if (interest.type === 'message') {
-      PubSub.publish(TOPIC_INTEREST__MESSAGE, interestDetail)
-    } else {
-      PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
+    if (interest.type) {
+      // if there is no interest type then we don't publish messages
+      if (interest.type === 'message') {
+        PubSub.publish(TOPIC_INTEREST__MESSAGE, interestDetail)
+      } else {
+        PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
+      }
     }
 
     res.json(interestDetail)
