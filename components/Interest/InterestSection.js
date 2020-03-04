@@ -27,8 +27,6 @@ export const InterestSection = ({ opid }) => {
   }
 
   const handleAction = async (updatedInterests, action, message) => {
-    console.log('handleAction', action, message)
-
     const putInterest = {
       ...(message && { messages: [{ body: message, author: me._id }] }),
       type: action
@@ -47,19 +45,18 @@ export const InterestSection = ({ opid }) => {
       case InterestAction.MESSAGE:
         break
     }
-    if (Array.isArray(updatedInterests)) {
-      updatedInterests.forEach(async interest => {
-        await dispatch(reduxApi.actions.interests.put({ id: updatedInterests._id }, { body: JSON.stringify(putInterest) }))
-        /* BUG: the problem here is that we issue a sequence of dispatch calls in a loop
-          the second put does not run because the first has set the data into the loading state.
-          by the time the data has returned we have finished.
-          so only one item in the list gets updated.
-          */
-      })
-    } else {
-      const res = await dispatch(reduxApi.actions.interests.put({ id: updatedInterests._id }, { body: JSON.stringify(putInterest) }))
-      console.log(res)
-    }
+    // if (Array.isArray(updatedInterests)) {
+    //   updatedInterests.forEach(async interest => {
+    //     await dispatch(reduxApi.actions.interests.put({ id: updatedInterests._id }, { body: JSON.stringify(putInterest) }))
+    //     /* BUG: the problem here is that we issue a sequence of dispatch calls in a loop
+    //       the second put does not run because the first has set the data into the loading state.
+    //       by the time the data has returned we have finished.
+    //       so only one item in the list gets updated.
+    //       */
+    //   })
+    // } else {
+    await dispatch(reduxApi.actions.interests.put({ id: updatedInterests._id }, { body: JSON.stringify(putInterest) }))
+    // }
   }
 
   return (

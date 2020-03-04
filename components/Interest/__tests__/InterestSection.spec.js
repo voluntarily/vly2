@@ -5,115 +5,164 @@ import InterestSection from '../InterestSection'
 import { Provider } from 'react-redux'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
-import people from '../../../server/api/person/__tests__/person.fixture'
 import { API_URL } from '../../../lib/callApi'
 import fetchMock from 'fetch-mock'
+import { makeInterests, opportunity, requestor } from './makeInterests.fixture'
+import { act } from 'react-dom/test-utils'
+import { InterestStatus } from '../../../server/api/interest/interest.constants'
+const { INVITED, INTERESTED, DECLINED } = InterestStatus
 
-// Initial opportunities added into test db
-const opid = '5cc903e5f94141437622cea7'
-const ops = [
-  {
-    _id: opid,
-    name: 'Growing in the garden',
-    subtitle: 'Growing digitally in the garden',
-    imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
-    description: 'Project to grow something in the garden',
-    duration: '15 Minutes',
-    location: 'Newmarket, Auckland',
-    tags: [],
-    status: 'active'
-  }
-]
+const interestCount = 5
+test.before('Setup fixtures', t => { t.context.interests = makeInterests('InterestSection', interestCount) })
 
-const interestid = '5cc903e5f94141437622cea8'
-const interests = [
-  {
-    _id: interestid,
-    person: people[0],
-    opportunity: ops[0],
-    comment: "I'm Andrew",
-    status: 'interested'
-  },
-  {
-    _id: '5cc903e5f94141437622cea9',
-    person: people[1],
-    opportunity: ops[0],
-    comment: 'Hi dali',
-    status: 'invited'
-  }
-
-]
-
-const invitedAndrew = {
-  _id: interestid,
-  person: people[0],
-  opportunity: ops[0],
-  comment: "I'm Andrew",
-  status: 'invited'
-}
-const declinedAndrew = {
-  _id: interestid,
-  person: people[0],
-  opportunity: ops[0],
-  comment: "I'm Andrew",
-  status: 'declined'
-}
-
+const opid = opportunity._id
 const initStore = {
-  interests: {
-    loading: false,
-    data: []
-  }
 }
 
-function sleep (ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
+const okMessagePopup = async (t, wrapper, rowindex, message) => {
+// find the popup.
+  const comment = wrapper.find('textarea').at(rowindex)
+  comment.simulate('change', { target: { value: message } })
+  wrapper.update()
+
+  // form is visible
+  t.true(wrapper.find('RegisterInterestMessageForm').at(rowindex).props().visible)
+  // click Send to accept the form
+  t.true(wrapper.exists('Button#sendBtn'))
+  wrapper.find('Button#sendBtn').first().simulate('click')
+  await act(async () => { }) // let the hooks complete
+  wrapper.update()
+
+  // check popup has gone
+  t.false(wrapper.find('RegisterInterestMessageForm').at(rowindex).props().visible)
 }
 
-test('mount the InterestSection with two interests', async t => {
+test('mount the InterestSection with a list of interests', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
-  myMock.getOnce(`${API_URL}/interests/?op=${opid}`, interests)
-  myMock.putOnce(`${API_URL}/interests/${interestid}`, invitedAndrew)
+  myMock.getOnce(`${API_URL}/interests/?op=${opid}`, t.context.interests)
 
-  const wrapper = await mountWithIntl(
+  const Col = {
+    SELECT: 0,
+    EXPAND: 1,
+    NAME: 2,
+    MESSAGES: 3,
+    STATUS: 4,
+    ACTIONS: 5
+  }
+  const Btn = {
+    ACCEPT: 0,
+    REJECT: 1,
+    MESSAGE: 2
+  }
+  const wrapper = mountWithIntl(
     <Provider store={realStore}>
       <InterestSection opid={opid} />
     </Provider>
   )
-  await sleep(1) // allow asynch fetch to complete
+  await act(async () => { }) // let the hooks complete
   wrapper.update()
-  t.is(wrapper.find('tbody tr').length, 2)
-  t.regex(wrapper.find('tbody tr td').at(1).text(), /avowkind/)
-  t.regex(wrapper.find('tbody tr').at(1).find('td').at(1).text(), /Dali/)
 
-  // test invite button
-  const invitebutton = wrapper.find('tbody tr').first().find('button').first()
+  t.true(realStore.getState().interests.sync)
+  t.is(realStore.getState().interests.data.length, interestCount)
+  t.is(wrapper.find('tbody tr').length, interestCount)
+
+  const rowindex = 0
+  let row = wrapper.find('tbody tr').at(rowindex)
+  t.true(row.find('td').at(Col.NAME).exists('AvatarProfile'))
+  t.regex(row.find('td').at(Col.NAME).text(), /volunteer_InterestSection/)
+  t.is(row.find('td').at(Col.STATUS).text(), 'interested')
+
+  // check buttons
+  let actionButtons = row.find('td').at(Col.ACTIONS).find('Button')
+  t.is(actionButtons.length, 3)
+
+  // =====================
+  // # Test invite button
+  // =====================
+  let storedInterest = realStore.getState().interests.data[0]
+  const invitedvp = { ...storedInterest, status: INVITED }
+  myMock.putOnce(`${API_URL}/interests/${storedInterest._id}`, invitedvp)
+
+  const invitebutton = actionButtons.at(Btn.ACCEPT)
+  t.is(invitebutton.text(), 'Invite')
   invitebutton.simulate('click')
-  await sleep(1) // allow asynch fetch to complete
-  wrapper.update()
+  await okMessagePopup(t, wrapper, rowindex, 'Invitation from us')
 
-  // test withdraw invite button
-  const withdrawbutton = wrapper.find('tbody tr').first().find('button').first()
+  storedInterest = realStore.getState().interests.data[0]
+  t.is(storedInterest.status, INVITED)
+  // effect should be to update row with invited person
+  row = wrapper.find('tbody tr').at(rowindex)
+
+  t.regex(row.find('td').at(Col.NAME).text(), /volunteer_InterestSection/)
+  t.is(row.find('td').at(Col.STATUS).text(), 'invited')
+
+  // =====================
+  // # Test withdraw invite button
+  // =====================
+  storedInterest = realStore.getState().interests.data[0]
+  const withdrawnvp = { ...storedInterest, status: INTERESTED }
+  myMock.restore()
+  myMock.putOnce(`${API_URL}/interests/${storedInterest._id}`, withdrawnvp)
+  row = wrapper.find('tbody tr').at(rowindex)
+  actionButtons = row.find('td').at(Col.ACTIONS).find('Button')
+  t.is(actionButtons.length, 5) // the form buttons are instatiated now
+  const withdrawbutton = actionButtons.at(Btn.ACCEPT)
   t.is(withdrawbutton.text(), 'Withdraw Invite')
-  myMock.restore()
-  myMock.putOnce(`${API_URL}/interests/${interestid}`, interests[0])
   withdrawbutton.simulate('click')
+  await okMessagePopup(t, wrapper, rowindex, 'Withdrawn from us')
 
-  // test decline button
+  // effect should be to update row back to interested person
+  row = wrapper.find('tbody tr').at(rowindex)
+
+  t.regex(row.find('td').at(Col.NAME).text(), /volunteer_InterestSection/)
+  t.is(row.find('td').at(Col.STATUS).text(), 'interested')
+  storedInterest = realStore.getState().interests.data[0]
+  t.is(storedInterest.status, INTERESTED)
+
+  // =====================
+  // # Test Message button
+  // =====================
+  storedInterest = realStore.getState().interests.data[0]
+  const messagevp = { ...storedInterest, messages: [{ body: 'new message', author: requestor }] }
   myMock.restore()
-  myMock.putOnce(`${API_URL}/interests/${interestid}`, declinedAndrew)
+  myMock.putOnce(`${API_URL}/interests/${storedInterest._id}`, messagevp)
+  row = wrapper.find('tbody tr').at(rowindex)
+  actionButtons = row.find('td').at(Col.ACTIONS).find('Button')
+  t.is(actionButtons.length, 5) // the form buttons are instatiated now
+  const messagebutton = actionButtons.at(Btn.MESSAGE)
+  t.is(messagebutton.text(), 'Message')
+  messagebutton.simulate('click')
+  await okMessagePopup(t, wrapper, rowindex, 'Messaged from us')
 
-  const declinebutton = wrapper.find('tbody tr').first().find('button').at(1)
+  // effect should be to update the message field and leave status stable
+  row = wrapper.find('tbody tr').at(rowindex)
+
+  storedInterest = realStore.getState().interests.data[0]
+  t.is(row.find('td').at(Col.STATUS).text(), 'interested')
+  t.is(storedInterest.status, INTERESTED)
+  t.is(storedInterest.messages.length, 1)
+
+  // =====================
+  // # Test Decline button
+  // =====================
+  storedInterest = realStore.getState().interests.data[0]
+  const declinevp = { ...storedInterest, status: DECLINED }
+  myMock.restore()
+  myMock.putOnce(`${API_URL}/interests/${storedInterest._id}`, declinevp)
+  row = wrapper.find('tbody tr').at(rowindex)
+  actionButtons = row.find('td').at(Col.ACTIONS).find('Button')
+  t.is(actionButtons.length, 5) // the form buttons are instatiated now
+  const declinebutton = actionButtons.at(Btn.REJECT)
   t.is(declinebutton.text(), 'Decline')
   declinebutton.simulate('click')
+  await okMessagePopup(t, wrapper, rowindex, 'Declined from us')
 
-  // // TODO: fix throw of rejected promise at this point
-  // popconfirm.props().onConfirm(interests[0])
-  // await sleep(1) // allow asynch fetch to complete
-  // wrapper.update()
-  // const status = wrapper.find('tbody tr').first().find('td').at(2).text()
-  // t.truthy(myMock.done())
-  myMock.restore()
+  // effect should be to update the decline field and leave status stable
+  row = wrapper.find('tbody tr').at(rowindex)
+
+  storedInterest = realStore.getState().interests.data[0]
+  t.is(row.find('td').at(Col.STATUS).text(), 'declined')
+  t.is(storedInterest.status, DECLINED)
 })
