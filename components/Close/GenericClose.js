@@ -1,9 +1,13 @@
 import { HalfGrid } from '../VTheme/VTheme'
+import CloseCard from './CloseActionCard'
 
 const GenericClose = () => (
   <HalfGrid>
     <img src='https://picsum.photos/640/480' />
-    <h2>Welcome to Voluntarily!</h2>
+    <div>
+      <h2>Welcome to Voluntarily!</h2>
+      <CloseCard />
+    </div>
   </HalfGrid>
 )
 
