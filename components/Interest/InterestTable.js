@@ -1,19 +1,13 @@
-import React, { useState } from 'react'
-import { Button, Table, Dropdown, Icon, Menu } from 'antd'
+import { Button, Dropdown, Icon, Menu, Table } from 'antd'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
-
+import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
+import { InterestAction } from '../../server/api/interest/interest.constants'
+import PersonCard from '../Person/PersonCard'
 import { AvatarProfile } from '../VTheme/AvatarProfileLink'
-import { InterestMessageList, InterestMessageItem } from './InterestMessage'
-import { PersonCard } from '../Person/PersonCard'
-const OneOrMany = (obj, fn) => {
-  if (Array.isArray(obj)) {
-    obj.map(item => fn(item))
-  } else {
-    fn(obj)
-  }
-}
+import { InterestMessageItem, InterestMessageList } from './InterestMessage'
+import { RegisterInterestMessageForm } from './RegisterInterestMessageForm'
 
 export const ExpandedInterestGrid = styled.div`
   display: grid;
@@ -39,21 +33,76 @@ const ExpandedInterest = ({ interest }) =>
     <InterestMessageList messages={interest.messages} />
   </ExpandedInterestGrid>
 
-const InterestTable = ({ interests, onInvite, onDecline, onWithdrawInvite }) => {
+const InviteText =
+  <FormattedMessage
+    id='inviteVolunteer'
+    defaultMessage='Invite'
+    description='Button allowing event organizer to invite an interested volunteer'
+  />
+
+const DeclineText =
+  <FormattedMessage
+    id='declineVolunteer'
+    defaultMessage='Decline'
+    description='Button allowing event organizer to decline an interested volunteer'
+  />
+const MessageText =
+  <FormattedMessage
+    id='messageVolunteer'
+    defaultMessage='Message'
+    description='Button allowing event organizer to message an interested volunteer'
+  />
+
+const WithdrawText =
+  <FormattedMessage
+    id='withdrawVolunteerInvite'
+    defaultMessage='Withdraw Invite'
+    description='Button allowing event organizer to withdraw a invite already issued to an interested volunteer'
+  />
+const undeclineInviteText =
+  <FormattedMessage
+    id='undeclineInvite'
+    defaultMessage='Undecline Invite'
+    description='Button allowing event organizer to "un-decline" a previously declined invite'
+  />
+const formOptions = {
+  [InterestAction.ACCEPT]: {
+    title: 'Invite Volunteers',
+    prompt: 'Optionally add a note to the message we will send to the volunteer'
+  },
+  [InterestAction.REJECT]: {
+    title: 'Decline Volunteers',
+    prompt: 'Optionally add a note to the message we will send to the volunteer'
+  },
+  [InterestAction.WITHDRAW]: {
+    title: 'Withdraw Invite Volunteers',
+    prompt: 'Optionally add a note to the message we will send to the volunteer'
+  },
+  [InterestAction.MESSAGE]: {
+    title: 'Message Volunteers',
+    prompt: 'Send a message to the volunteer'
+  }
+}
+
+const InterestTable = ({ interests, onAction }) => {
   const [filteredInfo, setFilteredInfo] = useState({})
   const [sortedInfo, setSortedInfo] = useState({})
   const [selectedRows, setSelectedRows] = useState([])
+  const [selectedInterest, setSelectedInterest] = useState()
+  const [action, setAction] = useState()
+  const [showMessageForm, setShowMessageForm] = useState(false)
 
-  const handleInviteButtonClicked = (interest) => {
-    OneOrMany(interest, onInvite)
+
+  const handleFormSubmit = (ok, message) => {
+    setShowMessageForm(false)
+    if (!ok) return
+    onAction(selectedInterest, action, message)
   }
 
-  const handleDeclineButtonClicked = (interest) => {
-    OneOrMany(interest, onDecline)
-  }
-
-  const handleWithdrawInviteButtonClicked = (interest) => {
-    OneOrMany(interest, onWithdrawInvite)
+  const handleClick = (action) => (interest) => {
+    setAction(action)
+    setSelectedInterest(interest)
+    setShowMessageForm(true)
   }
 
   const handleTableChange = (pagination, filters, sorter) => {
@@ -61,8 +110,10 @@ const InterestTable = ({ interests, onInvite, onDecline, onWithdrawInvite }) => 
     setSortedInfo(sorter)
   }
 
-  const onSelectChange = (selectedRowKeys, selectedRows) => {
-    setSelectedRows(selectedRows)
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      setSelectedRows(selectedRows)
+    }
   }
   const columns = [
     {
@@ -107,13 +158,7 @@ const InterestTable = ({ interests, onInvite, onDecline, onWithdrawInvite }) => 
       key: 'action',
       render: (text, record) => {
         const options = getEnabledButtons(record)
-        let withdrawInviteText = (
-          <FormattedMessage
-            id='withdrawVolunteerInvite'
-            defaultMessage='Withdraw Invite'
-            description='Button allowing event organizer to withdraw a invite already issued to an interested volunteer'
-          />
-        )
+        let withdrawInviteText = WithdrawText
 
         // Needed? Or is declining the end of the road?
         if (
@@ -121,28 +166,25 @@ const InterestTable = ({ interests, onInvite, onDecline, onWithdrawInvite }) => 
           !options.declineButtonEnabled &&
           !options.inviteButtonEnabled
         ) {
-          withdrawInviteText = (
-            <FormattedMessage
-              id='undeclineInvite'
-              defaultMessage='Undecline Invite'
-              description='Button allowing event organizer to "un-decline" a previously declined invite'
-            />
-          )
+          withdrawInviteText = undeclineInviteText
         }
 
         return (
           <div>
+            <RegisterInterestMessageForm
+              id='acceptRegisterInterestForm'
+              {...formOptions[action]}
+              showTerms={false}
+              onSubmit={handleFormSubmit}
+              visible={showMessageForm}
+            />
             {options.inviteButtonEnabled && (
               <span>
                 <Button
                   type='primary' shape='round'
-                  onClick={() => handleInviteButtonClicked(record)}
+                  onClick={() => handleClick(InterestAction.ACCEPT)(record)}
                 >
-                  <FormattedMessage
-                    id='inviteVolunteer'
-                    defaultMessage='Invite'
-                    description='Button allowing event organizer to invite an interested volunteer'
-                  />
+                  {InviteText}
                 </Button>
                   &nbsp;
               </span>
@@ -151,7 +193,7 @@ const InterestTable = ({ interests, onInvite, onDecline, onWithdrawInvite }) => 
               <span>
                 <Button
                   type='secondary' shape='round'
-                  onClick={() => handleWithdrawInviteButtonClicked(record)}
+                  onClick={() => handleClick(InterestAction.WITHDRAW)(record)}
                 >
                   {withdrawInviteText}
                 </Button>
@@ -162,24 +204,25 @@ const InterestTable = ({ interests, onInvite, onDecline, onWithdrawInvite }) => 
               <span>
                 <Button
                   type='danger' shape='round'
-                  onClick={() => handleDeclineButtonClicked(record)}
+                  onClick={() => handleClick(InterestAction.REJECT)(record)}
                 >
-                  <FormattedMessage
-                    id='declineVolunteer'
-                    defaultMessage='Decline'
-                    description='Button allowing event organizer to decline an interested volunteer'
-                  />
+                  {DeclineText}
                 </Button>
               </span>
             )}
+            <span>
+              <Button
+                shape='round'
+                onClick={() => handleClick(InterestAction.MESSAGE)(record)}
+              >
+                {MessageText}
+              </Button>
+            </span>
           </div>
         )
       }
     }
   ]
-  const rowSelection = {
-    handleTableChange: onSelectChange
-  }
 
   // put all selected rows' status together to form a selectedStatus array
   const selectedStatus = selectedRows.map(row => row.status)
@@ -187,25 +230,30 @@ const InterestTable = ({ interests, onInvite, onDecline, onWithdrawInvite }) => 
     <Menu>
       {selectedStatus.every(status => status === 'interested') && (
         <Menu.Item>
-          <a onClick={() => handleInviteButtonClicked(selectedRows)}>
-              Invite
+          <a onClick={() => handleClick(InterestAction.ACCEPT)(selectedRows)}>
+            {InviteText}
           </a>
         </Menu.Item>
       )}
       {selectedStatus.every(status => status === 'invited') && (
         <Menu.Item>
-          <a onClick={() => handleWithdrawInviteButtonClicked(selectedRows)}>
-              Withdraw Invite
+          <a onClick={() => handleClick(InterestAction.WITHDRAW)(selectedRows)}>
+            {WithdrawText}
           </a>
         </Menu.Item>
       )}
       {!selectedStatus.includes('declined') && (
         <Menu.Item>
-          <a onClick={() => handleDeclineButtonClicked(selectedRows)}>
-              Decline
+          <a onClick={() => handleClick(InterestAction.REJECT)(selectedRows)}>
+            {DeclineText}
           </a>
         </Menu.Item>
       )}
+      <Menu.Item>
+        <a onClick={() => handleClick(InterestAction.MESSAGE)(selectedRows)}>
+          {MessageText}
+        </a>
+      </Menu.Item>
     </Menu>
   )
   return (
@@ -230,9 +278,7 @@ const InterestTable = ({ interests, onInvite, onDecline, onWithdrawInvite }) => 
 }
 
 InterestTable.propTypes = {
-  onInvite: PropTypes.func.isRequired,
-  onWithdrawInvite: PropTypes.func.isRequired,
-  onDecline: PropTypes.func.isRequired,
+  onAction: PropTypes.func.isRequired,
   interests: PropTypes.array.isRequired
 }
 
