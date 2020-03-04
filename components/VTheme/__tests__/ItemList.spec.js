@@ -1,6 +1,16 @@
 import test from 'ava'
-import { ItemVolunteers } from '../ItemList'
+import { ItemVolunteers, ItemListing, ItemDuration } from '../ItemList'
 import { renderWithIntl } from '../../../lib/react-intl-test-helper'
+
+test('render ItemListing', t => {
+  const wrapper = renderWithIntl(<ItemListing />)
+  t.truthy(wrapper.find(ItemListing))
+})
+
+test('render duration if the value is 3 hours', t => {
+  const wrapper = renderWithIntl(<ItemDuration duration='3 hours' />)
+  t.is(wrapper.text(), '⏱ Duration:   3 hours')
+})
 
 test('render Volunteers per student properly if the value is < 1', t => {
 //   t.context.act.volunteers = 0.2
