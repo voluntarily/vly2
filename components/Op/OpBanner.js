@@ -53,8 +53,8 @@ const OpBanner = ({ op, children }) => {
 
           <ItemContainer>
             <ItemLocation location={op.location} />
-            <ItemDuration duration={op.duration} />
             {op.venue && <ItemVenue venue={op.venue} />}
+            <ItemDuration duration={op.duration} />
             <ItemDate startDate={startDate} endDate={endDate} />
             <ItemStatus status={op.status} />
 
