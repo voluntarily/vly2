@@ -104,6 +104,7 @@ export const SideBarGrid = styled.div`
   grid-template-columns: 29rem 49rem;
   grid-column-gap: 2rem;
   margin: 2rem 0 4rem 0 ;
+  padding-top: 5rem;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: calc(40vw - 4rem) calc(60vw - 4rem);
