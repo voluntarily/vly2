@@ -18,7 +18,20 @@ export const PageBanner = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding-bottom: 1rem;
-  border-bottom: thin solid rgba(101, 73, 170, 0.5);
+ 
+  @media screen and (max-width: 767px) {
+    margin-top: 4rem;
+    grid-template-columns: calc(100vw - 2rem);
+    grid-gap: 0rem;
+  }
+`
+
+export const PageBannerNoTabs = styled.div`
+  margin: 8rem 0 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-bottom: 1rem;
+  border-bottom: thin solid  #e8e8e8;
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
     grid-template-columns: calc(100vw - 2rem);
