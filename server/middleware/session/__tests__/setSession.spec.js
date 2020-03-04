@@ -84,20 +84,8 @@ test('Check headers and redirect location for expired session on API request', a
   const res = new MockResponse()
 
   await setSession(req, res, next)
-  const headers = res.getHeaders()
-  t.is(
-    headers['set-cookie'],
-    'idToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT',
-    'idToken cookie should be cleared if expired JWT is found'
-  )
 
-  t.is(
-    headers.location,
-    '/auth/sign-thru?redirect=%2Fhome%2F',
-    'Location header should be set to /auth/sign-thru and redirect parameter to /home/'
-  )
-
-  t.is(res.statusCode, 301, 'Status code should be 301 for redirect')
+  t.is(res.statusCode, 401, 'Status code should be 401 for unauthorized')
   t.false(req.session.isAuthenticated)
 })
 
