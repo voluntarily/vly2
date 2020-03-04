@@ -28,7 +28,7 @@ export const InterestMessageItem = ({ message }) => (
   />
 )
 InterestMessageItem.propTypes = {
-  interest: PropTypes.shape({
+  message: PropTypes.shape({
     body: PropTypes.string.isRequired,
     author: PropTypes.object.isRequired
   }).isRequired
