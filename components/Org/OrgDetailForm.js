@@ -25,7 +25,7 @@ function hasErrors (fieldsError) {
 class OrgDetailForm extends Component {
   constructor (props) {
     super(props)
-    //this.setImgUrl = this.setImgUrl.bind(this)
+    // this.setImgUrl = this.setImgUrl.bind(this)
     this.setAddress = this.setAddress.bind(this)
   }
 
@@ -42,7 +42,7 @@ class OrgDetailForm extends Component {
     this.props.form.setFieldsValue({ address: value })
   }
 
-  /*setDomainName = value => {
+  /* setDomainName = value => {
     this.props.form.setFieldsValue({ domainName: value })
   } */
   // setWebsite = (value) => {
@@ -341,9 +341,7 @@ class OrgDetailForm extends Component {
                 )}
               </Form.Item>
               <ShortInputContainer>
-                <Form.Item
-                  label={orgDomain}
-                >
+                <Form.Item label={orgDomain}>
                   {getFieldDecorator('domainName', {
                     rules: [
                       {
