@@ -12,7 +12,7 @@ import { useState } from 'react'
  Form calls back onSubmit false if cancelled and form fields in ok.
  */
 
-const RegisterInterestForm = ({
+export const RegisterInterestMessageForm = ({
   visible,
   onSubmit,
   title, prompt, showTerms
@@ -76,4 +76,4 @@ const RegisterInterestForm = ({
   )
 }
 
-export default RegisterInterestForm
+export default RegisterInterestMessageForm
