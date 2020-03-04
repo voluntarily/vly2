@@ -2,8 +2,8 @@ import { HalfGrid } from '../VTheme/VTheme'
 
 const GenericClose = () => (
   <HalfGrid>
-    <img />
-    <p>aaaa</p>
+    <img src='https://picsum.photos/640/480' />
+    <h1>Welcome to Voluntarily!</h1>
   </HalfGrid>
 )
 
