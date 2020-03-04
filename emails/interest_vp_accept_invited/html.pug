@@ -14,6 +14,8 @@ block copybig
 block copy
   p Kia ora #{to.nickname},
   p #{from.name} invites you to help with #{op.name}
+  if message
+    p saying: #{message.body}
   p Click on the Opportunity link below to accept the invitation. Then check out your profile to see if there are any new training requirements.
   p Ngā mihi, Voluntarily.nz
 //- Override copy button because the layout has a block for authentical user
