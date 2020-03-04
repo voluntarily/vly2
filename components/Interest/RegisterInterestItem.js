@@ -22,7 +22,7 @@ import { InterestStatus } from '../../server/api/interest/interest.constants'
 const SafeAffix = ({ children }) => {
   return (process.env.NODE_ENV === 'test')
     ? <>{children}</>
-    : <Affix style={{ width: '100%', position: 'absolute', top: 0, left: 0 }} offsetTop={4}>{children}</Affix>
+    : <Affix style={{ width: '100%', position: 'absolute', top: 0, left: 0 }} offsetTop={56}>{children}</Affix>
 }
 export const RegisterInterestItem = ({
   interest,
@@ -217,8 +217,8 @@ const getOptions = (status) => {
         statusMessage: <FormattedMessage id='invited.statusMessage' defaultMessage='You have been invited to this activity 🥳' description='prompt when volunteer is invited' />,
 
         showAcceptButton: true,
-        acceptFormTitle: <FormattedMessage id='invited.acceptFormTitle' defaultMessage="That's great. Thanks." description='Heading displayed on express-interest form when volunteer has been invited to participate' />,
-        acceptFormPrompt: <FormattedMessage id='invited.acceptFormPrompt' defaultMessage='Send a message to the organiser.' description='Sub-heading displayed on express-interest form when volunteer has been invited to participate' />,
+        acceptFormTitle: <FormattedMessage id='invited.acceptFormTitle' defaultMessage='Accept Invitiation' description='Heading displayed on express-interest form when volunteer has been invited to participate' />,
+        acceptFormPrompt: <FormattedMessage id='invited.acceptFormPrompt' defaultMessage='(Optional) Send a message the Organiser if you have any questions ' description='Sub-heading displayed on express-interest form when volunteer has been invited to participate' />,
         acceptButtonText: <FormattedMessage id='invited.acceptButtonText' defaultMessage='Accept' description='Allows volunteer to accept invitation to participate in opportunity' />,
         acceptNotifyHeading: <FormattedMessage id='invited.acceptNotifyHeading' defaultMessage='Thank you so much!' description='Heading displayed when volunteer has committed to an op' />,
         acceptNotifyMessage: <FormattedMessage id='invited.acceptNotifyMessage' defaultMessage='You have agreed to participate in this activty! Check out your home page for some things you might need to complete.' description='Sub-heading displayed when volunteer has committed to an op' />,
