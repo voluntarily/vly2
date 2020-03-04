@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet'
 import { SideBarGrid, OpBannerDetail } from '../VTheme/VTheme'
 import {
   Left,
-  Right,
   ItemContainer,
   ItemVenue,
   ItemDuration,
@@ -54,7 +53,7 @@ const OpBanner = ({ op, children }) => {
           <ItemContainer>
             <ItemLocation location={op.location} />
             {op.venue && <ItemVenue venue={op.venue} />}
-            <ItemDuration duration={op.duration} />
+            {op.duration && <ItemDuration duration={op.duration} />}
             <ItemDate startDate={startDate} endDate={endDate} />
             <ItemStatus status={op.status} />
 
