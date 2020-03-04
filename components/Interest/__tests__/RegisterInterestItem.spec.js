@@ -79,7 +79,7 @@ const interests = [
 
 ]
 
-test.only('initial state', t => {
+test('initial state', t => {
   const handleAccept = sinon.fake()
   const handleReject = sinon.fake()
   const handleMessage = sinon.fake()
