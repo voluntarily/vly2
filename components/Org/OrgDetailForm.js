@@ -8,6 +8,7 @@ import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import NumericRange from '../VTheme/NumericRange'
 import { Category as OrganisationCategory } from '../../server/api/organisation/organisation.constants'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
+import { domainRegex } from '../../server/api/person/person.validation'
 import {
   DescriptionContainer,
   FormGrid,
@@ -24,7 +25,7 @@ function hasErrors (fieldsError) {
 class OrgDetailForm extends Component {
   constructor (props) {
     super(props)
-    this.setImgUrl = this.setImgUrl.bind(this)
+    //this.setImgUrl = this.setImgUrl.bind(this)
     this.setAddress = this.setAddress.bind(this)
   }
 
@@ -40,6 +41,10 @@ class OrgDetailForm extends Component {
   setAddress = value => {
     this.props.form.setFieldsValue({ address: value })
   }
+
+  /*setDomainName = value => {
+    this.props.form.setFieldsValue({ domainName: value })
+  } */
   // setWebsite = (value) => {
   //   this.props.form.setWebsite({ contactEmail: value })
   // }
@@ -110,7 +115,7 @@ class OrgDetailForm extends Component {
           description='organisation Domain label in OrgDetails Form'
         />
       &nbsp;
-        <Tooltip title='used to match emails of the form name@org.domain to your organisation automatically.'>
+        <Tooltip title='Used to match emails of the form name@org.domain to your organisation automatically.'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -333,7 +338,12 @@ class OrgDetailForm extends Component {
                   label={orgDomain}
                 >
                   {getFieldDecorator('domainName', {
-                    rules: []
+                    rules: [
+                      {
+                        pattern: domainRegex,
+                        message: 'Enter vaild domain'
+                      }
+                    ]
                   })(<Input placeholder='Organisation Domain' />)}
                 </Form.Item>
               </ShortInputContainer>
@@ -632,7 +642,6 @@ OrgDetailForm.propTypes = {
     name: PropTypes.string,
     info: PropTypes.shape({
       about: PropTypes.string,
-      domainName: PropTypes.string,
       followers: PropTypes.string,
       joiners: PropTypes.string,
       members: PropTypes.string,
@@ -642,6 +651,7 @@ OrgDetailForm.propTypes = {
       PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
     ),
     imgUrl: PropTypes.string,
+    domainName: PropTypes.string,
     website: PropTypes.string,
     contactEmail: PropTypes.string,
     facebook: PropTypes.string,
@@ -695,6 +705,7 @@ export default Form.create({
         value: org.info.outsiders
       }),
       imgUrl: Form.createFormField({ ...org.imgUrl, value: org.imgUrl }),
+      domainName: Form.createFormField({ ...org.domainName, value: org.domainName }),
       website: Form.createFormField({ ...org.website, value: org.website }),
       contactEmail: Form.createFormField({
         ...org.contactEmail,
