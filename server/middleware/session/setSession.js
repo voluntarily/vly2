@@ -3,7 +3,6 @@ const { Role } = require('../../services/authorize/role')
 
 const { TOPIC_PERSON__CREATE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
-const queryString = require('querystring')
 const { TokenExpiredError } = require('jsonwebtoken')
 const { jwtVerify } = require('./jwtVerify')
 const { getPersonRoles } = require('../../api/member/member.lib')
@@ -83,13 +82,16 @@ const setSession = async (req, res, next) => {
       // This should only happen if the access token expires after page load but before ajax is exectued on a page.
       const redirectUrl = req.url.startsWith('/api/') ? '/home/' : req.url
 
-      const qs = queryString.stringify({ redirect: redirectUrl })
+      const encodedRedirectUrl = encodeURIComponent(redirectUrl)
 
       // Have to set location and set-cookie header manually without nodejs helper functions (res.clearCookie, res.redirect)
       // as the above functions make the header immutable.
       // We must clear idToken cookie server-side otherwise we create a infinite loop of redirects as this code will be
       // executed again.
-      res.setHeader('Location', `/auth/sign-thru?${qs}`)
+      res.setHeader(
+        'Location',
+        `/auth/sign-thru?redirect=${encodedRedirectUrl}`
+      )
       res.setHeader(
         'Set-Cookie',
         'idToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
