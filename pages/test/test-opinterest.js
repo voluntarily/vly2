@@ -76,11 +76,12 @@ const getInterests = async (numInterests) => {
 const TestPublicPage = ({ locale, session, isAuthenticated }) => {
   const [numInterests, setNumInterests] = useState(5)
   const [interests, setInterests] = useState([])
-  const [action, setAction] = useState({ note: 'Action results here' })
+  const [actionList, setActionList] = useState(['Action results here'])
 
-  const handleInvite = (res) => { setAction(res) }
-  const handleWithdrawInvite = (res) => { setAction(res) }
-  const handleDecline = (res) => { setAction(res) }
+  const handleAction = (action, interest) => {
+    console.log('handleAction', action, interest)
+    setActionList(actionList.concat(`${action} - ${interest.person.name} ${interest.messages.slice(-1)[0].body}`))
+  }
 
   useEffect(() => {
     getInterests(numInterests).then(interests => setInterests(interests))
@@ -99,12 +100,10 @@ const TestPublicPage = ({ locale, session, isAuthenticated }) => {
       </Portrait>
       <Landscape>
         <InterestTable
-          onInvite={handleInvite}
-          onWithdrawInvite={handleWithdrawInvite}
-          onDecline={handleDecline}
+          onAction={handleAction}
           interests={interests}
         />
-        <pre>{JSON.stringify(action, null, 2)}</pre>
+        <pre>{JSON.stringify(actionList, null, 2)}</pre>
 
         {/* <pre>{JSON.stringify(interests, null, 2)}</pre> */}
       </Landscape>
