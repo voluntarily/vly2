@@ -101,8 +101,11 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[2].idToken}`])
     },
     assertions: (t, response) => {
+      const expectedInterests = t.context.fixtures.interests
+        .filter(interest => interest.person === t.context.fixtures.people[2]._id)
+
       t.is(response.statusCode, 200)
-      t.is(response.body.length, 1)
+      t.is(response.body.length, expectedInterests.length)
     }
   },
   {
@@ -215,9 +218,56 @@ const testScenarios = [
     }
   },
   {
-    // a volunteer can change status to COMMITTED
     role: 'volunteer',
-    action: 'update',
+    action: 'update (valid transition "invited" -> "committed")',
+    makeRequest: async (context) => {
+      return request(server)
+        .put(`/api/interests/${context.fixtures.interests[5]._id}`)
+        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .send({
+          status: InterestStatus.COMMITTED,
+          messages: {
+            body: 'Committed message',
+            author: context.fixtures.people[2]
+          },
+          type: 'accept'
+        })
+    },
+    assertions: (t, response) => {
+      t.is(
+        response.statusCode,
+        200,
+        'Volunteer should be able to move interest status from "invited" to "committed"'
+      )
+    }
+  },
+  {
+    role: 'volunteer',
+    action: 'update (valid transition "committed" -> "interested")',
+    makeRequest: async (context) => {
+      return request(server)
+        .put(`/api/interests/${context.fixtures.interests[6]._id}`)
+        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .send({
+          status: InterestStatus.COMMITTED,
+          messages: {
+            body: 'Committed message',
+            author: context.fixtures.people[2]
+          },
+          type: 'accept'
+        })
+    },
+    assertions: (t, response) => {
+      t.is(
+        response.statusCode,
+        200,
+        'Volunteer should be able to move interest status from "committed" to "interested"'
+      )
+    }
+  },
+  {
+    role: 'volunteer',
+    action: 'update (invalid transition "interested" -> "committed")',
     makeRequest: async (context) => {
       return request(server)
         .put(`/api/interests/${context.fixtures.interests[0]._id}`)
@@ -226,13 +276,17 @@ const testScenarios = [
           status: InterestStatus.COMMITTED,
           messages: {
             body: 'Committed message',
-            author: ObjectId()
+            author: context.fixtures.people[2]
           },
           type: 'accept'
         })
     },
     assertions: (t, response) => {
-      t.is(response.statusCode, 200)
+      t.is(
+        response.statusCode,
+        403,
+        'Volunteer should not be able to move interest status from "interested" to "committed"'
+      )
     }
   },
   {
@@ -268,8 +322,12 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
     },
     assertions: (t, response) => {
+      const requestorOpportunityIds = t.context.fixtures.opportunities
+        .filter(opportunity => opportunity.requestor === t.context.fixtures.people[1]._id)
+        .map(opportunity => opportunity._id)
+
       const expectedInterests = t.context.fixtures.interests
-        .filter(interest => interest.opportunity === t.context.fixtures.opportunities[0]._id)
+        .filter(interest => requestorOpportunityIds.includes(interest.opportunity))
 
       t.is(response.statusCode, 200)
       t.is(response.body.length, expectedInterests.length)
@@ -391,8 +449,12 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
     },
     assertions: (t, response) => {
+      const orgOpportunityIds = t.context.fixtures.opportunities
+        .filter(opportunity => opportunity.offerOrg === t.context.fixtures.organisations[0]._id)
+        .map(opportunity => opportunity._id)
+
       const expectedInterests = t.context.fixtures.interests
-        .filter(interest => interest.opportunity === t.context.fixtures.opportunities[0]._id)
+        .filter(interest => orgOpportunityIds.includes(interest.opportunity))
 
       t.is(response.statusCode, 200)
       t.is(response.body.length, expectedInterests.length)
@@ -560,10 +622,17 @@ const testScenarios = [
   }
 ]
 
-for (const { role, action, makeRequest, assertions } of testScenarios) {
-  test.serial(`Interest API - ${role} - ${action}`, async t => {
+for (const { role, action, makeRequest, assertions, only } of testScenarios) {
+  const testName = `Interest API - ${role} - ${action}`
+  const testFunction = async t => {
     const response = await makeRequest(t.context)
 
     assertions(t, response)
-  })
+  }
+
+  if (only) {
+    test.serial.only(testName, testFunction)
+  } else {
+    test.serial(testName, testFunction)
+  }
 }
