@@ -484,6 +484,7 @@ export const Card = styled.figure`
 
 -webkit-transition: all 0.28s;
 padding-bottom: 1rem;
+transition: all 0.3s;
 
 a { text-decoration: none; }
 
@@ -493,7 +494,7 @@ figcaption {
 }
 
 :hover {
-  transition: all 0.3s;
+
   box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
   transform: scale(1.1);
   border-radius: 8px;
