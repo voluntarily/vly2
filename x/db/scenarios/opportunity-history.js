@@ -54,12 +54,12 @@ async function main () {
     {
       $set: organisationWithHistoryData
     },
-    { upsert: true }
+    { upsert: true, new: true }
   )
 
   const memberData = {
-    person: person,
-    organisation: organisation,
+    person: person._id,
+    organisation: organisation._id,
     status: MemberStatus.MEMBER
   }
 
