@@ -3,6 +3,8 @@ const { Action } = require('../../services/abilities/ability.constants')
 const { getInterestDetail, getMyOpInterestDetail } = require('./interest.lib')
 const { TOPIC_INTEREST__UPDATE, TOPIC_INTEREST__MESSAGE, TOPIC_INTEREST__DELETE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
+const { Role } = require('../../services/authorize/role')
+const { InterestStatus } = require('./interest.constants')
 
 /**
   api/interests -> list all interests
@@ -102,25 +104,48 @@ const createInterest = async (req, res) => {
 
 const updateInterest = async (req, res) => {
   try {
-    const interest = req.body
-    const updates = {
-      // this ... conditionally adds the $set to the update if value is present
-      ...(interest.status && { $set: { status: interest.status } }),
-      ...(interest.messages && { $push: { messages: interest.messages } })
-    }
-    const result = await Interest
-      .accessibleBy(req.ability, Action.UPDATE)
-      .updateOne(req.params, updates)
-    if (result.nModified === 0) {
+    const existingInterest = await Interest.findOne(req.params)
+      .accessibleBy(req.ability, Action.READ)
+
+    if (existingInterest === null) {
       return res.sendStatus(404)
     }
 
-    const interestDetail = await getInterestDetail(req.params._id)
-    interestDetail.type = interest.type
-    if (!interest.type) {
-      console.log('no iterest type', interest)
+    const interestUpdateData = req.body
+    const person = req.session.me
+
+    if (
+      interestUpdateData.status &&
+      person.role.includes(Role.VOLUNTEER_PROVIDER) &&
+      existingInterest.person.toString() === req.session.me._id.toString()
+    ) {
+      if (!isValidTransition(existingInterest.status, interestUpdateData.status)) {
+        return res.status(403).json({
+          message: 'Invalid status transition'
+        })
+      }
     }
-    if (interest.type === 'message') {
+
+    if (interestUpdateData.status) {
+      existingInterest.status = interestUpdateData.status
+    }
+
+    if (interestUpdateData.messages) {
+      existingInterest.messages.push(interestUpdateData.messages)
+    }
+
+    if (!req.ability.can(Action.UPDATE, existingInterest)) {
+      return res.status(403).json({
+        message: 'Invalid update attempted'
+      })
+    }
+
+    await existingInterest.save()
+
+    const interestDetail = await getInterestDetail(req.params._id)
+    interestDetail.type = interestUpdateData.type
+
+    if (interestUpdateData.type === 'message') {
       PubSub.publish(TOPIC_INTEREST__MESSAGE, interestDetail)
     } else {
       PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
@@ -131,6 +156,22 @@ const updateInterest = async (req, res) => {
     // console.error(err)
     res.status(404).send(err)
   }
+}
+
+const isValidTransition = (originalStatus, newStatus) => {
+  const validTransitionMap = {
+    [InterestStatus.INVITED]: [
+      InterestStatus.COMMITTED
+    ],
+    [InterestStatus.COMMITTED]: [
+      InterestStatus.INTERESTED
+    ]
+  }
+
+  return (
+    validTransitionMap[originalStatus] &&
+    validTransitionMap[originalStatus].includes(newStatus)
+  )
 }
 
 const deleteInterest = async (req, res, next) => {

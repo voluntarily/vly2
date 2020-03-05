@@ -4,9 +4,6 @@ import { server, appReady } from '../../../server'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import { loadInterestFixtures, clearInterestFixtures, sessions } from './interest.ability.fixture'
 import { InterestStatus } from '../interest.constants'
-import mongoose from 'mongoose'
-
-const ObjectId = mongoose.Types.ObjectId
 
 test.before('setup database and app', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -208,7 +205,7 @@ const testScenarios = [
         .send({
           messages: {
             body: 'Updated message',
-            author: ObjectId()
+            author: context.fixtures.people[2]
           },
           type: 'accept'
         })
@@ -249,7 +246,7 @@ const testScenarios = [
         .put(`/api/interests/${context.fixtures.interests[6]._id}`)
         .set('Cookie', [`idToken=${sessions[2].idToken}`])
         .send({
-          status: InterestStatus.COMMITTED,
+          status: InterestStatus.INTERESTED,
           messages: {
             body: 'Committed message',
             author: context.fixtures.people[2]
