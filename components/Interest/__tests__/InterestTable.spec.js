@@ -105,7 +105,7 @@ test('InterestTable renders properly', async t => {
   row = wrapper.find('tbody tr').at(6)
   t.is(row.find('td').at(Col.STATUS).text(), 'declined')
   actionButtons = row.find('td').at(Col.ACTIONS).find('Button')
-  t.is(actionButtons.length, 4)
+  t.is(actionButtons.length, 2)
   const undeclinebutton = actionButtons.at(Btn.ACCEPT)
   t.is(undeclinebutton.text(), 'Undecline Invite')
   undeclinebutton.simulate('click')

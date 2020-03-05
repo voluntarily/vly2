@@ -117,7 +117,7 @@ test('mount the InterestSection with a list of interests', async t => {
   myMock.putOnce(`${API_URL}/interests/${storedInterest._id}`, withdrawnvp)
   row = wrapper.find('tbody tr').at(rowindex)
   actionButtons = row.find('td').at(Col.ACTIONS).find('Button')
-  t.is(actionButtons.length, 5) // the form buttons are instatiated now
+  t.is(actionButtons.length, 3)
   const withdrawbutton = actionButtons.at(Btn.ACCEPT)
   t.is(withdrawbutton.text(), 'Withdraw Invite')
   withdrawbutton.simulate('click')
@@ -140,7 +140,7 @@ test('mount the InterestSection with a list of interests', async t => {
   myMock.putOnce(`${API_URL}/interests/${storedInterest._id}`, messagevp)
   row = wrapper.find('tbody tr').at(rowindex)
   actionButtons = row.find('td').at(Col.ACTIONS).find('Button')
-  t.is(actionButtons.length, 5) // the form buttons are instatiated now
+  t.is(actionButtons.length, 3)
   const messagebutton = actionButtons.at(Btn.MESSAGE)
   t.is(messagebutton.text(), 'Message')
   messagebutton.simulate('click')
@@ -163,7 +163,7 @@ test('mount the InterestSection with a list of interests', async t => {
   myMock.putOnce(`${API_URL}/interests/${storedInterest._id}`, declinevp)
   row = wrapper.find('tbody tr').at(rowindex)
   actionButtons = row.find('td').at(Col.ACTIONS).find('Button')
-  t.is(actionButtons.length, 5) // the form buttons are instatiated now
+  t.is(actionButtons.length, 3)
   const declinebutton = actionButtons.at(Btn.REJECT)
   t.is(declinebutton.text(), 'Decline')
   declinebutton.simulate('click')
