@@ -9,6 +9,9 @@ const mongoose = require('mongoose')
 const { PersonFields } = require('./person.constants')
 const { mapValues, keyBy } = require('lodash')
 const Member = require('../member/member')
+const Interest = require('../interest/interest')
+const Opportunity = require('../opportunity/opportunity')
+const { InterestStatus } = require('../interest/interest.constants')
 
 /* find a single person by searching for a key field.
 This is a convenience function usually used to call
@@ -52,11 +55,21 @@ async function getPerson (req, res, next) {
     return !!myOrgs.find(myOrg => personOrgs.includes(myOrg))
   }
 
+  const isPersonInvitedToMyOpportunities = async () => {
+    const myOps = await Opportunity.find({ requestor: me._id })
+    return !!(await Interest.findOne({
+      opportunity: { $in: myOps },
+      status: { $ne: InterestStatus.DECLINED },
+      person: personId
+    }))
+  }
+
   const includePersonalFields = (me.role &&
     (
       me.role.includes(Role.ADMIN) ||
       me.role.includes(Role.TESTER) ||
-      (await isPersonInMyOrg())
+      (await isPersonInMyOrg()) ||
+      (await isPersonInvitedToMyOpportunities())
     )) ||
     isSelf
 
