@@ -1,4 +1,4 @@
-import { Button, Dropdown, Icon, Menu, Table } from 'antd'
+import { Button, Table } from 'antd'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -87,11 +87,10 @@ const formOptions = {
 const InterestTable = ({ interests, onAction }) => {
   const [filteredInfo, setFilteredInfo] = useState({})
   const [sortedInfo, setSortedInfo] = useState({})
-  const [selectedRows, setSelectedRows] = useState([])
+  // Batch const [selectedRows, setSelectedRows] = useState([])
   const [selectedInterest, setSelectedInterest] = useState()
   const [action, setAction] = useState()
   const [showMessageForm, setShowMessageForm] = useState(false)
-
 
   const handleFormSubmit = (ok, message) => {
     setShowMessageForm(false)
@@ -110,17 +109,18 @@ const InterestTable = ({ interests, onAction }) => {
     setSortedInfo(sorter)
   }
 
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      setSelectedRows(selectedRows)
-    }
-  }
+  // TODO fix batch updates.
+  // const rowSelection = {
+  //   onChange: (selectedRowKeys, selectedRows) => {
+  //     setSelectedRows(selectedRows)
+  //   }
+  // }
   const columns = [
     {
       title: 'Name',
       key: 'person',
       sorter: (a, b) => a.person.nickname.localeCompare(b.person.nickname),
-      sortOrder: sortedInfo.columnKey === 'imgUrl' && sortedInfo.order,
+      sortOrder: sortedInfo.columnKey === 'person' && sortedInfo.order,
       render: (text, record) => {
         return (
           <AvatarProfile person={record.person} />
@@ -171,13 +171,7 @@ const InterestTable = ({ interests, onAction }) => {
 
         return (
           <div>
-            <RegisterInterestMessageForm
-              id='acceptRegisterInterestForm'
-              {...formOptions[action]}
-              showTerms={false}
-              onSubmit={handleFormSubmit}
-              visible={showMessageForm}
-            />
+
             {options.inviteButtonEnabled && (
               <span>
                 <Button
@@ -218,51 +212,59 @@ const InterestTable = ({ interests, onAction }) => {
                 {MessageText}
               </Button>
             </span>
+            <RegisterInterestMessageForm
+              id='acceptRegisterInterestForm'
+              {...formOptions[action]}
+              showTerms={false}
+              onSubmit={handleFormSubmit}
+              visible={showMessageForm}
+            />
           </div>
         )
       }
     }
   ]
 
-  // put all selected rows' status together to form a selectedStatus array
-  const selectedStatus = selectedRows.map(row => row.status)
-  const menu = (
-    <Menu>
-      {selectedStatus.every(status => status === 'interested') && (
-        <Menu.Item>
-          <a onClick={() => handleClick(InterestAction.ACCEPT)(selectedRows)}>
-            {InviteText}
-          </a>
-        </Menu.Item>
-      )}
-      {selectedStatus.every(status => status === 'invited') && (
-        <Menu.Item>
-          <a onClick={() => handleClick(InterestAction.WITHDRAW)(selectedRows)}>
-            {WithdrawText}
-          </a>
-        </Menu.Item>
-      )}
-      {!selectedStatus.includes('declined') && (
-        <Menu.Item>
-          <a onClick={() => handleClick(InterestAction.REJECT)(selectedRows)}>
-            {DeclineText}
-          </a>
-        </Menu.Item>
-      )}
-      <Menu.Item>
-        <a onClick={() => handleClick(InterestAction.MESSAGE)(selectedRows)}>
-          {MessageText}
-        </a>
-      </Menu.Item>
-    </Menu>
-  )
+  // TODO BATCH
+  // // put all selected rows' status together to form a selectedStatus array
+  // const selectedStatus = selectedRows.map(row => row.status)
+  // const menu = (
+  //   <Menu>
+  //     {selectedStatus.every(status => status === 'interested') && (
+  //       <Menu.Item>
+  //         <a onClick={() => handleClick(InterestAction.ACCEPT)(selectedRows)}>
+  //           {InviteText}
+  //         </a>
+  //       </Menu.Item>
+  //     )}
+  //     {selectedStatus.every(status => status === 'invited') && (
+  //       <Menu.Item>
+  //         <a onClick={() => handleClick(InterestAction.WITHDRAW)(selectedRows)}>
+  //           {WithdrawText}
+  //         </a>
+  //       </Menu.Item>
+  //     )}
+  //     {!selectedStatus.includes('declined') && (
+  //       <Menu.Item>
+  //         <a onClick={() => handleClick(InterestAction.REJECT)(selectedRows)}>
+  //           {DeclineText}
+  //         </a>
+  //       </Menu.Item>
+  //     )}
+  //     <Menu.Item>
+  //       <a onClick={() => handleClick(InterestAction.MESSAGE)(selectedRows)}>
+  //         {MessageText}
+  //       </a>
+  //     </Menu.Item>
+  //   </Menu>
+  // )
   return (
     <>
-      <Dropdown overlay={menu}>
+      {/* <Dropdown overlay={menu}>
         <a className='ant-dropdown-link'>
             Group Actions <Icon type='down' />
         </a>
-      </Dropdown>
+      </Dropdown> */}
       <Table
         columns={columns}
         dataSource={interests.filter((interest) => interest.person !== null)}
@@ -271,7 +273,7 @@ const InterestTable = ({ interests, onAction }) => {
         onChange={handleTableChange}
         expandedRowRender={record => <ExpandedInterest interest={record} />}
         expandRowByClick
-        rowSelection={rowSelection}
+        // rowSelection={rowSelection}
       />
     </>
   )
@@ -297,10 +299,3 @@ function getEnabledButtons (interest) {
 }
 
 export default InterestTable
-
-/* expandable={{
-          expandedRowRender: record =>
-            <InterestMessageList style={{ margin: '6rem' }} messages={record.messages} />,
-          rowExpandable: true // record => record.messages.length > 1
-        }}
-        */ // r

@@ -1,4 +1,5 @@
 import React from 'react'
+import { act } from 'react-dom/test-utils'
 import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import InterestSection from '../InterestSection'
@@ -8,13 +9,35 @@ import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { API_URL } from '../../../lib/callApi'
 import fetchMock from 'fetch-mock'
 import { makeInterests, opportunity, requestor } from './makeInterests.fixture'
-import { act } from 'react-dom/test-utils'
 import { InterestStatus } from '../../../server/api/interest/interest.constants'
 const { INVITED, INTERESTED, DECLINED } = InterestStatus
 
 const interestCount = 5
 test.before('Setup fixtures', t => { t.context.interests = makeInterests('InterestSection', interestCount) })
 
+// BATCH Enabled
+// const Col = {
+//   SELECT: 0,
+//   EXPAND: 1,
+//   NAME: 2,
+//   MESSAGES: 3,
+//   STATUS: 4,
+//   ACTIONS: 5
+// }
+
+const Col = {
+  EXPAND: 0,
+  NAME: 1,
+  MESSAGES: 2,
+  STATUS: 3,
+  ACTIONS: 4
+}
+
+const Btn = {
+  ACCEPT: 0,
+  REJECT: 1,
+  MESSAGE: 2
+}
 const opid = opportunity._id
 const initStore = {
 }
@@ -43,19 +66,6 @@ test('mount the InterestSection with a list of interests', async t => {
   reduxApi.use('fetch', adapterFetch(myMock))
   myMock.getOnce(`${API_URL}/interests/?op=${opid}`, t.context.interests)
 
-  const Col = {
-    SELECT: 0,
-    EXPAND: 1,
-    NAME: 2,
-    MESSAGES: 3,
-    STATUS: 4,
-    ACTIONS: 5
-  }
-  const Btn = {
-    ACCEPT: 0,
-    REJECT: 1,
-    MESSAGE: 2
-  }
   const wrapper = mountWithIntl(
     <Provider store={realStore}>
       <InterestSection opid={opid} />
