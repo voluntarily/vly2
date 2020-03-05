@@ -26,7 +26,15 @@ transition: all 0.3s;
     p>strong {
       color: #653CAD;
     }
+  } 
+
+  :focus {
+    box-shadow: 2px 2px 24px 0 rgba(0,0,0,0.5);
+    p>strong {
+      color: #653CAD;
+    }
   }
+
 
 `
 
