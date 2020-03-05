@@ -27,11 +27,21 @@ export const ExpandedInterestGrid = styled.div`
     height: auto;
   }
 `
-const ExpandedInterest = ({ interest }) =>
+export const ExpandedInterest = ({ interest }) =>
   <ExpandedInterestGrid>
     <PersonCard person={interest.person} />
     <InterestMessageList messages={interest.messages} />
   </ExpandedInterestGrid>
+
+export const MessagesColumn = {
+  title: 'Messages',
+  key: 'comment',
+  render: (text, record) => {
+    return (
+      <InterestMessageItem message={record.messages.slice(-1)[0]} />
+    )
+  }
+}
 
 const InviteText =
   <FormattedMessage
@@ -46,7 +56,7 @@ const DeclineText =
     defaultMessage='Decline'
     description='Button allowing event organizer to decline an interested volunteer'
   />
-const MessageText =
+export const MessageText =
   <FormattedMessage
     id='messageVolunteer'
     defaultMessage='Message'
@@ -118,24 +128,16 @@ const InterestTable = ({ interests, onAction }) => {
   const columns = [
     {
       title: 'Name',
-      key: 'person',
+      key: 'name',
       sorter: (a, b) => a.person.nickname.localeCompare(b.person.nickname),
-      sortOrder: sortedInfo.columnKey === 'person' && sortedInfo.order,
+      sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
       render: (text, record) => {
         return (
           <AvatarProfile person={record.person} />
         )
       }
     },
-    {
-      title: 'Messages',
-      key: 'comment',
-      render: (text, record) => {
-        return (
-          <InterestMessageItem message={record.messages.slice(-1)[0]} />
-        )
-      }
-    },
+    MessagesColumn,
     {
       title: 'Status',
       dataIndex: 'status',
@@ -212,13 +214,7 @@ const InterestTable = ({ interests, onAction }) => {
                 {MessageText}
               </Button>
             </span>
-            <RegisterInterestMessageForm
-              id='acceptRegisterInterestForm'
-              {...formOptions[action]}
-              showTerms={false}
-              onSubmit={handleFormSubmit}
-              visible={showMessageForm}
-            />
+
           </div>
         )
       }
@@ -274,6 +270,13 @@ const InterestTable = ({ interests, onAction }) => {
         expandedRowRender={record => <ExpandedInterest interest={record} />}
         expandRowByClick
         // rowSelection={rowSelection}
+      />
+      <RegisterInterestMessageForm
+        id='acceptRegisterInterestForm'
+        {...formOptions[action]}
+        showTerms={false}
+        onSubmit={handleFormSubmit}
+        visible={showMessageForm}
       />
     </>
   )
