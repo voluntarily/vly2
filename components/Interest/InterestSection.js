@@ -2,13 +2,13 @@
   Smart component. for the given opportunity gets a list of Interests
   and displays them in a table. actions change the state of the interested volunteers
 */
-// import PropTypes from 'prop-types'
 import { useEffect } from 'react'
 import InterestTable from './InterestTable'
 import reduxApi from '../../lib/redux/reduxApi'
 import Loading from '../Loading'
 import { useSelector, useDispatch } from 'react-redux'
 import { InterestStatus, InterestAction } from '../../server/api/interest/interest.constants'
+import PropTypes from 'prop-types'
 
 export const InterestSection = ({ opid }) => {
   const interests = useSelector(state => state.interests)
@@ -60,11 +60,12 @@ export const InterestSection = ({ opid }) => {
 
   return (
     <InterestTable
-      checkboxEnabled
       interests={interests.data}
       onAction={handleAction}
     />
   )
 }
-
+InterestSection.propTypes = {
+  opid: PropTypes.string.isRequired
+}
 export default InterestSection
