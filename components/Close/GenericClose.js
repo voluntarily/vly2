@@ -1,4 +1,4 @@
-import { HalfGrid } from '../VTheme/VTheme'
+
 import CloseCard from './CloseActionCard'
 import { Divider } from 'antd'
 import styled from 'styled-components'
@@ -19,10 +19,14 @@ const GenericClose = () => (
     <img src='https://picsum.photos/640/480' />
     <div>
       <SmallHeader>Activity created</SmallHeader>
-      <h2>Volunteers can now see your activity and offer to help you out! 🥳</h2>
+      <h2>Volunteers can now see your activity and offer to help you out!</h2>
       <Divider />
-      <h4>Try the following things next:</h4>
-      <CloseCard imgLink='' link='#' />
+      <p>Try the following things next:</p>
+      <CloseCard cardTitle='Invite Friends &amp; Parents' imgLink='/static/img/icons/invite.svg' link='#' />
+
+      <CloseCard cardTitle='Invite Friends &amp; Parents' imgLink='/static/img/icons/invite.svg' link='#' />
+
+      <CloseCard cardTitle='Invite Friends &amp; Parents' imgLink='/static/img/icons/invite.svg' link='#' />
 
     </div>
   </CloseGrid>
