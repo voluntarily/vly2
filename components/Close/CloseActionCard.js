@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-
+import Link from 'next/link'
 const CloseContainer = styled.article`
 
 border-radius: 8px;
@@ -21,15 +21,18 @@ p {
 
 `
 
-const CloseCard = (cardTitle, imgLink) => (
-
-  <CloseContainer>
-    <img src={imgLink} alt={cardTitle} />
-    <div>
-      <p><strong>Invite Friends &amp; parents</strong></p>
-      <p>Invite your community to do this activity</p>
-    </div>
-  </CloseContainer>
+const CloseCard = ({ cardTitle, imgLink, link }) => (
+  <Link src={link}>
+    <a>
+      <CloseContainer>
+        <img src={imgLink} alt={cardTitle} />
+        <div>
+          <p><strong>Invite Friends &amp; parents</strong></p>
+          <p>Invite your community to do this activity</p>
+        </div>
+      </CloseContainer>
+    </a>
+  </Link>
 )
 
 export default CloseCard

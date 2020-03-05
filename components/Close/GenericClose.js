@@ -15,7 +15,7 @@ const GenericClose = () => (
       <h2>Volunteers can now see your activity and offer to help you out 🥳</h2>
       <Divider />
       <h4>Try the following things next:</h4>
-      <CloseCard />
+      <CloseCard imgLink='./static/img/icons/invite.svg' />
       <CloseCard />
       <CloseCard />
     </div>
