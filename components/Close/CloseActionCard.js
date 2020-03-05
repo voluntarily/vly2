@@ -23,10 +23,10 @@ p {
 `
 
 const CloseCard = ({ cardTitle, imgLink, link }) => (
-  <Link src={link}>
+  <Link href={link}>
     <a>
       <CloseContainer>
-        <img src={imgLink} alt={cardTitle} />
+        <img src='/static/img/icons/invite.svg' alt={cardTitle} />
         <div>
           <p><strong>Invite Friends &amp; parents</strong></p>
           <p>Invite your community to do this activity</p>

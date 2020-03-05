@@ -21,7 +21,7 @@
     "docker-test:build": "docker build -t vly-test:latest -f Dockerfile-test . ",
     "docker-test": "npm run docker-test:build && docker run vly-test:latest ",
     "remote": "APP_URL=http://$(ifconfig | grep -A 1 ‘en0’ | tail -1 | cut -d ' ' -f 2):3122 nodemon -w server -w package.json server/server.js",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -s ./public -p 6006",
     "build-storybook": "build-storybook",
     "mongo": "mongod --dbpath ./data",
     "pretest": "rimraf .test",
