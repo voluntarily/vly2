@@ -131,7 +131,10 @@ const updateInterest = async (req, res) => {
     }
 
     if (interestUpdateData.messages) {
-      existingInterest.messages.push(interestUpdateData.messages)
+      interestUpdateData.messages = Array.isArray(interestUpdateData.messages)
+        ? interestUpdateData.messages : [interestUpdateData.messages]
+
+      existingInterest.messages = existingInterest.messages.concat(interestUpdateData.messages)
     }
 
     if (!req.ability.can(Action.UPDATE, existingInterest)) {
