@@ -103,6 +103,12 @@ const createInterest = async (req, res) => {
 const updateInterest = async (req, res) => {
   try {
     const interest = req.body
+    const meid = req.session.me._id
+    // messages is an array that will usually only have one item
+    // but could have more. Author is set to current person
+    if (interest.messages && interest.messages.length > 0) {
+      interest.messages.forEach(msg => (msg.author = meid))
+    }
     const updates = {
       // this ... conditionally adds the $set to the update if value is present
       ...(interest.status && { $set: { status: interest.status } }),

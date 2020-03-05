@@ -80,7 +80,7 @@ const RegisterInterestSection = ({ meid, opid }) => {
 
     const putInterest = {
       ...((status !== newStatus) && { status: newStatus }),
-      ...(message && { messages: [{ body: message, author: meid }] }),
+      ...(message && { messages: [{ body: message }] }),
       type
     }
 

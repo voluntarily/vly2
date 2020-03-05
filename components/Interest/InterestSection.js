@@ -13,7 +13,6 @@ import { InterestStatus, InterestAction } from '../../server/api/interest/intere
 export const InterestSection = ({ opid }) => {
   const interests = useSelector(state => state.interests)
   const dispatch = useDispatch()
-  const me = useSelector(state => state.session.me)
 
   useEffect(() => {
     const getOpInterests = async () => {
@@ -28,7 +27,7 @@ export const InterestSection = ({ opid }) => {
 
   const handleAction = async (updatedInterests, action, message) => {
     const putInterest = {
-      ...(message && { messages: [{ body: message, author: me._id }] }),
+      ...(message && { messages: [{ body: message }] }),
       type: action
     }
     switch (action) {
