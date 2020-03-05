@@ -36,11 +36,11 @@ const GenericClose = () => (
       <h2>Volunteers can now see your activity and offer to help you out!</h2>
       <Divider />
       <p>Try the following things next:</p>
-      <CloseCard cardTitle='Invite Friends &amp; Parents' imgLink='/static/img/icons/invite.svg' link='#' />
+      <CloseCard cardTitle='Share Activity' cardDescription='Tell your community about your activity so they can get involved' imgLink='/static/img/icons/invite.svg' link='#' />
 
       <CloseCard cardTitle='Invite Friends &amp; Parents' imgLink='/static/img/icons/invite.svg' link='#' />
 
-      <CloseCard cardTitle='Invite Friends &amp; Parents' imgLink='/static/img/icons/invite.svg' link='#' />
+      <CloseCard cardTitle='Find more things to do' imgLink='/static/img/icons/dash.svg' link='#' />
 
     </div>
   </CloseGrid>

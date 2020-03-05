@@ -38,14 +38,14 @@ transition: all 0.3s;
 
 `
 
-const CloseCard = ({ cardTitle, imgLink, link }) => (
+const CloseCard = ({ cardTitle, cardDescription, imgLink, link }) => (
   <Link href={link}>
     <a>
       <CloseContainer>
         <img src={imgLink} alt={cardTitle} />
         <div>
           <p><strong>{cardTitle}</strong></p>
-          <p>Invite your community to do this activity</p>
+          <p>{cardDescription}</p>
         </div>
       </CloseContainer>
     </a>
