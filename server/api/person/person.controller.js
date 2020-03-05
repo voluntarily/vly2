@@ -8,6 +8,7 @@ const { websiteRegex } = require('./person.validation')
 const mongoose = require('mongoose')
 const { PersonFields } = require('./person.constants')
 const { mapValues, keyBy } = require('lodash')
+const Member = require('../member/member')
 
 /* find a single person by searching for a key field.
 This is a convenience function usually used to call
@@ -44,10 +45,18 @@ async function getPerson (req, res, next) {
     PersonFields.SENDEMAILNOTIFICATIONS
   ]
 
+  const isPersonInMyOrg = async () => {
+    const myOrgs = (await Member.find({ person: me._id })).map(member => member.organisation.toString())
+    const personOrgs = (await Member.find({ person: personId })).map(member => member.organisation.toString())
+
+    return !!myOrgs.find(myOrg => personOrgs.includes(myOrg))
+  }
+
   const includePersonalFields = (me.role &&
     (
       me.role.includes(Role.ADMIN) ||
-      me.role.includes(Role.TESTER)
+      me.role.includes(Role.TESTER) ||
+      (await isPersonInMyOrg())
     )) ||
     isSelf
 
