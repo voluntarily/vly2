@@ -7,6 +7,20 @@ display: grid;
 grid-template-columns: 1fr 1fr;
 gap: 5rem;
 max-width: 1280px;
+
+img {
+  width: 100%;
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 1281px) {
+    grid-template-columns: calc(50vw - 4rem) calc(50vw - 4rem);
+    grid-column-gap: 2rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: calc(100vw - 2rem);
+  }
 `
 
 const SmallHeader = styled.small`
