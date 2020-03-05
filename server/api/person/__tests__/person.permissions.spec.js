@@ -232,7 +232,7 @@ for (const role of [Role.ADMIN, Role.TESTER]) {
   })
 }
 
-test(`Get person by id - requested person is in my organisation`, async t => {
+test('Get person by id - requested person is in my organisation', async t => {
   const personA = await createPerson([Role.VOLUNTEER_PROVIDER])
   const personB = await Person.create({
     name: 'name',
@@ -251,7 +251,7 @@ test(`Get person by id - requested person is in my organisation`, async t => {
 
   const org = await Organisation.create({
     name: `${uuid()}`,
-    slug: `${uuid()}`,
+    slug: `${uuid()}`
   })
 
   // Join person A and B to the same org
@@ -278,7 +278,7 @@ test(`Get person by id - requested person is in my organisation`, async t => {
   t.is(res.body.placeOfWork, 'POW')
 })
 
-test(`Get person by id - requested person is invited to an opportunity of mine`, async t => {
+test('Get person by id - requested person is invited to an opportunity of mine', async t => {
   const personA = await createPerson([Role.VOLUNTEER_PROVIDER])
   const personB = await Person.create({
     name: 'name',
