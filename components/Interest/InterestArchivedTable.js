@@ -151,8 +151,7 @@ const InterestArchivedTable = ({ interests, onAction }) => {
 }
 
 InterestArchivedTable.propTypes = {
-  onPresent: PropTypes.func.isRequired,
-  onAbsent: PropTypes.func.isRequired,
+  onAction: PropTypes.func.isRequired,
   interests: PropTypes.array
 }
 

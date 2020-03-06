@@ -50,9 +50,9 @@ export const makeInterestedVolunteer = (name, status) => {
     status
   }
 }
-export const makeInterests = (name, numInterests) => {
+export const makeInterests = (name, numInterests, states = InterestStatusFeed) => {
   return (Array(numInterests).fill({}).map((item, index) => {
-    const status = InterestStatusFeed[index % InterestStatusFeed.length]
+    const status = states[index % states.length]
     return (makeInterestedVolunteer(name, status))
   }))
 }
