@@ -1,6 +1,6 @@
 import test from 'ava'
 import { appReady } from '../../../server'
-import Interest from '../interest'
+import { Interest } from '../interest'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import Opportunity from '../../opportunity/opportunity'
 import ops from '../../opportunity/__tests__/opportunity.fixture'

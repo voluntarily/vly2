@@ -1,6 +1,6 @@
-const Interest = require('./interest')
+const { Interest, InterestArchive } = require('./interest')
 const { Action } = require('../../services/abilities/ability.constants')
-const { getInterestDetail, getMyOpInterestDetail } = require('./interest.lib')
+const { getInterestDetailA, getMyOpInterestDetailA } = require('./interest.lib')
 const { TOPIC_INTEREST__UPDATE, TOPIC_INTEREST__MESSAGE, TOPIC_INTEREST__DELETE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
 
@@ -10,15 +10,15 @@ const PubSub = require('pubsub-js')
   api/interests?op='opid'&me='personid' -> lists all interests (hopefully only 0 or 1) associated with opid and personid.
   api/interests?me='personid' -> list all the ops i'm interested in and populate the op out.
  */
-const listInterests = async (req, res) => {
+const listInterestsA = InterestModel => async (req, res) => {
+  // console.log('ListInterests', InterestModel, req.query)
   const sort = 'dateAdded' // todo sort by date.
-
   try {
     if (req.query.op && req.query.me) {
       // this is a request for a single interest for one person and one op
       // populate out ready for the opdetailspage display
       try {
-        const interest = await getMyOpInterestDetail(req.query.op, req.query.me)
+        const interest = await getMyOpInterestDetailA(InterestModel)(req.query.op, req.query.me)
         return res.json([interest])
       } catch (e) {
         // its not an error to have no interests yet.
@@ -37,29 +37,28 @@ const listInterests = async (req, res) => {
       find.person = req.query.me
       populateList.push({ path: 'opportunity' })
     }
-
-    const query = Interest.find(find)
+    const query = InterestModel.find(find)
 
     for (const populate of populateList) {
       query.populate(populate)
     }
-
     const interests = (await query
       .accessibleBy(req.ability, Action.LIST)
       .sort(sort)
       .exec())
       .filter(opportunity => opportunity.person !== null)
-
     res.json(interests)
   } catch (err) {
     // console.error(err)
     res.status(404).send(err)
   }
 }
+const listInterestArchives = listInterestsA(InterestArchive)
+const listInterests = listInterestsA(Interest)
 
-const getInterest = async (req, res, next) => {
+const getInterestA = InterestSchema => async (req, res, next) => {
   try {
-    const interest = await Interest
+    const interest = await InterestSchema
       .accessibleBy(req.ability, Action.READ)
       .findOne(req.params)
 
@@ -72,24 +71,26 @@ const getInterest = async (req, res, next) => {
     res.status(500).send()
   }
 }
+const getInterest = getInterestA(Interest)
+const getInterestArchive = getInterestA(InterestArchive)
 
-const createInterest = async (req, res) => {
+const createInterestA = InterestModel => async (req, res) => {
   const interestData = req.body
 
   if (!interestData.person) {
     interestData.person = (req.session.me && req.session.me._id) ? req.session.me._id : undefined
   }
 
-  const interest = new Interest(interestData)
+  const interest = new InterestModel(interestData)
 
   if (!req.ability.can(Action.CREATE, interest)) {
-    return res.sendStatus(403)
+    return res.status(403).send('Must have create permission')
   }
 
   try {
     await interest.save()
 
-    const interestDetail = await getInterestDetail(interest._id)
+    const interestDetail = await getInterestDetailA(InterestModel)(interest._id)
     interestDetail.type = 'accept'
     PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
 
@@ -99,8 +100,10 @@ const createInterest = async (req, res) => {
     res.status(422).send(err)
   }
 }
+const createInterest = createInterestA(Interest)
+// const createInterestArchive = createInterestA(InterestArchive)
 
-const updateInterest = async (req, res) => {
+const updateInterestA = InterestModel => async (req, res) => {
   try {
     const interest = req.body
     const meid = req.session.me._id
@@ -114,14 +117,14 @@ const updateInterest = async (req, res) => {
       ...(interest.status && { $set: { status: interest.status } }),
       ...(interest.messages && { $push: { messages: interest.messages } })
     }
-    const result = await Interest
+    const result = await InterestModel
       .accessibleBy(req.ability, Action.UPDATE)
       .updateOne(req.params, updates)
     if (result.nModified === 0) {
       return res.sendStatus(404)
     }
 
-    const interestDetail = await getInterestDetail(req.params._id)
+    const interestDetail = await getInterestDetailA(InterestModel)(req.params._id)
     interestDetail.type = interest.type
     if (interest.type) {
       // if there is no interest type then we don't publish messages
@@ -138,6 +141,8 @@ const updateInterest = async (req, res) => {
     res.status(404).send(err)
   }
 }
+const updateInterest = updateInterestA(Interest)
+const updateInterestArchive = updateInterestA(InterestArchive)
 
 const deleteInterest = async (req, res, next) => {
   try {
@@ -162,5 +167,9 @@ module.exports = {
   getInterest,
   updateInterest,
   createInterest,
-  deleteInterest
+  deleteInterest,
+
+  listInterestArchives,
+  getInterestArchive,
+  updateInterestArchive
 }

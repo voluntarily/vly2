@@ -1,7 +1,7 @@
 import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
-import InterestArchive from '../interestArchive'
+import { InterestArchive } from '../interest'
 import ArchivedOpportunity from '../../archivedOpportunity/archivedOpportunity'
 import Person from '../../person/person'
 import MemoryMongo from '../../../util/test-memory-mongo'
@@ -9,6 +9,7 @@ import interests from './interestArchive.fixture'
 import people from '../../person/__tests__/person.fixture'
 import archivedOps from '../../archivedOpportunity/__tests__/archivedOpportunity.fixture.js'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
+import { InterestStatus } from '../interest.constants'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -42,13 +43,13 @@ test.afterEach.always(async () => {
   await Person.deleteMany()
 })
 
-test.serial('Should correctly give number of Interests Archived', async t => {
+test.only('Should correctly give number of Interests Archived', async t => {
   t.plan(2)
   const res = await request(server)
-    .get('/api/interestsArchived')
+    .get('/api/interestArchives')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
-    .expect('Content-Type', /json/)
+    // .expect('Content-Type', /json/)
   t.is(res.status, 200)
   t.is(res.body.length, t.context.interests.length)
 })
@@ -56,7 +57,7 @@ test.serial('Should correctly give number of Interests Archived', async t => {
 test.serial('Should correctly give interest when queried by opportunity', async t => {
   t.plan(2)
   const res = await request(server)
-    .get(`/api/interestsArchived?op=${t.context.opportunities[0]._id}`)
+    .get(`/api/interestArchives?op=${t.context.opportunities[0]._id}`)
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect('Content-Type', /json/)
@@ -66,7 +67,7 @@ test.serial('Should correctly give interest when queried by opportunity', async 
 
 test.serial('Should send correct data when queried against a _id', async t => {
   const res = await request(server)
-    .get(`/api/interestsArchived/${t.context.interests[0]._id}`)
+    .get(`/api/interestArchives/${t.context.interests[0]._id}`)
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(200, res.status)
@@ -76,15 +77,15 @@ test.serial('Should send correct data when queried against a _id', async t => {
 
 test.serial('Should return 404 code when queried non existing interest', async t => {
   const res = await request(server)
-    .get('/api/interestsArchived/5cc8d60b8b16812b5b392123')
+    .get('/api/interestArchives/5cc8d60b8b16812b5b392123')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
   const expectedResponseStatus = 404
   t.is(res.status, expectedResponseStatus)
 })
 
-test.only('Should update the interest state from interested to attended', async t => {
+test.serial('Should update the interest state from interested to attended', async t => {
   const reqData = {
-    status: 'attended',
+    status: InterestStatus.ATTENDED,
     _id: t.context.interests[1]._id,
     person: {
       nickname: t.context.people[0].nickname,
@@ -99,7 +100,7 @@ test.only('Should update the interest state from interested to attended', async 
     date: 'Sanitize it plz'
   }
   const res = await request(server)
-    .put(`/api/interestsArchived/${t.context.interests[1]._id}`)
+    .put(`/api/interestArchives/${t.context.interests[1]._id}`)
     .send(reqData)
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
@@ -112,7 +113,7 @@ test.serial('Should correctly delete an interest', async t => {
   const newInterestArchive = new InterestArchive({
     _id: '5cc8d60b8b16812b5b3920c9',
     person: t.context.people[0]._id,
-    status: 'not attended',
+    status: InterestStatus.NOTATTENDED,
     messages: [{ // this works whether its an object or array.
       body: 'Well done',
       author: t.context.people[0]._id
@@ -122,7 +123,7 @@ test.serial('Should correctly delete an interest', async t => {
   })
   await newInterestArchive.save()
   const res = await request(server)
-    .delete(`/api/interestsArchived/${newInterestArchive._id}`)
+    .delete(`/api/interestArchives/${newInterestArchive._id}`)
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 200)

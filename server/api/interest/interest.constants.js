@@ -25,7 +25,8 @@ const InterestAction = {
 }
 
 module.exports = {
-  SchemaName: 'Interest',
+  InterestSchemaName: 'Interest',
+  InterestArchiveSchemaName: 'InterestArchive',
   InterestFields,
   InterestAction,
   InterestStatus

@@ -2,8 +2,8 @@ import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
 import Member from '../../member/member'
 import ArchivedOpportunity from '../../archivedOpportunity/archivedOpportunity'
-import InterestArchive from '../interestArchive'
-import { InterestStatus } from '../../interest/interest.constants'
+import { InterestArchive } from '../interest'
+import { InterestStatus } from '../interest.constants'
 import { Role } from '../../../services/authorize/role'
 import { MemberStatus } from '../../member/member.constants'
 import { OpportunityStatus } from '../../opportunity/opportunity.constants'
@@ -102,23 +102,23 @@ const archivedOpportunities = [
   }
 ]
 
-const archivedInterests = [
+const interestArchives = [
   {
     person: people[2]._id,
     opportunity: archivedOpportunities[0]._id,
-    comment: 'Test comment',
+    message: [{ body: 'Test comment', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[3]._id,
     opportunity: archivedOpportunities[0]._id,
-    comment: 'Test comment',
+    message: [{ body: 'Test comment', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[3]._id,
     opportunity: archivedOpportunities[1]._id,
-    comment: 'Test comment 2',
+    message: [{ body: 'Test comment 2', author: generateObjectId() }],
     status: InterestStatus.INTERESTED
   }
 ]
@@ -144,7 +144,7 @@ const loadInterestFixtures = async () => {
     ArchivedOpportunity.create(archivedOpportunities)
   ])
 
-  loadedFixtures.archivedInterests = await InterestArchive.create(archivedInterests)
+  loadedFixtures.interestArchives = await InterestArchive.create(interestArchives)
 
   return loadedFixtures
 }

@@ -1,27 +1,27 @@
 const { Role } = require('../../services/authorize/role')
 const { Action } = require('../../services/abilities/ability.constants')
-const Opportunity = require('../opportunity/opportunity')
-const { InterestSchemaName, InterestStatus } = require('./interest.constants')
+const ArchivedOpportunity = require('../archivedOpportunity/archivedOpportunity')
+const { InterestArchiveSchemaName } = require('./interest.constants')
 
 const ruleBuilder = async (session) => {
   const anonRules = [{
-    subject: InterestSchemaName,
+    subject: InterestArchiveSchemaName,
     action: Action.LIST,
     inverted: true
   }, {
-    subject: InterestSchemaName,
+    subject: InterestArchiveSchemaName,
     action: Action.CREATE,
     inverted: true
   }, {
-    subject: InterestSchemaName,
+    subject: InterestArchiveSchemaName,
     action: Action.READ,
     inverted: true
   }, {
-    subject: InterestSchemaName,
+    subject: InterestArchiveSchemaName,
     action: Action.UPDATE,
     inverted: true
   }, {
-    subject: InterestSchemaName,
+    subject: InterestArchiveSchemaName,
     action: Action.DELETE,
     inverted: true
   }]
@@ -30,52 +30,52 @@ const ruleBuilder = async (session) => {
 
   if (session.me && session.me._id) {
     volunteerRules.push({
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.LIST,
       conditions: { person: session.me._id }
     }, {
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.READ,
       conditions: { person: session.me._id }
     }, {
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.CREATE,
-      conditions: { person: session.me._id, status: InterestStatus.INTERESTED }
+      inverted: true
     }, {
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.UPDATE,
-      conditions: { person: session.me._id, status: { $in: [InterestStatus.INTERESTED, InterestStatus.COMMITTED] } }
+      inverted: true
     }, {
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.DELETE,
-      conditions: { person: session.me._id }
+      inverted: true
     })
   }
 
   const opportunityProviderRules = []
 
   if (session.me && session.me._id && session.me.role.includes(Role.OPPORTUNITY_PROVIDER)) {
-    const myOpportunities = await Opportunity.find({ requestor: session.me._id })
-    const myOpportunityIds = myOpportunities.map(opportunity => opportunity._id.toString())
-
+    const myOpportunities = await ArchivedOpportunity.find({ requestor: session.me._id })
+    const myOpportunityIds = myOpportunities.map(op => op._id.toString())
+    console.log('op rules', myOpportunityIds)
     opportunityProviderRules.push({
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.LIST,
       conditions: { opportunity: { $in: myOpportunityIds } }
     }, {
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.READ,
       conditions: { opportunity: { $in: myOpportunityIds } }
     }, {
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.CREATE,
       inverted: true
     }, {
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.UPDATE,
       conditions: { opportunity: { $in: myOpportunityIds } }
     }, {
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.DELETE,
       inverted: true
     })
@@ -84,37 +84,50 @@ const ruleBuilder = async (session) => {
   const orgAdminRules = []
 
   if (session.me && session.me._id && session.me.role.includes(Role.ORG_ADMIN)) {
-    const myOpportunities = await Opportunity.find({ offerOrg: { $in: session.me.orgAdminFor } })
-    const myOpportunityIds = myOpportunities.map(opportunity => opportunity._id.toString())
+    const myOpportunities = await ArchivedOpportunity.find({ offerOrg: { $in: session.me.orgAdminFor } })
+    const myOpportunityIds = myOpportunities.map(op => op._id.toString())
 
     orgAdminRules.push({
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.LIST,
       conditions: { opportunity: { $in: myOpportunityIds } }
     }, {
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.READ,
       conditions: { opportunity: { $in: myOpportunityIds } }
     }, {
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.CREATE,
       inverted: true
     }, {
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.UPDATE,
       conditions: { opportunity: { $in: myOpportunityIds } }
     }, {
-      subject: InterestSchemaName,
+      subject: InterestArchiveSchemaName,
       action: Action.DELETE,
       inverted: true
     })
   }
 
   const adminRules = [{
-    subject: InterestSchemaName,
-    action: Action.MANAGE
+    subject: InterestArchiveSchemaName,
+    action: Action.READ
+  }, {
+    subject: InterestArchiveSchemaName,
+    action: Action.LIST
+  }, {
+    subject: InterestArchiveSchemaName,
+    action: Action.UPDATE
+  }, {
+    subject: InterestArchiveSchemaName,
+    action: Action.DELETE,
+    inverted: true
+  }, {
+    subject: InterestArchiveSchemaName,
+    action: Action.CREATE,
+    inverted: true
   }]
-
   return {
     [Role.ANON]: anonRules,
     [Role.VOLUNTEER_PROVIDER]: volunteerRules,

@@ -3,7 +3,7 @@ import request from 'supertest'
 import { server, appReady } from '../../../server'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import { loadInterestFixtures, clearInterestFixtures, sessions } from './interestArchive.ability.fixture'
-import { InterestStatus } from '../../interest/interest.constants'
+import { InterestStatus } from '../interest.constants'
 
 test.before('setup database and app', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -29,7 +29,7 @@ const testScenarios = [
     action: 'list',
     makeRequest: async () => {
       return request(server)
-        .get('/api/interestsArchived')
+        .get('/api/interestArchives')
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 403)
@@ -40,7 +40,7 @@ const testScenarios = [
     action: 'read',
     makeRequest: async (context) => {
       return request(server)
-        .get(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .get(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 403)
@@ -51,7 +51,7 @@ const testScenarios = [
     action: 'create',
     makeRequest: async (context) => {
       return request(server)
-        .post('/api/interestsArchived')
+        .post('/api/interestArchives')
         .send({
           person: context.fixtures.people[0]._id,
           opportunity: context.fixtures.archivedOpportunities[0]._id,
@@ -69,7 +69,7 @@ const testScenarios = [
     action: 'update',
     makeRequest: async (context) => {
       return request(server)
-        .put(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .put(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
         .send({
           messages: [{ // this works whether its an object or array.
             body: 'Well done',
@@ -86,7 +86,7 @@ const testScenarios = [
     role: 'anon',
     action: 'delete',
     makeRequest: async (context) => {
-      return request(server).delete(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+      return request(server).delete(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 403)
@@ -97,7 +97,7 @@ const testScenarios = [
     action: 'list',
     makeRequest: async () => {
       return request(server)
-        .get('/api/interestsArchived')
+        .get('/api/interestArchives')
         .set('Cookie', [`idToken=${sessions[2].idToken}`])
     },
     assertions: (t, response) => {
@@ -110,7 +110,7 @@ const testScenarios = [
     action: 'read (own interest)',
     makeRequest: async (context) => {
       return request(server)
-        .get(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .get(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
         .set('Cookie', [`idToken=${sessions[2].idToken}`])
     },
     assertions: (t, response) => {
@@ -122,7 +122,7 @@ const testScenarios = [
     action: 'read (other\'s interest)',
     makeRequest: async (context) => {
       return request(server)
-        .get(`/api/interestsArchived/${context.fixtures.archivedInterests[1]._id}`)
+        .get(`/api/interestArchives/${context.fixtures.interestArchives[1]._id}`)
         .set('Cookie', [`idToken=${sessions[2].idToken}`])
     },
     assertions: (t, response) => {
@@ -134,7 +134,7 @@ const testScenarios = [
     action: 'create',
     makeRequest: async (context) => {
       return request(server)
-        .post('/api/interestsArchived')
+        .post('/api/interestArchives')
         .set('Cookie', [`idToken=${sessions[2].idToken}`])
         .send({
           person: context.fixtures.people[0]._id,
@@ -156,7 +156,7 @@ const testScenarios = [
     action: 'update',
     makeRequest: async (context) => {
       return request(server)
-        .put(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .put(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
         .set('Cookie', [`idToken=${sessions[2].idToken}`])
         .send({
           messages: [{ // this works whether its an object or array.
@@ -175,7 +175,7 @@ const testScenarios = [
     action: 'delete',
     makeRequest: async (context) => {
       return request(server)
-        .delete(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .delete(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
         .set('Cookie', [`idToken=${sessions[2].idToken}`])
     },
     assertions: (t, response) => {
@@ -187,10 +187,11 @@ const testScenarios = [
     action: 'list',
     makeRequest: async () => {
       return request(server)
-        .get('/api/interestsArchived')
+        .get('/api/interestArchives')
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
     },
     assertions: (t, response) => {
+      console.log('op list', response.body)
       t.is(response.statusCode, 200)
       t.is(response.body.length, 2)
     }
@@ -200,7 +201,7 @@ const testScenarios = [
     action: 'read (own interest)',
     makeRequest: async (context) => {
       return request(server)
-        .get(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .get(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
     },
     assertions: (t, response) => {
@@ -212,7 +213,7 @@ const testScenarios = [
     action: 'read (other\'s interest)',
     makeRequest: async (context) => {
       return request(server)
-        .get(`/api/interestsArchived/${context.fixtures.archivedInterests[2]._id}`)
+        .get(`/api/interestArchives/${context.fixtures.interestArchives[2]._id}`)
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
     },
     assertions: (t, response) => {
@@ -224,7 +225,7 @@ const testScenarios = [
     action: 'create',
     makeRequest: async (context) => {
       return request(server)
-        .post('/api/interestsArchived')
+        .post('/api/interestArchives')
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
         .send({
           opportunity: context.fixtures.archivedOpportunities[0]._id,
@@ -244,7 +245,7 @@ const testScenarios = [
     action: 'update (own interest)',
     makeRequest: async (context) => {
       return request(server)
-        .put(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .put(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
         .send({
           status: InterestStatus.ATTENDED,
@@ -260,7 +261,7 @@ const testScenarios = [
     action: 'update (other\'s interest)',
     makeRequest: async (context) => {
       return request(server)
-        .put(`/api/interestsArchived/${context.fixtures.archivedInterests[2]._id}`)
+        .put(`/api/interestArchives/${context.fixtures.interestArchives[2]._id}`)
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
         .send({
           status: InterestStatus.NOTATTENDED,
@@ -276,7 +277,7 @@ const testScenarios = [
     action: 'delete',
     makeRequest: async (context) => {
       return request(server)
-        .delete(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .delete(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
     },
     assertions: (t, response) => {
@@ -288,7 +289,7 @@ const testScenarios = [
     action: 'list',
     makeRequest: async () => {
       return request(server)
-        .get('/api/interestsArchived')
+        .get('/api/interestArchives')
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
     },
     assertions: (t, response) => {
@@ -301,7 +302,7 @@ const testScenarios = [
     action: 'read (own interest)',
     makeRequest: async (context) => {
       return request(server)
-        .get(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .get(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
     },
     assertions: (t, response) => {
@@ -313,7 +314,7 @@ const testScenarios = [
     action: 'read (other\'s interest)',
     makeRequest: async (context) => {
       return request(server)
-        .get(`/api/interestsArchived/${context.fixtures.archivedInterests[2]._id}`)
+        .get(`/api/interestArchives/${context.fixtures.interestArchives[2]._id}`)
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
     },
     assertions: (t, response) => {
@@ -325,7 +326,7 @@ const testScenarios = [
     action: 'create',
     makeRequest: async (context) => {
       return request(server)
-        .post('/api/interestsArchived')
+        .post('/api/interestArchives')
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
         .send({
           opportunity: context.fixtures.archivedOpportunities[0]._id,
@@ -345,7 +346,7 @@ const testScenarios = [
     action: 'update (own interest)',
     makeRequest: async (context) => {
       return request(server)
-        .put(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .put(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
         .send({
           status: InterestStatus.INVITED,
@@ -365,7 +366,7 @@ const testScenarios = [
     action: 'update (other\'s interest)',
     makeRequest: async (context) => {
       return request(server)
-        .put(`/api/interestsArchived/${context.fixtures.archivedInterests[2]._id}`)
+        .put(`/api/interestArchives/${context.fixtures.interestArchives[2]._id}`)
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
         .send({
           status: InterestStatus.INVITED,
@@ -385,7 +386,7 @@ const testScenarios = [
     action: 'delete',
     makeRequest: async (context) => {
       return request(server)
-        .delete(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .delete(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
         .set('Cookie', [`idToken=${sessions[4].idToken}`])
     },
     assertions: (t, response) => {
@@ -397,7 +398,7 @@ const testScenarios = [
     action: 'list',
     makeRequest: async () => {
       return request(server)
-        .get('/api/interestsArchived')
+        .get('/api/interestArchives')
         .set('Cookie', [`idToken=${sessions[0].idToken}`])
     },
     assertions: (t, response) => {
@@ -410,7 +411,7 @@ const testScenarios = [
     action: 'read',
     makeRequest: async (context) => {
       return request(server)
-        .get(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .get(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
         .set('Cookie', [`idToken=${sessions[0].idToken}`])
     },
     assertions: (t, response) => {
@@ -422,7 +423,7 @@ const testScenarios = [
     action: 'create',
     makeRequest: async (context) => {
       return request(server)
-        .post('/api/interestsArchived')
+        .post('/api/interestArchives')
         .set('Cookie', [`idToken=${sessions[0].idToken}`])
         .send({
           person: context.fixtures.people[1]._id,
@@ -432,11 +433,11 @@ const testScenarios = [
             author: context.fixtures.people[0]._id
           }],
           type: 'accept',
-          status: InterestStatus.INVITED
+          status: InterestStatus.ATTENDED
         })
     },
     assertions: (t, response) => {
-      t.is(response.statusCode, 200)
+      t.is(response.statusCode, 403)
     }
   },
   {
@@ -444,7 +445,7 @@ const testScenarios = [
     action: 'update',
     makeRequest: async (context) => {
       return request(server)
-        .put(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .put(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
         .set('Cookie', [`idToken=${sessions[0].idToken}`])
         .send({
           status: InterestStatus.INVITED
@@ -459,19 +460,21 @@ const testScenarios = [
     action: 'delete',
     makeRequest: async (context) => {
       return request(server)
-        .delete(`/api/interestsArchived/${context.fixtures.archivedInterests[0]._id}`)
+        .delete(`/api/interestArchives/${context.fixtures.interestArchives[0]._id}`)
         .set('Cookie', [`idToken=${sessions[0].idToken}`])
     },
     assertions: (t, response) => {
-      t.is(response.statusCode, 200)
+      t.is(response.statusCode, 403)
     }
   }
 ]
 
 for (const { role, action, makeRequest, assertions } of testScenarios) {
   test.serial(`Interest Archive API - ${role} - ${action}`, async t => {
+    // leave comment in as it shows how to focus on one particular test
+    // if (role === 'opportunity provider' && action === 'list') {
     const response = await makeRequest(t.context)
-
     assertions(t, response)
+    // } else (t.pass())
   })
 }
