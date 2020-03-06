@@ -76,14 +76,24 @@ const getInterestA = InterestSchema => async (req, res, next) => {
 const getInterest = getInterestA(Interest)
 const getInterestArchive = getInterestA(InterestArchive)
 
+const flatAndAuthorMessages = (messages, newMessages, req) => {
+  if (newMessages) {
+    newMessages = Array.isArray(newMessages) ? newMessages : [newMessages]
+    const meid = req.session.me._id
+    newMessages.forEach(msg => (msg.author = meid))
+    messages = messages.concat(newMessages)
+    return messages
+  }
+  return []
+}
+
 const createInterestA = InterestModel => async (req, res) => {
   const interestData = req.body
-
   if (!interestData.person) {
     interestData.person = (req.session.me && req.session.me._id) ? req.session.me._id : undefined
   }
-
   const interest = new InterestModel(interestData)
+  interest.messages = flatAndAuthorMessages([], interestData.messages, req)
 
   if (!req.ability.can(Action.CREATE, interest)) {
     return res.status(403).send('Must have create permission')
@@ -133,14 +143,7 @@ const updateInterestA = InterestModel => async (req, res) => {
       existingInterest.status = interestUpdateData.status
     }
 
-    if (interestUpdateData.messages) {
-      interestUpdateData.messages = Array.isArray(interestUpdateData.messages)
-        ? interestUpdateData.messages : [interestUpdateData.messages]
-      const meid = req.session.me._id
-      interestUpdateData.messages.forEach(msg => (msg.author = meid))
-      existingInterest.messages = existingInterest.messages.concat(interestUpdateData.messages)
-    }
-
+    existingInterest.messages = flatAndAuthorMessages(existingInterest.messages, interestUpdateData.messages, req)
     if (!req.ability.can(Action.UPDATE, existingInterest)) {
       return res.status(403).json({
         message: 'Invalid update attempted'
