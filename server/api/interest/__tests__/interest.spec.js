@@ -250,7 +250,7 @@ test.serial('Should update the interest state from interested to invited', async
   t.is(savedInterest.status, InterestStatus.INVITED)
 
   // no extra message should be added.
-  t.is(savedInterest.messages.length, 1)
+  t.is(savedInterest.messages.length, 0)
 })
 
 test.serial('Should update the interest state from invited to committed', async t => {
