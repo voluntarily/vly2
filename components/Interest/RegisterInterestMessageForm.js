@@ -31,16 +31,17 @@ export const RegisterInterestMessageForm = ({
       visible={visible}
       onOk={handleOk}
       onCancel={handleCancel}
-      width={380}
+      width={400}
       footer={[
-        <Button id='cancelBtn' key='esc' shape='round' onClick={handleCancel}>
-          <FormattedMessage id='RegisterInterestMessageForm.cancel' defaultMessage='Cancel' description='Cancel button on popup form' />
-        </Button>,
+
         <Button
           key='submit' id='sendBtn' type='primary' shape='round'
           onClick={handleOk}
         >
           <FormattedMessage id='RegisterInterestMessageForm.send' defaultMessage='Send' description='Send button on popup form' />
+        </Button>,
+        <Button id='cancelBtn' key='esc' shape='round' onClick={handleCancel}>
+          <FormattedMessage id='RegisterInterestMessageForm.cancel' defaultMessage='Cancel' description='Cancel button on popup form' />
         </Button>
       ]}
     >

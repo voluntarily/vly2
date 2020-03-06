@@ -117,6 +117,18 @@ const opportunities = [
     status: OpportunityStatus.ACTIVE,
     requestor: people[5]._id,
     offerOrg: organisations[1]._id
+  },
+  {
+    _id: generateObjectId(),
+    status: OpportunityStatus.ACTIVE,
+    requestor: people[1]._id,
+    offerOrg: organisations[0]._id
+  },
+  {
+    _id: generateObjectId(),
+    status: OpportunityStatus.ACTIVE,
+    requestor: people[1]._id,
+    offerOrg: organisations[0]._id
   }
 ]
 
@@ -124,32 +136,44 @@ const interests = [
   {
     person: people[2]._id,
     opportunity: opportunities[0]._id,
-    message: [{ body: 'Test comment', author: generateObjectId() }],
+    message: [{ body: 'Test comment', author: people[2]._id }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[3]._id,
     opportunity: opportunities[0]._id,
-    message: [{ body: 'Test comment', author: generateObjectId() }],
+    message: [{ body: 'Test comment', author: people[3]._id }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[3]._id,
     opportunity: opportunities[1]._id,
-    message: [{ body: 'Test comment 2', author: generateObjectId() }],
+    message: [{ body: 'Test comment 2', author: people[3]._id }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[6]._id,
     opportunity: opportunities[0]._id,
-    message: [{ body: 'Test comment 1', author: generateObjectId() }],
+    message: [{ body: 'Test comment 1', author: people[6]._id }],
     status: InterestStatus.INTERESTED
   },
   {
     person: people[6]._id,
     opportunity: opportunities[1]._id,
-    message: [{ body: 'Test comment 2', author: generateObjectId() }],
+    message: [{ body: 'Test comment 2', author: people[6]._id }],
     status: InterestStatus.INTERESTED
+  },
+  {
+    person: people[2]._id,
+    opportunity: opportunities[2]._id,
+    message: [{ body: 'Test comment', author: people[2]._id }],
+    status: InterestStatus.INVITED
+  },
+  {
+    person: people[2]._id,
+    opportunity: opportunities[3]._id,
+    message: [{ body: 'Test comment', author: people[2]._id }],
+    status: InterestStatus.COMMITTED
   }
 ]
 

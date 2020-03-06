@@ -16,10 +16,19 @@ const StyledAvatar = styled(Avatar)`
   }
 `
 
+const VMenu = styled(Menu)`
+border-bottom: 2px solid transparent;
+
+.ant-menu-item {
+  border: none;
+  
+}
+`
+
 const Navigation = ({ items, defaultItem, router, me, ...props }) => {
   const activeItem = router.pathname.slice(1)
   return (
-    <Menu
+    <VMenu
       theme='light'
       mode='horizontal'
       style={{ float: 'right' }}
@@ -43,7 +52,7 @@ const Navigation = ({ items, defaultItem, router, me, ...props }) => {
           </Link>
         </StyledAvatar>
       </Menu.Item>
-    </Menu>
+    </VMenu>
   )
 }
 
