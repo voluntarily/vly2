@@ -1,4 +1,3 @@
-/* TODO: this module can be removed */
 import React from 'react'
 import { Comment, List, Tooltip } from 'antd'
 import PropTypes from 'prop-types'
