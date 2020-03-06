@@ -1,7 +1,8 @@
 
-import CloseCard from './CloseActionCard'
+import CloseCard from '../Close/CloseActionCard'
 import { Divider } from 'antd'
 import styled from 'styled-components'
+import OpPreview from './OpPreview'
 const CloseGrid = styled.div`
 display: grid;
 grid-template-columns: 1fr 1fr;
@@ -28,12 +29,13 @@ color: #333;
 font-size: 1rem;
 `
 
-const GenericClose = () => (
+const ActClose = () => (
   <CloseGrid>
     <img src='/static/img/goal/goal-first-volunteer.png' />
     <div>
       <SmallHeader>Activity created</SmallHeader>
       <h2>Volunteers can now see your activity and offer to help you out!</h2>
+      <OpPreview />
       <Divider />
       <p>Try the following things next:</p>
       <CloseCard cardTitle='Share Activity' cardDescription='Tell your community about your activity so they can get involved' imgLink='/static/img/icons/invite.svg' link='#' />
@@ -46,4 +48,4 @@ const GenericClose = () => (
   </CloseGrid>
 )
 
-export default GenericClose
+export default ActClose
