@@ -1,4 +1,3 @@
-import { Card } from '../VTheme/VTheme'
 import styled from 'styled-components'
 import { ItemDuration, ItemDate, ItemLocation } from '../VTheme/ItemList'
 
