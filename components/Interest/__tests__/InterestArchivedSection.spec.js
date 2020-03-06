@@ -56,12 +56,12 @@ const markAndrewAsAbsent = {
   person: people[0],
   opportunity: ops[0],
   comment: "I'm Andrew",
-  status: 'not attended'
+  status: InterestStatus.NOTATTENDED
 }
 
 const initStore = {
 
-  interestsArchived: {
+  interestArchives: {
     sync: true,
     loading: false,
     data: []
@@ -76,8 +76,8 @@ test.serial('mount the InterestSection with two interests', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
-  myMock.getOnce(`${API_URL}/interestsArchived/?op=${opid}`, interests)
-  myMock.putOnce(`${API_URL}/interestsArchived/${interests[0]._id}`, markAndrewAsPresent)
+  myMock.getOnce(`${API_URL}/interestArchives/?op=${opid}`, interests)
+  myMock.putOnce(`${API_URL}/interestArchives/${interests[0]._id}`, markAndrewAsPresent)
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
@@ -107,7 +107,7 @@ test.serial('mount the InterestSection with two interests', async t => {
   const notattendbutton = wrapper.find('tbody tr').first().find('button').first()
   t.is(notattendbutton.text(), 'Not Attended')
   myMock.restore()
-  myMock.putOnce(`${API_URL}/interestsArchived/${interests[0]._id}`, markAndrewAsAbsent)
+  myMock.putOnce(`${API_URL}/interestArchives/${interests[0]._id}`, markAndrewAsAbsent)
   notattendbutton.simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
@@ -119,7 +119,7 @@ test.serial('mount the InterestSection with no interests', async t => {
   const myMock = fetchMock.sandbox()
   const fakeObjectId = mongoose.Types.ObjectId().toString()
   reduxApi.use('fetch', adapterFetch(myMock))
-  myMock.getOnce(`${API_URL}/interestsArchived/?op=${fakeObjectId}`, [])
+  myMock.getOnce(`${API_URL}/interestArchives/?op=${fakeObjectId}`, [])
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
       <InterestArchivedSection opid={fakeObjectId} />

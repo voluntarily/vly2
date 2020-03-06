@@ -48,7 +48,7 @@ test.before('Setup fixtures', (t) => {
         data: [archivedOpportunities[1]],
         request: null
       },
-      interestsArchived: {
+      interestArchives: {
         sync: true,
         loading: false,
         data: []
@@ -66,7 +66,7 @@ test('archivedOpDetailPage should have an OpDetail component', t => {
   const RoutedArchivedOpDetailPage = withMockRoute(ArchivedOpDetailPageWithArchivedOps)
   const myMock = fetchMock.sandbox()
   myMock.get(API_URL + '/archivedOpportunities/' + archivedOpportunities[1]._id, { body: { status: 200 } })
-  myMock.get(API_URL + '/interestsArchived/?op=' + archivedOpportunities[1]._id, { body: { status: 200 } })
+  myMock.get(API_URL + '/interestArchives/?op=' + archivedOpportunities[1]._id, { body: { status: 200 } })
 
   reduxApi.use('fetch', adapterFetch(myMock))
   const wrapper = mountWithIntl(
@@ -87,7 +87,7 @@ test('archivedOpDetailPage should have an InterestSection component', t => {
   const RoutedArchivedOpDetailPage = withMockRoute(ArchivedOpDetailPageWithArchivedOps)
   const myMock = fetchMock.sandbox()
   myMock.get(API_URL + '/archivedOpportunities/' + archivedOpportunities[1]._id, { body: { status: 200 } })
-  myMock.get(API_URL + '/interestsArchived/?op=' + archivedOpportunities[1]._id, { body: { status: 200 } })
+  myMock.get(API_URL + '/interestArchives/?op=' + archivedOpportunities[1]._id, { body: { status: 200 } })
 
   reduxApi.use('fetch', adapterFetch(myMock))
   const wrapper = mountWithIntl(

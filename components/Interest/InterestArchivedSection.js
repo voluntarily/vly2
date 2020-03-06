@@ -12,18 +12,18 @@ import { useSelector, useDispatch } from 'react-redux'
 import { InterestStatus, InterestAction } from '../../server/api/interest/interest.constants'
 
 export const InterestArchivedSection = ({ opid }) => {
-  const interests = useSelector(state => state.interestsArchived)
+  const interests = useSelector(state => state.interestArchives)
   const dispatch = useDispatch()
 
   useEffect(() => {
     const getOpInterests = async () => {
-      await dispatch(reduxApi.actions.interestsArchived.get({ op: opid }))
+      await dispatch(reduxApi.actions.interestArchives.get({ op: opid }))
     }
     getOpInterests()
   }, [opid])
   // If we haven't finished making the API request to the server yet...
   if (!interests.sync) {
-    return (<Loading label='interestsArchived' entity={interests} />)
+    return (<Loading label='interestArchives' entity={interests} />)
   }
 
   const handleAction = async (updatedInterests, action, message) => {
@@ -41,7 +41,7 @@ export const InterestArchivedSection = ({ opid }) => {
       case InterestAction.MESSAGE:
         break
     }
-    await dispatch(reduxApi.actions.interestsArchived.put({ id: updatedInterests._id }, { body: JSON.stringify(putInterest) }))
+    await dispatch(reduxApi.actions.interestArchives.put({ id: updatedInterests._id }, { body: JSON.stringify(putInterest) }))
   }
 
   return (
