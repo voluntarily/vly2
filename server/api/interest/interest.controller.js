@@ -136,7 +136,8 @@ const updateInterestA = InterestModel => async (req, res) => {
     if (interestUpdateData.messages) {
       interestUpdateData.messages = Array.isArray(interestUpdateData.messages)
         ? interestUpdateData.messages : [interestUpdateData.messages]
-
+      const meid = req.session.me._id
+      interestUpdateData.messages.forEach(msg => (msg.author = meid))
       existingInterest.messages = existingInterest.messages.concat(interestUpdateData.messages)
     }
 
