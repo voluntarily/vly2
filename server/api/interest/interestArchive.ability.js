@@ -57,7 +57,6 @@ const ruleBuilder = async (session) => {
   if (session.me && session.me._id && session.me.role.includes(Role.OPPORTUNITY_PROVIDER)) {
     const myOpportunities = await ArchivedOpportunity.find({ requestor: session.me._id })
     const myOpportunityIds = myOpportunities.map(op => op._id.toString())
-    console.log('op rules', myOpportunityIds)
     opportunityProviderRules.push({
       subject: InterestArchiveSchemaName,
       action: Action.LIST,

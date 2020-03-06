@@ -36,7 +36,6 @@ test('gra gets a random integer in range', t => {
 test('make volunteer creates a valid volunteer', t => {
   range(0, 5, 1).forEach(item => {
     const vp = makeVolunteer(`testy${item}`)
-    console.log(vp)
     t.true(vp.name.includes('volunteer'))
     t.true(vp.role.includes('volunteer'))
 
@@ -47,7 +46,6 @@ test('make volunteer creates a valid volunteer', t => {
 test('make teacher creates a valid teacher', t => {
   range(0, 5, 1).forEach(item => {
     const vp = makeTeacher(`teacher${item}`)
-    console.log(vp)
     t.true(vp.name.includes('opportunityProvider'))
     t.true(['he', 'she', 'they'].includes(vp.pronoun.subject))
   })

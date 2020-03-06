@@ -76,7 +76,6 @@ export const RegisterInterestItem = ({
   }
 
   const handleMessageSubmit = (ok, message) => {
-    // console.log('handleMessageSubmit', ok, message)
     setShowMessageForm(false)
     if (ok) {
       onMessage(message)

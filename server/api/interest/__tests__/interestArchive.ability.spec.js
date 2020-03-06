@@ -191,7 +191,6 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[1].idToken}`])
     },
     assertions: (t, response) => {
-      console.log('op list', response.body)
       t.is(response.statusCode, 200)
       t.is(response.body.length, 2)
     }
