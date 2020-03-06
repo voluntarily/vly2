@@ -30,7 +30,7 @@ font-size: 1rem;
 
 const GenericClose = () => (
   <CloseGrid>
-    <img src='https://picsum.photos/640/480' />
+    <img src='/static/img/goal/goal-first-volunteer.png' />
     <div>
       <SmallHeader>Activity created</SmallHeader>
       <h2>Volunteers can now see your activity and offer to help you out!</h2>
@@ -38,9 +38,9 @@ const GenericClose = () => (
       <p>Try the following things next:</p>
       <CloseCard cardTitle='Share Activity' cardDescription='Tell your community about your activity so they can get involved' imgLink='/static/img/icons/invite.svg' link='#' />
 
-      <CloseCard cardTitle='See your Dashboard' cardDescription='See what you have signed up for' imgLink='/static/img/icons/invite.svg' link='#' />
+      <CloseCard cardTitle='See your Dashboard' cardDescription='See what you have signed up for' imgLink='/static/img/icons/home.svg' link='#' />
 
-      <CloseCard cardTitle='Find more things to do' cardDescription='aaa' imgLink='/static/img/icons/dash.svg' link='#' />
+      <CloseCard cardTitle='Find more cool volunteering opportunities' cardDescription='Help loads of people' imgLink='/static/img/icons/search-act.svg' link='#' />
 
     </div>
   </CloseGrid>
