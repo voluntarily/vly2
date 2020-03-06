@@ -60,8 +60,7 @@ test('List - anonymous', async t => {
     .set('Accept', 'application/json')
 
   t.is(resAnon.status, 403)
-  // Ensure there is no data in the response body
-  t.true(Object.entries(resAnon.body).length === 0)
+  t.is(resAnon.body.error, 'cannot list Person')
 })
 
 // Roles (other than ADMIN) can list all users, but email and phone fields are removed from the response

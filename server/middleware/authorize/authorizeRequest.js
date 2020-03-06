@@ -22,8 +22,7 @@ const authorizeActions = (subject, convertRequestToAction = defaultConvertReques
   if (authorized) {
     next()
   } else {
-    // console.error(`cannot ${action} ${subject} ${req.ability}`)
-    res.status(403).json({ error: `cannot ${action} ${subject} ${req.ability}` })
+    res.status(403).json({ error: `cannot ${action} ${subject}` })
   }
 }
 
