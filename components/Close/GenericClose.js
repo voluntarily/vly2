@@ -38,9 +38,9 @@ const GenericClose = () => (
       <p>Try the following things next:</p>
       <CloseCard cardTitle='Share Activity' cardDescription='Tell your community about your activity so they can get involved' imgLink='/static/img/icons/invite.svg' link='#' />
 
-      <CloseCard cardTitle='Invite Friends &amp; Parents' imgLink='/static/img/icons/invite.svg' link='#' />
+      <CloseCard cardTitle='See your Dashboard' cardDescription='See what you have signed up for' imgLink='/static/img/icons/invite.svg' link='#' />
 
-      <CloseCard cardTitle='Find more things to do' imgLink='/static/img/icons/dash.svg' link='#' />
+      <CloseCard cardTitle='Find more things to do' cardDescription='aaa' imgLink='/static/img/icons/dash.svg' link='#' />
 
     </div>
   </CloseGrid>
