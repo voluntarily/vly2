@@ -2,8 +2,10 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import MemoryMongo from '../../../util/test-memory-mongo'
-import { loadInterestFixtures, clearInterestFixtures, sessions } from './interest.ability.fixture'
+import { loadInterestFixtures, clearInterestFixtures, sessions, PERSON } from './interest.ability.fixture'
 import { InterestStatus } from '../interest.constants'
+import { Interest } from '../interest'
+import Opportunity from '../../opportunity/opportunity'
 
 test.before('setup database and app', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -16,11 +18,11 @@ test.after.always(async (t) => {
 })
 
 test.beforeEach('populate database fixtures', async (t) => {
-  t.context.fixtures = await loadInterestFixtures()
+  t.context.fixtures = await loadInterestFixtures(Interest, Opportunity)
 })
 
 test.afterEach.always(async () => {
-  await clearInterestFixtures()
+  await clearInterestFixtures(Interest, Opportunity)
 })
 
 const testScenarios = [
@@ -55,8 +57,7 @@ const testScenarios = [
         .send({
           person: context.fixtures.people[0]._id,
           opportunity: context.fixtures.opportunities[0]._id,
-          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
-          type: 'accept',
+          message: [{ body: 'Test comment' }],
           status: InterestStatus.INTERESTED
         })
     },
@@ -71,7 +72,7 @@ const testScenarios = [
       return request(server)
         .put(`/api/interests/${context.fixtures.interests[0]._id}`)
         .send({
-          message: [{ body: 'updated test comment', author: context.fixtures.people[0]._id }],
+          message: [{ body: 'updated test comment' }],
           type: 'accept'
         })
     },
@@ -95,7 +96,7 @@ const testScenarios = [
     makeRequest: async () => {
       return request(server)
         .get('/api/interests')
-        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.VP1].idToken}`])
     },
     assertions: (t, response) => {
       const expectedInterests = t.context.fixtures.interests
@@ -111,7 +112,7 @@ const testScenarios = [
     makeRequest: async () => {
       return request(server)
         .get('/api/interests')
-        .set('Cookie', [`idToken=${sessions[7].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.VPAP].idToken}`])
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 200)
@@ -124,7 +125,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .get(`/api/interests/${context.fixtures.interests[0]._id}`)
-        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.VP1].idToken}`])
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 200)
@@ -136,7 +137,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .get(`/api/interests/${context.fixtures.interests[1]._id}`)
-        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.VP1].idToken}`])
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 404)
@@ -148,11 +149,10 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .post('/api/interests')
-        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.VP1].idToken}`])
         .send({
           opportunity: context.fixtures.opportunities[0]._id,
-          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
-          type: 'accept'
+          message: [{ body: 'Test comment' }]
         })
     },
     assertions: (t, response) => {
@@ -165,11 +165,10 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .post('/api/interests')
-        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.VP1].idToken}`])
         .send({
           opportunity: context.fixtures.opportunities[0]._id,
-          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
-          type: 'accept',
+          message: [{ body: 'Test comment' }],
           status: InterestStatus.INVITED
         })
     },
@@ -183,12 +182,11 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .post('/api/interests')
-        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.VP1].idToken}`])
         .send({
-          person: context.fixtures.people[3]._id,
+          person: context.fixtures.people[PERSON.VP2]._id,
           opportunity: context.fixtures.opportunities[0]._id,
-          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
-          type: 'accept'
+          message: [{ body: 'Test comment' }]
         })
     },
     assertions: (t, response) => {
@@ -201,7 +199,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .put(`/api/interests/${context.fixtures.interests[0]._id}`)
-        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.VP1].idToken}`])
         .send({
           messages: {
             body: 'Updated message',
@@ -220,7 +218,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .put(`/api/interests/${context.fixtures.interests[5]._id}`)
-        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.VP1].idToken}`])
         .send({
           status: InterestStatus.COMMITTED,
           messages: {
@@ -244,7 +242,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .put(`/api/interests/${context.fixtures.interests[6]._id}`)
-        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.VP1].idToken}`])
         .send({
           status: InterestStatus.INTERESTED,
           messages: {
@@ -268,7 +266,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .put(`/api/interests/${context.fixtures.interests[0]._id}`)
-        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.VP1].idToken}`])
         .send({
           status: InterestStatus.COMMITTED,
           messages: {
@@ -292,7 +290,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .delete(`/api/interests/${context.fixtures.interests[0]._id}`)
-        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.VP1].idToken}`])
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 200)
@@ -304,7 +302,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .delete(`/api/interests/${context.fixtures.interests[1]._id}`)
-        .set('Cookie', [`idToken=${sessions[2].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.VP1].idToken}`])
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 404)
@@ -316,11 +314,11 @@ const testScenarios = [
     makeRequest: async () => {
       return request(server)
         .get('/api/interests')
-        .set('Cookie', [`idToken=${sessions[1].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.OP1].idToken}`])
     },
     assertions: (t, response) => {
       const requestorOpportunityIds = t.context.fixtures.opportunities
-        .filter(opportunity => opportunity.requestor === t.context.fixtures.people[1]._id)
+        .filter(opportunity => opportunity.requestor === t.context.fixtures.people[PERSON.OP1]._id)
         .map(opportunity => opportunity._id)
 
       const expectedInterests = t.context.fixtures.interests
@@ -336,7 +334,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .get(`/api/interests/${context.fixtures.interests[0]._id}`)
-        .set('Cookie', [`idToken=${sessions[1].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.OP1].idToken}`])
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 200)
@@ -348,7 +346,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .get(`/api/interests/${context.fixtures.interests[2]._id}`)
-        .set('Cookie', [`idToken=${sessions[1].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.OP1].idToken}`])
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 404)
@@ -360,15 +358,14 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .post('/api/interests')
-        .set('Cookie', [`idToken=${sessions[1].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.OP1].idToken}`])
         .send({
           opportunity: context.fixtures.opportunities[0]._id,
-          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
-          type: 'accept'
+          message: [{ body: 'Test comment' }]
         })
     },
     assertions: (t, response) => {
-      t.is(response.statusCode, 403)
+      t.is(response.statusCode, 200)
     }
   },
   {
@@ -377,10 +374,10 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .put(`/api/interests/${context.fixtures.interests[0]._id}`)
-        .set('Cookie', [`idToken=${sessions[1].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.OP1].idToken}`])
         .send({
           status: InterestStatus.INVITED,
-          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          message: [{ body: 'Test comment' }],
           type: 'accept'
         })
     },
@@ -394,7 +391,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .put(`/api/interests/${context.fixtures.interests[2]._id}`)
-        .set('Cookie', [`idToken=${sessions[1].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.OP1].idToken}`])
         .send({
           status: InterestStatus.INVITED
         })
@@ -409,10 +406,10 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .delete(`/api/interests/${context.fixtures.interests[0]._id}`)
-        .set('Cookie', [`idToken=${sessions[1].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.OP1].idToken}`])
     },
     assertions: (t, response) => {
-      t.is(response.statusCode, 403)
+      t.is(response.statusCode, 404)
     }
   },
   {
@@ -420,12 +417,12 @@ const testScenarios = [
     action: 'list',
     makeRequest: async (context) => {
       return request(server)
-        .get(`/api/interests?meid=${context.fixtures.people[6]._id}`)
-        .set('Cookie', [`idToken=${sessions[6].idToken}`])
+        .get(`/api/interests?meid=${context.fixtures.people[PERSON.VPOP]._id}`)
+        .set('Cookie', [`idToken=${sessions[PERSON.VPOP].idToken}`])
     },
     assertions: (t, response) => {
       const expectedInterests = t.context.fixtures.interests
-        .filter(interest => interest.person === t.context.fixtures.people[6]._id)
+        .filter(interest => interest.person === t.context.fixtures.people[PERSON.VPOP]._id)
 
       const expectedInterestIds = expectedInterests.map(interest => interest._id.toString())
 
@@ -443,7 +440,7 @@ const testScenarios = [
     makeRequest: async () => {
       return request(server)
         .get('/api/interests')
-        .set('Cookie', [`idToken=${sessions[4].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.ORGADMIN].idToken}`])
     },
     assertions: (t, response) => {
       const orgOpportunityIds = t.context.fixtures.opportunities
@@ -463,7 +460,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .get(`/api/interests/${context.fixtures.interests[0]._id}`)
-        .set('Cookie', [`idToken=${sessions[4].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.ORGADMIN].idToken}`])
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 200)
@@ -475,7 +472,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .get(`/api/interests/${context.fixtures.interests[2]._id}`)
-        .set('Cookie', [`idToken=${sessions[4].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.ORGADMIN].idToken}`])
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 404)
@@ -487,15 +484,14 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .post('/api/interests')
-        .set('Cookie', [`idToken=${sessions[4].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.ORGADMIN].idToken}`])
         .send({
           opportunity: context.fixtures.opportunities[0]._id,
-          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
-          type: 'accept'
+          message: [{ body: 'Test comment' }]
         })
     },
     assertions: (t, response) => {
-      t.is(response.statusCode, 403)
+      t.is(response.statusCode, 200)
     }
   },
   {
@@ -504,10 +500,10 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .put(`/api/interests/${context.fixtures.interests[0]._id}`)
-        .set('Cookie', [`idToken=${sessions[4].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.ORGADMIN].idToken}`])
         .send({
           status: InterestStatus.INVITED,
-          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          message: [{ body: 'Test comment' }],
           type: 'accept'
         })
     },
@@ -521,10 +517,10 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .put(`/api/interests/${context.fixtures.interests[2]._id}`)
-        .set('Cookie', [`idToken=${sessions[4].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.ORGADMIN].idToken}`])
         .send({
           status: InterestStatus.INVITED,
-          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          message: [{ body: 'Test comment' }],
           type: 'accept'
         })
     },
@@ -538,10 +534,10 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .delete(`/api/interests/${context.fixtures.interests[0]._id}`)
-        .set('Cookie', [`idToken=${sessions[4].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.ORGADMIN].idToken}`])
     },
     assertions: (t, response) => {
-      t.is(response.statusCode, 403)
+      t.is(response.statusCode, 404)
     }
   },
   {
@@ -550,7 +546,7 @@ const testScenarios = [
     makeRequest: async () => {
       return request(server)
         .get('/api/interests')
-        .set('Cookie', [`idToken=${sessions[0].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.ADMIN].idToken}`])
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 200)
@@ -563,7 +559,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .get(`/api/interests/${context.fixtures.interests[0]._id}`)
-        .set('Cookie', [`idToken=${sessions[0].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.ADMIN].idToken}`])
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 200)
@@ -575,12 +571,11 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .post('/api/interests')
-        .set('Cookie', [`idToken=${sessions[0].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.ADMIN].idToken}`])
         .send({
-          person: context.fixtures.people[1]._id,
+          person: context.fixtures.people[PERSON.OP1]._id,
           opportunity: context.fixtures.opportunities[0]._id,
-          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
-          type: 'accept',
+          message: [{ body: 'Test comment' }],
           status: InterestStatus.INVITED
         })
     },
@@ -594,10 +589,10 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .put(`/api/interests/${context.fixtures.interests[0]._id}`)
-        .set('Cookie', [`idToken=${sessions[0].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.ADMIN].idToken}`])
         .send({
           status: InterestStatus.INVITED,
-          message: [{ body: 'Test comment', author: context.fixtures.people[0]._id }],
+          message: [{ body: 'Test comment' }],
           type: 'accept'
         })
     },
@@ -611,7 +606,7 @@ const testScenarios = [
     makeRequest: async (context) => {
       return request(server)
         .delete(`/api/interests/${context.fixtures.interests[0]._id}`)
-        .set('Cookie', [`idToken=${sessions[0].idToken}`])
+        .set('Cookie', [`idToken=${sessions[PERSON.ADMIN].idToken}`])
     },
     assertions: (t, response) => {
       t.is(response.statusCode, 200)

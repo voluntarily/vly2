@@ -69,7 +69,7 @@ const ruleBuilder = async (session) => {
     }, {
       subject: InterestSchemaName,
       action: Action.CREATE,
-      inverted: true
+      conditions: { person: session.me._id, status: InterestStatus.INTERESTED }
     }, {
       subject: InterestSchemaName,
       action: Action.UPDATE,
@@ -77,7 +77,7 @@ const ruleBuilder = async (session) => {
     }, {
       subject: InterestSchemaName,
       action: Action.DELETE,
-      inverted: true
+      conditions: { person: session.me._id }
     })
   }
 
@@ -98,7 +98,7 @@ const ruleBuilder = async (session) => {
     }, {
       subject: InterestSchemaName,
       action: Action.CREATE,
-      inverted: true
+      conditions: { person: session.me._id, status: InterestStatus.INTERESTED }
     }, {
       subject: InterestSchemaName,
       action: Action.UPDATE,
@@ -106,7 +106,7 @@ const ruleBuilder = async (session) => {
     }, {
       subject: InterestSchemaName,
       action: Action.DELETE,
-      inverted: true
+      conditions: { person: session.me._id }
     })
   }
 
@@ -118,7 +118,7 @@ const ruleBuilder = async (session) => {
   return {
     [Role.ANON]: anonRules,
     [Role.VOLUNTEER_PROVIDER]: volunteerRules,
-    [Role.ACTIVITY_PROVIDER]: volunteerRules,
+    // [Role.ACTIVITY_PROVIDER]: volunteerRules, // don't include roles that have no rules
     [Role.OPPORTUNITY_PROVIDER]: opportunityProviderRules,
     [Role.ORG_ADMIN]: orgAdminRules,
     [Role.ADMIN]: adminRules

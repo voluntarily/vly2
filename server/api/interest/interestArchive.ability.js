@@ -53,7 +53,6 @@ const ruleBuilder = async (session) => {
   }
 
   const opportunityProviderRules = []
-
   if (session.me && session.me._id && session.me.role.includes(Role.OPPORTUNITY_PROVIDER)) {
     const myOpportunities = await ArchivedOpportunity.find({ requestor: session.me._id })
     const myOpportunityIds = myOpportunities.map(op => op._id.toString())
@@ -130,7 +129,7 @@ const ruleBuilder = async (session) => {
   return {
     [Role.ANON]: anonRules,
     [Role.VOLUNTEER_PROVIDER]: volunteerRules,
-    [Role.ACTIVITY_PROVIDER]: volunteerRules,
+    // [Role.ACTIVITY_PROVIDER]: volunteerRules, // don't include roles that have no rules
     [Role.OPPORTUNITY_PROVIDER]: opportunityProviderRules,
     [Role.ORG_ADMIN]: orgAdminRules,
     [Role.ADMIN]: adminRules
