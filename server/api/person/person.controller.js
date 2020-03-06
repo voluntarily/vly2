@@ -9,7 +9,7 @@ const mongoose = require('mongoose')
 const { PersonFields } = require('./person.constants')
 const { mapValues, keyBy } = require('lodash')
 const Member = require('../member/member')
-const Interest = require('../interest/interest')
+const { Interest } = require('../interest/interest')
 const Opportunity = require('../opportunity/opportunity')
 const { InterestStatus } = require('../interest/interest.constants')
 
