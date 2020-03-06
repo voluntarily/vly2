@@ -35,7 +35,7 @@ export const InterestSection = ({ opid }) => {
         putInterest.status = InterestStatus.INVITED
         break
       case InterestAction.REJECT:
-        putInterest.status = InterestStatus.INTERESTED
+        putInterest.status = InterestStatus.DECLINED
         break
       case InterestAction.WITHDRAW:
         putInterest.type = InterestAction.REJECT
