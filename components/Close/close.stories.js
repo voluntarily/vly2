@@ -4,7 +4,12 @@ import GenericClose from './GenericClose'
 import { FullPage } from '../VTheme/VTheme'
 
 storiesOf('Close Component', module)
-  .add('Closing an Activity', () => (
+  .add('Finish creating an Activity', () => (
+    <FullPage>
+      <GenericClose />
+    </FullPage>
+  ))
+  .add('Finish creating an account', () => (
     <FullPage>
       <GenericClose />
     </FullPage>
