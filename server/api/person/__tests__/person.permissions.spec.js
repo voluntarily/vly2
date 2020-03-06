@@ -11,7 +11,7 @@ import jsonwebtoken from 'jsonwebtoken'
 import Organisation from '../../organisation/organisation'
 import Member from '../../member/member'
 import Opportunity from '../../opportunity/opportunity'
-import Interest from '../../interest/interest'
+import { Interest } from '../../interest/interest'
 import { InterestStatus } from '../../interest/interest.constants'
 
 const createJwtIdToken = (email) => {
@@ -65,7 +65,7 @@ test('List - anonymous', async t => {
     .set('Accept', 'application/json')
 
   t.is(resAnon.status, 403)
-  t.is(resAnon.body.error, 'cannot list Person')
+  t.is(resAnon.body.error, 'Auth cannot list Person')
 })
 
 // Roles (other than ADMIN) can list all users, but email and phone fields are removed from the response
