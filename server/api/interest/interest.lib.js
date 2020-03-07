@@ -1,8 +1,8 @@
-const Interest = require('./interest')
+const { Interest, InterestArchive } = require('./interest')
 const { InterestStatus } = require('./interest.constants')
 const { config } = require('../../../config/serverConfig')
 
-const personInterestCount = (personId) => {
+const personInterestCountA = InterestSchema => (personId) => {
   const query = {
     person: personId,
     status: {
@@ -15,12 +15,14 @@ const personInterestCount = (personId) => {
   }
   return Interest.countDocuments(query).exec()
 }
+const personInterestCount = personInterestCountA(Interest)
+const personInterestArchiveCount = personInterestCountA(InterestArchive)
 
 const personFields = 'name nickname email imgUrl pronoun sendEmailNotifications'
 
-const getInterestDetail = async (interestID) => {
+const getInterestDetailA = InterestSchema => async (interestID) => {
   // Get the interest and populate out key information needed for emailing
-  const interestDetail = await Interest.findById(interestID)
+  const interestDetail = await InterestSchema.findById(interestID)
     .populate({ path: 'person', select: personFields })
     .populate({
       path: 'opportunity',
@@ -35,10 +37,12 @@ const getInterestDetail = async (interestID) => {
   interestDetail.person.href = `${config.appUrl + '/people/' + interestDetail.person._id}`
   return interestDetail
 }
+const getInterestDetail = getInterestDetailA(Interest)
+const getInterestArchiveDetail = getInterestDetailA(InterestArchive)
 
-const getMyOpInterestDetail = async (opportunity, person) => {
+const getMyOpInterestDetailA = InterestSchema => async (opportunity, person) => {
   // Get the interest and populate out key information needed for emailing
-  const interestDetail = await Interest.findOne({ opportunity, person })
+  const interestDetail = await InterestSchema.findOne({ opportunity, person })
     .populate({ path: 'person', select: personFields })
     .populate({
       path: 'opportunity',
@@ -52,8 +56,20 @@ const getMyOpInterestDetail = async (opportunity, person) => {
   interestDetail.person.href = `${config.appUrl + '/people/' + interestDetail.person._id}`
   return interestDetail
 }
+
+const getMyOpInterestDetail = getMyOpInterestDetailA(Interest)
+const getMyOpInterestArchiveDetail = getMyOpInterestDetailA(InterestArchive)
+
 module.exports = {
+  getInterestDetailA,
+  getMyOpInterestDetailA,
+  personInterestCountA,
+
   getInterestDetail,
   getMyOpInterestDetail,
-  personInterestCount
+  personInterestCount,
+
+  getMyOpInterestArchiveDetail,
+  getInterestArchiveDetail,
+  personInterestArchiveCount
 }

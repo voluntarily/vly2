@@ -1,25 +1,25 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
-const InterestArchive = require('./interestArchive')
-const { listInterests, updateInterest, getInterest } = require('./interestArchive.controller')
+const { InterestArchive } = require('./interest')
+const { listInterestArchives, updateInterestArchive, getInterestArchive } = require('../interest/interest.controller')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
-const { SchemaName } = require('./interestArchive.constants')
+const { InterestArchiveSchemaName } = require('./interest.constants')
 
 module.exports = server => {
   // Docs: https://github.com/ryo718/mongoose-crudify
   server.use(
-    '/api/interestsArchived',
+    '/api/interestArchives',
     mongooseCrudify({
       Model: InterestArchive,
       selectFields: '-__v', // Hide '__v' property
       endResponseInAction: false,
       beforeActions: [{
-        middlewares: [authorizeActions(SchemaName)]
+        middlewares: [authorizeActions(InterestArchiveSchemaName)]
       }],
       actions: {
-        list: listInterests,
-        read: getInterest,
-        update: updateInterest
+        list: listInterestArchives,
+        read: getInterestArchive,
+        update: updateInterestArchive
       },
       afterActions: [
         // this is the place to require user be authed.
