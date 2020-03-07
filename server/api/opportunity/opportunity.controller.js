@@ -1,3 +1,4 @@
+const { Action } = require('../../services/abilities/ability.constants')
 const escapeRegex = require('../../util/regexUtil')
 const Opportunity = require('./opportunity')
 const Interest = require('./../interest/interest')
@@ -8,18 +9,21 @@ const { OpportunityStatus } = require('./opportunity.constants')
 const { regions } = require('../location/locationData')
 const sanitizeHtml = require('sanitize-html')
 const { getLocationRecommendations, getSkillsRecommendations } = require('./opportunity.util')
+const { Role } = require('../../services/authorize/role')
+const Member = require('../member/member')
 
 /**
- * Get all orgs
+ * Get all ops
  * @param req
  * @param res
  * @returns void
  */
-const getOpportunities = async (req, res) => {
-  // limit to Active ops unless one of the params overrides
+const getOpportunities = async (req, res, next) => {
+  // Default to Active ops unless one of the params overrides
   let query = { status: OpportunityStatus.ACTIVE }
   let sort = 'name'
-  let select = {}
+  // return only the summary needed for an OpCard
+  let select = 'name subtitle imgUrl status date location duration'
 
   try {
     query = req.query.q ? JSON.parse(req.query.q) : query
@@ -79,7 +83,9 @@ const getOpportunities = async (req, res) => {
         .populate('offerOrg', 'name imgUrl category')
         .sort(sort)
         .exec()
-      res.json(got)
+
+      req.crudify = { result: got }
+      return next()
     } catch (e) {
       return res.status(404).send(e)
     }
@@ -110,10 +116,10 @@ const getOpportunityRecommendations = async (req, res) => {
   }
 }
 
-const getOpportunity = async (req, res) => {
+const getOpportunity = async (req, res, next) => {
   try {
     const got = await Opportunity
-      .accessibleBy(req.ability)
+      .accessibleBy(req.ability, Action.READ)
       .findOne(req.params)
       .populate('requestor', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl category')
@@ -123,27 +129,114 @@ const getOpportunity = async (req, res) => {
       // Also this error message is not helpful.  Catch and do something useful
       throw Error()
     }
-    res.json(got)
+    req.crudify = { result: got }
+    return next()
   } catch (e) {
     res.status(404).send(e)
   }
 }
 
-const putOpportunity = async (req, res) => {
+const putOpportunity = async (req, res, next) => {
+  const me = req.session && req.session.me
+  if (!me) {
+    return res.sendStatus(401)
+  }
+
   try {
+    if (!me.role.includes(Role.ADMIN)) {
+      // Once an opportunity has been created we should not be able to change the activity it was based on
+      if (req.body.fromActivity) {
+        return res.status(400).send('Cannot change the fromActivity field')
+      }
+
+      if (req.body.offerOrg && (await Member.find({ person: me._id, organisation: req.body.offerOrg })).length === 0) {
+        return res.status(400).send('Invalid organisation')
+      }
+    }
+
     if (req.body.status === OpportunityStatus.COMPLETED || req.body.status === OpportunityStatus.CANCELLED) {
-      await Opportunity.findByIdAndUpdate(req.params._id, { $set: req.body })
-      const archop = await archiveOpportunity(req.params._id)
+      await Opportunity
+        .accessibleBy(req.ability, Action.UPDATE)
+        .updateOne({ _id: req.params._id }, req.body)
+
+      const archOp = await archiveOpportunity(req.params._id)
       // TODO: [VP-282] after archiving return a 301 redirect to the archived opportunity
       // res.redirect(301, `/opsarchive/${archop._id}`)
       await archiveInterests(req.params._id)
-      res.json(archop)
+
+      req.crudify = { result: archOp }
+      return next()
     } else {
-      await Opportunity.findByIdAndUpdate(req.params._id, { $set: req.body })
-      getOpportunity(req, res)
+      const result = await Opportunity
+        .accessibleBy(req.ability, Action.UPDATE)
+        .updateOne({ _id: req.params._id }, { $set: req.body })
+      if (result.n === 0) {
+        return res.sendStatus(404)
+      }
+
+      await getOpportunity(req, res, next)
     }
   } catch (e) {
+    console.log(e)
     res.status(400).send(e)
+  }
+}
+
+const deleteOpportunity = async (req, res, next) => {
+  try {
+    const result = await Opportunity
+      .accessibleBy(req.ability, Action.DELETE)
+      .deleteOne({ _id: req.params._id })
+
+    if (result.nDeleted === 0) {
+      return res.sendStatus(404)
+    }
+  } catch (e) {
+    return res.sendStatus(500)
+  }
+
+  req.crudify = { result: {} }
+  res.status(204)
+  next()
+}
+
+const createOpportunity = async (req, res, next) => {
+  const me = req && req.session && req.session.me
+  if (!me) {
+    return res.sendStatus(401)
+  }
+
+  const canCreate = async () => {
+    if (me.role.includes(Role.ADMIN)) {
+      return true
+    }
+    if (me.role.includes(Role.ORG_ADMIN) && req.body.offerOrg && me.orgAdminFor.includes(req.body.offerOrg)) {
+      return true
+    }
+    if (me.role.includes(Role.OPPORTUNITY_PROVIDER) || me.role.includes(Role.VOLUNTEER_PROVIDER)) {
+      if (!req.body.offerOrg) {
+        return false
+      }
+
+      // The offerOrg must be one the current user is a member of
+      return (await Member.find({ person: me._id, organisation: req.body.offerOrg })).length > 0
+    }
+
+    return false
+  }
+
+  if (!(await canCreate())) {
+    return res.sendStatus(403)
+  }
+
+  try {
+    const result = await Opportunity.create(req.body)
+
+    req.crudify = { result }
+    res.status(200)
+    next()
+  } catch (e) {
+    res.sendStatus(500)
   }
 }
 
@@ -201,5 +294,7 @@ module.exports = {
   getOpportunities,
   getOpportunity,
   putOpportunity,
-  getOpportunityRecommendations
+  deleteOpportunity,
+  getOpportunityRecommendations,
+  createOpportunity
 }

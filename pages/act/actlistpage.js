@@ -5,9 +5,8 @@ import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import ActList from '../../components/Act/ActList'
-import ActMenu from '../../components/Act/ActMenu'
 import NoResult from '../../components/NoResult'
-import { ActivityContainer, FullPage, GridContainer, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
+import { FullPage, GridContainer, PageBannerNoTabs, PageBannerButtons } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withActs } from '../../lib/redux/reduxApi.js'
 import ActAdd from '../../components/Act/ActAdd'
@@ -21,10 +20,6 @@ const SearchContainer = styled.div`
   padding: 1rem;
   margin-bottom: 2rem;
 `
-const ProfileSection = styled.div`
-  margin: 1.5rem 0 0 0;
-`
-
 const handleSearch = (value) => {
   if (!value) { return false }
   value = escapeRegex(value)
@@ -40,14 +35,14 @@ const handleSearch = (value) => {
 export const ActListPage = ({ activities }) =>
   <FullPage>
     <Helmet>
-      <title>Voluntarily - Activities List</title>
+      <title>Voluntarily - Resources List</title>
     </Helmet>
-    <PageBanner>
+    <PageBannerNoTabs>
       <h1>
         <FormattedMessage
           id='ActListPage.Title'
-          defaultMessage='Activities'
-          description='Title of page listing activities'
+          defaultMessage='Resources'
+          description='Title of page listing resources for teachers'
         />
       </h1>
 
@@ -58,36 +53,30 @@ export const ActListPage = ({ activities }) =>
         defaultMessage='Find activity templates that make it easy to bring volunteers into your classroom'
         id='act.list.subtitle'
       />
-    </PageBanner>
+    </PageBannerNoTabs>
     {/* <Tabs style={shadowStyle} defaultActiveKey='1' onChange={callback}>
       <TabPane tab={activityTab} key='1'> */}
-    <ActivityContainer>
-      <ProfileSection>
-        {' '}
-        <ActMenu acts={activities.data} />
-      </ProfileSection>
-      <ProfileSection>
-        <SearchContainer>
-          <p>Search activities</p>
-          <Input.Search
-            placeholder='eg: activity'
-            enterButton='Search'
-            size='large'
-            onSearch={handleSearch}
-          />
-        </SearchContainer>
 
-        {activities.data.length > 0 ? (
-          <ActList acts={activities.data} />
-        ) : (
-          <NoResult
-            id='act.noresult'
-            msg='No activities found based on your search criteria'
-            description='Message shown while no activities found'
-          />
-        )}
-      </ProfileSection>
-    </ActivityContainer>
+    <SearchContainer>
+      <p><strong>Search resources</strong></p>
+      <Input.Search
+        placeholder='eg: activity'
+        enterButton='Search'
+        size='large'
+        onSearch={handleSearch}
+      />
+    </SearchContainer>
+
+    {activities.data.length > 0 ? (
+      <ActList acts={activities.data} />
+    ) : (
+      <NoResult
+        id='act.noresult'
+        msg='No activities found based on your search criteria'
+        description='Message shown while no activities found'
+      />
+    )}
+
     {/* </TabPane>
     </Tabs> */}
     <GridContainer>

@@ -31,3 +31,13 @@ test('verify JWT against Auth0 Signing key', async t => {
 
   t.pass()
 })
+
+test.serial('Correct signing key for dev tokens', async t => {
+  const originalEnv = process.env.NODE_ENV
+  process.env.NODE_ENV = 'development'
+  getSigningKey({ kid: 'dev' }, (error, key) => {
+    process.env.NODE_ENV = originalEnv
+    t.is(error, null)
+    t.is(key, 'dev')
+  })
+})

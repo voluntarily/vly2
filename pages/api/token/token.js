@@ -11,9 +11,16 @@ const handleToken = async (req, res, actionTable) => {
   if (!token) {
     return res.status(403).end()
   }
+
   // if user is not authenticated then get them in.
   if (!req.session.isAuthenticated) {
-    return res.redirect(`/auth/sign-thru?redirect=${req.originalUrl}`)
+    if (req.session.user && !req.session.user.email_verified) {
+      // if user has signed in but is invalid then tell them
+      return res.redirect('/unverified')
+    } else {
+      // user has not signed in
+      return res.redirect(`/auth/sign-thru?redirect=${req.originalUrl}`)
+    }
   }
   try {
     const payload = await handleURLToken(token, actionTable)

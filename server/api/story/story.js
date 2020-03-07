@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
-const idvalidator = require('mongoose-id-validator')
 const Schema = mongoose.Schema
-const SchemaName = 'Story'
+const idvalidator = require('mongoose-id-validator')
+const { accessibleRecordsPlugin } = require('@casl/mongoose')
+const { SchemaName } = require('./story.constants')
 
 // simplified version without Auth
 const storySchema = new Schema({
@@ -24,6 +25,7 @@ const storySchema = new Schema({
 })
 
 storySchema.plugin(idvalidator)
+storySchema.plugin(accessibleRecordsPlugin)
 storySchema.index({ tags: 1 })
 
 // protect multiple imports

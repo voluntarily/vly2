@@ -105,7 +105,7 @@ test.serial('RegisterMemberSection join and validate', async t => {
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // we should see "Join" button
-  t.is(wrapper.find('button').last().text(), 'Join')
+  t.is(wrapper.find('button').last().text(), 'Staff Signup')
 
   // setup response to click on follow
   const response = members[0]
@@ -138,7 +138,7 @@ test.serial('RegisterMemberSection join and validate', async t => {
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // Status is now validator, button should be Join
-  t.is(wrapper.find('button').last().text(), 'Join')
+  t.is(wrapper.find('button').last().text(), 'Staff Signup')
   t.truthy(t.context.fetchMock.done())
   t.context.fetchMock.restore()
 })
@@ -161,7 +161,7 @@ test.serial('RegisterMemberSection as a Member', async t => {
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // we should see "Follow" button
-  t.is(wrapper.find('button').last().text(), 'Join')
+  t.is(wrapper.find('button').last().text(), 'Staff Signup')
 
   // setup response to click on follow
   const response = members[0]

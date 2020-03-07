@@ -58,14 +58,14 @@ test.before('Setup fixtures', (t) => {
     {
       session: t.context.sessionAnon,
       opportunities: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
         data: ops,
         request: null
       },
       interests: {
-        sync: false,
+        sync: true,
         syncing: false,
         loading: false,
         data: interests,
@@ -83,14 +83,12 @@ test('render landing page ', t => {
   const props = {
     me: false,
     isAuthenticated: false
-
   }
 
   const wrapper = mountWithIntl(
-
     <Provider store={t.context.mockStore}>
       <Landing {...props} />
     </Provider>)
-  t.is(wrapper.find('h1').first().text(), 'volunteer yo—self.')
+  t.is(wrapper.find('h1').first().text(), 'Industry in the classroom.')
   t.is(wrapper.find('OpCard').length, 1)
 })

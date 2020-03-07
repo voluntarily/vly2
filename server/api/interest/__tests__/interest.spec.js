@@ -2,6 +2,7 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Interest from '../interest'
+import { InterestStatus } from '../interest.constants'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import Opportunity from '../../opportunity/opportunity'
 import ops from '../../opportunity/__tests__/opportunity.fixture'
@@ -10,15 +11,16 @@ import people from '../../person/__tests__/person.fixture'
 import Organisation from '../../organisation/organisation'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
+import { getInterestDetail } from '../interest.lib'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
   await appReady
 
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+  t.context.people = await Person.create(people)
   t.context.me = t.context.people[0] // I am the first person.
-  t.context.orgs = await Organisation.create(orgs).catch(() => 'Unable to create orgs')
+  t.context.orgs = await Organisation.create(orgs)
 
   // setup opportunities 5 items
   ops.map((op, index) => {
@@ -27,7 +29,7 @@ test.before('before connect to database', async (t) => {
     // all the ops belong to the OMGTech org
     op.offerOrg = t.context.orgs[1]._id
   })
-  t.context.ops = await Opportunity.create(ops).catch((err) => console.error('Unable to create opportunities', err))
+  t.context.ops = await Opportunity.create(ops)
 
   // setup interests
   // each op has person + 2 interested.
@@ -36,10 +38,15 @@ test.before('before connect to database', async (t) => {
     return {
       person: enquirer._id,
       opportunity: op._id,
-      comment: `${index} ${enquirer.nickname} interested in ${op.name}`
+      // deprecated comment: `${index} ${enquirer.nickname} interested in ${op.name}`,
+      messages: [{
+        body: `${index} ${enquirer.name} interested in ${op.name}`,
+        author: enquirer._id
+      }],
+      type: 'accept'
     }
   })
-  t.context.interests = await Interest.create(interests).catch(() => 'Unable to create interests')
+  t.context.interests = await Interest.create(interests)
 })
 
 test.serial('Should correctly give number of Interests', async t => {
@@ -171,7 +178,11 @@ test.serial('Should correctly add a valid interest', async t => {
   const newInterest = {
     person: me._id,
     opportunity: op._id,
-    comment: 'test interest'
+    messages: { // this works whether its an object or array.
+      body: `${me.name} is interested in ${op.name}`,
+      author: me._id
+    },
+    type: 'accept'
   }
 
   const res = await request(server)
@@ -188,15 +199,25 @@ test.serial('Should correctly add a valid interest', async t => {
   t.is(savedInterest.person._id.toString(), me._id.toString())
   t.is(savedInterest.opportunity._id.toString(), op._id.toString())
 
-  // test whether appropriate email got sent.
+  // did the message get added?
+  t.is(savedInterest.messages.length, 1)
+  t.deepEqual(savedInterest.messages[0].author, me._id)
 })
 
-test.serial('Should update the interest state from interested to invited', async t => {
+test.serial('Should update the interest with message from volunteer ', async t => {
   // interests 2 has a single date - so should trigger a calendar event to be attached
   const interest = t.context.interests[2]
+  const newInterest = await getInterestDetail(interest._id)
+  const from = newInterest.opportunity.requestor
+  const to = newInterest.person
+  // this request should append the new message into the array
   const reqData = {
     _id: interest._id,
-    status: 'invited'
+    messages: [{ // this works whether its an object or array.
+      body: `${from.name} has a message for ${to.name}`,
+      author: from._id
+    }],
+    type: 'accept'
   }
 
   const res = await request(server)
@@ -205,14 +226,39 @@ test.serial('Should update the interest state from interested to invited', async
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 200)
-  t.is(res.body.status, 'invited')
+  const updateInterest = res.body
+  t.is(updateInterest.status, InterestStatus.INTERESTED)
+  t.is(updateInterest.messages.length, 2)
+  t.is(updateInterest.messages[1].body, reqData.messages[0].body)
+})
+
+test.serial('Should update the interest state from interested to invited', async t => {
+  const interest = t.context.interests[4]
+  const reqData = {
+    _id: interest._id,
+    status: InterestStatus.INVITED,
+    type: 'accept'
+  }
+
+  const res = await request(server)
+    .put(`/api/interests/${interest._id}`)
+    .send(reqData)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+  t.is(res.status, 200)
+  const savedInterest = res.body
+  t.is(savedInterest.status, InterestStatus.INVITED)
+
+  // no extra message should be added.
+  t.is(savedInterest.messages.length, 1)
 })
 
 test.serial('Should update the interest state from invited to committed', async t => {
   const interest = t.context.interests[3]
   const reqData = {
     _id: interest._id,
-    status: 'committed'
+    status: InterestStatus.COMMITTED,
+    type: 'accept'
   }
 
   const res = await request(server)
@@ -222,15 +268,15 @@ test.serial('Should update the interest state from invited to committed', async 
     .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 200)
-  t.is(res.body.status, 'committed')
+  t.is(res.body.status, InterestStatus.COMMITTED)
 })
 
 test.serial('Should update the interest state from to declined', async t => {
-  // interests 2 has a single date - so should trigger a calendar event to be attached
   const interest = t.context.interests[4]
   const reqData = {
     _id: interest._id,
-    status: 'declined'
+    status: InterestStatus.DECLINED,
+    type: 'reject'
   }
 
   const res = await request(server)
@@ -239,7 +285,7 @@ test.serial('Should update the interest state from to declined', async t => {
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 200)
-  t.is(res.body.status, 'declined')
+  t.is(res.body.status, InterestStatus.DECLINED)
 })
 
 test.serial('Should correctly delete an interest', async t => {
@@ -249,8 +295,7 @@ test.serial('Should correctly delete an interest', async t => {
   const newInterest = new Interest({
     _id: '5cc8d60b8b16812b5b3920c9',
     person: me._id,
-    opportunity: op._id,
-    comment: 'delete me'
+    opportunity: op._id
   })
 
   await newInterest.save()
@@ -271,7 +316,8 @@ test.serial('Should correctly delete an interest', async t => {
 test.serial('Should get 404 updating an interest with invalid id', async t => {
   const reqData = {
     _id: '5d2905d9a792f000114a557b',
-    status: 'invited'
+    status: InterestStatus.INVITED,
+    type: 'accept'
   }
 
   const res = await request(server)
@@ -291,8 +337,12 @@ test.serial('Should not return interests with null person field', async t => {
   const newInterest = await Interest.create({
     person: newPerson._id,
     opportunity: t.context.ops[0]._id,
-    comment: 'XYZ test comment',
-    status: 'interested'
+    messages: {
+      body: 'XYZ test comment',
+      author: newPerson._id
+    },
+    type: 'accept',
+    status: InterestStatus.INTERESTED
   })
 
   const firstResponse = await request(server)
@@ -303,7 +353,7 @@ test.serial('Should not return interests with null person field', async t => {
 
   t.is(firstResponse.status, 200)
   t.is(
-    firstResponse.body.filter((opportunity) => opportunity.comment === 'XYZ test comment').length,
+    firstResponse.body.filter((opportunity) => opportunity.messages[0].body === 'XYZ test comment').length,
     1
   )
 
@@ -322,7 +372,7 @@ test.serial('Should not return interests with null person field', async t => {
 
   t.is(secondResponse.status, 200)
   t.is(
-    secondResponse.body.filter((opportunity) => opportunity.comment === 'XYZ test comment').length,
+    secondResponse.body.filter((opportunity) => opportunity.messages[0].body === 'XYZ test comment').length,
     0
   )
 })

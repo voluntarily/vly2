@@ -3,15 +3,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 
-function NoResult (props) {
-  const {
-    id,
-    msg,
-    description,
-    icon,
-    iconTheme
-  } = props
-
+function NoResult ({
+  id,
+  msg,
+  description,
+  icon,
+  iconTheme
+}) {
   const FormattedMsg = () => {
     return (
       <FormattedMessage

@@ -1,0 +1,26 @@
+//- Welcome email sent when person first signs in
+//- expects locals of {
+//-   to: person receiving email
+//-   from: person sending email - the op requestor
+//- }
+extends ../theme/layout.pug
+
+block tagline
+  span You are now a member of #{org.name}
+
+block copy
+  p Kia ora #{to.nickname},
+  p You are now a member of #{org.name} and you may have some new goal cards allocated to you.
+  p You'll also be able to access the member specific pages of our organisation profile.
+  p Ngā mihi, #{org.name}
+
+
+block copybutton
+  a(href=org.href class='mobile-button') #{org.name}
+  span &nbsp; 
+  a(href=to.href class='mobile-button') Activities
+      
+block copyimage
+  img(src=org.imgUrl alt=org.name width="100%" )
+              
+                          

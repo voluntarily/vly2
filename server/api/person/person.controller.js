@@ -1,20 +1,99 @@
 const Person = require('./person')
 const sanitizeHtml = require('sanitize-html')
-const Action = require('../../services/abilities/ability.constants')
+const { Action } = require('../../services/abilities/ability.constants')
 const { getPersonRoles } = require('../member/member.lib')
+const { Role } = require('../../services/authorize/role')
+const { supportedLanguages } = require('../../../lang/lang')
+const { websiteRegex } = require('./person.validation')
+const mongoose = require('mongoose')
+const { PersonFields } = require('./person.constants')
+const { mapValues, keyBy } = require('lodash')
+const Member = require('../member/member')
+const Interest = require('../interest/interest')
+const Opportunity = require('../opportunity/opportunity')
+const { InterestStatus } = require('../interest/interest.constants')
+
 /* find a single person by searching for a key field.
 This is a convenience function usually used to call
 */
-function getPerson (req, res, next) {
+async function getPerson (req, res, next) {
   const query = req.params
 
-  Person.findOne(query).exec(async (_err, person) => {
-    if (person) { // note if person does not exist middle ware will already have 404d the result
-      await getPersonRoles(person)
-    }
-    req.crudify = { result: person }
-    return next()
-  })
+  const me = req && req.session && req.session.me
+  if (!me) {
+    return res.sendStatus(401)
+  }
+
+  const personId = req.params._id
+  if (!personId) {
+    return res.status(400).send('Missing person identifier')
+  }
+
+  const isSelf = me._id && personId === me._id.toString()
+
+  const fields = [
+    PersonFields.ID,
+    PersonFields.NICKNAME,
+    PersonFields.LANGUAGE,
+    PersonFields.NAME,
+    PersonFields.STATUS,
+    PersonFields.AVATAR,
+    PersonFields.ABOUT,
+    PersonFields.ROLE,
+    PersonFields.PRONOUN,
+    PersonFields.TAGS,
+    PersonFields.FACEBOOK,
+    PersonFields.WEBSITE,
+    PersonFields.TWITTER,
+    PersonFields.SENDEMAILNOTIFICATIONS
+  ]
+
+  const isPersonInMyOrg = async () => {
+    const myOrgs = (await Member.find({ person: me._id })).map(member => member.organisation.toString())
+    const personOrgs = (await Member.find({ person: personId })).map(member => member.organisation.toString())
+
+    return !!myOrgs.find(myOrg => personOrgs.includes(myOrg))
+  }
+
+  const isPersonInvitedToMyOpportunities = async () => {
+    const myOps = await Opportunity.find({ requestor: me._id })
+    return !!(await Interest.findOne({
+      opportunity: { $in: myOps },
+      status: { $ne: InterestStatus.DECLINED },
+      person: personId
+    }))
+  }
+
+  const includePersonalFields = (me.role &&
+    (
+      me.role.includes(Role.ADMIN) ||
+      me.role.includes(Role.TESTER) ||
+      (await isPersonInMyOrg()) ||
+      (await isPersonInvitedToMyOpportunities())
+    )) ||
+    isSelf
+
+  if (includePersonalFields) {
+    fields.push(
+      PersonFields.EMAIL,
+      PersonFields.PHONE,
+      PersonFields.EDUCATION,
+      PersonFields.JOB,
+      PersonFields.LOCATION,
+      PersonFields.PLACEOFWORK
+    )
+  }
+
+  Person
+    .accessibleBy(req.ability, Action.READ)
+    .findOne(query, mapValues(keyBy(fields), field => 1))
+    .exec(async (_err, person) => {
+      if (person) { // note if person does not exist middleware will already have 404d the result
+        await getPersonRoles(person)
+      }
+      req.crudify = { result: person }
+      return next()
+    })
 }
 
 /* return a list of people matching the search criteria
@@ -44,11 +123,82 @@ const isProd = process.env.NODE_ENV === 'production'
 
 async function updatePersonDetail (req, res, next) {
   const { ability: userAbility, body: person } = req
-  const personId = person._id
+
+  const me = req && req.session && req.session.me
+  if (!me) {
+    return res.sendStatus(401)
+  }
+
+  const personId = req.params._id
+  if (!personId || !person) {
+    return res.status(400).send('Missing person identifier')
+  }
+
+  const currentPerson = await Person.findById(personId).lean().exec()
+  if (!currentPerson) {
+    return res.sendStatus(404)
+  }
+
+  const updatingSelf = me._id && personId === me._id.toString()
+
+  // ADMIN, TESTER, ORG_ADMIN or the owner of the person record is allowed to update it, otherwise forbidden
+  const allowed = (me.role &&
+                  (
+                    me.role.includes(Role.ADMIN) ||
+                    me.role.includes(Role.TESTER) ||
+                    me.role.includes(Role.ORG_ADMIN)
+                  )) ||
+                  updatingSelf
+
+  if (!allowed) {
+    return res.status(403).send('You do not have the required role to update this person')
+  }
+
+  // If we are attempting to change the role field
+  if (person.role) {
+    // Only an ADMIN can update the role field to include ADMIN
+    if (person.role.includes(Role.ADMIN) && !me.role.includes(Role.ADMIN)) {
+      return res.status(403).send('You do not have the required role to change the \'role\' field')
+    }
+
+    // Only ADMIN can update the role field to include TESTER
+    if (person.role.includes(Role.TESTER) && !me.role.includes(Role.ADMIN)) {
+      return res.status(403).send('You do not have the required role to change the \'role\' field')
+    }
+  }
+
+  // Only a subset of the Role enum can be set via the API. Some value are computed and set such as ORG_ADMIN.
+  const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]
+  if (person.role && person.role.find(role => !applicableRoles.includes(role))) {
+    return res.status(400).send('You have specified an invalid role value')
+  }
+
+  // Only ADMIN can change the email field
+  if (person.email && !me.role.includes(Role.ADMIN)) {
+    return res.status(403).send('You do not have the required role to change the \'email\' field')
+  }
+
+  // Cannot change dateAdded
+  if (Object.keys(person).includes('dateAdded')) {
+    return res.status(403).send('The dateAdded field cannot be changed')
+  }
+
+  // Must be a valid language
+  if (Object.keys(person).includes('language') && !supportedLanguages.includes(person.language)) {
+    return res.status(400).send('You have specified an invalid language value')
+  }
+
+  // Website string validation
+  if (Object.keys(person).includes('website')) {
+    if (!(person.website || '').match(websiteRegex)) {
+      return res.status(400).send('The \'website\' field does not match the validation rule')
+    }
+  }
+
   if (isProd) { delete person.role } // cannot save role - its virtual
   let resultUpdate
   try {
-    resultUpdate = await Person.accessibleBy(userAbility, Action.UPDATE).updateOne({ _id: personId }, req.body)
+    resultUpdate = await Person.accessibleBy(userAbility, Action.UPDATE).updateOne({ _id: personId }, person)
   } catch (e) {
     return res.sendStatus(400) // 400 error for any bad request body. This also prevent error to propagate and crash server
   }
@@ -59,6 +209,46 @@ async function updatePersonDetail (req, res, next) {
   const updatedPerson = await Person.findById(personId).lean().exec()
   await getPersonRoles(updatedPerson)
   req.crudify.result = updatedPerson
+  next()
+}
+
+async function deletePerson (req, res, next) {
+  const me = req && req.session && req.session.me
+  if (!me) {
+    return res.sendStatus(401)
+  }
+
+  const personId = req.params._id
+  if (!personId) {
+    return res.status(400).send('Missing person identifier')
+  }
+
+  const currentPerson = await Person.findById(personId).lean().exec()
+  if (!currentPerson) {
+    return res.sendStatus(404)
+  }
+
+  const isSelf = me._id && personId === me._id.toString()
+
+  const allowed = me.role.includes(Role.ADMIN) ||
+                  me.role.includes(Role.TESTER) ||
+                  isSelf
+
+  if (!allowed) {
+    return res.status(403).send('You do not have the required role to delete this person')
+  }
+
+  // VP-1297 - Anonymise user details instead of hard deleting their record
+  const result = await Person.deleteOne({ _id: mongoose.Types.ObjectId(personId) })
+
+  if (result.deletedCount === 0) {
+    return res.sendStatus(400)
+  }
+
+  res.status(204)
+  req.crudify = {
+    result: undefined
+  }
   next()
 }
 
@@ -101,5 +291,6 @@ module.exports = {
   ensureSanitized,
   listPeople,
   getPerson,
-  updatePersonDetail
+  updatePersonDetail,
+  deletePerson
 }

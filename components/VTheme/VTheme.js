@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Tag } from 'antd'
 
 /*
 ====================================================
@@ -17,7 +18,20 @@ export const PageBanner = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding-bottom: 1rem;
-  border-bottom: thin solid rgba(101, 73, 170, 0.5);
+ 
+  @media screen and (max-width: 767px) {
+    margin-top: 4rem;
+    grid-template-columns: calc(100vw - 2rem);
+    grid-gap: 0rem;
+  }
+`
+
+export const PageBannerNoTabs = styled.div`
+  margin: 8rem 0 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-bottom: 1rem;
+  border-bottom: thin solid  #e8e8e8;
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
     grid-template-columns: calc(100vw - 2rem);
@@ -82,7 +96,7 @@ export const HalfGrid = styled.div`
   margin: 0;
   grid-template-columns: 39rem 39rem;
   grid-column-gap: 2rem;
-  margin: 8rem 0 4rem 0;
+  margin: 4rem 0 ;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: calc(50vw - 4rem) calc(50vw - 4rem);
@@ -95,6 +109,27 @@ export const HalfGrid = styled.div`
 ` // end halfgrid
 export const HalfGridContainer = styled.div``
 
+// 30% left, 60% right two column
+export const SideBarGrid = styled.div`
+  display: grid;
+  position: relative;
+  margin: 0;
+  grid-template-columns: 29rem 49rem;
+  grid-column-gap: 2rem;
+  margin: 2rem 0 4rem 0 ;
+  padding-top: 5rem;
+
+  @media screen and (min-width: 768px) and (max-width: 1281px) {
+    grid-template-columns: calc(40vw - 4rem) calc(60vw - 4rem);
+    grid-column-gap: 2rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: calc(100vw - 2rem);
+  }
+`
+
+// end halfgrid
 export const TripleGrid = styled.div`
   display: grid;
   grid-template-columns: 25rem 25rem 25rem;
@@ -526,6 +561,13 @@ time {
 }
 `
 
+/* Fix for Op heading alignment */
+
+export const OpBannerDetail = styled.div`
+display: grid;
+align-self: center;
+`
+
 /* Item lists - tidy listings
 */
 export const Ul = styled.ul`
@@ -541,6 +583,22 @@ export const Li = styled.li`
   color: initial;
   margin-bottom: 0.3rem;
 `
+
+export const TagStyle = styled(Tag)`
+width: auto;
+max-width: 100%;
+overflow-wrap: break-word;
+white-space: pre-wrap; 
+
+
+padding: 0.2rem 0.5rem;
+margin: 0.1rem;
+vertical-align: middle;
+font-size: 1.2rem;
+font-weight: 500;
+background-color: #e8e8e8;
+`
+
 /* Contact list displayed for organisations */
 
 export const ContactList = styled.ul`
@@ -569,8 +627,32 @@ export const ContactList = styled.ul`
       }
 
       @media screen and (min-width: 988px) {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
       }
     }
+  }
+`
+
+/* dark banner across the page containing important information
+  e.g you have been invited - or event has been cancelled.
+  main text inside should contain an h4 title.
+*/
+export const PageAlert = styled.div`
+
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
+
+
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 3rem 3fr 1fr 1fr;
+
+  background-color: rgb(37, 15, 81);
+  margin-bottom: -5rem;
+  h4 {
+    color: white;
+    font-weight: 600;
   }
 `

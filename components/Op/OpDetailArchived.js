@@ -25,13 +25,16 @@ import {
 import { OpQuestionPanel } from './OpQuestionPanel'
 import OpUpdatePanel from './OpUpdatePanel'
 import { withRouter } from 'next/router'
-import { config } from '../../config/config'
+import { config } from '../../config/clientConfig'
 
 const { TabPane } = Tabs
 
 const aboutTab = (
   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-    <FormattedMessage id='orgAbout' />
+    <FormattedMessage
+      id='OpDetailArchived.tab.about'
+      defaultMessage='About'
+    />
   </span>
 )
 

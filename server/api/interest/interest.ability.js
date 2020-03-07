@@ -26,8 +26,6 @@ const ruleBuilder = async (session) => {
     inverted: true
   }]
 
-  const allRules = anonRules.slice(0)
-
   const volunteerRules = []
 
   if (session.me && session.me._id) {
@@ -46,7 +44,7 @@ const ruleBuilder = async (session) => {
     }, {
       subject: SchemaName,
       action: Action.UPDATE,
-      inverted: true
+      conditions: { person: session.me._id, status: { $in: [InterestStatus.INTERESTED, InterestStatus.COMMITTED] } }
     }, {
       subject: SchemaName,
       action: Action.DELETE,
@@ -120,8 +118,8 @@ const ruleBuilder = async (session) => {
   return {
     [Role.ANON]: anonRules,
     [Role.VOLUNTEER_PROVIDER]: volunteerRules,
+    [Role.ACTIVITY_PROVIDER]: volunteerRules,
     [Role.OPPORTUNITY_PROVIDER]: opportunityProviderRules,
-    [Role.ACTIVITY_PROVIDER]: allRules,
     [Role.ORG_ADMIN]: orgAdminRules,
     [Role.ADMIN]: adminRules
   }

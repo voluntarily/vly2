@@ -1,7 +1,7 @@
 import React from 'react'
 import Router from 'next/router'
 import publicPage from '../../hocs/publicPage'
-import Loading from '../../components/Loading'
+import { LoadSpinner } from '../../components/Loading'
 class TestRedirect extends React.Component {
   wait (ms) {
     return new Promise((resolve, reject) => {
@@ -15,7 +15,7 @@ class TestRedirect extends React.Component {
   }
 
   render = () => {
-    return <Loading />
+    return <LoadSpinner />
   }
 }
 export default publicPage(TestRedirect)

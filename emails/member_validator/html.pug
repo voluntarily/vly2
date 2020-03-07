@@ -1,0 +1,24 @@
+//- Welcome email sent when person first signs in
+//- expects locals of {
+//-   to: person receiving email
+//-   from: person sending email - the op requestor
+//- }
+extends ../theme/layout.pug
+
+block tagline
+  span Thanks for joining #{org.name}
+
+block copy
+  p Kia ora #{to.nickname},
+  p Thanks for requesting to join our organisation on Voluntarily. 
+  p Someone will verify that you belong to the organisation and you should receive a membership confirmation soon.
+  p Ngā mihi, #{org.name}
+
+
+block copybutton
+  a(href=org.href class='mobile-button') #{org.name}
+      
+block copyimage
+  img(src=org.imgUrl alt=org.name width="100%" )
+                                 
+                          

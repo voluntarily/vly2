@@ -133,7 +133,7 @@ export class PersonDetailPage extends Component {
 
   render () {
     if (!this.props.people.sync) {
-      return <Loading />
+      return <Loading label='person' entity={this.props.people} />
     }
 
     let person = null
@@ -164,7 +164,7 @@ export class PersonDetailPage extends Component {
           <Helmet>
             <title>Edit {person.name} - Voluntarily</title>
           </Helmet>
-          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancelEdit.bind(this)} locations={this.props.locations.data} existingTags={this.props.tags.data} />
+          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancelEdit.bind(this)} locations={this.props.locations.data} existingTags={this.props.tags.data} me={this.props.me} />
         </FullPage>)
     }
 
@@ -173,11 +173,12 @@ export class PersonDetailPage extends Component {
         <Helmet>
           <title>{person.nickname} - Voluntarily</title>
         </Helmet>
+
+        <PersonDetail person={person} />
         {canEdit &&
-          <Button id='editPersonBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })}>
+          <Button id='editPersonBtn' style={{ float: 'left' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })}>
             <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
           </Button>}
-        <PersonDetail person={person} />
             &nbsp;
         {canRemove &&
           <Popconfirm id='deletePersonConfirm' title='Confirm removal of this person.' onConfirm={this.handleDeletePerson.bind(this, person)} onCancel={this.handleCancelDelete.bind(this)} okText='Yes' cancelText='No'>

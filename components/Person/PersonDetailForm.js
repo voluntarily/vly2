@@ -1,6 +1,7 @@
 import { Avatar, Button, Checkbox, Divider, Form, Icon, Input, Radio, Tooltip, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component, forwardRef } from 'react'
+import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import LocationSelector from '../Form/Input/LocationSelector'
 import EducationSelector from '../Form/Input/EducationSelector'
@@ -15,6 +16,8 @@ import {
   TitleContainer
 } from '../VTheme/FormStyles'
 import { H3Bold, P } from '../VTheme/VTheme'
+import { websiteRegex } from '../../server/api/person/person.validation'
+import { Role } from '../../server/services/authorize/role'
 
 const EducationSelectorRef = forwardRef(EducationSelector)
 const developerSettings = process.env.NODE_ENV !== 'production'
@@ -25,7 +28,7 @@ function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
 }
 
-class PersonDetailForm extends Component {
+class PersonDetail extends Component {
   constructor (props) {
     super(props)
     this.setImgUrl = this.setImgUrl.bind(this)
@@ -75,7 +78,8 @@ class PersonDetailForm extends Component {
         person.placeOfWork = values.placeOfWork
         person.job = values.job
         window.scrollTo(0, 0)
-        this.props.onSubmit(this.props.person)
+        permissionTrimFields(person, this.props.me.role)
+        this.props.onSubmit(person)
       }
     })
   }
@@ -128,7 +132,7 @@ class PersonDetailForm extends Component {
     const personAbout = (
       <FormattedMessage
         id='personAbout'
-        defaultMessage='About you'
+        defaultMessage='About'
         description='person about label in personDetails Form'
       />
     )
@@ -156,7 +160,7 @@ class PersonDetailForm extends Component {
     const personAvatar = (
       <FormattedMessage
         id='personAvatar'
-        defaultMessage='Image'
+        defaultMessage='Profile Photo'
         description='person Image URL label in personDetails Form'
       />
     )
@@ -409,7 +413,7 @@ class PersonDetailForm extends Component {
                 <Form.Item label={personEmail}>
                   {getFieldDecorator('email', {
                     rules: []
-                  })(<Input placeholder='salvador@dali.com' />)}
+                  })(<Input placeholder='salvador@dali.com' readOnly />)}
                 </Form.Item>
               </ShortInputContainer>
               <ShortInputContainer>
@@ -429,12 +433,12 @@ class PersonDetailForm extends Component {
               <H3Bold>
                 <FormattedMessage
                   id='PersonDetailForm.SectionTitle.Avatar'
-                  defaultMessage='Avatar'
+                  defaultMessage='Profile Photo'
                 />
               </H3Bold>
               <FormattedMessage
                 id='PersonDetailForm.SectionDescription.Avatar'
-                defaultMessage='Help people to recognise you and reflect your character.'
+                defaultMessage='Upload a photo to help people to recognise you and reflect your character.'
               />
               {this.props.person.imgUrlSm &&
                 <p>
@@ -470,7 +474,7 @@ class PersonDetailForm extends Component {
                 {getFieldDecorator('website', {
                   rules: [
                     {
-                      pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/,
+                      pattern: websiteRegex,
                       message: 'Enter valid URL'
                     }
                   ]
@@ -580,7 +584,7 @@ class PersonDetailForm extends Component {
   }
 }
 
-PersonDetailForm.propTypes = {
+PersonDetail.propTypes = {
   person: PropTypes.shape({
     cuid: PropTypes.string,
     name: PropTypes.string,
@@ -621,7 +625,7 @@ PersonDetailForm.propTypes = {
   // dispatch: PropTypes.func.isRequired,
 }
 
-export default Form.create({
+const PersonDetailForm = Form.create({
   name: 'person_detail_form',
   onFieldsChange (props, changedFields) {
     // props.onChange(changedFields);
@@ -708,4 +712,25 @@ export default Form.create({
   },
   onValuesChange (_, values) {
   }
-})(PersonDetailForm)
+})(PersonDetail)
+
+export default connect(store => ({ me: store.session.me }))(PersonDetailForm)
+export { PersonDetailForm }
+
+/**
+ * Removes any fields from the person object which cannot be altered via the API.
+ * @param {*} person The person object to alter.
+ * @param {string[]} roles The array of permission roles to use.
+ */
+export const permissionTrimFields = (person, roles) => {
+  if (!roles.includes(Role.ADMIN) && !roles.includes(Role.TESTER)) {
+    delete person.email
+  }
+
+  delete person.dateAdded
+
+  const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]
+  if (person.role) {
+    person.role = person.role.filter(role => applicableRoles.includes(role))
+  }
+}

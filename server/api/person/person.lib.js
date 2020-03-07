@@ -1,6 +1,6 @@
 const Person = require('./person')
 const Badge = require('../badge/badge')
-const { config } = require('../../../config/config')
+const { config } = require('../../../config/serverConfig')
 
 const personProfileCompletenessById = async (personId) => {
   const person = await Person.findById(personId).exec()

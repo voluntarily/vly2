@@ -8,7 +8,7 @@ import { ProfilePanel, ProfileSection } from '../VTheme/Profile'
 import { OpSectionGrid, Spacer } from '../VTheme/VTheme'
 import { Divider } from 'antd'
 import { ShareLinks } from './OpShareLinks'
-import { config } from '../../config/config'
+import { config } from '../../config/clientConfig'
 import { FormattedMessage } from 'react-intl'
 export function OpAboutPanel ({ op }) {
   const description = op.description || ''
@@ -26,12 +26,15 @@ export function OpAboutPanel ({ op }) {
             {description}
           </Html>
           <Divider />
-          <TagContainer>
-            <h5><FormattedMessage id='actCategories' defaultMessage='Categories' /></h5>
-            <TagDisplay tags={op.tags} />
-          </TagContainer>
+          {op.tags.length === 'undefined' &&
+            <>
+              <TagContainer>
+                <h5><FormattedMessage id='actCategories' defaultMessage='Categories' /></h5>
+                <TagDisplay tags={op.tags} />
+              </TagContainer>
+              <Divider />
+            </>}
 
-          <Divider />
           <h5><FormattedMessage id='actShare' defaultMessage='Share' /></h5>
           <ShareLinks url={appUrl} />
         </div>
