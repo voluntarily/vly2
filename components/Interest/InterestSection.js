@@ -2,66 +2,70 @@
   Smart component. for the given opportunity gets a list of Interests
   and displays them in a table. actions change the state of the interested volunteers
 */
-// import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import { useEffect } from 'react'
 import InterestTable from './InterestTable'
-import reduxApi, { withInterests } from '../../lib/redux/reduxApi'
-import LoadingComponent from '../Loading'
-import { InterestStatus } from '../../server/api/interest/interest.constants'
+import reduxApi from '../../lib/redux/reduxApi'
+import Loading from '../Loading'
+import { useSelector, useDispatch } from 'react-redux'
+import { InterestStatus, InterestAction } from '../../server/api/interest/interest.constants'
+import PropTypes from 'prop-types'
 
-const Loading = styled(LoadingComponent)`
-  margin: 0 auto;
-  display: block;
-`
+export const InterestSection = ({ opid }) => {
+  const interests = useSelector(state => state.interests)
+  const dispatch = useDispatch()
 
-class InterestSection extends Component {
-  async componentDidMount () {
-    // Get all interests
-    const opid = this.props.opid
-    await this.props.dispatch(reduxApi.actions.interests.get({ op: opid }))
-  }
-
-  async handleInvite (interest) {
-    const updatedInterest = {
-      status: InterestStatus.INVITED,
-      type: 'accept'
+  useEffect(() => {
+    const getOpInterests = async () => {
+      await dispatch(reduxApi.actions.interests.get({ op: opid }))
     }
-    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(updatedInterest) }))
+    getOpInterests()
+  }, [opid])
+  // If we haven't finished making the API request to the server yet...
+  if (!interests.sync) {
+    return (<Loading label='interests' entity={interests} />)
   }
 
-  async handleWithdrawInvite (interest) {
-    const updatedInterest = {
-      status: InterestStatus.INTERESTED,
-      type: 'reject'
+  const handleAction = async (updatedInterests, action, message) => {
+    const putInterest = {
+      ...(message && { messages: [{ body: message }] }),
+      type: action
     }
-    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(updatedInterest) }))
+    switch (action) {
+      case InterestAction.ACCEPT:
+        putInterest.status = InterestStatus.INVITED
+        break
+      case InterestAction.REJECT:
+        putInterest.status = InterestStatus.DECLINED
+        break
+      case InterestAction.WITHDRAW:
+        putInterest.type = InterestAction.REJECT
+        putInterest.status = InterestStatus.INTERESTED
+        break
+      case InterestAction.MESSAGE:
+        break
+    }
+    // if (Array.isArray(updatedInterests)) {
+    //   updatedInterests.forEach(async interest => {
+    //     await dispatch(reduxApi.actions.interests.put({ id: updatedInterests._id }, { body: JSON.stringify(putInterest) }))
+    //     /* BUG: the problem here is that we issue a sequence of dispatch calls in a loop
+    //       the second put does not run because the first has set the data into the loading state.
+    //       by the time the data has returned we have finished.
+    //       so only one item in the list gets updated.
+    //       */
+    //   })
+    // } else {
+    await dispatch(reduxApi.actions.interests.put({ id: updatedInterests._id }, { body: JSON.stringify(putInterest) }))
+    // }
   }
 
-  async handleDecline (interest) {
-    const updatedInterest = {
-      status: InterestStatus.DECLINED,
-      type: 'reject'
-    }
-    await this.props.dispatch(reduxApi.actions.interests.put({ id: interest._id }, { body: JSON.stringify(updatedInterest) }))
-  }
-
-  render () {
-    if (!this.props.interests || !this.props.interests.sync) {
-      return <Loading />
-    } else {
-      return (
-        <InterestTable
-          checkboxEnabled
-          interests={this.props.interests.data}
-          onInvite={this.handleInvite.bind(this)}
-          onWithdrawInvite={this.handleWithdrawInvite.bind(this)}
-          onDecline={this.handleDecline.bind(this)}
-        />
-      )
-    }
-  }
+  return (
+    <InterestTable
+      interests={interests.data}
+      onAction={handleAction}
+    />
+  )
 }
-
-export const InterestSectionTest = InterestSection
-export default withInterests(InterestSection)
+InterestSection.propTypes = {
+  opid: PropTypes.string.isRequired
+}
+export default InterestSection

@@ -10,8 +10,7 @@ import { OpportunityStatus } from '../opportunity.constants'
 import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
 import archivedOpportunity from './../../archivedOpportunity/archivedOpportunity'
-import Interest from '../../interest/interest'
-import InterestArchive from '../../interest-archive/interestArchive'
+import { Interest, InterestArchive } from '../../interest/interest'
 
 // Fixtures
 import people from '../../person/__tests__/person.fixture'
