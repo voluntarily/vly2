@@ -8,6 +8,11 @@ import people from '../__tests__/person.fixture'
 import uuid from 'uuid'
 import { Role } from '../../../services/authorize/role'
 import jsonwebtoken from 'jsonwebtoken'
+import Organisation from '../../organisation/organisation'
+import Member from '../../member/member'
+import Opportunity from '../../opportunity/opportunity'
+import Interest from '../../interest/interest'
+import { InterestStatus } from '../../interest/interest.constants'
 
 const createJwtIdToken = (email) => {
   const jwt = { ...jwtData }
@@ -194,7 +199,7 @@ test('Get person by id - self returns all fields', async t => {
 })
 
 for (const role of [Role.ADMIN, Role.TESTER]) {
-  test(`Get person by id - ${role}`, async t => {
+  test(`Get person by id - ${role} - should return all fields`, async t => {
     const person = t.context.people.find(p => p.email === 'andrew@groat.nz')
 
     const res = await request(server)
@@ -226,6 +231,95 @@ for (const role of [Role.ADMIN, Role.TESTER]) {
     }
   })
 }
+
+test('Get person by id - requested person is in my organisation', async t => {
+  const personA = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const personB = await Person.create({
+    name: 'name',
+    email: `${uuid()}@test.com`,
+    role: [Role.VOLUNTEER_PROVIDER],
+    status: 'active',
+    language: 'en',
+    website: 'https://reddit.com',
+    // Personal fields
+    phone: 'Phone self',
+    education: 'self university',
+    job: 'Self',
+    location: 'Loc',
+    placeOfWork: 'POW'
+  })
+
+  const org = await Organisation.create({
+    name: `${uuid()}`,
+    slug: `${uuid()}`
+  })
+
+  // Join person A and B to the same org
+  await Member.create({
+    person: personA,
+    organisation: org
+  })
+  await Member.create({
+    person: personB,
+    organisation: org
+  })
+
+  const res = await request(server)
+    .get(`/api/people/${personB._id}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${createJwtIdToken([personA.email])}`])
+
+  // Personal fields should be returned
+  t.is(res.status, 200)
+  t.is(res.body.phone, 'Phone self')
+  t.is(res.body.education, 'self university')
+  t.is(res.body.job, 'Self')
+  t.is(res.body.location, 'Loc')
+  t.is(res.body.placeOfWork, 'POW')
+})
+
+test('Get person by id - requested person is invited to an opportunity of mine', async t => {
+  const personA = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const personB = await Person.create({
+    name: 'name',
+    email: `${uuid()}@test.com`,
+    role: [Role.VOLUNTEER_PROVIDER],
+    status: 'active',
+    language: 'en',
+    website: 'https://reddit.com',
+    // Personal fields
+    phone: 'Phone self',
+    education: 'self university',
+    job: 'Self',
+    location: 'Loc',
+    placeOfWork: 'POW'
+  })
+
+  // PersonA creates an op
+  const op = await Opportunity.create({
+    requestor: personA
+  })
+
+  // PersonB is invited
+  await Interest.create({
+    person: personB,
+    opportunity: op._id,
+    status: InterestStatus.INVITED
+  })
+
+  const res = await request(server)
+    .get(`/api/people/${personB._id}`)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${createJwtIdToken([personA.email])}`])
+
+  // Personal fields should be returned
+  t.is(res.status, 200)
+  t.is(res.body.phone, 'Phone self')
+  t.is(res.body.education, 'self university')
+  t.is(res.body.job, 'Self')
+  t.is(res.body.location, 'Loc')
+  t.is(res.body.placeOfWork, 'POW')
+})
 
 for (const role of [undefined, Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.TESTER]) {
   test.serial(`Create a new person - ${role || 'Anonymous'} is denied`, async t => {
