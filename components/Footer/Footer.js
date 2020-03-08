@@ -39,7 +39,7 @@ const FooterText = styled.div`
   margin-top: 1rem;
 `
 
-const FooterGridItemTitle = styled.li`
+const FooterGridItemTitle = styled.h4`
   font-weight: 700;
   font-size: 1.5rem;
   letter-spacing: -0.8px;
@@ -126,8 +126,9 @@ const Footer = ({ isAuthenticated, ...props }) => (
       <Spacer />
       <Row>
         <Col sm={12} lg={6}>
+          <FooterGridItemTitle>How it works</FooterGridItemTitle>
           <MenuWrapper>
-            <FooterGridItemTitle>How it works</FooterGridItemTitle>
+
             <MenuItem><a href='/volunteers'>For Volunteers</a></MenuItem>
             <MenuItem><a href='/teachers'>For Teachers</a></MenuItem>
             <MenuItem><a href='/charities'>For Charities</a></MenuItem>
@@ -137,8 +138,9 @@ const Footer = ({ isAuthenticated, ...props }) => (
         </Col>
 
         <Col sm={12} lg={6}>
+          <FooterGridItemTitle>Resources</FooterGridItemTitle>
           <MenuWrapper>
-            <FooterGridItemTitle>Resources</FooterGridItemTitle>
+
             <MenuItem><a href='/about'>Getting started</a></MenuItem>
             <MenuItem>
               <a
@@ -168,8 +170,9 @@ const Footer = ({ isAuthenticated, ...props }) => (
         </Col>
 
         <Col sm={12} lg={6}>
+          <FooterGridItemTitle>Social</FooterGridItemTitle>
           <MenuWrapper>
-            <FooterGridItemTitle>Social</FooterGridItemTitle>
+
             <MenuItem>
               <a
                 href='http://twitter.com/voluntarilyhq'
@@ -222,8 +225,9 @@ const Footer = ({ isAuthenticated, ...props }) => (
         </Col>
 
         <Col sm={12} lg={6}>
+          <FooterGridItemTitle>Project</FooterGridItemTitle>
           <MenuWrapper>
-            <FooterGridItemTitle>Project</FooterGridItemTitle>
+
             <MenuItem><a href='/about'>About us</a></MenuItem>
             <MenuItem>
               <a
@@ -255,11 +259,6 @@ const Footer = ({ isAuthenticated, ...props }) => (
       <Spacer />
       {/* <WomensRefuge /> */}
     </FooterContainer>
-    <MenuItem
-      href='https://voluntarily.atlassian.net/wiki'
-      target='_blank'
-      rel='noopener noreferrer'
-    />
     {props.isAdmin && (
       <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
     )}

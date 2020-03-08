@@ -156,10 +156,10 @@ const Hero = ({ ...props }) => (
 
       <HeroRight>
         <HeroText>Industry in<br /> the classroom.</HeroText>
-        <h5>
+        <p>
           We connect industry volunteers with teachers to teach science, technology, engineering, entrepreneurship,
 art and design in the classroom.
-        </h5>
+        </p>
         <SearchBox>
           <Search
             placeholder="try 'building robots'"

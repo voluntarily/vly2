@@ -92,7 +92,7 @@ const Header = ({ isAuthenticated, ...props }) => {
       {notice && <Notice><Icon type='warning' /> {notice}</Notice>}
       <MenuGrid>
         <div>
-          <Brand className='site-name' />
+          <Brand className='site-name' aria-hidden='true' />
           <SearchInput
             placeholder='Search for cool ways to help out'
             onSearch={handleSearch}

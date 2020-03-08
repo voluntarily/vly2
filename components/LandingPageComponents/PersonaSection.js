@@ -38,7 +38,7 @@ const Image = styled.img`
   }
 `
 
-const Title = styled.div`
+const Title = styled.h4`
   height: auto;
   margin: 0.2rem 0 0 0;
   font-size: 1.5rem;
@@ -51,7 +51,7 @@ const Title = styled.div`
   }
 `
 
-const Text = styled.div`
+const Text = styled.p`
   margin: 0rem 0rem 0.5rem 0rem;
   font-size: 1rem;
   font-weight: 400;
