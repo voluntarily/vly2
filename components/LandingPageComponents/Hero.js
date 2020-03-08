@@ -3,6 +3,7 @@ import Router from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 import { HalfGrid } from '../VTheme/VTheme'
+import { FormattedMessage } from 'react-intl'
 
 const Search = Input.Search
 
@@ -148,7 +149,7 @@ const Hero = ({ ...props }) => (
 
         <AwesomeImage
           src='/static/img/hero.png'
-
+          alt={<FormattedMessage id='heroImgText' defaultMessage='Children Playing with Robots' description='Description for the hero image' />}
         />
 
       </HeroLeft>

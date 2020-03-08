@@ -15,7 +15,7 @@ align-self: center;
 
 small {
     font-size: 1rem;
-    opacity: 0.7;
+    opacity: 1;
 }
 `
 

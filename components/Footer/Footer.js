@@ -13,7 +13,7 @@ const getAllowedLinks = isAuthenticated =>
     .filter(l => !l.authRequired || (l.authRequired && isAuthenticated))
     .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
 
-const FooterBackground = styled.div`
+const FooterBackground = styled.footer`
   background-color: #fefefe;
 `
 
