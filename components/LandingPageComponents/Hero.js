@@ -155,7 +155,7 @@ const Hero = ({ ...props }) => (
       </HeroLeft>
 
       <HeroRight>
-        <HeroText>Industry in<br /> the classroom.</HeroText>
+        <HeroText>We make it easy to volunteer 🥳</HeroText>
         <p>
           We connect industry volunteers with teachers to teach science, technology, engineering, entrepreneurship,
 art and design in the classroom.

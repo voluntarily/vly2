@@ -87,7 +87,7 @@ const AboutSection = () => (
       <Col sm={12} lg={6}>
         <a href='/about' target='_blank' rel='noopener noreferrer'>
           <PersonaContainer>
-            <Image src='/static/img/volunteerCard.png' />
+            <Image src='/static/img/volunteerCard.png' alt='Volunteers' />
             <Title>Volunteers</Title>
             <Text>
               Discover cool opportunities to help out teachers, students and
@@ -100,7 +100,7 @@ const AboutSection = () => (
       <Col sm={12} lg={6}>
         <a href='/teachers' target='_blank' rel='noopener noreferrer'>
           <PersonaContainer>
-            <Image src='/static/img/teacherCard.png' />
+            <Image src='/static/img/teacherCard.png' alt='Teachers' />
             <Title>Teachers</Title>
             <Text>
               Get the help of skilled volunteers to bring tech to your teaching.
