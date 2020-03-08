@@ -14,13 +14,20 @@ const PersonaBox = styled.div`
 `
 
 const PersonaContainer = styled.div`
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
   margin-bottom: 2rem;
 
   :hover {
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
+    border-radius: 8px;
     transform: scale(1.04);
+    h4 {
+      color: #6549AA;
+    }
+
+
   }
+
 `
 const Image = styled.img`
   width: 100%;
