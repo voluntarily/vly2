@@ -1,248 +1,289 @@
-import { Button, Popconfirm, Table, Dropdown, Icon, Menu } from 'antd'
+import { Button, Table } from 'antd'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
+import { InterestAction } from '../../server/api/interest/interest.constants'
+import PersonCard from '../Person/PersonCard'
 import { AvatarProfile } from '../VTheme/AvatarProfileLink'
+import { InterestMessageItem, InterestMessageList } from './InterestMessage'
+import { RegisterInterestMessageForm } from './RegisterInterestMessageForm'
 
-class InterestTable extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      filteredInfo: {},
-      sortedInfo: {},
-      selectedRows: []
-    }
+export const ExpandedInterestGrid = styled.div`
+  display: grid;
+  position: relative;
+  margin: 0;
+  grid-template-columns: 29rem 49rem;
+  grid-column-gap: 2rem;
+  height: 20rem;
+
+  @media screen and (min-width: 768px) and (max-width: 1281px) {
+    grid-template-columns: calc(40vw - 4rem) calc(60vw - 4rem);
+    grid-column-gap: 2rem;
   }
 
-  async handleInviteButtonClicked (interest) {
-    if (Array.isArray(interest)) {
-      for (const row of interest) await this.props.onInvite(row)
-    } else {
-      this.props.onInvite(interest)
-    }
+  @media screen and (max-width: 768px) {
+    grid-template-columns: calc(100vw - 2rem);
+    height: auto;
   }
+`
+export const ExpandedInterest = ({ interest }) =>
+  <ExpandedInterestGrid>
+    <PersonCard person={interest.person} />
+    <InterestMessageList messages={interest.messages} />
+  </ExpandedInterestGrid>
 
-  async handleDeclineButtonClicked (interest) {
-    if (Array.isArray(interest)) {
-      for (const row of interest) await this.props.onDecline(row)
-    } else {
-      this.props.onDecline(interest)
-    }
-  }
-
-  async handleWithdrawInviteButtonClicked (interest) {
-    if (Array.isArray(interest)) {
-      for (const row of interest) await this.props.onDecline(row)
-    } else {
-      this.props.onWithdrawInvite(interest)
-    }
-  }
-
-  handleTableChange = (pagination, filters, sorter) => {
-    this.setState({
-      filteredInfo: filters,
-      sortedInfo: sorter
-    })
-  };
-
-  onSelectChange = (selectedRowKeys, selectedRows) => {
-    this.setState({ selectedRowKeys, selectedRows })
-  };
-
-  render () {
-    let { sortedInfo, filteredInfo, selectedRows } = this.state
-    sortedInfo = sortedInfo || {}
-    filteredInfo = filteredInfo || {}
-    const columns = [
-      // {
-      //   title: "Selected",
-      //   key: "isSelected",
-      //   render: (text, record) => {
-      //     return <Checkbox value="selected" />;
-      //   }
-      // },
-      {
-        title: 'Name',
-        key: 'imgUrl',
-        sorter: (a, b) => a.person.nickname.length - b.person.nickname.length,
-        sortOrder: sortedInfo.columnKey === 'imgUrl' && sortedInfo.order,
-        render: (text, record) => {
-          return (
-            <AvatarProfile person={record.person} />
-          )
-        }
-      },
-      {
-        title: 'Comment',
-        dataIndex: 'comment',
-        key: 'comment'
-      },
-      {
-        title: 'Status',
-        dataIndex: 'status',
-        key: 'status',
-        sorter: (a, b) => a.status.length - b.status.length,
-        sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
-        filters: [
-          { text: 'interested', value: 'interested' },
-          { text: 'invited', value: 'invited' },
-          { text: 'committed', value: 'committed' },
-          { text: 'declined', value: 'declined' },
-          { text: 'completed', value: 'completed' },
-          { text: 'cancelled', value: 'cancelled' }
-        ],
-        filteredValue: filteredInfo.status || null,
-        onFilter: (value, record) => record.status.includes(value)
-      },
-      {
-        title: 'Action',
-        key: 'action',
-        render: (text, record) => {
-          const options = getEnabledButtons(record)
-          let withdrawInviteText = (
-            <FormattedMessage
-              id='withdrawVolunteerInvite'
-              defaultMessage='Withdraw Invite'
-              description='Button allowing event organizer to withdraw a invite already issued to an interested volunteer'
-            />
-          )
-
-          // Needed? Or is declining the end of the road?
-          if (
-            options.withdrawInviteButtonEnabled &&
-            !options.declineButtonEnabled &&
-            !options.inviteButtonEnabled
-          ) {
-            withdrawInviteText = (
-              <FormattedMessage
-                id='undeclineInvite'
-                defaultMessage='Undecline Invite'
-                description='Button allowing event organizer to "un-decline" a previously declined invite'
-              />
-            )
-          }
-
-          return (
-            <div>
-              {options.inviteButtonEnabled ? (
-                <span>
-                  <Button
-                    type='primary'
-                    shape='round'
-                    // onClick={this.handleInviteButtonClicked.bind(this, record)}
-                    onClick={this.handleInviteButtonClicked.bind(this, record)}
-                  >
-                    <FormattedMessage
-                      id='inviteVolunteer'
-                      defaultMessage='Invite'
-                      description='Button allowing event organizer to invite an interested volunteer'
-                    />
-                  </Button>
-                  &nbsp;
-                </span>
-              ) : null}
-              {options.withdrawInviteButtonEnabled ? (
-                <span>
-                  <Button
-                    type='secondary'
-                    shape='round'
-                    onClick={this.handleWithdrawInviteButtonClicked.bind(
-                      this,
-                      record
-                    )}
-                  >
-                    {withdrawInviteText}
-                  </Button>
-                  &nbsp;
-                </span>
-              ) : null}
-              {options.declineButtonEnabled ? (
-                <span>
-                  <Popconfirm
-                    id='declineInvitePopConfirm'
-                    title='Are you sure?'
-                    onConfirm={this.handleDeclineButtonClicked.bind(
-                      this,
-                      record
-                    )}
-                    okText='Yes'
-                    cancelText='No'
-                  >
-                    <Button type='danger' shape='round'>
-                      <FormattedMessage
-                        id='declineVolunteer'
-                        defaultMessage='Decline'
-                        description='Button allowing event organizer to decline an interested volunteer'
-                      />
-                    </Button>
-                  </Popconfirm>
-                </span>
-              ) : null}
-            </div>
-          )
-        }
-      }
-    ]
-    const rowSelection = {
-      // selectedRowKeys,
-      handleTableChange: this.onSelectChange
-      // getCheckboxProps: record => ({
-      //   disabled: record.name === "Disabled User", // Column configuration not to be checked
-      //   name: record.name
-      // })
-    }
-
-    // put all selected rows' status together to form a selectedStatus array
-    const selectedStatus = selectedRows.map(row => row.status)
-    const menu = (
-      <Menu>
-        {selectedStatus.every(status => status === 'interested') && (
-          <Menu.Item>
-            <a onClick={this.handleInviteButtonClicked.bind(this, selectedRows)}>
-              Invite
-            </a>
-          </Menu.Item>
-        )}
-        {selectedStatus.every(status => status === 'invited') && (
-          <Menu.Item>
-            <a onClick={this.handleWithdrawInviteButtonClicked.bind(this, selectedRows)}>
-              Withdraw Invite
-            </a>
-          </Menu.Item>
-        )}
-        {!selectedStatus.includes('declined') && (
-          <Menu.Item>
-            <a onClick={this.handleDeclineButtonClicked.bind(this, selectedRows)}>
-              Decline
-            </a>
-          </Menu.Item>
-        )}
-      </Menu>
-    )
+export const MessagesColumn = {
+  title: 'Messages',
+  key: 'comment',
+  render: (text, record) => {
     return (
-      <>
-        <Dropdown overlay={menu}>
-          <a className='ant-dropdown-link'>
-            Group Actions <Icon type='down' />
-          </a>
-        </Dropdown>
-        <Table
-          columns={columns}
-          dataSource={this.props.interests.filter((interest) => interest.person !== null)}
-          rowKey='_id'
-          pagination={false}
-          onChange={this.handleTableChange}
-          rowSelection={rowSelection}
-        />
-      </>
+      <InterestMessageItem message={record.messages.slice(-1)[0]} />
     )
   }
 }
 
+const InviteText =
+  <FormattedMessage
+    id='inviteVolunteer'
+    defaultMessage='Invite'
+    description='Button allowing event organizer to invite an interested volunteer'
+  />
+
+const DeclineText =
+  <FormattedMessage
+    id='declineVolunteer'
+    defaultMessage='Decline'
+    description='Button allowing event organizer to decline an interested volunteer'
+  />
+export const MessageText =
+  <FormattedMessage
+    id='messageVolunteer'
+    defaultMessage='Message'
+    description='Button allowing event organizer to message an interested volunteer'
+  />
+
+const WithdrawText =
+  <FormattedMessage
+    id='withdrawVolunteerInvite'
+    defaultMessage='Withdraw Invite'
+    description='Button allowing event organizer to withdraw a invite already issued to an interested volunteer'
+  />
+const undeclineInviteText =
+  <FormattedMessage
+    id='undeclineInvite'
+    defaultMessage='Undecline Invite'
+    description='Button allowing event organizer to "un-decline" a previously declined invite'
+  />
+const formOptions = {
+  [InterestAction.ACCEPT]: {
+    title: 'Invite Volunteers',
+    prompt: 'Optionally add a note to the message we will send to the volunteer'
+  },
+  [InterestAction.REJECT]: {
+    title: 'Decline Volunteers',
+    prompt: 'Optionally add a note to the message we will send to the volunteer'
+  },
+  [InterestAction.WITHDRAW]: {
+    title: 'Withdraw Invite Volunteers',
+    prompt: 'Optionally add a note to the message we will send to the volunteer'
+  },
+  [InterestAction.MESSAGE]: {
+    title: 'Message Volunteers',
+    prompt: 'Send a message to the volunteer'
+  }
+}
+
+const InterestTable = ({ interests, onAction }) => {
+  const [filteredInfo, setFilteredInfo] = useState({})
+  const [sortedInfo, setSortedInfo] = useState({})
+  // Batch const [selectedRows, setSelectedRows] = useState([])
+  const [selectedInterest, setSelectedInterest] = useState()
+  const [action, setAction] = useState()
+  const [showMessageForm, setShowMessageForm] = useState(false)
+
+  const handleFormSubmit = (ok, message) => {
+    setShowMessageForm(false)
+    if (!ok) return
+    onAction(selectedInterest, action, message)
+  }
+
+  const handleClick = (action) => (interest) => {
+    setAction(action)
+    setSelectedInterest(interest)
+    setShowMessageForm(true)
+  }
+
+  const handleTableChange = (pagination, filters, sorter) => {
+    setFilteredInfo(filters)
+    setSortedInfo(sorter)
+  }
+
+  // TODO fix batch updates.
+  // const rowSelection = {
+  //   onChange: (selectedRowKeys, selectedRows) => {
+  //     setSelectedRows(selectedRows)
+  //   }
+  // }
+  const columns = [
+    {
+      title: 'Name',
+      key: 'name',
+      sorter: (a, b) => a.person.nickname.localeCompare(b.person.nickname),
+      sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
+      render: (text, record) => {
+        return (
+          <AvatarProfile person={record.person} />
+        )
+      }
+    },
+    MessagesColumn,
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      sorter: (a, b) => a.status.length - b.status.length,
+      sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
+      filters: [
+        { text: 'interested', value: 'interested' },
+        { text: 'invited', value: 'invited' },
+        { text: 'committed', value: 'committed' },
+        { text: 'declined', value: 'declined' },
+        { text: 'attended', value: 'attended' },
+        { text: 'notattended', value: 'notattended' }
+      ],
+      filteredValue: filteredInfo.status || null,
+      onFilter: (value, record) => record.status.includes(value)
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (text, record) => {
+        const options = getEnabledButtons(record)
+        let withdrawInviteText = WithdrawText
+
+        // Needed? Or is declining the end of the road?
+        if (
+          options.withdrawInviteButtonEnabled &&
+          !options.declineButtonEnabled &&
+          !options.inviteButtonEnabled
+        ) {
+          withdrawInviteText = undeclineInviteText
+        }
+
+        return (
+          <div>
+
+            {options.inviteButtonEnabled && (
+              <span>
+                <Button
+                  type='primary' shape='round'
+                  onClick={() => handleClick(InterestAction.ACCEPT)(record)}
+                >
+                  {InviteText}
+                </Button>
+                  &nbsp;
+              </span>
+            )}
+            {options.withdrawInviteButtonEnabled && (
+              <span>
+                <Button
+                  type='secondary' shape='round'
+                  onClick={() => handleClick(InterestAction.WITHDRAW)(record)}
+                >
+                  {withdrawInviteText}
+                </Button>
+                  &nbsp;
+              </span>
+            )}
+            {options.declineButtonEnabled && (
+              <span>
+                <Button
+                  type='danger' shape='round'
+                  onClick={() => handleClick(InterestAction.REJECT)(record)}
+                >
+                  {DeclineText}
+                </Button>
+              </span>
+            )}
+            <span>
+              <Button
+                shape='round'
+                onClick={() => handleClick(InterestAction.MESSAGE)(record)}
+              >
+                {MessageText}
+              </Button>
+            </span>
+
+          </div>
+        )
+      }
+    }
+  ]
+
+  // TODO BATCH
+  // // put all selected rows' status together to form a selectedStatus array
+  // const selectedStatus = selectedRows.map(row => row.status)
+  // const menu = (
+  //   <Menu>
+  //     {selectedStatus.every(status => status === 'interested') && (
+  //       <Menu.Item>
+  //         <a onClick={() => handleClick(InterestAction.ACCEPT)(selectedRows)}>
+  //           {InviteText}
+  //         </a>
+  //       </Menu.Item>
+  //     )}
+  //     {selectedStatus.every(status => status === 'invited') && (
+  //       <Menu.Item>
+  //         <a onClick={() => handleClick(InterestAction.WITHDRAW)(selectedRows)}>
+  //           {WithdrawText}
+  //         </a>
+  //       </Menu.Item>
+  //     )}
+  //     {!selectedStatus.includes('declined') && (
+  //       <Menu.Item>
+  //         <a onClick={() => handleClick(InterestAction.REJECT)(selectedRows)}>
+  //           {DeclineText}
+  //         </a>
+  //       </Menu.Item>
+  //     )}
+  //     <Menu.Item>
+  //       <a onClick={() => handleClick(InterestAction.MESSAGE)(selectedRows)}>
+  //         {MessageText}
+  //       </a>
+  //     </Menu.Item>
+  //   </Menu>
+  // )
+  return (
+    <>
+      {/* <Dropdown overlay={menu}>
+        <a className='ant-dropdown-link'>
+            Group Actions <Icon type='down' />
+        </a>
+      </Dropdown> */}
+      <Table
+        columns={columns}
+        dataSource={interests.filter((interest) => interest.person !== null)}
+        rowKey='_id'
+        pagination={false}
+        onChange={handleTableChange}
+        expandedRowRender={record => <ExpandedInterest interest={record} />}
+        expandRowByClick
+        // rowSelection={rowSelection}
+      />
+      <RegisterInterestMessageForm
+        id='acceptRegisterInterestForm'
+        {...formOptions[action]}
+        showTerms={false}
+        onSubmit={handleFormSubmit}
+        visible={showMessageForm}
+      />
+    </>
+  )
+}
+
 InterestTable.propTypes = {
-  onInvite: PropTypes.func.isRequired,
-  onWithdrawInvite: PropTypes.func.isRequired,
-  onDecline: PropTypes.func.isRequired,
+  onAction: PropTypes.func.isRequired,
   interests: PropTypes.array.isRequired
 }
 
@@ -250,12 +291,12 @@ function getEnabledButtons (interest) {
   return {
     inviteButtonEnabled: interest.status === 'interested',
     declineButtonEnabled:
-      interest.status !== 'completed' &&
-      interest.status !== 'cancelled' &&
+      interest.status !== 'attended' &&
+      interest.status !== 'notattended' &&
       interest.status !== 'declined',
     withdrawInviteButtonEnabled:
-      interest.status !== 'completed' &&
-      interest.status !== 'cancelled' &&
+      interest.status !== 'attended' &&
+      interest.status !== 'notattended' &&
       interest.status !== 'interested'
   }
 }

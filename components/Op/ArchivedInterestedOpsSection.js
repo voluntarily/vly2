@@ -16,7 +16,7 @@ import { InterestStatus } from '../../server/api/interest/interest.constants'
   */
 
 const selectArchivedInterestedOps = createSelector(
-  state => state.interestsArchived,
+  state => state.interestArchives,
   interests => interests.data
     .filter(interest => [InterestStatus.COMMITTED, InterestStatus.ATTENDED].includes(interest.status))
     .map((interest) => {
@@ -30,8 +30,8 @@ const selectArchivedInterestedOps = createSelector(
 )
 
 export const ArchivedInterestedOpsSection = () => {
-  const interestsArchived = useSelector(state => state.interestsArchived)
-  if (!interestsArchived.sync) return <Loading label='interestsArchived' entity={interestsArchived} />
+  const interestArchives = useSelector(state => state.interestArchives)
+  if (!interestArchives.sync) return <Loading label='interestArchives' entity={interestArchives} />
 
   const ops = useSelector(selectArchivedInterestedOps)
   if (!ops.length) return null

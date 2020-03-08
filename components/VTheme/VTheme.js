@@ -458,6 +458,10 @@ export const A4 = styled.div`
     }
   }
 `
+
+/* FullPage is the generic page wrapper providing wide margins
+  so that the page looks like a piece of paper.
+*/
 export const FullPage = styled.div`
   margin: 6rem auto;
   width: 80rem;
@@ -472,6 +476,39 @@ export const FullPage = styled.div`
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
     width: calc(100vw - 2rem);
+  }
+` // end fullpage
+
+export const Portrait = styled.section`
+  margin: 6rem auto;
+  width: 80rem;
+  overflow: visible;
+  height: auto;
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    width: calc(100vw - 4rem);
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  @media screen and (max-width: 767px) {
+    margin-top: 4rem;
+    width: calc(100vw - 2rem);
+  }
+` // end fullpage
+
+export const Landscape = styled.section`
+  margin: 6rem 2rem;
+  overflow: visible;
+  height: auto;
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    // width: calc(100vw - 4rem);
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  @media screen and (max-width: 767px) {
+    margin-top: 4rem;
+    // width: calc(100vw - 2rem);
   }
 ` // end fullpage
 

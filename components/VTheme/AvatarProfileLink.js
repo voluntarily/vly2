@@ -11,7 +11,7 @@ export function AvatarProfile ({ person }) {
           size='large'
           shape='square'
           onClick={() => Router.push(`/people/${person._id}`)}
-          src={person.imgUrl}
+          src={person.imgUrlsm}
           icon='user'
         />&nbsp;&nbsp;
         <span>{person.nickname}</span>

@@ -85,7 +85,7 @@ PersonHomePage.getInitialProps = async ({ store, query }) => {
       store.dispatch(reduxApi.actions.interests.get({ me: meid })),
       store.dispatch(reduxApi.actions.personalGoals.get({ meid: meid })),
       store.dispatch(reduxApi.actions.members.get({ meid: meid })),
-      store.dispatch(reduxApi.actions.interestsArchived.get({ me: meid })),
+      store.dispatch(reduxApi.actions.interestArchives.get({ me: meid })),
       store.dispatch(reduxApi.actions.recommendedOps.get({ me: meid }))
     ])
   } catch (err) {
