@@ -168,6 +168,7 @@ art and design in the classroom.
             size='large'
             // eslint-disable-next-line no-console
             onSearch={handleSearch}
+            aria-label='Search for volunteering opportunties here'
           />
         </SearchBox>
         <div>

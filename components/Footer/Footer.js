@@ -39,7 +39,7 @@ const FooterText = styled.div`
   margin-top: 1rem;
 `
 
-const FooterGridItemTitle = styled.h4`
+const FooterGridItemTitle = styled.h3`
   font-weight: 700;
   font-size: 1.5rem;
   letter-spacing: -0.8px;
@@ -90,7 +90,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
       }}
     />
     <FooterContainer>
-      <FooterLogo src='/static/vlogo.svg' />
+      <FooterLogo src='/static/vlogo.svg' alt='voluntarily logo' />
       <FooterText>
         <P>
           <FormattedMessage

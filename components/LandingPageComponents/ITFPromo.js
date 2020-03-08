@@ -21,7 +21,7 @@ small {
 
 const ITFPromo = () => (
   <HalfGrid>
-    <PromoImage src='./static/img/landing-pages/promo/itf.png' />
+    <PromoImage src='./static/img/landing-pages/promo/itf.png' alt='image of many children smiling' />
     <PromoContainer>
       <small>
         <FormattedMessage id='landing.promoSection.small' defaultMessage='Featured programme' description='Subheading for Inspiring The Future Promo Section' />

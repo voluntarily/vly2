@@ -96,6 +96,8 @@ const Header = ({ isAuthenticated, ...props }) => {
           <SearchInput
             placeholder='Search for cool ways to help out'
             onSearch={handleSearch}
+            aria-label='Search for volunteering opportunties here'
+
           />
         </div>
         <Link href='/landing'>

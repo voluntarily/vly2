@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { FormattedMessage } from 'react-intl'
 import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
-const PersonaBox = styled.div`
+const PersonaBox = styled.section`
   margin-bottom: 4rem;
 
  
@@ -45,7 +45,7 @@ const Image = styled.img`
   }
 `
 
-const Title = styled.h4`
+const Title = styled.h3`
   height: auto;
   margin: 0.2rem 0 0 0;
   font-size: 1.5rem;
@@ -119,7 +119,7 @@ const AboutSection = () => (
       <Col sm={12} lg={6}>
         <a href='/content' target='_blank' rel='noopener noreferrer'>
           <PersonaContainer>
-            <Image src='/static/img/contentCard.png' />
+            <Image src='/static/img/contentCard.png' alt='Content Creators' />
             <Title>Content Creators</Title>
             <Text>We help you get more people involved with your content.</Text>
             <Button>Learn More</Button>
@@ -129,7 +129,7 @@ const AboutSection = () => (
       <Col sm={12} lg={6}>
         <a href='/business' target='_blank' rel='noopener noreferrer'>
           <PersonaContainer>
-            <Image src='/static/img/businessCard.png' />
+            <Image src='/static/img/businessCard.png' alt='Businesses' />
             <Title>Businesses</Title>
             <Text>
                 We handle HR, admin, and discovery so your staff have more impact on
