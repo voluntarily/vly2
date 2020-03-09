@@ -9,20 +9,38 @@ height: auto;
 img {
   max-height: 8rem;
 }
+
+figcaption {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+}
+
+div {
+  align-self: center;
+}
 `
 
 const PersonCard = ({ person }) => (
   <PersonContainer>
+
     <Link href={`/people/${person._id}`}>
       <a>
-        <img src={person.imgUrl} />
+        <figcaption>
+
+          <img src={person.imgUrl} />
+          <div>
+            <h4>{person.name}</h4>
+            <p>{person.nickname}</p>
+          </div>
+        </figcaption>
       </a>
     </Link>
-    <figcaption>
-      <h1>{person.nickname}</h1>
-      <p className='personName'>{person.name}</p>
-      <p className='personName'>{person.email}</p>
-    </figcaption>
+
+    <p className='personName'>{person.email}</p>
+    <p className='personName'>{person.phone}</p>
 
     <style jsx>{`
       .personName {
@@ -45,6 +63,7 @@ PersonCard.propTypes = {
     nickname: PropTypes.string.isRequired,
     imgUrl: PropTypes.string,
     email: PropTypes.string,
+    phone: PropTypes.string,
     _id: PropTypes.string.isRequired
   }).isRequired
 }
