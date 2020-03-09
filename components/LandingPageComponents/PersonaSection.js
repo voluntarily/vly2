@@ -119,8 +119,8 @@ const AboutSection = () => (
       <Col sm={12} lg={6}>
         <a href='/content' target='_blank' rel='noopener noreferrer'>
           <PersonaContainer>
-            <Image src='/static/img/contentCard.png' alt='Content Creators' />
-            <Title>Content Creators</Title>
+            <Image src='/static/img/contentCard.png' alt={<FormattedMessage id='PersonaContent' defaultMessage='Content Creators' description='Content Creators' />} />
+            <Title><FormattedMessage id='PersonaContent' defaultMessage='Content Creators' description='Content Creators' /></Title>
             <Text>We help you get more people involved with your content.</Text>
             <Button>Learn More</Button>
           </PersonaContainer>
@@ -129,8 +129,8 @@ const AboutSection = () => (
       <Col sm={12} lg={6}>
         <a href='/business' target='_blank' rel='noopener noreferrer'>
           <PersonaContainer>
-            <Image src='/static/img/businessCard.png' alt='Businesses' />
-            <Title>Businesses</Title>
+            <Image src='/static/img/businessCard.png' alt={<FormattedMessage id='PersonaBusiness' defaultMessage='Businesses' description='Businesses' />} />
+            <Title><FormattedMessage id='PersonaBusiness' defaultMessage='Businesses' description='Businesses' /></Title>
             <Text>
                 We handle HR, admin, and discovery so your staff have more impact on
                 the community.
