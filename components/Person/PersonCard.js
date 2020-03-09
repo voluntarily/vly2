@@ -21,7 +21,6 @@ const PersonCard = ({ person }) => (
     <figcaption>
       <h1>{person.nickname}</h1>
       <p className='personName'>{person.name}</p>
-
       <p className='personName'>{person.email}</p>
     </figcaption>
 
@@ -45,7 +44,6 @@ PersonCard.propTypes = {
     name: PropTypes.string.isRequired,
     nickname: PropTypes.string.isRequired,
     imgUrl: PropTypes.string,
-
     email: PropTypes.string,
     _id: PropTypes.string.isRequired
   }).isRequired
