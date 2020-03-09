@@ -42,16 +42,6 @@ class OrgDetailForm extends Component {
     this.props.form.setFieldsValue({ address: value })
   }
 
-  /* setDomainName = value => {
-    this.props.form.setFieldsValue({ domainName: value })
-  } */
-  // setWebsite = (value) => {
-  //   this.props.form.setWebsite({ contactEmail: value })
-  // }
-  // setContactEmailUrl = (value) => {
-  //   this.props.form.setFieldsValue({ contactEmail: value })
-  // }
-
   /**
    * Creates a link to google maps for the supplied address.
    * @param {string} address
