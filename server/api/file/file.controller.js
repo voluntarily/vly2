@@ -8,7 +8,7 @@ const uploadFile = async (req, res) => {
     }
 
     const { data, filename } = req.body
-    
+
     AWS.config.update({
       accessKeyId: config.AWS_ACCESS_KEY_ID,
       secretAccessKey: config.AWS_SECRET_ACCESS_KEY
