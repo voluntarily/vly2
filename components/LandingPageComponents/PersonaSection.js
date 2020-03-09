@@ -33,6 +33,8 @@ const Image = styled.img`
   width: 100%;
   object-fit: cover;
 
+
+
   @media screen and (max-width: 768px) {
     height: 20rem;
     object-position: top;
@@ -100,7 +102,7 @@ const AboutSection = () => (
             <Text>
               <FormattedMessage id='PersonaVolunteersDescription' defaultMessage='Discover cool opportunities to help out teachers, students and charities.' description='promo description for volunteers' />
             </Text>
-            <Button>Learn More</Button>
+            <Button><FormattedMessage id='LearnMore' defaultMessage='Learn More' description='Learn more button' /></Button>
           </PersonaContainer>
         </a>
       </Col>
@@ -110,9 +112,10 @@ const AboutSection = () => (
             <Image src='/static/img/teacherCard.png' alt={<FormattedMessage id='PersonaTeachers' defaultMessage='Teachers' description='teachers' />} />
             <Title><FormattedMessage id='PersonaTeachers' defaultMessage='Teachers' description='teachers' /></Title>
             <Text>
-              Get the help of skilled volunteers to bring tech to your teaching.
+              <FormattedMessage id='PersonaTeachersDescription' defaultMessage='Get the help of skilled volunteers to bring tech to your teaching.' description='description for teacher promo card' />
+
             </Text>
-            <Button>Learn More</Button>
+            <Button><FormattedMessage id='LearnMore' defaultMessage='Learn More' description='Learn more button' /></Button>
           </PersonaContainer>
         </a>
       </Col>
@@ -122,7 +125,7 @@ const AboutSection = () => (
             <Image src='/static/img/contentCard.png' alt={<FormattedMessage id='PersonaContent' defaultMessage='Content Creators' description='Content Creators' />} />
             <Title><FormattedMessage id='PersonaContent' defaultMessage='Content Creators' description='Content Creators' /></Title>
             <Text>We help you get more people involved with your content.</Text>
-            <Button>Learn More</Button>
+            <Button><FormattedMessage id='LearnMore' defaultMessage='Learn More' description='Learn more button' /></Button>
           </PersonaContainer>
         </a>
       </Col>
@@ -135,7 +138,7 @@ const AboutSection = () => (
                 We handle HR, admin, and discovery so your staff have more impact on
                 the community.
             </Text>
-            <Button>Learn More</Button>
+            <Button><FormattedMessage id='LearnMore' defaultMessage='Learn More' description='Learn more button' /></Button>
           </PersonaContainer>
         </a>
       </Col>
