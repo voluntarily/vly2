@@ -34,9 +34,10 @@ export function OpAboutPanel ({ op }) {
               </TagContainer>
               <Divider />
             </>}
-
-          <h5><FormattedMessage id='actShare' defaultMessage='Share' /></h5>
-          <ShareLinks url={appUrl} />
+          <section>
+            <h5><FormattedMessage id='actShare' defaultMessage='Share' /></h5>
+            <ShareLinks url={appUrl} />
+          </section>
         </div>
       </OpSectionGrid>
       <Divider />
