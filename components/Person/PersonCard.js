@@ -1,19 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
-import { Card } from '../VTheme/VTheme'
+import styled from 'styled-components'
+
+const PersonContainer = styled.section`
+height: auto;
+
+img {
+  max-height: 8rem;
+}
+`
 
 const PersonCard = ({ person }) => (
-  <Card>
+  <PersonContainer>
     <Link href={`/people/${person._id}`}>
       <a>
         <img src={person.imgUrl} />
-        <figcaption>
-          <h1>{person.nickname}</h1>
-          <p className='personName'>{person.name}</p>
-        </figcaption>
       </a>
     </Link>
+    <figcaption>
+      <h1>{person.nickname}</h1>
+      <p className='personName'>{person.name}</p>
+
+      <p className='personName'>{person.email}</p>
+    </figcaption>
+
     <style jsx>{`
       .personName {
         overflow: hidden;
@@ -26,7 +37,7 @@ const PersonCard = ({ person }) => (
       }
     `}
     </style>
-  </Card>
+  </PersonContainer>
 )
 
 PersonCard.propTypes = {
@@ -34,6 +45,8 @@ PersonCard.propTypes = {
     name: PropTypes.string.isRequired,
     nickname: PropTypes.string.isRequired,
     imgUrl: PropTypes.string,
+
+    email: PropTypes.string,
     _id: PropTypes.string.isRequired
   }).isRequired
 }
