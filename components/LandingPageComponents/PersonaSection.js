@@ -124,7 +124,7 @@ const AboutSection = () => (
           <PersonaContainer>
             <Image src='/static/img/contentCard.png' alt={<FormattedMessage id='PersonaContent' defaultMessage='Content Creators' description='Content Creators' />} />
             <Title><FormattedMessage id='PersonaContent' defaultMessage='Content Creators' description='Content Creators' /></Title>
-            <Text>We help you get more people involved with your content.</Text>
+            <Text><FormattedMessage id='PersonaContentDescription' defaultMessage='We help you get more people involved with your content.' description='description content for Content Creators' /></Text>
             <Button><FormattedMessage id='LearnMore' defaultMessage='Learn More' description='Learn more button' /></Button>
           </PersonaContainer>
         </a>
@@ -135,8 +135,7 @@ const AboutSection = () => (
             <Image src='/static/img/businessCard.png' alt={<FormattedMessage id='PersonaBusiness' defaultMessage='Businesses' description='Businesses' />} />
             <Title><FormattedMessage id='PersonaBusiness' defaultMessage='Businesses' description='Businesses' /></Title>
             <Text>
-                We handle HR, admin, and discovery so your staff have more impact on
-                the community.
+              <FormattedMessage id='PersonaBusinessDescription' defaultMessage='We handle HR, admin, and discovery so your staff have more impact on the community.' description='Description content for businesses' />
             </Text>
             <Button><FormattedMessage id='LearnMore' defaultMessage='Learn More' description='Learn more button' /></Button>
           </PersonaContainer>
