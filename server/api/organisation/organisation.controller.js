@@ -1,6 +1,6 @@
 const Organisation = require('./organisation')
 const { Role } = require('../../services/authorize/role')
-const { websiteRegex } = require('./person.validation')
+const { domainRegex } = require('./organisation.validation')
 /**
  * Get all orgs
  * @param req
@@ -45,10 +45,10 @@ const putOrganisation = async (req, res) => {
 
   await Organisation.findByIdAndUpdate(req.params._id, { $set: req.body })
   res.json(await Organisation.findById(req.params._id).exec())
-  // Website string validation
+  // Domain string validation
   if (Object.keys(Organisation).includes('domainName')) {
-    if (!(Organisation.website || '').match(websiteRegex)) {
-      return res.status(400).send('The \'website\' field does not match the validation rule')
+    if (!(Organisation.domainName || '').match(domainRegex)) {
+      return res.status(400).send('The \'domainName\' field does not match the validation rule')
     }
   }
 }
