@@ -98,7 +98,7 @@ const AboutSection = () => (
             <Image src='/static/img/volunteerCard.png' alt={<FormattedMessage id='PersonaVolunteers' defaultMessage='Volunteers' description='volunteers' />} />
             <Title><FormattedMessage id='PersonaVolunteers' defaultMessage='Volunteers' description='volunteers' /></Title>
             <Text>
-              Discover cool opportunities to help out teachers, students and charities.
+              <FormattedMessage id='PersonaVolunteersDescription' defaultMessage='Discover cool opportunities to help out teachers, students and charities.' description='promo description for volunteers' />
             </Text>
             <Button>Learn More</Button>
           </PersonaContainer>
