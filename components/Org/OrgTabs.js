@@ -89,7 +89,7 @@ OrgTabs.propTypes = {
     imgUrl: PropTypes.string,
     website: PropTypes.string,
     contactEmail: PropTypes.string,
-    domainName: PropTypes.string,
+    facebook: PropTypes.string,
     twitter: PropTypes.string
   }).isRequired
 }
