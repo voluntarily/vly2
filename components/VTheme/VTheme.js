@@ -603,6 +603,7 @@ time {
 export const OpBannerDetail = styled.div`
 display: grid;
 align-self: center;
+
 `
 
 /* Item lists - tidy listings

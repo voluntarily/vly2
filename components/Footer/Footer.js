@@ -57,8 +57,9 @@ const MenuWrapper = styled.ul`
   }
 `
 
-const MenuItem = styled.li`
+const MenuItem = styled.li`         
 list-style: none;
+
 
   a {
     font-weight: 700;
@@ -66,6 +67,11 @@ list-style: none;
     color: #333333;
     letter-spacing: -1.07px;
     line-height: 40px;
+
+:hover {
+  color: #6549AA; 
+}
+
   }
 `
 const Footer = ({ isAuthenticated, ...props }) => (
