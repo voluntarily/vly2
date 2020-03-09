@@ -336,7 +336,7 @@ class OrgDetailForm extends Component {
                     rules: [
                       {
                         pattern: domainRegex,
-                        message: 'Enter vaild domain'
+                        message: 'Enter a valid Domain'
                       }
                     ]
                   })(<Input placeholder='Organisation Domain' />)}
