@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Tag } from 'antd'
+import { Tag, Icon } from 'antd'
 
 /*
 ====================================================
@@ -636,6 +636,9 @@ font-weight: 500;
 background-color: #e8e8e8;
 `
 
+export const StyledIcon = styled(Icon)`
+  margin-right: 0.5rem;
+`
 /* Contact list displayed for organisations */
 
 export const ContactList = styled.ul`

@@ -7,12 +7,13 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
 import TagDisplay from '../Tags/TagDisplay'
-import { ActivityContainer } from '../VTheme/VTheme'
+import { ActivityContainer , StyledIcon } from '../VTheme/VTheme'
 import Html from '../VTheme/Html'
 import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
 import { PersonBadgeSection } from './PersonBadge'
 import { VBanner, VBannerImg, ProfileBannerTitle } from '../VTheme/Profile'
+
 
 const DetailItem = styled.div`
   margin-top: 0.5rem;
@@ -20,10 +21,6 @@ const DetailItem = styled.div`
   @media screen and (max-width: 767px) {
     display: none;
   }
-`
-
-const StyledIcon = styled(Icon)`
-  margin-right: 0.5rem;
 `
 
 const InfoSection = styled.div`

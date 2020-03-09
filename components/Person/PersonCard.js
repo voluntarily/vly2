@@ -7,7 +7,6 @@ import { Icon } from 'antd'
 const PersonContainer = styled.section`
 height: auto;
 
-
 img {
   max-height: 8rem;
 }
@@ -16,7 +15,7 @@ figcaption {
   display: grid;
   grid-template-columns: 8rem 1fr;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   padding: 1rem;
 
 }
@@ -36,20 +35,20 @@ const PersonCard = ({ person }) => (
         <Link href={`/people/${person._id}`}>
           <a>
             <h4>{person.name}</h4>
-
-            <p>a</p>
-
+            <p>{person.placeOfWork}</p>
+            <p>{person.job}</p>
           </a>
         </Link>
 
       </div>
     </figcaption>
-    {person.phone &&
-      <>
-        <Icon type='phone' /><p className='personName'>{person.phone}</p>
-      </>}
-    <p className='personName'>{person.email}</p>
+    <section>
+      <h5>Contact details</h5>
+      {person.phone &&
 
+        <p className='personName'><Icon type='phone' />&nbsp;&nbsp;{person.phone}</p>}
+      <p className='personName'><Icon type='mail' />&nbsp;&nbsp;{person.email}</p>
+    </section>
     <style jsx>{`
       .personName {
         overflow: hidden;
@@ -70,6 +69,8 @@ PersonCard.propTypes = {
     name: PropTypes.string.isRequired,
     nickname: PropTypes.string.isRequired,
     imgUrl: PropTypes.string,
+    job: PropTypes.string,
+    placeOfWork: PropTypes.string,
     email: PropTypes.string,
     phone: PropTypes.string,
     _id: PropTypes.string.isRequired
