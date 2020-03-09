@@ -26,7 +26,7 @@ export function OpAboutPanel ({ op }) {
             {description}
           </Html>
           <Divider />
-          {op.tags.length === 'undefined' &&
+          {op.tags.length === undefined &&
             <>
               <TagContainer>
                 <h5><FormattedMessage id='actCategories' defaultMessage='Categories' /></h5>

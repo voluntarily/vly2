@@ -26,18 +26,19 @@ div {
 const PersonCard = ({ person }) => (
   <PersonContainer>
 
-    <Link href={`/people/${person._id}`}>
-      <a>
-        <figcaption>
+    <figcaption>
 
-          <img src={person.imgUrl} />
-          <div>
+      <img src={person.imgUrl} />
+      <div>
+        <Link href={`/people/${person._id}`}>
+          <a>
             <h4>{person.name}</h4>
             <p>{person.nickname}</p>
-          </div>
-        </figcaption>
-      </a>
-    </Link>
+          </a>
+        </Link>
+
+      </div>
+    </figcaption>
 
     <p className='personName'>{person.email}</p>
     <p className='personName'>{person.phone}</p>
