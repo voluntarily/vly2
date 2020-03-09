@@ -9,6 +9,7 @@ height: auto;
 
 img {
   max-height: 8rem;
+  border-radius: 8px 0 0 8px;
 }
 
 figcaption {
@@ -16,8 +17,9 @@ figcaption {
   grid-template-columns: 8rem 1fr;
   gap: 1rem;
   margin-bottom: 1rem;
-  padding: 1rem;
 
+  box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.2);
+  border-radius: 8px;
 }
 
 div {
@@ -42,15 +44,19 @@ const PersonCard = ({ person }) => (
 
       </div>
     </figcaption>
+
     <section>
       <h5>Contact details</h5>
       {person.phone &&
 
-        <p className='personName'><Icon type='phone' />&nbsp;&nbsp;{person.phone}</p>}
-      <p className='personName'><Icon type='mail' />&nbsp;&nbsp;{person.email}</p>
+        <p className='personName'><Icon type='phone' />{person.phone}</p>}
+      <p className='personName'><Icon type='mail' />{person.email}</p>
     </section>
+
     <style jsx>{`
       .personName {
+     
+        margin-bottom: 0.5rem;
         overflow: hidden;
         text-overflow: ellipsis; 
         word-wrap: break-word;
