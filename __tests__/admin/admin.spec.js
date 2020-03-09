@@ -99,7 +99,6 @@ test.serial('Load invite school page as anon', async (t) => {
 
   const response = await request(server)
     .get('/admin/invite-school')
-  console.log('\nresponse', response)
   t.is(response.status, 302, 'Should be redirected to login')
 })
 

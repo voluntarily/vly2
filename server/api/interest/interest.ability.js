@@ -1,27 +1,27 @@
 const { Role } = require('../../services/authorize/role')
 const { Action } = require('../../services/abilities/ability.constants')
-const { InterestStatus, SchemaName } = require('./interest.constants')
 const Opportunity = require('../opportunity/opportunity')
+const { InterestSchemaName, InterestStatus } = require('./interest.constants')
 
 const ruleBuilder = async (session) => {
   const anonRules = [{
-    subject: SchemaName,
+    subject: InterestSchemaName,
     action: Action.LIST,
     inverted: true
   }, {
-    subject: SchemaName,
+    subject: InterestSchemaName,
     action: Action.CREATE,
     inverted: true
   }, {
-    subject: SchemaName,
+    subject: InterestSchemaName,
     action: Action.READ,
     inverted: true
   }, {
-    subject: SchemaName,
+    subject: InterestSchemaName,
     action: Action.UPDATE,
     inverted: true
   }, {
-    subject: SchemaName,
+    subject: InterestSchemaName,
     action: Action.DELETE,
     inverted: true
   }]
@@ -30,23 +30,23 @@ const ruleBuilder = async (session) => {
 
   if (session.me && session.me._id) {
     volunteerRules.push({
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.LIST,
       conditions: { person: session.me._id }
     }, {
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.READ,
       conditions: { person: session.me._id }
     }, {
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.CREATE,
       conditions: { person: session.me._id, status: InterestStatus.INTERESTED }
     }, {
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.UPDATE,
       conditions: { person: session.me._id, status: { $in: [InterestStatus.INTERESTED, InterestStatus.COMMITTED] } }
     }, {
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.DELETE,
       conditions: { person: session.me._id }
     })
@@ -59,25 +59,25 @@ const ruleBuilder = async (session) => {
     const myOpportunityIds = myOpportunities.map(opportunity => opportunity._id.toString())
 
     opportunityProviderRules.push({
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.LIST,
       conditions: { opportunity: { $in: myOpportunityIds } }
     }, {
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.READ,
       conditions: { opportunity: { $in: myOpportunityIds } }
     }, {
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.CREATE,
-      inverted: true
+      conditions: { person: session.me._id, status: InterestStatus.INTERESTED }
     }, {
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.UPDATE,
       conditions: { opportunity: { $in: myOpportunityIds } }
     }, {
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.DELETE,
-      inverted: true
+      conditions: { person: session.me._id }
     })
   }
 
@@ -88,37 +88,37 @@ const ruleBuilder = async (session) => {
     const myOpportunityIds = myOpportunities.map(opportunity => opportunity._id.toString())
 
     orgAdminRules.push({
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.LIST,
       conditions: { opportunity: { $in: myOpportunityIds } }
     }, {
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.READ,
       conditions: { opportunity: { $in: myOpportunityIds } }
     }, {
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.CREATE,
-      inverted: true
+      conditions: { person: session.me._id, status: InterestStatus.INTERESTED }
     }, {
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.UPDATE,
       conditions: { opportunity: { $in: myOpportunityIds } }
     }, {
-      subject: SchemaName,
+      subject: InterestSchemaName,
       action: Action.DELETE,
-      inverted: true
+      conditions: { person: session.me._id }
     })
   }
 
   const adminRules = [{
-    subject: SchemaName,
+    subject: InterestSchemaName,
     action: Action.MANAGE
   }]
 
   return {
     [Role.ANON]: anonRules,
     [Role.VOLUNTEER_PROVIDER]: volunteerRules,
-    [Role.ACTIVITY_PROVIDER]: volunteerRules,
+    // [Role.ACTIVITY_PROVIDER]: volunteerRules, // don't include roles that have no rules
     [Role.OPPORTUNITY_PROVIDER]: opportunityProviderRules,
     [Role.ORG_ADMIN]: orgAdminRules,
     [Role.ADMIN]: adminRules

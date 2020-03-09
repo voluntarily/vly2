@@ -35,7 +35,7 @@ const putOrganisation = async (req, res) => {
 
   // The current user must be; an ADMIN, or an ORG_ADMIN of the requested organisation
   if (!isAdmin && !req.session.me.orgAdminFor.includes(req.params._id)) {
-    return res.status(403).end()
+    return res.status(403).send('Must be admin or org admin')
   }
 
   // Category field can only be set by ADMIN
@@ -55,7 +55,7 @@ const putOrganisation = async (req, res) => {
 // Create
 const postOrganisation = async (req, res) => {
   if (!req.session.me.role.includes(Role.ADMIN)) {
-    return res.status(403).end()
+    return res.status(403).send('Must be admin to create an organisation')
   }
 
   const org = await new Organisation(req.body).save()
@@ -65,7 +65,7 @@ const postOrganisation = async (req, res) => {
 // Delete
 const deleteOrganisation = async (req, res) => {
   if (!req.session.me.role.includes(Role.ADMIN)) {
-    return res.status(403).end()
+    return res.status(403).send('Must be admin to delete an organisation')
   }
 
   if (!req.params._id) {

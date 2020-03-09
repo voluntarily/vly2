@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { FormattedMessage } from 'react-intl'
 import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
-const PersonaBox = styled.div`
+const PersonaBox = styled.section`
   margin-bottom: 4rem;
 
  
@@ -14,17 +14,26 @@ const PersonaBox = styled.div`
 `
 
 const PersonaContainer = styled.div`
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
   margin-bottom: 2rem;
 
   :hover {
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
+    border-radius: 8px;
     transform: scale(1.04);
+    h3 {
+      color: #6549AA;
+    }
+
+
   }
+
 `
 const Image = styled.img`
   width: 100%;
   object-fit: cover;
+
+
 
   @media screen and (max-width: 768px) {
     height: 20rem;
@@ -38,7 +47,7 @@ const Image = styled.img`
   }
 `
 
-const Title = styled.div`
+const Title = styled.h3`
   height: auto;
   margin: 0.2rem 0 0 0;
   font-size: 1.5rem;
@@ -51,7 +60,7 @@ const Title = styled.div`
   }
 `
 
-const Text = styled.div`
+const Text = styled.p`
   margin: 0rem 0rem 0.5rem 0rem;
   font-size: 1rem;
   font-weight: 400;
@@ -81,54 +90,54 @@ const AboutSection = () => (
       <FormattedMessage
         id='landing.sectiontitle.persona'
         defaultMessage='Who we help'
+        description='Title for the section that describes who we help'
       />
     </SectionTitle>
     <Row gutter={[32, 32]}>
       <Col sm={12} lg={6}>
         <a href='/about' target='_blank' rel='noopener noreferrer'>
           <PersonaContainer>
-            <Image src='/static/img/volunteerCard.png' />
-            <Title>Volunteers</Title>
+            <Image src='/static/img/volunteerCard.png' alt={<FormattedMessage id='PersonaVolunteers' defaultMessage='Volunteers' description='volunteers' />} />
+            <Title><FormattedMessage id='PersonaVolunteers' defaultMessage='Volunteers' description='volunteers' /></Title>
             <Text>
-              Discover cool opportunities to help out teachers, students and
-              charities.
+              <FormattedMessage id='PersonaVolunteersDescription' defaultMessage='Discover cool opportunities to help out teachers, students and charities.' description='promo description for volunteers' />
             </Text>
-            <Button>Learn More</Button>
+            <Button><FormattedMessage id='LearnMore' defaultMessage='Learn More' description='Learn more button' /></Button>
           </PersonaContainer>
         </a>
       </Col>
       <Col sm={12} lg={6}>
         <a href='/teachers' target='_blank' rel='noopener noreferrer'>
           <PersonaContainer>
-            <Image src='/static/img/teacherCard.png' />
-            <Title>Teachers</Title>
+            <Image src='/static/img/teacherCard.png' alt={<FormattedMessage id='PersonaTeachers' defaultMessage='Teachers' description='teachers' />} />
+            <Title><FormattedMessage id='PersonaTeachers' defaultMessage='Teachers' description='teachers' /></Title>
             <Text>
-              Get the help of skilled volunteers to bring tech to your teaching.
+              <FormattedMessage id='PersonaTeachersDescription' defaultMessage='Get the help of skilled volunteers to bring tech to your teaching.' description='description for teacher promo card' />
+
             </Text>
-            <Button>Learn More</Button>
+            <Button><FormattedMessage id='LearnMore' defaultMessage='Learn More' description='Learn more button' /></Button>
           </PersonaContainer>
         </a>
       </Col>
       <Col sm={12} lg={6}>
         <a href='/content' target='_blank' rel='noopener noreferrer'>
           <PersonaContainer>
-            <Image src='/static/img/contentCard.png' />
-            <Title>Content Creators</Title>
-            <Text>We help you get more people involved with your content.</Text>
-            <Button>Learn More</Button>
+            <Image src='/static/img/contentCard.png' alt={<FormattedMessage id='PersonaContent' defaultMessage='Content Creators' description='Content Creators' />} />
+            <Title><FormattedMessage id='PersonaContent' defaultMessage='Content Creators' description='Content Creators' /></Title>
+            <Text><FormattedMessage id='PersonaContentDescription' defaultMessage='We help you get more people involved with your content.' description='description content for Content Creators' /></Text>
+            <Button><FormattedMessage id='LearnMore' defaultMessage='Learn More' description='Learn more button' /></Button>
           </PersonaContainer>
         </a>
       </Col>
       <Col sm={12} lg={6}>
         <a href='/business' target='_blank' rel='noopener noreferrer'>
           <PersonaContainer>
-            <Image src='/static/img/businessCard.png' />
-            <Title>Businesses</Title>
+            <Image src='/static/img/businessCard.png' alt={<FormattedMessage id='PersonaBusiness' defaultMessage='Businesses' description='Businesses' />} />
+            <Title><FormattedMessage id='PersonaBusiness' defaultMessage='Businesses' description='Businesses' /></Title>
             <Text>
-                We handle HR, admin, and discovery so your staff have more impact on
-                the community.
+              <FormattedMessage id='PersonaBusinessDescription' defaultMessage='We handle HR, admin, and discovery so your staff have more impact on the community.' description='Description content for businesses' />
             </Text>
-            <Button>Learn More</Button>
+            <Button><FormattedMessage id='LearnMore' defaultMessage='Learn More' description='Learn more button' /></Button>
           </PersonaContainer>
         </a>
       </Col>

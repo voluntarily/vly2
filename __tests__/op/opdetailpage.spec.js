@@ -18,6 +18,7 @@ import sinon from 'sinon'
 import * as nextRouter from 'next/router'
 import { MockWindowScrollTo } from '../../server/util/mock-dom-helpers'
 import fetchMock from 'fetch-mock'
+
 const locations = ['Auckland, Wellington, Christchurch']
 MockWindowScrollTo.replaceForTest(test, global)
 
@@ -81,6 +82,13 @@ test.before('Setup fixtures', (t) => {
       isAuthenticated: true,
       user: { nickname: me.nickname },
       me
+    },
+    interests: {
+      sync: true,
+      syncing: false,
+      loading: false,
+      data: [],
+      request: null
     },
     opportunities: {
       sync: true,
@@ -356,7 +364,7 @@ test.serial('can create new Op from blank', t => {
 
   t.context.defaultstore.opportunities = originalOpportunitiesData
 
-  t.false(saveButton.isEmpty(), 'Save button should be found on page')
+  t.true(saveButton.exists(), 'Save button should be found on page')
   t.is(saveButton.text(), 'Save as draft')
 })
 

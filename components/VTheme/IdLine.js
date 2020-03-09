@@ -22,6 +22,7 @@ const IdLine = ({ item, path }) =>
             shape='square'
             src={item.imgUrl}
             icon='team'
+            alt={item.name}
           />
           <span style={{ marginLeft: '1em' }}>{item.name}</span>
         </a>

@@ -38,7 +38,10 @@ export function ActDetail ({ act, me }) {
         </Left>
         <Right>
           <h1>{act.name}</h1>
-          <ItemIdLine item={act.offerOrg} path='orgs' />
+          <ul>
+            <ItemIdLine item={act.offerOrg} path='orgs' />
+          </ul>
+
           <ItemContainer>
             <ItemDuration duration={act.duration} />
             <ItemVolunteers volunteers={act.volunteers} />
@@ -86,8 +89,10 @@ export function ActDetail ({ act, me }) {
           <h2>What you will need</h2>
         </div>
         <ItemDescription>
-          <ItemVolunteers volunteers={act.volunteers} />
-          <ItemSpace space={act.space} />
+          <ul>
+            <ItemVolunteers volunteers={act.volunteers} />
+            <ItemSpace space={act.space} />
+          </ul>
           <EquipmentList equipment={act.equipment} />
         </ItemDescription>
       </OpSectionGrid>
@@ -98,9 +103,10 @@ export function ActDetail ({ act, me }) {
           <h2>Written by</h2>
         </div>
         <ItemDescription>
-
-          <ItemIdLine item={act.owner} path='people' />
-          <ItemIdLine item={act.offerOrg} path='orgs' />
+          <ul>
+            <ItemIdLine item={act.owner} path='people' />
+            <ItemIdLine item={act.offerOrg} path='orgs' />
+          </ul>
         </ItemDescription>
       </OpSectionGrid>
 

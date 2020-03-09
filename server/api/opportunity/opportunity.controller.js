@@ -1,10 +1,9 @@
 const { Action } = require('../../services/abilities/ability.constants')
 const escapeRegex = require('../../util/regexUtil')
 const Opportunity = require('./opportunity')
-const Interest = require('./../interest/interest')
+const { Interest, InterestArchive } = require('./../interest/interest')
 const Person = require('./../person/person')
 const ArchivedOpportunity = require('./../archivedOpportunity/archivedOpportunity')
-const InterestArchive = require('./../interest-archive/interestArchive')
 const { OpportunityStatus } = require('./opportunity.constants')
 const { regions } = require('../location/locationData')
 const sanitizeHtml = require('sanitize-html')
@@ -177,7 +176,7 @@ const putOpportunity = async (req, res, next) => {
       await getOpportunity(req, res, next)
     }
   } catch (e) {
-    console.log(e)
+    console.error(e)
     res.status(400).send(e)
   }
 }
@@ -226,7 +225,7 @@ const createOpportunity = async (req, res, next) => {
   }
 
   if (!(await canCreate())) {
-    return res.sendStatus(403)
+    return res.status(403).send('Must have create permission')
   }
 
   try {

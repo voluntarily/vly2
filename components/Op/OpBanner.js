@@ -2,10 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { config } from '../../config/clientConfig'
 import { Helmet } from 'react-helmet'
-import { SideBarGrid } from '../VTheme/VTheme'
+import { SideBarGrid, OpBannerDetail } from '../VTheme/VTheme'
 import {
   Left,
-  Right,
   ItemContainer,
   ItemVenue,
   ItemDuration,
@@ -43,18 +42,19 @@ const OpBanner = ({ op, children }) => {
         <meta property='og:image' content={op.imgUrl} />
       </Helmet>
       {/* // add space for the action bar */}
-      <SideBarGrid style={{ paddingTop: '5rem' }}>
+      <SideBarGrid>
         <Left>
           <ItemImage src={op.imgUrl} alt={op.name} />
         </Left>
-        <Right>
+        <OpBannerDetail>
           <h1>{op.name}</h1>
-          <ItemIdLine item={op.offerOrg} path='orgs' />
-
+          <ul>
+            <ItemIdLine item={op.offerOrg} path='orgs' />
+          </ul>
           <ItemContainer>
             <ItemLocation location={op.location} />
-            <ItemDuration duration={op.duration} />
-            <ItemVenue venue={op.venue} />
+            {op.venue && <ItemVenue venue={op.venue} />}
+            {op.duration && <ItemDuration duration={op.duration} />}
             <ItemDate startDate={startDate} endDate={endDate} />
             <ItemStatus status={op.status} />
 
@@ -62,7 +62,7 @@ const OpBanner = ({ op, children }) => {
           <>
             {children}
           </>
-        </Right>
+        </OpBannerDetail>
       </SideBarGrid>
     </>)
 }

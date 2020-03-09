@@ -12,7 +12,7 @@ import { useState } from 'react'
  Form calls back onSubmit false if cancelled and form fields in ok.
  */
 
-const RegisterInterestForm = ({
+export const RegisterInterestMessageForm = ({
   visible,
   onSubmit,
   title, prompt, showTerms
@@ -31,16 +31,17 @@ const RegisterInterestForm = ({
       visible={visible}
       onOk={handleOk}
       onCancel={handleCancel}
-      width={380}
+      width={400}
       footer={[
-        <Button id='cancelBtn' key='esc' shape='round' onClick={handleCancel}>
-          <FormattedMessage id='RegisterInterestMessageForm.cancel' defaultMessage='Cancel' description='Cancel button on popup form' />
-        </Button>,
+
         <Button
           key='submit' id='sendBtn' type='primary' shape='round'
           onClick={handleOk}
         >
           <FormattedMessage id='RegisterInterestMessageForm.send' defaultMessage='Send' description='Send button on popup form' />
+        </Button>,
+        <Button id='cancelBtn' key='esc' shape='round' onClick={handleCancel}>
+          <FormattedMessage id='RegisterInterestMessageForm.cancel' defaultMessage='Cancel' description='Cancel button on popup form' />
         </Button>
       ]}
     >
@@ -76,4 +77,4 @@ const RegisterInterestForm = ({
   )
 }
 
-export default RegisterInterestForm
+export default RegisterInterestMessageForm
