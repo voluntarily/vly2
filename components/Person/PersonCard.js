@@ -9,8 +9,9 @@ height: auto;
 
 img {
   max-height: 8rem;
-  border-radius: 8px 0 0 8px;
+  border-radius: 8px;
 }
+
 
 figcaption {
   display: grid;
@@ -18,8 +19,8 @@ figcaption {
   gap: 1rem;
   margin-bottom: 1rem;
 
-  box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.2);
-  border-radius: 8px;
+  /* box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.2);
+  border-radius: 8px; */
 }
 
 div {
