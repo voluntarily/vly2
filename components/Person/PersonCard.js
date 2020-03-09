@@ -2,9 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { Icon } from 'antd'
 
 const PersonContainer = styled.section`
 height: auto;
+
 
 img {
   max-height: 8rem;
@@ -16,6 +18,7 @@ figcaption {
   gap: 1rem;
   margin-bottom: 2rem;
   padding: 1rem;
+
 }
 
 div {
@@ -33,15 +36,19 @@ const PersonCard = ({ person }) => (
         <Link href={`/people/${person._id}`}>
           <a>
             <h4>{person.name}</h4>
-            <p>{person.nickname}</p>
+
+            <p>a</p>
+
           </a>
         </Link>
 
       </div>
     </figcaption>
-
+    {person.phone &&
+      <>
+        <Icon type='phone' /><p className='personName'>{person.phone}</p>
+      </>}
     <p className='personName'>{person.email}</p>
-    <p className='personName'>{person.phone}</p>
 
     <style jsx>{`
       .personName {
