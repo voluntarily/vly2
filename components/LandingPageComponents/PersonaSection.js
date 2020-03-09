@@ -88,17 +88,17 @@ const AboutSection = () => (
       <FormattedMessage
         id='landing.sectiontitle.persona'
         defaultMessage='Who we help'
+        description='Title for the section that describes who we help'
       />
     </SectionTitle>
     <Row gutter={[32, 32]}>
       <Col sm={12} lg={6}>
         <a href='/about' target='_blank' rel='noopener noreferrer'>
           <PersonaContainer>
-            <Image src='/static/img/volunteerCard.png' alt='Volunteers' />
-            <Title>Volunteers</Title>
+            <Image src='/static/img/volunteerCard.png' alt={<FormattedMessage id='PersonaVolunteers' defaultMessage='Volunteers' description='volunteers' />} />
+            <Title><FormattedMessage id='PersonaVolunteers' defaultMessage='Volunteers' description='volunteers' /></Title>
             <Text>
-              Discover cool opportunities to help out teachers, students and
-              charities.
+              Discover cool opportunities to help out teachers, students and charities.
             </Text>
             <Button>Learn More</Button>
           </PersonaContainer>
@@ -107,8 +107,8 @@ const AboutSection = () => (
       <Col sm={12} lg={6}>
         <a href='/teachers' target='_blank' rel='noopener noreferrer'>
           <PersonaContainer>
-            <Image src='/static/img/teacherCard.png' alt='Teachers' />
-            <Title>Teachers</Title>
+            <Image src='/static/img/teacherCard.png' alt={<FormattedMessage id='PersonaTeachers' defaultMessage='Teachers' description='teachers' />} />
+            <Title><FormattedMessage id='PersonaTeachers' defaultMessage='Teachers' description='teachers' /></Title>
             <Text>
               Get the help of skilled volunteers to bring tech to your teaching.
             </Text>
