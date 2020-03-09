@@ -76,6 +76,21 @@ test.before('Setup fixtures', (t) => {
       data: [orgs[1]],
       request: null
     },
+    archivedOpportunities: {
+      sync: true,
+      syncing: false,
+      loading: false,
+      data: [{
+        name: 'test',
+        subtitle: 'test',
+        imgUrl: 'test.jpg',
+        date: ['2017-09-03', '2013-07-26'],
+        location: 'Testington',
+        duration: 'long time',
+        _id: 'testidtestid'
+      }],
+      request: null
+    },
     members: {
       sync: true,
       syncing: false,
@@ -99,6 +114,7 @@ test('OrgDetailPage GetInitialProps non member', async t => {
   reduxApi.use('fetch', adapterFetch(myMock))
   myMock
     .get(`path:/api/organisations/${t.context.org._id}`, { body: { status: 200 } })
+    .get('path:/api/archivedOpportunities/', { body: { status: 200 } })
     .get('path:/api/members/', { body: { status: 200 } })
   const props = await OrgDetailPage.getInitialProps(ctx)
   t.false(props.isNew)
@@ -137,6 +153,7 @@ test('OrgDetailPage GetInitialProps anon', async t => {
   reduxApi.use('fetch', adapterFetch(myMock))
   myMock
     .get(`path:/api/organisations/${t.context.org._id}`, { body: { status: 200 } })
+    .get('path:/api/archivedOpportunities/', { body: { status: 200 } })
     .get('path:/api/members/', { body: { status: 200 } })
   const props = await OrgDetailPage.getInitialProps(ctx)
   t.false(props.isNew)
@@ -155,6 +172,7 @@ test('OrgDetailPage GetInitialProps new', async t => {
   reduxApi.use('fetch', adapterFetch(myMock))
   myMock
     .get(`path:/api/organisations/${t.context.org._id}`, { body: { status: 200 } })
+    .get('path:/api/archivedOpportunities/', { body: { status: 200 } })
     .get('path:/api/members/', { body: { status: 200 } })
   const props = await OrgDetailPage.getInitialProps(ctx)
   t.true(props.isNew)
@@ -190,6 +208,7 @@ test('render OrgDetailPage anon ', async t => {
     isNew: false,
     orgid: t.context.orgs[0],
     organisations: t.context.defaultstore.organisations,
+    archivedOpportunities: t.context.defaultstore.archivedOpportunities,
     members: {
       sync: true,
       syncing: false,
@@ -216,6 +235,7 @@ test('render OrgDetailPage member ', async t => {
     isNew: false,
     orgid: t.context.orgs[0],
     organisations: t.context.defaultstore.organisations,
+    archivedOpportunities: t.context.defaultstore.archivedOpportunities,
     members: {
       sync: true,
       syncing: false,
@@ -242,6 +262,7 @@ test('render OrgDetailPage OrgAdmin ', async t => {
     isNew: false,
     orgid: t.context.orgs[0],
     organisations: t.context.defaultstore.organisations,
+    archivedOpportunities: t.context.defaultstore.archivedOpportunities,
     members: t.context.defaultstore.members,
     me: t.context.people[1],
     isAuthenticated: true
@@ -274,6 +295,7 @@ test('edit and save existing org', async t => {
       data: [orgs[0]],
       request: null
     },
+    archivedOpportunities: t.context.defaultstore.archivedOpportunities,
     members: t.context.defaultstore.members,
     me: t.context.people[1],
     isAuthenticated: true,
@@ -288,14 +310,16 @@ test('edit and save existing org', async t => {
     </Provider>
   )
   // click on edit tab
-  wrapper.find('.ant-tabs-tab').at(4).simulate('click')
+  findAntTabByText(wrapper.find('.ant-tabs-tab'), 'Edit').simulate('click')
 
   t.true(wrapper.exists('OrgDetailForm'))
   const cancelButton = wrapper.find('button').at(1)
   t.is(cancelButton.text(), 'Cancel')
   cancelButton.simulate('click')
   wrapper.update()
-  wrapper.find('.ant-tabs-tab').at(4).simulate('click')
+
+  findAntTabByText(wrapper.find('.ant-tabs-tab'), 'Edit').simulate('click')
+
   const saveButton = wrapper.find('button').first()
   t.is(saveButton.text(), 'Save')
   wrapper.find('Form').first().simulate('submit')
@@ -314,6 +338,7 @@ test('edit and save new org', async t => {
       data: newOrg,
       request: null
     },
+    archivedOpportunities: t.context.defaultstore.archivedOpportunities,
     isAuthenticated: true,
     members: t.context.defaultstore.members,
     me: t.context.people[1],
@@ -337,7 +362,9 @@ test('edit and save new org', async t => {
   t.true(wrapper.exists('OrgBanner'))
   t.true(wrapper.exists('VTabs'))
   t.is(wrapper.find('VTabs').props().defaultActiveKey, 'about')
-  wrapper.find('.ant-tabs-tab').at(4).simulate('click')
+
+  findAntTabByText(wrapper.find('.ant-tabs-tab'), 'Edit').simulate('click')
+
   t.true(wrapper.exists('OrgDetailForm'))
   const saveButton = wrapper.find('button').first()
   t.is(saveButton.text(), 'Save')
@@ -357,8 +384,50 @@ test('render OrgDetailPage Unknown ', async t => {
       data: [],
       request: null
     },
+    archivedOpportunities: t.context.defaultstore.archivedOpportunities,
     me: t.context.people[1]
   }
   const wrapper = shallowWithIntl(<OrgDetailPage {...props} />)
   t.true(wrapper.exists('OrgUnknown'))
 })
+
+test('OrgDetailPage history tab ', async t => {
+  const props = {
+    isNew: false,
+    orgid: t.context.orgs[0],
+    organisations: t.context.defaultstore.organisations,
+    archivedOpportunities: t.context.defaultstore.archivedOpportunities,
+    members: {
+      sync: true,
+      syncing: false,
+      loading: false,
+      data: [],
+      request: null
+    },
+    isAuthenticated: false,
+    me: t.context.people[1]
+  }
+
+  const wrapper = mountWithIntl(
+    <OrgDetailPage {...props} />
+  )
+
+  findAntTabByText(wrapper.find('.ant-tabs-tab'), 'History').simulate('click')
+  const historyTab = wrapper.find('TabPane[orgTab="history"]')
+
+  t.true(historyTab.exists())
+  t.true(historyTab.exists('OpList'))
+  t.true(historyTab.exists('OpCard'))
+})
+
+const findAntTabByText = (tabs, tabText) => {
+  const matchedTabs = tabs.filterWhere((tab) => tab.text() === tabText)
+
+  if (matchedTabs.length === 1) {
+    return matchedTabs.first()
+  } else if (matchedTabs > 1) {
+    throw new Error(`Multiple tabs matched with text: "${tabText}"`)
+  } else {
+    throw new Error(`No tabs found with text: "${tabText}"`)
+  }
+}

@@ -7,6 +7,8 @@ import { ProfilePanel } from '../VTheme/Profile'
 import { OrgAboutPanel } from './OrgAboutPanel'
 import Html from '../VTheme/Html'
 import VTabs from '../VTheme/VTabs'
+import OpList from '../Op/OpList'
+
 const { TabPane } = Tabs
 
 const orgTab =
@@ -45,16 +47,20 @@ const orgEditTab =
   />
 
 // Warning do not try to group tabs under an isFlag TabPanes must be direct Children of Tabs.
-export const OrgTabs = ({ org, onChange, canManage, defaultTab, isAuthenticated }) => (
+export const OrgTabs = ({ org, archivedOpportunities, onChange, canManage, defaultTab, isAuthenticated }) => (
   <VTabs defaultActiveKey={defaultTab} onChange={onChange}>
-    <TabPane tab={orgTab} key='about'>
+    <TabPane tab={orgTab} key='about' orgTab='about'>
       <OrgAboutPanel org={org} />
     </TabPane>
-    <TabPane tab={orgOffersTab} key='offers'>
+    <TabPane tab={orgOffersTab} key='offers' orgTab='offers'>
       {/* // TODO: [VP-554] move the OpList for this org from the parent page to a tab  */}
     </TabPane>
+    <TabPane tab='History' key='history' orgTab='history'>
+      <h2>Previous opportunities</h2>
+      <OpList ops={archivedOpportunities} />
+    </TabPane>
     {isAuthenticated && (
-      <TabPane tab={orgInstructionTab} key='instructions'>
+      <TabPane tab={orgInstructionTab} key='instructions' orgTab='instructions'>
         <ProfilePanel>
           <Html>
             {(org.info && org.info.instructions) || ''}
@@ -62,12 +68,12 @@ export const OrgTabs = ({ org, onChange, canManage, defaultTab, isAuthenticated 
         </ProfilePanel>
       </TabPane>)}
     {isAuthenticated && (
-      <TabPane tab={orgMemberTab} key='members'>
+      <TabPane tab={orgMemberTab} key='members' orgTab='members'>
         <MemberSection org={org} />
       </TabPane>)}
 
     {canManage && (
-      <TabPane tab={orgEditTab} key='edit' />
+      <TabPane tab={orgEditTab} key='edit' orgTab='edit' />
     )}
 
   </VTabs>
@@ -91,7 +97,8 @@ OrgTabs.propTypes = {
     contactEmail: PropTypes.string,
     facebook: PropTypes.string,
     twitter: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  archivedOpportunities: PropTypes.array
 }
 
 export default OrgTabs

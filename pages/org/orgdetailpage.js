@@ -9,7 +9,7 @@ import OrgTabs from '../../components/Org/OrgTabs'
 import OrgDetailForm from '../../components/Org/OrgDetailForm'
 import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
-import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
+import reduxApi, { withOrgs, withArchivedOpportunities } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import RegisterMemberSection from '../../components/Member/RegisterMemberSection'
 import { Helmet } from 'react-helmet'
@@ -64,6 +64,7 @@ export const OrgDetailPage = ({
   members,
   me,
   organisations,
+  archivedOpportunities,
   isNew,
   dispatch,
   isAuthenticated
@@ -158,7 +159,7 @@ export const OrgDetailPage = ({
         {isAuthenticated && <RegisterMemberSection orgid={org._id} meid={me._id.toString()} />}
         {saved && <HomeButton />}
       </OrgBanner>
-      <OrgTabs org={org} canManage={canManage} isAuthenticated={isAuthenticated} defaultTab={tab} onChange={handleTabChange} />
+      <OrgTabs org={org} archivedOpportunities={archivedOpportunities.data} canManage={canManage} isAuthenticated={isAuthenticated} defaultTab={tab} onChange={handleTabChange} />
     </FullPage>)
 }
 
@@ -171,6 +172,7 @@ OrgDetailPage.getInitialProps = async ({ store, query }) => {
       orgid: null
     }
   } else if (query && query.id) {
+    await store.dispatch(reduxApi.actions.archivedOpportunities.get({ offerOrg: query.id }))
     await store.dispatch(reduxApi.actions.organisations.get(query))
     if (store.getState().session.isAuthenticated) {
       // get my membership of this org
@@ -186,5 +188,5 @@ OrgDetailPage.getInitialProps = async ({ store, query }) => {
   }
 }
 
-export const OrgDetailPageWithOrgs = withOrgs(OrgDetailPage)
+export const OrgDetailPageWithOrgs = withArchivedOpportunities(withOrgs(OrgDetailPage))
 export default publicPage(OrgDetailPageWithOrgs)

@@ -9,7 +9,7 @@ test('shallows the tabs anon', t => {
   const wrapper = shallow(
     <OrgTabs org={org} onChange={() => {}} />
   )
-  t.is(wrapper.find('TabPane').length, 2)
+  t.is(wrapper.find('TabPane').length, 3)
   t.true(wrapper.exists('OrgAboutPanel'))
 })
 
@@ -18,7 +18,7 @@ test('shallows the tabs authed', t => {
   const wrapper = shallow(
     <OrgTabs org={org} onChange={() => {}} isAuthenticated />
   )
-  t.is(wrapper.find('TabPane').length, 4)
+  t.is(wrapper.find('TabPane').length, 5)
   t.true(wrapper.exists('OrgAboutPanel'))
 })
 
@@ -27,6 +27,6 @@ test('shallows the tabs admin', t => {
   const wrapper = shallow(
     <OrgTabs org={org} onChange={() => {}} canManage isAuthenticated />
   )
-  t.is(wrapper.find('TabPane').length, 5)
+  t.is(wrapper.find('TabPane').length, 6)
   t.true(wrapper.exists('OrgAboutPanel'))
 })
