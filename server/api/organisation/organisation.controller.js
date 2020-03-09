@@ -1,6 +1,6 @@
 const Organisation = require('./organisation')
 const { Role } = require('../../services/authorize/role')
-
+const { websiteRegex } = require('./person.validation')
 /**
  * Get all orgs
  * @param req
@@ -45,8 +45,13 @@ const putOrganisation = async (req, res) => {
 
   await Organisation.findByIdAndUpdate(req.params._id, { $set: req.body })
   res.json(await Organisation.findById(req.params._id).exec())
+  // Website string validation
+  if (Object.keys(Organisation).includes('domainName')) {
+    if (!(Organisation.website || '').match(websiteRegex)) {
+      return res.status(400).send('The \'website\' field does not match the validation rule')
+    }
+  }
 }
-
 // Create
 const postOrganisation = async (req, res) => {
   if (!req.session.me.role.includes(Role.ADMIN)) {
