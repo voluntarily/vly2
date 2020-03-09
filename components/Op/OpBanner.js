@@ -48,8 +48,9 @@ const OpBanner = ({ op, children }) => {
         </Left>
         <OpBannerDetail>
           <h1>{op.name}</h1>
-          <ItemIdLine item={op.offerOrg} path='orgs' />
-
+          <ul>
+            <ItemIdLine item={op.offerOrg} path='orgs' />
+          </ul>
           <ItemContainer>
             <ItemLocation location={op.location} />
             {op.venue && <ItemVenue venue={op.venue} />}

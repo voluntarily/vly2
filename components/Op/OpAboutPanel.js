@@ -43,7 +43,9 @@ export function OpAboutPanel ({ op }) {
       <OpSectionGrid>
         <h2><FormattedMessage id='actDetailForm.AboutSection.organisersubtitle' defaultMessage='About the organisers' /></h2>
         <ProfileSection>
-          <ItemIdLine item={op.requestor} path='people' />
+          <ul>
+            <ItemIdLine item={op.requestor} path='people' />
+          </ul>
         </ProfileSection>
       </OpSectionGrid>
       <Spacer />

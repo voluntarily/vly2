@@ -604,6 +604,10 @@ export const OpBannerDetail = styled.div`
 display: grid;
 align-self: center;
 
+ul {
+  padding: 0;
+}
+
 `
 
 /* Item lists - tidy listings

@@ -21,7 +21,7 @@ const PersonaContainer = styled.div`
   :hover {
     border-radius: 8px;
     transform: scale(1.04);
-    h4 {
+    h3 {
       color: #6549AA;
     }
 
