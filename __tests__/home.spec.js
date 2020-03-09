@@ -207,7 +207,7 @@ test.before('Setup fixtures', (t) => {
         data: t.context.members,
         request: null
       },
-      interestsArchived: {
+      interestArchives: {
         sync: true,
         syncing: false,
         loading: false,
@@ -278,7 +278,7 @@ test.serial('run GetInitialProps', async t => {
     .get('path:/api/archivedOpportunities/', { body: t.context.archivedOpportunities })
     .get('path:/api/members/', { body: t.context.members })
     .get('path:/api/opportunities/recommended', { body: [t.context.recommendedOps] })
-    .get('path:/api/interestsArchived/', { body: t.context.archivedInterestFixture })
+    .get('path:/api/interestArchives/', { body: t.context.archivedInterestFixture })
   reduxApi.use('fetch', adapterFetch(t.context.mockServer))
 
   await PersonHomePage.getInitialProps({ store: t.context.mockStore })

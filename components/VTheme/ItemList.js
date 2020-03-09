@@ -11,7 +11,12 @@ import { StreetAddressLinkLi } from '../Address/StreetAddress'
 export const Left = styled.div`
   overflow: hidden;
 `
-export const Right = styled.div``
+export const Right = styled.div`
+ul {
+  padding-left: 0;
+}
+
+`
 
 export const ItemContainer = styled.ul`
   margin: 1.5rem 0 1rem 0;
@@ -34,6 +39,10 @@ export const ItemDescription = styled.div`
   color: initial;
   margin-bottom: 1rem;
   text-align: left;
+
+  ul {
+    padding-left: 0;
+  }
   `
 
 export const TagContainer = styled.div`

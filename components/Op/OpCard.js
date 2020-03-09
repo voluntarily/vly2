@@ -59,7 +59,7 @@ const OpCard = ({ op }) => {
       <Link href={getOpPageURL(isArchived, op._id)}>
         <a>
           <ImageWrapper>
-            <img src={cardImage} />
+            <img src={cardImage} alt={op.name} />
             {interestIcon}
           </ImageWrapper>
           <figcaption>

@@ -1,9 +1,9 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
-const Interest = require('./interest')
+const { Interest } = require('./interest')
 const { listInterests, getInterest, updateInterest, createInterest, deleteInterest } = require('./interest.controller')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
-const { SchemaName } = require('./interest.constants')
+const { InterestSchemaName } = require('./interest.constants')
 
 module.exports = server => {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -16,7 +16,7 @@ module.exports = server => {
 
       beforeActions: [
         {
-          middlewares: [authorizeActions(SchemaName)]
+          middlewares: [authorizeActions(InterestSchemaName)]
         }
       ],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)

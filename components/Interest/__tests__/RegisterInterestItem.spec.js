@@ -95,8 +95,8 @@ test('initial state', t => {
   t.false(wrapper.exists('#rejectBtn'))
   t.false(wrapper.exists('#messageBtn'))
   t.is(wrapper.find('#acceptBtn').first().text(), 'Get Involved')
-  t.is(wrapper.find('RegisterInterestForm').length, 3)
-  t.false(wrapper.find('RegisterInterestForm#acceptRegisterInterestForm').first().props().visible)
+  t.is(wrapper.find('RegisterInterestMessageForm').length, 3)
+  t.false(wrapper.find('RegisterInterestMessageForm#acceptRegisterInterestForm').first().props().visible)
 
   // click button and get popup form
   wrapper.find('#acceptBtn').first().simulate('click')

@@ -17,8 +17,17 @@ const InterestStatus = {
   NOTATTENDED: 'not_attended'
 }
 
+const InterestAction = {
+  ACCEPT: 'accept',
+  REJECT: 'reject',
+  WITHDRAW: 'withdraw',
+  MESSAGE: 'message'
+}
+
 module.exports = {
-  SchemaName: 'Interest',
+  InterestSchemaName: 'Interest',
+  InterestArchiveSchemaName: 'InterestArchive',
   InterestFields,
+  InterestAction,
   InterestStatus
 }

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import OrgList from '../../components/Org/OrgList'
-import { FullPage, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
+import { FullPage, PageBannerButtons, PageBannerNoTabs } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 
@@ -15,7 +15,7 @@ export const OrgListPage = ({ organisations, me }) => {
       <Helmet>
         <title>Organisations / Voluntarily</title>
       </Helmet>
-      <PageBanner>
+      <PageBannerNoTabs>
         <h1>
           <FormattedMessage
             defaultMessage='Organisations'
@@ -36,7 +36,7 @@ export const OrgListPage = ({ organisations, me }) => {
           defaultMessage='Check out organisations doing social good on the Voluntarily platform'
           id='org.list.subtitle'
         />
-      </PageBanner>
+      </PageBannerNoTabs>
       <OrgList orgs={orgs} />
     </FullPage>)
 }
