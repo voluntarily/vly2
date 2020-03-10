@@ -29,6 +29,7 @@ const listInterestsA = InterestModel => async (req, res) => {
     }
     const find = {}
     const populateList = []
+    populateList.push({ path: 'messages.author', select: 'nickname imgUrl' }) // just enough to label the message
 
     if (req.query.op) {
       find.opportunity = req.query.op
