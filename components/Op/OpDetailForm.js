@@ -32,9 +32,9 @@ class OpDetailForm extends Component {
   }
 
   componentDidMount () {
-    // Call validateFields here to disable the submit button when on a blank form.
-    // empty callback supresses a default which prints to the console.
-    this.props.form.validateFields()
+    // // Call validateFields here to disable the submit button when on a blank form.
+    // // empty callback supresses a default which prints to the console.
+    // this.props.form.validateFields(['title']);
     this.setState({ startDateValue: this.props.op.date[0] })
     this.setState({ endDateValue: this.props.op.date[1] })
   }
@@ -71,10 +71,47 @@ class OpDetailForm extends Component {
 
         this.props.onSubmit(this.props.op)
       } else {
+       
+        window.scrollTo(0,0);
         console.error('field validation error:', err)
       }
     })
   }
+/////carey
+  // handleSave = e => {
+   
+   
+  //   e.preventDefault()
+     
+  //   this.props.form.validateFields((values) => {
+  //        const op = this.props.op
+  //      // const { startDateValue, endDateValue } = this.state
+      
+  //       op.date = [] // Dirty work around to not change schema
+  //       //op.date.push(startDateValue, endDateValue)
+  //       op.name = values.name
+  //       // op.subtitle = values.subtitle
+  //       // op.tags = values.tags
+  //       // op.duration = values.duration
+  //       // op.location = values.location
+  //       // op.offerOrg = values.offerOrg && values.offerOrg.key
+  //       // op.description = values.description
+  //       // op.imgUrl = values.imgUrl
+  //       // op.venue = values.venue
+
+  //       op.status =
+  //         e.target.name === 'publish'
+  //           ? OpportunityStatus.ACTIVE
+  //           : OpportunityStatus.DRAFT
+  //       op.requestor =
+  //         (this.props.op.requestor && this.props.op.requestor._id) ||
+  //         this.props.me._id
+
+  //       this.props.onSubmit(this.props.op)
+     
+  //   })
+    
+  // }
 
   changeFormValue = (state, value) => {
     this.setState({
@@ -269,7 +306,7 @@ class OpDetailForm extends Component {
     } = this.props.form
 
     // Only show error after a field is touched.
-    const nameError = isFieldTouched('name') && getFieldError('name')
+   // const nameError = isFieldTouched('name') && getFieldError('name')
     const isNewOp = this.props.op._id
     const orgMembership =
       this.props.me.orgMembership &&
@@ -302,7 +339,7 @@ class OpDetailForm extends Component {
           </h5>
         </PageTitle>
         <Divider />
-        <Form hideRequiredMark colon={false}>
+        <Form colon={false}>
 
           <FormGrid>
             <DescriptionContainer>
@@ -317,19 +354,22 @@ class OpDetailForm extends Component {
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
-                <Form.Item
-                  label={opTitle}
-                  validateStatus={nameError ? 'error' : ''}
-                  help={nameError || ''}
+                <Form.Item label={opTitle}
+                  name='Title'
+                  // validateStatus={nameError ? 'error' : ''}
+                  // help={nameError || ''}
                 >
                   {getFieldDecorator('name', {
-                    rules: [{ required: true, message: 'name is required' }]
-                  })(<Input placeholder='name' maxLength='100' />)}
+                    rules: [{ required: true, message: 'Name is required' }]
+                  })(<Input placeholder='name' maxLength='100'/>)}
                 </Form.Item>
 
-                <Form.Item label={opSubtitle}>
+                <Form.Item 
+                  label={opSubtitle}
+                  name='Subtitle'
+                >
                   {getFieldDecorator('subtitle', {
-                    rules: []
+                    rules: [{ required: true, message: 'Subtitle is required' }]
                   })(
                     <Input placeholder='short summary that appears on the listing.' />
                   )}
@@ -351,7 +391,12 @@ class OpDetailForm extends Component {
               </Form.Item>
               {orgMembership && (
                 <Form.Item label={opOrganisation}>
-                  {getFieldDecorator('offerOrg')(
+                  {getFieldDecorator('offerOrg', {
+                    rules: [
+                      { required: true,
+                        message: 'Subtitle is required' }
+                    ]
+                  })(
                     <OrgSelector orgs={orgMembership} />
                   )}
                 </Form.Item>
@@ -371,18 +416,30 @@ class OpDetailForm extends Component {
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
-                <Form.Item label={opCommitment}>
+                <Form.Item 
+                  label={opCommitment}
+                  name='Commitment'
+                >
                   {getFieldDecorator('duration', {
                     rules: [
                       {
-                        required: false,
+                        required: true,
                         message: 'Commitment level is required'
                       }
                     ]
                   })(<Input placeholder='4 hours' />)}
                 </Form.Item>
-                <Form.Item label={opStartDate}>
-                  {getFieldDecorator('startDate', {})(
+                <Form.Item 
+                  label={opStartDate}
+                  name='Start date'
+                >
+                  {getFieldDecorator('startDate', {
+                    rules: [
+                      { 
+                        required: true,
+                        message: 'Start date is required' }
+                    ]
+                  })(
                     <DatePicker
                       showTime
                       disabledDate={current => {
@@ -397,8 +454,16 @@ class OpDetailForm extends Component {
                     />
                   )}
                 </Form.Item>
-                <Form.Item label={opEndDate}>
-                  {getFieldDecorator('endDate', {})(
+                <Form.Item 
+                  label={opEndDate}
+                  name='End date'    
+                >
+                  {getFieldDecorator('endDate', {
+                    rules: [
+                      { required: true,
+                        message: 'End date is required' }
+                    ]
+                  })(
                     <DatePicker
                       showTime
                       disabledDate={this.disabledEndDate}
@@ -482,7 +547,7 @@ class OpDetailForm extends Component {
               <MediumInputContainer>
                 <Form.Item label={opImgUrl}>
                   {getFieldDecorator('imgUrl', {
-                    rules: []
+                    rules: [{ required: true, message: 'Please upload an image' }]
                   })(<Input />)}
                   <ImageUpload setImgUrl={this.setImgUrl} />
                 </Form.Item>
@@ -520,7 +585,7 @@ class OpDetailForm extends Component {
                 id='saveOpBtn'
                 name='save'
                 onClick={this.handleSubmit}
-                disabled={hasErrors(getFieldsError())}
+                // disabled={hasErrors(getFieldsError())}
                 style={{ marginLeft: 8 }}
               >
                 <FormattedMessage
@@ -534,7 +599,8 @@ class OpDetailForm extends Component {
                 name='publish'
                 type='primary'
                 onClick={this.handleSubmit}
-                disabled={hasErrors(getFieldsError())}
+                scrollToFirstError={true}
+                // disabled={hasErrors(getFieldsError())}
                 style={{ marginLeft: 8 }}
               >
                 <FormattedMessage
