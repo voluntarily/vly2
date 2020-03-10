@@ -19,13 +19,27 @@ figcaption {
   gap: 1rem;
   margin-bottom: 1rem;
 
+
+@media screen and (min-width: 768px) and (max-width: 1000px) {
+    grid-template-columns: 1fr;
+
+  }
+
   /* box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.2);
   border-radius: 8px; */
 }
 
-div {
+a {
   align-self: center;
 }
+
+a:hover {
+  h4, p {
+    color: #6549AA;
+  }
+
+}
+
 `
 
 const PersonCard = ({ person }) => (
@@ -34,24 +48,24 @@ const PersonCard = ({ person }) => (
     <figcaption>
 
       <img src={person.imgUrl} />
-      <div>
-        <Link href={`/people/${person._id}`}>
-          <a>
-            <h4>{person.name}</h4>
-            <p>{person.placeOfWork}</p>
-            <p>{person.job}</p>
-          </a>
-        </Link>
 
-      </div>
+      <Link href={`/people/${person._id}`}>
+        <a target='_blank'>
+          <h4>{person.name}</h4>
+          <p>{person.placeOfWork}</p>
+          <p>{person.job}</p>
+        </a>
+      </Link>
     </figcaption>
 
     <section>
       <h5>Contact details</h5>
+
+      <p className='personName'><Icon type='mail' />{person.email}</p>
       {person.phone &&
 
         <p className='personName'><Icon type='phone' />{person.phone}</p>}
-      <p className='personName'><Icon type='mail' />{person.email}</p>
+
     </section>
 
     <style jsx>{`
