@@ -27,6 +27,7 @@ export function OpAboutPanel ({ op }) {
           </Html>
           <Divider />
 
+
           <>
             <TagContainer>
               <h5><FormattedMessage id='actCategories' defaultMessage='Categories' /></h5>
@@ -34,17 +35,20 @@ export function OpAboutPanel ({ op }) {
             </TagContainer>
             <Divider />
           </>
-
+         <section>
           <h5><FormattedMessage id='actShare' defaultMessage='Share' /></h5>
           <ShareLinks url={appUrl} />
+         </section>
+
         </div>
       </OpSectionGrid>
       <Divider />
       <OpSectionGrid>
         <h2><FormattedMessage id='actDetailForm.AboutSection.organisersubtitle' defaultMessage='About the organisers' /></h2>
         <ProfileSection>
-          <ItemIdLine item={op.requestor} path='people' />
-
+          <ul>
+            <ItemIdLine item={op.requestor} path='people' />
+          </ul>
         </ProfileSection>
       </OpSectionGrid>
       <Spacer />

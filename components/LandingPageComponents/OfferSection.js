@@ -89,7 +89,7 @@ const OfferSection = () => (
         <a>
 
           <OfferCard>
-            <img src='/static/img/offers/volunteering.png' />
+            <img src='/static/img/offers/volunteering.png' alt='image of people volunteering' />
             <figcaption>
               <h3>Volunteering</h3>
               <p>
@@ -104,7 +104,7 @@ const OfferSection = () => (
         <a>
           <OfferCard>
 
-            <img src='/static/img/offers/resources.png' />
+            <img src='/static/img/offers/resources.png' alt='an image of education resources' />
             <figcaption>
               <h3>Resources</h3>
               <p>
@@ -117,7 +117,7 @@ const OfferSection = () => (
       </Link>
       <OfferCard>
 
-        <img src='/static/img/offers/recognition.png' />
+        <img src='/static/img/offers/recognition.png' alt='an image of a trophy' />
         <figcaption>
           <h3>Recognition</h3>
           <p>

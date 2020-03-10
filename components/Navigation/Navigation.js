@@ -48,6 +48,7 @@ const Navigation = ({ items, defaultItem, router, me, ...props }) => {
               size='small'
               src={me && me.imgUrlSm}
               icon='user'
+              alt='profile photo'
             />
           </Link>
         </StyledAvatar>

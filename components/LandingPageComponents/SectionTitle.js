@@ -10,7 +10,7 @@ const TitleContainer = styled.div`
 
 const SectionTitle = ({ children }) => (
   <TitleContainer>
-    <h3>{children}</h3>
+    <h2>{children}</h2>
   </TitleContainer>
 )
 
