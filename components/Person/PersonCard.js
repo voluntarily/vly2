@@ -3,6 +3,13 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Icon } from 'antd'
+const ContactIcon = ({ type }) =>
+  <Icon
+    // theme='twoTone'
+    twoToneColor='blue'
+    type={type}
+    style={{ marginRight: '0.5rem', fontSize: '1rem', color: '#6549AA' }}
+  />
 
 const PersonContainer = styled.section`
 height: auto;
@@ -20,7 +27,7 @@ figcaption {
   margin-bottom: 1rem;
 
 
-@media screen and (min-width: 768px) and (max-width: 1000px) {
+@media screen and (max-width: 1000px) {
     grid-template-columns: 1fr;
 
   }
@@ -39,7 +46,6 @@ a:hover {
   }
 
 }
-
 `
 
 const PersonCard = ({ person }) => (
@@ -60,11 +66,11 @@ const PersonCard = ({ person }) => (
 
     <section>
       <h5>Contact details</h5>
+      <p className='personName'><ContactIcon type='mail' />{person.email}</p>
 
-      <p className='personName'><Icon type='mail' />{person.email}</p>
       {person.phone &&
 
-        <p className='personName'><Icon type='phone' />{person.phone}</p>}
+        <p className='personName'><ContactIcon type='phone' />{person.phone}</p>}
 
     </section>
 
