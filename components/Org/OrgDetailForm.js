@@ -25,7 +25,7 @@ function hasErrors (fieldsError) {
 class OrgDetailForm extends Component {
   constructor (props) {
     super(props)
-    // this.setImgUrl = this.setImgUrl.bind(this)
+    this.setImgUrl = this.setImgUrl.bind(this)
     this.setAddress = this.setAddress.bind(this)
   }
 
