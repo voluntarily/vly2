@@ -431,7 +431,13 @@ export const BigQuoteAuthor = styled.p`
     line-height: 1.5;
   }
 `
-
+export const ContactIcon = ({ type }) =>
+  <Icon
+    // theme='twoTone'
+    twoToneColor='blue'
+    type={type}
+    style={{ marginRight: '0.5rem', fontSize: '1rem', color: '#6549AA' }}
+  />
 /*
 ====================================================
 

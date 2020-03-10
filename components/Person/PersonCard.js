@@ -2,14 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { Icon } from 'antd'
-const ContactIcon = ({ type }) =>
-  <Icon
-    // theme='twoTone'
-    twoToneColor='blue'
-    type={type}
-    style={{ marginRight: '0.5rem', fontSize: '1rem', color: '#6549AA' }}
-  />
+import { ContactIcon } from '../VTheme/VTheme'
 
 const PersonContainer = styled.section`
 height: auto;

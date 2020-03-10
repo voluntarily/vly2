@@ -1,5 +1,5 @@
 import { defaultToHttpScheme } from '../../lib/urlUtil'
-import { Divider, Icon } from 'antd'
+import { Divider } from 'antd'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
