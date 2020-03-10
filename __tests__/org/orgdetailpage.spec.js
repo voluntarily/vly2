@@ -391,19 +391,13 @@ test('render OrgDetailPage Unknown ', async t => {
   t.true(wrapper.exists('OrgUnknown'))
 })
 
-test('OrgDetailPage history tab ', async t => {
+test('History tab - "op" organisation with archived opportunities', async t => {
   const props = {
     isNew: false,
     orgid: t.context.orgs[0],
     organisations: t.context.defaultstore.organisations,
     archivedOpportunities: t.context.defaultstore.archivedOpportunities,
-    members: {
-      sync: true,
-      syncing: false,
-      loading: false,
-      data: [],
-      request: null
-    },
+    members: t.context.defaultstore.members,
     isAuthenticated: false,
     me: t.context.people[1]
   }
@@ -418,6 +412,30 @@ test('OrgDetailPage history tab ', async t => {
   t.true(historyTab.exists())
   t.true(historyTab.exists('OpList'))
   t.true(historyTab.exists('OpCard'))
+})
+
+test('History tab - "op" organisation without archived opportunities', async t => {
+  const props = {
+    isNew: false,
+    orgid: t.context.orgs[0],
+    organisations: t.context.defaultstore.organisations,
+    archivedOpportunities: {
+      data: []
+    },
+    members: t.context.defaultstore.members,
+    isAuthenticated: false,
+    me: t.context.people[1]
+  }
+
+  const wrapper = mountWithIntl(
+    <OrgDetailPage {...props} />
+  )
+
+  findAntTabByText(wrapper.find('.ant-tabs-tab'), 'History').simulate('click')
+  const historyTab = wrapper.find('TabPane[orgTab="history"]')
+
+  t.true(historyTab.exists())
+  t.is(historyTab.find('p').text(), 'This organisation does not have any archived opportunities.')
 })
 
 const findAntTabByText = (tabs, tabText) => {

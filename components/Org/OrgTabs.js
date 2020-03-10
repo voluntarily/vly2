@@ -57,7 +57,11 @@ export const OrgTabs = ({ org, archivedOpportunities, onChange, canManage, defau
     </TabPane>
     <TabPane tab='History' key='history' orgTab='history'>
       <h2>Previous opportunities</h2>
-      <OpList ops={archivedOpportunities} />
+      {archivedOpportunities.length > 0 ? (
+        <OpList ops={archivedOpportunities} />
+      ) : (
+        <p>This organisation does not have any archived opportunities.</p>
+      )}
     </TabPane>
     {isAuthenticated && (
       <TabPane tab={orgInstructionTab} key='instructions' orgTab='instructions'>
