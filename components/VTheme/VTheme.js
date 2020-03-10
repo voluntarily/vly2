@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Tag } from 'antd'
+import { Tag, Icon } from 'antd'
 
 /*
 ====================================================
@@ -431,7 +431,13 @@ export const BigQuoteAuthor = styled.p`
     line-height: 1.5;
   }
 `
-
+export const ContactIcon = ({ type }) =>
+  <Icon
+    // theme='twoTone'
+    twoToneColor='blue'
+    type={type}
+    style={{ marginRight: '0.5rem', fontSize: '1rem', color: '#6549AA' }}
+  />
 /*
 ====================================================
 
@@ -642,6 +648,9 @@ font-weight: 500;
 background-color: #e8e8e8;
 `
 
+export const StyledIcon = styled(Icon)`
+  margin-right: 0.5rem;
+`
 /* Contact list displayed for organisations */
 
 export const ContactList = styled.ul`

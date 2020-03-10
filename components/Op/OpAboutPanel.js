@@ -26,18 +26,19 @@ export function OpAboutPanel ({ op }) {
             {description}
           </Html>
           <Divider />
-          {op.tags.length === 'undefined' &&
-            <>
-              <TagContainer>
-                <h5><FormattedMessage id='actCategories' defaultMessage='Categories' /></h5>
-                <TagDisplay tags={op.tags} />
-              </TagContainer>
-              <Divider />
-            </>}
+
+          <>
+            <TagContainer>
+              <h5><FormattedMessage id='actCategories' defaultMessage='Categories' /></h5>
+              <TagDisplay tags={op.tags} />
+            </TagContainer>
+            <Divider />
+          </>
           <section>
             <h5><FormattedMessage id='actShare' defaultMessage='Share' /></h5>
             <ShareLinks url={appUrl} />
           </section>
+
         </div>
       </OpSectionGrid>
       <Divider />
