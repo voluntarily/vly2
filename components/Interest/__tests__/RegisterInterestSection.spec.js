@@ -9,6 +9,7 @@ import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { API_URL } from '../../../lib/callApi'
 import people from '../../../server/api/person/__tests__/person.fixture'
 import fetchMock from 'fetch-mock'
+import { InterestStatus } from '../../../server/api/interest/interest.constants'
 
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -51,7 +52,8 @@ const interests = [
     person: people[0],
     opportunity: ops[0],
     messages: [],
-    status: 'interested'
+    status: 'interested',
+    termsAccepted: true
   }
 ]
 
@@ -88,10 +90,16 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
   wrapper.find('#sendBtn').first().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  // t.is(wrapper.find('h4').first().text(), 'Thank you for expressing your interest!')
 
   // press Get Involved! button
   t.truthy(myMock.done())
+
+  // what got Posted.
+  const posted = JSON.parse(myMock.lastCall()[1].body)
+  t.is(posted.person, meid)
+  t.is(posted.opportunity, opid)
+  t.is(posted.status, InterestStatus.INTERESTED)
+  t.true(posted.termsAccepted)
   myMock.restore()
 })
 

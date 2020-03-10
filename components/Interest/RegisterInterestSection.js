@@ -81,7 +81,8 @@ const RegisterInterestSection = ({ meid, opid }) => {
     const putInterest = {
       ...((status !== newStatus) && { status: newStatus }),
       ...(message && { messages: [{ body: message }] }),
-      type
+      type,
+      termsAccepted: true // can't get here without accepting the terms button.
     }
 
     if (interest._id) {
