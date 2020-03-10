@@ -172,7 +172,7 @@ OrgDetailPage.getInitialProps = async ({ store, query }) => {
       orgid: null
     }
   } else if (query && query.id) {
-    await store.dispatch(reduxApi.actions.archivedOpportunities.get({ offerOrg: query.id }))
+    await store.dispatch(reduxApi.actions.archivedOpportunities.get({ q: JSON.stringify({ offerOrg: query.id }) }))
     await store.dispatch(reduxApi.actions.organisations.get(query))
     if (store.getState().session.isAuthenticated) {
       // get my membership of this org
