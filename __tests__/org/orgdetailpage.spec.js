@@ -3,7 +3,7 @@ import objectid from 'objectid'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import { shallowWithIntl, mountWithIntl } from '../../lib/react-intl-test-helper'
+import { shallowWithIntl, mountWithIntl, mountWithMockIntl } from '../../lib/react-intl-test-helper'
 import reduxApi from '../../lib/redux/reduxApi'
 import { OrgDetailPage, OrgUnknown } from '../../pages/org/orgdetailpage'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
@@ -402,11 +402,16 @@ test('History tab - "op" organisation with archived opportunities', async t => {
     me: t.context.people[1]
   }
 
-  const wrapper = mountWithIntl(
-    <OrgDetailPage {...props} />
+  const historyTabText = 'HISTORY'
+
+  const wrapper = mountWithMockIntl(
+    <OrgDetailPage {...props} />,
+    {
+      'orgTabs.history': historyTabText
+    }
   )
 
-  findAntTabByText(wrapper.find('.ant-tabs-tab'), 'History').simulate('click')
+  findAntTabByText(wrapper.find('.ant-tabs-tab'), historyTabText).simulate('click')
   const historyTab = wrapper.find('TabPane[orgTab="history"]')
 
   t.true(historyTab.exists(), '"op" organisations should have a history tab')
@@ -427,11 +432,16 @@ test('History tab - "op" organisation without archived opportunities', async t =
     me: t.context.people[1]
   }
 
-  const wrapper = mountWithIntl(
-    <OrgDetailPage {...props} />
+  const historyTabText = 'HISTORY'
+
+  const wrapper = mountWithMockIntl(
+    <OrgDetailPage {...props} />,
+    {
+      'orgTabs.history': historyTabText
+    }
   )
 
-  findAntTabByText(wrapper.find('.ant-tabs-tab'), 'History').simulate('click')
+  findAntTabByText(wrapper.find('.ant-tabs-tab'), historyTabText).simulate('click')
   const historyTab = wrapper.find('TabPane[orgTab="history"]')
 
   t.is(
@@ -457,11 +467,16 @@ test('History tab - "op" organisation archived opportunities loading', async t =
     me: t.context.people[1]
   }
 
-  const wrapper = mountWithIntl(
-    <OrgDetailPage {...props} />
+  const historyTabText = 'HISTORY'
+
+  const wrapper = mountWithMockIntl(
+    <OrgDetailPage {...props} />,
+    {
+      'orgTabs.history': historyTabText
+    }
   )
 
-  findAntTabByText(wrapper.find('.ant-tabs-tab'), 'History').simulate('click')
+  findAntTabByText(wrapper.find('.ant-tabs-tab'), historyTabText).simulate('click')
   const historyTab = wrapper.find('TabPane[orgTab="history"]')
 
   t.true(
@@ -488,11 +503,16 @@ test('History tab - "op" organisation archived opportunities error', async t => 
     me: t.context.people[1]
   }
 
-  const wrapper = mountWithIntl(
-    <OrgDetailPage {...props} />
+  const historyTabText = 'HISTORY'
+
+  const wrapper = mountWithMockIntl(
+    <OrgDetailPage {...props} />,
+    {
+      'orgTabs.history': historyTabText
+    }
   )
 
-  findAntTabByText(wrapper.find('.ant-tabs-tab'), 'History').simulate('click')
+  findAntTabByText(wrapper.find('.ant-tabs-tab'), historyTabText).simulate('click')
   const historyTab = wrapper.find('TabPane[orgTab="history"]')
 
   t.true(
