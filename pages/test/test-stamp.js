@@ -2,7 +2,7 @@ import publicPage from '../../hocs/publicPage'
 import { FullPage } from '../../components/VTheme/VTheme'
 import styled from 'styled-components'
 import { Stamp } from '../../components/VTheme/Stamp'
-
+import { OpStatusStamp } from '../../components/Op/OpStatus'
 export const Rect = styled.div`
   display: block; /* Hidden by default */
   width: 20rem; 
@@ -22,7 +22,9 @@ const TestPublicPage = ({ locale, session, isAuthenticated }) =>
       <p>This is the content of the rectangle </p>
       <Stamp>Completed</Stamp>
     </Rect>
-
+    <Rect>
+      <OpStatusStamp status='draft' />
+    </Rect>
   </FullPage>
 
 export default publicPage(TestPublicPage)
