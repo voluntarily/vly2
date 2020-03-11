@@ -149,26 +149,27 @@ test.serial('Should return 404 code when queried non existing interest', async t
   t.is(res.status, expectedResponseStatus)
 })
 
-test.serial('Should not add an invalid interest where referenced person or opp is not in DB',
+test.serial('Should not add an interest where terms are not accepted',
   async t => {
-    const newInterest = new Interest({
-      person: '5cc8d60b8b16812b5babcdef',
-      opportunity: '5cc8d60b8b16812b5babcdef'
-    })
+    const me = t.context.me
+    const op = t.context.ops[0]
+    const newInterest = {
+      person: me._id,
+      opportunity: op._id,
+      messages: { // this works whether its an object or array.
+        body: `${me.name} is interested in ${op.name}`,
+        author: me._id
+      },
+      type: 'accept'
+    }
 
-    await request(server)
+    const res = await request(server)
       .post('/api/interests')
       .send(newInterest)
       .set('Accept', 'application/json')
       .set('Cookie', [`idToken=${jwtData.idToken}`])
-      .expect(422)
 
-    const savedInterest = await Interest.findOne({
-      person: newInterest.person,
-      opportunity: newInterest.opportunity
-    }).exec()
-
-    t.is(null, savedInterest)
+    t.is(res.status, 403)
   }
 )
 
@@ -182,7 +183,8 @@ test.serial('Should correctly add a valid interest', async t => {
       body: `${me.name} is interested in ${op.name}`,
       author: me._id
     },
-    type: 'accept'
+    type: 'accept',
+    termsAccepted: true
   }
 
   const res = await request(server)
