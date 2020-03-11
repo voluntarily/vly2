@@ -28,7 +28,7 @@ const interestSchema = new Schema({
       InterestStatus.DECLINED
     ]
   },
-  termsAccepted: Boolean,
+  termsAccepted: { type: Boolean, default: false },
   dateAdded: { type: Date, default: Date.now, required: true }
 })
 

@@ -93,6 +93,9 @@ const createInterestA = InterestModel => async (req, res) => {
   if (!interestData.person) {
     interestData.person = (req.session.me && req.session.me._id) ? req.session.me._id : undefined
   }
+  if (!interestData.termsAccepted) {
+    return res.status(403).send('Must accept terms')
+  }
   const interest = new InterestModel(interestData)
   interest.messages = flatAndAuthorMessages([], interestData.messages, req)
 
