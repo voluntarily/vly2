@@ -16,6 +16,7 @@ import OpDetailForm from '../../components/Op/OpDetailForm'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import { Helmet } from 'react-helmet'
 import { OpStatusStamp } from '../../components/Op/OpStatus'
+import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 
 const blankOp = {
   name: '',
@@ -23,7 +24,7 @@ const blankOp = {
   imgUrl: '/static/img/opportunity/opportunity.png',
   duration: '',
   location: 'Online',
-  status: 'inactive',
+  status: OpportunityStatus.DRAFT,
   date: [],
   startDate: null,
   endDate: null,
