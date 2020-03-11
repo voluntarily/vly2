@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import ReduxLoading from '../Loading'
 import { Alert } from 'antd'
+import { orgHistoryTitle, orgHistoryNotFound, orgHistoryError } from './OrgHistoryPanel.messages'
 
 export const OrgHistoryPanel = ({ archivedOpportunities, error, isLoading }) => {
   let content = ''
@@ -13,19 +14,19 @@ export const OrgHistoryPanel = ({ archivedOpportunities, error, isLoading }) => 
     content = (
       <Alert
         style={{ margin: '2rem' }}
-        message='Something went wrong'
+        message={orgHistoryError}
         type='error'
       />
     )
   } else if (archivedOpportunities.length === 0) {
-    content = <p>This organisation does not have any archived opportunities.</p>
+    content = <p>{orgHistoryNotFound}</p>
   } else {
     content = <OpList ops={archivedOpportunities} />
   }
 
   return (
     <>
-      <h2>Previous opportunities</h2>
+      <h2>{orgHistoryTitle}</h2>
       {content}
     </>
   )
