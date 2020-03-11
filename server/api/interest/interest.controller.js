@@ -29,10 +29,11 @@ const listInterestsA = InterestModel => async (req, res) => {
     }
     const find = {}
     const populateList = []
+    populateList.push({ path: 'messages.author', select: 'nickname imgUrl' }) // just enough to label the message
 
     if (req.query.op) {
       find.opportunity = req.query.op
-      populateList.push({ path: 'person', select: 'nickname name imgUrl' })
+      populateList.push({ path: 'person', select: 'nickname name imgUrl email website phone job placeOfWork' })
     }
 
     if (req.query.me) {
@@ -91,6 +92,9 @@ const createInterestA = InterestModel => async (req, res) => {
   const interestData = req.body
   if (!interestData.person) {
     interestData.person = (req.session.me && req.session.me._id) ? req.session.me._id : undefined
+  }
+  if (!interestData.termsAccepted) {
+    return res.status(403).send('Must accept terms')
   }
   const interest = new InterestModel(interestData)
   interest.messages = flatAndAuthorMessages([], interestData.messages, req)

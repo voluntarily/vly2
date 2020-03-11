@@ -4,27 +4,31 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import InterestSection from '../../components/Interest/InterestSection'
+import InterestArchivedSection from '../../components/Interest/InterestArchivedSection'
 import OpCloseOpportunity from '../../components/Op/OpCloseOpportunity'
 import { ProfilePanel, ProfileSection } from '../VTheme/Profile'
+import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 
-export function OpManagePanel ({
-  op
-}) {
+export function OpManagePanel ({ op }) {
+  const isDone = [OpportunityStatus.COMPLETED, OpportunityStatus.CANCELLED].includes(op.status)
   return (
     <ProfilePanel>
       <ProfileSection>
         <h2>
           <FormattedMessage
             id='interestSection.name'
-            defaultMessage='Interested Volunteers'
+            defaultMessage='Volunteers'
             description='label for interest table on op detail page'
           />
         </h2>
-        <InterestSection opid={op._id} />
+        {isDone
+          ? <InterestArchivedSection opid={op._id} />
+          : <InterestSection opid={op._id} />}
       </ProfileSection>
-      <ProfileSection>
-        <OpCloseOpportunity op={op} />
-      </ProfileSection>
+      {!isDone && (
+        <ProfileSection>
+          <OpCloseOpportunity op={op} />
+        </ProfileSection>)}
     </ProfilePanel>
   )
 }

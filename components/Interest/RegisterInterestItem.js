@@ -145,7 +145,7 @@ export const RegisterInterestItem = ({
         id='acceptRegisterInterestForm'
         title={options.acceptFormTitle}
         prompt={options.acceptFormPrompt}
-        showTerms={!interest.status}
+        showTerms={!interest.termsAccepted}
         onSubmit={handleAcceptSubmit}
         visible={showAcceptForm}
       />
@@ -153,7 +153,7 @@ export const RegisterInterestItem = ({
         id='rejectRegisterInterestForm'
         title={options.rejectFormTitle}
         prompt={options.rejectFormPrompt}
-        showTerms
+        showTerms={!interest.termsAccepted}
         onSubmit={handleRejectSubmit}
         visible={showRejectForm}
       />
@@ -161,7 +161,7 @@ export const RegisterInterestItem = ({
         id='messageRegisterInterestForm'
         title={messageForm.title}
         prompt={messageForm.prompt}
-        showTerms
+        showTerms={!interest.termsAccepted}
         onSubmit={handleMessageSubmit}
         visible={showMessageForm}
       />
