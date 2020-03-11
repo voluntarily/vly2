@@ -43,75 +43,42 @@ class OpDetailForm extends Component {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
 
-  handleSubmit = e => {
-    e.preventDefault()
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        const op = this.props.op
-        const { startDateValue, endDateValue } = this.state
-        op.date = [] // Dirty work around to not change schema
-        op.date.push(startDateValue, endDateValue)
-        op.name = values.name
-        op.subtitle = values.subtitle
-        op.tags = values.tags
-        op.duration = values.duration
-        op.location = values.location
-        op.offerOrg = values.offerOrg && values.offerOrg.key
-        op.description = values.description
-        op.imgUrl = values.imgUrl
-        op.venue = values.venue
 
-        op.status =
-          e.target.name === 'publish'
-            ? OpportunityStatus.ACTIVE
-            : OpportunityStatus.DRAFT
-        op.requestor =
-          (this.props.op.requestor && this.props.op.requestor._id) ||
-          this.props.me._id
+  handleSubmit = (draftOrPublish) => {
+    this.setState({
+      requiredForPublish: draftOrPublish == 'publish'
+    }
+     , () => {
+      this.props.form.validateFields((err, values) => {
+        if (!err) {
+          const op = this.props.op
+          const { startDateValue, endDateValue } = this.state
+          op.date = [] // Dirty work around to not change schema
+          op.date.push(startDateValue, endDateValue)
+          op.name = values.name
+          op.subtitle = values.subtitle
+          op.tags = values.tags
+          op.duration = values.duration
+          op.location = values.location
+          op.offerOrg = values.offerOrg && values.offerOrg.key
+          op.description = values.description
+          op.imgUrl = values.imgUrl
+          op.venue = values.venue
+          op.status = draftOrPublish === 'publish'
+              ? OpportunityStatus.ACTIVE
+              : OpportunityStatus.DRAFT
+          op.requestor =
+            (this.props.op.requestor && this.props.op.requestor._id) ||
+            this.props.me._id
 
-        this.props.onSubmit(this.props.op)
-      } else {
-       
-        window.scrollTo(0,0);
-        console.error('field validation error:', err)
-      }
+          this.props.onSubmit(this.props.op)
+        } else {
+          window.scrollTo(0,0);
+          console.error('field validation error:', err)
+        }
+      })
     })
   }
-/////carey
-  // handleSave = e => {
-   
-   
-  //   e.preventDefault()
-     
-  //   this.props.form.validateFields((values) => {
-  //        const op = this.props.op
-  //      // const { startDateValue, endDateValue } = this.state
-      
-  //       op.date = [] // Dirty work around to not change schema
-  //       //op.date.push(startDateValue, endDateValue)
-  //       op.name = values.name
-  //       // op.subtitle = values.subtitle
-  //       // op.tags = values.tags
-  //       // op.duration = values.duration
-  //       // op.location = values.location
-  //       // op.offerOrg = values.offerOrg && values.offerOrg.key
-  //       // op.description = values.description
-  //       // op.imgUrl = values.imgUrl
-  //       // op.venue = values.venue
-
-  //       op.status =
-  //         e.target.name === 'publish'
-  //           ? OpportunityStatus.ACTIVE
-  //           : OpportunityStatus.DRAFT
-  //       op.requestor =
-  //         (this.props.op.requestor && this.props.op.requestor._id) ||
-  //         this.props.me._id
-
-  //       this.props.onSubmit(this.props.op)
-     
-  //   })
-    
-  // }
 
   changeFormValue = (state, value) => {
     this.setState({
@@ -356,8 +323,6 @@ class OpDetailForm extends Component {
               <ShortInputContainer>
                 <Form.Item label={opTitle}
                   name='Title'
-                  // validateStatus={nameError ? 'error' : ''}
-                  // help={nameError || ''}
                 >
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'Name is required' }]
@@ -369,7 +334,7 @@ class OpDetailForm extends Component {
                   name='Subtitle'
                 >
                   {getFieldDecorator('subtitle', {
-                    rules: [{ required: true, message: 'Subtitle is required' }]
+                    rules: [{ required: this.state.requiredForPublish, message: 'Subtitle is required' }]
                   })(
                     <Input placeholder='short summary that appears on the listing.' />
                   )}
@@ -392,10 +357,7 @@ class OpDetailForm extends Component {
               {orgMembership && (
                 <Form.Item label={opOrganisation}>
                   {getFieldDecorator('offerOrg', {
-                    rules: [
-                      { required: true,
-                        message: 'Subtitle is required' }
-                    ]
+                    rules: [{ required: true, message: 'Please select organisation' }]
                   })(
                     <OrgSelector orgs={orgMembership} />
                   )}
@@ -423,7 +385,7 @@ class OpDetailForm extends Component {
                   {getFieldDecorator('duration', {
                     rules: [
                       {
-                        required: true,
+                        required: this.state.requiredForPublish,
                         message: 'Commitment level is required'
                       }
                     ]
@@ -436,7 +398,7 @@ class OpDetailForm extends Component {
                   {getFieldDecorator('startDate', {
                     rules: [
                       { 
-                        required: true,
+                        required: this.state.requiredForPublish,
                         message: 'Start date is required' }
                     ]
                   })(
@@ -460,7 +422,7 @@ class OpDetailForm extends Component {
                 >
                   {getFieldDecorator('endDate', {
                     rules: [
-                      { required: true,
+                      { required: this.state.requiredForPublish,
                         message: 'End date is required' }
                     ]
                   })(
@@ -479,7 +441,7 @@ class OpDetailForm extends Component {
                   {getFieldDecorator('location', {
                     rules: [
                       {
-                        required: true,
+                        required: this.state.requiredForPublish,
                         message: 'A region must be provided'
                       }
                     ]
@@ -547,7 +509,7 @@ class OpDetailForm extends Component {
               <MediumInputContainer>
                 <Form.Item label={opImgUrl}>
                   {getFieldDecorator('imgUrl', {
-                    rules: [{ required: true, message: 'Please upload an image' }]
+                    rules: [{ required: this.state.requiredForPublish, message: 'Please upload an image' }]
                   })(<Input />)}
                   <ImageUpload setImgUrl={this.setImgUrl} />
                 </Form.Item>
@@ -584,8 +546,7 @@ class OpDetailForm extends Component {
               <Button
                 id='saveOpBtn'
                 name='save'
-                onClick={this.handleSubmit}
-                // disabled={hasErrors(getFieldsError())}
+                onClick={()=>this.handleSubmit('draft')}
                 style={{ marginLeft: 8 }}
               >
                 <FormattedMessage
@@ -598,9 +559,7 @@ class OpDetailForm extends Component {
                 id='publishOpBtn'
                 name='publish'
                 type='primary'
-                onClick={this.handleSubmit}
-                scrollToFirstError={true}
-                // disabled={hasErrors(getFieldsError())}
+                onClick={()=>this.handleSubmit('publish')}
                 style={{ marginLeft: 8 }}
               >
                 <FormattedMessage
