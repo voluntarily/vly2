@@ -13,13 +13,10 @@ const uploadFile = async (req, res) => {
       accessKeyId: config.AWS_ACCESS_KEY_ID,
       secretAccessKey: config.AWS_SECRET_ACCESS_KEY
     })
-
+    const bucketName = getBucketName()
     const buffer = Buffer.from(data, 'binary')
     const key = `${Date.now()}-${filename}`
-    let bucketName = config.appUrl.replace(/^(https?|ftp|http):\/\//g, '')
-    if (bucketName.match(/localhost/g)) {
-      bucketName = 'localhost'
-    }
+
     const params = {
       Bucket: `${bucketName}.files`,
       Body: buffer,
@@ -40,6 +37,36 @@ const uploadFile = async (req, res) => {
   }
 }
 
+function getBucketName() {
+  let bucketName = config.appUrl.replace(/^(https?|ftp|http):\/\//g, '')
+  if (bucketName.match(/localhost/g)) {
+    bucketName = 'localhost'
+  }
+
+  return bucketName
+}
+
+/**
+ * Is the str a valid amazon s3 bucket for this environment.
+ * @param {string} str A URL.
+ */
+function isValidFileUrl(str) {
+  if (!str) {
+    return false
+  }
+
+  try {
+    const url = new URL(str)
+
+    return !!(url.hostname.match(/amazonaws.com$/) && url.pathname.startsWith(`/${getBucketName()}`))
+  }
+  catch {
+    return false
+  }
+}
+
 module.exports = {
-  uploadFile
+  uploadFile,
+  getBucketName,
+  isValidFileUrl
 }
