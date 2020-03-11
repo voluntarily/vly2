@@ -82,6 +82,11 @@ const setSession = async (req, res, next) => {
         return res.sendStatus(401)
       }
 
+      // from a client side redirect
+      if (req.url.startsWith('/auth/sign-thru')) {
+        return next()
+      }
+
       const encodedRedirectUrl = encodeURIComponent(req.url)
 
       // Have to set location and set-cookie header manually without nodejs helper functions (res.clearCookie, res.redirect)
