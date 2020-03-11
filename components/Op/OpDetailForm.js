@@ -14,10 +14,6 @@ import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, S
 
 const { TextArea } = Input
 
-function hasErrors (fieldsError) {
-  return Object.keys(fieldsError).some(field => fieldsError[field])
-}
-
 class OpDetailForm extends Component {
   constructor (props) {
     super(props)
@@ -43,12 +39,11 @@ class OpDetailForm extends Component {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
 
-
   handleSubmit = (draftOrPublish) => {
     this.setState({
-      requiredForPublish: draftOrPublish == 'publish'
+      requiredForPublish: draftOrPublish === 'publish'
     }
-     , () => {
+    , () => {
       this.props.form.validateFields((err, values) => {
         if (!err) {
           const op = this.props.op
@@ -65,15 +60,15 @@ class OpDetailForm extends Component {
           op.imgUrl = values.imgUrl
           op.venue = values.venue
           op.status = draftOrPublish === 'publish'
-              ? OpportunityStatus.ACTIVE
-              : OpportunityStatus.DRAFT
+            ? OpportunityStatus.ACTIVE
+            : OpportunityStatus.DRAFT
           op.requestor =
             (this.props.op.requestor && this.props.op.requestor._id) ||
             this.props.me._id
 
           this.props.onSubmit(this.props.op)
         } else {
-          window.scrollTo(0,0);
+          window.scrollTo(0, 0)
           console.error('field validation error:', err)
         }
       })
@@ -266,14 +261,11 @@ class OpDetailForm extends Component {
     )
 
     const {
-      getFieldDecorator,
-      getFieldsError,
-      getFieldError,
-      isFieldTouched
+      getFieldDecorator
     } = this.props.form
 
     // Only show error after a field is touched.
-   // const nameError = isFieldTouched('name') && getFieldError('name')
+    // const nameError = isFieldTouched('name') && getFieldError('name')
     const isNewOp = this.props.op._id
     const orgMembership =
       this.props.me.orgMembership &&
@@ -321,15 +313,16 @@ class OpDetailForm extends Component {
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
-                <Form.Item label={opTitle}
+                <Form.Item
+                  label={opTitle}
                   name='Title'
                 >
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'Name is required' }]
-                  })(<Input placeholder='name' maxLength='100'/>)}
+                  })(<Input placeholder='name' maxLength='100' />)}
                 </Form.Item>
 
-                <Form.Item 
+                <Form.Item
                   label={opSubtitle}
                   name='Subtitle'
                 >
@@ -378,7 +371,7 @@ class OpDetailForm extends Component {
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
-                <Form.Item 
+                <Form.Item
                   label={opCommitment}
                   name='Commitment'
                 >
@@ -391,15 +384,16 @@ class OpDetailForm extends Component {
                     ]
                   })(<Input placeholder='4 hours' />)}
                 </Form.Item>
-                <Form.Item 
+                <Form.Item
                   label={opStartDate}
                   name='Start date'
                 >
                   {getFieldDecorator('startDate', {
                     rules: [
-                      { 
+                      {
                         required: this.state.requiredForPublish,
-                        message: 'Start date is required' }
+                        message: 'Start date is required'
+                      }
                     ]
                   })(
                     <DatePicker
@@ -416,14 +410,16 @@ class OpDetailForm extends Component {
                     />
                   )}
                 </Form.Item>
-                <Form.Item 
+                <Form.Item
                   label={opEndDate}
-                  name='End date'    
+                  name='End date'
                 >
                   {getFieldDecorator('endDate', {
                     rules: [
-                      { required: this.state.requiredForPublish,
-                        message: 'End date is required' }
+                      {
+                        required: this.state.requiredForPublish,
+                        message: 'End date is required'
+                      }
                     ]
                   })(
                     <DatePicker
@@ -546,7 +542,7 @@ class OpDetailForm extends Component {
               <Button
                 id='saveOpBtn'
                 name='save'
-                onClick={()=>this.handleSubmit('draft')}
+                onClick={() => this.handleSubmit('draft')}
                 style={{ marginLeft: 8 }}
               >
                 <FormattedMessage
@@ -559,7 +555,7 @@ class OpDetailForm extends Component {
                 id='publishOpBtn'
                 name='publish'
                 type='primary'
-                onClick={()=>this.handleSubmit('publish')}
+                onClick={() => this.handleSubmit('publish')}
                 style={{ marginLeft: 8 }}
               >
                 <FormattedMessage
