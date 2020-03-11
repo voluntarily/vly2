@@ -10,6 +10,7 @@ import { FormattedMessage } from 'react-intl'
 import RegisterInterestMessageForm from './RegisterInterestMessageForm'
 import { PageAlert } from '../VTheme/VTheme'
 import { InterestStatus } from '../../server/api/interest/interest.constants'
+import { InterestMessageItem, InterestMessageList } from './InterestMessage'
 
 /* Cycle is
 1. status message + accept [reject] buttons
@@ -140,6 +141,9 @@ export const RegisterInterestItem = ({
           </SafeAffix>
         )
         : <RegisterButtons />}
+      <div style={{ maxHeight: '10rem', overflow: 'auto' }}>
+        <InterestMessageList messages={interest.messages} />
+      </div>
 
       <RegisterInterestMessageForm
         id='acceptRegisterInterestForm'
