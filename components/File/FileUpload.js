@@ -95,31 +95,40 @@ class FileUpload extends Component {
     const fileReader = new window.FileReader()
 
     fileReader.onloadend = async e => {
+      let responsePromise
       try {
-        const responsePromise = callApi('files', 'post', {
+        responsePromise = callApi('files', 'post', {
           data: e.currentTarget.result,
           filename: event.name
         })
 
-        this.uploadStatus.set(responsePromise, false)
-        this.onUploadEvent()
-
+        this.setUploadStatus(responsePromise, false)
         const response = await responsePromise
-
-        this.uploadStatus.set(responsePromise, true)
-        this.onUploadEvent()
-
+        this.setUploadStatus(responsePromise, true)
         this.filenameToLocationUrlMap.set(event.name, response.location)
-
         this.raiseFilesChanged()
       }
       catch (error) {
+        // If we failed to upload the file
+        // Then remove it from uppy
+        this.uppy.removeFile(event.id)
+
+        // And set that request as completed
+        if (responsePromise) {
+          this.setUploadStatus(responsePromise, true)
+        }
+
         console.error(error)
         message.error('An error occured uploading file')
       }
     }
 
     fileReader.readAsBinaryString(event.data)
+  }
+
+  setUploadStatus(responsePromise, completed) {
+    this.uploadStatus.set(responsePromise, completed)
+    this.onUploadEvent()
   }
 
   onUploadEvent() {
