@@ -7,7 +7,7 @@ import { ProfilePanel } from '../VTheme/Profile'
 import { OrgAboutPanel } from './OrgAboutPanel'
 import Html from '../VTheme/Html'
 import VTabs from '../VTheme/VTabs'
-import OpList from '../Op/OpList'
+import { OrgHistoryPanel } from './OrgHistoryPanel'
 
 const { TabPane } = Tabs
 
@@ -47,7 +47,16 @@ const orgEditTab =
   />
 
 // Warning do not try to group tabs under an isFlag TabPanes must be direct Children of Tabs.
-export const OrgTabs = ({ org, archivedOpportunities, onChange, canManage, defaultTab, isAuthenticated }) => (
+export const OrgTabs = ({
+  org,
+  archivedOpportunities,
+  archivedOpportunitiesLoading,
+  archivedOpportunitiesError,
+  onChange,
+  canManage,
+  defaultTab,
+  isAuthenticated
+}) => (
   <VTabs defaultActiveKey={defaultTab} onChange={onChange}>
     <TabPane tab={orgTab} key='about' orgTab='about'>
       <OrgAboutPanel org={org} />
@@ -55,14 +64,15 @@ export const OrgTabs = ({ org, archivedOpportunities, onChange, canManage, defau
     <TabPane tab={orgOffersTab} key='offers' orgTab='offers'>
       {/* // TODO: [VP-554] move the OpList for this org from the parent page to a tab  */}
     </TabPane>
-    <TabPane tab='History' key='history' orgTab='history'>
-      <h2>Previous opportunities</h2>
-      {archivedOpportunities.length > 0 ? (
-        <OpList ops={archivedOpportunities} />
-      ) : (
-        <p>This organisation does not have any archived opportunities.</p>
-      )}
-    </TabPane>
+    {org.category.includes('op') && (
+      <TabPane tab='History' key='history' orgTab='history'>
+        <OrgHistoryPanel
+          archivedOpportunities={archivedOpportunities}
+          isLoading={archivedOpportunitiesLoading}
+          error={archivedOpportunitiesError}
+        />
+      </TabPane>
+    )}
     {isAuthenticated && (
       <TabPane tab={orgInstructionTab} key='instructions' orgTab='instructions'>
         <ProfilePanel>
@@ -102,7 +112,9 @@ OrgTabs.propTypes = {
     facebook: PropTypes.string,
     twitter: PropTypes.string
   }).isRequired,
-  archivedOpportunities: PropTypes.array
+  archivedOpportunities: PropTypes.array,
+  archivedOpportunitiesLoading: PropTypes.bool,
+  archivedOpportunitiesError: PropTypes.object
 }
 
 export default OrgTabs

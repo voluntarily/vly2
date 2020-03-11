@@ -159,7 +159,16 @@ export const OrgDetailPage = ({
         {isAuthenticated && <RegisterMemberSection orgid={org._id} meid={me._id.toString()} />}
         {saved && <HomeButton />}
       </OrgBanner>
-      <OrgTabs org={org} archivedOpportunities={archivedOpportunities.data} canManage={canManage} isAuthenticated={isAuthenticated} defaultTab={tab} onChange={handleTabChange} />
+      <OrgTabs
+        org={org}
+        archivedOpportunities={archivedOpportunities.data}
+        archivedOpportunitiesLoading={archivedOpportunities.loading}
+        archivedOpportunitiesError={archivedOpportunities.error}
+        canManage={canManage}
+        isAuthenticated={isAuthenticated}
+        defaultTab={tab}
+        onChange={handleTabChange}
+      />
     </FullPage>)
 }
 

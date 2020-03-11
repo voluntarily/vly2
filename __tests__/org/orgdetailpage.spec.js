@@ -409,9 +409,9 @@ test('History tab - "op" organisation with archived opportunities', async t => {
   findAntTabByText(wrapper.find('.ant-tabs-tab'), 'History').simulate('click')
   const historyTab = wrapper.find('TabPane[orgTab="history"]')
 
-  t.true(historyTab.exists())
-  t.true(historyTab.exists('OpList'))
-  t.true(historyTab.exists('OpCard'))
+  t.true(historyTab.exists(), '"op" organisations should have a history tab')
+  t.true(historyTab.exists('OpList'), 'Organisations with archived opportunities should have an OpList')
+  t.true(historyTab.exists('OpCard'), 'OpList should contain OpCards')
 })
 
 test('History tab - "op" organisation without archived opportunities', async t => {
@@ -434,8 +434,101 @@ test('History tab - "op" organisation without archived opportunities', async t =
   findAntTabByText(wrapper.find('.ant-tabs-tab'), 'History').simulate('click')
   const historyTab = wrapper.find('TabPane[orgTab="history"]')
 
-  t.true(historyTab.exists())
-  t.is(historyTab.find('p').text(), 'This organisation does not have any archived opportunities.')
+  t.is(
+    historyTab.find('p').text(),
+    'This organisation does not have any archived opportunities.',
+    'Organisation without archived opportunities should display "no records found" message'
+  )
+})
+
+test('History tab - "op" organisation archived opportunities loading', async t => {
+  const props = {
+    isNew: false,
+    orgid: t.context.orgs[0],
+    organisations: t.context.defaultstore.organisations,
+    archivedOpportunities: {
+      sync: false,
+      loading: true,
+      error: null,
+      data: []
+    },
+    members: t.context.defaultstore.members,
+    isAuthenticated: false,
+    me: t.context.people[1]
+  }
+
+  const wrapper = mountWithIntl(
+    <OrgDetailPage {...props} />
+  )
+
+  findAntTabByText(wrapper.find('.ant-tabs-tab'), 'History').simulate('click')
+  const historyTab = wrapper.find('TabPane[orgTab="history"]')
+
+  t.true(
+    historyTab.exists('ReduxLoading'),
+    'History tab should show loading animation when records are still loading'
+  )
+})
+
+test('History tab - "op" organisation archived opportunities error', async t => {
+  const props = {
+    isNew: false,
+    orgid: t.context.orgs[0],
+    organisations: t.context.defaultstore.organisations,
+    archivedOpportunities: {
+      sync: false,
+      loading: false,
+      error: {
+        message: 'Something bad happened'
+      },
+      data: []
+    },
+    members: t.context.defaultstore.members,
+    isAuthenticated: false,
+    me: t.context.people[1]
+  }
+
+  const wrapper = mountWithIntl(
+    <OrgDetailPage {...props} />
+  )
+
+  findAntTabByText(wrapper.find('.ant-tabs-tab'), 'History').simulate('click')
+  const historyTab = wrapper.find('TabPane[orgTab="history"]')
+
+  t.true(
+    historyTab.exists('Alert'),
+    'History tab should display alert when loading records fails'
+  )
+})
+
+test('History tab - non "op" organisation', async t => {
+  const organisation = Object.assign({}, t.context.orgs[0])
+
+  const props = {
+    isNew: false,
+    orgid: organisation._id,
+    organisations: [organisation],
+    archivedOpportunities: {
+      sync: false,
+      loading: false,
+      error: {
+        message: 'Something bad happened'
+      },
+      data: []
+    },
+    members: t.context.defaultstore.members,
+    isAuthenticated: false,
+    me: t.context.people[1]
+  }
+
+  const wrapper = mountWithIntl(
+    <OrgDetailPage {...props} />
+  )
+
+  t.false(
+    wrapper.exists('TabPane[orgTab="history"]'),
+    'History tab should not display for non "op" organisations'
+  )
 })
 
 const findAntTabByText = (tabs, tabText) => {
