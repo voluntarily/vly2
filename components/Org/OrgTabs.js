@@ -1,50 +1,15 @@
 import { Tabs } from 'antd'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
 import MemberSection from '../Member/MemberSection'
 import { ProfilePanel } from '../VTheme/Profile'
 import { OrgAboutPanel } from './OrgAboutPanel'
 import Html from '../VTheme/Html'
 import VTabs from '../VTheme/VTabs'
 import { OrgHistoryPanel } from './OrgHistoryPanel'
+import { orgTab, orgMemberTab, orgInstructionTab, orgOffersTab, orgEditTab, orgHistoryTab } from './OrgTabs.messages'
 
 const { TabPane } = Tabs
-
-const orgTab =
-  <FormattedMessage
-    id='orgTabs.about'
-    defaultMessage='About'
-    description='Tab label on OrgDetailsPage'
-  />
-
-const orgMemberTab =
-  <FormattedMessage
-    id='orgMembers'
-    defaultMessage='Members'
-    description='show opportunities list on volunteer home page'
-  />
-
-const orgInstructionTab =
-  <FormattedMessage
-    id='orgInstructions'
-    defaultMessage='Getting Started'
-    description='show opportunities list on volunteer home page'
-  />
-
-const orgOffersTab =
-  <FormattedMessage
-    id='orgOffers'
-    defaultMessage='Offers'
-    description='show opportunities list on volunteer home page'
-  />
-
-const orgEditTab =
-  <FormattedMessage
-    id='orgTabs.edit'
-    defaultMessage='Edit'
-    description='Tab label for org Editor panel on organisation page'
-  />
 
 // Warning do not try to group tabs under an isFlag TabPanes must be direct Children of Tabs.
 export const OrgTabs = ({
@@ -65,7 +30,7 @@ export const OrgTabs = ({
       {/* // TODO: [VP-554] move the OpList for this org from the parent page to a tab  */}
     </TabPane>
     {org.category.includes('op') && (
-      <TabPane tab='History' key='history' orgTab='history'>
+      <TabPane tab={orgHistoryTab} key='history' orgTab='history'>
         <OrgHistoryPanel
           archivedOpportunities={archivedOpportunities}
           isLoading={archivedOpportunitiesLoading}
