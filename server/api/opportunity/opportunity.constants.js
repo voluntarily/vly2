@@ -38,11 +38,21 @@ const OpportunityFields = {
   DATE_ADDED: 'dateAdded',
   TAGS: 'tags'
 }
-
+const OpportunitySummaryFields = [
+  OpportunityFields.ID,
+  OpportunityFields.NAME,
+  OpportunityFields.SUBTITLE,
+  OpportunityFields.IMG_URL,
+  OpportunityFields.STATUS,
+  OpportunityFields.DATE,
+  OpportunityFields.LOCATION,
+  OpportunityFields.DURATION
+]
 module.exports = {
   SchemaName: 'Opportunity',
   OpportunityStatus,
   OpportunityPublishedStatus,
   OpportunityFields,
+  OpportunitySummaryFields,
   OpportunityRoutes
 }
