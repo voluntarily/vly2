@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import { Icon } from 'antd'
 import Link from 'next/link'
+import { FormattedMessage } from 'react-intl'
+import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 
 const HeaderContainer = styled.div`
   width: 100%;
@@ -15,6 +17,10 @@ const HeaderContainer = styled.div`
   h4 {
     color: white;
     font-weight: 600;
+
+    a {
+      filter: brightness(150%);
+    }
   }
 `
 
@@ -27,16 +33,35 @@ const TextContainer = styled.div`
   margin-top: 0rem;
 `
 
-const OpArchivedHeader = ({ date }) => (
+export const OpArchivedHeader = ({ status }) => (
   <HeaderContainer>
     <IconContainer>
       <Icon type='history' style={{ fontSize: '32px', color: 'white' }} />
     </IconContainer>
     <TextContainer>
       <h4>
-        This activity has already happened, but you can still get involved with{' '}
+        {status === OpportunityStatus.COMPLETED
+          ? (
+            <FormattedMessage
+              id='OpArchivedHeader.Completed.message'
+              defaultMessage='This activity has already happened, but you can still get involved with'
+              description='Message in banner activity has completed'
+            />)
+          : (
+            <FormattedMessage
+              id='OpArchivedHeader.Cancelled.message'
+              defaultMessage='This activity was cancelled, but you can still get involved with'
+              description='Message in banner activity has cancelled'
+            />)}
+        {' '}
         <Link href='/'>
-          <a style={{ color: '#CFBCF2' }}>similar activities here</a>
+          <a>
+            <FormattedMessage
+              id='OpArchivedHeader.link'
+              defaultMessage='similar activities here'
+              description='Message in banner activity has completed link text'
+            />
+          </a>
         </Link>
       </h4>
     </TextContainer>

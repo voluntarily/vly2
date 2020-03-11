@@ -15,6 +15,8 @@ import OpUnknown from '../../components/Op/OpUnknown'
 import OpDetailForm from '../../components/Op/OpDetailForm'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import { Helmet } from 'react-helmet'
+import { OpStatusStamp } from '../../components/Op/OpStatus'
+import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 
 const blankOp = {
   name: '',
@@ -22,7 +24,7 @@ const blankOp = {
   imgUrl: '/static/img/opportunity/opportunity.png',
   duration: '',
   location: 'Online',
-  status: 'inactive',
+  status: OpportunityStatus.DRAFT,
   date: [],
   startDate: null,
   endDate: null,
@@ -180,6 +182,7 @@ export const OpDetailPage = ({
         <title>{op.name} - Voluntarily</title>
       </Helmet>
       <OpBanner op={op}>
+        <OpStatusStamp status={op.status} />
         <OpVolunteerInterestSection
           isAuthenticated={isAuthenticated}
           canRegisterInterest={canRegisterInterest}
@@ -187,7 +190,7 @@ export const OpDetailPage = ({
           meid={me && me._id}
         />
       </OpBanner>
-      <OpTabs op={op} canManage={canManage} defaultTab={tab} onChange={handleTabChange} author={me._id} />
+      <OpTabs op={op} canManage={canManage} canEdit={canManage} defaultTab={tab} onChange={handleTabChange} author={me._id} />
     </FullPage>)
 }
 
