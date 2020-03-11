@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
@@ -7,11 +6,10 @@ import Loading from '../../components/Loading'
 import OpBanner from '../../components/Op/OpBanner'
 import OpTabs from '../../components/Op/OpTabs'
 import OpUnknown from '../../components/Op/OpUnknown'
-import { OpStatusStamp } from '../../components/Op/OpStatus'
+import OpArchivedHeader from '../../components/Op/OpArchivedHeader'
 import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withArchivedOpportunities, withMembers } from '../../lib/redux/reduxApi.js'
-import { FormattedMessage } from 'react-intl'
 const { Role } = require('../../server/services/authorize/role')
 
 export const ArchivedOpDetailPage = ({
@@ -58,25 +56,9 @@ export const ArchivedOpDetailPage = ({
       <Helmet>
         <title>{op.name} Archived - Voluntarily</title>
       </Helmet>
+      <OpArchivedHeader status={op.status} />
       <OpBanner op={op}>
-        <OpStatusStamp status={op.status} />
-        <p>
-          <FormattedMessage
-            id='ArchivedOpDetailPage.Completed.message'
-            defaultMessage='This activity has already happened, but you can still get involved with'
-            description='Message in banner activity has completed'
-          />
-          {' '}
-          <Link href='/'>
-            <a>
-              <FormattedMessage
-                id='ArchivedOpDetailPage.Completed.link'
-                defaultMessage='similar activities here'
-                description='Message in banner activity has completed link text'
-              />
-            </a>
-          </Link>
-        </p>
+        {/* <OpStatusStamp status={op.status} /> */}
       </OpBanner>
       <OpTabs op={op} canManage={canManage} defaultTab={tab} onChange={handleTabChange} author={me._id} />
     </FullPage>)
@@ -88,11 +70,10 @@ ArchivedOpDetailPage.getInitialProps = async ({ store, query }) => {
   const opExists = !!(query && query.id) // !! converts to a boolean value
 
   if (me._id) { // get viewers membership so we can tell if they are org Admin
-    // TODO: may already be in the session
     await store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() }))
   }
 
-  if (opExists) {
+  if (opExists) { // get the archived op for this page
     await store.dispatch(reduxApi.actions.archivedOpportunities.get(query))
   }
 }
