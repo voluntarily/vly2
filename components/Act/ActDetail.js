@@ -23,6 +23,16 @@ import {
   ItemImage
 } from '../VTheme/ItemList'
 import { Role } from '../../server/services/authorize/role'
+import styled from 'styled-components'
+
+const DocumentLink = styled.a`
+  &::before
+  {
+    content: '🗎';
+    display: inline-block;
+    margin-right: 4px;
+  }
+`
 
 export function ActDetail ({ act, me }) {
   const img = act.imgUrl || '/static/missingimage.svg'
@@ -98,6 +108,25 @@ export function ActDetail ({ act, me }) {
       </OpSectionGrid>
       <Divider />
 
+      {act.documents && act.documents.length > 0 && (
+        <>
+          <OpSectionGrid>
+            <div>
+              <h2>Documents</h2>
+            </div>
+            <ItemDescription>
+              <ul>
+                {act.documents.map(document => (
+                  <li key={document.location}>
+                    <DocumentLink href={document.location}>{document.filename}</DocumentLink>
+                  </li>
+                ))}
+              </ul>
+            </ItemDescription>
+          </OpSectionGrid>
+          <Divider />
+        </>)}
+
       <OpSectionGrid>
         <div>
           <h2>Written by</h2>
@@ -122,6 +151,7 @@ ActDetail.propTypes = {
     name: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
+    documents: PropTypes.array,
     description: PropTypes.string,
     volunteers: PropTypes.number,
     space: PropTypes.string,
