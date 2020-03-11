@@ -15,6 +15,7 @@ import OpUnknown from '../../components/Op/OpUnknown'
 import OpDetailForm from '../../components/Op/OpDetailForm'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import { Helmet } from 'react-helmet'
+import { OpStatusStamp } from '../../components/Op/OpStatus'
 
 const blankOp = {
   name: '',
@@ -180,6 +181,7 @@ export const OpDetailPage = ({
         <title>{op.name} - Voluntarily</title>
       </Helmet>
       <OpBanner op={op}>
+        <OpStatusStamp status={op.status} />
         <OpVolunteerInterestSection
           isAuthenticated={isAuthenticated}
           canRegisterInterest={canRegisterInterest}

@@ -7,7 +7,7 @@ import Loading from '../../components/Loading'
 import OpBanner from '../../components/Op/OpBanner'
 import OpTabs from '../../components/Op/OpTabs'
 import OpUnknown from '../../components/Op/OpUnknown'
-import { Stamp } from '../../components/VTheme/Stamp'
+import { OpStatusStamp } from '../../components/Op/OpStatus'
 import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withArchivedOpportunities, withMembers } from '../../lib/redux/reduxApi.js'
@@ -59,13 +59,7 @@ export const ArchivedOpDetailPage = ({
         <title>{op.name} Archived - Voluntarily</title>
       </Helmet>
       <OpBanner op={op}>
-        <Stamp>
-          <FormattedMessage
-            id='ArchivedOpDetailPage.Stamp.Completed'
-            defaultMessage='Completed'
-            description='Stamp on banner saying completed.'
-          />
-        </Stamp>
+        <OpStatusStamp status={op.status} />
         <p>
           <FormattedMessage
             id='ArchivedOpDetailPage.Completed.message'
@@ -117,5 +111,5 @@ ArchivedOpDetailPage.propTypes = {
   })
 }
 
-export const OpDetailPageWithOps = withMembers(withArchivedOpportunities(ArchivedOpDetailPage))
+export const ArchivedOpDetailPageWithArchivedOps = withMembers(withArchivedOpportunities(ArchivedOpDetailPage))
 export default publicPage(withMembers(withArchivedOpportunities(ArchivedOpDetailPage)))
