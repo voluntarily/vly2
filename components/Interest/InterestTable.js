@@ -16,6 +16,7 @@ export const ExpandedInterestGrid = styled.div`
   grid-template-columns: 29rem 49rem;
   grid-column-gap: 2rem;
   min-height: 20rem;
+  max-height: 20rem;
   height: auto;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
