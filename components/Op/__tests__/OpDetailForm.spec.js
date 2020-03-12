@@ -5,7 +5,6 @@ import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-hel
 import OpDetailForm from '../OpDetailForm'
 import sinon from 'sinon'
 const { sortedLocations } = require('../../../server/api/location/locationData')
-const Opportunity = require('../../../server/api/opportunity/opportunity')
 
 // Initial opportunities
 const op = {
@@ -151,10 +150,11 @@ test('render the detail with new blank op', t => {
   t.truthy(submitOp.calledOnce)
 })
 
-test('Save a op as draft with correct validation' , async t => {
+test('Save a op as draft with correct validation', async t => {
   const submitOp = sinon.spy()
   const cancelOp = sinon.spy()
-  const me = { _id: '5ccbffff958ff4833ed2188d',
+  const me = {
+    _id: '5ccbffff958ff4833ed2188d',
     orgMembership: [
       {
         organisation: {
@@ -163,7 +163,8 @@ test('Save a op as draft with correct validation' , async t => {
           slug: 'carey-org'
         }
       }
-    ]}
+    ]
+  }
 
   const wrapper = mountWithIntl(
     <OpDetailForm
@@ -180,14 +181,14 @@ test('Save a op as draft with correct validation' , async t => {
   t.truthy(wrapper.find('.name'))
 
   const name = wrapper.find('.name').first()
-  name.simulate('change', { target: { value: 'bob' }})
+  name.simulate('change', { target: { value: 'bob' } })
 
   t.truthy(wrapper.find('.organisation'))
 
   const org = wrapper.find('.organisation').first()
   org.simulate('click')
   wrapper.find('.ant-select-dropdown li').first().simulate('click')
-  
+
   const draftButton = wrapper.find('#saveOpBtn').first()
   draftButton.simulate('click')
 
@@ -199,7 +200,8 @@ test('Save a op as draft with correct validation' , async t => {
 test('Publish a op with correct validation', t => {
   const submitOp = sinon.spy()
   const cancelOp = sinon.spy()
-  const me = { _id: '5ccbffff958ff4833ed2188d',
+  const me = {
+    _id: '5ccbffff958ff4833ed2188d',
     orgMembership: [
       {
         organisation: {
@@ -208,7 +210,8 @@ test('Publish a op with correct validation', t => {
           slug: 'carey-org'
         }
       }
-    ]}
+    ]
+  }
 
   const wrapper = mountWithIntl(
     <OpDetailForm
@@ -225,10 +228,10 @@ test('Publish a op with correct validation', t => {
   t.truthy(wrapper.find('.name'))
 
   const name = wrapper.find('.name').first()
-  name.simulate('change', { target: { value: 'bob' }})
+  name.simulate('change', { target: { value: 'bob' } })
 
   const subtitle = wrapper.find('.subtitle').first()
-  subtitle.simulate('change', { target: {value: 'bobs oportunity'}})
+  subtitle.simulate('change', { target: { value: 'bobs oportunity' } })
 
   t.truthy(wrapper.find('.organisation'))
   const org = wrapper.find('.organisation').first()
@@ -236,7 +239,7 @@ test('Publish a op with correct validation', t => {
   wrapper.find('.ant-select-dropdown li').first().simulate('click')
 
   const commitment = wrapper.find('.commitment').first()
-  commitment.simulate('change', { target: { value: '8 hours'}})
+  commitment.simulate('change', { target: { value: '8 hours' } })
 
   const datePicker = wrapper.find('.ant-calendar-picker-input')
   datePicker.at(0).simulate('click')
