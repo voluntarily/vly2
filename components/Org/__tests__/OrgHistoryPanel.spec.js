@@ -75,7 +75,7 @@ test('Results', async t => {
 })
 
 test('Error', t => {
-  const expectedErrorMessage = 'HISTORYERRORMESSAGE'
+  const expectedErrorMessage = 'Error loading previous opportunities: 500 Internal Server Error'
 
   const store = configureStore([thunk])({
     archivedOpportunities: {

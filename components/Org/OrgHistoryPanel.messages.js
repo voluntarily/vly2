@@ -17,16 +17,7 @@ const orgHistoryNotFound = (
   />
 )
 
-const orgHistoryError = (
-  <FormattedMessage
-    id='orgTabs.history.error'
-    defaultMessage='Something went wrong'
-    description='Error message to display when fetching archived opportunities fails'
-  />
-)
-
 export {
   orgHistoryTitle,
-  orgHistoryNotFound,
-  orgHistoryError
+  orgHistoryNotFound
 }

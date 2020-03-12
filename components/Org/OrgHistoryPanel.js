@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ReduxLoading from '../Loading'
-import { Alert } from 'antd'
-import { orgHistoryTitle, orgHistoryNotFound, orgHistoryError } from './OrgHistoryPanel.messages'
+import { orgHistoryTitle, orgHistoryNotFound } from './OrgHistoryPanel.messages'
 import reduxApi from '../../lib/redux/reduxApi'
 
 export const OrgHistoryPanel = ({ organisationId }) => {
@@ -29,16 +28,8 @@ export const OrgHistoryPanel = ({ organisationId }) => {
 
   let content = ''
 
-  if (loadingState.loading || (!loadingState.sync && !loadingState.error)) {
-    content = <ReduxLoading />
-  } else if (loadingState.error) {
-    content = (
-      <Alert
-        style={{ margin: '2rem' }}
-        message={orgHistoryError}
-        type='error'
-      />
-    )
+  if (loadingState.loading || (!loadingState.sync && !loadingState.error) || loadingState.error) {
+    content = <ReduxLoading entity={loadingState} label='previous opportunities' />
   } else if (archivedOpportunities.length === 0) {
     content = <p>{orgHistoryNotFound}</p>
   } else {
