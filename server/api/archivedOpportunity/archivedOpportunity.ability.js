@@ -1,14 +1,14 @@
 const { Role } = require('../../services/authorize/role')
 const { Action } = require('../../services/abilities/ability.constants')
 const { SchemaName } = require('./archivedOpportunity.constants')
-const { OpportunityStatus, OpportunityFields, OpportunitySummaryFields } = require('../opportunity/opportunity.constants')
+const { OpportunityStatus, OpportunityFields, OpportunityListFields } = require('../opportunity/opportunity.constants')
 
 const ruleBuilder = session => {
   const anonAbilities = [{
     subject: SchemaName,
     action: Action.LIST,
     conditions: { status: { $in: [OpportunityStatus.COMPLETED] } },
-    fields: Object.values(OpportunitySummaryFields)
+    fields: Object.values(OpportunityListFields)
   }, {
     subject: SchemaName,
     action: Action.READ,
@@ -33,7 +33,7 @@ const ruleBuilder = session => {
       subject: SchemaName,
       action: Action.LIST,
       conditions: { requestor: session.me && session.me._id },
-      fields: Object.values(OpportunitySummaryFields)
+      fields: Object.values(OpportunityListFields)
     }, {
       subject: SchemaName,
       action: Action.READ,
@@ -62,7 +62,7 @@ const ruleBuilder = session => {
     {
       subject: SchemaName,
       action: Action.LIST,
-      fields: Object.values(OpportunitySummaryFields)
+      fields: Object.values(OpportunityListFields)
     }, {
       subject: SchemaName,
       action: Action.READ,
@@ -84,7 +84,7 @@ const ruleBuilder = session => {
     {
       subject: SchemaName,
       action: Action.LIST,
-      fields: Object.values(OpportunitySummaryFields)
+      fields: Object.values(OpportunityListFields)
     }, {
       subject: SchemaName,
       action: Action.READ,

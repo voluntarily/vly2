@@ -4,6 +4,7 @@ const escapeRegex = require('../../util/regexUtil')
 const { Action } = require('../../services/abilities/ability.constants')
 const { Role } = require('../../services/authorize/role')
 const sanitizeHtml = require('sanitize-html')
+const { isValidFileUrl } = require('../file/file.controller')
 /**
  * Get all orgs
  * @param req
@@ -100,6 +101,15 @@ const putActivity = async (req, res) => {
     return res.status(403).send()
   }
 
+  const { documents: docs } = req.body
+  if (docs && Array.isArray(docs)) {
+    for (const doc of docs) {
+      if (!isValidFileUrl(doc.location)) {
+        return res.status(400).send('Invalid document location URL')
+      }
+    }
+  }
+
   await Activity.updateOne({ _id: req.params._id }, { $set: req.body })
 
   getActivity(req, res)
@@ -125,6 +135,15 @@ const createActivity = async (req, res) => {
 
   if (!canCreate) {
     return res.status(403).send()
+  }
+
+  const { documents: docs } = req.body
+  if (docs && Array.isArray(docs)) {
+    for (const doc of docs) {
+      if (!isValidFileUrl(doc.location)) {
+        return res.status(400).send('Invalid document location URL')
+      }
+    }
   }
 
   try {

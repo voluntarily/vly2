@@ -7,7 +7,7 @@ import people from '../../person/__tests__/person.fixture'
 import { jwtData, jwtDataAlice, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
 import archivedOps from './archivedOpportunity.fixture'
 import ArchivedOpportunity from '../archivedOpportunity'
-import { OpportunityStatus, OpportunityFields, OpportunitySummaryFields } from '../../opportunity/opportunity.constants'
+import { OpportunityStatus, OpportunityFields, OpportunityListFields } from '../../opportunity/opportunity.constants'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -50,7 +50,7 @@ const testDataByRole = [
     roleName: 'anon',
     cookie: null,
     getExpectedArchivedOps: getCompletedOps,
-    listExpectedFields: OpportunitySummaryFields,
+    listExpectedFields: OpportunityListFields,
     readExpectedFields: Object.values(OpportunityFields),
     expectedPostStatus: 403,
     expectedPutStatus: 403,
@@ -60,7 +60,7 @@ const testDataByRole = [
     roleName: 'admin',
     cookie: `idToken=${jwtData.idToken}`,
     getExpectedArchivedOps: (archivedOps) => archivedOps,
-    listExpectedFields: OpportunitySummaryFields, // admins see all fields
+    listExpectedFields: OpportunityListFields, // admins see all fields
     readExpectedFields: Object.values(OpportunityFields),
     expectedPostStatus: 200,
     expectedPutStatus: 200,
@@ -70,7 +70,7 @@ const testDataByRole = [
     roleName: 'ap',
     cookie: `idToken=${jwtDataDali.idToken}`,
     getExpectedArchivedOps: getCompletedOps,
-    listExpectedFields: OpportunitySummaryFields,
+    listExpectedFields: OpportunityListFields,
     readExpectedFields: Object.values(OpportunityFields),
     expectedPostStatus: 403,
     expectedPutStatus: 403,
@@ -80,7 +80,7 @@ const testDataByRole = [
     roleName: 'op',
     cookie: `idToken=${jwtDataAlice.idToken}`,
     getExpectedArchivedOps: (archivedOps) => archivedOps,
-    listExpectedFields: OpportunitySummaryFields,
+    listExpectedFields: OpportunityListFields,
     readExpectedFields: Object.values(OpportunityFields),
     expectedPostStatus: 403,
     expectedPutStatus: 403,
