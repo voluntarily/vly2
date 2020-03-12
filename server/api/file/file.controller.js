@@ -50,7 +50,7 @@ function getBucketName () {
  * Is the str a valid amazon s3 bucket for this environment.
  * @param {string} str A URL.
  */
-function isValidFileUrl (str) {
+function isValidFileUrl (str, bucketName = getBucketName()) {
   if (!str) {
     return false
   }
@@ -58,7 +58,7 @@ function isValidFileUrl (str) {
   try {
     const url = new URL(str)
 
-    return !!(url.hostname.match(/amazonaws.com$/) && url.pathname.startsWith(`/${getBucketName()}`))
+    return !!(url.hostname.match(/amazonaws.com$/) && url.pathname.startsWith(`/${bucketName}`))
   } catch {
     return false
   }
