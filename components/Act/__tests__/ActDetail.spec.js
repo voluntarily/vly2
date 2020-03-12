@@ -71,3 +71,25 @@ test('render Volunteers per student properly if the value is < 1', t => {
   const wrapper = mountWithIntl(<ItemVolunteers volunteers={0.2} type='act' />)
   t.is(wrapper.text(), '🙋 Volunteers per student:5')
 })
+
+test('render documents on activity form', t => {
+  const act = {
+    _id: '5cc903e5f94141437622cea7',
+    name: 'herding cats',
+    subtitle: 'can you train cats using lazers',
+    description: 'Probably not ok to do this',
+    status: 'active',
+    documents: [{ 
+        filename: 'abc.pdf',
+        location: 'https://amazon.com/abc.pdf'
+    },
+    { 
+      filename: 'xyz.pdf',
+      location: 'https://amazon.com/xyz.pdf'
+    }]
+  }
+
+  const wrapper = mountWithIntl(<ActDetail act={act} />)
+  t.truthy(wrapper.find('Head'))
+  t.is(wrapper.find('#documents li').length, 2)
+})

@@ -115,7 +115,7 @@ export function ActDetail ({ act, me }) {
               <h2>Documents</h2>
             </div>
             <ItemDescription>
-              <ul>
+              <ul id="documents">
                 {act.documents.map(document => (
                   <li key={document.location}>
                     <DocumentLink href={document.location}>{document.filename}</DocumentLink>
