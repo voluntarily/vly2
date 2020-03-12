@@ -62,7 +62,7 @@ class FileUpload extends Component {
       debug: false,
       formData: true,
       restrictions: {
-        maxFileSize: this.TWO_MEGABYTES,
+        maxFileSize: props.maxFileSize || this.TWO_MEGABYTES,
         maxNumberOfFiles: props.maxNumberOfFiles,
         minNumberOfFiles: 0,
         allowedFileTypes: props.allowedFileTypes
@@ -162,6 +162,7 @@ class FileUpload extends Component {
 }
 
 FileUpload.PropTypes = {
+  maxFileSize: PropTypes.number,
   maxNumberOfFiles: PropTypes.number,
   allowedFileTypes: PropTypes.arrayOf(PropTypes.string),
   onFilesChanged: PropTypes.func,
