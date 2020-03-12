@@ -9,7 +9,6 @@ import {
   ItemVenue,
   ItemDuration,
   ItemLocation,
-  ItemStatus,
   ItemDate,
   ItemImage,
   ItemIdLine
@@ -56,8 +55,6 @@ const OpBanner = ({ op, children }) => {
             {op.venue && <ItemVenue venue={op.venue} />}
             {op.duration && <ItemDuration duration={op.duration} />}
             <ItemDate startDate={startDate} endDate={endDate} />
-            <ItemStatus status={op.status} />
-
           </ItemContainer>
           <>
             {children}
