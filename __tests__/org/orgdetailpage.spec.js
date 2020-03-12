@@ -377,13 +377,8 @@ test('History tab - "op" organisation', async t => {
     me: t.context.people[1]
   }
 
-  const historyTabText = 'HISTORY'
-
-  const wrapper = mountWithMockIntl(
-    <OrgDetailPage {...props} />,
-    {
-      'orgTabs.history': historyTabText
-    }
+  const wrapper = mountWithIntl(
+    <OrgDetailPage {...props} />
   )
 
   const historyTab = wrapper.find('TabPane[orgTab="history"]')
