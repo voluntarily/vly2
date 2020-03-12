@@ -25,7 +25,7 @@ const TextHeroTitle = styled.h1`
   font-weight: 700;
   font-size: 4.5rem;
   color: #000000;
-  letter-spacing: -4.05px;
+  letter-spacing: -3.05px;
   line-height: 96px;
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {

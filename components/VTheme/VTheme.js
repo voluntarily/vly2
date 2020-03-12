@@ -211,6 +211,29 @@ export const ActivityContainer = styled.div`
   }
 `
 
+export const SectionContainer = styled.section`
+  margin: 8rem 0;
+  position: relative;
+
+ 
+
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+  }
+  @media screen and (max-width: 768px) {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    width: calc(100vw - 2rem);
+
+
+  }
+  `
+
 export const GridTestItem = styled.div`
   background-color: pink;
 `
@@ -268,6 +291,12 @@ I have done a terrible example so far, but will aim to fix usage soon
 
 ====================================================
 */
+
+export const TextPromo = styled.p`
+font-size:1.5rem;
+font-weight: 400;
+letter-spacing: -0.035rem;
+`
 
 export const TextBigTitle = styled.h1`
   font-weight: 900;

@@ -8,11 +8,11 @@ import PersonaSection from '../../components/LandingPageComponents/PersonaSectio
 import {
   FullPage,
   HalfGrid,
-  P,
-  PBold,
+  TextPromo,
   Spacer,
   SpacerSmall,
-  TripleGrid
+  SectionContainer
+
 } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import Hero2 from '../../components/LandingPageComponents/Hero2'
@@ -23,7 +23,7 @@ import {
 
 // annoying hack to make sure buttons dont inherit block width
 const ButtonContainer = styled.div`
-  margin-top: 1rem;
+
   @media screen and (max-width: 768px) {
     margin-top: 0;
   }
@@ -95,31 +95,14 @@ const ListItemImage = styled.img`
 
 // Page-Specific Containers
 
-const SectionContainer = styled.div`
-  margin: 8rem 0;
-
-  position: relative;
-  @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-  }
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-  }
-  @media screen and (max-width: 768px) {
-    margin-top: 2.5rem;
-    margin-bottom: 2.5rem;
-    width: calc(100vw - 2rem);
-  }
-`
-
 const SectionGridItem = styled.div`
   display: grid;
   align-self: center;
   @media screen and (max-width: 768px) {
     margin-bottom: 4rem;
   }
+
+
 `
 
 const SectionGridItemLeft = styled.div`
@@ -132,17 +115,11 @@ const SectionGridItemLeft = styled.div`
 `
 
 const ItemContainer = styled.div`
-  height: 10rem;
+
   @media screen and (max-width: 768px) {
     margin-bottom: 2rem;
   }
 ` // end itemcontainer
-
-const ItemIcon = styled.img`
-  width: 2.5rem;
-  margin-top: 2rem;
-  margin-bottom: 0.5rem;
-` // end itemIcon
 
 export class Teacher extends Component {
   render () {
@@ -178,10 +155,10 @@ export class Teacher extends Component {
                 <h2>
                   <strong>Free resources</strong>
                 </h2>
-                <h4>
+                <TextPromo>
                   Organize activities in a few clicks with free educational
                   activity templates and resources
-                </h4>
+                </TextPromo>
                 <ButtonContainer>
                   <Button shape='round' size='large'>
                     See resources
@@ -197,10 +174,10 @@ export class Teacher extends Component {
                 <h2>
                   <strong>Bring in Expert Volunteers</strong>
                 </h2>
-                <h4>
+                <TextPromo>
                   Skilled volunteers want to help you out with your teaching by
                   sharing their skills
-                </h4>
+                </TextPromo>
                 <ButtonContainer>
                   <Button shape='round' size='large'>
                     Sign up
@@ -227,85 +204,21 @@ export class Teacher extends Component {
             </SponsorContainer>
           </SectionContainer>
           <Divider />
-          <SectionContainer>
-            <SectionTitle>Features</SectionTitle>
-            <TripleGrid>
-              <ItemContainer>
-                <ItemIcon src='/static/img/icons/search.svg' />
-                <PBold>Placeholder Title</PBold>
-                <P>
-                  Voluntarily is an awesome project and this is placeholder copy
-                  that will be filled soon
-                </P>
-              </ItemContainer>
-              <ItemContainer>
-                <ItemIcon src='/static/img/icons/search.svg' />
-                <PBold>Impact reporting</PBold>
-                <P>
-                  V measures the impact your actions have on New Zealand. See
-                  how your business ranks in social impact on our leaderboard.
-                </P>
-              </ItemContainer>
-              <ItemContainer>
-                <ItemIcon src='/static/img/icons/search.svg' />
-                <PBold>HR system integration</PBold>
-                <P>
-                  V supports single sign on, so you don't have to remember extra
-                  credentials if you're a large corp
-                </P>
-              </ItemContainer>
-              <ItemContainer>
-                <ItemIcon src='/static/img/icons/search.svg' />
-                <PBold>Automated police vetting</PBold>
-                <P>
-                  V provides you and your staff with an easy way to find schools
-                  and charities that need help with tech.
-                </P>
-              </ItemContainer>
-              <ItemContainer>
-                <ItemIcon src='/static/img/icons/search.svg' />
-                <PBold>Cause Targeting</PBold>
-                <P>
-                  Our systems enable you to target specific causes you want to
-                  support
-                </P>
-              </ItemContainer>
-              <ItemContainer>
-                <ItemIcon src='/static/img/icons/search.svg' />
-                <PBold>Integration</PBold>
-                <P>
-                  V supports single sign on, so you don't have to remember extra
-                  credentials if you're a large corp
-                </P>
-              </ItemContainer>
-            </TripleGrid>
-          </SectionContainer>
 
-          <Divider />
-
-          <SectionTitle>Get Involved</SectionTitle>
           <HalfGrid>
             <ItemContainer>
-              <h4>Sign up for updates</h4>
-              <SpacerSmall />
-              <P>Voluntarily is currently in beta and will launch soon.</P>
+              <h2>Get involved</h2>
+            </ItemContainer>
+            <ItemContainer>
+
+              <TextPromo>Voluntarily is currently in beta and will launch soon.<br />Want to join the beta? Sign up below.</TextPromo>
               <ButtonContainer>
-                <Button type='primary' size='large'>
+                <Button type='primary' size='large' shape='round'>
                   Sign up
                 </Button>
               </ButtonContainer>
-            </ItemContainer>
-            <ItemContainer>
-              <h4>Contact us</h4>
               <SpacerSmall />
-              <P>
-                Want to get more involved in the project? Get in touch below.
-              </P>
-              <br />
-              <a>business@voluntarily.nz</a>
-              <br />
-              <br />
-              <a>+64-9-123-4567</a>
+
               <ButtonContainer />
             </ItemContainer>
           </HalfGrid>
