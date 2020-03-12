@@ -5,7 +5,7 @@
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
-import { Card } from '../VTheme/VTheme'
+import { Card, DescriptionWrapper } from '../VTheme/VTheme'
 import { Icon } from 'antd'
 import styled from 'styled-components'
 
@@ -27,10 +27,6 @@ const StyledIcon = styled(Icon)`
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;    
-`
-
-const DescriptionWrapper = styled.p`
-margin-top: 0.5rem;
 `
 
 // todo if image is not present then use a fallback.
