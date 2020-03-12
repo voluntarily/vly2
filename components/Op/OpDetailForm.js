@@ -391,7 +391,7 @@ class OpDetailForm extends Component {
                   {getFieldDecorator('startDate', {
                     rules: [
                       {
-                        required: this.state.requiredForPublish,
+                        required: false,
                         message: 'Start date is required'
                       }
                     ]

@@ -241,10 +241,6 @@ test('Publish a op with correct validation', t => {
   const commitment = wrapper.find('.commitment').first()
   commitment.simulate('change', { target: { value: '8 hours' } })
 
-  const datePicker = wrapper.find('.ant-calendar-picker-input')
-  datePicker.at(0).simulate('click')
-  wrapper.find('.ant-calendar-today-btn').simulate('click')
-
   const publishButton = wrapper.find('#publishOpBtn').first()
   publishButton.simulate('click')
 
