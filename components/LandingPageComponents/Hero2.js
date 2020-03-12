@@ -77,7 +77,7 @@ const Hero2 = ({ subheader, title }) => (
     <TextHeroTitle>{title}</TextHeroTitle>
 
     <ButtonContainer>
-      <Button shape='round' size='large' type='primary'>
+      <Button shape='round' size='large'>
         Learn More
       </Button>
       &nbsp;&nbsp;

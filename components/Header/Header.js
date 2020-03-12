@@ -1,5 +1,5 @@
 // import { FormattedMessage } from 'react-intl'
-import { Icon, Input, Layout } from 'antd'
+import { Avatar, Icon, Input, Layout } from 'antd'
 import Link from 'next/link'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
@@ -54,6 +54,18 @@ const Logo = styled.img`
     width: 3rem;
   }
 `
+
+const StyledAvatar = styled(Avatar)`
+  background-color: #fff;
+
+  .anticon-user {
+    margin-right: 0px;
+  }
+
+  .ant-imgUrl > i {
+    margin-right: 0px;
+  }
+`
 const SearchInput = styled(Search)`
   width: 20rem;
   display: inline-block;
@@ -82,7 +94,7 @@ const getAllowedLinks = isAuthenticated =>
     .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
 
 // eslint-disable-next-line no-unused-vars
-const Header = ({ isAuthenticated, ...props }) => {
+const Header = ({ isAuthenticated, me, ...props }) => {
   const intl = useIntl()
   let notice = intl.formatMessage({ id: 'notice', defaultMessage: 'none' })
   if (notice === 'none') notice = '' // wipe notice if its set to none
@@ -110,6 +122,18 @@ const Header = ({ isAuthenticated, ...props }) => {
         </Link>
         <div>
           <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
+          {isAuthenticated &&
+            <StyledAvatar>
+              <Link href={me && me._id ? `/people/${me._id}` : '/home'}>
+                <Avatar
+                  size='small'
+                  src={me && me.imgUrlSm}
+                  icon='user'
+                  alt='profile photo'
+                />
+              </Link>
+
+            </StyledAvatar>}
         </div>
       </MenuGrid>
     </Layout.Header>
