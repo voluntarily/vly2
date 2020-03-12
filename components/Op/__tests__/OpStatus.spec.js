@@ -22,7 +22,18 @@ test('render OpStatusStamp for active op', t => {
   )
   t.is(wrapper.find('span').length, 0)
 })
-
+test('render OpStatusStamp for no state', t => {
+  const wrapper = mountWithIntl(
+    <OpStatusStamp />
+  )
+  t.is(wrapper.find('span').length, 0)
+})
+test('render OpStatusStamp for invalid state', t => {
+  const wrapper = mountWithIntl(
+    <OpStatusStamp state='INVALID' />
+  )
+  t.is(wrapper.find('span').length, 0)
+})
 test('render OpStatus for active op', t => {
   const wrapper = mountWithIntl(
     <OpStatus
@@ -30,4 +41,11 @@ test('render OpStatus for active op', t => {
     />
   )
   t.is(wrapper.text(), 'Active')
+})
+
+test('render OpStatus with no status', t => {
+  const wrapper = mountWithIntl(
+    <OpStatus />
+  )
+  t.is(wrapper.text(), '')
 })
