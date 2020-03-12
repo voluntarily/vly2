@@ -5,7 +5,7 @@
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
-import { Card } from '../VTheme/VTheme'
+import { Card, DescriptionWrapper } from '../VTheme/VTheme'
 import { Icon } from 'antd'
 import styled from 'styled-components'
 
@@ -71,9 +71,9 @@ const OpCard = ({ op }) => {
             <p> {startLocation}</p>
             <p> {startTime} </p>
             <p> {startDuration}</p>
-            <p>
+            <DescriptionWrapper>
               {op.subtitle}
-            </p>
+            </DescriptionWrapper>
           </figcaption>
         </a>
       </Link>

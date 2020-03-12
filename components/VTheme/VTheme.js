@@ -198,6 +198,10 @@ export const Grid8 = styled.div`
   }
 ` // end grid
 
+export const DescriptionWrapper = styled.p`
+margin-top: 0.5rem;
+`
+
 export const GridContainer = styled.div`
   position: relative;
 `
