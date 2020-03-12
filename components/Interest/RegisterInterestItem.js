@@ -29,12 +29,13 @@ const AffixTopBar = ({ children }) => {
 
 const MessagePanel = styled.section`
 box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
+margin-top: 1rem;
 border-radius: 8px;
 -webkit-transition: all 0.3s;
 transition: all 0.3s;
 :hover {
   border-radius: 8px;
-  transform: scale(1.04);
+  transform: scale(1.02);
   h3 {
     color: #6549AA;
   }
@@ -133,7 +134,8 @@ export const RegisterInterestItem = ({
         {options.showAcceptButton && (
           <Button
             id='acceptBtn'
-            type='primary' shape='round' size='large' style={{ width: '50%', marginTop: '1rem' }}
+            block
+            type='primary' shape='round' size='large' style={{ placeSelf: 'center' }}
             onClick={handleAcceptClick}
           >
             {options.acceptButtonText}
@@ -145,7 +147,8 @@ export const RegisterInterestItem = ({
             id='rejectBtn'
             shape='round'
             size='large'
-            style={{ width: '50%', marginTop: '1rem' }}
+            block
+            style={{ placeSelf: 'center' }}
             onClick={handleRejectClick}
           >
             {options.rejectButtonText}
@@ -155,7 +158,8 @@ export const RegisterInterestItem = ({
           <Button
             id='messageBtn'
             size='large'
-            style={{ width: '50%', marginTop: '1rem' }}
+            block
+            style={{ placeSelf: 'center' }}
             shape='round' onClick={handleMessageClick}
           >
             <FormattedMessage
@@ -177,14 +181,15 @@ export const RegisterInterestItem = ({
         ? (
           <AffixTopBar>
             <PageAlert>
-              <Icon type='history' style={{ fontSize: '32px', color: 'white' }} />
-              <h4>{options.statusMessage}</h4>
+              <Icon type='history' style={{ fontSize: '32px', color: 'white', placeSelf: 'center' }} />
+              <h4 style={{ alignSelf: 'center' }}>{options.statusMessage}</h4>
               <RegisterButtons />
             </PageAlert>
           </AffixTopBar>
         )
         : <RegisterButtons />}
       <MessagePanel onClick={() => showMessages()}>
+
         <InterestMessageItem message={latestMsg} />
       </MessagePanel>
 
