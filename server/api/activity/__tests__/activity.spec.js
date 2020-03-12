@@ -12,6 +12,7 @@ import { jwtData } from '../../../middleware/session/__tests__/setSession.fixtur
 import { getBucketName } from '../../file/file.controller'
 
 import acts from './activity.fixture.js'
+import uuid from 'uuid'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -414,6 +415,31 @@ test.serial('Create and retrieve an activity with documents', async t => {
   const resDocB = act.documents.find(d => d.filename === 'b.pdf')
   t.truthy(resDocB)
   t.is(resDocB.location, docB.location)
+})
+
+test.serial('Create activity with document location of an incorrect s3 URL results in bad request', async t => {
+  const docA = {
+    filename: 'a.pdf',
+    location: 'https://amazonaws.com/invalid-bucket-name/a.pdf'
+  }
+
+  const name = `${uuid.v1()}`
+
+  const res = await request(server)
+    .post('/api/activities')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .send({
+      name,
+      subtitle: 'to succeed in life',
+      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+      description: 'Project to build a simple rocket that will reach 400m',
+      duration: '4 hours',
+      documents: [docA]
+    })
+    .set('Accept', 'application/json')
+
+  t.is(res.status, 400)
+  t.falsy(await Activity.findOne({ name }))
 })
 
 test.serial('should permit activity titles with special characters', async t => {
