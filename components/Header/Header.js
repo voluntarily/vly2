@@ -29,7 +29,7 @@ const MenuGrid = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr 2fr 3rem;
   @media screen and (max-width: 767px) {
-    grid-template-columns: 0fr 1fr 2fr;
+    grid-template-columns: 0fr  3rem;
   }
 `
 
@@ -121,10 +121,9 @@ const Header = ({ isAuthenticated, me, ...props }) => {
             />
           </LogoContainer>
         </Link>
-        <div>
-          <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
 
-        </div>
+        <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
+
         {isAuthenticated &&
           <StyledAvatar>
             <Link href={me && me._id ? `/people/${me._id}` : '/home'}>

@@ -11,6 +11,10 @@ border-bottom: 2px solid transparent;
   border: none;
   
 }
+
+@media screen and (max-width: 767px) {
+    display: none;
+  }
 `
 
 const Navigation = ({ items, defaultItem, router, me, ...props }) => {
