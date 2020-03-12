@@ -725,10 +725,9 @@ export const ContactList = styled.ul`
 export const PageAlert = styled.div`
 
   width: 100%;
-  padding: 1rem;
+  padding: 0.6rem;
   border-radius: 8px;
   box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
-
 
   display: grid;
   gap: 1rem;
