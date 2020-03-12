@@ -10,8 +10,7 @@ import { OpportunityStatus } from '../opportunity.constants'
 import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
 import archivedOpportunity from './../../archivedOpportunity/archivedOpportunity'
-import Interest from '../../interest/interest'
-import InterestArchive from '../../interest-archive/interestArchive'
+import { Interest, InterestArchive } from '../../interest/interest'
 
 // Fixtures
 import people from '../../person/__tests__/person.fixture'
@@ -66,7 +65,7 @@ test.serial('Should correctly give count of all active Ops sorted by name', asyn
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(2, got.length)
+  t.is(3, got.length)
 
   t.is(got[0].name, '1 Mentor a year 12 business Impact Project')
 })
@@ -107,7 +106,7 @@ test.serial('Should correctly give number of active Opportunities', async t => {
     // .expect('Content-Length', '2')
   const got = res.body
 
-  t.is(2, got.length)
+  t.is(3, got.length)
 })
 
 test.serial('Should send correct data when queried against an _id', async t => {

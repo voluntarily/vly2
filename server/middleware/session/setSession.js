@@ -3,6 +3,7 @@ const { Role } = require('../../services/authorize/role')
 
 const { TOPIC_PERSON__CREATE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
+const { TokenExpiredError } = require('jsonwebtoken')
 const { jwtVerify } = require('./jwtVerify')
 const { getPersonRoles } = require('../../api/member/member.lib')
 const DEFAULT_SESSION = {
@@ -75,8 +76,33 @@ const setSession = async (req, res, next) => {
   } catch (e) {
     // console.error('Jwt Verify failed', e)
 
-    if (e.name === 'TokenExpiredError') {
-      res.clearCookie('idToken')
+    if (e instanceof TokenExpiredError) {
+      // If this is an API request then return 401 unauthorized
+      if (req.url.startsWith('/api/')) {
+        return res.sendStatus(401)
+      }
+
+      // from a client side redirect
+      if (req.url.startsWith('/auth/sign-thru')) {
+        return next()
+      }
+
+      const encodedRedirectUrl = encodeURIComponent(req.url)
+
+      // Have to set location and set-cookie header manually without nodejs helper functions (res.clearCookie, res.redirect)
+      // as the above functions make the header immutable.
+      // We must clear idToken cookie server-side otherwise we create a infinite loop of redirects as this code will be
+      // executed again.
+      res.setHeader(
+        'Location',
+        `/auth/sign-thru?redirect=${encodedRedirectUrl}`
+      )
+      res.setHeader(
+        'Set-Cookie',
+        'idToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      )
+      res.statusCode = 302
+      return res.end()
     }
 
     user = false

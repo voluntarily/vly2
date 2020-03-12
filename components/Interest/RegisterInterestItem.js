@@ -10,6 +10,8 @@ import { FormattedMessage } from 'react-intl'
 import RegisterInterestMessageForm from './RegisterInterestMessageForm'
 import { PageAlert } from '../VTheme/VTheme'
 import { InterestStatus } from '../../server/api/interest/interest.constants'
+import { InterestMessageItem, InterestMessageList } from './InterestMessage'
+import styled from 'styled-components'
 
 /* Cycle is
 1. status message + accept [reject] buttons
@@ -19,11 +21,31 @@ import { InterestStatus } from '../../server/api/interest/interest.constants'
 5. display new status
 */
 
-const SafeAffix = ({ children }) => {
+const AffixTopBar = ({ children }) => {
   return (process.env.NODE_ENV === 'test')
     ? <>{children}</>
     : <Affix style={{ width: '100%', position: 'absolute', top: 0, left: 0 }} offsetTop={56}>{children}</Affix>
 }
+
+const MessagePanel = styled.section`
+box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
+border-radius: 8px;
+-webkit-transition: all 0.3s;
+transition: all 0.3s;
+:hover {
+  border-radius: 8px;
+  transform: scale(1.04);
+  h3 {
+    color: #6549AA;
+  }
+}
+`
+/* <MessagePanel>
+<InterestMessageList messages={interest.messages} />
+</MessagePanel>
+      style: 'backgroundColor: #A0B0C0'
+*/
+
 export const RegisterInterestItem = ({
   interest,
   onAccept,
@@ -36,6 +58,21 @@ export const RegisterInterestItem = ({
   // Options to configure the controls on this page based on the state of the interest.
   const options = getOptions(interest.status)
 
+  const showMessages = () => {
+    notification.info({
+      message: `${interest.messages.length} Messages`,
+      description: <InterestMessageList messages={interest.messages} />,
+      placement: 'bottomRight',
+      duration: 4.5, // never close
+      style: {
+        maxHeight: '30rem',
+        overflow: 'auto'
+        // width: '20rem',
+        // marginLeft: 335 - 600
+      }
+
+    })
+  }
   const handleAcceptSubmit = (ok, message) => {
     setShowAcceptForm(false)
     if (ok) {
@@ -76,7 +113,6 @@ export const RegisterInterestItem = ({
   }
 
   const handleMessageSubmit = (ok, message) => {
-    console.log('handleMessageSubmit', ok, message)
     setShowMessageForm(false)
     if (ok) {
       onMessage(message)
@@ -128,25 +164,30 @@ export const RegisterInterestItem = ({
     )
   }
 
+  const latestMsg = interest.messages.slice(-1)[0]
+
   return (
     <>
       {options.showStatus
         ? (
-          <SafeAffix>
+          <AffixTopBar>
             <PageAlert>
               <Icon type='history' style={{ fontSize: '32px', color: 'white' }} />
               <h4>{options.statusMessage}</h4>
               <RegisterButtons />
             </PageAlert>
-          </SafeAffix>
+          </AffixTopBar>
         )
         : <RegisterButtons />}
+      <MessagePanel onClick={() => showMessages()}>
+        <InterestMessageItem message={latestMsg} />
+      </MessagePanel>
 
       <RegisterInterestMessageForm
         id='acceptRegisterInterestForm'
         title={options.acceptFormTitle}
         prompt={options.acceptFormPrompt}
-        showTerms={!interest.status}
+        showTerms={!interest.termsAccepted}
         onSubmit={handleAcceptSubmit}
         visible={showAcceptForm}
       />
@@ -154,7 +195,7 @@ export const RegisterInterestItem = ({
         id='rejectRegisterInterestForm'
         title={options.rejectFormTitle}
         prompt={options.rejectFormPrompt}
-        showTerms
+        showTerms={!interest.termsAccepted}
         onSubmit={handleRejectSubmit}
         visible={showRejectForm}
       />
@@ -162,7 +203,7 @@ export const RegisterInterestItem = ({
         id='messageRegisterInterestForm'
         title={messageForm.title}
         prompt={messageForm.prompt}
-        showTerms
+        showTerms={!interest.termsAccepted}
         onSubmit={handleMessageSubmit}
         visible={showMessageForm}
       />

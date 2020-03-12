@@ -1,5 +1,5 @@
 import test from 'ava'
-import Interest from '../interest'
+import { Interest } from '../interest'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'

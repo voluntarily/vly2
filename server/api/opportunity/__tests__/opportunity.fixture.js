@@ -79,7 +79,7 @@ const opList = [
     description: 'Attempting to go where no man has gone before',
     duration: '2000 days',
     location: regions[2].name,
-    status: OpportunityStatus.COMPLETED,
+    status: OpportunityStatus.ACTIVE,
     tags: [],
     date: [
       null,

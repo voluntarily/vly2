@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Tag } from 'antd'
+import { Tag, Icon } from 'antd'
 
 /*
 ====================================================
@@ -431,7 +431,13 @@ export const BigQuoteAuthor = styled.p`
     line-height: 1.5;
   }
 `
-
+export const ContactIcon = ({ type }) =>
+  <Icon
+    // theme='twoTone'
+    twoToneColor='blue'
+    type={type}
+    style={{ marginRight: '0.5rem', fontSize: '1rem', color: '#6549AA' }}
+  />
 /*
 ====================================================
 
@@ -458,6 +464,10 @@ export const A4 = styled.div`
     }
   }
 `
+
+/* FullPage is the generic page wrapper providing wide margins
+  so that the page looks like a piece of paper.
+*/
 export const FullPage = styled.div`
   margin: 6rem auto;
   width: 80rem;
@@ -472,6 +482,39 @@ export const FullPage = styled.div`
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
     width: calc(100vw - 2rem);
+  }
+` // end fullpage
+
+export const Portrait = styled.section`
+  margin: 6rem auto;
+  width: 80rem;
+  overflow: visible;
+  height: auto;
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    width: calc(100vw - 4rem);
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  @media screen and (max-width: 767px) {
+    margin-top: 4rem;
+    width: calc(100vw - 2rem);
+  }
+` // end fullpage
+
+export const Landscape = styled.section`
+  margin: 6rem 2rem;
+  overflow: visible;
+  height: auto;
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    // width: calc(100vw - 4rem);
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  @media screen and (max-width: 767px) {
+    margin-top: 4rem;
+    // width: calc(100vw - 2rem);
   }
 ` // end fullpage
 
@@ -566,6 +609,12 @@ time {
 export const OpBannerDetail = styled.div`
 display: grid;
 align-self: center;
+
+ul {
+  padding: 0;
+  margin-bottom: 0;
+}
+
 `
 
 /* Item lists - tidy listings
@@ -599,6 +648,9 @@ font-weight: 500;
 background-color: #e8e8e8;
 `
 
+export const StyledIcon = styled(Icon)`
+  margin-right: 0.5rem;
+`
 /* Contact list displayed for organisations */
 
 export const ContactList = styled.ul`

@@ -56,6 +56,7 @@ module.exports = (server) => {
     if ([
       InterestStatus.INTERESTED,
       InterestStatus.INVITED,
+      InterestStatus.COMMITTED,
       InterestStatus.DECLINED,
       InterestStatus.ATTENDED,
       InterestStatus.NOTATTENDED
@@ -108,7 +109,7 @@ PubSub.subscribe(TOPIC_INTEREST__MESSAGE, async (msg, interest) => {
   const message = interest.messages.slice(-1)[0] // last element should be most recent
 
   // from vp to op
-  const info = (message.author === vp._id)
+  const info = (message.author._id.toString() === vp._id.toString())
     ? emailPerson('interest_op_message', requestor, { from: vp, op, interest, message })
     : emailPerson('interest_vp_message', vp, { from: requestor, op, interest, message })
   await info

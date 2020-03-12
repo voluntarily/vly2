@@ -47,7 +47,7 @@ const opEditTab =
 
 const isNotProd = process.env.NODE_ENV !== 'production'
 
-export const OpTabs = ({ op, onChange, canManage, defaultTab, author }) => (
+export const OpTabs = ({ op, onChange, canManage, canEdit, defaultTab, author }) => (
   <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
     <TabPane tab={opAboutTab} key='about'>
       <OpAboutPanel op={op} />
@@ -68,7 +68,7 @@ export const OpTabs = ({ op, onChange, canManage, defaultTab, author }) => (
         <OpManagePanel op={op} />
       </TabPane>
     )}
-    {canManage && (
+    {canEdit && (
       <TabPane tab={opEditTab} key='edit' />
     )}
   </VTabs>
@@ -83,7 +83,8 @@ OpTabs.propTypes = {
     location: PropTypes.string,
     _id: PropTypes.string
   }),
-  canManage: PropTypes.bool.isRequired,
+  canManage: PropTypes.bool,
+  canEdit: PropTypes.bool,
   onChange: PropTypes.func,
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
