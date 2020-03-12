@@ -216,7 +216,6 @@ test('render OrgDetailPage member ', async t => {
     isNew: false,
     orgid: t.context.orgs[0],
     organisations: t.context.defaultstore.organisations,
-    archivedOpportunities: t.context.defaultstore.archivedOpportunities,
     members: {
       sync: true,
       syncing: false,
@@ -243,7 +242,6 @@ test('render OrgDetailPage OrgAdmin ', async t => {
     isNew: false,
     orgid: t.context.orgs[0],
     organisations: t.context.defaultstore.organisations,
-    archivedOpportunities: t.context.defaultstore.archivedOpportunities,
     members: t.context.defaultstore.members,
     me: t.context.people[1],
     isAuthenticated: true
