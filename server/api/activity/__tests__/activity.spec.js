@@ -9,6 +9,7 @@ import people from '../../person/__tests__/person.fixture'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 import tagList from '../../tag/__tests__/tag.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
+import { getBucketName } from '../../file/file.controller'
 
 import acts from './activity.fixture.js'
 
@@ -377,6 +378,42 @@ test.serial('Should correctly add and retrieve an activity with some equipment',
   const savedActivity = await Activity.findOne({ name: 'We need three things' }).exec()
   t.is(savedActivity.subtitle, 'to succeed in life')
   t.truthy(savedActivity.equipment.includes('backbone'))
+})
+
+test.serial('Create and retrieve an activity with documents', async t => {
+  const docA = {
+    filename: 'a.pdf',
+    location: `https://amazonaws.com/${getBucketName()}/a.pdf`
+  }
+  const docB = {
+    filename: 'b.pdf',
+    location: `https://amazonaws.com/${getBucketName()}/b.pdf`
+  }
+
+  const res = await request(server)
+    .post('/api/activities')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .send({
+      name: 'We need three things',
+      subtitle: 'to succeed in life',
+      imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
+      description: 'Project to build a simple rocket that will reach 400m',
+      duration: '4 hours',
+      documents: [docA, docB]
+    })
+    .set('Accept', 'application/json')
+
+  t.is(res.status, 200)
+
+  const act = await Activity.findOne({ _id: res.body._id })
+
+  const resDocA = act.documents.find(d => d.filename === 'a.pdf')
+  t.truthy(resDocA)
+  t.is(resDocA.location, docA.location)
+
+  const resDocB = act.documents.find(d => d.filename === 'b.pdf')
+  t.truthy(resDocB)
+  t.is(resDocB.location, docB.location)
 })
 
 test.serial('should permit activity titles with special characters', async t => {

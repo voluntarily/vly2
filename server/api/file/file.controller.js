@@ -37,6 +37,10 @@ const uploadFile = async (req, res) => {
   }
 }
 
+/**
+ * The name of the S3 bucket this envrionment should use.
+ * @returns {string}
+ */
 function getBucketName () {
   let bucketName = config.appUrl.replace(/^(https?|ftp|http):\/\//g, '')
   if (bucketName.match(/localhost/g)) {
