@@ -4,6 +4,7 @@ import { shallowWithIntl, mountWithIntl } from '../../../lib/react-intl-test-hel
 import OpCard from '../OpCard'
 import ops from './Op.fixture'
 import moment from 'moment'
+import { DescriptionWrapper } from '../../VTheme/VTheme'
 
 test.before('Setup fixtures', (t) => {
   // Initial opportunities
@@ -25,12 +26,12 @@ test('Card include name school/org imgUrl location duration and subtitle', t => 
   t.is(wrapper.find('figcaption').find('span').text(), op.offerOrg.name)
   t.is(wrapper.find('img').prop('src'), op.imgUrl)
   // four p tags for location time duration subtitle+interest
-  t.is(wrapper.find('figcaption').find('p').length, 4)
+  t.is(wrapper.find('figcaption').find('p').length, 3)
   t.is(wrapper.find('figcaption').find('p').first().text(), ` 📍 ${op.location}`)
   // second p for time and should be blank as time is not set
   t.is(wrapper.find('figcaption').find('p').at(1).text().trim().length, 0)
   t.is(wrapper.find('figcaption').find('p').at(2).text(), ` ⏱ ${op.duration}`)
-  t.is(wrapper.find('figcaption').find('p').last().text(), `${op.subtitle}`)
+  t.is(wrapper.find('figcaption').find(DescriptionWrapper).first().text(), `${op.subtitle}`)
 })
 
 test('op without an image should be displayed with default image', t => {

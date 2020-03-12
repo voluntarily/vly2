@@ -38,7 +38,11 @@ const OpportunityFields = {
   DATE_ADDED: 'dateAdded',
   TAGS: 'tags'
 }
-const OpportunitySummaryFields = [
+
+/* This list is currently used for requests returning a LIST
+of opportunities, it contains fields required for the OpCard.
+*/
+const OpportunityListFields = [
   OpportunityFields.ID,
   OpportunityFields.NAME,
   OpportunityFields.SUBTITLE,
@@ -48,11 +52,25 @@ const OpportunitySummaryFields = [
   OpportunityFields.LOCATION,
   OpportunityFields.DURATION
 ]
+
+/* This list is currently used for both anon and signed in people
+  all are required to make the OpDetailsPage work correctly.
+*/
+const OpportunityPublicFields = [
+  ...OpportunityListFields,
+  OpportunityFields.TAGS,
+  OpportunityFields.REQUESTOR,
+  OpportunityFields.OFFER_ORG,
+  OpportunityFields.FROM_ACTIVITY,
+  OpportunityFields.DATE_ADDED
+]
+
 module.exports = {
   SchemaName: 'Opportunity',
   OpportunityStatus,
   OpportunityPublishedStatus,
   OpportunityFields,
-  OpportunitySummaryFields,
+  OpportunityListFields,
+  OpportunityPublicFields,
   OpportunityRoutes
 }

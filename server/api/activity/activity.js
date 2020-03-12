@@ -41,7 +41,11 @@ const ActivitySchema = new Schema({
     required: true,
     default: 'draft',
     enum: ['draft', 'active', 'retired']
-  }
+  },
+  documents: [{
+    filename: { type: String, required: true },
+    location: { type: String, required: true }
+  }]
 },
 {
   timestamps: true

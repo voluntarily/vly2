@@ -47,6 +47,7 @@ export function OpAboutPanel ({ op }) {
         <ProfileSection>
           <ul>
             <ItemIdLine item={op.requestor} path='people' />
+            <ItemIdLine item={op.offerOrg} path='orgs' />
           </ul>
         </ProfileSection>
       </OpSectionGrid>

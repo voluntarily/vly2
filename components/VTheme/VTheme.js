@@ -198,6 +198,10 @@ export const Grid8 = styled.div`
   }
 ` // end grid
 
+export const DescriptionWrapper = styled.p`
+margin-top: 0.5rem;
+`
+
 export const GridContainer = styled.div`
   position: relative;
 `
@@ -210,6 +214,29 @@ export const ActivityContainer = styled.div`
     grid-template-columns: calc(100vw - 4rem);
   }
 `
+
+export const SectionContainer = styled.section`
+  margin: 8rem 0;
+  position: relative;
+
+ 
+
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+  }
+  @media screen and (max-width: 768px) {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    width: calc(100vw - 2rem);
+
+
+  }
+  `
 
 export const GridTestItem = styled.div`
   background-color: pink;
@@ -268,6 +295,12 @@ I have done a terrible example so far, but will aim to fix usage soon
 
 ====================================================
 */
+
+export const TextPromo = styled.p`
+font-size:1.5rem;
+font-weight: 400;
+letter-spacing: -0.035rem;
+`
 
 export const TextBigTitle = styled.h1`
   font-weight: 900;
@@ -692,10 +725,9 @@ export const ContactList = styled.ul`
 export const PageAlert = styled.div`
 
   width: 100%;
-  padding: 1rem;
+  padding: 0.6rem;
   border-radius: 8px;
   box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
-
 
   display: grid;
   gap: 1rem;
