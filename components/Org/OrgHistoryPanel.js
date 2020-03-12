@@ -1,16 +1,37 @@
 import OpList from '../Op/OpList'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import ReduxLoading from '../Loading'
 import { Alert } from 'antd'
 import { orgHistoryTitle, orgHistoryNotFound, orgHistoryError } from './OrgHistoryPanel.messages'
+import reduxApi from '../../lib/redux/reduxApi'
 
-export const OrgHistoryPanel = ({ archivedOpportunities, error, isLoading }) => {
+export const OrgHistoryPanel = ({ organisationId }) => {
+  const archivedOpportunities = useSelector(state => state.archivedOpportunities.data)
+
+  const loadingState = useSelector(state => ({
+    sync: state.archivedOpportunities.sync,
+    syncing: state.archivedOpportunities.syncing,
+    loading: state.archivedOpportunities.loading,
+    error: state.archivedOpportunities.error
+  }))
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!loadingState.loading) {
+      dispatch(
+        reduxApi.actions.archivedOpportunities.get({ q: JSON.stringify({ offerOrg: organisationId }) })
+      )
+    }
+  }, [organisationId])
+
   let content = ''
 
-  if (isLoading) {
+  if (loadingState.loading || (!loadingState.sync && !loadingState.error)) {
     content = <ReduxLoading />
-  } else if (error) {
+  } else if (loadingState.error) {
     content = (
       <Alert
         style={{ margin: '2rem' }}
@@ -33,7 +54,5 @@ export const OrgHistoryPanel = ({ archivedOpportunities, error, isLoading }) => 
 }
 
 OrgHistoryPanel.propTypes = {
-  archivedOpportunities: PropTypes.array,
-  isLoading: PropTypes.bool,
-  error: PropTypes.object
+  organisationId: PropTypes.string.isRequired
 }

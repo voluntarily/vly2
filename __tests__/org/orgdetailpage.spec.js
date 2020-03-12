@@ -76,21 +76,6 @@ test.before('Setup fixtures', (t) => {
       data: [orgs[1]],
       request: null
     },
-    archivedOpportunities: {
-      sync: true,
-      syncing: false,
-      loading: false,
-      data: [{
-        name: 'test',
-        subtitle: 'test',
-        imgUrl: 'test.jpg',
-        date: ['2017-09-03', '2013-07-26'],
-        location: 'Testington',
-        duration: 'long time',
-        _id: 'testidtestid'
-      }],
-      request: null
-    },
     members: {
       sync: true,
       syncing: false,
@@ -114,7 +99,6 @@ test('OrgDetailPage GetInitialProps non member', async t => {
   reduxApi.use('fetch', adapterFetch(myMock))
   myMock
     .get(`path:/api/organisations/${t.context.org._id}`, { body: { status: 200 } })
-    .get('path:/api/archivedOpportunities/', { body: { status: 200 } })
     .get('path:/api/members/', { body: { status: 200 } })
   const props = await OrgDetailPage.getInitialProps(ctx)
   t.false(props.isNew)
@@ -153,7 +137,6 @@ test('OrgDetailPage GetInitialProps anon', async t => {
   reduxApi.use('fetch', adapterFetch(myMock))
   myMock
     .get(`path:/api/organisations/${t.context.org._id}`, { body: { status: 200 } })
-    .get('path:/api/archivedOpportunities/', { body: { status: 200 } })
     .get('path:/api/members/', { body: { status: 200 } })
   const props = await OrgDetailPage.getInitialProps(ctx)
   t.false(props.isNew)
@@ -172,7 +155,6 @@ test('OrgDetailPage GetInitialProps new', async t => {
   reduxApi.use('fetch', adapterFetch(myMock))
   myMock
     .get(`path:/api/organisations/${t.context.org._id}`, { body: { status: 200 } })
-    .get('path:/api/archivedOpportunities/', { body: { status: 200 } })
     .get('path:/api/members/', { body: { status: 200 } })
   const props = await OrgDetailPage.getInitialProps(ctx)
   t.true(props.isNew)
@@ -208,7 +190,6 @@ test('render OrgDetailPage anon ', async t => {
     isNew: false,
     orgid: t.context.orgs[0],
     organisations: t.context.defaultstore.organisations,
-    archivedOpportunities: t.context.defaultstore.archivedOpportunities,
     members: {
       sync: true,
       syncing: false,
@@ -295,7 +276,6 @@ test('edit and save existing org', async t => {
       data: [orgs[0]],
       request: null
     },
-    archivedOpportunities: t.context.defaultstore.archivedOpportunities,
     members: t.context.defaultstore.members,
     me: t.context.people[1],
     isAuthenticated: true,
@@ -338,7 +318,6 @@ test('edit and save new org', async t => {
       data: newOrg,
       request: null
     },
-    archivedOpportunities: t.context.defaultstore.archivedOpportunities,
     isAuthenticated: true,
     members: t.context.defaultstore.members,
     me: t.context.people[1],
@@ -384,19 +363,17 @@ test('render OrgDetailPage Unknown ', async t => {
       data: [],
       request: null
     },
-    archivedOpportunities: t.context.defaultstore.archivedOpportunities,
     me: t.context.people[1]
   }
   const wrapper = shallowWithIntl(<OrgDetailPage {...props} />)
   t.true(wrapper.exists('OrgUnknown'))
 })
 
-test('History tab - "op" organisation with archived opportunities', async t => {
+test('History tab - "op" organisation', async t => {
   const props = {
     isNew: false,
     orgid: t.context.orgs[0],
     organisations: t.context.defaultstore.organisations,
-    archivedOpportunities: t.context.defaultstore.archivedOpportunities,
     members: t.context.defaultstore.members,
     isAuthenticated: false,
     me: t.context.people[1]
@@ -411,113 +388,11 @@ test('History tab - "op" organisation with archived opportunities', async t => {
     }
   )
 
-  findAntTabByText(wrapper.find('.ant-tabs-tab'), historyTabText).simulate('click')
-  const historyTab = wrapper.find('TabPane[orgTab="history"]')
-
-  t.true(historyTab.exists(), '"op" organisations should have a history tab')
-  t.true(historyTab.exists('OpList'), 'Organisations with archived opportunities should have an OpList')
-  t.true(historyTab.exists('OpCard'), 'OpList should contain OpCards')
-})
-
-test('History tab - "op" organisation without archived opportunities', async t => {
-  const props = {
-    isNew: false,
-    orgid: t.context.orgs[0],
-    organisations: t.context.defaultstore.organisations,
-    archivedOpportunities: {
-      data: []
-    },
-    members: t.context.defaultstore.members,
-    isAuthenticated: false,
-    me: t.context.people[1]
-  }
-
-  const historyTabText = 'HISTORY'
-
-  const wrapper = mountWithMockIntl(
-    <OrgDetailPage {...props} />,
-    {
-      'orgTabs.history': historyTabText
-    }
-  )
-
-  findAntTabByText(wrapper.find('.ant-tabs-tab'), historyTabText).simulate('click')
-  const historyTab = wrapper.find('TabPane[orgTab="history"]')
-
-  t.is(
-    historyTab.find('p').text(),
-    'This organisation does not have any archived opportunities.',
-    'Organisation without archived opportunities should display "no records found" message'
-  )
-})
-
-test('History tab - "op" organisation archived opportunities loading', async t => {
-  const props = {
-    isNew: false,
-    orgid: t.context.orgs[0],
-    organisations: t.context.defaultstore.organisations,
-    archivedOpportunities: {
-      sync: false,
-      loading: true,
-      error: null,
-      data: []
-    },
-    members: t.context.defaultstore.members,
-    isAuthenticated: false,
-    me: t.context.people[1]
-  }
-
-  const historyTabText = 'HISTORY'
-
-  const wrapper = mountWithMockIntl(
-    <OrgDetailPage {...props} />,
-    {
-      'orgTabs.history': historyTabText
-    }
-  )
-
-  findAntTabByText(wrapper.find('.ant-tabs-tab'), historyTabText).simulate('click')
   const historyTab = wrapper.find('TabPane[orgTab="history"]')
 
   t.true(
-    historyTab.exists('ReduxLoading'),
-    'History tab should show loading animation when records are still loading'
-  )
-})
-
-test('History tab - "op" organisation archived opportunities error', async t => {
-  const props = {
-    isNew: false,
-    orgid: t.context.orgs[0],
-    organisations: t.context.defaultstore.organisations,
-    archivedOpportunities: {
-      sync: false,
-      loading: false,
-      error: {
-        message: 'Something bad happened'
-      },
-      data: []
-    },
-    members: t.context.defaultstore.members,
-    isAuthenticated: false,
-    me: t.context.people[1]
-  }
-
-  const historyTabText = 'HISTORY'
-
-  const wrapper = mountWithMockIntl(
-    <OrgDetailPage {...props} />,
-    {
-      'orgTabs.history': historyTabText
-    }
-  )
-
-  findAntTabByText(wrapper.find('.ant-tabs-tab'), historyTabText).simulate('click')
-  const historyTab = wrapper.find('TabPane[orgTab="history"]')
-
-  t.true(
-    historyTab.exists('Alert'),
-    'History tab should display alert when loading records fails'
+    historyTab.exists(),
+    'History tab should display for "op" organisations'
   )
 })
 
@@ -528,14 +403,6 @@ test('History tab - non "op" organisation', async t => {
     isNew: false,
     orgid: organisation._id,
     organisations: [organisation],
-    archivedOpportunities: {
-      sync: false,
-      loading: false,
-      error: {
-        message: 'Something bad happened'
-      },
-      data: []
-    },
     members: t.context.defaultstore.members,
     isAuthenticated: false,
     me: t.context.people[1]

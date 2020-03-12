@@ -14,9 +14,6 @@ const { TabPane } = Tabs
 // Warning do not try to group tabs under an isFlag TabPanes must be direct Children of Tabs.
 export const OrgTabs = ({
   org,
-  archivedOpportunities,
-  archivedOpportunitiesLoading,
-  archivedOpportunitiesError,
   onChange,
   canManage,
   defaultTab,
@@ -31,11 +28,7 @@ export const OrgTabs = ({
     </TabPane>
     {org.category.includes('op') && (
       <TabPane tab={orgHistoryTab} key='history' orgTab='history'>
-        <OrgHistoryPanel
-          archivedOpportunities={archivedOpportunities}
-          isLoading={archivedOpportunitiesLoading}
-          error={archivedOpportunitiesError}
-        />
+        <OrgHistoryPanel organisationId={org._id} />
       </TabPane>
     )}
     {isAuthenticated && (
@@ -76,10 +69,7 @@ OrgTabs.propTypes = {
     contactEmail: PropTypes.string,
     facebook: PropTypes.string,
     twitter: PropTypes.string
-  }).isRequired,
-  archivedOpportunities: PropTypes.array,
-  archivedOpportunitiesLoading: PropTypes.bool,
-  archivedOpportunitiesError: PropTypes.object
+  }).isRequired
 }
 
 export default OrgTabs
