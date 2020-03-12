@@ -4,7 +4,7 @@ import { server, appReady } from '../../../server'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import Tag from '../../tag/tag'
 import Opportunity from '../opportunity'
-import { OpportunityStatus, OpportunityFields, OpportunityPublishedStatus } from '../opportunity.constants'
+import { OpportunityStatus, OpportunityPublicFields, OpportunityPublishedStatus } from '../opportunity.constants'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import Activity from '../../activity/activity'
@@ -50,17 +50,9 @@ const createPersonAndGetToken = async (roles) => {
   }
 }
 
-const assertContainsOnlyAnonymousFields = (test, obj) => {
-  const permittedFields = [
-    OpportunityFields.ID,
-    OpportunityFields.NAME,
-    OpportunityFields.SUBTITLE,
-    OpportunityFields.IMG_URL,
-    OpportunityFields.DURATION,
-    OpportunityFields.DATE
-  ]
+const assertContainsOnlyPublicFields = (test, obj) => {
   for (const key of Object.keys(obj)) {
-    test.true(permittedFields.includes(key), `The response contained an invalid field: '${key}'`)
+    test.true(OpportunityPublicFields.includes(key), `The response contained an invalid field: '${key}'`)
   }
 }
 
@@ -83,7 +75,7 @@ test.serial('Anonymous - READ by id', async t => {
     .set('Accept', 'application/json')
 
   t.is(200, res.status)
-  assertContainsOnlyAnonymousFields(t, res.body)
+  assertContainsOnlyPublicFields(t, res.body)
 })
 
 test.serial('Anonymous users should receive 404 from GET by ID endpoint if draft', async t => {
@@ -100,7 +92,7 @@ test.serial('Anonymous - LIST', async t => {
 
   t.is(200, res.status)
   for (const op of res.body) {
-    assertContainsOnlyAnonymousFields(t, op)
+    assertContainsOnlyPublicFields(t, op)
   }
 })
 
@@ -190,7 +182,7 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG
       .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.VOLUNTEER_PROVIDER])}`])
 
     t.is(200, res.status)
-    t.is(3, res.body.length) // There are 2 ACTIVE ops in the fixture file
+    t.is(3, res.body.length) // There are 3 ACTIVE ops in the fixture file
     t.truthy(res.body.find(op => op.name === '1 Mentor a year 12 business Impact Project'))
     t.truthy(res.body.find(op => op.name === '2 Self driving model cars'))
     // DRAFT ops will have been trimmed from the response
