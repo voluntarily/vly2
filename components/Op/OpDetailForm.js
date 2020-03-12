@@ -319,7 +319,7 @@ class OpDetailForm extends Component {
                 >
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'Name is required' }]
-                  })(<Input placeholder='name' maxLength='100' />)}
+                  })(<Input className='name' placeholder='name' maxLength='100' />)}
                 </Form.Item>
 
                 <Form.Item
@@ -329,7 +329,7 @@ class OpDetailForm extends Component {
                   {getFieldDecorator('subtitle', {
                     rules: [{ required: this.state.requiredForPublish, message: 'Subtitle is required' }]
                   })(
-                    <Input placeholder='short summary that appears on the listing.' />
+                    <Input className='subtitle' placeholder='short summary that appears on the listing.' />
                   )}
                 </Form.Item>
               </ShortInputContainer>
@@ -352,7 +352,7 @@ class OpDetailForm extends Component {
                   {getFieldDecorator('offerOrg', {
                     rules: [{ required: true, message: 'Please select organisation' }]
                   })(
-                    <OrgSelector orgs={orgMembership} />
+                    <OrgSelector className='organisation' orgs={orgMembership} />
                   )}
                 </Form.Item>
               )}
@@ -382,7 +382,7 @@ class OpDetailForm extends Component {
                         message: 'Commitment level is required'
                       }
                     ]
-                  })(<Input placeholder='4 hours' />)}
+                  })(<Input className='commitment' placeholder='4 hours' />)}
                 </Form.Item>
                 <Form.Item
                   label={opStartDate}
