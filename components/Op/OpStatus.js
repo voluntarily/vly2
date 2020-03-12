@@ -1,38 +1,41 @@
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import { FormattedMessage, useIntl, defineMessages } from 'react-intl'
 import { Stamp } from '../../components/VTheme/Stamp'
-
+const { DRAFT, ACTIVE, COMPLETED, CANCELLED } = OpportunityStatus
 export const OpportunityStatusMessages = defineMessages({
-  [OpportunityStatus.DRAFT]: {
+  [DRAFT]: {
     id: 'OpportunityStatus.draft',
     defaultMessage: 'Draft',
     description: 'When an opportunity is being drafted'
   },
-  [OpportunityStatus.ACTIVE]: {
+  [ACTIVE]: {
     id: 'OpportunityStatus.active',
     defaultMessage: 'Active',
     description: 'When an opportunity has been published'
   },
-  [OpportunityStatus.COMPLETED]: {
+  [COMPLETED]: {
     id: 'OpportunityStatus.completed',
     defaultMessage: 'Completed',
     description: 'When an opportunity has been completed'
   },
-  [OpportunityStatus.CANCELLED]: {
-    id: 'OpportunityStatus.cancelled',
+  [CANCELLED]: {
+    id: 'cancelled',
     defaultMessage: 'Cancelled',
     description: 'When an opportunity has been cancelled'
   }
 })
 
 /** Converts an opportunity status to a translated display string */
-export const OpStatus = ({ status }) =>
-  <FormattedMessage {...OpportunityStatusMessages[status]} />
+export const OpStatus = ({ status }) => {
+  if (!status || ![DRAFT, ACTIVE, COMPLETED, CANCELLED].includes(status)) return null
+  return (<FormattedMessage {...OpportunityStatusMessages[status]} />)
+}
 
 /** Converts an opportunity status to a Stamp - except for Active */
 export const OpStatusStamp = ({ status }) => {
+  if (!status) return null
   const intl = useIntl()
-  return status !== OpportunityStatus.ACTIVE
+  return status !== ACTIVE
     ? (
       <Stamp>
         {intl.formatMessage(OpportunityStatusMessages[status])}
