@@ -25,7 +25,7 @@ const TextHeroTitle = styled.h1`
   font-weight: 700;
   font-size: 4.5rem;
   color: #000000;
-  letter-spacing: -4.05px;
+  letter-spacing: -3.05px;
   line-height: 96px;
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
@@ -42,8 +42,8 @@ const TextHeroTitle = styled.h1`
 const TextMiniTitle = styled.p`
   margin-top: 2rem;
   width: 12.8rem;
-  color: gray;
-  font-size: 1rem;
+  color: #515151;
+  font-size: 1.2rem;
   letter-spacing: -0.5px;
 
   font-weight: 400;
@@ -77,7 +77,7 @@ const Hero2 = ({ subheader, title }) => (
     <TextHeroTitle>{title}</TextHeroTitle>
 
     <ButtonContainer>
-      <Button shape='round' size='large' type='primary'>
+      <Button shape='round' size='large'>
         Learn More
       </Button>
       &nbsp;&nbsp;
