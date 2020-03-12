@@ -13,8 +13,5 @@ test('shallow hero header seciton', t => {
     />
   )
   t.is(wrapper.find('p').text(), 'Voluntarily for Teachers')
-  t.is(
-    wrapper.find('h1').text(),
-    'Get industry volunteers to help teachers and students in your school.'
-  )
+  t.is(wrapper.find('h1').text(), 'Get industry volunteers to help teachers and students in your school.')
 })

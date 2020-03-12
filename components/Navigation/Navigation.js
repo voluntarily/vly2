@@ -1,20 +1,8 @@
-import { Avatar, Menu } from 'antd'
+import { Menu } from 'antd'
 import Link from 'next/link'
 import { withRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-
-const StyledAvatar = styled(Avatar)`
-  background-color: #fff;
-
-  .anticon-user {
-    margin-right: 0px;
-  }
-
-  .ant-imgUrl > i {
-    margin-right: 0px;
-  }
-`
 
 const VMenu = styled(Menu)`
 border-bottom: 2px solid transparent;
@@ -23,6 +11,10 @@ border-bottom: 2px solid transparent;
   border: none;
   
 }
+
+@media screen and (max-width: 767px) {
+    display: none;
+  }
 `
 
 const Navigation = ({ items, defaultItem, router, me, ...props }) => {
@@ -41,18 +33,7 @@ const Navigation = ({ items, defaultItem, router, me, ...props }) => {
           </Link>
         </Menu.Item>
       ))}
-      <Menu.Item>
-        <StyledAvatar>
-          <Link href={me && me._id ? `/people/${me._id}` : '/home'}>
-            <Avatar
-              size='small'
-              src={me && me.imgUrlSm}
-              icon='user'
-              alt='profile photo'
-            />
-          </Link>
-        </StyledAvatar>
-      </Menu.Item>
+
     </VMenu>
   )
 }

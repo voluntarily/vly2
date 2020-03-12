@@ -44,7 +44,7 @@ export default class IntlDocument extends Document {
     }`
 
     return (
-      <html>
+      <html lang={this.props.locale}>
         <Head>
           <link rel='shortcut icon' href='/static/img/icons/favicon.ico' />
           <meta httpEquiv='X-UA-Compatible' content='IE=edge' />

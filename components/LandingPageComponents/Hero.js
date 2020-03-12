@@ -100,7 +100,7 @@ line-height: 1.4;
     font-size:2.5rem;
   }
   @media screen and (max-width: 768px) {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     line-height: 1.2;
     margin-bottom: 1rem;
 
