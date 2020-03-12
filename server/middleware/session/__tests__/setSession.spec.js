@@ -108,7 +108,7 @@ test('Check headers and redirect location for expired session on page request', 
     'Location header should be set to /auth/sign-thru and redirect parameter to the correct page'
   )
 
-  t.is(res.statusCode, 301, 'Status code should be 301 for redirect')
+  t.is(res.statusCode, 302, 'Status code should be 302 for temp redirect')
   t.false(req.session.isAuthenticated)
 })
 
