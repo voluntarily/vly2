@@ -79,11 +79,11 @@ test('render documents on activity form', t => {
     subtitle: 'can you train cats using lazers',
     description: 'Probably not ok to do this',
     status: 'active',
-    documents: [{ 
-        filename: 'abc.pdf',
-        location: 'https://amazon.com/abc.pdf'
+    documents: [{
+      filename: 'abc.pdf',
+      location: 'https://amazon.com/abc.pdf'
     },
-    { 
+    {
       filename: 'xyz.pdf',
       location: 'https://amazon.com/xyz.pdf'
     }]
