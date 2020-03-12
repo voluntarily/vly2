@@ -60,7 +60,14 @@ export const OrgUnknown = () =>
     </Link>
   </>
 
-export const OrgDetailPage = ({ members, me, organisations, isNew, dispatch, isAuthenticated }) => {
+export const OrgDetailPage = ({
+  members,
+  me,
+  organisations,
+  isNew,
+  dispatch,
+  isAuthenticated
+}) => {
   const router = useRouter()
   const [saved, setSaved] = useState(false)
   const [tab, setTab] = useState(isNew ? 'edit' : router.query.tab)
