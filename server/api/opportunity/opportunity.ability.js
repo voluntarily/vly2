@@ -1,4 +1,10 @@
-const { SchemaName, OpportunityStatus, OpportunityFields, OpportunityPublishedStatus } = require('./opportunity.constants')
+const {
+  SchemaName,
+  OpportunityStatus,
+  OpportunityListFields,
+  OpportunityPublicFields,
+  OpportunityPublishedStatus
+} = require('./opportunity.constants')
 const { Role } = require('../../services/authorize/role')
 const { Action } = require('../../services/abilities/ability.constants')
 
@@ -19,12 +25,12 @@ const ruleBuilder = session => {
     subject: SchemaName,
     action: Action.READ,
     conditions: { status: OpportunityStatus.ACTIVE },
-    fields: [OpportunityFields.ID, OpportunityFields.NAME, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION, OpportunityFields.DATE]
+    fields: OpportunityPublicFields
   }, {
     subject: SchemaName,
     action: Action.LIST,
     conditions: { status: OpportunityStatus.ACTIVE },
-    fields: [OpportunityFields.ID, OpportunityFields.NAME, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION, OpportunityFields.DATE]
+    fields: OpportunityListFields
   }, {
     subject: SchemaName,
     action: Action.UPDATE,
