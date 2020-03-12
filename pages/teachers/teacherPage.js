@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Helmet } from 'react-helmet'
 import { Button, Divider } from 'antd'
-import { FormattedMessage } from 'react-intl'
 import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
 import PersonaSection from '../../components/LandingPageComponents/PersonaSection'
 import {
@@ -312,12 +311,7 @@ export class Teacher extends Component {
           </HalfGrid>
           <Divider />
           <Spacer />
-          <SectionTitle>
-            <FormattedMessage
-              id='teacherPage.sectiontitle.whoWeHelp'
-              defaultMessage='Who we help'
-            />
-          </SectionTitle>
+
           <PersonaSection />
         </FullPage>
       </div>
