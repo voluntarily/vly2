@@ -58,7 +58,7 @@ export const InterestMessageList = ({ messages }) => {
       size='small'
       style={{ overflow: 'auto' }}
       className='comment-list'
-      header={`${data.length} messages`}
+      // header={`${data.length} messages`}
       itemLayout='horizontal'
       dataSource={data}
       renderItem={item => (
