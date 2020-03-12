@@ -417,7 +417,7 @@ class OpDetailForm extends Component {
                   {getFieldDecorator('endDate', {
                     rules: [
                       {
-                        required: this.state.requiredForPublish,
+                        required: false,
                         message: 'End date is required'
                       }
                     ]
@@ -435,12 +435,7 @@ class OpDetailForm extends Component {
               <MediumInputContainer>
                 <Form.Item label={opLocation}>
                   {getFieldDecorator('location', {
-                    rules: [
-                      {
-                        required: this.state.requiredForPublish,
-                        message: 'A region must be provided'
-                      }
-                    ]
+                    rules: []
                   })(
                     <LocationSelector
                       existingLocations={this.props.existingLocations}
