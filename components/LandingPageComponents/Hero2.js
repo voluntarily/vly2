@@ -42,8 +42,8 @@ const TextHeroTitle = styled.h1`
 const TextMiniTitle = styled.p`
   margin-top: 2rem;
   width: 12.8rem;
-  color: gray;
-  font-size: 1rem;
+  color: #515151;
+  font-size: 1.2rem;
   letter-spacing: -0.5px;
 
   font-weight: 400;

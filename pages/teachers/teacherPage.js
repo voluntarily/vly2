@@ -161,7 +161,7 @@ export class Teacher extends Component {
           />
 
           <SectionContainer>
-            <AboutImage src='/static/test2.png' />
+            <AboutImage src='/static/test2.png' alt='Photo that shows what the voluntarily website looks like for teachers' />
 
             <TextHeroDescription>
               <strong>Call in support from experts</strong>
@@ -217,14 +217,14 @@ export class Teacher extends Component {
             <SectionTitle>We are working with</SectionTitle>
             <SponsorContainer>
               {/* <SponsorIcon src='static/img/partners/MOE.png' /> */}
-              <SponsorIcon src='static/img/partners/tec.png' />
-              <SponsorIcon src='static/img/partners/Spark.png' />
-              <SponsorIcon src='static/img/partners/Westpac.png' />
-              <SponsorIcon src='static/img/partners/Datacom.png' />
-              <SponsorIcon src='static/img/partners/innovationfund.png' />
-              <SponsorIcon src='static/img/partners/ateed.png' />
+              <SponsorIcon src='static/img/partners/tec.png' alt='Tertiary Edeucation Commission Logo' />
+              <SponsorIcon src='static/img/partners/Spark.png' alt='Spark New Zealand Logo' />
+              <SponsorIcon src='static/img/partners/Westpac.png' alt='Westpac Foundation Logo' />
+              <SponsorIcon src='static/img/partners/Datacom.png' alt='Datacom Logo' />
+              <SponsorIcon src='static/img/partners/innovationfund.png' alt='NZ Innovation Fund Logo' />
+              <SponsorIcon src='static/img/partners/ateed.png' alt='Auckland Tourism, Events, and Economic Development Logo Logo' />
               {/* <SponsorIcon src='static/img/partners/xero.png' /> */}
-              <SponsorIcon src='static/img/partners/uni.png' />
+              <SponsorIcon src='static/img/partners/uni.png' alt='University of Auckland ICT Graduate School Logo' />
             </SponsorContainer>
           </SectionContainer>
           <Divider />
