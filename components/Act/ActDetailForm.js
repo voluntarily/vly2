@@ -93,8 +93,8 @@ class ActDetailForm extends Component {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
 
-  onDocumentsChanged(documents) {
-    this.props.form.setFieldsValue({ 
+  onDocumentsChanged (documents) {
+    this.props.form.setFieldsValue({
       documents: documents.map(document => ({
         filename: document.data.name,
         location: document.location
@@ -102,7 +102,7 @@ class ActDetailForm extends Component {
     })
   }
 
-  onUploadingStatusChanged(isUploading) {
+  onUploadingStatusChanged (isUploading) {
     this.setState({
       documentsUploading: isUploading
     })
@@ -603,7 +603,7 @@ class ActDetailForm extends Component {
               <p>
                 <FormattedMessage
                   id='actDetailForm.addDocumentsSection.instructions'
-                  defaultMessage="Upload any PDF documents relativant to the activity that you would like volunteers to refer to (such as a Health and Safety pdf)"
+                  defaultMessage='Upload any PDF documents relativant to the activity that you would like volunteers to refer to (such as a Health and Safety pdf)'
                   description='instructions for instructions section in actdetail form'
                 />
               </p>
@@ -611,11 +611,14 @@ class ActDetailForm extends Component {
             <InputContainer>
               <MediumInputContainer>
                 <Form.Item label={actDocuments}>
-                  {getFieldDecorator('documents')(<FileUpload maxNumberOfFiles={5}
-                    allowedFileTypes={['.pdf']}
-                    files={this.props.act.documents}
-                    onFilesChanged={this.onDocumentsChanged.bind(this)}
-                    onUploadingStatusChanged={this.onUploadingStatusChanged.bind(this)} />)}
+                  {getFieldDecorator('documents')(
+                    <FileUpload
+                      maxNumberOfFiles={5}
+                      allowedFileTypes={['.pdf']}
+                      files={this.props.act.documents}
+                      onFilesChanged={this.onDocumentsChanged.bind(this)}
+                      onUploadingStatusChanged={this.onUploadingStatusChanged.bind(this)}
+                    />)}
                 </Form.Item>
               </MediumInputContainer>
             </InputContainer>

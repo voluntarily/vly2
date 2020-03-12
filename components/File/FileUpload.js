@@ -47,7 +47,7 @@ const FileUploadWrapper = styled.div`
 class FileUpload extends Component {
   TWO_MEGABYTES = 2000000
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     // Maps a Promise<Response> to whether it's complete (bool)
@@ -91,7 +91,7 @@ class FileUpload extends Component {
     }
   }
 
-  uploadFile(event) {
+  uploadFile (event) {
     const fileReader = new window.FileReader()
 
     fileReader.onloadend = async e => {
@@ -107,8 +107,7 @@ class FileUpload extends Component {
         this.setUploadStatus(responsePromise, true)
         this.filenameToLocationUrlMap.set(event.name, response.location)
         this.raiseFilesChanged()
-      }
-      catch (error) {
+      } catch (error) {
         // If we failed to upload the file
         // Then remove it from uppy
         this.uppy.removeFile(event.id)
@@ -126,13 +125,13 @@ class FileUpload extends Component {
     fileReader.readAsBinaryString(event.data)
   }
 
-  setUploadStatus(responsePromise, completed) {
+  setUploadStatus (responsePromise, completed) {
     this.uploadStatus.set(responsePromise, completed)
     this.onUploadEvent()
   }
 
-  onUploadEvent() {
-    const uploading = this.uploadStatus.size > 0 && 
+  onUploadEvent () {
+    const uploading = this.uploadStatus.size > 0 &&
       Array.from(this.uploadStatus.values()).filter(complete => !complete).length > 0
 
     this.setState({ uploading })
@@ -142,7 +141,7 @@ class FileUpload extends Component {
     }
   }
 
-  raiseFilesChanged() {
+  raiseFilesChanged () {
     if (this.props.onFilesChanged) {
       this.props.onFilesChanged(this.uppy.getFiles().map(file => ({
         ...file,
@@ -151,7 +150,7 @@ class FileUpload extends Component {
     }
   }
 
-  render() {
+  render () {
     const up = (process.env.NODE_ENV !== 'test') &&
       <FileUploadWrapper>
         <UploadingBadge data-uploading={this.state.uploading ? true : undefined}>Uploading...</UploadingBadge>

@@ -37,7 +37,7 @@ const uploadFile = async (req, res) => {
   }
 }
 
-function getBucketName() {
+function getBucketName () {
   let bucketName = config.appUrl.replace(/^(https?|ftp|http):\/\//g, '')
   if (bucketName.match(/localhost/g)) {
     bucketName = 'localhost'
@@ -50,7 +50,7 @@ function getBucketName() {
  * Is the str a valid amazon s3 bucket for this environment.
  * @param {string} str A URL.
  */
-function isValidFileUrl(str) {
+function isValidFileUrl (str) {
   if (!str) {
     return false
   }
@@ -59,8 +59,7 @@ function isValidFileUrl(str) {
     const url = new URL(str)
 
     return !!(url.hostname.match(/amazonaws.com$/) && url.pathname.startsWith(`/${getBucketName()}`))
-  }
-  catch {
+  } catch {
     return false
   }
 }
