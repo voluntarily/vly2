@@ -101,7 +101,7 @@ const setSession = async (req, res, next) => {
         'Set-Cookie',
         'idToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
       )
-      res.statusCode = 301
+      res.statusCode = 302
       return res.end()
     }
 
