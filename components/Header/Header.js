@@ -101,7 +101,7 @@ const Header = ({ isAuthenticated, me, ...props }) => {
   if (notice === 'none') notice = '' // wipe notice if its set to none
   const height = notice ? '112px' : '56px'
   return (
-    <Layout.Header style={{ position: 'fixed', height: height, zIndex: 10, width: '100%', backgroundColor: 'white', boxShadow: '1px 1px 12px 0 rgba(0, 0, 0, 0.1)' }}>
+    <Layout.Header style={{ position: 'fixed', height: height, zIndex: 10, width: '100%', backgroundColor: 'white' }}>
       {notice && <Notice><Icon type='warning' /> {notice}</Notice>}
       <MenuGrid>
         <div>
@@ -126,7 +126,7 @@ const Header = ({ isAuthenticated, me, ...props }) => {
 
         </div>
         {isAuthenticated &&
-          <StyledAvatar>
+          <StyledAvatar>\
             <Link href={me && me._id ? `/people/${me._id}` : '/home'}>
               <Avatar
                 size='small'
