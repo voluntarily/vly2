@@ -35,7 +35,7 @@ border-radius: 8px;
 transition: all 0.3s;
 :hover {
   border-radius: 8px;
-  transform: scale(1.04);
+  transform: scale(1.02);
   h3 {
     color: #6549AA;
   }
@@ -189,6 +189,7 @@ export const RegisterInterestItem = ({
         )
         : <RegisterButtons />}
       <MessagePanel onClick={() => showMessages()}>
+
         <InterestMessageItem message={latestMsg} />
       </MessagePanel>
 
