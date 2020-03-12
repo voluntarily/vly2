@@ -30,6 +30,16 @@ test_task:
   container:
     cpu: 4
 
+lang_task:
+  node_modules_cache:
+    folder: node_modules
+    fingerprint_script: cat package-lock.json
+    populate_script: MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" MONGOMS_VERSION="4.0.5" MONGOMS_DISABLE_POSTINSTALL=1 npm ci
+  build_lang_script:
+    - cp lang/en.json lang/en.orig.json
+    - npm run build:lang
+    - diff lang/en.json lang/en.orig.json
+
 systemtest_task:
   node_modules_cache:
     folder: node_modules
