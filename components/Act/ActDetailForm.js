@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import FileUpload from '../File/FileUpload'
 
 import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
@@ -92,6 +93,21 @@ class ActDetailForm extends Component {
     this.props.form.setFieldsValue({ imgUrl: value })
   }
 
+  onDocumentsChanged (documents) {
+    this.props.form.setFieldsValue({
+      documents: documents.map(document => ({
+        filename: document.data.name,
+        location: document.location
+      }))
+    })
+  }
+
+  onUploadingStatusChanged (isUploading) {
+    this.setState({
+      documentsUploading: isUploading
+    })
+  }
+
   handleSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
@@ -111,6 +127,7 @@ class ActDetailForm extends Component {
         act.description = values.description
         act.offerOrg = values.offerOrg && values.offerOrg.key
         act.imgUrl = values.imgUrl === '' ? undefined : values.imgUrl
+        act.documents = values.documents
         act.tags = values.tags
         act.status = e.target.name === 'publish' ? 'active' : 'draft'
         // act.owner = (this.props.act.owner && this.props.op.owner._id) || this.props.me._id
@@ -228,6 +245,19 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Choose a picture that illustrates the activity, you can upload a picture or link to something on the Internet, Animated Gifs too.'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
+    const actDocuments = (
+      <span>
+        <FormattedMessage
+          id='actDocuments'
+          defaultMessage='Documents'
+          description='activity documents label in ActDetailForm'
+        />
+        &nbsp;
+        <Tooltip title='Upload up to 5 pdf files that you would like to attach to this activity. These will be display on the activity for volunteers to read.'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -564,6 +594,43 @@ class ActDetailForm extends Component {
               <TitleContainer>
                 <h3>
                   <FormattedMessage
+                    id='actDetailForm.addDocumentsSection.title'
+                    defaultMessage='Documents'
+                    description='subtitle for the documents section in act detail form'
+                  />
+                </h3>
+              </TitleContainer>
+              <p>
+                <FormattedMessage
+                  id='actDetailForm.addDocumentsSection.instructions'
+                  defaultMessage='Upload any PDF documents relativant to the activity that you would like volunteers to refer to (such as a Health and Safety pdf)'
+                  description='instructions for instructions section in actdetail form'
+                />
+              </p>
+            </DescriptionContainer>
+            <InputContainer>
+              <MediumInputContainer>
+                <Form.Item label={actDocuments}>
+                  {getFieldDecorator('documents')(
+                    <FileUpload
+                      maxNumberOfFiles={5}
+                      allowedFileTypes={['.pdf']}
+                      files={this.props.act.documents}
+                      onFilesChanged={this.onDocumentsChanged.bind(this)}
+                      onUploadingStatusChanged={this.onUploadingStatusChanged.bind(this)}
+                    />)}
+                </Form.Item>
+              </MediumInputContainer>
+            </InputContainer>
+          </FormGrid>
+
+          <Divider />
+
+          <FormGrid>
+            <DescriptionContainer>
+              <TitleContainer>
+                <h3>
+                  <FormattedMessage
                     id='actDetailForm.SaveActivityButton'
                     defaultMessage='Save Activity'
                     description='Subtitle for save activity section on ActDetailForm'
@@ -596,7 +663,7 @@ class ActDetailForm extends Component {
                 name='save'
                 // htmlType='submit'
                 onClick={this.handleSubmit}
-                disabled={hasErrors(getFieldsError())}
+                disabled={hasErrors(getFieldsError()) || this.state.documentsUploading}
                 style={{ marginLeft: 8 }}
               >
                 <FormattedMessage
@@ -611,7 +678,7 @@ class ActDetailForm extends Component {
                 type='primary'
                 // htmlType='submit'
                 onClick={this.handleSubmit}
-                disabled={hasErrors(getFieldsError())}
+                disabled={hasErrors(getFieldsError()) || this.state.documentsUploading}
                 style={{ marginLeft: 8 }}
               >
                 <FormattedMessage
@@ -634,6 +701,7 @@ ActDetailForm.propTypes = {
     name: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.string,
+    documents: PropTypes.array,
     resource: PropTypes.string,
     volunteers: PropTypes.number,
     space: PropTypes.string,
@@ -705,6 +773,10 @@ export default Form.create({
       imgUrl: Form.createFormField({
         ...props.act.imgUrl,
         value: props.act.imgUrl
+      }),
+      documents: Form.createFormField({
+        ...props.act.documents,
+        value: props.act.documents
       }),
       time: Form.createFormField({ ...props.act.time, value: props.act.time }),
       resource: Form.createFormField({
