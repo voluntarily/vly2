@@ -27,7 +27,7 @@ const Notice = styled.div`
 
 const MenuGrid = styled.div`
   display: grid;
-  grid-template-columns: 2fr 1fr 2fr;
+  grid-template-columns: 2fr 1fr 2fr 3rem;
   @media screen and (max-width: 767px) {
     grid-template-columns: 0fr 1fr 2fr;
   }
@@ -57,6 +57,7 @@ const Logo = styled.img`
 
 const StyledAvatar = styled(Avatar)`
   background-color: #fff;
+  margin: 0.5rem 1rem 0 0;
 
   .anticon-user {
     margin-right: 0px;
@@ -122,19 +123,20 @@ const Header = ({ isAuthenticated, me, ...props }) => {
         </Link>
         <div>
           <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
-          {isAuthenticated &&
-            <StyledAvatar>
-              <Link href={me && me._id ? `/people/${me._id}` : '/home'}>
-                <Avatar
-                  size='small'
-                  src={me && me.imgUrlSm}
-                  icon='user'
-                  alt='profile photo'
-                />
-              </Link>
 
-            </StyledAvatar>}
         </div>
+        {isAuthenticated &&
+          <StyledAvatar>
+            <Link href={me && me._id ? `/people/${me._id}` : '/home'}>
+              <Avatar
+                size='small'
+                src={me && me.imgUrlSm}
+                icon='user'
+                alt='profile photo'
+              />
+            </Link>
+
+          </StyledAvatar>}
       </MenuGrid>
     </Layout.Header>
   )
