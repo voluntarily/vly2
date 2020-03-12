@@ -4,7 +4,8 @@ const { Action } = require('../../services/abilities/ability.constants')
 const getArchivedOpportunity = async (req, res, next) => {
   const got = await ArchivedOpportunity
     .findOne(req.params)
-    .populate('requestor')
+    .populate('requestor', 'name imgUrl imgUrlsm')
+    .populate('offerOrg', 'name imgUrl category')
     .exec()
 
   if (got === null) {
@@ -34,6 +35,8 @@ const getArchivedOpportunities = async (req, res, next) => {
       .accessibleBy(req.ability, Action.LIST)
       .find(query)
       .select(select)
+      .populate('requestor', 'name nickname imgUrl')
+      .populate('offerOrg', 'name imgUrl category')
       .sort(sort)
       .exec()
 

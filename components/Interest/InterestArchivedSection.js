@@ -2,14 +2,13 @@
   Smart component. for the given opportunity gets a list of Interests
   and displays them in a table. actions change the state of the interested volunteers
 */
-import { useEffect } from 'react'
-import InterestArchivedTable from './InterestArchivedTable'
-import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import reduxApi from '../../lib/redux/reduxApi'
+import { InterestAction, InterestStatus } from '../../server/api/interest/interest.constants'
 import Loading from '../Loading'
-import { useSelector, useDispatch } from 'react-redux'
-import { InterestStatus, InterestAction } from '../../server/api/interest/interest.constants'
+import InterestArchivedTable from './InterestArchivedTable'
 
 export const InterestArchivedSection = ({ opid }) => {
   const interests = useSelector(state => state.interestArchives)
@@ -45,19 +44,10 @@ export const InterestArchivedSection = ({ opid }) => {
   }
 
   return (
-    <section>
-      <h2>
-        <FormattedMessage
-          id='interestArchiveSection.name'
-          defaultMessage='Volunteers'
-          description='label for interest table on op detail page'
-        />
-      </h2>
-      <InterestArchivedTable
-        interests={interests.data}
-        onAction={handleAction}
-      />
-    </section>
+    <InterestArchivedTable
+      interests={interests.data}
+      onAction={handleAction}
+    />
   )
 }
 InterestArchivedSection.propTypes = {
