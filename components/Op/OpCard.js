@@ -29,6 +29,10 @@ const StyledIcon = styled(Icon)`
   right: 0.5rem;    
 `
 
+const DescriptionWrapper = styled.p`
+margin-top: 0.5rem;
+`
+
 // todo if image is not present then use a fallback.
 const OpCard = ({ op }) => {
   const cardImage = op.imgUrl ? op.imgUrl : '/static/missingimage.svg'
@@ -71,9 +75,9 @@ const OpCard = ({ op }) => {
             <p> {startLocation}</p>
             <p> {startTime} </p>
             <p> {startDuration}</p>
-            <p>
+            <DescriptionWrapper>
               {op.subtitle}
-            </p>
+            </DescriptionWrapper>
           </figcaption>
         </a>
       </Link>
