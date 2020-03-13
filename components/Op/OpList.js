@@ -16,8 +16,8 @@ const CardContainer = styled.div`
 overflow: visible;
   display:grid;
   grid-template-columns: auto;
-  grid-column-gap: 30px;
-  grid-row-gap: 32px;
+  grid-column-gap: 2rem;
+  grid-row-gap: 2rem;
   
   @media screen and (min-width: 768px) {
     grid-template-columns: 1fr 1fr 1fr;
