@@ -12,6 +12,7 @@ color: #6549AA;
 
 .ant-tabs {
     overflow: visible;
+
 }
 
 .ant-tabs-top {

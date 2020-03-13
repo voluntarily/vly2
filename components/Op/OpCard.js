@@ -23,10 +23,22 @@ const ImageWrapper = styled.div`
 `
 
 const StyledIcon = styled(Icon)`
-  font-size: 2rem;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+
+ 
+`
+const TagInterest = styled.p`
   position: absolute;
   top: 0.5rem;
-  right: 0.5rem;    
+  left: 0.5rem;   
+
+  padding:0.2rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  color: white;
+  background-color: #240754; 
 `
 
 // todo if image is not present then use a fallback.
@@ -40,8 +52,8 @@ const OpCard = ({ op }) => {
   const interestIcon = ((interest) => {
     if (!interest) { return '' }
     switch (interest.status) {
-      case 'interested': return <StyledIcon type='like' theme='twoTone' twoToneColor='#6549AA' />
-      case 'invited': return <StyledIcon type='message' theme='twoTone' twoToneColor='#fb0' />
+      case 'interested': return <TagInterest><StyledIcon type='mail' />Offer Sent</TagInterest>
+      case 'invited': return <TagInterest>Offer </TagInterest>
       case 'committed': return <StyledIcon type='check-circle' theme='twoTone' twoToneColor='#0f0' />
       case 'declined': return <StyledIcon type='close-circle' theme='twoTone' twoToneColor='#f00' />
       default: return ''
