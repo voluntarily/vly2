@@ -8,7 +8,7 @@ export const HomeBanner = ({ person, children }) =>
     <img src={person.imgUrl} />
     <div>
       <h1>{person.name}</h1>
-      <p>{person.job} {person.placeOfWork} - 32 potatoes earned </p>
+      <p> <strong>32</strong> achievements earned </p>
     </div>
     {children}
 

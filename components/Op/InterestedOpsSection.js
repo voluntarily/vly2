@@ -46,6 +46,7 @@ export const InterestedOpsSection = () => {
           defaultMessage='My Activities'
           description='Subtitle for home page for the volunteers current ops'
         />
+        <small>Activities you have offered to help out with are listed below:</small>
       </ProfileSectionTitle>
       <OpList ops={ops} />
     </ProfileSection>
