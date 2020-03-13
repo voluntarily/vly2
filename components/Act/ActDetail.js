@@ -72,9 +72,9 @@ export function ActDetail ({ act, me }) {
             <Divider />
             <h5>
               <FormattedMessage
-                id='opTags'
+                id='opTagsAct'
                 defaultMessage='Tags'
-                description='Tags on an opportunity'
+                description='Descriptions of general areas the activity relates to'
               />
             </h5>
             <TagDisplay tags={act.tags} />

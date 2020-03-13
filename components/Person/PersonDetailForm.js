@@ -131,7 +131,7 @@ class PersonDetail extends Component {
     )
     const personAbout = (
       <FormattedMessage
-        id='personAbout'
+        id='personAbout2'
         defaultMessage='About'
         description='person about label in personDetails Form'
       />
