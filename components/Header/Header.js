@@ -86,7 +86,7 @@ const handleSearch = search => {
     query: {
       search
     }
-  })npm 
+  })
 }
 
 const getAllowedLinks = isAuthenticated =>
