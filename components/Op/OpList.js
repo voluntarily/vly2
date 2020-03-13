@@ -9,8 +9,11 @@ import styled from 'styled-components'
 const CardWrapper = styled.div`
   width: 100%;
   height: 100%;
+  overflow: visible;
 `
 const CardContainer = styled.div`
+
+overflow: visible;
   display:grid;
   grid-template-columns: auto;
   grid-column-gap: 30px;
