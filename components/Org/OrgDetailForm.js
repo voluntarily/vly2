@@ -8,7 +8,7 @@ import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import NumericRange from '../VTheme/NumericRange'
 import { Category as OrganisationCategory } from '../../server/api/organisation/organisation.constants'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
-import { domainRegex } from '../../server/api/organisation/organisation.validation'
+import { domainRegex } from '../../lib/fieldValidation'
 import {
   DescriptionContainer,
   FormGrid,
