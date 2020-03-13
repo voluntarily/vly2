@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl'
 import OpRecommendations from './OpRecommendations'
 import { useSelector } from 'react-redux'
 import Loading from '../Loading'
-import { Divider } from 'antd'
 
 export const RecommendedOpsSection = () => {
   const recommendedOps = useSelector(state => state.recommendedOps)
