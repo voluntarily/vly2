@@ -3,12 +3,14 @@ import React from 'react'
 
 import { PageBanner } from '../../components/VTheme/VTheme'
 
+const isNotProd = process.env.NODE_ENV !== 'production'
+
 export const HomeBanner = ({ person, children }) =>
   <PageBanner>
     <img src={person.imgUrl} />
     <div>
       <h1>{person.name}</h1>
-      <p> <strong>32</strong> achievements earned </p>
+      {isNotProd && (<p> <strong>32</strong> achievements earned </p>)}
     </div>
     {children}
 
