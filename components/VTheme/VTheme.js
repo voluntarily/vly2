@@ -16,8 +16,17 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 export const PageBanner = styled.div`
   margin: 8rem 0 2rem 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding-bottom: 1rem;
+  grid-template-columns: 4rem 1fr 4rem 4rem;
+  padding: 1rem;
+  align-content: center;
+ 
+  box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
+  border-radius: 8px;
+
+  img{
+    width: 4rem;
+    border-radius: 100%;
+  }
  
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
