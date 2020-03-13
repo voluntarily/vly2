@@ -57,12 +57,12 @@ const homeDiscoverTab = (
 
 export const HomeTabs = ({ person, onChange, defaultTab }) =>
   <VTabs defaultActiveKey={defaultTab} onChange={onChange}>
-    <TabPane tab={homeDiscoverTab} key='discover'>
+    <TabPane tab={homeDiscoverTab} key='discover' style={{ overflow: 'visible' }}>
       <ProfilePanel>
         <RecommendedOpsSection />
       </ProfilePanel>
     </TabPane>
-    <TabPane tab={homeActiveTab} key='active'>
+    <TabPane tab={homeActiveTab} key='active' style={{ overflow: 'visible' }}>
       <ProfilePanel>
         <PersonalGoalSection />
         <ActiveOpsSection />
