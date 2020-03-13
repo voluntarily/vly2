@@ -56,6 +56,7 @@ export const PageBannerNoTabs = styled.div`
 
 export const PageBannerButtons = styled.div`
  align-self: center;
+ width: 100%;
   @media screen and (max-width: 767px) {
     margin-top: 1rem;
     

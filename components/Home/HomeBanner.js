@@ -8,7 +8,7 @@ export const HomeBanner = ({ person, children }) =>
     <img src={person.imgUrl} />
     <div>
       <h1>{person.name}</h1>
-      <p>{person.placeOfWork} Awesome Volunteer</p>
+      <p>{person.job} {person.placeOfWork} - 32 potatoes earned </p>
     </div>
     {children}
 
@@ -17,6 +17,7 @@ export const HomeBanner = ({ person, children }) =>
 HomeBanner.propTypes = {
   person: PropTypes.shape({
     name: PropTypes.string.isRequired,
+    job: PropTypes.string,
     placeOfWork: PropTypes.string,
     imgUrl: PropTypes.string
   }).isRequired
