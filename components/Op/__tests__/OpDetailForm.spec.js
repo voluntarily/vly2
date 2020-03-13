@@ -4,7 +4,6 @@ import tagList from '../../../server/api/tag/__tests__/tag.fixture'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
 import OpDetailForm from '../OpDetailForm'
 import sinon from 'sinon'
-
 const { sortedLocations } = require('../../../server/api/location/locationData')
 
 // Initial opportunities
@@ -149,4 +148,103 @@ test('render the detail with new blank op', t => {
 
   wrapper.find('#saveOpBtn').first().simulate('click')
   t.truthy(submitOp.calledOnce)
+})
+
+test('Save a op as draft with correct validation', async t => {
+  const submitOp = sinon.spy()
+  const cancelOp = sinon.spy()
+  const me = {
+    _id: '5ccbffff958ff4833ed2188d',
+    orgMembership: [
+      {
+        organisation: {
+          _id: 'a',
+          name: 'Careys org',
+          slug: 'carey-org'
+        }
+      }
+    ]
+  }
+
+  const wrapper = mountWithIntl(
+    <OpDetailForm
+      op={op}
+      me={me}
+      onSubmit={submitOp}
+      onCancel={cancelOp}
+      existingLocations={sortedLocations}
+      existingTags={[]}
+    />
+  )
+
+  t.is(wrapper.find('OpDetailForm').length, 1)
+  t.truthy(wrapper.find('.name'))
+
+  const name = wrapper.find('.name').first()
+  name.simulate('change', { target: { value: 'bob' } })
+
+  t.truthy(wrapper.find('.organisation'))
+
+  const org = wrapper.find('.organisation').first()
+  org.simulate('click')
+  wrapper.find('.ant-select-dropdown li').first().simulate('click')
+
+  const draftButton = wrapper.find('#saveOpBtn').first()
+  draftButton.simulate('click')
+
+  t.truthy(submitOp.calledOnce)
+
+  t.is(wrapper.find('.ant-form-explain').length, 0)
+})
+
+test('Publish a op with correct validation', t => {
+  const submitOp = sinon.spy()
+  const cancelOp = sinon.spy()
+  const me = {
+    _id: '5ccbffff958ff4833ed2188d',
+    orgMembership: [
+      {
+        organisation: {
+          _id: 'a',
+          name: 'Careys org',
+          slug: 'carey-org'
+        }
+      }
+    ]
+  }
+
+  const wrapper = mountWithIntl(
+    <OpDetailForm
+      op={op}
+      me={me}
+      onSubmit={submitOp}
+      onCancel={cancelOp}
+      existingLocations={sortedLocations}
+      existingTags={[]}
+    />
+  )
+
+  t.is(wrapper.find('OpDetailForm').length, 1)
+  t.truthy(wrapper.find('.name'))
+
+  const name = wrapper.find('.name').first()
+  name.simulate('change', { target: { value: 'bob' } })
+
+  const subtitle = wrapper.find('.subtitle').first()
+  subtitle.simulate('change', { target: { value: 'bobs oportunity' } })
+
+  t.truthy(wrapper.find('.organisation'))
+  const org = wrapper.find('.organisation').first()
+  org.simulate('click')
+  wrapper.find('.ant-select-dropdown li').first().simulate('click')
+
+  const commitment = wrapper.find('.commitment').first()
+  commitment.simulate('change', { target: { value: '8 hours' } })
+
+  const publishButton = wrapper.find('#publishOpBtn').first()
+  publishButton.simulate('click')
+
+  t.truthy(submitOp.calledOnce)
+
+  t.is(wrapper.find('.ant-form-explain').length, 0)
 })
