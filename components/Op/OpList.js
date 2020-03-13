@@ -9,11 +9,15 @@ import styled from 'styled-components'
 const CardWrapper = styled.div`
   width: 100%;
   height: 100%;
+  overflow: visible;
 `
 const CardContainer = styled.div`
+
+overflow: visible;
   display:grid;
   grid-template-columns: auto;
-  grid-column-gap: 30px;
+  grid-column-gap: 2rem;
+  grid-row-gap: 2rem;
   
   @media screen and (min-width: 768px) {
     grid-template-columns: 1fr 1fr 1fr;

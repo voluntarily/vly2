@@ -17,7 +17,7 @@ const FeaturedTwoSection = ({ ops, title, subtitle, ...props }) => (
         ops.map((op, index) => <OpCard size='Big' op={op} key={index} />)
       ) : (
         <FormattedMessage
-          id='op.list.empty'
+          id='op.list.empty2'
           defaultMessage='No matching activities'
           description='no opportunities message in OpList'
         />

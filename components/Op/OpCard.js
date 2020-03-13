@@ -5,7 +5,7 @@
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
-import { Card, DescriptionWrapper } from '../VTheme/VTheme'
+import { Card, DescriptionWrapper, TagState } from '../VTheme/VTheme'
 import { Icon } from 'antd'
 import styled from 'styled-components'
 
@@ -23,10 +23,10 @@ const ImageWrapper = styled.div`
 `
 
 const StyledIcon = styled(Icon)`
-  font-size: 2rem;
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;    
+  font-size: 1rem;
+  margin-right: 0.5rem;
+
+ 
 `
 
 // todo if image is not present then use a fallback.
@@ -40,10 +40,10 @@ const OpCard = ({ op }) => {
   const interestIcon = ((interest) => {
     if (!interest) { return '' }
     switch (interest.status) {
-      case 'interested': return <StyledIcon type='like' theme='twoTone' twoToneColor='#6549AA' />
-      case 'invited': return <StyledIcon type='message' theme='twoTone' twoToneColor='#fb0' />
-      case 'committed': return <StyledIcon type='check-circle' theme='twoTone' twoToneColor='#0f0' />
-      case 'declined': return <StyledIcon type='close-circle' theme='twoTone' twoToneColor='#f00' />
+      case 'interested': return <TagState style={{ color: '#222', backgroundColor: '#E1E1E1' }}><StyledIcon type='mail' />You offered to help</TagState>
+      case 'invited': return <TagState style={{ color: 'white', backgroundColor: '#653CAD' }}><StyledIcon type='calendar' />You are invited</TagState>
+      case 'committed': return <TagState style={{ color: 'black', backgroundColor: '#36F482' }}><StyledIcon type='check-circle' />Accepted</TagState>
+      case 'declined': return <TagState style={{ color: 'white', backgroundColor: '#F44336' }}><StyledIcon type='close-circle' />Cancelled</TagState>
       default: return ''
     }
   })(op.interest)
@@ -60,20 +60,32 @@ const OpCard = ({ op }) => {
         <a>
           <ImageWrapper>
             <img src={cardImage} alt={op.name} />
-            {interestIcon}
+
           </ImageWrapper>
           <figcaption>
             <h1>
               {draft}
               {op.name}
             </h1>
-            {orgName}
+
             <p> {startLocation}</p>
             <p> {startTime} </p>
             <p> {startDuration}</p>
             <DescriptionWrapper>
               {op.subtitle}
             </DescriptionWrapper>
+
+            {orgName &&
+              <>
+                <DescriptionWrapper>
+
+                  <i>
+                    {orgName}
+                  </i>
+                </DescriptionWrapper>
+              </>}
+            {interestIcon}
+
           </figcaption>
         </a>
       </Link>
