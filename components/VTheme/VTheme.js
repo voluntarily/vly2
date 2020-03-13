@@ -21,7 +21,7 @@ export const PageBanner = styled.div`
   gap: 1rem;
   align-self: center;
  
-  box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
+  box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.7);
   border-radius: 8px;
 
 h1 {

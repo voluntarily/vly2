@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import OpList from './OpList'
 
+import { ProfileSectionTitle } from '../VTheme/Profile'
+import { Divider } from 'antd'
+
 class OpRecommendations extends React.Component {
   render () {
     const { recommendedOps } = this.props
@@ -9,13 +12,19 @@ class OpRecommendations extends React.Component {
       <>
         {recommendedOps.basedOnLocation.length !== 0 &&
           <div>
-            <h2>Nearby opportunities</h2>
+            <Divider />
+            <ProfileSectionTitle>
+              Nearby opportunities
+            </ProfileSectionTitle>
             <OpList ops={recommendedOps.basedOnLocation} />
           </div>}
 
         {recommendedOps.basedOnSkills.length !== 0 &&
           <div>
-            <h2>Based on your skills</h2>
+            <Divider />
+            <ProfileSectionTitle>
+              Based on your skills
+            </ProfileSectionTitle>
             <OpList ops={recommendedOps.basedOnSkills} />
           </div>}
       </>)
