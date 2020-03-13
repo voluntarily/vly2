@@ -4,7 +4,7 @@ import { shallowWithIntl, mountWithIntl } from '../../../lib/react-intl-test-hel
 import OpCard from '../OpCard'
 import ops from './Op.fixture'
 import moment from 'moment'
-import { DescriptionWrapper } from '../../VTheme/VTheme'
+import { DescriptionWrapper, TagState } from '../../VTheme/VTheme'
 
 test.before('Setup fixtures', (t) => {
   // Initial opportunities
@@ -86,25 +86,25 @@ test('op with an interest status should have related icon appear in card', t => 
   let wrapper = mountWithIntl(
     <OpCard op={op} />
   )
-  t.truthy(wrapper.find('i').first().hasClass('anticon-like'))
+  t.truthy(wrapper.find('figcaption').find('i').hasClass('anticon-mail'))
 
   op.interest.status = 'invited'
   wrapper = mountWithIntl(
     <OpCard op={op} />
   )
-  t.truthy(wrapper.find('i').first().hasClass('anticon-message'))
+  t.truthy(wrapper.find('figcaption').find('i').hasClass('anticon-calendar'))
 
   op.interest.status = 'committed'
   wrapper = mountWithIntl(
     <OpCard op={op} />
   )
-  t.truthy(wrapper.find('i').first().hasClass('anticon-check-circle'))
+  t.truthy(wrapper.find('figcaption').find('i').hasClass('anticon-check-circle'))
 
   op.interest.status = 'declined'
   wrapper = mountWithIntl(
     <OpCard op={op} />
   )
-  t.truthy(wrapper.find('i').first().hasClass('anticon-close-circle'))
+  t.truthy(wrapper.find('figcaption').find('i').hasClass('anticon-close-circle'))
 })
 
 test('op with uncatered interest status should not have related icon appear in card', t => {
