@@ -14,7 +14,12 @@ color: #6549AA;
     overflow: visible;
 }
 
+.ant-tabs-top {
+    overflow: visible;
+}
+
 .ant-tabs-tab-active {
+    
     color: #333;
     font-weight: bold;
 

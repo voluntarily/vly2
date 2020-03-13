@@ -67,13 +67,23 @@ const OpCard = ({ op }) => {
               {draft}
               {op.name}
             </h1>
-            {orgName}
+
             <p> {startLocation}</p>
             <p> {startTime} </p>
             <p> {startDuration}</p>
             <DescriptionWrapper>
               {op.subtitle}
             </DescriptionWrapper>
+            {orgName &&
+              <>
+                <DescriptionWrapper>
+
+                  <i>
+              By {orgName}
+                  </i>
+                </DescriptionWrapper>
+              </>}
+
           </figcaption>
         </a>
       </Link>

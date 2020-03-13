@@ -17,6 +17,7 @@ overflow: visible;
   display:grid;
   grid-template-columns: auto;
   grid-column-gap: 30px;
+  grid-row-gap: 32px;
   
   @media screen and (min-width: 768px) {
     grid-template-columns: 1fr 1fr 1fr;
