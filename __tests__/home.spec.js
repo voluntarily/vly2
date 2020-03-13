@@ -296,10 +296,10 @@ test('render volunteer home page - Active tab', t => {
       <PersonHomePage {...props} />
     </Provider>)
 
-  t.is(wrapper.find('h1').first().text(), 'Activities')
+  t.is(wrapper.find('h1').first().text(), 'Andrew Watkins')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Upcoming')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(1).text(), 'Active Activities')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(2).text(), 'My Activities')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(1).text(), 'Your ActivitiesActivities you are organising with Volunteers are listed below:')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(2).text(), 'Upcoming ActivitiesActivities you have offered to help out with are listed below:')
 
   const oplists = wrapper.find('OpList') // find 2 oplists on the home page
   t.is(oplists.length, 2)
