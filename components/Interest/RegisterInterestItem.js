@@ -10,6 +10,8 @@ import { FormattedMessage } from 'react-intl'
 import RegisterInterestMessageForm from './RegisterInterestMessageForm'
 import { PageAlert } from '../VTheme/VTheme'
 import { InterestStatus } from '../../server/api/interest/interest.constants'
+import { InterestMessageItem, InterestMessageList } from './InterestMessage'
+import styled from 'styled-components'
 
 /* Cycle is
 1. status message + accept [reject] buttons
@@ -19,11 +21,32 @@ import { InterestStatus } from '../../server/api/interest/interest.constants'
 5. display new status
 */
 
-const SafeAffix = ({ children }) => {
+const AffixTopBar = ({ children }) => {
   return (process.env.NODE_ENV === 'test')
     ? <>{children}</>
     : <Affix style={{ width: '100%', position: 'absolute', top: 0, left: 0 }} offsetTop={56}>{children}</Affix>
 }
+
+const MessagePanel = styled.section`
+box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
+margin-top: 1rem;
+border-radius: 8px;
+-webkit-transition: all 0.3s;
+transition: all 0.3s;
+:hover {
+  border-radius: 8px;
+  transform: scale(1.02);
+  h3 {
+    color: #6549AA;
+  }
+}
+`
+/* <MessagePanel>
+<InterestMessageList messages={interest.messages} />
+</MessagePanel>
+      style: 'backgroundColor: #A0B0C0'
+*/
+
 export const RegisterInterestItem = ({
   interest,
   onAccept,
@@ -36,6 +59,21 @@ export const RegisterInterestItem = ({
   // Options to configure the controls on this page based on the state of the interest.
   const options = getOptions(interest.status)
 
+  const showMessages = () => {
+    notification.info({
+      message: `${interest.messages.length} Messages`,
+      description: <InterestMessageList messages={interest.messages} />,
+      placement: 'bottomRight',
+      duration: 4.5, // never close
+      style: {
+        maxHeight: '30rem',
+        overflow: 'auto'
+        // width: '20rem',
+        // marginLeft: 335 - 600
+      }
+
+    })
+  }
   const handleAcceptSubmit = (ok, message) => {
     setShowAcceptForm(false)
     if (ok) {
@@ -96,7 +134,8 @@ export const RegisterInterestItem = ({
         {options.showAcceptButton && (
           <Button
             id='acceptBtn'
-            type='primary' shape='round'
+            block
+            type='primary' shape='round' size='large' style={{ placeSelf: 'center' }}
             onClick={handleAcceptClick}
           >
             {options.acceptButtonText}
@@ -106,7 +145,11 @@ export const RegisterInterestItem = ({
         {options.showRejectButton && (
           <Button
             id='rejectBtn'
-            shape='round' onClick={handleRejectClick}
+            shape='round'
+            size='large'
+            block
+            style={{ placeSelf: 'center' }}
+            onClick={handleRejectClick}
           >
             {options.rejectButtonText}
           </Button>
@@ -114,6 +157,9 @@ export const RegisterInterestItem = ({
         {options.showMessageButton && (
           <Button
             id='messageBtn'
+            size='large'
+            block
+            style={{ placeSelf: 'center' }}
             shape='round' onClick={handleMessageClick}
           >
             <FormattedMessage
@@ -127,19 +173,25 @@ export const RegisterInterestItem = ({
     )
   }
 
+  const latestMsg = interest.messages.slice(-1)[0]
+
   return (
     <>
       {options.showStatus
         ? (
-          <SafeAffix>
+          <AffixTopBar>
             <PageAlert>
-              <Icon type='history' style={{ fontSize: '32px', color: 'white' }} />
-              <h4>{options.statusMessage}</h4>
+              <Icon type='history' style={{ fontSize: '32px', color: 'white', placeSelf: 'center' }} />
+              <h4 style={{ alignSelf: 'center' }}>{options.statusMessage}</h4>
               <RegisterButtons />
             </PageAlert>
-          </SafeAffix>
+          </AffixTopBar>
         )
         : <RegisterButtons />}
+      <MessagePanel onClick={() => showMessages()}>
+
+        <InterestMessageItem message={latestMsg} />
+      </MessagePanel>
 
       <RegisterInterestMessageForm
         id='acceptRegisterInterestForm'

@@ -98,6 +98,25 @@ export function ActDetail ({ act, me }) {
       </OpSectionGrid>
       <Divider />
 
+      {act.documents && act.documents.length > 0 && (
+        <>
+          <OpSectionGrid>
+            <div>
+              <h2>Documents</h2>
+            </div>
+            <ItemDescription>
+              <ul id='documents'>
+                {act.documents.map(document => (
+                  <li key={document.location}>
+                    <a href={document.location}>{document.filename}</a>
+                  </li>
+                ))}
+              </ul>
+            </ItemDescription>
+          </OpSectionGrid>
+          <Divider />
+        </>)}
+
       <OpSectionGrid>
         <div>
           <h2>Written by</h2>
@@ -122,6 +141,7 @@ ActDetail.propTypes = {
     name: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
+    documents: PropTypes.array,
     description: PropTypes.string,
     volunteers: PropTypes.number,
     space: PropTypes.string,

@@ -36,7 +36,13 @@ InterestMessageItem.propTypes = {
 }
 
 export const InterestMessageList = ({ messages }) => {
-  const data = messages.map(message => ({
+  if (messages.length === 0) return null
+  const latestFirst = messages.sort(
+    (a, b) => {
+      return moment(b.dateAdded) - moment(a.dateAdded)
+    }
+  )
+  const data = latestFirst.map(message => ({
     // actions: [<span key="comment-list-reply-to-0">Reply to</span>],
     author: message.author.nickname,
     // avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
@@ -52,7 +58,7 @@ export const InterestMessageList = ({ messages }) => {
       size='small'
       style={{ overflow: 'auto' }}
       className='comment-list'
-      header={`${data.length} messages`}
+      // header={`${data.length} messages`}
       itemLayout='horizontal'
       dataSource={data}
       renderItem={item => (

@@ -505,11 +505,13 @@ class OrgDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <FormattedMessage
-                  id='orgDetailPage.staff.join.title'
-                  defaultMessage='Staff Instructions'
-                  description='title for staff joiner section'
-                />
+                <h3>
+                  <FormattedMessage
+                    id='orgDetailPage.staff.join.title'
+                    defaultMessage='Staff Instructions'
+                    description='title for staff joiner section'
+                  />
+                </h3>
               </TitleContainer>
               <p>
                 <FormattedMessage
