@@ -86,25 +86,25 @@ test('op with an interest status should have related icon appear in card', t => 
   let wrapper = mountWithIntl(
     <OpCard op={op} />
   )
-  t.truthy(wrapper.find('figcaption').find('i').hasClass('anticon-mail'))
+  t.truthy(wrapper.find('figcaption').find('p').last().text(), 'You offered to help')
 
   op.interest.status = 'invited'
   wrapper = mountWithIntl(
     <OpCard op={op} />
   )
-  t.truthy(wrapper.find('figcaption').find('i').hasClass('anticon-calendar'))
+  t.truthy(wrapper.find('figcaption').find('p').last().text(), 'You are invited')
 
   op.interest.status = 'committed'
   wrapper = mountWithIntl(
     <OpCard op={op} />
   )
-  t.truthy(wrapper.find('figcaption').find('i').hasClass('anticon-check-circle'))
+  t.truthy(wrapper.find('figcaption').find('p').last().text(), 'Accepted')
 
   op.interest.status = 'declined'
   wrapper = mountWithIntl(
     <OpCard op={op} />
   )
-  t.truthy(wrapper.find('figcaption').find('i').hasClass('anticon-close-circle'))
+  t.truthy(wrapper.find('figcaption').find('p').last().text(), 'Cancelled')
 })
 
 test('op with uncatered interest status should not have related icon appear in card', t => {
