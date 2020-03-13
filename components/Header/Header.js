@@ -86,7 +86,7 @@ const handleSearch = search => {
     query: {
       search
     }
-  })
+  })npm 
 }
 
 const getAllowedLinks = isAuthenticated =>
@@ -102,7 +102,7 @@ const Header = ({ isAuthenticated, me, ...props }) => {
   const height = notice ? '112px' : '56px'
   return (
     <Layout.Header style={{ position: 'fixed', height: height, zIndex: 10, width: '100%', backgroundColor: 'white' }}>
-      {notice && <Notice><Icon type='warning' /> {notice}</Notice>}
+      {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><Icon type='warning' /> {notice}</Notice>}
       <MenuGrid>
         <div>
           <Brand className='site-name' aria-hidden='true' />
