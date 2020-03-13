@@ -6,7 +6,10 @@ import { PageBanner } from '../../components/VTheme/VTheme'
 export const HomeBanner = ({ person, children }) =>
   <PageBanner>
     <img src={person.imgUrl} />
-    <h1>{person.name}</h1>
+    <div>
+      <h1>{person.name}</h1>
+      <p>{person.placeOfWork} Awesome Volunteer</p>
+    </div>
     {children}
 
   </PageBanner>
@@ -14,6 +17,7 @@ export const HomeBanner = ({ person, children }) =>
 HomeBanner.propTypes = {
   person: PropTypes.shape({
     name: PropTypes.string.isRequired,
+    placeOfWork: PropTypes.string,
     imgUrl: PropTypes.string
   }).isRequired
 }

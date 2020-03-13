@@ -50,6 +50,8 @@ export const PersonHomePage = () => {
       <HomeBanner person={person}>
         <PageBannerButtons>
           <OpAdd roles={person.roles} />
+        </PageBannerButtons>
+        <PageBannerButtons>
           <ActAdd roles={person.roles} />
         </PageBannerButtons>
       </HomeBanner>
