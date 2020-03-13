@@ -4,7 +4,7 @@ import { shallowWithIntl, mountWithIntl } from '../../../lib/react-intl-test-hel
 import OpCard from '../OpCard'
 import ops from './Op.fixture'
 import moment from 'moment'
-import { DescriptionWrapper, TagState } from '../../VTheme/VTheme'
+import { DescriptionWrapper } from '../../VTheme/VTheme'
 
 test.before('Setup fixtures', (t) => {
   // Initial opportunities
