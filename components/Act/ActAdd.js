@@ -13,7 +13,7 @@ const ActAdd = ({ roles }) => {
   if (roles && roles.includes(Role.ACTIVITY_PROVIDER)) {
     return (
       <Link href='/act/new'>
-        <Button type='primary' shape='round' size='large'>
+        <Button type='primary' block shape='round' size='large'>
           <FormattedMessage
             id='act.new'
             defaultMessage='New Template'

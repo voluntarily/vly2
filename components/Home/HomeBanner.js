@@ -1,27 +1,26 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
+
 import { PageBanner } from '../../components/VTheme/VTheme'
+
+const isNotProd = process.env.NODE_ENV !== 'production'
 
 export const HomeBanner = ({ person, children }) =>
   <PageBanner>
-    <h1>
-      <FormattedMessage
-        id='home.title'
-        defaultMessage='Activities'
-        description='Title on personal home page'
-      />
-    </h1>
+    <img src={person.imgUrl} />
+    <div>
+      <h1>{person.name}</h1>
+      {isNotProd && (<p> <strong>32</strong> achievements earned </p>)}
+    </div>
     {children}
-    <FormattedMessage
-      defaultMessage='Your current activities, goals and recommendations'
-      id='home.subtitle'
-    />
+
   </PageBanner>
 
 HomeBanner.propTypes = {
   person: PropTypes.shape({
     name: PropTypes.string.isRequired,
+    job: PropTypes.string,
+    placeOfWork: PropTypes.string,
     imgUrl: PropTypes.string
   }).isRequired
 }
