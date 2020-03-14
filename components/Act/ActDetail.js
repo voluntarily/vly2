@@ -2,7 +2,6 @@
  */
 import { FormattedMessage } from 'react-intl'
 import { Button, Divider } from 'antd'
-import Markdown from 'markdown-to-jsx'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -23,6 +22,7 @@ import {
   ItemImage
 } from '../VTheme/ItemList'
 import { Role } from '../../server/services/authorize/role'
+import Html from '../VTheme/Html';
 
 export function ActDetail ({ act, me }) {
   const img = act.imgUrl || '/static/missingimage.svg'
@@ -60,7 +60,7 @@ export function ActDetail ({ act, me }) {
           <h2>About this Template</h2>
         </div>
         <ItemDescription>
-          <Markdown
+          <Html
             children={act.description}
             options={{
               overrides: {

@@ -12,10 +12,10 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Markdown from 'markdown-to-jsx'
 import MemberExport from './MemberExport'
 import InviteMembers from './InviteMembers'
 import { Role } from '../../server/services/authorize/role.js'
+import Html from '../VTheme/Html';
 
 const SubSection = styled.section`
   margin-bottom: 2.0rem;
@@ -143,7 +143,7 @@ class MemberSection extends Component {
               description='label for follower table on org detail page'
             />
           </h2>
-          <Markdown children={org.info.joiners || ''} />
+          <Html children={org.info.joiners || ''} />
         </section>
     }
 
@@ -159,7 +159,7 @@ class MemberSection extends Component {
               description='label for org info for members detail page'
             />
           </h2>
-          <Markdown children={org.info.members || ''} />
+          <Html children={org.info.members || ''} />
         </section>
     }
 
@@ -175,7 +175,7 @@ class MemberSection extends Component {
               description='label for org info for followers detail page'
             />
           </h2>
-          <Markdown children={org.info.followers || ''} />
+          <Html children={org.info.followers || ''} />
         </section>
     }
 
@@ -190,7 +190,7 @@ class MemberSection extends Component {
               description='message to non members on the org members tab'
             />
           </h2>
-          <Markdown children={org.info.outsiders || ''} />
+          <Html children={org.info.outsiders || ''} />
         </section>
     }
 
