@@ -6,8 +6,8 @@ export default () => [
     href: '/home',
     text:
   <FormattedMessage
-    id='HeaderMenu.home'
-    defaultMessage='Activities'
+    id='HeaderMenu.volunteer'
+    defaultMessage='Volunteer'
   />,
     authRequired: true
   },
