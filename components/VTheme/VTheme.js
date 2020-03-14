@@ -36,7 +36,7 @@ h1 {
  
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
-    grid-template-columns: calc(100vw - 2rem);
+    grid-template-columns: calc(100vw - 4rem);
     grid-gap: 0rem;
   }
 `
