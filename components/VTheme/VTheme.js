@@ -576,7 +576,8 @@ export const FillWindow = styled.div`
 export const Card = styled.figure`
 
 -webkit-transition: all 0.28s;
-padding-bottom: 1rem;
+padding-bottom: 0.5rem;
+
 
 a { text-decoration: none; }
 
@@ -588,7 +589,7 @@ figcaption {
 :hover {
   transition: all 0.3s;
   box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
-  transform: scale(1.1);
+  transform: scale(1.02);
   border-radius: 8px;
   h1 {
     color: #6549aa;
@@ -599,7 +600,7 @@ figcaption {
     
   }
   figcaption {
-    transform: scale(0.9091);
+    transform: scale(0.94);
   }
 }
 
@@ -682,7 +683,7 @@ export const Li = styled.li`
   color: initial;
   margin-bottom: 0.3rem;
 `
-
+// we use this tag for categories
 export const TagStyle = styled(Tag)`
 width: auto;
 max-width: 100%;
@@ -696,6 +697,18 @@ vertical-align: middle;
 font-size: 1.2rem;
 font-weight: 500;
 background-color: #e8e8e8;
+`
+// we use this tag for op state
+export const TagState = styled.p`
+
+  display: inline-block;
+
+  padding:0.2rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  margin: 0.5rem 0 0 0;
+
 `
 
 export const StyledIcon = styled(Icon)`
