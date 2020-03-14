@@ -203,7 +203,7 @@ class OpDetailForm extends Component {
           description='activity Description label in OpDetails Form'
         />
         &nbsp;
-        <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML or Markdown here.'>
+        <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML here.'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -340,7 +340,7 @@ class OpDetailForm extends Component {
                   isTest ? (
                     <TextArea
                       rows={20}
-                      placeholder='All the details about the request. You can use markdown here.'
+                      placeholder='All the details about the request.'
                     />
                   ) : (
                     <RichTextEditor />
