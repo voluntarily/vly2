@@ -44,7 +44,7 @@ h1 {
 export const PageBannerNoTabs = styled.div`
   margin: 8rem 0 2rem 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 14rem;
   padding-bottom: 1rem;
   border-bottom: thin solid  #e8e8e8;
   @media screen and (max-width: 767px) {
@@ -55,9 +55,10 @@ export const PageBannerNoTabs = styled.div`
 `
 
 export const PageBannerButtons = styled.div`
- align-self: center;
+
  width: 100%;
   @media screen and (max-width: 767px) {
+    
     margin-top: 1rem;
     
   }
