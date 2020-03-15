@@ -190,7 +190,7 @@ class ActDetailForm extends Component {
           description='activity resource label in ActDetail Form'
         />
         &nbsp;
-        <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML here.'>
+        <Tooltip title='Give a long description of what is needed and what people will be doing.'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -231,7 +231,7 @@ class ActDetailForm extends Component {
           description='activity description label in ActDetail Form'
         />
         &nbsp;
-        <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML here.'>
+        <Tooltip title='Give a long description of what is needed and what people will be doing.'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>

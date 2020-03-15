@@ -203,7 +203,7 @@ class OpDetailForm extends Component {
           description='activity Description label in OpDetails Form'
         />
         &nbsp;
-        <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML here.'>
+        <Tooltip title='Give a long description of what is needed and what people will be doing.'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
