@@ -43,6 +43,12 @@ export const ItemDescription = styled.div`
   ul {
     padding-left: 0;
   }
+
+  li {
+    list-style: none;
+    padding: 1rem;
+    
+  }
   `
 
 export const TagContainer = styled.div`
