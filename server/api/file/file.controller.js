@@ -17,8 +17,7 @@ const uploadFile = async (req, res) => {
     let location
     if (config.env === 'development') {
       location = await uploadToFileSystem(buffer, filename)
-    }
-    else {
+    } else {
       location = await uploadToS3(buffer, filename)
     }
 
@@ -32,7 +31,7 @@ const uploadFile = async (req, res) => {
   }
 }
 
-async function uploadToFileSystem(buffer, filename) {
+async function uploadToFileSystem (buffer, filename) {
   const uniqueID = cuid()
   const uploadUrl = '/static/upload'
   const uploadPath = `./public${uploadUrl}`
@@ -55,7 +54,7 @@ async function uploadToFileSystem(buffer, filename) {
  * @param {Buffer} buffer A buffer containing the binary of the file.
  * @param {string} filename The filename of the file to be uploaded.
  */
-async function uploadToS3(buffer, filename) {
+async function uploadToS3 (buffer, filename) {
   AWS.config.update({
     accessKeyId: config.AWS_ACCESS_KEY_ID,
     secretAccessKey: config.AWS_SECRET_ACCESS_KEY
@@ -88,10 +87,9 @@ function getBucketName () {
  * Is the str a valid upload URL for this environment.
  * @param {string} str A URL.
  */
-function isValidFileUrl(str) {
+function isValidFileUrl (str) {
   // Locally files are uploaded to the filesystem so we allow any URL, but other environments we need to check
   return config.env === 'development' || isValidS3Url(str)
-
 }
 
 /**
