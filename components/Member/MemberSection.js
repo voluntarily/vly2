@@ -15,7 +15,7 @@ import styled from 'styled-components'
 import MemberExport from './MemberExport'
 import InviteMembers from './InviteMembers'
 import { Role } from '../../server/services/authorize/role.js'
-import Html from '../VTheme/Html';
+import Html from '../VTheme/Html'
 
 const SubSection = styled.section`
   margin-bottom: 2.0rem;

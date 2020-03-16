@@ -22,7 +22,7 @@ import {
   ItemImage
 } from '../VTheme/ItemList'
 import { Role } from '../../server/services/authorize/role'
-import Html from '../VTheme/Html';
+import Html from '../VTheme/Html'
 
 export function ActDetail ({ act, me }) {
   const img = act.imgUrl || '/static/missingimage.svg'
