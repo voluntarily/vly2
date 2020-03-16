@@ -36,7 +36,7 @@ test.after.always(async (t) => {
 test.serial('getLocationRecommendations > no region match for location', async (t) => {
   const recommendedLocations = await getLocationRecommendations({
     _id: mongoose.Types.ObjectId(),
-    location: 'Mars'
+    locations: ['Mars']
   })
 
   t.deepEqual(recommendedLocations, [])
@@ -47,7 +47,7 @@ test.serial('getLocationRecommendations > no opportunities', async (t) => {
 
   const recommendedLocations = await getLocationRecommendations({
     _id: mongoose.Types.ObjectId(),
-    location: 'Wellington'
+    locations: ['Wellington']
   })
 
   t.deepEqual(recommendedLocations, [])
@@ -64,7 +64,7 @@ test.serial('getLocationRecommendations > no opportunities for requestor', async
 test.serial('getLocationRecommendations > opportunities', async (t) => {
   const recommendedLocations = await getLocationRecommendations({
     _id: mongoose.Types.ObjectId(),
-    location: 'Northland'
+    locations: ['Northland']
   })
 
   t.is(recommendedLocations.length, 4)
@@ -84,7 +84,7 @@ test.serial('getLocationRecommendations > opportunities', async (t) => {
 test.serial('getLocationRecommendations > closest opportunities', async (t) => {
   const testData = [
     {
-      location: 'Whangarei District',
+      locations: ['Whangarei District'],
       expectedSortedNames: [
         'Test 2',
         'Test 3',
@@ -93,7 +93,7 @@ test.serial('getLocationRecommendations > closest opportunities', async (t) => {
       ]
     },
     {
-      location: 'Kaipara District',
+      locations: ['Kaipara District'],
       expectedSortedNames: [
         'Test 4',
         'Test 1',
@@ -102,7 +102,7 @@ test.serial('getLocationRecommendations > closest opportunities', async (t) => {
       ]
     },
     {
-      location: 'Waikato',
+      locations: ['Waikato'],
       expectedSortedNames: [
         'Test 5'
       ]
@@ -112,7 +112,7 @@ test.serial('getLocationRecommendations > closest opportunities', async (t) => {
   for (const data of testData) {
     const recommendedLocations = await getLocationRecommendations({
       _id: mongoose.Types.ObjectId(),
-      location: data.location
+      locations: data.locations
     })
 
     const expectedResultsCount = data.expectedSortedNames.length

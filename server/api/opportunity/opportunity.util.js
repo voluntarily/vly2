@@ -3,7 +3,7 @@ const { regions } = require('../location/locationData')
 
 const getLocationRecommendations = async (me) => {
   const regionToMatch = regions.find(loc => {
-    return loc.name === me.location || loc.containedTerritories.includes(me.location)
+    return me.locations.includes(loc.name) || !!loc.containedTerritories.find(containedTerritory => me.locations.includes(containedTerritory))
   })
 
   let locationOps
@@ -20,10 +20,10 @@ const getLocationRecommendations = async (me) => {
 
     // if user has specified a territory, we should show the exact matches first, because we know
     // they are closest to the user.
-    const userIsInTerritory = regionToMatch.name !== me.location
+    const userIsInTerritory = !me.locations.includes(regionToMatch.name)
     if (userIsInTerritory) {
-      const closestOpportunities = locationOps.filter((opportunity) => opportunity.location === me.location)
-      const otherOpportunities = locationOps.filter((opportunity) => opportunity.location !== me.location)
+      const closestOpportunities = locationOps.filter((opportunity) => me.locations.includes(opportunity.location))
+      const otherOpportunities = locationOps.filter((opportunity) => !me.locations.includes(opportunity.location))
 
       locationOps = closestOpportunities.concat(otherOpportunities)
     }
