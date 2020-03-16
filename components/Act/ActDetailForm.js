@@ -190,7 +190,7 @@ class ActDetailForm extends Component {
           description='activity resource label in ActDetail Form'
         />
         &nbsp;
-        <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML or Markdown here.'>
+        <Tooltip title='Give a long description of what is needed and what people will be doing.'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -231,7 +231,7 @@ class ActDetailForm extends Component {
           description='activity description label in ActDetail Form'
         />
         &nbsp;
-        <Tooltip title='Give a long description of what is needed and what people will be doing. You can paste HTML or Markdown here.'>
+        <Tooltip title='Give a long description of what is needed and what people will be doing.'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -363,7 +363,7 @@ class ActDetailForm extends Component {
                   isTest ? (
                     <TextArea
                       rows={20}
-                      placeholder='All the details about the activity, you can use HTML or Markdown here'
+                      placeholder='All the details about the activity, you can use HTML here'
                     />
                   ) : (
                     <RichTextEditor />
