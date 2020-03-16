@@ -184,7 +184,7 @@ class PersonDetail extends Component {
         {' '}
         <FormattedMessage
           id='PersonDetailForm.Label.Location'
-          defaultMessage='In what region do you want to volunteer'
+          defaultMessage='In what regions do you want to volunteer'
           description='Person Location label in PersonDetails Form'
         />
         &nbsp;
