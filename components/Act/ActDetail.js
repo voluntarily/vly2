@@ -111,7 +111,7 @@ export function ActDetail ({ act, me }) {
                   <>
                     <a target='_blank' download={document.filename} rel='noopener noreferrer' href={document.location}>
                       <DocumentList key={document.location}>
-                        <img src='/static/img/icons/download.svg' />
+                        <img src='/static/img/icons/download.svg' alt='an image that shows files being downloaded' />
                         <div>
                           <p><strong>{document.filename}</strong></p>
                           <p>Click to download</p>
