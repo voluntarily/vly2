@@ -685,7 +685,7 @@ export const DocumentList = styled.li`
       :hover {
   
         box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
-        transform: scale(1.02);
+        transform: scale(1.01);
         border-radius: 8px;
         p {
           color: #653cad;
