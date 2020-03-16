@@ -109,7 +109,7 @@ export function ActDetail ({ act, me }) {
               <ul id='documents'>
                 {act.documents.map(document => (
                   <>
-                    <a download={document.filename} rel='noopener noreferrer' href={document.location}>
+                    <a target='_blank' download={document.filename} rel='noopener noreferrer' href={document.location}>
                       <DocumentList key={document.location}>
                         <img src='/static/img/icons/download.svg' />
                         <div>
