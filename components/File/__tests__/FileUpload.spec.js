@@ -19,7 +19,7 @@ test.serial('Upload denied for anonymous', async t => {
   const data = fs.readFileSync(path.join(__dirname, 'resources/file-sample_150kB.pdf'), {
     encoding: null
   })
-  
+
   // Force the file.controller to use the filesystem to store files
   config.env = 'development'
 
@@ -38,7 +38,7 @@ test.serial('Upload and retrieve file via the filesystem', async t => {
   const data = fs.readFileSync(path.join(__dirname, 'resources/file-sample_150kB.pdf'), {
     encoding: null
   })
-  
+
   // Force the file.controller to use the filesystem to store files
   config.env = 'development'
 
@@ -62,13 +62,12 @@ test.serial('Upload and retrieve file via the filesystem', async t => {
     t.is(getRes.status, 200)
     t.is(getRes.body.length, 142786)
     t.regex(res.body.location, /\.pdf$/)
-  }
-  finally {
+  } finally {
     // Delete test upload file by finding it using the 'uniq' part of its name
     glob(`*${uniq}.pdf`, {
       cwd: 'public/static/upload'
     }, (err, files) => {
-      if (files.length > 0) {
+      if (!err && files.length > 0) {
         fs.unlinkSync(`public/static/upload/${files[0]}`)
       }
     })
