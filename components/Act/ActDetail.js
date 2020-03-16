@@ -6,7 +6,7 @@ import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
-import { HalfGrid, OpSectionGrid } from '../VTheme/VTheme'
+import { HalfGrid, OpSectionGrid, DocumentList } from '../VTheme/VTheme'
 import {
   Left,
   Right,
@@ -94,6 +94,7 @@ export function ActDetail ({ act, me }) {
             <ItemSpace space={act.space} />
           </ul>
           <EquipmentList equipment={act.equipment} />
+
         </ItemDescription>
       </OpSectionGrid>
       <Divider />
@@ -107,9 +108,19 @@ export function ActDetail ({ act, me }) {
             <ItemDescription>
               <ul id='documents'>
                 {act.documents.map(document => (
-                  <li key={document.location}>
-                    <a href={document.location}>{document.filename}</a>
-                  </li>
+                  <>
+                    <a target='_blank' download={document.filename} rel='noopener noreferrer' href={document.location}>
+                      <DocumentList key={document.location}>
+                        <img src='/static/img/icons/download.svg' alt='an image that shows files being downloaded' />
+                        <div>
+                          <p><strong>{document.filename}</strong></p>
+                          <p><FormattedMessage id='actFileDescription' defaultMessage='Click to download' description='Instructions for user telling them to download the file' /></p>
+                        </div>
+                      </DocumentList>
+                    </a>
+
+                  </>
+
                 ))}
               </ul>
             </ItemDescription>
