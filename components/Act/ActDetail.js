@@ -114,7 +114,7 @@ export function ActDetail ({ act, me }) {
                         <img src='/static/img/icons/download.svg' alt='an image that shows files being downloaded' />
                         <div>
                           <p><strong>{document.filename}</strong></p>
-                          <p>Click to download</p>
+                          <p><FormattedMessage id='actFileDescription' defaultMessage='Click to download' description='Instructions for user telling them to download the file' /></p>
                         </div>
                       </DocumentList>
                     </a>
