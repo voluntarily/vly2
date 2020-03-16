@@ -10,6 +10,7 @@ const organisationSchema = new Schema({
   imgUrl: { type: 'String', default: '/static/img/organisation/organisation.png' },
   website: String,
   facebook: String,
+  domainName: String,
   twitter: String,
   category: {
     type: [String],

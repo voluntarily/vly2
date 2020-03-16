@@ -99,7 +99,7 @@ const Header = ({ isAuthenticated, me, ...props }) => {
   const intl = useIntl()
   let notice = intl.formatMessage({ id: 'notice', defaultMessage: 'none' })
   if (notice === 'none') notice = '' // wipe notice if its set to none
-  const height = notice ? '112px' : '56px'
+  const height = '56px'
   return (
     <Layout.Header style={{ position: 'fixed', height: height, zIndex: 10, width: '100%', backgroundColor: 'white' }}>
       {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><Icon type='warning' /> {notice}</Notice>}

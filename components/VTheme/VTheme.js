@@ -16,12 +16,27 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 export const PageBanner = styled.div`
   margin: 8rem 0 2rem 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding-bottom: 1rem;
+  grid-template-columns: 4rem 1fr 11rem 11rem;
+  padding: 1rem;
+  gap: 1rem;
+  align-self: center;
+ 
+  box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.7);
+  border-radius: 8px;
+
+h1 {
+  align-self: center;
+  font-size: 1.5rem;
+}
+
+  img{
+    width: 4rem;
+    border-radius: 100%;
+  }
  
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
-    grid-template-columns: calc(100vw - 2rem);
+    grid-template-columns: calc(100vw - 4rem);
     grid-gap: 0rem;
   }
 `
@@ -29,7 +44,7 @@ export const PageBanner = styled.div`
 export const PageBannerNoTabs = styled.div`
   margin: 8rem 0 2rem 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 14rem;
   padding-bottom: 1rem;
   border-bottom: thin solid  #e8e8e8;
   @media screen and (max-width: 767px) {
@@ -40,10 +55,12 @@ export const PageBannerNoTabs = styled.div`
 `
 
 export const PageBannerButtons = styled.div`
-  justify-self: end;
+
+ width: 100%;
   @media screen and (max-width: 767px) {
+    
     margin-top: 1rem;
-    justify-self: start;
+    
   }
 `
 

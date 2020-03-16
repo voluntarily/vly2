@@ -9,6 +9,10 @@ height: auto;
 
 img {
   max-height: 8rem;
+  max-width: 8rem;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
   border-radius: 8px;
 }
 
@@ -24,6 +28,14 @@ figcaption {
     grid-template-columns: 1fr;
 
   }
+
+@media screen and (max-width: 720px) {
+  img {
+  max-height: 4rem;
+  max-width: 4rem;
+  
+  }
+}
 
   /* box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.2);
   border-radius: 8px; */
