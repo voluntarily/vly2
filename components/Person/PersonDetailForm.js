@@ -326,7 +326,7 @@ class PersonDetail extends Component {
                   isTest ? (
                     <TextArea
                       rows={20}
-                      placeholder='You can use markdown here.'
+                      placeholder='Tell everyone about yourself here'
                     />
                   ) : (
                     <RichTextEditor />

@@ -326,7 +326,6 @@ class OrgDetailForm extends Component {
                 {getFieldDecorator('about', {
                   rules: []
                 })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
                   <RichTextEditor />
                 )}
               </Form.Item>
@@ -526,7 +525,6 @@ class OrgDetailForm extends Component {
                 {getFieldDecorator('instructions', {
                   rules: []
                 })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
                   <RichTextEditor />
                 )}
               </Form.Item>
@@ -548,7 +546,6 @@ class OrgDetailForm extends Component {
                 {getFieldDecorator('followers', {
                   rules: []
                 })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
                   <RichTextEditor />
                 )}
               </Form.Item>
@@ -581,7 +578,6 @@ class OrgDetailForm extends Component {
                 {getFieldDecorator('joiners', {
                   rules: []
                 })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
                   <RichTextEditor />
                 )}
               </Form.Item>
@@ -603,7 +599,6 @@ class OrgDetailForm extends Component {
                 {getFieldDecorator('members', {
                   rules: []
                 })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
                   <RichTextEditor />
                 )}
               </Form.Item>
@@ -624,7 +619,6 @@ class OrgDetailForm extends Component {
                 {getFieldDecorator('outsiders', {
                   rules: []
                 })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
                   <RichTextEditor />
                 )}
               </Form.Item>
