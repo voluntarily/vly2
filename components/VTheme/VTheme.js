@@ -666,6 +666,34 @@ export const Li = styled.li`
   color: initial;
   margin-bottom: 0.3rem;
 `
+export const DocumentList = styled.li`
+    transition: all 0.3s;
+    list-style: none;
+    padding: 1rem;
+    margin: 0 0 1.5rem 0;
+    box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 1rem;  
+
+    img {
+      height: 2rem;
+      align-self: center;
+    }
+
+      :hover {
+  
+        box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
+        transform: scale(1.02);
+        border-radius: 8px;
+        p {
+          color: #653cad;
+        }
+      }
+
+`
+
 // we use this tag for categories
 export const TagStyle = styled(Tag)`
 width: auto;

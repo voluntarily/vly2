@@ -7,7 +7,7 @@ import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
-import { HalfGrid, OpSectionGrid } from '../VTheme/VTheme'
+import { HalfGrid, OpSectionGrid, DocumentList } from '../VTheme/VTheme'
 import {
   Left,
   Right,
@@ -94,6 +94,17 @@ export function ActDetail ({ act, me }) {
             <ItemSpace space={act.space} />
           </ul>
           <EquipmentList equipment={act.equipment} />
+          <a>
+            <DocumentList>
+
+              <img src='/static/img/icons/download.svg' />
+              <div>
+                <p><strong>aaaaaaaaa</strong></p>
+                <p>Click to download</p>
+              </div>
+
+            </DocumentList>
+          </a>
         </ItemDescription>
       </OpSectionGrid>
       <Divider />
@@ -107,9 +118,13 @@ export function ActDetail ({ act, me }) {
             <ItemDescription>
               <ul id='documents'>
                 {act.documents.map(document => (
-                  <li key={document.location}>
-                    <a href={document.location}>{document.filename}</a>
-                  </li>
+                  <>
+                    <DocumentList key={document.location}>
+                      <a href={document.location}>{document.filename}</a>
+                    </DocumentList>
+
+                  </>
+
                 ))}
               </ul>
             </ItemDescription>
