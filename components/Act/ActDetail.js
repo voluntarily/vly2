@@ -94,17 +94,7 @@ export function ActDetail ({ act, me }) {
             <ItemSpace space={act.space} />
           </ul>
           <EquipmentList equipment={act.equipment} />
-          <a>
-            <DocumentList>
 
-              <img src='/static/img/icons/download.svg' />
-              <div>
-                <p><strong>aaaaaaaaa</strong></p>
-                <p>Click to download</p>
-              </div>
-
-            </DocumentList>
-          </a>
         </ItemDescription>
       </OpSectionGrid>
       <Divider />
@@ -119,9 +109,15 @@ export function ActDetail ({ act, me }) {
               <ul id='documents'>
                 {act.documents.map(document => (
                   <>
-                    <DocumentList key={document.location}>
-                      <a href={document.location}>{document.filename}</a>
-                    </DocumentList>
+                    <a download={document.filename} rel='noopener noreferrer' href={document.location}>
+                      <DocumentList key={document.location}>
+                        <img src='/static/img/icons/download.svg' />
+                        <div>
+                          <p><strong>{document.filename}</strong></p>
+                          <p>Click to download</p>
+                        </div>
+                      </DocumentList>
+                    </a>
 
                   </>
 
