@@ -77,9 +77,10 @@ const makeOrg = async (category, members, followers) => {
 }
 
 const makeOrgs = async (category, count, members, followers) => {
-  return Promise.all(
-    Array(count).fill({}).map(() => makeOrg(category, members, followers))
-  )
+  return Array(count).fill({}).map(async () => {
+    const o = await makeOrg(category, members, followers)
+    return o
+  })
 }
 
 module.exports = {

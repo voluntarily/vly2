@@ -76,9 +76,10 @@ async function main () {
   const size = process.argv[2] || 's'
   const params = scale[size]
   try {
-    const orgs = await Promise.all(params.orgs.map(org => {
-      return makeOrgs(org.category, org.count, org.members, org.followers)
-    }))
+    const orgs = params.orgs.map(async org => {
+      const o = await makeOrgs(org.category, org.count, org.members, org.followers)
+      return o
+    })
     const totalOrgs = orgs.reduce((total, arr) => total + arr.length, 0)
     console.log(totalOrgs, 'Orgs Created')
   } catch (e) {
