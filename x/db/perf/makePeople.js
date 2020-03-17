@@ -21,6 +21,7 @@ const makePeople = async (count) => {
     const tags = getTags(gra(2, 10))
     const sentences = getSentences()
     const about = `${person.name.first} ${person.name.last} has a cuid of ${code} and email of ${email}\n${sentences}`
+    console.log('person', person.name)
     return ({
       name: `${person.name.first} ${person.name.last}`,
       nickname: person.login.username,
