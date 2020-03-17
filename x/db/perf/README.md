@@ -22,13 +22,14 @@ https://github.com/RandomAPI/Randomuser.me-Node.git
 
 This table provides counts for each type of entity created - orgs, members, activities, opportunities and interests
  
-|scale|     time|    orgs|   people|  interests|
-|-----|---------|--------|---------|-----------|
-|   xs|    3.568|      11|       74|          8|
-|    s|    3.692|      22|      336|        100|
-|    m|   17.263|      44|     2864|       1200|
-|    l|  435.180|     110|    38100|      12000|
-|   xl|       . |     450|   250000|      24000|
-|  xxl|       . |    6100|  2110000|      48000|
+|scale|     time|    orgs|   people|  activities| opportunities|  interests| AWS Time |
+|-----|---------|--------|---------|------------|--------------|-----------|----------|
+|   xs|    3.568|      11|       74|           2|             4|          8|          |
+|    s|    3.692|      22|      336|           4|            20|        120|          |
+|    m|   17.263|      44|     2864|          10|           100|       1200| 3m59.570s|
+|    l|  435.180|     110|    38100|          50|          1000|      12000|          |
+|   xl|       . |     450|   250000|         100|          2000|      24000|          |
+|  xxl|       . |    6100|  2110000|         200|          4000|      48000|          |
+|-----|---------|--------|---------|------------|--------------|-----------|----------|
 
 _Time to create on localhost (Andrew's Macbook)_

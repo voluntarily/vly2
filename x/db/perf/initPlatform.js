@@ -7,13 +7,13 @@ const { clearCollections } = require('./clearCollections')
  * This table provides counts for each type of entity created - orgs, members, activities, opportunities and interests
  * the numbers scale up fairly quickly.
  * Time to create on localhost (Andrew's Macbook)
- * scale,   time,   orgs,  people, interests
- *    xs,   3.568,     11,      74,         8
- *     s,   3.692,     22,     336,       100
- *     m,  17.263,     44,    2864,      1200
- *     l, 435.180,    110,   38100,     12000
- *    xl,       ,    450,  250000,     24000
- *   xxl,       ,   6100, 2110000,     48000
+ * scale,   time,   orgs,  people, opportunities, interests
+ *    xs,   3.568,     11,      74,        4, 8
+ *     s,   3.692,     22,     336,       20, 120
+ *     m,  17.263,     44,    2864,      100, 1200
+ *     l, 435.180,    110,   38100,     1000, 12000
+ *    xl,       ,    450,  250000,      2000, 24000
+ *   xxl,       ,   6100, 2110000,      4000, 48000
  */
 const scale = {
   xs: {
@@ -30,7 +30,7 @@ const scale = {
       { category: 'op', count: 10, members: 8, followers: 8 }, // 160 people
       { category: 'ap', count: 2, members: 4, followers: 4 } // 16 people
     ],
-    acts: { count: 4, ops: 5, interested: 6 } // 100 interest records
+    acts: { count: 4, ops: 5, interested: 6 } // 120 interest records
   },
   m: {
     orgs: [
