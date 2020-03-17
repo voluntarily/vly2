@@ -5,16 +5,21 @@ const { MemberStatus } = require('../../../server/api/member/member.constants')
 const { makePeople } = require('./makePeople')
 
 const makeOrgMembers = async (org, memberStatus, memberCount) => {
-  const people = await makePeople(memberCount)
-  const members = people.map((person, index) => {
-    return ({
-      person: person._id,
-      organisation: org._id,
-      validation: `${person.email} belongs to ${org.name}`,
-      status: memberStatus
+  try {
+    const people = await makePeople(memberCount)
+    const members = people.map((person, index) => {
+      return ({
+        person: person._id,
+        organisation: org._id,
+        validation: `${person.email} belongs to ${org.name}`,
+        status: memberStatus
+      })
     })
-  })
-  return Member.create(members)
+    console.log('Members:', members.length)
+    return Member.create(members)
+  } catch (e) {
+    console.error('Error making org members', e)
+  }
 }
 
 /**
@@ -58,11 +63,16 @@ const makeOrg = async (category, members, followers) => {
     org.ageRange = { from, to }
     org.decile = gra(1, 10)
   }
-  const saved = await Organisation.create(org)
-  await makeOrgMembers(saved, MemberStatus.ORGADMIN, 1)
-  const m = await makeOrgMembers(saved, MemberStatus.MEMBER, members)
-  const f = await makeOrgMembers(saved, MemberStatus.FOLLOWER, followers)
-  console.log('org:', saved.name, m.length, ' members', f.length, 'followers')
+  try {
+    const saved = await Organisation.create(org)
+    await makeOrgMembers(saved, MemberStatus.ORGADMIN, 1)
+    const m = await makeOrgMembers(saved, MemberStatus.MEMBER, members)
+    const f = await makeOrgMembers(saved, MemberStatus.FOLLOWER, followers)
+    console.log('org:', saved.name, m.length, ' members', f.length, 'followers')
+  } catch (e) {
+    console.error('Error creating org', e)
+  }
+
   return org
 }
 
