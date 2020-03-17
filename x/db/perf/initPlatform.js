@@ -69,17 +69,16 @@ async function main () {
   connectDB()
   await clearCollections()
 
-  if (!process.argv[2]) {
-    console.log('Usage: initPlatform [xs|s|m|l|xl]')
-    process.exit(1)
-  }
-  const size = process.argv[2] || 's'
+  // if (!process.argv[2]) {
+  //   console.log('Usage: initPlatform [xs|s|m|l|xl]')
+  //   process.exit(1)
+  // }
+  const size = process.argv[2] || 'l'
   const params = scale[size]
   try {
-    const orgs = params.orgs.map(async org => {
-      const o = await makeOrgs(org.category, org.count, org.members, org.followers)
-      return o
-    })
+    const orgs = await Promise.all(params.orgs.map(async org => {
+      return makeOrgs(org.category, org.count, org.members, org.followers)
+    }))
     const totalOrgs = orgs.reduce((total, arr) => total + arr.length, 0)
     console.log(totalOrgs, 'Orgs Created')
   } catch (e) {

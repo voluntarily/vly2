@@ -15,7 +15,6 @@ const makeOrgMembers = async (org, memberStatus, memberCount) => {
         status: memberStatus
       })
     })
-    console.log('Members:', members.length)
     return Member.create(members)
   } catch (e) {
     console.error('Error making org members', e)
@@ -77,10 +76,10 @@ const makeOrg = async (category, members, followers) => {
 }
 
 const makeOrgs = async (category, count, members, followers) => {
-  return Array(count).fill({}).map(async () => {
-    const o = await makeOrg(category, members, followers)
-    return o
-  })
+  const orgs = await Promise.all(Array(count).fill({}).map(async () => {
+    return makeOrg(category, members, followers)
+  }))
+  return orgs
 }
 
 module.exports = {

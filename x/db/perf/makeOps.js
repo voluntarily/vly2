@@ -16,8 +16,6 @@ const makeMessages = (numMessages, a, b, status, op) =>
   }))
 
 const makeInterestedVolunteer = (op, personId, status) => {
-  console.log(personId, status, ' to ', op.name)
-
   // pick a vp organisation, then pick a random member.
   return {
     person: personId,
@@ -35,7 +33,7 @@ const makeInterestedVolunteers = async (op, interestStatus, interestCount) => {
   const vps = await Member.find({ organisation: org._id, status: MemberStatus.MEMBER })
   const interests = (Array(interestCount).fill({}).map(() => {
     const personId = vps[gra(0, vps.length - 1)].person
-    return (makeInterestedVolunteer(op, personId, interestStatus))
+    return makeInterestedVolunteer(op, personId, interestStatus)
   }))
   // console.log('creating ', interests.length, ' interests')
   return Interest.create(interests)
@@ -102,7 +100,7 @@ const makeOp = async (interestCount, fromActivity) => {
   const inviteds = await makeInterestedVolunteers(saved, InterestStatus.INVITED, split)
   const committeds = await makeInterestedVolunteers(saved, InterestStatus.COMMITTED, split)
   console.log('op:', saved.name, interesteds.length + inviteds.length + committeds.length)
-  return op
+  return saved
 }
 
 const makeOps = async (count, interestCount, fromActivity) => {
