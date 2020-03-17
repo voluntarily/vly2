@@ -1,0 +1,3 @@
+# ssh to utility EC2 instance
+
+ssh -i "AndrewsEC2Instance.pem" ec2-user@ec2-54-79-5-146.ap-southeast-2.compute.amazonaws.com

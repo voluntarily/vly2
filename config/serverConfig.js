@@ -1,3 +1,4 @@
+require('dotenv').config()
 const databaseName = process.env.DBNAME || 'vly2'
 const serverPort = process.env.PORT || 3122
 
