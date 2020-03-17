@@ -7,7 +7,7 @@ import people from '../../person/__tests__/person.fixture'
 import { jwtData, jwtDataAlice, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
 import archivedOps from './archivedOpportunity.fixture'
 import ArchivedOpportunity from '../archivedOpportunity'
-import { OpportunityStatus, OpportunityFields } from '../../opportunity/opportunity.constants'
+import { OpportunityStatus, OpportunityFields, OpportunityListFields } from '../../opportunity/opportunity.constants'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -25,7 +25,7 @@ test.beforeEach('connect and add two activity entries', async (t) => {
   const linkedArchivedOps = archivedOps.map((op, index) => {
     return {
       ...op,
-      requestor: t.context.people[index]._id
+      requestor: t.context.people[2]._id // alice is op for all ops
     }
   })
 
@@ -45,23 +45,12 @@ const getCompletedOps = (archivedOps) => {
   )
 }
 
-const limitedExpectedFields = [
-  OpportunityFields.ID,
-  OpportunityFields.NAME,
-  OpportunityFields.SUBTITLE,
-  OpportunityFields.IMG_URL,
-  OpportunityFields.STATUS,
-  OpportunityFields.DATE,
-  OpportunityFields.LOCATION,
-  OpportunityFields.DURATION
-]
-
 const testDataByRole = [
   {
     roleName: 'anon',
     cookie: null,
     getExpectedArchivedOps: getCompletedOps,
-    listExpectedFields: limitedExpectedFields,
+    listExpectedFields: OpportunityListFields,
     readExpectedFields: Object.values(OpportunityFields),
     expectedPostStatus: 403,
     expectedPutStatus: 403,
@@ -71,7 +60,7 @@ const testDataByRole = [
     roleName: 'admin',
     cookie: `idToken=${jwtData.idToken}`,
     getExpectedArchivedOps: (archivedOps) => archivedOps,
-    listExpectedFields: limitedExpectedFields,
+    listExpectedFields: OpportunityListFields, // admins see all fields
     readExpectedFields: Object.values(OpportunityFields),
     expectedPostStatus: 200,
     expectedPutStatus: 200,
@@ -81,7 +70,7 @@ const testDataByRole = [
     roleName: 'ap',
     cookie: `idToken=${jwtDataDali.idToken}`,
     getExpectedArchivedOps: getCompletedOps,
-    listExpectedFields: limitedExpectedFields,
+    listExpectedFields: OpportunityListFields,
     readExpectedFields: Object.values(OpportunityFields),
     expectedPostStatus: 403,
     expectedPutStatus: 403,
@@ -90,8 +79,8 @@ const testDataByRole = [
   {
     roleName: 'op',
     cookie: `idToken=${jwtDataAlice.idToken}`,
-    getExpectedArchivedOps: getCompletedOps,
-    listExpectedFields: limitedExpectedFields,
+    getExpectedArchivedOps: (archivedOps) => archivedOps,
+    listExpectedFields: OpportunityListFields,
     readExpectedFields: Object.values(OpportunityFields),
     expectedPostStatus: 403,
     expectedPutStatus: 403,
@@ -110,11 +99,10 @@ for (const testData of testDataByRole) {
     const expectedArchivedOps = testData.getExpectedArchivedOps(t.context.archivedOpportunities)
 
     t.is(response.statusCode, 200)
-    t.is(actualArchivedOps.length, expectedArchivedOps.length)
+    t.is(actualArchivedOps.length, expectedArchivedOps.length, testData.roleName)
 
     const expectedFields = testData.listExpectedFields
     const actualFields = Object.keys(actualArchivedOps[0])
-
     t.is(actualFields.length, expectedFields.length)
 
     for (const expectedField of expectedFields) {

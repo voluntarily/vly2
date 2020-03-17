@@ -288,14 +288,16 @@ test('edit and save existing org', async t => {
     </Provider>
   )
   // click on edit tab
-  wrapper.find('.ant-tabs-tab').at(4).simulate('click')
+  findAntTabByText(wrapper.find('.ant-tabs-tab'), 'Edit').simulate('click')
 
   t.true(wrapper.exists('OrgDetailForm'))
   const cancelButton = wrapper.find('button').at(1)
   t.is(cancelButton.text(), 'Cancel')
   cancelButton.simulate('click')
   wrapper.update()
-  wrapper.find('.ant-tabs-tab').at(4).simulate('click')
+
+  findAntTabByText(wrapper.find('.ant-tabs-tab'), 'Edit').simulate('click')
+
   const saveButton = wrapper.find('button').first()
   t.is(saveButton.text(), 'Save')
   wrapper.find('Form').first().simulate('submit')
@@ -337,7 +339,9 @@ test('edit and save new org', async t => {
   t.true(wrapper.exists('OrgBanner'))
   t.true(wrapper.exists('VTabs'))
   t.is(wrapper.find('VTabs').props().defaultActiveKey, 'about')
-  wrapper.find('.ant-tabs-tab').at(4).simulate('click')
+
+  findAntTabByText(wrapper.find('.ant-tabs-tab'), 'Edit').simulate('click')
+
   t.true(wrapper.exists('OrgDetailForm'))
   const saveButton = wrapper.find('button').first()
   t.is(saveButton.text(), 'Save')
@@ -362,3 +366,59 @@ test('render OrgDetailPage Unknown ', async t => {
   const wrapper = shallowWithIntl(<OrgDetailPage {...props} />)
   t.true(wrapper.exists('OrgUnknown'))
 })
+
+test('History tab - "op" organisation', async t => {
+  const props = {
+    isNew: false,
+    orgid: t.context.orgs[0],
+    organisations: t.context.defaultstore.organisations,
+    members: t.context.defaultstore.members,
+    isAuthenticated: false,
+    me: t.context.people[1]
+  }
+
+  const wrapper = mountWithIntl(
+    <OrgDetailPage {...props} />
+  )
+
+  const historyTab = wrapper.find('TabPane[orgTab="history"]')
+
+  t.true(
+    historyTab.exists(),
+    'History tab should display for "op" organisations'
+  )
+})
+
+test('History tab - non "op" organisation', async t => {
+  const organisation = Object.assign({}, t.context.orgs[0])
+
+  const props = {
+    isNew: false,
+    orgid: organisation._id,
+    organisations: [organisation],
+    members: t.context.defaultstore.members,
+    isAuthenticated: false,
+    me: t.context.people[1]
+  }
+
+  const wrapper = mountWithIntl(
+    <OrgDetailPage {...props} />
+  )
+
+  t.false(
+    wrapper.exists('TabPane[orgTab="history"]'),
+    'History tab should not display for non "op" organisations'
+  )
+})
+
+const findAntTabByText = (tabs, tabText) => {
+  const matchedTabs = tabs.filterWhere((tab) => tab.text() === tabText)
+
+  if (matchedTabs.length === 1) {
+    return matchedTabs.first()
+  } else if (matchedTabs > 1) {
+    throw new Error(`Multiple tabs matched with text: "${tabText}"`)
+  } else {
+    throw new Error(`No tabs found with text: "${tabText}"`)
+  }
+}

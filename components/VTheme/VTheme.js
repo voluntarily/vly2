@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Tag } from 'antd'
+import { Tag, Icon } from 'antd'
 
 /*
 ====================================================
@@ -16,12 +16,27 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 export const PageBanner = styled.div`
   margin: 8rem 0 2rem 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding-bottom: 1rem;
+  grid-template-columns: 4rem 1fr 11rem 11rem;
+  padding: 1rem;
+  gap: 1rem;
+  align-self: center;
+ 
+  box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.7);
+  border-radius: 8px;
+
+h1 {
+  align-self: center;
+  font-size: 1.5rem;
+}
+
+  img{
+    width: 4rem;
+    border-radius: 100%;
+  }
  
   @media screen and (max-width: 767px) {
     margin-top: 4rem;
-    grid-template-columns: calc(100vw - 2rem);
+    grid-template-columns: calc(100vw - 4rem);
     grid-gap: 0rem;
   }
 `
@@ -29,7 +44,7 @@ export const PageBanner = styled.div`
 export const PageBannerNoTabs = styled.div`
   margin: 8rem 0 2rem 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 14rem;
   padding-bottom: 1rem;
   border-bottom: thin solid  #e8e8e8;
   @media screen and (max-width: 767px) {
@@ -40,10 +55,12 @@ export const PageBannerNoTabs = styled.div`
 `
 
 export const PageBannerButtons = styled.div`
-  justify-self: end;
+
+ width: 100%;
   @media screen and (max-width: 767px) {
+    
     margin-top: 1rem;
-    justify-self: start;
+    
   }
 `
 
@@ -198,6 +215,10 @@ export const Grid8 = styled.div`
   }
 ` // end grid
 
+export const DescriptionWrapper = styled.p`
+margin-top: 0.5rem;
+`
+
 export const GridContainer = styled.div`
   position: relative;
 `
@@ -210,6 +231,29 @@ export const ActivityContainer = styled.div`
     grid-template-columns: calc(100vw - 4rem);
   }
 `
+
+export const SectionContainer = styled.section`
+  margin: 8rem 0;
+  position: relative;
+
+ 
+
+  @media screen and (min-width: 1026px) and (max-width: 1281px) {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+  }
+  @media screen and (max-width: 768px) {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    width: calc(100vw - 2rem);
+
+
+  }
+  `
 
 export const GridTestItem = styled.div`
   background-color: pink;
@@ -268,6 +312,12 @@ I have done a terrible example so far, but will aim to fix usage soon
 
 ====================================================
 */
+
+export const TextPromo = styled.p`
+font-size:1.5rem;
+font-weight: 400;
+letter-spacing: -0.035rem;
+`
 
 export const TextBigTitle = styled.h1`
   font-weight: 900;
@@ -431,7 +481,13 @@ export const BigQuoteAuthor = styled.p`
     line-height: 1.5;
   }
 `
-
+export const ContactIcon = ({ type }) =>
+  <Icon
+    // theme='twoTone'
+    twoToneColor='blue'
+    type={type}
+    style={{ marginRight: '0.5rem', fontSize: '1rem', color: '#6549AA' }}
+  />
 /*
 ====================================================
 
@@ -520,7 +576,8 @@ export const FillWindow = styled.div`
 export const Card = styled.figure`
 
 -webkit-transition: all 0.28s;
-padding-bottom: 1rem;
+padding-bottom: 0.5rem;
+
 
 a { text-decoration: none; }
 
@@ -532,7 +589,7 @@ figcaption {
 :hover {
   transition: all 0.3s;
   box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
-  transform: scale(1.1);
+  transform: scale(1.02);
   border-radius: 8px;
   h1 {
     color: #6549aa;
@@ -543,7 +600,7 @@ figcaption {
     
   }
   figcaption {
-    transform: scale(0.9091);
+    transform: scale(0.94);
   }
 }
 
@@ -603,6 +660,12 @@ time {
 export const OpBannerDetail = styled.div`
 display: grid;
 align-self: center;
+
+ul {
+  padding: 0;
+  margin-bottom: 0;
+}
+
 `
 
 /* Item lists - tidy listings
@@ -620,7 +683,35 @@ export const Li = styled.li`
   color: initial;
   margin-bottom: 0.3rem;
 `
+export const DocumentList = styled.li`
+    transition: all 0.3s;
+    list-style: none;
+    padding: 1rem;
+    margin: 0 0 1.5rem 0;
+    box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 1rem;  
 
+    img {
+      height: 2rem;
+      align-self: center;
+    }
+
+      :hover {
+  
+        box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
+        transform: scale(1.01);
+        border-radius: 8px;
+        p {
+          color: #653cad;
+        }
+      }
+
+`
+
+// we use this tag for categories
 export const TagStyle = styled(Tag)`
 width: auto;
 max-width: 100%;
@@ -635,7 +726,22 @@ font-size: 1.2rem;
 font-weight: 500;
 background-color: #e8e8e8;
 `
+// we use this tag for op state
+export const TagState = styled.p`
 
+  display: inline-block;
+
+  padding:0.2rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  margin: 0.5rem 0 0 0;
+
+`
+
+export const StyledIcon = styled(Icon)`
+  margin-right: 0.5rem;
+`
 /* Contact list displayed for organisations */
 
 export const ContactList = styled.ul`
@@ -677,10 +783,9 @@ export const ContactList = styled.ul`
 export const PageAlert = styled.div`
 
   width: 100%;
-  padding: 1rem;
+  padding: 0.6rem;
   border-radius: 8px;
   box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
-
 
   display: grid;
   gap: 1rem;

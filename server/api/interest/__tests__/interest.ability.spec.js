@@ -58,7 +58,8 @@ const testScenarios = [
           person: context.fixtures.people[0]._id,
           opportunity: context.fixtures.opportunities[0]._id,
           message: [{ body: 'Test comment' }],
-          status: InterestStatus.INTERESTED
+          status: InterestStatus.INTERESTED,
+          termsAccepted: true
         })
     },
     assertions: (t, response) => {
@@ -152,7 +153,8 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[PERSON.VP1].idToken}`])
         .send({
           opportunity: context.fixtures.opportunities[0]._id,
-          message: [{ body: 'Test comment' }]
+          message: [{ body: 'Test comment' }],
+          termsAccepted: true
         })
     },
     assertions: (t, response) => {
@@ -169,7 +171,8 @@ const testScenarios = [
         .send({
           opportunity: context.fixtures.opportunities[0]._id,
           message: [{ body: 'Test comment' }],
-          status: InterestStatus.INVITED
+          status: InterestStatus.INVITED,
+          termsAccepted: true
         })
     },
     assertions: (t, response) => {
@@ -186,7 +189,8 @@ const testScenarios = [
         .send({
           person: context.fixtures.people[PERSON.VP2]._id,
           opportunity: context.fixtures.opportunities[0]._id,
-          message: [{ body: 'Test comment' }]
+          message: [{ body: 'Test comment' }],
+          termsAccepted: true
         })
     },
     assertions: (t, response) => {
@@ -361,7 +365,8 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[PERSON.OP1].idToken}`])
         .send({
           opportunity: context.fixtures.opportunities[0]._id,
-          message: [{ body: 'Test comment' }]
+          message: [{ body: 'Test comment' }],
+          termsAccepted: true
         })
     },
     assertions: (t, response) => {
@@ -487,7 +492,8 @@ const testScenarios = [
         .set('Cookie', [`idToken=${sessions[PERSON.ORGADMIN].idToken}`])
         .send({
           opportunity: context.fixtures.opportunities[0]._id,
-          message: [{ body: 'Test comment' }]
+          message: [{ body: 'Test comment' }],
+          termsAccepted: true
         })
     },
     assertions: (t, response) => {
@@ -576,7 +582,8 @@ const testScenarios = [
           person: context.fixtures.people[PERSON.OP1]._id,
           opportunity: context.fixtures.opportunities[0]._id,
           message: [{ body: 'Test comment' }],
-          status: InterestStatus.INVITED
+          status: InterestStatus.INVITED,
+          termsAccepted: true
         })
     },
     assertions: (t, response) => {

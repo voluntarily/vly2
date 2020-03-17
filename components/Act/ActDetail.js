@@ -2,12 +2,11 @@
  */
 import { FormattedMessage } from 'react-intl'
 import { Button, Divider } from 'antd'
-import Markdown from 'markdown-to-jsx'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
-import { HalfGrid, OpSectionGrid } from '../VTheme/VTheme'
+import { HalfGrid, OpSectionGrid, DocumentList } from '../VTheme/VTheme'
 import {
   Left,
   Right,
@@ -23,6 +22,7 @@ import {
   ItemImage
 } from '../VTheme/ItemList'
 import { Role } from '../../server/services/authorize/role'
+import Html from '../VTheme/Html'
 
 export function ActDetail ({ act, me }) {
   const img = act.imgUrl || '/static/missingimage.svg'
@@ -38,7 +38,10 @@ export function ActDetail ({ act, me }) {
         </Left>
         <Right>
           <h1>{act.name}</h1>
-          <ItemIdLine item={act.offerOrg} path='orgs' />
+          <ul>
+            <ItemIdLine item={act.offerOrg} path='orgs' />
+          </ul>
+
           <ItemContainer>
             <ItemDuration duration={act.duration} />
             <ItemVolunteers volunteers={act.volunteers} />
@@ -57,7 +60,7 @@ export function ActDetail ({ act, me }) {
           <h2>About this Template</h2>
         </div>
         <ItemDescription>
-          <Markdown
+          <Html
             children={act.description}
             options={{
               overrides: {
@@ -69,9 +72,9 @@ export function ActDetail ({ act, me }) {
             <Divider />
             <h5>
               <FormattedMessage
-                id='opTags'
+                id='opTagsAct'
                 defaultMessage='Tags'
-                description='Tags on an opportunity'
+                description='Descriptions of general areas the activity relates to'
               />
             </h5>
             <TagDisplay tags={act.tags} />
@@ -86,21 +89,54 @@ export function ActDetail ({ act, me }) {
           <h2>What you will need</h2>
         </div>
         <ItemDescription>
-          <ItemVolunteers volunteers={act.volunteers} />
-          <ItemSpace space={act.space} />
+          <ul>
+            <ItemVolunteers volunteers={act.volunteers} />
+            <ItemSpace space={act.space} />
+          </ul>
           <EquipmentList equipment={act.equipment} />
+
         </ItemDescription>
       </OpSectionGrid>
       <Divider />
+
+      {act.documents && act.documents.length > 0 && (
+        <>
+          <OpSectionGrid>
+            <div>
+              <h2>Documents</h2>
+            </div>
+            <ItemDescription>
+              <ul id='documents'>
+                {act.documents.map(document => (
+                  <>
+                    <a target='_blank' download={document.filename} rel='noopener noreferrer' href={document.location}>
+                      <DocumentList key={document.location}>
+                        <img src='/static/img/icons/download.svg' alt='an image that shows files being downloaded' />
+                        <div>
+                          <p><strong>{document.filename}</strong></p>
+                          <p><FormattedMessage id='actFileDescription' defaultMessage='Click to download' description='Instructions for user telling them to download the file' /></p>
+                        </div>
+                      </DocumentList>
+                    </a>
+
+                  </>
+
+                ))}
+              </ul>
+            </ItemDescription>
+          </OpSectionGrid>
+          <Divider />
+        </>)}
 
       <OpSectionGrid>
         <div>
           <h2>Written by</h2>
         </div>
         <ItemDescription>
-
-          <ItemIdLine item={act.owner} path='people' />
-          <ItemIdLine item={act.offerOrg} path='orgs' />
+          <ul>
+            <ItemIdLine item={act.owner} path='people' />
+            <ItemIdLine item={act.offerOrg} path='orgs' />
+          </ul>
         </ItemDescription>
       </OpSectionGrid>
 
@@ -116,6 +152,7 @@ ActDetail.propTypes = {
     name: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
+    documents: PropTypes.array,
     description: PropTypes.string,
     volunteers: PropTypes.number,
     space: PropTypes.string,

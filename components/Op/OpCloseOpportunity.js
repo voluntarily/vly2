@@ -17,7 +17,7 @@ export const OpCloseOpportunity = ({ op, dispatch }) => {
         )
       )
       message.success('Opportunity Confirmed')
-      router.replace(`/archivedops/${op._id}`)
+      router.replace(`/archivedops/${op._id}?tab=manage`)
       // MAYBE: publish topic for completed op
     }, [])
 

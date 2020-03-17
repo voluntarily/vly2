@@ -3,6 +3,7 @@ import Router from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 import { HalfGrid } from '../VTheme/VTheme'
+import { FormattedMessage } from 'react-intl'
 
 const Search = Input.Search
 
@@ -99,7 +100,7 @@ line-height: 1.4;
     font-size:2.5rem;
   }
   @media screen and (max-width: 768px) {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     line-height: 1.2;
     margin-bottom: 1rem;
 
@@ -148,17 +149,17 @@ const Hero = ({ ...props }) => (
 
         <AwesomeImage
           src='/static/img/hero.png'
-
+          alt={<FormattedMessage id='heroImgText' defaultMessage='Children Playing with Robots' description='Description for the hero image' />}
         />
 
       </HeroLeft>
 
       <HeroRight>
-        <HeroText>Industry in<br /> the classroom.</HeroText>
-        <h5>
+        <HeroText>We make it easy to volunteer 🥳</HeroText>
+        <p>
           We connect industry volunteers with teachers to teach science, technology, engineering, entrepreneurship,
 art and design in the classroom.
-        </h5>
+        </p>
         <SearchBox>
           <Search
             placeholder="try 'building robots'"
@@ -167,6 +168,7 @@ art and design in the classroom.
             size='large'
             // eslint-disable-next-line no-console
             onSearch={handleSearch}
+            aria-label='Search for volunteering opportunties here'
           />
         </SearchBox>
         <div>

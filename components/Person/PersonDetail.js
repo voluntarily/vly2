@@ -1,5 +1,5 @@
 import { defaultToHttpScheme } from '../../lib/urlUtil'
-import { Divider, Icon } from 'antd'
+import { Divider } from 'antd'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
 import TagDisplay from '../Tags/TagDisplay'
-import { ActivityContainer } from '../VTheme/VTheme'
+import { ActivityContainer, StyledIcon } from '../VTheme/VTheme'
 import Html from '../VTheme/Html'
 import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
@@ -20,10 +20,6 @@ const DetailItem = styled.div`
   @media screen and (max-width: 767px) {
     display: none;
   }
-`
-
-const StyledIcon = styled(Icon)`
-  margin-right: 0.5rem;
 `
 
 const InfoSection = styled.div`

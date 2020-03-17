@@ -159,10 +159,7 @@ const putOpportunity = async (req, res, next) => {
         .updateOne({ _id: req.params._id }, req.body)
 
       const archOp = await archiveOpportunity(req.params._id)
-      // TODO: [VP-282] after archiving return a 301 redirect to the archived opportunity
-      // res.redirect(301, `/opsarchive/${archop._id}`)
       await archiveInterests(req.params._id)
-
       req.crudify = { result: archOp }
       return next()
     } else {

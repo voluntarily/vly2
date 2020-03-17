@@ -4,7 +4,7 @@ import { server, appReady } from '../../../server'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import Tag from '../../tag/tag'
 import Opportunity from '../opportunity'
-import { OpportunityStatus, OpportunityFields, OpportunityPublishedStatus } from '../opportunity.constants'
+import { OpportunityStatus, OpportunityPublicFields, OpportunityPublishedStatus } from '../opportunity.constants'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import Activity from '../../activity/activity'
@@ -50,17 +50,9 @@ const createPersonAndGetToken = async (roles) => {
   }
 }
 
-const assertContainsOnlyAnonymousFields = (test, obj) => {
-  const permittedFields = [
-    OpportunityFields.ID,
-    OpportunityFields.NAME,
-    OpportunityFields.SUBTITLE,
-    OpportunityFields.IMG_URL,
-    OpportunityFields.DURATION,
-    OpportunityFields.DATE
-  ]
+const assertContainsOnlyPublicFields = (test, obj) => {
   for (const key of Object.keys(obj)) {
-    test.true(permittedFields.includes(key), `The response contained an invalid field: '${key}'`)
+    test.true(OpportunityPublicFields.includes(key), `The response contained an invalid field: '${key}'`)
   }
 }
 
@@ -83,7 +75,7 @@ test.serial('Anonymous - READ by id', async t => {
     .set('Accept', 'application/json')
 
   t.is(200, res.status)
-  assertContainsOnlyAnonymousFields(t, res.body)
+  assertContainsOnlyPublicFields(t, res.body)
 })
 
 test.serial('Anonymous users should receive 404 from GET by ID endpoint if draft', async t => {
@@ -100,7 +92,7 @@ test.serial('Anonymous - LIST', async t => {
 
   t.is(200, res.status)
   for (const op of res.body) {
-    assertContainsOnlyAnonymousFields(t, op)
+    assertContainsOnlyPublicFields(t, op)
   }
 })
 
@@ -154,7 +146,7 @@ test.serial('Anonymous - DELETE is denied', async t => {
   t.is(403, res.status)
 })
 
-for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.ORG_ADMIN]) {
+for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN]) {
   test.serial(`${role} - LIST - get all published`, async t => {
     const q = {
       status: {
@@ -168,7 +160,7 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
       .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
 
     t.is(200, res.status)
-    t.is(3, res.body.length) // There are 3 published (i.e. ACTIVE or COMPLETED) ops in the fixture file
+    t.is(3, res.body.length) // Anon sees only ACTIVE ops
     t.truthy(res.body.find(op => op.name === '1 Mentor a year 12 business Impact Project'))
     t.truthy(res.body.find(op => op.name === '2 Self driving model cars'))
     t.truthy(res.body.find(op => op.name === '6 Building a race car'))
@@ -190,7 +182,7 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
       .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.VOLUNTEER_PROVIDER])}`])
 
     t.is(200, res.status)
-    t.is(2, res.body.length) // There are 2 ACTIVE ops in the fixture file
+    t.is(3, res.body.length) // There are 3 ACTIVE ops in the fixture file
     t.truthy(res.body.find(op => op.name === '1 Mentor a year 12 business Impact Project'))
     t.truthy(res.body.find(op => op.name === '2 Self driving model cars'))
     // DRAFT ops will have been trimmed from the response
@@ -199,14 +191,6 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
   test.serial(`${role} - READ - can read ACTIVE status`, async t => {
     const res = await request(server)
       .get(`/api/opportunities/${t.context.opportunities[0]._id}`)
-      .set('Accept', 'application/json')
-      .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.VOLUNTEER_PROVIDER])}`])
-
-    t.is(200, res.status)
-  })
-  test.serial(`${role} - READ - can read COMPLETED status`, async t => {
-    const res = await request(server)
-      .get(`/api/opportunities/${t.context.opportunities[5]._id}`)
       .set('Accept', 'application/json')
       .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.VOLUNTEER_PROVIDER])}`])
 
@@ -247,7 +231,7 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
       .set('Accept', 'application/json')
       .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
 
-    t.is(404, res.status)
+    t.true([403, 404].includes(res.status))
   })
 
   test.serial(`${role} - READ - can read op I own even if in DRAFT status`, async t => {
@@ -264,8 +248,12 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
       .set('Accept', 'application/json')
       .set('Cookie', [`idToken=${createJwtIdToken(person.email)}`])
 
-    t.is(200, res.status)
-    t.is(res.body._id, op._id.toString())
+    if (role === Role.OPPORTUNITY_PROVIDER) {
+      t.is(200, res.status)
+      t.is(res.body._id, op._id.toString())
+    } else {
+      t.true([403, 404].includes(res.status))
+    }
   })
 
   test.serial(`${role} - UPDATE - Can not update an opportunity they do not own`, async t => {
@@ -287,7 +275,7 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACT
           name: 'A new name' // Try and change the name of the op we do not own
         })
 
-      t.is(404, res.status)
+      t.true([403, 404].includes(res.status))
 
       // Make sure the op hasn't updated
       const op2 = await Opportunity.findById(opId)
@@ -445,7 +433,7 @@ test.serial('Owner - UPDATE - Can update an opportunity I created/own', async t 
   let opId
 
   try {
-    const requestor = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const requestor = await createPerson([Role.OPPORTUNITY_PROVIDER])
 
     const op = await Opportunity.create({
       name: 'Cool op',
@@ -729,8 +717,8 @@ for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_
   })
 }
 
-for (const role of [Role.OPPORTUNITY_PROVIDER, Role.VOLUNTEER_PROVIDER]) {
-  test.serial(`${role} - CREATE`, async t => {
+for (const role of [Role.OPPORTUNITY_PROVIDER]) {
+  test.serial(`${role} - can CREATE`, async t => {
     const org = await Organisation.create({
       name: `${uuid()}`,
       slug: `${uuid()}`

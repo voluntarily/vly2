@@ -12,7 +12,7 @@ const OpAdd = ({ roles }) => {
   if (roles && roles.includes('opportunityProvider')) {
     return (
       <Link href='/op/new'>
-        <Button type='primary' shape='round' size='large'>
+        <Button type='primary' block shape='round' size='large'>
           <FormattedMessage
             id='opAdd.new'
             defaultMessage='New Request'
