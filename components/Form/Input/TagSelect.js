@@ -10,12 +10,12 @@ const { Option } = Select
  */
 export const TagSelect = ({ values, onChange, value, placeholder }) => {
   /**
-   * @param {string} tag 
+   * @param {string} tag
    */
   const addTag = (tag) => onChange(value.concat(tag))
 
   /**
-   * @param {string} removedTag 
+   * @param {string} removedTag
    */
   const removeTag = removedTag => onChange(value.filter(tag => tag !== removedTag))
 
@@ -28,9 +28,12 @@ export const TagSelect = ({ values, onChange, value, placeholder }) => {
       </Select>
 
       {value && value.map(tag =>
-        <TagStyle key={tag}
+        <TagStyle
+          key={tag}
           closable
-          onClose={() => removeTag(tag)}>{tag}</TagStyle>)}
+          onClose={() => removeTag(tag)}
+        >{tag}
+        </TagStyle>)}
     </>
   )
 }
