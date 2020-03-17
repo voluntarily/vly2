@@ -42,7 +42,7 @@ const scale = {
   },
   l: {
     orgs: [
-      { category: 'vp', count: 50, members: 500, followers: 100 }, // 30,000 people
+      { category: 'vp', count: 50, members: 200, followers: 100 }, // 15,000 people
       { category: 'op', count: 50, members: 20, followers: 100 }, // 6000 people
       { category: 'ap', count: 10, members: 10, followers: 200 } // 2100 people
     ],
@@ -69,21 +69,29 @@ async function main () {
   connectDB()
   await clearCollections()
 
-  // if (!process.argv[2]) {
-  //   console.log('Usage: initPlatform [xs|s|m|l|xl]')
-  //   process.exit(1)
-  // }
+  if (!process.argv[2]) {
+    console.log('Usage: initPlatform [xs|s|m|l|xl]')
+    process.exit(1)
+  }
   const size = process.argv[2] || 's'
   const params = scale[size]
+  try {
+    const orgs = await Promise.all(params.orgs.map(org => {
+      return makeOrgs(org.category, org.count, org.members, org.followers)
+    }))
+    const totalOrgs = orgs.reduce((total, arr) => total + arr.length, 0)
+    console.log(totalOrgs, 'Orgs Created')
+  } catch (e) {
+    console.error('Error making orgs:', e)
+  }
+  try {
+    const act = params.acts
+    const acts = await makeActs(act.count, act.ops, act.interested)
+    console.log(acts.length, 'Acts Created')
+  } catch (e) {
+    console.error('Error making acts:', e)
+  }
 
-  const orgs = await Promise.all(params.orgs.map(org => {
-    return makeOrgs(org.category, org.count, org.members, org.followers)
-  }))
-  const totalOrgs = orgs.reduce((total, arr) => total + arr.length, 0)
-  console.log(totalOrgs, 'Orgs Created')
-  const act = params.acts
-  const acts = await makeActs(act.count, act.ops, act.interested)
-  console.log(acts.length, 'Acts Created')
   disconnectDB()
   process.exit(0)
 }
