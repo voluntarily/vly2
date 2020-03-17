@@ -1,4 +1,4 @@
-import { Button, Checkbox, Divider, Form, Input, InputNumber } from 'antd'
+import { Button, Checkbox, Divider, Form, Input, InputNumber, Tooltip, Icon } from 'antd'
 import slug from 'limax'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
@@ -8,6 +8,7 @@ import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import NumericRange from '../VTheme/NumericRange'
 import { Category as OrganisationCategory } from '../../server/api/organisation/organisation.constants'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
+import { domainRegex } from '../../lib/fieldValidation'
 import {
   DescriptionContainer,
   FormGrid,
@@ -40,12 +41,6 @@ class OrgDetailForm extends Component {
   setAddress = value => {
     this.props.form.setFieldsValue({ address: value })
   }
-  // setWebsite = (value) => {
-  //   this.props.form.setWebsite({ contactEmail: value })
-  // }
-  // setContactEmailUrl = (value) => {
-  //   this.props.form.setFieldsValue({ contactEmail: value })
-  // }
 
   /**
    * Creates a link to google maps for the supplied address.
@@ -71,6 +66,7 @@ class OrgDetailForm extends Component {
         const org = this.props.org
         // update the rest from the form values.
         org.name = values.name
+        org.domainName = values.domainName
         org.slug = slug(values.name)
         org.info.about = values.about
         org.info.instructions = values.instructions
@@ -104,6 +100,19 @@ class OrgDetailForm extends Component {
         defaultMessage='Title'
         description='organisation Title label in OrgDetails Form'
       />
+    )
+    const orgDomain = (
+      <span>
+        <FormattedMessage
+          id='orgDomain'
+          defaultMessage='Domain Name'
+          description='organisation Domain label in OrgDetails Form'
+        />
+      &nbsp;
+        <Tooltip title='Used to match emails of the form name@org.domain to your organisation automatically.'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
     )
     const orgImgUrl = (
       <FormattedMessage
@@ -317,10 +326,21 @@ class OrgDetailForm extends Component {
                 {getFieldDecorator('about', {
                   rules: []
                 })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
                   <RichTextEditor />
                 )}
               </Form.Item>
+              <ShortInputContainer>
+                <Form.Item label={orgDomain}>
+                  {getFieldDecorator('domainName', {
+                    rules: [
+                      {
+                        pattern: domainRegex,
+                        message: 'Enter a valid Domain'
+                      }
+                    ]
+                  })(<Input placeholder='Organisation Domain' />)}
+                </Form.Item>
+              </ShortInputContainer>
               <Form.Item label={orgImgUrl}>
                 {getFieldDecorator('imgUrl', {
                   rules: []
@@ -505,7 +525,6 @@ class OrgDetailForm extends Component {
                 {getFieldDecorator('instructions', {
                   rules: []
                 })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
                   <RichTextEditor />
                 )}
               </Form.Item>
@@ -527,7 +546,6 @@ class OrgDetailForm extends Component {
                 {getFieldDecorator('followers', {
                   rules: []
                 })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
                   <RichTextEditor />
                 )}
               </Form.Item>
@@ -560,7 +578,6 @@ class OrgDetailForm extends Component {
                 {getFieldDecorator('joiners', {
                   rules: []
                 })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
                   <RichTextEditor />
                 )}
               </Form.Item>
@@ -582,7 +599,6 @@ class OrgDetailForm extends Component {
                 {getFieldDecorator('members', {
                   rules: []
                 })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
                   <RichTextEditor />
                 )}
               </Form.Item>
@@ -603,7 +619,6 @@ class OrgDetailForm extends Component {
                 {getFieldDecorator('outsiders', {
                   rules: []
                 })(
-                  // <TextArea rows={20} placeholder='Tell us about your organisation. You can use markdown here. and include links' />
                   <RichTextEditor />
                 )}
               </Form.Item>
@@ -667,6 +682,7 @@ OrgDetailForm.propTypes = {
       PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
     ),
     imgUrl: PropTypes.string,
+    domainName: PropTypes.string,
     website: PropTypes.string,
     contactEmail: PropTypes.string,
     facebook: PropTypes.string,
@@ -720,6 +736,7 @@ export default Form.create({
         value: org.info.outsiders
       }),
       imgUrl: Form.createFormField({ ...org.imgUrl, value: org.imgUrl }),
+      domainName: Form.createFormField({ ...org.domainName, value: org.domainName }),
       website: Form.createFormField({ ...org.website, value: org.website }),
       contactEmail: Form.createFormField({
         ...org.contactEmail,

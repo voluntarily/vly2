@@ -43,6 +43,8 @@ export const ItemDescription = styled.div`
   ul {
     padding-left: 0;
   }
+
+
   `
 
 export const TagContainer = styled.div`
