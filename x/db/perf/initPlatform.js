@@ -66,16 +66,18 @@ const scale = {
   }
 }
 
-
 async function main () {
   connectDB()
-  await clearCollections()
 
-  // if (!process.argv[2]) {
-  //   console.log('Usage: initPlatform [xs|s|m|l|xl]')
-  //   process.exit(1)
-  // }
-  const size = process.argv[2] || 'l'
+  if (!process.argv[2]) {
+    console.log('Usage: initPlatform [xs|s|m|l|xl] --keep')
+    console.log('--keep will not clear the existing database, creating more new values')
+    process.exit(1)
+  }
+  const size = process.argv[2] || 'xs'
+  if (!(process.argv[3] && process.argv[3] === '--keep')) {
+    await clearCollections()
+  }
   const params = scale[size]
   try {
     await asyncForEach(params.orgs, async org => {
