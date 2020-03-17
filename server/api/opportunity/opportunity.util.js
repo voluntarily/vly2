@@ -1,34 +1,43 @@
 const Opportunity = require('./opportunity')
 const { regions } = require('../location/locationData')
 
+/**
+ *
+ * @param {{ locations: string[], _id }} me
+ * @returns {Promise<any[]>}
+ */
 const getLocationRecommendations = async (me) => {
-  const regionToMatch = regions.find(loc => {
-    return me.locations.includes(loc.name) || !!loc.containedTerritories.find(containedTerritory => me.locations.includes(containedTerritory))
-  })
+  const regionsToMatch = regions.filter(loc =>
+    me.locations.includes(loc.name) ||
+      !!loc.containedTerritories.find(containedTerritory => me.locations.includes(containedTerritory))
+  )
 
-  let locationOps
-  if (regionToMatch) {
-    locationOps = await Opportunity
-      .find({
-        location: { $in: [regionToMatch.name, ...regionToMatch.containedTerritories] },
-        requestor: { $ne: me._id }
-      })
-      .sort('name')
-      .collation({ locale: 'en_US', strength: 1 })
-      .populate('requestor', 'name nickname imgUrl')
-      .populate('offerOrg', 'name imgUrl category')
+  if (regionsToMatch.length === 0) {
+    return []
+  }
 
-    // if user has specified a territory, we should show the exact matches first, because we know
-    // they are closest to the user.
-    const userIsInTerritory = !me.locations.includes(regionToMatch.name)
-    if (userIsInTerritory) {
-      const closestOpportunities = locationOps.filter((opportunity) => me.locations.includes(opportunity.location))
-      const otherOpportunities = locationOps.filter((opportunity) => !me.locations.includes(opportunity.location))
+  // Extract all region names and the territories of those regions
+  // e.g. ['Bay of Plenty', 'Western Bay of Plenty District', 'Tauranga City', ..., 'Waikato', 'Thames-Coromandel District', 'Taupo District', ...]
+  const regionNames = regionsToMatch.flatMap(region => [region.name, ...region.containedTerritories])
 
-      locationOps = closestOpportunities.concat(otherOpportunities)
-    }
-  } else {
-    locationOps = []
+  let locationOps = await Opportunity
+    .find({
+      location: { $in: regionNames },
+      requestor: { $ne: me._id }
+    })
+    .sort('name')
+    .collation({ locale: 'en_US', strength: 1 })
+    .populate('requestor', 'name nickname imgUrl')
+    .populate('offerOrg', 'name imgUrl category')
+
+  // if user has specified a territory, we should show the exact matches first, because we know
+  // they are closest to the user.
+  const userIsInTerritory = !me.locations.includes(regionNames)
+  if (userIsInTerritory) {
+    const closestOpportunities = locationOps.filter((opportunity) => me.locations.includes(opportunity.location))
+    const otherOpportunities = locationOps.filter((opportunity) => !me.locations.includes(opportunity.location))
+
+    locationOps = closestOpportunities.concat(otherOpportunities)
   }
 
   return locationOps.slice(0, 10)

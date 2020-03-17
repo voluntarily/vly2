@@ -6,6 +6,7 @@ import Opportunity from '../opportunity'
 import fixtures from './opportunity.util.fixture'
 import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
+import { OpportunityStatus } from '../opportunity.constants'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -123,4 +124,79 @@ test.serial('getLocationRecommendations > closest opportunities', async (t) => {
       t.is(recommendedLocations[i].name, data.expectedSortedNames[i])
     }
   }
+})
+
+test.serial('getLocationRecommendations - multiple person locations should match all ops with those locations', async (t) => {
+  await Opportunity.deleteMany()
+
+  const john = await Person.create({
+    name: 'John',
+    email: 'john@mail.com'
+  })
+
+  // Auckland opportunity
+  await Opportunity.create({
+    name: 'Auckland op',
+    location: 'Auckland',
+    status: OpportunityStatus.ACTIVE,
+    requestor: john._id
+  })
+  // Wellington opportunity
+  await Opportunity.create({
+    name: 'Wellington op',
+    location: 'Wellington',
+    status: OpportunityStatus.ACTIVE,
+    requestor: john._id
+  })
+  // Christchurch opportunity
+  await Opportunity.create({
+    name: 'Christchurch op',
+    location: 'Christchurch',
+    status: OpportunityStatus.ACTIVE,
+    requestor: john._id
+  })
+
+  const me = {
+    _id: mongoose.Types.ObjectId(),
+    locations: ['Auckland', 'Wellington']
+  }
+
+  const recommendedOps = await getLocationRecommendations(me)
+
+  // 'me' is interested in opportunities in both Auckland and Wellington, and two opportunities match this
+  t.is(recommendedOps.length, 2)
+  t.truthy(recommendedOps.find(op => op.name === 'Auckland op'))
+  t.truthy(recommendedOps.find(op => op.name === 'Wellington op'))
+})
+
+/**
+ * If a person has specified their location as a territory (i.e. Lower Hutt City), we should still return
+ * opportunities for the parent region (i.e. Wellington)
+ */
+test.serial('getLocationRecommendations - return opportunity of parent region of "my" territory', async (t) => {
+  await Opportunity.deleteMany()
+
+  const john = await Person.create({
+    name: 'John',
+    email: 'john@mail.com'
+  })
+
+  // Lower Hutt City opportunity
+  // (Lower Hutt City being a territory/child of Wellington)
+  await Opportunity.create({
+    name: 'Lower Hutt City op',
+    location: 'Lower Hutt City',
+    status: OpportunityStatus.ACTIVE,
+    requestor: john._id
+  })
+
+  const me = {
+    _id: mongoose.Types.ObjectId(),
+    locations: ['Wellington'] // Wellington is the parent region of our test opportunity
+  }
+
+  const recommendedOps = await getLocationRecommendations(me)
+
+  t.is(recommendedOps.length, 1)
+  t.truthy(recommendedOps[0].name === 'Lower Hutt City op')
 })
