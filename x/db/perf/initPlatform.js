@@ -1,4 +1,4 @@
-const { connectDB, disconnectDB } = require('./util')
+const { connectDB, disconnectDB, asyncForEach } = require('./util')
 const { makeActs } = require('./makeActs')
 const { makeOrgs } = require('./makeOrgs')
 const { clearCollections } = require('./clearCollections')
@@ -65,6 +65,8 @@ const scale = {
     acts: { count: 200, ops: 20, interested: 12 } // 48,000 interested
   }
 }
+
+
 async function main () {
   connectDB()
   await clearCollections()
@@ -76,11 +78,10 @@ async function main () {
   const size = process.argv[2] || 'l'
   const params = scale[size]
   try {
-    const orgs = await Promise.all(params.orgs.map(async org => {
-      return makeOrgs(org.category, org.count, org.members, org.followers)
-    }))
-    const totalOrgs = orgs.reduce((total, arr) => total + arr.length, 0)
-    console.log(totalOrgs, 'Orgs Created')
+    await asyncForEach(params.orgs, async org => {
+      const o = await makeOrgs(org.category, org.count, org.members, org.followers)
+      console.log('made', o.length, org.category, 'orgs')
+    })
   } catch (e) {
     console.error('Error making orgs:', e)
   }

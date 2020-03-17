@@ -13,6 +13,12 @@ const sentences = []
 
 fs.readFileSync(path, 'utf-8').split(/\r?\n/).forEach(line => { sentences.push(line) })
 
+async function asyncForEach (array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array)
+  }
+}
+
 const getSentences = () => {
   const count = gra(5, 15)
   const pick = Array(count).fill({}).map(() => sentences[gra(0, sentences.length - 1)])
@@ -75,6 +81,7 @@ module.exports = {
   range,
   gra,
   coin,
+  asyncForEach,
   fetchJson,
   getSentences,
   getTags,

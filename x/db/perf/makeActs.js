@@ -1,4 +1,4 @@
-const { getSentences, coin, gra, getTags } = require('./util')
+const { getSentences, coin, gra, getTags, asyncForEach } = require('./util')
 const Organisation = require('../../../server/api/organisation/organisation')
 const Member = require('../../../server/api/member/member')
 const Activity = require('../../../server/api/activity/activity')
@@ -48,13 +48,27 @@ const makeAct = async (ops, interested) => {
   return act
 }
 
+// very parallel version
+// const makeActs = async (count, ops, interested) => {
+//   console.log('making Activities', count, ops, interested)
+//   return Promise.all(
+//     Array(count).fill({}).map(() => makeAct(ops, interested))
+//   )
+// }
+
+// serialised version
 const makeActs = async (count, ops, interested) => {
   console.log('making Activities', count, ops, interested)
-  return Promise.all(
-    Array(count).fill({}).map(() => makeAct(ops, interested))
-  )
+  const acts = Array(count).fill({})
+  try {
+    await asyncForEach(acts, async act => {
+      act = await makeAct(ops, interested)
+    })
+  } catch (e) {
+    console.error('Error making acts:', e)
+  }
+  return acts
 }
-
 module.exports = {
   makeAct,
   makeActs
