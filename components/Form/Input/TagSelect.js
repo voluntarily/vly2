@@ -32,8 +32,7 @@ export const TagSelect = ({ values, onChange, value, placeholder }) => {
           key={tag}
           closable
           onClose={() => removeTag(tag)}
-        >{tag}
-        </TagStyle>)}
+        >{tag}</TagStyle>)}
     </>
   )
 }

@@ -1,9 +1,8 @@
 const mongoose = require('mongoose')
 const { config } = require('../../config/serverConfig')
 const Person = require('../../server/api/person/person')
-const { Role } = require('../../server/services/authorize/role')
 
-async function main() {
+async function main () {
   mongoose.Promise = Promise
 
   try {
@@ -35,7 +34,7 @@ async function main() {
     await Person.updateOne({ _id: person._id }, person)
 
     // It's been copied and committed, so drop the old field
-    await Person.updateMany({}, { $unset: { location: 1 } }, { multi: true });
+    await Person.updateMany({}, { $unset: { location: 1 } }, { multi: true })
 
     console.log(`Migrated ${person.email}`)
   }
