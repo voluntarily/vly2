@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
 import links from './HeaderMenu'
 import { useIntl } from 'react-intl'
+import { Role } from '../../server/services/authorize/role'
 
 const Search = Input.Search
 
@@ -79,18 +80,6 @@ const SearchInput = styled(Search)`
     display: none;
   }
 `
-const AdminHeader = adminheader => {
-if (notice === 'none') notice = '' // wipe notice if its set to none
-const height = notice ? '112px' : '56px'
-const headerStyle = {
-    borderTop: me.role.includes(Role.ADMIN) ? 'solid 10px #daad14' : 'none',
-    position: 'fixed',
-    height,
-    zIndex: 10,
-    width: '100%',
-    backgroundColor: 'white'
- } 
-} 
 
 const handleSearch = search => {
   Router.push({
@@ -111,9 +100,19 @@ const Header = ({ isAuthenticated, me, ...props }) => {
   const intl = useIntl()
   let notice = intl.formatMessage({ id: 'notice', defaultMessage: 'none' })
   if (notice === 'none') notice = '' // wipe notice if its set to none
-  const height = '56px'
+  const height = notice ? '112px' : '56px'
+
+  const headerStyleAdmin = {
+  //  if (me.role.includes(Role.ADMIN) {
+    borderTop: me.role.includes(Role.ADMIN) ? 'solid 10px #7826ff' : 'none',
+    position: 'fixed',
+    height,
+    zIndex: 10,
+    width: '100%',
+    backgroundColor: 'white'
+  }
   return (
-    <Layout.Header style={{ position: 'fixed', height: height, zIndex: 10, width: '100%', backgroundColor: 'white' }}>
+    <Layout.Header style={ headerStyleAdmin }>
       {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><Icon type='warning' /> {notice}</Notice>}
       <MenuGrid>
         <div>
