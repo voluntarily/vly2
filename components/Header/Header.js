@@ -79,6 +79,18 @@ const SearchInput = styled(Search)`
     display: none;
   }
 `
+const AdminHeader = adminheader => {
+if (notice === 'none') notice = '' // wipe notice if its set to none
+const height = notice ? '112px' : '56px'
+const headerStyle = {
+    borderTop: me.role.includes(Role.ADMIN) ? 'solid 10px #daad14' : 'none',
+    position: 'fixed',
+    height,
+    zIndex: 10,
+    width: '100%',
+    backgroundColor: 'white'
+ } 
+} 
 
 const handleSearch = search => {
   Router.push({
