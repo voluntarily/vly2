@@ -63,7 +63,7 @@ test.serial('Should call next middleware when record is found', async t => {
     nickname: 'avowkind',
     email: 'andrew@groat.nz',
     about: 'New About Text',
-    location: 'Auckland',
+    locations: ['Auckland'],
     language: 'en',
     role: [
       'admin'

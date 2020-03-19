@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import React, { Component, forwardRef } from 'react'
 import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
-import LocationSelector from '../Form/Input/LocationSelector'
 import EducationSelector from '../Form/Input/EducationSelector'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import TagInput from '../Form/Input/TagInput'
@@ -18,6 +17,7 @@ import {
 import { H3Bold, P } from '../VTheme/VTheme'
 import { websiteRegex } from '../../server/api/person/person.validation'
 import { Role } from '../../server/services/authorize/role'
+import TagSelect from '../Form/Input/TagSelect'
 
 const EducationSelectorRef = forwardRef(EducationSelector)
 const developerSettings = process.env.NODE_ENV !== 'production'
@@ -59,7 +59,7 @@ class PersonDetail extends Component {
           possessive: values.pronoun_possessive
         }
         person.about = values.about
-        person.location = values.location
+        person.locations = values.locations
         person.tags = values.tags
 
         person.website = values.website
@@ -184,7 +184,7 @@ class PersonDetail extends Component {
         {' '}
         <FormattedMessage
           id='PersonDetailForm.Label.Location'
-          defaultMessage='In what region do you want to volunteer'
+          defaultMessage='In what regions do you want to volunteer'
           description='Person Location label in PersonDetails Form'
         />
         &nbsp;
@@ -377,8 +377,8 @@ class PersonDetail extends Component {
 
             <InputContainer>
               <Form.Item label={personLocation}>
-                {getFieldDecorator('location')(
-                  <LocationSelector existingLocations={this.props.locations} />
+                {getFieldDecorator('locations')(
+                  <TagSelect values={this.props.locations} placeholder='Select location' />
                 )}
               </Form.Item>
               <Form.Item label={personTags}>
@@ -590,7 +590,7 @@ PersonDetail.propTypes = {
     name: PropTypes.string,
     nickname: PropTypes.string,
     about: PropTypes.string,
-    location: PropTypes.string,
+    locations: PropTypes.arrayOf(PropTypes.string),
     email: PropTypes.string,
     phone: PropTypes.string,
     sendEmailNotifications: PropTypes.bool,
@@ -644,9 +644,9 @@ const PersonDetailForm = Form.create({
         ...props.person.about,
         value: props.person.about
       }),
-      location: Form.createFormField({
-        ...props.person.location,
-        value: props.person.location
+      locations: Form.createFormField({
+        ...props.person.locations,
+        value: props.person.locations
       }),
       education: Form.createFormField({
         ...props.person.education,

@@ -79,7 +79,7 @@ async function getPerson (req, res, next) {
       PersonFields.PHONE,
       PersonFields.EDUCATION,
       PersonFields.JOB,
-      PersonFields.LOCATION,
+      PersonFields.LOCATIONS,
       PersonFields.PLACEOFWORK
     )
   }
