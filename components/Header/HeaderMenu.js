@@ -40,11 +40,11 @@ export default () => [
     defaultMessage='Organisations'
   />
   },
-  // {
-  //   key: 'help',
-  //   text: 'Help',
-  //   href: 'https://voluntarily.atlassian.net/servicedesk/customer/portals'
-  // },
+  {
+    key: 'help',
+    text: 'Help',
+    href: 'https://voluntarily.atlassian.net/servicedesk/customer/portals'
+  },
   {
     key: 'hsignin',
     href: '/home',
