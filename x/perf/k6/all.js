@@ -1,5 +1,5 @@
 import http from 'k6/http'
-import { check, group, sleep, fail } from 'k6'
+import { check, group, sleep } from 'k6'
 
 // const USERNAME = `${randomString(10)}@example.com` // Set your own email or `${randomString(10)}@example.com`;
 // const PASSWORD = 'superCroc2019'
@@ -22,7 +22,6 @@ function randomString (length) {
   while (length--) res += charset[Math.random() * charset.length | 0]
   return res
 }
-
 
 export default (authToken) => {
   const requestConfigWithTag = tag => ({
@@ -60,29 +59,27 @@ export default (authToken) => {
         sex: 'M',
         date_of_birth: '2001-01-01'
       }
-  
-        const res = http.post(URL, payload, requestConfigWithTag({ name: 'Create' }))
-  
-        if (check(res, { 'Croc created correctly': (r) => r.status === 201 })) {
+
+      const res = http.post(URL, payload, requestConfigWithTag({ name: 'Create' }))
+
+      if (check(res, { 'Croc created correctly': (r) => r.status === 201 })) {
         URL = `${URL}${res.json('id')}/`
-        } else {
+      } else {
         console.log(`Unable to create a Croc ${res.status} ${res.body}`)
-          
-        }
+      }
     })
 
     group('Update croc', () => {
       const payload = { name: 'New name' }
-        const res = http.patch(URL, payload, requestConfigWithTag({ name: 'Update' }))
-        const isSuccessfulUpdate = check(res, {
+      const res = http.patch(URL, payload, requestConfigWithTag({ name: 'Update' }))
+      const isSuccessfulUpdate = check(res, {
         'Update worked': () => res.status === 200,
         'Updated name is correct': () => res.json('name') === 'New name'
       })
-  
-        if (!isSuccessfulUpdate) {
+
+      if (!isSuccessfulUpdate) {
         console.log(`Unable to update the croc ${res.status} ${res.body}`)
-          
-        }
+      }
     })
 
     const delRes = http.del(URL, null, requestConfigWithTag({ name: 'Delete' }))
