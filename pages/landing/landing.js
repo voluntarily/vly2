@@ -10,8 +10,6 @@ import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import moment from 'moment'
 import { Divider } from 'antd'
-import ITFPromo from '../../components/LandingPageComponents/ITFPromo'
-
 export const Landing = props => (
   <>
     <Hero />
