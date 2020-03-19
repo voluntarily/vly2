@@ -24,8 +24,6 @@ export const Landing = props => (
       <Divider />
       <OfferSection />
       <Divider />
-      <ITFPromo />
-      <Divider />
       <SectionTitle>
         <FormattedMessage
           id='landing.sectiontitle.oplist'
