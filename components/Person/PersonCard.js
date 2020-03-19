@@ -20,7 +20,7 @@ img {
 figcaption {
   display: grid;
   grid-template-columns: 8rem 1fr;
-  gap: 1rem;
+  gap: 2rem;
   margin-bottom: 1rem;
 
 

@@ -21,7 +21,7 @@ test('renders the list', t => {
     <PersonList people={t.context.people} />
   )
 
-  t.is(wrapper.find('PersonCard').length, 8)
+  t.is(wrapper.find('PersonListItem').length, 8)
 })
 
 test('renders no people', t => {
@@ -29,6 +29,6 @@ test('renders no people', t => {
     <PersonList />
   )
 
-  t.is(wrapper.find('PersonCard').length, 0)
+  t.is(wrapper.find('PersonListItem').length, 0)
   t.is(wrapper.text(), 'No Matching People')
 })

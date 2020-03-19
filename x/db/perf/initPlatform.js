@@ -1,4 +1,4 @@
-const { connectDB, disconnectDB } = require('./util')
+const { connectDB, disconnectDB, asyncForEach } = require('./util')
 const { makeActs } = require('./makeActs')
 const { makeOrgs } = require('./makeOrgs')
 const { clearCollections } = require('./clearCollections')
@@ -65,22 +65,25 @@ const scale = {
     acts: { count: 200, ops: 20, interested: 12 } // 48,000 interested
   }
 }
+
 async function main () {
   connectDB()
-  await clearCollections()
 
-  // if (!process.argv[2]) {
-  //   console.log('Usage: initPlatform [xs|s|m|l|xl]')
-  //   process.exit(1)
-  // }
-  const size = process.argv[2] || 'l'
+  if (!process.argv[2]) {
+    console.log('Usage: initPlatform [xs|s|m|l|xl] --keep')
+    console.log('--keep will not clear the existing database, creating more new values')
+    process.exit(1)
+  }
+  const size = process.argv[2] || 'xs'
+  if (!(process.argv[3] && process.argv[3] === '--keep')) {
+    await clearCollections()
+  }
   const params = scale[size]
   try {
-    const orgs = await Promise.all(params.orgs.map(async org => {
-      return makeOrgs(org.category, org.count, org.members, org.followers)
-    }))
-    const totalOrgs = orgs.reduce((total, arr) => total + arr.length, 0)
-    console.log(totalOrgs, 'Orgs Created')
+    await asyncForEach(params.orgs, async org => {
+      const o = await makeOrgs(org.category, org.count, org.members, org.followers)
+      console.log('made', o.length, org.category, 'orgs')
+    })
   } catch (e) {
     console.error('Error making orgs:', e)
   }
