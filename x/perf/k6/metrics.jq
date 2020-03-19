@@ -1,0 +1,1 @@
+jq '. | select(.type=="Point" and .metric == "http_req_duration" and .data.tags.status >= "200") | .data.value' x/perf/k6/output/api_health.json | jq -s 'add/length'
