@@ -1,0 +1,23 @@
+Deployment config changes
+
+Gamma 
+config autoscaling
+1..10 instances
+GrowWhenBusy - above 80%cpu after 300 secs.
+
+Increase Container to 4GB and 1 vCPU - task def 4.
+Update load balancer health check
+increase timeout from 10 secs to 60. require 5 unhealthy before restarting server
+
+use /api/health - its safer
+Protocol  HTTP
+Path  /api/health
+Port  traffic port
+Healthy threshold  2
+Unhealthy threshold   5
+Timeout   60
+Interval  200
+Success codes   200
+
+autoscaling
+Set min tasks to 2, desired to 3 max to 10.
