@@ -2,8 +2,8 @@ import { storiesOf } from '@storybook/react'
 import { Divider } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
-import { ColorContainer, ColorGrid, ColorSwatch, StoryIntroContainer } from '../VTheme/VStoryTheme'
-import { BigQuote, BigQuoteAuthor, Grid, H3, H3Black, H3Bold, PBold, TextBigTitle } from '../VTheme/VTheme'
+import { ColorContainer, ColorGrid, ColorSwatch, StoryIntroContainer } from '../components/VTheme/VStoryTheme'
+import { BigQuote, BigQuoteAuthor, Grid, H3, H3Black, H3Bold, PBold, TextBigTitle } from '../components/VTheme/VTheme'
 
 storiesOf('Welcome', module)
   .add('Getting Started', () => (
@@ -11,12 +11,28 @@ storiesOf('Welcome', module)
       <h1> 🥳 Welcome 🥳</h1>
       <h4>This is the Voluntarily Component Library </h4>
       <Divider />
+     
       <h4>All frontend development for the Voluntarily Platform starts here. Browse the components we use on the left, and tinker with them here without the risk of breaking anything 😂<br /> Open-Sauce (or Open Source) contributions are welcome, and enjoy yourself while you're here :) <br /><br />
+      For Developers:<br/>
+      <ul>
+     
         <li><a href='https://github.com/voluntarily/vly2' target='_blank' rel='noopener noreferrer'> 🎒 See the repo here</a></li>
         <li><a href='https://github.com/voluntarily/vly2/blob/master/docs/gettingstarted.md' target='_blank' rel='noopener noreferrer'>💻 Get Started with Windows, Mac, or Linux</a></li>
-
+      </ul>
       </h4>
-
+      <Divider />
+      
+      <h4>
+For designers:
+      </h4>
+      <ul>
+        <li>
+      <h4>Check out the prototype wireframes on Abstract by<a href='https://app.abstract.com/invitations/1b983220419057a57a9e5f8b80802a344758ac8b0adac535df42738cffa9661b' target='_blank'> clicking this link</a>  </h4>
+      </li>
+      <li>
+      <h4>Check out the prototype wireframes on Abstract by<a href='https://app.abstract.com/invitations/1b983220419057a57a9e5f8b80802a344758ac8b0adac535df42738cffa9661b' target='_blank'> clicking this link</a>  </h4>
+      </li>
+      </ul>
     </StoryIntroContainer>
   ))
   .add('Typography', () => (
@@ -424,7 +440,10 @@ storiesOf('Welcome', module)
       <br />
       <br />
       <Grid><TestWidthItem /><TestWidthItem /><TestWidthItem /><TestWidthItem /><TestWidthItem /><TestWidthItem /><TestWidthItem /><TestWidthItem /></Grid>
-
+      <br />
+      <PBold>Code</PBold>
+      <code>{GridText}</code>
+      <Divider />
     </StoryIntroContainer>
   ))
 
@@ -434,6 +453,7 @@ const TestWidthItem = styled.div`
   background-color: purple;
 `
 
+const GridText = '<Grid> <item/><item/><item/><item/> (You get the idea...) </Grid>'
 const TextHeroText = '<TextBigTitle>I am a hero title</TextBigTitle>'
 const TextH1Text = '<h1>I am a h1 heading</h1>'
 const TextH2Text = '<h2>I am a h1 heading</h2>'
