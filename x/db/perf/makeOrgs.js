@@ -1,4 +1,4 @@
-const { getSentences, gra } = require('./util')
+const { getSentences, gra, asyncForEach } = require('./util')
 const Organisation = require('../../../server/api/organisation/organisation')
 const Member = require('../../../server/api/member/member')
 const { MemberStatus } = require('../../../server/api/member/member.constants')
@@ -15,6 +15,7 @@ const makeOrgMembers = async (org, memberStatus, memberCount) => {
         status: memberStatus
       })
     })
+    // console.log('Members:', members.length)
     return Member.create(members)
   } catch (e) {
     console.error('Error making org members', e)
@@ -76,9 +77,14 @@ const makeOrg = async (category, members, followers) => {
 }
 
 const makeOrgs = async (category, count, members, followers) => {
-  const orgs = await Promise.all(Array(count).fill({}).map(async () => {
-    return makeOrg(category, members, followers)
-  }))
+  const orgs = Array(count).fill({})
+  try {
+    await asyncForEach(orgs, async org => {
+      org = await makeOrg(category, members, followers)
+    })
+  } catch (e) {
+    console.error('Error making orgs:', e)
+  }
   return orgs
 }
 
