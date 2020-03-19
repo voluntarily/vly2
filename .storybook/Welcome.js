@@ -25,14 +25,16 @@ storiesOf('Welcome', module)
       <h4>
 For designers:
       </h4>
+      <h4>
       <ul>
         <li>
-      <h4>Check out the prototype wireframes on Abstract by<a href='https://app.abstract.com/invitations/1b983220419057a57a9e5f8b80802a344758ac8b0adac535df42738cffa9661b' target='_blank'> clicking this link</a>  </h4>
+     Check out the prototype wireframes on Abstract by<a href='https://app.abstract.com/invitations/1b983220419057a57a9e5f8b80802a344758ac8b0adac535df42738cffa9661b' target='_blank'> clicking this link</a>  
       </li>
       <li>
-      <h4>Check out the prototype wireframes on Abstract by<a href='https://app.abstract.com/invitations/1b983220419057a57a9e5f8b80802a344758ac8b0adac535df42738cffa9661b' target='_blank'> clicking this link</a>  </h4>
+  Check out the prototype wireframes on Abstract by<a href='https://app.abstract.com/invitations/1b983220419057a57a9e5f8b80802a344758ac8b0adac535df42738cffa9661b' target='_blank'> clicking this link</a>  
       </li>
       </ul>
+      </h4>
     </StoryIntroContainer>
   ))
   .add('Typography', () => (
