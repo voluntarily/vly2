@@ -106,7 +106,7 @@ test('List - admin', async t => {
     'nickname',
     'email',
     'about',
-    'location',
+    'locations',
     'pronoun',
     'language',
     'role',
@@ -214,7 +214,7 @@ for (const role of [Role.ADMIN, Role.TESTER]) {
       'nickname',
       'email',
       'about',
-      'location',
+      'locations',
       'pronoun',
       'language',
       'role',
@@ -244,7 +244,7 @@ test('Get person by id - requested person is in my organisation', async t => {
     phone: 'Phone self',
     education: 'self university',
     job: 'Self',
-    location: 'Loc',
+    locations: ['Loc'],
     placeOfWork: 'POW'
   })
 
@@ -273,7 +273,9 @@ test('Get person by id - requested person is in my organisation', async t => {
   t.is(res.body.phone, 'Phone self')
   t.is(res.body.education, 'self university')
   t.is(res.body.job, 'Self')
-  t.is(res.body.location, 'Loc')
+  t.truthy(res.body.locations)
+  t.is(res.body.locations.length, 1)
+  t.is(res.body.locations[0], 'Loc')
   t.is(res.body.placeOfWork, 'POW')
 })
 
@@ -290,7 +292,7 @@ test('Get person by id - requested person is invited to an opportunity of mine',
     phone: 'Phone self',
     education: 'self university',
     job: 'Self',
-    location: 'Loc',
+    locations: ['Loc'],
     placeOfWork: 'POW'
   })
 
@@ -316,7 +318,9 @@ test('Get person by id - requested person is invited to an opportunity of mine',
   t.is(res.body.phone, 'Phone self')
   t.is(res.body.education, 'self university')
   t.is(res.body.job, 'Self')
-  t.is(res.body.location, 'Loc')
+  t.truthy(res.body.locations)
+  t.is(res.body.locations.length, 1)
+  t.is(res.body.locations[0], 'Loc')
   t.is(res.body.placeOfWork, 'POW')
 })
 

@@ -14,7 +14,7 @@ const PersonFields = {
   NICKNAME: 'nickname',
   NAME: 'name',
   ABOUT: 'about',
-  LOCATION: 'location',
+  LOCATIONS: 'locations',
   PHONE: 'phone',
   LANGUAGE: 'language',
   AVATAR: 'imgUrl',
