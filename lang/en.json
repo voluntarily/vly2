@@ -213,6 +213,8 @@
   "OpportunityStatus.active": "Active",
   "OpportunityStatus.completed": "Completed",
   "OpportunityStatus.draft": "Draft",
+  "OpportunityType.ASK": "Ask",
+  "OpportunityType.OFFER": "Offer",
   "opStartDate": "Start Date",
   "opSubtitle": "Subtitle",
   "opTabs.about": "About",
