@@ -9,7 +9,8 @@ import { Provider } from 'react-redux'
 const mockStore = configureStore()(
   {
     session: {
-      isAuthenticated: false
+      isAuthenticated: false,
+      me: [{ includes: '', name: 'Mr Admin', role: ['Admin'], email: 'test123@abc.com', nickname: 'slat' }]
     }
   }
 )
