@@ -193,7 +193,6 @@ export class Teacher extends Component {
             <SectionTitle>We are working with</SectionTitle>
             <SponsorContainer>
               {/* <SponsorIcon src='static/img/partners/MOE.png' /> */}
-              <SponsorIcon src='static/img/partners/tec.png' alt='Tertiary Edeucation Commission Logo' />
               <SponsorIcon src='static/img/partners/Spark.png' alt='Spark New Zealand Logo' />
               <SponsorIcon src='static/img/partners/Westpac.png' alt='Westpac Foundation Logo' />
               <SponsorIcon src='static/img/partners/Datacom.png' alt='Datacom Logo' />

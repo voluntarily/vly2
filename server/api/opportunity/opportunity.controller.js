@@ -4,7 +4,7 @@ const Opportunity = require('./opportunity')
 const { Interest, InterestArchive } = require('./../interest/interest')
 const Person = require('./../person/person')
 const ArchivedOpportunity = require('./../archivedOpportunity/archivedOpportunity')
-const { OpportunityStatus } = require('./opportunity.constants')
+const { OpportunityStatus, OpportunityListFields } = require('./opportunity.constants')
 const { regions } = require('../location/locationData')
 const sanitizeHtml = require('sanitize-html')
 const { getLocationRecommendations, getSkillsRecommendations } = require('./opportunity.util')
@@ -17,12 +17,12 @@ const Member = require('../member/member')
  * @param res
  * @returns void
  */
-const getOpportunities = async (req, res, next) => {
+const listOpportunities = async (req, res, next) => {
   // Default to Active ops unless one of the params overrides
   let query = { status: OpportunityStatus.ACTIVE }
   let sort = 'name'
   // return only the summary needed for an OpCard
-  let select = 'name subtitle imgUrl status date location duration'
+  let select = OpportunityListFields.join(' ')
 
   try {
     query = req.query.q ? JSON.parse(req.query.q) : query
@@ -89,7 +89,7 @@ const getOpportunities = async (req, res, next) => {
       return res.status(404).send(e)
     }
   } catch (e) {
-    console.error('getOpportunities error:', e)
+    console.error('listOpportunities error:', e)
     return res.status(500).send(e)
   }
 }
@@ -287,7 +287,7 @@ function ensureSanitized (req, res, next) {
 
 module.exports = {
   ensureSanitized,
-  getOpportunities,
+  listOpportunities,
   getOpportunity,
   putOpportunity,
   deleteOpportunity,

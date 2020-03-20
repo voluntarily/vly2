@@ -6,7 +6,7 @@ import { regions } from '../../location/locationData'
 
 // Schemas
 import Opportunity from '../opportunity'
-import { OpportunityStatus } from '../opportunity.constants'
+import { OpportunityStatus, OpportunityType } from '../opportunity.constants'
 import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
 import archivedOpportunity from './../../archivedOpportunity/archivedOpportunity'
@@ -68,6 +68,7 @@ test.serial('Should correctly give count of all active Ops sorted by name', asyn
   t.is(3, got.length)
 
   t.is(got[0].name, '1 Mentor a year 12 business Impact Project')
+  t.is(got[0].type, OpportunityType.ASK)
 })
 
 test.serial('Should correctly give subset of ops matching status', async t => {
@@ -86,7 +87,7 @@ test.serial('Should correctly give subset of ops matching status', async t => {
 
 test.serial('Should correctly select just the names and ids', async t => {
   const res = await request(server)
-    .get('/api/opportunities?p={"name": 1}')
+    .get('/api/opportunities?p="name type"')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
@@ -94,6 +95,7 @@ test.serial('Should correctly select just the names and ids', async t => {
   const got = res.body
   t.is(got[0].status, undefined)
   t.is(got[0].name, '1 Mentor a year 12 business Impact Project')
+  t.is(got[0].type, OpportunityType.ASK)
 })
 
 test.serial('Should correctly give number of active Opportunities', async t => {
@@ -109,9 +111,20 @@ test.serial('Should correctly give number of active Opportunities', async t => {
   t.is(3, got.length)
 })
 
-test.serial('Should send correct data when queried against an _id', async t => {
-  t.plan(3)
+test.serial('Should correctly give number of active offers ', async t => {
+  const res = await request(server)
+    .get('/api/opportunities?q={"status": "active", "type": "offer"}')
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
 
+  t.is(1, got.length)
+  t.is(got[0].type, OpportunityType.OFFER)
+})
+
+test.serial('Should send correct data when queried against an _id', async t => {
   const opp = new Opportunity({
     name: 'The first 1000 metres',
     subtitle: 'Launching into space step 4',
@@ -132,6 +145,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
     .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 200)
   t.is(res.body.name, opp.name)
+  t.is(res.body.type, OpportunityType.ASK) // should be defaulted
 
   // verify requestor was populated out
   t.is(res.body.requestor.name, person1.name)
@@ -169,6 +183,32 @@ test.serial('Should correctly add an opportunity with default image', async t =>
   const savedOpportunity = await Opportunity.findOne({ name: op.name }).exec()
   t.is(savedOpportunity.subtitle, 'Launching into space step 50')
   t.is(savedOpportunity.imgUrl, '/static/img/opportunity/opportunity.png')
+})
+
+test.serial('Should correctly add an offer opportunity', async t => {
+  const op = {
+    type: OpportunityType.OFFER,
+    name: 'I have spare laptops',
+    subtitle: 'I can lend out some old working pcs',
+    description: 'They work and have windows 10 installed.',
+    duration: '4 hours',
+    location: 'Albany, Auckland',
+    status: OpportunityStatus.DRAFT,
+    tags: tags,
+    requestor: t.context.people[0]._id
+  }
+
+  const res = await request(server)
+    .post('/api/opportunities')
+    .send(op)
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
+  t.is(res.status, 200)
+
+  const savedOpportunity = await Opportunity.findOne({ name: op.name }).exec()
+  t.is(savedOpportunity.subtitle, 'I can lend out some old working pcs')
+  t.is(savedOpportunity.type, OpportunityType.OFFER)
 })
 
 test.serial('Should correctly delete an opportunity', async t => {

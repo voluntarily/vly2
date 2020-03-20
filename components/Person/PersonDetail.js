@@ -122,10 +122,10 @@ const PersonDetail = ({ person }, ...props) => (
                 {person.twitter}
               </a>
             </li>}
-          {person.location &&
+          {person.locations &&
             <li>
               <StyledIcon type='compass' />
-              {person.location}
+              {person.locations.join(', ')}
             </li>}
           {person.pronoun &&
             <li>
@@ -215,7 +215,7 @@ PersonDetail.propTypes = {
     name: PropTypes.string.isRequired,
     nickname: PropTypes.string,
     about: PropTypes.string,
-    location: PropTypes.string,
+    locations: PropTypes.arrayOf(PropTypes.string),
     email: PropTypes.string,
     phone: PropTypes.string,
     facebook: PropTypes.string,

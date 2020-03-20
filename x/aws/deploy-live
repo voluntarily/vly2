@@ -1,0 +1,15 @@
+#!/bin/bash
+MY_DIR=$( dirname "${BASH_SOURCE[0]}" )
+
+# login to sydney
+source ${MY_DIR}/login-sydney
+
+# pull latest alpha image
+docker pull 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-alpha:master
+
+# retag
+docker image tag 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-alpha:master 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-live:master
+# push the new image
+docker push 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-live:master
+# restart
+aws ecs update-service --service vly-live --cluster vly-live-ECSCluster --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50 --force-new-deployment 

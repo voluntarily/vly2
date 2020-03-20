@@ -35,7 +35,7 @@ test.afterEach.always(async () => {
 })
 
 test.serial('Op recommendations based on location should include those nearby and not requested by me', async t => {
-  t.context.people[0].location = regions[0].containedTerritories[0]
+  t.context.people[0].locations = [regions[0].containedTerritories[0]]
   await t.context.people[0].save()
 
   t.context.opportunities.forEach((op, index) => {
