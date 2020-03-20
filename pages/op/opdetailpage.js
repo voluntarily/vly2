@@ -16,10 +16,11 @@ import OpDetailForm from '../../components/Op/OpDetailForm'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import { Helmet } from 'react-helmet'
 import { OpStatusStamp } from '../../components/Op/OpStatus'
-import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
+import { OpportunityStatus, OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 
 const blankOp = {
   name: '',
+  tyep: OpportunityType.ASK,
   subtitle: '',
   imgUrl: '/static/img/opportunity/opportunity.png',
   duration: '',
@@ -36,6 +37,7 @@ export const OpDetailPage = ({
   me,
   opportunities,
   isNew,
+  opType,
   dispatch,
   isAuthenticated,
   actid,
@@ -104,6 +106,7 @@ export const OpDetailPage = ({
   if (isNew) {
     // new op
     op = blankOp
+    op.type = opType
 
     // init from activity if provided
     if (actid) {
@@ -138,7 +141,7 @@ export const OpDetailPage = ({
     }
   }
   // Who can edit?
-  const isAdmin = me && me.role.includes('admin')
+  const isAdmin = me && me.role.includes(OpportunityStatus.ADMIN)
   const isOwner =
       isNew ||
       (me && op.requestor && me._id === op.requestor._id)
@@ -198,7 +201,7 @@ OpDetailPage.getInitialProps = async ({ store, query }) => {
   // console('getInitialProps: OpDetailPage', store, query)
   const me = store.getState().session.me
   // Get one Org
-  const isNew = query && query.new && query.new === 'new'
+  const isNew = query && query.new && [OpportunityType.ASK, OpportunityType.OFFER].includes(query.new)
   const opExists = !!(query && query.id) // !! converts to a boolean value
   await Promise.all([
     store.dispatch(reduxApi.actions.locations.get()),
@@ -216,6 +219,7 @@ OpDetailPage.getInitialProps = async ({ store, query }) => {
     }
     return {
       isNew,
+      opType: query.new,
       actid: query.act
     }
   } else {

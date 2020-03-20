@@ -22,7 +22,7 @@ test('Card include name school/org imgUrl location duration and subtitle', t => 
     <OpCard op={op} onPress={() => {}} />
   )
   t.is(wrapper.find('a').length, 1)
-  t.is(wrapper.find('figcaption').find('h1').text(), op.name)
+  t.true(wrapper.find('figcaption').find('h1').text().includes(op.name))
   t.is(wrapper.find('figcaption').find('span').text(), op.offerOrg.name)
   t.is(wrapper.find('img').prop('src'), op.imgUrl)
   // four p tags for location time duration subtitle+interest
@@ -51,7 +51,7 @@ test('draft ops should display name with prefix DRAFT: ', t => {
   const wrapper = shallowWithIntl(
     <OpCard op={op} onPress={() => {}} />
   )
-  t.is(wrapper.find('figcaption').find('h1').text(), `DRAFT: ${op.name}`)
+  t.true(wrapper.find('figcaption').find('h1').text().includes(`DRAFT: ${op.name}`))
 })
 
 test('Link on card should point to ops/<opportunity_id>', t => {
@@ -77,7 +77,7 @@ test('ops with start and end date should be display start date', t => {
   const wrapper = mountWithIntl(
     <OpCard op={op} />
   )
-  t.is(wrapper.find('figcaption').find('h1').text(), op.name)
+  t.true(wrapper.find('figcaption').find('h1').text().includes(op.name))
   t.is(wrapper.find('figcaption').find('p').at(1).text(), moment(op.date[0]).format(' 🗓 h:mmA - ddd DD/MM/YY '))
 })
 
@@ -133,7 +133,7 @@ test('ops without location and duration should display P tags with blank', t => 
   const wrapper = mountWithIntl(
     <OpCard op={op} />
   )
-  t.is(wrapper.find('figcaption').find('h1').text(), op.name)
+  t.true(wrapper.find('figcaption').find('h1').text().includes(op.name))
   t.is(wrapper.find('figcaption').find('p').at(1).text(), moment(op.date[0]).format(' 🗓 h:mmA - ddd DD/MM/YY '))
   t.is(wrapper.find('figcaption').find('p').at(0).text().trim().length, 0)
   t.is(wrapper.find('figcaption').find('p').at(2).text().trim().length, 0)

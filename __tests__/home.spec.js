@@ -306,11 +306,11 @@ test('render volunteer home page - Active tab', t => {
 
   const cards1 = oplists.at(0).find('OpCard')
   t.is(cards1.length, 1)
-  t.is(cards1.first().find('h1').first().text(), t.context.ops[0].name) // find the first opcard in the first oplist
+  t.true(cards1.first().find('h1').first().text().includes(t.context.ops[0].name)) // Tests the name of the first archived op in the first oplist
 
   const cards2 = oplists.at(1).find('OpCard')
   t.is(cards2.length, 5)
-  t.is(cards2.first().find('h1').first().text(), t.context.ops[1].name)
+  t.true(cards2.first().find('h1').first().text().includes(t.context.ops[1].name))
 })
 
 test('render volunteer home page - Discover tab', t => {
@@ -331,7 +331,7 @@ test('render volunteer home page - Discover tab', t => {
 
   const cards1 = oplists.at(0).find('OpCard')
   t.is(cards1.length, 1)
-  t.is(cards1.first().find('h1').first().text(), t.context.ops[0].name) // find the first opcard in the first oplist
+  t.true(cards1.first().find('h1').first().text().includes(t.context.ops[0].name)) // find the first opcard in the first oplist
 })
 
 test.serial('render volunteer home page - History tab', t => {
@@ -361,12 +361,12 @@ test.serial('render volunteer home page - History tab', t => {
   const completedRequests = oplists.at(0)
   const cards1 = completedRequests.find('OpCard')
   t.is(cards1.length, 3) // Number of opcards in archivedops fixture
-  t.is(cards1.first().find('h1').first().text(), t.context.archivedOpportunities[0].name) // Tests the name of the first archived op in the first oplist
+  t.true(cards1.first().find('h1').first().text().includes(t.context.archivedOpportunities[0].name)) // Tests the name of the first archived op in the first oplist
 
   const cancelledRequests = oplists.at(1)
   const cards2 = cancelledRequests.find('OpCard')
   t.is(cards2.length, 2)
-  t.is(cards2.first().find('h1').first().text(), t.context.archivedOpportunities[3].name)
+  t.true(cards2.first().find('h1').first().text().includes(t.context.archivedOpportunities[3].name))
 
   const attendedRequests = interestlists.at(0)
   const cards3 = attendedRequests.find('OpCard')

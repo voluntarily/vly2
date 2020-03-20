@@ -14,6 +14,7 @@ import {
   ItemIdLine
 } from '../VTheme/ItemList'
 import moment from 'moment'
+import { OpType } from './OpType'
 
 const OpBanner = ({ op, children }) => {
   const startDate = op.date[0]
@@ -46,7 +47,7 @@ const OpBanner = ({ op, children }) => {
           <ItemImage src={op.imgUrl} alt={op.name} />
         </Left>
         <OpBannerDetail>
-          <h1>{op.name}</h1>
+          <h1><OpType type={op.type} />: {op.name}</h1>
           <ul>
             <ItemIdLine item={op.offerOrg} path='orgs' />
           </ul>
