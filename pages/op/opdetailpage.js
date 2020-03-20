@@ -17,7 +17,6 @@ import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestS
 import { Helmet } from 'react-helmet'
 import { OpStatusStamp } from '../../components/Op/OpStatus'
 import { OpportunityStatus, OpportunityType } from '../../server/api/opportunity/opportunity.constants'
-import { Role } from '../../server/services/authorize/role'
 
 const blankOp = {
   name: '',
