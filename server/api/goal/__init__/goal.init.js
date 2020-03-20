@@ -6,9 +6,9 @@
 const { GoalGroup } = require('../goalGroup')
 
 module.exports = [
-  /*********************************************/
-  /* GROUP Getting Started as a Volunteer      */
-  /*********************************************/
+  /***********************************************/
+  /* GROUP VP_NEW Getting Started as a Volunteer */
+  /***********************************************/
   {
     group: GoalGroup.VP_NEW,
     name: 'Complete your profile',
@@ -33,6 +33,51 @@ module.exports = [
   },
   {
     group: GoalGroup.VP_NEW,
+    name: 'Basic Training for Voluntarily',
+    slug: 'goal-volunteer',
+    subtitle: 'What you need to know',
+    badgeclass: 'Gp99Py5ERQGVeDFj63gizA',
+    imgUrl: '/static/img/goal/goal-school-ready.png',
+    description: `
+We want you as a volunteer, and the people you help out to have a great experience and be safe.
+
+This goal will link you to some training materials that will 
+help you feel more confident participating.
+
+`,
+    preconditions: [],
+    startLink: '/goal/volunteer/ready',
+    language: 'en',
+    rank: 2,
+    evaluation: (personalGoal) => { return GoalTests.personBadged(personalGoal) }
+  },
+  {
+    group: GoalGroup.VP_NEW,
+    name: 'Find someone to help',
+    subtitle: 'Its time to find your first volunteer opportunity.',
+    slug: 'goal-find-first-activity',
+    imgUrl: '/static/img/goal/goal-first-volunteer.png',
+    description: `
+Its time to find your first volunteering opportunity.
+
+On the discover tab below you'll see opportunities to help that match up with the location and skills in your profile
+Or you can click *Start* to open the search page and browse what is going on.
+
+Once you find something click the <strong>Get Involved</strong> button.
+You can leave a message and the requestor will be notified.
+`,
+    preconditions: [],
+    startLink: '/search',
+    language: 'en',
+    rank: 3,
+    evaluation: (personalGoal) => { return GoalTests.personInterested(personalGoal) }
+  },
+
+  /***********************************************/
+  /* GROUP SCHOOL_VP_NEW Getting Started in schools */
+  /***********************************************/
+  {
+    group: GoalGroup.SCHOOL_VP_NEW,
     name: 'Get School Ready',
     slug: 'goal-school-ready',
     subtitle: 'Basic training for working with young people',
@@ -55,7 +100,7 @@ volunteer opportunities.
     evaluation: (personalGoal) => { return GoalTests.personBadged(personalGoal) }
   },
   {
-    group: GoalGroup.VP_NEW,
+    group: GoalGroup.SCHOOL_VP_NEW,
     name: 'Get School Safe',
     slug: 'goal-school-safe',
     subtitle: 'Complete the vetting required for in-school volunteering',
@@ -77,36 +122,15 @@ This goal will collect the required information and your permission to run the c
     rank: 3,
     evaluation: (personalGoal) => { return GoalTests.personBadged(personalGoal) }
   },
-  {
-    group: GoalGroup.VP_NEW,
-    name: 'Find first volunteering activity',
-    subtitle: 'Its time to find your first volunteering opportunity.',
-    slug: 'goal-find-first-activity',
-    imgUrl: '/static/img/goal/goal-first-volunteer.png',
-    description: `
-Its time to find your first volunteering opportunity.
-
-Below are some recommendations for events coming soon in your area. 
-Or you can click *Start* here to open the search page.
-
-Once you find something click the <strong>Interested</strong> button.
-You can leave a message and the organiser will be notified.
-`,
-    preconditions: [],
-    startLink: '/search',
-    language: 'en',
-    rank: 3,
-    evaluation: (personalGoal) => { return GoalTests.personInterested(personalGoal) }
-  },
 
   /*********************************************/
   /* GROUP First steps for a new school        */
   /*********************************************/
   {
     group: GoalGroup.ORG_OP_NEW,
-    name: 'Tell us about your school',
+    name: 'Tell us about your group',
     slug: 'goal-complete-school-profile',
-    subtitle: 'Tell the world about your awesome school - Complete profiles attract more volunteers!',
+    subtitle: 'Tell the world about your awesome group - Complete profiles attract more volunteers!',
     description:
 `Click Start below to open your school profile page, 
 
@@ -127,24 +151,72 @@ This card will disappear when the profile is complete
   },
   {
     group: GoalGroup.ORG_OP_NEW,
-    name: 'Run Inspiring the Future',
-    slug: 'goal-run-itfb',
-    imgUrl: '/static/img/goal/goal-itf.png',
-    subtitle: 'Connect children and young people with volunteers from the world of work through this fun in-school activity.',
+    name: 'Run an activity',
+    slug: 'goal-run-first-activity',
+    imgUrl: '/static/img/goal/goal-run-activity.png',
+    subtitle: 'Connect with volunteers from the world of work through your first activity request.',
     description:
-`Click Start below to open the Inspiring the Future Activity Template, 
-If it sounds like something you could run in your school then click 
-the DO THIS button. 
+`Click Start below to review existing template activities. See if there is one you or your group might be able to offer or want to ask for help with.
 
-This creates a new Activity page where you can setup the time and place details
+This creates a new request page where you can setup the specific details
 
-Once Published we will start finding volunteers
+Once Published we will try to match it with people who can help.
 `,
-    startLink: '/activity/inspiring-the-future',
+    startLink: '/acts',
     rank: 2,
-    evaluation: (personalGoal) => GoalTests.activityStarted(personalGoal, 'inspiring-the-future')
+    evaluation: (personalGoal) => GoalTests.activityStarted(personalGoal, '')
   },
 
+  /*********************************************/
+  /* GROUP First steps for offer / ask            */
+  /*********************************************/
+  {
+    group: GoalGroup.OP_NEW,
+    name: 'Find Activities you can offer or request',
+    slug: 'goal-find-activities',
+    subtitle: 'Search the curated activities page',
+    description: 'See templates for some common activities that you might want to ask for help with, or offer to help with',
+    imgurl: '/static/img/actions/createAct.png',
+    rank: 1,
+    evaluation: () => { return false }
+  },
+  {
+    group: GoalGroup.OP_NEW,
+    name: 'Ask for volunteers to help you',
+    slug: 'goal-create-new-ask-opportunity',
+    subtitle: 'Ask volunteers for help by creating a request to help out.',
+    description: '',
+    imgurl: '/static/img/actions/createOpAsk.png',
+    startlink: '/op/ask',
+    rank: 2,
+    evaluation: () => { return false }
+  },
+  {
+    group: GoalGroup.OP_NEW,
+    name: 'Offer help or resources to others',
+    slug: 'goal-create-new-offer-opportunity',
+    subtitle: 'What can you offer others?',
+    description: 'Create a new listing of what you can do, or what resources you can offer to others.',
+    imgurl: '/static/img/actions/createOpOffer.png',
+    startlink: '/op/offer',
+    rank: 2,
+    evaluation: () => { return false }
+  },
+  /*********************************************/
+  /* GROUP More ways to help out               */
+  /*********************************************/
+
+  {
+    group: GoalGroup.VP_MORE,
+    name: 'Contribute to the platform',
+    slug: 'goal-contribute-to-platform',
+    subtitle: 'Help mobilise more volunteers by contributing. All skill levels are welcome, and training is provided.',
+    description: '',
+    imgurl: '/static/img/actions/github.png',
+    startlink: 'https://github.com/voluntarily/vly2',
+    rank: 1,
+    evaluation: () => { return false }
+  },
   /*********************************************/
   /* GROUP Register as a Teacher               */
   /*********************************************/
@@ -162,47 +234,8 @@ to view activity templates and create new activities.
     startlink: '/action/registerTeacher',
     rank: 1,
     evaluation: () => { console.log('Confirm Teacher ID'); return false }
-  },
-
-  /*********************************************/
-  /* GROUP First steps for teachers            */
-  /*********************************************/
-  {
-    group: GoalGroup.OP_NEW,
-    name: 'Find Activities',
-    slug: 'goal-find-activities',
-    subtitle: 'See templates that other educators have created for you to copy',
-    description: 'Search the curated activities page filtering by age and curriculum topic',
-    imgurl: '/static/img/actions/createAct.png',
-    rank: 1,
-    evaluation: () => { console.log('Find Activities'); return false }
-  },
-  {
-    group: GoalGroup.OP_NEW,
-    name: 'Create an Opportunity',
-    slug: 'goal-create-new-opportunity',
-    subtitle: 'Ask skilled volunteers for help by creating an opportunity to help out.',
-    description: '',
-    imgurl: '/static/img/actions/createOp.png',
-    startlink: '/opportunity/registerTeacher',
-    rank: 2,
-    evaluation: () => { console.log('does person have first-volunteer-activity badge'); return false }
-  },
-  /*********************************************/
-  /* GROUP More ways to help out               */
-  /*********************************************/
-
-  {
-    group: GoalGroup.VP_MORE,
-    name: 'Contribute to the platform',
-    slug: 'goal-contribute-to-platform',
-    subtitle: 'Help mobilise more volunteers by contributing. All skill levels are welcome, and training is provided.',
-    description: '',
-    imgurl: '/static/img/actions/github.png',
-    startlink: 'https://github.com/voluntarily/vly2',
-    rank: 1,
-    evaluation: () => { console.log('Contribute to the platform'); return false }
   }
+
 // {
 //   name: '',
 //   slug: '',
