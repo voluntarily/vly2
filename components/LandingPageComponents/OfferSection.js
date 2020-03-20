@@ -102,10 +102,10 @@ const OfferSection = () => (
       <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
         <OfferCard>
 
-          <img src='./static/img/icons/code.svg' />
+          <img src='./static/img/icons/chat.svg' />
           <figcaption>
             <h3>Join the conversation</h3>
-            <p>Join our team on Slack and help shape the future of the platform
+            <p>Join the community chat on Slack and help shape the future of the platform
 
             </p>
           </figcaption>
