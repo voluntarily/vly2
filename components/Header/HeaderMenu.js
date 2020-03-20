@@ -23,7 +23,7 @@ export default () => [
   },
   {
     key: 'habout',
-    href: '/about',
+    href: 'https://blog.voluntarily.nz',
     text:
   <FormattedMessage
     id='HeaderMenu.about'
@@ -42,7 +42,7 @@ export default () => [
   },
   {
     key: 'help',
-    text: 'Help',
+    text: 'Lost? 🧐',
     href: 'https://voluntarily.atlassian.net/servicedesk/customer/portals'
   },
   {
