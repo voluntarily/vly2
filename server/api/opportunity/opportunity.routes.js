@@ -3,7 +3,7 @@ const helpers = require('../../services/helpers')
 const Opportunity = require('./opportunity')
 const {
   ensureSanitized,
-  getOpportunities,
+  listOpportunities,
   getOpportunity,
   putOpportunity,
   deleteOpportunity,
@@ -32,7 +32,7 @@ module.exports = (server) => {
       }],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       actions: {
-        list: getOpportunities,
+        list: listOpportunities,
         read: getOpportunity,
         update: putOpportunity,
         delete: deleteOpportunity,

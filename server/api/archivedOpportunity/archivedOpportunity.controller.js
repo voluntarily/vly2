@@ -1,5 +1,6 @@
 const ArchivedOpportunity = require('./archivedOpportunity')
 const { Action } = require('../../services/abilities/ability.constants')
+const { OpportunityListFields } = require('../opportunity/opportunity.constants')
 
 const getArchivedOpportunity = async (req, res, next) => {
   const got = await ArchivedOpportunity
@@ -20,7 +21,7 @@ const getArchivedOpportunities = async (req, res, next) => {
   // limit to Active ops unless one of the params overrides
   let query = { }
   let sort = 'name'
-  let select = 'name subtitle imgUrl status date location duration'
+  let select = OpportunityListFields.join(' ')
 
   try {
     query = req.query.q ? JSON.parse(req.query.q) : query
