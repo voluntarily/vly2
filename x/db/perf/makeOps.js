@@ -5,7 +5,7 @@ const Opportunity = require('../../../server/api/opportunity/opportunity')
 const { Interest } = require('../../../server/api/interest/interest')
 const { MemberStatus } = require('../../../server/api/member/member.constants')
 const { InterestStatus } = require('../../../server/api/interest/interest.constants')
-const { OpportunityStatus } = require('../../../server/api/opportunity/opportunity.constants')
+const { OpportunityStatus, OpportunityType } = require('../../../server/api/opportunity/opportunity.constants')
 const moment = require('moment')
 
 const makeMessages = (numMessages, a, b, status, op) =>
@@ -65,6 +65,7 @@ const makeOp = async (interestCount, fromActivity) => {
 
   const op = fromActivity
     ? {
+      type: OpportunityType.ASK,
       name: `${fromActivity.name} Opportunity`,
       imgUrl: fromActivity.imgUrl,
       subtitle: fromActivity.subtitle,
@@ -80,6 +81,7 @@ const makeOp = async (interestCount, fromActivity) => {
       tags
     }
     : {
+      type: OpportunityType.ASK,
       name: `${requestor.nickname} ${code} Opportunity`,
       imgUrl: `https://picsum.photos/seed/${requestor.nickname}-${code}/200/200`,
       subtitle: `${requestor.nickname} ${code}`,
