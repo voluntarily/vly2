@@ -1,5 +1,6 @@
 
 module.exports = {
   SchemaName: 'TagList',
-  DefaultTagList: 'default'
+  DefaultTagList: 'default',
+  GroupTagList: 'groups'
 }
