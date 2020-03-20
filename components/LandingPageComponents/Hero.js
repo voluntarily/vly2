@@ -155,7 +155,7 @@ const Hero = ({ ...props }) => (
       <HeroLeft>
 
         <AwesomeImage
-          src='/static/img/hero.png'
+          src='/static/img/hero2.png'
           alt={<FormattedMessage id='heroImgText' defaultMessage='Children Playing with Robots' description='Description for the hero image' />}
         />
 
@@ -168,7 +168,7 @@ const Hero = ({ ...props }) => (
         </p>
         <SearchBox>
           <Search
-            placeholder="try 'building robots'"
+            placeholder="Try 'remote learning'"
             prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)' }} />}
             enterButton='Search'
             size='large'

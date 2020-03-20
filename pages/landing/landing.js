@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import Hero from '../../components/LandingPageComponents/Hero'
-import PersonaSection from '../../components/LandingPageComponents/PersonaSection'
 import OfferSection from '../../components/LandingPageComponents/OfferSection'
 import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
 import OpAdd from '../../components/Op/OpAdd'
@@ -17,8 +16,6 @@ export const Landing = props => (
       <Helmet>
         <title>Voluntarily</title>
       </Helmet>
-      <Divider />
-      <PersonaSection />
       <Divider />
       <OfferSection />
       <Divider />
