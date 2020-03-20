@@ -58,6 +58,9 @@ width: 100%;
 
   :hover {
     transform: scale(1.05);
+    h3 {
+      color: #653cad;
+    }
   }
 
   /* Tablet */
