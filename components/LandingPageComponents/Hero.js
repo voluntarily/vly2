@@ -15,10 +15,17 @@ const AwesomeHeroContainer = styled.div`
 
   @media screen and (min-width: 768px) {
     margin-top: 8rem;
+    p {
+    font-size: 1rem;
+  }
   }
 
   @media screen and (min-width: 1200px) {
     width: 80rem;
+  }
+
+  p {
+    font-size: 1.5rem;
   }
 `
 // start left hand video side
@@ -89,12 +96,12 @@ const HeroRight = styled.div`
 
 const HeroText = styled.h1`
 font-weight: 700;
-font-size: 4rem;
+font-size: 3.5rem;
 letter-spacing: -1.2px;
 line-height: 1.4;
 
 @media screen and (min-width: 1026px) and (max-width: 1281px) {
-  font-size:3.5rem;
+  font-size:2.5rem;
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     font-size:2.5rem;
@@ -148,21 +155,20 @@ const Hero = ({ ...props }) => (
       <HeroLeft>
 
         <AwesomeImage
-          src='/static/img/hero.png'
+          src='/static/img/hero2.png'
           alt={<FormattedMessage id='heroImgText' defaultMessage='Children Playing with Robots' description='Description for the hero image' />}
         />
 
       </HeroLeft>
 
       <HeroRight>
-        <HeroText>We make it easy to volunteer 🥳</HeroText>
+        <HeroText>People helping people.</HeroText>
         <p>
-          We connect industry volunteers with teachers to teach science, technology, engineering, entrepreneurship,
-art and design in the classroom.
+          We connect people who can volunteer time, advice, or stuff to those who need it.
         </p>
         <SearchBox>
           <Search
-            placeholder="try 'building robots'"
+            placeholder="Try 'remote learning'"
             prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)' }} />}
             enterButton='Search'
             size='large'
@@ -172,7 +178,7 @@ art and design in the classroom.
           />
         </SearchBox>
         <div>
-          <Button type='secondary' shape='round' size='large' href='/about'>
+          <Button type='secondary' shape='round' size='large' href='https://blog.voluntarily.nz'>
             Learn more
           </Button>
         </div>
