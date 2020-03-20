@@ -34,17 +34,16 @@ test('do not render the opadd if not signed in ', t => {
   t.falsy(wrapper.find('button').exists())
 })
 
-test('render the opadd as null if not opportunityProvider role', t => {
+test('Volunteers see the offer button', t => {
   const wrapper = mountWithIntl(
     <Provider store={mockStore}>
       <OpAdd />
     </Provider>
   )
-
-  t.falsy(wrapper.find('button').exists())
+  t.true(wrapper.find('OpAddOfferBtn').exists())
 })
 
-test('render the opadd correctly if opportunityProvider role', t => {
+test('askers see the ask button', t => {
   mockStore.getState().session.me.role = ['opportunityProvider']
   const wrapper = mountWithIntl(
     <Provider store={mockStore}>
@@ -52,5 +51,17 @@ test('render the opadd correctly if opportunityProvider role', t => {
     </Provider>
   )
 
-  t.truthy(wrapper.find('button').exists())
+  t.truthy(wrapper.find('OpAddAskBtn').exists())
+})
+
+test('some see both buttons ask button', t => {
+  mockStore.getState().session.me.role = ['volunteer', 'opportunityProvider']
+  const wrapper = mountWithIntl(
+    <Provider store={mockStore}>
+      <OpAdd />
+    </Provider>
+  )
+
+  t.truthy(wrapper.find('OpAddAskBtn').exists())
+  t.true(wrapper.find('OpAddOfferBtn').exists())
 })

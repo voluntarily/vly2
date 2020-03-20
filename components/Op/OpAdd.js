@@ -7,27 +7,49 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
+import { Role } from '../../server/services/authorize/role'
+import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
+
+export const OpAddAskBtn = () => {
+  const href = `/op/${OpportunityType.ASK}`
+  return (
+    <Link href={href}>
+      <Button type='primary' block shape='round' size='large'>
+        <FormattedMessage
+          id='opAdd.newAsk'
+          defaultMessage='New Request'
+          description='Button to create a new Ask opportunity used on multiple pages'
+        />
+      </Button>
+    </Link>)
+}
+
+export const OpAddOfferBtn = () => {
+  const href = `/op/${OpportunityType.OFFER}`
+  return (
+    <Link href={href}>
+      <Button type='primary' block shape='round' size='large'>
+        <FormattedMessage
+          id='opAdd.newOffer'
+          defaultMessage='New Offer'
+          description='Button to create a new offer opportunity used on multiple pages'
+        />
+      </Button>
+    </Link>)
+}
 
 const OpAdd = ({ roles }) => {
-  if (roles && roles.includes('opportunityProvider')) {
-    return (
-      <Link href='/op/new'>
-        <Button type='primary' block shape='round' size='large'>
-          <FormattedMessage
-            id='opAdd.new'
-            defaultMessage='New Request'
-            description='Button to create a new opportunity multiple pages'
-          />
-        </Button>
-      </Link>
-    )
-  } else {
-    return null
-  }
+  if (!roles.length) return null
+  return (
+    <>
+      {(roles.includes(Role.OPPORTUNITY_PROVIDER)) && <><OpAddAskBtn /> &nbsp; </>}
+      {(roles.includes(Role.VOLUNTEER_PROVIDER)) && <OpAddOfferBtn />}
+    </>
+  )
 }
 
 OpAdd.propTypes = {
-  roles: PropTypes.array
+  roles: PropTypes.array.isRequired
 }
 
 // Warning me will be {} if not signed in and role will be undefined.
