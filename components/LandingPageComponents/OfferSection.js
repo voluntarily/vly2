@@ -92,7 +92,7 @@ const OfferSection = () => (
 
           <img src='./static/img/icons/code.svg' />
           <figcaption>
-            <h3>Help build the platform</h3>
+            <h3>Build the movement</h3>
             <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
 
             </p>
