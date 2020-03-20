@@ -131,7 +131,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
       </FooterText>
       <Spacer />
       <Row>
-        <Col sm={12} lg={6}>
+        {/* <Col sm={12} lg={6}>
           <FooterGridItemTitle>How it works</FooterGridItemTitle>
           <MenuWrapper>
 
@@ -141,7 +141,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
             <MenuItem><a href='/business'>For Businesses</a></MenuItem>
             <MenuItem><a href='/government'>For Governments</a></MenuItem>
           </MenuWrapper>
-        </Col>
+        </Col> */}
 
         <Col sm={12} lg={6}>
           <FooterGridItemTitle>Resources</FooterGridItemTitle>

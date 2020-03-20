@@ -23,7 +23,7 @@ export default () => [
   },
   {
     key: 'habout',
-    href: '/about',
+    href: 'https://blog.voluntarily.nz',
     text:
   <FormattedMessage
     id='HeaderMenu.about'

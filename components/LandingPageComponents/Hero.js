@@ -178,7 +178,7 @@ const Hero = ({ ...props }) => (
           />
         </SearchBox>
         <div>
-          <Button type='secondary' shape='round' size='large' href='/about'>
+          <Button type='secondary' shape='round' size='large' href='https://blog.voluntarily.nz'>
             Learn more
           </Button>
         </div>

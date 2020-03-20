@@ -86,34 +86,47 @@ const OfferSection = () => (
       />
     </SectionTitle>
     <OfferContainer>
-      <Link href='/search'>
-        <a>
+      {/* <Link href='/search'> */}
+      <a>
 
-          <OfferCard>
-            <img src='./static/img/icons/ask.svg' />
-            <figcaption>
-              <h3>Ask for Help</h3>
-              <p>
+        <OfferCard>
+          <img src='./static/img/icons/ask.svg' />
+          <figcaption>
+            <h3>Ask for Help (coming soon)</h3>
+            <p>
               Get help right now. We make it easy with templates that will take you through step-by-step to say exactly what you need.
-              </p>
-            </figcaption>
-          </OfferCard>
-        </a>
-      </Link>
-      <Link href='/act'>
-        <a>
-          <OfferCard>
+            </p>
+          </figcaption>
+        </OfferCard>
+      </a>
+      {/* </Link> */}
+      {/* <Link href='/act'> */}
+      <a>
+        <OfferCard>
 
-            <img src='./static/img/icons/offer.svg' />
-            <figcaption>
-              <h3>Offer to Help</h3>
-              <p>Keen to volunteer time, or resources during the crisis? Great! Click through to see where you can help the most people.
+          <img src='./static/img/icons/offer.svg' />
+          <figcaption>
+            <h3>Offer to Help (coming soon)</h3>
+            <p>Keen to volunteer time, or resources during the crisis? Great! Click through to see where you can help the most people.
 
-              </p>
-            </figcaption>
-          </OfferCard>
-        </a>
-      </Link>
+            </p>
+          </figcaption>
+        </OfferCard>
+      </a>
+      {/* </Link> */}
+
+      <a href='https://blog.voluntarily.nz'>
+        <OfferCard>
+
+          <img src='./static/img/icons/code.svg' />
+          <figcaption>
+            <h3>Help build the platform</h3>
+            <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
+
+            </p>
+          </figcaption>
+        </OfferCard>
+      </a>
 
     </OfferContainer>
   </div>
