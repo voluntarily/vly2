@@ -51,13 +51,13 @@ const FooterGridItemTitle = styled.h3`
 const MenuWrapper = styled.ul`
   margin-bottom: 2rem;
   padding: 0;
-  
+
   @media screen and (min-width: 576px) {
     height: 300px;
   }
 `
 
-const MenuItem = styled.li`         
+const MenuItem = styled.li`
 list-style: none;
 
 
@@ -69,7 +69,7 @@ list-style: none;
     line-height: 40px;
 
 :hover {
-  color: #6549AA; 
+  color: #6549AA;
 }
 
   }
@@ -205,7 +205,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
             </MenuItem>
             <MenuItem>
               <a
-                href='https://www.facebook.com/voluntarilyAotearoa/'
+                href='https://www.facebook.com/voluntarilyhq/'
                 target='_blank'
                 rel='noopener noreferrer'
               >Facebook
@@ -213,7 +213,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
             </MenuItem>
             <MenuItem>
               <a
-                href='https://www.messenger.com/t/voluntarilyAotearoa'
+                href='https://www.messenger.com/t/voluntarilyhq'
                 target='_blank'
                 rel='noopener noreferrer'
               >Messenger
