@@ -1,9 +1,10 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Organisation = require('./organisation')
-const { getOrganisations, putOrganisation, postOrganisation, deleteOrganisation } = require('./organisation.controller')
+const { listOrganisations, putOrganisation, postOrganisation, deleteOrganisation } = require('./organisation.controller')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 const { SchemaName } = require('./organisation.constants')
+const { initializeGroups } = require('../../util/initTags')
 
 module.exports = function (server) {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -17,10 +18,13 @@ module.exports = function (server) {
       beforeActions: [
         {
           middlewares: [authorizeActions(SchemaName)]
+        }, {
+          middlewares: [initializeGroups],
+          only: ['create', 'update']
         }],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       actions: {
-        list: getOrganisations,
+        list: listOrganisations,
         update: putOrganisation,
         create: postOrganisation,
         delete: deleteOrganisation
