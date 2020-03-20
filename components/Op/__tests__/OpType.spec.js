@@ -41,7 +41,7 @@ test('render OpType for offer op', t => {
     />
   )
   t.is(wrapper.text(), 'Offer')
-})  
+})
 
 test('render OpType with no type', t => {
   const wrapper = mountWithIntl(
