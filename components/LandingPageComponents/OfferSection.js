@@ -90,7 +90,7 @@ const OfferSection = () => (
       <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz'>
         <OfferCard>
 
-          <img src='./static/img/icons/code.svg' />
+          <img src='./static/img/icons/code-party.svg' />
           <figcaption>
             <h3>Build the movement</h3>
             <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
@@ -99,7 +99,7 @@ const OfferSection = () => (
           </figcaption>
         </OfferCard>
       </a>
-      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz'>
+      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
         <OfferCard>
 
           <img src='./static/img/icons/code.svg' />
