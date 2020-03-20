@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
 
