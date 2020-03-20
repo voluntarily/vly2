@@ -86,6 +86,31 @@ const OfferSection = () => (
       />
     </SectionTitle>
     <OfferContainer>
+
+      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz'>
+        <OfferCard>
+
+          <img src='./static/img/icons/code.svg' />
+          <figcaption>
+            <h3>Help build the platform</h3>
+            <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
+
+            </p>
+          </figcaption>
+        </OfferCard>
+      </a>
+      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz'>
+        <OfferCard>
+
+          <img src='./static/img/icons/code.svg' />
+          <figcaption>
+            <h3>Join the conversation</h3>
+            <p>Join our team on Slack and help shape the future of the platform
+
+            </p>
+          </figcaption>
+        </OfferCard>
+      </a>
       {/* <Link href='/search'> */}
       <a>
 
@@ -114,19 +139,6 @@ const OfferSection = () => (
         </OfferCard>
       </a>
       {/* </Link> */}
-
-      <a href='https://blog.voluntarily.nz'>
-        <OfferCard>
-
-          <img src='./static/img/icons/code.svg' />
-          <figcaption>
-            <h3>Help build the platform</h3>
-            <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
-
-            </p>
-          </figcaption>
-        </OfferCard>
-      </a>
 
     </OfferContainer>
   </div>

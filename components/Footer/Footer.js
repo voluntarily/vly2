@@ -150,7 +150,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
             <MenuItem><a href='/about'>Getting started</a></MenuItem>
             <MenuItem>
               <a
-                href='https://voluntarily.nz/blog'
+                href='https://blog.voluntarily.nz/'
                 target='_blank'
                 rel='noopener noreferrer'
               >Blog
