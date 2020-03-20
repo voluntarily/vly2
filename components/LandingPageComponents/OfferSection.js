@@ -73,8 +73,6 @@ width: 100%;
     min-height: initial;
   }
 
-
-
 `
 
 const OfferSection = () => (
@@ -112,7 +110,8 @@ const OfferSection = () => (
         </OfferCard>
       </a>
       {/* <Link href='/search'> */}
-      <a>
+
+      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/pre-register'>
 
         <OfferCard>
           <img src='./static/img/icons/ask.svg' />
@@ -126,7 +125,7 @@ const OfferSection = () => (
       </a>
       {/* </Link> */}
       {/* <Link href='/act'> */}
-      <a>
+      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/pre-register'>
         <OfferCard>
 
           <img src='./static/img/icons/offer.svg' />
