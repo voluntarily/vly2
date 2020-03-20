@@ -1,6 +1,7 @@
 const Organisation = require('./organisation')
 const { Role } = require('../../services/authorize/role')
 const { validationRules } = require('../../../lib/fieldValidation')
+const { OrganisationListFields } = require('./organisation.constants')
 /**
  * Get all orgs
  * @param req
@@ -8,14 +9,15 @@ const { validationRules } = require('../../../lib/fieldValidation')
  * @returns void
  */
 
-const getOrganisations = async (req, res) => {
+const listOrganisations = async (req, res) => {
   let query = {}
   let sort = 'name'
-  let select = null
+  let select = OrganisationListFields.join(' ')
+
   try {
     query = req.query.q ? JSON.parse(req.query.q) : query
     sort = req.query.s ? JSON.parse(req.query.s) : sort
-    select = req.query.p ? req.query.p : null
+    select = req.query.p ? req.query.p : select
   } catch (e) {
     // if there is something wrong with the query return a Bad Query
     return res.status(400).send(e)
@@ -75,7 +77,7 @@ const deleteOrganisation = async (req, res) => {
 }
 
 module.exports = {
-  getOrganisations,
+  listOrganisations,
   putOrganisation,
   postOrganisation,
   deleteOrganisation
