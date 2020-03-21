@@ -50,8 +50,9 @@ You can check your server is running by opening a browser and trying to visit ht
 4. Install Node.js on your machine if you don't have it by opening a terminal and running ```brew install node```
 5. Install MongoDB on your machine if you don't have it by opening a terminal and running
       a. ```brew tap mongodb/brew``` <sup>[1](#myfootnote1)</sup>
-      b. ```brew install brew install mongodb-community@4.0``` <sup>[2](#myfootnote2)</sup>
+      b. ```brew install mongodb-community@4.0``` <sup>[2](#myfootnote2)</sup>
 6. Create a db directory for mongodb eg: ```sudo mkdir -p /data/db```
+    * Note: If you are running Catalina, you are not able to write to / folder so you will have to specify your own filepath.
 7. Make sure permissions are set correctly for the directory
       a. ```sudo chmod 0755 /data/db```
       b. ```sudo chown $USER /data/db```
@@ -64,7 +65,8 @@ You can check your server is running by opening a browser and trying to visit ht
 
 ### Running a dev server
 ###### Note: The following assumes you are running bash
-1. Create a new terminal window, and run the ```mongod``` command
+1. Create a new terminal window, and run the ```mongod``` command. 
+     * If you have specified a custom filepath, at this point you need to pass it as a parameter ```mongod --dbpath [filepath]```
 2. Create a new terminal window, and run the ```npm run dev``` command
 3. That's it! 🎉
 You can check your server is running by opening a browser and trying to visit http://localhost:3122
