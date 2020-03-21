@@ -6,7 +6,7 @@ import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
-import { HalfGrid, OpSectionGrid, DocumentList } from '../VTheme/VTheme'
+import { SideBarGrid, OpSectionGrid, DocumentList } from '../VTheme/VTheme'
 import {
   Left,
   Right,
@@ -21,18 +21,18 @@ import {
   EquipmentList,
   ItemImage
 } from '../VTheme/ItemList'
-import { Role } from '../../server/services/authorize/role'
 import Html from '../VTheme/Html'
+import OpAdd from '../Op/OpAdd'
+import { PageBannerButtons } from '../../components/VTheme/VTheme'
 
-export function ActDetail ({ act, me }) {
+export function ActDetail ({ act }) {
   const img = act.imgUrl || '/static/missingimage.svg'
-  const isOP = me && me.role.includes(Role.OPPORTUNITY_PROVIDER)
   return (
     <>
       <Head>
         <title>{act.name}</title>
       </Head>
-      <HalfGrid>
+      <SideBarGrid>
         <Left>
           <ItemImage src={img} alt={act.name} />
         </Left>
@@ -49,9 +49,12 @@ export function ActDetail ({ act, me }) {
 
           </ItemContainer>
           <Divider />
-          {isOP && <Button size='large' shape='round' type='primary' href={`/op/new?act=${act._id}`}>Run Activity</Button>}
+          <PageBannerButtons>
+            <OpAdd actid={act._id} />
+          </PageBannerButtons>
+          {/* {isOP && <Button size='large' shape='round' type='primary' href={`/op/new?act=${act._id}`}>Run Activity</Button>} */}
         </Right>
-      </HalfGrid>
+      </SideBarGrid>
 
       <Divider />
 
