@@ -21,7 +21,6 @@ class TagInput extends React.Component {
       return (
         <>
           <AutoComplete
-            placeholder='Search skills'
             defaultActiveFirstOption // user must select from the dropdown
             onSearch={this.handleSearch}
             onSelect={this.handleSelect}
