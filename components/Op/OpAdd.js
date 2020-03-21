@@ -10,6 +10,16 @@ import { connect } from 'react-redux'
 import { Role } from '../../server/services/authorize/role'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 
+import styled from 'styled-components'
+
+const OppAddButtons = styled.div`
+    display: flex;
+    
+    Button:nth-child(1) {
+      margin-right: 1rem;
+    }
+`
+
 export const OpAddAskBtn = () => {
   const href = `/op/${OpportunityType.ASK}`
   return (
@@ -41,10 +51,10 @@ export const OpAddOfferBtn = () => {
 const OpAdd = ({ roles }) => {
   if (!roles.length) return null
   return (
-    <>
+    <OppAddButtons>
       {(roles.includes(Role.OPPORTUNITY_PROVIDER)) && <><OpAddAskBtn /> &nbsp; </>}
       {(roles.includes(Role.VOLUNTEER_PROVIDER)) && <OpAddOfferBtn />}
-    </>
+    </OppAddButtons>
   )
 }
 

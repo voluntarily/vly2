@@ -14,9 +14,10 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 */
 
 export const PageBanner = styled.div`
+
   margin: 8rem 0 2rem 0;
   display: grid;
-  grid-template-columns: 4rem 1fr 11rem 11rem;
+  grid-template-columns: 4rem 1fr 22rem 11rem;
   padding: 1rem;
   gap: 1rem;
   align-self: center;
