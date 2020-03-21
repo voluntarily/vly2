@@ -11,7 +11,6 @@ function TypeFilter ({ onChange, value, opTypes }) {
       <PBold>
         <FormattedMessage
           id='op-type-filter-description'
-          defaultMessage='Find offer or ask...'
           description='Text that describes what the type filter does'
         />
       </PBold>
