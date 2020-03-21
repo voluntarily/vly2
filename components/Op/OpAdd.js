@@ -14,7 +14,7 @@ import styled from 'styled-components'
 
 const OppAddButtons = styled.div`
     display: flex;
-    
+
     Button:nth-child(1) {
       margin-right: 1rem;
     }
@@ -52,7 +52,7 @@ const OpAdd = ({ roles }) => {
   if (!roles.length) return null
   return (
     <OppAddButtons>
-      {(roles.includes(Role.OPPORTUNITY_PROVIDER)) && <><OpAddAskBtn /> &nbsp; </>}
+      {(roles.includes(Role.OPPORTUNITY_PROVIDER)) && <OpAddAskBtn />}
       {(roles.includes(Role.VOLUNTEER_PROVIDER)) && <OpAddOfferBtn />}
     </OppAddButtons>
   )
