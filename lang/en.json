@@ -192,6 +192,7 @@
   "op.TypeFilterDescription": "Search by type...",
   "OpAboutPanel.subtitle": "About this activity",
   "opAdd.newAsk": "I can offer this",
+  "opAdd.newAskOffer": "New request or offering",
   "opAdd.newOffer": "I'd like help with this",
   "OpArchivedHeader.Cancelled.message": "This activity was cancelled, but you can still get involved with",
   "OpArchivedHeader.Completed.message": "This activity has already happened, but you can still get involved with",

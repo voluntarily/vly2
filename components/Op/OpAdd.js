@@ -20,6 +20,21 @@ const OppAddButtons = styled.div`
     }
 `
 
+export const OpAddNewBtn = () => {
+  const href = '/acts'
+
+  return (
+    <Link href={href}>
+      <Button type='primary' block shape='round' size='large'>
+        <FormattedMessage
+          id='opAdd.newAskOffer'
+          defaultMessage='New request or offering'
+          description='Button to create a new Ask or Offer opportunity used on multiple pages'
+        />
+      </Button>
+    </Link>)
+}
+
 export const OpAddAskBtn = ({ actid }) => {
   let href = `/op/${OpportunityType.ASK}`
   if (actid) {
