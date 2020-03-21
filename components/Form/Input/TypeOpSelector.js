@@ -4,7 +4,7 @@ import React from 'react'
 
 const { Option } = Select
 
-function TypeOpSelector({ opTypes ,onChange, value, width }) {
+function TypeOpSelector ({ opTypes, onChange, value, width }) {
   const children = opTypes.map(type => <Option key={type}>{type}</Option>)
   return (
     <Select
