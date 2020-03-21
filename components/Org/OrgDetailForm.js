@@ -233,7 +233,7 @@ class OrgDetailForm extends Component {
     // TODO translate
     // TODO Use constant values from server/api/organisation/organisation.constants.js
     const categoryOptions = [
-      { label: 'Volunteers', value: 'vp' },
+      { label: 'Volunteer', value: 'vp' },
       { label: 'Create Requests', value: 'op' },
       { label: 'Plan Activities', value: 'ap' },
       { label: 'Admin', value: 'admin' },
@@ -298,7 +298,7 @@ class OrgDetailForm extends Component {
                     <h3>
                       <FormattedMessage
                         id='orgDetail.form.category'
-                        defaultMessage='Set organisation category and group'
+                        defaultMessage='Set organisation permissions'
                         description='The type of organisation'
                       />
                     </h3>
@@ -306,7 +306,7 @@ class OrgDetailForm extends Component {
                   <p>
                     <FormattedMessage
                       id='orgDetail.form.category.description'
-                      defaultMessage='System Admin feature: Let everyone know what this group can do'
+                      defaultMessage='Members of this group can do the listed items.'
                       description='Description of the permissions of organisation'
                     />
                   </p>
