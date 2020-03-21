@@ -11,12 +11,17 @@ const {
 const { MemberStatus } = require('../member/member.constants')
 const { InterestStatus } = require('../interest/interest.constants')
 const { getICalendar } = require('../opportunity/opportunity.calendar')
+const Organisation = require('../organisation/organisation')
+const { addMember } = require('../member/member.lib')
 
 const welcomeFrom = {
   nickname: 'Welcome',
   name: 'The team at Voluntarily',
   email: 'welcome@voluntarily.nz'
 }
+
+const CORE_ORGANISATION_NAME = 'Voluntarily'
+const SYSTEM_MEMBER_VALIDATION_MESSAGE = 'system operation'
 
 module.exports = (server) => {
   PubSub.subscribe(TOPIC_PERSON__CREATE, async (msg, person) => {
@@ -28,9 +33,27 @@ module.exports = (server) => {
     PubSub.publish(TOPIC_PERSON__EMAIL_SENT, info)
   })
 
+  PubSub.subscribe(TOPIC_PERSON__CREATE, async (msg, person) => {
+    const coreOrganisation = await Organisation.findOne({ name: CORE_ORGANISATION_NAME }).lean().exec()
+
+    if (!coreOrganisation) {
+      return
+    }
+
+    await addMember({
+      person: person._id.toString(),
+      organisation: coreOrganisation._id.toString(),
+      validation: SYSTEM_MEMBER_VALIDATION_MESSAGE
+    })
+  })
+
   PubSub.subscribe(TOPIC_MEMBER__UPDATE, async (msg, member) => {
     // a new member has been created or a member status has changed
     // send email to let people know
+
+    if (member.validation === SYSTEM_MEMBER_VALIDATION_MESSAGE) {
+      return
+    }
 
     // skip states without emails
     if ([MemberStatus.NONE, MemberStatus.JOINER, MemberStatus.EXMEMBER]
