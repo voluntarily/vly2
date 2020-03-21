@@ -22,10 +22,12 @@ module.exports = {
 
   checkAboutPage () {
     I.amOnPage('https://blog.voluntarily.nz/')
-    I.see('HOME')
-    I.see('HELP US BUILD')
-    I.see('PRE-REGISTER')
-    I.see('SPONSER')
+    I.see('With Aotearoa NZ facing a future filled with uncertainty, helping each other is needed now more than ever.')
+  },
+
+  checkGetInvolvedPage () {
+    I.amOnPage('https://blog.voluntarily.nz/get-involved')
+    I.see('Nau mai haere mai | Welcome!')
   }
 
 }
