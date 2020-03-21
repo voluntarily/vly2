@@ -33,7 +33,7 @@ const SearchPageContainer = styled.div`
 
 const LOCATION_FILTER_NAME = 'location'
 const DATE_FILTER_NAME = 'date'
-const TYPE_FILTER_NAME = 'Type'
+const TYPE_FILTER_NAME = 'type'
 const opTypeValue = ['All', 'Offer', 'Ask']
 
 function filterVisibilityName (filterName) {
@@ -204,7 +204,7 @@ export class SearchPage extends Component {
               onFilterRemoved={this.handleFilterRemoved}
               isShowing={this.state[filterVisibilityName(TYPE_FILTER_NAME)]}
             >
-              <TypeFilter value='All' opTypes={opTypeValue} />
+              <TypeFilter opTypes={opTypeValue} />
             </FilterContainer>
             {/* TODO: VP-445 modify date picker to use filter container (like with location). This will
              help reduce the complexity of this page component */}
