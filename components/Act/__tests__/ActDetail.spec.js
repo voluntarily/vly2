@@ -3,6 +3,8 @@ import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import { ItemVolunteers } from '../../VTheme/ItemList'
 import ActDetail from '../ActDetail'
+import configureStore from 'redux-mock-store'
+import { Provider } from 'react-redux'
 
 // Initial activities
 const actMin = {
@@ -16,6 +18,16 @@ const actMin = {
   status: 'draft',
   tags: []
 }
+
+const mockStore = configureStore()(
+  {
+    session: {
+      me: {
+        role: ['volunteer']
+      }
+    }
+  }
+)
 
 const actMax = {
   _id: '5cc903e5f94141437622cea7',
@@ -33,7 +45,11 @@ const actMax = {
 }
 
 test('render the detail with short act', t => {
-  const wrapper = mountWithIntl(<ActDetail act={actMin} onPress={() => {}} />)
+  const wrapper = mountWithIntl(
+    <Provider store={mockStore}>
+      <ActDetail act={actMin} onPress={() => {}} />
+    </Provider>
+  )
   t.truthy(wrapper.find('Head'))
   t.is(wrapper.find('h1').text(), actMin.name)
   t.is(wrapper.find({ duration: actMin.duration }).length, 1)
@@ -41,7 +57,10 @@ test('render the detail with short act', t => {
 })
 
 test('render the detail with full act', t => {
-  const wrapper = mountWithIntl(<ActDetail act={actMax} onPress={() => {}} />)
+  const wrapper = mountWithIntl(
+    <Provider store={mockStore}>
+      <ActDetail act={actMax} onPress={() => {}} />
+    </Provider>)
   t.truthy(wrapper.find('Head'))
   t.is(wrapper.find('h1').text(), actMax.name)
   t.is(wrapper.find({ space: actMax.space }).length, 1)
@@ -61,7 +80,11 @@ test('render the detail with no picture ', t => {
     tags: []
   }
 
-  const wrapper = mountWithIntl(<ActDetail act={actNoPic} onPress={() => {}} />)
+  const wrapper = mountWithIntl(
+    <Provider store={mockStore}>
+      <ActDetail act={actNoPic} onPress={() => {}} />
+    </Provider>
+  )
   t.truthy(wrapper.find('Head'))
   t.is(wrapper.find({ space: '1 acre' }).length, 0)
   t.is(wrapper.find('li').length, 5)
@@ -89,7 +112,10 @@ test('render documents on activity form', t => {
     }]
   }
 
-  const wrapper = mountWithIntl(<ActDetail act={act} />)
+  const wrapper = mountWithIntl(
+    <Provider store={mockStore}>
+      <ActDetail act={act} />
+    </Provider>)
   t.truthy(wrapper.find('Head'))
   t.is(wrapper.find('#documents li').length, 2)
 })
