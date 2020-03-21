@@ -15,6 +15,7 @@ const personSchema = new Schema({
   nickname: { type: 'String', default: '' }, // how we should address you - eg. Andrew
   about: { type: 'String', default: '' }, // person description
   location: { type: 'String', default: '' },
+  locations: { type: [String], default: [] },
   phone: { type: 'String' }, // +64 27 7031007
   imgUrl: { type: 'String', default: '/static/img/person/person.png' }, // url to large profile image (256x256)
   imgUrlSm: { type: 'String', default: '/static/img/person/person.png' }, // url to small profile image (24x24)

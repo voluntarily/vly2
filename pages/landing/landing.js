@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import Hero from '../../components/LandingPageComponents/Hero'
-import PersonaSection from '../../components/LandingPageComponents/PersonaSection'
 import OfferSection from '../../components/LandingPageComponents/OfferSection'
 import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
 import OpAdd from '../../components/Op/OpAdd'
@@ -10,8 +9,6 @@ import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import moment from 'moment'
 import { Divider } from 'antd'
-import ITFPromo from '../../components/LandingPageComponents/ITFPromo'
-
 export const Landing = props => (
   <>
     <Hero />
@@ -20,11 +17,7 @@ export const Landing = props => (
         <title>Voluntarily</title>
       </Helmet>
       <Divider />
-      <PersonaSection />
-      <Divider />
       <OfferSection />
-      <Divider />
-      <ITFPromo />
       <Divider />
       <SectionTitle>
         <FormattedMessage

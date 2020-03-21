@@ -14,6 +14,11 @@ const OpportunityStatus = {
   CANCELLED: 'cancelled'
 }
 
+const OpportunityType = {
+  ASK: 'ask',
+  OFFER: 'offer'
+}
+
 /**
  * An Opportunity is considered Published if it has one of these status.
  */
@@ -24,13 +29,14 @@ const OpportunityPublishedStatus = [
 
 const OpportunityFields = {
   ID: '_id',
+  TYPE: 'type',
+  STATUS: 'status',
   NAME: 'name',
   SUBTITLE: 'subtitle',
   IMG_URL: 'imgUrl',
   DESCRIPTION: 'description',
   DURATION: 'duration',
   LOCATION: 'location',
-  STATUS: 'status',
   DATE: 'date',
   OFFER_ORG: 'offerOrg',
   REQUESTOR: 'requestor',
@@ -44,6 +50,7 @@ of opportunities, it contains fields required for the OpCard.
 */
 const OpportunityListFields = [
   OpportunityFields.ID,
+  OpportunityFields.TYPE,
   OpportunityFields.NAME,
   OpportunityFields.SUBTITLE,
   OpportunityFields.IMG_URL,
@@ -72,5 +79,6 @@ module.exports = {
   OpportunityFields,
   OpportunityListFields,
   OpportunityPublicFields,
-  OpportunityRoutes
+  OpportunityRoutes,
+  OpportunityType
 }

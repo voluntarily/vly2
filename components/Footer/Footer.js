@@ -51,13 +51,13 @@ const FooterGridItemTitle = styled.h3`
 const MenuWrapper = styled.ul`
   margin-bottom: 2rem;
   padding: 0;
-  
+
   @media screen and (min-width: 576px) {
     height: 300px;
   }
 `
 
-const MenuItem = styled.li`         
+const MenuItem = styled.li`
 list-style: none;
 
 
@@ -69,7 +69,7 @@ list-style: none;
     line-height: 40px;
 
 :hover {
-  color: #6549AA; 
+  color: #6549AA;
 }
 
   }
@@ -131,7 +131,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
       </FooterText>
       <Spacer />
       <Row>
-        <Col sm={12} lg={6}>
+        {/* <Col sm={12} lg={6}>
           <FooterGridItemTitle>How it works</FooterGridItemTitle>
           <MenuWrapper>
 
@@ -141,7 +141,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
             <MenuItem><a href='/business'>For Businesses</a></MenuItem>
             <MenuItem><a href='/government'>For Governments</a></MenuItem>
           </MenuWrapper>
-        </Col>
+        </Col> */}
 
         <Col sm={12} lg={6}>
           <FooterGridItemTitle>Resources</FooterGridItemTitle>
@@ -150,7 +150,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
             <MenuItem><a href='/about'>Getting started</a></MenuItem>
             <MenuItem>
               <a
-                href='https://voluntarily.nz/blog'
+                href='https://blog.voluntarily.nz/'
                 target='_blank'
                 rel='noopener noreferrer'
               >Blog
@@ -205,7 +205,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
             </MenuItem>
             <MenuItem>
               <a
-                href='https://www.facebook.com/voluntarilyAotearoa/'
+                href='https://www.facebook.com/voluntarilyhq/'
                 target='_blank'
                 rel='noopener noreferrer'
               >Facebook
@@ -213,7 +213,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
             </MenuItem>
             <MenuItem>
               <a
-                href='https://www.messenger.com/t/voluntarilyAotearoa'
+                href='https://www.messenger.com/t/voluntarilyhq'
                 target='_blank'
                 rel='noopener noreferrer'
               >Messenger

@@ -1,21 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
 
 const OfferContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 2rem;
   margin-bottom: 8rem;
   @media screen and (min-width: 1026px) and (max-width: 1289px) {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr ;
 
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr ;
   }
 
   @media screen and (max-width: 768px) {
@@ -24,16 +24,18 @@ const OfferContainer = styled.div`
 `
 
 const OfferCard = styled.div`
+
+  padding: 1.5rem;
+display: grid;
+gap:1.5rem;
+grid-template-columns: 4rem 1fr;
 width: 100%;
-min-height: 25rem;
   background: #ffffff;
   box-shadow: 2px 2px 16px 0 rgba(118, 118, 118, 0.5);
   border-radius: 8px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
-  figcaption {
-    padding: 1rem;
-  }
+
 
   h3 {
     bottom: 0;
@@ -45,21 +47,20 @@ min-height: 25rem;
     margin-bottom: 0.5rem;
   }
 
-
   p {
     font-size: 1.1rem;
   }
- 
+
   img {
-    border-radius: 8px;
+    align-self: center;
     width: 100%;
-    @media screen and (max-width: 768px) {
-    height: 14rem;
-  }
   }
 
   :hover {
     transform: scale(1.05);
+    h3 {
+      color: #653cad;
+    }
   }
 
   /* Tablet */
@@ -72,8 +73,6 @@ min-height: 25rem;
     min-height: initial;
   }
 
-
-
 `
 
 const OfferSection = () => (
@@ -81,51 +80,65 @@ const OfferSection = () => (
     <SectionTitle>
       <FormattedMessage
         id='landing.sectiontitle.offers'
-        defaultMessage='What we offer'
+        defaultMessage='Get Started'
       />
     </SectionTitle>
     <OfferContainer>
-      <Link href='/search'>
-        <a>
 
-          <OfferCard>
-            <img src='/static/img/offers/volunteering.png' alt='image of people volunteering' />
-            <figcaption>
-              <h3>Volunteering</h3>
-              <p>
-            Use your skills by volunteering to work with teachers and students
-            in schools
-              </p>
-            </figcaption>
-          </OfferCard>
-        </a>
-      </Link>
-      <Link href='/act'>
-        <a>
-          <OfferCard>
+      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz'>
+        <OfferCard>
 
-            <img src='/static/img/offers/resources.png' alt='an image of education resources' />
-            <figcaption>
-              <h3>Resources</h3>
-              <p>
-            Organize activities with volunteers for students in a few clicks with educational
-            activity templates and resources
-              </p>
-            </figcaption>
-          </OfferCard>
-        </a>
-      </Link>
-      <OfferCard>
+          <img src='./static/img/icons/code-party.svg' />
+          <figcaption>
+            <h3>Build the movement</h3>
+            <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
 
-        <img src='/static/img/offers/recognition.png' alt='an image of a trophy' />
-        <figcaption>
-          <h3>Recognition</h3>
-          <p>
-            Get recognised for your volunteering when you use Voluntarily.{' '}
-            <i>(Coming soon)</i>
-          </p>
-        </figcaption>
-      </OfferCard>
+            </p>
+          </figcaption>
+        </OfferCard>
+      </a>
+      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
+        <OfferCard>
+
+          <img src='./static/img/icons/chat.svg' />
+          <figcaption>
+            <h3>Join the conversation</h3>
+            <p>Join the community chat on Slack and help shape the future of the platform
+
+            </p>
+          </figcaption>
+        </OfferCard>
+      </a>
+      {/* <Link href='/search'> */}
+
+      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/pre-register'>
+
+        <OfferCard>
+          <img src='./static/img/icons/ask.svg' />
+          <figcaption>
+            <h3>Ask for Help (coming soon)</h3>
+            <p>
+              Get help right now. We make it easy with templates that will take you through step-by-step to say exactly what you need.
+            </p>
+          </figcaption>
+        </OfferCard>
+      </a>
+      {/* </Link> */}
+      {/* <Link href='/act'> */}
+      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/pre-register'>
+        <OfferCard>
+
+          <img src='./static/img/icons/offer.svg' />
+          <figcaption>
+            <h3>Offer to Help (coming soon)</h3>
+            <p>Keen to volunteer time, or resources during the crisis? Great! Click through to see where you can help the most people.
+
+            </p>
+          </figcaption>
+        </OfferCard>
+      </a>
+      {/* </Link> */}
+
     </OfferContainer>
   </div>
 )

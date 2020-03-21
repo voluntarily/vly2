@@ -3,7 +3,7 @@ const helpers = require('../../services/helpers')
 const Opportunity = require('./opportunity')
 const {
   ensureSanitized,
-  getOpportunities,
+  listOpportunities,
   getOpportunity,
   putOpportunity,
   deleteOpportunity,
@@ -12,7 +12,7 @@ const {
 } = require('./opportunity.controller')
 const { SchemaName } = require('./opportunity.constants')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
-const initializeTags = require('../../util/initTags')
+const { initializeTags } = require('../../util/initTags')
 const removeUnauthorizedFields = require('../../services/authorize/removeUnauthorizedFields')
 
 module.exports = (server) => {
@@ -32,7 +32,7 @@ module.exports = (server) => {
       }],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       actions: {
-        list: getOpportunities,
+        list: listOpportunities,
         read: getOpportunity,
         update: putOpportunity,
         delete: deleteOpportunity,

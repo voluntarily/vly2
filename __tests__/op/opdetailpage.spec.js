@@ -174,12 +174,12 @@ test.serial('OpDetailPage GetInitialProps non member', async t => {
   t.true(props.opExists)
 })
 
-test.serial('OpDetailPage GetInitialProps new', async t => {
+test.serial('OpDetailPage GetInitialProps new ask', async t => {
   // first test GetInitialProps
   const ctx = {
     store: t.context.mockStore,
     query: {
-      new: 'new'
+      new: 'ask'
     }
   }
   const myMock = fetchMock.sandbox()
@@ -192,6 +192,29 @@ test.serial('OpDetailPage GetInitialProps new', async t => {
 
   const props = await OpDetailPage.getInitialProps(ctx)
   t.true(props.isNew)
+  t.is(props.opType, 'ask')
+  t.falsy(props.opExists)
+})
+
+test.serial('OpDetailPage GetInitialProps new offer', async t => {
+  // first test GetInitialProps
+  const ctx = {
+    store: t.context.mockStore,
+    query: {
+      new: 'offer'
+    }
+  }
+  const myMock = fetchMock.sandbox()
+  reduxApi.use('fetch', adapterFetch(myMock))
+  myMock
+    .get(`path:/api/opportunities/${t.context.op._id}`, { body: { status: 200 } })
+    .get('path:/api/locations', { body: t.context.locations })
+    .get('path:/api/tags/', { body: t.context.tags })
+    .get('path:/api/members/', { body: t.context.members })
+
+  const props = await OpDetailPage.getInitialProps(ctx)
+  t.true(props.isNew)
+  t.is(props.opType, 'offer')
   t.falsy(props.opExists)
 })
 
@@ -430,22 +453,4 @@ test('page loads when user is not signed in but does not show edit VP-499', t =>
     </Provider>
   )
   t.is(wrapper.find('.ant-tabs-tab').length, 3)
-})
-
-test('page loads when op does not have a valid requestor VP-499', t => {
-  const op = t.context.ops[2]
-  op.requestor = null
-  const store = t.context.defaultstore
-  store.opportunities.data = [op]
-  const mockStore = configureStore([thunk])(store)
-  const props = {
-    me: t.context.me,
-    dispatch: mockStore.dispatch
-  }
-  const wrapper = mountWithIntl(
-    <Provider store={mockStore}>
-      <OpDetailPageWithOps {...props} />
-    </Provider>)
-  t.true(wrapper.exists('OpDetailPage'))
-  t.is(wrapper.find('.ant-tabs-tab').length, 5)
 })

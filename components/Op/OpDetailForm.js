@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
-import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
+import { OpportunityStatus, OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 import LocationSelector from '../Form/Input/LocationSelector'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import TagInput from '../Form/Input/TagInput'
@@ -270,7 +270,7 @@ class OpDetailForm extends Component {
     const orgMembership =
       this.props.me.orgMembership &&
       this.props.me.orgMembership.map(member => member.organisation)
-
+    const opType = this.props.op.type
     return (
       <div className='OpDetailForm'>
         <PageTitle>
@@ -281,13 +281,19 @@ class OpDetailForm extends Component {
                 description='Title for editing Ops'
                 defaultMessage='Edit your activity'
               />
-            ) : (
+            ) : opType === OpportunityType.ASK ? (
               <FormattedMessage
-                id='opCreate'
-                description='Title for creating Ops'
-                defaultMessage='Create an activity'
-              />
-            )}
+                id='OpDetailForm.title.opCreateAsk'
+                description='Title for creating request Ops'
+                defaultMessage='Create an new request'
+              />)
+              : opType === OpportunityType.OFFER ? (
+                <FormattedMessage
+                  id='OpDetailForm.title.opCreateOffer'
+                  description='Title for creating offering Ops'
+                  defaultMessage='Create an new offering'
+                />)
+                : null}
           </h1>
           <h5>
             <FormattedMessage
@@ -303,12 +309,20 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <h3>What are you looking for?</h3>
+                <h3>
+                  <FormattedMessage
+                    id='OpDetailForm.Title.label'
+                    description='Section label for op title'
+                    defaultMessage='What are you looking for?'
+                  />
+                </h3>
               </TitleContainer>
               <p>
-                Before our skilled volunteers get involved, they need to know
-                how they can help. Add a title and description that tell
-                volunteers how they can help you.
+                <FormattedMessage
+                  id='OpDetailForm.Title.prompt'
+                  description='Section prompt for op title'
+                  defaultMessage='Before our skilled volunteers get involved, they need to know how they can help. Add a title and description that tell volunteers how they can help you.'
+                />
               </p>
             </DescriptionContainer>
             <InputContainer>
@@ -319,7 +333,7 @@ class OpDetailForm extends Component {
                 >
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'Name is required' }]
-                  })(<Input className='name' placeholder='name' maxLength='100' />)}
+                  })(<Input className='name' placeholder='name' maxLength={100} />)}
                 </Form.Item>
 
                 <Form.Item
@@ -362,11 +376,20 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <h3>Where and when?</h3>
+                <h3>
+                  <FormattedMessage
+                    id='OpDetailForm.location.label'
+                    description='Section label for op location'
+                    defaultMessage='Where and when?'
+                  />
+                </h3>
               </TitleContainer>
               <p>
-                More skilled volunteers will offer to help you if you know when,
-                or where you need help.
+                <FormattedMessage
+                  id='OpDetailForm.location.prompt'
+                  description='Section prompt for op location'
+                  defaultMessage='More skilled volunteers will offer to help you if you know when, or where you need help.'
+                />
               </p>
             </DescriptionContainer>
             <InputContainer>
@@ -461,12 +484,20 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <h3>Do you need any specific skills? (optional)</h3>
+                <h3>
+                  <FormattedMessage
+                    id='OpDetailForm.tags.label'
+                    description='Section label for op tags'
+                    defaultMessage='Do you need any specific skills or resources?'
+                  />
+                </h3>
               </TitleContainer>
               <p>
-                Does what you're asking for fit into any specific categories
-                like programming, electronics, or robots? Enter them here to
-                make it easier for volunteers to find you.
+                <FormattedMessage
+                  id='OpDetailForm.tags.prompt'
+                  description='Section prompt for op tags'
+                  defaultMessage='Does what you are asking for fit into any specific categories like programming, electronics, or robots? Enter them here to make it easier for volunteers to find you.'
+                />
               </p>
             </DescriptionContainer>
             <InputContainer>

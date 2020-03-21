@@ -64,8 +64,8 @@ test('render the detail with op', t => {
   const wrapper = mountWithIntl(
     <PersonDetailForm person={t.context.me} existingTags={tagList} locations={sortedLocations} onSubmit={submitOp} onCancel={cancelOp} me={t.context.me} />
   )
-  const locationInput = wrapper.find('LocationSelector').first()
-  locationInput.props().onChange('Auckland')
+  const locationInput = wrapper.find('TagSelect').first()
+  locationInput.props().onChange(['Auckland'])
 
   t.true(wrapper.exists('ForwardRef(EducationSelector)'))
   const educationSelector = wrapper.find('ForwardRef(EducationSelector)').first()

@@ -18,7 +18,7 @@ module.exports = {
       name: 'Testy McTestface',
       nickname: 'Testy',
       about: 'Tester',
-      location: 'Planet Earth',
+      locations: ['Planet Earth'],
       email: 'testy.mctestface@example.com',
       phone: '1234567',
       pronoun: { subject: 'they', object: 'them', possesive: 'their' },

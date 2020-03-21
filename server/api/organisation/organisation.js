@@ -19,6 +19,7 @@ const organisationSchema = new Schema({
     enum: ['admin', 'vp', 'op', 'ap', 'other']
     // TODO: [VP-905] replace category strings with constants in ./organisation.constants.js
   },
+  groups: [String], // which groups does this org belong to - business, school, individual
   info: {
     about: String,
     instructions: String,

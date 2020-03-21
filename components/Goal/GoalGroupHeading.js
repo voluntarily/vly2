@@ -14,7 +14,7 @@ export const goalGroupHeading = goalGroup => {
     }
     case GoalGroup.OP_NEW: return {
       title: {
-        id: 'GoalSection.OP_NEW.title', defaultMessage: 'Getting Started as a Teacher'
+        id: 'GoalSection.OP_NEW.title', defaultMessage: 'Start creating opportunities'
       },
       subtitle: {
         id: 'GoalSection.OP_NEW.subtitle', defaultMessage: 'Get up and running with your first activites:'
@@ -30,7 +30,7 @@ export const goalGroupHeading = goalGroup => {
     }
     case GoalGroup.ORG_OP_NEW: return {
       title: {
-        id: 'GoalSection.ORG_OP_NEW.title', defaultMessage: 'First steps for a new school'
+        id: 'GoalSection.ORG_OP_NEW.title', defaultMessage: 'First steps for a new group'
       },
       subtitle: {
         id: 'GoalSection.ORG_OP_NEW.subtitle', defaultMessage: 'Setup your organisation and first activity:'

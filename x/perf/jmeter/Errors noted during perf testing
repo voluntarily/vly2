@@ -1,0 +1,18 @@
+Errors noted during perf testing
+
+
+06:40:33
+(node:17) UnhandledPromiseRejectionWarning: MongoError: Executor error during find command :: caused by :: Sort operation used more than the maximum 33554432 bytes of RAM. Add an index, or specify a smaller limit.
+
+
+Total stress causes the servers to timeout and be restarted which then causes Gateway errors.
+
+503/Service Temporarily Unavailable	17489	68.50%	58.30%
+502/Bad Gateway	7948	31.13%	26.49%
+Non HTTP response code: org.apache.http.conn.HttpHostConnectException/Non HTTP response message: Connect to gamma.voluntarily.nz:443 [gamma.voluntarily.nz\/13.55.168.30, gamma.voluntarily.nz\/54.79.121.32] failed: Operation timed out (Connection timed out)	59	0.23%	0.20%
+504/Gateway Time-out	34	0.13%	0.11%
+
+Mostly bad gateway errors from the load balancer.
+Why is 502 Bad gateway appearing in the console log?
+
+6 500,Internal Server Errors
