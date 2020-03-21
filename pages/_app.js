@@ -8,9 +8,6 @@ import { ThemeProvider } from 'styled-components'
 import { getSession } from '../lib/auth/auth'
 import { Role } from '../server/services/authorize/role'
 import { IntlProvider } from 'react-intl'
-import * as Sentry from '@sentry/browser'
-
-Sentry.init({dsn: "https://e8e41423c54e44218441559971b0a9d4@sentry.io/5169743"});
 
 // Define what props.theme will look like
 const theme = {
