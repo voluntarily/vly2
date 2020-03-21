@@ -10,12 +10,12 @@ function TypeFilter ({ onChange, value, opTypes }) {
     <div className='location-filter-container'>
       <PBold>
         <FormattedMessage
-          id='location-filter-description'
+          id='op-type-filter-description'
           defaultMessage='Find offer or ask...'
           description='Text that describes what the type filter does'
         />
       </PBold>
-      <OpTypeSelector onChange={onChange} value={value} width='100%' opTypes={opTypes}/>
+      <OpTypeSelector onChange={onChange} value={value} width='100%' opTypes={opTypes} />
     </div>
   )
 }
