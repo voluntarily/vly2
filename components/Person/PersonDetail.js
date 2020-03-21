@@ -13,6 +13,7 @@ import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
 import { PersonBadgeSection } from './PersonBadge'
 import { VBanner, VBannerImg, ProfileBannerTitle } from '../VTheme/Profile'
+import { Button } from 'antd'
 
 const DetailItem = styled.div`
   margin-top: 0.5rem;
@@ -38,7 +39,7 @@ const PersonUl = styled.ul`
   }
 `
 
-const PersonDetail = ({ person }, ...props) => (
+const PersonDetail = ({ person, panelEdit, personEdit, canEdit }, ...props) => (
   <div>
     <Head title={person.nickname} />
     <VBanner>
@@ -46,8 +47,19 @@ const PersonDetail = ({ person }, ...props) => (
       <ProfileBannerTitle>
         <h1>{person.name}</h1>
 
-        <p>{person.job && `${person.job}`} {person.placeOfWork && `- ${person.placeOfWork}`}</p>
+        {canEdit ? 
+        <Button id='editPersonBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={personEdit}>
+            <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
+        </Button> :
+        
+        <Button style={{ float: 'right' }} type='primary' shape='round' onClick={panelEdit}>
+          <FormattedMessage
+            id='editPerson'
+            defaultMessage='Edit'
+            description='Button to edit an person on PersonDetails page'/>
+        </Button>}
 
+        <p>{person.job && `${person.job}`} {person.placeOfWork && `- ${person.placeOfWork}`}</p>
       </ProfileBannerTitle>
     </VBanner>
     <Divider />

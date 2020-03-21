@@ -155,10 +155,8 @@
   "homepage": "https://github.com/voluntarily/vly2#readme",
   "ava": {
     "files": [
-      "__tests__/**/*.spec.js",
-      "server/**/__tests__/*.spec.js",
-      "components/**/__tests__/*.spec.js",
-      "lib/**/__tests__/*.spec.js"
+      "__tests__/**/persondetailpage.spec.js",
+      "components/**/__tests__/PersonDetail.spec.js"
     ],
     "helpers": [
       "**/__tests__/**/*.fixture.js",

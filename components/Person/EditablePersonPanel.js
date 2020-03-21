@@ -51,9 +51,9 @@ export const EditablePersonPanel = ({ person, me }) => {
   return (
     <>
 
-      <PersonDetail person={person} />
-      <Button
-        style={{ float: 'left' }}
+      <PersonDetail person={person} panelEdit={() => setEditing(true)}/>
+      {/* <Button
+        style={{ float: 'right' }}
         type='secondary'
         shape='round'
         onClick={() => setEditing(true)}
@@ -63,7 +63,7 @@ export const EditablePersonPanel = ({ person, me }) => {
           defaultMessage='Edit'
           description='Button to edit an person on PersonDetails page'
         />
-      </Button>
+      </Button> */}
     </>
   )
 }

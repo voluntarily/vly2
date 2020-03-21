@@ -59,7 +59,6 @@ const PersonCard = ({ person }) => (
     <figcaption>
 
       <img src={person.imgUrl} />
-
       <Link href={`/people/${person._id}`}>
         <a target='_blank'>
           <h4>{person.name}</h4>
