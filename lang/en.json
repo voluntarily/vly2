@@ -189,6 +189,7 @@
   "op.list.empty": "No matching activities",
   "op.list.empty2": "No matching activities",
   "op.SaveInstructions": "Save as Draft will allow you to preview the request while Publish will make it available to everyone to view.",
+  "op.TypeFilterDescription": "Search by type...",
   "OpAboutPanel.subtitle": "About this activity",
   "opAdd.newAsk": "I can offer this",
   "opAdd.newAskOffer": "New request or offering",
