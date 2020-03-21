@@ -204,7 +204,7 @@ export class SearchPage extends Component {
               onFilterRemoved={this.handleFilterRemoved}
               isShowing={this.state[filterVisibilityName(TYPE_FILTER_NAME)]}
             >
-              <TypeFilter value={'All'} opTypes={opTypeValue}/>
+              <TypeFilter value='All' opTypes={opTypeValue} />
             </FilterContainer>
             {/* TODO: VP-445 modify date picker to use filter container (like with location). This will
              help reduce the complexity of this page component */}
