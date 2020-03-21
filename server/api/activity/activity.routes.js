@@ -3,7 +3,7 @@ const helpers = require('../../services/helpers')
 const Activity = require('./activity')
 const { getActivities, getActivity, putActivity, createActivity } = require('./activity.controller')
 const { findActivity } = require('./findActivity')
-const initializeTags = require('../../util/initTags')
+const { initializeTags } = require('../../util/initTags')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 const { SchemaName } = require('./activity.constants')
 

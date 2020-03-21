@@ -1,12 +1,12 @@
 const Tag = require('../api/tag/tag')
-const { DefaultTagList } = require('../api/tag/tag.constants')
+const { DefaultTagList, GroupTagList } = require('../api/tag/tag.constants')
 
-const initializeTags = async (req, res, next) => {
+const initializeTagsA = taglist => async (req, res, next) => {
   try {
     const { tags } = req.body
     if (tags) {
       try {
-        const tagset = await Tag.findOne({ name: DefaultTagList }).exec()
+        const tagset = await Tag.findOne({ name: taglist }).exec()
         if (tagset) {
           const currentTags = new Set(tagset.tags)
           tags.forEach(x => {
@@ -17,7 +17,7 @@ const initializeTags = async (req, res, next) => {
           })
           await tagset.save()
         } else {
-          await Tag.create({ name: DefaultTagList, tags: tags })
+          await Tag.create({ name: taglist, tags: tags })
         }
       } catch (error) {
         console.error('Failed to fetch tags to append to', error)
@@ -30,4 +30,11 @@ const initializeTags = async (req, res, next) => {
   }
 }
 
-module.exports = initializeTags
+const initializeTags = initializeTagsA(DefaultTagList)
+// console.log(initializeTags)
+const initializeGroups = initializeTagsA(GroupTagList)
+
+module.exports = {
+  initializeTags,
+  initializeGroups
+}

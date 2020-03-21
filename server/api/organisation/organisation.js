@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const organisationSchema = new Schema({
   name: { type: 'String', required: true, unique: true },
   slug: { type: 'String', required: true, unique: true },
-  about: { type: 'String' },
+  about: { type: 'String' }, // deprecated don't use
   // TODO: [VP-146] make required and provide a default image in the static folder.  imgUrl: String,
   imgUrl: { type: 'String', default: '/static/img/organisation/organisation.png' },
   website: String,
@@ -19,6 +19,7 @@ const organisationSchema = new Schema({
     enum: ['admin', 'vp', 'op', 'ap', 'other']
     // TODO: [VP-905] replace category strings with constants in ./organisation.constants.js
   },
+  groups: [String], // which groups does this org belong to - business, school, individual
   info: {
     about: String,
     instructions: String,
