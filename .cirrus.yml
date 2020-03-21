@@ -13,6 +13,7 @@ lint_task:
   lint_script: npm run lint
 
 test_task:
+  use_compute_credits: $CIRRUS_USER_COLLABORATOR == 'true'
   env:
     # For some reason AVA/Cirrus get confused about not all tasks being test tasks, so we override the defaults to
     # force AVA to run all the tests in one task.

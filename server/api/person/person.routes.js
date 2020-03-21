@@ -6,7 +6,7 @@ const { SchemaName } = require('./person.constants')
 const removeUnauthorizedFields = require('../../services/authorize/removeUnauthorizedFields')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 const { publishCreate } = require('../../services/pubsub/publishTopic')
-const initializeTags = require('../../util/initTags')
+const { initializeTags } = require('../../util/initTags')
 
 module.exports = function (server) {
   // Docs: https://github.com/ryo718/mongoose-crudify
