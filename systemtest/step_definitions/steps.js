@@ -15,7 +15,7 @@ Given('I open the Voluntarily portal', () => {
 Then('I can navigate through all pages successfully', () => {
   // From "features\basic.feature" {"line":8,"column":5}
   landingPage.checkAboutPage()
-   landingPage.checkGetInvolvedPage()
+  landingPage.checkGetInvolvedPage()
 })
 
 Then('I can login into the Voluntarily system', () => {
@@ -52,7 +52,6 @@ When('I can register into the Voluntarily system', () => {
   // From "features\basic.feature" {"line":28,"column":5}
   throw new Error('Not implemented yet')
 })
-
 
 Then('I can login into the Voluntarily system as {string}', () => {
   // From "features\basic.feature" {"line":23,"column":5}

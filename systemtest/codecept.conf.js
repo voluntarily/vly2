@@ -10,21 +10,21 @@ exports.config = {
       windowSize: '1920x1680',
       desiredCapabilities: {
         chromeOptions: {
-          args: [ /*"--headless",*/ "--disable-gpu", "--window-size=1200,1000", "--no-sandbox" ]
+          args: [/* "--headless", */'--disable-gpu', '--window-size=1200,1000', '--no-sandbox']
         }
       }
     },
     REST: {
       endpoint: 'http://site.com/api',
       onRequest: (request) => {
-        request.headers.auth = '123';
+        request.headers.auth = '123'
       }
-   },    
+    }
   },
   include: {
     I: './steps_file.js',
     loginPage: './pages/LoginPage.js',
-    registrationPage: './pages/RegistrationPage.js',
+    registrationPage: './pages/RegistrationPage.js'
   },
   mocha: {},
   bootstrap: null,
