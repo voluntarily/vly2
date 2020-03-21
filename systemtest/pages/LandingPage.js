@@ -15,27 +15,17 @@ module.exports = {
   openPortal () {
     console.log('Going to open voluntarily portal')
     I.amOnPage('https://voluntarily.nz/')
-    I.see('Home')
     I.see('About')
-    I.see('Get Involved')
+    I.see('Organisations')
+    I.see('Lost 🧐')
   },
 
   checkAboutPage () {
-    I.amOnPage('https://voluntarily.nz/about')
-    I.see('About Voluntarily')
-  },
-
-  checkGetInvolvedPage () {
-    I.amOnPage('https://voluntarily.nz/get-involved')
-    I.see('Developers')
-    I.see('Volunteers')
-    I.see('Sponsorship')
-    I.see('HELP BUILD THE PLATFORM')
-    I.see('BECOME A VOLUNTEER')
-    I.see('CONTACT US')
-    I.see('DEVELOPER CHATROOM')
-    I.see('GITHUB')
-    I.see('CONTACT US')
+    I.amOnPage('https://blog.voluntarily.nz/')
+    I.see('HOME')
+    I.see('HELP US BUILD')
+    I.see('PRE-REGISTER')
+    I.see('SPONSER')
   }
 
 }

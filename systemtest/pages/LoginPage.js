@@ -33,7 +33,7 @@ module.exports = {
   openPortal () {
     console.log('Going to open voluntarily portal')
     I.amOnPage('https://voluntarily.nz/')
-    I.see('We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content.')
+    I.see('We connect people who can volunteer time, advice, or stuff to those who need it.')
   },
 
   register (email, password) {
