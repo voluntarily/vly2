@@ -11,7 +11,7 @@ const {
 const { MemberStatus } = require('../member/member.constants')
 const { InterestStatus } = require('../interest/interest.constants')
 const { getICalendar } = require('../opportunity/opportunity.calendar')
-const { Organisation } = require('../organisation/organisation')
+const Organisation = require('../organisation/organisation')
 const { addMember } = require('../member/member.lib')
 
 const welcomeFrom = {
