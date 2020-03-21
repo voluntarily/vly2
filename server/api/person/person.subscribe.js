@@ -41,7 +41,7 @@ module.exports = (server) => {
     }
 
     await addMember({
-      person: person.id.toString(),
+      person: person._id.toString(),
       organisation: coreOrganisation._id.toString(),
       validation: SYSTEM_MEMBER_VALIDATION_MESSAGE
     })
@@ -51,7 +51,7 @@ module.exports = (server) => {
     // a new member has been created or a member status has changed
     // send email to let people know
 
-    if (isSystemOperation(member.validation)) {
+    if (member.validation === SYSTEM_MEMBER_VALIDATION_MESSAGE) {
       return
     }
 
@@ -138,7 +138,3 @@ PubSub.subscribe(TOPIC_INTEREST__MESSAGE, async (msg, interest) => {
   await info
   PubSub.publish(TOPIC_PERSON__EMAIL_SENT, info)
 })
-
-function isSystemOperation (validationMessage) {
-  return validationMessage === SYSTEM_MEMBER_VALIDATION_MESSAGE
-}
