@@ -27,8 +27,9 @@ const routerHandler = routes.getRequestHandler(app)
 const { config } = require('../config/serverConfig')
 const { supportedLanguages } = require('../lang/lang')
 
+const { raygunExpressServerAPIKey } = require('../lib/sec/keys')
 const raygun = require('raygun');
-const raygunClient = new raygun.Client().init({ apiKey: 'test' });
+const raygunClient = new raygun.Client().init({ apiKey: raygunExpressServerAPIKey });
 
 raygunClient.user = function (req) {
   if (req.person) {

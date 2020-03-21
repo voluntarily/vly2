@@ -46,4 +46,8 @@ module.exports = function (server) {
       ]
     })
   )
+
+  server.get('/api/test/raygun', function (req, res) {
+    throw new Error()
+  })
 }
