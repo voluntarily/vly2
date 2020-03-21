@@ -21,7 +21,7 @@ function TypeOpSelector ({ opTypes, onChange, value, width }) {
 
 TypeOpSelector.propTypes = {
   value: PropTypes.string,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
   opTypes: PropTypes.array.isRequired,
   width: PropTypes.string
 }

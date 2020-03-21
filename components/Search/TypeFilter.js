@@ -10,7 +10,8 @@ function TypeFilter ({ onChange, value, opTypes }) {
     <div className='location-filter-container'>
       <PBold>
         <FormattedMessage
-          id='op-type-filter-description'
+          id='op.TypeFilterDescription'
+          defaultMessage='Search by type...'
           description='Text that describes what the type filter does'
         />
       </PBold>
