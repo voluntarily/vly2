@@ -6,7 +6,7 @@ import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
-import { SideBarGrid, OpSectionGrid, DocumentList } from '../VTheme/VTheme'
+import { SideBarGrid, OpSectionGrid, DocumentList, PageBannerButtons } from '../VTheme/VTheme'
 import {
   Left,
   Right,
@@ -23,7 +23,6 @@ import {
 } from '../VTheme/ItemList'
 import Html from '../VTheme/Html'
 import OpAdd from '../Op/OpAdd'
-import { PageBannerButtons } from '../../components/VTheme/VTheme'
 
 export function ActDetail ({ act }) {
   const img = act.imgUrl || '/static/missingimage.svg'
