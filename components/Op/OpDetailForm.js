@@ -20,7 +20,7 @@ class OpDetailForm extends Component {
 
     this.state = {
       startDateValue: null,
-      endDateValue: null,
+      endDateValue: null
     }
     // this.setDescriptin = this.setDescription.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
