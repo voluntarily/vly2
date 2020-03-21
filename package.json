@@ -34,6 +34,8 @@
     "@babel/polyfill": "^7.8.3",
     "@casl/ability": "^3.4.0",
     "@casl/mongoose": "^2.3.2",
+    "@sentry/browser": "^5.15.0",
+    "@sentry/node": "^5.14.2",
     "@storybook/addon-knobs": "^5.3.9",
     "@types/react-intl": "^3.0.0",
     "@uppy/core": "^1.7.0",
