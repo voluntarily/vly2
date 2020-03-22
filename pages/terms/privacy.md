@@ -1,4 +1,4 @@
-# Voluntarily privacy policy
+# Voluntarily Privacy Policy
 
 ### Introduction
 
