@@ -50,6 +50,7 @@ const OpBanner = ({ op, children }) => {
           <h1><OpType type={op.type} />: {op.name}</h1>
           <ul>
             <ItemIdLine item={op.offerOrg} path='orgs' />
+            <ItemIdLine item={op.fromActivity} path='acts' />
           </ul>
           <ItemContainer>
             <ItemLocation location={op.location} />

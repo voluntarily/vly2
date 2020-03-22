@@ -55,3 +55,14 @@ If you see the message "Please make sure Mongodb is installed and running!"  the
 
 Press `ctrl + c` to exit the node application.
 
+#######################Running BDD Tests#########################
+
+cd systemtest
+npx codeceptjs run --grep "@smoke" --plugins allure   
+allure serve output
+############### BDD Set Up ################################
+
+//Refer https://codecept.io/bdd
+
+MacOS
+You may need to install selenium and webdriver brew install selenium-server-standalone brew install allure followed by selenium-server -port 4444

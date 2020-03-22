@@ -266,8 +266,9 @@ test.serial('Should correctly give activity 2 when searching by "Algorithms"', a
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(acts[1].description, got[0].description)
   t.is(1, got.length)
+  t.is(acts[1].name, got[0].name)
+  t.falsy(got[0].description) // should only get summary fields
 })
 
 test.serial('Should correctly give activity 1 when searching by Organization', async t => {
