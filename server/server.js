@@ -27,6 +27,21 @@ const routerHandler = routes.getRequestHandler(app)
 const { config } = require('../config/serverConfig')
 const { supportedLanguages } = require('../lang/lang')
 
+const { raygunExpressServerAPIKey } = require('../lib/sec/keys')
+const raygun = require('raygun')
+const raygunClient = new raygun.Client().init({ apiKey: raygunExpressServerAPIKey })
+
+raygunClient.excludedHostNames = ['localhost']
+raygunClient.user = function (req) {
+  if (req.person) {
+    return {
+      identifier: req.person.nickname + req.person.email,
+      email: req.person.email,
+      fullName: req.person.name
+    }
+  }
+}
+
 // We need to expose React Intl's locale data on the request for the user's
 // locale. This function will also cache the scripts by lang in memory.
 // const localeDataCache = new Map()
@@ -104,6 +119,7 @@ const appReady = app.prepare().then(() => {
   server.get('*', routerHandler)
   // Start server
   if (process.env.NODE_ENV !== 'test') {
+    server.use(raygunClient.expressHandler)
     server.listen(config.serverPort, () =>
       console.log(`${config.appName} (${process.env.REVISION || 'local_build'}) running on ${config.appUrl} ${config.env}/ Be Awesome`))
   } else {
