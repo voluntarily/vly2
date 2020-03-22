@@ -1,0 +1,30 @@
+//- expects locals of {
+//-   to: person receiving email
+//-   from: person sending email - the op requestor
+//-   op: the opportunity
+//- }
+extends ../theme/layout.pug
+
+block tagline
+  span There's some interest on your offer
+
+block copybig
+  a( href=op.href) #{op.name}
+
+block copy
+  p Kia ora #{to.nickname},
+  p #{from.name} is interested in your offer #{op.name}.
+    if message
+      p saying: #{message.body}
+  p Review them on the activity page and send them an invite if they match your offer.
+  p Ngā mihi, Voluntarily.nz
+
+block copybutton
+  a(href=op.href class='mobile-button') Opportunity
+  span &nbsp;
+  a(href=to.href class='mobile-button') Profile
+
+block copyimage
+  img(src=op.imgUrl alt=op.name width="100%" )
+
+

@@ -1,17 +1,21 @@
 extends ../theme/layout.pug
 
 block tagline
-  span Things are growing
+  span You're a legend
 
 block copybig
   a( href=op.href) #{op.name} 
 
 block copy
   p Kia ora #{to.nickname},
-  p #{from.name} just committed to #{op.name}.
+  p You just committed to #{op.name}.
   if message
     p saying: #{message.body}
-  p Remember to keep visiting your activity management page to review new interested people.
+  p Time to prepare for the activity. 
+  ul
+    li Check out any new goal cards you may have on your home page.
+    li Read through the activity pages and any linked documents
+    li message the organiser if you have any questions.
 
 block copybutton
   a(href=op.href class='mobile-button') Activity
