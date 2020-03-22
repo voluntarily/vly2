@@ -6,26 +6,24 @@
 extends ../theme/layout.pug
 
 block tagline
-  span You've been invited
-  
+  span #{from.name} can't make it
 block copybig
   a( href=op.href) #{op.name} 
 
 block copy
   p Kia ora #{to.nickname},
-  p #{from.name} invites you to help with #{op.name}
-  if message
+  p #{from.name} can't make it to your activity.
+    if message
     p saying: #{message.body}
-  p Click on the Opportunity link below to accept the invitation. Then check out your profile to see if there are any new training requirements.
+  p We will move #{from.pronoun.object} back to the interested list 
   p Ngā mihi, Voluntarily.nz
-//- Override copy button because the layout has a block for authentical user
-//- Replace it witht this will do
+
 block copybutton
   a(href=op.href class='mobile-button') Opportunity
   span &nbsp; 
   a(href=to.href class='mobile-button') Profile
    
-   
 block copyimage
   img(src=op.imgUrl alt=op.name width="100%" )
                                  
+                         

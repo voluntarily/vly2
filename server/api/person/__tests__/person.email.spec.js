@@ -50,7 +50,7 @@ test('Send acknowledgeInterest email to person', async t => {
     from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson('interest_vp_accept_interested', t.context.to, props)
+  const info = await emailPerson('interest_vp_ask_accept_interested', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
 
   const sentMail = nodemailerMock.mock.getSentMail()
@@ -66,7 +66,7 @@ test('render acknowledgeInterest email to person', async t => {
     op: t.context.op,
     renderonly: true
   }
-  const html = await emailPerson('interest_vp_accept_interested', t.context.to, props, true)
+  const html = await emailPerson('interest_vp_ask_accept_interested', t.context.to, props, true)
   const document = (new JSDOM(html)).window.document
   t.truthy(getByText(document, 'Help make a difference'))
   t.truthy(getByText(document, t.context.op.name))
@@ -79,7 +79,7 @@ test('Send invited email to person', async t => {
     from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson('interest_vp_accept_invited', t.context.to, props)
+  const info = await emailPerson('interest_vp_ask_accept_invited', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
 
   const sentMail = nodemailerMock.mock.getSentMail()
@@ -94,7 +94,7 @@ test('Send committed email to requestor', async t => {
     from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson('interest_op_accept_committed', t.context.to, props)
+  const info = await emailPerson('interest_op_ask_accept_committed', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
 
   const sentMail = nodemailerMock.mock.getSentMail()
@@ -109,7 +109,7 @@ test('Send declined email to volunteer', async t => {
     from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson('interest_vp_reject_declined', t.context.to, props)
+  const info = await emailPerson('interest_vp_ask_reject_declined', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
   const sentMail = nodemailerMock.mock.getSentMail()
   t.is(sentMail.length, 1)
@@ -124,7 +124,7 @@ test('Send person interested email to requestor', async t => {
     op: t.context.op,
     interest: { comment: 'All your base belong to us' }
   }
-  const info = await emailPerson('interest_op_accept_interested', t.context.to, props)
+  const info = await emailPerson('interest_op_ask_accept_interested', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
   const sentMail = nodemailerMock.mock.getSentMail()
   t.is(sentMail.length, 1)
@@ -139,7 +139,7 @@ test('Email to Voluntarily user includes unsubscribe link', async (t) => {
     interest: { comment: 'Test comment' }
   }
 
-  const info = await emailPerson('interest_vp_accept_interested', t.context.to, props)
+  const info = await emailPerson('interest_vp_ask_accept_interested', t.context.to, props)
   const sentMail = nodemailerMock.mock.getSentMail()
 
   t.true(info.accepted[0] === 'accepted')
@@ -167,7 +167,7 @@ test('Email to anonymous user does not include unsubscribe link', async (t) => {
   // so it not being present should result in no unsubscribe link
   delete to._id
 
-  const info = await emailPerson('interest_vp_accept_interested', to, props)
+  const info = await emailPerson('interest_vp_ask_accept_interested', to, props)
   const sentMail = nodemailerMock.mock.getSentMail()
 
   t.true(info.accepted[0] === 'accepted')
@@ -209,7 +209,7 @@ test('sendNotificationEmails flag is respected', async (t) => {
   ]
 
   for (const testPerson of testPeople) {
-    await emailPerson('interest_vp_accept_interested', testPerson.person, props)
+    await emailPerson('interest_vp_ask_accept_interested', testPerson.person, props)
     const sentMail = nodemailerMock.mock.getSentMail()
 
     t.is(sentMail.length, testPerson.expectedMailCount)

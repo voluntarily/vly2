@@ -6,15 +6,16 @@
 extends ../theme/layout.pug
 
 block tagline
-  span #{from.name} can't make it
+  span Help make a difference
+
 block copybig
   a( href=op.href) #{op.name}
 
 block copy
   p Kia ora #{to.nickname},
-  p #{from.name} can't offer the opportunity any longer.
-    if message
-    p saying: #{message.body}
+  p On behalf of #{from.name} and the Voluntarily team, we would like to thank you for offering to help with this request.
+  p Your contribution is super valuable to us. The person asking for help has been notified and should be in touch shortly.
+  p Check your home page for messages
   p Ngā mihi, Voluntarily.nz
 
 block copybutton
