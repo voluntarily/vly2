@@ -65,6 +65,25 @@ export const PageBannerButtons = styled.div`
   }
 `
 
+export const HeroSectionHeader = styled.div`
+display: grid;
+
+grid-template-columns: 1fr 12rem;
+margin: 4rem 0 3rem 0;
+
+
+@media screen and (max-width: 768px) {
+    grid-template-columns: calc(100vw - 2rem);
+    margin: 2rem 0;
+  }
+
+`
+export const HeroSectionButtonContainer = styled.div`
+@media screen and (max-width: 768px) {
+    display: none;
+  }
+`
+
 export const SpacerSmall = styled.div`
   height: 0.5rem;
 `
