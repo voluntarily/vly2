@@ -42,8 +42,6 @@ raygunClient.user = function (req) {
   }
 }
 
-raygunClient.setVersion('22mar2020-pre-launch')
-
 // We need to expose React Intl's locale data on the request for the user's
 // locale. This function will also cache the scripts by lang in memory.
 // const localeDataCache = new Map()
