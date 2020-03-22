@@ -1,13 +1,13 @@
 extends ../theme/layout.pug
 block tagline
-  span There's some interest
+  span There's some interest in your offer
   
 block copybig
   a( href=op.href) #{op.name} 
 
 block copy
   p Kia ora #{to.nickname},
-  p #{from.name} is interested in #{op.name}.
+  p #{from.name} is interested in your offer #{op.name}.
   if message
     p saying: #{message.body}
   p Review them on the activity page and send them an invite if they match your requirements.

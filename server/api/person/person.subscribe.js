@@ -105,10 +105,17 @@ module.exports = (server) => {
     // send email to the opportunity requestor
     if ([
       InterestStatus.INTERESTED,
-      InterestStatus.COMMITTED
+      InterestStatus.COMMITTED,
+      InterestStatus.ATTENDED
       // InterestStatus.DECLINED
     ].includes(interest.status)) {
       const op = interest.opportunity
+
+      if( (op.type === OpportunityType.ASK && interest.status === InterestStatus.ATTENDED) ) {
+        // We don't want to send an email to the OP when the status is ATTENDED and the type is ASK.
+        return; 
+      }
+
       op.requestor.href = `${config.appUrl}/home`
       op.href = `${config.appUrl}/ops/${op._id}`
 

@@ -122,7 +122,7 @@ test('Send person interested email to requestor', async t => {
     send: true, // when true email is actually sent
     from: t.context.me,
     op: t.context.op,
-    interest: { comment: 'All your base belong to us' }
+    interest: { comment: 'A ll your base belong to us' }
   }
   const info = await emailPerson('interest_op_ask_accept_interested', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
@@ -167,7 +167,7 @@ test('Email to anonymous user does not include unsubscribe link', async (t) => {
   // so it not being present should result in no unsubscribe link
   delete to._id
 
-  const info = await emailPerson('interest_vp_ask_accept_interested', to, props)
+  const info = await emailPerson('interest_vp_offer_accept_interested', to, props)
   const sentMail = nodemailerMock.mock.getSentMail()
 
   t.true(info.accepted[0] === 'accepted')
