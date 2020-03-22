@@ -111,9 +111,9 @@ module.exports = (server) => {
     ].includes(interest.status)) {
       const op = interest.opportunity
 
-      if( (op.type === OpportunityType.ASK && interest.status === InterestStatus.ATTENDED) ) {
+      if ((op.type === OpportunityType.ASK && interest.status === InterestStatus.ATTENDED)) {
         // We don't want to send an email to the OP when the status is ATTENDED and the type is ASK.
-        return; 
+        return
       }
 
       op.requestor.href = `${config.appUrl}/home`
