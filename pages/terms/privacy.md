@@ -78,7 +78,9 @@ Generally, we do not disclose personal information to third parties for them to 
 
 * where required by applicable law or any court, or in response to a legitimate request by a law enforcement agency
 
-Any personal information you provide to us may be stored on the secure servers of our trusted service providers, which may be located outside New Zealand. This may involve the transfer of your personal information to countries which have less legal protection for personal information than New Zealand. [Confidential information held by us in relation to the users business will not be disclosed to a connected business unless authorised by the administrator of the business to which the information relates.]
+Any personal information you provide to us may be stored on the secure servers of our trusted service providers, which may be located outside New Zealand. This may involve the transfer of your personal information to countries which have less legal protection for personal information than New Zealand.
+
+[Confidential information held by us in relation to the users business will not be disclosed to a connected business unless authorised by the administrator of the business to which the information relates.]
 
 ### Vetting
 
@@ -92,7 +94,7 @@ Effective screening, as part of a comprehensive organisational safety policy, ca
 
 * Tracking - identifying volunteer activities that involve working with other people and signalling to activity organisers the status of the people volunteering.
 
-### We may request specific information from users including:
+We may request specific information from users including:
 
 * Consent or non-consent for the current employer to be contacted.
 
