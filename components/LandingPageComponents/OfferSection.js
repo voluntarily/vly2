@@ -91,7 +91,7 @@ const OfferSection = () => (
 
     <OfferContainer>
 
-      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz'>
+      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
         <OfferCard>
 
           <img src='./static/img/icons/code-party.svg' />
