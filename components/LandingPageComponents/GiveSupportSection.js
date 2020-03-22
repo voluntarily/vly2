@@ -1,12 +1,10 @@
-import { Button, Row, Col } from 'antd'
+
 import React from 'react'
 import styled from 'styled-components'
 
-import { FormattedMessage } from 'react-intl'
-import SectionTitle from './SectionTitle'
-import { Grid } from '../VTheme/VTheme'
+import { Grid, HeroSectionHeader } from '../VTheme/VTheme'
 const PersonaBox = styled.section`
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 
  
   @media screen and (max-width: 768px) {
@@ -85,14 +83,16 @@ const Text = styled.p`
 
 const GiveSupportSection = () => (
   <PersonaBox>
-
-    <h2>How you can support others</h2>
+    <HeroSectionHeader>
+      <h2>How you can support others</h2>
+    </HeroSectionHeader>
     <Grid>
       <PersonaContainer>
         <Image src='./static/img/landingcards/business.png' alt='' />
         <Title>Help small businesses</Title>
         <Text>Offer your knowledge to smaller businesses who need the support to set up remote working.</Text>
       </PersonaContainer>
+
       <PersonaContainer>
         <Image src='./static/img/landingcards/community.png' alt='' />
         <Title>Help your community</Title>
@@ -100,7 +100,6 @@ const GiveSupportSection = () => (
       </PersonaContainer>
 
       <PersonaContainer>
-
         <Image src='./static/img/landingcards/educator.png' alt='' />
         <Title>Help teachers</Title>
         <Text>Help teachers create a distance learning plan for their kura or school. </Text>

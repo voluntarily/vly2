@@ -21,6 +21,8 @@ export const Landing = props => (
       <OfferSection />
       <Divider />
       <GiveSupportSection />
+      <Divider />
+      <GiveSupportSection />
       <SectionTitle>
         <FormattedMessage
           id='landing.sectiontitle.oplist'

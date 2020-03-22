@@ -7,18 +7,19 @@ const OfferContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  margin: 2rem 0;
+  margin: 2rem 0 4rem 0;
   @media screen and (min-width: 1026px) and (max-width: 1289px) {
     grid-template-columns: 1fr 1fr ;
-
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     
     grid-template-columns: 1fr ;
+    margin: 2rem 0 ;
   }
 
   @media screen and (max-width: 768px) {
     grid-template-columns: 1fr;
+    margin: 2rem 0 ;
   }
 `
 

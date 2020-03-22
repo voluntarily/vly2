@@ -65,6 +65,14 @@ export const PageBannerButtons = styled.div`
   }
 `
 
+export const HeroSectionHeader = styled.div`
+display: grid;
+grid-template-columns: 1fr 5rem;
+margin: 4rem 0 2rem 0;
+
+
+`
+
 export const SpacerSmall = styled.div`
   height: 0.5rem;
 `
