@@ -2,16 +2,15 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import PersonCard from './PersonCard'
-import { Grid8 } from '../VTheme/VTheme'
+import { TripleGrid } from '../VTheme/VTheme'
+import PersonListItem from './PersonListItem'
 
 const PersonList = ({ people, ...props }) => (
-  <Grid8>
-    { people
-      ? people.map((person, index) => <PersonCard person={person} key={index} />)
-      : 'No Matching People'
-    }
-  </Grid8>
+  <TripleGrid>
+    {people
+      ? people.map((person, index) => <PersonListItem person={person} key={index} />)
+      : 'No Matching People'}
+  </TripleGrid>
 )
 
 PersonList.propTypes = {

@@ -1,28 +1,76 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const idvalidator = require('mongoose-id-validator')
-const { InterestStatus } = require('./interest.constants')
+const { accessibleRecordsPlugin } = require('@casl/mongoose')
+const { InterestStatus, InterestSchemaName, InterestArchiveSchemaName } = require('./interest.constants')
+
+// this is deliberately similar to the Story Schema.
+var messageSchema = new mongoose.Schema({
+  body: String,
+  // who sent the message (op or vp?)
+  author: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
+  dateAdded: { type: Date, default: Date.now, required: true }
+})
 
 const interestSchema = new Schema({
-
   person: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
   opportunity: { type: Schema.Types.ObjectId, ref: 'Opportunity', required: true },
-  comment: String,
+  comment: String, // deprecated in favour of messages
+  messages: [messageSchema],
   status: {
-    type: 'String',
+    type: String,
     required: true,
     default: InterestStatus.INTERESTED,
     enum: [
       InterestStatus.INTERESTED,
       InterestStatus.INVITED,
       InterestStatus.COMMITTED,
-      InterestStatus.DECLINED,
-      InterestStatus.COMPLETED,
-      InterestStatus.CANCELLED
+      InterestStatus.DECLINED
     ]
   },
-  dateAdded: { type: 'Date', default: Date.now, required: true }
+  termsAccepted: { type: Boolean, default: false },
+  dateAdded: { type: Date, default: Date.now, required: true }
 })
+
+const interestArchiveSchema = new Schema({
+  ...interestSchema.obj,
+  opportunity: { type: Schema.Types.ObjectId, ref: 'ArchivedOpportunity', required: true },
+  status: {
+    type: 'String',
+    required: true,
+    enum: [
+      InterestStatus.INTERESTED,
+      InterestStatus.INVITED,
+      InterestStatus.COMMITTED,
+      InterestStatus.DECLINED,
+      InterestStatus.ATTENDED,
+      InterestStatus.NOTATTENDED
+    ]
+  }
+})
+
+interestSchema.plugin(idvalidator)
+interestSchema.plugin(accessibleRecordsPlugin)
+interestArchiveSchema.plugin(idvalidator)
+interestArchiveSchema.plugin(accessibleRecordsPlugin)
+
+// protect multiple imports
+var Interest
+var InterestArchive
+
+if (mongoose.models.Interest) {
+  Interest = mongoose.model(InterestSchemaName)
+  InterestArchive = mongoose.model(InterestArchiveSchemaName)
+} else {
+  Interest = mongoose.model(InterestSchemaName, interestSchema)
+  InterestArchive = mongoose.model(InterestArchiveSchemaName, interestArchiveSchema)
+}
+module.exports = {
+  Interest,
+  InterestArchive,
+  InterestSchemaName,
+  InterestArchiveSchemaName
+}
 
 /*
     State flows
@@ -48,6 +96,3 @@ const interestSchema = new Schema({
         -> cancelled
 
 */
-
-interestSchema.plugin(idvalidator)
-module.exports = mongoose.model('Interest', interestSchema)

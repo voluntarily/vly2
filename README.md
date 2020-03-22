@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://i.imgur.com/aFjiS0u.png">
 </p>
- 
+
 # vly2
 [![Gitter](https://badges.gitter.im/voluntarily/community.svg)](https://gitter.im/voluntarily/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Build Status](https://api.cirrus-ci.com/github/voluntarily/vly2.svg)](https://cirrus-ci.com/github/voluntarily/vly2)
@@ -58,7 +58,7 @@ then you can open your browser at http://localhost:3122.
 
 If you see the message _"Please make sure Mongodb is installed and running!"_  then go back and start mongod.
 
-Press control+C to exit the node application.
+Press `ctrl + c` to exit the node application.
 
 #######################Running BDD Tests#########################
 

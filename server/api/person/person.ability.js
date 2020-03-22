@@ -5,6 +5,7 @@ const SchemaName = 'Person'
 
 // WIKI rules : https://voluntarily.atlassian.net/wiki/spaces/VP/pages/18677761/API+Access+Security+Rules
 const ruleBuilder = session => {
+  // https://github.com/stalniy/casl/issues/229
   // block all api call for non log in user
   const anonAbilities = [{
     subject: SchemaName,
@@ -15,59 +16,64 @@ const ruleBuilder = session => {
     action: Action.CREATE
   }]
 
-  const userID = session.me ? session.me._id : undefined
-  const allAbilities = [{
+  const allAbilities = [
+    {
+      subject: SchemaName,
+      action: Action.READ
+    }, {
+      subject: SchemaName,
+      action: Action.LIST,
+      fields: [
+        PersonFields.ID,
+        PersonFields.NICKNAME,
+        PersonFields.LANGUAGE,
+        PersonFields.STATUS,
+        PersonFields.AVATAR,
+        PersonFields.NAME,
+        PersonFields.ROLE,
+        PersonFields.ABOUT,
+        PersonFields.PRONOUN,
+        PersonFields.TAGS,
+        PersonFields.FACEBOOK,
+        PersonFields.WEBSITE,
+        PersonFields.TWITTER
+      ]
+    }, {
+      subject: SchemaName,
+      action: Action.DELETE
+    }, {
+      subject: SchemaName,
+      action: Action.CREATE,
+      inverted: true
+    }, {
+      subject: SchemaName,
+      action: Action.UPDATE
+    }]
+
+  const adminAbilities = [{
     subject: SchemaName,
-    action: Action.READ,
-    fields: [
-      PersonFields.ID,
-      PersonFields.NICKNAME,
-      PersonFields.LANGUAGE,
-      PersonFields.NAME,
-      PersonFields.STATUS,
-      PersonFields.AVATAR,
-      PersonFields.ABOUT,
-      PersonFields.ROLE,
-      PersonFields.PRONOUN
-    ]
+    action: Action.READ
   }, {
     subject: SchemaName,
-    action: Action.LIST,
-    fields: [
-      PersonFields.ID,
-      PersonFields.NICKNAME,
-      PersonFields.LANGUAGE,
-      PersonFields.STATUS,
-      PersonFields.AVATAR,
-      PersonFields.NAME,
-      PersonFields.ROLE,
-      PersonFields.ABOUT,
-      PersonFields.PRONOUN
-    ]
+    action: Action.LIST
   }, {
     subject: SchemaName,
-    action: Action.DELETE,
-    inverted: true
+    action: Action.DELETE
   }, {
     subject: SchemaName,
     action: Action.CREATE
   }, {
     subject: SchemaName,
-    action: Action.UPDATE,
-    conditions: {
-      _id: userID
-    }
+    action: Action.UPDATE
   }]
-
-  const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
 
   return {
     [Role.ANON]: anonAbilities,
     [Role.VOLUNTEER_PROVIDER]: allAbilities,
     [Role.OPPORTUNITY_PROVIDER]: allAbilities,
-    [Role.TESTER]: adminAbilities, // Confusing but the wiki is not clear about tester ability
     [Role.ADMIN]: adminAbilities,
     [Role.ACTIVITY_PROVIDER]: allAbilities,
+    [Role.TESTER]: allAbilities,
     [Role.ALL]: allAbilities,
     [Role.ORG_ADMIN]: adminAbilities
   }

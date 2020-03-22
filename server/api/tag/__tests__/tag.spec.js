@@ -4,139 +4,151 @@ import { server, appReady } from '../../../server'
 import Tag from '../tag'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import tags from './tag.fixture.js'
+import { jwtData, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
+import people from '../../person/__tests__/person.fixture'
+import Person from '../../person/person'
 
 test.before('before connect to database', async (t) => {
-  await appReady
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  await appReady
+
+  const tagCollection = [
+    { tags: tags },
+    { name: 'numbers', tags: ['one', 'two', 'three'] }
+  ]
+  t.context.people = await Person.create(people).catch((err) => console.error('Unable to create people', err))
+  t.context.tags = await Tag.create(tagCollection).catch((err) => console.error('Unable to create tags', err))
 })
 
 test.after.always(async (t) => {
+  await Tag.deleteMany()
   await t.context.memMongo.stop()
 })
 
-test.beforeEach('connect and add tag entries', async (t) => {
-  t.context.tags = await Tag.create(tags).catch((err) => console.log('Unable to create tags', err))
+/* -- Anon person */
+test('Tag API - anon - create', async t => {
+  const response = await request(server)
+    .post('/api/tags')
+    .send({ name: 'test', tags: ['a', 'b', 'c'] })
+
+  t.is(response.statusCode, 403)
 })
 
-test.afterEach.always(async () => {
-  await Tag.deleteMany()
-})
-
-test.serial('verify fixture database has tags', async t => {
-  const count = await Tag.countDocuments()
-  t.is(count, t.context.tags.length)
-  // can find all
-  const p = await Tag.find()
-  t.is(t.context.tags.length, p.length)
-
-  // can find by things
-  const q = await Tag.findOne({ tag: 'robots' })
-  t.is(q.tag, 'robots')
-})
-
-test.serial('Should correctly give count of all tags', async t => {
+test('Tag API - anon - read', async t => {
   const res = await request(server)
     .get('/api/tags')
     .set('Accept', 'application/json')
+    .expect(403)
+  t.is(res.status, 403)
+})
+test('Tag API - anon - update', async t => {
+  const tag = t.context.tags[0]
+
+  const response = await request(server)
+    .put(`/api/tags/${tag._id}`)
+    .send({ tags: ['a', 'b', 'c'] })
+
+  t.is(response.statusCode, 403)
+})
+
+test('Tag API - anon - delete', async t => {
+  const tag = t.context.tags[0]
+
+  const response = await request(server)
+    .delete(`/api/tags/${tag._id}`)
+
+  t.is(response.statusCode, 403)
+})
+
+/* -- Signed in person */
+
+test('Tag API - signed - create', async t => {
+  const response = await request(server)
+    .post('/api/tags')
+    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
+    .send({ tags: ['a', 'b', 'c'] })
+
+  t.is(response.statusCode, 403)
+})
+
+test('Tag API - signed - read default list', async t => {
+  const res = await request(server)
+    .get('/api/tags')
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
+
   const got = res.body
   t.is(tags.length, got.length)
+  t.is(got[0], tags[0])
 })
 
-test.serial('Should send correct data when queried against an _id', async t => {
-  t.plan(2)
-
-  const tag1 = t.context.tags[1]
+test('Tag API - signed - read by name', async t => {
   const res = await request(server)
-    .get(`/api/tags/${tag1._id}`)
+    .get('/api/tags?name=numbers')
     .set('Accept', 'application/json')
-  t.is(res.status, 200)
-  t.is(res.body.tag, tag1.tag)
+    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
+    .expect(200)
+    .expect('Content-Type', /json/)
+
+  const got = res.body
+  t.is(got.length, 3)
+  t.is(got[0], 'one')
 })
 
-test.serial('Should not find invalid _id', async t => {
-  const res = await request(server)
-    .get(`/api/tags/123456781234567812345678`)
-    .set('Accept', 'application/json')
-  t.is(res.status, 404)
+test('Tag API - signed - update', async t => {
+  const tag = t.context.tags[0]
+
+  const response = await request(server)
+    .put(`/api/tags/${tag._id}`)
+    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
+    .send({ tags: ['a', 'b', 'c'] })
+
+  t.is(response.statusCode, 403)
 })
 
-test.serial('Should correctly add a tag', async t => {
-  t.plan(2)
+test('Tag API - signed - delete', async t => {
+  const tag = t.context.tags[0]
 
-  const res = await request(server)
-    .post('/api/tags')
-    .send({
-      tag: 'volunteering'
-    })
-    .set('Accept', 'application/json')
-
-  t.is(res.status, 200)
-
-  const savedTag = await Tag.findOne({ tag: 'volunteering' }).exec()
-  t.is(savedTag.tag, 'volunteering')
-})
-
-test.serial('Should correctly add multiple tags', async t => {
-  const res = await request(server)
-    .post('/api/tags')
-    .send([{
-      tag: 'volunteering'
-    }, {
-      tag: 'orienteering'
-    }])
-    .set('Accept', 'application/json')
-
-  t.is(res.status, 200)
-  t.is(2, res.body.length)
-
-  const savedTag = await Tag.findOne({ tag: 'volunteering' }).exec()
-  t.is(savedTag.tag, 'volunteering')
-
-  const savedTag2 = await Tag.findOne({ tag: 'orienteering' }).exec()
-  t.is(savedTag2.tag, 'orienteering')
-})
-
-test.serial('Should not add a duplicate tag', async t => {
-  await request(server)
-    .post('/api/tags')
-    .send({
-      tag: tags[0].tag
-    })
-    .set('Accept', 'application/json')
-
-  const savedTag = await Tag.findOne({ tag: 'volunteering' }).exec()
-  t.is(null, savedTag)
-})
-
-test.serial('Should not add a duplicate tag with different case', async t => {
-  await request(server)
-    .post('/api/tags')
-    .send({
-      tag: tags[0].tag.toUpperCase()
-    })
-    .set('Accept', 'application/json')
-
-  const savedTag = await Tag.findOne({ tag: 'volunteering' }).exec()
-  t.is(null, savedTag)
-})
-
-test.serial('Should correctly delete a tag', async t => {
-  t.plan(2)
-
-  const tag = new Tag({
-    tag: 'computing'
-  })
-  await tag.save()
-
-  const res = await request(server)
+  const response = await request(server)
     .delete(`/api/tags/${tag._id}`)
-    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
 
-  t.is(res.status, 200)
+  t.is(response.statusCode, 403)
+})
 
-  const queriedTag = await Tag.findOne({ _id: tag._id }).exec()
-  t.is(queriedTag, null)
+/* -- Admin person */
+
+test('Tag API - admin - CRUD', async t => {
+  let response = await request(server)
+    .post('/api/tags')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .send({ name: 'crud', tags: ['a', 'b', 'c'] })
+
+  t.is(response.statusCode, 200)
+  const newtags = response.body
+  const id = newtags._id
+
+  // get by id - non admin check
+  response = await request(server)
+    .get(`/api/tags/${id}`)
+    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
+
+  t.is(response.statusCode, 200)
+  t.is(response.body.tags.length, 3)
+
+  // update
+  response = await request(server)
+    .put(`/api/tags/${id}`)
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .send({ name: 'crud', tags: ['a', 'b', 'c', 'd'] })
+  t.is(response.statusCode, 200)
+
+  response = await request(server)
+    .delete(`/api/tags/${id}`)
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+
+  t.is(response.statusCode, 200)
 })

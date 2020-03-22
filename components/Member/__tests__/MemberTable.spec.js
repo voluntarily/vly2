@@ -18,10 +18,11 @@ const MTF = {
 test('MemberTable renders followers properly', t => {
   const members = t.context.members.filter(m => m.status === MemberStatus.FOLLOWER)
   const handleMembershipChange = sinon.spy()
-  const wrapper = mountWithIntl(<MemberTable
-    members={members}
-    onMembershipChange={handleMembershipChange}
-  />)
+  const wrapper = mountWithIntl(
+    <MemberTable
+      members={members}
+      onMembershipChange={handleMembershipChange}
+    />)
 
   // Confirm table headers
   t.is(wrapper.find('th').at(1).text(), 'Name')
@@ -30,7 +31,7 @@ test('MemberTable renders followers properly', t => {
   t.is(wrapper.find('tbody tr').length, members.length)
   // Confirm table data
   const row1 = wrapper.find('tbody tr').first()
-  t.is(row1.find('td').at(MTF.NAME).text(), members[0].person.nickname)
+  t.is(row1.find('td a span').at(MTF.NAME).text(), members[0].person.nickname)
   t.is(row1.find('td').at(MTF.STATUS).text(), MemberStatus.FOLLOWER)
 
   const inviteBtn = row1.find('button').first()
@@ -43,15 +44,16 @@ test('MemberTable renders followers properly', t => {
 test('MemberTable renders members properly', t => {
   const members = t.context.members.filter(m => m.status === MemberStatus.MEMBER)
   const handleMembershipChange = sinon.spy()
-  const wrapper = mountWithIntl(<MemberTable
-    members={members}
-    onMembershipChange={handleMembershipChange}
-  />)
+  const wrapper = mountWithIntl(
+    <MemberTable
+      members={members}
+      onMembershipChange={handleMembershipChange}
+    />)
 
   t.is(wrapper.find('tbody tr').length, members.length)
   // Confirm table data
   const row1 = wrapper.find('tbody tr').first()
-  t.is(row1.find('td').at(MTF.NAME).text(), members[0].person.nickname)
+  t.is(row1.find('td a span').at(MTF.NAME).text(), members[0].person.nickname)
   t.is(row1.find('td').at(MTF.STATUS).text(), MemberStatus.MEMBER)
 
   const inviteBtn = row1.find('button').first()
@@ -66,22 +68,24 @@ test('row click handler pushes to profile page', t => {
 
   const handleMembershipChange = sinon.spy()
   const RoutedTable = withMockRoute(MemberTable, '/about')
-  const wrapper = mountWithIntl(<RoutedTable
-    members={members}
-    onMembershipChange={handleMembershipChange}
-  />, '/test')
+  const wrapper = mountWithIntl(
+    <RoutedTable
+      members={members}
+      onMembershipChange={handleMembershipChange}
+    />, '/test')
   const row1 = wrapper.find('tr').at(1)
   t.regex(row1.find('td').at(1).text(), /avowkind/)
-  row1.find('.ant-avatar').first().simulate('click')
+  row1.find('a').first().simulate('click')
 })
 
 test('expanded row render', t => {
   const members = t.context.members.filter(m => m.status === MemberStatus.FOLLOWER)
   const handleMembershipChange = sinon.spy()
-  const wrapper = mountWithIntl(<MemberTable
-    members={members}
-    onMembershipChange={handleMembershipChange}
-  />)
+  const wrapper = mountWithIntl(
+    <MemberTable
+      members={members}
+      onMembershipChange={handleMembershipChange}
+    />)
 
   const expander = wrapper.find('.ant-table-row-expand-icon').first()
   expander.simulate('click')

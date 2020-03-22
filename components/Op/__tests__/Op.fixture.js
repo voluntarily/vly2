@@ -1,18 +1,26 @@
-import cuid from 'cuid'
+import objectid from 'objectid'
 
 const requestor = {
-  _id: cuid(),
+  _id: objectid().toString(),
   name: 'Testy McTestface',
   imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png'
 }
-
-const offerOrg = {
-  _id: cuid(),
+export const orgActionWhizzyFelt = {
+  _id: objectid().toString(),
   name: 'Action Whizzy Felt',
   imgUrl: 'https://files.list.co.uk/images/2009/02/19/623atpiccap2.jpg'
 }
-
-const noDate = [ ]
+export const orgOmgTech = {
+  _id: objectid().toString(),
+  name: 'OMGTech',
+  slug: 'omgtech',
+  category: ['ap', 'vp'],
+  imgUrl: 'https://images.squarespace-cdn.com/content/556e9677e4b099ded4a2e757/1488844920526-ZGL78IXEPYARVWLL778H/OMGTECH.png?content-type=image%2Fpng',
+  info: {
+    about: 'Awesome content providers'
+  }
+}
+const noDate = []
 const openDate = [
   '2019-05-23T12:26:18.000Z' // Fri, 24 May 2019 00:26:18 NZST
 ]
@@ -23,7 +31,8 @@ const date = [
 
 export default [
   {
-    _id: cuid(),
+    _id: objectid().toString(),
+    type: 'ask',
     name: '1 Mentor a year 12 business Impact Project',
     subtitle: 'Help us create a programme connecting business with senior students',
     imgUrl: 'https://www.tvnz.co.nz/content/dam/images/news/2015/01/26/pacific-island-mentors-with-kelston-high-school-students.jpg.hashed.0d58ef7e.desktop.story.share.jpg',
@@ -32,12 +41,13 @@ export default [
     location: 'Wellington',
     status: 'active',
     requestor,
-    offerOrg,
-    tags: [ ],
+    offerOrg: orgActionWhizzyFelt,
+    tags: [],
     date: noDate
   },
   {
-    _id: cuid(),
+    _id: objectid().toString(),
+    type: 'ask',
     name: '2 Self driving model cars',
     subtitle: 'using algorithms to follow lines and avoid obstacles',
     imgUrl: 'http://www.plaz-tech.com/wp-content/plugins/wp-easycart-data/products/pics1/Arduino%20Car%202_8ab5dd38f1e3f6f05ad244f1e5e74529.jpg',
@@ -46,12 +56,13 @@ export default [
     location: 'Ruakaka',
     status: 'active',
     requestor,
-    offerOrg,
-    tags: [ ],
+    offerOrg: orgOmgTech,
+    tags: [],
     date: openDate
   },
   {
-    _id: cuid(),
+    _id: objectid().toString(),
+    type: 'ask',
     name: '3 Growing in the garden',
     subtitle: 'Growing digitally in the garden',
     imgUrl: 'https://c.pxhere.com/photos/84/ac/garden_water_sprinkler_soil_lettuce_grow_agriculture_floral-561591.jpg!d',
@@ -60,37 +71,39 @@ export default [
     location: 'Auckland',
     status: 'active',
     requestor,
-    offerOrg,
+    offerOrg: orgActionWhizzyFelt,
     interest: { status: 'interested' },
-    tags: [ ],
+    tags: [],
     date
   },
   {
-    _id: cuid(),
+    _id: objectid().toString(),
+    type: 'ask',
     name: '4 The first 100 metres',
     subtitle: 'Launching into space',
     imgUrl: 'https://images.sunlive.co.nz/images/170705-st-marys-school-rockets1.jpg',
     description: 'Project to build a simple rocket that will reach 100m',
-    duration: '2 hours',
+    duration: '',
     location: 'Hamilton',
     // this has no requestor
-    offerOrg,
+    offerOrg: orgActionWhizzyFelt,
     status: 'active',
-    tags: [ ],
+    tags: [],
     date
   },
   {
-    _id: cuid(),
+    _id: objectid().toString(),
+    type: 'ask',
     name: '5 Going to the moon',
     subtitle: 'Travelling up',
     imgUrl: 'https://images.sunlive.co.nz/images/170705-st-marys-school-rockets1.jpg',
     description: 'Attempting to go where no man has gone before',
-    duration: '2 days',
+    duration: '',
     location: 'Auckland',
     requestor,
     // this one has no offerOrg
     status: 'active',
-    tags: [ ],
+    tags: [],
     date
   }
 ]

@@ -20,10 +20,11 @@ const cardHeading = {
 }
 
 const InterestConfirmationCard = ({ organizer, ...props }) => {
+  // TODO: [VP-1339] InterestConfirmationCard organizer is an id and needs to be populated.
   const emailHref = 'mailto:' + organizer.email
 
   return (
-    <React.Fragment>
+    <>
       <div style={{ color: 'black' }}>
         <Paragraph>
           <FormattedMessage {...interestConfirmation} />
@@ -31,7 +32,8 @@ const InterestConfirmationCard = ({ organizer, ...props }) => {
       </div>
       <div>
         <Card style={{ width: 450, marginTop: 16, borderRadius: 8 }}>
-          <Meta style={cardHeading}
+          <Meta
+            style={cardHeading}
             imgUrl={
               <Avatar src={organizer.imgUrl} />
             }
@@ -41,11 +43,11 @@ const InterestConfirmationCard = ({ organizer, ...props }) => {
           <div style={{ color: '#6549AA', marginTop: '20px' }}>
             <Icon type='mail' /><span> <a href={emailHref}>{organizer.email}</a></span><br />
             {organizer.phone && organizer.phone !== 'undefined' &&
-            <span><Icon type='mobile' /> {organizer.phone}</span>}
+              <span><Icon type='mobile' /> {organizer.phone}</span>}
           </div>
         </Card>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

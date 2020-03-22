@@ -1,15 +1,17 @@
 import InterestItem from '../InterestItem'
 import test from 'ava'
-import { mount } from 'enzyme'
+import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 
 test('constructs properly', t => {
-  const wrapper = mount(<InterestItem interest={{
-    person: { nickname: 'Test Name' },
-    opportunity: 'Test Opportunity',
-    comment: 'Test Comment',
-    status: 'Test Status',
-    _id: '11223344'
-  }} />)
+  const wrapper = mountWithIntl(
+    <InterestItem interest={{
+      person: { nickname: 'Test Name' },
+      opportunity: 'Test Opportunity',
+      comment: 'Test Comment',
+      status: 'Test Status',
+      _id: '11223344'
+    }}
+    />)
 
   t.truthy(wrapper.find('.person.nickname'), 'Test Name')
   t.truthy(wrapper.find('.opportunity'), 'Test Opportunity')

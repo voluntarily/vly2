@@ -3,6 +3,9 @@ import test from 'ava'
 import people from '../../../server/api/person/__tests__/person.fixture'
 import sinon from 'sinon'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
+import { InterestStatus } from '../../../server/api/interest/interest.constants'
+import mongoose from 'mongoose'
+const ObjectId = mongoose.Types.ObjectId
 
 // Initial opportunities added into test db
 const opid = '5cc903e5f94141437622cea7'
@@ -20,170 +23,227 @@ const ops = [
   }
 ]
 
-const interestid = '5cc903e5f94141437622cea8'
 const interests = [
   {
-    _id: interestid,
+    _id: ObjectId(),
     person: people[0],
     opportunity: ops[0],
-    comment: "I'm Andrew",
+    termsAccepted: false,
+    messages: [],
     status: null
   },
   {
-    _id: interestid,
+    _id: ObjectId(),
     person: people[0],
     opportunity: ops[0],
-    comment: "I'm Andrew",
-    status: 'interested'
+    messages: [{
+      body: 'Message 1',
+      author: ObjectId()
+    }],
+    termsAccepted: true,
+    status: InterestStatus.INTERESTED
   },
   {
-    _id: interestid,
+    _id: ObjectId(),
     person: people[0],
     opportunity: ops[0],
-    comment: "I'm Andrew",
-    status: 'invited'
+    messages: [{
+      body: 'Message 2',
+      author: ObjectId()
+    }],
+    termsAccepted: true,
+    status: InterestStatus.INVITED
   },
   {
-    _id: interestid,
+    _id: ObjectId(),
     person: people[0],
     opportunity: ops[0],
-    comment: "I'm Andrew",
-    status: 'committed'
+    messages: [{
+      body: 'Message 3',
+      author: ObjectId()
+    }],
+    termsAccepted: true,
+    status: InterestStatus.COMMITTED
   },
   {
-    _id: interestid,
+    _id: ObjectId(),
     person: people[0],
     opportunity: ops[0],
-    comment: "I'm Andrew",
-    status: 'completed'
-  },
-  {
-    _id: interestid,
-    person: people[0],
-    opportunity: ops[0],
-    comment: "I'm Andrew",
-    status: 'cancelled'
-  },
-  {
-    _id: interestid,
-    person: people[0],
-    opportunity: ops[0],
-    comment: "I'm Andrew",
-    status: 'declined'
+    messages: [{
+      body: 'Message 4',
+      author: ObjectId()
+    }],
+    termsAccepted: true,
+    status: InterestStatus.DECLINED
   }
 
 ]
 
 test('initial state', t => {
-  const changeStatus = sinon.fake()
-  const withdraw = sinon.fake()
+  const handleAccept = sinon.fake()
+  const handleReject = sinon.fake()
+  const handleMessage = sinon.fake()
 
-  const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[0]}
-    onChangeStatus={changeStatus}
-    onWithdraw={withdraw}
-  />)
-  t.is(wrapper.find('button').text(), "I'm Interested")
+  const wrapper = mountWithIntl(
+    <RegisterInterestItem
+      interest={interests[0]}
+      onAccept={handleAccept}
+      onReject={handleReject}
+      onMessage={handleMessage}
+    />)
+  t.true(wrapper.exists('#acceptBtn'))
+  t.false(wrapper.exists('#rejectBtn'))
+  t.false(wrapper.exists('#messageBtn'))
+  t.is(wrapper.find('#acceptBtn').first().text(), 'Get Involved')
+  t.is(wrapper.find('RegisterInterestMessageForm').length, 3)
+  t.false(wrapper.find('RegisterInterestMessageForm#acceptRegisterInterestForm').first().props().visible)
 
-  // click button and get form
-  wrapper.find('button').simulate('click')
-  t.is(wrapper.find('button').first().text(), 'Get Involved!')
-  t.is(wrapper.find('button').at(1).text(), 'Cancel')
+  // click button and get popup form
+  wrapper.find('#acceptBtn').first().simulate('click')
+  let acceptForm = wrapper.find('#acceptRegisterInterestForm').first()
+  t.true(acceptForm.props().visible)
 
-  // click cancel and return to the original button
-  wrapper.find('button').at(1).simulate('click')
-  t.is(wrapper.find('button').text(), "I'm Interested")
+  // click cancel to hide the form
+  t.true(wrapper.exists('#cancelBtn'))
+  wrapper.find('#cancelBtn').first().simulate('click')
+  acceptForm = wrapper.find('#acceptRegisterInterestForm').first()
+  t.false(acceptForm.props().visible)
 
-  // click button and get form again, click action
-  wrapper.find('button').simulate('click')
-  t.is(wrapper.find('button').first().text(), 'Get Involved!')
-  wrapper.find('button').first().simulate('click')
+  // click button and get popup form again
+  wrapper.find('#acceptBtn').first().simulate('click')
+  acceptForm = wrapper.find('#acceptRegisterInterestForm').first()
+  t.true(acceptForm.props().visible)
 
-  t.is(wrapper.find('.ant-form-explain').text(), 'Comment is required')
-
-  // fill in comment and click again
-  const comment = wrapper.find('textarea')
+  // add message
+  const comment = acceptForm.find('textarea').first()
   comment.simulate('change', { target: { value: 'My Comment' } })
-  wrapper.find('button').first().simulate('click')
+  wrapper.update()
+
+  // commit the form
+  wrapper.find('#sendBtn').first().simulate('click')
 
   // status change callback is called.
-  t.truthy(changeStatus.calledOnce)
+  t.true(handleAccept.calledOnce)
+  t.true(handleAccept.calledWith('My Comment'))
 })
 
 test('interested state', t => {
-  const changeStatus = sinon.fake()
-  const withdraw = sinon.fake()
+  const handleAccept = sinon.fake()
+  const handleReject = sinon.fake()
+  const handleMessage = sinon.fake()
 
-  const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[1]}
-    onChangeStatus={changeStatus}
-    onWithdraw={withdraw}
-  />)
-  t.is(wrapper.find('button').first().text(), 'Withdraw Interest')
-  wrapper.find('button').first().simulate('click')
+  const wrapper = mountWithIntl(
+    <RegisterInterestItem
+      interest={interests[1]}
+      onAccept={handleAccept}
+      onReject={handleReject}
+      onMessage={handleMessage}
+    />)
+  t.false(wrapper.exists('#acceptBtn'))
+  t.true(wrapper.exists('#rejectBtn'))
+  t.true(wrapper.exists('#messageBtn'))
+
+  // click reject button and get popup form
+  wrapper.find('#rejectBtn').first().simulate('click')
+  const rejectForm = wrapper.find('#rejectRegisterInterestForm').first()
+  t.true(rejectForm.props().visible)
+
+  // add message
+  const comment = rejectForm.find('textarea').first()
+  comment.simulate('change', { target: { value: 'Withdraw message' } })
+  wrapper.update()
+
+  // commit the form
+  wrapper.find('#sendBtn').first().simulate('click')
+
+  // status change callback is called.
+  t.true(handleReject.calledOnce)
+  t.true(handleReject.calledWith('Withdraw message'))
 })
 
-test('completed state', t => {
-  const changeStatus = sinon.fake()
-  const withdraw = sinon.fake()
+test(InterestStatus.INVITED, t => {
+  const handleAccept = sinon.fake()
+  const handleReject = sinon.fake()
+  const handleMessage = sinon.fake()
 
-  const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[1]}
-    onChangeStatus={changeStatus}
-    onWithdraw={withdraw}
-  />)
-  t.is(wrapper.find('h1').first().text(), 'Thank you for expressing your interest!')
+  const wrapper = mountWithIntl(
+    <RegisterInterestItem
+      interest={interests[2]}
+      onAccept={handleAccept}
+      onReject={handleReject}
+      onMessage={handleMessage}
+    />)
+  t.true(wrapper.exists('#acceptBtn'))
+  t.true(wrapper.exists('#rejectBtn'))
+  t.false(wrapper.exists('#messageBtn'))
+
+  // click reject button and get popup form
+  wrapper.find('#rejectBtn').first().simulate('click')
+  const rejectForm = wrapper.find('#rejectRegisterInterestForm').first()
+  t.true(rejectForm.props().visible)
+
+  // add message
+  const comment = rejectForm.find('textarea').first()
+  comment.simulate('change', { target: { value: 'Withdraw message' } })
+  wrapper.update()
+
+  // commit the form
+  wrapper.find('#sendBtn').first().simulate('click')
+
+  // status change callback is called.
+  t.true(handleReject.calledOnce)
+  t.true(handleReject.calledWith('Withdraw message'))
 })
 
-test('cancelled state', t => {
-  const changeStatus = sinon.fake()
-  const withdraw = sinon.fake()
+test(InterestStatus.COMMITTED, t => {
+  const handleAccept = sinon.fake()
+  const handleReject = sinon.fake()
+  const handleMessage = sinon.fake()
 
-  const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[4]}
-    onChangeStatus={changeStatus}
-    onWithdraw={withdraw}
-  />)
-  // testing the words that come out
-  t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
+  const wrapper = mountWithIntl(
+    <RegisterInterestItem
+      interest={interests[3]}
+      onAccept={handleAccept}
+      onReject={handleReject}
+      onMessage={handleMessage}
+    />)
+  t.false(wrapper.exists('#acceptBtn'))
+  t.true(wrapper.exists('#rejectBtn'))
+  t.true(wrapper.exists('#messageBtn'))
+
+  // click message button and get popup form
+  wrapper.find('#messageBtn').first().simulate('click')
+  const messageForm = wrapper.find('#messageRegisterInterestForm').first()
+  t.true(messageForm.props().visible)
+
+  // add message
+  const comment = messageForm.find('textarea').first()
+  comment.simulate('change', { target: { value: 'Hello message' } })
+  wrapper.update()
+
+  // commit the form
+  wrapper.find('#sendBtn').first().simulate('click')
+
+  // status change callback is called.
+  t.true(handleMessage.calledOnce)
+  t.true(handleMessage.calledWith('Hello message'))
 })
 
-test('invited', t => {
-  const changeStatus = sinon.fake()
-  const withdraw = sinon.fake()
+test(InterestStatus.DECLINED, t => {
+  const handleAccept = sinon.fake()
+  const handleReject = sinon.fake()
+  const handleMessage = sinon.fake()
 
-  const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[4]}
-    onChangeStatus={changeStatus}
-    onWithdraw={withdraw}
-  />)
-  // console.log(wrapper.html())
-  t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
-})
-
-test('committed', t => {
-  const changeStatus = sinon.fake()
-  const withdraw = sinon.fake()
-
-  const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[2]}
-    onChangeStatus={changeStatus}
-    onWithdraw={withdraw}
-  />)
-  // console.log(wrapper.html())
-  t.is(wrapper.find('h1').first().text(), 'You\'ve been invited to participate!')
-})
-
-test('declined', t => {
-  const changeStatus = sinon.fake()
-  const withdraw = sinon.fake()
-
-  const wrapper = mountWithIntl(<RegisterInterestItem
-    interest={interests[5]}
-    onChangeStatus={changeStatus}
-    onWithdraw={withdraw}
-  />)
-  t.is(wrapper.find('h1').first().text(), 'Our apologies')
+  const wrapper = mountWithIntl(
+    <RegisterInterestItem
+      interest={interests[4]}
+      onAccept={handleAccept}
+      onReject={handleReject}
+      onMessage={handleMessage}
+    />)
+  t.false(wrapper.exists('#acceptBtn'))
+  t.false(wrapper.exists('#rejectBtn'))
+  t.false(wrapper.exists('#messageBtn'))
 })
 // TODO: popconfirm requires a valid event.
 // popconfirm.props().onConfirm()

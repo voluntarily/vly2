@@ -1,240 +1,235 @@
-import { Button, Divider } from 'antd'
-import Router from 'next/router'
+import { useState, useCallback } from 'react'
+import { message } from 'antd'
+import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
-import { Component } from 'react'
-import { FormattedMessage } from 'react-intl'
 import Loading from '../../components/Loading'
-import OpDetail from '../../components/Op/OpDetail'
-import OpOwnerManageInterests from '../../components/Op/OpOwnerManageInterests'
-import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
-import { FullPage } from '../../components/VTheme/VTheme'
+import OpTabs from '../../components/Op/OpTabs'
+import {
+  FullPage
+} from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
-import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
-import OpEditPage from './opeditpage'
-import OpUnavailablePage from './opunavailablepage'
+import OpBanner from '../../components/Op/OpBanner'
+import OpUnknown from '../../components/Op/OpUnknown'
+import OpDetailForm from '../../components/Op/OpDetailForm'
+import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
+import { Helmet } from 'react-helmet'
+import { OpStatusStamp } from '../../components/Op/OpStatus'
+import { OpportunityStatus, OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 
 const blankOp = {
   name: '',
+  tyep: OpportunityType.ASK,
   subtitle: '',
-  imgUrl: '',
+  imgUrl: '/static/img/opportunity/opportunity.png',
   duration: '',
   location: 'Online',
-  status: 'inactive',
+  status: OpportunityStatus.DRAFT,
   date: [],
   startDate: null,
   endDate: null,
   tags: []
 }
 
-export class OpDetailPage extends Component {
-  state = {
-    editing: false
+export const OpDetailPage = ({
+  members,
+  me,
+  opportunities,
+  isNew,
+  opType,
+  dispatch,
+  isAuthenticated,
+  actid,
+  activities,
+  tags,
+  locations
+}) => {
+  const router = useRouter()
+  const [tab, setTab] = useState(isNew ? 'edit' : router.query.tab)
+
+  const updateTab = (key, top) => {
+    setTab(key)
+    if (top) window.scrollTo(0, 0)
+    //  else { window.scrollTo(0, 400) }
+    const newpath = `/ops/${op._id}?tab=${key}`
+    router.replace(router.pathname, newpath, { shallow: true })
   }
-
-  constructor (props) {
-    super(props)
-    this.confirmOpportunity = this.confirmOpportunity.bind(this)
-    this.cancelOpportunity = this.cancelOpportunity.bind(this)
-    this.isAdmin = this.isAdmin.bind(this)
-    this.isOwner = this.isOwner.bind(this)
-    this.canManageInterests = this.canManageInterests.bind(this)
-    this.canRegisterInterest = this.canRegisterInterest.bind(this)
-    this.retrieveOpportunity = this.retrieveOpportunity.bind(this)
+  const handleTabChange = (key, e) => {
+    updateTab(key, key === 'edit')
   }
-
-  static async getInitialProps ({ store, query }) {
-    // console('getInitialProps: OpDetailPage', store, query)
-    const me = store.getState().session.me
-    // Get one Org
-    const isNew = query && query.new && query.new === 'new'
-    const opExists = !!(query && query.id) // !! converts to a boolean value
-    await Promise.all([
-      store.dispatch(reduxApi.actions.members.get({ meid: me._id })),
-      store.dispatch(reduxApi.actions.locations.get()),
-      store.dispatch(reduxApi.actions.tags.get())
-    ])
-
-    if (isNew) {
-      // if there is an act parameter then get the activity and create initial op.
-      if (query.act) {
-        await store.dispatch(reduxApi.actions.activities.get({ id: query.act }))
+  const handleCancel = useCallback(
+    () => {
+      updateTab('about', true)
+      if (isNew) { // return to previous
+        router.back()
       }
-      return {
-        isNew,
-        actid: query.act
+    },
+    [isNew]
+  )
+  const handleSubmit = useCallback(
+    async (op) => {
+      let res = {}
+      if (op._id) {
+        // update existing op
+        res = await dispatch(
+          reduxApi.actions.opportunities.put(
+            { id: op._id },
+            { body: JSON.stringify(op) }
+          )
+        )
+      } else {
+        // save new opportunity
+        res = await dispatch(
+          reduxApi.actions.opportunities.post(
+            {},
+            { body: JSON.stringify(op) })
+        )
+        op = res[0] // get new id
+        router.replace(`/ops/${op._id}`) // reload to the new id page
       }
-    } else {
-      if (opExists) {
-        query.session = store.getState().session //  Inject session with query that restricted api access
-        await store.dispatch(reduxApi.actions.opportunities.get(query))
-      }
-      return {
-        isNew,
-        opExists
-      }
-    }
+      updateTab('about', true)
+      message.success('Saved.')
+    }, [])
+
+  // bail early if no data
+  if (!opportunities.sync && !isNew) {
+    return <Loading label='activity' entity={opportunities} />
+  }
+  const ops = opportunities.data
+  if (ops.length === 0 && !isNew) {
+    return <OpUnknown />
   }
 
-  componentDidMount () {
-    if (this.props.isNew) {
-      this.setState({ editing: true })
-    }
-  }
+  // setup the opportunity data
+  let op
+  if (isNew) {
+    // new op
+    op = blankOp
+    op.type = opType
 
-  async createOpportunity (op) {
-    const res = await this.props.dispatch(
-      reduxApi.actions.opportunities.put(
-        { id: op._id },
-        { body: JSON.stringify(op) }
-      )
-    )
-    return res[0]
-  }
-
-  async updateOpportunity (op) {
-    const res = await this.props.dispatch(
-      reduxApi.actions.opportunities.post(
-        {},
-        { body: JSON.stringify(op) }
-      )
-    )
-    return res[0]
-  }
-
-  stopEditing = () => {
-    this.setState({ editing: false })
-    if (this.props.isNew) { // return to previous
-      Router.back()
-    }
-  }
-
-  async confirmOpportunity (op) {
-    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.COMPLETED }) }))
-  }
-
-  async cancelOpportunity (op) {
-    await this.props.dispatch(reduxApi.actions.opportunities.put({ id: op._id }, { body: JSON.stringify({ status: OpportunityStatus.CANCELLED }) }))
-  }
-
-  isAdmin () {
-    return this.props.me && this.props.me.role.includes('admin')
-  }
-
-  isOwner (op) {
-    return this.props.isNew || (this.props.me && op.requestor && this.props.me._id === op.requestor._id)
-  }
-
-  canEdit (op) {
-    const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
-    return (this.isOwner(op) || isOrgAdmin || this.isAdmin())
-  }
-
-  canManageInterests (op) {
-    return (this.isOwner(op) || this.isAdmin())
-  }
-
-  canRegisterInterest (op) {
-    return (this.props.isAuthenticated && !this.isOwner(op))
-  }
-
-  retrieveOpportunity () {
-    if (this.props.members.sync && this.props.members.data.length > 0 && this.props.me) {
-      this.props.me.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
-    }
-
-    let op
-    if (this.props.isNew) {
-      op = blankOp
-
-      // init from activity if provided
-      if (this.props.actid) {
-        const act = this.props.activities.data[0]
-        op = {
-          ...blankOp,
-          name: act.name,
-          subtitle: act.subtitle,
-          description: act.description,
-          imgUrl: act.imgUrl,
-          duration: act.duration,
-          tags: act.tags,
-          fromActivity: act._id
-        }
-      }
-      op.requestor = this.props.me
-
-      // set init offerOrg to first membership result
-      if (this.props.me.orgMembership && this.props.me.orgMembership.length > 0) {
-        op.offerOrg = {
-          _id: this.props.me.orgMembership[0].organisation._id
-        }
-      }
-    } else {
+    // init from activity if provided
+    if (actid) {
+      const act = activities.data[0]
       op = {
-        ...this.props.opportunities.data[0],
-        // tags: this.props.opportunities.data[0].tags.map(op => op.tag),
-        startDate: this.props.opportunities.data[0].date[0],
-        endDate: this.props.opportunities.data[0].date[1]
+        ...blankOp,
+        name: act.name,
+        subtitle: act.subtitle,
+        description: act.description,
+        imgUrl: act.imgUrl,
+        duration: act.duration,
+        tags: act.tags,
+        fromActivity: actid
       }
     }
-    return op
+    op.requestor = me
+
+    // set init offerOrg to first membership result
+    if (
+      me.orgMembership &&
+     me.orgMembership.length > 0
+    ) {
+      op.offerOrg = {
+        _id: me.orgMembership[0].organisation._id
+      }
+    }
+  } else { // existing op
+    op = {
+      ...opportunities.data[0],
+      startDate: opportunities.data[0].date[0],
+      endDate: opportunities.data[0].date[1]
+    }
+  }
+  // Who can edit?
+  const isAdmin = me && me.role.includes(OpportunityStatus.ADMIN)
+  const isOwner =
+      isNew ||
+      (me && op.requestor && me._id === op.requestor._id)
+
+  let isOrgAdmin = false
+
+  // add org membership to me so it can be used for offerOrg
+  if (me && members.sync && members.data.length > 0) {
+    me.orgMembership = members.data.filter(m =>
+      [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)
+    )
+    if (op.offerOrg) {
+      isOrgAdmin = me.orgMembership.find(m => {
+        return (m.status === MemberStatus.ORGADMIN &&
+        m.organisation._id === op.offerOrg._id).length > 0
+      })
+    }
+  }
+  const canManage = isOwner || isAdmin || isOrgAdmin
+  const canRegisterInterest = isAuthenticated && !isOwner
+
+  if (tab === 'edit') {
+    return (
+      <FullPage>
+        <Helmet>
+          <title>Edit {op.name} - Voluntarily</title>
+        </Helmet>
+        <OpDetailForm
+          op={op}
+          me={me}
+          onSubmit={handleSubmit}
+          onCancel={handleCancel}
+          existingTags={tags.data}
+          existingLocations={locations.data}
+        />
+      </FullPage>)
+  }
+  return (
+    <FullPage>
+      <Helmet>
+        <title>{op.name} - Voluntarily</title>
+      </Helmet>
+      <OpBanner op={op}>
+        <OpStatusStamp status={op.status} />
+        <OpVolunteerInterestSection
+          isAuthenticated={isAuthenticated}
+          canRegisterInterest={canRegisterInterest}
+          opid={op && op._id}
+          meid={me && me._id}
+        />
+      </OpBanner>
+      <OpTabs op={op} canManage={canManage} canEdit={canManage} defaultTab={tab} onChange={handleTabChange} author={me._id} />
+    </FullPage>)
+}
+
+OpDetailPage.getInitialProps = async ({ store, query }) => {
+  // console('getInitialProps: OpDetailPage', store, query)
+  const me = store.getState().session.me
+  // Get one Org
+  const isNew = query && query.new && [OpportunityType.ASK, OpportunityType.OFFER].includes(query.new)
+  const opExists = !!(query && query.id) // !! converts to a boolean value
+  await Promise.all([
+    store.dispatch(reduxApi.actions.locations.get()),
+    store.dispatch(reduxApi.actions.tags.get())
+  ])
+
+  if (me._id) {
+    await store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() }))
   }
 
-  render () {
-    // Verifying that we do not show the page unless data has been loaded when the opportunity is not new
-    if (!this.props.isNew) {
-      if (this.props.opportunities.loading) {
-        return (<Loading />)
-      }
-      if (this.props.opportunities.data.length !== 1) {
-        return (<OpUnavailablePage />)
-      }
+  if (isNew) {
+    // if there is an act parameter then get the activity and create initial op.
+    if (query.act) {
+      await store.dispatch(reduxApi.actions.activities.get({ id: query.act }))
     }
-
-    let op = this.retrieveOpportunity()
-
-    if ((op && this.state.editing)) {
-      return (
-        <OpEditPage
-          op={op}
-          me={this.props.me}
-          existingTags={this.props.tags.data}
-          existingLocations={this.props.locations.data}
-          stopEditing={this.stopEditing.bind(this)}
-          updateOpportunity={this.updateOpportunity.bind(this)}
-          createOpportunity={this.createOpportunity.bind(this)}
-        />
-      )
-    } else {
-      return (!this.props.isNew &&
-        <FullPage>
-          {this.canEdit(op) &&
-            <Button
-              id='editOpBtn'
-              style={{ float: 'right' }}
-              type='primary'
-              shape='round'
-              onClick={() => this.setState({ editing: true })}>
-              <FormattedMessage id='op.edit' defaultMessage='Edit' description='Button to edit an opportunity' />
-            </Button>
-          }
-          <OpDetail op={op} />
-          <Divider />
-          <OpVolunteerInterestSection
-            isAuthenticated={this.props.isAuthenticated}
-            canRegisterInterest={this.canRegisterInterest(op)}
-            op={op}
-            meID={this.props.me && this.props.me._id}
-          />
-          <OpOwnerManageInterests
-            canManageInterests={this.canManageInterests(op)}
-            op={op}
-            confirmOpportunity={this.confirmOpportunity}
-            cancelOpportunity={this.cancelOpportunity}
-          />
-        </FullPage>
-      )
+    return {
+      isNew,
+      opType: query.new,
+      actid: query.act
+    }
+  } else {
+    if (opExists) {
+      // query.session = store.getState().session //  Inject session with query that restricted api access
+      await store.dispatch(reduxApi.actions.opportunities.get(query))
+    }
+    return {
+      isNew,
+      opExists
     }
   }
 }

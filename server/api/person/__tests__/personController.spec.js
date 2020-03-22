@@ -8,27 +8,24 @@ import MockResponse from 'mock-res'
 import { updatePersonDetail } from '../person.controller'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../__tests__/person.fixture'
+import { Role } from '../../../../server/services/authorize/role'
 
 test.before('before connect to database', async (t) => {
-  await appReady
-  t.context.memMongo = new MemoryMongo()
-  // console.log('App ready')
-  await t.context.memMongo.start()
+  try {
+    t.context.memMongo = new MemoryMongo()
+    await t.context.memMongo.start()
+    await appReady
+    await Person.create(people).catch((err) => console.error('Unable to create people:', err))
+  } catch (e) {
+    console.error('personController.spec.js, before connect to database', e)
+  }
 })
 
 test.after.always(async (t) => {
   await t.context.memMongo.stop()
 })
 
-test.beforeEach('connect and add people fixture', async () => {
-  await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-})
-
-test.afterEach.always(async () => {
-  await Person.deleteMany()
-})
-
-test.serial('Should call send status function for null record ', async t => {
+test.serial('Should call sendStatus function for null record ', async t => {
   const userIDWantToUpdate = 'asdfasdfgadf'
   const fakeSendStatus = sinon.fake()
   const rawRules = [
@@ -49,7 +46,7 @@ test.serial('Should call send status function for null record ', async t => {
 })
 
 test.serial('Should call next middleware when record is found', async t => {
-  const personToQuery = await Person.find({ 'name': 'Andrew Watkins' })
+  const personToQuery = await Person.find({ name: 'Andrew Watkins' })
   const idToQuery = personToQuery[0]._id
 
   const fakeSendStatus = sinon.fake()
@@ -62,27 +59,37 @@ test.serial('Should call next middleware when record is found', async t => {
   const request = new MockExpressRequest()
   request.body = {
     _id: idToQuery,
-    'name': 'Andrew Watkins',
-    'nickname': 'avowkind',
-    'email': 'andrew@groat.nz',
-    'about': 'Voluntari.ly Product Lead',
-    'location': 'Auckland',
-    'gender': 'male',
-    'language': 'EN',
-    'role': [
+    name: 'Andrew Watkins',
+    nickname: 'avowkind',
+    email: 'andrew@groat.nz',
+    about: 'New About Text',
+    locations: ['Auckland'],
+    language: 'en',
+    role: [
       'admin'
     ],
-    'status': 'active',
-    'imgUrl': 'https://avatars2.githubusercontent.com/u/1596437?v=4',
-    'phone': '+64 027 7031007'
+    status: 'active',
+    imgUrl: 'https://avatars2.githubusercontent.com/u/1596437?v=4',
+    phone: '+64 027 7031007'
   }
   request.ability = ability
   request.crudify = {
     result: {}
   }
+  request.session = {
+    me: {
+      _id: idToQuery,
+      role: [Role.ADMIN]
+    }
+  }
+  request.params = {
+    _id: idToQuery.toString()
+  }
+
   const response = new MockResponse()
   response.sendStatus = (status) => { fakeSendStatus() }
   await updatePersonDetail(request, response, nextMiddleware)
+
   t.is(1, nextMiddleware.callCount)
-  t.deepEqual(request.crudify.result, request.body)
+  t.is(request.crudify.result.about, request.body.about)
 })

@@ -12,6 +12,8 @@ const act = {
   imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
   description: 'Project to grow something in the garden',
   duration: '15 Minutes',
+  space: '1 acre',
+  volunteers: '0.2',
   location: 'Newmarket, Auckland',
   status: 'draft'
 }
@@ -20,9 +22,31 @@ test('shallow the card with act', t => {
   const wrapper = shallowWithIntl(
     <ActCard act={act} onPress={() => {}} />
   )
-  // console.log(wrapper.debug())
-  t.is(wrapper.find('.requestContainer').length, 1)
-  t.is(wrapper.find('.requestTitle').text(), act.name)
+
+  t.is((wrapper.find('Link').first().props().href), '/acts/' + act._id)
+  t.is(wrapper.find('h1').text(), `DRAFT: ${act.name}`)
+  t.is(wrapper.find('img').prop('src'), act.imgUrl)
+  t.is(wrapper.find('figcaption').find('p').first().text(), `⏱ ${act.duration}`)
+  t.is(wrapper.find('figcaption').find('p').last().text(), `${act.subtitle}`)
 })
 
+test('shallow the card with no pic', t => {
+  const act = {
+    _id: '5cc903e5f94141437622cea7',
+    name: 'Growing in the garden',
+    subtitle: 'Growing digitally in the garden',
+    description: 'Project to grow something in the garden',
+    location: 'Newmarket, Auckland',
+    status: 'active'
+  }
+
+  const wrapper = shallowWithIntl(
+    <ActCard act={act} onPress={() => {}} />
+  )
+  t.is((wrapper.find('Link').first().props().href), '/acts/' + act._id)
+  t.is(wrapper.find('h1').text(), `${act.name}`)
+  t.is(wrapper.find('img').prop('src'), '/static/missingimage.svg')
+  t.is(wrapper.find('figcaption').find('p').first().text(), '')
+  t.is(wrapper.find('figcaption').find('p').last().text(), `${act.subtitle}`)
+})
 // test.todo('Click the card and see if the link works')

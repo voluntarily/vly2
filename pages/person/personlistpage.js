@@ -4,7 +4,6 @@
   Entry - people menu item.
 */
 import { Button } from 'antd'
-import Cookie from 'js-cookie'
 import Link from 'next/link'
 import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
@@ -15,16 +14,12 @@ import securePage from '../../hocs/securePage'
 import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
 
 class PersonListPage extends Component {
-  static async getInitialProps ({ store, req }) {
-    let cookies = req ? req.cookies : Cookie.get()
+  static async getInitialProps ({ store }) {
     // Get all People
     try {
-      const cookiesStr = JSON.stringify(cookies)
-      await store.dispatch(reduxApi.actions.people.get(undefined, {
-        params: cookiesStr
-      }))
+      await store.dispatch(reduxApi.actions.people.get())
     } catch (err) {
-      console.log('error in getting people', err)
+      console.error('error in getting people', err)
     }
   }
 

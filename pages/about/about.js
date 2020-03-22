@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import AboutCTA from '../../components/About/AboutCTA.js'
 import { FullPage, Spacer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
-import withIntl from '../../lib/withIntl'
+import { injectIntl } from 'react-intl'
 import aboutEn from './about-en-md.js'
 import aboutMi from './about-mi-md.js'
 
@@ -97,7 +97,8 @@ class About extends Component {
               margin: 0 3em;
             }
           }
-        `}</style>
+        `}
+        </style>
       </FullPage>
     )
   }
@@ -105,4 +106,4 @@ class About extends Component {
 
 export const AboutTest = About // for test
 
-export default publicPage(withIntl(About))
+export default publicPage(injectIntl(About))

@@ -3,12 +3,12 @@ import { HalfGrid } from '../VTheme/VTheme'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
-import TitleSectionSub from './TitleSectionSub'
+import SectionSubtitle from './SectionSubtitle'
 import OpCard from '../Op/OpCard'
 
 const FeaturedTwoSection = ({ ops, title, subtitle, ...props }) => (
   <div>
-    <TitleSectionSub
+    <SectionSubtitle
       title={title}
       subtitle={subtitle}
     />
@@ -17,8 +17,8 @@ const FeaturedTwoSection = ({ ops, title, subtitle, ...props }) => (
         ops.map((op, index) => <OpCard size='Big' op={op} key={index} />)
       ) : (
         <FormattedMessage
-          id='op.list.empty'
-          defaultMessage='No matching opportunities'
+          id='op.list.empty2'
+          defaultMessage='No matching activities'
           description='no opportunities message in OpList'
         />
       )}

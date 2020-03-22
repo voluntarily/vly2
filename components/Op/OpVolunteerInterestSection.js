@@ -1,26 +1,28 @@
-import { Button, Divider } from 'antd'
+import { Button } from 'antd'
 import Link from 'next/link'
-import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RegisterInterestSection from '../Interest/RegisterInterestSection'
 
-export default class OpVolunteerInterestSection extends Component {
-  render () {
+export const OpVolunteerInterestSection = ({ isAuthenticated, canRegisterInterest, opid, meid }) => {
+  // if not signed in then the interested button signs in first
+  if (!isAuthenticated) {
     return (
-      // if not signed in then the interested button signs in first
-      !this.props.isAuthenticated
-        ? <div>
-          <Link href={`/auth/sign-in`} >
-            <Button type='primary' shape='round' >
-              <FormattedMessage id='iminterested-anon' defaultMessage="I'm Interested" description="I'm interested button that leads to sign in page" />
-            </Button>
-          </Link>
-          <Divider />
-        </div>
-        : this.props.canRegisterInterest && <div>
-          <RegisterInterestSection op={this.props.op} meID={this.props.meID} />
-          <Divider />
-        </div>
+      <Link href={`/auth/sign-thru?redirect=/ops/${opid}`}>
+
+        <Button type='primary' style={{ width: '50%' }} size='large' shape='round'>
+          <FormattedMessage id='iminterested-anon' defaultMessage='Get involved' description='Registration button on an op that leads to sign in page' />
+        </Button>
+
+      </Link>
     )
   }
+
+  if (canRegisterInterest) {
+    return (
+      <RegisterInterestSection opid={opid} meid={meid} />
+    )
+  }
+  return null
 }
+
+export default OpVolunteerInterestSection

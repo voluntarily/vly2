@@ -1,26 +1,28 @@
+const { Action } = require('../../services/abilities/ability.constants')
 const escapeRegex = require('../../util/regexUtil')
 const Opportunity = require('./opportunity')
-const Interest = require('./../interest/interest')
-const Tag = require('./../tag/tag')
+const { Interest, InterestArchive } = require('./../interest/interest')
 const Person = require('./../person/person')
 const ArchivedOpportunity = require('./../archivedOpportunity/archivedOpportunity')
-const InterestArchive = require('./../interest-archive/interestArchive')
-const { OpportunityStatus } = require('./opportunity.constants')
+const { OpportunityStatus, OpportunityListFields } = require('./opportunity.constants')
 const { regions } = require('../location/locationData')
 const sanitizeHtml = require('sanitize-html')
 const { getLocationRecommendations, getSkillsRecommendations } = require('./opportunity.util')
+const { Role } = require('../../services/authorize/role')
+const Member = require('../member/member')
 
 /**
- * Get all orgs
+ * Get all ops
  * @param req
  * @param res
  * @returns void
  */
-const getOpportunities = async (req, res) => {
-  // limit to Active ops unless one of the params overrides
-  let query = { 'status': OpportunityStatus.ACTIVE }
+const listOpportunities = async (req, res, next) => {
+  // Default to Active ops unless one of the params overrides
+  let query = { status: OpportunityStatus.ACTIVE }
   let sort = 'name'
-  let select = {}
+  // return only the summary needed for an OpCard
+  let select = OpportunityListFields.join(' ')
 
   try {
     query = req.query.q ? JSON.parse(req.query.q) : query
@@ -38,27 +40,15 @@ const getOpportunities = async (req, res) => {
       // split around one or more whitespace characters
       const keywordArray = search.split(/\s+/)
 
-      // case insensitive regex which will find tags matching any of the array values
-      const tagSearchExpression = new RegExp(keywordArray.map(w => escapeRegex(w)).join('|'), 'i')
-
-      // find tag ids to include in the opportunity search
-      const matchingTagIds = await Tag.find({ 'tag': tagSearchExpression }, '_id').exec()
-
       const searchExpression = new RegExp(regexSearch, 'i')
+
       const searchParams = {
         $or: [
-          { 'name': searchExpression },
-          { 'subtitle': searchExpression },
-          { 'description': searchExpression }
+          { name: searchExpression },
+          { subtitle: searchExpression },
+          { description: searchExpression },
+          { tags: { $in: keywordArray } }
         ]
-      }
-
-      // mongoose isn't happy if we provide an empty array as an expression
-      if (matchingTagIds.length > 0) {
-        const tagIdExpression = {
-          $or: matchingTagIds.map(id => ({ 'tags': id }))
-        }
-        searchParams.$or.push(tagIdExpression)
       }
 
       query = {
@@ -77,12 +67,11 @@ const getOpportunities = async (req, res) => {
       // location is a filter so should still match all other queries. use AND, not OR
       query = {
         $and: [
-          { 'location': { $in: locsToFind } },
+          { location: { $in: locsToFind } },
           query
         ]
       }
     }
-    // console.log('getOpportunities', req.query, query)
 
     try {
       const got = await Opportunity
@@ -93,12 +82,14 @@ const getOpportunities = async (req, res) => {
         .populate('offerOrg', 'name imgUrl category')
         .sort(sort)
         .exec()
-      res.json(got)
+
+      req.crudify = { result: got }
+      return next()
     } catch (e) {
       return res.status(404).send(e)
     }
   } catch (e) {
-    console.log('getOpportunities error:', e)
+    console.error('listOpportunities error:', e)
     return res.status(500).send(e)
   }
 }
@@ -124,53 +115,136 @@ const getOpportunityRecommendations = async (req, res) => {
   }
 }
 
-const getOpportunity = async (req, res) => {
+const getOpportunity = async (req, res, next) => {
   try {
     const got = await Opportunity
-      .accessibleBy(req.ability)
+      .accessibleBy(req.ability, Action.READ)
       .findOne(req.params)
       .populate('requestor', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl category')
-      .populate('tags')
       .exec()
     if (got == null) {
       // BUG: [VP-478] populate tags with many tags can cause a 507 Insufficient Space error.
       // Also this error message is not helpful.  Catch and do something useful
       throw Error()
     }
-    res.json(got)
+    req.crudify = { result: got }
+    return next()
   } catch (e) {
     res.status(404).send(e)
   }
 }
 
-const putOpportunity = async (req, res) => {
+const putOpportunity = async (req, res, next) => {
+  const me = req.session && req.session.me
+  if (!me) {
+    return res.sendStatus(401)
+  }
+
   try {
+    if (!me.role.includes(Role.ADMIN)) {
+      // Once an opportunity has been created we should not be able to change the activity it was based on
+      if (req.body.fromActivity) {
+        return res.status(400).send('Cannot change the fromActivity field')
+      }
+
+      if (req.body.offerOrg && (await Member.find({ person: me._id, organisation: req.body.offerOrg })).length === 0) {
+        return res.status(400).send('Invalid organisation')
+      }
+    }
+
     if (req.body.status === OpportunityStatus.COMPLETED || req.body.status === OpportunityStatus.CANCELLED) {
-      await Opportunity.findByIdAndUpdate(req.params._id, { $set: req.body })
-      const archop = await archiveOpportunity(req.params._id)
-      // TODO: [VP-282] after archiving return a 301 redirect to the archived opportunity
-      // res.redirect(301, `/opsarchive/${archop._id}`)
+      await Opportunity
+        .accessibleBy(req.ability, Action.UPDATE)
+        .updateOne({ _id: req.params._id }, req.body)
+
+      const archOp = await archiveOpportunity(req.params._id)
       await archiveInterests(req.params._id)
-      res.json(archop)
+      req.crudify = { result: archOp }
+      return next()
     } else {
-      await Opportunity.findByIdAndUpdate(req.params._id, { $set: req.body })
-      getOpportunity(req, res)
+      const result = await Opportunity
+        .accessibleBy(req.ability, Action.UPDATE)
+        .updateOne({ _id: req.params._id }, { $set: req.body })
+      if (result.n === 0) {
+        return res.sendStatus(404)
+      }
+
+      await getOpportunity(req, res, next)
     }
   } catch (e) {
+    console.error(e)
     res.status(400).send(e)
   }
 }
 
+const deleteOpportunity = async (req, res, next) => {
+  try {
+    const result = await Opportunity
+      .accessibleBy(req.ability, Action.DELETE)
+      .deleteOne({ _id: req.params._id })
+
+    if (result.nDeleted === 0) {
+      return res.sendStatus(404)
+    }
+  } catch (e) {
+    return res.sendStatus(500)
+  }
+
+  req.crudify = { result: {} }
+  res.status(204)
+  next()
+}
+
+const createOpportunity = async (req, res, next) => {
+  const me = req && req.session && req.session.me
+  if (!me) {
+    return res.sendStatus(401)
+  }
+
+  const canCreate = async () => {
+    if (me.role.includes(Role.ADMIN)) {
+      return true
+    }
+    if (me.role.includes(Role.ORG_ADMIN) && req.body.offerOrg && me.orgAdminFor.includes(req.body.offerOrg)) {
+      return true
+    }
+    if (me.role.includes(Role.OPPORTUNITY_PROVIDER) || me.role.includes(Role.VOLUNTEER_PROVIDER)) {
+      if (!req.body.offerOrg) {
+        return false
+      }
+
+      // The offerOrg must be one the current user is a member of
+      return (await Member.find({ person: me._id, organisation: req.body.offerOrg })).length > 0
+    }
+
+    return false
+  }
+
+  if (!(await canCreate())) {
+    return res.status(403).send('Must have create permission')
+  }
+
+  try {
+    const result = await Opportunity.create(req.body)
+
+    req.crudify = { result }
+    res.status(200)
+    next()
+  } catch (e) {
+    res.sendStatus(500)
+  }
+}
+
 const archiveOpportunity = async (id) => {
-  let opportunity = await Opportunity.findById(id).exec()
+  const opportunity = await Opportunity.findById(id).exec()
   await new ArchivedOpportunity(opportunity.toJSON()).save()
   await Opportunity.deleteOne({ _id: id }).exec()
   return archiveOpportunity
 }
 
 const archiveInterests = async (opId) => {
-  let opportunityInterests = await Interest.find({ opportunity: opId }).exec()
+  const opportunityInterests = await Interest.find({ opportunity: opId }).exec()
   let interest
   for (interest of opportunityInterests) {
     await new InterestArchive(interest.toJSON()).save()
@@ -180,49 +254,43 @@ const archiveInterests = async (opId) => {
 
 function ensureSanitized (req, res, next) {
   const descriptionOptions = {
-    allowedTags: [ 'a', 'b', 'br', 'caption', 'code', 'div', 'blockquote', 'em',
+    allowedTags: ['a', 'b', 'br', 'caption', 'code', 'div', 'blockquote', 'em',
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'iframe', 'img', 'li', 'ol',
       'p', 'pre', 's', 'span', 'strike', 'strong', 'table', 'tbody', 'td', 'th',
-      'thead', 'tr', 'u', 'ul' ],
+      'thead', 'tr', 'u', 'ul'],
     allowedAttributes: {
-      a: [ 'href' ],
-      iframe: [ 'height', 'src', 'width' ],
-      img: [ 'src' ],
-      pre: [ 'spellcheck' ],
-      span: [ 'style' ]
+      a: ['href'],
+      iframe: ['height', 'src', 'width'],
+      img: ['src'],
+      pre: ['spellcheck'],
+      span: ['style']
     },
     allowedClasses: {
-      '*': [ 'ql-align-center', 'ql-align-right', 'ql-align-justify', 'ql-syntax' ]
+      '*': ['ql-align-center', 'ql-align-right', 'ql-align-justify', 'ql-syntax']
     },
     allowedStyles: {
       span: {
-        // permits values for color and background-color CSS properties that look like 'rgb(230,0,50)'
-        'color': [ /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/ ],
-        'background-color': [ /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/ ]
+        color: [/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/],
+        backgroundColor: [/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/]
       }
     },
-    allowedIframeHostnames: [ 'www.youtube.com' ],
-    // Should prevent any iframes using something other than https for their src.
-    allowedSchemesByTag: { iframe: [ 'https' ] },
+    allowedIframeHostnames: ['www.youtube.com'],
+    allowedSchemesByTag: { iframe: ['https'] },
     allowProtocolRelative: false
   }
 
   const op = req.body
-  if (op.name) { op.name = sanitizeHtml(op.name) }
-  if (op.subtitle) { op.subtitle = sanitizeHtml(op.subtitle) }
-  if (op.imgUrl) { op.imgUrl = sanitizeHtml(op.imgUrl) }
   if (op.description) { op.description = sanitizeHtml(op.description, descriptionOptions) }
-  if (op.duration) { op.duration = sanitizeHtml(op.duration) }
-  if (op.location) { op.location = sanitizeHtml(op.location) }
-  if (op.offerOrg) { op.offerOrg = sanitizeHtml(op.offerOrg) }
   req.body = op
   next()
 }
 
 module.exports = {
   ensureSanitized,
-  getOpportunities,
+  listOpportunities,
   getOpportunity,
   putOpportunity,
-  getOpportunityRecommendations
+  deleteOpportunity,
+  getOpportunityRecommendations,
+  createOpportunity
 }

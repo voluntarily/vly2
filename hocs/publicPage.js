@@ -1,69 +1,37 @@
+/* This Wrapper adds the header and footer layout to a standard page
+  to inhibit rendering of the header/footer return isPlain = true from
+  the wrapped component GetInitialProps
+ */
 import { Layout } from 'antd'
-import Cookie from 'js-cookie'
-import Router from 'next/router'
 import React from 'react'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 import { FillWindow } from '../components/VTheme/VTheme'
-import { getUserFromLocalCookie, getUserFromServerCookie, parseUserToSession } from '../lib/auth/auth'
-import { setSession } from '../lib/redux/actions'
 
-export default Page =>
-  class DefaultPage extends React.Component {
-    static async getInitialProps (ctx) {
-      let cookies = ctx.req ? ctx.req.cookies : Cookie.get()
-      let session = {}
-      const loggedUser = process.browser
-        ? getUserFromLocalCookie()
-        : getUserFromServerCookie(ctx.req)
-      if (loggedUser) {
-        try {
-          session = await parseUserToSession(loggedUser, cookies)
-          ctx.store.dispatch(setSession(session))
-        } catch (err) {
-          console.error('PublicPage error parsing user session: ', err)
-        }
-      }
+export const PublicPage = Page => {
+  const DefaultPage = (props) => {
+    const isPlain = props.isPlain
+    return (
+      <Layout>
+        {!isPlain && <Header {...props} />}
+        <Layout.Content>
+          <FillWindow>
+            <Page {...props} />
+          </FillWindow>
+        </Layout.Content>
+        {!isPlain && <Footer {...props} />}
+      </Layout>
+    )
+  }
 
-      const pageProps =
-        Page.getInitialProps && (await Page.getInitialProps(ctx))
-      return {
-        ...pageProps,
-        me: session.me || false,
-        isAuthenticated: !!session.isAuthenticated,
-        isPlain: false
-      }
-    }
-
-    constructor (props) {
-      super(props)
-      this.logout = this.logout.bind(this)
-    }
-
-    logout (eve) {
-      if (eve.key === 'logout') {
-        Router.push(`/?logout=${eve.newValue}`)
-      }
-    }
-
-    componentDidMount () {
-      window.addEventListener('storage', this.logout, false)
-    }
-
-    componentWillUnmount () {
-      window.removeEventListener('storage', this.logout, false)
-    }
-    render () {
-      return (
-        <Layout>
-          { !this.props.isPlain && <Header {...this.props} />}
-          <Layout.Content>
-            <FillWindow>
-              <Page {...this.props} />
-            </FillWindow>
-          </Layout.Content>
-          { !this.props.isPlain && <Footer {...this.props} />}
-        </Layout>
-      )
+  DefaultPage.getInitialProps = async (ctx) => {
+    const pageProps = Page.getInitialProps && (await Page.getInitialProps(ctx))
+    const isPlain = false
+    return {
+      isPlain,
+      ...pageProps // page props can override these props
     }
   }
+  return DefaultPage
+}
+export default PublicPage

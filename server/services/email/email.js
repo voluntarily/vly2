@@ -1,25 +1,26 @@
 const nodemailer = require('nodemailer')
-const { config } = require('../../../config/config')
+const nodemailerMock = require('nodemailer-mock')
 
-const getTransportTest = () => {
-  // Generate test SMTP service account from ethereal.email
-  // Only needed if you don't have a real mail account for testing
-  return nodemailer.createTestAccount()
-    .then(testAccount => {
-      // console.log('Created test account ', testAccount)
-      return nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-          user: testAccount.user, // generated ethereal user
-          pass: testAccount.pass // generated ethereal password
-        }
-      })
-    })
-}
+const { config } = require('../../../config/serverConfig')
 
-const getDevelopmentTransport = () =>
+// const getTransportTest = () => {
+//   // Generate test SMTP service account from ethereal.email
+//   // Only needed if you don't have a real mail account for testing
+//   return nodemailer.createTestAccount()
+//     .then(testAccount => {
+//       return nodemailer.createTransport({
+//         host: 'smtp.ethereal.email',
+//         port: 587,
+//         secure: false, // true for 465, false for other ports
+//         auth: {
+//           user: testAccount.user, // generated ethereal user
+//           pass: testAccount.pass // generated ethereal password
+//         }
+//       })
+//     })
+// }
+
+const getTransportDev = () =>
   nodemailer.createTransport({
     host: 'smtp.ethereal.email',
     port: 587,
@@ -45,10 +46,36 @@ const getTransportSES = () =>
     }
   })
 
+const getTransportMock = () => {
+  return (nodemailerMock.createTransport({
+    host: 'smtp.voluntarily.nz',
+    port: 587,
+    secure: false
+  }))
+}
+
+const getTransportFromEnvironment = () =>
+  nodemailer.createTransport({
+    host: process.env.VLY_SMTP_HOST,
+    port: process.env.VLY_SMTP_PORT,
+    secure: false
+  })
+
+const currentTransport = () => {
+  if (process.env.mockEmails || config.env === 'test') {
+    return getTransportMock()
+  } else if (process.env.VLY_SMTP_HOST && process.env.VLY_SMTP_PORT) {
+    return getTransportFromEnvironment()
+  } else if (config.env === 'development') {
+    return getTransportDev()
+  } else {
+    return getTransportSES()
+  }
+}
+
 module.exports = {
   getTransportSES,
-  getTransportTest,
-  getDevelopmentTransport, // should use this one for development only
-  getTransport: (process.env.NODE_ENV === 'test') ? getTransportTest : getTransportSES
-  // getTransport: getTransportSES
+  getTransportDev, // should use this one for development only
+  getTransportMock, // use for testing
+  getTransport: currentTransport
 }

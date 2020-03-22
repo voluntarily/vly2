@@ -1,43 +1,40 @@
-import React, { Component } from 'react'
-import publicPage from '../../hocs/publicPage'
-import Hero from '../../components/LandingPageComponents/Hero'
-import PersonaSection from '../../components/LandingPageComponents/PersonaSection'
-import OpListSection from '../../components/Op/OpListSection'
-import OpAdd from '../../components/Op/OpAdd'
-import TitleSectionSub from '../../components/LandingPageComponents/TitleSectionSub'
-import { FullPage, Spacer } from '../../components/VTheme/VTheme'
-// import bigimage from './landing-page-bg.jpg'
-// import schoolsactivity from './schoolsactivity.png'
 import { Helmet } from 'react-helmet'
+import { FormattedMessage } from 'react-intl'
+import Hero from '../../components/LandingPageComponents/Hero'
+import OfferSection from '../../components/LandingPageComponents/OfferSection'
+import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
+import OpAdd from '../../components/Op/OpAdd'
+import OpListSection from '../../components/Op/OpListSection'
+import { FullPage } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
+import moment from 'moment'
+import { Divider } from 'antd'
+export const Landing = props => (
+  <>
+    <Hero />
+    <FullPage>
+      <Helmet>
+        <title>Voluntarily</title>
+      </Helmet>
+      <Divider />
+      <OfferSection />
+      <Divider />
+      <SectionTitle>
+        <FormattedMessage
+          id='landing.sectiontitle.oplist'
+          defaultMessage='Happening Soon'
+        />
+      </SectionTitle>
 
-class Landing extends Component {
-  render () {
-    return (
-      <div>
-        <Hero />
-        <FullPage>
-          <Helmet>
-            <title>Voluntarily - Welcome</title>
-          </Helmet>
-          <Spacer />
-          <div className='spacer' />
-          <TitleSectionSub
-            title='Who we help'
-            subtitle='We help these awesome people accomplish amazing things'
-          />
-          <PersonaSection />
-          <div className='spacer' />
-          <TitleSectionSub
-            title='Happening Soon'
-            subtitle='You are a few clicks away from getting involved with your community'
-          />
+      <OpListSection
+        store={props.store}
+        filter={{
+          date: [moment().subtract(1, 'days'), moment().add(60, 'days')]
+        }}
+      />
 
-          <OpListSection store={this.props.store} filter={{ date: '' }} />
-          <OpAdd {...this.props} />
-        </FullPage>
-      </div>
-    )
-  }
-}
-export const LandingTest = Landing // for test
+      <OpAdd {...props} />
+    </FullPage>
+  </>
+)
 export default publicPage(Landing)

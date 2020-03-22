@@ -1,16 +1,20 @@
 import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
-import fs from 'fs'
-import fsExtra from 'fs-extra'
+import MemoryMongo from '../../../util/test-memory-mongo'
+import fs from 'fs-extra'
+import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 
-test.after.always(() => {
-  // clean out upload folder.
-  fsExtra.emptyDirSync('./static/upload-test')
+test.before('before connect to database', async (t) => {
+  try {
+    t.context.memMongo = new MemoryMongo()
+    await t.context.memMongo.start()
+    await appReady
+    fs.emptyDirSync('public/static/upload-test')
+  } catch (e) { console.error('image.spec.js error before', e) }
 })
 
 test.serial('can return image from static folder', async t => {
-  await appReady
   const res = await request(server)
     .get('/static/img/194px-Testcard_F.jpg')
     .set('Accept', 'image')
@@ -28,13 +32,17 @@ const sendImageToAPI = (path, filename) => {
     .send(JSON.stringify({ image: file, file: filename }))
 }
 
-test.serial('Should upload a small file', async t => {
-  await appReady
+test.serial('Upload image - anonymous', async t => {
+  const response = await sendImageToAPI(__dirname, '194px-Testcard_F.jpg')
+  t.is(response.statusCode, 403)
+})
+
+test.serial('Upload image - authenticated', async t => {
   const res = await sendImageToAPI(__dirname, '194px-Testcard_F.jpg')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
-  // console.log(res)
-  t.regex(res.body.imageUrl, /-194px-testcard_f[.]jpg/i)
+  t.regex(res.body.imageUrl, /-194px-testcard_f_full\.png/i)
 
   // get the image back from server only if testing with local uploading storage
   if (!res.body.imageUrl.match(/https:\/\//gm)) {
@@ -48,11 +56,11 @@ test.serial('Should upload a small file', async t => {
   }
 })
 
-test.serial('Should fail to upload', async t => {
-  await appReady
+test.serial('Empty image should fail to upload', async t => {
   const res = await request(server)
     .post('/api/images')
     .set('content-type', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .send(JSON.stringify({ image: {}, file: 'okfilename' }))
     .expect('Content-Type', /json/)
   t.is(res.status, 400)

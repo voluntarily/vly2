@@ -4,7 +4,8 @@ const InterestFields = {
   STATUS: 'status',
   DATE_ADDED: 'dateAdded',
   PERSON: 'person',
-  OPPORTUNITY: 'opportunity'
+  OPPORTUNITY: 'opportunity',
+  MESSAGES: 'messages'
 }
 
 const InterestStatus = {
@@ -12,12 +13,21 @@ const InterestStatus = {
   INVITED: 'invited',
   COMMITTED: 'committed',
   DECLINED: 'declined',
-  COMPLETED: 'completed',
-  CANCELLED: 'cancelled'
+  ATTENDED: 'attended',
+  NOTATTENDED: 'not_attended'
+}
+
+const InterestAction = {
+  ACCEPT: 'accept',
+  REJECT: 'reject',
+  WITHDRAW: 'withdraw',
+  MESSAGE: 'message'
 }
 
 module.exports = {
-  SchemaName: 'Interest',
+  InterestSchemaName: 'Interest',
+  InterestArchiveSchemaName: 'InterestArchive',
   InterestFields,
+  InterestAction,
   InterestStatus
 }

@@ -39,5 +39,5 @@ test('renders the list with no ops', t => {
     <FeaturedTwoSection handleShowOp={() => {}} title='' handleDeleteOp={() => {}} />
   )
   t.is(wrapper.find('OpCard').length, 0)
-  t.is(wrapper.find('span').text(), 'No matching opportunities')
+  t.is(wrapper.find('div').last().text(), 'No matching activities')
 })

@@ -1,62 +1,140 @@
-const jwtDecode = require('jwt-decode')
 const Person = require('../../api/person/person')
+const { Role } = require('../../services/authorize/role')
 
+const { TOPIC_PERSON__CREATE } = require('../../services/pubsub/topic.constants')
+const PubSub = require('pubsub-js')
+const { TokenExpiredError } = require('jsonwebtoken')
+const { jwtVerify } = require('./jwtVerify')
+const { getPersonRoles } = require('../../api/member/member.lib')
 const DEFAULT_SESSION = {
   isAuthenticated: false,
   user: null,
-  me: null
+  me: {
+    role: [Role.ANON]
+  },
+  idToken: ''
 }
 
-const URL_BLACKLIST = ['/static/', '/_next/']
+/* when page loads it makes lots of static and library calls
+ we don't need to authenticate or set session for these items
+ */
+const OPEN_URL = ['/static/', '/_next/']
 
-const isUrlBlacklisted = url => {
-  let blacklisted = false
-  for (let i = 0; i < URL_BLACKLIST.length; i++) {
-    if (url.includes(URL_BLACKLIST[i])) {
-      blacklisted = true
-      break
+const openPath = url => {
+  let path
+  for (path of OPEN_URL) {
+    if (url.startsWith(path)) {
+      return true
     }
   }
-  return blacklisted
+  return false
 }
 
-const getCookie = (req) => {
-  if (req.cookies.idToken != null) {
-    return req.cookies
-  } else if (req.headers.cookie != null) {
-    let cookieInJSON
-    try {
-      cookieInJSON = JSON.parse(req.headers.cookie)
-    } catch (err) {
-      return undefined
-    }
-    return cookieInJSON
+/* Get the current Authentication Token from either the cookies or the headers */
+const getIdToken = (req) => {
+  if (req && req.cookies && req.cookies.idToken) { return req.cookies.idToken }
+
+  if (req.headers.authorization) {
+    const regex = /Bearer (.*)/
+    const found = req.headers.authorization.match(regex)
+    return found[1]
   }
-  return undefined
 }
 
-const hasSessionInQueryRequest = (req) => {
-  return req.query != null && req.query.session != null
+const createPersonFromUser = async (user) => {
+  const person = {
+    name: user.name,
+    email: user.email,
+    nickname: user.nickname,
+    imgUrl: user.picture
+  }
+  try {
+    const p = new Person(person)
+    await p.save()
+    PubSub.publish(TOPIC_PERSON__CREATE, p)
+    return p
+  } catch (err) {
+    // will fail if email is a duplicate or database gone
+    console.error('create person failed', err)
+    return false
+  }
 }
 
 const setSession = async (req, res, next) => {
   req.session = { ...DEFAULT_SESSION } // Default session object will get mutated after logged in. Deconstructing the objec will only get the attribute of it
-  const cookie = getCookie(req)
-
-  if (hasSessionInQueryRequest(req)) {
-    req.session = req.query.session
+  if (openPath(req.url)) { // skip if its a special path.
+    return next()
   }
 
-  if (!isUrlBlacklisted(req.url) && cookie && cookie.idToken) {
-    try {
-      const user = jwtDecode(cookie.idToken)
-      req.session.isAuthenticated = true
-      req.session.user = user
-      req.session.me = await Person.findOne({ email: req.session.user.email }).exec()
-    } catch (err) {
-      console.error('setSession', err)
+  const idToken = getIdToken(req)
+  if (!idToken) { // no token, use default session
+    return next()
+  }
+  let user
+  try {
+    user = await jwtVerify(idToken)
+  } catch (e) {
+    // console.error('Jwt Verify failed', e)
+
+    if (e instanceof TokenExpiredError) {
+      // If this is an API request then return 401 unauthorized
+      if (req.url.startsWith('/api/')) {
+        return res.sendStatus(401)
+      }
+
+      // from a client side redirect
+      if (req.url.startsWith('/auth/sign-thru')) {
+        return next()
+      }
+
+      const encodedRedirectUrl = encodeURIComponent(req.url)
+
+      // Have to set location and set-cookie header manually without nodejs helper functions (res.clearCookie, res.redirect)
+      // as the above functions make the header immutable.
+      // We must clear idToken cookie server-side otherwise we create a infinite loop of redirects as this code will be
+      // executed again.
+      res.setHeader(
+        'Location',
+        `/auth/sign-thru?redirect=${encodedRedirectUrl}`
+      )
+      res.setHeader(
+        'Set-Cookie',
+        'idToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      )
+      res.statusCode = 302
+      return res.end()
     }
+
+    user = false
   }
+  if (!user) {
+    return next()
+  }
+  req.session.idToken = idToken
+  req.session.user = user
+  if (!user.email_verified) {
+    // remove login token here
+    // console.error('setSession Warning: user email not verified')
+    return next()
+  }
+  let me = false
+  try {
+    me = await Person.findOne({ email: user.email }, 'name nickname email role imgUrlSm sendEmailNotifications').exec()
+    if (!me) {
+      me = await createPersonFromUser(user)
+    } else {
+      await getPersonRoles(me)
+    }
+  } catch (err) {
+    console.error(`failed to find or create ${user.email}`, err)
+  }
+  req.session = {
+    isAuthenticated: user.email_verified,
+    user,
+    me,
+    idToken
+  }
+  // console.log('setting session from IdToken', req.url, req.session.isAuthenticated, 'user', req.session.user.email, 'me', req.session.me.name, req.session.me.role)
   next()
 }
 

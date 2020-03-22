@@ -5,12 +5,11 @@ import RegisterMemberSection from '../RegisterMemberSection'
 import { Provider } from 'react-redux'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
-import { API_URL } from '../../../lib/apiCaller'
+import { API_URL } from '../../../lib/callApi'
 import fixture from './member.fixture.js'
 import { MemberStatus } from '../../../server/api/member/member.constants'
 import objectid from 'objectid'
-
-const { fetchMock } = require('fetch-mock')
+import fetchMock from 'fetch-mock'
 
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -56,7 +55,6 @@ test.serial('RegisterMemberSection follow and unfollow', async t => {
   wrapper.update()
   // we should see "Follow" button
   t.is(wrapper.find('button').first().text(), 'Follow')
-  // console.log(t.context.realStore.getState().members.data)
 
   // setup response to click on follow
   const newMember = {
@@ -71,7 +69,6 @@ test.serial('RegisterMemberSection follow and unfollow', async t => {
   wrapper.update()
   const newMemberResult = t.context.realStore.getState().members.data[0]
   t.deepEqual(newMember, newMemberResult)
-  // console.log(t.context.realStore.getState().members.data)
 
   // Status is now follower, button should be unfollow.
   t.is(wrapper.find('button').first().text(), 'Unfollow')
@@ -108,7 +105,7 @@ test.serial('RegisterMemberSection join and validate', async t => {
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // we should see "Join" button
-  t.is(wrapper.find('button').last().text(), 'Join')
+  t.is(wrapper.find('button').last().text(), 'Staff Signup')
 
   // setup response to click on follow
   const response = members[0]
@@ -141,7 +138,7 @@ test.serial('RegisterMemberSection join and validate', async t => {
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // Status is now validator, button should be Join
-  t.is(wrapper.find('button').last().text(), 'Join')
+  t.is(wrapper.find('button').last().text(), 'Staff Signup')
   t.truthy(t.context.fetchMock.done())
   t.context.fetchMock.restore()
 })
@@ -164,7 +161,7 @@ test.serial('RegisterMemberSection as a Member', async t => {
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // we should see "Follow" button
-  t.is(wrapper.find('button').last().text(), 'Join')
+  t.is(wrapper.find('button').last().text(), 'Staff Signup')
 
   // setup response to click on follow
   const response = members[0]

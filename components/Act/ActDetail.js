@@ -1,85 +1,163 @@
 /* Dumb React component Shows contents of an activity
  */
-import { Button } from 'antd'
-import Markdown from 'markdown-to-jsx'
+import { FormattedMessage } from 'react-intl'
+import { Button, Divider } from 'antd'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
 import TagDisplay from '../Tags/TagDisplay'
-import { FullPage, HalfGrid, Spacer } from '../VTheme/VTheme'
-
-const Left = styled.div``
-
-const Right = styled.div``
-
-const TitleFont = styled.h1`
-  font-weight: 900;
-  font-size: 2rem;
-  letter-spacing: -0.02rem;
-`
-const ItemListing = styled.p`
-  font-weight: 500;
-  font-size: 1rem;
-  opacity: 1;
-  color: initial;
-  margin-bottom: 0.2rem;
-`
-const ItemP = styled.div`
-  letter-spacing: -0.02rem;
-  font-weight: 400;
-  font-size: 1rem;
-  opacity: 1;
-  color: initial;
-  margin-bottom: 1rem;
-  `
-
-const TagContainer = styled.div`
-  margin-top: 0.2rem;
-`
+import { SideBarGrid, OpSectionGrid, DocumentList, PageBannerButtons } from '../VTheme/VTheme'
+import {
+  Left,
+  Right,
+  ItemContainer,
+  ItemDescription,
+  TagContainer,
+  ItemDuration,
+  ItemStatus,
+  ItemIdLine,
+  ItemVolunteers,
+  ItemSpace,
+  EquipmentList,
+  ItemImage
+} from '../VTheme/ItemList'
+import Html from '../VTheme/Html'
+import OpAdd from '../Op/OpAdd'
 
 export function ActDetail ({ act }) {
-  const img = act.imgUrl || '../../static/missingimage.svg'
+  const img = act.imgUrl || '/static/missingimage.svg'
   return (
-    <FullPage>
-      <Spacer />
-      <Head><title>{act.name}</title></Head>
-      <HalfGrid>
+    <>
+      <Head>
+        <title>{act.name}</title>
+      </Head>
+      <SideBarGrid>
         <Left>
-          <TitleFont>{act.name}</TitleFont>
-          <ItemListing>⏱&nbsp;{act.duration}</ItemListing>
-          // TODO: [VP-204] add organisation and contact
-          <ItemListing>📝&nbsp;{act.status}</ItemListing>
-          <Spacer />
-          <ItemP>
-            <Markdown
-              children={act.description}
-              options={{
-                overrides: {
-                  Button: { component: Button }
-                }
-              }}
-            />
-          </ItemP>
-          <Spacer />
+          <ItemImage src={img} alt={act.name} />
         </Left>
         <Right>
-          <img style={{ width: '100%' }} src={img} alt={act.name} />
+          <h1>{act.name}</h1>
+          <ul>
+            <ItemIdLine item={act.offerOrg} path='orgs' />
+          </ul>
+
+          <ItemContainer>
+            <ItemDuration duration={act.duration} />
+            <ItemVolunteers volunteers={act.volunteers} />
+            <ItemStatus status={act.status} />
+
+          </ItemContainer>
+          <Divider />
+          <PageBannerButtons>
+            <OpAdd actid={act._id} />
+          </PageBannerButtons>
+          {/* {isOP && <Button size='large' shape='round' type='primary' href={`/op/new?act=${act._id}`}>Run Activity</Button>} */}
+        </Right>
+      </SideBarGrid>
+
+      <Divider />
+
+      <OpSectionGrid>
+        <div>
+          <h2>About this Template</h2>
+        </div>
+        <ItemDescription>
+          <Html
+            children={act.description}
+            options={{
+              overrides: {
+                Button: { component: Button }
+              }
+            }}
+          />
           <TagContainer>
+            <Divider />
+            <h5>
+              <FormattedMessage
+                id='opTagsAct'
+                defaultMessage='Tags'
+                description='Descriptions of general areas the activity relates to'
+              />
+            </h5>
             <TagDisplay tags={act.tags} />
           </TagContainer>
-        </Right>
-      </HalfGrid>
-    </FullPage>
+        </ItemDescription>
+      </OpSectionGrid>
+
+      <Divider />
+
+      <OpSectionGrid>
+        <div>
+          <h2>What you will need</h2>
+        </div>
+        <ItemDescription>
+          <ul>
+            <ItemVolunteers volunteers={act.volunteers} />
+            <ItemSpace space={act.space} />
+          </ul>
+          <EquipmentList equipment={act.equipment} />
+
+        </ItemDescription>
+      </OpSectionGrid>
+      <Divider />
+
+      {act.documents && act.documents.length > 0 && (
+        <>
+          <OpSectionGrid>
+            <div>
+              <h2>Documents</h2>
+            </div>
+            <ItemDescription>
+              <ul id='documents'>
+                {act.documents.map(document => (
+                  <>
+                    <a target='_blank' download={document.filename} rel='noopener noreferrer' href={document.location}>
+                      <DocumentList key={document.location}>
+                        <img src='/static/img/icons/download.svg' alt='an image that shows files being downloaded' />
+                        <div>
+                          <p><strong>{document.filename}</strong></p>
+                          <p><FormattedMessage id='actFileDescription' defaultMessage='Click to download' description='Instructions for user telling them to download the file' /></p>
+                        </div>
+                      </DocumentList>
+                    </a>
+
+                  </>
+
+                ))}
+              </ul>
+            </ItemDescription>
+          </OpSectionGrid>
+          <Divider />
+        </>)}
+
+      <OpSectionGrid>
+        <div>
+          <h2>Written by</h2>
+        </div>
+        <ItemDescription>
+          <ul>
+            <ItemIdLine item={act.owner} path='people' />
+            <ItemIdLine item={act.offerOrg} path='orgs' />
+          </ul>
+        </ItemDescription>
+      </OpSectionGrid>
+
+      <Divider />
+
+      <TagContainer />
+    </>
   )
 }
 
 ActDetail.propTypes = {
   act: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
+    documents: PropTypes.array,
     description: PropTypes.string,
+    volunteers: PropTypes.number,
+    space: PropTypes.string,
     status: PropTypes.string,
     _id: PropTypes.string.isRequired
   })

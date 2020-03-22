@@ -25,7 +25,7 @@ class ActListSection extends Component {
 
       return await this.props.dispatch(reduxApi.actions.activities.get(filters))
     } catch (err) {
-      // console.log('error in getting acts', err)
+      // console.error('error in getting acts', err)
     }
   }
 
@@ -40,17 +40,15 @@ class ActListSection extends Component {
   }
 
   render () {
-    if (this.props.activities.loading) {
-      return (<section>
-        <Loading><p>Loading activities...</p></Loading>
+    if (!this.props.activities.sync) {
+      return <Loading label='activities' entity={this.props.activities} />
+    }
 
-      </section>)
-    } else {
-      // TODO: [VP-130] take out the search filter here line in ActListSection and pass in a property instead
-      return (<section>
+    // TODO: [VP-130] take out the search filter here line in ActListSection and pass in a property instead
+    return (
+      <section>
         <ActList acts={this.props.activities.data} />
       </section>)
-    }
   }
 }
 

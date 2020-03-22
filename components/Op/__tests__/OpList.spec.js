@@ -16,10 +16,10 @@ const ops = [
     status: 'draft',
     date: [
       {
-        '$date': '2019-05-23T12:26:18.000Z'
+        $date: '2019-05-23T12:26:18.000Z'
       },
       {
-        '$date': '2019-06-12T04:55:10.014Z'
+        $date: '2019-06-12T04:55:10.014Z'
       }
     ]
   },
@@ -34,10 +34,10 @@ const ops = [
     status: 'draft',
     date: [
       {
-        '$date': '2019-05-23T12:26:18.000Z'
+        $date: '2019-05-23T12:26:18.000Z'
       },
       {
-        '$date': '2019-06-12T04:55:10.014Z'
+        $date: '2019-06-12T04:55:10.014Z'
       }
     ]
   }
@@ -63,5 +63,5 @@ test('renders the list with no ops', t => {
     <OpList handleShowOp={() => {}} handleDeleteOp={() => {}} ops={[]} />
   )
   t.is(wrapper.find('OpCard').length, 0)
-  t.is(wrapper.find('span').text(), '')
+  t.is(wrapper.text(), '')
 })

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const idvalidator = require('mongoose-id-validator')
+const { accessibleRecordsPlugin } = require('@casl/mongoose')
 const { MemberStatus } = require('./member.constants')
 
 const memberSchema = new Schema({
@@ -16,6 +17,8 @@ const memberSchema = new Schema({
       MemberStatus.FOLLOWER,
       MemberStatus.JOINER,
       MemberStatus.MEMBER,
+      MemberStatus.VALIDATOR,
+      MemberStatus.ORGADMIN,
       MemberStatus.EXMEMBER
     ]
   },
@@ -42,4 +45,14 @@ const memberSchema = new Schema({
 */
 
 memberSchema.plugin(idvalidator)
-module.exports = mongoose.model('Member', memberSchema)
+memberSchema.plugin(accessibleRecordsPlugin)
+
+// protect multiple imports
+var Member
+
+if (mongoose.models.Member) {
+  Member = mongoose.model('Member')
+} else {
+  Member = mongoose.model('Member', memberSchema)
+}
+module.exports = Member

@@ -16,12 +16,13 @@ test('initial state', t => {
     validation: '',
     status: MemberStatus.NONE
   }
-  const wrapper = mountWithIntl(<RegisterMemberItem
-    member={member}
-    onChangeStatus={changeStatus}
-  />)
+  const wrapper = mountWithIntl(
+    <RegisterMemberItem
+      member={member}
+      onChangeStatus={changeStatus}
+    />)
   t.is(wrapper.find('button').first().text(), 'Follow')
-  t.is(wrapper.find('button').at(1).text(), 'Join')
+  t.is(wrapper.find('button').at(1).text(), 'Staff Signup')
 
   // // click button and get form
   // wrapper.find('button').simulate('click')
@@ -95,7 +96,6 @@ test('initial state', t => {
 //     onChangeStatus={changeStatus}
 //     onWithdraw={withdraw}
 //   />)
-//   // console.log(wrapper.html())
 //   t.is(wrapper.find('h1').first().text(), 'Thank you so much!')
 // })
 
@@ -108,7 +108,6 @@ test('initial state', t => {
 //     onChangeStatus={changeStatus}
 //     onWithdraw={withdraw}
 //   />)
-//   // console.log(wrapper.html())
 //   t.is(wrapper.find('h1').first().text(), 'You\'ve been invited to participate!')
 // })
 

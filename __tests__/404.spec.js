@@ -9,16 +9,16 @@ const E500 = 500
 const E200 = 200
 
 test('render 404', t => {
-  const wrapper = mountWithIntl(<ErrorPageTest router={router} url='/404' errorCode={E404} />)
+  const wrapper = mountWithIntl(<ErrorPageTest locale='en' router={router} url='/404' errorCode={E404} />)
   t.is(wrapper.find('h1').first().text(), 'Oh no! Page not found')
 })
 
 test('render 200', t => {
-  const wrapper = mountWithIntl(<ErrorPageTest router={router} url='/_error' errorCode={E200} />)
+  const wrapper = mountWithIntl(<ErrorPageTest locale='en' router={router} url='/_error' errorCode={E200} />)
   t.is(wrapper.find('h1').first().text(), 'Oh no! Page not found')
 })
 
 test('render 500', t => {
-  const wrapper = mountWithIntl(<ErrorPageTest router={router} url='/404' errorCode={E500} />)
+  const wrapper = mountWithIntl(<ErrorPageTest locale='en' router={router} url='/404' errorCode={E500} />)
   t.regex(wrapper.find('h2').first().text(), /Sorry, there was a problem/)
 })

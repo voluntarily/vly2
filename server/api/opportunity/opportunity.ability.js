@@ -1,4 +1,10 @@
-const { SchemaName, OpportunityStatus, OpportunityFields } = require('./opportunity.constants')
+const {
+  SchemaName,
+  OpportunityStatus,
+  OpportunityListFields,
+  OpportunityPublicFields,
+  OpportunityPublishedStatus
+} = require('./opportunity.constants')
 const { Role } = require('../../services/authorize/role')
 const { Action } = require('../../services/abilities/ability.constants')
 
@@ -18,12 +24,13 @@ const ruleBuilder = session => {
   const anonAbilities = [{
     subject: SchemaName,
     action: Action.READ,
-    conditions: { status: OpportunityStatus.ACTIVE }
+    conditions: { status: OpportunityStatus.ACTIVE },
+    fields: OpportunityPublicFields
   }, {
     subject: SchemaName,
     action: Action.LIST,
     conditions: { status: OpportunityStatus.ACTIVE },
-    fields: [OpportunityFields.ID, OpportunityFields.NAME, OpportunityFields.SUBTITLE, OpportunityFields.IMG_URL, OpportunityFields.DURATION]
+    fields: OpportunityListFields
   }, {
     subject: SchemaName,
     action: Action.UPDATE,
@@ -38,29 +45,55 @@ const ruleBuilder = session => {
     inverted: true
   }]
 
-  const allAbilities = [{
+  const opAbilities = [{
+    subject: SchemaName,
+    action: Action.READ,
+    conditions: { status: { $in: OpportunityPublishedStatus } }
+  }, {
+    subject: SchemaName,
+    action: Action.READ,
+    conditions: { requestor: session.me && session.me._id }
+  }, {
+    subject: SchemaName,
+    action: Action.LIST
+  }, {
+    subject: SchemaName,
+    action: Action.UPDATE,
+    conditions: { requestor: session.me && session.me._id }
+  }, {
+    subject: SchemaName,
+    action: Action.DELETE,
+    inverted: true
+  }, {
+    subject: SchemaName,
+    action: Action.CREATE
+  }]
+
+  const testerAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
+  const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
+
+  const orgAdminAbilities = [{
     subject: SchemaName,
     action: Action.READ
   }, {
     subject: SchemaName,
     action: Action.LIST
-  }]
-
-  const vpAbilities = allAbilities
-  const opAbilities = allAbilities.concat([{
-    subject: SchemaName,
-    action: Action.CREATE
   }, {
     subject: SchemaName,
-    action: Action.UPDATE
-  }])
-  const testerAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
-  const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
-  const orgAdminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
+    action: Action.UPDATE,
+    conditions: { offerOrg: { $in: session.me.orgAdminFor } }
+  }, {
+    subject: SchemaName,
+    action: Action.DELETE,
+    inverted: true
+  }, {
+    subject: SchemaName,
+    action: Action.CREATE
+  }]
 
   return {
     [Role.ANON]: anonAbilities,
-    [Role.VOLUNTEER_PROVIDER]: vpAbilities,
+    [Role.VOLUNTEER_PROVIDER]: anonAbilities,
     [Role.OPPORTUNITY_PROVIDER]: opAbilities,
     [Role.TESTER]: testerAbilities,
     [Role.ADMIN]: adminAbilities,

@@ -6,10 +6,10 @@ import { Provider } from 'react-redux'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 
-import { API_URL } from '../../../lib/apiCaller'
+import { API_URL } from '../../../lib/callApi'
 import people from '../../../server/api/person/__tests__/person.fixture'
-
-const { fetchMock } = require('fetch-mock')
+import fetchMock from 'fetch-mock'
+import { InterestStatus } from '../../../server/api/interest/interest.constants'
 
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -51,63 +51,70 @@ const interests = [
     _id: '5cc903e5f94141437622ceaa',
     person: people[0],
     opportunity: ops[0],
-    comment: "I'm Interested",
-    status: 'interested'
+    messages: [],
+    status: 'interested',
+    termsAccepted: true
   }
 ]
 
 test.serial('mount RegisterInterestSection with with no existing interest', async t => {
-  //   console.log(people[0])
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
-  const getmyinterests = `${API_URL}/interests/?op=${opid}&me=${meid}`
+  const getmyinterests = 'path:/api/interests/'
   myMock.getOnce(getmyinterests, [])
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
       <RegisterInterestSection
-        op={opid}
-        meID={meid}
+        opid={opid}
+        meid={meid}
       />
     </Provider>
   )
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // we should see "i'm interested"
-  t.is(wrapper.find('button').first().text(), "I'm Interested")
+  t.is(wrapper.find('button').first().text(), 'Get Involved')
   wrapper.find('button').first().simulate('click')
-  t.is(wrapper.find('h1').first().text(), 'How do you want to get involved?')
 
   const postnewinterest = `${API_URL}/interests/`
   myMock.postOnce(postnewinterest, interests[0])
 
   // fill in comment on input field
-  const comment = wrapper.find('#register_interest_form_comment').first()
+  // add message
+  const comment = wrapper.find('textarea').first()
   comment.simulate('change', { target: { value: 'Test mount RegisterInterestSection with with no existing interest' } })
-  wrapper.find('button').first().simulate('click')
+  wrapper.update()
+
+  wrapper.find('#sendBtn').first().simulate('click')
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
-  t.is(wrapper.find('h1').first().text(), 'Thank you for expressing your interest!')
 
   // press Get Involved! button
   t.truthy(myMock.done())
+
+  // what got Posted.
+  const posted = JSON.parse(myMock.lastCall()[1].body)
+  t.is(posted.person, meid)
+  t.is(posted.opportunity, opid)
+  t.is(posted.status, InterestStatus.INTERESTED)
+  t.true(posted.termsAccepted)
   myMock.restore()
 })
 
 test.serial('mount RegisterInterestSection with op and me', async t => {
-  //   console.log(people[0])
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
-  const getmyinterests = `${API_URL}/interests/?op=${opid}&me=${meid}`
+  const getmyinterests = 'path:/api/interests/'
   myMock.getOnce(getmyinterests, interests[0])
 
   const wrapper = await mountWithIntl(
     <Provider store={realStore}>
       <RegisterInterestSection
-        op={opid}
-        meID={meid}
+        opid={opid}
+        meid={meid}
       />
     </Provider>
   )
@@ -116,9 +123,7 @@ test.serial('mount RegisterInterestSection with op and me', async t => {
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // once loading completed should the thank you note
-  t.is(wrapper.find('h1').first().text(), 'Thank you for expressing your interest!')
+  t.is(wrapper.find('h4').first().text(), 'The organiser will get back to you soon!')
   t.truthy(myMock.done())
   myMock.restore()
 })
-
-// showing status

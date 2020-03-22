@@ -14,8 +14,8 @@ const PersonFields = {
   NICKNAME: 'nickname',
   NAME: 'name',
   ABOUT: 'about',
+  LOCATIONS: 'locations',
   PHONE: 'phone',
-  GENDER: 'gender',
   LANGUAGE: 'language',
   AVATAR: 'imgUrl',
   FACEBOOK: 'facebook',
@@ -23,7 +23,12 @@ const PersonFields = {
   TWITTER: 'twitter',
   ROLE: 'role',
   STATUS: 'status',
-  PRONOUN: 'pronoun'
+  PRONOUN: 'pronoun',
+  TAGS: 'tags',
+  EDUCATION: 'education',
+  JOB: 'job',
+  SENDEMAILNOTIFICATIONS: 'sendEmailNotifications',
+  PLACEOFWORK: 'placeOfWork'
 }
 
 module.exports = {

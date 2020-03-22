@@ -1,65 +1,42 @@
-import { Button } from 'antd'
-import Link from 'next/link'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import OpList from '../../components/Op/OpList'
-import { FullPage } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+import OpAdd from '../../components/Op/OpAdd'
+import { FullPage, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
+import securePage from '../../hocs/securePage'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 
-class Ops extends Component {
-  static async getInitialProps ({ store, query }) {
-    // Get all Ops
-    try {
-      const ops = await store.dispatch(reduxApi.actions.opportunities.get())
-      // console.log('got ops', ops)
-      return { ops, query }
-    } catch (err) {
-      console.log('error in getting ops', err)
-    }
-  }
+/*
+  This is a basic crud listings page with no filters or anything
+  as such its not really used in Voluntarily except as an admin check.
+*/
+export const OpListPage = ({ opportunities, roles }) =>
+  <FullPage>
+    <Helmet>
+      <title>Opportunities / Voluntarily</title>
+    </Helmet>
+    <PageBanner>
+      <h1>
+        <FormattedMessage
+          id='oplistpage.title'
+          defaultMessage='All Opportunities'
+          description='Title on full opportunities list'
+        />
+      </h1>
+      <PageBannerButtons>
+        <OpAdd roles={roles} />
+      </PageBannerButtons>
+      <FormattedMessage
+        defaultMessage='All current opportunities'
+        id='oplistpage.subtitle'
+      />
+    </PageBanner>
+    <OpList ops={opportunities.data} />
+  </FullPage>
 
-  render () {
-    return (
-      <FullPage>
-        <Helmet>
-          <title>Voluntarily - Opportunities List</title>
-        </Helmet>
-        <h1>
-          <FormattedMessage
-            id='opportunities'
-            defaultMessage='Opportunities'
-            description='Title of page listing opportunities'
-          />
-        </h1>
-        <Button shape='round'><Link href='/op/new'><a>
-          <FormattedMessage id='op.new' defaultMessage='New Opportunity' description='Button to create a new opportunity' />
-        </a></Link></Button>
-        <br /><br />
-        <OpList ops={this.props.ops} />
-      </FullPage>
-    )
-  }
+OpListPage.getInitialProps = async ({ store }) => {
+  // Get all OpListPage
+  return store.dispatch(reduxApi.actions.opportunities.get())
 }
 
-Ops.propTypes = {
-  ops: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    subtitle: PropTypes.string,
-    imgUrl: PropTypes.any,
-    description: PropTypes.string,
-    duration: PropTypes.string,
-    status: PropTypes.string,
-    _id: PropTypes.string.isRequired
-  })).isRequired
-  //  showAddOp: PropTypes.bool.isRequired,
-  // dispatch: PropTypes.func.isRequired
-}
-
-Ops.contextTypes = {
-  router: PropTypes.object
-}
-
-export default publicPage(withOps(Ops))
+export default securePage(withOps(OpListPage))

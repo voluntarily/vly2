@@ -1,9 +1,9 @@
 const { Action } = require('../../services/abilities/ability.constants')
 
-const defaultConvertRequestToAction = (method) => {
-  switch (method) {
+const defaultConvertRequestToAction = (req) => {
+  switch (req.method) {
     case 'GET':
-      return Action.READ
+      return (req.route && req.route.path === '/') ? Action.LIST : Action.READ
     case 'POST':
       return Action.CREATE
     case 'PUT':
@@ -16,12 +16,14 @@ const defaultConvertRequestToAction = (method) => {
 }
 
 const authorizeActions = (subject, convertRequestToAction = defaultConvertRequestToAction) => (req, res, next) => {
-  const action = convertRequestToAction(req.method)
+  const action = convertRequestToAction(req)
   const authorized = req.ability.can(action, subject)
+  // console.log('authorizeActions', subject, action, authorized)
   if (authorized) {
     next()
   } else {
-    res.status(403).end()
+    // console.log(`Auth cannot ${action} ${subject}`)
+    res.status(403).json({ error: `Auth cannot ${action} ${subject}` })
   }
 }
 

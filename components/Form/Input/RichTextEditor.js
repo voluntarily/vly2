@@ -1,23 +1,24 @@
 import React from 'react'
 
 class RichTextEditor extends React.Component {
-  componentWillMount () {
+  componentDidMount () {
     const isTest = process.env.NODE_ENV === 'test'
     if (document && !isTest) {
       this.quill = require('react-quill')
     }
   }
+
   render () {
     const isTest = process.env.NODE_ENV === 'test'
 
-    var toolbarOptions = [
+    const toolbarOptions = [
       ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-      ['blockquote', 'code-block'],
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      ['blockquote', 'code-block', 'video'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
       // [{ 'indent': '-1' }, { 'indent': '+1' }], // outdent/indent
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-      [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
-      [{ 'align': [] }],
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+      [{ align: [] }],
       ['clean'] // remove formatting button
     ]
     const modules = {

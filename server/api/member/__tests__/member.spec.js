@@ -8,11 +8,16 @@ import Person from '../../person/person'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
 import orgs from '../../organisation/__tests__/organisation.fixture'
+import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 
 test.before('before connect to database', async (t) => {
-  await appReady
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+  try {
+    t.context.memMongo = new MemoryMongo()
+    await t.context.memMongo.start()
+    await appReady
+  } catch (e) {
+    console.error('member.spec.js - error in test setup', e)
+  }
 
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create organisations: ${err}`)
@@ -61,6 +66,7 @@ test.serial('Should give number of Members', async t => {
   const res = await request(server)
     .get('/api/members')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect('Content-Type', /json/)
     .expect(200)
   t.is(res.status, 200)
@@ -73,6 +79,7 @@ test.serial('Should give number of Members for an org', async t => {
   const res = await request(server)
     .get(`/api/members?orgid=${orgid}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect('Content-Type', /json/)
     .expect(200)
   const members = res.body
@@ -85,6 +92,7 @@ test.serial('Should give a list of orgs for a person', async t => {
   const res = await request(server)
     .get(`/api/members?meid=${personid}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect('Content-Type', /json/)
     .expect(200)
   const members = res.body
@@ -101,6 +109,7 @@ test.serial('Should give a specific membership for a person in org', async t => 
   const res = await request(server)
     .get(`/api/members?meid=${personid}&orgid=${orgid}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect('Content-Type', /json/)
     .expect(200)
   const members = res.body
@@ -114,6 +123,7 @@ test.serial('Should send correct data when queried against a _id', async t => {
   const res = await request(server)
     .get(`/api/members/${member._id}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(200, res.status)
   t.is(member.person.toString(), res.body.person)
   t.is(member.organisation.toString(), res.body.organisation)
@@ -122,8 +132,9 @@ test.serial('Should send correct data when queried against a _id', async t => {
 
 test.serial('Should return 404 code when queried non existing member', async t => {
   const res = await request(server)
-    .get(`/api/members/asodifklamd`)
+    .get('/api/members/asodifklamd')
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   // This test is not ready since the return status was 500 not 404
   const expectedResponseStatus = 500
@@ -142,6 +153,7 @@ test.serial(
       .post('/api/members')
       .send(newMember)
       .set('Accept', 'application/json')
+      .set('Cookie', [`idToken=${jwtData.idToken}`])
 
     const savedMember = await Member.findOne({
       person: newMember.person,
@@ -166,6 +178,7 @@ test.serial('Should add a valid follower', async t => {
     .post('/api/members')
     .send(newMember)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 200)
   const returnedMember = res.body
@@ -184,6 +197,7 @@ test.serial('Should add a valid follower', async t => {
     .put(`/api/members/${returnedMember._id}`)
     .send(returnedMember)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
   t.is(res.status, 200)
   const updatedMember = res2.body
   t.is(updatedMember.status, MemberStatus.MEMBER)
@@ -191,6 +205,7 @@ test.serial('Should add a valid follower', async t => {
   await request(server)
     .delete(`/api/members/${returnedMember._id}`)
     .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 200)
 

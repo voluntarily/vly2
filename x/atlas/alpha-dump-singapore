@@ -1,0 +1,2 @@
+# Dumps the vly-alpha database to dump/vly-alpha locally
+mongodump --host Cluster0-shard-0/cluster0-shard-00-00-kwmsu.mongodb.net:27017,cluster0-shard-00-01-kwmsu.mongodb.net:27017,cluster0-shard-00-02-kwmsu.mongodb.net:27017 --ssl --username vly-admin --password fFlquTxiu2BYe12f --authenticationDatabase admin --db vly-alpha

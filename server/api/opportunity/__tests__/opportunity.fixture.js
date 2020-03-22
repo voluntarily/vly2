@@ -1,8 +1,9 @@
-const { OpportunityStatus } = require('../opportunity.constants')
+const { OpportunityStatus, OpportunityType } = require('../opportunity.constants')
 const { regions } = require('../../location/locationData')
 
 const opList = [
   {
+    type: OpportunityType.ASK,
     name: '1 Mentor a year 12 business Impact Project',
     subtitle: 'Help us create a programme connecting business with senior students',
     imgUrl: 'https://www.tvnz.co.nz/content/dam/images/news/2015/01/26/pacific-island-mentors-with-kelston-high-school-students.jpg.hashed.0d58ef7e.desktop.story.share.jpg',
@@ -10,13 +11,14 @@ const opList = [
     duration: '12 weeks, 1 hour sessions',
     location: regions[0].name,
     status: OpportunityStatus.ACTIVE,
-    tags: [ ],
+    tags: [],
     date: [
       null,
       null
     ]
   },
   {
+    type: OpportunityType.ASK,
     name: '2 Self driving model cars',
     subtitle: 'using algorithms to follow lines and avoid obstacles',
     imgUrl: 'http://www.plaz-tech.com/wp-content/plugins/wp-easycart-data/products/pics1/Arduino%20Car%202_8ab5dd38f1e3f6f05ad244f1e5e74529.jpg',
@@ -24,27 +26,29 @@ const opList = [
     duration: '4 hours',
     location: regions[0].containedTerritories[1],
     status: OpportunityStatus.ACTIVE,
-    tags: [ ],
+    tags: [],
     date: [
-      null,
-      null
+      '2019-07-30T09:00:00.000Z',
+      '2019-07-30T16:00:00.000Z'
     ]
   },
   {
+    type: OpportunityType.ASK,
     name: '3 Growing in the garden',
     subtitle: 'Growing digitally in the garden',
     imgUrl: 'https://c.pxhere.com/photos/84/ac/garden_water_sprinkler_soil_lettuce_grow_agriculture_floral-561591.jpg!d',
     description: 'Project to grow something in the garden',
-    duration: '15 Minutes',
+    duration: '6 hours',
     location: regions[0].containedTerritories[1],
     status: OpportunityStatus.DRAFT,
-    tags: [ ],
+    tags: [],
     date: [
-      null,
+      '2020-07-30T09:00:00.000Z',
       null
     ]
   },
   {
+    type: OpportunityType.ASK,
     name: '4 The first 100 metres',
     subtitle: 'Launching into space',
     imgUrl: 'https://images.sunlive.co.nz/images/170705-st-marys-school-rockets1.jpg',
@@ -52,13 +56,14 @@ const opList = [
     duration: '2 hours',
     location: regions[0].containedTerritories[2],
     status: OpportunityStatus.DRAFT,
-    tags: [ ],
+    tags: [],
     date: [
       null,
       null
     ]
   },
   {
+    type: OpportunityType.ASK,
     name: '5 Going to the moon',
     subtitle: 'Travelling up',
     imgUrl: 'https://images.sunlive.co.nz/images/170705-st-marys-school-rockets1.jpg',
@@ -66,7 +71,22 @@ const opList = [
     duration: '2 days',
     location: regions[2].name,
     status: OpportunityStatus.DRAFT,
-    tags: [ ],
+    tags: [],
+    date: [
+      null,
+      null
+    ]
+  },
+  {
+    type: OpportunityType.OFFER,
+    name: '6 Building a race car',
+    subtitle: 'Racecar',
+    imgUrl: 'https://images.sunlive.co.nz/images/170705-st-marys-school-rockets1.jpg',
+    description: 'I will help you go where no man has gone before',
+    duration: '2000 days',
+    location: regions[2].name,
+    status: OpportunityStatus.ACTIVE,
+    tags: [],
     date: [
       null,
       null

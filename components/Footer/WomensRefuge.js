@@ -19,6 +19,7 @@ class WomensRefuge extends React.Component {
     /* eslint-disable no-undef */
     /* eslint-disable new-cap */
     const frameName = new ds07o6pcmkorn({
+      // FIXME: [VP-574] script id will break whenever the womans refuge site is redeployed.
       openElementId: '#WomensRefuge-id'
     })
     frameName.init()
@@ -26,12 +27,12 @@ class WomensRefuge extends React.Component {
 
   render () {
     return (
-      <React.Fragment>
+      <>
         <script src='https://d3f5l8ze0o4j2m.cloudfront.net/m87/k33spt.js' />
         <a className='WomensRefuge-class' id='WomensRefuge-id'>
-          <ShieldSiteLogo src='../../static/womens_refuge.png' />
+          <ShieldSiteLogo src='/static/womens_refuge.png' />
         </a>
-      </React.Fragment>
+      </>
     )
   }
 }

@@ -16,7 +16,7 @@ import Loading from '../../components/Loading'
 import DatePickerType from './DatePickerType.constant'
 
 class OpListSection extends Component {
-  async loadData (search, location, query) {
+  loadData (search, location, query) {
     // Get all Ops
     try {
       const filters = {}
@@ -30,51 +30,102 @@ class OpListSection extends Component {
       if (query) {
         filters.q = query
       }
-
-      return await this.props.dispatch(reduxApi.actions.opportunities.get(filters))
+      return this.props.dispatch(reduxApi.actions.opportunities.get(filters))
     } catch (err) {
-      // console.log('error in getting ops', err)
+      console.error('error in getting ops', err)
     }
   }
 
   applyDateFilter = (filter) => {
+    if (!filter) {
+      return this.props.opportunities.data
+    }
     if (filter.date.length === 0) return this.props.opportunities.data
     const momentLists = filter.date.map(element => moment(element))
-    if (!this.props.opportunities.loading) {
+    if (this.props.opportunities.sync) {
       const filteredData = this.props.opportunities.data.filter(element => this.isDateFilterBetween(momentLists, element.date))
       return filteredData
     }
   }
 
-  isDateFilterBetween = (date, opDateArray) => {
+  /**
+   * This method use in organization detail page
+   * to filter opportunities offered by specific organization
+   */
+  appltOrganizationFilter = (opData, org) => {
+    if (!org) {
+      return opData
+    } else {
+      if (this.props.opportunities.sync) {
+        const filteredData = opData.filter(m => (m.offerOrg) && (m.offerOrg._id === org))
+        return filteredData
+      }
+    }
+  }
+
+  sortOrder = (orderValue) => {
+    const dataOp = this.props.opportunities.data
+    if (orderValue === 'name') {
+      return (dataOp.sort((a, b) => a.name.localeCompare(b.name)))
+    } else if (orderValue === 'date') {
+      dataOp.sort((a, b) => {
+        const dateA = a.date && a.date[0]
+        const dateB = b.date && b.date[1]
+        if (!dateA && dateB) {
+          return 1
+        } else if (dateA && !dateB) {
+          return -1
+        } else if (dateA === dateB) {
+          return 0
+        } else {
+          return (dateA > dateB) ? 1 : (dateB > dateA ? -1 : 0)
+        }
+      })
+      // return (dataOp.sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate()))
+    } else if (orderValue === 'commitment') {
+      dataOp.sort((a, b) => {
+        if (a.duration && a.duration !== '') {
+          return (a.duration.localeCompare(b.duration))
+        } else {
+          return ''
+        }
+      })
+    }
+    // TODO: [VP-698] Location based sorting for the opportunities
+  }
+
+  isDateFilterBetween = (filterdate, opDateArray) => {
     const { hasValue } = this
-    if (!hasValue(date)) return true // The reason is that if the date filter value is empty all of the ops found is correct for display
+    if (!hasValue(filterdate)) return true // The reason is that if the date filter value is empty all of the ops found is correct for display
     const startDateOpportunities = moment(opDateArray[0])
     switch (this.props.dateFilterType) {
       case DatePickerType.IndividualDate:
-        return date[0].isSame(startDateOpportunities, 'day') // This only compare the start date to the filter. Not included things like end date of the opportunity
+        return filterdate[0].isSame(startDateOpportunities, 'day') // This only compare the start date to the filter. Not included things like end date of the opportunity
       case DatePickerType.MonthRange:
-        return date[0].isSame(opDateArray[0], 'month')
+        return filterdate[0].isSame(startDateOpportunities, 'month')
       case DatePickerType.WeekRange:
         // The reason why checking is that if any of the opportunity that is open end then is a valid search result
         // We only check for opportunity that has a specific date range only
         if (hasValue(opDateArray[1]) && hasValue(opDateArray[0])) {
           const weekOfStartDate = startDateOpportunities.week()
           const weekOfEndDate = moment(opDateArray[1]).week()
-          const weekOfDateFilter = date[0].week()
+          const weekOfDateFilter = filterdate[0].week()
           return (weekOfDateFilter === weekOfStartDate) && (weekOfEndDate === weekOfDateFilter)
         }
         return true
       case DatePickerType.DateRange:
-        // React will force an update. Since the user has not chose the end date of the date filter yet which this will throw undefined error
+
+        // React will force an update. Since the user has not chose the end filterdate of the date filter yet which this will throw undefined error
         // The reason for this is because when the user change state from specific date,month or week to date range
-        if (date.length !== 2) return true
+        if (filterdate.length !== 2) return true
         if (hasValue(opDateArray[1] && hasValue(opDateArray[0]))) {
-          const startDateFilterBetweenOpportunity = date[0].isSame(startDateOpportunities, 'date')
-          const endDateFilterBetweenOpportunity = date[1].isBetween(startDateOpportunities, moment(opDateArray[1]), 'date')
+          const startDateFilterBetweenOpportunity = filterdate[0].isSame(startDateOpportunities, 'date')
+          const endDateFilterBetweenOpportunity = filterdate[1].isBetween(startDateOpportunities, moment(opDateArray[1]), 'date')
           return startDateFilterBetweenOpportunity && endDateFilterBetweenOpportunity
         }
         return true // Valid filter result for any open ended opportunity
+      default:
+        return startDateOpportunities.isBetween(filterdate[0], filterdate[1])
     }
   }
 
@@ -93,16 +144,19 @@ class OpListSection extends Component {
   }
 
   render () {
-    const opData = this.applyDateFilter(this.props.filter)
-    if (this.props.opportunities.loading) {
-      return (<section>
-        <Loading><p>Loading opportunities...</p></Loading>
-
-      </section>)
+    const opDataFilteredByDate = this.applyDateFilter(this.props.filter)
+    const opFilteredByOrg = this.appltOrganizationFilter(opDataFilteredByDate, this.props.org)
+    const opData = this.props.opType == null || this.props.opType === 'All' ? opFilteredByOrg : opFilteredByOrg.filter(op => op.type === this.props.opType.toLowerCase())
+    if (!this.props.opportunities.sync) {
+      return (
+        <section>
+          <Loading label='Opportunities' entity={this.props.opportunities} />
+        </section>)
     } else {
-      return (<section>
-        <OpList ops={opData} />
-      </section>)
+      return (
+        <section>
+          <OpList ops={opData} orderby={this.sortOrder(this.props.orderby)} />
+        </section>)
     }
   }
 }
@@ -120,7 +174,9 @@ OpListSection.propTypes = {
   dispatch: PropTypes.func.isRequired,
   query: PropTypes.string,
   search: PropTypes.string,
-  location: PropTypes.string
+  location: PropTypes.string,
+  org: PropTypes.string,
+  filter: PropTypes.object
 }
 
 export const OpListSectionTest = OpListSection

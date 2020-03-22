@@ -1,5 +1,4 @@
 import { Button, message, Popconfirm } from 'antd'
-import Cookie from 'js-cookie'
 import Link from 'next/link'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
@@ -9,6 +8,7 @@ import { FormattedMessage } from 'react-intl'
 import Loading from '../../components/Loading'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
+import { IssueBadgeButton } from '../../components/IssueBadge/issueBadge'
 import { FullPage } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi, { withMembers, withPeople, withLocations } from '../../lib/redux/reduxApi.js'
@@ -19,31 +19,59 @@ const blankPerson = {
   name: '',
   nickname: '',
   about: '',
-  location: '',
+  locations: [],
   email: '',
+  sendEmailNotifications: true,
   phone: '',
-  gender: '',
   pronoun: {
-    'subject': '',
-    'object': '',
-    'possessive': ''
+    subject: '',
+    object: '',
+    possessive: ''
   },
-  imgUrl: '',
+  imgUrl: '/static/img/person/person.png',
   website: null,
   facebook: null,
   twitter: null,
   role: ['volunteer'],
-  status: 'inactive'
+  status: 'inactive',
+  tags: []
 }
+
+const PersonNotAvailable = ({ isAdmin }) =>
+  <FullPage>
+    <Helmet>
+      <title>Person Unavailable - Voluntarily</title>
+    </Helmet>
+    <h2><FormattedMessage id='person.notavailable' defaultMessage='Sorry, this person is not available' description='message on person not found page' /></h2>
+    {isAdmin &&
+      <>
+        <Button shape='round'>
+          <Link href='/people'>
+            <a>
+              <FormattedMessage id='showPeople' defaultMessage='Show All' description='Button to show all People' />
+            </a>
+          </Link>
+        </Button>
+        <Button shape='round'>
+          <Link href='/person/new'>
+            <a>
+              <FormattedMessage id='person.altnew' defaultMessage='New Person' description='Button to create a new person' />
+            </a>
+          </Link>
+        </Button>
+      </>}
+  </FullPage>
 
 export class PersonDetailPage extends Component {
   state = {
     editing: false
   }
+
   static async getInitialProps ({ store, query, req }) {
     // Get one Org
     const isNew = query && query.new && query.new === 'new'
     await store.dispatch(reduxApi.actions.locations.get())
+    await store.dispatch(reduxApi.actions.tags.get())
     if (isNew) {
       return {
         isNew: true,
@@ -51,17 +79,12 @@ export class PersonDetailPage extends Component {
       }
     } else if (query && query.id) {
       const meid = query.id
-      let cookies = req ? req.cookies : Cookie.get()
-      const cookiesStr = JSON.stringify(cookies)
-      query.session = store.getState().session
       try {
-        await store.dispatch(reduxApi.actions.people.get(query, {
-          params: cookiesStr
-        }))
+        await store.dispatch(reduxApi.actions.people.get(query))
         await store.dispatch(reduxApi.actions.members.get({ meid }))
       } catch (err) {
         // this can return a 403 forbidden if not signed in
-        console.log('Error in persondetailpage:', err)
+        console.error('Error in persondetailpage:', err)
       }
 
       return {
@@ -77,103 +100,95 @@ export class PersonDetailPage extends Component {
     }
   }
 
-  handleCancel = () => {
-    this.setState({ editing: false })
+  handleCancelEdit = () => {
     if (this.props.isNew) { // return to previous
-      Router.back()
+      return Router.back()
     }
+    this.setState({ editing: false })
   }
 
   // TODO: [VP-209] only show person delete button for admins
-  async handleDelete (person) {
-    if (!person) return
+  async handleDeletePerson (person) {
     await this.props.dispatch(reduxApi.actions.people.delete({ id: person._id }))
     // TODO error handling - how can this fail?
     message.success('Deleted. ')
-    Router.replace(`/people`)
+    Router.replace('/people')
   }
 
   async handleSubmit (person) {
-    if (!person) return
     // Actual data request
     let res = {}
     if (person._id) {
       res = await this.props.dispatch(reduxApi.actions.people.put({ id: person._id }, { body: JSON.stringify(person) }))
+      this.setState({ editing: false })
     } else {
       res = await this.props.dispatch(reduxApi.actions.people.post({}, { body: JSON.stringify(person) }))
       person = res[0]
       Router.replace(`/people/${person._id}`)
     }
-    this.setState({ editing: false })
     message.success('Saved.')
   }
 
-  handleDeleteCancel = () => { message.error('Delete Cancelled') }
+  handleCancelDelete = () => { message.error('Delete Cancelled') }
 
   render () {
-    const isOrgAdmin = false // TODO: [VP-473] is this person an admin for the org that person belongs to.
-    const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
-    const canEdit = (isOrgAdmin || isAdmin)
-    const canRemove = isAdmin
-    const showPeopleButton = isAdmin
+    if (!this.props.people.sync) {
+      return <Loading label='person' entity={this.props.people} />
+    }
 
-    let content = ''
     let person = null
-    if (this.props.people.loading) {
-      content = <Loading />
-    } else if (this.props.isNew) {
+    if (this.props.isNew) {
       person = blankPerson
     } else {
       const people = this.props.people.data
-      if (people.length === 1) {
+      if (people.length > 0) {
         person = people[0]
+        if (this.props.members.sync && this.props.members.data.length > 0) {
+          person.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
+          person.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
+        }
       }
     }
 
-    if (this.props.members.sync && this.props.members.data.length > 0) {
-      person.orgMembership = this.props.members.data.filter(m => m.status === MemberStatus.MEMBER)
-    }
     if (!person) {
-      content = <div>
-        <h2><FormattedMessage id='person.notavailable' defaultMessage='Sorry, this person is not available' description='message on person not found page' /></h2>
-        {showPeopleButton &&
-          <Button shape='round'>
-            <Link href='/people'><a>
-              <FormattedMessage id='showPeople' defaultMessage='Show All' description='Button to show all People' />
-            </a></Link>
-          </Button>}
-        {isAdmin &&
-          <Button shape='round'>
-            <Link href='/person/new'><a>
-              <FormattedMessage id='person.altnew' defaultMessage='New Person' description='Button to create a new person' />
-            </a></Link>
-          </Button>}
-      </div>
-    } else {
-      content = this.state.editing
-        ? <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancel.bind(this)} locations={this.props.locations.data} />
-        : <>
-          {canEdit && <Button style={{ float: 'right' }} type='secondary' shape='round' onClick={() => this.setState({ editing: true })} >
-            <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
-          </Button>}
-
-          <PersonDetail person={person} />
-
-          &nbsp;
-          {canRemove && <Popconfirm title='Confirm removal of this person.' onConfirm={this.handleDeletePerson} onCancel={this.cancel} okText='Yes' cancelText='No'>
-            <Button type='danger' shape='round' >
-              <FormattedMessage id='deletePerson' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
-            </Button>
-          </Popconfirm>}
-
-        </>
+      return <PersonNotAvailable isAdmin />
     }
+    const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
+    const canRemove = isAdmin
+    const isOrgAdmin = false // TODO: [VP-473] is this person an admin for the org that person belongs to.
+    const canEdit = (isOrgAdmin || isAdmin || (person && person._id === this.props.me._id))
+
+    if (this.state.editing) {
+      return (
+        <FullPage>
+          <Helmet>
+            <title>Edit {person.name} - Voluntarily</title>
+          </Helmet>
+          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancelEdit.bind(this)} locations={this.props.locations.data} existingTags={this.props.tags.data} me={this.props.me} />
+        </FullPage>)
+    }
+
     return (
       <FullPage>
         <Helmet>
-          <title>Voluntarily - Person Details</title>
+          <title>{person.nickname} - Voluntarily</title>
         </Helmet>
-        {content}
+
+        <PersonDetail person={person} />
+        {canEdit &&
+          <Button id='editPersonBtn' style={{ float: 'left' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })}>
+            <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
+          </Button>}
+            &nbsp;
+        {canRemove &&
+          <Popconfirm id='deletePersonConfirm' title='Confirm removal of this person.' onConfirm={this.handleDeletePerson.bind(this, person)} onCancel={this.handleCancelDelete.bind(this)} okText='Yes' cancelText='No'>
+            <Button id='deletePersonBtn' type='danger' shape='round'>
+              <FormattedMessage id='person.delete' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
+            </Button>
+          </Popconfirm>}
+            &nbsp;
+        {isAdmin &&
+          <IssueBadgeButton person={this.props.people.data[0]} />}
       </FullPage>
     )
   }
@@ -181,18 +196,19 @@ export class PersonDetailPage extends Component {
 
 PersonDetailPage.propTypes = {
   person: PropTypes.shape({
-    _id: PropTypes.string,
+    _id: PropTypes.object,
     name: PropTypes.string,
     nickname: PropTypes.string,
     about: PropTypes.string,
-    location: PropTypes.string,
+    locations: PropTypes.arrayOf(PropTypes.string),
     email: PropTypes.string,
     phone: PropTypes.string,
-    gender: PropTypes.string,
+    sendEmailNotifications: PropTypes.bool,
     pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
     role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
-    status: PropTypes.oneOf(['active', 'inactive', 'hold'])
+    status: PropTypes.oneOf(['active', 'inactive', 'hold']),
+    tags: PropTypes.arrayOf(PropTypes.string)
   }),
   params: PropTypes.shape({
     id: PropTypes.string.isRequired

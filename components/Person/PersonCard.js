@@ -1,53 +1,88 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
+import styled from 'styled-components'
+import { ContactIcon } from '../VTheme/VTheme'
 
-const PersonCard = ({ person, ...props }) => (
-  <div>
-    <Link href={`/people/${person._id}`} >
-      <a>
-        <div className='personContainer'>
-          <img className='personImg' src={person.imgUrl} />
-          <p className='personTitle'>{person.nickname}</p>
-          <p className='personName'>{person.name}</p>
-        </div>
-      </a>
-    </Link>
+const PersonContainer = styled.section`
+height: auto;
+
+img {
+  max-height: 8rem;
+  max-width: 8rem;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+
+figcaption {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 2rem;
+  margin-bottom: 1rem;
+
+
+@media screen and (max-width: 1000px) {
+    grid-template-columns: 1fr;
+
+  }
+
+@media screen and (max-width: 720px) {
+  img {
+  max-height: 4rem;
+  max-width: 4rem;
+  
+  }
+}
+
+  /* box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.2);
+  border-radius: 8px; */
+}
+
+a {
+  align-self: center;
+}
+
+a:hover {
+  h4, p {
+    color: #6549AA;
+  }
+
+}
+`
+
+const PersonCard = ({ person }) => (
+  <PersonContainer>
+
+    <figcaption>
+
+      <img src={person.imgUrl} />
+
+      <Link href={`/people/${person._id}`}>
+        <a target='_blank'>
+          <h4>{person.name}</h4>
+          <p>{person.placeOfWork}</p>
+          <p>{person.job}</p>
+        </a>
+      </Link>
+    </figcaption>
+
+    <section>
+      <h5>Contact details</h5>
+      <p className='personName'><ContactIcon type='mail' />{person.email}</p>
+
+      {person.phone &&
+
+        <p className='personName'><ContactIcon type='phone' />{person.phone}</p>}
+
+    </section>
+
     <style jsx>{`
-      .personContainer {
-        width: 10rem;
-        letter-spacing: -0.3px;
-        line-height: 24px;
-        margin-bottom: 0px;
-      }
-
-      .personImg {
-        width: 100%;
-        height: 10rem;
-        background-color: rgba(0,0,0,0.0);
-        object-fit: cover;
-        object-position: center;
-        
-      }
-
-      .personTitle {
-        margin-top: 0px;
-        margin-bottom: 0px;
-        vertical-align: middle;
-        font-weight: bold;
-        font-size: 16px;
-        color: #000;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-      }
-     
-      .personTitle :hover {
-        color: #6549aa;
-      }
       .personName {
+     
+        margin-bottom: 0.5rem;
         overflow: hidden;
         text-overflow: ellipsis; 
         word-wrap: break-word;
@@ -56,10 +91,9 @@ const PersonCard = ({ person, ...props }) => (
         -webkit-line-clamp: 6;
         -webkit-box-orient: vertical;
       }
-      
-
-    `}</style>
-  </div>
+    `}
+    </style>
+  </PersonContainer>
 )
 
 PersonCard.propTypes = {
@@ -67,6 +101,10 @@ PersonCard.propTypes = {
     name: PropTypes.string.isRequired,
     nickname: PropTypes.string.isRequired,
     imgUrl: PropTypes.string,
+    job: PropTypes.string,
+    placeOfWork: PropTypes.string,
+    email: PropTypes.string,
+    phone: PropTypes.string,
     _id: PropTypes.string.isRequired
   }).isRequired
 }

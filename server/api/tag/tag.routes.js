@@ -1,7 +1,9 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Tag = require('./tag')
-const { createTags } = require('./tag.controller.js')
+const { listTags } = require('./tag.controller.js')
+const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
+const { SchemaName } = require('./tag.constants')
 
 module.exports = server => {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -11,14 +13,12 @@ module.exports = server => {
       Model: Tag,
       selectFields: '-__v', // Hide '__v' property
       endResponseInAction: false,
-
-      // beforeActions: [],
+      beforeActions: [{ middlewares: [authorizeActions(SchemaName)] }],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       actions: {
-        create: createTags
+        list: listTags
       },
       afterActions: [
-        // this is the place to require user be authed.
         { middlewares: [helpers.formatResponse] }
       ]
     })

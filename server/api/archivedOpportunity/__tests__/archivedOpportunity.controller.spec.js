@@ -2,7 +2,6 @@
 import test from 'ava'
 import { server, appReady } from '../../../server'
 import MemoryMongo from '../../../util/test-memory-mongo'
-import Tag from '../../tag/tag'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import archivedOps from './archivedOpportunity.fixture.js'
@@ -12,15 +11,18 @@ import request from 'supertest'
 import objectid from 'objectid'
 
 test.before('before connect to database', async (t) => {
-  await appReady
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+  try {
+    t.context.memMongo = new MemoryMongo()
+    await t.context.memMongo.start()
+    await appReady
 
-  // connect each oppo to a requestor.
-  t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-  t.context.tags = await Tag.create(tags).catch((err) => `Unable to create tags: ${err}`)
-  archivedOps.map((op, index) => { op.requestor = t.context.people[index]._id })
-  t.context.opportunities = await ArchiveOpportunity.create(archivedOps).catch((err) => console.log('Unable to create opportunities', err))
+    // connect each oppo to a requestor.
+    t.context.people = await Person.create(people).catch((err) => console.error(`Unable to create people: ${err}`))
+    archivedOps.map((op, index) => { op.requestor = t.context.people[index]._id })
+    t.context.opportunities = await ArchiveOpportunity.create(archivedOps).catch((err) => console.error('Unable to create opportunities', err))
+  } catch (e) {
+    console.error('archivedOpportunity.controller.spec before connect error', e)
+  }
 })
 
 test.after.always(async (t) => {
@@ -28,7 +30,7 @@ test.after.always(async (t) => {
 })
 
 test.serial('Should send correct data when queried against an _id', async t => {
-  t.plan(4)
+  t.plan(3)
 
   const opp = new ArchiveOpportunity({
     name: 'The first 1000 metres',
@@ -38,7 +40,7 @@ test.serial('Should send correct data when queried against an _id', async t => {
     duration: '4 hours',
     location: 'Albany, Auckland',
     status: 'completed',
-    tags: [t.context.tags[0]._id],
+    tags: [tags[0]],
     requestor: t.context.people[1]._id
   })
   await opp.save()
@@ -52,9 +54,6 @@ test.serial('Should send correct data when queried against an _id', async t => {
 
   // verify requestor was populated out
   t.is(res.body.requestor.name, person1.name)
-
-  // verify tag was populated out
-  t.is(res.body.tags[0].tag, t.context.tags[0].tag)
 })
 
 test.serial('Should return 404 when archivedOpportunity not found', async t => {

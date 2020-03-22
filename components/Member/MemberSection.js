@@ -12,10 +12,14 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Markdown from 'markdown-to-jsx'
+import MemberExport from './MemberExport'
+import InviteMembers from './InviteMembers'
+import { Role } from '../../server/services/authorize/role.js'
+import Html from '../VTheme/Html'
 
 const SubSection = styled.section`
   margin-bottom: 2.0rem;
+  text-align: left;
 `
 
 class MemberSection extends Component {
@@ -44,14 +48,14 @@ class MemberSection extends Component {
   }
 
   render () {
-    if (this.props.members.loading) {
-      return <Loading />
-    }
     if (!this.props.members.sync) {
-      return <Loading />
+      return <Loading label='members' entity={this.props.members} />
+    }
+    if (this.props.me.role.includes(Role.ANON)) {
+      return '' // blank page for anon users
     }
     const org = this.props.org
-    const meid = this.props.me._id
+    const meid = this.props.me._id.toString()
     if (!org.info) { org.info = {} }
     // check if I am in the members list
     // TODO: [VP-440] members ability I am orgadmin then I get all members list, else I get just my own membership status
@@ -77,11 +81,16 @@ class MemberSection extends Component {
       orgAdminSection =
         <div>
           <SubSection>
-            <h2><FormattedMessage
-              id='memberSection.JoinersTitle'
-              defaultMessage='Organisation Joiners'
-              description='label for joiner table on org detail page'
-            /></h2>
+            <InviteMembers org={org} />
+          </SubSection>
+          <SubSection>
+            <h2>
+              <FormattedMessage
+                id='memberSection.JoinersTitle'
+                defaultMessage='Organisation Joiners'
+                description='label for joiner table on org detail page'
+              />
+            </h2>
 
             <MemberTable
               members={joiners}
@@ -90,11 +99,13 @@ class MemberSection extends Component {
             />
           </SubSection>
           <SubSection>
-            <h2><FormattedMessage
-              id='memberSection.MembersTitle'
-              defaultMessage='Organisation Members'
-              description='label for member table on org detail page'
-            /></h2>
+            <h2>
+              <FormattedMessage
+                id='memberSection.MembersTitle'
+                defaultMessage='Organisation Members'
+                description='label for member table on org detail page'
+              />
+            </h2>
 
             <MemberTable
               members={members}
@@ -104,11 +115,13 @@ class MemberSection extends Component {
           </SubSection>
 
           <SubSection>
-            <h2><FormattedMessage
-              id='memberSection.followersTitle'
-              defaultMessage='Organisation Followers'
-              description='label for follower table on org detail page'
-            /></h2>
+            <h2>
+              <FormattedMessage
+                id='memberSection.followersTitle'
+                defaultMessage='Organisation Followers'
+                description='label for follower table on org detail page'
+              />
+            </h2>
 
             <MemberTable
               members={followers}
@@ -123,12 +136,14 @@ class MemberSection extends Component {
     if (joinerOrValidator(myMembership)) {
       joinerInfoSection =
         <section>
-          <h2><FormattedMessage
-            id='memberSection.joinerInfoSection'
-            defaultMessage='Information for new members'
-            description='label for follower table on org detail page'
-          /></h2>
-          <Markdown children={org.info.joiners || ''} />
+          <h2>
+            <FormattedMessage
+              id='memberSection.joinerInfoSection'
+              defaultMessage='Information for new members'
+              description='label for follower table on org detail page'
+            />
+          </h2>
+          <Html children={org.info.joiners || ''} />
         </section>
     }
 
@@ -137,12 +152,14 @@ class MemberSection extends Component {
     if (memberOrOrgAdmin(myMembership)) {
       memberInfoSection =
         <section>
-          <h2><FormattedMessage
-            id='memberSection.memberInfoTitle'
-            defaultMessage='Information for members'
-            description='label for org info for members detail page'
-          /></h2>
-          <Markdown children={org.info.members || ''} />
+          <h2>
+            <FormattedMessage
+              id='memberSection.memberInfoTitle'
+              defaultMessage='Information for members'
+              description='label for org info for members detail page'
+            />
+          </h2>
+          <Html children={org.info.members || ''} />
         </section>
     }
 
@@ -151,12 +168,14 @@ class MemberSection extends Component {
     if (follower(myMembership)) {
       followerInfoSection =
         <section>
-          <h2><FormattedMessage
-            id='memberSection.followerInfoTitle'
-            defaultMessage='Information for followers'
-            description='label for org info for followers detail page'
-          /></h2>
-          <Markdown children={org.info.followers || ''} />
+          <h2>
+            <FormattedMessage
+              id='memberSection.followerInfoTitle'
+              defaultMessage='Information for followers'
+              description='label for org info for followers detail page'
+            />
+          </h2>
+          <Html children={org.info.followers || ''} />
         </section>
     }
 
@@ -164,18 +183,30 @@ class MemberSection extends Component {
     if (nonMember(myMembership)) {
       nonMemberInfoSection =
         <section>
-          <h2><FormattedMessage
-            id='memberSection.notMember'
-            defaultMessage='About Joining'
-            description='message to non members on the org members tab'
-          /></h2>
-          <Markdown children={org.info.outsiders || ''} />
+          <h2>
+            <FormattedMessage
+              id='memberSection.notMember'
+              defaultMessage='About Joining'
+              description='message to non members on the org members tab'
+            />
+          </h2>
+          <Html children={org.info.outsiders || ''} />
         </section>
     }
+
+    let memberExportSection = ''
+    if (myMembership.status === MemberStatus.ORGADMIN || this.props.isAdmin) {
+      memberExportSection =
+        <section>
+          <MemberExport members={this.props.members.data} />
+        </section>
+    }
+
     return (
       <div>
         {orgAdminSection}
         {followerInfoSection}
+        {memberExportSection}
         {memberInfoSection}
         {joinerInfoSection}
         {nonMemberInfoSection}

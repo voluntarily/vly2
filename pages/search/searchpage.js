@@ -5,17 +5,18 @@ import { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import TitleSection from '../../components/LandingPageComponents/TitleSectionSub'
+import SectionTitle from '../../components/LandingPageComponents/SectionSubtitle'
 import DatePickerType from '../../components/Op/DatePickerType.constant'
 import OpListSection from '../../components/Op/OpListSection'
 import FilterContainer from '../../components/Search/FilterContainer'
 import HeaderSearch from '../../components/Search/HeaderSearch'
 import LocationFilter from '../../components/Search/LocationFilter'
+import TypeFilter from '../../components/Search/TypeFilter'
 import { FullPage, Spacer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
 import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
-
+import OpOrderby from '../../components/Op/OpOrderby'
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
 const { Item } = Menu
 
@@ -32,6 +33,8 @@ const SearchPageContainer = styled.div`
 
 const LOCATION_FILTER_NAME = 'location'
 const DATE_FILTER_NAME = 'date'
+const TYPE_FILTER_NAME = 'type'
+const opTypeValue = ['All', 'Offer', 'Ask']
 
 function filterVisibilityName (filterName) {
   return `${filterName}FilterVisible`
@@ -48,12 +51,16 @@ export class SearchPage extends Component {
     showDatePickerModal: false,
     filter: {
       date: []
-    }
+    },
+    locationFilterVisible: false,
+    typeFilterVisible: false,
+    opOrderBy: 'date'
   }
 
   constructor (props) {
     super(props)
     this.state.search = props.search
+    this.handleSort = this.handleSort.bind(this)
   }
 
   static getDerivedStateFromProps ({ search }) {
@@ -69,19 +76,19 @@ export class SearchPage extends Component {
     }
   }
 
-  openFilter = (filterName) => {
+  handleFilterOpened = (filterName) => {
     this.setState({ [filterVisibilityName(filterName)]: true })
   }
 
-  closeFilter = (filterName) => {
+  handleClose = (filterName) => {
     this.setState({ [filterVisibilityName(filterName)]: false })
   }
 
-  applyFilter = (filterName, value) => {
+  handleFilterApplied = (filterName, value) => {
     this.setState({ [filterValueName(filterName)]: value })
   }
 
-  removeFilter = (filterName) => {
+  handleFilterRemoved = (filterName) => {
     this.setState({ [filterValueName(filterName)]: null })
   }
 
@@ -114,7 +121,7 @@ export class SearchPage extends Component {
           date: Array.isArray(change) ? change : [change]
         }
       })
-    } else this.setState({ filter: { ...this.state.fitler, date: [] } })
+    } else this.setState({ filter: { ...this.state.filter, date: [] } })
   }
 
   changePickerType = type => {
@@ -124,6 +131,12 @@ export class SearchPage extends Component {
   formateDateValue = () => {
     if (this.state.filter.date.length === 0) return 'Date'
     return formatDateBaseOn(this.state.datePickerType, this.state.filter.date)
+  }
+
+  handleSort = (value) => {
+    this.setState({
+      opOrderBy: value
+    })
   }
 
   render () {
@@ -157,30 +170,41 @@ export class SearchPage extends Component {
           onSearch={this.handleSearch}
           dateLabel={dateLabel}
           locations={existingLocations}
-          onFilterOpened={this.openFilter}
-          filterNames={[DATE_FILTER_NAME, LOCATION_FILTER_NAME]}
+          onFilterOpened={this.handleFilterOpened}
+          filterNames={[DATE_FILTER_NAME, LOCATION_FILTER_NAME, TYPE_FILTER_NAME]}
         />
         <FullPage>
           <Helmet>
             <title>Voluntarily - Search Results</title>
           </Helmet>
           <SearchPageContainer>
-            <TitleSection
+            <SectionTitle
               title={
                 <FormattedMessage
-                  defaultMessage={`Search results for "{search}"`}
+                  defaultMessage={'Search results for "{search}"'}
                   values={{ search }}
                   id='search.title'
                 />
               }
             />
+            <OpOrderby onChange={this.handleSort} />
             <FilterContainer
-              onClose={this.closeFilter}
+              onClose={this.handleClose}
               filterName={LOCATION_FILTER_NAME}
-              onFilterApplied={this.applyFilter}
-              onFilterRemoved={this.removeFilter}
-              isShowing={this.state[filterVisibilityName(LOCATION_FILTER_NAME)]}>
+              onFilterApplied={this.handleFilterApplied}
+              onFilterRemoved={this.handleFilterRemoved}
+              isShowing={this.state[filterVisibilityName(LOCATION_FILTER_NAME)]}
+            >
               <LocationFilter locations={existingLocations} />
+            </FilterContainer>
+            <FilterContainer
+              onClose={this.handleClose}
+              filterName={TYPE_FILTER_NAME}
+              onFilterApplied={this.handleFilterApplied}
+              onFilterRemoved={this.handleFilterRemoved}
+              isShowing={this.state[filterVisibilityName(TYPE_FILTER_NAME)]}
+            >
+              <TypeFilter opTypes={opTypeValue} />
             </FilterContainer>
             {/* TODO: VP-445 modify date picker to use filter container (like with location). This will
              help reduce the complexity of this page component */}
@@ -190,13 +214,11 @@ export class SearchPage extends Component {
               onCancel={() =>
                 this.setState({
                   [filterVisibilityName(DATE_FILTER_NAME)]: false
-                })
-              }
+                })}
               onOk={() =>
                 this.setState({
                   [filterVisibilityName(DATE_FILTER_NAME)]: true
-                })
-              }
+                })}
             >
               <Dropdown overlay={DatePickerOption} placement='bottomCenter'>
                 <Button>
@@ -217,6 +239,8 @@ export class SearchPage extends Component {
               filter={this.state.filter}
               dateFilterType={this.state.datePickerType}
               location={this.state[filterValueName(LOCATION_FILTER_NAME)]}
+              opType={this.state[filterValueName(TYPE_FILTER_NAME)]}
+              orderby={this.state.opOrderBy}
             />
           </SearchPageContainer>
         </FullPage>
@@ -238,8 +262,6 @@ SearchPage.propTypes = {
       _id: PropTypes.string
     })
   )
-  //  showAddOp: PropTypes.bool.isRequired,
-  // dispatch: PropTypes.func.isRequired
 }
 
 export default publicPage(withLocations(SearchPage))

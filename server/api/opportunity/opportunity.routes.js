@@ -1,32 +1,19 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Opportunity = require('./opportunity')
-const { Action } = require('../../services/abilities/ability.constants')
 const {
   ensureSanitized,
-  getOpportunities,
+  listOpportunities,
   getOpportunity,
   putOpportunity,
-  getOpportunityRecommendations
+  deleteOpportunity,
+  getOpportunityRecommendations,
+  createOpportunity
 } = require('./opportunity.controller')
-const { SchemaName, OpportunityRoutes } = require('./opportunity.constants')
+const { SchemaName } = require('./opportunity.constants')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
-const initializeTags = require('../../util/initTags')
-
-const convertRequestToAction = (req) => {
-  switch (req.method) {
-    case 'GET':
-      return req.route.path === OpportunityRoutes[Action.READ] ? Action.READ : Action.LIST
-    case 'POST':
-      return Action.CREATE
-    case 'PUT':
-      return Action.UPDATE
-    case 'DELETE':
-      return Action.DELETE
-    default:
-      return Action.READ
-  }
-}
+const { initializeTags } = require('../../util/initTags')
+const removeUnauthorizedFields = require('../../services/authorize/removeUnauthorizedFields')
 
 module.exports = (server) => {
   // Docs: https://github.com/ryo718/mongoose-crudify
@@ -38,19 +25,21 @@ module.exports = (server) => {
       selectFields: '-__v', // Hide '__v' property
       endResponseInAction: false,
       beforeActions: [{
-        middlewares: [authorizeActions(SchemaName, convertRequestToAction), ensureSanitized]
+        middlewares: [authorizeActions(SchemaName), ensureSanitized]
       }, {
         middlewares: [initializeTags],
         only: ['create', 'update']
       }],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       actions: {
-        list: getOpportunities,
+        list: listOpportunities,
         read: getOpportunity,
-        update: putOpportunity
+        update: putOpportunity,
+        delete: deleteOpportunity,
+        create: createOpportunity
       },
       afterActions: [{
-        middlewares: [helpers.formatResponse]
+        middlewares: [removeUnauthorizedFields(Opportunity), helpers.formatResponse]
       }]
     })
   )

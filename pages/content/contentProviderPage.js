@@ -2,7 +2,7 @@ import { Button, Divider } from 'antd'
 import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
-import TitleSection from '../../components/LandingPageComponents/TitleSection'
+import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
 import { BigQuote, BigQuoteAuthor, FullPage, H1, H3, H3Bold, H4, HalfGrid, P, PBold, Spacer, SpacerSmall, TripleGrid } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 
@@ -231,7 +231,7 @@ export class ContentProvider extends Component {
             </HalfGrid>
           </HeroContainer>
           <SectionContainer>
-            <AboutImage src='./static/test2.png' />
+            <AboutImage src='/static/test2.png' />
             <H3Bold>
               Enable your staff to become role models for future innovators.
             </H3Bold>
@@ -243,7 +243,7 @@ export class ContentProvider extends Component {
             </H3>
           </SectionContainer>
           <SectionContainer>
-            <TitleSection title='We are working with' />
+            <SectionTitle title='We are working with' />
             <SponsorContainer>
               <SponsorIcon src='static/img/partners/Spark.png' />
               <SponsorIcon src='static/img/partners/Westpac.png' />
@@ -341,10 +341,10 @@ export class ContentProvider extends Component {
             </BigQuoteContainer>
           </SectionContainer>
           <Divider />
-          <TitleSection title='Features' />
+          <SectionTitle title='Features' />
           <TripleGrid>
             <ItemContainer>
-              <ItemIcon src='./static/img/icons/search.svg' />
+              <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>Volunteering Management</PBold>
               <P>
                 V provides you and your staff with an easy way to find schools
@@ -352,7 +352,7 @@ export class ContentProvider extends Component {
               </P>
             </ItemContainer>
             <ItemContainer>
-              <ItemIcon src='./static/img/icons/search.svg' />
+              <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>Impact reporting</PBold>
               <P>
                 V measures the impact your actions have on New Zealand. See how
@@ -360,7 +360,7 @@ export class ContentProvider extends Component {
               </P>
             </ItemContainer>
             <ItemContainer>
-              <ItemIcon src='./static/img/icons/search.svg' />
+              <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>HR system integration</PBold>
               <P>
                 V supports single sign on, so you don't have to remember extra
@@ -368,7 +368,7 @@ export class ContentProvider extends Component {
               </P>
             </ItemContainer>
             <ItemContainer>
-              <ItemIcon src='./static/img/icons/search.svg' />
+              <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>Automated police vetting</PBold>
               <P>
                 V provides you and your staff with an easy way to find schools
@@ -376,7 +376,7 @@ export class ContentProvider extends Component {
               </P>
             </ItemContainer>
             <ItemContainer>
-              <ItemIcon src='./static/img/icons/search.svg' />
+              <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>Cause Targeting</PBold>
               <P>
                 Our systems enable you to target specific causes you want to
@@ -384,7 +384,7 @@ export class ContentProvider extends Component {
               </P>
             </ItemContainer>
             <ItemContainer>
-              <ItemIcon src='./static/img/icons/search.svg' />
+              <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>Integration</PBold>
               <P>
                 V supports single sign on, so you don't have to remember extra
@@ -395,7 +395,7 @@ export class ContentProvider extends Component {
           <Spacer />
           <Divider />
 
-          <TitleSection title='How to get involved' />
+          <SectionTitle title='How to get involved' />
           <HalfGrid>
             <ItemContainer>
               <H3>Sign up for updates</H3>

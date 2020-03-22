@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk')
 
-const { config } = require('../../../config/config')
+const { config } = require('../../../config/serverConfig')
 
 const cloudUploadService = async (imageObject) => {
   const { image: imageBase64, file: filename } = imageObject

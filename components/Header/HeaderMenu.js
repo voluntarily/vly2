@@ -1,49 +1,68 @@
+import { FormattedMessage } from 'react-intl'
+
 export default () => [
   {
     key: 'home',
     href: '/home',
-    text: 'Dashboard',
+    text:
+  <FormattedMessage
+    id='HeaderMenu.volunteer'
+    defaultMessage='Volunteer'
+  />,
     authRequired: true
   },
   {
     key: 'acts',
     href: '/acts',
-    text: 'Activities',
+    text:
+  <FormattedMessage
+    id='HeaderMenu.resorces'
+    defaultMessage='Resources'
+  />,
     authRequired: true
   },
   {
     key: 'habout',
-    text: 'About',
-    href: '/about',
+    href: 'https://blog.voluntarily.nz',
+    text:
+  <FormattedMessage
+    id='HeaderMenu.about'
+    defaultMessage='About'
+  />,
     anonymousOnly: true
   },
   {
     key: 'orgs',
     href: '/orgs',
-    text: 'Organisations'
-
+    text:
+  <FormattedMessage
+    id='HeaderMenu.organisations'
+    defaultMessage='Organisations'
+  />
   },
   {
     key: 'help',
-    text: 'Help',
+    text: 'Lost? 🧐',
     href: 'https://voluntarily.atlassian.net/servicedesk/customer/portals'
   },
   {
     key: 'hsignin',
-    href: '/auth/sign-in',
-    text: 'Log in',
-    anonymousOnly: true
-  },
-  {
-    key: 'hsignup',
-    href: '/auth/sign-in',
-    text: 'Sign up',
+    href: '/home',
+    text:
+  <FormattedMessage
+    id='HeaderMenu.sign-in'
+    defaultMessage='Sign in'
+  />,
     anonymousOnly: true
   },
   {
     key: 'hsignoff',
     href: '/auth/sign-off',
-    text: 'Sign Out',
+    text:
+  <FormattedMessage
+    id='HeaderMenu.sign-out'
+    defaultMessage='Sign out'
+  />,
     authRequired: true
   }
 ]

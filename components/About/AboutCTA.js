@@ -1,8 +1,7 @@
 import { Button } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import TitleSectionSub from '../LandingPageComponents/TitleSectionSub'
-import { TripleGrid } from '../VTheme/VTheme'
+import { TripleGrid, Spacer } from '../VTheme/VTheme'
 
 // cardcontainer
 const CTAContainer = styled.div`
@@ -53,10 +52,10 @@ const CTADescription = styled.h1`
 
 const AboutCTA = () => (
   <div>
-    <TitleSectionSub title='How to get involved' />
+    <Spacer />
     <TripleGrid>
       <CTAContainer>
-        <CTAImage src='../../static/img/about/dev.png' />
+        <CTAImage src='/static/img/about/dev.png' />
         <CTATitle>
           <FormattedMessage
             id='cta.title.dev'
@@ -75,7 +74,7 @@ const AboutCTA = () => (
           <FormattedMessage
             id='cta.dev.chat'
             description='call to action for developers to enter the chatroom'
-            defaultMessage='Dev Chatroom'
+            defaultMessage='Developer Chatroom'
           />
         </Button>&nbsp;&nbsp;
         <Button href='https://github.com/voluntarily/vly2' target='_blank' rel='noopener noreferrer'>
@@ -88,7 +87,7 @@ const AboutCTA = () => (
         </Button>
       </CTAContainer>
       <CTAContainer>
-        <CTAImage src='../../static/img/about/volunteers.png' />
+        <CTAImage src='/static/img/about/volunteers.png' />
         <CTATitle>
           <FormattedMessage
             id='cta.title.volunteer'
@@ -113,7 +112,7 @@ const AboutCTA = () => (
         </Button>
       </CTAContainer>
       <CTAContainer>
-        <CTAImage src='../../static/img/about/sponsors.png' />
+        <CTAImage src='/static/img/about/sponsors.png' />
         <CTATitle>
           <FormattedMessage
             id='cta.title.sponsor'

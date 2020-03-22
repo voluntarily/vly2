@@ -1,7 +1,8 @@
-# Pull Request Template (VP-123)
-
-Please check that your ticket number and ticket description is included in the PR title 😀
-
+## I do solemnly swear that I have:
+- [ ] Run `npm test` and all the tests pass.
+- [ ] Run `npm run lint` and there are no warnings.
+- [ ] Not decreased the overall test coverage?
+- [ ] Included the Jira ID and description in the PR title
 
 ## Proposed Changes? 🤔
 1. 

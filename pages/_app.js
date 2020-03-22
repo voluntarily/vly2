@@ -1,78 +1,79 @@
 import '../assets/voluntarily.less'
 import React from 'react'
-import App, { Container } from 'next/app'
-import { IntlProvider, addLocaleData } from 'react-intl'
+import App from 'next/app'
 import { Provider } from 'react-redux'
 import withRedux from 'next-redux-wrapper'
 import { makeStore } from '../lib/redux/reduxApi'
-import Router from 'next/router'
-import { setRouting } from '../lib/redux/actions'
+import { ThemeProvider } from 'styled-components'
+import { getSession } from '../lib/auth/auth'
+import { Role } from '../server/services/authorize/role'
+import { IntlProvider } from 'react-intl'
 
-// Register React Intl's locale data for the user's locale in the browser. This
-// locale data was added to the page by `pages/_document.js`. This only happens
-// once, on initial page load in the browser.
-if (typeof window !== 'undefined' && window.ReactIntlLocaleData) {
-  Object.keys(window.ReactIntlLocaleData).forEach(lang => {
-    addLocaleData(window.ReactIntlLocaleData[lang])
-  })
+// Define what props.theme will look like
+const theme = {
+  main: '#6549AA'
 }
 
-const updateRoutingInRedux = (store, redirectUrl) => {
-  // TODO: Refactor to some HOC where boundry pages participating in 3rd party redirects can
-  // register themselves for exclusion
-  if (redirectUrl !== '/auth/sign-in') {
-    store.dispatch(setRouting({ redirectUrl }))
+function MyApp ({
+  Component,
+  store,
+  locale,
+  messages,
+  initialNow,
+  isPlain,
+  me,
+  isAuthenticated,
+  isAdmin,
+  user,
+  pageProps
+}) {
+  const docProps = {
+    isPlain,
+    me,
+    isAuthenticated,
+    isAdmin,
+    user
   }
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <IntlProvider locale={locale} messages={messages} initialNow={initialNow}>
+          <Component {...pageProps} {...docProps} />
+        </IntlProvider>
+      </ThemeProvider>
+    </Provider>
+  )
 }
 
-class MyApp extends App {
-  static async getInitialProps ({ Component, router, ctx }) {
-    let pageProps = {}
+/*  app Context has:
+  AppTree: [Function: AppTree],
+  Component: [Function: DefaultPage],
+  router: ServerRouter
+  ctx: includes req, res, store.
+*/
+MyApp.getInitialProps = async (appContext) => {
+  const { ctx } = appContext
+  // get the session early from the token and put in the redux store.
+  // must do this before calling wrapped pages.
+  const session = await getSession(ctx.req, ctx.store)
 
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx)
-    }
+  // Get the `locale` and `messages` from the request object on the server.
+  // In the browser, use the same values that the server serialized.
+  const { locale, messages } = ctx.req || window.__NEXT_DATA__.props.initialProps
 
-    updateRoutingInRedux(ctx.store, router.asPath)
+  // calls page's `getInitialProps` and fills `appProps.pageProps`
+  const appProps = await App.getInitialProps(appContext)
 
-    // Get the `locale` and `messages` from the request object on the server.
-    // In the browser, use the same values that the server serialized.
-    const { req } = ctx
-    const { locale, messages } = req || window.__NEXT_DATA__.props.initialProps
-    const initialNow = Date.now()
-
-    return { pageProps, locale, messages, initialNow }
-  }
-
-  onHistoryChange = url => {
-    updateRoutingInRedux(this.props.store, url)
-  }
-
-  componentDidMount () {
-    Router.events.on('beforeHistoryChange', this.onHistoryChange)
-  }
-
-  componentWillUnmount () {
-    Router.events.off('beforeHistoryChange', this.onHistoryChange)
-  }
-
-  render () {
-    const { Component, pageProps, locale, messages, initialNow, store } = this.props
-
-    return (
-      <Container>
-        <Provider store={store}>
-          <IntlProvider
-            locale={locale}
-            messages={messages}
-            initialNow={initialNow}
-          >
-            <Component {...pageProps} />
-          </IntlProvider>
-        </Provider>
-      </Container>
-    )
+  return {
+    isPlain: false,
+    me: session.me || false,
+    isAuthenticated: session.isAuthenticated,
+    isAdmin: session.me && session.me.role && session.me.role.includes(Role.ADMIN),
+    user: session.user,
+    locale,
+    messages,
+    initialNow: Date.now(),
+    ...appProps // page props can override the earlier props
   }
 }
-
 export default withRedux(makeStore, { debug: false })(MyApp)
