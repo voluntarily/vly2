@@ -1,6 +1,6 @@
 # Voluntarily Terms of Use
 
-Voluntarily.nz (Voluntarily) is an online app that connects volunteers with those asking for help.
+Voluntarily.nz (Voluntarily) is an online platform that connects volunteers with those asking for help.
 
 Voluntarily is an initiative by the Pam Fergusson Charitable Trust (PFCT, we, our, or us) with support from Datacom, The Ministry of Education, Auckland Tourism, Events and Economic Development (ATEED), Spark Foundation, NZ Government Innovation Fund and many leading NZ corporates.
 
