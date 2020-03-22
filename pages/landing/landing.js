@@ -1,3 +1,4 @@
+import React from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import Hero from '../../components/LandingPageComponents/Hero'
@@ -17,7 +18,9 @@ export const Landing = props => (
     <Helmet>
       <title>Voluntarily</title>
     </Helmet>
-    <Hero />
+    <Hero
+      isAuthenticated={props.isAuthenticated}
+    />
     <FullPage>
       <OfferSection />
       <Divider />
