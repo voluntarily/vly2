@@ -1,3 +1,4 @@
+import React from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import Hero from '../../components/LandingPageComponents/Hero'
@@ -11,7 +12,6 @@ import moment from 'moment'
 import { Divider } from 'antd'
 import GiveSupportSection from '../../components/LandingPageComponents/GiveSupportSection'
 import TakeSupportSection from '../../components/LandingPageComponents/TakeSupportSection'
-import React from 'react'
 export const Landing = props => (
   <>
 
