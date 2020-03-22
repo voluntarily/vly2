@@ -237,6 +237,14 @@ const Footer = ({ isAuthenticated, ...props }) => (
             <MenuItem><a href='/about'>About us</a></MenuItem>
             <MenuItem>
               <a
+                href='https://voluntarily.statuspage.io'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Status
+              </a>
+            </MenuItem>
+            <MenuItem>
+              <a
                 href='https://github.com/voluntarily/vly2'
                 target='_blank'
                 rel='noopener noreferrer'
