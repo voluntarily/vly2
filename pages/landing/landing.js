@@ -9,16 +9,18 @@ import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import moment from 'moment'
 import { Divider } from 'antd'
+import GiveSupportSection from '../../components/LandingPageComponents/GiveSupportSection'
 export const Landing = props => (
   <>
+
+    <Helmet>
+      <title>Voluntarily</title>
+    </Helmet>
     <Hero />
     <FullPage>
-      <Helmet>
-        <title>Voluntarily</title>
-      </Helmet>
-      <Divider />
       <OfferSection />
       <Divider />
+      <GiveSupportSection />
       <SectionTitle>
         <FormattedMessage
           id='landing.sectiontitle.oplist'

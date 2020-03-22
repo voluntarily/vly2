@@ -1,13 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 // import Link from 'next/link'
-import { Button } from 'antd'
+import { FormattedMessage } from 'react-intl'
+import SectionTitle from './SectionTitle'
 
 const OfferContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  margin: 2rem 0;
+  margin-bottom: 8rem;
   @media screen and (min-width: 1026px) and (max-width: 1289px) {
     grid-template-columns: 1fr 1fr ;
 
@@ -24,10 +25,10 @@ const OfferContainer = styled.div`
 
 const OfferCard = styled.div`
 
-  padding: 3rem;
+  padding: 2rem;
 display: grid;
 gap:1.5rem;
-grid-template-columns: 1fr;
+grid-template-columns: 4rem 1fr;
 width: 100%;
   background: #ffffff;
   box-shadow: 2px 2px 16px 0 rgba(118, 118, 118, 0.5);
@@ -50,10 +51,13 @@ width: 100%;
     font-size: 1.1rem;
   }
 
- 
+  img {
+    align-self: center;
+    width: 100%;
+  }
 
   :hover {
-    transform: scale(1.01);
+    transform: scale(1.05);
     h3 {
       color: #653cad;
     }
@@ -71,21 +75,51 @@ width: 100%;
 
 `
 
-const OfferSection = () => (
+const CommunitySection = () => (
   <div>
-
+    <SectionTitle>
+      <FormattedMessage
+        id='landing.sectiontitle.offers'
+        defaultMessage='Get Started'
+      />
+    </SectionTitle>
     <OfferContainer>
 
+      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz'>
+        <OfferCard>
+
+          <img src='./static/img/icons/code-party.svg' />
+          <figcaption>
+            <h3>Build the movement</h3>
+            <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
+
+            </p>
+          </figcaption>
+        </OfferCard>
+      </a>
+      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
+        <OfferCard>
+
+          <img src='./static/img/icons/chat.svg' />
+          <figcaption>
+            <h3>Join the conversation</h3>
+            <p>Join the community chat on Slack and help shape the future of the platform
+
+            </p>
+          </figcaption>
+        </OfferCard>
+      </a>
       {/* <Link href='/search'> */}
 
       <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/pre-register'>
 
         <OfferCard>
+          <img src='./static/img/icons/ask.svg' />
           <figcaption>
-            <h3>Can you help out?</h3>
+            <h3>Can you help out? (coming soon)</h3>
             <p>
-            Want to volunteer your time, or resources to help out someone in need? See what is needed and offer your skills.
-            </p><Button size='large' shape='round' type='primary' style={{ marginTop: '1rem' }}>See how you can help</Button>
+              Get help right now. We make it easy with templates that will take you through step-by-step to say exactly what you need.
+            </p>
           </figcaption>
         </OfferCard>
       </a>
@@ -94,11 +128,12 @@ const OfferSection = () => (
       <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/pre-register'>
         <OfferCard>
 
+          <img src='./static/img/icons/offer.svg' />
           <figcaption>
-            <h3>Do you need a hand?</h3>
-            <p>It’s okay to ask. We make it easy with templates that will help you communicate exactly what you need.
+            <h3>Offer to Help (coming soon)</h3>
+            <p>Keen to volunteer time, or resources during the crisis? Great! Click through to see where you can help the most people.
+
             </p>
-            <Button size='large' shape='round' type='primary' style={{ marginTop: '1rem' }}>See what help is available</Button>
           </figcaption>
         </OfferCard>
       </a>
@@ -108,4 +143,4 @@ const OfferSection = () => (
   </div>
 )
 
-export default OfferSection
+export default CommunitySection
