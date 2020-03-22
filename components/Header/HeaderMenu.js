@@ -16,8 +16,8 @@ export default () => [
     href: '/acts',
     text:
   <FormattedMessage
-    id='HeaderMenu.resorces'
-    defaultMessage='Resources'
+    id='HeaderMenu.activities'
+    defaultMessage='Activities'
   />,
     authRequired: true
   },
