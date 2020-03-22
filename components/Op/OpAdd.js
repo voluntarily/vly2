@@ -20,40 +20,61 @@ const OppAddButtons = styled.div`
     }
 `
 
-export const OpAddAskBtn = () => {
-  const href = `/op/${OpportunityType.ASK}`
+export const OpAddNewBtn = () => {
+  const href = '/acts'
+
+  return (
+    <Link href={href}>
+      <Button type='primary' block shape='round' size='large'>
+        <FormattedMessage
+          id='opAdd.newAskOffer'
+          defaultMessage='New request or offering'
+          description='Button to create a new Ask or Offer opportunity used on multiple pages'
+        />
+      </Button>
+    </Link>)
+}
+
+export const OpAddAskBtn = ({ actid }) => {
+  let href = `/op/${OpportunityType.ASK}`
+  if (actid) {
+    href = href.concat(`?act=${actid}`)
+  }
   return (
     <Link href={href}>
       <Button type='primary' block shape='round' size='large'>
         <FormattedMessage
           id='opAdd.newAsk'
-          defaultMessage='New Request'
+          defaultMessage='I can offer this'
           description='Button to create a new Ask opportunity used on multiple pages'
         />
       </Button>
     </Link>)
 }
 
-export const OpAddOfferBtn = () => {
-  const href = `/op/${OpportunityType.OFFER}`
+export const OpAddOfferBtn = ({ actid }) => {
+  let href = `/op/${OpportunityType.OFFER}`
+  if (actid) {
+    href = href.concat(`?act=${actid}`)
+  }
   return (
     <Link href={href}>
       <Button type='primary' block shape='round' size='large'>
         <FormattedMessage
           id='opAdd.newOffer'
-          defaultMessage='New Offer'
+          defaultMessage="I'd like help with this"
           description='Button to create a new offer opportunity used on multiple pages'
         />
       </Button>
     </Link>)
 }
 
-const OpAdd = ({ roles }) => {
+const OpAdd = ({ roles, actid }) => {
   if (!roles.length) return null
   return (
     <OppAddButtons>
-      {(roles.includes(Role.OPPORTUNITY_PROVIDER)) && <OpAddAskBtn />}
-      {(roles.includes(Role.VOLUNTEER_PROVIDER)) && <OpAddOfferBtn />}
+      {(roles.includes(Role.OPPORTUNITY_PROVIDER)) && <><OpAddAskBtn actid={actid} /> &nbsp; </>}
+      {(roles.includes(Role.VOLUNTEER_PROVIDER)) && <OpAddOfferBtn actid={actid} />}
     </OppAddButtons>
   )
 }

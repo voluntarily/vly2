@@ -103,6 +103,7 @@ export const ActDetailPage = (props) => {
       act.offerOrg = {
         _id: me.orgMembership[0].organisation._id
       }
+      act.tags = me.orgMembership[0].organisation.groups
     }
   } else if (!props.activities.sync) {
     content = <Loading label='activity' entity={props.activities} />
