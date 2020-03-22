@@ -72,6 +72,15 @@ grid-template-columns: 1fr 12rem;
 margin: 4rem 0 2rem 0;
 
 
+@media screen and (max-width: 768px) {
+    grid-template-columns: calc(100vw - 2rem);
+  }
+
+`
+export const HeroSectionButtonContainer = styled.div`
+@media screen and (max-width: 768px) {
+    display: none;
+  }
 `
 
 export const SpacerSmall = styled.div`

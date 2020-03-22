@@ -2,7 +2,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Button } from 'antd'
-import { Grid, HeroSectionHeader } from '../VTheme/VTheme'
+import { Grid, HeroSectionHeader, HeroSectionButtonContainer } from '../VTheme/VTheme'
 const PersonaBox = styled.section`
   margin-bottom: 2rem;
 
@@ -29,8 +29,6 @@ const PersonaContainer = styled.div`
 const Image = styled.img`
   width: 100%;
   object-fit: cover;
-
-
 
   @media screen and (max-width: 768px) {
     height: 20rem;
@@ -85,8 +83,9 @@ const GiveSupportSection = () => (
   <PersonaBox>
     <HeroSectionHeader>
       <h2>How you can support others</h2>
-
-      <Button type='secondary' size='large' shape='round'>Sign up to help</Button>
+      <HeroSectionButtonContainer>
+        <Button type='secondary' size='large' shape='round' block>See all requests</Button>
+      </HeroSectionButtonContainer>
     </HeroSectionHeader>
     <Grid>
       <PersonaContainer>

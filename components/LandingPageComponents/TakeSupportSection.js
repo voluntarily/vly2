@@ -2,7 +2,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Grid, HeroSectionHeader } from '../VTheme/VTheme'
+import { Grid, HeroSectionHeader, HeroSectionButtonContainer } from '../VTheme/VTheme'
 import { Button } from 'antd'
 const PersonaBox = styled.section`
   margin-bottom: 2rem;
@@ -86,14 +86,16 @@ const TakeSupportSection = () => (
   <PersonaBox>
     <HeroSectionHeader>
       <h2>How people can support you</h2>
-      <Button type='secondary' size='large' shape='round'>See all requests</Button>
+      <HeroSectionButtonContainer>
+        <Button type='secondary' size='large' shape='round' block>See all offers</Button>
+      </HeroSectionButtonContainer>
     </HeroSectionHeader>
     <Grid>
 
       <PersonaContainer>
         <Image src='./static/img/landingcards/RemoteWorking.png' alt='' />
-        <Title>School closed?</Title>
-        <Text>Offer your knowledge to smaller businesses who need the support to set up remote working.</Text>
+        <Title>Suddenly working remotely?</Title>
+        <Text>Find someone to tell you all about remote working apps, and tips for working from home efficiently.</Text>
       </PersonaContainer>
 
       <PersonaContainer>
@@ -104,7 +106,7 @@ const TakeSupportSection = () => (
 
       <PersonaContainer>
         <Image src='./static/img/landingcards/Isolation.png' alt='' />
-        <Title>Help teachers</Title>
+        <Title>Self isolating and struggling?</Title>
         <Text>Meet someone who can help you run errands, check in on you, or just someone to talk to. </Text>
       </PersonaContainer>
 
