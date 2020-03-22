@@ -1,0 +1,13 @@
+{
+  "slug": "goal-complete-profile",
+  "description": "Complete your profile by adding a picture, \n      skills list, where you are, your job, things you are interested \n      in and tell us about yourself. \n      This helps us make great recommendations for \n      activities you should volunteer for and helps teachers select \n      the range of helpers they need for an activity",
+  "evaluation": "async personalGoal=>{const{score,count}=await GoalTests.personCompleteness(personalGoal);return score/count*100>85;}",
+  "group": "Getting Started as a Volunteer",
+  "imgUrl": "/static/img/goal/goal-complete-profile.png",
+  "language": "en",
+  "name": "Complete your profile",
+  "preconditions": [],
+  "rank": 1,
+  "startLink": "/my/person",
+  "subtitle": "Updated"
+}
