@@ -85,19 +85,20 @@ const Text = styled.p`
 const TakeSupportSection = () => (
   <PersonaBox>
     <HeroSectionHeader>
-      <h2>How people can support you</h2>
+      <h2>Suddenly working remotely?</h2>
       <Button type='secondary' size='large' shape='round'>aaaaa</Button>
     </HeroSectionHeader>
     <Grid>
+
       <PersonaContainer>
         <Image src='./static/img/landingcards/RemoteWorking.png' alt='' />
-        <Title>Help small businesses</Title>
+        <Title>School closed?</Title>
         <Text>Offer your knowledge to smaller businesses who need the support to set up remote working.</Text>
       </PersonaContainer>
 
       <PersonaContainer>
         <Image src='./static/img/landingcards/SchoolClosed.png' alt='' />
-        <Title>Help your community</Title>
+        <Title>Over seventy?</Title>
         <Text>Spread your kindness and offer help to those that cannot leave their homes.</Text>
       </PersonaContainer>
 
