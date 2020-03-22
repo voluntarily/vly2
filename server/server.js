@@ -31,6 +31,7 @@ const { raygunExpressServerAPIKey } = require('../lib/sec/keys')
 const raygun = require('raygun')
 const raygunClient = new raygun.Client().init({ apiKey: raygunExpressServerAPIKey })
 
+raygunClient.excludedHostNames = ['localhost']
 raygunClient.user = function (req) {
   if (req.person) {
     return {
