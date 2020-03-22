@@ -10,6 +10,7 @@ import publicPage from '../../hocs/publicPage'
 import moment from 'moment'
 import { Divider } from 'antd'
 import GiveSupportSection from '../../components/LandingPageComponents/GiveSupportSection'
+import TakeSupportSection from '../../components/LandingPageComponents/TakeSupportSection'
 export const Landing = props => (
   <>
 
@@ -22,7 +23,7 @@ export const Landing = props => (
       <Divider />
       <GiveSupportSection />
       <Divider />
-      <GiveSupportSection />
+      <TakeSupportSection />
       <SectionTitle>
         <FormattedMessage
           id='landing.sectiontitle.oplist'
