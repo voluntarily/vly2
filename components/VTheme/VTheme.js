@@ -69,7 +69,7 @@ export const HeroSectionHeader = styled.div`
 display: grid;
 
 grid-template-columns: 1fr 12rem;
-margin: 4rem 0 2rem 0;
+margin: 4rem 0 3rem 0;
 
 
 @media screen and (max-width: 768px) {
