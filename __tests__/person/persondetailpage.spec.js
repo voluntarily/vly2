@@ -227,51 +227,51 @@ test('render Dalis PersonDetailPage as admin ', async t => {
   t.is(props.dispatch.callCount, 1)
 })
 
-// test('render Dalis PersonDetailPage as self dali', async t => {
-//   const dali = people[1]
-//   const props = {
-//     ...t.context.store,
-//     me: dali,
-//     isNew: false,
-//     personid: dali._id,
-//     people: {
-//       sync: true,
-//       syncing: false,
-//       loading: false,
-//       data: [dali],
-//       request: null
-//     },
-//     dispatch: sinon.fake()
-//   }
+test('render Dalis PersonDetailPage as self dali', async t => {
+  const dali = people[1]
+  const props = {
+    ...t.context.store,
+    me: dali,
+    isNew: false,
+    personid: dali._id,
+    people: {
+      sync: true,
+      syncing: false,
+      loading: false,
+      data: [dali],
+      request: null
+    },
+    dispatch: sinon.fake()
+  }
 
-//   const RoutedPersonDetailPage = withMockRoute(PersonDetailPage)
-//   const outer = shallowWithIntl(<RoutedPersonDetailPage {...props} />)
-//   const wrapper = outer.dive()
+  const RoutedPersonDetailPage = withMockRoute(PersonDetailPage)
+  const outer = shallowWithIntl(<RoutedPersonDetailPage {...props} />)
+  const wrapper = outer.dive()
 
-//   t.true(wrapper.exists('PersonDetail'))
-//   t.is(wrapper.find('PersonDetail').first().props().person, dali)
+  t.true(wrapper.exists('PersonDetail'))
+  t.is(wrapper.find('PersonDetail').first().props().person, dali)
 
-//   // as I am me there should be only an edit button
-//   t.is(wrapper.find('Button').length, 1)
-//   t.true(wrapper.exists('#editPersonBtn'))
+  // as I am me there should be only an edit button
+  t.is(wrapper.find('Button').length, 1)
+  t.true(wrapper.exists('#editPersonBtn'))
 
-//   // click the edit button
-//   const editPerson = wrapper.find('Button#editPersonBtn')
-//   editPerson.props().onClick()
-//   // we should now be in edit mode
-//   t.true(wrapper.exists('Connect(Form(PersonDetail))'))
-//   // cancel the edit
-//   wrapper.find('Connect(Form(PersonDetail))').first().props().onCancel()
-//   t.is(wrapper.find('Button').length, 1)
+  // click the edit button
+  const editPerson = wrapper.find('Button#editPersonBtn')
+  editPerson.props().onClick()
+  // we should now be in edit mode
+  t.true(wrapper.exists('Connect(Form(PersonDetail))'))
+  // cancel the edit
+  wrapper.find('Connect(Form(PersonDetail))').first().props().onCancel()
+  t.is(wrapper.find('Button').length, 1)
 
-//   // edit again
-//   editPerson.props().onClick()
-//   t.true(wrapper.exists('Connect(Form(PersonDetail))'))
-//   // save the edit
-//   await wrapper.find('Connect(Form(PersonDetail))').first().props().onSubmit(dali)
-//   t.true(wrapper.exists('#editPersonBtn'))
-//   t.is(props.dispatch.callCount, 1)
-// })
+  // edit again
+  editPerson.props().onClick()
+  t.true(wrapper.exists('Connect(Form(PersonDetail))'))
+  // save the edit
+  await wrapper.find('Connect(Form(PersonDetail))').first().props().onSubmit(dali)
+  t.true(wrapper.exists('#editPersonBtn'))
+  t.is(props.dispatch.callCount, 1)
+})
 
 test('render new PersonDetailPage as admin ', async t => {
   const admin = people[0]

@@ -175,11 +175,6 @@ export class PersonDetailPage extends Component {
         </Helmet>
 
         <PersonDetail person={person} personEdit={() => this.setState({ editing: true})} canEdit={canEdit} />
-        {/* {canEdit &&
-          <Button id='editPersonBtn' style={{ float: 'left' }} type='primary' shape='round' onClick={() => this.setState({ editing: true })}>
-            <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
-          </Button>}
-            &nbsp; */}
         {canRemove &&
           <Popconfirm id='deletePersonConfirm' title='Confirm removal of this person.' onConfirm={this.handleDeletePerson.bind(this, person)} onCancel={this.handleCancelDelete.bind(this)} okText='Yes' cancelText='No'>
             <Button id='deletePersonBtn' type='danger' shape='round'>
