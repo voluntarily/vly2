@@ -4,6 +4,7 @@ const escapeRegex = require('../../util/regexUtil')
 const { Action } = require('../../services/abilities/ability.constants')
 const { Role } = require('../../services/authorize/role')
 const sanitizeHtml = require('sanitize-html')
+const { ActivityListFields } = require('./activity.constants')
 const { isValidFileUrl } = require('../file/file.controller')
 /**
  * Get all orgs
@@ -11,10 +12,10 @@ const { isValidFileUrl } = require('../file/file.controller')
  * @param res
  * @returns void
  */
-const getActivities = async (req, res) => {
+const listActivities = async (req, res) => {
   let query = {} // { status: 'active' }
   let sort = 'name'
-  let select = {}
+  let select = ActivityListFields.join(' ')
 
   try {
     query = req.query.q ? JSON.parse(req.query.q) : query
@@ -109,7 +110,6 @@ const putActivity = async (req, res) => {
       }
     }
   }
-
   await Activity.updateOne({ _id: req.params._id }, { $set: req.body })
 
   getActivity(req, res)
@@ -191,7 +191,7 @@ function ensureSanitized (req, res, next) {
 
 module.exports = {
   ensureSanitized,
-  getActivities,
+  listActivities,
   getActivity,
   putActivity,
   createActivity
