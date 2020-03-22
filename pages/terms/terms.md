@@ -1,4 +1,4 @@
-# Welcome to Voluntarily
+# Voluntarily Terms of Use
 
 Voluntarily.nz (Voluntarily) is an online app that connects volunteers with those asking for help.
 
