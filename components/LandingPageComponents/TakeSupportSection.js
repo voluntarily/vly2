@@ -85,8 +85,8 @@ const Text = styled.p`
 const TakeSupportSection = () => (
   <PersonaBox>
     <HeroSectionHeader>
-      <h2>Suddenly working remotely?</h2>
-      <Button type='secondary' size='large' shape='round'>aaaaa</Button>
+      <h2>How people can support you</h2>
+      <Button type='secondary' size='large' shape='round'>See all requests</Button>
     </HeroSectionHeader>
     <Grid>
 
@@ -98,20 +98,20 @@ const TakeSupportSection = () => (
 
       <PersonaContainer>
         <Image src='./static/img/landingcards/SchoolClosed.png' alt='' />
-        <Title>Over seventy?</Title>
-        <Text>Spread your kindness and offer help to those that cannot leave their homes.</Text>
+        <Title>School closed?</Title>
+        <Text>Talk to educators who can guide you to platforms and resources to help you keep teaching or learning online.</Text>
       </PersonaContainer>
 
       <PersonaContainer>
         <Image src='./static/img/landingcards/Isolation.png' alt='' />
         <Title>Help teachers</Title>
-        <Text>Help teachers create a distance learning plan for their kura or school. </Text>
+        <Text>Meet someone who can help you run errands, check in on you, or just someone to talk to. </Text>
       </PersonaContainer>
 
       <PersonaContainer>
         <Image src='./static/img/landingcards/ElderlyRisk.png' alt='' />
-        <Title>Help seniors</Title>
-        <Text>Reach out to our most at-risk citizens and help look out for those over 70.</Text>
+        <Title>Over seventy?</Title>
+        <Text>Or worried about an over seventy? Find someone to check in to make isolation a little less lonely.</Text>
       </PersonaContainer>
     </Grid>
 

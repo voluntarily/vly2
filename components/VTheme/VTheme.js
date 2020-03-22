@@ -68,7 +68,7 @@ export const PageBannerButtons = styled.div`
 export const HeroSectionHeader = styled.div`
 display: grid;
 
-grid-template-columns: 1fr 8rem;
+grid-template-columns: 1fr 12rem;
 margin: 4rem 0 2rem 0;
 
 
