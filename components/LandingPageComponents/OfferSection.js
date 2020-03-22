@@ -63,11 +63,23 @@ width: 100%;
   /* Tablet */
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     min-height: initial;
+
    }
 
   /* Mobile */
   @media screen and (max-width: 768px) {
     min-height: initial;
+
+  padding: 2rem;
+    width: calc(100vw - 2rem);
+
+
+  h3 {
+    bottom: 0;
+    font-size: 1.5rem;
+  
+  }
+
   }
 
 `

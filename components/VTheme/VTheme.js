@@ -74,6 +74,7 @@ margin: 4rem 0 3rem 0;
 
 @media screen and (max-width: 768px) {
     grid-template-columns: calc(100vw - 2rem);
+    margin: 2rem 0;
   }
 
 `
