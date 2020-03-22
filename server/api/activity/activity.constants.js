@@ -27,15 +27,25 @@ const ActivityFields = {
 }
 
 const ActivityListFields = [
-  ActivityFields.ID,
   ActivityFields.NAME,
   ActivityFields.SLUG,
   ActivityFields.IMG_URL,
   ActivityFields.OFFERORG
 ]
+
+// fields to populate an opportunity with a fromActivity
+const ActivityOpFields = [
+  ActivityFields.NAME,
+  ActivityFields.SLUG,
+  ActivityFields.IMG_URL,
+  ActivityFields.OFFERORG,
+  ActivityFields.LOCKED,
+  ActivityFields.LOCKFIELDS
+]
 module.exports = {
   SchemaName: 'Activity',
   ActivityStatus,
   ActivityFields,
-  ActivityListFields
+  ActivityListFields,
+  ActivityOpFields
 }
