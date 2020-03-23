@@ -1,4 +1,4 @@
-import { ReactSelector, waitForReact } from 'testcafe-react-selectors'
+import { waitForReact } from 'testcafe-react-selectors'
 const { config } = require('../config/clientConfig')
 
 fixture`Getting Started` // eslint-disable-line no-undef
