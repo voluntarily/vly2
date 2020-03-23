@@ -154,7 +154,7 @@ This card will disappear when the profile is complete
     name: 'Run an activity',
     slug: 'goal-run-first-activity',
     imgUrl: '/static/img/goal/goal-run-activity.png',
-    subtitle: 'Connect with volunteers from the world of work through your first activity request.',
+    subtitle: 'Coming very soon. We make it easy to ask for exactly what you need',
     description:
 `Click Start below to review existing template activities. See if there is one you or your group might be able to offer or want to ask for help with.
 
@@ -176,7 +176,7 @@ Once Published we will try to match it with people who can help.
     slug: 'goal-find-activities',
     subtitle: 'Search the curated activities page',
     description: 'See templates for some common activities that you might want to ask for help with, or offer to help with',
-    imgurl: '/static/img/actions/createAct.png',
+    imgUrl: '/static/img/actions/createAct.png',
     rank: 1,
     evaluation: () => { return false }
   },
@@ -186,8 +186,8 @@ Once Published we will try to match it with people who can help.
     slug: 'goal-create-new-ask-opportunity',
     subtitle: 'Ask volunteers for help by creating a request to help out.',
     description: '',
-    imgurl: '/static/img/actions/createOpAsk.png',
-    startlink: '/op/ask',
+    imgUrl: '/static/img/actions/createOpAsk.png',
+    startLink: '/op/ask',
     rank: 2,
     evaluation: () => { return false }
   },
@@ -197,8 +197,8 @@ Once Published we will try to match it with people who can help.
     slug: 'goal-create-new-offer-opportunity',
     subtitle: 'What can you offer others?',
     description: 'Create a new listing of what you can do, or what resources you can offer to others.',
-    imgurl: '/static/img/actions/createOpOffer.png',
-    startlink: '/op/offer',
+    imgUrl: '/static/img/actions/createOpOffer.png',
+    startLink: '/op/offer',
     rank: 2,
     evaluation: () => { return false }
   },
@@ -212,8 +212,8 @@ Once Published we will try to match it with people who can help.
     slug: 'goal-contribute-to-platform',
     subtitle: 'Help mobilise more volunteers by contributing. All skill levels are welcome, and training is provided.',
     description: '',
-    imgurl: '/static/img/actions/github.png',
-    startlink: 'https://github.com/voluntarily/vly2',
+    imgUrl: '/static/img/actions/github.png',
+    startLink: 'https://github.com/voluntarily/vly2',
     rank: 1,
     evaluation: () => { return false }
   },
@@ -225,13 +225,13 @@ Once Published we will try to match it with people who can help.
     name: 'Confirm Teacher ID',
     slug: 'goal-confirm-teacher-id',
     subtitle: 'If you are a teacher, click here to enable creating new requests for volunteers.',
-    imgurl: '/static/img/goal/goal-profile2.png',
+    imgUrl: '/static/img/goal/goal-profile2.png',
     description: `
 If you have not been automatically joined to a school you can enter your teacher
 registration number to confirm that you are a teacher and thus enable the ability
 to view activity templates and create new activities.    
 `,
-    startlink: '/action/registerTeacher',
+    startLink: '/action/registerTeacher',
     rank: 1,
     evaluation: () => { console.log('Confirm Teacher ID'); return false }
   }
