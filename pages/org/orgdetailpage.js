@@ -25,7 +25,7 @@ const blankOrg = {
   facebook: null,
   twitter: null,
   category: ['vp'],
-  tags: { data: [] }
+  groups: []
 }
 
 export const HomeButton = () =>
