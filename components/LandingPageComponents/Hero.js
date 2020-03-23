@@ -27,6 +27,12 @@ const AwesomeHeroContainer = styled.div`
   p {
     font-size: 1.5rem;
   }
+
+  @media screen and (max-width: 768px) {
+   margin-top: 0;
+  }
+
+
 `
 
 export const HeroGrid = styled.div`
@@ -95,8 +101,10 @@ const AwesomeImage = styled.img`
     height: inherit;
 
   }
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    width: inherit;
+  @media screen and (min-width: 769px) and (max-width: 1025px) {
+    width: calc(100% - 2rem);
+
+    margin-left: 2rem;
 
   }
 

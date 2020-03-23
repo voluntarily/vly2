@@ -102,10 +102,12 @@ const OfferSection = () => (
 
           <OfferCard>
             <figcaption>
+
+              <small>New!</small>
               <h3>Offer to help</h3>
               <p>
             Want to volunteer your time, or resources to help out someone in need? See what is needed and offer your skills.
-              </p><Button size='large' shape='round' type='primary' style={{ marginTop: '1rem' }}>See requests for help</Button>
+              </p><Button size='large' shape='round' type='primary' style={{ marginTop: '1rem' }}>See who needs help</Button>
             </figcaption>
           </OfferCard>
         </a>
@@ -126,10 +128,12 @@ const OfferSection = () => (
         </OfferCard>
       </a>
       {/* </Link> */}
+
       <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
         <OfferCard>
 
           <figcaption>
+            <small>Open Source</small>
             <h3>Join the community build</h3>
             <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
             </p>
