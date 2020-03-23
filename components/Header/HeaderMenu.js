@@ -6,8 +6,8 @@ export default () => [
     href: '/home',
     text:
   <FormattedMessage
-    id='HeaderMenu.volunteer'
-    defaultMessage='Volunteer'
+    id='HeaderMenu.home'
+    defaultMessage='Home'
   />,
     authRequired: true
   },
@@ -30,15 +30,6 @@ export default () => [
     defaultMessage='About'
   />,
     anonymousOnly: true
-  },
-  {
-    key: 'orgs',
-    href: '/orgs',
-    text:
-  <FormattedMessage
-    id='HeaderMenu.organisations'
-    defaultMessage='Organisations'
-  />
   },
   {
     key: 'help',
