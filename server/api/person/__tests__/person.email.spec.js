@@ -113,7 +113,7 @@ test('Send declined email to volunteer', async t => {
   t.true(info.accepted[0] === 'accepted')
   const sentMail = nodemailerMock.mock.getSentMail()
   t.is(sentMail.length, 1)
-  t.truthy(sentMail[0].text.includes('Right now we have all the people we need for 1 Mentor a year 12 business'))
+  t.truthy(sentMail[0].text.includes(`On behalf of ${props.from} and the Voluntarily team, we would like to thank you for expressing interest in this offer`))
   t.regex(sentMail[0].subject, /update on 1 Mentor a year 12 business Impact Project/)
 })
 
