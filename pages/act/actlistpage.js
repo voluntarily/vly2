@@ -59,7 +59,7 @@ export const ActListPage = ({ activities }) =>
 
     <SearchContainer>
       <Input.Search
-        placeholder='eg: Help with grocery shopping'
+        placeholder='eg: Grocery shopping'
         enterButton='Search'
         size='large'
         onSearch={handleSearch}
