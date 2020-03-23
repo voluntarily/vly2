@@ -267,6 +267,14 @@ const Footer = ({ isAuthenticated, ...props }) => (
               >Terms and Conditions
               </a>
             </MenuItem>
+            <MenuItem>
+              <a
+                href='/terms/privacy'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Privacy
+              </a>
+            </MenuItem>
           </MenuWrapper>
         </Col>
       </Row>
