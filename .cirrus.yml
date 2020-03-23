@@ -51,7 +51,8 @@ systemtest_task:
     - apt-get install -y firefox-esr
     - npm install --save-dev codeceptjs
     - npm i @wdio/selenium-standalone-service --save-dev
-    - cd systemtest npx codeceptjs run --grep "@smoke" --plugins allure
+    - cd systemtest 
+    - npx codeceptjs run --grep "@smoke" --plugins allure
 
 
 build_test_docker_builder:
