@@ -35,7 +35,11 @@ width: 100%;
   border-radius: 8px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
-min-height: 20rem;
+min-height: 23rem;
+
+figcaption {
+  position: relative;
+}
 
   h3 {
     bottom: 0;
@@ -64,17 +68,17 @@ min-height: 20rem;
 
   /* Tablet */
   @media screen and (min-width: 768px) and (max-width: 1025px) {
-    min-height: initial;
+    min-height: 19rem;
    }
 
   /* Mobile */
   @media screen and (max-width: 768px) {
-    min-height: initial;
+    min-height: 22rem;
   }
 
   /* Mobile */
   @media screen and (max-width: 668px) {
-    min-height: initial;
+    min-height: 22rem;
 
     width: calc(100vw - 2rem);
 
@@ -107,7 +111,7 @@ const OfferSection = () => (
               <h3>Offer to help</h3>
               <p>
             Want to volunteer your time, or resources to help out someone in need? See what is needed and offer your skills.
-              </p><Button size='large' shape='round' type='primary' style={{ marginTop: '1rem' }}>See who needs help</Button>
+              </p><Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>See who needs help</Button>
             </figcaption>
           </OfferCard>
         </a>
@@ -123,7 +127,7 @@ const OfferSection = () => (
             <h3>Ask for help</h3>
             <p>Coming this week. We make it easy to ask for exactly what you need.
             </p>
-            <Button size='large' shape='round' type='primary' style={{ marginTop: '1rem' }}>Coming soon</Button>
+            <Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>Coming soon</Button>
           </figcaption>
         </OfferCard>
       </a>
@@ -138,7 +142,7 @@ const OfferSection = () => (
             <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
             </p>
 
-            <Button size='large' shape='round' type='primary' style={{ marginTop: '1rem' }}>Join the build</Button>
+            <Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>Join the build</Button>
           </figcaption>
         </OfferCard>
       </a>
