@@ -8,8 +8,10 @@ block copybig
 
 block copy
   p Kia ora #{to.nickname},
-  p On behalf of #{from.name} and the Voluntarily team, we would like to thank you for expressing interest in this offer.
-  p For some reason your interest to participate has been withdrawn.
+  p On behalf of #{from.name} and the Voluntarily team, we would like to thank you for expressing interest in this request.
+  p Sorry we have to decline your offer at this time.
+   if message
+    p #{from.nickname} says: #{message.body}
   p Ngā mihi, Voluntarily.nz
    
 block copybutton
