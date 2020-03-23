@@ -290,7 +290,7 @@ class OrgDetailForm extends Component {
                     {getFieldDecorator('groups', {
                       initialValue: [],
                       rules: []
-                    })(<TagInput existingGroups={this.props.existingGroups} />)}
+                    })(<TagInput existingTags={this.props.existingGroups} />)}
                   </Form.Item>
                 </InputContainer>
                 <DescriptionContainer>

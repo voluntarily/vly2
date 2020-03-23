@@ -3,18 +3,28 @@ const { DefaultTagList, GroupTagList } = require('../api/tag/tag.constants')
 
 const initializeTagsA = taglist => async (req, res, next) => {
   try {
-    const { tags } = req.body
-    if (tags) {
+    const { tags, groups } = req.body
+    if (tags || groups) {
       try {
         const tagset = await Tag.findOne({ name: taglist }).exec()
         if (tagset) {
           const currentTags = new Set(tagset.tags)
-          tags.forEach(x => {
-            if (!currentTags.has(x)) {
-              currentTags.add(x)
-              tagset.tags = new Array(...currentTags)
-            }
-          })
+          if(tags) {
+            tags.forEach(x => {
+              if (!currentTags.has(x)) {
+                currentTags.add(x)
+                tagset.tags = new Array(...currentTags)
+              }
+            })
+          }
+          if (groups) {  
+            groups.forEach(x => {
+              if (!currentTags.has(x)) {
+                currentTags.add(x)
+                tagset.tags = new Array(...currentTags)
+              }
+            })
+          }
           await tagset.save()
         } else {
           await Tag.create({ name: taglist, tags: tags })
