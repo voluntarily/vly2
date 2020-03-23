@@ -5,7 +5,7 @@ import { Button } from 'antd'
 
 const OfferContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
   margin: 2rem 0 4rem 0;
   @media screen and (min-width: 1026px) and (max-width: 1289px) {
@@ -35,7 +35,7 @@ width: 100%;
   border-radius: 8px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
-min-height: 292px;
+min-height: 20rem;
 
   h3 {
     bottom: 0;
@@ -53,7 +53,7 @@ min-height: 292px;
   small {
   font-size: 1rem
 }
- 
+ img{ margin-top: 1rem;}
 
   :hover {
     transform: scale(1.01);
@@ -65,17 +65,21 @@ min-height: 292px;
   /* Tablet */
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     min-height: initial;
-
    }
 
   /* Mobile */
   @media screen and (max-width: 768px) {
     min-height: initial;
+  }
 
+  /* Mobile */
+  @media screen and (max-width: 668px) {
+    min-height: initial;
 
-  padding: 2rem;
     width: calc(100vw - 2rem);
 
+  padding: 2rem;
+   
 
   h3 {
     bottom: 0;
@@ -101,7 +105,7 @@ const OfferSection = () => (
               <h3>Offer to help</h3>
               <p>
             Want to volunteer your time, or resources to help out someone in need? See what is needed and offer your skills.
-              </p><Button size='large' shape='round' type='primary' style={{ marginTop: '1rem' }}>See how you can help</Button>
+              </p><Button size='large' shape='round' type='primary' style={{ marginTop: '1rem' }}>See requests for help</Button>
             </figcaption>
           </OfferCard>
         </a>
@@ -117,7 +121,7 @@ const OfferSection = () => (
             <h3>Ask for help</h3>
             <p>Coming this week. We make it easy to ask for exactly what you need.
             </p>
-            <Button size='large' shape='round' type='primary' style={{ marginTop: '1rem' }}>See what help is available</Button>
+            <Button size='large' shape='round' type='primary' style={{ marginTop: '1rem' }}>Coming soon</Button>
           </figcaption>
         </OfferCard>
       </a>
@@ -125,12 +129,12 @@ const OfferSection = () => (
       <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
         <OfferCard>
 
-          <img src='./static/img/icons/code-party.svg' />
           <figcaption>
-            <h3>Be part of the community build</h3>
+            <h3>Join the community build</h3>
             <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
-
             </p>
+
+            <Button size='large' shape='round' type='primary' style={{ marginTop: '1rem' }}>Join us</Button>
           </figcaption>
         </OfferCard>
       </a>
