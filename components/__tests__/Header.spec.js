@@ -29,9 +29,9 @@ test('renders the Header and Navigation for anon user', t => {
   t.is(wrapper.find('a').last().text(), 'Sign in')
   t.snapshot()
 
-  const search = wrapper.find('input').first()
-  search.simulate('change', { target: { value: 'auckland' } })
-  search.simulate('keyDown', { keyCode: 13 })
+  // const search = wrapper.find('input').first()
+  // search.simulate('change', { target: { value: 'auckland' } })
+  // search.simulate('keyDown', { keyCode: 13 })
   // t.truthy(onpush.calledOnce)
 })
 
