@@ -107,8 +107,7 @@ test('OrgDetailPage GetInitialProps non member', async t => {
   myMock
     .get(`path:/api/organisations/${t.context.org._id}`, { body: { status: 200 } })
     .get('path:/api/members/', { body: { status: 200 } })
-    .get('path:/git st
-    s/', { body: [] })
+    .get('path:/api/tags/', { body: [] })
   const props = await OrgDetailPage.getInitialProps(ctx)
   t.false(props.isNew)
   t.is(props.orgid, t.context.org._id)
