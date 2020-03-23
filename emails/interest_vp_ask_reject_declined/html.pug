@@ -1,0 +1,19 @@
+extends ../theme/layout.pug
+
+block tagline
+  span Heads-up #{to.nickname}, an update
+  
+block copybig
+  a( href=op.href) #{op.name} 
+
+block copy
+  p Kia ora #{to.nickname},
+  p On behalf of #{from.name} and the Voluntarily team, we would like to thank you for expressing interest in this request.
+  p Sorry we have to decline your offer at this time.
+   if message
+    p #{from.nickname} says: #{message.body}
+  p Ngā mihi, Voluntarily.nz
+   
+block copybutton
+  a(href=to.href class='mobile-button') Recommendations
+             

@@ -40,17 +40,17 @@ test.before(t => {
   }
 })
 
-test.afterEach(t => {
+test.beforeEach(t => {
   // Reset the mock back to the defaults after each test
   nodemailerMock.mock.reset()
 })
 
-test('Send acknowledgeInterest email to person', async t => {
+test.serial('Send acknowledgeInterest email to person', async t => {
   const props = {
     from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson('interest_vp_accept_interested', t.context.to, props)
+  const info = await emailPerson('interest_vp_ask_accept_interested', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
 
   const sentMail = nodemailerMock.mock.getSentMail()
@@ -59,27 +59,27 @@ test('Send acknowledgeInterest email to person', async t => {
   t.regex(sentMail[0].subject, /Confirming your interest/)
 })
 
-test('render acknowledgeInterest email to person', async t => {
+test.serial('render acknowledgeInterest email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
     op: t.context.op,
     renderonly: true
   }
-  const html = await emailPerson('interest_vp_accept_interested', t.context.to, props, true)
+  const html = await emailPerson('interest_vp_ask_accept_interested', t.context.to, props, true)
   const document = (new JSDOM(html)).window.document
   t.truthy(getByText(document, 'Help make a difference'))
   t.truthy(getByText(document, t.context.op.name))
   t.truthy(getByText(document, `Kia ora ${t.context.to.nickname},`))
 })
 
-test('Send invited email to person', async t => {
+test.serial('Send invited email to person', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson('interest_vp_accept_invited', t.context.to, props)
+  const info = await emailPerson('interest_vp_ask_accept_invited', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
 
   const sentMail = nodemailerMock.mock.getSentMail()
@@ -88,13 +88,13 @@ test('Send invited email to person', async t => {
   t.regex(sentMail[0].subject, /You're invited to 1 Mentor a year 12 business Impact Project/)
 })
 
-test('Send committed email to requestor', async t => {
+test.serial('Send committed email to requestor', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson('interest_op_accept_committed', t.context.to, props)
+  const info = await emailPerson('interest_op_ask_accept_committed', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
 
   const sentMail = nodemailerMock.mock.getSentMail()
@@ -103,43 +103,45 @@ test('Send committed email to requestor', async t => {
   // TODO: [VP-1341] verify ical attachment for committed email
 })
 
-test('Send declined email to volunteer', async t => {
+test.serial('Send declined email to volunteer', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
     op: t.context.op
   }
-  const info = await emailPerson('interest_vp_reject_declined', t.context.to, props)
+  const info = await emailPerson('interest_vp_ask_reject_declined', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
   const sentMail = nodemailerMock.mock.getSentMail()
   t.is(sentMail.length, 1)
-  t.truthy(sentMail[0].text.includes('Right now we have all the people we need for 1 Mentor a year 12 business'))
+
+  t.truthy(sentMail[0].text.includes('Sorry we have to decline your offer at this time'))
   t.regex(sentMail[0].subject, /update on 1 Mentor a year 12 business Impact Project/)
 })
 
-test('Send person interested email to requestor', async t => {
+test.serial('Send person interested email to requestor', async t => {
   const props = {
     send: true, // when true email is actually sent
     from: t.context.me,
     op: t.context.op,
-    interest: { comment: 'All your base belong to us' }
+    interest: { comment: 'A ll your base belong to us' }
   }
-  const info = await emailPerson('interest_op_accept_interested', t.context.to, props)
+  const info = await emailPerson('interest_op_ask_accept_interested', t.context.to, props)
   t.true(info.accepted[0] === 'accepted')
   const sentMail = nodemailerMock.mock.getSentMail()
+  // console.log('sentMail', sentMail)
   t.is(sentMail.length, 1)
   // t.truthy(sentMail[0].text.includes('Andrew Watkins just expressed interest in your opportunity'))
   t.regex(sentMail[0].subject, /Andrew Watkins is interested in 1 Mentor/)
 })
 
-test('Email to Voluntarily user includes unsubscribe link', async (t) => {
+test.serial('Email to Voluntarily user includes unsubscribe link', async (t) => {
   const props = {
     from: t.context.me,
     op: t.context.op,
     interest: { comment: 'Test comment' }
   }
 
-  const info = await emailPerson('interest_vp_accept_interested', t.context.to, props)
+  const info = await emailPerson('interest_vp_ask_accept_interested', t.context.to, props)
   const sentMail = nodemailerMock.mock.getSentMail()
 
   t.true(info.accepted[0] === 'accepted')
@@ -154,7 +156,7 @@ test('Email to Voluntarily user includes unsubscribe link', async (t) => {
   t.truthy(sentMail[0].html.includes(expectedUnsubscribeText))
 })
 
-test('Email to anonymous user does not include unsubscribe link', async (t) => {
+test.serial('Email to anonymous user does not include unsubscribe link', async (t) => {
   const props = {
     from: t.context.me,
     op: t.context.op,
@@ -167,7 +169,7 @@ test('Email to anonymous user does not include unsubscribe link', async (t) => {
   // so it not being present should result in no unsubscribe link
   delete to._id
 
-  const info = await emailPerson('interest_vp_accept_interested', to, props)
+  const info = await emailPerson('interest_vp_offer_accept_interested', to, props)
   const sentMail = nodemailerMock.mock.getSentMail()
 
   t.true(info.accepted[0] === 'accepted')
@@ -177,7 +179,7 @@ test('Email to anonymous user does not include unsubscribe link', async (t) => {
   t.falsy(sentMail[0].text.includes(expectedUnsubscribeText))
 })
 
-test('sendNotificationEmails flag is respected', async (t) => {
+test.serial('sendNotificationEmails flag is respected', async (t) => {
   const props = {
     from: t.context.me,
     op: t.context.op,
@@ -209,7 +211,7 @@ test('sendNotificationEmails flag is respected', async (t) => {
   ]
 
   for (const testPerson of testPeople) {
-    await emailPerson('interest_vp_accept_interested', testPerson.person, props)
+    await emailPerson('interest_vp_ask_accept_interested', testPerson.person, props)
     const sentMail = nodemailerMock.mock.getSentMail()
 
     t.is(sentMail.length, testPerson.expectedMailCount)

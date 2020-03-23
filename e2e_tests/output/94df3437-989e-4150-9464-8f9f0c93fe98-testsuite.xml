@@ -1,0 +1,40 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1570732087708' stop='1570732109501'>
+    <name>UxDesign:</name>
+    <title>UxDesign:</title>
+    <test-cases>
+        <test-case start='1570732102899' status='failed' stop='1570732108861'>
+            <name>Test web and Rest</name>
+            <title>Test web and Rest</title>
+            <labels>
+                <label name='tag' value='null'/>
+            </labels>
+            <parameters/>
+            <steps>
+                <step start='1570732102910' status='passed' stop='1570732104956'>
+                    <name>I am on page "https://github.com"</name>
+                    <title>I am on page "https://github.com"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1570732104956' status='failed' stop='1570732108860'>
+                    <name>I click "Sign in"</name>
+                    <title>I click "Sign in"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title='Last Seen Screenshot' source='eb922caa-773c-44e6-87d8-9db4ad55d6dd-attachment.png' type='image/png' size='131438'/>
+            </attachments>
+            <failure>
+                <message>Clickable element "Sign in" was not found by text|CSS|XPath</message>
+                <stack-trace>Error: Clickable element "Sign in" was not found by text|CSS|XPath
+                    at new ElementNotFound (C:\Users\Yogi\vly2\node_modules\codeceptjs\lib\helper\errors\ElementNotFound.js:14:11)
+                    at assertElementExists (C:\Users\Yogi\vly2\node_modules\codeceptjs\lib\helper\WebDriver.js:2316:11)
+                    at WebDriver.click (C:\Users\Yogi\vly2\node_modules\codeceptjs\lib\helper\WebDriver.js:720:7)
+                    at process._tickCallback (internal/process/next_tick.js:68:7)</stack-trace>
+            </failure>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>
