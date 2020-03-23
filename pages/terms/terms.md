@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-export default () => `
 # Voluntarily Terms of Use
 
 Voluntarily.nz (Voluntarily) is an online platform that connects volunteers with those asking for help.
@@ -127,4 +125,3 @@ When you provide personal information to us, we will comply with our Privacy Pol
 10.5 If any part or provision of these Terms is or becomes illegal, unenforceable, or invalid, that part or provision is deemed to be modified to the extent required to remedy the illegality, unenforceability or invalidity. If a modification is not possible, the part or provision must be treated for all purposes as severed from these Terms. The remainder of these Terms will be binding on you.
 
 10.6 These Terms set out everything agreed by the parties relating to your use of the Website and supersede and cancel anything discussed, exchanged or agreed prior to you agreeing to these Terms. The parties have not relied on any representation, warranty or agreement relating to the Website that is not expressly set out in the Terms, and no such representation, warranty or agreement has any effect from the date you agreed to these Terms.
-`

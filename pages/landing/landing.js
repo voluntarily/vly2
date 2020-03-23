@@ -1,10 +1,8 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import { FormattedMessage } from 'react-intl'
 import Hero from '../../components/LandingPageComponents/Hero'
 import OfferSection from '../../components/LandingPageComponents/OfferSection'
-import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
-import OpAdd from '../../components/Op/OpAdd'
+// import OpAdd from '../../components/Op/OpAdd'
 import OpListSection from '../../components/Op/OpListSection'
 import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
@@ -27,12 +25,6 @@ export const Landing = props => (
       <GiveSupportSection />
       <Divider />
       <TakeSupportSection />
-      <SectionTitle>
-        <FormattedMessage
-          id='landing.sectiontitle.oplist'
-          defaultMessage='Happening Soon'
-        />
-      </SectionTitle>
 
       <OpListSection
         store={props.store}
@@ -41,7 +33,6 @@ export const Landing = props => (
         }}
       />
 
-      <OpAdd {...props} />
     </FullPage>
   </>
 )
