@@ -33,7 +33,7 @@ export default () => [
   },
   {
     key: 'help',
-    text: 'Lost? 🧐',
+    text: 'Support 🙋🏽‍♀️',
     href: 'https://voluntarily.atlassian.net/servicedesk/customer/portals'
   },
   {
