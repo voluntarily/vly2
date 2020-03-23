@@ -91,8 +91,8 @@ for (const testData of testScenarios) {
         rank: 1,
         evaluation: 'async (personalGoal) => { return false }'
       })
-
-    t.is(response.statusCode, 403)
+    const expected = testData.role === 'admin' ? 200 : 403
+    t.is(response.statusCode, expected)
   })
 
   test.serial(`Goal API - ${testData.role} - update`, async t => {
@@ -106,7 +106,8 @@ for (const testData of testScenarios) {
         name: 'Updated test name'
       })
 
-    t.is(response.statusCode, 403)
+    const expected = testData.role === 'admin' ? 200 : 403
+    t.is(response.statusCode, expected)
   })
 
   test.serial(`Goal API - ${testData.role} - delete`, async t => {
@@ -117,6 +118,7 @@ for (const testData of testScenarios) {
       .set('Accept', 'application/json')
       .set('Cookie', [testData.cookie])
 
-    t.is(response.statusCode, 403)
+    const expected = testData.role === 'admin' ? 200 : 403
+    t.is(response.statusCode, expected)
   })
 }

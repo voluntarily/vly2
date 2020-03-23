@@ -28,7 +28,8 @@ Find out more about the project at the [Website](http://voluntarily.nz) and then
 
 Voluntarily is based on the [MERN (MongoDB, Express, React+Redux, Node)](http://mern.io/) software stack but also uses next.js to keep things clean and simple. Everything should work out of the box. There are two choices:
 
-1. install NodeJS and MongoDB and run locally - [See here for detailed instructions](https://github.com/voluntarily/vly2/blob/master/docs/gettingstarted.md "Instructions")
+1. install NodeJS and MongoDB and run locally - [See here for detailed instructions](
+   "Instructions")
 
 2. install Docker and run in a container - [See here for detailed instructions](https://github.com/voluntarily/vly2/blob/master/docs/Docker.md "Instructions")
 
@@ -49,20 +50,33 @@ Voluntarily is based on the [MERN (MongoDB, Express, React+Redux, Node)](http://
 7. `npm run storybook` - starts the Storybook Component Library
 
 
-Once you see the message "Voluntarily is running on port: 3122! Be Awesome!" then you can open your browser at http://localhost:3122.
+Once you see the message: 
 
-If you see the message "Please make sure Mongodb is installed and running!"  then go back and start mongod.
+    "Voluntarily is running on port: 3122! Be Awesome!" 
+
+then you can open your browser at http://localhost:3122.
+
+If you see the message _"Please make sure Mongodb is installed and running!"_  then go back and start mongod.
 
 Press `ctrl + c` to exit the node application.
 
 #######################Running BDD Tests#########################
 
-cd systemtest
-npx codeceptjs run --grep "@smoke" --plugins allure   
-allure serve output
-############### BDD Set Up ################################
+    cd systemtest
+    npx codeceptjs run --grep "@smoke" --plugins allure   
+    allure serve output
+
+
+
+############### BDD Set Up ################################ 
 
 //Refer https://codecept.io/bdd
 
-MacOS
-You may need to install selenium and webdriver brew install selenium-server-standalone brew install allure followed by selenium-server -port 4444
+### MacOS
+You may need to install selenium and webdriver
+`brew install selenium-server-standalone`
+`brew install allure`
+followed by
+`selenium-server -port 4444`
+
+
