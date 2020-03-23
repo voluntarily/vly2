@@ -7,9 +7,9 @@ fixture`Getting Started` // eslint-disable-line no-undef
     await waitForReact(30000)
   })
 
-test('Test we can search from landing page', async t => { // eslint-disable-line no-undef
-  await t
-    .typeText(ReactSelector('Search'), 'robots')
-    .pressKey('enter')
-    .expect(ReactSelector('SearchPage SectionSubtitle').innerText, { timeout: 10000 }).eql('Search results for "robots"')
-})
+// test('Test we can search from landing page', async t => { // eslint-disable-line no-undef
+//   await t
+//     .typeText(ReactSelector('Search'), 'robots')
+//     .pressKey('enter')
+//     .expect(ReactSelector('SearchPage SectionSubtitle').innerText, { timeout: 10000 }).eql('Search results for "robots"')
+// })

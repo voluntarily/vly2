@@ -67,18 +67,18 @@ const StyledAvatar = styled(Avatar)`
     margin-right: 0px;
   }
 `
-const SearchInput = styled(Search)`
-  width: 20rem;
-  display: inline-block;
-  margin-left: 0.5rem;
+// const SearchInput = styled(Search)`
+//   width: 20rem;
+//   display: inline-block;
+//   margin-left: 0.5rem;
 
-  padding: 4px;
-  border-radius: 4px;
+//   padding: 4px;
+//   border-radius: 4px;
 
-  @media screen and (max-width: 767px) {
-    display: none;
-  }
-`
+//   @media screen and (max-width: 767px) {
+//     display: none;
+//   }
+// `
 
 const handleSearch = search => {
   Router.push({
