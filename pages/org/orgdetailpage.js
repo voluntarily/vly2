@@ -25,7 +25,7 @@ const blankOrg = {
   facebook: null,
   twitter: null,
   category: ['vp'],
-  tags: []
+  tags: { data: [] }
 }
 
 export const HomeButton = () =>
@@ -168,7 +168,7 @@ export const OrgDetailPage = ({
 
 OrgDetailPage.getInitialProps = async ({ store, query }) => {
   // Get one Org
-  await store.dispatch(reduxApi.actions.tags.get( {name: GroupTagList} ))
+  await store.dispatch(reduxApi.actions.tags.get({ name: GroupTagList }))
   const isNew = query && query.new && query.new === 'new'
   if (isNew) {
     return {
