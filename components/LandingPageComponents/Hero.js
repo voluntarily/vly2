@@ -177,9 +177,9 @@ const Hero = ({ isAuthenticated }) => (
       <HeroRight>
         <HeroText>People helping people.</HeroText>
         <p>
-          We connect people who can volunteer time, advice, or stuff to those who need it.
+          We connect people who can volunteer time, advice, or stuff to those who need it.<br/><br/>
         </p>
-        <SearchBox>
+        {/* <SearchBox>
           <Search
             placeholder="Try 'remote learning'"
             prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -189,7 +189,7 @@ const Hero = ({ isAuthenticated }) => (
             onSearch={handleSearch}
             aria-label='Search for volunteering opportunties here'
           />
-        </SearchBox>
+        </SearchBox> */}
         <div>
           <Button type='secondary' shape='round' size='large' href='https://blog.voluntarily.nz'>
             Learn more

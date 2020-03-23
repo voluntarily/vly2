@@ -106,12 +106,12 @@ const Header = ({ isAuthenticated, me, ...props }) => {
       <MenuGrid>
         <div>
           <Brand className='site-name' aria-hidden='true' />
-          <SearchInput
+          {/* <SearchInput
             placeholder='Search for cool ways to help out'
             onSearch={handleSearch}
             aria-label='Search for volunteering opportunties here'
 
-          />
+          /> */}
         </div>
         <Link href='/landing'>
           <LogoContainer>
