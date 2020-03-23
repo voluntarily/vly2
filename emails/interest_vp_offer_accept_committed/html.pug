@@ -1,0 +1,23 @@
+extends ../theme/layout.pug
+
+block tagline
+  span Help is on the way
+
+block copybig
+  a( href=op.href) #{op.name} 
+
+block copy
+  p Kia ora #{to.nickname},
+  p You just committed to #{op.name}.
+  if message
+    p saying: #{message.body}
+  p Time to prepare for the activity. 
+  ul
+    li Read through the activity pages and any linked documents
+    li message the organiser if you have any questions.
+
+block copybutton
+  a(href=op.href class='mobile-button') Activity
+  span &nbsp; 
+  a(href=to.href class='mobile-button') Profile
+   
