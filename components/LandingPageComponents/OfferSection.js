@@ -138,7 +138,7 @@ const OfferSection = () => (
             <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
             </p>
 
-            <Button size='large' shape='round' type='primary' style={{ marginTop: '1rem' }}>Join us</Button>
+            <Button size='large' shape='round' type='primary' style={{ marginTop: '1rem' }}>Join the build</Button>
           </figcaption>
         </OfferCard>
       </a>
