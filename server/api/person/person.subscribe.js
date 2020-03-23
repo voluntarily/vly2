@@ -44,7 +44,8 @@ module.exports = (server) => {
     await addMember({
       person: person._id.toString(),
       organisation: coreOrganisation._id.toString(),
-      validation: SYSTEM_MEMBER_VALIDATION_MESSAGE
+      validation: SYSTEM_MEMBER_VALIDATION_MESSAGE,
+      status: MemberStatus.MEMBER
     })
   })
 
