@@ -1,12 +1,12 @@
-import { Button, Icon, Input } from 'antd'
-import Router from 'next/router'
+import { Button } from 'antd'
+// import Router from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 import { HalfGrid } from '../VTheme/VTheme'
 import { FormattedMessage } from 'react-intl'
 import { SignUpButton } from './SignUp'
 
-const Search = Input.Search
+// const Search = Input.Search
 
 // this is the big container block that holds the container together lol
 const AwesomeHeroContainer = styled.div`
@@ -91,7 +91,6 @@ const HeroRight = styled.div`
 
   @media screen and (max-width: 768px) {
     margin: 1rem 1rem 0 1rem;
-
   }
 `
 
@@ -115,27 +114,27 @@ line-height: 1.4;
   }
 `
 
-const SearchBox = styled.div`
-width: 80%;
-  background-color: white;
-  height: 4rem;
-  margin: 1.5rem 0;
-  border-radius: 0.25rem;
-  padding: 8px;
-  box-shadow: 2px 2px 12px 0 rgba(0, 0, 0, 0.5);
-  @media screen and (min-width: 1026px) and (max-width: 1281px) {
-  width: initial;
-  }
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    width: initial;
-  }
-  .ant-input-affix-wrapper .ant-input:not(:first-child) {
-    padding-left: 40px;
-  }
-  @media screen and (max-width: 768px) {
-   display: none;
-  }
-`
+// const SearchBox = styled.div`
+// width: 80%;
+//   background-color: white;
+//   height: 4rem;
+//   margin: 1.5rem 0;
+//   border-radius: 0.25rem;
+//   padding: 8px;
+//   box-shadow: 2px 2px 12px 0 rgba(0, 0, 0, 0.5);
+//   @media screen and (min-width: 1026px) and (max-width: 1281px) {
+//   width: initial;
+//   }
+//   @media screen and (min-width: 768px) and (max-width: 1025px) {
+//     width: initial;
+//   }
+//   .ant-input-affix-wrapper .ant-input:not(:first-child) {
+//     padding-left: 40px;
+//   }
+//   @media screen and (max-width: 768px) {
+//    display: none;
+//   }
+// `
 
 const HeroAuthenticate = styled.p`
   display: flex;
@@ -151,14 +150,14 @@ const HeroAuthenticate = styled.p`
 
 // end right hand copy and CTA side
 
-const handleSearch = search => {
-  Router.push({
-    pathname: '/search',
-    query: {
-      search
-    }
-  })
-}
+// const handleSearch = search => {
+//   Router.push({
+//     pathname: '/search',
+//     query: {
+//       search
+//     }
+//   })
+// }
 
 // begin actual component
 const Hero = ({ isAuthenticated }) => (
@@ -177,9 +176,9 @@ const Hero = ({ isAuthenticated }) => (
       <HeroRight>
         <HeroText>People helping people.</HeroText>
         <p>
-          We connect people who can volunteer time, advice, or stuff to those who need it.
+          We connect people who can volunteer time, advice, or stuff to those who need it.<br /><br />
         </p>
-        <SearchBox>
+        {/* <SearchBox>
           <Search
             placeholder="Try 'remote learning'"
             prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -189,7 +188,7 @@ const Hero = ({ isAuthenticated }) => (
             onSearch={handleSearch}
             aria-label='Search for volunteering opportunties here'
           />
-        </SearchBox>
+        </SearchBox> */}
         <div>
           <Button type='secondary' shape='round' size='large' href='https://blog.voluntarily.nz'>
             Learn more
