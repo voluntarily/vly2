@@ -16,12 +16,7 @@ module.exports = [
     subtitle: 'Help us recommend volunteering opportunities relevant to you',
     // badgeclass:
     imgUrl: '/static/img/goal/goal-complete-profile.png',
-    description: `Complete your profile by adding a picture, 
-      skills list, where you are, your job, things you are interested 
-      in and tell us about yourself. 
-      This helps us make great recommendations for 
-      activities you should volunteer for and helps teachers select 
-      the range of helpers they need for an activity`,
+    description: `Complete your profile by adding a picture, skills list, where you are, your job, things you are interested in and tell us about yourself. It is really important to fill in your location and your skills. This will mean it will be easier to match you once we are ready to go.`,
     preconditions: [],
     startLink: '/my/person',
     language: 'en',
@@ -31,7 +26,7 @@ module.exports = [
       return (score / count * 100 > 85)
     }
   },
-  {
+/*  {
     group: GoalGroup.VP_NEW,
     name: 'Basic Training for Voluntarily',
     slug: 'goal-volunteer',
@@ -71,7 +66,7 @@ You can leave a message and the requestor will be notified.
     language: 'en',
     rank: 3,
     evaluation: (personalGoal) => { return GoalTests.personInterested(personalGoal) }
-  },
+  },*/
 
   /***********************************************/
   /* GROUP SCHOOL_VP_NEW Getting Started in schools */
