@@ -4,17 +4,16 @@ block tagline
   span Things are growing
 
 block copybig
-  a( href=op.href) #{op.name} 
+  a( href=op.href) #{op.name}
 
 block copy
   p Kia ora #{to.nickname},
-  p #{from.name} just committed to #{op.name}.
+  p #{from.name} just committed to your offer #{op.name}.
   if message
     p saying: #{message.body}
   p Remember to keep visiting your activity management page to review new interested people.
 
 block copybutton
   a(href=op.href class='mobile-button') Activity
-  span &nbsp; 
+  span &nbsp;
   a(href=to.href class='mobile-button') Profile
-   
