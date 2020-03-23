@@ -113,6 +113,7 @@ test.serial('Send declined email to volunteer', async t => {
   t.true(info.accepted[0] === 'accepted')
   const sentMail = nodemailerMock.mock.getSentMail()
   t.is(sentMail.length, 1)
+
   t.truthy(sentMail[0].text.includes('Sorry we have to decline your offer at this time'))
   t.regex(sentMail[0].subject, /update on 1 Mentor a year 12 business Impact Project/)
 })
