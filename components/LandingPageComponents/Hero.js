@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { HalfGrid } from '../VTheme/VTheme'
 import { FormattedMessage } from 'react-intl'
+import { SignUpButton } from './SignUp'
 
 const Search = Input.Search
 
@@ -58,7 +59,7 @@ const AwesomeImage = styled.img`
   position: relative;
   text-align: center;
   margin: 0 auto;
- 
+
   overflow: hidden;
   object-fit: cover;
   background-color: white;
@@ -136,6 +137,18 @@ width: 80%;
   }
 `
 
+const HeroAuthenticate = styled.p`
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+  align-items: center;
+
+  .hero-authenticate__middle {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+`
+
 // end right hand copy and CTA side
 
 const handleSearch = search => {
@@ -148,7 +161,7 @@ const handleSearch = search => {
 }
 
 // begin actual component
-const Hero = ({ ...props }) => (
+const Hero = ({ isAuthenticated }) => (
   <AwesomeHeroContainer>
     <HalfGrid>
 
@@ -182,6 +195,12 @@ const Hero = ({ ...props }) => (
             Learn more
           </Button>
         </div>
+        {!isAuthenticated &&
+          <HeroAuthenticate>
+            <Button type='primary' href='/home' shape='round' size='large'>Log In</Button>
+            <div className='hero-authenticate__middle'>or</div>
+            <SignUpButton />
+          </HeroAuthenticate>}
       </HeroRight>
 
     </HalfGrid>

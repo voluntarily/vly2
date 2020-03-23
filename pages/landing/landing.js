@@ -1,3 +1,4 @@
+import React from 'react'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import Hero from '../../components/LandingPageComponents/Hero'
@@ -9,16 +10,23 @@ import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import moment from 'moment'
 import { Divider } from 'antd'
+import GiveSupportSection from '../../components/LandingPageComponents/GiveSupportSection'
+import TakeSupportSection from '../../components/LandingPageComponents/TakeSupportSection'
 export const Landing = props => (
   <>
-    <Hero />
+
+    <Helmet>
+      <title>Voluntarily</title>
+    </Helmet>
+    <Hero
+      isAuthenticated={props.isAuthenticated}
+    />
     <FullPage>
-      <Helmet>
-        <title>Voluntarily</title>
-      </Helmet>
-      <Divider />
       <OfferSection />
       <Divider />
+      <GiveSupportSection />
+      <Divider />
+      <TakeSupportSection />
       <SectionTitle>
         <FormattedMessage
           id='landing.sectiontitle.oplist'
