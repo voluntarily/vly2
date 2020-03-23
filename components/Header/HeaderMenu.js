@@ -6,8 +6,8 @@ export default () => [
     href: '/home',
     text:
   <FormattedMessage
-    id='HeaderMenu.volunteer'
-    defaultMessage='Volunteer'
+    id='HeaderMenu.home'
+    defaultMessage='Home'
   />,
     authRequired: true
   },
@@ -32,17 +32,8 @@ export default () => [
     anonymousOnly: true
   },
   {
-    key: 'orgs',
-    href: '/orgs',
-    text:
-  <FormattedMessage
-    id='HeaderMenu.organisations'
-    defaultMessage='Organisations'
-  />
-  },
-  {
     key: 'help',
-    text: 'Lost? 🧐',
+    text: 'Support 🙋🏽‍♀️',
     href: 'https://voluntarily.atlassian.net/servicedesk/customer/portals'
   },
   {

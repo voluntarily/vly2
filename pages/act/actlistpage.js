@@ -41,7 +41,7 @@ export const ActListPage = ({ activities }) =>
       <h1>
         <FormattedMessage
           id='ActListPage.Title'
-          defaultMessage='Resources'
+          defaultMessage='Activities'
           description='Title of page listing resources for teachers'
         />
       </h1>
@@ -50,7 +50,7 @@ export const ActListPage = ({ activities }) =>
         <ActAdd />
       </PageBannerButtons>
       <FormattedMessage
-        defaultMessage='Find activity templates that make it easy to bring volunteers into your classroom'
+        defaultMessage='Find activities to help or be helped with'
         id='act.list.subtitle'
       />
     </PageBannerNoTabs>
@@ -58,9 +58,8 @@ export const ActListPage = ({ activities }) =>
       <TabPane tab={activityTab} key='1'> */}
 
     <SearchContainer>
-      <p><strong>Search resources</strong></p>
       <Input.Search
-        placeholder='eg: activity'
+        placeholder='eg: Grocery shopping'
         enterButton='Search'
         size='large'
         onSearch={handleSearch}
