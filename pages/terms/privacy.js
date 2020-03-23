@@ -7,19 +7,10 @@ import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import { injectIntl } from 'react-intl'
 
-import termEn from './term-en-md.js'
-import termMi from './term-mi-md.js'
+import privacyEn from './privacy-en-md.js'
 
 const getText = locale => {
-  switch (locale) {
-    case 'mi': {
-      return termMi()
-    }
-    case 'fr': {
-      return termMi()
-    }
-  }
-  return termEn()
+  return privacyEn()
 }
 
 const TermsSection = styled.div`
