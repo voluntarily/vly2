@@ -111,7 +111,6 @@ test.only('Should correctly list active acts with counts', async t => {
     .expect('Content-Type', /json/)
   const got = res.body
   t.is(got.length, t.context.activities.length)
-  t.is(got[0].status, undefined)
   t.is(got[0].name, acts[0].name)
   t.deepEqual(got[0].opCounts, { ask: 0, offer: 0 })
 })
