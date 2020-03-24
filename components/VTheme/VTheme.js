@@ -616,14 +616,15 @@ figcaption {
   }
   img {
     border-radius: 8px 8px 0 0;
-    
-    
   }
   figcaption {
     transform: scale(0.94);
   }
 }
-
+img {
+  border-radius: 8px;
+  min-width: 18rem;
+}
 h1 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
