@@ -23,7 +23,8 @@ jobs:
         node-version: 10.x
         
     - name: Run NPM CI
-    - run: npm ci
+      run: npm ci
+      
       env:
         CI: true      
 
