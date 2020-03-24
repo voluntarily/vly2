@@ -1,5 +1,5 @@
 import { defaultToHttpScheme } from '../../lib/urlUtil'
-import { Divider } from 'antd'
+import { Divider, Button } from 'antd'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -13,7 +13,6 @@ import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
 import { PersonBadgeSection } from './PersonBadge'
 import { VBanner, VBannerImg, ProfileBannerTitle } from '../VTheme/Profile'
-import { Button } from 'antd'
 
 const DetailItem = styled.div`
   margin-top: 0.5rem;
@@ -47,17 +46,19 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }, ...props) => (
       <ProfileBannerTitle>
         <h1>{person.name}</h1>
 
-        {canEdit ? 
-        <Button id='editPersonBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={personEdit}>
-            <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
-        </Button> :
-        
-        <Button style={{ float: 'right' }} type='primary' shape='round' onClick={panelEdit}>
-          <FormattedMessage
-            id='editPerson'
-            defaultMessage='Edit'
-            description='Button to edit an person on PersonDetails page'/>
-        </Button>}
+        {canEdit
+          ? (
+            <Button id='editPersonBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={personEdit}>
+              <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
+            </Button>)
+          : (
+            <Button style={{ float: 'right' }} type='primary' shape='round' onClick={panelEdit}>
+              <FormattedMessage
+                id='editPerson'
+                defaultMessage='Edit'
+                description='Button to edit an person on PersonDetails page'
+              />
+            </Button>)}
 
         <p>{person.job && `${person.job}`} {person.placeOfWork && `- ${person.placeOfWork}`}</p>
       </ProfileBannerTitle>
