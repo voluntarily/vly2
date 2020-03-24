@@ -74,7 +74,7 @@ const OpAdd = ({ roles, actid }) => {
   return (
     <OppAddButtons>
       {(roles.includes(Role.OPPORTUNITY_PROVIDER)) && <><OpAddAskBtn actid={actid} /> &nbsp; </>}
-      {(roles.includes(Role.VOLUNTEER_PROVIDER)) && <OpAddOfferBtn actid={actid} />}
+      {(roles.includes(Role.OPPORTUNITY_PROVIDER)) && <OpAddOfferBtn actid={actid} />}
     </OppAddButtons>
   )
 }
