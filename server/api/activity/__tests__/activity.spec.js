@@ -102,6 +102,20 @@ test.serial('Should correctly select just the titles and ids', async t => {
   t.is(got[0].name, acts[0].name)
 })
 
+test.only('Should correctly list active acts with counts', async t => {
+  const res = await request(server)
+    .get('/api/activities')
+    .set('Accept', 'application/json')
+    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .expect(200)
+    .expect('Content-Type', /json/)
+  const got = res.body
+  t.is(got.length, t.context.activities.length)
+  t.is(got[0].status, undefined)
+  t.is(got[0].name, acts[0].name)
+  t.deepEqual(got[0].opCounts, { ask: 0, offer: 0 })
+})
+
 test.serial('Should correctly give number of active activities', async t => {
   const res = await request(server)
     .get('/api/activities?q={"status": "active"}')

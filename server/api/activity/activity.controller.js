@@ -6,6 +6,7 @@ const { Role } = require('../../services/authorize/role')
 const sanitizeHtml = require('sanitize-html')
 const { ActivityListFields } = require('./activity.constants')
 const { isValidFileUrl } = require('../file/file.controller')
+const { getOpsForActivity } = require('./activity.lib')
 /**
  * Get all orgs
  * @param req
@@ -16,7 +17,7 @@ const listActivities = async (req, res) => {
   let query = {} // { status: 'active' }
   let sort = 'name'
   let select = ActivityListFields.join(' ')
-
+  const noCounts = req.query.nocounts
   try {
     query = req.query.q ? JSON.parse(req.query.q) : query
     sort = req.query.s ? JSON.parse(req.query.s) : sort
@@ -60,12 +61,19 @@ const listActivities = async (req, res) => {
     }
 
     try {
-      const got = await Activity
+      let got = await Activity
         .accessibleBy(req.ability, Action.LIST)
         .find(query)
         .select(select)
         .sort(sort)
-        .exec()
+        .lean()
+
+      if (!noCounts) {
+        got = await Promise.all(got.map(async (act) => {
+          const opCounts = await getOpsForActivity(act._id)
+          return { ...act, opCounts }
+        }))
+      }
       res.json(got)
     } catch (e) {
       res.status(404).send(e)
