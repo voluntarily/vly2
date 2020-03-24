@@ -12,6 +12,7 @@ on:
 
 jobs:
   build:
+    name: Build and run all tests
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -30,5 +31,11 @@ jobs:
     - name: Lint
       run: npm run lint
 
+    - name: NPM Test
+      run: npm run test-all -- --tap
+      
+    - name: Code Coverage
+      run: ./node_modules/codecov/bin/codecov --disable=gcov
+      
       env:
         CI: true
