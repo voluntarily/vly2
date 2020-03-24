@@ -1,0 +1,46 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1570731984143' stop='1570732009638'>
+    <name>UxDesign:</name>
+    <title>UxDesign:</title>
+    <test-cases>
+        <test-case start='1570732001115' status='failed' stop='1570732008849'>
+            <name>Test web and Rest</name>
+            <title>Test web and Rest</title>
+            <labels>
+                <label name='tag' value='null'/>
+            </labels>
+            <parameters/>
+            <steps>
+                <step start='1570732001133' status='passed' stop='1570732003719'>
+                    <name>I am on page "https://github.com"</name>
+                    <title>I am on page "https://github.com"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1570732003720' status='passed' stop='1570732004261'>
+                    <name>I send get request "/api/users.json"</name>
+                    <title>I send get request "/api/users.json"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1570732004261' status='failed' stop='1570732008848'>
+                    <name>I click "Login"</name>
+                    <title>I click "Login"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title='Last Seen Screenshot' source='cc6fbe8b-0d7d-497a-ac6d-5fe9d4184940-attachment.png' type='image/png' size='131438'/>
+            </attachments>
+            <failure>
+                <message>Clickable element "Login" was not found by text|CSS|XPath</message>
+                <stack-trace>Error: Clickable element "Login" was not found by text|CSS|XPath
+                    at new ElementNotFound (C:\Users\Yogi\vly2\node_modules\codeceptjs\lib\helper\errors\ElementNotFound.js:14:11)
+                    at assertElementExists (C:\Users\Yogi\vly2\node_modules\codeceptjs\lib\helper\WebDriver.js:2316:11)
+                    at WebDriver.click (C:\Users\Yogi\vly2\node_modules\codeceptjs\lib\helper\WebDriver.js:720:7)
+                    at process._tickCallback (internal/process/next_tick.js:68:7)</stack-trace>
+            </failure>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

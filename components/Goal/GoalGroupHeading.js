@@ -9,7 +9,7 @@ export const goalGroupHeading = goalGroup => {
         id: 'GoalSection.VP_NEW.title', defaultMessage: 'Getting Started as a Volunteer'
       },
       subtitle: {
-        id: 'GoalSection.VP_NEW.subtitle', defaultMessage: 'Here are a few things we recommend doing:'
+        id: 'GoalSection.VP_NEW.subtitle', defaultMessage: 'Let’s get ready! Over the next few days we are pre-loading Voluntarily.nz with topics you can help on. These topics will make it easy for you to pick where you want to volunteer your time to most. They focus on what we all need to do to get NZ through Covid-19.   We will let you know soon when we are ready to go.'
       }
     }
     case GoalGroup.OP_NEW: return {

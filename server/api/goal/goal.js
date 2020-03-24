@@ -39,10 +39,11 @@ const goalSchema = new Schema({
 
   // evaluation - function that checks whether the goal has been completed - e.g. badge presents, status value etc.
   evaluation: { type: 'String', required: true, default: '() => false' },
-  rank: { type: 'Number', default: 99, required: true },
-  dateAdded: { type: 'Date', default: Date.now, required: true }
+  rank: { type: 'Number', default: 99, required: true }
+},
+{
+  timestamps: true
 })
-
 goalSchema.plugin(idvalidator)
 
 // protect multiple imports

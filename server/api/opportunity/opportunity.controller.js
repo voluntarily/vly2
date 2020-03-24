@@ -5,6 +5,7 @@ const { Interest, InterestArchive } = require('./../interest/interest')
 const Person = require('./../person/person')
 const ArchivedOpportunity = require('./../archivedOpportunity/archivedOpportunity')
 const { OpportunityStatus, OpportunityListFields } = require('./opportunity.constants')
+const { ActivityOpFields } = require('../activity/activity.constants')
 const { regions } = require('../location/locationData')
 const sanitizeHtml = require('sanitize-html')
 const { getLocationRecommendations, getSkillsRecommendations } = require('./opportunity.util')
@@ -122,6 +123,7 @@ const getOpportunity = async (req, res, next) => {
       .findOne(req.params)
       .populate('requestor', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl category')
+      .populate('fromActivity', ActivityOpFields.join(' '))
       .exec()
     if (got == null) {
       // BUG: [VP-478] populate tags with many tags can cause a 507 Insufficient Space error.

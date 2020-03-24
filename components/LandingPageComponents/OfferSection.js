@@ -1,48 +1,52 @@
 import React from 'react'
 import styled from 'styled-components'
-// import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
-import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
+import Link from 'next/link'
+import { Button } from 'antd'
 
 const OfferContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
-  margin-bottom: 8rem;
+  margin: 2rem 0 4rem 0;
   @media screen and (min-width: 1026px) and (max-width: 1289px) {
     grid-template-columns: 1fr 1fr ;
-
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     
     grid-template-columns: 1fr ;
+    margin: 2rem 0 ;
   }
 
   @media screen and (max-width: 768px) {
     grid-template-columns: 1fr;
+    margin: 2rem 0 ;
   }
 `
 
 const OfferCard = styled.div`
 
-  padding: 1.5rem;
+  padding: 3rem;
 display: grid;
 gap:1.5rem;
-grid-template-columns: 4rem 1fr;
+grid-template-columns: 1fr;
 width: 100%;
   background: #ffffff;
   box-shadow: 2px 2px 16px 0 rgba(118, 118, 118, 0.5);
   border-radius: 8px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
+min-height: 23rem;
 
+figcaption {
+  position: relative;
+}
 
   h3 {
     bottom: 0;
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: bold;
     letter-spacing: -0.38px;
-    line-height: 32px;
+    line-height: 1.5;
 
     margin-bottom: 0.5rem;
   }
@@ -50,14 +54,13 @@ width: 100%;
   p {
     font-size: 1.1rem;
   }
-
-  img {
-    align-self: center;
-    width: 100%;
-  }
+  small {
+  font-size: 1rem
+}
+ img{ margin-top: 1rem;}
 
   :hover {
-    transform: scale(1.05);
+    transform: scale(1.01);
     h3 {
       color: #653cad;
     }
@@ -65,80 +68,84 @@ width: 100%;
 
   /* Tablet */
   @media screen and (min-width: 768px) and (max-width: 1025px) {
-    min-height: initial;
+    min-height: 19rem;
    }
 
   /* Mobile */
   @media screen and (max-width: 768px) {
-    min-height: initial;
+    min-height: 22rem;
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 668px) {
+    min-height: 22rem;
+
+    width: calc(100vw - 2rem);
+
+  padding: 2rem;
+   
+
+  h3 {
+    bottom: 0;
+    font-size: 1.5rem;
+  
+  }
+
   }
 
 `
 
 const OfferSection = () => (
   <div>
-    <SectionTitle>
-      <FormattedMessage
-        id='landing.sectiontitle.offers'
-        defaultMessage='Get Started'
-      />
-    </SectionTitle>
+
     <OfferContainer>
 
-      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz'>
-        <OfferCard>
+      <Link href='/home'>
 
-          <img src='./static/img/icons/code-party.svg' />
-          <figcaption>
-            <h3>Build the movement</h3>
-            <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
+        <a>
 
-            </p>
-          </figcaption>
-        </OfferCard>
-      </a>
-      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
-        <OfferCard>
+          <OfferCard>
+            <figcaption>
 
-          <img src='./static/img/icons/chat.svg' />
-          <figcaption>
-            <h3>Join the conversation</h3>
-            <p>Join the community chat on Slack and help shape the future of the platform
+              <small>New!</small>
+              <h3>Offer to help</h3>
+              <p>
+            Want to volunteer your time, or resources to help out someone in need? See what is needed and offer your skills.
+              </p><Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>See who needs help</Button>
+            </figcaption>
+          </OfferCard>
+        </a>
+      </Link>
 
-            </p>
-          </figcaption>
-        </OfferCard>
-      </a>
-      {/* <Link href='/search'> */}
-
-      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/pre-register'>
-
-        <OfferCard>
-          <img src='./static/img/icons/ask.svg' />
-          <figcaption>
-            <h3>Ask for Help (coming soon)</h3>
-            <p>
-              Get help right now. We make it easy with templates that will take you through step-by-step to say exactly what you need.
-            </p>
-          </figcaption>
-        </OfferCard>
-      </a>
-      {/* </Link> */}
       {/* <Link href='/act'> */}
       <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/pre-register'>
         <OfferCard>
 
-          <img src='./static/img/icons/offer.svg' />
           <figcaption>
-            <h3>Offer to Help (coming soon)</h3>
-            <p>Keen to volunteer time, or resources during the crisis? Great! Click through to see where you can help the most people.
 
+            <small>Coming soon</small>
+            <h3>Ask for help</h3>
+            <p>Coming this week. We make it easy to ask for exactly what you need.
             </p>
+            <Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>Coming soon</Button>
           </figcaption>
         </OfferCard>
       </a>
       {/* </Link> */}
 
+      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
+        <OfferCard>
+
+          <figcaption>
+            <small>Open Source</small>
+            <h3>Join the<br />Community Build</h3>
+            <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
+            </p>
+
+            <Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>Join the build</Button>
+          </figcaption>
+        </OfferCard>
+      </a>
     </OfferContainer>
   </div>
 )

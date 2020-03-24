@@ -14,9 +14,10 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 */
 
 export const PageBanner = styled.div`
+
   margin: 8rem 0 2rem 0;
   display: grid;
-  grid-template-columns: 4rem 1fr 11rem 11rem;
+  grid-template-columns: 4rem 1fr 22rem 11rem;
   padding: 1rem;
   gap: 1rem;
   align-self: center;
@@ -61,6 +62,25 @@ export const PageBannerButtons = styled.div`
     
     margin-top: 1rem;
     
+  }
+`
+
+export const HeroSectionHeader = styled.div`
+display: grid;
+
+grid-template-columns: 1fr 12rem;
+margin: 4rem 0 3rem 0;
+
+
+@media screen and (max-width: 768px) {
+    grid-template-columns: calc(100vw - 2rem);
+    margin: 2rem 0;
+  }
+
+`
+export const HeroSectionButtonContainer = styled.div`
+@media screen and (max-width: 768px) {
+    display: none;
   }
 `
 
@@ -596,14 +616,15 @@ figcaption {
   }
   img {
     border-radius: 8px 8px 0 0;
-    
-    
   }
   figcaption {
     transform: scale(0.94);
   }
 }
-
+img {
+  border-radius: 8px;
+  min-width: 18rem;
+}
 h1 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;

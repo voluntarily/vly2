@@ -4,18 +4,20 @@ const escapeRegex = require('../../util/regexUtil')
 const { Action } = require('../../services/abilities/ability.constants')
 const { Role } = require('../../services/authorize/role')
 const sanitizeHtml = require('sanitize-html')
+const { ActivityListFields } = require('./activity.constants')
 const { isValidFileUrl } = require('../file/file.controller')
+const { getOpsForActivity } = require('./activity.lib')
 /**
  * Get all orgs
  * @param req
  * @param res
  * @returns void
  */
-const getActivities = async (req, res) => {
+const listActivities = async (req, res) => {
   let query = {} // { status: 'active' }
   let sort = 'name'
-  let select = {}
-
+  let select = ActivityListFields.join(' ')
+  const noCounts = req.query.nocounts
   try {
     query = req.query.q ? JSON.parse(req.query.q) : query
     sort = req.query.s ? JSON.parse(req.query.s) : sort
@@ -59,12 +61,19 @@ const getActivities = async (req, res) => {
     }
 
     try {
-      const got = await Activity
+      let got = await Activity
         .accessibleBy(req.ability, Action.LIST)
         .find(query)
         .select(select)
         .sort(sort)
-        .exec()
+        .lean()
+
+      if (!noCounts) {
+        got = await Promise.all(got.map(async (act) => {
+          const opCounts = await getOpsForActivity(act._id)
+          return { ...act, opCounts }
+        }))
+      }
       res.json(got)
     } catch (e) {
       res.status(404).send(e)
@@ -109,7 +118,6 @@ const putActivity = async (req, res) => {
       }
     }
   }
-
   await Activity.updateOne({ _id: req.params._id }, { $set: req.body })
 
   getActivity(req, res)
@@ -191,7 +199,7 @@ function ensureSanitized (req, res, next) {
 
 module.exports = {
   ensureSanitized,
-  getActivities,
+  listActivities,
   getActivity,
   putActivity,
   createActivity

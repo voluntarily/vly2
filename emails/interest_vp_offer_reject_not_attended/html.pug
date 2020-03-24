@@ -1,0 +1,19 @@
+extends ../theme/layout.pug
+
+block tagline
+  span We missed you
+  
+block copybig
+  a( href=op.href) #{op.name} 
+
+block copy
+  p Kia ora #{to.nickname},
+  p We want to thank you showing interest in #{op.name} and we are sad you were not able to participate; perhaps next time.
+  p Want to do more? Check out the recommendations page for other activities still needing volunteers.
+  p Ngā mihi, Voluntarily.nz
+   
+block copybutton
+  a(href=op.href class='mobile-button') Opportunity
+  span &nbsp; 
+  a(href=to.href class='mobile-button') Recommendations
+             

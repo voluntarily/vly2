@@ -145,7 +145,8 @@ class OpListSection extends Component {
 
   render () {
     const opDataFilteredByDate = this.applyDateFilter(this.props.filter)
-    const opData = this.appltOrganizationFilter(opDataFilteredByDate, this.props.org)
+    const opFilteredByOrg = this.appltOrganizationFilter(opDataFilteredByDate, this.props.org)
+    const opData = this.props.opType == null || this.props.opType === 'All' ? opFilteredByOrg : opFilteredByOrg.filter(op => op.type === this.props.opType.toLowerCase())
     if (!this.props.opportunities.sync) {
       return (
         <section>

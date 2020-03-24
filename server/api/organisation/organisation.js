@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const organisationSchema = new Schema({
   name: { type: 'String', required: true, unique: true },
   slug: { type: 'String', required: true, unique: true },
-  about: { type: 'String' },
+  about: { type: 'String' }, // deprecated don't use
   // TODO: [VP-146] make required and provide a default image in the static folder.  imgUrl: String,
   imgUrl: { type: 'String', default: '/static/img/organisation/organisation.png' },
   website: String,

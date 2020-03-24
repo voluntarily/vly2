@@ -34,13 +34,13 @@ test('do not render the opadd if not signed in ', t => {
   t.falsy(wrapper.find('button').exists())
 })
 
-test('Volunteers see the offer button', t => {
+test('Volunteers dont see the offer button', t => {
   const wrapper = mountWithIntl(
     <Provider store={mockStore}>
       <OpAdd />
     </Provider>
   )
-  t.true(wrapper.find('OpAddOfferBtn').exists())
+  t.false(wrapper.find('OpAddOfferBtn').exists())
 })
 
 test('askers see the ask button', t => {

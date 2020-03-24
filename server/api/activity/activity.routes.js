@@ -1,8 +1,8 @@
 const mongooseCrudify = require('mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Activity = require('./activity')
-const { getActivities, getActivity, putActivity, createActivity } = require('./activity.controller')
-const { findActivity } = require('./findActivity')
+const { listActivities, getActivity, putActivity, createActivity } = require('./activity.controller')
+const { findActivity } = require('./activity.lib')
 const { initializeTags } = require('../../util/initTags')
 const { authorizeActions } = require('../../middleware/authorize/authorizeRequest')
 const { SchemaName } = require('./activity.constants')
@@ -30,7 +30,7 @@ module.exports = (server) => {
       ],
       // actions: {}, // list (GET), create (POST), read (GET), update (PUT), delete (DELETE)
       actions: {
-        list: getActivities,
+        list: listActivities,
         create: createActivity,
         read: getActivity,
         update: putActivity

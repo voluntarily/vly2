@@ -17,6 +17,7 @@ import {
   ShortInputContainer,
   TitleContainer
 } from '../VTheme/FormStyles'
+import TagInput from '../Form/Input/TagInput'
 
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
@@ -68,6 +69,7 @@ class OrgDetailForm extends Component {
         org.name = values.name
         org.domainName = values.domainName
         org.slug = slug(values.name)
+        org.groups = values.groups
         org.info.about = values.about
         org.info.instructions = values.instructions
         org.info.followers = values.followers
@@ -143,6 +145,13 @@ class OrgDetailForm extends Component {
       />
     )
 
+    const orgGroups = (
+      <FormattedMessage
+        id='orgGroups'
+        defaultMessage='Groups'
+        description='Descriptions of groups this org belongs to'
+      />
+    )
     const orgAbout = (
       <FormattedMessage
         id='orgAbout'
@@ -224,9 +233,9 @@ class OrgDetailForm extends Component {
     // TODO translate
     // TODO Use constant values from server/api/organisation/organisation.constants.js
     const categoryOptions = [
-      { label: 'Business', value: 'vp' },
-      { label: 'School', value: 'op' },
-      { label: 'Activity provider', value: 'ap' },
+      { label: 'Volunteer', value: 'vp' },
+      { label: 'Create Requests', value: 'op' },
+      { label: 'Plan Activities', value: 'ap' },
       { label: 'Admin', value: 'admin' },
       { label: 'Other', value: 'other' }
     ]
@@ -262,8 +271,34 @@ class OrgDetailForm extends Component {
                   <TitleContainer>
                     <h3>
                       <FormattedMessage
+                        id='OpDetailForm.groups.label'
+                        description='Section label for op groups'
+                        defaultMessage='What categories does this group service?'
+                      />
+                    </h3>
+                  </TitleContainer>
+                  <p>
+                    <FormattedMessage
+                      id='OpDetailForm.groups.prompt'
+                      description='Section prompt for op groups'
+                      defaultMessage='e.g. Business, School, Individual'
+                    />
+                  </p>
+                </DescriptionContainer>
+                <InputContainer>
+                  <Form.Item label={orgGroups}>
+                    {getFieldDecorator('groups', {
+                      initialValue: [],
+                      rules: []
+                    })(<TagInput existingTags={this.props.existingGroups} />)}
+                  </Form.Item>
+                </InputContainer>
+                <DescriptionContainer>
+                  <TitleContainer>
+                    <h3>
+                      <FormattedMessage
                         id='orgDetail.form.category'
-                        defaultMessage='Set organisation category'
+                        defaultMessage='Set organisation permissions'
                         description='The type of organisation'
                       />
                     </h3>
@@ -271,8 +306,8 @@ class OrgDetailForm extends Component {
                   <p>
                     <FormattedMessage
                       id='orgDetail.form.category.description'
-                      defaultMessage='System Admin feature: Let everyone know what type of organisation you are.'
-                      description='Description of the type of organisation'
+                      defaultMessage='Members of this group can do the listed items.'
+                      description='Description of the permissions of organisation'
                     />
                   </p>
                 </DescriptionContainer>
@@ -280,11 +315,12 @@ class OrgDetailForm extends Component {
                   <Form.Item label={orgCategory}>
                     {getFieldDecorator('category', {
                       rules: [
-                        { required: true, message: 'category is required' }
+                        { required: true, message: 'permissions level  is required' }
                       ]
                     })(<Checkbox.Group options={categoryOptions} />)}
                   </Form.Item>
                 </InputContainer>
+
               </FormGrid>
               <Divider />
             </>
@@ -704,9 +740,7 @@ OrgDetailForm.propTypes = {
 
 export default Form.create({
   name: 'organisation_detail_form',
-  onFieldsChange (props, changedFields) {
-    // props.onChange(changedFields);
-  },
+
   mapPropsToFields (props) {
     const org = props.org
     if (!org.info) {
@@ -714,6 +748,10 @@ export default Form.create({
     }
     return {
       name: Form.createFormField({ ...org.name, value: org.name }),
+      groups: Form.createFormField({
+        ...props.org.groups,
+        value: props.org.groups
+      }),
       about: Form.createFormField({ ...org.info.about, value: org.info.about }),
       instructions: Form.createFormField({
         ...org.info.instructions,

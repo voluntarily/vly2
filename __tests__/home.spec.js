@@ -409,11 +409,11 @@ test.serial('render Edit Profile ', async t => {
     </Provider>)
   wrapper.find('.ant-tabs-tab').at(tabIndex.profile).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Profile')
-  t.is(wrapper.find('Button').first().text(), 'Edit')
-  wrapper.find('Button').first().simulate('click')
-  // t.is(wrapper.find('Button').first().text(), 'Cancel')
-  wrapper.find('Button').first().simulate('click') // cancel edit
-  wrapper.find('Button').first().simulate('click') // edit again
-  // t.is(wrapper.find('Button').last().text(), 'Save')
+  const profilePanel = wrapper.find('EditablePersonPanel').first()
+  t.is(profilePanel.find('Button').first().text(), 'Edit')
+  profilePanel.find('EditablePersonPanel Button').first().simulate('click')
+
+  wrapper.find('EditablePersonPanel Button').first().simulate('click') // cancel edit
+  wrapper.find('EditablePersonPanel Button').first().simulate('click') // edit again
   wrapper.find('Form').first().simulate('submit')
 })

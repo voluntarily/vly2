@@ -368,9 +368,7 @@ class PersonDetail extends Component {
               <P>
                 <FormattedMessage
                   id='PersonDetailForm.SectionDescription.SkillsAndInterests'
-                  defaultMessage='This section helps us find the right things for you to do
-                  Tell us the region you in and your skills and interests.
-                  Use keywords like: coding, robots, flight etc.'
+                  defaultMessage='This section helps us find the right things for you to do. Tell us the region you in and your skills and interests. Use keywords like: accounting, video conferencing etc.'
                 />
               </P>
             </DescriptionContainer>
@@ -404,7 +402,7 @@ class PersonDetail extends Component {
               <P>
                 <FormattedMessage
                   id='PersonDetailForm.SectionDescription.ContactDetails'
-                  defaultMessage='How do you want teachers and charities to get in touch with you? Other people can only see this if you let them 🤫'
+                  defaultMessage='How do you want people to get in touch with you? Other people can only see this if you let them 🤫'
                 />
               </P>
             </DescriptionContainer>

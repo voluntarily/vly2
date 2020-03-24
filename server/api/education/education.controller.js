@@ -1,7 +1,7 @@
 
 const geteducation = function (req, res) {
   const education = [
-    'High school Graduate',
+    'High school ',
     'Some College',
     'Associate and /Bachelor Degree',
     'Bachelor Degree',

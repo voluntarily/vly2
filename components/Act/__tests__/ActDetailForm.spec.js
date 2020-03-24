@@ -112,7 +112,7 @@ test('render the detail with act', t => {
     />
   )
   t.is(wrapper.find('ActDetailForm').length, 1)
-  t.is(wrapper.find('button').length, 4)
+  t.is(wrapper.find('button').length, 5)
   wrapper.find('#cancelActBtn').first().simulate('click')
   t.truthy(cancelAct.calledOnce)
   wrapper.find('#publishActBtn').first().simulate('click')
@@ -241,7 +241,7 @@ test('render the detail with new blank act', t => {
     />
   )
   t.is(wrapper.find('ActDetailForm').length, 1)
-  t.is(wrapper.find('button').length, 4)
+  t.is(wrapper.find('button').length, 5)
   wrapper.find('#cancelActBtn').first().simulate('click')
   t.truthy(cancelAct.calledOnce)
 

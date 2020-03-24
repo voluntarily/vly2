@@ -3,8 +3,7 @@ import Markdown from 'markdown-to-jsx'
 import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
-import AboutCTA from '../../components/About/AboutCTA.js'
-import { FullPage, Spacer } from '../../components/VTheme/VTheme'
+import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import { injectIntl } from 'react-intl'
 
@@ -28,17 +27,21 @@ const TermsSection = styled.div`
   margin: 0 0;
 
   h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     letter-spacing: -3px;
     font-weight: bold;
     color: gray;
   }
-
-  p {
+  h3 {
     font-size: 2rem;
+    letter-spacing: -3px;
+  }
+  p {
+    font-size: 1rem;
     letter-spacing: -1.3px;
     font-weight: 400;
     color: #333;
+    padding-bottom: 0.5rem;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1025px) {
@@ -72,10 +75,8 @@ class Terms extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Voluntarily- Terms and Conditions</title>
+          <title>Terms and Conditions - Voluntarily</title>
         </Helmet>
-        <Spacer />
-        <Spacer />
         <TermsSection>
           <Markdown
             children={terms}
@@ -86,20 +87,6 @@ class Terms extends Component {
             }}
           />
         </TermsSection>
-        <AboutCTA />
-
-        <style jsx>{`
-          div {
-            margin: 3em;
-            max-width: 50em;
-          }
-          @media (max-width: 600px) {
-            div {
-              margin: 0 3em;
-            }
-          }
-        `}
-        </style>
       </FullPage>
     )
   }

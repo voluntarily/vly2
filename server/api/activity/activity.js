@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 const idvalidator = require('mongoose-id-validator')
 const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
 const slug = require('limax')
-
+const { ActivityStatus, ActivityFields } = require('./activity.constants')
 const ActivitySchema = new Schema({
   name: { type: String, required: true }, // "Growing in the garden",
   slug: {
@@ -40,12 +40,27 @@ const ActivitySchema = new Schema({
     type: String,
     required: true,
     default: 'draft',
-    enum: ['draft', 'active', 'retired']
+    enum: [
+      ActivityStatus.DRAFT,
+      ActivityStatus.ACTIVE,
+      ActivityStatus.RETIRED,
+      ActivityStatus.REVIEW
+    ]
   },
   documents: [{
     filename: { type: String, required: true },
     location: { type: String, required: true }
-  }]
+  }],
+  locked: { type: Boolean, required: true, default: false },
+  lockfields: { // which fields is the op not allowed to change when locked?
+    type: [String],
+    default: [
+      ActivityFields.NAME,
+      ActivityFields.SLUG,
+      ActivityFields.SUBTITLE,
+      ActivityFields.IMG_URL
+    ]
+  }
 },
 {
   timestamps: true

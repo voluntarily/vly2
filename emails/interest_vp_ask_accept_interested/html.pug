@@ -1,0 +1,29 @@
+//- expects locals of {
+//-   to: person receiving email
+//-   from: person sending email - the op requestor
+//-   op: the opportunity
+//- }
+extends ../theme/layout.pug
+
+block tagline
+  span Help make a difference
+
+block copybig
+  a( href=op.href) #{op.name}
+
+block copy
+  p Kia ora #{to.nickname},
+  p On behalf of #{from.name} and the Voluntarily team, we would like to thank you for offering to help with this request.
+  p Your contribution is super valuable to us. The person asking for help has been notified and should be in touch shortly.
+  p Check your home page for messages
+  p Ngā mihi, Voluntarily.nz
+
+block copybutton
+  a(href=op.href class='mobile-button') Opportunity
+  span &nbsp;
+  a(href=to.href class='mobile-button') Profile
+
+block copyimage
+  img(src=op.imgUrl alt=op.name width="100%" )
+
+

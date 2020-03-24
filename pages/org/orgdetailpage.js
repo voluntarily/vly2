@@ -11,6 +11,7 @@ import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
+import { GroupTagList } from '../../server/api/tag/tag.constants'
 import RegisterMemberSection from '../../components/Member/RegisterMemberSection'
 import { Helmet } from 'react-helmet'
 
@@ -23,7 +24,8 @@ const blankOrg = {
   website: null,
   facebook: null,
   twitter: null,
-  category: ['vp']
+  category: ['vp'],
+  groups: []
 }
 
 export const HomeButton = () =>
@@ -66,7 +68,8 @@ export const OrgDetailPage = ({
   organisations,
   isNew,
   dispatch,
-  isAuthenticated
+  isAuthenticated,
+  tags
 }) => {
   const router = useRouter()
   const [saved, setSaved] = useState(false)
@@ -144,6 +147,7 @@ export const OrgDetailPage = ({
           isAdmin={isAdmin}
           onSubmit={handleSubmit}
           onCancel={handleCancel}
+          existingGroups={tags.data}
         />
       </FullPage>)
   }
@@ -164,6 +168,7 @@ export const OrgDetailPage = ({
 
 OrgDetailPage.getInitialProps = async ({ store, query }) => {
   // Get one Org
+  await store.dispatch(reduxApi.actions.tags.get({ name: GroupTagList }))
   const isNew = query && query.new && query.new === 'new'
   if (isNew) {
     return {

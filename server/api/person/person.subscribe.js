@@ -11,12 +11,18 @@ const {
 const { MemberStatus } = require('../member/member.constants')
 const { InterestStatus } = require('../interest/interest.constants')
 const { getICalendar } = require('../opportunity/opportunity.calendar')
+const { OpportunityType } = require('../opportunity/opportunity.constants')
+const Organisation = require('../organisation/organisation')
+const { addMember } = require('../member/member.lib')
 
 const welcomeFrom = {
   nickname: 'Welcome',
   name: 'The team at Voluntarily',
   email: 'welcome@voluntarily.nz'
 }
+
+const CORE_ORGANISATION_NAME = 'Voluntarily'
+const SYSTEM_MEMBER_VALIDATION_MESSAGE = 'system operation'
 
 module.exports = (server) => {
   PubSub.subscribe(TOPIC_PERSON__CREATE, async (msg, person) => {
@@ -28,9 +34,28 @@ module.exports = (server) => {
     PubSub.publish(TOPIC_PERSON__EMAIL_SENT, info)
   })
 
+  PubSub.subscribe(TOPIC_PERSON__CREATE, async (msg, person) => {
+    const coreOrganisation = await Organisation.findOne({ name: CORE_ORGANISATION_NAME }).lean().exec()
+
+    if (!coreOrganisation) {
+      return
+    }
+
+    await addMember({
+      person: person._id.toString(),
+      organisation: coreOrganisation._id.toString(),
+      validation: SYSTEM_MEMBER_VALIDATION_MESSAGE,
+      status: MemberStatus.MEMBER
+    })
+  })
+
   PubSub.subscribe(TOPIC_MEMBER__UPDATE, async (msg, member) => {
     // a new member has been created or a member status has changed
     // send email to let people know
+
+    if (member.validation === SYSTEM_MEMBER_VALIDATION_MESSAGE) {
+      return
+    }
 
     // skip states without emails
     if ([MemberStatus.NONE, MemberStatus.JOINER, MemberStatus.EXMEMBER]
@@ -65,7 +90,7 @@ module.exports = (server) => {
       op.href = `${config.appUrl}/ops/${op._id}`
 
       interest.person.href = `${config.appUrl}/home`
-      const template = `interest_vp_${interest.type}_${interest.status}`
+      const template = `interest_vp_${op.type || OpportunityType.ASK}_${interest.type}_${interest.status}`
       const message = interest.messages.slice(-1)[0] // last element should be most recent
       const props = { from: op.requestor, op, interest, message }
       if (interest.status === InterestStatus.INVITED) {
@@ -81,14 +106,21 @@ module.exports = (server) => {
     // send email to the opportunity requestor
     if ([
       InterestStatus.INTERESTED,
-      InterestStatus.COMMITTED
+      InterestStatus.COMMITTED,
+      InterestStatus.ATTENDED
       // InterestStatus.DECLINED
     ].includes(interest.status)) {
       const op = interest.opportunity
+
+      if ((op.type === OpportunityType.ASK && interest.status === InterestStatus.ATTENDED)) {
+        // We don't want to send an email to the OP when the status is ATTENDED and the type is ASK.
+        return
+      }
+
       op.requestor.href = `${config.appUrl}/home`
       op.href = `${config.appUrl}/ops/${op._id}`
 
-      const template = `interest_op_${interest.type}_${interest.status}`
+      const template = `interest_op_${op.type || OpportunityType.ASK}_${interest.type}_${interest.status}`
       const message = interest.messages.slice(-1)[0] // last element should be most recent
       const props = { from: interest.person, op, interest, message }
       const info = await emailPerson(template, op.requestor, props)

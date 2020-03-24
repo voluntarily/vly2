@@ -14,14 +14,162 @@ import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, S
 
 const { TextArea } = Input
 
+// get translated labels
+const opTitle = (
+  <span>
+    <FormattedMessage
+      id='opTitle'
+      defaultMessage='Title'
+      description='activity Title label in OpDetails Form'
+    />
+    &nbsp;
+    <Tooltip title="Choose something interesting like 'we want to build robots' ">
+      <Icon type='question-circle-o' />
+    </Tooltip>
+  </span>
+)
+
+const opSubtitle = (
+  <span>
+    {' '}
+    <FormattedMessage
+      id='opSubtitle'
+      defaultMessage='Subtitle'
+      description='activity Subtitle label in OpDetails Form'
+    />{' '}
+    <Tooltip title="Choose something interesting like 'we want to build robots' ">
+      <Icon type='question-circle-o' />
+    </Tooltip>
+  </span>
+)
+const opCommitment = (
+  <span>
+    <FormattedMessage
+      id='opCommitment'
+      defaultMessage='Commitment'
+      description='activity Commitment label in OpDetails Form'
+    />
+    &nbsp;
+    <Tooltip title='How much time overall is likely to be required for the activity?'>
+      <Icon type='question-circle-o' />
+    </Tooltip>
+  </span>
+)
+const opLocation = (
+  <span>
+    {' '}
+    <FormattedMessage
+      id='opLocation'
+      defaultMessage='Location'
+      description='activity Location label in OpDetails Form'
+    />
+    &nbsp;
+    <Tooltip title='set the region to help find local volunteers'>
+      <Icon type='question-circle-o' />
+    </Tooltip>
+  </span>
+)
+const opVenue = (
+  <span>
+    {' '}
+    <FormattedMessage
+      id='opVenue'
+      defaultMessage='Venue'
+      description='Venue label in OpDetails Form'
+    />
+    &nbsp;
+    <Tooltip title='Enter the address where the event will be held at'>
+      <Icon type='question-circle-o' />
+    </Tooltip>
+  </span>
+)
+const opOrganisation = (
+  <span>
+    {' '}
+    <FormattedMessage
+      id='opOrganisation'
+      defaultMessage='Offer Organisation'
+      description='label for Organisation offering the activity'
+    />
+    &nbsp;
+    <Tooltip title='Which organisation is this activity for?'>
+      <Icon type='question-circle-o' />
+    </Tooltip>
+  </span>
+)
+const opDescription = (
+  <span>
+    {' '}
+    <FormattedMessage
+      id='opDescription'
+      defaultMessage='Description'
+      description='activity Description label in OpDetails Form'
+    />
+    &nbsp;
+    <Tooltip title='Give a long description of what is needed and what people will be doing.'>
+      <Icon type='question-circle-o' />
+    </Tooltip>
+  </span>
+)
+const opStartDate = (
+  <span>
+    {' '}
+    <FormattedMessage
+      id='opStartDate'
+      defaultMessage='Start Date'
+      description='activity start date label in OpDetails Form'
+    />
+    &nbsp;
+    <Tooltip title='Set a start date if the activity needs to be done at a specific time'>
+      <Icon type='question-circle-o' />
+    </Tooltip>
+  </span>
+)
+
+const opEndDate = (
+  <span>
+    {' '}
+    <FormattedMessage
+      id='opEndDate'
+      defaultMessage='End Date'
+      description='activity end date label in OpDetails Form'
+    />
+    &nbsp;
+    <Tooltip title='Set an end date if the activity needs more than one day.'>
+      <Icon type='question-circle-o' />
+    </Tooltip>
+  </span>
+)
+
+const opImgUrl = (
+  <span>
+    <FormattedMessage
+      id='opImgUrl'
+      defaultMessage='Image Link'
+      description='activity Image URL label in OpDetails Form'
+    />
+    &nbsp;
+    <Tooltip title="Choose something interesting like 'we want to build robots' ">
+      <Icon type='question-circle-o' />
+    </Tooltip>
+  </span>
+)
+
+const opTags = (
+  <FormattedMessage
+    id='opTags'
+    defaultMessage='Tags'
+    description='Descriptions of general areas the activity relates to'
+  />
+)
+
 class OpDetailForm extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
       startDateValue: null,
-      endDateValue: null,
-      endOpen: false
+      endDateValue: null
     }
     // this.setDescriptin = this.setDescription.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
@@ -31,8 +179,9 @@ class OpDetailForm extends Component {
     // // Call validateFields here to disable the submit button when on a blank form.
     // // empty callback supresses a default which prints to the console.
     // this.props.form.validateFields(['title']);
-    this.setState({ startDateValue: this.props.op.date[0] })
-    this.setState({ endDateValue: this.props.op.date[1] })
+    const op = this.props.op
+    this.setState({ startDateValue: op.date[0] })
+    this.setState({ endDateValue: op.date[1] })
   }
 
   setImgUrl = value => {
@@ -110,167 +259,26 @@ class OpDetailForm extends Component {
   }
 
   render () {
+    const op = this.props.op
     const isTest = process.env.NODE_ENV === 'test'
-
-    // get translated labels
-    const opTitle = (
-      <span>
-        <FormattedMessage
-          id='opTitle'
-          defaultMessage='Title'
-          description='activity Title label in OpDetails Form'
-        />
-        &nbsp;
-        <Tooltip title="Choose something interesting like 'we want to build robots' ">
-          <Icon type='question-circle-o' />
-        </Tooltip>
-      </span>
-    )
-    const opSubtitle = (
-      <span>
-        {' '}
-        <FormattedMessage
-          id='opSubtitle'
-          defaultMessage='Subtitle'
-          description='activity Subtitle label in OpDetails Form'
-        />{' '}
-        <Tooltip title="Choose something interesting like 'we want to build robots' ">
-          <Icon type='question-circle-o' />
-        </Tooltip>
-      </span>
-    )
-    const opCommitment = (
-      <span>
-        <FormattedMessage
-          id='opCommitment'
-          defaultMessage='Commitment'
-          description='activity Commitment label in OpDetails Form'
-        />
-        &nbsp;
-        <Tooltip title='How much time overall is likely to be required for the activity?'>
-          <Icon type='question-circle-o' />
-        </Tooltip>
-      </span>
-    )
-    const opLocation = (
-      <span>
-        {' '}
-        <FormattedMessage
-          id='opLocation'
-          defaultMessage='Location'
-          description='activity Location label in OpDetails Form'
-        />
-        &nbsp;
-        <Tooltip title='set the region to help find local volunteers'>
-          <Icon type='question-circle-o' />
-        </Tooltip>
-      </span>
-    )
-    const opVenue = (
-      <span>
-        {' '}
-        <FormattedMessage
-          id='opVenue'
-          defaultMessage='Venue'
-          description='Venue label in OpDetails Form'
-        />
-        &nbsp;
-        <Tooltip title='Enter the address where the event will be held at'>
-          <Icon type='question-circle-o' />
-        </Tooltip>
-      </span>
-    )
-    const opOrganisation = (
-      <span>
-        {' '}
-        <FormattedMessage
-          id='opOrganisation'
-          defaultMessage='Offer Organisation'
-          description='label for Organisation offering the activity'
-        />
-        &nbsp;
-        <Tooltip title='Which organisation is this activity for?'>
-          <Icon type='question-circle-o' />
-        </Tooltip>
-      </span>
-    )
-    const opDescription = (
-      <span>
-        {' '}
-        <FormattedMessage
-          id='opDescription'
-          defaultMessage='Description'
-          description='activity Description label in OpDetails Form'
-        />
-        &nbsp;
-        <Tooltip title='Give a long description of what is needed and what people will be doing.'>
-          <Icon type='question-circle-o' />
-        </Tooltip>
-      </span>
-    )
-    const opStartDate = (
-      <span>
-        {' '}
-        <FormattedMessage
-          id='opStartDate'
-          defaultMessage='Start Date'
-          description='activity start date label in OpDetails Form'
-        />
-        &nbsp;
-        <Tooltip title='Choose your start date '>
-          <Icon type='question-circle-o' />
-        </Tooltip>
-      </span>
-    )
-
-    const opEndDate = (
-      <span>
-        {' '}
-        <FormattedMessage
-          id='opEndDate'
-          defaultMessage='End Date'
-          description='activity end date label in OpDetails Form'
-        />
-        &nbsp;
-        <Tooltip title='Choose your end date '>
-          <Icon type='question-circle-o' />
-        </Tooltip>
-      </span>
-    )
-
-    const opImgUrl = (
-      <span>
-        <FormattedMessage
-          id='opImgUrl'
-          defaultMessage='Image Link'
-          description='activity Image URL label in OpDetails Form'
-        />
-        &nbsp;
-        <Tooltip title="Choose something interesting like 'we want to build robots' ">
-          <Icon type='question-circle-o' />
-        </Tooltip>
-      </span>
-    )
-
-    const opTags = (
-      <FormattedMessage
-        id='opTags'
-        defaultMessage='Tags'
-        description='Descriptions of general areas the activity relates to'
-      />
-    )
-
+    const locked = op.fromActivity && op.fromActivity.locked
+    const lockfields = locked ? op.fromActivity.lockfields : []
+    // const lockedField = field => locked && lockfields.includes(field)
+    const lockedField = field => {
+      console.log('lockedField', field, lockfields, locked, locked && lockfields.includes(field))
+      return locked && lockfields.includes(field)
+    }
     const {
       getFieldDecorator
     } = this.props.form
 
     // Only show error after a field is touched.
     // const nameError = isFieldTouched('name') && getFieldError('name')
-    const isNewOp = this.props.op._id
+    const isNewOp = op._id
     const orgMembership =
       this.props.me.orgMembership &&
       this.props.me.orgMembership.map(member => member.organisation)
-    const opType = this.props.op.type
+    const opType = op.type
     return (
       <div className='OpDetailForm'>
         <PageTitle>
@@ -297,10 +305,19 @@ class OpDetailForm extends Component {
           </h1>
           <h5>
             <FormattedMessage
-              id='opdetail.pagesubtitle'
+              id='OpDetailForm.pagePrompt'
               description='subTitle for creating Ops'
-              defaultMessage='Check and update the details below including a time and a location for the activity you wish to run. Make sure you have all the information included for your volunteers.'
+              defaultMessage='Check and update the details below including a time and a location for the activity.'
             />
+            {locked && (
+              <p>
+                <FormattedMessage
+                  id='OpDetailForm.pageLockedPrompt'
+                  description='Message if some fields are locked'
+                  defaultMessage='Some fields have been disabled by the activity template.'
+                />
+              </p>
+            )}
           </h5>
         </PageTitle>
         <Divider />
@@ -333,7 +350,11 @@ class OpDetailForm extends Component {
                 >
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'Name is required' }]
-                  })(<Input className='name' placeholder='name' maxLength={100} />)}
+                  })(
+                    <Input
+                      className='name' placeholder='name' maxLength={100}
+                      disabled={lockedField('name')}
+                    />)}
                 </Form.Item>
 
                 <Form.Item
@@ -343,7 +364,10 @@ class OpDetailForm extends Component {
                   {getFieldDecorator('subtitle', {
                     rules: [{ required: this.state.requiredForPublish, message: 'Subtitle is required' }]
                   })(
-                    <Input className='subtitle' placeholder='short summary that appears on the listing.' />
+                    <Input
+                      className='subtitle' placeholder='short summary that appears on the listing.'
+                      disabled={lockedField('subtitle')}
+                    />
                   )}
                 </Form.Item>
               </ShortInputContainer>
@@ -355,6 +379,7 @@ class OpDetailForm extends Component {
                     <TextArea
                       rows={20}
                       placeholder='All the details about the request.'
+                      disabled={lockedField('description')}
                     />
                   ) : (
                     <RichTextEditor />
@@ -411,14 +436,7 @@ class OpDetailForm extends Component {
                   label={opStartDate}
                   name='Start date'
                 >
-                  {getFieldDecorator('startDate', {
-                    rules: [
-                      {
-                        required: false,
-                        message: 'Start date is required'
-                      }
-                    ]
-                  })(
+                  {getFieldDecorator('startDate')(
                     <DatePicker
                       showTime
                       disabledDate={current => {
@@ -437,14 +455,7 @@ class OpDetailForm extends Component {
                   label={opEndDate}
                   name='End date'
                 >
-                  {getFieldDecorator('endDate', {
-                    rules: [
-                      {
-                        required: false,
-                        message: 'End date is required'
-                      }
-                    ]
-                  })(
+                  {getFieldDecorator('endDate')(
                     <DatePicker
                       showTime
                       disabledDate={this.disabledEndDate}
@@ -457,23 +468,14 @@ class OpDetailForm extends Component {
               </ShortInputContainer>
               <MediumInputContainer>
                 <Form.Item label={opLocation}>
-                  {getFieldDecorator('location', {
-                    rules: []
-                  })(
+                  {getFieldDecorator('location')(
                     <LocationSelector
                       existingLocations={this.props.existingLocations}
                     />
                   )}
                 </Form.Item>
                 <Form.Item label={opVenue}>
-                  {getFieldDecorator('venue', {
-                    rules: [
-                      {
-                        required: false,
-                        message: 'A venue or address of event must be provided'
-                      }
-                    ]
-                  })(<Input placeholder='Venue' />
+                  {getFieldDecorator('venue')(<Input placeholder='Venue' />
                   )}
                 </Form.Item>
               </MediumInputContainer>
@@ -502,10 +504,7 @@ class OpDetailForm extends Component {
             </DescriptionContainer>
             <InputContainer>
               <Form.Item label={opTags}>
-                {getFieldDecorator('tags', {
-                  initialValue: [],
-                  rules: []
-                })(<TagInput existingTags={this.props.existingTags} />)}
+                {getFieldDecorator('tags')(<TagInput existingTags={this.props.existingTags} />)}
               </Form.Item>
             </InputContainer>
           </FormGrid>
@@ -515,15 +514,25 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <h3>Add an image (optional)</h3>
+                <h3>
+                  <FormattedMessage
+                    id='OpDetailForm.sectionTitle.addImage'
+                    defaultMessage='Add an image'
+                    description='Title for photo upload section'
+                  />
+                </h3>
               </TitleContainer>
               <p>
-                Requests with photos get more responses. If you don't have a
-                photo leave blank and we will provide one based on the category.
+                <FormattedMessage
+                  id='OpDetailForm.sectionPrompt.addImage'
+                  defaultMessage='Requests with photos get more responses. Upload or link to a picture that represents this activity.'
+                  description='Prompt for photo upload section'
+                />
+
               </p>
               <img
                 style={{ width: '50%', float: 'right' }}
-                src={this.props.op.imgUrl}
+                src={op.imgUrl}
                 alt='current image'
               />
             </DescriptionContainer>
@@ -532,8 +541,11 @@ class OpDetailForm extends Component {
                 <Form.Item label={opImgUrl}>
                   {getFieldDecorator('imgUrl', {
                     rules: [{ required: this.state.requiredForPublish, message: 'Please upload an image' }]
-                  })(<Input />)}
-                  <ImageUpload setImgUrl={this.setImgUrl} />
+                  })(
+                    <Input
+                      disabled={lockedField('imgUrl')}
+                    />)}
+                  {!lockedField('imgUrl') && <ImageUpload setImgUrl={this.setImgUrl} />}
                 </Form.Item>
               </MediumInputContainer>
             </InputContainer>
@@ -542,7 +554,13 @@ class OpDetailForm extends Component {
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
-                <h3>Confirm request</h3>
+                <h3>
+                  <FormattedMessage
+                    id='OpDetailForm.sectiontitle.ConfirmRequest'
+                    defaultMessage='Confirm request'
+                    description='Section title for the save and publish buttons'
+                  />
+                </h3>
               </TitleContainer>
               <p>
                 <FormattedMessage
@@ -641,55 +659,41 @@ OpDetailForm.propTypes = {
 
 export default Form.create({
   name: 'opportunity_detail_form',
-  onFieldsChange (props, changedFields) {
-    // props.onChange(changedFields);
-  },
   mapPropsToFields (props) {
     return {
       name: Form.createFormField({ ...props.op.name, value: props.op.name }),
 
       subtitle: Form.createFormField({
-        ...props.op.subtitle,
         value: props.op.subtitle
       }),
       description: Form.createFormField({
-        ...props.op.description,
         value: props.op.description
       }),
       duration: Form.createFormField({
-        ...props.op.duration,
         value: props.op.duration
       }),
       location: Form.createFormField({
-        ...props.op.location,
         value: props.op.location
       }),
       offerOrg: Form.createFormField({
-        ...props.op.offerOrg,
         value: { key: props.op.offerOrg ? props.op.offerOrg._id : '' }
       }),
       imgUrl: Form.createFormField({
-        ...props.op.imgUrl,
         value: props.op.imgUrl
       }),
       status: Form.createFormField({
-        ...props.op.status,
         value: props.op.status
       }),
       tags: Form.createFormField({
-        ...props.op.tags,
         value: props.op.tags
       }),
       startDate: Form.createFormField({
-        ...props.op.startDate,
         value: props.op.startDate != null ? moment(props.op.startDate) : null
       }),
       endDate: Form.createFormField({
-        ...props.op.endDate,
         value: props.op.endDate != null ? moment(props.op.endDate) : null
       }),
       venue: Form.createFormField({
-        ...props.op.venue,
         value: props.op.venue || ''
       })
     }

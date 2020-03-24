@@ -84,7 +84,7 @@ test('TOPIC_MEMBER__UPDATE for exmember sends no email', async t => {
   // but at least we can run the code.
 })
 
-test('Trigger TOPIC_INTEREST__UPDATE INTERESTED', async t => {
+test('Trigger ask TOPIC_INTEREST__UPDATE INTERESTED', async t => {
   t.plan(4)
   let callcount = 0
   const spy = sinon.spy()
@@ -111,7 +111,7 @@ test('Trigger TOPIC_INTEREST__UPDATE INTERESTED', async t => {
   t.true(spy.calledTwice)
 })
 
-test('Trigger TOPIC_INTEREST__UPDATE INVITED', async t => {
+test('Trigger ask TOPIC_INTEREST__UPDATE INVITED', async t => {
   t.plan(4)
   let callcount = 0
   const spy = sinon.spy()
@@ -138,12 +138,91 @@ test('Trigger TOPIC_INTEREST__UPDATE INVITED', async t => {
   t.true(spy.calledTwice)
 })
 
-test('Trigger TOPIC_INTEREST__UPDATE COMMITTED', async t => {
+test('Trigger ask TOPIC_INTEREST__UPDATE COMMITTED', async t => {
   t.plan(3)
   const spy = sinon.spy()
   const newInterest = {
     person: t.context.people[0],
     opportunity: t.context.ops[0],
+    messages: [{ // this works whether its an object or array.
+      body: 'testing TOPIC_INTEREST__UPDATE INTERESTED',
+      author: t.context.people[1]._id
+    }],
+    type: 'accept',
+    status: InterestStatus.COMMITTED
+  }
+  const done = new Promise((resolve, reject) => {
+    PubSub.subscribe(TOPIC_PERSON__EMAIL_SENT, async (msg, info) => {
+      t.is(info.originalMessage.to, t.context.people[0].email)
+      spy()
+      resolve(true)
+    })
+  })
+  t.true(PubSub.publish(TOPIC_INTEREST__UPDATE, newInterest))
+  await done
+  t.true(spy.calledOnce)
+})
+
+test('Trigger offer TOPIC_INTEREST__UPDATE INTERESTED', async t => {
+  t.plan(4)
+  let callcount = 0
+  const spy = sinon.spy()
+  const newInterest = {
+    person: t.context.people[0],
+    opportunity: t.context.ops[5],
+    messages: [{ // this works whether its an object or array.
+      body: 'testing TOPIC_INTEREST__UPDATE INTERESTED',
+      author: t.context.people[1]._id
+    }],
+    type: 'accept',
+    status: InterestStatus.INTERESTED
+  }
+  const done = new Promise((resolve, reject) => {
+    PubSub.subscribe(TOPIC_PERSON__EMAIL_SENT, async (msg, info) => {
+      t.is(info.originalMessage.to, t.context.people[0].email)
+      spy()
+      callcount++
+      if (callcount === 2) { resolve(true) }
+    })
+  })
+  t.true(PubSub.publish(TOPIC_INTEREST__UPDATE, newInterest))
+  await done
+  t.true(spy.calledTwice)
+})
+
+test('Trigger offer TOPIC_INTEREST__UPDATE INVITED', async t => {
+  t.plan(4)
+  let callcount = 0
+  const spy = sinon.spy()
+  const newInterest = {
+    person: t.context.people[0],
+    opportunity: t.context.ops[5],
+    messages: [{ // this works whether its an object or array.
+      body: 'testing TOPIC_INTEREST__UPDATE INTERESTED',
+      author: t.context.people[1]._id
+    }],
+    type: 'accept',
+    status: InterestStatus.INVITED
+  }
+  const done = new Promise((resolve, reject) => {
+    PubSub.subscribe(TOPIC_PERSON__EMAIL_SENT, async (msg, info) => {
+      t.is(info.originalMessage.to, t.context.people[0].email)
+      spy()
+      callcount++
+      if (callcount === 2) { resolve(true) }
+    })
+  })
+  t.true(PubSub.publish(TOPIC_INTEREST__UPDATE, newInterest))
+  await done
+  t.true(spy.calledTwice)
+})
+
+test('Trigger offer TOPIC_INTEREST__UPDATE COMMITTED', async t => {
+  t.plan(3)
+  const spy = sinon.spy()
+  const newInterest = {
+    person: t.context.people[0],
+    opportunity: t.context.ops[5],
     messages: [{ // this works whether its an object or array.
       body: 'testing TOPIC_INTEREST__UPDATE INTERESTED',
       author: t.context.people[1]._id

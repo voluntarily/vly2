@@ -1,9 +1,10 @@
 const Tag = require('../api/tag/tag')
 const { DefaultTagList, GroupTagList } = require('../api/tag/tag.constants')
 
-const initializeTagsA = taglist => async (req, res, next) => {
+const initializeTagsA = (taglist, property) => async (req, res, next) => {
   try {
-    const { tags } = req.body
+    const tags = req.body[property]
+
     if (tags) {
       try {
         const tagset = await Tag.findOne({ name: taglist }).exec()
@@ -30,9 +31,9 @@ const initializeTagsA = taglist => async (req, res, next) => {
   }
 }
 
-const initializeTags = initializeTagsA(DefaultTagList)
+const initializeTags = initializeTagsA(DefaultTagList, 'tags')
 // console.log(initializeTags)
-const initializeGroups = initializeTagsA(GroupTagList)
+const initializeGroups = initializeTagsA(GroupTagList, 'groups')
 
 module.exports = {
   initializeTags,

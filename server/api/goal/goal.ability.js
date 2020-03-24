@@ -25,13 +25,18 @@ const ruleBuilder = session => {
 
   const allAbilities = anonAbilities.slice(0)
 
+  const adminAbilities = [{
+    subject: SchemaName,
+    action: Action.MANAGE
+  }]
+
   return {
     [Role.ANON]: anonAbilities,
     [Role.VOLUNTEER_PROVIDER]: allAbilities,
     [Role.OPPORTUNITY_PROVIDER]: allAbilities,
     [Role.ACTIVITY_PROVIDER]: allAbilities,
     [Role.ORG_ADMIN]: allAbilities,
-    [Role.ADMIN]: allAbilities
+    [Role.ADMIN]: adminAbilities
   }
 }
 

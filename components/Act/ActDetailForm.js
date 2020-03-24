@@ -1,15 +1,15 @@
-import { Button, Divider, Form, Icon, Input, Tooltip, Radio } from 'antd'
+import { Button, Divider, Form, Icon, Input, Tooltip, Radio, Switch } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import FileUpload from '../File/FileUpload'
-
 import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
 import { DynamicFieldSet } from '../DynamicFieldSet/DynamicFieldSet'
 import slug from 'limax'
+import { ActivityFields, ActivityStatus } from '../../server/api/activity/activity.constants'
 
 import {
   DescriptionContainer,
@@ -129,7 +129,9 @@ class ActDetailForm extends Component {
         act.imgUrl = values.imgUrl === '' ? undefined : values.imgUrl
         act.documents = values.documents
         act.tags = values.tags
-        act.status = e.target.name === 'publish' ? 'active' : 'draft'
+        console.log('locked', values.locked)
+        act.locked = values.locked
+        act.status = e.target.name === 'publish' ? ActivityStatus.ACTIVE : ActivityStatus.DRAFT
         // act.owner = (this.props.act.owner && this.props.op.owner._id) || this.props.me._id
         act.owner = this.props.me._id
         // TODO: [VP-305] should the owner of the activity be preserved or set to the last person who edits it?
@@ -283,6 +285,20 @@ class ActDetailForm extends Component {
         description='Descriptions of general areas the activity relates to'
       />
     )
+    const actLock = (
+      <span>
+        {' '}
+        <FormattedMessage
+          id='actLock'
+          defaultMessage='Lock Editable Fields'
+          description='activity lock label in ActDetail Form'
+        />
+        &nbsp;
+        <Tooltip title='Enable lock to prevent people from changing the title and image when the base a request on this activity'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
+    )
     const {
       getFieldDecorator,
       getFieldsError,
@@ -343,13 +359,13 @@ class ActDetailForm extends Component {
                   validateStatus={titleError ? 'error' : ''}
                   help={titleError || ''}
                 >
-                  {getFieldDecorator('name', {
+                  {getFieldDecorator(ActivityFields.NAME, {
                     rules: [{ required: true, message: 'Title is required' }]
                   })(<Input placeholder='Title' maxLength='100' required />)}
                 </Form.Item>
 
                 <Form.Item label={actSubtitle}>
-                  {getFieldDecorator('subtitle', {
+                  {getFieldDecorator(ActivityFields.SUBTITLE, {
                     rules: []
                   })(
                     <Input placeholder='short summary that appears on the listing.' />
@@ -357,7 +373,7 @@ class ActDetailForm extends Component {
                 </Form.Item>
               </ShortInputContainer>
               <Form.Item label={actDescription}>
-                {getFieldDecorator('description', {
+                {getFieldDecorator(ActivityFields.DESCRIPTION, {
                   rules: []
                 })(
                   isTest ? (
@@ -372,7 +388,7 @@ class ActDetailForm extends Component {
               </Form.Item>
               {orgMembership && (
                 <Form.Item label={actOrganisation}>
-                  {getFieldDecorator('offerOrg')(
+                  {getFieldDecorator(ActivityFields.OFFERORG)(
                     <OrgSelector orgs={orgMembership} />
                   )}
                 </Form.Item>
@@ -402,7 +418,7 @@ class ActDetailForm extends Component {
             </DescriptionContainer>
             <InputContainer>
               <Form.Item label={actTags}>
-                {getFieldDecorator('tags', {
+                {getFieldDecorator(ActivityFields.TAGS, {
                   initialValue: [],
                   rules: []
                 })(<TagInput existingTags={this.props.existingTags} />)}
@@ -441,7 +457,7 @@ class ActDetailForm extends Component {
                   validateStatus={durationError ? 'error' : ''}
                   help={durationError || ''}
                 >
-                  {getFieldDecorator('duration', {
+                  {getFieldDecorator(ActivityFields.DURATION, {
                     rules: [
                       {
                         required: true,
@@ -451,7 +467,7 @@ class ActDetailForm extends Component {
                   })(<Input placeholder='4 hours' required />)}
                 </Form.Item>
                 <Form.Item label={actResource}>
-                  {getFieldDecorator('resource')(
+                  {getFieldDecorator(ActivityFields.RESOURCE)(
                     <Input placeholder='5 people, classroom, projector' />
                   )}
                 </Form.Item>
@@ -500,7 +516,7 @@ class ActDetailForm extends Component {
                   )}
                 </Form.Item>
                 <Form.Item label={actSpace}>
-                  {getFieldDecorator('space')(
+                  {getFieldDecorator(ActivityFields.SPACE)(
                     <Input name='space' placeholder='40 sqm' />
                   )}
                 </Form.Item>
@@ -578,7 +594,7 @@ class ActDetailForm extends Component {
             <InputContainer>
               <MediumInputContainer>
                 <Form.Item label={actImgUrl}>
-                  {getFieldDecorator('imgUrl', {
+                  {getFieldDecorator(ActivityFields.IMG_URL, {
                     rules: []
                   })(<Input />)}
                   <ImageUpload setImgUrl={this.setImgUrl} />
@@ -611,7 +627,7 @@ class ActDetailForm extends Component {
             <InputContainer>
               <MediumInputContainer>
                 <Form.Item label={actDocuments}>
-                  {getFieldDecorator('documents')(
+                  {getFieldDecorator(ActivityFields.DOCUMENTS)(
                     <FileUpload
                       maxNumberOfFiles={5}
                       allowedFileTypes={['.pdf']}
@@ -646,6 +662,16 @@ class ActDetailForm extends Component {
               </p>
             </DescriptionContainer>
             <InputContainer>
+              <Form.Item label={actLock}>
+                {getFieldDecorator(ActivityFields.LOCKED, {
+                  valuePropName: 'checked'
+                })(
+                  <Switch
+                    checkedChildren={<Icon type='check' />}
+                    unCheckedChildren={<Icon type='cross' />}
+                  />)}
+              </Form.Item>
+
               <Button
                 id='cancelActBtn'
                 type='secondary'
@@ -738,72 +764,35 @@ ActDetailForm.propTypes = {
 
 export default Form.create({
   name: 'activity_detail_form',
-  mapPropsToFields (props) {
+  mapPropsToFields ({ act }) {
     let totalVolunteerRequired
     let volunteerPerStudent
-    if (props.act.volunteers === 0) {
+    if (act.volunteers === 0) {
       totalVolunteerRequired = 0
-    } else if (props.act.volunteers >= 1) {
-      totalVolunteerRequired = props.act.volunteers
-    } else if (props.act.volunteers < 1) {
-      volunteerPerStudent = Math.round(1 / props.act.volunteers)
+    } else if (act.volunteers >= 1) {
+      totalVolunteerRequired = act.volunteers
+    } else if (act.volunteers < 1) {
+      volunteerPerStudent = Math.round(1 / act.volunteers)
     }
+    console.log('locked', act.locked)
     return {
-      name: Form.createFormField({ ...props.act.name, value: props.act.name }),
-      subtitle: Form.createFormField({
-        ...props.act.subtitle,
-        value: props.act.subtitle
-      }),
-      description: Form.createFormField({
-        ...props.act.description,
-        value: props.act.description
-      }),
-      offerOrg: Form.createFormField({
-        ...props.act.offerOrg,
-        value: { key: props.act.offerOrg ? props.act.offerOrg._id : '' }
-      }),
-      duration: Form.createFormField({
-        ...props.act.duration,
-        value: props.act.duration
-      }),
-      location: Form.createFormField({
-        ...props.act.location,
-        value: props.act.location
-      }),
-      imgUrl: Form.createFormField({
-        ...props.act.imgUrl,
-        value: props.act.imgUrl
-      }),
-      documents: Form.createFormField({
-        ...props.act.documents,
-        value: props.act.documents
-      }),
-      time: Form.createFormField({ ...props.act.time, value: props.act.time }),
-      resource: Form.createFormField({
-        ...props.act.resource,
-        value: props.act.resource
-      }),
-      status: Form.createFormField({
-        ...props.act.status,
-        value: props.act.status
-      }),
-      tags: Form.createFormField({ ...props.act.tags, value: props.act.tags }),
-      totalVolunteerRequired: Form.createFormField({
-        ...totalVolunteerRequired,
-        value: totalVolunteerRequired
-      }),
-      volunteerPerStudent: Form.createFormField({
-        ...volunteerPerStudent,
-        value: volunteerPerStudent
-      }),
-      space: Form.createFormField({
-        ...props.act.space,
-        value: props.act.space
-      }),
-      equipment: Form.createFormField({
-        ...props.act.equipment,
-        value: props.act.equipment
-      })
+      name: Form.createFormField({ value: act.name }),
+      subtitle: Form.createFormField({ value: act.subtitle }),
+      description: Form.createFormField({ value: act.description }),
+      offerOrg: Form.createFormField({ value: { key: act.offerOrg ? act.offerOrg._id : '' } }),
+      duration: Form.createFormField({ value: act.duration }),
+      location: Form.createFormField({ value: act.location }),
+      imgUrl: Form.createFormField({ value: act.imgUrl }),
+      documents: Form.createFormField({ value: act.documents }),
+      time: Form.createFormField({ ...act.time, value: act.time }),
+      resource: Form.createFormField({ value: act.resource }),
+      status: Form.createFormField({ value: act.status }),
+      tags: Form.createFormField({ value: act.tags }),
+      totalVolunteerRequired: Form.createFormField({ value: totalVolunteerRequired }),
+      volunteerPerStudent: Form.createFormField({ value: volunteerPerStudent }),
+      space: Form.createFormField({ value: act.space }),
+      equipment: Form.createFormField({ value: act.equipment }),
+      locked: Form.createFormField({ value: act.locked })
     }
   }
 })(ActDetailForm)

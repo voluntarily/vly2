@@ -82,6 +82,13 @@ test.before('Setup fixtures', (t) => {
       loading: false,
       data: orgMembership,
       request: null
+    },
+    tags: {
+      sync: true,
+      syncing: false,
+      loading: false,
+      data: [],
+      request: null
     }
   }
   t.context.mockStore = configureStore([thunk])(t.context.defaultstore)
@@ -100,6 +107,7 @@ test('OrgDetailPage GetInitialProps non member', async t => {
   myMock
     .get(`path:/api/organisations/${t.context.org._id}`, { body: { status: 200 } })
     .get('path:/api/members/', { body: { status: 200 } })
+    .get('path:/api/tags/', { body: [] })
   const props = await OrgDetailPage.getInitialProps(ctx)
   t.false(props.isNew)
   t.is(props.orgid, t.context.org._id)
@@ -123,6 +131,13 @@ test('OrgDetailPage GetInitialProps anon', async t => {
       loading: false,
       data: [],
       request: null
+    },
+    tags: {
+      sync: true,
+      syncing: false,
+      loading: false,
+      data: [],
+      request: null
     }
   }
   const mockStore = configureStore([thunk])(store)
@@ -138,6 +153,7 @@ test('OrgDetailPage GetInitialProps anon', async t => {
   myMock
     .get(`path:/api/organisations/${t.context.org._id}`, { body: { status: 200 } })
     .get('path:/api/members/', { body: { status: 200 } })
+    .get('path:/api/tags/', { body: [] })
   const props = await OrgDetailPage.getInitialProps(ctx)
   t.false(props.isNew)
   t.is(props.orgid, t.context.org._id)
@@ -156,6 +172,7 @@ test('OrgDetailPage GetInitialProps new', async t => {
   myMock
     .get(`path:/api/organisations/${t.context.org._id}`, { body: { status: 200 } })
     .get('path:/api/members/', { body: { status: 200 } })
+    .get('path:/api/tags/', { body: [] })
   const props = await OrgDetailPage.getInitialProps(ctx)
   t.true(props.isNew)
   t.is(props.orgid, null)
@@ -277,6 +294,7 @@ test('edit and save existing org', async t => {
     members: t.context.defaultstore.members,
     me: t.context.people[1],
     isAuthenticated: true,
+    tags: { data: [] },
     dispatch: (p) => {
       return [t.context.orgs[0]]
     }
@@ -319,6 +337,7 @@ test('edit and save new org', async t => {
     isAuthenticated: true,
     members: t.context.defaultstore.members,
     me: t.context.people[1],
+    tags: { data: [] },
     dispatch: (p) => {
       return [t.context.orgs[0]]
     }

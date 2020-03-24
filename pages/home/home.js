@@ -6,7 +6,7 @@ import ActAdd from '../../components/Act/ActAdd'
 import { HomeBanner } from '../../components/Home/HomeBanner.js'
 import { HomeTabs } from '../../components/Home/HomeTabs.js'
 import Loading from '../../components/Loading'
-import OpAdd from '../../components/Op/OpAdd'
+import { OpAddNewBtn } from '../../components/Op/OpAdd'
 import { FullPage, PageBannerButtons } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import reduxApi from '../../lib/redux/reduxApi.js'
@@ -49,7 +49,7 @@ export const PersonHomePage = () => {
       </Helmet>
       <HomeBanner person={person}>
         <PageBannerButtons>
-          <OpAdd roles={person.roles} />
+          <OpAddNewBtn />
         </PageBannerButtons>
         <PageBannerButtons>
           <ActAdd roles={person.roles} />

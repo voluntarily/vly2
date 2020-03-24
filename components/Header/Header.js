@@ -1,7 +1,7 @@
 // import { FormattedMessage } from 'react-intl'
-import { Avatar, Icon, Input, Layout } from 'antd'
+import { Avatar, Icon, Layout } from 'antd'
 import Link from 'next/link'
-import Router from 'next/router'
+// import Router from 'next/router'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -10,7 +10,7 @@ import Navigation from '../Navigation/Navigation'
 import links from './HeaderMenu'
 import { useIntl } from 'react-intl'
 
-const Search = Input.Search
+// const Search = Input.Search
 
 const Brand = styled.h1`
   font-weight: 300;
@@ -67,27 +67,27 @@ const StyledAvatar = styled(Avatar)`
     margin-right: 0px;
   }
 `
-const SearchInput = styled(Search)`
-  width: 20rem;
-  display: inline-block;
-  margin-left: 0.5rem;
+// const SearchInput = styled(Search)`
+//   width: 20rem;
+//   display: inline-block;
+//   margin-left: 0.5rem;
 
-  padding: 4px;
-  border-radius: 4px;
+//   padding: 4px;
+//   border-radius: 4px;
 
-  @media screen and (max-width: 767px) {
-    display: none;
-  }
-`
+//   @media screen and (max-width: 767px) {
+//     display: none;
+//   }
+// `
 
-const handleSearch = search => {
-  Router.push({
-    pathname: '/search',
-    query: {
-      search
-    }
-  })
-}
+// const handleSearch = search => {
+//   Router.push({
+//     pathname: '/search',
+//     query: {
+//       search
+//     }
+//   })
+// }
 
 const getAllowedLinks = isAuthenticated =>
   links()
@@ -106,12 +106,12 @@ const Header = ({ isAuthenticated, me, ...props }) => {
       <MenuGrid>
         <div>
           <Brand className='site-name' aria-hidden='true' />
-          <SearchInput
+          {/* <SearchInput
             placeholder='Search for cool ways to help out'
             onSearch={handleSearch}
             aria-label='Search for volunteering opportunties here'
 
-          />
+          /> */}
         </div>
         <Link href='/landing'>
           <LogoContainer>

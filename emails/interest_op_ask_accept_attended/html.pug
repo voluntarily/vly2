@@ -1,0 +1,21 @@
+extends ../theme/layout.pug
+
+block tagline
+  span Huge thanks for helping out.
+  
+block copybig
+  a( href=op.href) #{op.name} 
+
+block copy
+  p Kia ora #{to.nickname},
+  p We want to thank you for helping out by offering the opportunity #{op.name}. 
+    span This activity has now been moved to your history tab.
+    span Any rewards or badges from the activity will be added to your profile.
+  p Want to do more? Check out the recommendations link for other activities still needing volunteers.
+  p Ngā mihi, Voluntarily.nz
+   
+block copybutton
+  a(href=op.href class='mobile-button') Opportunity
+  span &nbsp; 
+  a(href=to.href class='mobile-button') Recommendations
+             

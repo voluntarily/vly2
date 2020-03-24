@@ -6,7 +6,7 @@ import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
 import TagDisplay from '../Tags/TagDisplay'
-import { HalfGrid, OpSectionGrid, DocumentList } from '../VTheme/VTheme'
+import { SideBarGrid, OpSectionGrid, DocumentList, PageBannerButtons } from '../VTheme/VTheme'
 import {
   Left,
   Right,
@@ -14,30 +14,33 @@ import {
   ItemDescription,
   TagContainer,
   ItemDuration,
-  ItemStatus,
   ItemIdLine,
   ItemVolunteers,
   ItemSpace,
   EquipmentList,
   ItemImage
 } from '../VTheme/ItemList'
-import { Role } from '../../server/services/authorize/role'
 import Html from '../VTheme/Html'
+import OpAdd from '../Op/OpAdd'
+import { OpStatusStamp, OpStatus } from '../Op/OpStatus'
 
-export function ActDetail ({ act, me }) {
+export function ActDetail ({ act }) {
   const img = act.imgUrl || '/static/missingimage.svg'
-  const isOP = me && me.role.includes(Role.OPPORTUNITY_PROVIDER)
   return (
     <>
       <Head>
         <title>{act.name}</title>
       </Head>
-      <HalfGrid>
+      <SideBarGrid>
         <Left>
+          <OpStatusStamp status={act.status} />
           <ItemImage src={img} alt={act.name} />
         </Left>
         <Right>
-          <h1>{act.name}</h1>
+
+          <h1>
+            <OpStatus status={act.status} />{act.name}
+          </h1>
           <ul>
             <ItemIdLine item={act.offerOrg} path='orgs' />
           </ul>
@@ -45,13 +48,15 @@ export function ActDetail ({ act, me }) {
           <ItemContainer>
             <ItemDuration duration={act.duration} />
             <ItemVolunteers volunteers={act.volunteers} />
-            <ItemStatus status={act.status} />
 
           </ItemContainer>
           <Divider />
-          {isOP && <Button size='large' shape='round' type='primary' href={`/op/new?act=${act._id}`}>Run Activity</Button>}
+          <PageBannerButtons>
+            <OpAdd actid={act._id} />
+          </PageBannerButtons>
+          {/* {isOP && <Button size='large' shape='round' type='primary' href={`/op/new?act=${act._id}`}>Run Activity</Button>} */}
         </Right>
-      </HalfGrid>
+      </SideBarGrid>
 
       <Divider />
 
