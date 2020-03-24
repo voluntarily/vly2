@@ -138,7 +138,7 @@ const OfferSection = () => (
 
           <figcaption>
             <small>Open Source</small>
-            <h3>Join the community build</h3>
+            <h3>Join the<br />Community Build</h3>
             <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
             </p>
 

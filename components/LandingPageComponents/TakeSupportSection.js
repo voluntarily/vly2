@@ -87,7 +87,7 @@ const TakeSupportSection = () => (
     <HeroSectionHeader>
       <h2>How people can support you</h2>
       <HeroSectionButtonContainer>
-        <Button type='secondary' size='large' shape='round' block>See all offers</Button>
+        <Button type='secondary' size='large' shape='round' block>See all Activities</Button>
       </HeroSectionButtonContainer>
     </HeroSectionHeader>
     <Grid>
