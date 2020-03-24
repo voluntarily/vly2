@@ -27,8 +27,8 @@ const ActCard = ({ act, onPress, ...props }) => {
               {act.name}
             </h1>
             <p>{act.subtitle}</p>
-            <p><OpTypeCount count={act.opCounts[ASK]} type={ASK} /></p>
-            <p><OpTypeCount count={act.opCounts[OFFER]} type={OFFER} /></p>
+            <p><OpTypeCount count={act.opCounts} type={ASK} /></p>
+            <p><OpTypeCount count={act.opCounts} type={OFFER} /></p>
             <p><OpCommitment duration={act.duration} /></p>
           </figcaption>
         </a>

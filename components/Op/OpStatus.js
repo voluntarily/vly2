@@ -27,11 +27,11 @@ export const OpportunityStatusMessages = defineMessages({
 
 /** Converts an opportunity status to a translated display string */
 export const OpStatus = ({ status }) => {
-  if (!status || ![DRAFT, ACTIVE, COMPLETED, CANCELLED].includes(status)) return null
+  if (!status || ![DRAFT, COMPLETED, CANCELLED].includes(status)) return null
   return (
     <>
       <FormattedMessage {...OpportunityStatusMessages[status]} />
-    : &nbsp;
+    :{' '}
     </>)
 }
 

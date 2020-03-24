@@ -39,8 +39,7 @@ export function ActDetail ({ act }) {
         <Right>
 
           <h1>
-            <OpStatus status={act.status} />
-            {act.name}
+            <OpStatus status={act.status} />{act.name}
           </h1>
           <ul>
             <ItemIdLine item={act.offerOrg} path='orgs' />
