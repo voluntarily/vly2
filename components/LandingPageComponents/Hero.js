@@ -98,7 +98,8 @@ const AwesomeImage = styled.img`
   }
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    height: inherit;
+   
+    height: 22rem;
 
   }
   @media screen and (min-width: 769px) and (max-width: 1025px) {
@@ -127,6 +128,7 @@ const HeroRight = styled.div`
   @media screen and (max-width: 768px) {
     margin: 1rem 1rem 0 1rem;
   }
+
 `
 
 const HeroText = styled.h1`
