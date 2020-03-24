@@ -17,10 +17,10 @@ jobs:
     steps:
     - name: Check out
       uses: actions/checkout@v2      
-    - name: Use Node 10
+    - name: Use Node 12
       uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 12.x
     - name: Lang
       run: |
         npm ci
@@ -50,10 +50,10 @@ jobs:
     steps:
     - name: Check out
       uses: actions/checkout@v2      
-    - name: Use Node 10
+    - name: Use Node 12
       uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 12.x
         mongoms_download_mirror: http://downloads.mongodb.org
         mongoms_version: 4.0.5
         mongoms_disable_postinstall: 1
