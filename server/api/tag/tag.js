@@ -4,7 +4,7 @@ const { SchemaName, DefaultTagList } = require('./tag.constants')
 const tagSchema = {
   name: { type: String, lowercase: true, unique: true, required: true, default: DefaultTagList },
   tags: [
-    { type: String, lowercase: true, unique: true }
+    { type: String, lowercase: true }
   ]
 }
 
