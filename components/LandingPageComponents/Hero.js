@@ -234,7 +234,7 @@ const Hero = ({ isAuthenticated }) => (
         </SearchBox> */}
         <div>
           {!isAuthenticated &&
-            <> <Link src='/home'><Button type='primary' shape='round' size='large' style={{ marginTop: '1rem', marginRight: '0.5rem' }}> Sign up </Button></Link></>}
+            <> <Link href='/home'><Button type='primary' shape='round' size='large' style={{ marginTop: '1rem', marginRight: '0.5rem' }}> Sign up </Button></Link></>}
           <Button type='secondary' shape='round' size='large' href='https://blog.voluntarily.nz' style={{ marginTop: '1rem' }}>
             Learn more
           </Button>
