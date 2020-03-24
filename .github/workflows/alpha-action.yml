@@ -2,7 +2,7 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 # Author: Andrew Somervell
 
-name: Build and test
+name: alpha
 
 on:
   push:
@@ -50,6 +50,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
+        mongoms_download_mirror: http://downloads.mongodb.org
+        mongoms_version: 4.0.5
+        mongoms_disable_postinstall: 1
+        codecov_token: ${{ secrets.CODECOV_TOKEN }}
     - name: Code coverage
       run: |
         npm ci
@@ -65,6 +69,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
+        mongoms_download_mirror: http://downloads.mongodb.org
+        mongoms_version: 4.0.5
+        mongoms_disable_postinstall: 1
+        ci_node_index: 0
+        ci_node_total: 1
     - name: Test          
       run: |
         npm ci
