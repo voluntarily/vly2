@@ -2,7 +2,7 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 # Author: Andrew Somervell
 
-name: Node.js CI
+name: Build and test
 
 on:
   push:
@@ -12,30 +12,48 @@ on:
 
 jobs:
   build:
-    name: Build and run all tests
+    name: NPM CI
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js 10.x
+      
+    - name: Use Node 10
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
+        
+    - name: Run NPM CI
     - run: npm ci
-      
-    - name: Lang
-      run: |
-        cp lang/en.json lang/en.orig.json
-        npm run build:lang
-        diff lang/en.json lang/en.orig.json
-          
-    - name: Lint
-      run: npm run lint
-
-    - name: NPM Test
-      run: npm run test-all -- --tap
-      
-    - name: Code Coverage
-      run: ./node_modules/codecov/bin/codecov --disable=gcov
-      
       env:
-        CI: true
+        CI: true      
+
+  lang:    
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Lang
+        run: |
+          cp lang/en.json lang/en.orig.json
+          npm run build:lang
+          diff lang/en.json lang/en.orig.json
+      
+  lint:        
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Lint
+        run: npm run lint
+    
+  coverage:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Code coverage
+        run: ./node_modules/codecov/bin/codecov --disable=gcov
+    
+  test:
+    runs-on: ubuntu-latest
+    needs: [build, lang, lint, coverage]
+    steps:
+      - name: Test          
+        run: npm run test-all -- --tap
