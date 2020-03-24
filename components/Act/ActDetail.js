@@ -14,7 +14,6 @@ import {
   ItemDescription,
   TagContainer,
   ItemDuration,
-  ItemStatus,
   ItemIdLine,
   ItemVolunteers,
   ItemSpace,
@@ -23,6 +22,7 @@ import {
 } from '../VTheme/ItemList'
 import Html from '../VTheme/Html'
 import OpAdd from '../Op/OpAdd'
+import { OpStatusStamp, OpStatus } from '../Op/OpStatus'
 
 export function ActDetail ({ act }) {
   const img = act.imgUrl || '/static/missingimage.svg'
@@ -33,10 +33,15 @@ export function ActDetail ({ act }) {
       </Head>
       <SideBarGrid>
         <Left>
+          <OpStatusStamp status={act.status} />
           <ItemImage src={img} alt={act.name} />
         </Left>
         <Right>
-          <h1>{act.name}</h1>
+
+          <h1>
+            <OpStatus status={act.status} />
+            {act.name}
+          </h1>
           <ul>
             <ItemIdLine item={act.offerOrg} path='orgs' />
           </ul>
@@ -44,7 +49,6 @@ export function ActDetail ({ act }) {
           <ItemContainer>
             <ItemDuration duration={act.duration} />
             <ItemVolunteers volunteers={act.volunteers} />
-            <ItemStatus status={act.status} />
 
           </ItemContainer>
           <Divider />
