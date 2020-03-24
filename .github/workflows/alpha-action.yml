@@ -11,50 +11,54 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-    name: NPM CI
+  lang:    
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      
+    - name: Check out
+      uses: actions/checkout@v2      
     - name: Use Node 10
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
-        
-    - name: Run NPM CI
-      run: npm ci
-      
-      env:
-        CI: true      
-
-  lang:    
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Lang
-        run: |
-          cp lang/en.json lang/en.orig.json
-          npm run build:lang
-          diff lang/en.json lang/en.orig.json
+    - name: Lang
+      run: |
+        cp lang/en.json lang/en.orig.json
+        npm run build:lang
+        diff lang/en.json lang/en.orig.json
       
   lint:        
     runs-on: ubuntu-latest
-    needs: build
     steps:
-      - name: Lint
-        run: npm run lint
+    - name: Check out
+      uses: actions/checkout@v2      
+    - name: Use Node 10
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+    - name: Lint
+      run: npm run lint
     
   coverage:
     runs-on: ubuntu-latest
-    needs: build
     steps:
-      - name: Code coverage
-        run: ./node_modules/codecov/bin/codecov --disable=gcov
+    - name: Check out
+      uses: actions/checkout@v2      
+    - name: Use Node 10
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+    - name: Code coverage
+      run: ./node_modules/codecov/bin/codecov --disable=gcov
     
   test:
     runs-on: ubuntu-latest
-    needs: [build, lang, lint, coverage]
+    needs: [lang, lint, coverage]
     steps:
-      - name: Test          
-        run: npm run test-all -- --tap
+    - name: Check out
+      uses: actions/checkout@v2      
+    - name: Use Node 10
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+    - name: Test          
+      run: npm run test-all -- --tap
