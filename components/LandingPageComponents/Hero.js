@@ -3,6 +3,7 @@ import { Button } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
+import Link from 'next/link'
 
 // const Search = Input.Search
 
@@ -98,7 +99,8 @@ const AwesomeImage = styled.img`
   }
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    height: inherit;
+   
+    height: 22rem;
 
   }
   @media screen and (min-width: 769px) and (max-width: 1025px) {
@@ -127,6 +129,7 @@ const HeroRight = styled.div`
   @media screen and (max-width: 768px) {
     margin: 1rem 1rem 0 1rem;
   }
+
 `
 
 const HeroText = styled.h1`
@@ -230,6 +233,8 @@ const Hero = ({ isAuthenticated }) => (
           />
         </SearchBox> */}
         <div>
+          {!isAuthenticated &&
+            <> <Link href='/home'><Button type='primary' shape='round' size='large' style={{ marginTop: '1rem', marginRight: '0.5rem' }}> Sign up </Button></Link></>}
           <Button type='secondary' shape='round' size='large' href='https://blog.voluntarily.nz' style={{ marginTop: '1rem' }}>
             Learn more
           </Button>
