@@ -53,16 +53,16 @@ test('render OpType with no type', t => {
 test('render OpTypeCount for offer op', t => {
   const wrapper = mountWithIntl(
     <OpTypeCount
-      count={5}
+      counts={{ ask: 5, offer: 2 }}
       type={OpportunityType.OFFER}
     />
   )
-  t.is(wrapper.text(), '💁🏻5 offering to help')
+  t.is(wrapper.text(), '💁🏻2 offering to help')
 })
 test('render OpTypeCount for ask op', t => {
   const wrapper = mountWithIntl(
     <OpTypeCount
-      count={5}
+      counts={{ ask: 5, offer: 2 }}
       type={OpportunityType.ASK}
     />
   )
