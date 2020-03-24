@@ -40,7 +40,7 @@ test('render OpStatus for active op', t => {
       status={OpportunityStatus.ACTIVE}
     />
   )
-  t.is(wrapper.text(), 'Active')
+  t.is(wrapper.text(), '')
 })
 
 test('render OpStatus with no status', t => {

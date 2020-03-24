@@ -20,7 +20,7 @@ const ActivityFields = {
   TIME: 'time',
   TAGS: 'tags',
   EQUIPMENT: 'equipment',
-  ACTIVITYSTATUS: 'ActivityStatus',
+  STATUS: 'status',
   DOCUMENTS: 'documents',
   LOCKED: 'locked',
   LOCKFIELDS: 'lockfields'
@@ -29,6 +29,9 @@ const ActivityFields = {
 const ActivityListFields = [
   ActivityFields.NAME,
   ActivityFields.SLUG,
+  ActivityFields.STATUS,
+  ActivityFields.SUBTITLE,
+  ActivityFields.DURATION,
   ActivityFields.IMG_URL,
   ActivityFields.OFFERORG
 ]

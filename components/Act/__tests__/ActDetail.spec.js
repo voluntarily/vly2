@@ -44,16 +44,16 @@ const actMax = {
   tags: ['algorithms', 'scheduling']
 }
 
-test('render the detail with short act', t => {
+test('render the detail with short draft act', t => {
   const wrapper = mountWithIntl(
     <Provider store={mockStore}>
       <ActDetail act={actMin} onPress={() => {}} />
     </Provider>
   )
   t.truthy(wrapper.find('Head'))
-  t.is(wrapper.find('h1').text(), actMin.name)
+  t.is(wrapper.find('h1').text(), `Draft: ${actMin.name}`)
   t.is(wrapper.find({ duration: actMin.duration }).length, 1)
-  t.is(wrapper.find('li').length, 5) // only minimal items shown
+  t.is(wrapper.find('li').length, 4) // only minimal items shown
 })
 
 test('render the detail with full act', t => {
@@ -65,7 +65,7 @@ test('render the detail with full act', t => {
   t.is(wrapper.find('h1').text(), actMax.name)
   t.is(wrapper.find({ space: actMax.space }).length, 1)
   t.is(wrapper.find({ volunteers: actMax.volunteers }).length, 2)
-  t.is(wrapper.find('li').length, 11)
+  t.is(wrapper.find('li').length, 10)
 })
 
 test('render the detail with no picture ', t => {
@@ -87,7 +87,7 @@ test('render the detail with no picture ', t => {
   )
   t.truthy(wrapper.find('Head'))
   t.is(wrapper.find({ space: '1 acre' }).length, 0)
-  t.is(wrapper.find('li').length, 5)
+  t.is(wrapper.find('li').length, 4)
 })
 
 test('render Volunteers per student properly if the value is < 1', t => {
