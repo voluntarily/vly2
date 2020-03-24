@@ -3,6 +3,7 @@ import { Button } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
+import Link from 'next/link'
 
 // const Search = Input.Search
 
@@ -232,6 +233,8 @@ const Hero = ({ isAuthenticated }) => (
           />
         </SearchBox> */}
         <div>
+          {!isAuthenticated &&
+            <> <Link src='/home'><Button type='primary' shape='round' size='large' style={{ marginTop: '1rem', marginRight: '0.5rem' }}> Sign up </Button></Link></>}
           <Button type='secondary' shape='round' size='large' href='https://blog.voluntarily.nz' style={{ marginTop: '1rem' }}>
             Learn more
           </Button>
