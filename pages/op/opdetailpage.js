@@ -12,7 +12,7 @@ import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import OpBanner from '../../components/Op/OpBanner'
 import OpUnknown from '../../components/Op/OpUnknown'
-import OpDetailForm from '../../components/Op/OpDetailForm'
+import OpAskForm from '../../components/Op/OpAskForm'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import { Helmet } from 'react-helmet'
 // import { OpStatusStamp } from '../../components/Op/OpStatus'
@@ -163,7 +163,7 @@ export const OpDetailPage = ({
         <Helmet>
           <title>Edit {op.name} - Voluntarily</title>
         </Helmet>
-        <OpDetailForm
+        <OpAskForm
           op={op}
           me={me}
           onSubmit={handleSubmit}

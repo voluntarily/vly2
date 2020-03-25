@@ -2,7 +2,7 @@ import React from 'react'
 import test from 'ava'
 import tagList from '../../../server/api/tag/__tests__/tag.fixture'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
-import OpDetailForm from '../OpDetailForm'
+import OpAskForm from '../OpAskForm'
 import sinon from 'sinon'
 import { OpportunityStatus, OpportunityType } from '../../../server/api/opportunity/opportunity.constants'
 const { sortedLocations } = require('../../../server/api/location/locationData')
@@ -79,7 +79,7 @@ test.after.always(() => {
 
 test('shallow the detail with op', t => {
   const wrapper = shallowWithIntl(
-    <OpDetailForm
+    <OpAskForm
       op={op}
       onSubmit={() => {}}
       onCancel={() => {}}
@@ -87,7 +87,7 @@ test('shallow the detail with op', t => {
       existingTags={[]}
     />
   )
-  t.is(wrapper.find('OpDetailForm').length, 1)
+  t.is(wrapper.find('OpAskForm').length, 1)
 })
 
 test('render the detail with op', t => {
@@ -95,7 +95,7 @@ test('render the detail with op', t => {
   const cancelOp = sinon.spy()
   const me = { _id: '5ccbffff958ff4833ed2188d' }
   const wrapper = mountWithIntl(
-    <OpDetailForm
+    <OpAskForm
       op={op}
       me={me}
       onSubmit={submitOp}
@@ -104,7 +104,7 @@ test('render the detail with op', t => {
       existingTags={[]}
     />
   )
-  t.is(wrapper.find('OpDetailForm').length, 1)
+  t.is(wrapper.find('OpAskForm').length, 1)
   t.is(wrapper.find('button').length, 3)
   wrapper.find('#cancelOpBtn').first().simulate('click')
   t.truthy(cancelOp.calledOnce)
@@ -123,7 +123,7 @@ test('render the detail with new blank ask op', t => {
   const me = { _id: '5ccbffff958ff4833ed2188d' }
 
   const wrapper = mountWithIntl(
-    <OpDetailForm
+    <OpAskForm
       op={blankAsk}
       me={me}
       onSubmit={submitOp}
@@ -138,7 +138,7 @@ test('render the detail with new blank ask op', t => {
   datePicker.at(1).simulate('click') // Check if the dissable date method got called
   t.is(datePicker.length, 2) // should find 1 date picker component
 
-  t.is(wrapper.find('OpDetailForm').length, 1)
+  t.is(wrapper.find('OpAskForm').length, 1)
   t.is(wrapper.find('button').length, 3) // cancel, save and publish
   wrapper.find('button').first().simulate('click')
   t.truthy(cancelOp.calledOnce)
@@ -174,7 +174,7 @@ test('render the detail with new blank offer op', t => {
   const me = { _id: '5ccbffff958ff4833ed2188d' }
 
   const wrapper = mountWithIntl(
-    <OpDetailForm
+    <OpAskForm
       op={blankOffer}
       me={me}
       onSubmit={submitOp}
@@ -189,7 +189,7 @@ test('render the detail with new blank offer op', t => {
   datePicker.at(1).simulate('click') // Check if the dissable date method got called
   t.is(datePicker.length, 2) // should find 1 date picker component
 
-  t.is(wrapper.find('OpDetailForm').length, 1)
+  t.is(wrapper.find('OpAskForm').length, 1)
   t.is(wrapper.find('button').length, 3) // cancel, save and publish
   wrapper.find('button').first().simulate('click')
   t.truthy(cancelOp.calledOnce)
@@ -236,7 +236,7 @@ test('Save a op as draft with correct validation', async t => {
   }
 
   const wrapper = mountWithIntl(
-    <OpDetailForm
+    <OpAskForm
       op={op}
       me={me}
       onSubmit={submitOp}
@@ -246,7 +246,7 @@ test('Save a op as draft with correct validation', async t => {
     />
   )
 
-  t.is(wrapper.find('OpDetailForm').length, 1)
+  t.is(wrapper.find('OpAskForm').length, 1)
   t.truthy(wrapper.find('.name'))
 
   const name = wrapper.find('.name').first()
@@ -283,7 +283,7 @@ test('Publish a op with correct validation', t => {
   }
 
   const wrapper = mountWithIntl(
-    <OpDetailForm
+    <OpAskForm
       op={op}
       me={me}
       onSubmit={submitOp}
@@ -293,7 +293,7 @@ test('Publish a op with correct validation', t => {
     />
   )
 
-  t.is(wrapper.find('OpDetailForm').length, 1)
+  t.is(wrapper.find('OpAskForm').length, 1)
   t.truthy(wrapper.find('.name'))
 
   const name = wrapper.find('.name').first()

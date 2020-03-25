@@ -3,7 +3,7 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
+import PageTitle from '../LandingPageComponents/PageTitle.js'
 import { OpportunityStatus, OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 import LocationSelector from '../Form/Input/LocationSelector'
 import RichTextEditor from '../Form/Input/RichTextEditor'
@@ -163,7 +163,7 @@ const opTags = (
   />
 )
 
-class OpDetailForm extends Component {
+class OpAskForm extends Component {
   constructor (props) {
     super(props)
 
@@ -280,7 +280,7 @@ class OpDetailForm extends Component {
       this.props.me.orgMembership.map(member => member.organisation)
     const opType = op.type
     return (
-      <div className='OpDetailForm'>
+      <div className='OpAskForm'>
         <PageTitle>
           <h1>
             {isNewOp ? (
@@ -291,13 +291,13 @@ class OpDetailForm extends Component {
               />
             ) : opType === OpportunityType.ASK ? (
               <FormattedMessage
-                id='OpDetailForm.title.opCreateAsk'
+                id='OpAskForm.title.opCreateAsk'
                 description='Title for creating request Ops'
                 defaultMessage='Create an new request'
               />)
               : opType === OpportunityType.OFFER ? (
                 <FormattedMessage
-                  id='OpDetailForm.title.opCreateOffer'
+                  id='OpAskForm.title.opCreateOffer'
                   description='Title for creating offering Ops'
                   defaultMessage='Create an new offering'
                 />)
@@ -305,14 +305,14 @@ class OpDetailForm extends Component {
           </h1>
           <h5>
             <FormattedMessage
-              id='OpDetailForm.pagePrompt'
+              id='OpAskForm.pagePrompt'
               description='subTitle for creating Ops'
               defaultMessage='Check and update the details below including a time and a location for the activity.'
             />
             {locked && (
               <p>
                 <FormattedMessage
-                  id='OpDetailForm.pageLockedPrompt'
+                  id='OpAskForm.pageLockedPrompt'
                   description='Message if some fields are locked'
                   defaultMessage='Some fields have been disabled by the activity template.'
                 />
@@ -328,7 +328,7 @@ class OpDetailForm extends Component {
               <TitleContainer>
                 <h3>
                   <FormattedMessage
-                    id='OpDetailForm.Title.label'
+                    id='OpAskForm.Title.label'
                     description='Section label for op title'
                     defaultMessage='What are you looking for?'
                   />
@@ -336,7 +336,7 @@ class OpDetailForm extends Component {
               </TitleContainer>
               <p>
                 <FormattedMessage
-                  id='OpDetailForm.Title.prompt'
+                  id='OpAskForm.Title.prompt'
                   description='Section prompt for op title'
                   defaultMessage='Before our skilled volunteers get involved, they need to know how they can help. Add a title and description that tell volunteers how they can help you.'
                 />
@@ -403,7 +403,7 @@ class OpDetailForm extends Component {
               <TitleContainer>
                 <h3>
                   <FormattedMessage
-                    id='OpDetailForm.location.label'
+                    id='OpAskForm.location.label'
                     description='Section label for op location'
                     defaultMessage='Where and when?'
                   />
@@ -411,7 +411,7 @@ class OpDetailForm extends Component {
               </TitleContainer>
               <p>
                 <FormattedMessage
-                  id='OpDetailForm.location.prompt'
+                  id='OpAskForm.location.prompt'
                   description='Section prompt for op location'
                   defaultMessage='More skilled volunteers will offer to help you if you know when, or where you need help.'
                 />
@@ -488,7 +488,7 @@ class OpDetailForm extends Component {
               <TitleContainer>
                 <h3>
                   <FormattedMessage
-                    id='OpDetailForm.tags.label'
+                    id='OpAskForm.tags.label'
                     description='Section label for op tags'
                     defaultMessage='Do you need any specific skills or resources?'
                   />
@@ -496,7 +496,7 @@ class OpDetailForm extends Component {
               </TitleContainer>
               <p>
                 <FormattedMessage
-                  id='OpDetailForm.tags.prompt'
+                  id='OpAskForm.tags.prompt'
                   description='Section prompt for op tags'
                   defaultMessage='Does what you are asking for fit into any specific categories like programming, electronics, or robots? Enter them here to make it easier for volunteers to find you.'
                 />
@@ -516,7 +516,7 @@ class OpDetailForm extends Component {
               <TitleContainer>
                 <h3>
                   <FormattedMessage
-                    id='OpDetailForm.sectionTitle.addImage'
+                    id='OpAskForm.sectionTitle.addImage'
                     defaultMessage='Add an image'
                     description='Title for photo upload section'
                   />
@@ -524,7 +524,7 @@ class OpDetailForm extends Component {
               </TitleContainer>
               <p>
                 <FormattedMessage
-                  id='OpDetailForm.sectionPrompt.addImage'
+                  id='OpAskForm.sectionPrompt.addImage'
                   defaultMessage='Requests with photos get more responses. Upload or link to a picture that represents this activity.'
                   description='Prompt for photo upload section'
                 />
@@ -556,7 +556,7 @@ class OpDetailForm extends Component {
               <TitleContainer>
                 <h3>
                   <FormattedMessage
-                    id='OpDetailForm.sectiontitle.ConfirmRequest'
+                    id='OpAskForm.sectiontitle.ConfirmRequest'
                     defaultMessage='Confirm request'
                     description='Section title for the save and publish buttons'
                   />
@@ -616,7 +616,7 @@ class OpDetailForm extends Component {
   }
 }
 
-OpDetailForm.propTypes = {
+OpAskForm.propTypes = {
   op: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
@@ -699,4 +699,4 @@ export default Form.create({
     }
   }
 
-})(OpDetailForm)
+})(OpAskForm)
