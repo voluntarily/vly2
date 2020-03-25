@@ -102,7 +102,7 @@ class RegisterMemberSection extends Component {
     let member = null
 
     if (this.props.members.data.length > 0) {
-      const matches = this.props.members.data.filter(m => m.person._id === this.props.meid)
+      const matches = this.props.members.data.filter(m => m.person && m.person._id === this.props.meid)
       member = matches.length && matches[0]
     }
     if (!member) {
