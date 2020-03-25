@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { PersonalGoalStatus } from '../../server/api/personalGoal/personalGoal.constants'
 import reduxApi, { withPersonalGoals } from '../../lib/redux/reduxApi'
-import { useState } from 'react'
-import Markdown from 'markdown-to-jsx'
+
 import { FormattedMessage } from 'react-intl'
 import Link from 'next/link'
 
@@ -55,13 +54,6 @@ const CardSubtitle = styled.p`
   letter-spacing: -0.3px;
   margin: 0 1rem 1rem 1rem;
 ` // GoalCardSubtitle
-
-const CardDescription = styled.div`
-  font-size: 14px;
-  color: #000000;
-  letter-spacing: -0.3px;
-  margin: 1rem 1rem 1rem 1rem;
-` // CardDescription
 
 const StyledIconRight = styled(Icon)`
   font-size: 1rem;
@@ -115,8 +107,6 @@ export const GoalStartButton = ({ status, href, onClick }) => {
 }
 
 const GoalCard = ({ goal, dispatch }) => {
-  const [front, setExpand] = useState(true)
-
   // if pg is set then show the personalGoal adornments, otherwise show the
   // plain goal.
   const pg = goal.personalGoal
@@ -134,9 +124,6 @@ const GoalCard = ({ goal, dispatch }) => {
     message.success('Goal hidden for 7 days')
   }
 
-  const handleClickCard = e => {
-    setExpand(!front)
-  }
   const handleStart = async (e) => {
     e.stopPropagation()
     pg.status = PersonalGoalStatus.ACTIVE
@@ -151,26 +138,22 @@ const GoalCard = ({ goal, dispatch }) => {
   // only show queued and active goals
   if (pg && ![PersonalGoalStatus.QUEUED, PersonalGoalStatus.ACTIVE, PersonalGoalStatus.COMPLETED].includes(pg.status)) { return '' }
   return (
-    <a href={goal.startLink}>
-      <CardContainer className='open' onClick={handleClickCard}>
-        {front ? (
-          <>
-            <CardImage src={goal.imgUrl} />
-            <CardTitle>{goal.name}</CardTitle>
-            {pg &&
-              <>
-                <GoalStatusIcon status={goal.status} />
-                <StyledIconRight type='close-circle' onClick={handleClose} />
-              </>}
-            <CardSubtitle>{goal.subtitle}</CardSubtitle>
-          </>)
-          : (
-            <CardDescription>
-              <Markdown children={goal.description} />
-              <GoalStartButton status={goal.status} href={goal.startLink} onClick={handleStart} />
-            </CardDescription>)}
-      </CardContainer>
-    </a>
+    <CardContainer>
+      {pg &&
+        <StyledIconRight type='close-circle' onClick={handleClose} />}
+      <a href={goal.startLink} onClick={handleStart}>
+        <>
+          <CardImage src={goal.imgUrl} />
+          <CardTitle>{goal.name}</CardTitle>
+          {pg &&
+            <>
+              <GoalStatusIcon status={goal.status} />
+            </>}
+          <CardSubtitle>{goal.subtitle}</CardSubtitle>
+        </>
+      </a>
+    </CardContainer>
+
   )
 }
 
