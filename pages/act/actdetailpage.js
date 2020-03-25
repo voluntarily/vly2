@@ -131,7 +131,7 @@ export const ActDetailPage = ({
     return (
       <FullPage>
         <Helmet>
-          <title>Edit {isNew ? 'Activity':act.name} - Voluntarily</title>
+          <title>Edit {isNew ? 'Activity' : act.name} - Voluntarily</title>
         </Helmet>
         <ActDetailForm
           act={act}
