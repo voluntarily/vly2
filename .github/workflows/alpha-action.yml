@@ -46,7 +46,6 @@ jobs:
   test:
     name: NPM and System Test
     runs-on: self-hosted
-    needs: [lang, lint]
     steps:
     - name: Check out
       uses: actions/checkout@v2      
