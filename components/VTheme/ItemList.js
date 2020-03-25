@@ -60,7 +60,7 @@ object-position: center;
 
 export const ItemDuration = ({ duration }) =>
   <ItemListing>
-  ⏱&nbsp;
+  ⏱
     <strong>
       <FormattedMessage
         id='itemlist.duration'
@@ -73,7 +73,7 @@ export const ItemDuration = ({ duration }) =>
 
 export const ItemStatus = ({ status }) =>
   <ItemListing>
-    📝&nbsp;
+    📝
     <strong>
       <FormattedMessage
         id='itemlist.status'
@@ -115,7 +115,7 @@ export const ItemIdLine = ({ item, path }) =>
 
 export const ItemDate = ({ startDate, endDate }) =>
   <ItemListing>
-    🗓&nbsp;
+    🗓
     <strong>
       <FormattedMessage
         id='itemlist.date'
@@ -130,7 +130,7 @@ export const ItemLocation = ({ location }) =>
   location
     ? (
       <ItemListing>
-   📍&nbsp;
+   📍
         <strong>
           <FormattedMessage
             id='itemlist.location'
@@ -145,7 +145,7 @@ export const ItemLocation = ({ location }) =>
 
 export const ItemVenue = ({ venue }) =>
   <ItemListing>
-    🏫&nbsp;
+    🏫
     <strong>
       <FormattedMessage
         id='itemlist.venue'
@@ -156,36 +156,55 @@ export const ItemVenue = ({ venue }) =>
     <StreetAddressLinkLi address={sanitize(venue) || ''} />
   </ItemListing>
 
-export const ItemVolunteers = ({ volunteers }) => {
+export const ItemVolunteers = ({ volunteers, equipment }) => {
   if (!volunteers) return ''
-
   if (volunteers >= 1) {
     return (
       <ItemListing>
-        🙋&nbsp;
         <strong>
           <FormattedMessage
-            id='act.detail.volunteersrequired'
-            defaultMessage='Volunteers:'
+            id='ItemList.required'
+            defaultMessage='🤔Activity needs:'
             description='label for number of volunteers required'
+            values={{
+              volunteers
+            }}
           />
         </strong>
-        &nbsp;&nbsp;&nbsp;{volunteers}
+        <FormattedMessage
+          id='ItemList.volunteers'
+          defaultMessage=' {volunteers, number} {volunteers, plural, one {volunteer} other {volunteers}}'
+          description='label for number of volunteers required'
+          values={{
+            volunteers
+          }}
+        />
+        {equipment && equipment.length &&
+          <FormattedMessage
+            id='ItemList.items'
+            defaultMessage=', {count, number} {count, plural, one {item} other {items} }'
+            description='label for number of volunteers required'
+            values={{ count: equipment.length }}
+          />}
       </ItemListing>
     )
   }
 
   return (
     <ItemListing>
-        🙋&nbsp;
       <strong>
         <FormattedMessage
-          id='act.detail.volunteerratio'
-          defaultMessage='Volunteers per student:'
+          id='ItemList.volunteerratio'
+          defaultMessage='🙋One volunteer for each '
           description='label for number of volunteers required per student'
         />
       </strong>
       {Math.round(1 / volunteers)}
+      <FormattedMessage
+        id='ItemList.people'
+        defaultMessage='people '
+        description='label for number of volunteers required per student'
+      />
     </ItemListing>
   )
 }
@@ -194,10 +213,10 @@ export const ItemSpace = ({ space }) =>
   space
     ? (
       <ItemListing>
-        🐘&nbsp;
+        🐘
         <strong>
           <FormattedMessage
-            id='act.detail.space'
+            id='ItemList.space'
             defaultMessage='Space:'
             description='label for space requirement'
           />
