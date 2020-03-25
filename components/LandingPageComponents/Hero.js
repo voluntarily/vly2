@@ -16,7 +16,7 @@ const AwesomeHeroContainer = styled.div`
   
 
   @media screen and (min-width: 768px) {
-    margin-top: 8rem;
+    margin-top: 2rem;
     p {
     font-size: 1rem;
   }
