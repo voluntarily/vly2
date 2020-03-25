@@ -1,17 +1,19 @@
-import { Button, message } from 'antd'
-import Router from 'next/router'
+import { message } from 'antd'
+import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
-import { useState, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import { Helmet } from 'react-helmet'
-import { FormattedMessage } from 'react-intl'
-import ActDetail from '../../components/Act/ActDetail'
+import ActBanner from '../../components/Act/ActBanner'
+import ActTabs from '../../components/Act/ActTabs'
+import ActUnknown from '../../components/Act/ActUnknown'
 import ActDetailForm from '../../components/Act/ActDetailForm'
 import Loading from '../../components/Loading'
-import { FullPage, Spacer } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
+import { FullPage, PageBannerButtons } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
 import reduxApi, { withActs, withMembers } from '../../lib/redux/reduxApi.js'
-import { Role } from '../../server/services/authorize/role'
 import { MemberStatus } from '../../server/api/member/member.constants'
+import OpAdd from '../../components/Op/OpAdd'
+import { Role } from '../../server/services/authorize/role.js'
 
 const blankAct = {
   name: '',
@@ -24,192 +26,165 @@ const blankAct = {
   tags: []
 }
 
-export const ActDetailPage = (props) => {
-  const [editing, setEditing] = useState(false)
-  useEffect(() => {
-    if (props.isNew) {
-      setEditing(true)
-    }
-  }, [props])
+export const ActDetailPage = ({
+  members,
+  me,
+  opportunities,
+  isNew,
+  dispatch,
+  activities,
+  tags
+}) => {
+  const router = useRouter()
+  const [tab, setTab] = useState(isNew ? 'edit' : router.query.tab)
 
-  const handleCancelEdit = () => {
-    setEditing(false)
-    if (props.isNew) { // return to previous
-      Router.back()
-    }
+  const updateTab = (key, top) => {
+    setTab(key)
+    if (top) window.scrollTo(0, 0)
+    //  else { window.scrollTo(0, 400) }
+    const newpath = `/acts/${act._id}?tab=${key}`
+    router.replace(router.pathname, newpath, { shallow: true })
+  }
+  const handleTabChange = (key, e) => {
+    updateTab(key, key === 'edit')
+  }
+  const handleCancel = useCallback(
+    () => {
+      updateTab('about', true)
+      if (isNew) { // return to previous
+        router.back()
+      }
+    },
+    [isNew]
+  )
+
+  const handleSubmit = useCallback(
+    async act => {
+      if (!act) return
+      // Actual data request
+      let res = {}
+      if (act._id) {
+        res = await dispatch(
+          reduxApi.actions.activities.put(
+            { id: act._id },
+            { body: JSON.stringify(act) }
+          )
+        )
+      } else {
+        res = await dispatch(
+          reduxApi.actions.activities.post(
+            {},
+            { body: JSON.stringify(act) })
+        )
+        act = res[0]
+        router.replace(`/acts/${act._id}`)
+      }
+      updateTab('about', true)
+      message.success('Saved.')
+    }, [])
+
+  // bail early if no data
+  if (!activities.sync && !isNew) {
+    return <Loading label='activity' entity={opportunities} />
+  }
+  const acts = activities.data
+  if (acts.length === 0 && !isNew) {
+    return <ActUnknown />
   }
 
-  const setEditingOfPage = (editing) => {
-    setEditing(editing)
-    window.scrollTo({
-      top: 0
+  // setup the activity data
+  let act
+  if (isNew) {
+    // new op
+    act = blankAct
+    act.owner = me
+  } else { // existing act
+    act = activities.data[0]
+  }
+  // Who can edit?
+  const isAdmin = me && me.role.includes(Role.ADMIN)
+  const isOwner =
+      isNew ||
+      (me && act.onwer && me._id === act.owner._id)
+
+  let isOrgAdmin = false
+
+  // add org membership to me so it can be used for offerOrg
+  if (me && members.sync && members.data.length > 0) {
+    me.orgMembership = members.data.filter(m =>
+      [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)
+    )
+    if (!act.offerOrg && me.orgMembership.length > 0) {
+      act.offerOrg = { _id: me.orgMembership[0].organisation._id }
+    }
+  }
+  if (act.offerOrg) {
+    isOrgAdmin = me.orgMembership.find(m => {
+      return (m.status === MemberStatus.ORGADMIN &&
+      m.organisation._id === act.offerOrg._id).length > 0
     })
   }
 
-  // // Called when the user confirms they want to delete an act
-  // const handleDelete = async act => {
-  //   if (!act) return
-  //   // Actual data request
-  //   await props.dispatch(reduxApi.actions.activities.delete({ id: act._id }))
-  //   // TODO error handling - how can this fail?
-  //   message.success('Deleted. ')
-  //   Router.replace('/acts')
-  // }
-  // const handleDeleteCancel = () => { message.error('Delete Cancelled') }
+  const canManage = isOwner || isAdmin || isOrgAdmin
 
-  const handleSubmit = async act => {
-    if (!act) return
-    // Actual data request
-    let res = {}
-    if (act._id) {
-      props.dispatch(reduxApi.actions.activities.put({ id: act._id }, { body: JSON.stringify(act) }))
-    } else {
-      res = await props.dispatch(reduxApi.actions.activities.post({}, { body: JSON.stringify(act) }))
-      act = res[0]
-      Router.replace(`/acts/${act._id}`)
-    }
-    setEditing(false)
-    message.success('Saved.')
+  if (tab === 'edit') {
+    return (
+      <FullPage>
+        <Helmet>
+          <title>Edit {isNew ? 'Activity' : act.name} - Voluntarily</title>
+        </Helmet>
+        <ActDetailForm
+          act={act}
+          me={me}
+          onSubmit={handleSubmit}
+          onCancel={handleCancel}
+          existingTags={tags.data}
+        />
+      </FullPage>)
   }
-
-  const handleEditClicked = () => { setEditing(!editing) }
-
-  const me = props.me
-  const isOrgAdmin = false // TODO: is this person an admin for the org that person belongs to.
-  const isAdmin = (me && me.role.includes(Role.ADMIN))
-  // const isOP = (me && me.role.includes(Role.OPPORTUNITY_PROVIDER))
-
-  // get membership list for owner
-  if (me &&
-      props.members.sync &&
-      props.members.data.length > 0 &&
-      props.members) {
-    me.orgMembership = props.members.data.filter(
-      m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status) &&
-        m.organisation.category.includes('ap')
-    )
-  }
-
-  let isOwner = false
-  let content
-  let act
-  let owner
-  if (props.isNew) {
-    act = blankAct
-    owner = me
-    isOwner = true
-    // set init offerOrg to first membership result
-    if (me.orgMembership && me.orgMembership.length > 0) {
-      act.offerOrg = {
-        _id: me.orgMembership[0].organisation._id
-      }
-      act.tags = me.orgMembership[0].organisation.groups
-    }
-  } else if (!props.activities.sync) {
-    content = <Loading label='activity' entity={props.activities} />
-  } else {
-    const acts = props.activities.data
-    if (acts.length === 1) {
-      act = acts[0]
-      owner = act.owner
-      isOwner = ((me || {})._id === (owner || {})._id)
-    } else { // array must be empty
-      content = <h2><FormattedMessage id='ActDetailPage.notavailable' defaultMessage='Sorry, this activity is not available' description='message on activity not found page' /></h2>
-    }
-  }
-
-  // display permissions
-  const canEdit = (isOwner || isOrgAdmin || isAdmin)
-  const existingTags = props.tags.data
-
-  // // button to make an opportunity from an activity
-  // const createOpportunitySection = () => {
-  //   return (
-  //     // if not signed in then the interested button signs in first
-  //     isOP &&
-  //       <Button style={{ float: 'right' }} type='primary' shape='round' href={`/op/new?act=${act._id}`}>
-  //         <FormattedMessage
-  //           id='act.createOpportunityBtn'
-  //           defaultMessage='Create new request from this Activity'
-  //           description='Button to create an opportunity from an activity'
-  //         />
-  //       </Button>
-  //   )
-  // }
-
-  if (!content) {
-    if ((act && editing) || props.isNew) {
-      content =
-        <>
-          <Helmet>
-            <title>
-              Voluntarily - Edit Activity
-            </title>
-          </Helmet>
-          <ActDetailForm
-            act={act}
-            me={me}
-            onSubmit={() => handleSubmit(act)}
-            onCancel={handleCancelEdit}
-            existingTags={existingTags}
-          />
-        </>
-    } else {
-      content =
-        <>
-          <Helmet>
-            <title>
-              {act ? `Voluntarily - ${act.name}` : 'Voluntarily'}
-            </title>
-          </Helmet>
-          <ActDetail
-            act={act}
-            onEditClicked={handleEditClicked}
-            canEdit={canEdit}
-            me={props.me}
-            {...props}
-          />
-          {canEdit &&
-            <Button
-              id='editActBtn' style={{ float: 'right' }}
-              type='primary' shape='round'
-              onClick={() => setEditingOfPage(true)}
-            >
-              <FormattedMessage id='act.edit' defaultMessage='Edit' description='Button to edit an activity' />
-            </Button>}
-          <Spacer />
-        </>
-    }
-  }
-
   return (
     <FullPage>
-      {content}
-    </FullPage>
-  )
+      <Helmet>
+        <title>{act.name} - Voluntarily</title>
+      </Helmet>
+      <ActBanner act={act}>
+        <PageBannerButtons>
+          <OpAdd actid={act._id} />
+        </PageBannerButtons>
+      </ActBanner>
+      <ActTabs act={act} canManage={canManage} canEdit={canManage} defaultTab={tab} onChange={handleTabChange} owner={me._id} />
+    </FullPage>)
 }
 
 ActDetailPage.getInitialProps = async ({ store, query }) => {
   const me = store.getState().session.me
   const isNew = query && query.new && query.new === 'new'
   const actExists = !!(query && query.id) // !! converts to a boolean value
-  await Promise.all([
-    store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })),
-    store.dispatch(reduxApi.actions.tags.get())
-  ])
+
   if (isNew) {
+    await Promise.all([
+      store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })),
+      store.dispatch(reduxApi.actions.tags.get())
+    ])
     return {
-      isNew,
-      actid: null
+      isNew
     }
   } else {
     if (actExists) {
-      await store.dispatch(reduxApi.actions.activities.get(query))
+      await Promise.all([
+        store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })),
+        store.dispatch(reduxApi.actions.tags.get()),
+        store.dispatch(reduxApi.actions.activities.get(query)),
+        store.dispatch(
+          reduxApi.actions.opportunities.get(
+            { q: JSON.stringify({ fromActivity: query.id }) }
+          )
+        )
+      ])
     }
     return {
       isNew,
-      actExists,
-      actid: query.id
+      actExists
     }
   }
 }
@@ -228,4 +203,4 @@ ActDetailPage.propTypes = {
   })
 }
 export const ActDetailPageWithActs = withMembers(withActs(ActDetailPage))
-export default securePage(withMembers(withActs(ActDetailPage)))
+export default publicPage(withMembers(withActs(ActDetailPage)))

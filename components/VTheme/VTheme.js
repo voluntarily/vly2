@@ -69,6 +69,8 @@ export const PageBannerNoTabs = styled.div`
 export const PageBannerButtons = styled.div`
 
  width: 100%;
+ margin-top: 1rem;
+
   @media screen and (max-width: 767px) {
     
     margin-top: 1rem;
@@ -689,7 +691,7 @@ time {
 
 /* Fix for Op heading alignment */
 
-export const OpBannerDetail = styled.div`
+export const BannerDetail = styled.div`
 display: grid;
 align-self: center;
 
