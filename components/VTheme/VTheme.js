@@ -41,6 +41,16 @@ h1 {
     grid-gap: 0rem;
   }
 `
+export const AlertContainer = styled.div`
+margin-top: 4rem;
+width: 100%;
+background-color: #ffcc00;
+min-height: 2rem;
+padding: 1rem;
+font-size: 1.5rem;
+font-weight: 700;
+color: black;
+`
 
 export const PageBannerNoTabs = styled.div`
   margin: 8rem 0 2rem 0;
