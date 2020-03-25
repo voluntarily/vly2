@@ -13,6 +13,7 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 import OpBanner from '../../components/Op/OpBanner'
 import OpUnknown from '../../components/Op/OpUnknown'
 import OpAskForm from '../../components/Op/OpAskForm'
+import OpOfferForm from '../../components/Op/OpOfferForm'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import { Helmet } from 'react-helmet'
 // import { OpStatusStamp } from '../../components/Op/OpStatus'
@@ -31,6 +32,14 @@ const blankOp = {
   startDate: null,
   endDate: null,
   tags: []
+}
+
+const OpDetailForm = type => {
+  switch (type) {
+    case OpportunityType.ASK: return OpAskForm
+    case OpportunityType.OFFER: return OpOfferForm
+    default: return <p>Error: Opportunity type not Set</p>
+  }
 }
 
 export const OpDetailPage = ({
@@ -158,12 +167,13 @@ export const OpDetailPage = ({
   const canRegisterInterest = isAuthenticated && !isOwner
 
   if (tab === 'edit') {
+    const OpForm = OpDetailForm(op.type)
     return (
       <FullPage>
         <Helmet>
-          <title>Edit {op.name} - Voluntarily</title>
+          <title>Edit {op.type} {op.name} - Voluntarily</title>
         </Helmet>
-        <OpAskForm
+        <OpForm
           op={op}
           me={me}
           onSubmit={handleSubmit}
@@ -176,7 +186,7 @@ export const OpDetailPage = ({
   return (
     <FullPage>
       <Helmet>
-        <title>{op.name} - Voluntarily</title>
+        <title>{op.type} {op.name} - Voluntarily</title>
       </Helmet>
       <OpBanner op={op}>
         {/* <OpStatusStamp status={op.status} /> */}
