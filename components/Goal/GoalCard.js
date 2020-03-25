@@ -151,24 +151,26 @@ const GoalCard = ({ goal, dispatch }) => {
   // only show queued and active goals
   if (pg && ![PersonalGoalStatus.QUEUED, PersonalGoalStatus.ACTIVE, PersonalGoalStatus.COMPLETED].includes(pg.status)) { return '' }
   return (
-    <CardContainer className='open' onClick={handleClickCard}>
-      {front ? (
-        <>
-          <CardImage src={goal.imgUrl} />
-          <CardTitle>{goal.name}</CardTitle>
-          {pg &&
-            <>
-              <GoalStatusIcon status={goal.status} />
-              <StyledIconRight type='close-circle' onClick={handleClose} />
-            </>}
-          <CardSubtitle>{goal.subtitle}</CardSubtitle>
-        </>)
-        : (
-          <CardDescription>
-            <Markdown children={goal.description} />
-            <GoalStartButton status={goal.status} href={goal.startLink} onClick={handleStart} />
-          </CardDescription>)}
-    </CardContainer>
+    <a href={goal.startLink}>
+      <CardContainer className='open' onClick={handleClickCard}>
+        {front ? (
+          <>
+            <CardImage src={goal.imgUrl} />
+            <CardTitle>{goal.name}</CardTitle>
+            {pg &&
+              <>
+                <GoalStatusIcon status={goal.status} />
+                <StyledIconRight type='close-circle' onClick={handleClose} />
+              </>}
+            <CardSubtitle>{goal.subtitle}</CardSubtitle>
+          </>)
+          : (
+            <CardDescription>
+              <Markdown children={goal.description} />
+              <GoalStartButton status={goal.status} href={goal.startLink} onClick={handleStart} />
+            </CardDescription>)}
+      </CardContainer>
+    </a>
   )
 }
 
