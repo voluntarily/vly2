@@ -17,6 +17,7 @@ import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestS
 import { Helmet } from 'react-helmet'
 // import { OpStatusStamp } from '../../components/Op/OpStatus'
 import { OpportunityStatus, OpportunityType } from '../../server/api/opportunity/opportunity.constants'
+import { Role } from '../../server/services/authorize/role.js'
 
 const blankOp = {
   name: '',
@@ -123,16 +124,6 @@ export const OpDetailPage = ({
       }
     }
     op.requestor = me
-
-    // set init offerOrg to first membership result
-    if (
-      me.orgMembership &&
-     me.orgMembership.length > 0
-    ) {
-      op.offerOrg = {
-        _id: me.orgMembership[0].organisation._id
-      }
-    }
   } else { // existing op
     op = {
       ...opportunities.data[0],
@@ -141,7 +132,7 @@ export const OpDetailPage = ({
     }
   }
   // Who can edit?
-  const isAdmin = me && me.role.includes(OpportunityStatus.ADMIN)
+  const isAdmin = me && me.role.includes(Role.ADMIN)
   const isOwner =
       isNew ||
       (me && op.requestor && me._id === op.requestor._id)
@@ -153,6 +144,9 @@ export const OpDetailPage = ({
     me.orgMembership = members.data.filter(m =>
       [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)
     )
+    if (!op.offerOrg && me.orgMembership.length > 0) {
+      op.offerOrg = { _id: me.orgMembership[0].organisation._id }
+    }
     if (op.offerOrg) {
       isOrgAdmin = me.orgMembership.find(m => {
         return (m.status === MemberStatus.ORGADMIN &&

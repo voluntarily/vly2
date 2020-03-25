@@ -218,8 +218,8 @@ test('render Dalis PersonDetailPage as admin ', async t => {
   t.true(wrapper.exists('PersonDetail'))
   t.is(wrapper.find('PersonDetail').first().props().person, dali)
 
-  // as I am no one there should be two buttons
-  t.is(wrapper.find('Button').length, 2)
+  // as I am no one there should be one button
+  t.is(wrapper.find('Button').length, 1)
   t.true(wrapper.exists('IssueBadge'))
   t.true(wrapper.exists('#deletePersonBtn'))
   await wrapper.find('#deletePersonConfirm').first().props().onCancel()
@@ -250,26 +250,30 @@ test('render Dalis PersonDetailPage as self dali', async t => {
 
   t.true(wrapper.exists('PersonDetail'))
   t.is(wrapper.find('PersonDetail').first().props().person, dali)
-
+  let personDetail = wrapper.find('PersonDetail').first().dive()
   // as I am me there should be only an edit button
-  t.is(wrapper.find('Button').length, 1)
-  t.true(wrapper.exists('#editPersonBtn'))
+  // console.log(personDetail.debug())
+  t.is(personDetail.find('Button').length, 1)
+  t.true(personDetail.exists('#editPersonBtn'))
 
   // click the edit button
-  const editPerson = wrapper.find('Button#editPersonBtn')
+  const editPerson = personDetail.find('Button#editPersonBtn')
   editPerson.props().onClick()
   // we should now be in edit mode
   t.true(wrapper.exists('Connect(Form(PersonDetail))'))
   // cancel the edit
   wrapper.find('Connect(Form(PersonDetail))').first().props().onCancel()
-  t.is(wrapper.find('Button').length, 1)
+  personDetail = wrapper.find('PersonDetail').first().dive()
+
+  t.is(personDetail.find('Button').length, 1)
 
   // edit again
   editPerson.props().onClick()
   t.true(wrapper.exists('Connect(Form(PersonDetail))'))
   // save the edit
   await wrapper.find('Connect(Form(PersonDetail))').first().props().onSubmit(dali)
-  t.true(wrapper.exists('#editPersonBtn'))
+  personDetail = wrapper.find('PersonDetail').first().dive()
+  t.true(personDetail.exists('#editPersonBtn'))
   t.is(props.dispatch.callCount, 1)
 })
 

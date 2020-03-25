@@ -41,6 +41,17 @@ h1 {
     grid-gap: 0rem;
   }
 `
+export const AlertContainer = styled.div`
+margin-top: 4rem;
+width: 100%;
+background-color: #ffcc00;
+height: auto;
+min-height: 2rem;
+padding: 1rem;
+font-size: 1.5rem;
+font-weight: 700;
+color: black;
+`
 
 export const PageBannerNoTabs = styled.div`
   margin: 8rem 0 2rem 0;
@@ -58,6 +69,8 @@ export const PageBannerNoTabs = styled.div`
 export const PageBannerButtons = styled.div`
 
  width: 100%;
+ margin-top: 1rem;
+
   @media screen and (max-width: 767px) {
     
     margin-top: 1rem;
@@ -678,7 +691,7 @@ time {
 
 /* Fix for Op heading alignment */
 
-export const OpBannerDetail = styled.div`
+export const BannerDetail = styled.div`
 display: grid;
 align-self: center;
 
