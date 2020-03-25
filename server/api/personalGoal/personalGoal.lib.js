@@ -66,12 +66,14 @@ const evaluatePersonalGoals = async (person) => {
       case PersonalGoalStatus.ACTIVE: // goal has been started but not finished - in progress
         try {
           /* eslint-disable no-eval */
-          const ev = eval(pg.goal.evaluation)
-          const isCompleted = await ev(pg)
-          if (isCompleted) {
-            pg.dateCompleted = Date.now()
-            pg.status = PersonalGoalStatus.COMPLETED
-            return Promise.resolve(pg.save())
+          if (pg.goal.evaluation) {
+            const ev = eval(pg.goal.evaluation)
+            const isCompleted = await ev(pg)
+            if (isCompleted) {
+              pg.dateCompleted = Date.now()
+              pg.status = PersonalGoalStatus.COMPLETED
+              return Promise.resolve(pg.save())
+            }
           }
         } catch (e) {
           console.error('PersonalGoal eval failed:', e)
