@@ -8,7 +8,7 @@ import ActiveOpsSection from '../Op/ActiveOpsSection'
 import InterestedOpsSection from '../Op/InterestedOpsSection'
 import ArchivedOpsSection from '../Op/ArchivedOpsSection'
 import ArchivedInterestedOpsSection from '../Op/ArchivedInterestedOpsSection'
-import RecommendedOpsSection from '../Op/RecommendedOpsSection'
+// import RecommendedOpsSection from '../Op/RecommendedOpsSection'
 import EditablePersonPanel from '../../components/Person/EditablePersonPanel'
 
 import VTabs from '../VTheme/VTabs'
@@ -44,24 +44,24 @@ const homeProfileTab = (
     />
   </span>
 )
-const homeDiscoverTab = (
-  <span>
-    <Icon type='file-search' />
-    <FormattedMessage
-      id='home.tab.discover'
-      defaultMessage='Discover'
-      description='tab to find new ops and recommendations'
-    />
-  </span>
-)
+// const homeDiscoverTab = (
+//   <span>
+//     <Icon type='file-search' />
+//     <FormattedMessage
+//       id='home.tab.discover'
+//       defaultMessage='Discover'
+//       description='tab to find new ops and recommendations'
+//     />
+//   </span>
+// )
 
 export const HomeTabs = ({ person, onChange, defaultTab }) =>
   <VTabs defaultActiveKey={defaultTab} onChange={onChange}>
-    <TabPane tab={homeDiscoverTab} key='discover' style={{ overflow: 'visible' }}>
+    {/* <TabPane tab={homeDiscoverTab} key='discover' style={{ overflow: 'visible' }}>
       <ProfilePanel>
         <RecommendedOpsSection />
       </ProfilePanel>
-    </TabPane>
+    </TabPane> */}
     <TabPane tab={homeActiveTab} key='active' style={{ overflow: 'visible' }}>
       <ProfilePanel>
         <PersonalGoalSection />

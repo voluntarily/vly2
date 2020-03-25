@@ -147,7 +147,9 @@ const OfferSection = () => (
         </OfferCard>
       </a>
     </OfferContainer>
+
   </div>
+
 )
 
 export default OfferSection
