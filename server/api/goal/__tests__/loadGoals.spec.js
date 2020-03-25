@@ -21,5 +21,5 @@ test('Should correctly give count of all goals sorted by rank', async t => {
   t.is(count, goals.length)
   await loadGoals()
   count = await Goal.countDocuments()
-  t.is(count, 13) // union of the two sources
+  t.is(count, 14) // union of the two sources
 })
