@@ -147,7 +147,7 @@ export const OpDetailPage = ({
     if (!op.offerOrg && me.orgMembership.length > 0) {
       op.offerOrg = { _id: me.orgMembership[0].organisation._id }
     }
-    if (op.offerOrg) {
+    if (op.offerOrg && me.orgMembership) {
       isOrgAdmin = me.orgMembership.find(m => {
         return (m.status === MemberStatus.ORGADMIN &&
         m.organisation._id === op.offerOrg._id).length > 0

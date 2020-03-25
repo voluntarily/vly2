@@ -59,7 +59,7 @@ class MemberSection extends Component {
     if (!org.info) { org.info = {} }
     // check if I am in the members list
     // TODO: [VP-440] members ability I am orgadmin then I get all members list, else I get just my own membership status
-    let myMembership = this.props.members.data.find(m => m.person._id === meid)
+    let myMembership = this.props.members.data.find(m => m.person && m.person._id === meid)
     if (!myMembership) {
       myMembership = {
         status: MemberStatus.NONE

@@ -13,7 +13,6 @@ const { ASK, OFFER } = OpportunityType
 // todo if image is not present then use a fallback.
 const ActCard = ({ act, onPress, ...props }) => {
   const cardImage = act.imgUrl ? act.imgUrl : '/static/missingimage.svg'
-  console.log('act.opCounts', act.opCounts)
   return (
     <Card>
       <Link href={`/acts/${act._id}`}>

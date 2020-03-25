@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Router from 'next/router'
 
 export function AvatarProfile ({ person }) {
+  if (!person) return null
   return (
     <Link href={`/people/${person._id}`}>
       <a>
