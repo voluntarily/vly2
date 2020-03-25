@@ -12,7 +12,7 @@ By viewing and using this site (Website), you agree to these terms of use (Terms
 
 1.2 If you do not agree to these Terms, you are not authorised to access and use the Website, and you must immediately stop doing so.
 
-1.3 Our privacy policy at [insert URL] (Privacy Policy) also applies to your use of the Website. If you do not agree to privacy practices disclosed in the Privacy Policy, please do not use the Website.
+1.3 Our privacy policy at voluntarily.nz/terms/privacy (Privacy Policy) also applies to your use of the Website. If you do not agree to privacy practices disclosed in the Privacy Policy, please do not use the Website.
 
 ### 2 CHANGES
 
