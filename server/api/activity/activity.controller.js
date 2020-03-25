@@ -61,7 +61,7 @@ const listActivities = async (req, res) => {
     }
 
     try {
-      let got = await Activity
+      let acts = await Activity
         .accessibleBy(req.ability, Action.LIST)
         .find(query)
         .select(select)
@@ -69,12 +69,12 @@ const listActivities = async (req, res) => {
         .lean()
 
       if (!noCounts) {
-        got = await Promise.all(got.map(async (act) => {
+        acts = await Promise.all(acts.map(async (act) => {
           const opCounts = await getOpsForActivity(act._id)
           return { ...act, opCounts }
         }))
       }
-      res.json(got)
+      res.json(acts)
     } catch (e) {
       res.status(404).send(e)
     }
@@ -83,19 +83,23 @@ const listActivities = async (req, res) => {
   }
 }
 const getActivity = async (req, res) => {
+  const noCounts = req.query.nocounts
+
   try {
-    const got = await Activity
+    const act = await Activity
       .accessibleBy(req.ability, Action.READ)
       .findOne(req.params)
       .populate('owner', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl category')
-      .exec()
+      .lean()
 
-    if (got === null) {
+    if (act === null) {
       return res.status(404).send()
     }
-
-    res.json(got)
+    if (!noCounts) {
+      act.opCounts = await getOpsForActivity(act._id)
+    }
+    res.json(act)
   } catch (e) {
     res.status(404).send(e)
   }
