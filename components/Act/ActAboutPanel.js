@@ -27,12 +27,12 @@ export function ActAboutPanel ({ act }) {
           </Html>
           <Divider />
           <TagContainer>
-            <h5><FormattedMessage id='actCategories' defaultMessage='Categories' /></h5>
+            <h5><FormattedMessage id='ActAboutPanel.categories' defaultMessage='Categories' /></h5>
             <TagDisplay tags={act.tags} />
           </TagContainer>
           <Divider />
           <section>
-            <h5><FormattedMessage id='actShare' defaultMessage='Share' /></h5>
+            <h5><FormattedMessage id='ActAboutPanel.share' defaultMessage='Share' /></h5>
             <ShareLinks url={appUrl} />
           </section>
 
