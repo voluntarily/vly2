@@ -26,7 +26,7 @@ jobs:
     - name: Full Tests          
       run: |
         npm ci
-        npx nyc --reporter=lcov --reporter=text ava
+        npm test
     - name: coverage
       uses: codecov/codecov-action@v1 
 
