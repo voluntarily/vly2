@@ -64,9 +64,6 @@ jobs:
       run: |
         npm ci
         npm run test-all -- --tap
-        
-    - name: Code coverage          
-      run: |       
         ./node_modules/codecov/bin/codecov --disable=gcov
         
     - name: System Test
