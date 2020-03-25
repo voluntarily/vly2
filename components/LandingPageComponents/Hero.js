@@ -1,9 +1,10 @@
-import { Button } from 'antd'
+import { Button, Icon } from 'antd'
 // import Router from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import Link from 'next/link'
+import { AlertContainer } from '../VTheme/VTheme'
 
 // const Search = Input.Search
 
@@ -203,25 +204,33 @@ line-height: 1.7;
 
 // begin actual component
 const Hero = ({ isAuthenticated }) => (
-  <AwesomeHeroContainer>
-    <HeroGrid>
+  <>
+    <a href='https://covid19.govt.nz/' rel='noopener noreferrer' target='_blank'>
+      <AlertContainer>
+        <Icon type='question-circle-o' />&nbsp;
+For official information and advice around COVID-19 visit  <a href='https://covid19.govt.nz/' rel='noopener noreferrer' target='_blank'>covid19.govt.nz</a>
+      </AlertContainer>
+    </a>
+    <AwesomeHeroContainer>
 
-      <HeroLeft>
+      <HeroGrid>
 
-        <AwesomeImage
-          src='/static/img/hero2.png'
-          alt={<FormattedMessage id='heroImgText' defaultMessage='Children Playing with Robots' description='Description for the hero image' />}
-        />
+        <HeroLeft>
 
-      </HeroLeft>
+          <AwesomeImage
+            src='/static/img/hero2.png'
+            alt={<FormattedMessage id='heroImgText' defaultMessage='Children Playing with Robots' description='Description for the hero image' />}
+          />
 
-      <HeroRight>
-        <HeroText>People helping people.
-          <p>
+        </HeroLeft>
+
+        <HeroRight>
+          <HeroText>People helping people.
+            <p>
           We connect people who can volunteer time, advice, or stuff to those who need it.
-          </p>
-        </HeroText>
-        {/* <SearchBox>
+            </p>
+          </HeroText>
+          {/* <SearchBox>
           <Search
             placeholder="Try 'remote learning'"
             prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -232,17 +241,18 @@ const Hero = ({ isAuthenticated }) => (
             aria-label='Search for volunteering opportunties here'
           />
         </SearchBox> */}
-        <div>
-          {!isAuthenticated &&
-            <> <Link href='/home'><Button type='primary' shape='round' size='large' style={{ marginTop: '1rem', marginRight: '0.5rem' }}> Sign up </Button></Link></>}
-          <Button type='secondary' shape='round' size='large' href='https://blog.voluntarily.nz' style={{ marginTop: '1rem' }}>
+          <div>
+            {!isAuthenticated &&
+              <> <Link href='/home'><Button type='primary' shape='round' size='large' style={{ marginTop: '1rem', marginRight: '0.5rem' }}> Sign up </Button></Link></>}
+            <Button type='secondary' shape='round' size='large' href='https://blog.voluntarily.nz' style={{ marginTop: '1rem' }}>
             Learn more
-          </Button>
-        </div>
-      </HeroRight>
+            </Button>
+          </div>
+        </HeroRight>
 
-    </HeroGrid>
-  </AwesomeHeroContainer>
+      </HeroGrid>
+    </AwesomeHeroContainer>
+  </>
 )
 // LAUNCH IT. WOOOSH!
 export default Hero

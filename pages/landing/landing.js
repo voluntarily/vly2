@@ -7,18 +7,23 @@ import OfferSection from '../../components/LandingPageComponents/OfferSection'
 import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 // import moment from 'moment'
-import { Divider } from 'antd'
+import { Divider, Icon } from 'antd'
 import GiveSupportSection from '../../components/LandingPageComponents/GiveSupportSection'
 import TakeSupportSection from '../../components/LandingPageComponents/TakeSupportSection'
+
+import styled from 'styled-components'
+
 export const Landing = props => (
   <>
 
     <Helmet>
       <title>Voluntarily</title>
     </Helmet>
+
     <Hero
       isAuthenticated={props.isAuthenticated}
     />
+
     <FullPage>
       <OfferSection />
       <Divider />
