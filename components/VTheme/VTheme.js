@@ -45,6 +45,7 @@ export const AlertContainer = styled.div`
 margin-top: 4rem;
 width: 100%;
 background-color: #ffcc00;
+height: auto;
 min-height: 2rem;
 padding: 1rem;
 font-size: 1.5rem;

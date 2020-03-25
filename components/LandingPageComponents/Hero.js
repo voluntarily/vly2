@@ -16,7 +16,7 @@ const AwesomeHeroContainer = styled.div`
   
 
   @media screen and (min-width: 768px) {
-    margin-top: 8rem;
+    margin-top: 2rem;
     p {
     font-size: 1rem;
   }
@@ -205,12 +205,14 @@ line-height: 1.7;
 // begin actual component
 const Hero = ({ isAuthenticated }) => (
   <>
-    <a href='https://covid19.govt.nz/' rel='noopener noreferrer' target='_blank'>
-      <AlertContainer>
-        <Icon type='question-circle-o' />&nbsp;
+    <div>
+      <a href='https://covid19.govt.nz/' rel='noopener noreferrer' target='_blank'>
+        <AlertContainer>
+          <Icon type='question-circle-o' />&nbsp;
 For official information and advice around COVID-19 visit  <a href='https://covid19.govt.nz/' rel='noopener noreferrer' target='_blank'>covid19.govt.nz</a>
-      </AlertContainer>
-    </a>
+        </AlertContainer>
+      </a>
+    </div>
     <AwesomeHeroContainer>
 
       <HeroGrid>
