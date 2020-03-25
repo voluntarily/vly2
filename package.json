@@ -5,8 +5,10 @@
   "main": "server/server.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test PORT=8080 node_modules/.bin/nyc node --no-deprecation node_modules/ava/cli.js",
-    "test-security": "npm run test --match='**ability.spec.js'",
-    "test-integration": "npm run test --match='!**ability.spec.js'",
+    "test-person": "npm run test -- --match='*personGoal*'",
+    "test-security": "npm run test -- --match='**ability.spec.js' --match='**permissions.spec.js'",
+    "test-integration": "npm run test -- --match='!**ability.spec.js' --match='!**permissions.spec.js' --match='server/**/*'" ,
+    "test-component": "npm run test -- --match='!**ability.spec.js' --match='!**permissions.spec.js' --match='!server/**/*'",
     "test-all": "cross-env NODE_ENV=test PORT=8080 node_modules/.bin/nyc --all node --no-deprecation node_modules/ava/cli.js",
     "watch:test": "npm run test -- --watch",
     "end-to-end-test": "run-p -r dev testcafe-tests",

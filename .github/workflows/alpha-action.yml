@@ -45,7 +45,7 @@ jobs:
     
   test:
     name: NPM and System Test
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [lang, lint]
     steps:
     - name: Check out
@@ -90,8 +90,8 @@ jobs:
         which ecs-cli        
     - name: build
       run: ./x/aws/buildimage
-    - name: deploy
-      run: ./x/aws/deploy-alpha
+#    - name: deploy
+#      run: ./x/aws/deploy-alpha
   
       env:
         AWS_ACCOUNT_ID: 585172581592
