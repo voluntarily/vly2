@@ -4,8 +4,9 @@
   "description": "Voluntari.ly Client based on Next.js",
   "main": "server/server.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test PORT=8080 node_modules/.bin/nyc node --no-deprecation node_modules/ava/cli.js",
-    "test-all": "cross-env NODE_ENV=test PORT=8080 node_modules/.bin/nyc --all node --no-deprecation node_modules/ava/cli.js",
+    "test": "npx nyc --reporter=lcov --reporter=text ava",
+    "test:component": "npx nyc --reporter=lcov --reporter=text ava",
+    "test:integration": "npx nyc --reporter=lcov --reporter=text ava",
     "watch:test": "npm run test -- --watch",
     "end-to-end-test": "run-p -r dev testcafe-tests",
     "testcafe-tests": "wait-on -t 60000 -w 2000 -l http://localhost:3122 && node node_modules/testcafe/bin/testcafe.js --skip-js-errors firefox:headless systemtest/landing.test.js",
