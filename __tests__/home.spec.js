@@ -263,9 +263,8 @@ test.after.always(() => {
 })
 const tabIndex = {
   active: 0,
-  discover: 1,
-  history: 2,
-  profile: 3
+  history: 1,
+  profile: 2
 }
 
 test.serial('run GetInitialProps', async t => {
@@ -313,26 +312,26 @@ test('render volunteer home page - Active tab', t => {
   t.true(cards2.first().find('h1').first().text().includes(t.context.ops[1].name))
 })
 
-test('render volunteer home page - Discover tab', t => {
-  const props = {
-    me: t.context.me
-  }
+// test('render volunteer home page - Discover tab', t => {
+//   const props = {
+//     me: t.context.me
+//   }
 
-  const wrapper = mountWithIntl(
-    <Provider store={t.context.mockStore}>
-      <PersonHomePage {...props} />
-    </Provider>)
-  wrapper.find('.ant-tabs-tab').at(tabIndex.discover).simulate('click')
-  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Upcoming')
-  const discoverPane = wrapper.find('.ant-tabs-tabpane-active').first()
+//   const wrapper = mountWithIntl(
+//     <Provider store={t.context.mockStore}>
+//       <PersonHomePage {...props} />
+//     </Provider>)
+//   wrapper.find('.ant-tabs-tab').at(tabIndex.discover).simulate('click')
+//   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Upcoming')
+//   const discoverPane = wrapper.find('.ant-tabs-tabpane-active').first()
 
-  const oplists = discoverPane.find('OpList') // find 2 oplists on the home page
-  t.is(oplists.length, 2)
+//   const oplists = discoverPane.find('OpList') // find 2 oplists on the home page
+//   t.is(oplists.length, 2)
 
-  const cards1 = oplists.at(0).find('OpCard')
-  t.is(cards1.length, 1)
-  t.true(cards1.first().find('h1').first().text().includes(t.context.ops[0].name)) // find the first opcard in the first oplist
-})
+//   const cards1 = oplists.at(0).find('OpCard')
+//   t.is(cards1.length, 1)
+//   t.true(cards1.first().find('h1').first().text().includes(t.context.ops[0].name)) // find the first opcard in the first oplist
+// })
 
 test.serial('render volunteer home page - History tab', t => {
   const props = {
