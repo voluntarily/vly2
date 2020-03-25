@@ -70,15 +70,20 @@ const HeroLeft = styled.div`
 
 
 
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
+  @media screen and (min-width: 769px) and (max-width: 1025px) {
     width: 22rem;
 
     height: auto;
   }
 
   @media screen and (max-width: 768px) {
+height: 22rem;
+width: 100vw;
+  }
+
+  @media screen and (max-width: 767px) {
     position: relative;
-    height: 20rem;
+    height: 12rem;
     width: 100vw;
     overflow: hidden;
   }
@@ -91,7 +96,7 @@ const AwesomeImage = styled.img`
   
 
   overflow: hidden;
-  object-fit: cover;
+  object-fit: contain;
   background-color: white;
 
   @media screen and (min-width: 1282px) and (max-width: 1921px) {
@@ -106,16 +111,21 @@ const AwesomeImage = styled.img`
   }
   @media screen and (min-width: 769px) and (max-width: 1025px) {
     width: calc(100% - 2rem);
-
     margin-left: 2rem;
-
+  }
+  @media screen and (max-width: 768px) {
+height: 22rem;
+width: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 
-  @media screen and (max-width: 768px) {
-    height: 20rem;
+  @media screen and (max-width: 767px) {
+    height: 16rem;
+
     width: 100%;
     object-fit: cover;
-    object-position: top;
+    object-position: center;
   }
 `
 // end left hand video side

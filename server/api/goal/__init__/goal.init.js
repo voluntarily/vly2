@@ -26,6 +26,21 @@ module.exports = [
       return (score / count * 100 > 85)
     }
   },
+  {
+    group: GoalGroup.VP_NEW,
+    name: 'Suggest a topic',
+    slug: 'activity-suggestion',
+    subtitle: 'Suggest a topic you want help with, or can offer to help with',
+    // badgeclass:
+    imgUrl: '/static/img/goal/goal-suggest-act.png',
+    description: 'Complete your profile by adding a picture, skills list, where you are, your job, things you are interested in and tell us about yourself. It is really important to fill in your location and your skills. This will mean it will be easier to match you once we are ready to go.',
+    preconditions: [],
+    startLink: 'https://blog.voluntarily.nz/topic',
+    language: 'en',
+    rank: 2,
+    evaluation: (personalGoal) => { return GoalTests.personBadged(personalGoal) }
+
+  },
   /*  {
     group: GoalGroup.VP_NEW,
     name: 'Basic Training for Voluntarily',
@@ -91,7 +106,7 @@ volunteer opportunities.
     preconditions: [],
     startLink: '/goal/school/ready',
     language: 'en',
-    rank: 2,
+    rank: 3,
     evaluation: (personalGoal) => { return GoalTests.personBadged(personalGoal) }
   },
   {
@@ -114,7 +129,7 @@ This goal will collect the required information and your permission to run the c
     preconditions: [],
     startLink: '/goal/school/safe',
     language: 'en',
-    rank: 3,
+    rank: 4,
     evaluation: (personalGoal) => { return GoalTests.personBadged(personalGoal) }
   },
 
