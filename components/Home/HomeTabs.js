@@ -8,7 +8,7 @@ import ActiveOpsSection from '../Op/ActiveOpsSection'
 import InterestedOpsSection from '../Op/InterestedOpsSection'
 import ArchivedOpsSection from '../Op/ArchivedOpsSection'
 import ArchivedInterestedOpsSection from '../Op/ArchivedInterestedOpsSection'
-import RecommendedOpsSection from '../Op/RecommendedOpsSection'
+// import RecommendedOpsSection from '../Op/RecommendedOpsSection'
 import EditablePersonPanel from '../../components/Person/EditablePersonPanel'
 
 import VTabs from '../VTheme/VTabs'
