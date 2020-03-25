@@ -140,7 +140,6 @@
   "itemlist.equipment": "Equipment needed:",
   "ItemList.items": ", {count, number} {count, plural, one {item} other {items} }",
   "itemlist.location": "Location:",
-  "ItemList.people": "people ",
   "ItemList.required": "🤔Activity needs:",
   "ItemList.space": "Space:",
   "itemlist.status": "Status:",
