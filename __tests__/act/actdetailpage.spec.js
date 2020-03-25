@@ -10,6 +10,7 @@ import people from '../../server/api/person/__tests__/person.fixture'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import tags from '../../server/api/tag/__tests__/tag.fixture'
 import { MemberStatus } from '../../server/api/member/member.constants'
+import * as nextRouter from 'next/router'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
@@ -86,6 +87,25 @@ test.before('Setup fixtures', (t) => {
   }
 })
 
+test.before('Setup Route', (t) => {
+  const router = () => {
+    return ({
+      pathname: '/test',
+      route: '/test',
+      query: { id: 12345 },
+      asPath: '/test/12345',
+      initialProps: {},
+      pageLoader: sinon.fake(),
+      App: sinon.fake(),
+      Component: sinon.fake(),
+      replace: sinon.fake(),
+      push: sinon.fake(),
+      back: sinon.fake()
+    })
+  }
+  sinon.replace(nextRouter, 'useRouter', router)
+})
+
 test('render ActDetailPage', async t => {
   const ps = await ActDetailPage.getInitialProps({ store: t.context.store, query: t.context.query })
   const props = {
@@ -98,7 +118,7 @@ test('render ActDetailPage', async t => {
   const router = outer.props().router
   router.push = sinon.spy()
   const wrapper = outer.dive()
-  t.is(wrapper.find('title').first().text(), "Voluntarily - 1 What's my line - Careers panel game")
+  t.is(wrapper.find('title').first().text(), "1 What's my line - Careers panel game - Voluntarily")
   t.truthy(wrapper.find('ActDetail').first())
 })
 
@@ -121,7 +141,7 @@ test('render ActDetailPage - empty acts', async t => {
   const router = outer.props().router
   router.push = sinon.spy()
   const wrapper = outer.dive()
-  t.is(wrapper.find('FormattedMessage').first().props().id, 'ActDetailPage.notavailable')
+  t.true(wrapper.exists('ActUnkown'))
 })
 
 test('render ActDetailPage - loading', async t => {
@@ -164,7 +184,7 @@ test('Edit new ActDetailPage', async t => {
   const router = outer.props().router
   router.push = sinon.spy()
   const wrapper = outer.dive()
-  t.is(wrapper.find('title').first().text(), 'Voluntarily - Edit Activity')
+  t.is(wrapper.find('title').first().text(), 'Edit Activity - Voluntarily')
 
   const form = wrapper.find('Form(ActDetailForm)').first()
   // act should be blank
@@ -175,38 +195,4 @@ test('Edit new ActDetailPage', async t => {
   form.props().onCancel() // let the hooks complete
   form.props().onSubmit(newAct)
   // save and return to details
-})
-
-test('render ActDetailPage as Admin click Edit', async t => {
-  const ps = await ActDetailPage.getInitialProps({ store: t.context.store, query: t.context.query })
-  const admin = { ...t.context.me }
-  admin.role = 'admin'
-  const props = {
-    ...t.context.props,
-    ...ps,
-    me: admin,
-    dispatch: sinon.spy()
-  }
-  const RoutedActDetailPage = withMockRoute(ActDetailPage)
-
-  const outer = shallowWithIntl(<RoutedActDetailPage {...props} />)
-  const router = outer.props().router
-  router.push = sinon.spy()
-  const wrapper = outer.dive()
-  t.is(wrapper.find('title').first().text(), "Voluntarily - 1 What's my line - Careers panel game")
-  t.truthy(wrapper.find('#editActBtn').first())
-  wrapper.find('#editActBtn').first().props().onClick()
-  const form = wrapper.find('Form(ActDetailForm)').first()
-
-  t.is(form.length, 1)
-
-  // cancel should return to detail page
-  form.props().onCancel(t.context.acts[0])
-
-  // edit again
-  t.truthy(wrapper.find('#editActBtn').first())
-  wrapper.find('#editActBtn').first().props().onClick()
-  form.props().onSubmit(t.context.acts[0])
-  // save and return to details
-  wrapper.find('#editActBtn').first().props().onClick()
 })

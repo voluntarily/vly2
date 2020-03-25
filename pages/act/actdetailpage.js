@@ -9,7 +9,7 @@ import ActUnknown from '../../components/Act/ActUnknown'
 import ActDetailForm from '../../components/Act/ActDetailForm'
 import Loading from '../../components/Loading'
 import { FullPage, PageBannerButtons } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
+import publicPage from '../../hocs/publicPage'
 import reduxApi, { withActs, withMembers } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import OpAdd from '../../components/Op/OpAdd'
@@ -131,7 +131,7 @@ export const ActDetailPage = ({
     return (
       <FullPage>
         <Helmet>
-          <title>Edit {act.name} - Voluntarily</title>
+          <title>Edit {isNew ? 'Activity':act.name} - Voluntarily</title>
         </Helmet>
         <ActDetailForm
           act={act}
@@ -203,4 +203,4 @@ ActDetailPage.propTypes = {
   })
 }
 export const ActDetailPageWithActs = withMembers(withActs(ActDetailPage))
-export default securePage(withMembers(withActs(ActDetailPage)))
+export default publicPage(withMembers(withActs(ActDetailPage)))

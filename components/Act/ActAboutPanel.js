@@ -13,13 +13,12 @@ import { FormattedMessage } from 'react-intl'
 export function ActAboutPanel ({ act }) {
   const description = act.description || ''
   const appUrl = `${config.appUrl}/acts/act._id`
-  const subtitle = act.subtitle ? <div><p>{act.subtitle}</p></div> : ''
   return (
     <ProfilePanel>
       <OpSectionGrid>
         <div>
           <h2><FormattedMessage id='ActAboutPanel.subtitle' defaultMessage='About this activity' /></h2>
-          <Alert message={subtitle} type='info' showIcon />
+          {act.subtitle && <Alert message={act.subtitle} type='info' showIcon />}
         </div>
         <div>
           <Html>
