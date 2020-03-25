@@ -13,7 +13,7 @@ on:
 jobs:
   lang:    
     name: Lang
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Check out
       uses: actions/checkout@v2      
@@ -30,7 +30,7 @@ jobs:
       
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Check out
       uses: actions/checkout@v2      
