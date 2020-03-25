@@ -195,16 +195,11 @@ export const ItemVolunteers = ({ volunteers, equipment }) => {
       <strong>
         <FormattedMessage
           id='ItemList.volunteerratio'
-          defaultMessage='🙋One volunteer for each '
+          defaultMessage='🙋One volunteer for each {ratio, number} people'
           description='label for number of volunteers required per student'
+          values={{ ratio: Math.round(1 / volunteers) }}
         />
       </strong>
-      {Math.round(1 / volunteers)}
-      <FormattedMessage
-        id='ItemList.people'
-        defaultMessage='people '
-        description='label for number of volunteers required per student'
-      />
     </ItemListing>
   )
 }

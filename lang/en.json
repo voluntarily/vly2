@@ -146,7 +146,7 @@
   "ItemList.space": "Space:",
   "itemlist.status": "Status:",
   "itemlist.venue": "Venue:",
-  "ItemList.volunteerratio": "🙋One volunteer for each ",
+  "ItemList.volunteerratio": "🙋One volunteer for each {ratio, number} people",
   "ItemList.volunteers": " {volunteers, number} {volunteers, plural, one {volunteer} other {volunteers}}",
   "job": "What is your Job Title?",
   "landing.sectiontitle.offers": "Get Started",
