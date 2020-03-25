@@ -209,7 +209,7 @@ const Hero = ({ isAuthenticated }) => (
       <a href='https://covid19.govt.nz/' rel='noopener noreferrer' target='_blank'>
         <AlertContainer>
           <Icon type='question-circle-o' />&nbsp;
-For official information and advice around COVID-19 visit  <a href='https://covid19.govt.nz/' rel='noopener noreferrer' target='_blank'>covid19.govt.nz</a>
+For official information and advice about COVID-19 visit  <a href='https://covid19.govt.nz/' rel='noopener noreferrer' target='_blank'>covid19.govt.nz</a>
         </AlertContainer>
       </a>
     </div>
