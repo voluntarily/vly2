@@ -15,6 +15,24 @@ export const OpTypeMessages = defineMessages({
   }
 })
 
+export const OpTypeAct = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.ActASK',
+    defaultMessage: 'Requests',
+    description: 'Ask label prefix'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.ActOFFER',
+    defaultMessage: 'Offers',
+    description: 'Offer label prefix'
+  }
+})
+
+export const OpTypeTitle = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpTypeAct[type]} />)
+}
+
 /** Converts an opportunity type to a translated display string */
 export const OpType = ({ type }) => {
   if (!type || ![ASK, OFFER].includes(type)) return null

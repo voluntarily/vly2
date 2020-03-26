@@ -43,9 +43,9 @@ export const ActBanner = ({ act, children }) => {
           <h1>
             <OpStatus status={act.status} />{act.name}
           </h1>
-          <ul>
+          {/* <ul>
             <ItemIdLine item={act.offerOrg} path='orgs' />
-          </ul>
+          </ul> */}
           <ItemContainer>
             <ItemDuration duration={act.duration} />
             <ItemVolunteers volunteers={act.volunteers} />
