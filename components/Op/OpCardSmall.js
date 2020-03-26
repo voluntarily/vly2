@@ -52,6 +52,7 @@ const OpCardSmall = ({ op }) => {
       <Link href={getOpPageURL(isArchived, op._id)}>
         <a>
           <SmallOpGrid>
+
             <img src={op.requestor.imgUrl} />
             <figcaption>
               {/* <p>  {op.subtitle}</p> */}
