@@ -1,15 +1,15 @@
+import { Role } from '../../../server/services/authorize/role'
 const Person = require('../../../server/api/person/person')
 const Activity = require('../../../server/api/activity/activity')
 const { Interest } = require('../../../server/api/interest/interest')
 const Opportunity = require('../../../server/api/opportunity/opportunity')
-import { Role } from '../../../server/services/authorize/role'
 
 const { OpportunityType, OpportunityStatus } = require('../../../server/api/opportunity/opportunity.constants')
 const { ActivityStatus } = require('../../../server/api/activity/activity.constants')
 
 export default async (req, res) => {
   res.setHeader('Content-Type', 'application/json')
-  if (!req.session.me.role.includes(Role.ADMIN)){ // Not an admin
+  if (!req.session.me.role.includes(Role.ADMIN)) { // Not an admin
     return res.status(401).json('Authorisation required')
   }
 
