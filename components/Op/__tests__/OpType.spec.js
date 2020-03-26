@@ -11,7 +11,7 @@ test('render OpTypeStamp for ask op', t => {
     />
   )
   t.is(wrapper.find('span').length, 1)
-  t.is(wrapper.find('span').text(), 'needs help with')
+  t.is(wrapper.find('span').text(), 'is asking for help')
 })
 
 test('render OpTypeStamp for offer op', t => {
@@ -40,7 +40,7 @@ test('render OpType for offer op', t => {
       type={OpportunityType.OFFER}
     />
   )
-  t.is(wrapper.text(), 'can help you with')
+  t.is(wrapper.text(), 'can help you')
 })
 
 test('render OpType with no type', t => {
