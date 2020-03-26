@@ -48,12 +48,12 @@ export const PersonHomePage = () => {
         <title>{person.nickname} - Voluntarily</title>
       </Helmet>
       <HomeBanner person={person}>
-        <PageBannerButtons>
+        {/* <PageBannerButtons>
           <OpAddNewBtn />
         </PageBannerButtons>
         <PageBannerButtons>
           <ActAdd roles={person.roles} />
-        </PageBannerButtons>
+        </PageBannerButtons> */}
       </HomeBanner>
       <HomeTabs
         person={person}

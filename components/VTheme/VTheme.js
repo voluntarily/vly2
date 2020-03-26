@@ -14,31 +14,50 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 */
 
 export const PageBanner = styled.div`
-
-  margin: 8rem 0 2rem 0;
-  display: grid;
-  grid-template-columns: 4rem 1fr 22rem 11rem;
+ width: 100%;
+  margin: 2rem 0 2rem 0;
+  display: inline-block;
   padding: 1rem;
   gap: 1rem;
-  align-self: center;
  
   box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.7);
   border-radius: 8px;
 
+article {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+}
+
+
+img{
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
+    border-radius: 100%;
+    align-self: center;
+  }
+
+div{
+  margin-left: 1rem;
+  margin-right: 1rem;
+  align-self: center;
+}
+
 h1 {
   align-self: center;
   font-size: 1.5rem;
+  line-height: 1.5
+}
+p {
+  margin-top: -0.1rem;
 }
 
-  img{
-    width: 4rem;
-    border-radius: 100%;
-  }
  
   @media screen and (max-width: 767px) {
-    margin-top: 4rem;
-    grid-template-columns: calc(100vw - 4rem);
+    article {
+  
     grid-gap: 0rem;
+  }
   }
 `
 export const AlertContainer = styled.div`
