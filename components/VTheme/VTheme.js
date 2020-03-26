@@ -56,8 +56,12 @@ p {
  
   @media screen and (max-width: 767px) {
     article {
-  
+
     grid-gap: 0rem;
+  }
+  div {
+
+  margin-right: 0;
   }
   }
 `
