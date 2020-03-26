@@ -82,7 +82,7 @@ const Hero2 = ({ subheader, title }) => (
       </Button>
       &nbsp;&nbsp;
       <Button shape='round' size='large'>
-        Teacher Sign up
+        Business Sign up
       </Button>
     </ButtonContainer>
   </HeroContainer>
