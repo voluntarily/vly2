@@ -29,7 +29,7 @@ const MenuGrid = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr 2fr 3rem;
   @media screen and (max-width: 767px) {
-    grid-template-columns: 0fr 1fr 2fr 3rem;
+    grid-template-columns: 0fr 1fr 2fr 0;
   }
 `
 
@@ -58,7 +58,9 @@ const Logo = styled.img`
 const StyledAvatar = styled(Avatar)`
   background-color: #fff;
   margin: 0.5rem 1rem 0 0;
-
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
   .anticon-user {
     margin-right: 0px;
   }
