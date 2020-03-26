@@ -19,7 +19,11 @@ test.after.always(async (t) => {
 test('Should respond with summary data for an admin', async t => {
   const req = new MockExpressRequest()
   const res = new MockExpressResponse()
-  req.ability = { can: sinon.fake.returns(true) }
+  req.session = {
+    isAuthenticated: true,
+    me: { role: ["admin"] }
+  }
+
   await summary(req, res)
   t.deepEqual(res._getJSON(), {
     Person: 0,
@@ -33,7 +37,7 @@ test('Should respond with summary data for an admin', async t => {
 test('Should require the logged in user is an admin', async t => {
   const req = new MockExpressRequest()
   const res = new MockExpressResponse()
-  req.ability = { can: sinon.fake.returns(false) }
+  req.session = {}
   await summary(req, res)
   t.is(401, res.statusCode, 'Authorisation required')
 })

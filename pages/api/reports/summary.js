@@ -9,7 +9,7 @@ const { ActivityStatus } = require('../../../server/api/activity/activity.consta
 
 export default async (req, res) => {
   res.setHeader('Content-Type', 'application/json')
-  if (!req.session.me.role.includes(Role.ADMIN)) { // Not an admin
+  if ( !(req.session.me && req.session.me.role.includes(Role.ADMIN))) { // Not an admin
     return res.status(401).json('Authorisation required')
   }
 
