@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
 import { P, Spacer } from '../VTheme/VTheme'
 import links from './FooterMenu'
-import { Row, Col } from 'antd'
 // import WomensRefuge from './WomensRefuge.js'
 
 const getAllowedLinks = isAuthenticated =>
