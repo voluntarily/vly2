@@ -29,17 +29,17 @@ const PersonFields = {
   EDUCATION: 'education',
   JOB: 'job',
   SENDEMAILNOTIFICATIONS: 'sendEmailNotifications',
-  PLACEOFWORK: 'placeOfWork',
+  PLACEOFWORK: 'placeOfWork'
 }
 
 const PersonCategory = {
-  ESSENTIAL_SERVICE = 'essential_service',
-  VULNERABLE_PERSON = 'vulnerable_person'
+  ESSENTIAL_SERVICE: 'essentialService',
+  VULNERABLE_PERSON: 'vulnerablePerson'
 }
 
 module.exports = {
   SchemaName,
   PersonRoutes,
-  PersonFields
+  PersonFields,
   PersonCategory
 }
