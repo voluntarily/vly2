@@ -52,13 +52,14 @@ const OpCardSmall = ({ op }) => {
     <SmallCard>
       <Link href={getOpPageURL(isArchived, op._id)}>
         <a>
+          <img src={op.requestor.imgUrl} />
           <figcaption>
             {/* <p>  {op.subtitle}</p> */}
-            <h1>
-              {op.requestor.name} <OpType type={op.type} /> <br />
+            <h2>
+              {op.requestor.nickname} <OpType type={op.type} /> <br />
 
               {op.name}
-            </h1>
+            </h2>
 
             <p> {startLocation}</p>
             <p> {startTime} </p>

@@ -3,7 +3,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import ReduxLoading from '../Loading'
 import { FormattedMessage } from 'react-intl'
-import { OpSectionGrid } from '../VTheme/VTheme'
+import { ActivityContainer } from '../VTheme/VTheme'
 
 const actRequestsNotFound = (
   <FormattedMessage
@@ -31,5 +31,5 @@ export const ActOpsPanel = ({ actId, type }) => {
     return <p>{actRequestsNotFound}</p>
   }
 
-  return <OpSectionGrid><h2> Requests for help</h2><OpListSmall ops={opportunities.filter(op => op.type === type)} /></OpSectionGrid>
+  return <ActivityContainer><h2> Requests for help</h2><OpListSmall ops={opportunities.filter(op => op.type === type)} /></ActivityContainer>
 }

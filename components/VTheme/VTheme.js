@@ -697,7 +697,7 @@ export const SmallCard = styled.figure`
 padding-bottom: 0.5rem;
 
 box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
-padding: 0.5rem;
+padding: 1rem;
 border-radius: 8px;
 
 a { text-decoration: none; }
@@ -711,22 +711,16 @@ figcaption {
   transition: all 0.3s;
   transform: scale(1.02);
   border-radius: 8px;
-  h1 {
+  h2 {
     color: #6549aa;
   }
-  img {
-    border-radius: 8px 8px 0 0;
-  }
+ 
   figcaption {
     transform: scale(0.96);
   }
 }
-img {
-  border-radius: 8px;
-  min-width: 18rem;
-}
-h1 {
-  margin-top: 0.5rem;
+
+h2 {
   margin-bottom: 0.5rem;
   font-size: 1rem;
   vertical-align: middle;
@@ -748,9 +742,11 @@ h1 {
 img {
   transition: all 0.2s;
   -webkit-transition: all 0.2s;
-  width: 100%;
-  height: 10rem;
-  max-height: 10rem;
+ 
+  border-radius: 129px;
+  width: 4rem;
+  height: 4rem;
+ 
   background-color: rgba(0, 0, 0, 0);
   object-fit: cover;
   overflow: hidden;
