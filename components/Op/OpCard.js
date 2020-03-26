@@ -8,6 +8,7 @@ import moment from 'moment'
 import { Card, DescriptionWrapper, TagState } from '../VTheme/VTheme'
 import { Icon } from 'antd'
 import styled from 'styled-components'
+
 const getOpPageURL = (isArchived, opid) => {
   if (isArchived) {
     return `/archivedops/${opid}`
