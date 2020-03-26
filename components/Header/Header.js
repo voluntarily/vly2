@@ -27,9 +27,11 @@ const Notice = styled.div`
 
 const MenuGrid = styled.div`
   display: grid;
+  align-self: center;
   grid-template-columns: 2fr 1fr 2fr 3rem;
   @media screen and (max-width: 767px) {
-    grid-template-columns: 0fr 1fr 2fr 0;
+    grid-template-columns: 0fr 1fr 2fr 0.25rem;
+
   }
 `
 
@@ -43,15 +45,14 @@ const Logo = styled.img`
   height: 3rem;
   width: 12rem;
   margin: 0.7rem;
-  margin-top: 0.8rem;
+
   background-image: url('/static/vlogolong.svg');
   background-repeat: no-repeat;
   background-position: left top;
   @media screen and (max-width: 767px) {
     background-image: url('/static/vlogo.svg');
-    margin-top: 0.5rem;
-    margin-left: 0.5rem;
-    width: 3rem;
+  
+    width: 2rem;
   }
 `
 
