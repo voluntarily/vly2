@@ -5,7 +5,6 @@ import MemoryMongo from '../../../server/util/test-memory-mongo'
 import { OpportunityType } from '../../../server/api/opportunity/opportunity.constants'
 
 import summary from '../../../pages/api/reports/summary'
-import sinon from 'sinon'
 
 test.before('start in memory mongo and create fake server', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -21,7 +20,7 @@ test('Should respond with summary data for an admin', async t => {
   const res = new MockExpressResponse()
   req.session = {
     isAuthenticated: true,
-    me: { role: ["admin"] }
+    me: { role: ['admin'] }
   }
 
   await summary(req, res)
