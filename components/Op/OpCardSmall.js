@@ -5,7 +5,7 @@
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
-import { Card, DescriptionWrapper, TagState } from '../VTheme/VTheme'
+import { SmallCard, DescriptionWrapper, TagState } from '../VTheme/VTheme'
 import { Icon } from 'antd'
 import styled from 'styled-components'
 import { OpType } from './OpType'
@@ -26,7 +26,6 @@ const StyledIcon = styled(Icon)`
 
 // todo if image is not present then use a fallback.
 const OpCardSmall = ({ op }) => {
-  const cardImage = op.imgUrl ? op.imgUrl : '/static/missingimage.svg'
   const draft = op.status === 'draft' ? 'DRAFT: ' : ''
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
   const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA - ddd DD/MM/YY') : ''
@@ -43,45 +42,34 @@ const OpCardSmall = ({ op }) => {
     }
   })(op.interest)
 
-  let orgName = ''
+  // let orgName = ''
 
-  if (op.offerOrg) {
-    orgName = <span>{op.offerOrg.name}</span>
-  }
+  // if (op.offerOrg) {
+  //   orgName = <span>{op.offerOrg.name}</span>
+  // }
 
   return (
-    <Card>
+    <SmallCard>
       <Link href={getOpPageURL(isArchived, op._id)}>
         <a>
           <figcaption>
+            {/* <p>  {op.subtitle}</p> */}
             <h1>
-              <OpType type={op.type} />:&nbsp;
-              {draft}
+              {op.requestor.name} <OpType type={op.type} /> <br />
+
               {op.name}
             </h1>
 
             <p> {startLocation}</p>
             <p> {startTime} </p>
             <p> {startDuration}</p>
-            <DescriptionWrapper>
-              {op.subtitle}
-            </DescriptionWrapper>
 
-            {orgName &&
-              <>
-                <DescriptionWrapper>
-
-                  <i>
-                    {orgName}
-                  </i>
-                </DescriptionWrapper>
-              </>}
             {interestIcon}
 
           </figcaption>
         </a>
       </Link>
-    </Card>
+    </SmallCard>
   )
 }
 
@@ -93,6 +81,7 @@ OpCardSmall.propTypes = {
     date: PropTypes.arrayOf.string,
     location: PropTypes.string,
     duration: PropTypes.string,
+    requestor: PropTypes.object,
     _id: PropTypes.string.isRequired
   })
 }

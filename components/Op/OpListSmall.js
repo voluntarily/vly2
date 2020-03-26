@@ -24,7 +24,7 @@ overflow: visible;
   }
 
   @media screen and (min-width: 998px) {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 `
 

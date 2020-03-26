@@ -689,6 +689,93 @@ time {
 }
 `
 
+/* Small Card - an image followed by a title and some content
+*/
+export const SmallCard = styled.figure`
+
+-webkit-transition: all 0.28s;
+padding-bottom: 0.5rem;
+
+box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
+padding: 0.5rem;
+border-radius: 8px;
+
+a { text-decoration: none; }
+
+figcaption {
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+:hover {
+  transition: all 0.3s;
+  transform: scale(1.02);
+  border-radius: 8px;
+  h1 {
+    color: #6549aa;
+  }
+  img {
+    border-radius: 8px 8px 0 0;
+  }
+  figcaption {
+    transform: scale(0.96);
+  }
+}
+img {
+  border-radius: 8px;
+  min-width: 18rem;
+}
+h1 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  vertical-align: middle;
+  color: #000;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  -webkit-transition: all 0.28s;
+  transition: all 0.28s;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.4;
+  -webkit-line-clamp: 3;
+
+}
+
+img {
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  width: 100%;
+  height: 10rem;
+  max-height: 10rem;
+  background-color: rgba(0, 0, 0, 0);
+  object-fit: cover;
+  overflow: hidden;
+  object-position: top;
+
+  @media screen and (max-width: 768px) {
+    height: 12rem;
+  }
+}
+
+time {
+  vertical-align: middle;
+  margin-bottom: 0px;
+  font-weight: 500;
+  font-size: 16px;
+  color: #585858;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  margin-block-start: 0;
+}
+`
+
 /* Fix for Op heading alignment */
 
 export const BannerDetail = styled.div`
