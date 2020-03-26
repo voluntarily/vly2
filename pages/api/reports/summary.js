@@ -8,6 +8,10 @@ const { ActivityStatus } = require('../../../server/api/activity/activity.consta
 
 export default async (req, res) => {
   res.setHeader('Content-Type', 'application/json')
+  if (!req.ability.can('manage', 'Person')) { // Not an admin
+    return res.status(401).json('Authorisation required')
+  }
+
   const operations = [
     Opportunity.countDocuments({ status: OpportunityStatus.ACTIVE, type: OpportunityType.ASK }).exec(),
     Opportunity.countDocuments({ status: OpportunityStatus.ACTIVE, type: OpportunityType.OFFER }).exec(),
