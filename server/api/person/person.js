@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const idvalidator = require('mongoose-id-validator')
 const Schema = mongoose.Schema
-const { SchemaName } = require('./person.constants')
+const { SchemaName, PersonCategory } = require('./person.constants')
 const {
   accessibleRecordsPlugin,
   accessibleFieldsPlugin
@@ -48,6 +48,15 @@ const personSchema = new Schema({
     required: true,
     default: 'active',
     enum: ['active', 'inactive', 'hold']
+  },
+  category: {
+    type: [String],
+    required: true,
+    default: [],
+    enum: [
+      PersonCategory.VULNERABLE_PERSON,
+      PersonCategory.ESSENTIAL_SERVICE
+    ]
   },
   dateAdded: { type: 'Date', default: Date.now, required: true },
   tags: [String],

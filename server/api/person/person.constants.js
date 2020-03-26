@@ -23,16 +23,23 @@ const PersonFields = {
   TWITTER: 'twitter',
   ROLE: 'role',
   STATUS: 'status',
+  CATEGORY: 'category',
   PRONOUN: 'pronoun',
   TAGS: 'tags',
   EDUCATION: 'education',
   JOB: 'job',
   SENDEMAILNOTIFICATIONS: 'sendEmailNotifications',
-  PLACEOFWORK: 'placeOfWork'
+  PLACEOFWORK: 'placeOfWork',
+}
+
+const PersonCategory = {
+  ESSENTIAL_SERVICE = 'essential_service',
+  VULNERABLE_PERSON = 'vulnerable_person'
 }
 
 module.exports = {
   SchemaName,
   PersonRoutes,
   PersonFields
+  PersonCategory
 }

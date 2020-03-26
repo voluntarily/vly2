@@ -2,6 +2,7 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Person from '../person'
+const { PersonCategory } = require('./person.constants')
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../__tests__/person.fixture'
@@ -75,6 +76,7 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
     about: "console.log('hello world')", // ok
     pronoun: { subject: 'they', object: 'them', possesive: 'ȁǹy' }, // ok
     role: ['tester'],
+    category: [PersonCategory.ESSENTIAL_SERVICE],
     tags: []
   }
 
