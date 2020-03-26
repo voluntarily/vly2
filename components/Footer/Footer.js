@@ -147,7 +147,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
           <FooterGridItemTitle>Resources</FooterGridItemTitle>
           <MenuWrapper>
 
-            <MenuItem><a href='/about'>Getting started</a></MenuItem>
+            <MenuItem><a href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/17' target='_blank' rel='noreferrer noopener'>Suggest a Topic</a></MenuItem>
             <MenuItem>
               <a
                 href='https://blog.voluntarily.nz/'
