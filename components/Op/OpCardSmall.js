@@ -30,7 +30,7 @@ const StyledIcon = styled(Icon)`
 `
 
 // todo if image is not present then use a fallback.
-const OpCard = ({ op }) => {
+const OpCardSmall = ({ op }) => {
   const cardImage = op.imgUrl ? op.imgUrl : '/static/missingimage.svg'
   const draft = op.status === 'draft' ? 'DRAFT: ' : ''
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
@@ -94,7 +94,7 @@ const OpCard = ({ op }) => {
   )
 }
 
-OpCard.propTypes = {
+OpCardSmall.propTypes = {
   op: PropTypes.shape({
     name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
@@ -106,4 +106,4 @@ OpCard.propTypes = {
   })
 }
 
-export default OpCard
+export default OpCardSmall
