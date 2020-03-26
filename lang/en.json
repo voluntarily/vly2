@@ -329,6 +329,8 @@
   "orgTabs.history": "History",
   "orgTabs.history.notfound": "This organisation does not have any archived opportunities.",
   "orgTabs.history.title": "Previous opportunities",
+  "orgTabs.offers.activities.notfound": "This organisation does not have any activities yet",
+  "orgTabs.offers.opportunities.notfound": "This organisation does not have any opportunities yet",
   "orgWebsite": "Website",
   "people.new": "New Person",
   "person.altnew": "New Person",

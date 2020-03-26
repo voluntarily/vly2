@@ -7,6 +7,7 @@ import { OrgAboutPanel } from './OrgAboutPanel'
 import Html from '../VTheme/Html'
 import VTabs from '../VTheme/VTabs'
 import { OrgHistoryPanel } from './OrgHistoryPanel'
+import { OrgOffersPanel } from './OrgOffersPanel'
 import { orgTab, orgMemberTab, orgInstructionTab, orgOffersTab, orgEditTab, orgHistoryTab } from './OrgTabs.messages'
 
 const { TabPane } = Tabs
@@ -25,6 +26,7 @@ export const OrgTabs = ({
     </TabPane>
     <TabPane tab={orgOffersTab} key='offers' orgTab='offers'>
       {/* // TODO: [VP-554] move the OpList for this org from the parent page to a tab  */}
+      <OrgOffersPanel organisationId={org._id} />
     </TabPane>
     {org.category.includes('op') && (
       <TabPane tab={orgHistoryTab} key='history' orgTab='history'>

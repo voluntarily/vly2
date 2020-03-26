@@ -8,7 +8,7 @@ import moment from 'moment'
 import { Card, DescriptionWrapper, TagState } from '../VTheme/VTheme'
 import { Icon } from 'antd'
 import styled from 'styled-components'
-import { OpType } from './OpType'
+// import { OpType } from './OpType'
 const getOpPageURL = (isArchived, opid) => {
   if (isArchived) {
     return `/archivedops/${opid}`
@@ -64,7 +64,7 @@ const OpCard = ({ op }) => {
           </ImageWrapper>
           <figcaption>
             <h1>
-              <OpType type={op.type} />:&nbsp;
+              {/* <OpType type={op.type} />:&nbsp; */}
               {draft}
               {op.name}
             </h1>
