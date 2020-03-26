@@ -16,6 +16,7 @@ import {
 } from '../VTheme/FormStyles'
 import { H3Bold, P } from '../VTheme/VTheme'
 import { websiteRegex } from '../../server/api/person/person.validation'
+import { PersonCategory } from '../../server/api/person/person.constants'
 import { Role } from '../../server/services/authorize/role'
 import TagSelect from '../Form/Input/TagSelect'
 
@@ -74,6 +75,7 @@ class PersonDetail extends Component {
           person.role = values.role
         }
         person.status = values.status
+        person.category = values.category
         person.education = values.education
         person.placeOfWork = values.placeOfWork
         person.job = values.job
@@ -179,6 +181,13 @@ class PersonDetail extends Component {
         description='active or retired status'
       />
     )
+    const personCategory = (
+      <FormattedMessage
+        id='personCategory'
+        defaultMessage='Category'
+        description='special categories - vulnerable or essential'
+      />
+    )
     const personLocation = (
       <span>
         {' '}
@@ -243,6 +252,12 @@ class PersonDetail extends Component {
       { label: 'Content provider', value: 'activityProvider' },
       { label: 'Tester', value: 'tester' }
     ]
+
+    const categoryOptions = [
+      { label: 'Vulnerable person', value: PersonCategory.VULNERABLE_PERSON },
+      { label: 'Essential service', value: PersonCategory.ESSENTIAL_SERVICE }
+    ]
+
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
     const isTest = process.env.NODE_ENV === 'test'
@@ -503,7 +518,7 @@ class PersonDetail extends Component {
               <P>
                 <FormattedMessage
                   id='PersonDetailForm.SectionDescription.Settings'
-                  defaultMessage='Control your availability for volunteering and whether to receive emails.'
+                  defaultMessage='Control your availability for volunteering, whether you fall into a special category, and whether to receive emails.'
                 />
               </P>
             </DescriptionContainer>
@@ -516,6 +531,11 @@ class PersonDetail extends Component {
                     <Radio.Button value='inactive'>Not Available</Radio.Button>
                     <Radio.Button value='active'>Available</Radio.Button>
                   </Radio.Group>
+                )}
+              </Form.Item>
+              <Form.Item label={personCategory}>
+                {getFieldDecorator('category')(
+                  <Checkbox.Group options={categoryOptions} />
                 )}
               </Form.Item>
               <Form.Item>
@@ -610,6 +630,7 @@ PersonDetail.propTypes = {
       ])
     ),
     status: PropTypes.oneOf(['active', 'inactive', 'hold']),
+    category: PropTypes.oneOf([PersonCategory.ESSENTIAL_SERVICE, PersonCategory.VULNERABLE_PERSON]),
     tags: PropTypes.arrayOf(PropTypes.string)
   }),
   form: PropTypes.object,
@@ -701,6 +722,10 @@ const PersonDetailForm = Form.create({
       status: Form.createFormField({
         ...props.person.status,
         value: props.person.status
+      }),
+      category: Form.createFormField({
+        ...props.person.category,
+        value: props.person.category
       }),
       tags: Form.createFormField({
         ...props.person.tags,
