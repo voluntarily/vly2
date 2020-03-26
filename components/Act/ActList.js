@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import ActCard from './ActCard'
 import { FormattedMessage } from 'react-intl'
 import { Grid } from '../VTheme/VTheme'
+import ActCardSuggest from './ActCardSuggest'
 
 const ActList = ({ acts, ...props }) => (
   <Grid>
@@ -16,7 +17,7 @@ const ActList = ({ acts, ...props }) => (
         defaultMessage='No matching activities'
         description='no activities message in ActList'
       />
-    )}
+    )}<ActCardSuggest />
   </Grid>
 )
 

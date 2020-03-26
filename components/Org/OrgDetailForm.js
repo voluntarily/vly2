@@ -271,7 +271,7 @@ class OrgDetailForm extends Component {
                   <TitleContainer>
                     <h3>
                       <FormattedMessage
-                        id='OpDetailForm.groups.label'
+                        id='OpAskForm.groups.label'
                         description='Section label for op groups'
                         defaultMessage='What categories does this group service?'
                       />
@@ -279,7 +279,7 @@ class OrgDetailForm extends Component {
                   </TitleContainer>
                   <p>
                     <FormattedMessage
-                      id='OpDetailForm.groups.prompt'
+                      id='OpAskForm.groups.prompt'
                       description='Section prompt for op groups'
                       defaultMessage='e.g. Business, School, Individual'
                     />

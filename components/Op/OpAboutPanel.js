@@ -29,13 +29,13 @@ export function OpAboutPanel ({ op }) {
 
           <>
             <TagContainer>
-              <h5><FormattedMessage id='actCategories' defaultMessage='Categories' /></h5>
+              <h5><FormattedMessage id='OpAboutPanel.categories' defaultMessage='Categories' /></h5>
               <TagDisplay tags={op.tags} />
             </TagContainer>
             <Divider />
           </>
           <section>
-            <h5><FormattedMessage id='actShare' defaultMessage='Share' /></h5>
+            <h5><FormattedMessage id='OpAboutPanel.share' defaultMessage='Share' /></h5>
             <ShareLinks url={appUrl} />
           </section>
 

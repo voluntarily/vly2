@@ -12,11 +12,13 @@ import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import OpBanner from '../../components/Op/OpBanner'
 import OpUnknown from '../../components/Op/OpUnknown'
-import OpDetailForm from '../../components/Op/OpDetailForm'
+import OpAskForm from '../../components/Op/OpAskForm'
+import OpOfferForm from '../../components/Op/OpOfferForm'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import { Helmet } from 'react-helmet'
 // import { OpStatusStamp } from '../../components/Op/OpStatus'
 import { OpportunityStatus, OpportunityType } from '../../server/api/opportunity/opportunity.constants'
+import { Role } from '../../server/services/authorize/role.js'
 
 const blankOp = {
   name: '',
@@ -30,6 +32,14 @@ const blankOp = {
   startDate: null,
   endDate: null,
   tags: []
+}
+
+const OpDetailForm = type => {
+  switch (type) {
+    case OpportunityType.ASK: return OpAskForm
+    case OpportunityType.OFFER: return OpOfferForm
+    default: return <p>Error: Opportunity type not Set</p>
+  }
 }
 
 export const OpDetailPage = ({
@@ -123,16 +133,6 @@ export const OpDetailPage = ({
       }
     }
     op.requestor = me
-
-    // set init offerOrg to first membership result
-    if (
-      me.orgMembership &&
-     me.orgMembership.length > 0
-    ) {
-      op.offerOrg = {
-        _id: me.orgMembership[0].organisation._id
-      }
-    }
   } else { // existing op
     op = {
       ...opportunities.data[0],
@@ -141,7 +141,7 @@ export const OpDetailPage = ({
     }
   }
   // Who can edit?
-  const isAdmin = me && me.role.includes(OpportunityStatus.ADMIN)
+  const isAdmin = me && me.role.includes(Role.ADMIN)
   const isOwner =
       isNew ||
       (me && op.requestor && me._id === op.requestor._id)
@@ -153,7 +153,10 @@ export const OpDetailPage = ({
     me.orgMembership = members.data.filter(m =>
       [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)
     )
-    if (op.offerOrg) {
+    if (!op.offerOrg && me.orgMembership.length > 0) {
+      op.offerOrg = { _id: me.orgMembership[0].organisation._id }
+    }
+    if (op.offerOrg && me.orgMembership) {
       isOrgAdmin = me.orgMembership.find(m => {
         return (m.status === MemberStatus.ORGADMIN &&
         m.organisation._id === op.offerOrg._id).length > 0
@@ -164,12 +167,13 @@ export const OpDetailPage = ({
   const canRegisterInterest = isAuthenticated && !isOwner
 
   if (tab === 'edit') {
+    const OpForm = OpDetailForm(op.type)
     return (
       <FullPage>
         <Helmet>
-          <title>Edit {op.name} - Voluntarily</title>
+          <title>Edit {op.type} {op.name} - Voluntarily</title>
         </Helmet>
-        <OpDetailForm
+        <OpForm
           op={op}
           me={me}
           onSubmit={handleSubmit}
@@ -182,7 +186,7 @@ export const OpDetailPage = ({
   return (
     <FullPage>
       <Helmet>
-        <title>{op.name} - Voluntarily</title>
+        <title>{op.type} {op.name} - Voluntarily</title>
       </Helmet>
       <OpBanner op={op}>
         {/* <OpStatusStamp status={op.status} /> */}

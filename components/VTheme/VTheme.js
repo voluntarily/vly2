@@ -69,6 +69,8 @@ export const PageBannerNoTabs = styled.div`
 export const PageBannerButtons = styled.div`
 
  width: 100%;
+ margin-top: 1rem;
+
   @media screen and (max-width: 767px) {
     
     margin-top: 1rem;
@@ -527,7 +529,7 @@ We use these to contain components and nudge them around
 
 Will refactor all the containers in here soon :)
 
-Need the form ones as well soon as we create other forms on top of the OpDetailForm component work :L
+Need the form ones as well soon as we create other forms on top of the OpAskForm component work :L
 
 ^__^
 
@@ -689,7 +691,7 @@ time {
 
 /* Fix for Op heading alignment */
 
-export const OpBannerDetail = styled.div`
+export const BannerDetail = styled.div`
 display: grid;
 align-self: center;
 

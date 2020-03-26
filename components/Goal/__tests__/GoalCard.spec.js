@@ -100,10 +100,6 @@ Test paragraph with *strong text*
   const event = {
     stopPropagation: sinon.spy()
   }
-  await wrapper.props().onClick(event) // handleClickCard
-  const startBtn = wrapper.find('GoalStartButton').first()
-  t.is(startBtn.props().href, goal.startLink)
-  await startBtn.props().onClick(event)
   goal.status = PersonalGoalStatus.ACTIVE
   wrapper = shallowWithIntl(
     <GoalCardTest goal={goal} dispatch={dispatch} />
