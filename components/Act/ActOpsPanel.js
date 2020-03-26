@@ -1,8 +1,9 @@
-import OpList from '../Op/OpList'
+import OpListSmall from '../Op/OpListSmall'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import ReduxLoading from '../Loading'
 import { FormattedMessage } from 'react-intl'
+import { OpSectionGrid } from '../VTheme/VTheme'
 
 const actRequestsNotFound = (
   <FormattedMessage
@@ -30,5 +31,5 @@ export const ActOpsPanel = ({ actId, type }) => {
     return <p>{actRequestsNotFound}</p>
   }
 
-  return <OpList ops={opportunities.filter(op => op.type === type)} />
+  return <OpSectionGrid><h2> Requests for help</h2><OpListSmall ops={opportunities.filter(op => op.type === type)} /></OpSectionGrid>
 }

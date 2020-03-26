@@ -20,11 +20,11 @@ overflow: visible;
   grid-row-gap: 2rem;
   
   @media screen and (min-width: 768px) {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   @media screen and (min-width: 998px) {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 `
 
