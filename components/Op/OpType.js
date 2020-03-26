@@ -5,12 +5,12 @@ const { ASK, OFFER } = OpportunityType
 export const OpTypeMessages = defineMessages({
   [ASK]: {
     id: 'OpportunityType.ASK',
-    defaultMessage: 'Ask',
+    defaultMessage: 'needs help with',
     description: 'Ask label prefix'
   },
   [OFFER]: {
     id: 'OpportunityType.OFFER',
-    defaultMessage: 'Offer',
+    defaultMessage: 'can help you with',
     description: 'Offer label prefix'
   }
 })

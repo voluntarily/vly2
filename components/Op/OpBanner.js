@@ -47,11 +47,11 @@ const OpBanner = ({ op, children }) => {
           <ItemImage src={op.imgUrl} alt={op.name} />
         </Left>
         <BannerDetail>
-          <small><OpType type={op.type} /></small>
+          <small>{op.requestor.name} <OpType type={op.type} /></small>
           <h1> {op.name}</h1>
           <ul>
-            <ItemIdLine item={op.offerOrg} path='orgs' />
-            <ItemIdLine item={op.fromActivity} path='acts' />
+            {/* <ItemIdLine item={op.offerOrg} path='orgs' />
+            <ItemIdLine item={op.fromActivity} path='acts' /> */}
           </ul>
           <ItemContainer>
             <ItemLocation location={op.location} />
@@ -70,6 +70,7 @@ const OpBanner = ({ op, children }) => {
 OpBanner.propTypes = {
   op: PropTypes.shape({
     name: PropTypes.string.isRequired,
+    requestor: PropTypes.object,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     duration: PropTypes.string,

@@ -699,6 +699,15 @@ ul {
   padding: 0;
   margin-bottom: 0;
 }
+small {
+
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #333;
+@media screen and (max-width: 768px) {
+  margin-top: 0.5rem;
+}
+}
 
 `
 

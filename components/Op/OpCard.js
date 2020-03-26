@@ -74,7 +74,7 @@ const OpCard = ({ op }) => {
             <p> {startDuration}</p>
             <DescriptionWrapper>
               {op.subtitle}<br />
-              <OpType type={op.type} />
+              {/* <OpType type={op.type} /> */}
             </DescriptionWrapper>
 
             {orgName &&
