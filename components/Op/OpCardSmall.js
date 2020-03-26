@@ -5,7 +5,7 @@
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
-import { SmallCard, DescriptionWrapper, TagState } from '../VTheme/VTheme'
+import { SmallCard, SmallOpGrid, TagState } from '../VTheme/VTheme'
 import { Icon } from 'antd'
 import styled from 'styled-components'
 import { OpType } from './OpType'
@@ -26,7 +26,6 @@ const StyledIcon = styled(Icon)`
 
 // todo if image is not present then use a fallback.
 const OpCardSmall = ({ op }) => {
-  const draft = op.status === 'draft' ? 'DRAFT: ' : ''
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
   const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA - ddd DD/MM/YY') : ''
   const startLocation = op.location ? `📍 ${op.location}` : ''
@@ -52,22 +51,23 @@ const OpCardSmall = ({ op }) => {
     <SmallCard>
       <Link href={getOpPageURL(isArchived, op._id)}>
         <a>
-          <img src={op.requestor.imgUrl} />
-          <figcaption>
-            {/* <p>  {op.subtitle}</p> */}
-            <h2>
-              {op.requestor.nickname} <OpType type={op.type} /> <br />
+          <SmallOpGrid>
+            <img src={op.requestor.imgUrl} />
+            <figcaption>
+              {/* <p>  {op.subtitle}</p> */}
+              <h2>
+                {op.requestor.nickname} <OpType type={op.type} /> <br />
 
-              {op.name}
-            </h2>
+              </h2>
 
-            <p> {startLocation}</p>
-            <p> {startTime} </p>
-            <p> {startDuration}</p>
+              <p> {startLocation}</p>
+              <p> {startTime} </p>
+              <p> {startDuration}</p>
 
-            {interestIcon}
+              {interestIcon}
 
-          </figcaption>
+            </figcaption>
+          </SmallOpGrid>
         </a>
       </Link>
     </SmallCard>

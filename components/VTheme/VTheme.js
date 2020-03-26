@@ -123,6 +123,12 @@ align-self: center;
   }
 
 `
+export const SmallOpGrid = styled.div`
+display: grid;
+grid-template-columns: 4rem 1fr;
+gap: 0.5rem;
+align-items: center;
+`
 
 export const OpSectionGrid = styled.div`
   margin: 2rem 0;
@@ -694,11 +700,11 @@ time {
 export const SmallCard = styled.figure`
 
 -webkit-transition: all 0.28s;
-padding-bottom: 0.5rem;
 
 box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
 padding: 1rem;
 border-radius: 8px;
+margin-bottom: 0;
 
 a { text-decoration: none; }
 
@@ -721,7 +727,7 @@ figcaption {
 }
 
 h2 {
-  margin-bottom: 0.5rem;
+ 
   font-size: 1rem;
   vertical-align: middle;
   color: #000;
