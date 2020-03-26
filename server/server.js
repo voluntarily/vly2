@@ -42,20 +42,6 @@ raygunClient.user = function (req) {
   }
 }
 
-// We need to expose React Intl's locale data on the request for the user's
-// locale. This function will also cache the scripts by lang in memory.
-// const localeDataCache = new Map()
-// const getLocaleDataScript = locale => {
-//   // const lang = locale.split('-')[0]
-//   const lang = locale || 'en'
-//   if (!localeDataCache.has(lang)) {
-//     const localeDataFile = require.resolve(`react-intl/locale-data/${lang}`)
-//     const localeDataScript = readFileSync(localeDataFile, 'utf8')
-//     localeDataCache.set(lang, localeDataScript)
-//   }
-//   return localeDataCache.get(lang)
-// }
-
 // We need to load and expose the translations on the request for the user's
 // locale. These will only be used in production, in dev the `defaultMessage` in
 // each message description in the source code will be used.
@@ -72,8 +58,8 @@ const appReady = app.prepare().then(() => {
     req.locale = req.acceptsLanguages(supportedLanguages)
     req.locale = req.locale || 'en'
     // req.localeDataScript = getLocaleDataScript(req.locale)
-    // req.messages = dev ? {} : getMessages(req.locale)
-    req.messages = getMessages(req.locale)
+    req.messages = dev ? {} : getMessages(req.locale)
+    // req.messages = getMessages(req.locale)
     // const { gitDescribeSync } = require('git-describe')
     // const gitInfo = gitDescribeSync()
     // req.messages.revision = process.env.REVISION || gitInfo.raw
