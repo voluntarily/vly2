@@ -125,7 +125,7 @@ align-self: center;
 `
 export const SmallOpGrid = styled.div`
 display: grid;
-grid-template-columns: 4rem 1fr;
+grid-template-columns: 3rem 1fr;
 gap: 0.5rem;
 align-items: center;
 `
@@ -750,17 +750,15 @@ img {
   -webkit-transition: all 0.2s;
  
   border-radius: 129px;
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
  
   background-color: rgba(0, 0, 0, 0);
   object-fit: cover;
   overflow: hidden;
   object-position: top;
 
-  @media screen and (max-width: 768px) {
-    height: 12rem;
-  }
+
 }
 
 time {
