@@ -8,7 +8,6 @@ import {
   ItemContainer,
   ItemDuration,
   ItemImage,
-  ItemIdLine,
   ItemVolunteers
 } from '../VTheme/ItemList'
 import { OpStatusStamp, OpStatus } from '../Op/OpStatus'
