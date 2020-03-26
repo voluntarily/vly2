@@ -10,8 +10,7 @@ import {
   ItemDuration,
   ItemLocation,
   ItemDate,
-  ItemImage,
-  ItemIdLine
+  ItemImage
 } from '../VTheme/ItemList'
 import moment from 'moment'
 import { OpType } from './OpType'

@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
-import OpList from '../../components/Op/OpList'
 import OpListSmall from '../../components/Op/OpListSmall'
 import OpAdd from '../../components/Op/OpAdd'
 import { FullPage, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
