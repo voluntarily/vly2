@@ -14,7 +14,7 @@ const getAllowedLinks = isAuthenticated =>
     .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
 
 const FooterBackground = styled.footer`
-  background-color: #fefefe;
+  background-color: #f3f3f3;
 `
 
 const FooterContainer = styled.div`
@@ -28,8 +28,28 @@ const FooterContainer = styled.div`
     padding: 0;
   }
 `
+
+const FooterGrid = styled.article`
+display: grid;
+grid-template-columns: 2fr 1fr 1fr;
+@media screen and (min-width: 1026px) and (max-width: 1281px) {
+   
+grid-template-columns: 2fr 1fr 1fr;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+
+  @media screen and (max-width: 768px) {
+
+    grid-template-columns: 1fr;
+    grid-row-gap: 2rem;
+  }
+`
+
 const FooterLogo = styled.img`
-  margin-top: 2rem;
+
   width: 2.5rem;
 `
 
@@ -37,12 +57,17 @@ const FooterText = styled.div`
   letter-spacing: -0.4px;
   font-size: 1rem;
   margin-top: 1rem;
+  width: 24rem;
+  @media screen and (max-width: 768px) {
+
+width: 100%;
+}
 `
 
 const FooterGridItemTitle = styled.h3`
-  font-weight: 700;
-  font-size: 1.5rem;
-  letter-spacing: -0.8px;
+  font-weight: 500;
+  font-size: 1.2rem;
+  letter-spacing: -0.2px;
   margin-bottom: 0.5rem;
   color: black;
   list-style: none;
@@ -52,9 +77,7 @@ const MenuWrapper = styled.ul`
   margin-bottom: 2rem;
   padding: 0;
 
-  @media screen and (min-width: 576px) {
-    height: 300px;
-  }
+ 
 `
 
 const MenuItem = styled.li`
@@ -63,10 +86,10 @@ list-style: none;
 
   a {
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #333333;
-    letter-spacing: -1.07px;
-    line-height: 40px;
+    letter-spacing: -0.2px;
+    line-height: 2;
 
 :hover {
   color: #6549AA;
@@ -96,86 +119,74 @@ const Footer = ({ isAuthenticated, ...props }) => (
       }}
     />
     <FooterContainer>
-      <FooterLogo src='/static/vlogo.svg' alt='voluntarily logo' />
-      <FooterText>
-        <P>
-          <FormattedMessage
-            id='footer.credit'
-            defaultMessage='Voluntarily is an awesome open source project run by the'
-            description='line in the footer that says we are supported by PFCT.'
-          />
-          &nbsp;
-          <a
-            href='https://www.pamfergusson.org.nz/'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Pam Fergusson Charitable Trust
-          </a>
-        </P>
-        <P>
-          <FormattedMessage
-            id='version'
-            defaultMessage='Version'
-            description='Source coder version label.'
-          />
-          :&nbsp;
-          <FormattedMessage
-            id='revision' // set in server.js
-            defaultMessage='local-build'
-            description='Source code revision, auto generated.'
-          >
-            {txt => <a href={'https://github.com/voluntarily/vly2/commit/' + txt.split(/[ \- _ ]+/)[0]} rel='noopener noreferrer' target='_blank'>{txt}</a>}
-          </FormattedMessage>
-        </P>
-      </FooterText>
+
       <Spacer />
-      <Row>
-        {/* <Col sm={12} lg={6}>
-          <FooterGridItemTitle>How it works</FooterGridItemTitle>
+      <FooterGrid>
+
+        <div>
+          <FooterLogo src='/static/vlogo.svg' alt='voluntarily logo' />
+          <FooterText>
+            <P>
+              <FormattedMessage
+                id='footer.credit'
+                defaultMessage='Voluntarily is an open source volunteering platform, built by volunteers, to help volunteers volunteer voluntarily for volunteering projects.'
+                description='line in the footer that says we are supported by PFCT.'
+              />
+              <br /><br />A part of the&nbsp;
+              <a
+                href='https://www.pamfergusson.org.nz/'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+            Pam Fergusson Charitable Trust
+              </a>
+            </P>
+
+          </FooterText>
+        </div>
+
+        <div>
+          <FooterGridItemTitle>Project</FooterGridItemTitle>
           <MenuWrapper>
 
-            <MenuItem><a href='/volunteers'>For Volunteers</a></MenuItem>
-            <MenuItem><a href='/teachers'>For Teachers</a></MenuItem>
-            <MenuItem><a href='/charities'>For Charities</a></MenuItem>
-            <MenuItem><a href='/business'>For Businesses</a></MenuItem>
-            <MenuItem><a href='/government'>For Governments</a></MenuItem>
-          </MenuWrapper>
-        </Col> */}
-
-        <Col sm={12} lg={6}>
-          <FooterGridItemTitle>Resources</FooterGridItemTitle>
-          <MenuWrapper>
-
+            <MenuItem><a href='https://blog.voluntarily.nz/get-involved' target='_blank' rel='noopener noreferrer'>Join the build</a></MenuItem>
             <MenuItem><a href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/17' target='_blank' rel='noreferrer noopener'>Suggest a Topic</a></MenuItem>
             <MenuItem>
               <a
-                href='https://blog.voluntarily.nz/'
+                href='https://voluntarily.statuspage.io'
                 target='_blank'
                 rel='noopener noreferrer'
-              >Blog
+              >System Status
               </a>
             </MenuItem>
             <MenuItem>
               <a
-                href='https://voluntarily.atlassian.net/servicedesk/customer/portals'
+                href='/terms'
                 target='_blank'
                 rel='noopener noreferrer'
-              >Help centre
+              >Terms and Conditions
               </a>
             </MenuItem>
             <MenuItem>
               <a
-                href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/12'
+                href='/terms/privacy'
                 target='_blank'
                 rel='noopener noreferrer'
-              >Contact Support
+              >Privacy Policy
+              </a>
+            </MenuItem>
+            <MenuItem>
+              <a
+                href='https://github.com/voluntarily/vly2'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Github
               </a>
             </MenuItem>
           </MenuWrapper>
-        </Col>
+        </div>
 
-        <Col sm={12} lg={6}>
+        <div>
           <FooterGridItemTitle>Social</FooterGridItemTitle>
           <MenuWrapper>
 
@@ -211,14 +222,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
               >Facebook
               </a>
             </MenuItem>
-            <MenuItem>
-              <a
-                href='https://www.messenger.com/t/voluntarilyhq'
-                target='_blank'
-                rel='noopener noreferrer'
-              >Messenger
-              </a>
-            </MenuItem>
+
             <MenuItem>
               <a
                 href='https://www.instagram.com/voluntarilyhq/'
@@ -228,57 +232,25 @@ const Footer = ({ isAuthenticated, ...props }) => (
               </a>
             </MenuItem>
           </MenuWrapper>
-        </Col>
+        </div>
 
-        <Col sm={12} lg={6}>
-          <FooterGridItemTitle>Project</FooterGridItemTitle>
-          <MenuWrapper>
-
-            <MenuItem><a href='/about'>About us</a></MenuItem>
-            <MenuItem>
-              <a
-                href='https://voluntarily.statuspage.io'
-                target='_blank'
-                rel='noopener noreferrer'
-              >Status
-              </a>
-            </MenuItem>
-            <MenuItem>
-              <a
-                href='https://github.com/voluntarily/vly2'
-                target='_blank'
-                rel='noopener noreferrer'
-              >Github Repo
-              </a>
-            </MenuItem>
-            <MenuItem>
-              <a
-                href='https://voluntarily.atlassian.net/wiki'
-                target='_blank'
-                rel='noopener noreferrer'
-              >Developer resources
-              </a>
-            </MenuItem>
-            <MenuItem>
-              <a
-                href='/terms'
-                target='_blank'
-                rel='noopener noreferrer'
-              >Terms and Conditions
-              </a>
-            </MenuItem>
-            <MenuItem>
-              <a
-                href='/terms/privacy'
-                target='_blank'
-                rel='noopener noreferrer'
-              >Privacy
-              </a>
-            </MenuItem>
-          </MenuWrapper>
-        </Col>
-      </Row>
+      </FooterGrid>
       <Spacer />
+      <P>
+        <FormattedMessage
+          id='version'
+          defaultMessage='Version'
+          description='Source coder version label.'
+        />
+          :&nbsp;
+        <FormattedMessage
+          id='revision' // set in server.js
+          defaultMessage='local-build'
+          description='Source code revision, auto generated.'
+        >
+          {txt => <a href={'https://github.com/voluntarily/vly2/commit/' + txt.split(/[ \- _ ]+/)[0]} rel='noopener noreferrer' target='_blank'>{txt}</a>}
+        </FormattedMessage>
+      </P>
       {/* <WomensRefuge /> */}
     </FooterContainer>
     {props.isAdmin && (
