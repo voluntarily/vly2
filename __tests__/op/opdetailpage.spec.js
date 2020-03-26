@@ -18,6 +18,7 @@ import sinon from 'sinon'
 import * as nextRouter from 'next/router'
 import { MockWindowScrollTo } from '../../server/util/mock-dom-helpers'
 import fetchMock from 'fetch-mock'
+import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 
 const locations = ['Auckland, Wellington, Christchurch']
 MockWindowScrollTo.replaceForTest(test, global)
@@ -354,7 +355,7 @@ test('display loading opportunity message when activity is loading', t => {
   t.is(wrapper.find('img').prop('src'), '/static/loading.svg')
 })
 
-test.serial('can create new Op from blank', t => {
+test('can create new Ask Op from blank', t => {
   // imitate new op state
   const newOpportunitiesData = {
     sync: false,
@@ -374,6 +375,45 @@ test.serial('can create new Op from blank', t => {
 
   const props = {
     isNew: true,
+    opType: OpportunityType.ASK,
+    me: t.context.me,
+    dispatch: t.context.mockStore.dispatch
+  }
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <OpDetailPageWithOps {...props} />
+    </Provider>
+  )
+
+  const saveButton = wrapper.find('#saveOpBtn').first()
+
+  t.context.defaultstore.opportunities = originalOpportunitiesData
+
+  t.true(saveButton.exists(), 'Save button should be found on page')
+  t.is(saveButton.text(), 'Save as draft')
+})
+
+test('can create new Offer Op from blank', t => {
+  // imitate new op state
+  const newOpportunitiesData = {
+    sync: false,
+    syncing: false,
+    loading: false,
+    data: [],
+    request: null
+  }
+  const originalOpportunitiesData = t.context.defaultstore.opportunities
+  t.context.defaultstore.opportunities = newOpportunitiesData
+
+  const opportunityToEdit = t.context.op
+  const myMock = makeFetchMock(opportunityToEdit._id)
+  myMock.post(API_URL + '/tags/', { body: { status: 200 } })
+  myMock.put(API_URL + '/opportunities/' + opportunityToEdit._id, { body: { status: 200 } })
+  reduxApi.use('fetch', adapterFetch(myMock))
+
+  const props = {
+    isNew: true,
+    opType: OpportunityType.OFFER,
     me: t.context.me,
     dispatch: t.context.mockStore.dispatch
   }
@@ -400,6 +440,7 @@ test('can cancel new Op from blank', t => {
 
   const props = {
     isNew: true,
+    opType: OpportunityType.ASK,
     me: t.context.me,
     dispatch: t.context.mockStore.dispatch
   }
@@ -425,6 +466,7 @@ test.serial('can create new Op from Activity', t => {
 
   const props = {
     isNew: true,
+    opType: OpportunityType.ASK,
     me: t.context.me,
     dispatch: t.context.mockStore.dispatch,
     actid: fromActivity._id
@@ -445,6 +487,7 @@ test.serial('can create new Op from Activity', t => {
 test('page loads when user is not signed in but does not show edit VP-499', t => {
   const props = {
     me: '',
+    opType: OpportunityType.ASK,
     dispatch: t.context.mockStore.dispatch
   }
   const wrapper = mountWithIntl(
