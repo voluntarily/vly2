@@ -17,8 +17,8 @@ export default async (req, res) => {
     Opportunity.countDocuments({ status: OpportunityStatus.ACTIVE, type: OpportunityType.OFFER }).exec(),
     Person.countDocuments({ }).exec(),
     Interest.countDocuments({ }).exec(),
-    Activity.countDocuments({status: ActivityStatus.ACTIVE}).exec()
-  ];
+    Activity.countDocuments({ status: ActivityStatus.ACTIVE }).exec()
+  ]
 
   return Promise.all(operations).then(
     ([askCount, offerCount, personCount, interestCount, activityCount]) =>
@@ -28,5 +28,5 @@ export default async (req, res) => {
         Interest: interestCount,
         Activity: activityCount
       })
-  );
+  )
 }
