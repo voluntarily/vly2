@@ -8,7 +8,9 @@ import cuid from 'cuid'
 const SummaryReport = () => {
   const initSummary = {
     Person: 0,
-    Opportunity: { ask: 0, offer: 0 }
+    Opportunity: { ask: 0, offer: 0 },
+    Interest: 0,
+    Activity: 0
   }
   const [summary, setSummary] = useState(initSummary)
   const [resets, setResets] = useState('')
@@ -24,13 +26,14 @@ const SummaryReport = () => {
   const stats = [
     { label: 'People', value: summary.Person },
     { label: 'Asks', value: summary.Opportunity.ask },
-    { label: 'Offers', value: summary.Opportunity.offer }
+    { label: 'Offers', value: summary.Opportunity.offer },
+    { label: 'Interests', value: summary.Interest },
+    { label: 'Activities', alue: summary.Activity }
   ]
 
   return (
     <FullPage>
       <h1>Summary Report</h1>
-      {/* <pre>{JSON.stringify(summary, 2)}</pre> */}
       <List
         grid={{ gutter: 16, column: 4 }}
         dataSource={stats}
