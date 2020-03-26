@@ -297,8 +297,8 @@ test('render volunteer home page - Active tab', t => {
 
   t.is(wrapper.find('h1').first().text(), 'Andrew Watkins')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Upcoming')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(1).text(), 'Your RequestsActivities you requested help from Volunteers with are listed below:')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(2).text(), 'Upcoming ActivitiesActivities you have offered to help out with are listed below:')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(1).text(), 'You are asking forActivities you requested help from Volunteers with are listed below:')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(2).text(), 'You offered to help withActivities you have offered to help out with are listed below:')
 
   const oplists = wrapper.find('OpList') // find 2 oplists on the home page
   t.is(oplists.length, 2)

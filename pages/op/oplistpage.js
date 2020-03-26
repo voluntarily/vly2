@@ -31,6 +31,7 @@ export const OpListPage = ({ opportunities, roles }) =>
         id='oplistpage.subtitle'
       />
     </PageBanner>
+    {/* <OpList ops={opportunities.data} /> */}
     <OpList ops={opportunities.data} />
   </FullPage>
 

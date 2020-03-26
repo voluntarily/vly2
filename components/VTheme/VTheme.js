@@ -14,31 +14,55 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 */
 
 export const PageBanner = styled.div`
-
-  margin: 8rem 0 2rem 0;
-  display: grid;
-  grid-template-columns: 4rem 1fr 22rem 11rem;
+ width: auto;
+  margin: 2rem 0 2rem 0;
+  display: inline-block;
+/* 
   padding: 1rem;
-  gap: 1rem;
-  align-self: center;
- 
   box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.7);
-  border-radius: 8px;
+  border-radius: 8px; */
+
+article {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+}
+
+
+img{
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
+    border-radius: 100%;
+    align-self: center;
+  }
+
+div{
+  margin-left: 1rem;
+  margin-right: 3rem;
+  align-self: center;
+}
 
 h1 {
   align-self: center;
   font-size: 1.5rem;
+  line-height: 1.5
+}
+p {
+  margin-top: -0.1rem;
+  font-size: 1.25rem;
+  color: #333;
 }
 
-  img{
-    width: 4rem;
-    border-radius: 100%;
-  }
  
   @media screen and (max-width: 767px) {
-    margin-top: 4rem;
-    grid-template-columns: calc(100vw - 4rem);
+    article {
+
     grid-gap: 0rem;
+  }
+  div {
+
+  margin-right: 0;
+  }
   }
 `
 export const AlertContainer = styled.div`
@@ -122,6 +146,12 @@ align-self: center;
     grid-template-columns: calc(100vw - 2rem);
   }
 
+`
+export const SmallOpGrid = styled.div`
+display: grid;
+grid-template-columns: 3rem 1fr;
+gap: 0.5rem;
+align-items: center;
 `
 
 export const OpSectionGrid = styled.div`
@@ -689,6 +719,87 @@ time {
 }
 `
 
+/* Small Card - an image followed by a title and some content
+*/
+export const SmallCard = styled.figure`
+
+-webkit-transition: all 0.28s;
+
+box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
+padding: 1rem;
+border-radius: 8px;
+margin-bottom: 0;
+
+a { text-decoration: none; }
+
+figcaption {
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+:hover {
+  transition: all 0.3s;
+  transform: scale(1.02);
+  border-radius: 8px;
+  h2 {
+    color: #6549aa;
+  }
+ 
+  figcaption {
+    transform: scale(0.96);
+  }
+}
+
+h2 {
+ 
+  font-size: 1rem;
+  vertical-align: middle;
+  color: #000;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  -webkit-transition: all 0.28s;
+  transition: all 0.28s;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.4;
+  -webkit-line-clamp: 3;
+
+}
+
+img {
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+ 
+  border-radius: 129px;
+  width: 3rem;
+  height: 3rem;
+ 
+  background-color: rgba(0, 0, 0, 0);
+  object-fit: cover;
+  overflow: hidden;
+  object-position: top;
+
+
+}
+
+time {
+  vertical-align: middle;
+  margin-bottom: 0px;
+  font-weight: 500;
+  font-size: 16px;
+  color: #585858;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  margin-block-start: 0;
+}
+`
+
 /* Fix for Op heading alignment */
 
 export const BannerDetail = styled.div`
@@ -698,6 +809,15 @@ align-self: center;
 ul {
   padding: 0;
   margin-bottom: 0;
+}
+small {
+
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #333;
+@media screen and (max-width: 768px) {
+  margin-top: 0.5rem;
+}
 }
 
 `

@@ -10,8 +10,7 @@ import {
   ItemDuration,
   ItemLocation,
   ItemDate,
-  ItemImage,
-  ItemIdLine
+  ItemImage
 } from '../VTheme/ItemList'
 import moment from 'moment'
 import { OpType } from './OpType'
@@ -47,10 +46,11 @@ const OpBanner = ({ op, children }) => {
           <ItemImage src={op.imgUrl} alt={op.name} />
         </Left>
         <BannerDetail>
-          <h1><OpType type={op.type} />: {op.name}</h1>
+          <small>{op.requestor.nickname} <OpType type={op.type} /> with</small>
+          <h1> {op.name}</h1>
           <ul>
-            <ItemIdLine item={op.offerOrg} path='orgs' />
-            <ItemIdLine item={op.fromActivity} path='acts' />
+            {/* <ItemIdLine item={op.offerOrg} path='orgs' />
+            <ItemIdLine item={op.fromActivity} path='acts' /> */}
           </ul>
           <ItemContainer>
             <ItemLocation location={op.location} />
@@ -69,6 +69,7 @@ const OpBanner = ({ op, children }) => {
 OpBanner.propTypes = {
   op: PropTypes.shape({
     name: PropTypes.string.isRequired,
+    requestor: PropTypes.object,
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     duration: PropTypes.string,

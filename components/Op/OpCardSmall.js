@@ -5,10 +5,10 @@
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
-import { Card, DescriptionWrapper, TagState } from '../VTheme/VTheme'
+import { SmallCard, SmallOpGrid, TagState } from '../VTheme/VTheme'
 import { Icon } from 'antd'
 import styled from 'styled-components'
-
+import { OpType } from './OpType'
 const getOpPageURL = (isArchived, opid) => {
   if (isArchived) {
     return `/archivedops/${opid}`
@@ -16,11 +16,6 @@ const getOpPageURL = (isArchived, opid) => {
     return `/ops/${opid}`
   }
 }
-
-const ImageWrapper = styled.div`
-  position: relative;
-
-`
 
 const StyledIcon = styled(Icon)`
   font-size: 1rem;
@@ -30,9 +25,7 @@ const StyledIcon = styled(Icon)`
 `
 
 // todo if image is not present then use a fallback.
-const OpCard = ({ op }) => {
-  const cardImage = op.imgUrl ? op.imgUrl : '/static/missingimage.svg'
-  const draft = op.status === 'draft' ? 'DRAFT: ' : ''
+const OpCardSmall = ({ op }) => {
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
   const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA - ddd DD/MM/YY') : ''
   const startLocation = op.location ? `📍 ${op.location}` : ''
@@ -48,54 +41,41 @@ const OpCard = ({ op }) => {
     }
   })(op.interest)
 
-  let orgName = ''
+  // let orgName = ''
 
-  if (op.offerOrg) {
-    orgName = <span>{op.offerOrg.name}</span>
-  }
+  // if (op.offerOrg) {
+  //   orgName = <span>{op.offerOrg.name}</span>
+  // }
 
   return (
-    <Card>
+    <SmallCard>
       <Link href={getOpPageURL(isArchived, op._id)}>
         <a>
-          <ImageWrapper>
-            <img src={cardImage} alt={op.name} />
-            {/* <OpTypeStamp type={op.type} /> */}
-          </ImageWrapper>
-          <figcaption>
-            <h1>
+          <SmallOpGrid>
 
-              {draft}
-              {op.name}
-            </h1>
+            <img src={op.requestor.imgUrl} />
+            <figcaption>
+              {/* <p>  {op.subtitle}</p> */}
+              <h2>
+                {op.requestor.nickname} <OpType type={op.type} /> <br />
 
-            <p> {startLocation}</p>
-            <p> {startTime} </p>
-            <p> {startDuration}</p>
-            <DescriptionWrapper>
-              {op.subtitle}<br />
-              {/* <OpType type={op.type} /> */}
-            </DescriptionWrapper>
+              </h2>
 
-            {orgName &&
-              <>
-                <DescriptionWrapper>
+              <p> {startLocation}</p>
+              <p> {startTime} </p>
+              <p> {startDuration}</p>
 
-                  <i>
-                    {orgName}
-                  </i>
-                </DescriptionWrapper>
-              </>}
-            {interestIcon}
+              {interestIcon}
 
-          </figcaption>
+            </figcaption>
+          </SmallOpGrid>
         </a>
       </Link>
-    </Card>
+    </SmallCard>
   )
 }
 
-OpCard.propTypes = {
+OpCardSmall.propTypes = {
   op: PropTypes.shape({
     name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
@@ -103,8 +83,9 @@ OpCard.propTypes = {
     date: PropTypes.arrayOf.string,
     location: PropTypes.string,
     duration: PropTypes.string,
+    requestor: PropTypes.object,
     _id: PropTypes.string.isRequired
   })
 }
 
-export default OpCard
+export default OpCardSmall

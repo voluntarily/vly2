@@ -5,51 +5,51 @@ container:
       image: mongo:latest
       port: 27017
 
-lint_task:
-  node_modules_cache:
-    folder: node_modules
-    fingerprint_script: cat package-lock.json
-    populate_script: npm ci
-  lint_script: npm run lint
+# lint_task:
+#   node_modules_cache:
+#     folder: node_modules
+#     fingerprint_script: cat package-lock.json
+#     populate_script: npm ci
+#   lint_script: npm run lint
 
-test_task:
-  use_compute_credits: $CIRRUS_USER_COLLABORATOR == 'true'
-  env:
-    # For some reason AVA/Cirrus get confused about not all tasks being test tasks, so we override the defaults to
-    # force AVA to run all the tests in one task.
-    CI_NODE_INDEX: 0
-    CI_NODE_TOTAL: 1
-    CODECOV_TOKEN: ENCRYPTED[5f7e0e7856e3710c6c79d4affd4781a9cafd47f648896a67af570de4cd9f11d09e56bd6758de06a27867ebf68ce28bf6]
-  node_modules_cache:
-    folder: node_modules
-    fingerprint_script: cat package-lock.json
-    populate_script: MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" MONGOMS_VERSION="4.0.5" MONGOMS_DISABLE_POSTINSTALL=1 npm ci
-  test_script:
-    - npm run test-all -- --tap
-    - unset CIRRUS_CI
-    - ./node_modules/codecov/bin/codecov --disable=gcov
-  container:
-    cpu: 4
+# test_task:
+#   use_compute_credits: $CIRRUS_USER_COLLABORATOR == 'true'
+#   env:
+#     # For some reason AVA/Cirrus get confused about not all tasks being test tasks, so we override the defaults to
+#     # force AVA to run all the tests in one task.
+#     CI_NODE_INDEX: 0
+#     CI_NODE_TOTAL: 1
+#     CODECOV_TOKEN: ENCRYPTED[5f7e0e7856e3710c6c79d4affd4781a9cafd47f648896a67af570de4cd9f11d09e56bd6758de06a27867ebf68ce28bf6]
+#   node_modules_cache:
+#     folder: node_modules
+#     fingerprint_script: cat package-lock.json
+#     populate_script: MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" MONGOMS_VERSION="4.0.5" MONGOMS_DISABLE_POSTINSTALL=1 npm ci
+#   test_script:
+#     - npm run test-all -- --tap
+#     - unset CIRRUS_CI
+#     - ./node_modules/codecov/bin/codecov --disable=gcov
+#   container:
+#     cpu: 4
 
-lang_task:
-  node_modules_cache:
-    folder: node_modules
-    fingerprint_script: cat package-lock.json
-    populate_script: MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" MONGOMS_VERSION="4.0.5" MONGOMS_DISABLE_POSTINSTALL=1 npm ci
-  build_lang_script:
-    - cp lang/en.json lang/en.orig.json
-    - npm run build:lang
-    - diff lang/en.json lang/en.orig.json
+# lang_task:
+#   node_modules_cache:
+#     folder: node_modules
+#     fingerprint_script: cat package-lock.json
+#     populate_script: MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" MONGOMS_VERSION="4.0.5" MONGOMS_DISABLE_POSTINSTALL=1 npm ci
+#   build_lang_script:
+#     - cp lang/en.json lang/en.orig.json
+#     - npm run build:lang
+#     - diff lang/en.json lang/en.orig.json
 
-systemtest_task:
-  node_modules_cache:
-    folder: node_modules
-    fingerprint_script: cat package-lock.json
-    populate_script: MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" MONGOMS_VERSION="4.0.5" MONGOMS_DISABLE_POSTINSTALL=1 npm ci
-  test_script:
-    - apt-get update
-    - apt-get install -y firefox-esr
-    - npm run end-to-end-test
+# systemtest_task:
+#   node_modules_cache:
+#     folder: node_modules
+#     fingerprint_script: cat package-lock.json
+#     populate_script: MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" MONGOMS_VERSION="4.0.5" MONGOMS_DISABLE_POSTINSTALL=1 npm ci
+#   test_script:
+#     - apt-get update
+#     - apt-get install -y firefox-esr
+#     - npm run end-to-end-test
 
 build_test_docker_builder:
   only_if: $CIRRUS_BRANCH != 'master'
@@ -58,10 +58,10 @@ build_test_docker_builder:
 
 prod_docker_docker_builder:
   only_if: $CIRRUS_BRANCH == 'master'
-  depends_on:
-    - test
-    - systemtest
-    - lint
+  # depends_on:
+  #   - test
+  #   - systemtest
+  #   - lint
   env:
     AWS_ACCOUNT_ID: 585172581592 # voluntarily-deployment
     AWS_ACCESS_KEY_ID: AKIAYQPYA7TMKZS4NM6W

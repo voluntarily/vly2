@@ -1,8 +1,10 @@
-import OpList from '../Op/OpList'
+import OpListSmall from '../Op/OpListSmall'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import ReduxLoading from '../Loading'
 import { FormattedMessage } from 'react-intl'
+import { ActivityContainer, Spacer } from '../VTheme/VTheme'
+import { OpTypeTitle } from '../Op/OpType'
 
 const actRequestsNotFound = (
   <FormattedMessage
@@ -30,5 +32,5 @@ export const ActOpsPanel = ({ actId, type }) => {
     return <p>{actRequestsNotFound}</p>
   }
 
-  return <OpList ops={opportunities.filter(op => op.type === type)} />
+  return <><Spacer /><ActivityContainer><h2> <OpTypeTitle type={type} /></h2><OpListSmall ops={opportunities.filter(op => op.type === type)} /></ActivityContainer></>
 }
