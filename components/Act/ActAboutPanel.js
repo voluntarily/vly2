@@ -6,7 +6,7 @@ import Html from '../VTheme/Html'
 import { TagContainer } from '../VTheme/ItemList'
 import { ProfilePanel } from '../VTheme/Profile'
 import { OpSectionGrid } from '../VTheme/VTheme'
-import { Alert, Divider } from 'antd'
+import { Divider } from 'antd'
 import { ShareLinks } from '../Op/OpShareLinks'
 import { config } from '../../config/clientConfig'
 import { FormattedMessage } from 'react-intl'
@@ -18,7 +18,7 @@ export function ActAboutPanel ({ act }) {
       <OpSectionGrid>
         <div>
           <h2><FormattedMessage id='ActAboutPanel.subtitle' defaultMessage='About this activity' /></h2>
-          {act.subtitle && <Alert message={act.subtitle} type='info' showIcon />}
+          {/* {act.subtitle && <Alert message={act.subtitle} type='info' showIcon />} */}
         </div>
         <div>
           <Html>
