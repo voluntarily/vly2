@@ -2,11 +2,11 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Person from '../person'
-const { PersonCategory } = require('./person.constants')
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../__tests__/person.fixture'
 import objectid from 'objectid'
+const { PersonCategory } = require('../person.constants')
 test.before('before connect to database', async (t) => {
   try {
     t.context.memMongo = new MemoryMongo()
