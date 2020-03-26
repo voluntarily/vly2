@@ -48,7 +48,8 @@ export const NavigationV = ({ items, router }) => {
     >
       <SubMenu
         key='sub1'
-        title='☰'
+        title='Menu'
+        style={{ textAlign: 'right', fontWeight: '700' }}
       >
         {items.map(item => (
           <Item key={item.key}>
