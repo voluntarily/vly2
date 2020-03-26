@@ -64,7 +64,7 @@ const OpCard = ({ op }) => {
           </ImageWrapper>
           <figcaption>
             <h1>
-              <OpType type={op.type} />:&nbsp;
+
               {draft}
               {op.name}
             </h1>
@@ -73,7 +73,8 @@ const OpCard = ({ op }) => {
             <p> {startTime} </p>
             <p> {startDuration}</p>
             <DescriptionWrapper>
-              {op.subtitle}
+              {op.subtitle}<br />
+              <OpType type={op.type} />
             </DescriptionWrapper>
 
             {orgName &&
