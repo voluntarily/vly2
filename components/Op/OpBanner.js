@@ -47,7 +47,8 @@ const OpBanner = ({ op, children }) => {
           <ItemImage src={op.imgUrl} alt={op.name} />
         </Left>
         <BannerDetail>
-          <h1><OpType type={op.type} />: {op.name}</h1>
+          <small><OpType type={op.type} /></small>
+          <h1> {op.name}</h1>
           <ul>
             <ItemIdLine item={op.offerOrg} path='orgs' />
             <ItemIdLine item={op.fromActivity} path='acts' />

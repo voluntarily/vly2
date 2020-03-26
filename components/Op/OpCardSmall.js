@@ -17,11 +17,6 @@ const getOpPageURL = (isArchived, opid) => {
   }
 }
 
-const ImageWrapper = styled.div`
-  position: relative;
-
-`
-
 const StyledIcon = styled(Icon)`
   font-size: 1rem;
   margin-right: 0.5rem;
@@ -58,10 +53,6 @@ const OpCardSmall = ({ op }) => {
     <Card>
       <Link href={getOpPageURL(isArchived, op._id)}>
         <a>
-          <ImageWrapper>
-            <img src={cardImage} alt={op.name} />
-            {/* <OpTypeStamp type={op.type} /> */}
-          </ImageWrapper>
           <figcaption>
             <h1>
               <OpType type={op.type} />:&nbsp;

@@ -2,7 +2,7 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import OpCard from './OpCard'
+import OpCardSmall from './OpCardSmall'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 
@@ -33,7 +33,7 @@ const OpList = ({ ops, ...props }) => (
     {ops ? (
       ops.map((op, index) =>
         <CardWrapper key={index}>
-          <OpCard size='Small' op={op} />
+          <OpCardSmall size='Small' op={op} />
         </CardWrapper>
       )
     ) : (
