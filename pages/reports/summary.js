@@ -28,7 +28,7 @@ const SummaryReport = () => {
     { label: 'Asks', value: summary.Opportunity.ask },
     { label: 'Offers', value: summary.Opportunity.offer },
     { label: 'Interests', value: summary.Interest },
-    { label: 'Activities', alue: summary.Activity }
+    { label: 'Activities', value: summary.Activity }
   ]
 
   return (
