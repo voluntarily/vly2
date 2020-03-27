@@ -140,6 +140,21 @@ const Footer = ({ isAuthenticated, ...props }) => (
             Pam Fergusson Charitable Trust
               </a>
             </P>
+            <P>
+              <FormattedMessage
+                id='version'
+                defaultMessage='Version'
+                description='Source coder version label.'
+              />
+          :&nbsp;
+              <FormattedMessage
+                id='revision' // set in server.js
+                defaultMessage='local-build'
+                description='Source code revision, auto generated.'
+              >
+                {txt => <a href={'https://github.com/voluntarily/vly2/commit/' + txt.split(/[ \- _ ]+/)[0]} rel='noopener noreferrer' target='_blank'>{txt}</a>}
+              </FormattedMessage>
+            </P>
 
           </FooterText>
         </div>
@@ -235,21 +250,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
 
       </FooterGrid>
       <Spacer />
-      <P>
-        <FormattedMessage
-          id='version'
-          defaultMessage='Version'
-          description='Source coder version label.'
-        />
-          :&nbsp;
-        <FormattedMessage
-          id='revision' // set in server.js
-          defaultMessage='local-build'
-          description='Source code revision, auto generated.'
-        >
-          {txt => <a href={'https://github.com/voluntarily/vly2/commit/' + txt.split(/[ \- _ ]+/)[0]} rel='noopener noreferrer' target='_blank'>{txt}</a>}
-        </FormattedMessage>
-      </P>
+
       {/* <WomensRefuge /> */}
     </FooterContainer>
     {props.isAdmin && (
