@@ -23,31 +23,28 @@ const getText = locale => {
 }
 
 const TermsSection = styled.div`
-  width: 72rem;
   margin: 0 0;
 
   h1 {
     font-size: 3rem;
-    letter-spacing: -3px;
     font-weight: bold;
     color: gray;
   }
   h3 {
     font-size: 2rem;
-    letter-spacing: -3px;
   }
   p {
     font-size: 1rem;
-    letter-spacing: -1.3px;
     font-weight: 400;
     color: #333;
+
+    letter-spacing: 2;
     padding-bottom: 0.5rem;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     width: calc(100vw - 4rem);
     margin: 2rem 0 2rem 0;
-    letter-spacing: -01px;
     h1 {
       font-size: 2.5rem;
     }

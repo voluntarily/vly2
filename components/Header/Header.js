@@ -102,7 +102,7 @@ const Header = ({ isAuthenticated, me, ...props }) => {
   const intl = useIntl()
   let notice = intl.formatMessage({ id: 'notice', defaultMessage: 'none' })
   if (notice === 'none') notice = '' // wipe notice if its set to none
-  const height = notice ? '112px' : '56px'
+  const height = '56px'
   const headerColor = isAuthenticated ? me.role.includes(Role.TESTER) ? 'solid 10px #faad14' : me.role.includes(Role.ADMIN) ? 'solid 10px #7826ff' : 'none' : 'none'
   const headerStyle = {
     borderTop: headerColor,
