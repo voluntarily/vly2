@@ -249,7 +249,8 @@
       "reference",
       "systemtest",
       "x",
-      "public"
+      "public",
+      "test-codecept"
     ],
     "reporter": [
       "lcov",
