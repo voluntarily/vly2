@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
 import { P, Spacer } from '../VTheme/VTheme'
 import links from './FooterMenu'
-// import WomensRefuge from './WomensRefuge.js'
+import WomensRefuge from './WomensRefuge.js'
 
 const getAllowedLinks = isAuthenticated =>
   links()
@@ -90,12 +90,13 @@ list-style: none;
     letter-spacing: -0.2px;
     line-height: 2;
 
-:hover {
-  color: #6549AA;
-}
+    :hover {
+      color: #6549AA;
+    }
 
   }
 `
+
 const Footer = ({ isAuthenticated, ...props }) => (
   <FooterBackground>
     <script
@@ -247,7 +248,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
             </MenuItem>
           </MenuWrapper>
         </div>
-
+        <WomensRefuge />
       </FooterGrid>
       <Spacer />
 
