@@ -19,7 +19,7 @@ export const SidebarGrid = styled.div`
   overflow: visible;
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
-    grid-template-columns: repeat(auto-fit, 18.5rem);
+    grid-template-columns: none;
     justify-content: start;
     justify-items: center;
   }
@@ -78,7 +78,16 @@ export const ActListSection = () => {
       <SidebarGrid>
         <ActMenu acts={acts} onClick={handleMenu} />
         <List
-          grid={{ gutter: 16, column: 3 }}
+          // grid={{ gutter: 16, column: 3 }}
+          grid={{
+            gutter: 16,
+            xs: 1,
+            sm: 2,
+            md: 2,
+            lg: 3,
+            xl: 3,
+            xxl: 3
+          }}
           dataSource={acts}
           loading={activities.loading}
           pagination={{
