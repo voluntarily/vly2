@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { I } = inject()
 // Add in your custom step files
 const loginPage = require('../pages/LoginPage')

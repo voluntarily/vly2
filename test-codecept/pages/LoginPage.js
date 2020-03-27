@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const { I } = inject()
 
 class LoginPage {}

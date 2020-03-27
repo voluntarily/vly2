@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const { expect } = require('chai')
 const { I } = inject()
 
