@@ -33,13 +33,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-    - name: Install AWS CLI          
-      run: |
-        pip install awscli
-        wget https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest -O ./ecs-cli
-        chmod +x ./ecs-cli
-        mv ./ecs-cli /usr/local/bin/
-        which ecs-cli        
     - name: build
       run: ./x/aws/buildimage
     - name: deploy
