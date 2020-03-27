@@ -239,7 +239,7 @@ const getOptions = (status) => {
       return {
         showStatus: false,
         showAcceptButton: true,
-        acceptButtonText: <FormattedMessage id='nointerest.acceptButtonText' defaultMessage='Get Involved' description='Button allowing volunteer to express interest in an opportunity' />,
+        acceptButtonText: <FormattedMessage id='nointerest.acceptButtonText' defaultMessage='Offer to help' description='Button allowing volunteer to express interest in an opportunity' />,
         acceptFormTitle: <FormattedMessage id='nointerest.acceptFormTitle' defaultMessage='How do you want to get involved?' description='Heading displayed on form allowing volunteer to express interest in an opportunity' />,
         acceptFormPrompt: <FormattedMessage id='nointerest.acceptFormPrompt' defaultMessage='Let us know how you want to get involved or what you have to offer and an organizer will get in touch with you.' description='Sub-heading displayed on form allowing volunteer to express interest in an opportunity' />,
         acceptNotifyHeading: <FormattedMessage id='nointerest.acceptNotifyHeading' defaultMessage='Thank you for expressing your interest!' description='Heading on express-interest form when volunteer has already expressed interest' />,
