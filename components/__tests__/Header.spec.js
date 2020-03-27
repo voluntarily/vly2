@@ -6,17 +6,15 @@ import withMockRoute from '../../server/util/mockRouter'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 
-const mockStore = configureStore()(
-  {
-    session: {
-      isAuthenticated: false
-    }
-  }
-)
-
 test('renders the Header and Navigation for anon user', t => {
   const RoutedHeader = withMockRoute(Header, '/about')
-  // test searching
+  const mockStore = configureStore()(
+    {
+      session: {
+        isAuthenticated: false
+      }
+    }
+  )
 
   const wrapper = mountWithIntl(
     <Provider store={mockStore}>
@@ -41,7 +39,8 @@ test('renders the Header and Navigation for authenticated user', t => {
   const mockStoreAuth = configureStore()(
     {
       session: {
-        isAuthenticated: true
+        isAuthenticated: true,
+        me: { name: 'Mr Admin', role: ['Admin'], email: 'test123@abc.com', nickname: 'slat' }
       }
     }
   )
