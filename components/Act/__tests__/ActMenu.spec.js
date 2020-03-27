@@ -1,12 +1,19 @@
 import React from 'react'
 import test from 'ava'
 import { renderWithIntl } from '../../../lib/react-intl-test-helper'
+import acts from '../../../server/api/activity/__tests__/activity.fixture'
+import objectid from 'objectid'
 
 import ActMenu from '../ActMenu'
 
-// TO DO: Fix test as it is currently a false positive.
+test.before('Setup fixtures', (t) => {
+  // not using mongo or server here so faking ids
+  acts.map(p => { p._id = objectid().toString() })
+  t.context.acts = acts
+})
 
 test('render the activity menu headers', t => {
-  const wrapper = renderWithIntl(<ActMenu />)
-  t.truthy(wrapper.find('Discover'))
+  const wrapper = renderWithIntl(<ActMenu acts={t.context.acts} />)
+  t.true(wrapper.exists('.ant-menu-item-group-title'))
+  t.is(wrapper.find('li').length, 3)
 })
