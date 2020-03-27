@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { ProfileSection, ProfileSectionTitle } from '../VTheme/Profile'
 import Loading from '../Loading'
 import OpList from './OpList'
+import { Divider } from 'antd'
 
 /* ActiveOpsSection
   shows the list of opportunities currently in draft and active mode
@@ -22,17 +23,20 @@ export const ActiveOpsSection = () => {
   const ops = opportunities.data
   if (!ops.length) return null
   return (
-    <ProfileSection>
-      <ProfileSectionTitle>
-        <FormattedMessage
-          id='ActivOpsSection.title'
-          defaultMessage='You are asking for'
-          decription='Subtitle for teacher home page for active opportunities that have been hosted'
-        />
-        <small>Activities you requested help from Volunteers with are listed below:</small>
-      </ProfileSectionTitle>
-      <OpList ops={ops} />
-    </ProfileSection>
+    <>
+      <ProfileSection>
+        <ProfileSectionTitle>
+          <FormattedMessage
+            id='ActivOpsSection.title'
+            defaultMessage='You are asking for'
+            decription='Subtitle for teacher home page for active opportunities that have been hosted'
+          />
+          <small>Activities you requested help from Volunteers with are listed below:</small>
+        </ProfileSectionTitle>
+        <OpList ops={ops} />
+      </ProfileSection>
+      <Divider />
+    </>
   )
 }
 

@@ -7,6 +7,7 @@ import { ProfileSection, ProfileSectionTitle } from '../VTheme/Profile'
 import { createSelector } from 'reselect'
 import Loading from '../Loading'
 import OpList from './OpList'
+import { Divider } from 'antd'
 
 /* InterestedOpsSection
   shows the list of opportunities currently in draft and active mode
@@ -39,7 +40,8 @@ export const InterestedOpsSection = () => {
   const ops = useSelector(selectInterestedOps)
   if (!ops.length) return null
   return (
-    <ProfileSection>
+    <>
+      <ProfileSection>
       <ProfileSectionTitle>
         <FormattedMessage
           id='interestedOpsSection.title'
@@ -50,6 +52,8 @@ export const InterestedOpsSection = () => {
       </ProfileSectionTitle>
       <OpList ops={ops} />
     </ProfileSection>
+      <Divider />
+    </>
   )
 }
 
