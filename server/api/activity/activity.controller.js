@@ -32,7 +32,7 @@ const listActivities = async (req, res) => {
       const regexSearch = escapeRegex(search)
       const searchExpression = new RegExp(regexSearch, 'i')
       // find any organization matching search
-      const matchingOrgIds = await Organisation.find({ name: searchExpression }, '_id').exec()
+      const matchingOrgIds = await Organisation.find({ name: searchExpression }, '_id').lean()
 
       // split around one or more whitespace characters
       const keywordArray = search.split(/\s+/)
@@ -65,6 +65,7 @@ const listActivities = async (req, res) => {
         .accessibleBy(req.ability, Action.LIST)
         .find(query)
         .select(select)
+        .populate('offerOrg', 'name')
         .sort(sort)
         .lean()
 

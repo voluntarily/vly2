@@ -1,70 +1,101 @@
-/*
-  Smart component. Given a filter gets a list of activities
-  and displays them in a grid. Clicking on a panel links to a
-  details page.
-*/
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import ActList from '../Act/ActList'
-import reduxApi, { withActs } from '../../lib/redux/reduxApi'
-import Loading from '../Loading'
 
-// TODO: [VP-131] use redux instead of local state.
-class ActListSection extends Component {
-  async loadData (search) {
-    // Get all Acts
-    try {
-      // TODO: [VP-128] document how to set the parameters correctly
-      // TODO: [VP-129] filter should be passed in here and translated into the query
+import { useState, useEffect } from 'react'
+import reduxApi from '../../lib/redux/reduxApi'
+import { useDispatch, useSelector } from 'react-redux'
+import ActSearchInput from './ActSearchInput'
+import ActMenu from './ActMenu'
+import ActCard from './ActCard'
+import styled from 'styled-components'
+import { List } from 'antd'
+import { useRouter } from 'next/router'
 
-      const filters = {}
+const escapeRegex = require('../../server/util/regexUtil')
 
+export const SidebarGrid = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-columns: 18.5rem 1fr;
+  grid-gap: 2rem;
+  overflow: visible;
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    grid-template-columns: repeat(auto-fit, 18.5rem);
+    justify-content: start;
+    justify-items: center;
+  }
+
+  @media screen and (max-width: 767px) {
+    grid-template-columns: calc(100vw - 2rem);
+    grid-gap: 0rem;
+  }
+` // end grid
+
+/**
+ * initial filter passed in from page URL params
+ * @param {*} filter format { search: 'keywords', orgs: [offerOrgs]}
+ */
+export const ActListSection = () => {
+  const router = useRouter()
+  const [search, setSearch] = useState(router.query.search)
+  const [selectedOrg, setSelectedOrg] = useState()
+
+  const activities = useSelector(
+    state => state.activities // list of ops I own
+  )
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const getActivities = async () => {
+      const query = { }
       if (search) {
-        filters.search = search
+        query.search = search
       }
+      if (selectedOrg) {
+        query.q = JSON.stringify({ offerOrg: selectedOrg })
+      }
+      await dispatch(reduxApi.actions.activities.get(query))
+    }
+    getActivities()
+  }, [search, selectedOrg])
 
-      return await this.props.dispatch(reduxApi.actions.activities.get(filters))
-    } catch (err) {
-      // console.error('error in getting acts', err)
+  const handleSearch = e => {
+    setSearch(e)
+    if (e) {
+      const value = escapeRegex(e)
+      router.replace(router.pathname, { query: { search: value } }, { shallow: true })
     }
   }
 
-  async componentDidUpdate (prevProps) {
-    if (prevProps.search !== this.props.search) {
-      await this.loadData(this.props.search)
-    }
+  const handleMenu = e => {
+    // toggle the selected org
+    setSelectedOrg(selectedOrg === e.key ? null : (e.key))
   }
+  const acts = activities.data
 
-  async componentDidMount () {
-    await this.loadData(this.props.search)
-  }
-
-  render () {
-    if (!this.props.activities.sync) {
-      return <Loading label='activities' entity={this.props.activities} />
-    }
-
-    // TODO: [VP-130] take out the search filter here line in ActListSection and pass in a property instead
-    return (
-      <section>
-        <ActList acts={this.props.activities.data} />
-      </section>)
-  }
+  return (
+    <>
+      <ActSearchInput value={search} onSearch={handleSearch} loading={activities.loading} />
+      <SidebarGrid>
+        <ActMenu acts={acts} onClick={handleMenu} />
+        <List
+          grid={{ gutter: 16, column: 3 }}
+          dataSource={acts}
+          loading={activities.loading}
+          pagination={{
+            defaultCurrent: 1,
+            defaultPageSize: 12,
+            hideOnSinglePage: true
+            // size: 'small'
+          }}
+          renderItem={(act) => (
+            <List.Item>
+              <ActCard act={act} />
+            </List.Item>
+          )}
+        />,
+      </SidebarGrid>
+    </>
+  )
 }
 
-ActListSection.propTypes = {
-  acts: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequire,
-    subtitle: PropTypes.string,
-    imgUrl: PropTypes.any,
-    description: PropTypes.string,
-    duration: PropTypes.string,
-    status: PropTypes.string,
-    _id: PropTypes.string.isRequired
-  })), // optional as we can show an empty list and data may arrive async
-  dispatch: PropTypes.func.isRequired,
-  search: PropTypes.string
-}
-
-export const ActListSectionTest = ActListSection
-export default withActs(ActListSection)
+export default ActListSection

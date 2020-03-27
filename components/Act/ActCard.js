@@ -14,7 +14,7 @@ const { ASK, OFFER } = OpportunityType
 const ActCard = ({ act, onPress, ...props }) => {
   const cardImage = act.imgUrl ? act.imgUrl : '/static/missingimage.svg'
   return (
-    <Card>
+    <Card style={{ minHeight: '22rem' }}>
       <Link href={`/acts/${act._id}`}>
         <a>
           <div>

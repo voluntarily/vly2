@@ -49,12 +49,12 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }, ...props) => (
         {canEdit
           ? (
             <Button id='editPersonBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={personEdit}>
-              <FormattedMessage id='person.edit' defaultMessage='Edit' description='Button to edit a person' />
+              <FormattedMessage id='PersonDetail.edit' defaultMessage='Edit' description='Button to edit a person' />
             </Button>)
           : (
             <Button style={{ float: 'right' }} type='primary' shape='round' onClick={panelEdit}>
               <FormattedMessage
-                id='editPerson'
+                id='PersonDetail.panel.edit'
                 defaultMessage='Edit'
                 description='Button to edit an person on PersonDetails page'
               />
