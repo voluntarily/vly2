@@ -18,7 +18,7 @@ export const ActSearchInput = ({ value, onSearch, loading }) =>
       enterButton
       loading={loading}
       size='large'
-      defaultvalue={value}
+      defaultValue={value}
       onSearch={onSearch}
       maxLength={100}
       allowClear

@@ -5,21 +5,8 @@ import { FullPage, PageBannerNoTabs, PageBannerButtons } from '../../components/
 import publicPage from '../../hocs/publicPage'
 import ActAdd from '../../components/Act/ActAdd'
 import ActListSection from '../../components/Act/ActListSection'
-// const escapeRegex = require('../../server/util/regexUtil')
 
-// const handleSearch = (value) => {
-//   if (!value) { return false }
-//   value = escapeRegex(value)
-
-//   Router.push({
-//     pathname: '/acts',
-//     query: {
-//       search: value
-//     }
-//   })
-// }
-
-export const ActListPage = ({ activities }) =>
+export const ActListPage = () =>
   <FullPage>
     <Helmet>
       <title>Activites - Voluntarily</title>

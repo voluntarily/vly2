@@ -7,6 +7,10 @@ import ActMenu from './ActMenu'
 import ActCard from './ActCard'
 import styled from 'styled-components'
 import { List } from 'antd'
+import { useRouter } from 'next/router'
+
+const escapeRegex = require('../../server/util/regexUtil')
+
 export const SidebarGrid = styled.div`
   position: relative;
   display: grid;
@@ -26,25 +30,13 @@ export const SidebarGrid = styled.div`
   }
 ` // end grid
 
-// const escapeRegex = require('../../server/util/regexUtil')
-
-// const handleSearch = (value) => {
-//   if (!value) { return false }
-//   value = escapeRegex(value)
-
-//   Router.push({
-//     pathname: '/acts',
-//     query: {
-//       search: value
-//     }
-//   })
-// }
 /**
  * initial filter passed in from page URL params
  * @param {*} filter format { search: 'keywords', orgs: [offerOrgs]}
  */
-export const ActListSection = ({ filter, onChange }) => {
-  const [search, setSearch] = useState('')
+export const ActListSection = () => {
+  const router = useRouter()
+  const [search, setSearch] = useState(router.query.search)
   const [selectedOrg, setSelectedOrg] = useState()
 
   const activities = useSelector(
@@ -54,7 +46,10 @@ export const ActListSection = ({ filter, onChange }) => {
 
   useEffect(() => {
     const getActivities = async () => {
-      const query = { search }
+      const query = { }
+      if (search) {
+        query.search = search
+      }
       if (selectedOrg) {
         query.q = JSON.stringify({ offerOrg: selectedOrg })
       }
@@ -65,6 +60,10 @@ export const ActListSection = ({ filter, onChange }) => {
 
   const handleSearch = e => {
     setSearch(e)
+    if (e) {
+      const value = escapeRegex(e)
+      router.replace(router.pathname, { query: { search: value } }, { shallow: true })
+    }
   }
 
   const handleMenu = e => {
