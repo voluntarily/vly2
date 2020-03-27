@@ -19,17 +19,14 @@ const TermsSection = styled.div`
 
   h1 {
     font-size: 3rem;
-    letter-spacing: -3px;
     font-weight: bold;
     color: gray;
   }
   h3 {
     font-size: 2rem;
-    letter-spacing: -3px;
   }
   p {
     font-size: 1rem;
-    letter-spacing: -1.3px;
     font-weight: 400;
     color: #333;
     padding-bottom: 0.5rem;
@@ -38,7 +35,6 @@ const TermsSection = styled.div`
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     width: calc(100vw - 4rem);
     margin: 2rem 0 2rem 0;
-    letter-spacing: -01px;
     h1 {
       font-size: 2.5rem;
     }
@@ -50,7 +46,6 @@ const TermsSection = styled.div`
 
     h1 {
       font-size: 2rem;
-      letter-spacing: -1.5px;
     }
 
     p {
