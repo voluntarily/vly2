@@ -33,6 +33,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
+    - name: Check out
+      uses: actions/checkout@v2      
+    - name: Use Node 12
+      uses: actions/setup-node@v1
     - name: build
       run: ./x/aws/buildimage
     - name: deploy
