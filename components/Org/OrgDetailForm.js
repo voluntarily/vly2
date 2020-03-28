@@ -1,12 +1,10 @@
-import { Button, Checkbox, Divider, Form, Input, InputNumber, Tooltip, Icon } from 'antd'
+import { Button, Checkbox, Divider, Form, Input, Tooltip, Icon } from 'antd'
 import slug from 'limax'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import NumericRange from '../VTheme/NumericRange'
-import { Category as OrganisationCategory } from '../../server/api/organisation/organisation.constants'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
 import { domainRegex } from '../../lib/fieldValidation'
 import {
@@ -141,7 +139,7 @@ class OrgDetailForm extends Component {
       <FormattedMessage
         id='orgCategory'
         defaultMessage='Category'
-        description='school, business or activity provider'
+        description='business or activity provider'
       />
     )
 
@@ -192,20 +190,6 @@ class OrgDetailForm extends Component {
         id='orgInfoOutsiders'
         defaultMessage='Outsiders'
         description='organisation Description label in OrgDetails Form'
-      />
-    )
-    const orgAgeRange = (
-      <FormattedMessage
-        id='orgAgeRange'
-        defaultMessage='Age range'
-        description='Age range of students at the school'
-      />
-    )
-    const orgDecile = (
-      <FormattedMessage
-        id='orgDecile'
-        defaultMessage='Decile'
-        description='Decile of school'
       />
     )
     const orgContactName = (
@@ -281,7 +265,7 @@ class OrgDetailForm extends Component {
                     <FormattedMessage
                       id='OpAskForm.groups.prompt'
                       description='Section prompt for op groups'
-                      defaultMessage='e.g. Business, School, Individual'
+                      defaultMessage='e.g. Business or Individual'
                     />
                   </p>
                 </DescriptionContainer>
@@ -340,8 +324,8 @@ class OrgDetailForm extends Component {
                 <FormattedMessage
                   id='orgDetail.form.about.description'
                   values={{ br: <br /> }}
-                  defaultMessage='Tell the world about your school or organisation.{br}{br}
-                  This is your opportunity to ‘sell’ your school or organisation to the rest of the Voluntarily community. Who are you? What do you do? What are your values and your motivations for using Voluntarily?'
+                  defaultMessage='Tell the world about your organisation.{br}{br}
+                  This is your opportunity to ‘sell’ your organisation to the rest of the Voluntarily community. Who are you? What do you do? What are your values and your motivations for using Voluntarily?'
                   description='Title for about section of organisation edit form'
                 />
               </p>
@@ -392,7 +376,7 @@ class OrgDetailForm extends Component {
                 <h3>Contact Details</h3>
               </TitleContainer>
               <p>
-                How do you want teachers and schools to get in touch with you?
+                How do you want the public to get in touch with you?
               </p>
             </DescriptionContainer>
             <InputContainer>
@@ -431,112 +415,54 @@ class OrgDetailForm extends Component {
             </InputContainer>
           </FormGrid>
           <Divider />
-          {(getFieldValue('category') || []).includes(
-            OrganisationCategory.SCHOOL
-          ) ? (
-            <>
-              <FormGrid>
-                <DescriptionContainer>
-                  <TitleContainer>
-                    <h3>
-                      <FormattedMessage
-                        id='orgDetailpage.schoolDetail'
-                        defaultMessage='School Details'
-                        description='Title for school detail section of organisation edit form'
-                      />
-                    </h3>
-                  </TitleContainer>
-                  <FormattedMessage
-                    id='orgDetailPage.schoolDetail.description'
-                    defaultMessage='A few details about your school'
-                    description='description for school detail section of organisation edit form'
-                  />
-                  <p>l</p>
-                </DescriptionContainer>
-                <InputContainer>
-                  <ShortInputContainer>
-                    <Form.Item label={orgDecile}>
-                      {getFieldDecorator(
-                        'decile',
-                        {}
-                      )(<InputNumber min={1} max={10} className='decile' />)}
-                    </Form.Item>
 
-                    <Form.Item label={orgAgeRange}>
-                      {getFieldDecorator('ageRange', {
-                        rules: [
-                          {
-                            type: 'method',
-                            validator: (rule, value, callback) => {
-                              callback(
-                                validateAgeRange(value) ? (
-                                  undefined
-                                ) : (
-                                  <FormattedMessage
-                                    id='org.detail.ageRange'
-                                    defaultMessage='Please enter the age range of your students'
-                                    description='The age range specified on the organisation form is invalid'
-                                  />
-                                )
-                              )
-                            }
-                          }
-                        ]
-                      })(
-                        <NumericRange
-                          fromPlaceholder='5'
-                          fromMin={0}
-                          fromMax={120}
-                          toPlaceholder='18'
-                          toMin={0}
-                          toMax={120}
+          <>
+            <FormGrid>
+              <InputContainer>
+                <ShortInputContainer>
+                  <Form.Item label={orgContactName}>
+                    {getFieldDecorator('contactName')(<Input />)}
+                  </Form.Item>
+                  <Form.Item label={orgContactPhoneNumber}>
+                    {getFieldDecorator('contactPhoneNumber')(
+                      <Input placeholder='01 123 456789' />
+                    )}
+                  </Form.Item>
+                  <Form.Item label={orgAddress}>
+                    {getFieldDecorator('address')(
+                      <>
+                        <Input.TextArea
+                          id='address'
+                          rows={4}
+                          maxLength={512}
+                          value={getFieldValue('address')}
+                          onChange={e => this.setAddress(e.target.value)}
                         />
-                      )}
-                    </Form.Item>
-                    <Form.Item label={orgContactName}>
-                      {getFieldDecorator('contactName')(<Input />)}
-                    </Form.Item>
-                    <Form.Item label={orgContactPhoneNumber}>
-                      {getFieldDecorator('contactPhoneNumber')(
-                        <Input placeholder='01 123 456789' />
-                      )}
-                    </Form.Item>
-                    <Form.Item label={orgAddress}>
-                      {getFieldDecorator('address')(
-                        <>
-                          <Input.TextArea
-                            id='address'
-                            rows={4}
-                            maxLength={512}
-                            value={getFieldValue('address')}
-                            onChange={e => this.setAddress(e.target.value)}
-                          />
-                          {OrgDetailForm.createGoogleMapsAddressUrl(
-                            getFieldValue('address')
-                          ) && (
-                            <a
-                              href={OrgDetailForm.createGoogleMapsAddressUrl(
-                                getFieldValue('address')
-                              )}
-                              target='_blank'
-                              rel='noopener noreferrer'
-                            >
-                              <FormattedMessage
-                                id='org.detail.viewAddressInGoogleMaps'
-                                defaultMessage='View in Google maps'
-                                description='Link to view the address in Google maps'
-                              />
-                            </a>
-                          )}
-                        </>
-                      )}
-                    </Form.Item>
-                  </ShortInputContainer>
-                </InputContainer>
-              </FormGrid>
-              <Divider />
-            </>
-            ) : null}
+                        {OrgDetailForm.createGoogleMapsAddressUrl(
+                          getFieldValue('address')
+                        ) && (
+                          <a
+                            href={OrgDetailForm.createGoogleMapsAddressUrl(
+                              getFieldValue('address')
+                            )}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                          >
+                            <FormattedMessage
+                              id='org.detail.viewAddressInGoogleMaps'
+                              defaultMessage='View in Google maps'
+                              description='Link to view the address in Google maps'
+                            />
+                          </a>
+                        )}
+                      </>
+                    )}
+                  </Form.Item>
+                </ShortInputContainer>
+              </InputContainer>
+            </FormGrid>
+            <Divider />
+          </>
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -647,7 +573,7 @@ class OrgDetailForm extends Component {
                 <h3>Public Section</h3>
               </TitleContainer>
               <p>
-                How do you want teachers and schools to get in touch with you?
+                How do you want the public to get in touch with you?
               </p>
             </DescriptionContainer>
             <InputContainer>
