@@ -31,8 +31,15 @@ const PersonFields = {
   PLACEOFWORK: 'placeOfWork'
 }
 
+const PersonStatus = {
+  ACTIVE: 'active',
+  INACTIVE: 'inactive',
+  HOLD: 'hold'
+}
+
 module.exports = {
   SchemaName,
   PersonRoutes,
-  PersonFields
+  PersonFields,
+  PersonStatus
 }

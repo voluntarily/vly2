@@ -18,7 +18,7 @@ const newInterest = (meid, opid) => {
     person: meid,
     opportunity: opid,
     status: null,
-    // dateAdded: Date.now(),
+    // createdAt: Date.now(),
     messages: [],
     termsAccepted: false
   }

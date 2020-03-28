@@ -25,7 +25,7 @@ const personalGoalSchema = new Schema({
     ]
   },
   // date when goal added to persons queue
-  dateAdded: { type: 'Date', default: Date.now, required: true },
+  createdAt: { type: 'Date', default: Date.now, required: true },
   // date when they move to active status
   dateStarted: { type: 'Date', required: false },
   // date when they move to hidden status

@@ -85,7 +85,7 @@ properties:
     example: active
     description: |
       used to indicate person's overall availability
-  dateAdded:
+  createdAt:
     type: string
     default: Date.now
     format: date-time
@@ -95,4 +95,4 @@ required:
   - name
   - email
   - status
-  - dateAdded
+  - createdAt

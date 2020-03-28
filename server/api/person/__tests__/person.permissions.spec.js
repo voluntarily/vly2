@@ -705,9 +705,9 @@ test.serial('Update - Only ADMIN can change a users email field', async t => {
 })
 
 for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]) {
-  test.serial(`Update - no one can update dateAdded field - ${role}`, async t => {
+  test.serial(`Update - no one can update createdAt field - ${role}`, async t => {
     const person = await createPerson([Role.VOLUNTEER])
-    const originalDateAdded = person.dateAdded.toISOString()
+    const originalCreatedAt = person.createdAt.toISOString()
 
     const res = await request(server)
       .put(`/api/people/${person._id}`)
@@ -716,7 +716,7 @@ for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDE
         role: person.role,
         status: 'active',
         phone: 'testphone',
-        dateAdded: '2030-12-18T00:14:42.432Z'
+        createdAt: '2030-12-18T00:14:42.432Z'
       })
       .set('Accept', 'application/json')
       .set('Cookie', `idToken=${await createPersonAndGetToken([role])}`)
@@ -724,13 +724,13 @@ for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDE
     t.is(res.status, 403)
 
     const person2 = await Person.findById(person._id)
-    t.is(person2.dateAdded.toISOString(), originalDateAdded)
+    t.is(person2.createdAt.toISOString(), originalCreatedAt)
   })
 }
-for (const dateAdded of ['', '   ', null]) {
-  test.serial(`Update - cannot set dateAdded to falsey values - '${dateAdded}'`, async t => {
+for (const createdAt of ['', '   ', null]) {
+  test.serial(`Update - cannot set createdAt to falsey values - '${createdAt}'`, async t => {
     const person = await createPerson([Role.VOLUNTEER])
-    const originalDateAdded = person.dateAdded.toISOString()
+    const originalCreatedAt = person.createdAt.toISOString()
 
     const res = await request(server)
       .put(`/api/people/${person._id}`)
@@ -739,7 +739,7 @@ for (const dateAdded of ['', '   ', null]) {
         role: person.role,
         status: 'active',
         phone: 'testphone',
-        dateAdded
+        createdAt
       })
       .set('Accept', 'application/json')
       .set('Cookie', `idToken=${createJwtIdToken(person.email)}`)
@@ -747,7 +747,7 @@ for (const dateAdded of ['', '   ', null]) {
     t.is(res.status, 403)
 
     const person2 = await Person.findById(person._id)
-    t.is(person2.dateAdded.toISOString(), originalDateAdded)
+    t.is(person2.createdAt.toISOString(), originalCreatedAt)
   })
 }
 

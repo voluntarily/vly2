@@ -178,9 +178,9 @@ async function updatePersonDetail (req, res, next) {
     return res.status(403).send('You do not have the required role to change the \'email\' field')
   }
 
-  // Cannot change dateAdded
-  if (Object.keys(person).includes('dateAdded')) {
-    return res.status(403).send('The dateAdded field cannot be changed')
+  // Cannot change createdAt
+  if (Object.keys(person).includes('createdAt')) {
+    return res.status(403).send('The createdAt field cannot be changed')
   }
 
   // Must be a valid language

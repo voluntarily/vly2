@@ -14,7 +14,7 @@ const { InterestStatus } = require('./interest.constants')
  */
 const listInterestsA = InterestModel => async (req, res) => {
   // console.log('ListInterests', InterestModel, req.query)
-  const sort = 'dateAdded' // todo sort by date.
+  const sort = 'createdAt' // todo sort by date.
   try {
     if (req.query.op && req.query.me) {
       // this is a request for a single interest for one person and one op

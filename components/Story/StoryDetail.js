@@ -20,7 +20,7 @@ export const StoryDetail = ({ story, children }) => {
       <ExpandText storyBody={story.body} maxLength={250} />
       <footer>
         <span item={story.author} path='author'> By {story.author && story.author.name}</span> &nbsp;
-        <span>{moment(story.dateAdded).fromNow()}</span>
+        <span>{moment(story.createdAt).fromNow()}</span>
       </footer>
       <br />
       <Button shape='round' type='secondary'>Reply</Button>

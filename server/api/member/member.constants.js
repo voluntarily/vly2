@@ -1,7 +1,7 @@
 const MemberFields = {
   ID: '_id',
   STATUS: 'status',
-  DATE_ADDED: 'dateAdded',
+  DATE_ADDED: 'createdAt',
   PERSON: 'person',
   ORGANISATION: 'organisation',
   VALIDATION: 'validation'
