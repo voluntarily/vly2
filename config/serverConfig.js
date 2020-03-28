@@ -27,9 +27,16 @@ const completeConfig = {
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
     BADGR_USERNAME: process.env.BADGR_USERNAME,
     BADGR_PASSWORD: process.env.BADGR_PASSWORD,
-    BADGR_API: process.env.BADGR_API || 'https://api.au.badgr.io'
+    BADGR_API: process.env.BADGR_API || 'https://api.au.badgr.io',
+    verification: {
+      cloudcheck: {
+        url: process.env.CLOUDCHECK_URL || "https://api.cloudcheck.co.nz",
+        apiKey: process.env.CLOUDCHECK_API_KEY,
+        secret: process.env.CLOUDCHECK_SECRET
+      }
+    }
   },
-
+  // appUrl: process.env.APP_URL || `http://localhost:${serverPort}`,
   development: {
     appUrl: process.env.APP_URL || `http://localhost:${serverPort}`
   },
