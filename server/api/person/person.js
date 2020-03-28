@@ -33,13 +33,7 @@ const personSchema = new Schema({
     required: true,
     default: [Role.VOLUNTEER],
     enum: [
-      Role.ADMIN,
-      Role.ORG_ADMIN,
-      Role.OPPORTUNITY_PROVIDER,
-      Role.VOLUNTEER,
-      Role.ACTIVITY_PROVIDER,
-      Role.RESOURCE_PROVIDER,
-      Role.SUPPORT
+      ...Object.keys(Role)
     ]
   },
   // used to indicate whether people show up in searches.
@@ -49,7 +43,6 @@ const personSchema = new Schema({
     default: 'active',
     enum: ['active', 'inactive', 'hold']
   },
-  dateAdded: { type: 'Date', default: Date.now, required: true },
   tags: [String],
   // helper fields - these are only in the schema and don't need to be stored
   href: String,
@@ -64,7 +57,7 @@ const personSchema = new Schema({
       expiry: String
     }
   }
-})
+}, { timestamps: true })
 
 personSchema.plugin(idvalidator)
 personSchema.plugin(accessibleFieldsPlugin)

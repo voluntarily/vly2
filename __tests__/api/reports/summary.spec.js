@@ -2,7 +2,6 @@ import test from 'ava'
 import MockExpressRequest from 'mock-express-request'
 import MockExpressResponse from 'mock-express-response'
 import MemoryMongo from '../../../server/util/test-memory-mongo'
-import { OpportunityType } from '../../../server/api/opportunity/opportunity.constants'
 
 import summary from '../../../pages/api/reports/summary'
 
@@ -27,10 +26,10 @@ test('Should respond with summary data for an admin', async t => {
   t.deepEqual(res._getJSON(), {
     Person: { total: 0 },
     Activity: { total: 0 },
-    Interest: { total: 0, status: {}},
-    Member: { total: 0, status: {}},
-    Opportunity: { total: 0, type: {}},
-    Organisation: { total: 0, category: {}},
+    Interest: { total: 0, status: {} },
+    Member: { total: 0, status: {} },
+    Opportunity: { total: 0, type: {} },
+    Organisation: { total: 0, category: {} }
   })
   t.is(200, res.statusCode, 'OK Response')
 })

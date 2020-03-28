@@ -16,13 +16,12 @@ const storySchema = new Schema({
     default: 'draft',
     enum: ['draft', 'published', 'deleted']
   },
-  dateAdded: { type: 'Date', default: Date.now, required: true },
   datePublished: { type: 'Date' },
   allowComments: { type: Boolean, default: true, required: true },
   parent: { type: Schema.Types.ObjectId },
   tags: [String],
   albumKey: [String]
-})
+}, { timestamps: true })
 
 storySchema.plugin(idvalidator)
 storySchema.plugin(accessibleRecordsPlugin)

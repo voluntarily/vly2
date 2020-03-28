@@ -47,7 +47,7 @@ const interestArchiveSchema = new Schema({
       InterestStatus.NOTATTENDED
     ]
   }
-})
+}, { timestamps: true })
 
 interestSchema.plugin(idvalidator)
 interestSchema.plugin(accessibleRecordsPlugin)

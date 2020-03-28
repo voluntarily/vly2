@@ -32,7 +32,8 @@ const personalGoalSchema = new Schema({
   dateHidden: { type: 'Date', required: false },
   // date when they move to completed status
   dateCompleted: { type: 'Date', required: false }
-})
+}, { timestamps: true })
+
 personalGoalSchema.plugin(idvalidator)
 personalGoalSchema.plugin(accessibleFieldsPlugin)
 personalGoalSchema.plugin(accessibleRecordsPlugin)
