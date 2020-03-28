@@ -49,8 +49,7 @@ systemtest_task:
   test_script:
     - apt-get update
     - apt-get install -y firefox-esr
-    - add-apt-repository ppa:webupd8team/java
-    - apt-get install oracle-java8-set-default
+    - apt-get install default-jdk
     - javac -version
     - npm install --save-dev codeceptjs
     - npm i @wdio/selenium-standalone-service --save-dev
