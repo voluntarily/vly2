@@ -25,10 +25,12 @@ test('Should respond with summary data for an admin', async t => {
 
   await summary(req, res)
   t.deepEqual(res._getJSON(), {
-    Person: 0,
-    Activity: 0,
-    Interest: 0,
-    Opportunity: { [OpportunityType.ASK]: 0, [OpportunityType.OFFER]: 0 }
+    Person: { total: 0 },
+    Activity: { total: 0 },
+    Interest: { total: 0, status: {}},
+    Member: { total: 0, status: {}},
+    Opportunity: { total: 0, type: {}},
+    Organisation: { total: 0, category: {}},
   })
   t.is(200, res.statusCode, 'OK Response')
 })
