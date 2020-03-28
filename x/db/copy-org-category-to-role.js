@@ -31,8 +31,10 @@ async function main () {
       .cursor()
       .on('data', function (doc) {
         console.log(doc.name, doc.category, doc.role)
-        doc.role = doc.category
-        doc.save()
+        if (doc.category && !doc.role) {
+          doc.role = doc.category
+          doc.save()
+        }
       })
       .on('end', function () {
         console.log('Done!')
