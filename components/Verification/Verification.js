@@ -1,13 +1,18 @@
 import React, { useState } from "react"
+import Router from 'next/router'
 import { Modal } from "antd"
 import VerifyButton from "./VerifyButton"
+import PropTypes from 'prop-types'
 
-const Verification = () => {
-
+const Verification = (props) => {
     const [modalOpen, setModalOpen] = useState(false);
-    
 
-    const handleConfirmModal = () => console.log("adsf")
+
+    const handleConfirmModal = async () => {
+        const signThruUrl = `/api/verify?meid=${props.meid}`
+        Router.push(signThruUrl)
+        setModalOpen(false)
+    }
 
     return (
         <section>
@@ -29,7 +34,10 @@ const Verification = () => {
             </Modal>
         </section>
     )
+}
 
+Verification.propTypes = {
+    meid: PropTypes.string.isRequired
 }
 
 export default Verification
