@@ -155,7 +155,7 @@ This card will disappear when the profile is complete
     startLink: '/my/org/op',
     rank: 1,
     evaluation: async (personalGoal) => {
-      const { score, count } = await GoalTests.orgCompleteness(personalGoal, 'op')
+      const { score, count } = await GoalTests.orgCompleteness(personalGoal, OrganisationRole.OPPORTUNITY_PROVIDER)
       return (score / count * 100 > 75)
     }
   },

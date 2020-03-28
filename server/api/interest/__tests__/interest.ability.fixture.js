@@ -7,6 +7,7 @@ import { OpportunityStatus } from '../../opportunity/opportunity.constants'
 import Organisation from '../../organisation/organisation'
 import Person from '../../person/person'
 import { InterestStatus } from '../interest.constants'
+import { OrganisationRole } from '../../organisation/organisation.constants'
 
 const generateObjectId = mongoose.Types.ObjectId
 
@@ -82,13 +83,13 @@ const organisations = [
     _id: generateObjectId(),
     name: 'Opportunity Provider 1',
     slug: 'opportunity-provider-1',
-    category: ['vp']
+    role: [OrganisationRole.VOLUNTEER_PROVIDER]
   },
   {
     _id: generateObjectId(),
     name: 'Opportunity Provider 2',
     slug: 'opportunity-provider-2',
-    category: ['op']
+    role: ['op']
   }
 ]
 

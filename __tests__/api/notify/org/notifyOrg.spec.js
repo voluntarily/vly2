@@ -16,10 +16,10 @@ test.before('before connect to database', async (t) => {
   try {
     t.context.memMongo = new MemoryMongo()
     await t.context.memMongo.start()
-    t.context.orgs = await Organisation.create(orgs).catch(() => 'Unable to create orgs')
+    t.context.orgs = await Organisation.create(orgs)
     t.context.org = t.context.orgs[0]
 
-    t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
+    t.context.people = await Person.create(people)
     t.context.andrew = t.context.people[0]
     t.context.dali = t.context.people[1]
     t.context.alice = t.context.people[2]

@@ -4,6 +4,7 @@ const { TOPIC_PERSON__CREATE, TOPIC_MEMBER__UPDATE } = require('../../services/p
 const { addPersonalGoalGroup } = require('./personalGoal.lib')
 const { MemberStatus } = require('../member/member.constants')
 const Organisation = require('../organisation/organisation')
+const { OrganisationRole } = require('../organisation/organisation.constants')
 const { GoalGroup } = require('../goal/goalGroup.js')
 
 module.exports = (server) => {
@@ -18,9 +19,9 @@ module.exports = (server) => {
     const org = await Organisation.findById(orgid)
     switch (member.status) {
       case MemberStatus.ORGADMIN:
-        if (org.category.includes('vp')) { await addPersonalGoalGroup(GoalGroup.ORG_VP_NEW, member.person) }
-        if (org.category.includes('op')) { await addPersonalGoalGroup(GoalGroup.ORG_OP_NEW, member.person) }
-        if (org.category.includes('ap')) { await addPersonalGoalGroup(GoalGroup.ORG_AP_NEW, member.person) }
+        if (org.role.includes(OrganisationRole.VOLUNTEER_PROVIDER)) { await addPersonalGoalGroup(GoalGroup.ORG_VP_NEW, member.person) }
+        if (org.role.includes(OrganisationRole.OPPORTUNITY_PROVIDER)) { await addPersonalGoalGroup(GoalGroup.ORG_OP_NEW, member.person) }
+        if (org.role.includes(OrganisationRole.ACTIVITY_PROVIDER)) { await addPersonalGoalGroup(GoalGroup.ORG_AP_NEW, member.person) }
         break
       case MemberStatus.FOLLOWER:
         break

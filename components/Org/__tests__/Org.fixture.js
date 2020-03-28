@@ -1,4 +1,5 @@
 import objectid from 'objectid'
+import { OrganisationRole } from '../../../server/api/organisation/organisation.constants'
 
 export default [
   {
@@ -14,11 +15,11 @@ export default [
       outsiders: '<h1><strong>You could be a member of Voluntarily. </strong></h1>'
     },
     imgUrl: 'http://localhost:3122/static/vlogo.svg',
-    category: [
-      'vp',
-      'op',
-      'ap',
-      'admin',
+    role: [
+      OrganisationRole.VOLUNTEER_PROVIDER,
+      OrganisationRole.OPPORTUNITY_PROVIDER,
+      OrganisationRole.ACTIVITY_PROVIDER,
+      OrganisationRole.ADMIN,
       'other'
     ],
     contactEmail: 'andrew@voluntarily.nz',
@@ -32,7 +33,7 @@ export default [
     _id: objectid().toHexString(),
     name: 'OMGTech',
     slug: 'omgtech',
-    category: ['ap', 'vp'],
+    role: [OrganisationRole.ACTIVITY_PROVIDER, OrganisationRole.VOLUNTEER_PROVIDER],
     imgUrl: 'https://images.squarespace-cdn.com/content/556e9677e4b099ded4a2e757/1488844920526-ZGL78IXEPYARVWLL778H/OMGTECH.png?content-type=image%2Fpng',
     info: {
       about: 'Awesome content providers'
@@ -42,7 +43,7 @@ export default [
     _id: objectid().toHexString(),
     name: 'Datacom',
     slug: 'datacom',
-    category: ['vp'],
+    role: [OrganisationRole.VOLUNTEER_PROVIDER],
     imgUrl: 'https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-cq6IrCmLVAQ%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FcEuff2J9PJ8%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1',
     info: { about: 'some of our most loyal helpers' }
   },
@@ -50,7 +51,7 @@ export default [
     _id: objectid().toHexString(),
     name: 'Spark Ltd',
     slug: 'spark',
-    category: ['vp'],
+    role: [OrganisationRole.VOLUNTEER_PROVIDER],
     imgUrl: 'https://image.shutterstock.com/image-vector/raven-sedentary-birds-never-voluntarily-260nw-1339914020.jpg',
     info: { about: 'more of our most loyal helpers' }
   },
@@ -59,7 +60,7 @@ export default [
     imgUrl: 'https://image.shutterstock.com/image-vector/raven-sedentary-birds-never-voluntarily-260nw-1339914020.jpg',
     name: 'Westpac Ltd',
     slug: 'westpac',
-    category: ['vp'],
+    role: [OrganisationRole.VOLUNTEER_PROVIDER],
     info: { about: 'even more of our most loyal helpers' }
   },
   {
@@ -67,7 +68,7 @@ export default [
     name: 'Albany High School',
     imgUrl: 'https://image.shutterstock.com/image-vector/raven-sedentary-birds-never-voluntarily-260nw-1339914020.jpg',
     slug: 'albany-high',
-    category: ['op'],
+    role: [OrganisationRole.OPPORTUNITY_PROVIDER],
     info: { }
   }
 ]

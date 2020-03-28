@@ -7,7 +7,7 @@ const { authorizeActions } = require('../../middleware/authorize/authorizeReques
 const { SchemaName } = require('./member.constants')
 
 module.exports = server => {
-  server.use('/my/org/:category', findMyOrg)
+  server.use('/my/org/:role', findMyOrg)
   server.use('/my/org', findMyOrg)
   server.use('/my/person', findMyPerson)
 

@@ -6,9 +6,10 @@ import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
 import { MemberStatus } from '../member.constants'
 import { Role } from '../../../services/authorize/role'
+import { OrganisationRole } from '../../organisation/organisation.constants'
 
 import {
-  findOrgByPersonIdAndCategory,
+  findOrgByPersonIdAndRole,
   getPersonRoles,
   getMemberbyId,
   addMember,
@@ -114,26 +115,26 @@ test.serial('add member creates a new member', async (t) => {
   await updatedMember.remove()
 })
 
-test.serial('Find org by person and category', async (t) => {
+test.serial('Find org by person and role', async (t) => {
   const testData = [
     {
       personId: t.context.people[0]._id,
-      category: null,
+      role: null,
       expectedOrgId: t.context.organisations[0]._id.str
     },
     {
       personId: t.context.people[0]._id,
-      category: 'ap',
+      role: OrganisationRole.ACTIVITY_PROVIDER,
       expectedOrgId: t.context.organisations[1]._id.str
     },
     {
       personId: t.context.people[1]._id,
-      category: null,
+      role: null,
       expectedOrgId: t.context.organisations[3]._id.str
     },
     {
       personId: t.context.people[2]._id,
-      category: null,
+      role: null,
       expectedOrgId: null
     }
   ]
@@ -141,7 +142,7 @@ test.serial('Find org by person and category', async (t) => {
   t.plan(testData.length)
 
   for (const testRecord of testData) {
-    let orgId = await findOrgByPersonIdAndCategory(testRecord.personId, testRecord.category)
+    let orgId = await findOrgByPersonIdAndRole(testRecord.personId, testRecord.role)
 
     if (orgId !== null) {
       orgId = orgId.str
@@ -166,7 +167,7 @@ test.serial('role of person with various memberships.', async (t) => {
   const [role, orgAdminFor] = await getPersonRoles(person)
   t.is(role.length, 3) // ["opportunityProvider","orgAdmin","admin"]
   t.is(role[0], 'opportunityProvider') // because org[2] is OP
-  t.is(role[2], 'admin') // because org[3] is admin category
+  t.is(role[2], 'admin') // because org[3] is admin role
   t.is(orgAdminFor.length, 1)
   t.deepEqual(orgAdminFor[0], t.context.organisations[3]._id)
 })

@@ -5,7 +5,7 @@ import Organisation from '../organisation'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import orgs from './organisation.fixture.js'
 import { Role } from '../../../services/authorize/role'
-import Person from '../../../../server/api/person/person'
+import Person from '../../person/person'
 import jsonwebtoken from 'jsonwebtoken'
 import uuid from 'uuid'
 import { jwtData } from '../../../../server/middleware/session/__tests__/setSession.fixture'
@@ -13,6 +13,7 @@ import { MemberStatus } from '../../member/member.constants'
 import Member from '../../member/member'
 import cuid from 'cuid'
 import slug from 'limax'
+import { OrganisationRole } from '../organisation.constants'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -63,7 +64,7 @@ const createOrganisation = () => {
   return Organisation.create({
     name,
     slug: slug(name),
-    category: ['vp']
+    role: [OrganisationRole.VOLUNTEER_PROVIDER]
   })
 }
 
@@ -106,7 +107,7 @@ test.serial('Permissions - Roles matrix', async t => {
     return req.send({
       name: 'Test org - POST',
       slug: 'test-organisation',
-      category: ['vp']
+      role: [OrganisationRole.VOLUNTEER_PROVIDER]
     })
   }
   const put = async (roles) => {
@@ -121,7 +122,7 @@ test.serial('Permissions - Roles matrix', async t => {
     return req.send({
       name: newName,
       slug: slug(newName),
-      category: ['vp']
+      role: [OrganisationRole.VOLUNTEER_PROVIDER]
     })
   }
 
@@ -210,7 +211,7 @@ test.serial('Permissions - ORG_ADMIN can update their own organisation', async (
     .send({
       name: newName,
       slug: slug(newName),
-      category: ['vp']
+      role: [OrganisationRole.VOLUNTEER_PROVIDER]
     })
 
   t.is(res.status, 200)
@@ -243,7 +244,7 @@ test.serial('Permissions - ORG_ADMIN cannot update other organisations', async (
     .send({
       name: 'Organisation2',
       slug: 'organisation2',
-      category: ['vp']
+      role: [OrganisationRole.VOLUNTEER_PROVIDER]
     })
 
   // Response should be FORBIDDEN
@@ -252,16 +253,16 @@ test.serial('Permissions - ORG_ADMIN cannot update other organisations', async (
   t.is((await Organisation.findOne({ _id: organisation1._id })).name, organisation1.name)
 })
 
-test.serial('Only admin can update the category field - can update as admin', async t => {
+test.serial('Only admin can update the role field - can update as admin', async t => {
   // Create new user
-  const person = await createPerson(['admin'])
+  const person = await createPerson([OrganisationRole.ADMIN])
 
   // Create an organisation
   const org = await createOrganisation()
 
   // Update fields of our organisation
   const jwtIdToken = createJwtIdToken(person.email)
-  const newName = 'Org Category Update 1'
+  const newName = 'Org Role Update 1'
   // PUT/update organisation
   const res = await request(server)
     .put(`${endpointUrl}/${org._id}`)
@@ -270,17 +271,17 @@ test.serial('Only admin can update the category field - can update as admin', as
     .send({
       name: newName,
       slug: slug(newName),
-      category: ['rp']
+      role: ['rp']
     })
 
   t.true(res.ok)
   const updatedOrg = await Organisation.findOne({ _id: org._id })
-  t.truthy(updatedOrg.category)
-  t.is(1, updatedOrg.category.length)
-  t.is('rp', updatedOrg.category[0])
+  t.truthy(updatedOrg.role)
+  t.is(1, updatedOrg.role.length)
+  t.is('rp', updatedOrg.role[0])
 })
 
-test('Only admin can update the category field - orgadmin of request org cannot update category', async t => {
+test('Only admin can update the role field - orgadmin of request org cannot update role', async t => {
   // Create new user
   const person = await createPerson()
 
@@ -298,7 +299,7 @@ test('Only admin can update the category field - orgadmin of request org cannot 
   const jwtIdToken = createJwtIdToken(person.email)
 
   // PUT/update organisation
-  const newName = 'Org Category Update 2'
+  const newName = 'Org Role Update 2'
   const res = await request(server)
     .put(`${endpointUrl}/${organisation._id}`)
     .set('Accept', 'application/json')
@@ -306,15 +307,15 @@ test('Only admin can update the category field - orgadmin of request org cannot 
     .send({
       name: newName,
       slug: slug(newName),
-      category: ['rp']
+      role: ['rp']
     })
 
-  // Whilst we've sent the category field in the body, the category field will be
+  // Whilst we've sent the role field in the body, the role field will be
   // ignored, but the request can complete otherwise
   t.true(res.ok)
-  // Make sure the category field is unchanged after the PUT
+  // Make sure the role field is unchanged after the PUT
   const updatedOrg = await Organisation.findOne({ _id: organisation._id })
-  t.truthy(updatedOrg.category)
-  t.is(1, updatedOrg.category.length)
-  t.is('vp', updatedOrg.category[0])
+  t.truthy(updatedOrg.role)
+  t.is(1, updatedOrg.role.length)
+  t.is(OrganisationRole.VOLUNTEER_PROVIDER, updatedOrg.role[0])
 })

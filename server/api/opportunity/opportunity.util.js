@@ -28,7 +28,7 @@ const getLocationRecommendations = async (me) => {
     .sort('name')
     .collation({ locale: 'en_US', strength: 1 })
     .populate('requestor', 'name nickname imgUrl')
-    .populate('offerOrg', 'name imgUrl category')
+    .populate('offerOrg', 'name imgUrl role')
 
   // if user has specified a territory, we should show the exact matches first, because we know
   // they are closest to the user.
@@ -54,7 +54,7 @@ const getSkillsRecommendations = async (me) => {
         requestor: { $ne: me._id }
       })
       .populate('requestor', 'name nickname imgUrl')
-      .populate('offerOrg', 'name imgUrl category')
+      .populate('offerOrg', 'name imgUrl role')
     const opsWithCounts = []
 
     opsWithMatchingTags.forEach(op => {

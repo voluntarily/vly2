@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import fetchMock from 'fetch-mock'
 import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
 import { OrgOfferedOpportunities } from '../OrgOfferedOpportunities'
+import { OrganisationRole } from '../../../server/api/organisation/organisation.constants'
 
 test('No results', async t => {
   const expectedNotFoundMessage = 'No offered opportunities found yet'
@@ -52,11 +53,11 @@ test('Results', async t => {
     duration: '5 min',
     offerOrg: {
       imgUrl: '/static/img/organisation/organisation.png',
-      category: [
-        'vp',
-        'op',
-        'ap',
-        'admin',
+      role: [
+        OrganisationRole.VOLUNTEER_PROVIDER,
+        OrganisationRole.OPPORTUNITY_PROVIDER,
+        OrganisationRole.ACTIVITY_PROVIDER,
+        OrganisationRole.ADMIN,
         'other'
       ],
       _id: '5e7861fa8a83596edbc739aa',

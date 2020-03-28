@@ -3,7 +3,7 @@ const Opportunity = require('../opportunity/opportunity')
 const { OpportunityType } = require('../opportunity/opportunity.constants')
 
 const findActivity = async (req, res) => {
-  // filter by category if present  e.g /my/org/vp
+  // filter by role if present  e.g /my/org/vp
   const slug = req.params.slug
   // get id of Activity
   try {

@@ -80,7 +80,7 @@ const listOpportunities = async (req, res, next) => {
         .find(query)
         .select(select)
         .populate('requestor', 'name nickname imgUrl')
-        .populate('offerOrg', 'name imgUrl category')
+        .populate('offerOrg', 'name imgUrl role')
         .sort(sort)
         .exec()
 
@@ -122,7 +122,7 @@ const getOpportunity = async (req, res, next) => {
       .accessibleBy(req.ability, Action.READ)
       .findOne(req.params)
       .populate('requestor', 'name nickname imgUrl')
-      .populate('offerOrg', 'name imgUrl category')
+      .populate('offerOrg', 'name imgUrl role')
       .populate('fromActivity', ActivityOpFields.join(' '))
       .exec()
     if (got == null) {

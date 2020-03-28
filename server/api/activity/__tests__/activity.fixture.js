@@ -1,10 +1,11 @@
 import cuid from 'cuid'
+import { OrganisationRole } from '../../organisation/organisation.constants'
 
 const orgOmgTech = {
   _id: cuid(),
   name: 'OMGTech',
   slug: 'omgtech',
-  category: ['ap', 'vp'],
+  role: [OrganisationRole.ACTIVITY_PROVIDER, OrganisationRole.VOLUNTEER_PROVIDER],
   imgUrl: 'https://www.tvnz.co.nz/content/dam/images/news/2015/01/26/pacific-island-mentors-with-kelston-high-school-students.jpg.hashed.0d58ef7e.desktop.story.share.jpg',
   info: {
     about: 'Awesome content providers'

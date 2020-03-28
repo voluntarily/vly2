@@ -34,7 +34,7 @@ const goalSchema = new Schema({
   // language code - which language the goal and workflow is in.
   language: { type: 'String', default: 'en' },
 
-  // Category - 'Getting Started', 'Prepare for volunteering'
+  // Role - 'Getting Started', 'Prepare for volunteering'
   group: { type: 'String' },
 
   // evaluation - function that checks whether the goal has been completed - e.g. badge presents, status value etc.

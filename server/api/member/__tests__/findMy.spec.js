@@ -62,7 +62,7 @@ test.serial('find my org - member of admin', async t => {
   t.is(res.headers.location, `/orgs/${t.context.orgs[0]._id}`)
 })
 
-test.serial('find my org - no category', async t => {
+test.serial('find my org - no role', async t => {
   const res = await request(server)
     .get('/my/org')
     .set('Accept', 'application/json')

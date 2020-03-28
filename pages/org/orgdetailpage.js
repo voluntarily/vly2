@@ -14,6 +14,7 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 import { GroupTagList } from '../../server/api/tag/tag.constants'
 import RegisterMemberSection from '../../components/Member/RegisterMemberSection'
 import { Helmet } from 'react-helmet'
+import { OrganisationRole } from '../../server/api/organisation/organisation.constants'
 
 const blankOrg = {
   name: 'New Organisation',
@@ -24,7 +25,7 @@ const blankOrg = {
   website: null,
   facebook: null,
   twitter: null,
-  category: ['vp'],
+  role: [OrganisationRole.VOLUNTEER_PROVIDER],
   groups: []
 }
 
