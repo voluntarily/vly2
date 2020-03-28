@@ -1,12 +1,10 @@
-import { Button, Checkbox, Divider, Form, Input, InputNumber, Tooltip, Icon } from 'antd'
+import { Button, Checkbox, Divider, Form, Input, Tooltip, Icon } from 'antd'
 import slug from 'limax'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
-import NumericRange from '../VTheme/NumericRange'
-import { Category as OrganisationCategory } from '../../server/api/organisation/organisation.constants'
 import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
 import { domainRegex } from '../../lib/fieldValidation'
 import {
@@ -417,54 +415,54 @@ class OrgDetailForm extends Component {
             </InputContainer>
           </FormGrid>
           <Divider />
-          
-            <>
-              <FormGrid>
-                <InputContainer>
-                  <ShortInputContainer>
-                    <Form.Item label={orgContactName}>
-                      {getFieldDecorator('contactName')(<Input />)}
-                    </Form.Item>
-                    <Form.Item label={orgContactPhoneNumber}>
-                      {getFieldDecorator('contactPhoneNumber')(
-                        <Input placeholder='01 123 456789' />
-                      )}
-                    </Form.Item>
-                    <Form.Item label={orgAddress}>
-                      {getFieldDecorator('address')(
-                        <>
-                          <Input.TextArea
-                            id='address'
-                            rows={4}
-                            maxLength={512}
-                            value={getFieldValue('address')}
-                            onChange={e => this.setAddress(e.target.value)}
-                          />
-                          {OrgDetailForm.createGoogleMapsAddressUrl(
-                            getFieldValue('address')
-                          ) && (
-                            <a
-                              href={OrgDetailForm.createGoogleMapsAddressUrl(
-                                getFieldValue('address')
-                              )}
-                              target='_blank'
-                              rel='noopener noreferrer'
-                            >
-                              <FormattedMessage
-                                id='org.detail.viewAddressInGoogleMaps'
-                                defaultMessage='View in Google maps'
-                                description='Link to view the address in Google maps'
-                              />
-                            </a>
-                          )}
-                        </>
-                      )}
-                    </Form.Item>
-                  </ShortInputContainer>
-                </InputContainer>
-              </FormGrid>
-              <Divider />
-            </>
+
+          <>
+            <FormGrid>
+              <InputContainer>
+                <ShortInputContainer>
+                  <Form.Item label={orgContactName}>
+                    {getFieldDecorator('contactName')(<Input />)}
+                  </Form.Item>
+                  <Form.Item label={orgContactPhoneNumber}>
+                    {getFieldDecorator('contactPhoneNumber')(
+                      <Input placeholder='01 123 456789' />
+                    )}
+                  </Form.Item>
+                  <Form.Item label={orgAddress}>
+                    {getFieldDecorator('address')(
+                      <>
+                        <Input.TextArea
+                          id='address'
+                          rows={4}
+                          maxLength={512}
+                          value={getFieldValue('address')}
+                          onChange={e => this.setAddress(e.target.value)}
+                        />
+                        {OrgDetailForm.createGoogleMapsAddressUrl(
+                          getFieldValue('address')
+                        ) && (
+                          <a
+                            href={OrgDetailForm.createGoogleMapsAddressUrl(
+                              getFieldValue('address')
+                            )}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                          >
+                            <FormattedMessage
+                              id='org.detail.viewAddressInGoogleMaps'
+                              defaultMessage='View in Google maps'
+                              description='Link to view the address in Google maps'
+                            />
+                          </a>
+                        )}
+                      </>
+                    )}
+                  </Form.Item>
+                </ShortInputContainer>
+              </InputContainer>
+            </FormGrid>
+            <Divider />
+          </>
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
