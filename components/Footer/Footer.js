@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
 import { P, Spacer } from '../VTheme/VTheme'
 import links from './FooterMenu'
-import WomensRefuge from './WomensRefuge.js'
+// import WomensRefuge from './WomensRefuge.js'
 
 const getAllowedLinks = isAuthenticated =>
   links()
@@ -248,11 +248,10 @@ const Footer = ({ isAuthenticated, ...props }) => (
             </MenuItem>
           </MenuWrapper>
         </div>
-        <WomensRefuge />
+        {/* <WomensRefuge /> */}
       </FooterGrid>
       <Spacer />
 
-      {/* <WomensRefuge /> */}
     </FooterContainer>
     {props.isAdmin && (
       <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
