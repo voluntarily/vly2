@@ -141,7 +141,7 @@ class OrgDetailForm extends Component {
       <FormattedMessage
         id='orgCategory'
         defaultMessage='Category'
-        description='school, business or activity provider'
+        description='business or activity provider'
       />
     )
 
@@ -192,20 +192,6 @@ class OrgDetailForm extends Component {
         id='orgInfoOutsiders'
         defaultMessage='Outsiders'
         description='organisation Description label in OrgDetails Form'
-      />
-    )
-    const orgAgeRange = (
-      <FormattedMessage
-        id='orgAgeRange'
-        defaultMessage='Age range'
-        description='Age range of students at the school'
-      />
-    )
-    const orgDecile = (
-      <FormattedMessage
-        id='orgDecile'
-        defaultMessage='Decile'
-        description='Decile of school'
       />
     )
     const orgContactName = (
@@ -281,7 +267,7 @@ class OrgDetailForm extends Component {
                     <FormattedMessage
                       id='OpAskForm.groups.prompt'
                       description='Section prompt for op groups'
-                      defaultMessage='e.g. Business, School, Individual'
+                      defaultMessage='e.g. Business or Individual'
                     />
                   </p>
                 </DescriptionContainer>
@@ -340,8 +326,8 @@ class OrgDetailForm extends Component {
                 <FormattedMessage
                   id='orgDetail.form.about.description'
                   values={{ br: <br /> }}
-                  defaultMessage='Tell the world about your school or organisation.{br}{br}
-                  This is your opportunity to ‘sell’ your school or organisation to the rest of the Voluntarily community. Who are you? What do you do? What are your values and your motivations for using Voluntarily?'
+                  defaultMessage='Tell the world about your organisation.{br}{br}
+                  This is your opportunity to ‘sell’ your organisation to the rest of the Voluntarily community. Who are you? What do you do? What are your values and your motivations for using Voluntarily?'
                   description='Title for about section of organisation edit form'
                 />
               </p>
@@ -392,7 +378,7 @@ class OrgDetailForm extends Component {
                 <h3>Contact Details</h3>
               </TitleContainer>
               <p>
-                How do you want teachers and schools to get in touch with you?
+                How do you want the public to get in touch with you?
               </p>
             </DescriptionContainer>
             <InputContainer>
@@ -431,68 +417,11 @@ class OrgDetailForm extends Component {
             </InputContainer>
           </FormGrid>
           <Divider />
-          {(getFieldValue('category') || []).includes(
-            OrganisationCategory.SCHOOL
-          ) ? (
+          
             <>
               <FormGrid>
-                <DescriptionContainer>
-                  <TitleContainer>
-                    <h3>
-                      <FormattedMessage
-                        id='orgDetailpage.schoolDetail'
-                        defaultMessage='School Details'
-                        description='Title for school detail section of organisation edit form'
-                      />
-                    </h3>
-                  </TitleContainer>
-                  <FormattedMessage
-                    id='orgDetailPage.schoolDetail.description'
-                    defaultMessage='A few details about your school'
-                    description='description for school detail section of organisation edit form'
-                  />
-                  <p>l</p>
-                </DescriptionContainer>
                 <InputContainer>
                   <ShortInputContainer>
-                    <Form.Item label={orgDecile}>
-                      {getFieldDecorator(
-                        'decile',
-                        {}
-                      )(<InputNumber min={1} max={10} className='decile' />)}
-                    </Form.Item>
-
-                    <Form.Item label={orgAgeRange}>
-                      {getFieldDecorator('ageRange', {
-                        rules: [
-                          {
-                            type: 'method',
-                            validator: (rule, value, callback) => {
-                              callback(
-                                validateAgeRange(value) ? (
-                                  undefined
-                                ) : (
-                                  <FormattedMessage
-                                    id='org.detail.ageRange'
-                                    defaultMessage='Please enter the age range of your students'
-                                    description='The age range specified on the organisation form is invalid'
-                                  />
-                                )
-                              )
-                            }
-                          }
-                        ]
-                      })(
-                        <NumericRange
-                          fromPlaceholder='5'
-                          fromMin={0}
-                          fromMax={120}
-                          toPlaceholder='18'
-                          toMin={0}
-                          toMax={120}
-                        />
-                      )}
-                    </Form.Item>
                     <Form.Item label={orgContactName}>
                       {getFieldDecorator('contactName')(<Input />)}
                     </Form.Item>
@@ -536,7 +465,6 @@ class OrgDetailForm extends Component {
               </FormGrid>
               <Divider />
             </>
-            ) : null}
           <FormGrid>
             <DescriptionContainer>
               <TitleContainer>
@@ -647,7 +575,7 @@ class OrgDetailForm extends Component {
                 <h3>Public Section</h3>
               </TitleContainer>
               <p>
-                How do you want teachers and schools to get in touch with you?
+                How do you want the public to get in touch with you?
               </p>
             </DescriptionContainer>
             <InputContainer>
