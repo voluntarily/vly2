@@ -727,7 +727,7 @@ export const permissionTrimFields = (person, roles) => {
 
   delete person.dateAdded
 
-  const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]
+  const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER]
   if (person.role) {
     person.role = person.role.filter(role => applicableRoles.includes(role))
   }

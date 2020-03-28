@@ -133,7 +133,7 @@ const updateInterestA = InterestModel => async (req, res) => {
 
     if (
       interestUpdateData.status &&
-      person.role.includes(Role.VOLUNTEER_PROVIDER) &&
+      person.role.includes(Role.VOLUNTEER) &&
       existingInterest.person.toString() === req.session.me._id.toString()
     ) {
       if (!isValidTransition(existingInterest.status, interestUpdateData.status)) {

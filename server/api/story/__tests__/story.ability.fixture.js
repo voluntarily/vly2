@@ -18,13 +18,13 @@ const people = [
     _id: generateObjectId(),
     name: 'Volunteer 1',
     email: 'volunteer.1@example.com',
-    role: [Role.VOLUNTEER_PROVIDER]
+    role: [Role.VOLUNTEER]
   },
   {
     _id: generateObjectId(),
     name: 'Volunteer 2',
     email: 'volunteer.2@example.com',
-    role: [Role.VOLUNTEER_PROVIDER]
+    role: [Role.VOLUNTEER]
   }
 ]
 

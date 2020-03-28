@@ -175,7 +175,7 @@ test.serial('role of person with various memberships.', async (t) => {
 test.serial('roles are sorted and deduplicated', t => {
   const desiredOrder = [
     Role.ANON,
-    Role.VOLUNTEER_PROVIDER,
+    Role.VOLUNTEER,
     Role.OPPORTUNITY_PROVIDER,
     Role.ACTIVITY_PROVIDER,
     Role.RESOURCE_PROVIDER,
@@ -185,7 +185,7 @@ test.serial('roles are sorted and deduplicated', t => {
 
   const mixedRoles = [
     Role.ADMIN,
-    Role.VOLUNTEER_PROVIDER,
+    Role.VOLUNTEER,
     Role.OPPORTUNITY_PROVIDER,
     Role.ACTIVITY_PROVIDER,
     Role.TESTER,

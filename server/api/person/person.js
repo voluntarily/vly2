@@ -31,12 +31,12 @@ const personSchema = new Schema({
   role: {
     type: [String],
     required: true,
-    default: [Role.VOLUNTEER_PROVIDER],
+    default: [Role.VOLUNTEER],
     enum: [
       Role.ADMIN,
       Role.ORG_ADMIN,
       Role.OPPORTUNITY_PROVIDER,
-      Role.VOLUNTEER_PROVIDER,
+      Role.VOLUNTEER,
       Role.ACTIVITY_PROVIDER,
       Role.RESOURCE_PROVIDER,
       Role.TESTER

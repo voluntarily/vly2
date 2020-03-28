@@ -168,7 +168,7 @@ async function updatePersonDetail (req, res, next) {
   }
 
   // Only a subset of the Role enum can be set via the API. Some value are computed and set such as ORG_ADMIN.
-  const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]
+  const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER]
   if (person.role && person.role.find(role => !applicableRoles.includes(role))) {
     return res.status(400).send('You have specified an invalid role value')
   }

@@ -27,13 +27,13 @@ const people = [
     _id: generateObjectId(),
     name: 'Volunteer 1',
     email: 'volunteer.1@example.com',
-    role: [Role.VOLUNTEER_PROVIDER]
+    role: [Role.VOLUNTEER]
   },
   { // 3
     _id: generateObjectId(),
     name: 'Volunteer 2',
     email: 'volunteer.2@example.com',
-    role: [Role.VOLUNTEER_PROVIDER]
+    role: [Role.VOLUNTEER]
   },
   { // 4
     _id: generateObjectId(),
@@ -51,19 +51,19 @@ const people = [
     _id: generateObjectId(),
     name: 'Volunteer + Opportunity Provider 1',
     email: 'volunteer.opportunity.provider.1@example.com',
-    role: [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER]
+    role: [Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER]
   },
   { // 7
     _id: generateObjectId(),
     name: 'Volunteer + Activity Provider',
     email: 'volunteer.3@example.com',
-    role: [Role.VOLUNTEER_PROVIDER, Role.ACTIVITY_PROVIDER]
+    role: [Role.VOLUNTEER, Role.ACTIVITY_PROVIDER]
   },
   { // 8
     _id: generateObjectId(),
     name: 'Volunteer + Opportunity Provider + Activity Provider',
     email: 'vp_op_ap@example.com',
-    role: [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER]
+    role: [Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER]
   }
 ]
 export const PERSON = {

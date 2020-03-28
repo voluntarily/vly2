@@ -146,7 +146,7 @@ test.serial('Anonymous - DELETE is denied', async t => {
   t.is(403, res.status)
 })
 
-for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN]) {
+for (const role of [Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN]) {
   test.serial(`${role} - LIST - get all published`, async t => {
     const q = {
       status: {
@@ -179,7 +179,7 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG
     const res = await request(server)
       .get(`/api/opportunities?q=${JSON.stringify(q)}`)
       .set('Accept', 'application/json')
-      .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.VOLUNTEER_PROVIDER])}`])
+      .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.VOLUNTEER])}`])
 
     t.is(200, res.status)
     t.is(3, res.body.length) // There are 3 ACTIVE ops in the fixture file
@@ -192,7 +192,7 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG
     const res = await request(server)
       .get(`/api/opportunities/${t.context.opportunities[0]._id}`)
       .set('Accept', 'application/json')
-      .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.VOLUNTEER_PROVIDER])}`])
+      .set('Cookie', [`idToken=${await createPersonAndGetToken([Role.VOLUNTEER])}`])
 
     t.is(200, res.status)
   })
@@ -224,7 +224,7 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG
   })
 }
 
-for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER]) {
+for (const role of [Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER]) {
   test.serial(`${role} - READ - can not read DRAFT status`, async t => {
     const res = await request(server)
       .get(`/api/opportunities/${t.context.opportunities[2]._id}`)
@@ -324,7 +324,7 @@ test.serial('orgAdmin - CREATE', async t => {
   const requestor = (await Person.find())[0]
 
   // personA is an org admin for orgA
-  const personA = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const personA = await createPerson([Role.VOLUNTEER])
   await Member.create({
     person: personA,
     organisation: orgA,
@@ -350,7 +350,7 @@ test.serial('orgAdmin - CREATE - attempt to create an op for an org I am not apa
   const orgB = await Organisation.findOne({ name: 'Datacom' })
 
   // personA is an org admin for orgA
-  const personA = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const personA = await createPerson([Role.VOLUNTEER])
   await Member.create({
     person: personA,
     organisation: orgA,
@@ -358,7 +358,7 @@ test.serial('orgAdmin - CREATE - attempt to create an op for an org I am not apa
   })
 
   // personB is an org admin for orgB
-  const personB = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const personB = await createPerson([Role.VOLUNTEER])
   await Member.create({
     person: personB,
     organisation: orgB,
@@ -406,7 +406,7 @@ test.serial('Owner - DELETE - Cannot delete an opportunity', async t => {
   let opId
 
   try {
-    const requestor = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const requestor = await createPerson([Role.VOLUNTEER])
 
     const op = await Opportunity.create({
       name: 'Cool op',
@@ -459,7 +459,7 @@ test.serial('Owner - UPDATE - Can update an opportunity I created/own', async t 
   }
 })
 
-for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
+for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER]) {
   test.serial(`${role} - UPDATE - Cannot set the offerOrg to an org I am not a member of`, async t => {
     const requestor = await createPerson([role])
 
@@ -699,7 +699,7 @@ test.serial('admin - DELETE - Admin can delete ops', async t => {
   t.falsy(op2)
 })
 
-for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
+for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER]) {
   test.serial(`${role} - UPDATE - Cannot set the fromActivity field`, async t => {
     const op = await Opportunity.create({
       requestor: await createPerson([Role.ACTIVITY_PROVIDER])

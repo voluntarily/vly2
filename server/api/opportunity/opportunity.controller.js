@@ -211,7 +211,7 @@ const createOpportunity = async (req, res, next) => {
     if (me.role.includes(Role.ORG_ADMIN) && req.body.offerOrg && me.orgAdminFor.includes(req.body.offerOrg)) {
       return true
     }
-    if (me.role.includes(Role.OPPORTUNITY_PROVIDER) || me.role.includes(Role.VOLUNTEER_PROVIDER)) {
+    if (me.role.includes(Role.OPPORTUNITY_PROVIDER) || me.role.includes(Role.VOLUNTEER)) {
       if (!req.body.offerOrg) {
         return false
       }

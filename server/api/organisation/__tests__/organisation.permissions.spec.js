@@ -151,7 +151,7 @@ test.serial('Permissions - Roles matrix', async t => {
       forbidden: [delete_, post, put]
     },
     {
-      roles: [Role.VOLUNTEER_PROVIDER],
+      roles: [Role.VOLUNTEER],
       permitted: [getAll, getById],
       forbidden: [delete_, post, put]
     },

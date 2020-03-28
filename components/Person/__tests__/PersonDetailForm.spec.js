@@ -82,7 +82,7 @@ test('render the detail with op', t => {
   t.truthy(submitOp.calledWith(t.context.me))
 })
 
-for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.VOLUNTEER_PROVIDER]) {
+for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.VOLUNTEER]) {
   test(`permissionTrimFields - email field is removed if ${role}`, t => {
     const person = {
       email: 'abc@xyz.com'
