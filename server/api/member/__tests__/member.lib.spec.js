@@ -157,17 +157,16 @@ test.serial('Find org by person and category', async (t) => {
 test.serial('role of person with no membership is what is in the person.role field.', async (t) => {
   const person = t.context.people[3]
   const [role, orgAdminFor] = await getPersonRoles(person)
-  t.is(role.length, 1)
-  t.is(role[0], 'volunteer')
+  t.is(role.length, 0)
   t.is(orgAdminFor.length, 0)
 })
 
 test.serial('role of person with various memberships.', async (t) => {
   const person = t.context.people[1]
   const [role, orgAdminFor] = await getPersonRoles(person)
-  t.is(role.length, 4) // ["volunteer","opportunityProvider","orgAdmin","admin"]
-  t.is(role[1], 'opportunityProvider') // because org[2] is OP
-  t.is(role[3], 'admin') // because org[3] is admin category
+  t.is(role.length, 3) // ["opportunityProvider","orgAdmin","admin"]
+  t.is(role[0], 'opportunityProvider') // because org[2] is OP
+  t.is(role[2], 'admin') // because org[3] is admin category
   t.is(orgAdminFor.length, 1)
   t.deepEqual(orgAdminFor[0], t.context.organisations[3]._id)
 })
@@ -175,20 +174,20 @@ test.serial('role of person with various memberships.', async (t) => {
 test.serial('roles are sorted and deduplicated', t => {
   const desiredOrder = [
     Role.ANON,
-    Role.VOLUNTEER_PROVIDER,
+    Role.VOLUNTEER,
     Role.OPPORTUNITY_PROVIDER,
     Role.ACTIVITY_PROVIDER,
     Role.RESOURCE_PROVIDER,
-    Role.TESTER,
+    Role.SUPPORT,
     Role.ADMIN
   ]
 
   const mixedRoles = [
     Role.ADMIN,
-    Role.VOLUNTEER_PROVIDER,
+    Role.VOLUNTEER,
     Role.OPPORTUNITY_PROVIDER,
     Role.ACTIVITY_PROVIDER,
-    Role.TESTER,
+    Role.SUPPORT,
     Role.OPPORTUNITY_PROVIDER,
     Role.ANON,
     Role.RESOURCE_PROVIDER,

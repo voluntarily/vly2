@@ -67,7 +67,7 @@ async function getPerson (req, res, next) {
   const includePersonalFields = (me.role &&
     (
       me.role.includes(Role.ADMIN) ||
-      me.role.includes(Role.TESTER) ||
+      me.role.includes(Role.SUPPORT) ||
       (await isPersonInMyOrg()) ||
       (await isPersonInvitedToMyOpportunities())
     )) ||
@@ -141,11 +141,11 @@ async function updatePersonDetail (req, res, next) {
 
   const updatingSelf = me._id && personId === me._id.toString()
 
-  // ADMIN, TESTER, ORG_ADMIN or the owner of the person record is allowed to update it, otherwise forbidden
+  // ADMIN, SUPPORT, ORG_ADMIN or the owner of the person record is allowed to update it, otherwise forbidden
   const allowed = (me.role &&
                   (
                     me.role.includes(Role.ADMIN) ||
-                    me.role.includes(Role.TESTER) ||
+                    me.role.includes(Role.SUPPORT) ||
                     me.role.includes(Role.ORG_ADMIN)
                   )) ||
                   updatingSelf
@@ -161,14 +161,14 @@ async function updatePersonDetail (req, res, next) {
       return res.status(403).send('You do not have the required role to change the \'role\' field')
     }
 
-    // Only ADMIN can update the role field to include TESTER
-    if (person.role.includes(Role.TESTER) && !me.role.includes(Role.ADMIN)) {
+    // Only ADMIN can update the role field to include SUPPORT
+    if (person.role.includes(Role.SUPPORT) && !me.role.includes(Role.ADMIN)) {
       return res.status(403).send('You do not have the required role to change the \'role\' field')
     }
   }
 
   // Only a subset of the Role enum can be set via the API. Some value are computed and set such as ORG_ADMIN.
-  const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]
+  const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]
   if (person.role && person.role.find(role => !applicableRoles.includes(role))) {
     return res.status(400).send('You have specified an invalid role value')
   }
@@ -178,9 +178,9 @@ async function updatePersonDetail (req, res, next) {
     return res.status(403).send('You do not have the required role to change the \'email\' field')
   }
 
-  // Cannot change dateAdded
-  if (Object.keys(person).includes('dateAdded')) {
-    return res.status(403).send('The dateAdded field cannot be changed')
+  // Cannot change createdAt
+  if (Object.keys(person).includes('createdAt')) {
+    return res.status(403).send('The createdAt field cannot be changed')
   }
 
   // Must be a valid language
@@ -231,7 +231,7 @@ async function deletePerson (req, res, next) {
   const isSelf = me._id && personId === me._id.toString()
 
   const allowed = me.role.includes(Role.ADMIN) ||
-                  me.role.includes(Role.TESTER) ||
+                  me.role.includes(Role.SUPPORT) ||
                   isSelf
 
   if (!allowed) {

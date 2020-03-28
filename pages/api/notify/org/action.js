@@ -22,7 +22,7 @@ const props = {
     tags: [],
     _id: '5da51c5e79e1a079f638a354',
     avatar: '',
-    dateAdded: '2019-10-15T01:09:50.309Z',
+    createdAt: '2019-10-15T01:09:50.309Z',
     name: 'andrew@omgtech.conz',
     email: 'andrew@omgtech.conz',
     __v: 1,

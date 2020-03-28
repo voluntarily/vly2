@@ -18,7 +18,7 @@ const ruleBuilder = async (session) => {
 
   return {
     [Role.ANON]: anonRules,
-    [Role.VOLUNTEER_PROVIDER]: allRules,
+    [Role.VOLUNTEER]: allRules,
     [Role.OPPORTUNITY_PROVIDER]: allRules,
     [Role.ACTIVITY_PROVIDER]: allRules,
     [Role.ORG_ADMIN]: allRules,

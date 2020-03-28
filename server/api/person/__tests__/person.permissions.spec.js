@@ -70,7 +70,7 @@ test('List - anonymous', async t => {
 
 // Roles (other than ADMIN) can list all users, but email and phone fields are removed from the response
 // VP-1264 - In the future the set of users will be more limited
-for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.TESTER]) {
+for (const role of [Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.SUPPORT]) {
   test(`List - ${role}`, async t => {
     const res = await request(server)
       .get('/api/people')
@@ -133,7 +133,7 @@ test('Get person by id - anonymous', async t => {
   t.is(res.status, 403)
 })
 
-for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER]) {
+for (const role of [Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER]) {
   test(`Get person by id - ${role}`, async t => {
     const person = t.context.people[2] // Testy A.
 
@@ -197,7 +197,7 @@ test('Get person by id - self returns all fields', async t => {
   }
 })
 
-for (const role of [Role.ADMIN, Role.TESTER]) {
+for (const role of [Role.ADMIN, Role.SUPPORT]) {
   test(`Get person by id - ${role} - should return all fields`, async t => {
     const person = t.context.people.find(p => p.email === 'andrew@groat.nz')
 
@@ -232,11 +232,11 @@ for (const role of [Role.ADMIN, Role.TESTER]) {
 }
 
 test('Get person by id - requested person is in my organisation', async t => {
-  const personA = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const personA = await createPerson([Role.VOLUNTEER])
   const personB = await Person.create({
     name: 'name',
     email: `${uuid()}@test.com`,
-    role: [Role.VOLUNTEER_PROVIDER],
+    role: [Role.VOLUNTEER],
     status: 'active',
     language: 'en',
     website: 'https://reddit.com',
@@ -280,11 +280,11 @@ test('Get person by id - requested person is in my organisation', async t => {
 })
 
 test('Get person by id - requested person is invited to an opportunity of mine', async t => {
-  const personA = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const personA = await createPerson([Role.VOLUNTEER])
   const personB = await Person.create({
     name: 'name',
     email: `${uuid()}@test.com`,
-    role: [Role.VOLUNTEER_PROVIDER],
+    role: [Role.VOLUNTEER],
     status: 'active',
     language: 'en',
     website: 'https://reddit.com',
@@ -324,7 +324,7 @@ test('Get person by id - requested person is invited to an opportunity of mine',
   t.is(res.body.placeOfWork, 'POW')
 })
 
-for (const role of [undefined, Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.TESTER]) {
+for (const role of [undefined, Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.SUPPORT]) {
   test.serial(`Create a new person - ${role || 'Anonymous'} is denied`, async t => {
     const res = await request(server)
       .post('/api/people')
@@ -360,7 +360,7 @@ test.serial('Update - anonymous user cannot update', async t => {
   t.is(person2.phone, person.phone)
 })
 
-for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER]) {
+for (const role of [Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER]) {
   test.serial(`Update - ${role} cannot update person`, async t => {
     const person = t.context.people[0]
 
@@ -388,7 +388,7 @@ for (const role of [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER]) {
   })
 }
 
-for (const role of [Role.ADMIN, Role.ORG_ADMIN, Role.TESTER]) {
+for (const role of [Role.ADMIN, Role.ORG_ADMIN, Role.SUPPORT]) {
   test.serial(`Update - ${role} can update person`, async t => {
     const person = await createPerson([Role.ADMIN])
 
@@ -398,7 +398,7 @@ for (const role of [Role.ADMIN, Role.ORG_ADMIN, Role.TESTER]) {
       .put(`/api/people/${person._id}`)
       .send({
         name: newName,
-        role: [Role.VOLUNTEER_PROVIDER],
+        role: [Role.VOLUNTEER],
         status: 'active',
         phone: 'testphone'
       })
@@ -410,14 +410,14 @@ for (const role of [Role.ADMIN, Role.ORG_ADMIN, Role.TESTER]) {
     const person2 = await Person.findById(person._id)
     t.is(person2.name, newName)
     t.is(person2.email, person.email)
-    t.is(person2.role[0], Role.VOLUNTEER_PROVIDER)
+    t.is(person2.role[0], Role.VOLUNTEER)
     t.is(person2.status, 'active')
     t.is(person2.phone, 'testphone')
   })
 }
 
 test.serial('Update - can update self (even with role which denies update)', async t => {
-  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const person = await createPerson([Role.VOLUNTEER])
   const originalEmail = person.email
 
   const res = await request(server)
@@ -469,9 +469,9 @@ test('Anon user cannot remove a user', async t => {
   t.is(queriedPerson.email, p.email)
 })
 
-for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.VOLUNTEER_PROVIDER]) {
+for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.VOLUNTEER]) {
   test.serial(`Delete - ${role} cannot delete users`, async t => {
-    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const person = await createPerson([Role.VOLUNTEER])
 
     const res = await request(server)
       .delete(`/api/people/${person._id}`)
@@ -486,9 +486,9 @@ for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.RESO
   })
 }
 
-for (const role of [Role.ADMIN, Role.TESTER]) {
+for (const role of [Role.ADMIN, Role.SUPPORT]) {
   test.serial(`Delete - ${role} can delete any user`, async t => {
-    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const person = await createPerson([Role.VOLUNTEER])
 
     const res = await request(server)
       .delete(`/api/people/${person._id}`)
@@ -506,7 +506,7 @@ for (const role of [Role.ADMIN, Role.TESTER]) {
 test.serial('Delete - Owner can delete their account', async t => {
   // Volunteer role normally cannot delete an account, so for this code to succeed it will trigger the check
   // that this request is for the current user's account
-  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const person = await createPerson([Role.VOLUNTEER])
 
   const res = await request(server)
     .delete(`/api/people/${person._id}`)
@@ -520,9 +520,9 @@ test.serial('Delete - Owner can delete their account', async t => {
   t.falsy(person2)
 })
 
-for (const role of [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
+for (const role of [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]) {
   test.serial(`Update - ADMIN can change a persons role to ${role}`, async t => {
-    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const person = await createPerson([Role.VOLUNTEER])
 
     const res = await request(server)
       .put(`/api/people/${person._id}`)
@@ -543,9 +543,9 @@ for (const role of [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDE
   })
 }
 
-for (const currentUserRole of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
+for (const currentUserRole of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]) {
   test.serial(`Update - ${currentUserRole} cannot assign the ADMIN role to a user`, async t => {
-    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const person = await createPerson([Role.VOLUNTEER])
 
     const res = await request(server)
       .put(`/api/people/${person._id}`)
@@ -564,12 +564,12 @@ for (const currentUserRole of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER
 
     // Assert the user's role has remained as is
     const person2 = await Person.findById(person._id)
-    t.is(person2.role[0], Role.VOLUNTEER_PROVIDER)
+    t.is(person2.role[0], Role.VOLUNTEER)
   })
 }
 
 test.serial('Update - ADMIN can assign the ADMIN role to a user', async t => {
-  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const person = await createPerson([Role.VOLUNTEER])
 
   const res = await request(server)
     .put(`/api/people/${person._id}`)
@@ -589,40 +589,40 @@ test.serial('Update - ADMIN can assign the ADMIN role to a user', async t => {
   t.is(person2.role[0], Role.ADMIN)
 })
 
-for (const currentUserRole of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
-  test.serial(`Update - ${currentUserRole} cannot assign the TESTER role to a user`, async t => {
-    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+for (const currentUserRole of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]) {
+  test.serial(`Update - ${currentUserRole} cannot assign the SUPPORT role to a user`, async t => {
+    const person = await createPerson([Role.VOLUNTEER])
 
     const res = await request(server)
       .put(`/api/people/${person._id}`)
       .send({
         name: 'testname',
         email: `${uuid()}@test.com`,
-        role: [Role.TESTER], // Try and become a TESTER
+        role: [Role.SUPPORT], // Try and become a SUPPORT
         status: 'active',
         phone: 'testphone'
       })
       .set('Accept', 'application/json')
       .set('Cookie', `idToken=${await createPersonAndGetToken([currentUserRole])}`)
 
-    // Forbidden to change to the TESTER role
+    // Forbidden to change to the SUPPORT role
     t.is(res.status, 403)
 
     // Assert the user's role has remained as is
     const person2 = await Person.findById(person._id)
-    t.is(person2.role[0], Role.VOLUNTEER_PROVIDER)
+    t.is(person2.role[0], Role.VOLUNTEER)
   })
 }
 
-test.serial('Update - ADMIN can assign the TESTER role to a user', async t => {
-  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+test.serial('Update - ADMIN can assign the SUPPORT role to a user', async t => {
+  const person = await createPerson([Role.VOLUNTEER])
 
   const res = await request(server)
     .put(`/api/people/${person._id}`)
     .send({
       name: 'testname',
       email: `${uuid()}@test.com`,
-      role: [Role.TESTER], // Allowed to become an TESTER
+      role: [Role.SUPPORT], // Allowed to become an SUPPORT
       status: 'active',
       phone: 'testphone'
     })
@@ -632,12 +632,12 @@ test.serial('Update - ADMIN can assign the TESTER role to a user', async t => {
   t.is(res.status, 200)
 
   const person2 = await Person.findById(person._id)
-  t.is(person2.role[0], Role.TESTER)
+  t.is(person2.role[0], Role.SUPPORT)
 })
 
 for (const role of [Role.ORG_ADMIN, Role.ANON, Role.ALL, 'undefined', 'null']) {
   test.serial(`Update - ${role} is not a role which can be set via the API`, async t => {
-    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const person = await createPerson([Role.VOLUNTEER])
 
     const res = await request(server)
       .put(`/api/people/${person._id}`)
@@ -654,13 +654,13 @@ for (const role of [Role.ORG_ADMIN, Role.ANON, Role.ALL, 'undefined', 'null']) {
     t.is(res.status, 400)
 
     const person2 = await Person.findById(person._id)
-    t.is(person2.role[0], Role.VOLUNTEER_PROVIDER)
+    t.is(person2.role[0], Role.VOLUNTEER)
   })
 }
 
-for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
+for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]) {
   test.serial(`Update - Only ADMIN can change a users email field - ${role} cannot`, async t => {
-    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const person = await createPerson([Role.VOLUNTEER])
     const originalEmail = person.email
 
     const res = await request(server)
@@ -682,7 +682,7 @@ for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_
   })
 }
 test.serial('Update - Only ADMIN can change a users email field', async t => {
-  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const person = await createPerson([Role.VOLUNTEER])
 
   const payload = {
     name: 'testname',
@@ -704,10 +704,10 @@ test.serial('Update - Only ADMIN can change a users email field', async t => {
   t.is(person2.email, payload.email)
 })
 
-for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]) {
-  test.serial(`Update - no one can update dateAdded field - ${role}`, async t => {
-    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
-    const originalDateAdded = person.dateAdded.toISOString()
+for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]) {
+  test.serial(`Update - no one can update createdAt field - ${role}`, async t => {
+    const person = await createPerson([Role.VOLUNTEER])
+    const originalCreatedAt = person.createdAt.toISOString()
 
     const res = await request(server)
       .put(`/api/people/${person._id}`)
@@ -716,7 +716,7 @@ for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDE
         role: person.role,
         status: 'active',
         phone: 'testphone',
-        dateAdded: '2030-12-18T00:14:42.432Z'
+        createdAt: '2030-12-18T00:14:42.432Z'
       })
       .set('Accept', 'application/json')
       .set('Cookie', `idToken=${await createPersonAndGetToken([role])}`)
@@ -724,13 +724,13 @@ for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDE
     t.is(res.status, 403)
 
     const person2 = await Person.findById(person._id)
-    t.is(person2.dateAdded.toISOString(), originalDateAdded)
+    t.is(person2.createdAt.toISOString(), originalCreatedAt)
   })
 }
-for (const dateAdded of ['', '   ', null]) {
-  test.serial(`Update - cannot set dateAdded to falsey values - '${dateAdded}'`, async t => {
-    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
-    const originalDateAdded = person.dateAdded.toISOString()
+for (const createdAt of ['', '   ', null]) {
+  test.serial(`Update - cannot set createdAt to falsey values - '${createdAt}'`, async t => {
+    const person = await createPerson([Role.VOLUNTEER])
+    const originalCreatedAt = person.createdAt.toISOString()
 
     const res = await request(server)
       .put(`/api/people/${person._id}`)
@@ -739,7 +739,7 @@ for (const dateAdded of ['', '   ', null]) {
         role: person.role,
         status: 'active',
         phone: 'testphone',
-        dateAdded
+        createdAt
       })
       .set('Accept', 'application/json')
       .set('Cookie', `idToken=${createJwtIdToken(person.email)}`)
@@ -747,14 +747,14 @@ for (const dateAdded of ['', '   ', null]) {
     t.is(res.status, 403)
 
     const person2 = await Person.findById(person._id)
-    t.is(person2.dateAdded.toISOString(), originalDateAdded)
+    t.is(person2.createdAt.toISOString(), originalCreatedAt)
   })
 }
 
 // Test invalid language values, including empty string and falsey
 for (const lang of ['TEST', '  ', '']) {
   test.serial(`Update - only permitted languages can be set - invalid language value: '${lang}' - current user`, async t => {
-    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const person = await createPerson([Role.VOLUNTEER])
 
     const res = await request(server)
       .put(`/api/people/${person._id}`)
@@ -775,7 +775,7 @@ for (const lang of ['TEST', '  ', '']) {
 }
 
 test.serial('Update - only permitted languages can be set - valid language - current user', async t => {
-  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const person = await createPerson([Role.VOLUNTEER])
 
   const res = await request(server)
     .put(`/api/people/${person._id}`)
@@ -795,7 +795,7 @@ test.serial('Update - only permitted languages can be set - valid language - cur
 })
 
 test.serial('Update - language value is case sensitive', async t => {
-  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const person = await createPerson([Role.VOLUNTEER])
 
   const res = await request(server)
     .put(`/api/people/${person._id}`)
@@ -816,7 +816,7 @@ test.serial('Update - language value is case sensitive', async t => {
 
 for (const website of ['http://space.com', 'https://space.com', 'http://sls.rockets.nasa', 'space.com']) {
   test.serial(`Update - website field validation rules - valid - '${website}'`, async t => {
-    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const person = await createPerson([Role.VOLUNTEER])
 
     const res = await request(server)
       .put(`/api/people/${person._id}`)
@@ -837,7 +837,7 @@ for (const website of ['http://space.com', 'https://space.com', 'http://sls.rock
 }
 for (const website of [null, '', 'abc', '123']) {
   test.serial(`Update - website field validation rules - invalid - '${website}'`, async t => {
-    const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+    const person = await createPerson([Role.VOLUNTEER])
     const originalWebsite = person.website
 
     const res = await request(server)
@@ -858,7 +858,7 @@ for (const website of [null, '', 'abc', '123']) {
   })
 }
 test.serial('Update - website field validation rules - invalid - too long', async t => {
-  const person = await createPerson([Role.VOLUNTEER_PROVIDER])
+  const person = await createPerson([Role.VOLUNTEER])
   const originalWebsite = person.website
 
   let website = ''

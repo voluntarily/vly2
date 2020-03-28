@@ -9,7 +9,7 @@ var messageSchema = new mongoose.Schema({
   body: String,
   // who sent the message (op or vp?)
   author: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
-  dateAdded: { type: Date, default: Date.now, required: true }
+  createdAt: { type: Date, default: Date.now, required: true }
 })
 
 const interestSchema = new Schema({
@@ -29,7 +29,7 @@ const interestSchema = new Schema({
     ]
   },
   termsAccepted: { type: Boolean, default: false },
-  dateAdded: { type: Date, default: Date.now, required: true }
+  createdAt: { type: Date, default: Date.now, required: true }
 })
 
 const interestArchiveSchema = new Schema({
@@ -47,7 +47,7 @@ const interestArchiveSchema = new Schema({
       InterestStatus.NOTATTENDED
     ]
   }
-})
+}, { timestamps: true })
 
 interestSchema.plugin(idvalidator)
 interestSchema.plugin(accessibleRecordsPlugin)

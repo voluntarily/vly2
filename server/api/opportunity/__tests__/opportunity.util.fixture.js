@@ -38,7 +38,7 @@ module.exports = {
     {
       name: 'Testy McTestface',
       nickname: 'Testy',
-      about: 'Tester',
+      about: 'SUPPORT',
       location: 'Planet Earth',
       email: 'testy.mctestface@example.com',
       phone: '1234567',

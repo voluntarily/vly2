@@ -2,57 +2,57 @@
 {
   "name": "Testy A McTestface",
   "nickname": "A Testy",
-  "about": "Tester",
+  "about": "SUPPORT",
   "email": "atesty@voluntar.ly",
   "phone": "027 444 5555",
   "imgUrl": "https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png",
-  "role": ["tester", "volunteer"],
+  "role": ["support", "volunteer"],
   "status": "active"
 },
 {
   "name": "Testy B McTestface",
   "nickname": "B Testy",
-  "about": "Tester",
+  "about": "SUPPORT",
   "email": "btesty@voluntar.ly",
   "phone": "027 444 5555",
   "imgUrl": "https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png",
-  "role": ["tester", "volunteer"],
+  "role": ["support", "volunteer"],
   "status": "active"
 },{
   "name": "Testy C McTestface",
   "nickname": "C Testy",
-  "about": "Tester",
+  "about": "SUPPORT",
   "email": "ctesty@voluntar.ly",
   "phone": "027 444 5555",
   "imgUrl": "https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png",
-  "role": ["tester", "volunteer"],
+  "role": ["support", "volunteer"],
   "status": "active"
 },{
   "name": "Testy D McTestface",
   "nickname": "D Testy",
-  "about": "Tester",
+  "about": "SUPPORT",
   "email": "dtesty@voluntar.ly",
   "phone": "027 444 5555",
   "imgUrl": "https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png",
-  "role": ["tester", "volunteer"],
+  "role": ["support", "volunteer"],
   "status": "active"
 },{
   "name": "Testy E McTestface",
   "nickname": "E Testy",
-  "about": "Tester",
+  "about": "SUPPORT",
   "email": "ftesty@voluntar.ly",
   "phone": "027 444 5555",
   "imgUrl": "https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png",
-  "role": ["tester", "volunteer"],
+  "role": ["support", "volunteer"],
   "status": "active"
 },{
   "name": "Testy F McTestface",
   "nickname": "F Testy",
-  "about": "Tester",
+  "about": "SUPPORT",
   "email": "ftesty@voluntar.ly",
   "phone": "027 444 5555",
   "imgUrl": "https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png",
-  "role": ["tester", "volunteer"],
+  "role": ["support", "volunteer"],
   "status": "active"
 }
 ]

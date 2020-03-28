@@ -3,7 +3,7 @@ import objectid from 'objectid'
 export default [
   {
     _id: objectid().toHexString(),
-    dateAdded: '2019-04-28T19:03:39.908Z',
+    createdAt: '2019-04-28T19:03:39.908Z',
     name: 'Voluntarily NZ',
     slug: 'voluntarily-nz',
     info: {

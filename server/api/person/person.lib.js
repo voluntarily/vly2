@@ -36,7 +36,7 @@ const personProfileCompleteness = (person) => {
   // scoreStr(person.twitter, 4) // optional
   // scoreStr(person.role, 4) // defaulted
   // scoreStr(person.status, 4) // can't set
-  // scoreStr(person.dateAdded, 4) // defaulted
+  // scoreStr(person.createdAt, 4) // defaulted
   // scoreStr(person.href, 4) // internal use
   scoreArr(person.tags, 5)
   // scoreStr(person.teacher, 4) // internal

@@ -17,7 +17,7 @@ const listStory = async (req, res) => {
   const got = await Story.find(query)
     .accessibleBy(req.ability, Action.LIST)
     .populate('author', 'name imgUrl')
-    .sort('-dateAdded').exec() // sorts the data by date in the server
+    .sort('-createdAt').exec() // sorts the data by date in the server
 
   res.json(got)
 }

@@ -12,7 +12,7 @@ test('MemberExport button renders properly', t => {
 test('createCsv formats properly', async t => {
   const testMember = [
     {
-      dateAdded: '12345',
+      createdAt: '12345',
       status: 'member',
       person: {
         name: 'Jared',

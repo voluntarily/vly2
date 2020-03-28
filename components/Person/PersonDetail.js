@@ -245,7 +245,7 @@ PersonDetail.propTypes = {
         'opportunityProvider',
         'volunteer',
         'activityProvider',
-        'tester',
+        'support',
         'orgAdmin'
       ])
     ),

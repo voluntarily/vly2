@@ -10,7 +10,7 @@ export const PersonRole = ({ role }) => {
     volunteer: <FormattedMessage id='volunteer' defaultMessage='Volunteer' />,
     activityProvider: <FormattedMessage id='activityProvider' defaultMessage='Activity Provider' />,
     resourceProvider: <FormattedMessage id='resourceProvider' defaultMessage='Resource Provider' />,
-    tester: <FormattedMessage id='test' defaultMessage='Test' />
+    support: <FormattedMessage id='test' defaultMessage='Test' />
   }
   return roleOptions[role] || role
 }

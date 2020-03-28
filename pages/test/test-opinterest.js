@@ -46,7 +46,7 @@ const makeMessages = (numMessages, a, b, status, op) =>
   Array(numMessages).fill({}).map((item, index) => ({
     body: coin(`Example message ${a.name} is ${status} in ${op.name}`, 'Thanks for the feedback, I will be in touch'),
     author: coin(a, b),
-    dateAdded: moment().subtract(getRandomArbitrary(5, 1200), 'minutes')
+    createdAt: moment().subtract(getRandomArbitrary(5, 1200), 'minutes')
   }))
 
 const getInterests = async (numInterests) => {

@@ -42,7 +42,7 @@ const badgeSchema = new Schema({
     type: String,
     required: true
   }
-})
+}, { timestamps: true })
 
 badgeSchema.plugin(idvalidator)
 

@@ -28,7 +28,6 @@ const organisationSchema = new Schema({
     members: String,
     outsiders: String
   },
-  dateAdded: { type: 'Date', default: Date.now, required: true },
   ageRange: {
     from: Number,
     to: Number
@@ -38,7 +37,7 @@ const organisationSchema = new Schema({
   contactEmail: String,
   contactPhoneNumber: String,
   address: String
-})
+}, { timestamps: true })
 
 organisationSchema.plugin(accessibleRecordsPlugin)
 

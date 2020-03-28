@@ -4,10 +4,9 @@ import test from 'ava'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
 import objectid from 'objectid'
 
-import OrgDetailForm, { validateAgeRange } from '../OrgDetailForm'
+import OrgDetailForm from '../OrgDetailForm'
 import sinon from 'sinon'
 import organisations from '../../../server/api/organisation/__tests__/organisation.fixture'
-import { Category } from '../../../server/api/organisation/organisation.constants'
 import { MockWindowScrollTo } from '../../../server/util/mock-dom-helpers'
 
 MockWindowScrollTo.replaceForTest(test, global)

@@ -46,6 +46,6 @@ properties:
         type: string
       outsiders:
         type: string
-  dateAdded:
+  createdAt:
     type: string
     format: date-time

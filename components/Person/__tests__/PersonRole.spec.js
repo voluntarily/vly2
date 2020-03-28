@@ -5,13 +5,13 @@ import { renderWithIntl } from '../../../lib/react-intl-test-helper'
 
 test('Person Role renders properly', t => {
   t.is(renderWithIntl(<PersonRole role='volunteer' />).text(), 'Volunteer')
-  t.is(renderWithIntl(<PersonRole role='tester' />).text(), 'Test')
+  t.is(renderWithIntl(<PersonRole role='support' />).text(), 'Test')
 })
 
 test('Person Role list renders properly', t => {
   const roles = [
     'volunteer',
-    'tester',
+    'support',
     'activityProvider'
   ]
   const wrapper = renderWithIntl(<PersonRoles roles={roles} />)

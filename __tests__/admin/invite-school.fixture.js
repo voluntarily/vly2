@@ -17,7 +17,7 @@ const people = [
     _id: generateObjectId(),
     name: 'Volunteer',
     email: 'volunteer@example.com',
-    role: [Role.VOLUNTEER_PROVIDER]
+    role: [Role.VOLUNTEER]
   }
 ]
 

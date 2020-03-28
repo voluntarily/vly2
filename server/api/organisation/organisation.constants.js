@@ -16,7 +16,7 @@ const OrganisationFields = {
   CATEGORY: 'category',
   GROUPS: 'groups',
   INFO: 'info',
-  DATEADDED: 'dateAdded',
+  CREATEDAT: 'createdAt',
   AGERANGE: 'ageRange',
   DECILE: 'decile',
   CONTACTNAME: 'contactName',
