@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 import Html from '../VTheme/Html'
 import { useState } from 'react'
+
+// DO NOT USE ATM - it breaks the site
+
 const ShieldSiteLogo = styled.img`
   width: 2.5rem;
   cursor: 'pointer;
