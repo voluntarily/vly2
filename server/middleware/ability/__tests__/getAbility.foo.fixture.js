@@ -26,13 +26,13 @@ const ruleBuilder = session => {
 
   const allAbilities = [{ subject, action: Action.READ }]
   const vpAbilities = [{ subject, action: Action.DELETE }]
-  const testerAbilities = [{ subject, action: Action.UPDATE }]
+  const supportAbilities = [{ subject, action: Action.UPDATE }]
 
   return {
     [Role.ANON]: anonAbilities,
     [Role.ALL]: allAbilities,
     [Role.VOLUNTEER]: vpAbilities,
-    [Role.TESTER]: testerAbilities
+    [Role.SUPPORT]: supportAbilities
   }
 }
 

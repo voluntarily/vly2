@@ -459,7 +459,7 @@ test.serial('Owner - UPDATE - Can update an opportunity I created/own', async t 
   }
 })
 
-for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER]) {
+for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]) {
   test.serial(`${role} - UPDATE - Cannot set the offerOrg to an org I am not a member of`, async t => {
     const requestor = await createPerson([role])
 
@@ -699,7 +699,7 @@ test.serial('admin - DELETE - Admin can delete ops', async t => {
   t.falsy(op2)
 })
 
-for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER]) {
+for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]) {
   test.serial(`${role} - UPDATE - Cannot set the fromActivity field`, async t => {
     const op = await Opportunity.create({
       requestor: await createPerson([Role.ACTIVITY_PROVIDER])

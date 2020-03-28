@@ -179,7 +179,7 @@ test.serial('roles are sorted and deduplicated', t => {
     Role.OPPORTUNITY_PROVIDER,
     Role.ACTIVITY_PROVIDER,
     Role.RESOURCE_PROVIDER,
-    Role.TESTER,
+    Role.SUPPORT,
     Role.ADMIN
   ]
 
@@ -188,7 +188,7 @@ test.serial('roles are sorted and deduplicated', t => {
     Role.VOLUNTEER,
     Role.OPPORTUNITY_PROVIDER,
     Role.ACTIVITY_PROVIDER,
-    Role.TESTER,
+    Role.SUPPORT,
     Role.OPPORTUNITY_PROVIDER,
     Role.ANON,
     Role.RESOURCE_PROVIDER,

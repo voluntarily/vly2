@@ -69,7 +69,7 @@ properties:
       - opportunityProvider
       - activityProvider
       - resourceProvider
-      - tester
+      - support
       - admin
       - orgAdmin
     example: volunteer

@@ -201,7 +201,7 @@ PersonDetailPage.propTypes = {
     sendEmailNotifications: PropTypes.bool,
     pronoun: PropTypes.object,
     imgUrl: PropTypes.any,
-    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'tester'])),
+    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'support'])),
     status: PropTypes.oneOf(['active', 'inactive', 'hold']),
     tags: PropTypes.arrayOf(PropTypes.string)
   }),

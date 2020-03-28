@@ -63,7 +63,7 @@ test.serial('Default signed in abilities - Volunteer', async t => {
 test.serial('Can combine multiple Role', async t => {
   const req = t.context.REQ_AUTHENTICATED_TEMPLATE
   req.session.me.role.push(Role.VOLUNTEER)
-  req.session.me.role.push(Role.TESTER)
+  req.session.me.role.push(Role.SUPPORT)
   const res = {}
   await getAbility({ searchPattern: '/server/middleware/ability/__tests__/getAbility.foo.fixture.js' })(req, res, mockNext)
   t.truthy(req.ability)

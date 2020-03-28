@@ -94,7 +94,7 @@ for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_
   })
 }
 
-for (const role of [Role.ADMIN, Role.TESTER]) {
+for (const role of [Role.ADMIN, Role.SUPPORT]) {
   test(`permissionTrimFields - email field is included if ${role}`, t => {
     const person = {
       email: 'abc@xyz.com'

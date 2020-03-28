@@ -43,7 +43,7 @@ const ruleBuilder = (session) => {
     [Role.ACTIVITY_PROVIDER]: defaultAbilities,
     [Role.VOLUNTEER]: defaultAbilities,
     [Role.OPPORTUNITY_PROVIDER]: defaultAbilities,
-    [Role.TESTER]: defaultAbilities,
+    [Role.SUPPORT]: defaultAbilities,
     [Role.ADMIN]: adminAbilities
   }
 }

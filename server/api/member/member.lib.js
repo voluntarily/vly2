@@ -67,7 +67,7 @@ const orgToRoleTable = {
   op: Role.OPPORTUNITY_PROVIDER,
   ap: Role.ACTIVITY_PROVIDER,
   other: Role.RESOURCE_PROVIDER,
-  test: Role.TESTER
+  test: Role.SUPPORT
 }
 // desired sort order for roles
 // ANON, VP, OP,AP, ORG_ADMIN, ADMIN
@@ -79,7 +79,7 @@ const sortRoles = roles => {
     Role.ACTIVITY_PROVIDER,
     Role.RESOURCE_PROVIDER,
     Role.ORG_ADMIN,
-    Role.TESTER,
+    Role.SUPPORT,
     Role.ADMIN
   ]
   const sortedRoles = []

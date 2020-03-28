@@ -5,7 +5,7 @@ const Role = {
   OPPORTUNITY_PROVIDER: 'opportunityProvider',
   ACTIVITY_PROVIDER: 'activityProvider',
   RESOURCE_PROVIDER: 'resourceProvider',
-  TESTER: 'tester',
+  SUPPORT: 'support',
   ADMIN: 'admin',
   ORG_ADMIN: 'orgAdmin'
 }
@@ -17,9 +17,10 @@ const OrganisationRole = {
   RESOURCE_PROVIDER: 'resourceProvider',
   AGENCY: 'agency', // can access reports
   SUPPORT: 'support', // can provide help desk support
-  ADMIN: 'admin'
+  ADMIN: 'admin' // can be all powerful
 }
 
 module.exports = {
-  Role
+  Role,
+  OrganisationRole
 }

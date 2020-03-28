@@ -39,7 +39,7 @@ const personSchema = new Schema({
       Role.VOLUNTEER,
       Role.ACTIVITY_PROVIDER,
       Role.RESOURCE_PROVIDER,
-      Role.TESTER
+      Role.SUPPORT
     ]
   },
   // used to indicate whether people show up in searches.
