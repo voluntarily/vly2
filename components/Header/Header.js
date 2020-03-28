@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
 import links from './HeaderMenu'
 import { useIntl } from 'react-intl'
-
+import { Role } from '../../server/services/authorize/role.js'
 // const Search = Input.Search
 
 const Brand = styled.h1`
@@ -103,8 +103,17 @@ const Header = ({ isAuthenticated, me, ...props }) => {
   let notice = intl.formatMessage({ id: 'notice', defaultMessage: 'none' })
   if (notice === 'none') notice = '' // wipe notice if its set to none
   const height = '56px'
+  const headerColor = isAuthenticated ? me.role.includes(Role.TESTER) ? 'solid 10px #faad14' : me.role.includes(Role.ADMIN) ? 'solid 10px #7826ff' : 'none' : 'none'
+  const headerStyle = {
+    borderTop: headerColor,
+    position: 'fixed',
+    height,
+    zIndex: 10,
+    width: '100%',
+    backgroundColor: 'white'
+  }
   return (
-    <Layout.Header style={{ position: 'fixed', height: height, zIndex: 10, width: '100%', backgroundColor: 'white' }}>
+    <Layout.Header style={headerStyle}>
       {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><Icon type='warning' /> {notice}</Notice>}
       <MenuGrid>
         <div>

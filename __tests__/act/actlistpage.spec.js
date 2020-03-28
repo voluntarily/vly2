@@ -6,7 +6,6 @@ import acts from '../../server/api/activity/__tests__/activity.fixture'
 import objectid from 'objectid'
 import withMockRoute from '../../server/util/mockRouter'
 import sinon from 'sinon'
-import { Grid } from '../../components/VTheme/VTheme'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
@@ -35,56 +34,13 @@ test.before('Setup fixtures', (t) => {
 })
 
 test('render ActListPage', async t => {
-  const props = await ActListPage.getInitialProps({ store: t.context.store })
+  // const props = await ActListPage.getInitialProps({ store: t.context.store })
   const RoutedActListPage = withMockRoute(ActListPage)
 
-  const outer = shallowWithIntl(<RoutedActListPage {...props} />)
+  const outer = shallowWithIntl(<RoutedActListPage />)
   const router = outer.props().router
   router.push = sinon.spy()
   const wrapper = outer.dive()
   t.is(wrapper.find('h1 FormattedMessage').first().props().id, 'ActListPage.Title')
-  t.truthy(wrapper.find('Button'))
-  t.truthy(wrapper.find('ActListPage'))
-  t.truthy(wrapper.find(Grid))
-
-  // handle search
-  const search = wrapper.find('Search').first()
-  search.props().onSearch('moon')
-  t.true(router.push.calledWith({ pathname: '/acts', query: { search: 'moon' } }))
-
-  t.false(search.props().onSearch())
-})
-
-test('render ActListPage with no acts', async t => {
-  // first test GetInitialPracts
-  const props = await ActListPage.getInitialProps({ store: t.context.store })
-  const RoutedActListPage = withMockRoute(ActListPage)
-
-  const outer = shallowWithIntl(<RoutedActListPage {...props} />)
-  const router = outer.props().router
-  router.push = sinon.spy()
-  const wrapper = outer.dive()
-  t.is(wrapper.find('h1 FormattedMessage').first().props().id, 'ActListPage.Title')
-  t.truthy(wrapper.find('Button'))
-  t.truthy(wrapper.find('ActListPage'))
-
-  // handle search
-  const search = wrapper.find('Search').first()
-  search.props().onSearch('moon')
-  t.true(router.push.calledWith({ pathname: '/acts', query: { search: 'moon' } }))
-
-  t.false(search.props().onSearch())
-})
-
-test('render ActListPage with dispatch error', async t => {
-  t.plan(1)
-  // first test GetInitialProps
-  const store = {
-    dispatch: (ACTION) => {
-      throw Error('Catch This!')
-    }
-  }
-  await t.throwsAsync(async () => {
-    await ActListPage.getInitialProps({ store })
-  }, { message: 'Catch This!' })
+  t.true(wrapper.exists('ActListSection'))
 })

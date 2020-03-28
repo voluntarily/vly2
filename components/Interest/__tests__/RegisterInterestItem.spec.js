@@ -94,7 +94,7 @@ test('initial state', t => {
   t.true(wrapper.exists('#acceptBtn'))
   t.false(wrapper.exists('#rejectBtn'))
   t.false(wrapper.exists('#messageBtn'))
-  t.is(wrapper.find('#acceptBtn').first().text(), 'Get Involved')
+  t.is(wrapper.find('#acceptBtn').first().text(), 'Offer to help')
   t.is(wrapper.find('RegisterInterestMessageForm').length, 3)
   t.false(wrapper.find('RegisterInterestMessageForm#acceptRegisterInterestForm').first().props().visible)
 

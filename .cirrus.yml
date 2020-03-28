@@ -51,10 +51,10 @@ container:
 #     - apt-get install -y firefox-esr
 #     - npm run end-to-end-test
 
-build_test_docker_builder:
-  only_if: $CIRRUS_BRANCH != 'master'
-  test_script:
-    - docker build --target production_build .
+# build_test_docker_builder:
+#   only_if: $CIRRUS_BRANCH != 'master'
+#   test_script:
+#     - docker build --target production_build .
 
 prod_docker_docker_builder:
   only_if: $CIRRUS_BRANCH == 'master'

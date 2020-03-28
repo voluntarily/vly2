@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
 import { P, Spacer } from '../VTheme/VTheme'
 import links from './FooterMenu'
-// import WomensRefuge from './WomensRefuge.js'
+import WomensRefuge from './WomensRefuge.js'
 
 const getAllowedLinks = isAuthenticated =>
   links()
@@ -90,12 +90,13 @@ list-style: none;
     letter-spacing: -0.2px;
     line-height: 2;
 
-:hover {
-  color: #6549AA;
-}
+    :hover {
+      color: #6549AA;
+    }
 
   }
 `
+
 const Footer = ({ isAuthenticated, ...props }) => (
   <FooterBackground>
     <script
@@ -139,6 +140,21 @@ const Footer = ({ isAuthenticated, ...props }) => (
               >
             Pam Fergusson Charitable Trust
               </a>
+            </P>
+            <P>
+              <FormattedMessage
+                id='version'
+                defaultMessage='Version'
+                description='Source coder version label.'
+              />
+          :&nbsp;
+              <FormattedMessage
+                id='revision' // set in server.js
+                defaultMessage='local-build'
+                description='Source code revision, auto generated.'
+              >
+                {txt => <a href={'https://github.com/voluntarily/vly2/commit/' + txt.split(/[ \- _ ]+/)[0]} rel='noopener noreferrer' target='_blank'>{txt}</a>}
+              </FormattedMessage>
             </P>
 
           </FooterText>
@@ -232,24 +248,10 @@ const Footer = ({ isAuthenticated, ...props }) => (
             </MenuItem>
           </MenuWrapper>
         </div>
-
+        <WomensRefuge />
       </FooterGrid>
       <Spacer />
-      <P>
-        <FormattedMessage
-          id='version'
-          defaultMessage='Version'
-          description='Source coder version label.'
-        />
-          :&nbsp;
-        <FormattedMessage
-          id='revision' // set in server.js
-          defaultMessage='local-build'
-          description='Source code revision, auto generated.'
-        >
-          {txt => <a href={'https://github.com/voluntarily/vly2/commit/' + txt.split(/[ \- _ ]+/)[0]} rel='noopener noreferrer' target='_blank'>{txt}</a>}
-        </FormattedMessage>
-      </P>
+
       {/* <WomensRefuge /> */}
     </FooterContainer>
     {props.isAdmin && (

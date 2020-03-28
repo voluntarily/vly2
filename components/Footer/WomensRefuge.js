@@ -1,10 +1,10 @@
-import React from 'react'
 import styled from 'styled-components'
-
+import Html from '../VTheme/Html'
+import { useState } from 'react'
 const ShieldSiteLogo = styled.img`
-  margin-top: 2rem;
-  margin-bottom: 2rem;
   width: 2.5rem;
+  cursor: 'pointer;
+
   @media screen and (min-width: 768px) and (max-width: 1280px) {
     margin-left: 2rem;
   }
@@ -14,27 +14,39 @@ const ShieldSiteLogo = styled.img`
   }
 `
 
-class WomensRefuge extends React.Component {
-  componentDidMount () {
-    /* eslint-disable no-undef */
-    /* eslint-disable new-cap */
-    const frameName = new ds07o6pcmkorn({
-      // FIXME: [VP-574] script id will break whenever the womans refuge site is redeployed.
-      openElementId: '#WomensRefuge-id'
-    })
-    frameName.init()
-  }
+const closeIcon = 'https://staticcdn.co.nz/embed/close.png'
+const ifr = "<iframe sandbox='allow-forms allow-scripts allow-same-origin allow-popups' src='https://staticcdn.co.nz' width='310' height='420' style='opacity: .98; width:310px; height:420px;' frameBorder='0' />"
 
-  render () {
-    return (
-      <>
-        <script src='https://d3f5l8ze0o4j2m.cloudfront.net/m87/k33spt.js' />
-        <a className='WomensRefuge-class' id='WomensRefuge-id'>
-          <ShieldSiteLogo src='/static/womens_refuge.png' />
-        </a>
-      </>
-    )
+export const WomensRefuge = () => {
+  const [visible, setVisible] = useState(false)
+  const [content, setContent] = useState('')
+  const open = () => {
+    setContent(ifr)
+    setVisible(true)
   }
+  const close = () => {
+    setVisible(false)
+  }
+  return (
+    <>
+      {visible &&
+        <div>
+          <Html>
+            {content}
+          </Html>
+          <a href='#' id='wfclose' onClick={close}>
+            <img style={{ topMargin: '-4px' }} src={closeIcon} alt='close modal' />
+          </a>
+        </div>}
+      {!visible &&
+        <ShieldSiteLogo
+          alt='shielded'
+          id='shielded-logo'
+          height='60' width='60'
+          src='https://shielded.co.nz/img/custom-logo.png'
+          onClick={open}
+        />}
+    </>)
 }
 
 export default WomensRefuge

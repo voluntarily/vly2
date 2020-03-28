@@ -75,7 +75,7 @@ test.serial('mount RegisterInterestSection with with no existing interest', asyn
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // we should see "i'm interested"
-  t.is(wrapper.find('button').first().text(), 'Get Involved')
+  t.is(wrapper.find('button').first().text(), 'Offer to help')
   wrapper.find('button').first().simulate('click')
 
   const postnewinterest = `${API_URL}/interests/`

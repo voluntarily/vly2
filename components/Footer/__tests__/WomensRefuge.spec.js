@@ -8,6 +8,10 @@ global.ds07o6pcmkorn = function (e) {
 
 test('Womens refuge button renders properly', t => {
   const wrapper = mount(<WomensRefuge />)
-  t.truthy(wrapper.find('a').first().hasClass('WomensRefuge-class'))
-  t.truthy(wrapper.find('a').simulate('click'))
+  console.log(wrapper.debug())
+  t.true(wrapper.exists('img#shielded-logo'))
+  wrapper.find('img#shielded-logo').first().simulate('click')
+  wrapper.update()
+  t.true(wrapper.exists('#wfclose'))
+  wrapper.find('#wfclose').first().simulate('click')
 })
