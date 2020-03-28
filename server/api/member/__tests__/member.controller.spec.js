@@ -6,7 +6,7 @@ import Person from '../../person/person'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
 import orgs from '../../organisation/__tests__/organisation.fixture'
-import { addMember, findOrgByPersonIdAndCategory } from '../member.lib'
+import { addMember, findOrgByPersonIdAndRole } from '../member.lib'
 
 test.before('before connect to database', async (t) => {
   try {
@@ -64,7 +64,7 @@ test.serial('Should add a member when they are not there already', async t => {
   t.is(membership.status, MemberStatus.MEMBER)
 })
 
-test.serial('findOrgByPersonIdAndCategory', async t => {
+test.serial('findOrgByPersonIdAndRole', async t => {
   const member = {
     person: t.context.andrew._id,
     organisation: t.context.orgs[1]._id, // omgtech is an op
@@ -74,11 +74,11 @@ test.serial('findOrgByPersonIdAndCategory', async t => {
 
   await addMember(member)
 
-  let orgid = await findOrgByPersonIdAndCategory(t.context.alice._id, 'op')
+  let orgid = await findOrgByPersonIdAndRole(t.context.alice._id, 'op')
   t.is(orgid, null)
-  orgid = await findOrgByPersonIdAndCategory(t.context.andrew._id, 'op')
+  orgid = await findOrgByPersonIdAndRole(t.context.andrew._id, 'op')
   t.deepEqual(orgid, t.context.orgs[1]._id)
-  // try with no category
-  orgid = await findOrgByPersonIdAndCategory(t.context.andrew._id, null)
+  // try with no role
+  orgid = await findOrgByPersonIdAndRole(t.context.andrew._id, null)
   t.deepEqual(orgid, t.context.orgs[1]._id)
 })

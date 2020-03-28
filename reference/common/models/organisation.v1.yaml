@@ -23,7 +23,7 @@ properties:
     type: string
   twitter:
     type: string
-  category:
+  role:
     type: array
     enum:
       - admin

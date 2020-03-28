@@ -9,6 +9,7 @@ import VTabs from '../VTheme/VTabs'
 import { OrgHistoryPanel } from './OrgHistoryPanel'
 import { OrgOffersPanel } from './OrgOffersPanel'
 import { orgTab, orgMemberTab, orgInstructionTab, orgOffersTab, orgEditTab, orgHistoryTab } from './OrgTabs.messages'
+import { OrganisationRole } from '../../server/api/organisation/organisation.constants'
 
 const { TabPane } = Tabs
 
@@ -28,7 +29,7 @@ export const OrgTabs = ({
       {/* // TODO: [VP-554] move the OpList for this org from the parent page to a tab  */}
       <OrgOffersPanel organisationId={org._id} />
     </TabPane>
-    {org.category.includes('op') && (
+    {org.role.includes(OrganisationRole.OPPORTUNITY_PROVIDER) && (
       <TabPane tab={orgHistoryTab} key='history' orgTab='history'>
         <OrgHistoryPanel organisationId={org._id} />
       </TabPane>
@@ -63,8 +64,8 @@ OrgTabs.propTypes = {
       members: PropTypes.string,
       outsiders: PropTypes.string
     }),
-    category: PropTypes.arrayOf(
-      PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
+    role: PropTypes.arrayOf(
+      PropTypes.oneOf([OrganisationRole.ADMIN, OrganisationRole.OPPORTUNITY_PROVIDER, OrganisationRole.VOLUNTEER_PROVIDER, OrganisationRole.ACTIVITY_PROVIDER, 'other'])
     ).isRequired,
     imgUrl: PropTypes.string,
     website: PropTypes.string,

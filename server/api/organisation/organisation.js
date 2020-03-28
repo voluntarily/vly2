@@ -1,23 +1,27 @@
 const mongoose = require('mongoose')
 const { accessibleRecordsPlugin } = require('@casl/mongoose')
 const Schema = mongoose.Schema
-
+const { OrganisationRole } = require('./organisation.constants')
 const organisationSchema = new Schema({
   name: { type: 'String', required: true, unique: true },
   slug: { type: 'String', required: true, unique: true },
-  about: { type: 'String' }, // deprecated don't use
-  // TODO: [VP-146] make required and provide a default image in the static folder.  imgUrl: String,
   imgUrl: { type: 'String', default: '/static/img/organisation/organisation.png' },
   website: String,
   facebook: String,
   domainName: String,
   twitter: String,
-  category: {
+  category: { // deprecated do not use
     type: [String],
-    required: true,
+    required: false,
     default: ['vp'],
     enum: ['admin', 'vp', 'op', 'ap', 'other']
-    // TODO: [VP-905] replace category strings with constants in ./organisation.constants.js
+    // TODO: [VP-905] replace role strings with constants in ./organisation.constants.js
+  },
+  role: {
+    type: [String],
+    required: true,
+    default: [OrganisationRole.VOLUNTEER_PROVIDER],
+    enum: [...Object.values(OrganisationRole)]
   },
   groups: [String], // which groups does this org belong to - business, school, individual
   info: {

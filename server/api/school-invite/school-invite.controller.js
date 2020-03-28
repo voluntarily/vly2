@@ -9,6 +9,7 @@ const Organisation = require('../organisation/organisation')
 const slug = require('limax')
 const { MemberStatus } = require('../member/member.constants')
 const { addMember } = require('../member/member.lib')
+const { OrganisationRole } = require('../organisation/organisation.constants')
 
 class SchoolInvite {
   static async send (req, res) {
@@ -176,7 +177,7 @@ class SchoolInvite {
       initialOrganisationData[organisationFieldName] = schoolData[schoolFieldName]
     }
 
-    initialOrganisationData.category = ['op']
+    initialOrganisationData.role = [OrganisationRole.OPPORTUNITY_PROVIDER]
     initialOrganisationData.slug = slug(initialOrganisationData.name)
     // check whether org already exists. - match slug.
     const existingOrg = await Organisation.findOne({ slug: initialOrganisationData.slug })

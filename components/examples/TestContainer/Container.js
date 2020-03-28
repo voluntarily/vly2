@@ -34,7 +34,7 @@ Container.propTypes = {
     name: PropTypes.string.isRequired,
     nickname: PropTypes.string.isRequired,
     about: PropTypes.string.isRequired,
-    // type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])).isRequired,
+    // type: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'op', OrganisationRole.VOLUNTEER_PROVIDER, OrganisationRole.ACTIVITY_PROVIDER, 'other'])).isRequired,
     _id: PropTypes.string.isRequired
   }).isRequired
 }

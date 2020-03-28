@@ -14,7 +14,7 @@ const reduceKeyValues = aggregation => aggregation.reduce((acc, kv) =>
   Object.assign(acc, { [kv.key]: kv.value }), {})
 
 // Single group values (e.g. status) return a string
-// Multiple group values (e.g. category) return an array
+// Multiple group values (e.g. role) return an array
 const aggregateProjection = { $project: { _id: false, key: '$_id', value: '$total' } }
 
 export default async (req, res) => {
@@ -32,7 +32,7 @@ export default async (req, res) => {
     Organisation.countDocuments({ }),
     Person.countDocuments({ }).exec(),
 
-    // Grouping by an enumerable - e.g. status or category
+    // Grouping by an enumerable - e.g. status or role
     Interest.aggregate([
       { $group: { _id: '$status', total: { $sum: 1 } } },
       aggregateProjection]).exec(),
@@ -43,17 +43,17 @@ export default async (req, res) => {
       { $match: { status: OpportunityStatus.active } },
       aggregateProjection]).exec(),
     Organisation.aggregate([
-      { $group: { _id: '$category', total: { $sum: 1 } } },
+      { $group: { _id: '$role', total: { $sum: 1 } } },
       aggregateProjection]).exec()
   ]
 
   return Promise.all(operations).then(
     ([activityCount, interestCount, memberCount, opportunityCount, organisationCount, personCount,
-      interestsByStatus, membersByStatus, opportunitiesByType, organisationsByCategory]) =>
+      interestsByStatus, membersByStatus, opportunitiesByType, organisationsByRole]) =>
       res.send({
         Person: { total: personCount },
         Opportunity: { total: opportunityCount, type: reduceKeyValues(opportunitiesByType) },
-        Organisation: { total: organisationCount, category: reduceKeyValues(organisationsByCategory) },
+        Organisation: { total: organisationCount, role: reduceKeyValues(organisationsByRole) },
         Interest: { total: interestCount, status: reduceKeyValues(interestsByStatus) },
         Member: { total: memberCount, status: reduceKeyValues(membersByStatus) },
         Activity: { total: activityCount }

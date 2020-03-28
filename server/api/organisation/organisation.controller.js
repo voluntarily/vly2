@@ -40,9 +40,9 @@ const putOrganisation = async (req, res) => {
     return res.status(403).send('Must be admin or org admin')
   }
 
-  // Category field can only be set by ADMIN
+  // Role field can only be set by ADMIN
   if (!isAdmin) {
-    delete req.body.category
+    delete req.body.role
   }
 
   await Organisation.findByIdAndUpdate(req.params._id, { $set: req.body })

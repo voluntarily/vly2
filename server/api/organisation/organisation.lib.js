@@ -1,4 +1,5 @@
 const Organisation = require('./organisation')
+const { OrganisationRole } = require('./organisation.constants')
 
 const orgProfileCompletenessById = async (orgId) => {
   const org = await Organisation.findById(orgId).exec()
@@ -33,7 +34,7 @@ const orgProfileCompleteness = (org) => {
   scoreStr(org.contactName, 10)
   scoreStr(org.contactPhoneNumber, 7)
   scoreStr(org.address, 10)
-  if (org.category.includes('op')) {
+  if (org.role.includes(OrganisationRole.OPPORTUNITY_PROVIDER)) {
     scoreNum(org.ageRange.from, 1, 100)
     scoreNum(org.ageRange.to, 1, 100)
     scoreNum(org.decile, 1, 10)

@@ -10,7 +10,7 @@ If you have Admin status on Voluntarily you will see these changes in the system
 * ActDetailPage - owner, OrgAdmin and Admin can edit the Activity
 * OpDetailPage - owner, OrgAdmin and Admin can manage the Opportunity: edit, manage interested volunteers, complete and cancel
 * OrgDetailPage - OrgAdmin and Admin can edit the organisation
-* OrgDetailForm - Only Admin can edit the organisation category. category cannot be set to Admin except through db config. Orgs cannot make themselves Admin OP or AP and they are VP by default. A system Admin must edit the organisation to make them a school or Activity provider based on a formal request. or they are onboarded into that mode directly.
+* OrgDetailForm - Only Admin can edit the organisation role. role cannot be set to Admin except through db config. Orgs cannot make themselves Admin OP or AP and they are VP by default. A system Admin must edit the organisation to make them a school or Activity provider based on a formal request. or they are onboarded into that mode directly.
 * OrgListPage - Create Organisation button.
 * PersonDetailPage - Admin has newPerson Edit, Remove & ShowPeople buttons. 
 

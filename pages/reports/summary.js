@@ -12,7 +12,7 @@ const SummaryReport = () => {
     Interest: { total: 0, status: {} },
     Member: { total: 0, status: {} },
     Opportunity: { total: 0, type: {} },
-    Organisation: { total: 0, category: {} }
+    Organisation: { total: 0, role: {} }
   }
   const [summary, setSummary] = useState(initSummary)
   const [resets, setResets] = useState('')
@@ -64,8 +64,8 @@ const SummaryReport = () => {
           { title: 'Organisation categories', dataIndex: 'type', key: 'type' },
           { title: 'Count', dataIndex: 'count', key: 'count' }
         ]}
-        dataSource={Object.keys(summary.Organisation.category).map(k =>
-          ({ type: k, count: summary.Organisation.category[k] })
+        dataSource={Object.keys(summary.Organisation.role).map(k =>
+          ({ type: k, count: summary.Organisation.role[k] })
         )}
       />
 

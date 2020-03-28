@@ -3,8 +3,9 @@ const Opportunity = require('../opportunity/opportunity')
 const { OpportunityStatus } = require('../opportunity/opportunity.constants')
 const { orgProfileCompletenessById } = require('../organisation/organisation.lib')
 const { personProfileCompletenessById, personHasBadge } = require('../person/person.lib')
-const { findOrgByPersonIdAndCategory } = require('../member/member.lib')
+const { findOrgByPersonIdAndRole } = require('../member/member.lib')
 const { personInterestCount } = require('../interest/interest.lib')
+const { OrganisationRole } = require('../organisation/organisation.constants')
 /* Note These library functions call the database.
 They can fail and throw exceptions, we don't catch them here but
 allow them to be caught at the API layer where we can return a 4xx result
@@ -12,7 +13,7 @@ allow them to be caught at the API layer where we can return a 4xx result
 const GoalTests = {
   orgCompleteness: async (personalGoal, group) => {
     const personId = personalGoal.person._id
-    const orgid = await findOrgByPersonIdAndCategory(personId, group)
+    const orgid = await findOrgByPersonIdAndRole(personId, group)
     return orgProfileCompletenessById(orgid)
   },
   personCompleteness: (personalGoal) => {
@@ -35,7 +36,7 @@ const GoalTests = {
       if (!act) return false
       // get org of person
       const personid = personalGoal.person._id
-      const orgid = await findOrgByPersonIdAndCategory(personid, 'op')
+      const orgid = await findOrgByPersonIdAndRole(personid, OrganisationRole.OPPORTUNITY_PROVIDER)
       const query = { // find all opportunities where
         offerOrg: orgid, // its my school and
         fromActivity: act._id, // its the requested activity and

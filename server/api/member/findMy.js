@@ -1,10 +1,10 @@
-const { findOrgByPersonIdAndCategory } = require('./member.lib')
+const { findOrgByPersonIdAndRole } = require('./member.lib')
 
 const findMyOrg = async (req, res) => {
   if (!req.session || !req.session.isAuthenticated || !req.session.me) {
     return res.status(403).send('Must be signed in')
   }
-  const orgid = await findOrgByPersonIdAndCategory(req.session.me._id, req.params.category)
+  const orgid = await findOrgByPersonIdAndRole(req.session.me._id, req.params.role)
   if (!orgid) { // failed to find matching org
     return res.status(404).send('No matching organisation')
   }

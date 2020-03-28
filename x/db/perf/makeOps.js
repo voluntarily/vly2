@@ -1,5 +1,6 @@
 const { getSentences, coin, gra, getTags } = require('./util')
 const Organisation = require('../../../server/api/organisation/organisation')
+const { OrganisationRole } = require('../../../server/api/organisation/organisation.constants')
 const Member = require('../../../server/api/member/member')
 const Opportunity = require('../../../server/api/opportunity/opportunity')
 const { Interest } = require('../../../server/api/interest/interest')
@@ -28,7 +29,7 @@ const makeInterestedVolunteer = (op, personId, status) => {
 const makeInterestedVolunteers = async (op, interestStatus, interestCount) => {
   console.log('makeInterestedVolunteers', op.name, interestStatus, interestCount)
 
-  const orgs = await Organisation.find({ category: 'vp' })
+  const orgs = await Organisation.find({ role: OrganisationRole.VOLUNTEER_PROVIDER })
   const org = orgs[gra(0, orgs.length - 1)]
   const vps = await Member.find({ organisation: org._id, status: MemberStatus.MEMBER })
   const interests = (Array(interestCount).fill({}).map(() => {
@@ -49,7 +50,7 @@ const makeOp = async (interestCount, fromActivity) => {
   console.log('makeOp', interestCount, fromActivity.name)
 
   // find a random op
-  const orgs = await Organisation.find({ category: 'op' })
+  const orgs = await Organisation.find({ role: OrganisationRole.OPPORTUNITY_PROVIDER })
   const org = orgs[gra(0, orgs.length - 1)]
   // find a member of op
   const members = await Member

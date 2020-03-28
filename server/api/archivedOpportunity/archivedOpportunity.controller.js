@@ -6,7 +6,7 @@ const getArchivedOpportunity = async (req, res, next) => {
   const got = await ArchivedOpportunity
     .findOne(req.params)
     .populate('requestor', 'name imgUrl imgUrlsm')
-    .populate('offerOrg', 'name imgUrl category')
+    .populate('offerOrg', 'name imgUrl role')
     .exec()
 
   if (got === null) {
@@ -37,7 +37,7 @@ const getArchivedOpportunities = async (req, res, next) => {
       .find(query)
       .select(select)
       .populate('requestor', 'name nickname imgUrl')
-      .populate('offerOrg', 'name imgUrl category')
+      .populate('offerOrg', 'name imgUrl role')
       .sort(sort)
       .exec()
 

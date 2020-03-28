@@ -29,7 +29,7 @@ test('Should respond with summary data for an admin', async t => {
     Interest: { total: 0, status: {} },
     Member: { total: 0, status: {} },
     Opportunity: { total: 0, type: {} },
-    Organisation: { total: 0, category: {} }
+    Organisation: { total: 0, role: {} }
   })
   t.is(200, res.statusCode, 'OK Response')
 })

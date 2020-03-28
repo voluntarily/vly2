@@ -8,11 +8,12 @@ import uuid from 'uuid'
 import Person from '../../../../server/api/person/person'
 import { jwtData } from '../../../../server/middleware/session/__tests__/setSession.fixture'
 import jsonwebtoken from 'jsonwebtoken'
+import { OrganisationRole } from '../organisation.constants'
 
 const testOrg = {
   name: 'Test Organisation',
   slug: 'test-organisation',
-  category: ['vp', 'ap'],
+  role: [OrganisationRole.VOLUNTEER_PROVIDER, OrganisationRole.ACTIVITY_PROVIDER],
   imgUrl: 'https://example.com/image1',
   info: {
     about: 'Industry in the classroom.',
@@ -26,7 +27,7 @@ const testOrg = {
 const testOrgNoImg = {
   name: 'Test Organisation 2',
   slug: 'test-organisation-2',
-  category: ['vp'],
+  role: [OrganisationRole.VOLUNTEER_PROVIDER],
   info: {
     about: 'Industry in the classroom.',
     members: 'You are a member of Test Organisation.',
@@ -37,7 +38,7 @@ const testOrgNoImg = {
 }
 
 /**
- * Create a new user with the 'admin' role.
+ * Create a new user with the OrganisationRole.ADMIN role.
  * @param {string[]} roles Array of roles.
  */
 const createAdminAndGetToken = async () => {
@@ -45,7 +46,7 @@ const createAdminAndGetToken = async () => {
   const person = {
     name: 'name',
     email: `${uuid()}@test.com`,
-    role: ['admin'],
+    role: [OrganisationRole.ADMIN],
     status: 'active'
   }
 
@@ -154,9 +155,9 @@ test.serial('Should fail to find - Bad request ', async t => {
     .expect(400)
   t.is(res.status, 400)
 })
-test.serial('Should correctly give subset of orgs of category', async t => {
+test.serial('Should correctly give subset of orgs of role', async t => {
   const res = await request(server)
-    .get('/api/organisations?q={"category":"vp"}')
+    .get('/api/organisations?q={"role":"vp"}')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
@@ -164,9 +165,9 @@ test.serial('Should correctly give subset of orgs of category', async t => {
   t.is(got.length, 3)
 })
 
-test.serial('Should correctly give reverse sorted orgs of category', async t => {
+test.serial('Should correctly give reverse sorted orgs of role', async t => {
   const res = await request(server)
-    .get('/api/organisations?q={"category":"vp"}&s="-name"')
+    .get('/api/organisations?q={"role":"vp"}&s="-name"')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)
@@ -176,7 +177,7 @@ test.serial('Should correctly give reverse sorted orgs of category', async t => 
 })
 
 // Searching for something in the subtitle (case insensitive)
-// [VP-508] Add searching for orgs by category, name and tags
+// [VP-508] Add searching for orgs by role, name and tags
 // test.serial('Should correctly give opportunity 2 when searching by "helpers"', async t => {
 //   const res = await request(server)
 //     .get('/api/opportunities?search=HeLPErs')
@@ -195,8 +196,8 @@ const queryString = params => Object.keys(params).map((key) => {
 
 test.serial('Should correctly select just the names and ids', async t => {
   const query = {
-    q: JSON.stringify({ category: 'vp' }),
-    p: 'name imgUrl category'
+    q: JSON.stringify({ role: OrganisationRole.VOLUNTEER_PROVIDER }),
+    p: 'name imgUrl role'
   }
   const res = await request(server)
     .get(`/api/organisations?${queryString(query)}`)
@@ -264,7 +265,7 @@ test.serial('Should load a organisation into the db and delete them via the api'
   const testOrgDelete = {
     name: 'Test Organisation Delete',
     slug: 'test-organisation-delete',
-    category: ['vp'],
+    role: [OrganisationRole.VOLUNTEER_PROVIDER],
     info: {
       about: 'Industry in the classroom.',
       members: 'You are a member of Test Organisation.',

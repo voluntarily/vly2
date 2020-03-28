@@ -5,7 +5,9 @@ import { ContactList, ActivityContainer } from '../VTheme/VTheme'
 import { ProfilePanel } from '../VTheme/Profile'
 import { StreetAddressLinkLi } from '../Address/StreetAddress'
 import { Icon, Divider } from 'antd'
-import OrgCategory from './OrgCategory'
+import OrgRole from './OrgRole'
+import { OrganisationRole } from '../../server/api/organisation/organisation.constants'
+
 const ContactIcon = ({ type }) =>
   <Icon
     // theme='twoTone'
@@ -24,7 +26,7 @@ export const OrgAboutPanel = ({ org, ...props }) => (
         <Html>
           {(org.info && org.info.about) || ''}
         </Html>
-        <OrgCategory orgCategory={org.category} />
+        <OrgRole orgRole={org.role} />
       </div>
 
     </ActivityContainer>
@@ -62,8 +64,8 @@ OrgAboutPanel.propTypes = {
     info: PropTypes.shape({
       about: PropTypes.string
     }),
-    category: PropTypes.arrayOf(
-      PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
+    role: PropTypes.arrayOf(
+      PropTypes.oneOf([OrganisationRole.ADMIN, OrganisationRole.OPPORTUNITY_PROVIDER, OrganisationRole.VOLUNTEER_PROVIDER, OrganisationRole.ACTIVITY_PROVIDER, 'other'])
     ).isRequired,
     imgUrl: PropTypes.string,
     website: PropTypes.string,
