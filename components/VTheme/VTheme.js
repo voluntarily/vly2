@@ -66,7 +66,7 @@ p {
   }
 `
 export const AlertContainer = styled.div`
-margin-top: 4rem;
+margin-top: 3.5rem;
 width: 100%;
 background-color: #ffcc00;
 height: auto;
