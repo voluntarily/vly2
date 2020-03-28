@@ -48,7 +48,9 @@ systemtest_task:
     populate_script: MONGOMS_DOWNLOAD_MIRROR="http://downloads.mongodb.org" MONGOMS_VERSION="4.0.5" MONGOMS_DISABLE_POSTINSTALL=1 npm ci
   test_script:
     - apt-get update
-    - apt-get install chrome-browser -y
+    - apt-get install -y libappindicator1 fonts-liberation
+    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - dpkg -i google-chrome*.deb
     - apt-get install default-jdk -y
     - javac -version
     - npm install --save-dev codeceptjs
