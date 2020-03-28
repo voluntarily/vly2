@@ -2,15 +2,17 @@ import adminPage from '../../hocs/adminPage'
 import { FullPage } from '../../components/VTheme/VTheme'
 import { useState, useEffect } from 'react'
 import callApi from '../../lib/callApi'
-import { Button, List, Statistic } from 'antd'
+import { Button, List, Statistic, Table } from 'antd'
 import cuid from 'cuid'
 
 const SummaryReport = () => {
   const initSummary = {
-    Person: 0,
-    Opportunity: { ask: 0, offer: 0 },
-    Interest: 0,
-    Activity: 0
+    Person: { total: 0 },
+    Activity: { total: 0 },
+    Interest: { total: 0, status: {} },
+    Member: { total: 0, status: {} },
+    Opportunity: { total: 0, type: {} },
+    Organisation: { total: 0, category: {} }
   }
   const [summary, setSummary] = useState(initSummary)
   const [resets, setResets] = useState('')
@@ -24,11 +26,12 @@ const SummaryReport = () => {
   }, [resets])
 
   const stats = [
-    { label: 'People', value: summary.Person },
-    { label: 'Asks', value: summary.Opportunity.ask },
-    { label: 'Offers', value: summary.Opportunity.offer },
-    { label: 'Interests', value: summary.Interest },
-    { label: 'Activities', value: summary.Activity }
+    { label: 'People', value: summary.Person.total },
+    { label: 'Asks', value: summary.Opportunity.status && summary.Opportunity.status.ask },
+    { label: 'Offers', value: summary.Opportunity.offer && summary.Opportunity.status.offer },
+    { label: 'Interests', value: summary.Interest.total },
+    { label: 'Activities', value: summary.Activity.total },
+    { label: 'Members', value: summary.Member.total }
   ]
 
   return (
@@ -41,6 +44,39 @@ const SummaryReport = () => {
           <List.Item>
             <Statistic title={item.label} value={item.value} />
           </List.Item>
+        )}
+      />
+
+      <Table
+        pagination={false}
+        columns={[
+          { title: 'Member type', dataIndex: 'type', key: 'type' },
+          { title: 'Count', dataIndex: 'count', key: 'count' }
+        ]}
+        dataSource={Object.keys(summary.Member.status).map(k =>
+          ({ type: k, count: summary.Member.status[k] })
+        )}
+      />
+
+      <Table
+        pagination={false}
+        columns={[
+          { title: 'Organisation categories', dataIndex: 'type', key: 'type' },
+          { title: 'Count', dataIndex: 'count', key: 'count' }
+        ]}
+        dataSource={Object.keys(summary.Organisation.category).map(k =>
+          ({ type: k, count: summary.Organisation.category[k] })
+        )}
+      />
+
+      <Table
+        pagination={false}
+        columns={[
+          { title: 'Interest status', dataIndex: 'status', key: 'status' },
+          { title: 'Count', dataIndex: 'count', key: 'count' }
+        ]}
+        dataSource={Object.keys(summary.Interest.status).map(k =>
+          ({ type: k, count: summary.Interest.status[k] })
         )}
       />
 
