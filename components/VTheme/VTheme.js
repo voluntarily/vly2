@@ -101,6 +101,14 @@ export const PageBannerButtons = styled.div`
     
   }
 `
+export const InfoSectionHeader = styled.article`
+
+h2 {
+  font-weight: 600;
+  font-size: 4rem;
+  letter-spacing: -1.2px;
+}
+`
 
 export const HeroSectionHeader = styled.div`
 display: grid;
