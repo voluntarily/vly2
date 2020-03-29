@@ -4,7 +4,7 @@ exports.config = {
     WebDriver: {
       url: 'https://https://voluntarily.nz/',
       browser: 'chrome',
-      host: 'https://ci.getskills.co.nz/wd/hub', 
+      host: 'https://rblgrid.getskills.co.nz/wd/hub', 
       restart: false,
       windowSize: '1920x1680',
       desiredCapabilities: {
