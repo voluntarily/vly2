@@ -8,7 +8,6 @@ const {
 } = require('@casl/mongoose')
 
 const personalVerificationSchema = new Schema({
-  _id: { type: Schema.Types.ObjectId, required: true},
   person: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
   status: {
     type: 'String',
@@ -16,7 +15,9 @@ const personalVerificationSchema = new Schema({
     required: false,
     enum: [
       PersonalVerificationStatus.NOT_VERIFIED,
-      PersonalVerificationStatus.VERIFIED
+      PersonalVerificationStatus.VERIFIED,
+      PersonalVerificationStatus.IN_PROGRESS,
+      PersonalVerificationStatus.FAILED
     ]
   },
   // date and time when the verification process was initiated by the user
@@ -24,7 +25,9 @@ const personalVerificationSchema = new Schema({
   voluntarilyReference: { type: "string", required: true},
   captureReference: { type: "string", required: false},
   liveCaptured: { type: "string", required: false},
-  liveToken: { type: "string", required: false}
+  liveToken: { type: "string", required: false},
+  verificationReference: { type: "string", required: false},
+  verificationObject: { type: "object", required: false},
 })
 personalVerificationSchema.plugin(idvalidator)
 personalVerificationSchema.plugin(accessibleFieldsPlugin)
