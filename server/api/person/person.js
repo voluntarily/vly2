@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const idvalidator = require('mongoose-id-validator')
 const Schema = mongoose.Schema
 const { SchemaName } = require('./person.constants')
+const { PersonalVerificationStatus } = require('../personalVerification/personalVerification.constants') 
 const {
   accessibleRecordsPlugin,
   accessibleFieldsPlugin
@@ -63,6 +64,48 @@ const personSchema = new Schema({
       category: String,
       expiry: String
     }
+  },
+  verifiedName: {
+    status: {
+      type: 'String',
+      default: PersonalVerificationStatus.NOT_VERIFIED,
+      required: false,
+      enum: [
+        PersonalVerificationStatus.NOT_VERIFIED,
+        PersonalVerificationStatus.VERIFIED,
+        PersonalVerificationStatus.IN_PROGRESS,
+        PersonalVerificationStatus.FAILED
+      ]
+    },
+    verificationReference: { type: "string", required: false},
+  },
+  verifiedAddress: {
+    status: {
+      type: 'String',
+      default: PersonalVerificationStatus.NOT_VERIFIED,
+      required: false,
+      enum: [
+        PersonalVerificationStatus.NOT_VERIFIED,
+        PersonalVerificationStatus.VERIFIED,
+        PersonalVerificationStatus.IN_PROGRESS,
+        PersonalVerificationStatus.FAILED
+      ]
+    },
+    verificationReference: { type: "string", required: false},
+  },
+  verifiedDateOfBirth: {
+    status: {
+      type: 'String',
+      default: PersonalVerificationStatus.NOT_VERIFIED,
+      required: false,
+      enum: [
+        PersonalVerificationStatus.NOT_VERIFIED,
+        PersonalVerificationStatus.VERIFIED,
+        PersonalVerificationStatus.IN_PROGRESS,
+        PersonalVerificationStatus.FAILED
+      ]
+    },
+    verificationReference: { type: "string", required: false},
   }
 })
 

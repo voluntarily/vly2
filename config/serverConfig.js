@@ -36,7 +36,6 @@ const completeConfig = {
       }
     }
   },
-  // appUrl: process.env.APP_URL || `http://localhost:${serverPort}`,
   development: {
     appUrl: process.env.APP_URL || `http://localhost:${serverPort}`
   },
