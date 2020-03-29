@@ -1,7 +1,11 @@
 // import './static/empty.less'
 import Document, { Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
+import dynamic from 'next/dynamic'
 
+const Raygun = dynamic(import('../components/Raygun/RaygunScript'),
+  { ssr: false }
+)
 // The document (which is SSR-only) needs to be customized to expose the locale
 // data for the user's locale for React Intl to work in the browser.
 export default class IntlDocument extends Document {
@@ -45,6 +49,8 @@ export default class IntlDocument extends Document {
 
     return (
       <html lang={this.props.locale}>
+
+        <Raygun />
         <Head>
           <link rel='shortcut icon' href='/static/img/icons/favicon.ico' />
           <meta httpEquiv='X-UA-Compatible' content='IE=edge' />

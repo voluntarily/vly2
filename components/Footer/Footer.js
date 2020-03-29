@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
 import { P, Spacer } from '../VTheme/VTheme'
 import links from './FooterMenu'
+import { RaygunCreds } from '../Raygun/RaygunScript'
 
 const getAllowedLinks = isAuthenticated =>
   links()
@@ -117,6 +118,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
             gtag('config', 'UA-141212194-1'); `
       }}
     />
+
     <FooterContainer>
 
       <Spacer />
@@ -262,6 +264,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
     {props.isAdmin && (
       <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
     )}
+    <RaygunCreds />
   </FooterBackground>
 )
 

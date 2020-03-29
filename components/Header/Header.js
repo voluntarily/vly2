@@ -10,6 +10,7 @@ import Navigation from '../Navigation/Navigation'
 import links from './HeaderMenu'
 import { useIntl } from 'react-intl'
 import { Role } from '../../server/services/authorize/role.js'
+
 // const Search = Input.Search
 
 const Brand = styled.h1`
@@ -117,6 +118,7 @@ const Header = ({ isAuthenticated, me, ...props }) => {
       {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><Icon type='warning' /> {notice}</Notice>}
       <MenuGrid>
         <div>
+
           <Brand className='site-name' aria-hidden='true' />
           {/* <SearchInput
             placeholder='Search for cool ways to help out'
@@ -131,6 +133,7 @@ const Header = ({ isAuthenticated, me, ...props }) => {
               src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
               alt='Voluntarily logo'
             />
+
           </LogoContainer>
         </Link>
         <div>
