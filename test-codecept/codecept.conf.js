@@ -2,7 +2,7 @@ exports.config = {
   output: './output',
   helpers: {
     WebDriver: {
-      url: 'https://https://voluntarily.nz/',
+      url: 'https://voluntarily.nz/',
       browser: 'chrome',
       host: 'https://rblgrid.getskills.co.nz/wd/hub/',
       restart: false,
