@@ -4,8 +4,7 @@ exports.config = {
     WebDriver: {
       url: 'https://https://voluntarily.nz/',
       browser: 'chrome',
-      host: '127.0.0.1',
-      port: 4444,
+      host: 'https://ci.getskills.co.nz/wd/hub', 
       restart: false,
       windowSize: '1920x1680',
       desiredCapabilities: {
@@ -39,7 +38,7 @@ exports.config = {
       enabled: true
     },
     wdio: {
-      enabled: true,
+      enabled: false,
       services: ['selenium-standalone']
     },
     allure: {
