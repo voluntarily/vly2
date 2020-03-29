@@ -19,7 +19,7 @@ const PrivacyPage = () => (
         </li>
       </ul>
       <aside>View the full<a> Privacy Policy</a></aside><br />
-      <Button type='primary' shape='round' size='large'>Accept Privacy Policy</Button>
+      <Button type='primary' shape='round' size='large' block>Accept Privacy Policy</Button>
 
     </InfoSection>
   </FullPage>

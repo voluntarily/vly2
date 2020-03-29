@@ -104,6 +104,7 @@ export const PageBannerButtons = styled.div`
 
 export const InfoSection = styled.article`
 
+
 h1 {
   font-weight: 600;
   font-size: 4rem;
@@ -114,6 +115,23 @@ p {
   font-size: 1.5rem;
   max-width: 700px;
 }
+
+
+@media screen and (min-width: 768px) and (max-width: 1281px) {
+
+  }
+
+
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  p {
+  font-size: 1.2rem;
+}
+
+  }
+
 `
 
 export const HeroSectionHeader = styled.div`
