@@ -22,12 +22,12 @@ const personalVerificationSchema = new Schema({
   },
   // date and time when the verification process was initiated by the user
   dateAdded: { type: 'Date', default: Date.now, required: false },
-  voluntarilyReference: { type: "string", required: true},
-  captureReference: { type: "string", required: false},
-  liveCaptured: { type: "string", required: false},
-  liveToken: { type: "string", required: false},
-  verificationReference: { type: "string", required: false},
-  verificationObject: { type: "object", required: false},
+  voluntarilyReference: { type: 'string', required: true },
+  captureReference: { type: 'string', required: false },
+  liveCaptured: { type: 'string', required: false },
+  liveToken: { type: 'string', required: false },
+  verificationReference: { type: 'string', required: false },
+  verificationObject: { type: 'object', required: false }
 })
 personalVerificationSchema.plugin(idvalidator)
 personalVerificationSchema.plugin(accessibleFieldsPlugin)
@@ -35,9 +35,9 @@ personalVerificationSchema.plugin(accessibleRecordsPlugin)
 // protect multiple imports
 var PersonalVerification
 if (mongoose.models.PersonalVerification) {
-    PersonalVerification = mongoose.model(SchemaName)
+  PersonalVerification = mongoose.model(SchemaName)
 } else {
-    PersonalVerification = mongoose.model(SchemaName, personalVerificationSchema)
+  PersonalVerification = mongoose.model(SchemaName, personalVerificationSchema)
 }
 
 module.exports = PersonalVerification
