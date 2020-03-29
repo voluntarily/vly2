@@ -43,6 +43,9 @@ const initVerify = async (req, res) => {
     data: obj,
     path: '/live/'
   })
+  if (liveResponse.verification && liveResponse.verification.error) {
+    return res.status(401).json(liveResponse)
+  }
 
   const query = { voluntarilyReference: liveResponse.capture.reference }
   const update = { captureReference: liveResponse.capture.captureReference, status: PersonalVerificationStatus.IN_PROGRESS }
