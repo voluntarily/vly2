@@ -50,7 +50,8 @@ systemtest_task:
     - apt-get update
     - apt-get install libxss1 libappindicator1 libindicator7 -y
     - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - apt install ./google-chrome*.deb -y
+    - dpkg -i google-chrome-stable_current_amd64.deb
+    - apt-get -fy install
     - apt-get install default-jdk -y
     - javac -version
     - npm install --save-dev codeceptjs
