@@ -17,6 +17,7 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const setSession = require('./middleware/session/setSession')
 const getAbility = require('./middleware/ability/getAbility')
+const actuator = require('express-actuator');
 // server.use(bodyParser.urlencoded({ limit: UPLOAD_LIMIT, extended: true }))
 // server.use(bodyParser.json({ limit: UPLOAD_LIMIT, extended: true }))
 server.use(cookieParser())
@@ -74,6 +75,12 @@ const appReady = app.prepare().then(() => {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
     next()
   })
+
+  // Metrics Actuator settings
+  const options = {
+    infoGitMode: 'full' 
+  };
+  server.use(actuator(options)); 
 
   // MongoDB
   mongoose.Promise = Promise
