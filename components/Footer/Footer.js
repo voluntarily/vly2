@@ -191,6 +191,14 @@ const Footer = ({ isAuthenticated, ...props }) => (
             </MenuItem>
             <MenuItem>
               <a
+                href='https://github.com/voluntarily/vly2/blob/master/CODE_OF_CONDUCT.md'
+                target='_blank'
+                rel='noopener noreferrer'
+              >Code of Conduct
+              </a>
+            </MenuItem>
+            <MenuItem>
+              <a
                 href='https://github.com/voluntarily/vly2'
                 target='_blank'
                 rel='noopener noreferrer'
