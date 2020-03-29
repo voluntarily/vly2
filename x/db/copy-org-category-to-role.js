@@ -31,8 +31,10 @@ async function main () {
       .cursor()
       .on('data', function (doc) {
         console.log(doc.name, doc.category, doc.role)
-        if (doc.category && !doc.role) {
+        if (doc.category) {
+          console.log('updating role')
           doc.role = doc.category
+          doc.category = undefined
           doc.save()
         }
       })
