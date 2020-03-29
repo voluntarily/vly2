@@ -50,7 +50,7 @@ systemtest_task:
     - apt-get update
     - apt-get install -y libappindicator1 fonts-liberation
     - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - dpkg -i google-chrome*.deb
+    - apt-get update && apt-get -y install google-chrome-stable
     - apt-get install default-jdk -y
     - javac -version
     - npm install --save-dev codeceptjs
