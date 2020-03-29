@@ -116,6 +116,15 @@ p {
   max-width: 700px;
 }
 
+ul {
+  padding: 0;
+}
+li {
+  list-style: none;
+
+}
+
+
 
 @media screen and (min-width: 768px) and (max-width: 1281px) {
 
