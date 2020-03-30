@@ -63,6 +63,12 @@ test.beforeEach('Load fixtures', async (t) => {
       organisation: organisations[3]._id,
       validation: 'orgAdmin',
       status: MemberStatus.ORGADMIN
+    },
+    {
+      person: people[4]._id,
+      organisation: organisations[0]._id,
+      validation: 'member',
+      status: MemberStatus.MEMBER
     }
   ]
 
@@ -166,10 +172,19 @@ test.serial('role of person with various memberships.', async (t) => {
   const person = t.context.people[1]
   const [role, orgAdminFor] = await getPersonRoles(person)
   t.is(role.length, 3) // ["opportunityProvider","orgAdmin","admin"]
-  t.is(role[0], 'opportunityProvider') // because org[2] is OP
-  t.is(role[2], 'admin') // because org[3] is admin role
+  t.is(role[0], Role.OPPORTUNITY_PROVIDER) // because org[2] is OP
+  t.is(role[2], Role.ADMIN) // because org[3] is admin role
   t.is(orgAdminFor.length, 1)
   t.deepEqual(orgAdminFor[0], t.context.organisations[3]._id)
+})
+
+test.serial('role generic volunteer.', async (t) => {
+  const person = t.context.people[4]
+  const [role, orgAdminFor] = await getPersonRoles(person)
+  console.log(role)
+  t.is(role.length, 1) // [VOLUNTEER]
+  t.is(role[0], Role.VOLUNTEER) // because org[2] is OP
+  t.is(orgAdminFor.length, 0)
 })
 
 test.serial('roles are sorted and deduplicated', t => {

@@ -64,6 +64,7 @@ const findOrgByPersonIdAndRole = async (personId, role) => {
 }
 
 const orgToRoleTable = {
+  [OrganisationRole.VOLUNTEER_PROVIDER]: Role.VOLUNTEER,
   [OrganisationRole.ADMIN]: Role.ADMIN,
   [OrganisationRole.OPPORTUNITY_PROVIDER]: Role.OPPORTUNITY_PROVIDER,
   [OrganisationRole.ACTIVITY_PROVIDER]: Role.ACTIVITY_PROVIDER,
