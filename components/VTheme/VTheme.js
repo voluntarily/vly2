@@ -102,6 +102,92 @@ export const PageBannerButtons = styled.div`
   }
 `
 
+export const InfoSection = styled.article`
+
+
+h1 {
+  font-weight: 600;
+  font-size: 4rem;
+  letter-spacing: -1.2px;
+}
+
+p {
+  font-size: 1.25rem;
+  max-width: 800px;
+  color: black;
+}
+
+
+ul {
+  padding: 0;
+}
+li {
+  list-style: none;
+
+}
+
+
+
+@media screen and (min-width: 768px) and (max-width: 1281px) {
+
+  }
+
+
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  p {
+ max-width: calc(100vw - 2rem);
+  font-size: 1.2rem;
+}
+
+  }
+
+`
+export const TermsButtonContainer = styled.div`
+
+max-width: 320px;
+@media screen and (max-width: 768px) { 
+  margin-left: -1rem;
+max-width: initial;
+width: 100vw;
+
+background-color: white;
+div{ 
+  
+  margin: 2rem;
+}
+
+position: fixed;
+bottom: 0;
+}
+`
+
+export const InfoItem = styled.div`
+display: grid;
+
+  margin: 2rem 0 2rem 0;
+grid-template-columns: 4rem 1fr;
+align-items: center;
+column-gap: 0rem;
+row-gap: 3rem;
+
+
+@media screen and (max-width: 768px) {
+
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  p {
+ max-width: calc(100vw - 2rem);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+  }
+
+`
+
 export const HeroSectionHeader = styled.div`
 display: grid;
 

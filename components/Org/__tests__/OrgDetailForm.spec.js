@@ -3,7 +3,6 @@ import test from 'ava'
 // import { JSDOM } from 'jsdom'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
 import objectid from 'objectid'
-
 import OrgDetailForm from '../OrgDetailForm'
 import sinon from 'sinon'
 import organisations from '../../../server/api/organisation/__tests__/organisation.fixture'
