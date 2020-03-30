@@ -20,7 +20,7 @@ const PrivacyPage = () => (
         <img src='../static/img/icons/chat.svg' />
         <p>Other Website users might share personal details with you.<br />Respect their privacy and don’t share their details unless they allow you to.</p>
         <img src='../static/img/icons/kind.svg' />
-        <p>The platform is intended for use only by people who are at least 16 years old.<br />We will do everything we can to keep you personal information safe.</p>
+        <p>The platform is intended for use only by people who are at least 16 years old. We will do everything we can to keep you personal information safe.</p>
       </InfoItem>
       <aside>View the full<a href='/terms/privacy' target='_blank' rel='noreferrer noopener'> Privacy Policy</a></aside><br />
       {/* <Link>
