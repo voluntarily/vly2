@@ -12,7 +12,6 @@ import { Role } from '../../server/services/authorize/role'
  */
 const opCountThreshold = 2
 export const ActTryBelow = ({ counts, role }) => {
-  console.log('ActTryBelow', counts, role)
   return (role.includes(Role.OPPORTUNITY_PROVIDER) && (counts.ask + counts.offer > opCountThreshold))
     ? (
       <FormattedMessage
