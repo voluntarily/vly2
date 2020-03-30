@@ -113,7 +113,7 @@ h1 {
 
 p {
   font-size: 1.25rem;
-  max-width: 700px;
+  max-width: 800px;
   color: black;
 }
 
@@ -148,6 +148,20 @@ li {
 export const TermsButtonContainer = styled.div`
 
 max-width: 320px;
+@media screen and (max-width: 768px) { 
+  margin-left: -1rem;
+max-width: initial;
+width: 100vw;
+
+background-color: white;
+div{ 
+  
+  margin: 2rem;
+}
+
+position: fixed;
+bottom: 0;
+}
 `
 
 export const InfoItem = styled.div`
