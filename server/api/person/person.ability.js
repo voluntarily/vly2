@@ -16,7 +16,7 @@ const ruleBuilder = session => {
     action: Action.CREATE
   }]
 
-  const allAbilities = [
+  const basicRules = [
     {
       subject: SchemaName,
       action: Action.READ
@@ -69,12 +69,13 @@ const ruleBuilder = session => {
 
   return {
     [Role.ANON]: anonAbilities,
-    [Role.VOLUNTEER]: allAbilities,
-    [Role.OPPORTUNITY_PROVIDER]: allAbilities,
+    [Role.BASIC]: basicRules,
+    [Role.VOLUNTEER]: basicRules,
+    // [Role.OPPORTUNITY_PROVIDER]: basicRules,
     [Role.ADMIN]: adminAbilities,
-    [Role.ACTIVITY_PROVIDER]: allAbilities,
-    [Role.SUPPORT]: allAbilities,
-    [Role.ALL]: allAbilities,
+    [Role.ACTIVITY_PROVIDER]: basicRules,
+    [Role.SUPPORT]: basicRules,
+    [Role.ALL]: basicRules,
     [Role.ORG_ADMIN]: adminAbilities
   }
 }

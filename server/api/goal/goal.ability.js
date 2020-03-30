@@ -32,10 +32,9 @@ const ruleBuilder = session => {
 
   return {
     [Role.ANON]: anonAbilities,
+    [Role.BASIC]: allAbilities,
     [Role.VOLUNTEER]: allAbilities,
-    [Role.OPPORTUNITY_PROVIDER]: allAbilities,
-    [Role.ACTIVITY_PROVIDER]: allAbilities,
-    [Role.ORG_ADMIN]: allAbilities,
+
     [Role.ADMIN]: adminAbilities
   }
 }

@@ -9,7 +9,7 @@ const ruleBuilder = async (session) => {
     inverted: true
   }]
 
-  const allRules = anonRules.slice(0)
+  const basicRules = anonRules.slice(0)
 
   const adminRules = [{
     subject: SchemaName,
@@ -18,10 +18,7 @@ const ruleBuilder = async (session) => {
 
   return {
     [Role.ANON]: anonRules,
-    [Role.VOLUNTEER]: allRules,
-    [Role.OPPORTUNITY_PROVIDER]: allRules,
-    [Role.ACTIVITY_PROVIDER]: allRules,
-    [Role.ORG_ADMIN]: allRules,
+    [Role.BASIC]: basicRules,
     [Role.ADMIN]: adminRules
   }
 }

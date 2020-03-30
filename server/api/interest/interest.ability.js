@@ -26,10 +26,10 @@ const ruleBuilder = async (session) => {
     inverted: true
   }]
 
-  const volunteerRules = []
+  const basicRules = []
 
   if (session.me && session.me._id) {
-    volunteerRules.push({
+    basicRules.push({
       subject: InterestSchemaName,
       action: Action.LIST,
       conditions: { person: session.me._id }
@@ -117,8 +117,9 @@ const ruleBuilder = async (session) => {
 
   return {
     [Role.ANON]: anonRules,
-    [Role.VOLUNTEER]: volunteerRules,
-    // [Role.ACTIVITY_PROVIDER]: volunteerRules, // don't include roles that have no rules
+    [Role.BASIC]: basicRules,
+    [Role.VOLUNTEER]: basicRules,
+    // [Role.ACTIVITY_PROVIDER]: basicRules, // don't include roles that have no rules
     [Role.OPPORTUNITY_PROVIDER]: opportunityProviderRules,
     [Role.ORG_ADMIN]: orgAdminRules,
     [Role.ADMIN]: adminRules
