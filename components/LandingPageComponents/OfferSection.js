@@ -100,7 +100,7 @@ const OfferSection = () => (
 
     <OfferContainer>
 
-      <Link href='/home'>
+      <Link href='/acts'>
 
         <a>
 
@@ -117,21 +117,21 @@ const OfferSection = () => (
         </a>
       </Link>
 
-      {/* <Link href='/act'> */}
-      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/pre-register'>
-        <OfferCard>
+      <Link href='/acts'>
+        <a>
+          <OfferCard>
 
-          <figcaption>
+            <figcaption>
 
-            <small>Coming soon</small>
-            <h3>Ask for help</h3>
-            <p>Coming this week. We make it easy to ask for exactly what you need.
-            </p>
-            <Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>Coming soon</Button>
-          </figcaption>
-        </OfferCard>
-      </a>
-      {/* </Link> */}
+              <small>New!</small>
+              <h3>Ask for help</h3>
+              <p>We make it easy to ask for exactly what you need. All you need to do is ask.
+              </p>
+              <Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>Coming soon</Button>
+            </figcaption>
+          </OfferCard>
+        </a>
+      </Link>
 
       <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
         <OfferCard>
