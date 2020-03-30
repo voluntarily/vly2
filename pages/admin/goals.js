@@ -22,11 +22,11 @@ function groupBy (arr, property) {
   }, {})
 }
 
-const handleAssignGoalCategory = async (group) => {
+const handleAssignGoalRole = async (group) => {
   try {
     await fetch(`/api/xadmin/assignPersonalGoals?group=${group}`)
     message.success('done')
-  } catch (e) { console.error('handleAssignGoalCategory Failed', e) }
+  } catch (e) { console.error('handleAssignGoalRole Failed', e) }
 }
 
 const handleLoadGoals = async () => {
@@ -68,7 +68,7 @@ class GoalListPage extends Component {
             <GoalSection goals={groups[key]} />
             <Button
               shape='round'
-              onClick={() => handleAssignGoalCategory(key)}
+              onClick={() => handleAssignGoalRole(key)}
             >
               <FormattedMessage
                 id='GoalsListPage.AssignGoalGroupToMe'

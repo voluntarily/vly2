@@ -23,7 +23,7 @@ export default [
     language: 'en',
     rank: 1,
     evaluation: "() => { console.log('evaluates to false'); return false }",
-    dateAdded: '2019-11-27T10:00:00.000Z'
+    createdAt: '2019-11-27T10:00:00.000Z'
   },
   {
     group: GoalGroup.VP_NEW,
@@ -57,7 +57,7 @@ export default [
     language: 'en',
     rank: 2,
     evaluation: "() => { console.log('evaluates to true'); return true }",
-    dateAdded: '2019-11-27T10:00:00.000Z'
+    createdAt: '2019-11-27T10:00:00.000Z'
   },
   {
     group: GoalGroup.VP_NEW,
@@ -93,7 +93,7 @@ export default [
     startLink: '/search',
     language: 'en',
     evaluation: '() => { return true }',
-    dateAdded: '2019-11-27T10:00:00.000Z'
+    createdAt: '2019-11-27T10:00:00.000Z'
   },
   /*********************************************/
   /* GROUP First steps for a new school        */

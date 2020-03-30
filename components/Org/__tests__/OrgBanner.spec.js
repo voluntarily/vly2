@@ -3,6 +3,7 @@ import OrgBanner from '../OrgBanner'
 import { VBannerImg } from '../../VTheme/Profile'
 import { shallow } from 'enzyme'
 import objectid from 'objectid'
+import { OrganisationRole } from '../../../server/api/organisation/organisation.constants'
 
 /* OrgBanner is much like OrgCard but spread across the top of a page */
 const org = {
@@ -10,7 +11,7 @@ const org = {
   name: 'OMGTech',
   slug: 'hello-omgtech',
   imgUrl: '/static/andrew.jpg',
-  category: ['vp', 'ap'],
+  role: [OrganisationRole.VOLUNTEER_PROVIDER, OrganisationRole.ACTIVITY_PROVIDER],
   contactEmail: 'andrew@voluntarily.nz',
   website: 'https://voluntarily.nz',
   facebook: 'voluntarilyAotearoa',
@@ -32,7 +33,7 @@ test('OrgBanner has image, and title', t => {
 //   name: 'OMGTech',
 //   slug: 'hello-omgtech',
 //   imgUrl: '/static/andrew.jpg',
-//   category: ['vp', 'ap']
+//   role: [OrganisationRole.VOLUNTEER_PROVIDER, OrganisationRole.ACTIVITY_PROVIDER]
 // }
 //   const children = <p>Test</p>
 //   const wrapper = shallow(<OrgBanner org={orgNoWeb} children={children} />)

@@ -241,7 +241,7 @@ class PersonDetail extends Component {
       { label: 'Requestor', value: 'opportunityProvider' },
       { label: 'Volunteer', value: 'volunteer' },
       { label: 'Content provider', value: 'activityProvider' },
-      { label: 'Tester', value: 'tester' }
+      { label: 'SUPPORT', value: 'support' }
     ]
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
@@ -606,7 +606,7 @@ PersonDetail.propTypes = {
         'opportunityProvider',
         'volunteer',
         'activityProvider',
-        'tester'
+        'support'
       ])
     ),
     status: PropTypes.oneOf(['active', 'inactive', 'hold']),
@@ -721,13 +721,13 @@ export { PersonDetailForm }
  * @param {string[]} roles The array of permission roles to use.
  */
 export const permissionTrimFields = (person, roles) => {
-  if (!roles.includes(Role.ADMIN) && !roles.includes(Role.TESTER)) {
+  if (!roles.includes(Role.ADMIN) && !roles.includes(Role.SUPPORT)) {
     delete person.email
   }
 
-  delete person.dateAdded
+  delete person.createdAt
 
-  const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.TESTER, Role.VOLUNTEER_PROVIDER]
+  const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]
   if (person.role) {
     person.role = person.role.filter(role => applicableRoles.includes(role))
   }

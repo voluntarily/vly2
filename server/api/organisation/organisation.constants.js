@@ -1,10 +1,21 @@
-const Category = {
-  BUSINESS: 'vp',
-  SCHOOL: 'op',
-  ACTIVITYPROVIDER: 'ap',
-  AGENCY: 'admin',
-  OTHER: 'other'
+// const Category = {
+//   VOLUNTEER_PROVIDER: 'vp',
+//   OPPORTUNITY_PROVIDER: 'op',
+//   ACTIVITY_PROVIDER: 'ap',
+//   AGENCY: 'admin',
+//   OTHER: 'other'
+// }
+const OrganisationRole = {
+  VOLUNTEER_PROVIDER: 'vp',
+  OPPORTUNITY_PROVIDER: 'op',
+  ACTIVITY_PROVIDER: 'ap',
+  RESOURCE_PROVIDER: 'rp',
+  AGENCY: 'agency', // can access reports
+  SUPPORT: 'support', // can provide help desk support
+  ADMIN: 'admin', // can be all powerful
+  OTHER: 'other' // whats next
 }
+
 const OrganisationFields = {
   NAME: 'name',
   SLUG: 'slug',
@@ -13,10 +24,10 @@ const OrganisationFields = {
   FACEBOOK: 'facebook',
   DOMAINNAME: 'domainName',
   TWITTER: 'twitter',
-  CATEGORY: 'category',
+  ROLE: 'role',
   GROUPS: 'groups',
   INFO: 'info',
-  DATEADDED: 'dateAdded',
+  CREATEDAT: 'createdAt',
   AGERANGE: 'ageRange',
   DECILE: 'decile',
   CONTACTNAME: 'contactName',
@@ -30,14 +41,14 @@ const OrganisationListFields = [
   OrganisationFields.NAME,
   OrganisationFields.SLUG,
   OrganisationFields.IMG_URL,
-  OrganisationFields.CATEGORY,
+  OrganisationFields.ROLE,
   OrganisationFields.GROUPS
 ]
 
 const SchemaName = 'Organisation'
 
 module.exports = {
-  Category,
+  OrganisationRole,
   OrganisationFields,
   OrganisationListFields,
   SchemaName

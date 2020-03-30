@@ -14,7 +14,7 @@ const { InterestStatus } = require('./interest.constants')
  */
 const listInterestsA = InterestModel => async (req, res) => {
   // console.log('ListInterests', InterestModel, req.query)
-  const sort = 'dateAdded' // todo sort by date.
+  const sort = 'createdAt' // todo sort by date.
   try {
     if (req.query.op && req.query.me) {
       // this is a request for a single interest for one person and one op
@@ -133,7 +133,7 @@ const updateInterestA = InterestModel => async (req, res) => {
 
     if (
       interestUpdateData.status &&
-      person.role.includes(Role.VOLUNTEER_PROVIDER) &&
+      person.role.includes(Role.VOLUNTEER) &&
       existingInterest.person.toString() === req.session.me._id.toString()
     ) {
       if (!isValidTransition(existingInterest.status, interestUpdateData.status)) {

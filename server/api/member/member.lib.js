@@ -3,12 +3,13 @@ const PubSub = require('pubsub-js')
 const { TOPIC_MEMBER__UPDATE } = require('../../services/pubsub/topic.constants')
 const { MemberStatus } = require('./member.constants')
 const { Role } = require('../../services/authorize/role')
+const { OrganisationRole } = require('../organisation/organisation.constants')
 
 /* get a single member record with org and person populated out */
 const getMemberbyId = id => {
   return Member.findOne({ _id: id })
     .populate({ path: 'person', select: 'nickname name imgUrl email sendEmailNotifications' })
-    .populate({ path: 'organisation', select: 'name imgUrl category' })
+    .populate({ path: 'organisation', select: 'name imgUrl role' })
     .exec()
 }
 
@@ -30,15 +31,15 @@ const addMember = async (member) => {
   return got
 }
 
-const findOrgByPersonIdAndCategory = async (personId, category) => {
-  // search membership table for org matching category and person id
+const findOrgByPersonIdAndRole = async (personId, role) => {
+  // search membership table for org matching role and person id
   const query = { person: personId }
-  let myorgs = await Member.find(query).populate({ path: 'organisation', select: 'name category' }).exec()
+  let myorgs = await Member.find(query).populate({ path: 'organisation', select: 'name role' }).exec()
 
-  // filter by category if present  e.g /my/org/vp
-  if (category) {
+  // filter by role if present  e.g /my/org/vp
+  if (role) {
     myorgs = myorgs.filter(
-      o => o.organisation.category.includes(category))
+      o => o.organisation.role.includes(role))
   }
   if (!myorgs.length) { // failed to find matching org
     return null
@@ -63,23 +64,24 @@ const findOrgByPersonIdAndCategory = async (personId, category) => {
 }
 
 const orgToRoleTable = {
-  admin: Role.ADMIN,
-  op: Role.OPPORTUNITY_PROVIDER,
-  ap: Role.ACTIVITY_PROVIDER,
-  other: Role.RESOURCE_PROVIDER,
-  test: Role.TESTER
+  [OrganisationRole.VOLUNTEER_PROVIDER]: Role.VOLUNTEER,
+  [OrganisationRole.ADMIN]: Role.ADMIN,
+  [OrganisationRole.OPPORTUNITY_PROVIDER]: Role.OPPORTUNITY_PROVIDER,
+  [OrganisationRole.ACTIVITY_PROVIDER]: Role.ACTIVITY_PROVIDER,
+  [OrganisationRole.RESOURCE_PROVIDER]: Role.RESOURCE_PROVIDER,
+  [OrganisationRole.SUPPORT]: Role.SUPPORT
 }
 // desired sort order for roles
 // ANON, VP, OP,AP, ORG_ADMIN, ADMIN
 const sortRoles = roles => {
   const desiredOrder = [
     Role.ANON,
-    Role.VOLUNTEER_PROVIDER,
+    Role.VOLUNTEER,
     Role.OPPORTUNITY_PROVIDER,
     Role.ACTIVITY_PROVIDER,
     Role.RESOURCE_PROVIDER,
     Role.ORG_ADMIN,
-    Role.TESTER,
+    Role.SUPPORT,
     Role.ADMIN
   ]
   const sortedRoles = []
@@ -93,7 +95,7 @@ const getPersonRoles = async person => {
   const membershipQuery = { person: person._id }
   const membership = await Member
     .find(membershipQuery)
-    .populate({ path: 'organisation', select: 'name category' })
+    .populate({ path: 'organisation', select: 'name role' })
     .lean()
     .exec()
   const role = person.role // role is required and has a defult
@@ -104,8 +106,8 @@ const getPersonRoles = async person => {
       orgAdminFor.push(m.organisation._id)
     }
     if ([MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)) {
-      m.organisation.category.map(category => {
-        const r = orgToRoleTable[category]
+      m.organisation.role.map(orgrole => {
+        const r = orgToRoleTable[orgrole]
         r && role.push(r)
       })
     }
@@ -118,7 +120,7 @@ const getPersonRoles = async person => {
 module.exports = {
   getMemberbyId,
   addMember,
-  findOrgByPersonIdAndCategory,
+  findOrgByPersonIdAndRole,
   getPersonRoles,
   sortRoles
 }

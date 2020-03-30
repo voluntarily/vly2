@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { VBanner, VBannerImg, ProfileBannerTitle } from '../VTheme/Profile'
 import TagDisplay from '../Tags/TagDisplay'
+import { OrganisationRole } from '../../server/api/organisation/organisation.constants'
 
 const OrgBanner = ({ org, children }) =>
   <VBanner>
@@ -17,8 +18,8 @@ const OrgBanner = ({ org, children }) =>
 OrgBanner.propTypes = {
   org: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    category: PropTypes.arrayOf(
-      PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
+    role: PropTypes.arrayOf(
+      PropTypes.oneOf([OrganisationRole.ADMIN, OrganisationRole.OPPORTUNITY_PROVIDER, OrganisationRole.VOLUNTEER_PROVIDER, OrganisationRole.ACTIVITY_PROVIDER, 'other'])
     ).isRequired,
     imgUrl: PropTypes.string,
     website: PropTypes.string

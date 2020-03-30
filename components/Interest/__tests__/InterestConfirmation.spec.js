@@ -12,7 +12,7 @@ test('render confirmation card', t => {
     email: 'testy@voluntar.ly',
     phone: '027 444 5555',
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
-    role: ['tester', 'volunteer']
+    role: ['support', 'volunteer']
   }
 
   const wrapper = shallow(<InterestConfirmationCard organizer={requestor} />)
@@ -29,7 +29,7 @@ test('render confirmation card no number', t => {
     phone: '',
     email: 'testy@voluntar.ly',
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
-    role: ['tester', 'volunteer']
+    role: ['support', 'volunteer']
   }
 
   const wrapper = shallow(<InterestConfirmationCard organizer={requestor} />)

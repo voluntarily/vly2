@@ -2,7 +2,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-console */
-/* Remove all people from the database who have the role tester */
+/* Remove all people from the database who have the role support */
 const axios = require('axios')
 
 const getData = async url => {
@@ -34,7 +34,7 @@ getData('http://localhost:3122/api/people')
   .then(people => {
     console.log(people)
     people.people.map(p => {
-      if (p.role === 'tester') {
+      if (p.role === 'support') {
         console.log('deleting:', p.name)
         return deletePerson(p._id)
       }

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const { config } = require('../../../config/serverConfig')
 const Organisation = require('../../../server/api/organisation/organisation')
+const { OrganisationRole } = require('../../../server/api/organisation/organisation.constants')
 const Person = require('../../../server/api/person/person')
 const Member = require('../../../server/api/member/member')
 const { MemberStatus } = require('../../../server/api/member/member.constants')
@@ -46,7 +47,7 @@ async function main () {
   const organisationWithHistoryData = {
     name: 'Organisation with history',
     slug: 'organisation-with-history',
-    category: ['op']
+    role: [OrganisationRole.OPPORTUNITY_PROVIDER]
   }
 
   const organisation = await Organisation.findOneAndUpdate(

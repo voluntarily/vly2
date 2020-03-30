@@ -42,7 +42,7 @@ export const OrgListPage = ({ organisations, me }) => {
 }
 
 OrgListPage.getInitialProps = async ({ store, query }) => {
-  const select = { p: 'name imgUrl category' }
+  const select = { p: 'name imgUrl role' }
   return store.dispatch(reduxApi.actions.organisations.get(select))
 }
 

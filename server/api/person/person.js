@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const idvalidator = require('mongoose-id-validator')
 const Schema = mongoose.Schema
-const { SchemaName } = require('./person.constants')
+const { SchemaName, PersonStatus } = require('./person.constants')
 const {
   accessibleRecordsPlugin,
   accessibleFieldsPlugin
@@ -30,26 +30,16 @@ const personSchema = new Schema({
   sendEmailNotifications: { type: 'Boolean', default: true, required: true },
   role: {
     type: [String],
-    required: true,
-    default: [Role.VOLUNTEER_PROVIDER],
-    enum: [
-      Role.ADMIN,
-      Role.ORG_ADMIN,
-      Role.OPPORTUNITY_PROVIDER,
-      Role.VOLUNTEER_PROVIDER,
-      Role.ACTIVITY_PROVIDER,
-      Role.RESOURCE_PROVIDER,
-      Role.TESTER
-    ]
+    default: [],
+    enum: [...Object.values(Role)]
   },
   // used to indicate whether people show up in searches.
   status: {
     type: String,
     required: true,
     default: 'active',
-    enum: ['active', 'inactive', 'hold']
+    enum: [...Object.values(PersonStatus)]
   },
-  dateAdded: { type: 'Date', default: Date.now, required: true },
   tags: [String],
   // helper fields - these are only in the schema and don't need to be stored
   href: String,
@@ -64,7 +54,7 @@ const personSchema = new Schema({
       expiry: String
     }
   }
-})
+}, { timestamps: true })
 
 personSchema.plugin(idvalidator)
 personSchema.plugin(accessibleFieldsPlugin)

@@ -16,7 +16,7 @@ import {
   TitleContainer
 } from '../VTheme/FormStyles'
 import TagInput from '../Form/Input/TagInput'
-
+import { OrganisationRole } from '../../server/api/organisation/organisation.constants'
 function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
 }
@@ -84,7 +84,7 @@ class OrgDetailForm extends Component {
         org.ageRange = values.ageRange
         org.decile = values.decile
         org.address = values.address
-        if (values.category) org.category = values.category
+        if (values.role) org.role = values.role
 
         window.scrollTo(0, 0)
         this.props.onSubmit(this.props.org)
@@ -135,10 +135,10 @@ class OrgDetailForm extends Component {
         description='contact Email label in OrgDetails Form'
       />
     )
-    const orgCategory = (
+    const orgRole = (
       <FormattedMessage
-        id='orgCategory'
-        defaultMessage='Category'
+        id='orgRole'
+        defaultMessage='Role'
         description='business or activity provider'
       />
     )
@@ -216,11 +216,11 @@ class OrgDetailForm extends Component {
 
     // TODO translate
     // TODO Use constant values from server/api/organisation/organisation.constants.js
-    const categoryOptions = [
-      { label: 'Volunteer', value: 'vp' },
-      { label: 'Create Requests', value: 'op' },
-      { label: 'Plan Activities', value: 'ap' },
-      { label: 'Admin', value: 'admin' },
+    const roleOptions = [
+      { label: 'Volunteer', value: OrganisationRole.VOLUNTEER_PROVIDER },
+      { label: 'Create Requests', value: OrganisationRole.OPPORTUNITY_PROVIDER },
+      { label: 'Plan Activities', value: OrganisationRole.ACTIVITY_PROVIDER },
+      { label: 'Admin', value: OrganisationRole.ADMIN },
       { label: 'Other', value: 'other' }
     ]
 
@@ -281,7 +281,7 @@ class OrgDetailForm extends Component {
                   <TitleContainer>
                     <h3>
                       <FormattedMessage
-                        id='orgDetail.form.category'
+                        id='orgDetail.form.role'
                         defaultMessage='Set organisation permissions'
                         description='The type of organisation'
                       />
@@ -289,19 +289,19 @@ class OrgDetailForm extends Component {
                   </TitleContainer>
                   <p>
                     <FormattedMessage
-                      id='orgDetail.form.category.description'
+                      id='orgDetail.form.role.description'
                       defaultMessage='Members of this group can do the listed items.'
                       description='Description of the permissions of organisation'
                     />
                   </p>
                 </DescriptionContainer>
                 <InputContainer>
-                  <Form.Item label={orgCategory}>
-                    {getFieldDecorator('category', {
+                  <Form.Item label={orgRole}>
+                    {getFieldDecorator('role', {
                       rules: [
                         { required: true, message: 'permissions level  is required' }
                       ]
-                    })(<Checkbox.Group options={categoryOptions} />)}
+                    })(<Checkbox.Group options={roleOptions} />)}
                   </Form.Item>
                 </InputContainer>
 
@@ -640,8 +640,8 @@ OrgDetailForm.propTypes = {
       members: PropTypes.string,
       outsiders: PropTypes.string
     }),
-    category: PropTypes.arrayOf(
-      PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
+    role: PropTypes.arrayOf(
+      PropTypes.oneOf([OrganisationRole.ADMIN, OrganisationRole.OPPORTUNITY_PROVIDER, OrganisationRole.VOLUNTEER_PROVIDER, OrganisationRole.ACTIVITY_PROVIDER, 'other'])
     ),
     imgUrl: PropTypes.string,
     domainName: PropTypes.string,
@@ -708,7 +708,7 @@ export default Form.create({
       }),
       facebook: Form.createFormField({ ...org.facebook, value: org.facebook }),
       twitter: Form.createFormField({ ...org.twitter, value: org.twitter }),
-      category: Form.createFormField({ ...org.category, value: org.category }),
+      role: Form.createFormField({ ...org.role, value: org.role }),
       ageRange: Form.createFormField({ ...org.ageRange, value: org.ageRange }),
       decile: Form.createFormField({ ...org.decile, value: org.decile }),
       contactName: Form.createFormField({

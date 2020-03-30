@@ -1,3 +1,5 @@
+import { OrganisationRole } from '../../organisation/organisation.constants'
+
 module.exports = {
   people: [
     {
@@ -16,29 +18,34 @@ module.exports = {
     {
       name: 'Member of None',
       email: 'test4@example.com'
+    },
+    {
+      name: 'Classic Volunteer',
+      email: 'test5@example.com'
     }
+
   ],
   organisations: [
     {
       name: 'Test organisation 1',
       slug: 'test-org-1',
-      category: 'vp'
+      role: OrganisationRole.VOLUNTEER_PROVIDER
     },
     {
       name: 'Test organisation 2',
       slug: 'test-org-2',
-      category: 'ap'
+      role: OrganisationRole.ACTIVITY_PROVIDER
     },
     {
       name: 'Test organisation 3',
       slug: 'test-org-3',
-      category: 'op'
+      role: OrganisationRole.OPPORTUNITY_PROVIDER
 
     },
     {
       name: 'Test organisation 4',
       slug: 'test-org-4',
-      category: 'admin'
+      role: OrganisationRole.ADMIN
 
     }
   ]

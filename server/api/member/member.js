@@ -21,9 +21,8 @@ const memberSchema = new Schema({
       MemberStatus.ORGADMIN,
       MemberStatus.EXMEMBER
     ]
-  },
-  dateAdded: { type: 'Date', default: Date.now, required: true }
-})
+  }
+}, { timestamps: true })
 
 /*
     State flows

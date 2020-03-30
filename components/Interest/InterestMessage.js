@@ -7,7 +7,7 @@ var messageSchema = new mongoose.Schema({
   body: String,
   // who sent the message (op or vp?)
   author: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
-  dateAdded: { type: Date, default: Date.now, required: true }
+  createdAt: { type: Date, default: Date.now, required: true }
 })
  */
 export const InterestMessageItem = ({ message }) => (
@@ -21,8 +21,8 @@ export const InterestMessageItem = ({ message }) => (
         </p>
       }
       datetime={
-        <Tooltip title={moment(message.dateAdded).format('YYYY-MM-DD HH:mm:ss')}>
-          <span>{moment(message.dateAdded).fromNow()}</span>
+        <Tooltip title={moment(message.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
+          <span>{moment(message.createdAt).fromNow()}</span>
         </Tooltip>
       }
     />)
@@ -39,7 +39,7 @@ export const InterestMessageList = ({ messages }) => {
   if (messages.length === 0) return null
   const latestFirst = messages.sort(
     (a, b) => {
-      return moment(b.dateAdded) - moment(a.dateAdded)
+      return moment(b.createdAt) - moment(a.createdAt)
     }
   )
   const data = latestFirst.map(message => ({
@@ -48,8 +48,8 @@ export const InterestMessageList = ({ messages }) => {
     // avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
     content: <p>{message.body}</p>,
     datetime: (
-      <Tooltip title={moment(message.dateAdded).format('YYYY-MM-DD HH:mm:ss')}>
-        <span>{moment(message.dateAdded).fromNow()}</span>
+      <Tooltip title={moment(message.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
+        <span>{moment(message.createdAt).fromNow()}</span>
       </Tooltip>)
   }))
 

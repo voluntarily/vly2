@@ -8,6 +8,7 @@ import { jwtData, jwtDataAlice, jwtDataDali } from '../../../middleware/session/
 import archivedOps from './archivedOpportunity.fixture'
 import ArchivedOpportunity from '../archivedOpportunity'
 import { OpportunityStatus, OpportunityFields, OpportunityListFields } from '../../opportunity/opportunity.constants'
+import { OrganisationRole } from '../../organisation/organisation.constants'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -67,7 +68,7 @@ const testDataByRole = [
     expectedDeleteStatus: 200
   },
   {
-    roleName: 'ap',
+    roleName: OrganisationRole.ACTIVITY_PROVIDER,
     cookie: `idToken=${jwtDataDali.idToken}`,
     getExpectedArchivedOps: getCompletedOps,
     listExpectedFields: OpportunityListFields,

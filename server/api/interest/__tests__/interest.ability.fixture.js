@@ -7,6 +7,7 @@ import { OpportunityStatus } from '../../opportunity/opportunity.constants'
 import Organisation from '../../organisation/organisation'
 import Person from '../../person/person'
 import { InterestStatus } from '../interest.constants'
+import { OrganisationRole } from '../../organisation/organisation.constants'
 
 const generateObjectId = mongoose.Types.ObjectId
 
@@ -27,13 +28,13 @@ const people = [
     _id: generateObjectId(),
     name: 'Volunteer 1',
     email: 'volunteer.1@example.com',
-    role: [Role.VOLUNTEER_PROVIDER]
+    role: [Role.VOLUNTEER]
   },
   { // 3
     _id: generateObjectId(),
     name: 'Volunteer 2',
     email: 'volunteer.2@example.com',
-    role: [Role.VOLUNTEER_PROVIDER]
+    role: [Role.VOLUNTEER]
   },
   { // 4
     _id: generateObjectId(),
@@ -51,19 +52,19 @@ const people = [
     _id: generateObjectId(),
     name: 'Volunteer + Opportunity Provider 1',
     email: 'volunteer.opportunity.provider.1@example.com',
-    role: [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER]
+    role: [Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER]
   },
   { // 7
     _id: generateObjectId(),
     name: 'Volunteer + Activity Provider',
     email: 'volunteer.3@example.com',
-    role: [Role.VOLUNTEER_PROVIDER, Role.ACTIVITY_PROVIDER]
+    role: [Role.VOLUNTEER, Role.ACTIVITY_PROVIDER]
   },
   { // 8
     _id: generateObjectId(),
     name: 'Volunteer + Opportunity Provider + Activity Provider',
     email: 'vp_op_ap@example.com',
-    role: [Role.VOLUNTEER_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER]
+    role: [Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER]
   }
 ]
 export const PERSON = {
@@ -82,13 +83,13 @@ const organisations = [
     _id: generateObjectId(),
     name: 'Opportunity Provider 1',
     slug: 'opportunity-provider-1',
-    category: ['vp']
+    role: [OrganisationRole.VOLUNTEER_PROVIDER]
   },
   {
     _id: generateObjectId(),
     name: 'Opportunity Provider 2',
     slug: 'opportunity-provider-2',
-    category: ['op']
+    role: ['op']
   }
 ]
 

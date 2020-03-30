@@ -1,4 +1,5 @@
 import objectid from 'objectid'
+import { OrganisationRole } from '../../../server/api/organisation/organisation.constants'
 
 const requestor = {
   _id: objectid().toString(),
@@ -14,7 +15,7 @@ export const orgOmgTech = {
   _id: objectid().toString(),
   name: 'OMGTech',
   slug: 'omgtech',
-  category: ['ap', 'vp'],
+  role: [OrganisationRole.ACTIVITY_PROVIDER, OrganisationRole.VOLUNTEER_PROVIDER],
   imgUrl: 'https://images.squarespace-cdn.com/content/556e9677e4b099ded4a2e757/1488844920526-ZGL78IXEPYARVWLL778H/OMGTECH.png?content-type=image%2Fpng',
   info: {
     about: 'Awesome content providers'

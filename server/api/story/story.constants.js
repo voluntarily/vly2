@@ -18,7 +18,7 @@ const StoryFields = {
   IMG_URL: 'imgUrl',
   AUTHOR: 'author',
   STATUS: 'status',
-  DATE_ADDED: 'dateAdded',
+  DATE_ADDED: 'createdAt',
   DATE_PUBLISHED: 'datePublished',
   ALLOW_COMMENTS: 'allowComments',
   PARENT: 'parent',

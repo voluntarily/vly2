@@ -1,5 +1,6 @@
 const { getSentences, coin, gra, getTags, asyncForEach } = require('./util')
 const Organisation = require('../../../server/api/organisation/organisation')
+const { OrganisationRole } = require('../../../server/api/organisation/organisation.constants')
 const Member = require('../../../server/api/member/member')
 const Activity = require('../../../server/api/activity/activity')
 const { MemberStatus } = require('../../../server/api/member/member.constants')
@@ -14,7 +15,7 @@ const { makeOps } = require('./makeOps')
 const makeAct = async (ops, interested) => {
   // find a random op
   console.log('makeAct', ops, interested)
-  const orgs = await Organisation.find({ category: 'ap' })
+  const orgs = await Organisation.find({ role: OrganisationRole.ACTIVITY_PROVIDER })
   const org = orgs[gra(0, orgs.length - 1)]
   // find a member of ap
   const members = await Member

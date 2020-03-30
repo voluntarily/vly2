@@ -4,7 +4,7 @@ import { MemberStatus } from '../../../../server/api/member/member.constants'
 import { emailPerson } from '../../../../server/api/person/person.email'
 import { makeURLToken } from '../../../../lib/sec/actiontoken'
 import { config } from '../../../../config/clientConfig'
-
+import Role from '../../../../server/services/authorize/role'
 export default async (req, res) => {
   // verify signed in
   if (!req.session || !req.session.isAuthenticated) { return res.status(403).end() }
@@ -21,7 +21,7 @@ export default async (req, res) => {
       organisation: orgid
     }
     const membership = await Member.findOne(membershipQuery).exec()
-    if (!(membership && membership.status === MemberStatus.ORGADMIN)) {
+    if (!(membership && membership.status === MemberStatus.ORGADMIN) || me.role.includes(Role.ADMIN)) {
       console.error('you are not an orgadmin of this organisation')
       return res.status(403).json({ error: 'signed-in person is not an orgadmin of the requested organisation' })
     }

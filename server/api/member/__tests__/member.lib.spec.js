@@ -6,9 +6,10 @@ import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
 import { MemberStatus } from '../member.constants'
 import { Role } from '../../../services/authorize/role'
+import { OrganisationRole } from '../../organisation/organisation.constants'
 
 import {
-  findOrgByPersonIdAndCategory,
+  findOrgByPersonIdAndRole,
   getPersonRoles,
   getMemberbyId,
   addMember,
@@ -62,6 +63,12 @@ test.beforeEach('Load fixtures', async (t) => {
       organisation: organisations[3]._id,
       validation: 'orgAdmin',
       status: MemberStatus.ORGADMIN
+    },
+    {
+      person: people[4]._id,
+      organisation: organisations[0]._id,
+      validation: 'member',
+      status: MemberStatus.MEMBER
     }
   ]
 
@@ -114,26 +121,26 @@ test.serial('add member creates a new member', async (t) => {
   await updatedMember.remove()
 })
 
-test.serial('Find org by person and category', async (t) => {
+test.serial('Find org by person and role', async (t) => {
   const testData = [
     {
       personId: t.context.people[0]._id,
-      category: null,
+      role: null,
       expectedOrgId: t.context.organisations[0]._id.str
     },
     {
       personId: t.context.people[0]._id,
-      category: 'ap',
+      role: OrganisationRole.ACTIVITY_PROVIDER,
       expectedOrgId: t.context.organisations[1]._id.str
     },
     {
       personId: t.context.people[1]._id,
-      category: null,
+      role: null,
       expectedOrgId: t.context.organisations[3]._id.str
     },
     {
       personId: t.context.people[2]._id,
-      category: null,
+      role: null,
       expectedOrgId: null
     }
   ]
@@ -141,7 +148,7 @@ test.serial('Find org by person and category', async (t) => {
   t.plan(testData.length)
 
   for (const testRecord of testData) {
-    let orgId = await findOrgByPersonIdAndCategory(testRecord.personId, testRecord.category)
+    let orgId = await findOrgByPersonIdAndRole(testRecord.personId, testRecord.role)
 
     if (orgId !== null) {
       orgId = orgId.str
@@ -157,38 +164,46 @@ test.serial('Find org by person and category', async (t) => {
 test.serial('role of person with no membership is what is in the person.role field.', async (t) => {
   const person = t.context.people[3]
   const [role, orgAdminFor] = await getPersonRoles(person)
-  t.is(role.length, 1)
-  t.is(role[0], 'volunteer')
+  t.is(role.length, 0)
   t.is(orgAdminFor.length, 0)
 })
 
 test.serial('role of person with various memberships.', async (t) => {
   const person = t.context.people[1]
   const [role, orgAdminFor] = await getPersonRoles(person)
-  t.is(role.length, 4) // ["volunteer","opportunityProvider","orgAdmin","admin"]
-  t.is(role[1], 'opportunityProvider') // because org[2] is OP
-  t.is(role[3], 'admin') // because org[3] is admin category
+  t.is(role.length, 3) // ["opportunityProvider","orgAdmin","admin"]
+  t.is(role[0], Role.OPPORTUNITY_PROVIDER) // because org[2] is OP
+  t.is(role[2], Role.ADMIN) // because org[3] is admin role
   t.is(orgAdminFor.length, 1)
   t.deepEqual(orgAdminFor[0], t.context.organisations[3]._id)
+})
+
+test.serial('role generic volunteer.', async (t) => {
+  const person = t.context.people[4]
+  const [role, orgAdminFor] = await getPersonRoles(person)
+  console.log(role)
+  t.is(role.length, 1) // [VOLUNTEER]
+  t.is(role[0], Role.VOLUNTEER) // because org[2] is OP
+  t.is(orgAdminFor.length, 0)
 })
 
 test.serial('roles are sorted and deduplicated', t => {
   const desiredOrder = [
     Role.ANON,
-    Role.VOLUNTEER_PROVIDER,
+    Role.VOLUNTEER,
     Role.OPPORTUNITY_PROVIDER,
     Role.ACTIVITY_PROVIDER,
     Role.RESOURCE_PROVIDER,
-    Role.TESTER,
+    Role.SUPPORT,
     Role.ADMIN
   ]
 
   const mixedRoles = [
     Role.ADMIN,
-    Role.VOLUNTEER_PROVIDER,
+    Role.VOLUNTEER,
     Role.OPPORTUNITY_PROVIDER,
     Role.ACTIVITY_PROVIDER,
-    Role.TESTER,
+    Role.SUPPORT,
     Role.OPPORTUNITY_PROVIDER,
     Role.ANON,
     Role.RESOURCE_PROVIDER,

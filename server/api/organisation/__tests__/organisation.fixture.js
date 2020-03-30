@@ -1,8 +1,9 @@
+const { OrganisationRole } = require('../organisation.constants')
 const orgList = [
   {
     name: 'Voluntarily Administrators',
     slug: 'voluntarily-administrators',
-    category: ['admin'],
+    role: [OrganisationRole.ADMIN],
     imgUrl: 'https://example.com/image1',
     info: {
       about: 'Industry in the classroom.',
@@ -19,7 +20,7 @@ const orgList = [
   {
     name: 'OMGTech',
     slug: 'omgtech',
-    category: ['ap', 'op'],
+    role: [OrganisationRole.ACTIVITY_PROVIDER, OrganisationRole.OPPORTUNITY_PROVIDER],
     imgUrl: 'https://example.com/image2',
     info: {
       about: `Awesome content providersOMGTech! develops & delivers engaging workshops for both teachers and students on digital technologies and how to explore and invent with them
@@ -39,28 +40,28 @@ const orgList = [
   {
     name: 'Datacom',
     slug: 'datacom',
-    category: ['vp'],
+    role: [OrganisationRole.VOLUNTEER_PROVIDER],
     imgUrl: 'https://example.com/image3',
     info: { about: 'some of our most loyal helpers' }
   },
   {
     name: 'Spark Ltd',
     slug: 'spark-ltd',
-    category: ['vp'],
+    role: [OrganisationRole.VOLUNTEER_PROVIDER],
     imgUrl: 'https://example.com/image4',
     info: { about: 'more of our most loyal helpers' }
   },
   {
     name: 'Westpac Ltd',
     slug: 'westpac-ltd',
-    category: ['vp'],
+    role: [OrganisationRole.VOLUNTEER_PROVIDER],
     info: { about: 'even more of our most loyal helpers' }
   },
   {
     name: 'Albany Senior High School',
     slug: 'albany-senior-high-school',
     imgUrl: 'http://www.ashs.school.nz/images/logo.png',
-    category: ['op'],
+    role: [OrganisationRole.OPPORTUNITY_PROVIDER],
     info: {
       about:
       `

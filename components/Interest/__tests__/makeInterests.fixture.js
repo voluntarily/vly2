@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { InterestStatus } from '../../../server/api/interest/interest.constants'
 import mongoose from 'mongoose'
-import { Category } from '../../../server/api/organisation/organisation.constants'
+import { OrganisationRole } from '../../../server/api/organisation/organisation.constants'
 import { coin, gra, makeTeacher, makeVolunteer } from '../../Person/__tests__/makePeople.fixture'
 
 const ObjectId = () => mongoose.Types.ObjectId().toHexString()
@@ -9,7 +9,7 @@ const offerOrg = {
   _id: ObjectId(),
   name: 'Normal School',
   slug: 'normal-school',
-  category: [Category.SCHOOL],
+  role: [OrganisationRole.OPPORTUNITY_PROVIDER],
   imgUrl: 'https://example.com/images/school.png',
   info: {
     about: 'Awesome school'
@@ -37,7 +37,7 @@ const makeMessages = (numMessages, a, b, status, op) =>
   Array(numMessages).fill({}).map((item, index) => ({
     body: coin(`Example message ${a.name} is ${status} in ${op.name}`, 'Thanks for the feedback, I will be in touch'),
     author: coin(a, b),
-    dateAdded: moment().subtract(gra(5, 1200), 'minutes').format()
+    createdAt: moment().subtract(gra(5, 1200), 'minutes').format()
   }))
 
 export const makeInterestedVolunteer = (name, status) => {

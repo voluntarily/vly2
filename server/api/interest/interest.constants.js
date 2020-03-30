@@ -2,7 +2,7 @@ const InterestFields = {
   ID: '_id',
   COMMENT: 'comment',
   STATUS: 'status',
-  DATE_ADDED: 'dateAdded',
+  DATE_ADDED: 'createdAt',
   PERSON: 'person',
   OPPORTUNITY: 'opportunity',
   MESSAGES: 'messages'

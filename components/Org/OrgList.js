@@ -4,6 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import OrgCard from './OrgCard'
 import { Grid } from '../VTheme/VTheme'
+import { OrganisationRole } from '../../server/api/organisation/organisation.constants'
 
 const OrgList = ({ orgs, ...props }) => (
   <Grid>
@@ -18,8 +19,8 @@ OrgList.propTypes = {
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       imgUrl: PropTypes.string,
-      category: PropTypes.arrayOf(
-        PropTypes.oneOf(['admin', 'op', 'vp', 'ap', 'other'])
+      role: PropTypes.arrayOf(
+        PropTypes.oneOf([OrganisationRole.ADMIN, OrganisationRole.OPPORTUNITY_PROVIDER, OrganisationRole.VOLUNTEER_PROVIDER, OrganisationRole.ACTIVITY_PROVIDER, 'other'])
       ).isRequired,
       _id: PropTypes.string.isRequired
     })

@@ -1,11 +1,11 @@
 const Role = {
   ANON: 'anonymous',
   ALL: 'all',
-  VOLUNTEER_PROVIDER: 'volunteer',
+  VOLUNTEER: 'volunteer',
   OPPORTUNITY_PROVIDER: 'opportunityProvider',
   ACTIVITY_PROVIDER: 'activityProvider',
   RESOURCE_PROVIDER: 'resourceProvider',
-  TESTER: 'tester',
+  SUPPORT: 'support',
   ADMIN: 'admin',
   ORG_ADMIN: 'orgAdmin'
 }

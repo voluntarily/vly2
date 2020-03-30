@@ -8,7 +8,7 @@ export const createCsv = (members) => {
   membersCsv += 'Name,Email,Phone,Role,Date_Added\n'
   if (members) {
     membersCsv += members.map(member => (
-      `${member.person.name},${member.person.email},${member.person.phone},${member.status},${member.dateAdded}`
+      `${member.person.name},${member.person.email},${member.person.phone},${member.status},${member.createdAt}`
     )).join('\n')
   }
   return membersCsv

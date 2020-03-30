@@ -69,7 +69,7 @@ const ruleBuilder = session => {
     action: Action.CREATE
   }]
 
-  const testerAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
+  const supportAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
   const adminAbilities = [{ subject: SchemaName, action: Action.MANAGE }]
 
   const orgAdminAbilities = [{
@@ -93,9 +93,9 @@ const ruleBuilder = session => {
 
   return {
     [Role.ANON]: anonAbilities,
-    [Role.VOLUNTEER_PROVIDER]: anonAbilities,
+    [Role.VOLUNTEER]: anonAbilities,
     [Role.OPPORTUNITY_PROVIDER]: opAbilities,
-    [Role.TESTER]: testerAbilities,
+    [Role.SUPPORT]: supportAbilities,
     [Role.ADMIN]: adminAbilities,
     [Role.ORG_ADMIN]: orgAdminAbilities
   }

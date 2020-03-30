@@ -91,7 +91,7 @@ const getActivity = async (req, res) => {
       .accessibleBy(req.ability, Action.READ)
       .findOne(req.params)
       .populate('owner', 'name nickname imgUrl')
-      .populate('offerOrg', 'name imgUrl category')
+      .populate('offerOrg', 'name imgUrl role')
       .lean()
 
     if (act === null) {

@@ -46,13 +46,13 @@ test('list everyone - bad filter', async t => {
 test('list everyone - filtered, sorted, produced', async t => {
   // filtered & sorted request
   const resFilter = await request(server)
-    .get('/api/people?q={"about":"Tester"}&s="phone"&p="nickname, phone"')
+    .get('/api/people?q={"about":"SUPPORT"}&s="phone"&p="nickname, phone"')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
-  const testers = t.context.people.filter(p => p.about === 'Tester')
-  t.is(resFilter.body.length, testers.length)
-  t.is(resFilter.body[0].phone, testers[testers.length - 1].phone)
+  const supports = t.context.people.filter(p => p.about === 'SUPPORT')
+  t.is(resFilter.body.length, supports.length)
+  t.is(resFilter.body[0].phone, supports[supports.length - 1].phone)
 })
 
 test('Get person who doesnt exist', async t => {
@@ -74,7 +74,7 @@ test.serial('Should correctly add a person and sanitise inputs', async t => {
     email: 'bobby@omgtech.co.nz', // ok
     about: "console.log('hello world')", // ok
     pronoun: { subject: 'they', object: 'them', possesive: 'ȁǹy' }, // ok
-    role: ['tester'],
+    role: ['support'],
     tags: []
   }
 
@@ -102,7 +102,7 @@ test('Should correctly handle missing inputs', async t => {
     nickname: 'Testy',
     phone: '123 456789',
     // email: 'Testy555@voluntarily.nz', <- explicity remove email
-    role: ['tester'],
+    role: ['support'],
     tags: []
   }
   const res = await request(server)
