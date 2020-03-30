@@ -127,7 +127,7 @@ const OfferSection = () => (
               <h3>Ask for help</h3>
               <p>We make it easy to ask for exactly what you need. All you need to do is ask.
               </p>
-              <Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>Coming soon</Button>
+              <Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>See who can help you</Button>
             </figcaption>
           </OfferCard>
         </a>
