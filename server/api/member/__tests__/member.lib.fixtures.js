@@ -18,7 +18,12 @@ module.exports = {
     {
       name: 'Member of None',
       email: 'test4@example.com'
+    },
+    {
+      name: 'Classic Volunteer',
+      email: 'test5@example.com'
     }
+
   ],
   organisations: [
     {
@@ -34,13 +39,13 @@ module.exports = {
     {
       name: 'Test organisation 3',
       slug: 'test-org-3',
-      role: 'op'
+      role: OrganisationRole.OPPORTUNITY_PROVIDER
 
     },
     {
       name: 'Test organisation 4',
       slug: 'test-org-4',
-      role: 'admin'
+      role: OrganisationRole.ADMIN
 
     }
   ]
