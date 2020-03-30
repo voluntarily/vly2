@@ -17,7 +17,7 @@ const PersonFields = {
   LOCATIONS: 'locations',
   PHONE: 'phone',
   LANGUAGE: 'language',
-  AVATAR: 'imgUrl',
+  IMG_URL: 'imgUrl',
   FACEBOOK: 'facebook',
   WEBSITE: 'website',
   TWITTER: 'twitter',
@@ -31,6 +31,39 @@ const PersonFields = {
   PLACEOFWORK: 'placeOfWork'
 }
 
+/* This list is currently used for requests returning a LIST
+of people, it contains fields required for the person card.
+*/
+const PersonListFields = [
+  PersonFields.NICKNAME,
+  PersonFields.LANGUAGE,
+  PersonFields.NAME,
+  PersonFields.STATUS,
+  PersonFields.IMG_URL,
+  PersonFields.ROLE,
+  PersonFields.PRONOUN,
+  PersonFields.TAGS,
+  PersonFields.SENDEMAILNOTIFICATIONS
+]
+
+const PersonPublicFields = [
+  ...PersonListFields,
+  PersonFields.ABOUT,
+  PersonFields.LOCATIONS,
+  PersonFields.FACEBOOK,
+  PersonFields.WEBSITE,
+  PersonFields.TWITTER
+]
+
+const PersonFriendFields = [
+  ...PersonPublicFields,
+  PersonFields.EMAIL,
+  PersonFields.PHONE,
+  PersonFields.EDUCATION,
+  PersonFields.JOB,
+  PersonFields.PLACEOFWORK
+]
+
 const PersonStatus = {
   ACTIVE: 'active',
   INACTIVE: 'inactive',
@@ -41,5 +74,8 @@ module.exports = {
   SchemaName,
   PersonRoutes,
   PersonFields,
-  PersonStatus
+  PersonStatus,
+  PersonListFields,
+  PersonPublicFields,
+  PersonFriendFields
 }

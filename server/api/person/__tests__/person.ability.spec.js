@@ -2,6 +2,7 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Person from '../person'
+import { PersonListFields, PersonFriendFields } from '../person.constants'
 import { jwtData, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import people from './person.fixture'
@@ -101,23 +102,7 @@ test('List - admin', async t => {
   const andrew = res.body.find(user => user.email === 'andrew@groat.nz')
   t.truthy(andrew)
 
-  const expectedFields = [
-    'name',
-    'nickname',
-    'email',
-    'about',
-    'locations',
-    'pronoun',
-    'language',
-    'role',
-    'status',
-    'imgUrl',
-    'phone',
-    'sendEmailNotifications',
-    'website',
-    'tags'
-  ]
-  for (const expectedField of expectedFields) {
+  for (const expectedField of PersonListFields) {
     t.truthy(andrew[expectedField], `The '${expectedField}' field of the response body object should contain data`)
   }
 })
@@ -152,7 +137,7 @@ for (const role of [Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PRO
 
 // We trim certain fields (email, phone etc) from each user, however when asking for data for the current
 // user we should return all fields
-test('Get person by id - self returns all fields', async t => {
+test.serial('Get person by id - self returns all fields', async t => {
   // Create a new user in the database directly
   const email = `${uuid()}@test.com`
 
@@ -180,7 +165,7 @@ test('Get person by id - self returns all fields', async t => {
     placeOfWork: 'POW Self'
   })
 
-  const person = await Person.findOne({ email }).lean().exec()
+  const person = await Person.findOne({ email }).lean()
 
   const res = await request(server)
     .get(`/api/people/${person._id}`)
@@ -188,17 +173,15 @@ test('Get person by id - self returns all fields', async t => {
     .set('Cookie', [`idToken=${createJwtIdToken(email)}`]) // Self
 
   t.is(res.status, 200)
-
   // Make sure all person fields are returned for a request about myself
   t.is(res.body._id, person._id.toString())
-  const expectedKeys = ['email', 'nickname', 'name', 'about', 'phone', 'language', 'imgUrl', 'facebook', 'website', 'twitter', 'role', 'status', 'pronoun', 'tags', 'education', 'job']
-  for (const key of expectedKeys) {
+  for (const key of PersonFriendFields) {
     t.deepEqual(res.body[key], person[key], `The '${key}' field on the person response object (when requesting as self) is invalid`)
   }
 })
 
 for (const role of [Role.ADMIN, Role.SUPPORT]) {
-  test(`Get person by id - ${role} - should return all fields`, async t => {
+  test(`Get person by id - ${role} - should return all list fields`, async t => {
     const person = t.context.people.find(p => p.email === 'andrew@groat.nz')
 
     const res = await request(server)
@@ -209,29 +192,14 @@ for (const role of [Role.ADMIN, Role.SUPPORT]) {
     // All fields should be returned
     t.is(res.status, 200)
 
-    const expectedFields = [
-      'name',
-      'nickname',
-      'email',
-      'about',
-      'locations',
-      'pronoun',
-      'language',
-      'role',
-      'status',
-      'imgUrl',
-      'phone',
-      'sendEmailNotifications',
-      'website',
-      'tags'
-    ]
-    for (const expectedField of expectedFields) {
+    for (const expectedField of PersonListFields) {
       t.truthy(res.body[expectedField], `The '${expectedField}' field of the response body object should contain data`)
     }
   })
 }
 
-test('Get person by id - requested person is in my organisation', async t => {
+// SKIP as we no longer share details across an organisation.
+test.skip('Get person by id - requested person is in my organisation', async t => {
   const personA = await createPerson([Role.VOLUNTEER])
   const personB = await Person.create({
     name: 'name',

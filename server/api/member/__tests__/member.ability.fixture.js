@@ -1,5 +1,6 @@
 import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
+import { OrganisationRole } from '../../organisation/organisation.constants'
 import Member from '../../member/member'
 import { Role } from '../../../services/authorize/role'
 import { MemberStatus } from '../../member/member.constants'
@@ -45,12 +46,14 @@ const organisations = [
   {
     _id: generateObjectId(),
     name: 'Organisation 1',
-    slug: 'organisation-1'
+    slug: 'organisation-1',
+    role: [OrganisationRole.OPPORTUNITY_PROVIDER]
   },
   {
     _id: generateObjectId(),
     name: 'Organisation 2',
-    slug: 'organisation-2'
+    slug: 'organisation-2',
+    role: [OrganisationRole.VOLUNTEER_PROVIDER]
   }
 ]
 

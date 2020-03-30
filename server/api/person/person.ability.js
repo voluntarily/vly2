@@ -28,7 +28,7 @@ const ruleBuilder = session => {
         PersonFields.NICKNAME,
         PersonFields.LANGUAGE,
         PersonFields.STATUS,
-        PersonFields.AVATAR,
+        PersonFields.IMG_URL,
         PersonFields.NAME,
         PersonFields.ROLE,
         PersonFields.ABOUT,
