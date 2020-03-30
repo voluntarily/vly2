@@ -9,6 +9,7 @@ import { OpSectionGrid, Spacer } from '../VTheme/VTheme'
 import { Divider } from 'antd'
 import { ShareLinks } from './OpShareLinks'
 import { config } from '../../config/clientConfig'
+import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 import { FormattedMessage } from 'react-intl'
 export function OpAboutPanel ({ op }) {
   const description = op.description || ''
@@ -46,7 +47,7 @@ export function OpAboutPanel ({ op }) {
         <h2><FormattedMessage id='actDetailForm.AboutSection.organisersubtitle' defaultMessage='About the organisers' /></h2>
         <ProfileSection>
           <ul>
-            <ItemIdLine item={op.requestor} path='people' />
+            {(op.requestor.type === OpportunityType.OFFER) && <ItemIdLine item={op.requestor} path='people' />}
             <ItemIdLine item={op.offerOrg} path='orgs' />
           </ul>
         </ProfileSection>
