@@ -22,16 +22,16 @@ const PrivacyPage = () => (
         <img src='../static/img/icons/kind.svg' />
         <p>The platform is intended for use only by people who are at least 16 years old.<br />We will do everything we can to keep you personal information safe.</p>
       </InfoItem>
-      <aside>View the full<a> Privacy Policy</a></aside><br />
-      <Link href=''>
-        <a>
-          <TermsButtonContainer>
-            <div>
-              <Button type='primary' shape='round' size='large' block>Accept Privacy Policy</Button>
-            </div>
-          </TermsButtonContainer>
-        </a>
-      </Link>
+      <aside>View the full<a href='/terms/privacy' target='_blank' rel='noreferrer noopener'> Privacy Policy</a></aside><br />
+      {/* <Link>
+        <a> */}
+      <TermsButtonContainer>
+        <div>
+          <Button type='primary' shape='round' size='large' block>Accept Privacy Policy</Button>
+        </div>
+      </TermsButtonContainer>
+      {/*   </a>
+     </Link> */}
     </InfoSection>
   </FullPage>
 )
