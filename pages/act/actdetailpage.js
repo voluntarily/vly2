@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet'
 import ActBanner from '../../components/Act/ActBanner'
 import ActTabs from '../../components/Act/ActTabs'
 import ActUnknown from '../../components/Act/ActUnknown'
+import ActTryBelow from '../../components/Act/ActTryBelow'
 import ActDetailForm from '../../components/Act/ActDetailForm'
 import Loading from '../../components/Loading'
 import { FullPage, PageBannerButtons } from '../../components/VTheme/VTheme'
@@ -151,6 +152,7 @@ export const ActDetailPage = ({
         <PageBannerButtons>
           <OpAdd actid={act._id} />
         </PageBannerButtons>
+        <ActTryBelow counts={act.opCounts} role={me.role} />
       </ActBanner>
       <ActTabs act={act} canManage={canManage} canEdit={canManage} defaultTab={tab} onChange={handleTabChange} owner={me._id} />
     </FullPage>)
@@ -171,16 +173,20 @@ ActDetailPage.getInitialProps = async ({ store, query }) => {
     }
   } else {
     if (actExists) {
-      await Promise.all([
-        store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })),
-        store.dispatch(reduxApi.actions.tags.get()),
-        store.dispatch(reduxApi.actions.activities.get(query)),
-        store.dispatch(
-          reduxApi.actions.opportunities.get(
-            { q: JSON.stringify({ fromActivity: query.id }) }
+      try {
+        await Promise.all([
+          store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })),
+          store.dispatch(reduxApi.actions.tags.get()),
+          store.dispatch(reduxApi.actions.activities.get(query)),
+          store.dispatch(
+            reduxApi.actions.opportunities.get(
+              { q: JSON.stringify({ fromActivity: query.id }) }
+            )
           )
-        )
-      ])
+        ])
+      } catch (e) {
+        console.error('Error getting activity data:', e)
+      }
     }
     return {
       isNew,

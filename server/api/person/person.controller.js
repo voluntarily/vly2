@@ -6,7 +6,7 @@ const { Role } = require('../../services/authorize/role')
 const { supportedLanguages } = require('../../../lang/lang')
 const { websiteRegex } = require('./person.validation')
 const mongoose = require('mongoose')
-const { PersonFields } = require('./person.constants')
+const { PersonPublicFields, PersonFriendFields } = require('./person.constants')
 const { mapValues, keyBy } = require('lodash')
 const Member = require('../member/member')
 const { Interest } = require('../interest/interest')
@@ -30,30 +30,12 @@ async function getPerson (req, res, next) {
   }
 
   const isSelf = me._id && personId === me._id.toString()
+  // const isPersonInMyOrg = async () => {
+  //   const myOrgs = (await Member.find({ person: me._id })).map(member => member.organisation.toString())
+  //   const personOrgs = (await Member.find({ person: personId })).map(member => member.organisation.toString())
 
-  const fields = [
-    PersonFields.ID,
-    PersonFields.NICKNAME,
-    PersonFields.LANGUAGE,
-    PersonFields.NAME,
-    PersonFields.STATUS,
-    PersonFields.AVATAR,
-    PersonFields.ABOUT,
-    PersonFields.ROLE,
-    PersonFields.PRONOUN,
-    PersonFields.TAGS,
-    PersonFields.FACEBOOK,
-    PersonFields.WEBSITE,
-    PersonFields.TWITTER,
-    PersonFields.SENDEMAILNOTIFICATIONS
-  ]
-
-  const isPersonInMyOrg = async () => {
-    const myOrgs = (await Member.find({ person: me._id })).map(member => member.organisation.toString())
-    const personOrgs = (await Member.find({ person: personId })).map(member => member.organisation.toString())
-
-    return !!myOrgs.find(myOrg => personOrgs.includes(myOrg))
-  }
+  //   return !!myOrgs.find(myOrg => personOrgs.includes(myOrg))
+  // }
 
   const isPersonInvitedToMyOpportunities = async () => {
     const myOps = await Opportunity.find({ requestor: me._id })
@@ -64,25 +46,15 @@ async function getPerson (req, res, next) {
     }))
   }
 
-  const includePersonalFields = (me.role &&
+  const personalFriend = (me.role &&
     (
       me.role.includes(Role.ADMIN) ||
       me.role.includes(Role.SUPPORT) ||
-      (await isPersonInMyOrg()) ||
+      // (await isPersonInMyOrg()) ||
       (await isPersonInvitedToMyOpportunities())
     )) ||
     isSelf
-
-  if (includePersonalFields) {
-    fields.push(
-      PersonFields.EMAIL,
-      PersonFields.PHONE,
-      PersonFields.EDUCATION,
-      PersonFields.JOB,
-      PersonFields.LOCATIONS,
-      PersonFields.PLACEOFWORK
-    )
-  }
+  const fields = (personalFriend) ? PersonFriendFields : PersonPublicFields
 
   Person
     .accessibleBy(req.ability, Action.READ)

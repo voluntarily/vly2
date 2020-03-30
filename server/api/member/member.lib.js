@@ -76,6 +76,7 @@ const orgToRoleTable = {
 const sortRoles = roles => {
   const desiredOrder = [
     Role.ANON,
+    Role.BASIC,
     Role.VOLUNTEER,
     Role.OPPORTUNITY_PROVIDER,
     Role.ACTIVITY_PROVIDER,

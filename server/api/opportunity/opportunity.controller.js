@@ -73,7 +73,6 @@ const listOpportunities = async (req, res, next) => {
         ]
       }
     }
-
     try {
       const got = await Opportunity
         .accessibleBy(req.ability)

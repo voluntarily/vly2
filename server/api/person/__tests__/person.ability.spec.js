@@ -2,9 +2,10 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Person from '../person'
+import { PersonListFields, PersonFriendFields } from '../person.constants'
 import { jwtData, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
 import MemoryMongo from '../../../util/test-memory-mongo'
-import people from '../__tests__/person.fixture'
+import people from './person.fixture'
 import uuid from 'uuid'
 import { Role } from '../../../services/authorize/role'
 import jsonwebtoken from 'jsonwebtoken'
@@ -26,7 +27,7 @@ const createPerson = (roles) => {
   const person = {
     name: 'name',
     email: `${uuid()}@test.com`,
-    role: roles || [],
+    role: [...roles, Role.BASIC],
     status: 'active',
     language: 'en',
     website: 'https://reddit.com'
@@ -70,7 +71,7 @@ test('List - anonymous', async t => {
 
 // Roles (other than ADMIN) can list all users, but email and phone fields are removed from the response
 // VP-1264 - In the future the set of users will be more limited
-for (const role of [Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.SUPPORT]) {
+for (const role of [Role.BASIC, Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.SUPPORT]) {
   test(`List - ${role}`, async t => {
     const res = await request(server)
       .get('/api/people')
@@ -101,23 +102,7 @@ test('List - admin', async t => {
   const andrew = res.body.find(user => user.email === 'andrew@groat.nz')
   t.truthy(andrew)
 
-  const expectedFields = [
-    'name',
-    'nickname',
-    'email',
-    'about',
-    'locations',
-    'pronoun',
-    'language',
-    'role',
-    'status',
-    'imgUrl',
-    'phone',
-    'sendEmailNotifications',
-    'website',
-    'tags'
-  ]
-  for (const expectedField of expectedFields) {
+  for (const expectedField of PersonListFields) {
     t.truthy(andrew[expectedField], `The '${expectedField}' field of the response body object should contain data`)
   }
 })
@@ -152,7 +137,7 @@ for (const role of [Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PRO
 
 // We trim certain fields (email, phone etc) from each user, however when asking for data for the current
 // user we should return all fields
-test('Get person by id - self returns all fields', async t => {
+test.serial('Get person by id - self returns all fields', async t => {
   // Create a new user in the database directly
   const email = `${uuid()}@test.com`
 
@@ -180,7 +165,7 @@ test('Get person by id - self returns all fields', async t => {
     placeOfWork: 'POW Self'
   })
 
-  const person = await Person.findOne({ email }).lean().exec()
+  const person = await Person.findOne({ email }).lean()
 
   const res = await request(server)
     .get(`/api/people/${person._id}`)
@@ -188,17 +173,15 @@ test('Get person by id - self returns all fields', async t => {
     .set('Cookie', [`idToken=${createJwtIdToken(email)}`]) // Self
 
   t.is(res.status, 200)
-
   // Make sure all person fields are returned for a request about myself
   t.is(res.body._id, person._id.toString())
-  const expectedKeys = ['email', 'nickname', 'name', 'about', 'phone', 'language', 'imgUrl', 'facebook', 'website', 'twitter', 'role', 'status', 'pronoun', 'tags', 'education', 'job']
-  for (const key of expectedKeys) {
+  for (const key of PersonFriendFields) {
     t.deepEqual(res.body[key], person[key], `The '${key}' field on the person response object (when requesting as self) is invalid`)
   }
 })
 
 for (const role of [Role.ADMIN, Role.SUPPORT]) {
-  test(`Get person by id - ${role} - should return all fields`, async t => {
+  test(`Get person by id - ${role} - should return all list fields`, async t => {
     const person = t.context.people.find(p => p.email === 'andrew@groat.nz')
 
     const res = await request(server)
@@ -209,29 +192,14 @@ for (const role of [Role.ADMIN, Role.SUPPORT]) {
     // All fields should be returned
     t.is(res.status, 200)
 
-    const expectedFields = [
-      'name',
-      'nickname',
-      'email',
-      'about',
-      'locations',
-      'pronoun',
-      'language',
-      'role',
-      'status',
-      'imgUrl',
-      'phone',
-      'sendEmailNotifications',
-      'website',
-      'tags'
-    ]
-    for (const expectedField of expectedFields) {
+    for (const expectedField of PersonListFields) {
       t.truthy(res.body[expectedField], `The '${expectedField}' field of the response body object should contain data`)
     }
   })
 }
 
-test('Get person by id - requested person is in my organisation', async t => {
+// SKIP as we no longer share details across an organisation.
+test.skip('Get person by id - requested person is in my organisation', async t => {
   const personA = await createPerson([Role.VOLUNTEER])
   const personB = await Person.create({
     name: 'name',
@@ -658,7 +626,7 @@ for (const role of [Role.ORG_ADMIN, Role.ANON, Role.ALL, 'undefined', 'null']) {
   })
 }
 
-for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]) {
+for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.VOLUNTEER]) {
   test.serial(`Update - Only ADMIN can change a users email field - ${role} cannot`, async t => {
     const person = await createPerson([Role.VOLUNTEER])
     const originalEmail = person.email
@@ -675,36 +643,36 @@ for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_
       .set('Accept', 'application/json')
       .set('Cookie', `idToken=${await createPersonAndGetToken([role])}`)
 
-    t.is(res.status, 403)
+    t.true([400, 403].includes(res.status))
 
     const person2 = await Person.findById(person._id)
     t.is(person2.email, originalEmail)
   })
 }
-test.serial('Update - Only ADMIN can change a users email field', async t => {
-  const person = await createPerson([Role.VOLUNTEER])
+// test.serial('Update - Only ADMIN can change a users email field', async t => {
+//   const person = await createPerson([Role.VOLUNTEER])
 
-  const payload = {
-    name: 'testname',
-    email: `${uuid()}@test.com`, // Update the users email to a new value
-    role: person.role,
-    status: 'active',
-    phone: 'testphone'
-  }
+//   const payload = {
+//     name: 'testname',
+//     email: `${uuid()}@test.com`, // Update the users email to a new value
+//     role: person.role,
+//     status: 'active',
+//     phone: 'testphone'
+//   }
 
-  const res = await request(server)
-    .put(`/api/people/${person._id}`)
-    .send(payload)
-    .set('Accept', 'application/json')
-    .set('Cookie', `idToken=${await createPersonAndGetToken([Role.ADMIN])}`)
+//   const res = await request(server)
+//     .put(`/api/people/${person._id}`)
+//     .send(payload)
+//     .set('Accept', 'application/json')
+//     .set('Cookie', `idToken=${await createPersonAndGetToken([Role.ADMIN])}`)
 
-  t.is(res.status, 200)
+//   t.is(res.status, 200)
 
-  const person2 = await Person.findById(person._id)
-  t.is(person2.email, payload.email)
-})
+//   const person2 = await Person.findById(person._id)
+//   t.is(person2.email, payload.email)
+// })
 
-for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]) {
+for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.VOLUNTEER]) {
   test.serial(`Update - no one can update createdAt field - ${role}`, async t => {
     const person = await createPerson([Role.VOLUNTEER])
     const originalCreatedAt = person.createdAt.toISOString()
@@ -721,7 +689,7 @@ for (const role of [Role.ADMIN, Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDE
       .set('Accept', 'application/json')
       .set('Cookie', `idToken=${await createPersonAndGetToken([role])}`)
 
-    t.is(res.status, 403)
+    t.true([400, 403].includes(res.status))
 
     const person2 = await Person.findById(person._id)
     t.is(person2.createdAt.toISOString(), originalCreatedAt)
@@ -744,7 +712,7 @@ for (const createdAt of ['', '   ', null]) {
       .set('Accept', 'application/json')
       .set('Cookie', `idToken=${createJwtIdToken(person.email)}`)
 
-    t.is(res.status, 403)
+    t.is(res.status, 400)
 
     const person2 = await Person.findById(person._id)
     t.is(person2.createdAt.toISOString(), originalCreatedAt)

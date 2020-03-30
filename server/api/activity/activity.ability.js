@@ -3,7 +3,7 @@ const { Action } = require('../../services/abilities/ability.constants')
 const { ActivityStatus, SchemaName } = require('./activity.constants')
 
 const ruleBuilder = session => {
-  const anonAbilities = [{
+  const anonRules = [{
     subject: SchemaName,
     action: Action.LIST,
     conditions: { status: ActivityStatus.ACTIVE }
@@ -24,8 +24,6 @@ const ruleBuilder = session => {
     action: Action.DELETE,
     inverted: true
   }]
-
-  const allAbilities = anonAbilities.slice(0)
 
   const activityProviderAbilities = [{
     subject: SchemaName,
@@ -56,7 +54,7 @@ const ruleBuilder = session => {
     inverted: true
   }]
 
-  const orgAdminAbilities = anonAbilities.slice(0)
+  const orgAdminAbilities = anonRules.slice(0)
 
   if (session.me._id && session.me.orgAdminFor.length > 0) {
     orgAdminAbilities.push({
@@ -99,9 +97,9 @@ const ruleBuilder = session => {
   }]
 
   return {
-    [Role.ANON]: anonAbilities,
-    [Role.VOLUNTEER]: allAbilities,
-    [Role.OPPORTUNITY_PROVIDER]: allAbilities,
+    [Role.ANON]: anonRules,
+    [Role.BASIC]: anonRules,
+    [Role.VOLUNTEER]: anonRules,
     [Role.ACTIVITY_PROVIDER]: activityProviderAbilities,
     [Role.ORG_ADMIN]: orgAdminAbilities,
     [Role.ADMIN]: adminAbilities

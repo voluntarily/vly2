@@ -112,11 +112,11 @@ const setSession = async (req, res, next) => {
   }
   req.session.idToken = idToken
   req.session.user = user
-  if (!user.email_verified) {
-    // remove login token here
-    // console.error('setSession Warning: user email not verified')
-    return next()
-  }
+  // if (!user.email_verified) {
+  //   // remove login token here
+  //   // console.error('setSession Warning: user email not verified')
+  //   return next()
+  // }
   let me = false
   try {
     me = await Person.findOne({ email: user.email }, 'name nickname email role imgUrlSm sendEmailNotifications').exec()
@@ -128,6 +128,7 @@ const setSession = async (req, res, next) => {
   } catch (err) {
     console.error(`failed to find or create ${user.email}`, err)
   }
+
   req.session = {
     isAuthenticated: user.email_verified,
     user,

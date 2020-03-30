@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {
   ItemDescription,
   EquipmentList,
-  ItemVolunteers,
+  ItemNeeds,
   ItemSpace
 } from '../VTheme/ItemList'
 import { ProfilePanel } from '../VTheme/Profile'
@@ -21,7 +21,6 @@ export function ActResourcesPanel ({ act }) {
         </div>
         <ItemDescription>
           <ul>
-            <ItemVolunteers volunteers={act.volunteers} />
             <ItemSpace space={act.space} />
           </ul>
           <EquipmentList equipment={act.equipment} />

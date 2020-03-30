@@ -1,7 +1,7 @@
 import React from 'react'
 import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
-import { ItemVolunteers } from '../../VTheme/ItemList'
+import { ItemNeeds } from '../../VTheme/ItemList'
 import ActBanner from '../ActBanner'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
@@ -91,6 +91,6 @@ test('render the detail with no picture ', t => {
 })
 
 test('render Volunteers per student properly if the value is < 1', t => {
-  const wrapper = mountWithIntl(<ItemVolunteers volunteers={0.2} type='act' />)
+  const wrapper = mountWithIntl(<ItemNeeds volunteers={0.2} type='act' />)
   t.is(wrapper.text(), '🙋One volunteer for each 5 people')
 })

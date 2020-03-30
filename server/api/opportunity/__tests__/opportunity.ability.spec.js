@@ -32,7 +32,7 @@ const createPerson = (roles) => {
   const person = {
     name: 'name',
     email: `${uuid()}@test.com`,
-    role: roles || [],
+    role: [...roles, Role.BASIC],
     status: 'active'
   }
 

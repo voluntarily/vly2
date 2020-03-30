@@ -9,10 +9,10 @@ const ruleBuilder = async (session) => {
     inverted: true
   }]
 
-  const allRules = []
+  const basicRules = []
 
   if (session.me && session.me._id) {
-    allRules.push({
+    basicRules.push({
       subject: SchemaName,
       action: [Action.LIST, Action.READ],
       conditions: { person: session.me._id }
@@ -62,9 +62,8 @@ const ruleBuilder = async (session) => {
 
   return {
     [Role.ANON]: anonRules,
-    [Role.VOLUNTEER]: allRules,
-    [Role.OPPORTUNITY_PROVIDER]: allRules,
-    [Role.ACTIVITY_PROVIDER]: allRules,
+    [Role.BASIC]: basicRules,
+    [Role.VOLUNTEER]: basicRules,
     [Role.ORG_ADMIN]: orgAdminRules,
     [Role.ADMIN]: adminRules
   }

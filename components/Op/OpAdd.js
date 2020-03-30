@@ -27,7 +27,7 @@ export const OpAddNewBtn = () => {
     <Link href={href}>
       <Button type='primary' block shape='round' size='large'>
         <FormattedMessage
-          id='opAdd.newAskOffer'
+          id='OpAdd.newAskOffer'
           defaultMessage='New request or offering'
           description='Button to create a new Ask or Offer opportunity used on multiple pages'
         />
@@ -44,7 +44,7 @@ export const OpAddAskBtn = ({ actid }) => {
     <Link href={href}>
       <Button type='primary' block shape='round' size='large'>
         <FormattedMessage
-          id='opAdd.newAsk'
+          id='OpAdd.newAsk'
           defaultMessage='Request help with this'
           description='Button to create a new Ask opportunity used on multiple pages'
         />
@@ -61,7 +61,7 @@ export const OpAddOfferBtn = ({ actid }) => {
     <Link href={href}>
       <Button type='primary' block shape='round' size='large'>
         <FormattedMessage
-          id='opAdd.newOffer'
+          id='OpAdd.newOffer'
           defaultMessage='Offer help with this'
           description='Button to create a new offer opportunity used on multiple pages'
         />
@@ -70,11 +70,11 @@ export const OpAddOfferBtn = ({ actid }) => {
 }
 
 const OpAdd = ({ roles, actid }) => {
-  if (!roles.length) return null
+  if (!roles.length || !roles.includes(Role.OPPORTUNITY_PROVIDER)) return null
   return (
     <OppAddButtons>
-      {(roles.includes(Role.OPPORTUNITY_PROVIDER)) && <><OpAddAskBtn actid={actid} /> &nbsp; </>}
-      {(roles.includes(Role.OPPORTUNITY_PROVIDER)) && <OpAddOfferBtn actid={actid} />}
+      <><OpAddAskBtn actid={actid} />&nbsp;</>
+      {(roles.includes(Role.VOLUNTEER)) && <OpAddOfferBtn actid={actid} />}
     </OppAddButtons>
   )
 }
