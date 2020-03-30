@@ -70,10 +70,10 @@ export const OpAddOfferBtn = ({ actid }) => {
 }
 
 const OpAdd = ({ roles, actid }) => {
-  if (!roles.length) return null
+  if (!roles.length || !roles.includes(Role.OPPORTUNITY_PROVIDER)) return null
   return (
     <OppAddButtons>
-      {(roles.includes(Role.OPPORTUNITY_PROVIDER)) && <><OpAddAskBtn actid={actid} /> &nbsp; </>}
+      <><OpAddAskBtn actid={actid} />&nbsp;</>
       {(roles.includes(Role.VOLUNTEER)) && <OpAddOfferBtn actid={actid} />}
     </OppAddButtons>
   )

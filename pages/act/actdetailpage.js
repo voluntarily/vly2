@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet'
 import ActBanner from '../../components/Act/ActBanner'
 import ActTabs from '../../components/Act/ActTabs'
 import ActUnknown from '../../components/Act/ActUnknown'
+import ActTryBelow from '../../components/Act/ActTryBelow'
 import ActDetailForm from '../../components/Act/ActDetailForm'
 import Loading from '../../components/Loading'
 import { FullPage, PageBannerButtons } from '../../components/VTheme/VTheme'
@@ -151,6 +152,7 @@ export const ActDetailPage = ({
         <PageBannerButtons>
           <OpAdd actid={act._id} />
         </PageBannerButtons>
+        <ActTryBelow counts={act.opCounts} role={me.role} />
       </ActBanner>
       <ActTabs act={act} canManage={canManage} canEdit={canManage} defaultTab={tab} onChange={handleTabChange} owner={me._id} />
     </FullPage>)
