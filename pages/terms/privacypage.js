@@ -1,7 +1,7 @@
 import securePage from '../../hocs/securePage'
 import { FullPage, InfoSection, TermsButtonContainer, InfoItem } from '../../components/VTheme/VTheme'
 import { Divider, Button } from 'antd'
-import Link from 'next/link'
+// import Link from 'next/link'
 
 const PrivacyPage = () => (
   <FullPage>
