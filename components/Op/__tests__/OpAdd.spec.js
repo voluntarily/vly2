@@ -44,7 +44,7 @@ test('Basic people dont see the offer button', t => {
 })
 
 test('volunteers see the offer button', t => {
-  mockStore.getState().session.me.role = ['volunteer']
+  mockStore.getState().session.me.role = ['volunteer', 'opportunityProvider']
   const wrapper = mountWithIntl(
     <Provider store={mockStore}>
       <OpAdd />
