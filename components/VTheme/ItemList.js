@@ -156,32 +156,29 @@ export const ItemVenue = ({ venue }) =>
     <StreetAddressLinkLi address={sanitize(venue) || ''} />
   </ItemListing>
 
-export const ItemVolunteers = ({ volunteers, equipment }) => {
+export const ItemNeeds = ({ volunteers, equipment }) => {
   if (!volunteers) return ''
   if (volunteers >= 1) {
     return (
       <ItemListing>
         <strong>
           <FormattedMessage
-            id='ItemList.required'
+            id='ItemNeeds.required'
             defaultMessage='🤔Activity needs:'
-            description='label for number of volunteers required'
-            values={{
-              volunteers
-            }}
+            description='label for number of people required'
           />
         </strong>
         <FormattedMessage
-          id='ItemList.volunteers'
-          defaultMessage=' {volunteers, number} {volunteers, plural, one {volunteer} other {volunteers}}'
-          description='label for number of volunteers required'
+          id='ItemNeeds.volunteers'
+          defaultMessage=' {volunteers, number} {volunteers, plural, one {person} other {people}}'
+          description='label for number of people required'
           values={{
             volunteers
           }}
         />
         {equipment && equipment.length &&
           <FormattedMessage
-            id='ItemList.items'
+            id='ItemNeeds.items'
             defaultMessage=', {count, number} {count, plural, one {item} other {items} }'
             description='label for number of volunteers required'
             values={{ count: equipment.length }}

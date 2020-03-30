@@ -9,7 +9,7 @@ const mockStore = configureStore()(
   {
     session: {
       me: {
-        role: ['volunteer']
+        role: ['basic']
       }
     }
   }
@@ -34,7 +34,7 @@ test('do not render the opadd if not signed in ', t => {
   t.falsy(wrapper.find('button').exists())
 })
 
-test('Volunteers dont see the offer button', t => {
+test('Basic people dont see the offer button', t => {
   const wrapper = mountWithIntl(
     <Provider store={mockStore}>
       <OpAdd />
@@ -43,6 +43,16 @@ test('Volunteers dont see the offer button', t => {
   t.false(wrapper.find('OpAddOfferBtn').exists())
 })
 
+test('volunteers see the offer button', t => {
+  mockStore.getState().session.me.role = ['volunteer']
+  const wrapper = mountWithIntl(
+    <Provider store={mockStore}>
+      <OpAdd />
+    </Provider>
+  )
+
+  t.truthy(wrapper.find('OpAddOfferBtn').exists())
+})
 test('askers see the ask button', t => {
   mockStore.getState().session.me.role = ['opportunityProvider']
   const wrapper = mountWithIntl(

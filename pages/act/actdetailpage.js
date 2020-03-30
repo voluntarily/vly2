@@ -171,16 +171,20 @@ ActDetailPage.getInitialProps = async ({ store, query }) => {
     }
   } else {
     if (actExists) {
-      await Promise.all([
-        store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })),
-        store.dispatch(reduxApi.actions.tags.get()),
-        store.dispatch(reduxApi.actions.activities.get(query)),
-        store.dispatch(
-          reduxApi.actions.opportunities.get(
-            { q: JSON.stringify({ fromActivity: query.id }) }
+      try {
+        await Promise.all([
+          store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })),
+          store.dispatch(reduxApi.actions.tags.get()),
+          store.dispatch(reduxApi.actions.activities.get(query)),
+          store.dispatch(
+            reduxApi.actions.opportunities.get(
+              { q: JSON.stringify({ fromActivity: query.id }) }
+            )
           )
-        )
-      ])
+        ])
+      } catch (e) {
+        console.error('Error getting activity data:', e)
+      }
     }
     return {
       isNew,

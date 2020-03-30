@@ -30,7 +30,7 @@ const personSchema = new Schema({
   sendEmailNotifications: { type: 'Boolean', default: true, required: true },
   role: {
     type: [String],
-    default: [],
+    default: [Role.BASIC],
     enum: [...Object.values(Role)]
   },
   // used to indicate whether people show up in searches.

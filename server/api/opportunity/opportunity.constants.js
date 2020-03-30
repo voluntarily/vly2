@@ -57,7 +57,10 @@ const OpportunityListFields = [
   OpportunityFields.STATUS,
   OpportunityFields.DATE,
   OpportunityFields.LOCATION,
-  OpportunityFields.DURATION
+  OpportunityFields.DURATION,
+  OpportunityFields.REQUESTOR,
+  OpportunityFields.OFFER_ORG,
+  OpportunityFields.FROM_ACTIVITY
 ]
 
 /* This list is currently used for both anon and signed in people
@@ -66,9 +69,6 @@ const OpportunityListFields = [
 const OpportunityPublicFields = [
   ...OpportunityListFields,
   OpportunityFields.TAGS,
-  OpportunityFields.REQUESTOR,
-  OpportunityFields.OFFER_ORG,
-  OpportunityFields.FROM_ACTIVITY,
   OpportunityFields.DATE_ADDED
 ]
 

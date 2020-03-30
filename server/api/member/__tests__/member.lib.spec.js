@@ -164,16 +164,17 @@ test.serial('Find org by person and role', async (t) => {
 test.serial('role of person with no membership is what is in the person.role field.', async (t) => {
   const person = t.context.people[3]
   const [role, orgAdminFor] = await getPersonRoles(person)
-  t.is(role.length, 0)
+  t.is(role.length, 1)
+  t.is(role[0], 'basic')
   t.is(orgAdminFor.length, 0)
 })
 
 test.serial('role of person with various memberships.', async (t) => {
   const person = t.context.people[1]
   const [role, orgAdminFor] = await getPersonRoles(person)
-  t.is(role.length, 3) // ["opportunityProvider","orgAdmin","admin"]
-  t.is(role[0], Role.OPPORTUNITY_PROVIDER) // because org[2] is OP
-  t.is(role[2], Role.ADMIN) // because org[3] is admin role
+  t.is(role.length, 4) // ["opportunityProvider","orgAdmin","admin", basic]
+  t.true(role.includes(Role.OPPORTUNITY_PROVIDER)) // because org[2] is OP
+  t.true(role.includes(Role.ADMIN)) // because org[3] is admin role
   t.is(orgAdminFor.length, 1)
   t.deepEqual(orgAdminFor[0], t.context.organisations[3]._id)
 })
@@ -182,8 +183,8 @@ test.serial('role generic volunteer.', async (t) => {
   const person = t.context.people[4]
   const [role, orgAdminFor] = await getPersonRoles(person)
   console.log(role)
-  t.is(role.length, 1) // [VOLUNTEER]
-  t.is(role[0], Role.VOLUNTEER) // because org[2] is OP
+  t.is(role.length, 2) // [VOLUNTEER, BASIC]
+  t.true(role.includes(Role.VOLUNTEER)) // because org[2] is OP
   t.is(orgAdminFor.length, 0)
 })
 

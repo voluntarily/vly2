@@ -28,7 +28,7 @@ overflow: visible;
   }
 `
 
-const OpList = ({ ops, ...props }) => (
+const OpList = ({ ops }) => (
   <CardContainer>
     {ops ? (
       ops.map((op, index) =>
@@ -38,7 +38,7 @@ const OpList = ({ ops, ...props }) => (
       )
     ) : (
       <FormattedMessage
-        id='op.list.empty'
+        id='OpListSmall.NoMatchingActivities'
         defaultMessage='No matching activities'
         description='no opportunities message in OpList'
       />
