@@ -8,7 +8,7 @@ import {
   ItemContainer,
   ItemDuration,
   ItemImage,
-  ItemVolunteers
+  ItemNeeds
 } from '../VTheme/ItemList'
 import { OpStatusStamp, OpStatus } from '../Op/OpStatus'
 import { OpTypeCount } from '../Op/OpType'
@@ -47,7 +47,7 @@ export const ActBanner = ({ act, children }) => {
           </ul> */}
           <ItemContainer>
             <ItemDuration duration={act.duration} />
-            <ItemVolunteers volunteers={act.volunteers} />
+            <ItemNeeds volunteers={act.volunteers} />
             <li><OpTypeCount counts={act.opCounts} type={ASK} /></li>
             <li><OpTypeCount counts={act.opCounts} type={OFFER} /></li>
           </ItemContainer>
