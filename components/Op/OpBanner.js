@@ -6,7 +6,7 @@ import { SideBarGrid, BannerDetail } from '../VTheme/VTheme'
 import {
   Left,
   ItemContainer,
-  ItemVenue,
+  // ItemVenue,
   ItemDuration,
   ItemLocation,
   ItemDate,
