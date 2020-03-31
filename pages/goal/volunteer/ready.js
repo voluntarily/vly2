@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet'
 const readyqs = [
   {
     name: 'Are you ready to volunteer?',
-    description: 'Watch this video to learn what you need to know when working in a school',
+    description: 'Watch this video to learn what you need to know when volunteering with Voluntarily.',
     src: 'https://www.youtube.com/embed/kv8GrLpfVNo',
     badgeclass: 'Gp99Py5ERQGVeDFj63gizA',
     questions: [
