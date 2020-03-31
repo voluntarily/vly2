@@ -699,23 +699,23 @@ test.serial('admin - DELETE - Admin can delete ops', async t => {
   t.falsy(op2)
 })
 
-for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]) {
-  test.serial(`${role} - UPDATE - Cannot set the fromActivity field`, async t => {
-    const op = await Opportunity.create({
-      requestor: await createPerson([Role.ACTIVITY_PROVIDER])
-    })
+// for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]) {
+//   test.serial(`${role} - UPDATE - Cannot set the fromActivity field`, async t => {
+//     const op = await Opportunity.create({
+//       requestor: await createPerson([Role.ACTIVITY_PROVIDER])
+//     })
 
-    const res = await request(server)
-      .put(`/api/opportunities/${op._id}`)
-      .set('Accept', 'application/json')
-      .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
-      .send({
-        fromActivity: new ObjectId('54759eb3c090d83494e2d804')
-      })
+//     const res = await request(server)
+//       .put(`/api/opportunities/${op._id}`)
+//       .set('Accept', 'application/json')
+//       .set('Cookie', [`idToken=${await createPersonAndGetToken([role])}`])
+//       .send({
+//         fromActivity: new ObjectId('54759eb3c090d83494e2d804')
+//       })
 
-    t.true(res.status === 400 || res.status === 403)
-  })
-}
+//     t.true(res.status === 400 || res.status === 403)
+//   })
+// }
 
 for (const role of [Role.OPPORTUNITY_PROVIDER]) {
   test.serial(`${role} - can CREATE`, async t => {

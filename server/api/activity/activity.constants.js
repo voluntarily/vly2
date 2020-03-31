@@ -42,6 +42,7 @@ const ActivityOpFields = [
   ActivityFields.SLUG,
   ActivityFields.IMG_URL,
   ActivityFields.OFFERORG,
+  ActivityFields.DESCRIPTION,
   ActivityFields.LOCKED,
   ActivityFields.LOCKFIELDS
 ]
