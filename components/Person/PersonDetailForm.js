@@ -222,11 +222,18 @@ class PersonDetail extends Component {
       />
     )
     const personTags = (
-      <FormattedMessage
-        id='PersonDetailForm.Label.Tags'
-        defaultMessage='Skills &amp; Interests'
-        description='Descriptions of general areas the person has skills in'
-      />
+      <span>
+        {' '}
+        <FormattedMessage
+          id='PersonDetailForm.Label.Tags'
+          defaultMessage='Skills &amp; Interests'
+          description='Descriptions of general areas the person has skills in'
+        />
+        &nbsp;
+        <Tooltip title='Helps us recommend activities based on your skills and interests'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
     )
 
     const {
