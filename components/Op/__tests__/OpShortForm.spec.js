@@ -2,7 +2,7 @@ import React from 'react'
 import test from 'ava'
 import tagList from '../../../server/api/tag/__tests__/tag.fixture'
 import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
-import OpOfferForm from '../OpOfferForm'
+import OpShortForm from '../OpShortForm'
 import sinon from 'sinon'
 import { OpportunityStatus, OpportunityType } from '../../../server/api/opportunity/opportunity.constants'
 const { sortedLocations } = require('../../../server/api/location/locationData')
@@ -79,7 +79,7 @@ test.after.always(() => {
 
 test('shallow the detail with op', t => {
   const wrapper = shallowWithIntl(
-    <OpOfferForm
+    <OpShortForm
       op={op}
       onSubmit={() => {}}
       onCancel={() => {}}
@@ -87,7 +87,7 @@ test('shallow the detail with op', t => {
       existingTags={[]}
     />
   )
-  t.is(wrapper.find('OpOfferForm').length, 1)
+  t.is(wrapper.find('OpShortForm').length, 1)
 })
 
 test('render the detail with op', t => {
@@ -95,7 +95,7 @@ test('render the detail with op', t => {
   const cancelOp = sinon.spy()
   const me = { _id: '5ccbffff958ff4833ed2188d' }
   const wrapper = mountWithIntl(
-    <OpOfferForm
+    <OpShortForm
       op={op}
       me={me}
       onSubmit={submitOp}
@@ -104,16 +104,12 @@ test('render the detail with op', t => {
       existingTags={[]}
     />
   )
-  t.is(wrapper.find('OpOfferForm').length, 1)
+  t.is(wrapper.find('OpShortForm').length, 1)
   t.is(wrapper.find('button').length, 3)
-  wrapper.find('#cancelOpBtn').first().simulate('click')
+  wrapper.find('#backBtn').first().simulate('click')
   t.truthy(cancelOp.calledOnce)
-  wrapper.find('#saveOpBtn').first().simulate('click')
+  wrapper.find('#doneBtn').first().simulate('click')
   t.truthy(submitOp.calledOnce)
-  t.truthy(submitOp.calledWith(op))
-
-  wrapper.find('#publishOpBtn').first().simulate('click')
-  t.truthy(submitOp.calledTwice)
   t.truthy(submitOp.calledWith(op))
 })
 
@@ -123,7 +119,7 @@ test('render the detail with new blank ask op', t => {
   const me = { _id: '5ccbffff958ff4833ed2188d' }
 
   const wrapper = mountWithIntl(
-    <OpOfferForm
+    <OpShortForm
       op={blankAsk}
       me={me}
       onSubmit={submitOp}
@@ -132,13 +128,12 @@ test('render the detail with new blank ask op', t => {
       existingTags={[]}
     />
   )
-  t.log(wrapper.first())
   const datePicker = wrapper.find('.ant-calendar-picker')
   datePicker.at(0).simulate('click') // Check if the dissable date method got called
-  datePicker.at(1).simulate('click') // Check if the dissable date method got called
-  t.is(datePicker.length, 2) // should find 1 date picker component
+  // datePicker.at(1).simulate('click') // Check if the dissable date method got called
+  // t.is(datePicker.length, 2) // should find 1 date picker component
 
-  t.is(wrapper.find('OpOfferForm').length, 1)
+  t.is(wrapper.find('OpShortForm').length, 1)
   t.is(wrapper.find('button').length, 3) // cancel, save and publish
   wrapper.find('button').first().simulate('click')
   t.truthy(cancelOp.calledOnce)
@@ -147,12 +142,6 @@ test('render the detail with new blank ask op', t => {
   wrapper.find('Form').first().simulate('submit')
   t.falsy(submitOp.calledOnce)
   wrapper.update()
-  // find name field.
-  const name = wrapper.find('input#opportunity_detail_form_name').first()
-  // name.node.value = 'Test'
-  name
-    .simulate('keydown', { which: 'a' })
-    .simulate('change', { target: { value: 'My new value' } })
 
   const locationInput = wrapper.find('LocationSelector').first()
   locationInput.props().onChange('Auckland')
@@ -162,10 +151,9 @@ test('render the detail with new blank ask op', t => {
   const duration = wrapper.find('input#opportunity_detail_form_duration').first()
   duration.simulate('change', { target: { value: '10 hours' } })
 
-  wrapper.find('#saveOpBtn').first().simulate('click')
+  wrapper.find('#doneBtn').first().simulate('click')
   t.truthy(submitOp.calledOnce)
   t.is(submitOp.args[0][0].type, OpportunityType.ASK)
-  t.is(submitOp.args[0][0].name, 'My new value')
 })
 
 test('render the detail with new blank offer op', t => {
@@ -174,7 +162,7 @@ test('render the detail with new blank offer op', t => {
   const me = { _id: '5ccbffff958ff4833ed2188d' }
 
   const wrapper = mountWithIntl(
-    <OpOfferForm
+    <OpShortForm
       op={blankOffer}
       me={me}
       onSubmit={submitOp}
@@ -183,13 +171,12 @@ test('render the detail with new blank offer op', t => {
       existingTags={[]}
     />
   )
-  t.log(wrapper.first())
   const datePicker = wrapper.find('.ant-calendar-picker')
   datePicker.at(0).simulate('click') // Check if the dissable date method got called
-  datePicker.at(1).simulate('click') // Check if the dissable date method got called
-  t.is(datePicker.length, 2) // should find 1 date picker component
+  // datePicker.at(1).simulate('click') // Check if the dissable date method got called
+  // t.is(datePicker.length, 2) // should find 1 date picker component
 
-  t.is(wrapper.find('OpOfferForm').length, 1)
+  t.is(wrapper.find('OpShortForm').length, 1)
   t.is(wrapper.find('button').length, 3) // cancel, save and publish
   wrapper.find('button').first().simulate('click')
   t.truthy(cancelOp.calledOnce)
@@ -198,12 +185,6 @@ test('render the detail with new blank offer op', t => {
   wrapper.find('Form').first().simulate('submit')
   t.falsy(submitOp.calledOnce)
   wrapper.update()
-  // find name field.
-  const name = wrapper.find('input#opportunity_detail_form_name').first()
-  // name.node.value = 'Test'
-  name
-    .simulate('keydown', { which: 'a' })
-    .simulate('change', { target: { value: 'My new value' } })
 
   const locationInput = wrapper.find('LocationSelector').first()
   locationInput.props().onChange('Auckland')
@@ -213,10 +194,9 @@ test('render the detail with new blank offer op', t => {
   const duration = wrapper.find('input#opportunity_detail_form_duration').first()
   duration.simulate('change', { target: { value: '10 hours' } })
 
-  wrapper.find('#saveOpBtn').first().simulate('click')
+  wrapper.find('#doneBtn').first().simulate('click')
   t.truthy(submitOp.calledOnce)
   t.is(submitOp.args[0][0].type, OpportunityType.OFFER)
-  t.is(submitOp.args[0][0].name, 'My new value')
 })
 
 test('Save a op as draft with correct validation', async t => {
@@ -236,7 +216,7 @@ test('Save a op as draft with correct validation', async t => {
   }
 
   const wrapper = mountWithIntl(
-    <OpOfferForm
+    <OpShortForm
       op={op}
       me={me}
       onSubmit={submitOp}
@@ -246,19 +226,14 @@ test('Save a op as draft with correct validation', async t => {
     />
   )
 
-  t.is(wrapper.find('OpOfferForm').length, 1)
-  t.truthy(wrapper.find('.name'))
-
-  const name = wrapper.find('.name').first()
-  name.simulate('change', { target: { value: 'bob' } })
-
+  t.is(wrapper.find('OpShortForm').length, 1)
   t.truthy(wrapper.find('.organisation'))
 
   const org = wrapper.find('.organisation').first()
   org.simulate('click')
   wrapper.find('.ant-select-dropdown li').first().simulate('click')
 
-  const draftButton = wrapper.find('#saveOpBtn').first()
+  const draftButton = wrapper.find('#doneBtn').first()
   draftButton.simulate('click')
 
   t.truthy(submitOp.calledOnce)
@@ -283,7 +258,7 @@ test('Publish a op with correct validation', t => {
   }
 
   const wrapper = mountWithIntl(
-    <OpOfferForm
+    <OpShortForm
       op={op}
       me={me}
       onSubmit={submitOp}
@@ -293,14 +268,7 @@ test('Publish a op with correct validation', t => {
     />
   )
 
-  t.is(wrapper.find('OpOfferForm').length, 1)
-  t.truthy(wrapper.find('.name'))
-
-  const name = wrapper.find('.name').first()
-  name.simulate('change', { target: { value: 'bob' } })
-
-  const subtitle = wrapper.find('.subtitle').first()
-  subtitle.simulate('change', { target: { value: 'bobs oportunity' } })
+  t.is(wrapper.find('OpShortForm').length, 1)
 
   t.truthy(wrapper.find('.organisation'))
   const org = wrapper.find('.organisation').first()
@@ -310,7 +278,7 @@ test('Publish a op with correct validation', t => {
   const commitment = wrapper.find('.commitment').first()
   commitment.simulate('change', { target: { value: '8 hours' } })
 
-  const publishButton = wrapper.find('#publishOpBtn').first()
+  const publishButton = wrapper.find('#doneBtn').first()
   publishButton.simulate('click')
 
   t.truthy(submitOp.calledOnce)

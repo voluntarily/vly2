@@ -13,7 +13,6 @@ const OrgSelector = ({ orgs, onChange, value, className }) => {
       value={value}
       className={className}
       aria-label='choose an organisation you want to run this activity for'
-
     >
       {orgs.map(
         org =>

@@ -52,6 +52,23 @@ export const OpTypeVerbs = defineMessages({
   }
 })
 
+export const OpTypeImperativeMsg = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.imp.ASK',
+    defaultMessage: 'Ask for help with',
+    description: 'Asking for help command'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.imp.OFFER',
+    defaultMessage: 'Offer to help with',
+    description: 'Offering help command'
+  }
+})
+export const OpTypeImperative = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpTypeImperativeMsg[type]} />)
+}
+
 export const OpTypeEmoji = {
   [ASK]: '🙋',
   [OFFER]: '💁🏻'
@@ -91,4 +108,72 @@ export const OpCommitment = ({ duration }) => {
         description='e.g 10 hours commitment'
       />
     </>)
+}
+
+const OpTypeLocationMsg = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.location.ASK',
+    defaultMessage: 'Where do you need help?',
+    description: 'Asking location prompt'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.location.OFFER',
+    defaultMessage: 'Where do you want to help?',
+    description: 'Offering location prompt'
+  }
+})
+export const OpTypeLocationPrompt = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpTypeLocationMsg[type]} />)
+}
+
+const OpTypeDateTitleMsg = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.date.title.ASK',
+    defaultMessage: 'When do you need help?',
+    description: 'Asking date title'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.date.title.OFFER',
+    defaultMessage: 'When do you want to help?',
+    description: 'Offering date title'
+  }
+})
+export const OpTypeDateTitle = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpTypeDateTitleMsg[type]} />)
+}
+const OpTypeDatePromptMsg = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.date.prompt.ASK',
+    defaultMessage: 'Let people know how much time you need, or if is a specific date you need help on. (optional)',
+    description: 'Asking date prompt'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.date.prompt.OFFER',
+    defaultMessage: 'Let people know how much time you have to give and any specific dates you are available',
+    description: 'Offering date prompt'
+  }
+})
+
+export const OpTypeDatePrompt = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpTypeDatePromptMsg[type]} />)
+}
+
+const OpTypeDescriptionMsg = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.description.ASK',
+    defaultMessage: 'Need anything specific?',
+    description: 'Asking description prompt'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.description.OFFER',
+    defaultMessage: 'Offering anything specific?',
+    description: 'Offering description prompt'
+  }
+})
+export const OpTypeDescriptionPrompt = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpTypeDescriptionMsg[type]} />)
 }

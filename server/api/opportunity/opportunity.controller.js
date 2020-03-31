@@ -144,10 +144,10 @@ const putOpportunity = async (req, res, next) => {
 
   try {
     if (!me.role.includes(Role.ADMIN)) {
-      // Once an opportunity has been created we should not be able to change the activity it was based on
-      if (req.body.fromActivity) {
-        return res.status(400).send('Cannot change the fromActivity field')
-      }
+      // // Once an opportunity has been created we should not be able to change the activity it was based on
+      // if (req.body.fromActivity) {
+      //   return res.status(400).send('Cannot change the fromActivity field')
+      // }
 
       if (req.body.offerOrg && (await Member.find({ person: me._id, organisation: req.body.offerOrg })).length === 0) {
         return res.status(400).send('Invalid organisation')
