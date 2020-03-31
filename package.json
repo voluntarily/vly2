@@ -114,6 +114,7 @@
     "webpack": "^4.42.1"
   },
   "devDependencies": {
+    "@ava/babel": "^1.0.1",
     "@babel/register": "^7.9.0",
     "@formatjs/cli": "^1.3.2",
     "@istanbuljs/nyc-config-babel": "^3.0.0",
@@ -122,8 +123,8 @@
     "@storybook/addons": "^5.3.18",
     "@storybook/react": "^5.3.18",
     "@testing-library/dom": "^7.2.0",
-    "@wdio/selenium-standalone-service": "^5.16.10",
-    "ava": "^2.4.0",
+    "@wdio/selenium-standalone-service": "^6.0.8",
+    "ava": "^3.5.2",
     "axios": "^0.19.2",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
@@ -167,20 +168,14 @@
       "components/**/__tests__/*.spec.js",
       "lib/**/__tests__/*.spec.js"
     ],
-    "helpers": [
-      "**/__tests__/**/*.fixture.js",
-      "lib/react-intl-test*.js"
-    ],
-    "sources": [
-      "components/**/*.js",
-      "hocs/**/*.js",
-      "lib/**/*.js",
-      "pages/**/*.js",
-      "server/**/*.js"
-    ],
+
     "failFast": false,
     "timeout": "2m",
     "babel": {
+      "compileAsTests": [
+          "**/__tests__/**/*.fixture.js",
+          "lib/react-intl-test*.js"
+        ],
       "testOptions": {
         "retainLines": true,
         "plugins": [
