@@ -27,14 +27,19 @@ export function OpAboutPanel ({ op }) {
             {description}
           </Html>
           <Divider />
+          {op.fromActivity &&
+            <>
+              <Html>
+                {op.fromActivity.description}
+              </Html>
+              <Divider />
+            </>}
 
-          <>
-            <TagContainer>
-              <h5><FormattedMessage id='OpAboutPanel.categories' defaultMessage='Categories' /></h5>
-              <TagDisplay tags={op.tags} />
-            </TagContainer>
-            <Divider />
-          </>
+          <TagContainer>
+            <h5><FormattedMessage id='OpAboutPanel.categories' defaultMessage='Categories' /></h5>
+            <TagDisplay tags={op.tags} />
+          </TagContainer>
+          <Divider />
           <section>
             <h5><FormattedMessage id='OpAboutPanel.share' defaultMessage='Share' /></h5>
             <ShareLinks url={appUrl} />

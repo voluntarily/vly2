@@ -12,8 +12,7 @@ import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import OpBanner from '../../components/Op/OpBanner'
 import OpUnknown from '../../components/Op/OpUnknown'
-import OpAskForm from '../../components/Op/OpAskForm'
-import OpOfferForm from '../../components/Op/OpOfferForm'
+import OpShortForm from '../../components/Op/OpShortForm'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
 import { Helmet } from 'react-helmet'
 // import { OpStatusStamp } from '../../components/Op/OpStatus'
@@ -34,13 +33,13 @@ const blankOp = {
   tags: []
 }
 
-const OpDetailForm = type => {
-  switch (type) {
-    case OpportunityType.ASK: return OpAskForm
-    case OpportunityType.OFFER: return OpOfferForm
-    default: return <p>Error: Opportunity type not Set</p>
-  }
-}
+// const OpDetailForm = type => {
+//   switch (type) {
+//     case OpportunityType.ASK: return OpAskForm
+//     case OpportunityType.OFFER: return OpOfferForm
+//     default: return <p>Error: Opportunity type not Set</p>
+//   }
+// }
 
 export const OpDetailPage = ({
   members,
@@ -125,7 +124,7 @@ export const OpDetailPage = ({
         ...blankOp,
         name: act.name,
         subtitle: act.subtitle,
-        description: act.description,
+        // description: act.description,
         imgUrl: act.imgUrl,
         duration: act.duration,
         tags: act.tags,
@@ -167,13 +166,12 @@ export const OpDetailPage = ({
   const canRegisterInterest = isAuthenticated && !isOwner
 
   if (tab === 'edit') {
-    const OpForm = OpDetailForm(op.type)
     return (
       <FullPage>
         <Helmet>
           <title>Edit {op.type} {op.name} - Voluntarily</title>
         </Helmet>
-        <OpForm
+        <OpShortForm
           op={op}
           me={me}
           onSubmit={handleSubmit}

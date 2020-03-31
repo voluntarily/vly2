@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import {
   ItemDescription,
   EquipmentList,
-  // ItemNeeds,
   ItemSpace
 } from '../VTheme/ItemList'
 import { ProfilePanel } from '../VTheme/Profile'

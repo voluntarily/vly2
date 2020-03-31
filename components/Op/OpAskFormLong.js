@@ -11,7 +11,6 @@ import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
 import ImageUpload from '../UploadComponent/ImageUploadComponent'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, ShortInputContainer, TitleContainer } from '../VTheme/FormStyles'
-
 const { TextArea } = Input
 
 // get translated labels
@@ -661,40 +660,21 @@ export default Form.create({
   mapPropsToFields (props) {
     return {
       name: Form.createFormField({ ...props.op.name, value: props.op.name }),
-
-      subtitle: Form.createFormField({
-        value: props.op.subtitle
-      }),
-      description: Form.createFormField({
-        value: props.op.description
-      }),
-      duration: Form.createFormField({
-        value: props.op.duration
-      }),
-      location: Form.createFormField({
-        value: props.op.location
-      }),
-      offerOrg: Form.createFormField({
-        value: { key: props.op.offerOrg ? props.op.offerOrg._id : '' }
-      }),
-      imgUrl: Form.createFormField({
-        value: props.op.imgUrl
-      }),
-      status: Form.createFormField({
-        value: props.op.status
-      }),
-      tags: Form.createFormField({
-        value: props.op.tags
-      }),
+      subtitle: Form.createFormField({ value: props.op.subtitle }),
+      description: Form.createFormField({ value: props.op.description }),
+      duration: Form.createFormField({ value: props.op.duration }),
+      location: Form.createFormField({ value: props.op.location }),
+      offerOrg: Form.createFormField({ value: { key: props.op.offerOrg ? props.op.offerOrg._id : '' } }),
+      imgUrl: Form.createFormField({ value: props.op.imgUrl }),
+      status: Form.createFormField({ value: props.op.status }),
+      tags: Form.createFormField({ value: props.op.tags }),
       startDate: Form.createFormField({
         value: props.op.startDate != null ? moment(props.op.startDate) : null
       }),
       endDate: Form.createFormField({
         value: props.op.endDate != null ? moment(props.op.endDate) : null
       }),
-      venue: Form.createFormField({
-        value: props.op.venue || ''
-      })
+      venue: Form.createFormField({ value: props.op.venue || '' })
     }
   }
 

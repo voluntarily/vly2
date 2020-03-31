@@ -6,7 +6,7 @@ const getLocations = function (req, res) {
     res.json(regionsAndLocations)
   } else {
     const returnLocation = sortedLocations.filter(element => element !== 'Online')
-    returnLocation.unshift('Online')
+    returnLocation.unshift('On the Internet / Remotely')
     res.json(returnLocation)
   }
 }
