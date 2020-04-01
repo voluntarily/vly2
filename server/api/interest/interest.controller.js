@@ -178,7 +178,8 @@ const updateInterestArchive = updateInterestA(InterestArchive)
 const isValidTransition = (originalStatus, newStatus) => {
   const validTransitionMap = {
     [InterestStatus.INVITED]: [
-      InterestStatus.COMMITTED
+      InterestStatus.COMMITTED,
+      InterestStatus.INTERESTED
     ],
     [InterestStatus.COMMITTED]: [
       InterestStatus.INTERESTED
