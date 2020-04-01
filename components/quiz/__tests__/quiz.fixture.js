@@ -1,9 +1,9 @@
 export default [
   {
-    name: 'Are you School Ready?',
+    name: 'Are you Volunteer Ready?',
     description: 'Watch this video to learn what you need to know when working in a school',
     badgeclass: 'Gp99Py5ERQGVeDFj63gizA',
-    src: 'https://www.youtube.com/embed/kv8GrLpfVNo',
+    src: 'https://www.youtube.com/embed/N0Ktkx8SYH0',
     questions: [
       {
         name: 'tShirt',
@@ -15,7 +15,7 @@ export default [
           'Jandals'
         ]
       },
-      {
+      {  
         name: 'launchDate',
         q: 'When does Voluntarily Launch?',
         options: [

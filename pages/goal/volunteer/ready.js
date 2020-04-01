@@ -8,9 +8,29 @@ const readyqs = [
   {
     name: 'Are you ready to volunteer?',
     description: 'Watch this video to learn what you need to know when volunteering with Voluntarily.',
-    src: 'https://www.youtube.com/embed/kv8GrLpfVNo',
+    src: 'https://www.youtube.com/embed/N0Ktkx8SYH0',
     badgeclass: 'Gp99Py5ERQGVeDFj63gizA',
     questions: [
+      {
+        name: 'tama',
+        q: 'What does Vaughan have on his t-shirt?',
+        options: [
+          'Unicorn',
+          'Dinosaur',
+          'Robot bee',
+          'Jandals'
+        ]
+      },
+      {
+        name: 'tShirt',
+        q: 'What does Vaughan have on his t-shirt?',
+        options: [
+          'Unicorn',
+          'Dinosaur',
+          'Robot bee',
+          'Jandals'
+        ]
+      },
       {
         name: 'tShirt',
         q: 'What does Vaughan have on his t-shirt?',
@@ -45,7 +65,7 @@ export const Ready = ({ vqa, me }) => {
   return (
     <FullPage>
       <Helmet>
-        <title>SchoolReady - Voluntarily</title>
+        <title>Volunteer Ready - Voluntarily</title> 
       </Helmet>
       <VideoQuiz vqa={vqa} me={me} onCompleted={handleCompleted} />
     </FullPage>
