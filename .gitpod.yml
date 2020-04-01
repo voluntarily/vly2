@@ -2,7 +2,7 @@ ports:
   - port: 3122
     onOpen: open-preview
 tasks:
-  - init: npm
+  - init: npm ci
     command: npm run dev
 github:
   prebuilds:
