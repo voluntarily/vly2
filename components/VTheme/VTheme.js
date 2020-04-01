@@ -783,7 +783,7 @@ img {
   background-color: rgba(0, 0, 0, 0);
   object-fit: cover;
   overflow: hidden;
-  object-position: top;
+  object-position: center;
 
   @media screen and (max-width: 768px) {
     height: 12rem;
