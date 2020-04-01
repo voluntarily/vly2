@@ -39,7 +39,7 @@ export const SaveDraftButton = ({ onClick }) =>
     onClick={onClick}
   >
     <FormattedMessage
-      id='OpShortForm..editSaveDraft'
+      id='OpShortForm.editSaveDraft'
       defaultMessage='Save as draft'
       description='Label for save as draft button on activity details form'
     />

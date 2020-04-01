@@ -11,7 +11,7 @@ export const OpFormDoneBtns = ({ getFieldDecorator, type, onSubmit, onCancel, sh
           <TitleContainer>
             <h3>
               <FormattedMessage
-                id='OpShortForm.AskForm.sectiontitle.ConfirmRequest'
+                id='OpFormDoneBtns.sectiontitle.ConfirmRequest'
                 defaultMessage='Confirm request'
                 description='Section title for the save and publish buttons'
               />
@@ -19,7 +19,7 @@ export const OpFormDoneBtns = ({ getFieldDecorator, type, onSubmit, onCancel, sh
           </TitleContainer>
           <p>
             <FormattedMessage
-              id='OpShortForm..SaveInstructions'
+              id='OpFormDoneBtns.SaveInstructions'
               defaultMessage='Save as Draft will allow you to preview the request while Publish will make it available to everyone to view.'
               description='Instructions for save and publish on activity details form'
             />

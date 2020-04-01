@@ -2,15 +2,16 @@ import { Form, Input } from 'antd'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, TitleContainer } from '../VTheme/FormStyles'
-import { OpTypeDescriptionPrompt } from './OpType'
+import { OpTypeDescriptionTitle, OpTypeDescriptionPrompt } from './OpType'
 const { TextArea } = Input
 
-const opDescription = (
+const opDescriptionLabel = (
   <FormattedMessage
-    id='OpShortForm.Description'
-    defaultMessage='Is there anything specific you want to offer or need?'
-    description='activity Description label in OpFormDescription'
+    id='OpShortForm.DescriptionTitle'
+    defaultMessage='More information'
+    description='activity Description title in OpFormDescription'
   />
+
 )
 
 export const OpFormDescription = ({ getFieldDecorator, type }) =>
@@ -18,12 +19,13 @@ export const OpFormDescription = ({ getFieldDecorator, type }) =>
   <FormGrid>
     <DescriptionContainer>
       <TitleContainer>
-        <h3><OpTypeDescriptionPrompt type={type} /></h3>
+        <h3><OpTypeDescriptionTitle type={type} /></h3>
+        <p><OpTypeDescriptionPrompt type={type} /></p>
       </TitleContainer>
     </DescriptionContainer>
     <InputContainer>
       <MediumInputContainer>
-        <Form.Item label={opDescription}>
+        <Form.Item label={opDescriptionLabel}>
           {getFieldDecorator('description')(
             <TextArea
               rows={6}

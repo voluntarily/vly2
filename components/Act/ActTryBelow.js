@@ -16,7 +16,7 @@ export const ActTryBelow = ({ counts, role }) => {
     ? (
       <FormattedMessage
         id='ActTryBelow.prompt'
-        defaultMessage='Check whether you can help with existing asks and offers before creating new ones.'
+        defaultMessage='Check below whether you can help with existing asks and offers before creating new ones.'
         description='prompt the person to review existing ops before creating a new one'
       />)
     : null
