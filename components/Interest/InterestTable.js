@@ -1,13 +1,13 @@
 import { Button, Table } from 'antd'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { InterestAction } from '../../server/api/interest/interest.constants'
 import PersonCard from '../Person/PersonCard'
 import { AvatarProfile } from '../VTheme/AvatarProfileLink'
 import { InterestMessageItem, InterestMessageList } from './InterestMessage'
 import { RegisterInterestMessageForm } from './RegisterInterestMessageForm'
+import { useIntl, defineMessages, FormattedMessage } from 'react-intl'
 
 export const ExpandedInterestGrid = styled.div`
   display: grid;
@@ -47,54 +47,69 @@ export const MessagesColumn = {
 
 const InviteText =
   <FormattedMessage
-    id='inviteVolunteer'
-    defaultMessage='Invite'
-    description='Button allowing event organizer to invite an interested volunteer'
+    id='InterestTable.accept'
+    defaultMessage='Accept'
+    description='Button allowing owner to invite an interested person'
   />
 
 const DeclineText =
   <FormattedMessage
-    id='declineVolunteer'
+    id='InterestTable.decline'
     defaultMessage='Decline'
-    description='Button allowing event organizer to decline an interested volunteer'
+    description='Button allowing owner to decline an interested person'
   />
 export const MessageText =
   <FormattedMessage
-    id='messageVolunteer'
+    id='InterestTable.messagePerson'
     defaultMessage='Message'
-    description='Button allowing event organizer to message an interested volunteer'
+    description='Button allowing owner to message an interested person'
   />
 
 const WithdrawText =
   <FormattedMessage
-    id='withdrawVolunteerInvite'
-    defaultMessage='Withdraw Invite'
-    description='Button allowing event organizer to withdraw a invite already issued to an interested volunteer'
+    id='InterestTable.withdrawPersonInvite'
+    defaultMessage='Undo'
+    description='Button allowing owner to withdraw a invite already issued to an interested person'
   />
 const undeclineInviteText =
   <FormattedMessage
-    id='undeclineInvite'
-    defaultMessage='Undecline Invite'
-    description='Button allowing event organizer to "un-decline" a previously declined invite'
+    id='InterestTable.undeclineInvite'
+    defaultMessage='Accept'
+    description='Button allowing owner to "un-decline" a previously declined invite'
   />
-const formOptions = {
-  [InterestAction.ACCEPT]: {
-    title: 'Invite Volunteers',
-    prompt: 'Optionally add a note to the message we will send to the volunteer'
+
+const messages = defineMessages({
+  accept_title: {
+    id: 'InterestTable.accept.title',
+    defaultMessage: 'Accept {nickname}',
+    description: 'prompt on message form from owner to interested person.'
   },
-  [InterestAction.REJECT]: {
-    title: 'Decline Volunteers',
-    prompt: 'Optionally add a note to the message we will send to the volunteer'
+  accept_prompt: {
+    id: 'InterestTable.accept.prompt',
+    defaultMessage: 'Optionally add a note to the message we will send to {nickname}',
+    description: 'prompt on message form from owner to interested person.'
   },
-  [InterestAction.WITHDRAW]: {
-    title: 'Withdraw Invite Volunteers',
-    prompt: 'Optionally add a note to the message we will send to the volunteer'
+  decline_title: {
+    id: 'InterestTable.decline.title',
+    defaultMessage: 'Decline {nickname}',
+    description: 'prompt on message form from owner to interested person.'
   },
-  [InterestAction.MESSAGE]: {
-    title: 'Message Volunteers',
-    prompt: 'Send a message to the volunteer'
+  decline_prompt: {
+    id: 'InterestTable.decline.prompt',
+    defaultMessage: 'Optionally add a note to the message we will send to {nickname}',
+    description: 'prompt on message form from owner to interested person.'
+  },
+  message_title: {
+    id: 'InterestTable.message.title',
+    defaultMessage: 'message {nickname}',
+    description: 'prompt on message form from owner to interested person.'
+  },
+  message_prompt: {
+    id: 'InterestTable.message.prompt',
+    defaultMessage: 'Send a message to {nickname}',
+    description: 'prompt on message form from owner to interested person.'
   }
-}
+})
 
 const InterestTable = ({ interests, onAction }) => {
   const [filteredInfo, setFilteredInfo] = useState({})
@@ -121,6 +136,30 @@ const InterestTable = ({ interests, onAction }) => {
     setSortedInfo(sorter)
   }
 
+  const { formatMessage } = useIntl()
+
+  const formOptions = (action, interest) => {
+    if (!interest) return { title: 'interest not set', prompt: '' }
+    const nickname = interest.person.nickname
+
+    switch (action) {
+      case InterestAction.ACCEPT:
+        return {
+          title: formatMessage(messages.accept_title, { nickname }),
+          prompt: formatMessage(messages.accept_prompt, { nickname })
+        }
+      case InterestAction.REJECT:
+        return {
+          title: formatMessage(messages.decline_title, { nickname }),
+          prompt: formatMessage(messages.decline_prompt, { nickname })
+        }
+      case InterestAction.MESSAGE:
+        return {
+          title: formatMessage(messages.message_title, { nickname }),
+          prompt: formatMessage(messages.message_prompt, { nickname })
+        }
+    }
+  }
   // TODO fix batch updates.
   // const rowSelection = {
   //   onChange: (selectedRowKeys, selectedRows) => {
@@ -162,21 +201,11 @@ const InterestTable = ({ interests, onAction }) => {
       key: 'action',
       render: (text, record) => {
         const options = getEnabledButtons(record)
-        let withdrawInviteText = WithdrawText
-
-        // Needed? Or is declining the end of the road?
-        if (
-          options.withdrawInviteButtonEnabled &&
-          !options.declineButtonEnabled &&
-          !options.inviteButtonEnabled
-        ) {
-          withdrawInviteText = undeclineInviteText
-        }
 
         return (
           <div>
 
-            {options.inviteButtonEnabled && (
+            {options.acceptButtonEnabled && (
               <span>
                 <Button
                   type='primary' shape='round'
@@ -187,18 +216,8 @@ const InterestTable = ({ interests, onAction }) => {
                   &nbsp;
               </span>
             )}
-            {options.withdrawInviteButtonEnabled && (
-              <span>
-                <Button
-                  type='secondary' shape='round'
-                  onClick={() => handleClick(InterestAction.WITHDRAW)(record)}
-                >
-                  {withdrawInviteText}
-                </Button>
-                  &nbsp;
-              </span>
-            )}
-            {options.declineButtonEnabled && (
+
+            {options.rejectButtonEnabled && (
               <span>
                 <Button
                   type='danger' shape='round'
@@ -274,8 +293,8 @@ const InterestTable = ({ interests, onAction }) => {
         // rowSelection={rowSelection}
       />
       <RegisterInterestMessageForm
-        id='acceptRegisterInterestForm'
-        {...formOptions[action]}
+        id='InterestTable.acceptRegisterInterestForm'
+        {...formOptions(action, selectedInterest)}
         showTerms={false}
         onSubmit={handleFormSubmit}
         visible={showMessageForm}
@@ -291,15 +310,10 @@ InterestTable.propTypes = {
 
 function getEnabledButtons (interest) {
   return {
-    inviteButtonEnabled: interest.status === 'interested',
-    declineButtonEnabled:
-      interest.status !== 'attended' &&
-      interest.status !== 'notattended' &&
-      interest.status !== 'declined',
-    withdrawInviteButtonEnabled:
-      interest.status !== 'attended' &&
-      interest.status !== 'notattended' &&
-      interest.status !== 'interested'
+    acceptButtonEnabled:
+      ['interested', 'attended', 'notattended', 'declined'].includes(interest.status),
+    rejectButtonEnabled:
+      ['invited', 'committed', 'attended', 'notattended'].includes(interest.status)
   }
 }
 

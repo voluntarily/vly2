@@ -7,7 +7,7 @@ import InterestSection from '../../components/Interest/InterestSection'
 import InterestArchivedSection from '../../components/Interest/InterestArchivedSection'
 import OpCloseOpportunity from '../../components/Op/OpCloseOpportunity'
 import { ProfilePanel, ProfileSection } from '../VTheme/Profile'
-import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
+import { OpportunityStatus, OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 
 export function OpManagePanel ({ op }) {
   const isDone = [OpportunityStatus.COMPLETED, OpportunityStatus.CANCELLED].includes(op.status)
@@ -15,11 +15,21 @@ export function OpManagePanel ({ op }) {
     <ProfilePanel>
       <ProfileSection>
         <h2>
-          <FormattedMessage
-            id='interestSection.name'
-            defaultMessage='Volunteers'
-            description='label for interest table on op detail page'
-          />
+          {op.type === OpportunityType.OFFER
+            ? (
+              <FormattedMessage
+                id='interestSection.offer.name'
+                defaultMessage='People asking for help'
+                description='label for interest table on op detail page'
+              />
+            )
+            : (
+              <FormattedMessage
+                id='interestSection.ask.name'
+                defaultMessage='People offering to help'
+                description='label for interest table on op detail page'
+              />)}
+
         </h2>
         {isDone
           ? <InterestArchivedSection opid={op._id} />
