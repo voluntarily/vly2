@@ -32,7 +32,7 @@ InterestMessageItem.propTypes = {
   message: PropTypes.shape({
     body: PropTypes.string.isRequired,
     author: PropTypes.object.isRequired
-  }).isRequired
+  })
 }
 
 export const InterestMessageList = ({ messages }) => {

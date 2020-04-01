@@ -10,7 +10,7 @@ import { API_URL } from '../../../lib/callApi'
 import fetchMock from 'fetch-mock'
 import { makeInterests, opportunity, requestor } from './makeInterests.fixture'
 import { InterestStatus } from '../../../server/api/interest/interest.constants'
-const { INVITED, INTERESTED, DECLINED } = InterestStatus
+const { INVITED, DECLINED } = InterestStatus
 
 const interestCount = 5
 test.before('Setup fixtures', t => { t.context.interests = makeInterests('InterestSection', interestCount) })
@@ -35,8 +35,7 @@ const Col = {
 
 const Btn = {
   ACCEPT: 0,
-  REJECT: 1,
-  MESSAGE: 2
+  REJECT: 1
 }
 const opid = opportunity._id
 const initStore = {
@@ -60,7 +59,7 @@ const okMessagePopup = async (t, wrapper, rowindex, message) => {
   t.false(wrapper.find('RegisterInterestMessageForm').at(rowindex).props().visible)
 }
 
-test('mount the InterestSection with a list of interests', async t => {
+test.serial('mount the InterestSection with a list of interests', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -96,7 +95,7 @@ test('mount the InterestSection with a list of interests', async t => {
   myMock.putOnce(`${API_URL}/interests/${storedInterest._id}`, invitedvp)
 
   const invitebutton = actionButtons.at(Btn.ACCEPT)
-  t.is(invitebutton.text(), 'Invite')
+  t.is(invitebutton.text(), 'Accept')
   invitebutton.simulate('click')
   await okMessagePopup(t, wrapper, rowindex, 'Invitation from us')
 
@@ -107,29 +106,28 @@ test('mount the InterestSection with a list of interests', async t => {
 
   t.regex(row.find('td').at(Col.NAME).text(), /volunteer_InterestSection/)
   t.is(row.find('td').at(Col.STATUS).text(), 'invited')
-
   // =====================
   // # Test withdraw invite button
   // =====================
-  storedInterest = realStore.getState().interests.data[0]
-  const withdrawnvp = { ...storedInterest, status: INTERESTED }
-  myMock.restore()
-  myMock.putOnce(`${API_URL}/interests/${storedInterest._id}`, withdrawnvp)
-  row = wrapper.find('tbody tr').at(rowindex)
-  actionButtons = row.find('td').at(Col.ACTIONS).find('Button')
-  t.is(actionButtons.length, 3)
-  const withdrawbutton = actionButtons.at(Btn.ACCEPT)
-  t.is(withdrawbutton.text(), 'Withdraw Invite')
-  withdrawbutton.simulate('click')
-  await okMessagePopup(t, wrapper, rowindex, 'Withdrawn from us')
+  // storedInterest = realStore.getState().interests.data[0]
+  // const withdrawnvp = { ...storedInterest, status: INTERESTED }
+  // myMock.restore()
+  // myMock.putOnce(`${API_URL}/interests/${storedInterest._id}`, withdrawnvp)
+  // row = wrapper.find('tbody tr').at(rowindex)
+  // actionButtons = row.find('td').at(Col.ACTIONS).find('Button')
+  // t.is(actionButtons.length, 3)
+  // const withdrawbutton = actionButtons.at(Btn.ACCEPT)
+  // t.is(withdrawbutton.text(), 'Withdraw Invite')
+  // withdrawbutton.simulate('click')
+  // await okMessagePopup(t, wrapper, rowindex, 'Withdrawn from us')
 
-  // effect should be to update row back to interested person
-  row = wrapper.find('tbody tr').at(rowindex)
+  // // effect should be to update row back to interested person
+  // row = wrapper.find('tbody tr').at(rowindex)
 
-  t.regex(row.find('td').at(Col.NAME).text(), /volunteer_InterestSection/)
-  t.is(row.find('td').at(Col.STATUS).text(), 'interested')
-  storedInterest = realStore.getState().interests.data[0]
-  t.is(storedInterest.status, INTERESTED)
+  // t.regex(row.find('td').at(Col.NAME).text(), /volunteer_InterestSection/)
+  // t.is(row.find('td').at(Col.STATUS).text(), 'interested')
+  // storedInterest = realStore.getState().interests.data[0]
+  // t.is(storedInterest.status, INTERESTED)
 
   // =====================
   // # Test Message button
@@ -140,8 +138,8 @@ test('mount the InterestSection with a list of interests', async t => {
   myMock.putOnce(`${API_URL}/interests/${storedInterest._id}`, messagevp)
   row = wrapper.find('tbody tr').at(rowindex)
   actionButtons = row.find('td').at(Col.ACTIONS).find('Button')
-  t.is(actionButtons.length, 3)
-  const messagebutton = actionButtons.at(Btn.MESSAGE)
+  t.is(actionButtons.length, 2)
+  const messagebutton = actionButtons.last()
   t.is(messagebutton.text(), 'Message')
   messagebutton.simulate('click')
   await okMessagePopup(t, wrapper, rowindex, 'Messaged from us')
@@ -150,8 +148,8 @@ test('mount the InterestSection with a list of interests', async t => {
   row = wrapper.find('tbody tr').at(rowindex)
 
   storedInterest = realStore.getState().interests.data[0]
-  t.is(row.find('td').at(Col.STATUS).text(), 'interested')
-  t.is(storedInterest.status, INTERESTED)
+  t.is(row.find('td').at(Col.STATUS).text(), 'invited')
+  t.is(storedInterest.status, INVITED)
   t.is(storedInterest.messages.length, 1)
 
   // =====================
@@ -163,8 +161,8 @@ test('mount the InterestSection with a list of interests', async t => {
   myMock.putOnce(`${API_URL}/interests/${storedInterest._id}`, declinevp)
   row = wrapper.find('tbody tr').at(rowindex)
   actionButtons = row.find('td').at(Col.ACTIONS).find('Button')
-  t.is(actionButtons.length, 3)
-  const declinebutton = actionButtons.at(Btn.REJECT)
+  t.is(actionButtons.length, 2)
+  const declinebutton = actionButtons.first()
   t.is(declinebutton.text(), 'Decline')
   declinebutton.simulate('click')
   await okMessagePopup(t, wrapper, rowindex, 'Declined from us')

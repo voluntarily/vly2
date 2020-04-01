@@ -51,7 +51,6 @@ function getBackStatus (status) {
 
 const RegisterInterestSection = ({ meid, opid }) => {
   const interests = useSelector(state => state.interests)
-  
   const dispatch = useDispatch()
 
   useEffect(() => {

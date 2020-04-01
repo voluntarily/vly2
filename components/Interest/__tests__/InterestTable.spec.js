@@ -78,7 +78,7 @@ test('InterestTable renders properly', async t => {
   let actionButtons = row.find('td').at(Col.ACTIONS).find('Button')
   t.is(actionButtons.length, 3)
   const invitebutton = actionButtons.at(Btn.ACCEPT)
-  t.is(invitebutton.text(), 'Invite')
+  t.is(invitebutton.text(), 'Accept')
   invitebutton.simulate('click')
   await okMessagePopup(t, wrapper, rowindex, 'Invitation from us')
 
@@ -86,7 +86,7 @@ test('InterestTable renders properly', async t => {
   // =====================
   // # Test Decline button
   // =====================
-  const declinebutton = actionButtons.at(Btn.REJECT)
+  const declinebutton = actionButtons.at(1)
   t.is(declinebutton.text(), 'Decline')
   declinebutton.simulate('click')
   await okMessagePopup(t, wrapper, rowindex, 'reject from us')
@@ -107,7 +107,7 @@ test('InterestTable renders properly', async t => {
   actionButtons = row.find('td').at(Col.ACTIONS).find('Button')
   t.is(actionButtons.length, 2)
   const undeclinebutton = actionButtons.at(Btn.ACCEPT)
-  t.is(undeclinebutton.text(), 'Undecline Invite')
+  t.is(undeclinebutton.text(), 'Accept')
   undeclinebutton.simulate('click')
   await okMessagePopup(t, wrapper, rowindex, 'withdraw from us')
   t.is(handleAction.callCount, 4)

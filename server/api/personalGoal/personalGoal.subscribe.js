@@ -19,6 +19,7 @@ module.exports = (server) => {
     const org = await Organisation.findById(orgid)
     switch (member.status) {
       case MemberStatus.ORGADMIN:
+        if (!org) break
         if (org.role.includes(OrganisationRole.VOLUNTEER_PROVIDER)) { await addPersonalGoalGroup(GoalGroup.ORG_VP_NEW, member.person) }
         if (org.role.includes(OrganisationRole.OPPORTUNITY_PROVIDER)) { await addPersonalGoalGroup(GoalGroup.ORG_OP_NEW, member.person) }
         if (org.role.includes(OrganisationRole.ACTIVITY_PROVIDER)) { await addPersonalGoalGroup(GoalGroup.ORG_AP_NEW, member.person) }

@@ -65,19 +65,6 @@ export const MessageText =
     description='Button allowing owner to message an interested person'
   />
 
-const WithdrawText =
-  <FormattedMessage
-    id='InterestTable.withdrawPersonInvite'
-    defaultMessage='Undo'
-    description='Button allowing owner to withdraw a invite already issued to an interested person'
-  />
-const undeclineInviteText =
-  <FormattedMessage
-    id='InterestTable.undeclineInvite'
-    defaultMessage='Accept'
-    description='Button allowing owner to "un-decline" a previously declined invite'
-  />
-
 const messages = defineMessages({
   accept_title: {
     id: 'InterestTable.accept.title',
@@ -311,9 +298,9 @@ InterestTable.propTypes = {
 function getEnabledButtons (interest) {
   return {
     acceptButtonEnabled:
-      ['interested', 'attended', 'notattended', 'declined'].includes(interest.status),
+      ['interested', 'declined', 'attended', 'notattended'].includes(interest.status),
     rejectButtonEnabled:
-      ['invited', 'committed', 'attended', 'notattended'].includes(interest.status)
+      ['interested', 'invited', 'committed', 'attended', 'notattended'].includes(interest.status)
   }
 }
 

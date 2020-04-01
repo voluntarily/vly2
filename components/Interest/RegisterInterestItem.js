@@ -195,7 +195,6 @@ export const RegisterInterestItem = ({
         )
         : <RegisterButtons />}
       <MessagePanel onClick={() => showMessages()}>
-
         <InterestMessageItem message={latestMsg} />
       </MessagePanel>
 

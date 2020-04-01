@@ -23,6 +23,7 @@ const opid = '5cc903e5f94141437622cea7'
 const ops = [
   {
     _id: opid,
+    type: 'ask',
     name: 'Growing in the garden',
     subtitle: 'Growing digitally in the garden',
     imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
@@ -57,7 +58,7 @@ const interests = [
   }
 ]
 
-test.serial('mount RegisterInterestSection with with no existing interest', async t => {
+test.serial('mount Ask RegisterInterestSection with with no existing interest', async t => {
   const realStore = makeStore(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -123,7 +124,7 @@ test.serial('mount RegisterInterestSection with op and me', async t => {
   await sleep(1) // allow asynch fetch to complete
   wrapper.update()
   // once loading completed should the thank you note
-  t.is(wrapper.find('h4').first().text(), 'The organiser will get back to you soon!')
+  t.is(wrapper.find('h4').first().text(), "You've offered to help, Dali will get back to you soon!")
   t.truthy(myMock.done())
   myMock.restore()
 })
