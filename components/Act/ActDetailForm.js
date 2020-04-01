@@ -129,7 +129,6 @@ class ActDetailForm extends Component {
         act.imgUrl = values.imgUrl === '' ? undefined : values.imgUrl
         act.documents = values.documents
         act.tags = values.tags
-        console.log('locked', values.locked)
         act.locked = values.locked
         act.status = e.target.name === 'publish' ? ActivityStatus.ACTIVE : ActivityStatus.DRAFT
         // act.owner = (this.props.act.owner && this.props.op.owner._id) || this.props.me._id
@@ -774,7 +773,6 @@ export default Form.create({
     } else if (act.volunteers < 1) {
       volunteerPerStudent = Math.round(1 / act.volunteers)
     }
-    console.log('locked', act.locked)
     return {
       name: Form.createFormField({ value: act.name }),
       subtitle: Form.createFormField({ value: act.subtitle }),

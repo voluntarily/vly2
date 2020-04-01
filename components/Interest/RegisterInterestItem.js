@@ -62,7 +62,6 @@ export const RegisterInterestItem = ({
   // Options to configure the controls on this page based on the state of the interest.
   // get current op from the store - should be only one.
   const op = useSelector(state => state.opportunities.data[0])
-  console.log('interest', interest)
   const options = getOptions(interest.status, op.type, op.requestor)
 
   const showMessages = () => {
@@ -302,7 +301,7 @@ const messages = {
     new_acceptNotifyHeading: { id: 'new.offer.acceptNotifyHeading', defaultMessage: 'Thank you for asking!', description: 'Heading on express-interest form when volunteer has already expressed interest' },
     new_acceptNotifyMessage: { id: 'new.offer.acceptNotifyMessage', defaultMessage: '{nickname} will be in touch shortly.', description: 'Sub-heading on express-interest form when volunteer has already expressed interest' },
     interested_statusMessage: { id: 'interested.offer.statusMessage', defaultMessage: "You've asked for help, {nickname} will get back to you soon!", description: 'message when volunteer has already expressed interest' },
-    interested_rejectButtonText: { id: 'interested.offer.rejectButtonText', defaultMessage: 'Withdraw Ask', description: 'Button for volunteer to reject interest in an opportunity' },
+    interested_rejectButtonText: { id: 'interested.offer.rejectButtonText', defaultMessage: 'Cancel Ask', description: 'Button for volunteer to reject interest in an opportunity' },
     interested_rejectFormTitle: { id: 'interested.offer.rejectFormTitle', defaultMessage: 'No longer need this?', description: 'title message form when interested person withdraws' },
     interested_rejectFormPrompt: { id: 'interested.offer.rejectFormPrompt', defaultMessage: 'Leave a message for {nickname}', description: 'prompt on message form when interested person withdraws' },
     interested_rejectNotifyHeading: { id: 'interested.offer.rejectNotifyHeading', defaultMessage: 'Ask cancelled', description: 'title on popup after person withdraws interest' },
