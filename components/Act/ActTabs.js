@@ -21,8 +21,8 @@ const actAboutTab =
 
 const actRequestsTab =
   <FormattedMessage
-    id='actTabs.requests'
-    defaultMessage='Requests'
+    id='actTabs.asks'
+    defaultMessage='Asks'
     description='Tab label on ActTabs'
   />
 
@@ -74,10 +74,10 @@ export const ActTabs = ({ act, onChange, canManage, canEdit, defaultTab }) => (
     <TabPane tab={actAboutTab} key='about'>
       <ActAboutPanel act={act} />
     </TabPane>
-    <TabPane tab={actRequestsTab} key='requests'>
+    <TabPane tab={actRequestsTab} key='ask'>
       <ActOpsPanel act={act} type={ASK} />
     </TabPane>
-    <TabPane tab={actOffersTab} key='offers'>
+    <TabPane tab={actOffersTab} key='offer'>
       <ActOpsPanel act={act} type={OFFER} />
 
     </TabPane>

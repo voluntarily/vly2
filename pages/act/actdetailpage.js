@@ -37,8 +37,13 @@ export const ActDetailPage = ({
   tags
 }) => {
   const router = useRouter()
-  const [tab, setTab] = useState(isNew ? 'edit' : router.query.tab)
-
+  const [tab, setTab] = useState(
+    isNew
+      ? 'edit'
+      : (router.query.tab
+        ? router.query.tab
+        : me.role.includes(Role.VOLUNTEER) ? 'ask' : 'offer')
+  )
   const updateTab = (key, top) => {
     setTab(key)
     if (top) window.scrollTo(0, 0)
