@@ -8,8 +8,8 @@ import moment from 'moment'
 const opCommitment = (
   <span>
     <FormattedMessage
-      id='OpOfferForm.Commitment'
-      defaultMessage='Commitment'
+      id='OpOfferForm.label.Commitment'
+      defaultMessage='How much time is needed.'
       description='activity Commitment label in OpOfferForm Form'
     />
     &nbsp;

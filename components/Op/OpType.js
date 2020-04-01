@@ -146,12 +146,12 @@ export const OpTypeDateTitle = ({ type }) => {
 const OpTypeDatePromptMsg = defineMessages({
   [ASK]: {
     id: 'OpportunityType.date.prompt.ASK',
-    defaultMessage: 'Let people know how much time you need, or if is a specific date you need help on. (optional)',
+    defaultMessage: 'Let people know how much time you need, and if there are only a few dates you can be available.',
     description: 'Asking date prompt'
   },
   [OFFER]: {
     id: 'OpportunityType.date.prompt.OFFER',
-    defaultMessage: 'Let people know how much time you have to give and any specific dates you are available',
+    defaultMessage: 'Let people know how much time you have to give and if there are only a few dates you can give time.',
     description: 'Offering date prompt'
   }
 })
@@ -161,19 +161,36 @@ export const OpTypeDatePrompt = ({ type }) => {
   return (<FormattedMessage {...OpTypeDatePromptMsg[type]} />)
 }
 
-const OpTypeDescriptionMsg = defineMessages({
+const OpTypeDescriptionTitleMsg = defineMessages({
   [ASK]: {
-    id: 'OpportunityType.description.ASK',
-    defaultMessage: 'Need anything specific?',
+    id: 'OpportunityType.description.title.ASK',
+    defaultMessage: 'Anything Else?',
+    description: 'Asking description title'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.description.title.OFFER',
+    defaultMessage: 'Anything Else?',
+    description: 'Offering description title'
+  }
+})
+export const OpTypeDescriptionTitle = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpTypeDescriptionTitleMsg[type]} />)
+}
+
+const OpTypeDescriptionPromptMsg = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.description.prompt.ASK',
+    defaultMessage: 'Is there anything else the helpers need to know to help you? Please don’t put your personal or contact details on here, we’ll take care of that later',
     description: 'Asking description prompt'
   },
   [OFFER]: {
-    id: 'OpportunityType.description.OFFER',
-    defaultMessage: 'Offering anything specific?',
+    id: 'OpportunityType.description..prompt.OFFER',
+    defaultMessage: 'Is there anything else you need to tell the people asking for help? Please don’t put personal or contact details here, we’ll take care of that later.',
     description: 'Offering description prompt'
   }
 })
 export const OpTypeDescriptionPrompt = ({ type }) => {
   if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpTypeDescriptionMsg[type]} />)
+  return (<FormattedMessage {...OpTypeDescriptionPromptMsg[type]} />)
 }
