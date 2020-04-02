@@ -8,5 +8,5 @@ test('shallow the card with act', t => {
   const wrapper = shallowWithIntl(
     <ActCardSuggest />
   )
-  t.is(wrapper.find('figcaption').find('p').first().text(), 'Suggest a topic')
+  t.is(wrapper.find('figcaption').find('h1').first().text(), 'Suggest a topic')
 })

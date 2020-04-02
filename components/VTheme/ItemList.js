@@ -90,11 +90,10 @@ font-size: 1.1rem;
 `
 
 export const EquipmentList = ({ equipment }) =>
-  equipment
+  equipment.length
     ? (
       <div>
         <Divider />
-
         <h5><strong>
           <FormattedMessage
             id='itemlist.equipment'
