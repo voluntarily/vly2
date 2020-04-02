@@ -12,7 +12,7 @@ import { jwtData } from '../../../middleware/session/__tests__/setSession.fixtur
 import { getBucketName } from '../../file/file.controller'
 
 import acts from './activity.fixture.js'
-import { v4 as uuid } from 'uuid'
+import uuid from 'uuid'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()

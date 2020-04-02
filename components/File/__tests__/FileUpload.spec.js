@@ -7,7 +7,7 @@ import path from 'path'
 import { jwtData } from '../../../server/middleware/session/__tests__/setSession.fixture'
 import { config } from '../../../config/serverConfig'
 import glob from 'glob'
-import { v4 as uuid } from 'uuid'
+import uuid from 'uuid'
 
 test.before(async t => {
   t.context.memMongo = new MemoryMongo()
@@ -42,7 +42,7 @@ test.serial('Upload and retrieve file via the filesystem', async t => {
   // Force the file.controller to use the filesystem to store files
   config.env = 'development'
 
-  const uniq = `${uuid()}`.substr(0, 8)
+  const uniq = `${uuid.v1()}`.substr(0, 8)
 
   try {
     const res = await request(server)
