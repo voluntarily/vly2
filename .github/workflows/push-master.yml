@@ -52,7 +52,7 @@ jobs:
         SMTP_ID: ${{ secrets.SMTP_ID }} 
         SMTP_PWD: ${{ secrets.SMTP_PWD }}
         VLY_PRIVATE_KEY: ${{ secrets.VLY_PRIVATE_KEY }}
-        IMAGE_TAG_VERSION: GITHUB_SHA
+        IMAGE_TAG_VERSION: ${{ github.event.pull_request.head.sha }}
         HOME: /root
         APP_URL: https://alpha.voluntarily.nz
         RAYGUN_EXPRESS_SERVER_API_KEY: ${{ secrets.RAYGUN_EXPRESS_SERVER_API_KEY }}
