@@ -13,8 +13,7 @@ import { useState } from 'react'
  */
 
 const showStaySafe = true
-const staySafeUrl = 'https://voluntarily.atlassian.net/wiki/spaces/VSP/pages/236486718/Keeping+your+info+safe+from+Scammers'
-
+const staySafeUrl = 'https://voluntarily.atlassian.net/servicedesk/customer/portal/2/article/236486718'
 export const RegisterInterestMessageForm = ({
   visible,
   onSubmit,
