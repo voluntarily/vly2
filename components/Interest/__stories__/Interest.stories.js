@@ -9,7 +9,6 @@ import fetch from 'isomorphic-fetch'
 const getPeople = async (numPeople) => {
   const url = 'https://randomuser.me/api/?results=$numPeople'
   const res = await fetch(url)
-  console.log(res.body)
   const people = res.body.results
   return people.map(person => {
     return ({

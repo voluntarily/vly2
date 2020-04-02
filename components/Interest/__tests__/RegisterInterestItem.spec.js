@@ -5,13 +5,19 @@ import sinon from 'sinon'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import { InterestStatus } from '../../../server/api/interest/interest.constants'
 import mongoose from 'mongoose'
+import { Provider } from 'react-redux'
+import { makeStore } from '../../../lib/redux/reduxApi'
 const ObjectId = mongoose.Types.ObjectId
 
+const person = {
+  nickname: 'Testy'
+}
 // Initial opportunities added into test db
 const opid = '5cc903e5f94141437622cea7'
 const ops = [
   {
     _id: opid,
+    type: 'ask',
     name: 'Growing in the garden',
     subtitle: 'Growing digitally in the garden',
     imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
@@ -19,7 +25,8 @@ const ops = [
     duration: '15 Minutes',
     location: 'Newmarket, Auckland',
     tags: [],
-    status: 'active'
+    status: 'active',
+    requestor: person
   }
 ]
 
@@ -79,18 +86,32 @@ const interests = [
 
 ]
 
+const initStore = {
+  opportunities: {
+    loading: false,
+    data: ops
+  },
+  interests: {
+    loading: false,
+    data: []
+  }
+}
+
 test('initial state', t => {
   const handleAccept = sinon.fake()
   const handleReject = sinon.fake()
   const handleMessage = sinon.fake()
-
+  const realStore = makeStore(initStore)
   const wrapper = mountWithIntl(
-    <RegisterInterestItem
-      interest={interests[0]}
-      onAccept={handleAccept}
-      onReject={handleReject}
-      onMessage={handleMessage}
-    />)
+    <Provider store={realStore}>
+      <RegisterInterestItem
+        interest={interests[0]}
+        onAccept={handleAccept}
+        onReject={handleReject}
+        onMessage={handleMessage}
+      />
+    </Provider>
+  )
   t.true(wrapper.exists('#acceptBtn'))
   t.false(wrapper.exists('#rejectBtn'))
   t.false(wrapper.exists('#messageBtn'))
@@ -131,14 +152,17 @@ test('interested state', t => {
   const handleAccept = sinon.fake()
   const handleReject = sinon.fake()
   const handleMessage = sinon.fake()
-
+  const realStore = makeStore(initStore)
   const wrapper = mountWithIntl(
-    <RegisterInterestItem
-      interest={interests[1]}
-      onAccept={handleAccept}
-      onReject={handleReject}
-      onMessage={handleMessage}
-    />)
+    <Provider store={realStore}>
+      <RegisterInterestItem
+        interest={interests[1]}
+        onAccept={handleAccept}
+        onReject={handleReject}
+        onMessage={handleMessage}
+      />
+    </Provider>
+  )
   t.false(wrapper.exists('#acceptBtn'))
   t.true(wrapper.exists('#rejectBtn'))
   t.true(wrapper.exists('#messageBtn'))
@@ -165,14 +189,18 @@ test(InterestStatus.INVITED, t => {
   const handleAccept = sinon.fake()
   const handleReject = sinon.fake()
   const handleMessage = sinon.fake()
+  const realStore = makeStore(initStore)
 
   const wrapper = mountWithIntl(
-    <RegisterInterestItem
-      interest={interests[2]}
-      onAccept={handleAccept}
-      onReject={handleReject}
-      onMessage={handleMessage}
-    />)
+    <Provider store={realStore}>
+      <RegisterInterestItem
+        interest={interests[2]}
+        onAccept={handleAccept}
+        onReject={handleReject}
+        onMessage={handleMessage}
+      />
+    </Provider>
+  )
   t.true(wrapper.exists('#acceptBtn'))
   t.true(wrapper.exists('#rejectBtn'))
   t.false(wrapper.exists('#messageBtn'))
@@ -199,14 +227,18 @@ test(InterestStatus.COMMITTED, t => {
   const handleAccept = sinon.fake()
   const handleReject = sinon.fake()
   const handleMessage = sinon.fake()
+  const realStore = makeStore(initStore)
 
   const wrapper = mountWithIntl(
-    <RegisterInterestItem
-      interest={interests[3]}
-      onAccept={handleAccept}
-      onReject={handleReject}
-      onMessage={handleMessage}
-    />)
+    <Provider store={realStore}>
+      <RegisterInterestItem
+        interest={interests[3]}
+        onAccept={handleAccept}
+        onReject={handleReject}
+        onMessage={handleMessage}
+      />
+    </Provider>
+  )
   t.false(wrapper.exists('#acceptBtn'))
   t.true(wrapper.exists('#rejectBtn'))
   t.true(wrapper.exists('#messageBtn'))
@@ -233,14 +265,18 @@ test(InterestStatus.DECLINED, t => {
   const handleAccept = sinon.fake()
   const handleReject = sinon.fake()
   const handleMessage = sinon.fake()
+  const realStore = makeStore(initStore)
 
   const wrapper = mountWithIntl(
-    <RegisterInterestItem
-      interest={interests[4]}
-      onAccept={handleAccept}
-      onReject={handleReject}
-      onMessage={handleMessage}
-    />)
+    <Provider store={realStore}>
+      <RegisterInterestItem
+        interest={interests[4]}
+        onAccept={handleAccept}
+        onReject={handleReject}
+        onMessage={handleMessage}
+      />
+    </Provider>
+  )
   t.false(wrapper.exists('#acceptBtn'))
   t.false(wrapper.exists('#rejectBtn'))
   t.false(wrapper.exists('#messageBtn'))
