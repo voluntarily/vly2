@@ -1,5 +1,5 @@
 
-import { Button, Modal } from 'antd'
+import { Button, Icon, Modal } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import { FormattedMessage } from 'react-intl'
 import { useState } from 'react'
@@ -11,6 +11,9 @@ import { useState } from 'react'
 
  Form calls back onSubmit false if cancelled and form fields in ok.
  */
+
+const showStaySafe = true
+const staySafeUrl = 'https://voluntarily.atlassian.net/wiki/spaces/VSP/pages/236486718/Keeping+your+info+safe+from+Scammers'
 
 export const RegisterInterestMessageForm = ({
   visible,
@@ -58,7 +61,7 @@ export const RegisterInterestMessageForm = ({
       {showTerms && (
         <p>
           <FormattedMessage
-            id='registerinterestitem.accepttcs'
+            id='RegisterInterestMessageForm.accepttcs'
             defaultMessage='By clicking Send you agree to the '
           />
           <a
@@ -67,11 +70,22 @@ export const RegisterInterestMessageForm = ({
             rel='noopener noreferrer'
           >
             <FormattedMessage
-              id='registerinterestitem.termsandconditions'
+              id='RegisterInterestMessageForm.termsandconditions'
               defaultMessage='Terms and Conditions'
             />
           </a>
         </p>)}
+      {showStaySafe && (
+        <p>
+          <Icon type='warning' theme='twoTone' twoToneColor='#6549AA' />&nbsp;
+          <a href={staySafeUrl} target='_blank' rel='noopener noreferrer'>
+            <FormattedMessage
+              id='RegisterInterestMessageForm.staysafeonline'
+              defaultMessage='Stay safe online'
+            />
+          </a>
+        </p>
+      )}
     </Modal>
 
   )
