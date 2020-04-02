@@ -8,8 +8,9 @@ const createNonce = () => uuid()
 const createReference = () => uuid()
 const createUnixTimestamp = () => moment().unix() * 1000
 const postCloudcheck = async (options) => {
-  const path = options.path
-  const obj = options.data
+  const path = options.path || ''
+  console.log('data: ' + options.data)
+  const obj = options.data || {}
 
   const signature = generateSignature(path, obj)
   obj.signature = signature
@@ -33,6 +34,9 @@ const postCloudcheck = async (options) => {
     return response.json()
   }).then((data) => {
     return data
+  }).catch(error => {
+    console.error(error)
+    return undefined
   })
 }
 
@@ -56,6 +60,9 @@ const getCloudcheck = async (options) => {
       return response.json()
     }).then((data) => {
       return data.capture
+    }).catch(error => {
+      console.error(error)
+      return undefined
     })
 }
 

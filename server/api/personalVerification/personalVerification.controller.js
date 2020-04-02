@@ -20,7 +20,7 @@ const initVerify = async (req, res) => {
   }
 
   const reference = createReference()
-  new PersonalVerification({
+  await new PersonalVerification({
     person,
     voluntarilyReference: reference
   }).save()
@@ -44,14 +44,16 @@ const initVerify = async (req, res) => {
     data: obj,
     path: '/live/'
   })
-  if (liveResponse.verification && liveResponse.verification.error) {
-    return res.status(401).json(liveResponse)
+
+  if (!(liveResponse && liveResponse.capture)) {
+    console.error(`Cloudcheck initVerification faild for reference: ${reference}, nonce: ${nonce}`)
+    return res.status(401).json({ error: 'There has been an error. Please try again.' })
   }
 
   const query = { voluntarilyReference: liveResponse.capture.reference }
   const update = { captureReference: liveResponse.capture.captureReference, status: PersonalVerificationStatus.IN_PROGRESS }
 
-  Person.findOneAndUpdate({ _id: me._id }, {
+  await Person.findOneAndUpdate({ _id: me._id }, {
     verifed: [
       { name: PersonFields.NAME, status: PersonalVerificationStatus.IN_PROGRESS },
       { name: PersonFields.ADDRESS, status: PersonalVerificationStatus.IN_PROGRESS },
@@ -59,7 +61,7 @@ const initVerify = async (req, res) => {
     ]
   }, () => console.log('Person verified* updated to IN_PROGRESS'))
 
-  PersonalVerification.findOneAndUpdate(query, update, () => console.log('Personal Verification updated to IN_PROGRESS'))
+  await PersonalVerification.findOneAndUpdate(query, update, () => console.log('Personal Verification updated to IN_PROGRESS'))
 
   return res.redirect(liveResponse.capture.url)
 }

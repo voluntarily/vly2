@@ -30,9 +30,9 @@ const completeConfig = {
     BADGR_API: process.env.BADGR_API || 'https://api.au.badgr.io',
     verification: {
       cloudcheck: {
-        url: process.env.CLOUDCHECK_URL || "https://api.cloudcheck.co.nz",
+        url: process.env.CLOUDCHECK_URL || 'https://api.cloudcheck.co.nz',
         apiKey: process.env.CLOUDCHECK_API_KEY,
-        secret: process.env.CLOUDCHECK_SECRET
+        secret: process.env.CLOUDCHECK_SECRET || 'mySecret'
       }
     }
   },

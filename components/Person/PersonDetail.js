@@ -62,7 +62,7 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }, ...props) => (
               />
             </Button>)}
 
-            <Verification meid={person._id} />
+        <Verification meid={person._id} />
 
         <p>{person.job && `${person.job}`} {person.placeOfWork && `- ${person.placeOfWork}`}</p>
       </ProfileBannerTitle>
