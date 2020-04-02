@@ -76,7 +76,7 @@ export const RegisterInterestMessageForm = ({
           </a>
         </p>)}
       {showStaySafe && (
-        <p style={{float: 'right'}}>
+        <p style={{ float: 'right' }}>
           <Icon type='warning' theme='twoTone' twoToneColor='#6549AA' />&nbsp;
           <a href={staySafeUrl} target='_blank' rel='noopener noreferrer'>
             <FormattedMessage
