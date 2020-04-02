@@ -12,48 +12,51 @@ const readyqs = [
     badgeclass: 'Gp99Py5ERQGVeDFj63gizA',
     questions: [
       {
-        name: 'tama',
-        q: 'What does Vaughan have on his t-shirt?',
+        name: 'Tama',
+        q: 'What is the name of the Offer?',
         options: [
-          'Unicorn',
-          'Dinosaur',
-          'Robot bee',
-          'Jandals'
+          'Tohu',
+          'Tane',
+          'Tama',
+          'Tana'
         ]
       },
       {
-        name: 'tShirt',
-        q: 'What does Vaughan have on his t-shirt?',
+        name: 'Food',
+        q: 'What activity was requested?',
         options: [
-          'Unicorn',
-          'Dinosaur',
-          'Robot bee',
-          'Jandals'
+          'Remote Working Policies',
+          'Delivering Medication',
+          'Groceries Delivery',
+          'Redux Tutorial'
         ]
       },
       {
-        name: 'tShirt',
-        q: 'What does Vaughan have on his t-shirt?',
+        name: 'Sharon',
+        q: 'What is the name of the Requestor?',
         options: [
-          'Unicorn',
-          'Dinosaur',
-          'Robot bee',
-          'Jandals'
+          'Shannon',
+          'Shaza',
+          'Sam',
+          'Sharon'
         ]
       },
       {
-        name: 'launchDate',
-        q: 'When does Voluntarily Launch?',
+        name: 'ActivityTab',
+        q: 'Which of these are not a tab found on the Activity Detail page?',
         options: [
-          '2020',
-          '2021',
-          '2022'
+          'About',
+          'Ask',
+          'Offer',
+          'Collaboration'
         ]
       }
     ],
     answers: {
-      tShirt: 1,
-      launchDate: 0
+      Tama: 2,
+      Food: 2,
+      Sharon: 3,
+      ActivityTab: 3
     }
   }
 ]
@@ -65,7 +68,7 @@ export const Ready = ({ vqa, me }) => {
   return (
     <FullPage>
       <Helmet>
-        <title>Volunteer Ready - Voluntarily</title> 
+        <title>Volunteer Ready - Voluntarily</title>
       </Helmet>
       <VideoQuiz vqa={vqa} me={me} onCompleted={handleCompleted} />
     </FullPage>
