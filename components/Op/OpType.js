@@ -185,7 +185,7 @@ const OpTypeDescriptionPromptMsg = defineMessages({
     description: 'Asking description prompt'
   },
   [OFFER]: {
-    id: 'OpportunityType.description..prompt.OFFER',
+    id: 'OpportunityType.description.prompt.OFFER',
     defaultMessage: 'Is there anything else you need to tell the people asking for help? Please don’t put personal or contact details here, we’ll take care of that later.',
     description: 'Offering description prompt'
   }
@@ -193,4 +193,22 @@ const OpTypeDescriptionPromptMsg = defineMessages({
 export const OpTypeDescriptionPrompt = ({ type }) => {
   if (!type || ![ASK, OFFER].includes(type)) return null
   return (<FormattedMessage {...OpTypeDescriptionPromptMsg[type]} />)
+}
+
+const OpTypeNoResultsMsg = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.prompt.notfound.ASK',
+    defaultMessage: 'Waiting for someone to ask for help.',
+    description: 'Message to display when an activity does not have any archived opportunities'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.prompt.notfound.OFFER',
+    defaultMessage: 'Waiting for someone to offer to help.',
+    description: 'Message to display when an activity does not have any archived opportunities'
+  }
+})
+
+export const OpTypeNoResults = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpTypeNoResultsMsg[type]} />)
 }

@@ -13,6 +13,7 @@ import {
 import { OpStatusStamp, OpStatus } from '../Op/OpStatus'
 import { OpTypeCount } from '../Op/OpType'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
+import { ActReadMore } from './ActReadMore'
 const { ASK, OFFER } = OpportunityType
 
 export const ActBanner = ({ act, children }) => {
@@ -51,6 +52,7 @@ export const ActBanner = ({ act, children }) => {
             <li><OpTypeCount counts={act.opCounts} type={ASK} /></li>
             <li><OpTypeCount counts={act.opCounts} type={OFFER} /></li>
           </ItemContainer>
+          <ActReadMore act={act} />
           <>
             {children}
           </>
