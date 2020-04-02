@@ -1,7 +1,7 @@
 /* eslint-disable space-before-function-paren */
 /* eslint-disable func-names */
 import mongoose from 'mongoose'
-import uuid from 'uuid'
+import { v4 as uuid } from 'uuid'
 
 /* This version skips mockgoose and creates the tests in a real database
     giving each file its own database id.

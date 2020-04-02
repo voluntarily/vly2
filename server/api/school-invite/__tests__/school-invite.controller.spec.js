@@ -196,8 +196,7 @@ test.serial('Create organisation from non-existent school', async (t) => {
   await t.throwsAsync(
     async () => {
       await SchoolInvite.createOrganisationFromSchool(nonExistentSchoolId)
-    },
-    'School not found'
+    }
   )
 })
 
