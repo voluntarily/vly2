@@ -37,7 +37,7 @@ test('show and accept form', t => {
       visible
     />)
 
-  t.is(wrapper.find('a').props().href, '/terms')
+  t.is(wrapper.find('a').first().props().href, '/terms')
   const comment = wrapper.find('textarea')
   comment.simulate('change', { target: { value: 'My Comment' } })
 
