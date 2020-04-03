@@ -22,6 +22,9 @@ module.exports = routes()
   .add('personnew', '/person/:new', 'person/persondetailpage')
   // Activities
   .add('acts', '/acts', 'act/actlistpage')
+  .add('acts_ask', '/a/:type', 'act/actlistpage')
+  .add('acts_offer', '/a/:type', 'act/actlistpage')
+
   .add('act', '/acts/:id', 'act/actdetailpage')
   .add('actnew', '/act/:new', 'act/actdetailpage')
   // .add('actsection', '/act/section', 'act/actlistsection')
