@@ -1,9 +1,10 @@
 import { Menu } from 'antd'
 import Link from 'next/link'
-import { withRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { useWindowSize } from '../../lib/useWindowSize'
+import { useRouter } from 'next/router'
+
 const { SubMenu, Item } = Menu
 const VMenu = styled(Menu)`
 border-bottom: 2px solid transparent;
@@ -17,7 +18,8 @@ border-right: none;
     // display: none;
   }
 `
-export const NavigationH = ({ items, router }) => {
+export const NavigationH = ({ items }) => {
+  const router = useRouter()
   const activeItem = router.pathname.slice(1)
   return (
     <VMenu
@@ -37,7 +39,8 @@ export const NavigationH = ({ items, router }) => {
     </VMenu>
   )
 }
-export const NavigationV = ({ items, router }) => {
+export const NavigationV = ({ items }) => {
+  const router = useRouter()
   const activeItem = router.pathname.slice(1)
   return (
     <VMenu
@@ -82,4 +85,4 @@ Navigation.propTypes = {
   defaultItem: PropTypes.string
 }
 
-export default withRouter(Navigation)
+export default Navigation

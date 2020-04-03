@@ -1,16 +1,12 @@
 // import { FormattedMessage } from 'react-intl'
 import { Avatar, Icon, Layout } from 'antd'
 import Link from 'next/link'
-// import Router from 'next/router'
-import PropTypes from 'prop-types'
 import React from 'react'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
-import Navigation from '../Navigation/Navigation'
-import links from './HeaderMenu'
+import { HeaderMenu, MenuShowState } from './HeaderMenu'
 import { useIntl } from 'react-intl'
 import { Role } from '../../server/services/authorize/role.js'
-// const Search = Input.Search
+import { useSelector } from 'react-redux'
 
 const Brand = styled.h1`
   font-weight: 300;
@@ -70,36 +66,11 @@ const StyledAvatar = styled(Avatar)`
     margin-right: 0px;
   }
 `
-// const SearchInput = styled(Search)`
-//   width: 20rem;
-//   display: inline-block;
-//   margin-left: 0.5rem;
-
-//   padding: 4px;
-//   border-radius: 4px;
-
-//   @media screen and (max-width: 767px) {
-//     display: none;
-//   }
-// `
-
-// const handleSearch = search => {
-//   Router.push({
-//     pathname: '/search',
-//     query: {
-//       search
-//     }
-//   })
-// }
-
-const getAllowedLinks = isAuthenticated =>
-  links()
-    .filter(l => !l.authRequired || (l.authRequired && isAuthenticated))
-    .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
-
 // eslint-disable-next-line no-unused-vars
-const Header = ({ isAuthenticated, me, ...props }) => {
+const Header = () => {
   const intl = useIntl()
+  const me = useSelector(state => state.session.me)
+  const isAuthenticated = useSelector(state => state.session.isAuthenticated)
   let notice = intl.formatMessage({ id: 'notice', defaultMessage: 'none' })
   if (notice === 'none') notice = '' // wipe notice if its set to none
   const height = '56px'
@@ -112,6 +83,11 @@ const Header = ({ isAuthenticated, me, ...props }) => {
     width: '100%',
     backgroundColor: 'white'
   }
+
+  let state = MenuShowState.ANON
+  if (isAuthenticated) state = MenuShowState.AUTH
+  if (me.role.includes(Role.VOLUNTEER)) state = MenuShowState.VOLUNTEER
+  if (me.role.includes(Role.ADMIN) || me.role.includes(Role.SUPPORT)) state = MenuShowState.ADMIN
   return (
     <Layout.Header style={headerStyle}>
       {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><Icon type='warning' /> {notice}</Notice>}
@@ -134,31 +110,23 @@ const Header = ({ isAuthenticated, me, ...props }) => {
           </LogoContainer>
         </Link>
         <div>
-          <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
+          <HeaderMenu state={state} />
 
         </div>
         {isAuthenticated &&
-          <StyledAvatar>\
-            <Link href={me && me._id ? `/people/${me._id}` : '/home'}>
+          <StyledAvatar>
+            <Link href='/home'>
               <Avatar
                 size='small'
-                src={me && me.imgUrlSm}
+                src={me.imgUrlSm}
                 icon='user'
                 alt='profile photo'
               />
             </Link>
-
           </StyledAvatar>}
       </MenuGrid>
     </Layout.Header>
   )
 }
-Header.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired
-}
-const mapStateToProps = store => ({
-  isAuthenticated: store.session.isAuthenticated,
-  me: store.session.me
-})
 
-export default connect(mapStateToProps)(Header)
+export default Header

@@ -13,7 +13,7 @@ export const PublicPage = Page => {
     const isPlain = props.isPlain
     return (
       <Layout>
-        {!isPlain && <Header {...props} />}
+        {!isPlain && <Header />}
         <Layout.Content>
           <FillWindow>
             <Page {...props} />
