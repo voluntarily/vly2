@@ -26,10 +26,10 @@ class MemoryMongo {
       keepAlive: true,
       keepAliveInitialDelay: 300000,
       poolSize: 30,
-      autoReconnect: true,
+      // autoReconnect: true,
       socketTimeoutMS: 360000,
-      connectTimeoutMS: 360000,
-      reconnectTries: Number.MAX_VALUE // Never stop trying to reconnect
+      connectTimeoutMS: 360000
+      // reconnectTries: Number.MAX_VALUE // Never stop trying to reconnect
       // bufferMaxEntries: 0 // fail immediately there's no connection
     }
     this.connection = mongoose.connect(this.mongoUri, mongooseOpts)

@@ -3,7 +3,6 @@ import sinon from 'sinon'
 import { config } from '../../../../config/serverConfig'
 import fetchMock from 'fetch-mock'
 import { initVerify } from '../personalVerification.controller'
-import { appReady } from '../../../server'
 import MockResponse from 'mock-res'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
@@ -14,11 +13,10 @@ const { PersonFields } = require('../../person/person.constants')
 const { PersonalVerificationStatus } = require('./../personalVerification.constants')
 const { PersonalVerification } = require('./../personalVerification')
 
-test.serial.beforeEach('before connect to database', async (t) => {
+test.before('before connect to database', async (t) => {
   try {
     t.context.memMongo = new MemoryMongo()
     await t.context.memMongo.start()
-    await appReady
   } catch (e) {
     console.error('personalVerification.controller.spec.js, before connect to database', e)
   }
@@ -26,8 +24,9 @@ test.serial.beforeEach('before connect to database', async (t) => {
   global.fetch = t.context.mockServer
 })
 
+test.afterEach.always(t => t.context.mockServer.reset())
+
 test.afterEach.always(async t => {
-  fetchMock.restore()
   await Person.remove()
   await PersonalVerification.remove()
 })
@@ -86,7 +85,7 @@ test.serial('initVerify should return 401 if cloudcheck returns an error', async
   t.is(1, fakeJson.callCount)
 })
 
-test.serial('initVerify should update person, personal verification and redirect if everything works', async t => {
+test.only('initVerify should update person, personal verification and redirect if everything works', async t => {
   const testPerson = await Person.create(people[1]).catch((err) => console.error('Unable to create people:', err))
 
   const fakeRedirect = sinon.fake()
@@ -106,6 +105,6 @@ test.serial('initVerify should update person, personal verification and redirect
   // console.log(personalVerification)
 
   const updatedPerson = await Person.findById(testPerson._id)
-  // console.log(updatedPerson)
-  t.is(PersonalVerificationStatus.IN_PROGRESS, updatedPerson.verified.find(v => v.name === PersonFields.NAME)[0].status)
+  // console.log(updatedPerson.verified.find(v => v.name === PersonFields.NAME))
+  t.is(PersonalVerificationStatus.IN_PROGRESS, updatedPerson.verified.find(v => v.name === PersonFields.NAME).status)
 })

@@ -46,7 +46,7 @@ const initVerify = async (req, res) => {
   })
 
   if (!(liveResponse && liveResponse.capture)) {
-    console.error(`Cloudcheck initVerification faild for reference: ${reference}, nonce: ${nonce}`)
+    console.error(`Cloudcheck initVerification failed for reference: ${reference}, nonce: ${nonce}`)
     return res.status(401).json({ error: 'There has been an error. Please try again.' })
   }
 
@@ -54,7 +54,7 @@ const initVerify = async (req, res) => {
   const update = { captureReference: liveResponse.capture.captureReference, status: PersonalVerificationStatus.IN_PROGRESS }
 
   await Person.findOneAndUpdate({ _id: me._id }, {
-    verifed: [
+    verified: [
       { name: PersonFields.NAME, status: PersonalVerificationStatus.IN_PROGRESS },
       { name: PersonFields.ADDRESS, status: PersonalVerificationStatus.IN_PROGRESS },
       { name: PersonFields.DOB, status: PersonalVerificationStatus.IN_PROGRESS }
