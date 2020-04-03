@@ -2,7 +2,8 @@ import React from 'react'
 import test from 'ava'
 import Navigation from '../Navigation/Navigation'
 import { mountWithIntl } from '../../lib/react-intl-test-helper'
-import withMockRoute from '../../server/util/mockRouter'
+import mockUseRouter from '../../server/util/mockUseRouter'
+test.before('Setup Route', mockUseRouter('/about'))
 const menu = [
   {
     key: 'acts',
@@ -33,9 +34,8 @@ test('renders the Navigation and Navigation properly', t => {
     items: menu,
     defaultItem: 'acts'
   }
-  const RoutedNavigation = withMockRoute(Navigation, '/about')
   const wrapper = mountWithIntl(
-    <RoutedNavigation {...props} />
+    <Navigation {...props} />
   )
 
   t.is(wrapper.find('Link').first().text(), 'Activities')
