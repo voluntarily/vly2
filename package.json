@@ -175,8 +175,7 @@
       "components/**/*.js",
       "hocs/**/*.js",
       "lib/**/*.js",
-      "pages/**/*.js",
-      "server/**/*.js"
+      "pages/**/*.js"
     ],
     "failFast": false,
     "timeout": "2m",
@@ -221,7 +220,8 @@
       "pages/api/*.js",
       "components/**/*.js",
       "server/**/*.js",
-      "lib/**/*.js"
+      "lib/**/*.js",
+      "robots.txt.prod"
     ],
     "exclude": [
       "**/__tests__/**",

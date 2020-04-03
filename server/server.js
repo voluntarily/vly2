@@ -75,6 +75,19 @@ const appReady = app.prepare().then(() => {
     next()
   })
 
+  // robots.txt
+  if (process.env.APP_URL.includes('live')) {
+    server.get('/robots.txt', function (req, res) {
+      res.type('text/plain')
+      res.send('User-agent: *\nDisallow: /\nAllow:/home')
+    })
+  } else {
+    server.get('/robots.txt', function (req, res) {
+      res.type('text/plain')
+      res.send('User-agent: *\nDisallow: /')
+    })
+  }
+
   // MongoDB
   mongoose.Promise = Promise
   if (process.env.NODE_ENV !== 'test') {
