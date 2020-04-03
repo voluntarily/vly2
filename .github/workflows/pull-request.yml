@@ -7,13 +7,13 @@ on:
       - master
 
 jobs:
-              
+
   component:
     name: Full tests and coverage
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - name: Check out
-      uses: actions/checkout@v2      
+      uses: actions/checkout@v2
     - name: Use Node 12
       uses: actions/setup-node@v1
       with:
@@ -23,19 +23,19 @@ jobs:
         mongoms_disable_postinstall: 1
         ci_node_index: 0
         ci_node_total: 1
-    - name: Full Tests          
+    - name: Full Tests
       run: |
         npm ci
         npm test
     - name: coverage
-      uses: codecov/codecov-action@v1 
+      uses: codecov/codecov-action@v1
 
   # integration:
   #   name: Integration Tests
   #   runs-on: self-hosted
   #   steps:
   #   - name: Check out
-  #     uses: actions/checkout@v2      
+  #     uses: actions/checkout@v2
   #   - name: Use Node 12
   #     uses: actions/setup-node@v1
   #     with:
@@ -45,7 +45,7 @@ jobs:
   #     mongoms_disable_postinstall: 1
   #     ci_node_index: 0
   #     ci_node_total: 1
-  #   - name: Integration Tests          
+  #   - name: Integration Tests
   #     run: |
   #       npm ci
   #       npx nyc --reporter=lcov --reporter=text ava

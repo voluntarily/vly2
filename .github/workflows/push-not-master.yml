@@ -7,12 +7,12 @@ on:
       - '!master'
 
 jobs:
-  lang:    
+  lang:
     name: Lang
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - name: Check out
-      uses: actions/checkout@v2      
+      uses: actions/checkout@v2
     - name: Use Node 12
       uses: actions/setup-node@v1
       with:
@@ -23,13 +23,13 @@ jobs:
         cp lang/en.json lang/en.orig.json
         npm run build:lang
         diff lang/en.json lang/en.orig.json
-      
+
   lint:
     name: Lint
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - name: Check out
-      uses: actions/checkout@v2      
+      uses: actions/checkout@v2
     - name: Use Node 12
       uses: actions/setup-node@v1
       with:
@@ -38,13 +38,13 @@ jobs:
       run: |
         npm ci
         npx standard
-          
+
   component:
     name: Component Tests
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - name: Check out
-      uses: actions/checkout@v2      
+      uses: actions/checkout@v2
     - name: Use Node 12
       uses: actions/setup-node@v1
       with:
@@ -54,7 +54,7 @@ jobs:
         mongoms_disable_postinstall: 1
         ci_node_index: 0
         ci_node_total: 1
-    - name: Component Tests          
+    - name: Component Tests
       run: |
         npm ci
-        npm test        
+        npm test

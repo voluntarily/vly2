@@ -10,10 +10,10 @@ on:
 jobs:
   test:
     name: Full test suite
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - name: Check out
-      uses: actions/checkout@v2      
+      uses: actions/checkout@v2
     - name: Use Node 12
       uses: actions/setup-node@v1
       with:
@@ -22,7 +22,7 @@ jobs:
         mongoms_version: 4.0.5
         mongoms_disable_postinstall: 1
         ci_node_index: 0
-        ci_node_total: 1        
+        ci_node_total: 1
     - name: Full test suite
       run: |
         npm ci
@@ -34,14 +34,22 @@ jobs:
     needs: test
     steps:
     - name: Check out
-      uses: actions/checkout@v2      
+      uses: actions/checkout@v2
     - name: Use Node 12
       uses: actions/setup-node@v1
+    - name: Get AWS dependencies
+      run: |
+        pip install awscli
+        wget https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest -O ./ecs-cli
+        chmod +x ./ecs-cli
+        mv ./ecs-cli /usr/local/bin/
+        which ecs-cli
+
     - name: build
       run: ./x/aws/buildimage
     - name: deploy
       run: ./x/aws/deploy-alpha
-  
+
       env:
         AWS_ACCOUNT_ID: 585172581592
         AWS_ACCESS_KEY_ID: AKIAYQPYA7TMKZS4NM6W
@@ -49,7 +57,7 @@ jobs:
         AWS_DEFAULT_REGION: ap-southeast-2
         BADGR_USERNAME: andrew+badgr@voluntarily.nz
         BADGR_PASSWORD: ${{ secrets.BADGR_PASSWORD }}
-        SMTP_ID: ${{ secrets.SMTP_ID }} 
+        SMTP_ID: ${{ secrets.SMTP_ID }}
         SMTP_PWD: ${{ secrets.SMTP_PWD }}
         VLY_PRIVATE_KEY: ${{ secrets.VLY_PRIVATE_KEY }}
         IMAGE_TAG_VERSION: ${{ github.event.pull_request.head.sha }}
