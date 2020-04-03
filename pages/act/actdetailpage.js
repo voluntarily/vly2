@@ -164,13 +164,14 @@ export const ActDetailPage = ({
 }
 
 ActDetailPage.getInitialProps = async ({ store, query }) => {
+  const isAuthenticated = store.getState().session.isAuthenticated
   const me = store.getState().session.me
   const isNew = query && query.new && query.new === 'new'
   const actExists = !!(query && query.id) // !! converts to a boolean value
 
   if (isNew) {
     await Promise.all([
-      store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })),
+      isAuthenticated ? store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })) : Promise.resolve(),
       store.dispatch(reduxApi.actions.tags.get())
     ])
     return {
@@ -180,7 +181,7 @@ ActDetailPage.getInitialProps = async ({ store, query }) => {
     if (actExists) {
       try {
         await Promise.all([
-          store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })),
+          isAuthenticated ? store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })) : Promise.resolve(),
           store.dispatch(reduxApi.actions.tags.get()),
           store.dispatch(reduxApi.actions.activities.get(query)),
           store.dispatch(
