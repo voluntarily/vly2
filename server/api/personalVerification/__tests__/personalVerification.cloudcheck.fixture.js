@@ -10,7 +10,26 @@ export const liveInitResponseSuccess = {
     capture: {
       reference: 'voluntarily-reference',
       captureReference: 'capture-reference',
-      url: 'redirect-url'
+      createdDate: '2013-05-06 12:02',
+      completed: false,
+      url: 'redirect-url',
+      status: 'PENDING',
+      recognizedDocuments: [],
+      images: [],
+      ipAddresses: [
+        '127.0.0.1'
+      ]
+    }
+  }
+}
+
+export const liveResponseSuccess = {
+  body: {
+    capture: {
+      liveReference: 'voluntarily-reference',
+      captureReference: 'capture-reference',
+      liveCaptured: 'sdfgsdfgsdfg',
+      liveToken: 'asdfasdfasdfasdf'
     }
   }
 }

@@ -24,9 +24,8 @@ test.before('before connect to database', async (t) => {
   global.fetch = t.context.mockServer
 })
 
-test.afterEach.always(t => t.context.mockServer.reset())
-
 test.afterEach.always(async t => {
+  t.context.mockServer.reset()
   await Person.remove()
   await PersonalVerification.remove()
 })
@@ -85,9 +84,8 @@ test.serial('initVerify should return 401 if cloudcheck returns an error', async
   t.is(1, fakeJson.callCount)
 })
 
-test.only('initVerify should update person, personal verification and redirect if everything works', async t => {
+test.serial('initVerify should update person, personal verification and redirect if everything works', async t => {
   const testPerson = await Person.create(people[1]).catch((err) => console.error('Unable to create people:', err))
-
   const fakeRedirect = sinon.fake()
   const response = new MockResponse()
   response.redirect = (url) => fakeRedirect(url)
@@ -101,10 +99,9 @@ test.only('initVerify should update person, personal verification and redirect i
 
   t.is(1, fakeRedirect.callCount)
   t.is(liveInitResponseSuccess.body.capture.url, fakeRedirect.lastArg)
-  // const personalVerification = await PersonalVerification.find({ person: testPerson._id })
-  // console.log(personalVerification)
 
   const updatedPerson = await Person.findById(testPerson._id)
-  // console.log(updatedPerson.verified.find(v => v.name === PersonFields.NAME))
   t.is(PersonalVerificationStatus.IN_PROGRESS, updatedPerson.verified.find(v => v.name === PersonFields.NAME).status)
+  t.is(PersonalVerificationStatus.IN_PROGRESS, updatedPerson.verified.find(v => v.name === PersonFields.ADDRESS).status)
+  t.is(PersonalVerificationStatus.IN_PROGRESS, updatedPerson.verified.find(v => v.name === PersonFields.DOB).status)
 })

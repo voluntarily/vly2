@@ -99,7 +99,7 @@ const verifyLiveCallback = async (req, res) => {
       verificationObject: driversLicenceVerificationResult
     }
     const personUpdate = {
-      verifed: [
+      verified: [
         {
           name: PersonFields.DOB,
           status: driversLicenceVerificationResult.verification.validated.dateofbirth ? PersonalVerificationStatus.VERIFIED : PersonalVerificationStatus.NOT_VERIFIED,
