@@ -6,9 +6,11 @@ import Html from '../VTheme/Html'
 import { TagContainer } from '../VTheme/ItemList'
 import { ProfilePanel } from '../VTheme/Profile'
 import { OpSectionGrid } from '../VTheme/VTheme'
-import { Divider } from 'antd'
+import { Button, Divider } from 'antd'
 import { ShareLinks } from '../Op/OpShareLinks'
 import { config } from '../../config/clientConfig'
+import { ActReadMore } from './ActReadMore'
+import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 export function ActAboutPanel ({ act }) {
   const description = act.description || ''
@@ -16,28 +18,63 @@ export function ActAboutPanel ({ act }) {
   return (
     <ProfilePanel>
       <OpSectionGrid>
-        <div>
-          <h2><FormattedMessage id='ActAboutPanel.subtitle' defaultMessage='About this activity' /></h2>
-          {/* {act.subtitle && <Alert message={act.subtitle} type='info' showIcon />} */}
+        <div id='left_column'>
+          <h2><FormattedMessage id='ActAboutPanel.section.title.about' defaultMessage='About' /></h2>
+          <TagContainer>
+            <TagDisplay tags={act.tags} />
+          </TagContainer>
         </div>
-        <div>
+        <div id='right_column'>
           <Html>
             {description}
           </Html>
-          <Divider />
-          <TagContainer>
-            <h5><FormattedMessage id='ActAboutPanel.categories' defaultMessage='Categories' /></h5>
-            <TagDisplay tags={act.tags} />
-          </TagContainer>
-          <Divider />
-          <section>
-            <h5><FormattedMessage id='ActAboutPanel.share' defaultMessage='Share' /></h5>
-            <ShareLinks url={appUrl} />
-          </section>
+        </div>
+      </OpSectionGrid>
+      <Divider />
+      <OpSectionGrid>
+        <div id='left_column'>
+          <h2>
+            <FormattedMessage
+              id='ActAboutPanel.section.title.guide'
+              defaultMessage='Activity Guide'
+            />
+          </h2>
+        </div>
+        <div id='right_column'>
+          <p>
+            <FormattedMessage
+              id='ActAboutPanel.section.prompt.guide'
+              defaultMessage='A description of what you need to prepare and do before you can do the thing.'
+            />
+          </p>
+          <ActReadMore act={act} />
+          <Link href={`/acts/${act._id}?tab=resources`}>
+            <Button block shape='round' size='large'>
+              <FormattedMessage
+                id='ActAboutPanel.button.guide'
+                defaultMessage='See all resources'
+              />
+            </Button>
+          </Link>
 
         </div>
       </OpSectionGrid>
+      <Divider />
+      <OpSectionGrid>
+        <section>
+          <h5><FormattedMessage id='ActAboutPanel.share' defaultMessage='Share' /></h5>
+          <ShareLinks url={appUrl} />
+        </section>
+      </OpSectionGrid>
+      <Divider />
 
+      <OpSectionGrid>
+        <section>
+          <h5><FormattedMessage id='ActAboutPanel.share' defaultMessage='Share' /></h5>
+          <ShareLinks url={appUrl} />
+        </section>
+      </OpSectionGrid>
+      <Divider />
     </ProfilePanel>)
 }
 
