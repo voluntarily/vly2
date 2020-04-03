@@ -39,8 +39,7 @@ test('Tag API - anon - read', async t => {
   const res = await request(server)
     .get('/api/tags')
     .set('Accept', 'application/json')
-    .expect(403)
-  t.is(res.status, 403)
+  t.is(res.status, 200)
 })
 test('Tag API - anon - update', async t => {
   const tag = t.context.tags[0]

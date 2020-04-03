@@ -14,19 +14,9 @@ interface Rule {
 }
 */
 const ruleBuilder = (session) => {
-  // block all api call for non log in user
-  const anonAbilities = [
-    {
-      subject: SchemaName,
-      action: Action.CRUD,
-      inverted: true,
-      reason: 'You must be signed in to access this resource'
-    }
-  ]
-
   // allow log in person to list the tags
   // no create, update, delete via the API
-  const defaultAbilities = [
+  const basicAbilities = [
     {
       subject: SchemaName,
       action: [Action.LIST, Action.READ]
@@ -39,9 +29,9 @@ const ruleBuilder = (session) => {
   }]
 
   return {
-    [Role.ANON]: anonAbilities,
-    [Role.BASIC]: defaultAbilities,
-    [Role.VOLUNTEER]: defaultAbilities,
+    [Role.ANON]: basicAbilities,
+    [Role.BASIC]: basicAbilities,
+    [Role.VOLUNTEER]: basicAbilities,
     [Role.SUPPORT]: adminAbilities,
     [Role.ADMIN]: adminAbilities
   }
