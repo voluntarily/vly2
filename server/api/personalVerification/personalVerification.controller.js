@@ -75,7 +75,7 @@ const verifyLiveCallback = async (req, res) => {
   const update = { liveCaptured, liveToken }
 
   const personalVerification = await PersonalVerification.findOne(query).exec()
-  PersonalVerification.findOneAndUpdate(query, update, () => console.log('Personal Verification updated with liveCapture & liveToken'))
+  await PersonalVerification.findOneAndUpdate(query, update, () => console.log('Personal Verification updated with liveCapture & liveToken'))
 
   const driversLicence = await getDriversLicenceData(captureReference)
   const driversLicenceVerificationResult = await verifyDriversLicence(driversLicence, personalVerification.person, req.query.liveReference)
@@ -135,11 +135,11 @@ const verifyDriversLicence = async (driversLicence, personId, reference) => {
         city: 'Christchurch'
       },
       name: {
-        given: driversLicence.givenName,
-        middle: driversLicence.middleName,
-        family: driversLicence.familyName
+        given: driversLicence.givenName ? driversLicence.givenName : undefined,
+        middle: driversLicence.middleName ? driversLicence.middleName : undefined,
+        family: driversLicence.familyName ? driversLicence.familyName : undefined
       },
-      dateofbirth: driversLicence.dateOfBirth,
+      dateofbirth: driversLicence.dateOfBirth ? driversLicence.dateOfBirth : undefined,
       driverslicence: {
         number: driversLicence.number,
         version: driversLicence.version
@@ -148,6 +148,9 @@ const verifyDriversLicence = async (driversLicence, personId, reference) => {
     reference,
     consent: 'Yes'
   }
+
+  // TODO: Remove
+  console.log(data)
 
   const objVerify = {
     data: JSON.stringify(data),
