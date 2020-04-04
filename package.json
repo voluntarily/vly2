@@ -5,6 +5,8 @@
   "main": "server/server.js",
   "scripts": {
     "test": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava",
+    "test:root": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava __tests__/**/*.spec.js",
+    "test:security": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava **/*ability.spec.js",
     "test:component": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava",
     "test:integration": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava",
     "watch:test": "npm run test -- --watch",

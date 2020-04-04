@@ -7,44 +7,24 @@ on:
       - '!master'
 
 jobs:
-  lang:
-    name: Lang
+  build:
     runs-on: ubuntu-latest
-    steps:
-    - name: Check out
-      uses: actions/checkout@v2
-    - name: Use Node 12
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - name: Lang
-      run: |
-        npm ci
-        cp lang/en.json lang/en.orig.json
-        npm run build:lang
-        diff lang/en.json lang/en.orig.json
 
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
     steps:
-    - name: Check out
-      uses: actions/checkout@v2
-    - name: Use Node 12
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - name: Lint
-      run: |
-        npm ci
-        npx standard
+    - uses: actions/checkout@v2
 
-  component:
-    name: Component Tests
-    runs-on: ubuntu-latest
-    steps:
-    - name: Check out
-      uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
     - name: Use Node 12
       uses: actions/setup-node@v1
       with:
@@ -54,7 +34,20 @@ jobs:
         mongoms_disable_postinstall: 1
         ci_node_index: 0
         ci_node_total: 1
-    - name: Component Tests
+
+    - name: Set up dependencies
+      run: npm ci
+
+    - name: Lang
+      run: |
+        cp lang/en.json lang/en.orig.json
+        npm run build:lang
+        diff lang/en.json lang/en.orig.json
+
+    - name: lint
       run: |
         npm ci
-        npm test
+        npx standard
+
+    - name: Test
+      run: npm test
