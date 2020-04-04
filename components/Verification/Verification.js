@@ -1,20 +1,25 @@
-import React, { useState } from 'react'
-import Router from 'next/router'
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { Modal } from 'antd'
 import VerifyButton from './VerifyButton'
 import PropTypes from 'prop-types'
+import { ErrorRedirectUrlQuery } from '../../server/api/personalVerification/personalVerification.constants'
 
 const Verification = (props) => {
+  const router = useRouter()
   const [modalOpen, setModalOpen] = useState(false)
   const [errorModalOpen, setErrorModalOpen] = useState(false)
 
-  // useEffect(() => {
-  //   setErrorModalOpen(Router.asPath.includes('verificatonError=true'))
-  // })
+  useEffect(() => {
+    if (router.asPath.includes(ErrorRedirectUrlQuery)) {
+      setErrorModalOpen(true)
+      router.replace(router.asPath.replace(`&${ErrorRedirectUrlQuery}`, ''))
+    }
+  })
 
   const handleConfirmModal = async () => {
-    const signThruUrl = `/api/verify?meid=${props.meid}`
-    Router.push(signThruUrl)
+    const redirectUrl = `/api/verify?meid=${props.meid}`
+    router.push(redirectUrl)
     setModalOpen(false)
   }
 
@@ -35,7 +40,7 @@ const Verification = (props) => {
                     code sets out principles and behaviours that the Voluntarily community reasonably
                     expects of people participating in voluntarily activities.
         </p>
-        {Router.asPath}
+        {router.asPath}
         <h3>Basic Principles</h3>
         <p>The community expects volunteers to:
           <ul>

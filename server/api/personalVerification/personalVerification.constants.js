@@ -5,8 +5,10 @@ const PersonalVerificationStatus = {
   IN_PROGRESS: 'in_progress',
   FAILED: 'failed'
 }
+const ErrorRedirectUrlQuery = 'verificationerror=true'
 
 module.exports = {
   SchemaName,
-  PersonalVerificationStatus
+  PersonalVerificationStatus,
+  ErrorRedirectUrlQuery
 }
