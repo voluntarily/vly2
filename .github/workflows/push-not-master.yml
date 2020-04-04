@@ -1,4 +1,4 @@
-name: V2LY Not Master
+name: V2LY
 
 on:
   push:
@@ -153,7 +153,7 @@ jobs:
         npm run test:components
 
   testlibraries:
-    name: Test Server
+    name: Test Libraries
     needs: setup
     runs-on: ubuntu-latest
     steps:
