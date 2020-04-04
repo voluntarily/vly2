@@ -1,4 +1,4 @@
-name: V2LY
+name: V2LY not master
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - '!master'
   pull_request:
     branches:
-      - master
+      - '!master'
 
 jobs:
   setup:
