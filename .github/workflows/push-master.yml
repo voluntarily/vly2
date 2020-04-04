@@ -181,25 +181,25 @@ jobs:
     steps:
     - name: Check out
       uses: actions/checkout@v2
+
     - name: Use Node 12
       uses: actions/setup-node@v1
-    - name: Get AWS dependencies
-      run: |
-        pip install awscli
-        wget https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest -O ./ecs-cli
-        chmod +x ./ecs-cli
-        mv ./ecs-cli /usr/local/bin/
-        which ecs-cli
+
+    - name: Configure AWS credentials?
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-southeast-2
 
     - name: build
       run: ./x/aws/buildimage
+
     - name: deploy
       run: ./x/aws/deploy-alpha
 
       env:
         AWS_ACCOUNT_ID: 585172581592
-        AWS_ACCESS_KEY_ID: AKIAYQPYA7TMKZS4NM6W
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: ap-southeast-2
         BADGR_USERNAME: andrew+badgr@voluntarily.nz
         BADGR_PASSWORD: ${{ secrets.BADGR_PASSWORD }}
