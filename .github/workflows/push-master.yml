@@ -24,22 +24,46 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-southeast-2
 
-    - name: build
-      run: ./x/aws/buildimage
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
 
-    - name: deploy
-      run: ./x/aws/deploy-alpha
+    - name: Build, tag, and push image to Amazon ECR
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: vly-alpha
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+    - name: Logout of Amazon ECR
+      if: always()
+      run: docker logout ${{ steps.login-ecr.outputs.registry }}
+
+    - name: Render Amazon ECS task definition
+      id: render-web-container
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: task-definition.json
+        container-name: web
+        image: amazon/amazon-ecs-sample:latest
+
+    - name: Deploy to Amazon ECS service
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.render-web-container.outputs.task-definition }}
+        service: vly-alpha
+        cluster: vly-alpha-ECSCluster
 
       env:
-        AWS_ACCOUNT_ID: 585172581592
-        AWS_DEFAULT_REGION: ap-southeast-2
+        REVISION: 
+        APP_URL: https://alpha.voluntarily.nz
+        VLY_PRIVATE_KEY: ${{ secrets.VLY_PRIVATE_KEY }}
+        SMTP_ID: ${{ secrets.SMTP_ID }}
         BADGR_USERNAME: andrew+badgr@voluntarily.nz
         BADGR_PASSWORD: ${{ secrets.BADGR_PASSWORD }}
-        SMTP_ID: ${{ secrets.SMTP_ID }}
         SMTP_PWD: ${{ secrets.SMTP_PWD }}
-        VLY_PRIVATE_KEY: ${{ secrets.VLY_PRIVATE_KEY }}
-        IMAGE_TAG_VERSION: ${{ github.head_ref }}
-        HOME: /root
-        APP_URL: https://alpha.voluntarily.nz
         RAYGUN_EXPRESS_SERVER_API_KEY: ${{ secrets.RAYGUN_EXPRESS_SERVER_API_KEY }}
         RAYGUN_REACT_CLIENT_API_KEY: ${{ secrets.RAYGUN_REACT_CLIENT_API_KEY }}
+        
