@@ -104,9 +104,9 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
     - name: Test Root __tests__    
-    run: |
-      npm ci
-      npm run test:root
+      run: |
+        npm ci
+        npm run test:root
 
   testserver:
     name: Test Server
