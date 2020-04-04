@@ -36,7 +36,7 @@ const postCloudcheck = async (options) => {
     return data
   }).catch(error => {
     console.error(error)
-    return undefined
+    throw Error(`Error caling cloudcheck with Path: ${path}`)
   })
 }
 
@@ -62,7 +62,7 @@ const getCloudcheck = async (options) => {
       return data.capture
     }).catch(error => {
       console.error(error)
-      return undefined
+      throw Error(`Error caling cloudcheck with Path: ${path}`)
     })
 }
 

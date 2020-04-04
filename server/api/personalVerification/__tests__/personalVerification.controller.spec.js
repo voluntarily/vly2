@@ -160,5 +160,4 @@ test.serial('verifyLiveCallback works', async t => {
   t.is(PersonalVerificationStatus.VERIFIED, updatedPersonalVerification.status)
   t.is(verificationReference, updatedPersonalVerification.verificationReference)
   t.deepEqual(verifyResponseData.body, updatedPersonalVerification.verificationObject)
-
 })

@@ -9,119 +9,129 @@ const { config } = require('../../../config/serverConfig')
   api/verify -> initiates the verification process
  */
 const initVerify = async (req, res) => {
-  const me = req && req.session && req.session.me
-  if (!me) {
-    return res.sendStatus(401)
+  try {
+    const me = req && req.session && req.session.me
+    if (!me) {
+      throw Error('User is not authenticated')
+    }
+
+    const person = await Person.findById(me._id).lean().exec()
+    if (!person) {
+      throw Error('User not found')
+    }
+
+    const reference = createReference()
+    await new PersonalVerification({
+      person,
+      voluntarilyReference: reference
+    }).save()
+
+    const nonce = createNonce()
+    const timestamp = createUnixTimestamp()
+    const callback = `${config.appUrl}/api/verify/live/callback`
+    const data = {
+      callback,
+      reference
+    }
+
+    const obj = {
+      data: JSON.stringify(data),
+      key: config.verification.cloudcheck.apiKey,
+      nonce,
+      timestamp
+    }
+
+    const liveResponse = await postCloudcheck({
+      data: obj,
+      path: '/live/'
+    })
+
+    if (!(liveResponse && liveResponse.capture)) {
+      throw Error(`Cloudcheck initVerification failed for reference: ${reference}, nonce: ${nonce}`)
+    }
+
+    const query = { voluntarilyReference: liveResponse.capture.reference }
+    const update = { captureReference: liveResponse.capture.captureReference, status: PersonalVerificationStatus.IN_PROGRESS }
+
+    await Person.findOneAndUpdate({ _id: me._id }, {
+      verified: [
+        { name: PersonFields.NAME, status: PersonalVerificationStatus.IN_PROGRESS },
+        { name: PersonFields.ADDRESS, status: PersonalVerificationStatus.IN_PROGRESS },
+        { name: PersonFields.DOB, status: PersonalVerificationStatus.IN_PROGRESS }
+      ]
+    }, () => console.log('Person verified* updated to IN_PROGRESS'))
+
+    await PersonalVerification.findOneAndUpdate(query, update, () => console.log('Personal Verification updated to IN_PROGRESS'))
+
+    return res.redirect(liveResponse.capture.url)
+  } catch (error) {
+    console.error(error)
+    return res.redirect(`${config.appUrl}/home?tab=profile&verificationerror=true`)
   }
-
-  const person = await Person.findById(me._id).lean().exec()
-  if (!person) {
-    return res.sendStatus(404)
-  }
-
-  const reference = createReference()
-  await new PersonalVerification({
-    person,
-    voluntarilyReference: reference
-  }).save()
-
-  const nonce = createNonce()
-  const timestamp = createUnixTimestamp()
-  const callback = `${config.appUrl}/api/verify/live/callback`
-  const data = {
-    callback,
-    reference
-  }
-
-  const obj = {
-    data: JSON.stringify(data),
-    key: config.verification.cloudcheck.apiKey,
-    nonce,
-    timestamp
-  }
-
-  const liveResponse = await postCloudcheck({
-    data: obj,
-    path: '/live/'
-  })
-
-  if (!(liveResponse && liveResponse.capture)) {
-    console.error(`Cloudcheck initVerification failed for reference: ${reference}, nonce: ${nonce}`)
-    return res.status(401).json({ error: 'There has been an error. Please try again.' })
-  }
-
-  const query = { voluntarilyReference: liveResponse.capture.reference }
-  const update = { captureReference: liveResponse.capture.captureReference, status: PersonalVerificationStatus.IN_PROGRESS }
-
-  await Person.findOneAndUpdate({ _id: me._id }, {
-    verified: [
-      { name: PersonFields.NAME, status: PersonalVerificationStatus.IN_PROGRESS },
-      { name: PersonFields.ADDRESS, status: PersonalVerificationStatus.IN_PROGRESS },
-      { name: PersonFields.DOB, status: PersonalVerificationStatus.IN_PROGRESS }
-    ]
-  }, () => console.log('Person verified* updated to IN_PROGRESS'))
-
-  await PersonalVerification.findOneAndUpdate(query, update, () => console.log('Personal Verification updated to IN_PROGRESS'))
-
-  return res.redirect(liveResponse.capture.url)
 }
 
 const verifyLiveCallback = async (req, res) => {
-  const liveCaptured = req.query.liveCaptured
-  const liveToken = req.query.liveToken
-  const captureReference = req.query.captureReference
+  try {
+    const liveCaptured = req.query.liveCaptured
+    const liveToken = req.query.liveToken
+    const captureReference = req.query.captureReference
 
-  const query = { voluntarilyReference: req.query.liveReference, captureReference }
-  const update = { liveCaptured, liveToken }
+    const query = { voluntarilyReference: req.query.liveReference, captureReference }
+    const update = { liveCaptured, liveToken }
 
-  const personalVerification = await PersonalVerification.findOne(query).exec()
-  await PersonalVerification.findOneAndUpdate(query, update, () => console.log('Personal Verification updated with liveCapture & liveToken'))
+    const personalVerification = await PersonalVerification.findOne(query).exec()
+    await PersonalVerification.findOneAndUpdate(query, update, () => console.log('Personal Verification updated with liveCapture & liveToken'))
 
-  const driversLicence = await getDriversLicenceData(captureReference)
-  const driversLicenceVerificationResult = await verifyDriversLicence(driversLicence, personalVerification.person, req.query.liveReference)
+    const driversLicence = await getDriversLicenceData(captureReference)
+    const driversLicenceVerificationResult = await verifyDriversLicence(driversLicence, personalVerification.person, req.query.liveReference)
 
-  let driversLicenceVerificationUpdate
+    let driversLicenceVerificationUpdate
+    let personUpdate
+    if (!driversLicenceVerificationResult || driversLicenceVerificationResult.verification.error) {
+      console.error(`Failed verification of drivers licence with message: ${driversLicenceVerificationResult.verification}`)
+      driversLicenceVerificationUpdate = {
+        status: PersonalVerificationStatus.FAILED,
+        verificationObject: driversLicenceVerificationResult
+      }
+    } else {
+      console.log(driversLicenceVerificationResult)
 
-  if (!driversLicenceVerificationResult || driversLicenceVerificationResult.verification.error) {
-    console.error(`Failed verification of drivers licence with message: ${driversLicenceVerificationResult.verification}`)
-    driversLicenceVerificationUpdate = {
-      status: PersonalVerificationStatus.FAILED,
-      verificationObject: driversLicenceVerificationResult
+      const verificationReference = driversLicenceVerificationResult.verification.verificationReference
+
+      driversLicenceVerificationUpdate = {
+        status: driversLicenceVerificationResult.verification.verificationSuccess ? PersonalVerificationStatus.VERIFIED : PersonalVerificationStatus.NOT_VERIFIED,
+        verificationReference,
+        verificationObject: driversLicenceVerificationResult
+      }
+      personUpdate = {
+        verified: [
+          {
+            name: PersonFields.DOB,
+            status: driversLicenceVerificationResult.verification.validated.dateofbirth ? PersonalVerificationStatus.VERIFIED : PersonalVerificationStatus.NOT_VERIFIED,
+            verificationReference
+          },
+          {
+            name: PersonFields.ADDRESS,
+            status: driversLicenceVerificationResult.verification.validated.address ? PersonalVerificationStatus.VERIFIED : PersonalVerificationStatus.NOT_VERIFIED,
+            verificationReference
+          },
+          {
+            name: PersonFields.NAME,
+            status: driversLicenceVerificationResult.verification.validated.name ? PersonalVerificationStatus.VERIFIED : PersonalVerificationStatus.NOT_VERIFIED,
+            verificationReference
+          }
+        ]
+      }
     }
-  } else {
-    console.log(driversLicenceVerificationResult)
-
-    const verificationReference = driversLicenceVerificationResult.verification.verificationReference
-
-    driversLicenceVerificationUpdate = {
-      status: driversLicenceVerificationResult.verification.verificationSuccess ? PersonalVerificationStatus.VERIFIED : PersonalVerificationStatus.NOT_VERIFIED,
-      verificationReference,
-      verificationObject: driversLicenceVerificationResult
-    }
-    const personUpdate = {
-      verified: [
-        {
-          name: PersonFields.DOB,
-          status: driversLicenceVerificationResult.verification.validated.dateofbirth ? PersonalVerificationStatus.VERIFIED : PersonalVerificationStatus.NOT_VERIFIED,
-          verificationReference
-        },
-        {
-          name: PersonFields.ADDRESS,
-          status: driversLicenceVerificationResult.verification.validated.address ? PersonalVerificationStatus.VERIFIED : PersonalVerificationStatus.NOT_VERIFIED,
-          verificationReference
-        },
-        {
-          name: PersonFields.NAME,
-          status: driversLicenceVerificationResult.verification.validated.name ? PersonalVerificationStatus.VERIFIED : PersonalVerificationStatus.NOT_VERIFIED,
-          verificationReference
-        }
-      ]
-    }
-    Person.findOneAndUpdate({ _id: personalVerification.person }, personUpdate, () => console.log('Updated Person with verification result'))
+    
+    res.redirect(`${config.appUrl}/home?tab=profile`)
+  } catch (error) {
+    console.error(error)
+    return res.redirect(`${config.appUrl}/home?tab=profile&verificationerror=true`)
+  } finally {
+    await Person.findOneAndUpdate({ _id: personalVerification.person }, personUpdate, () => console.log('Updated Person with verification result'))
+    await PersonalVerification.findOneAndUpdate(query, driversLicenceVerificationUpdate, () => console.log('Updated Personal Verification object'))
   }
-
-  PersonalVerification.findOneAndUpdate(query, driversLicenceVerificationUpdate, () => console.log('Updated Personal Verification object'))
-  res.redirect(`${config.appUrl}/home?tab=profile`)
 }
 
 const verifyDriversLicence = async (driversLicence, personId, reference) => {

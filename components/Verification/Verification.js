@@ -6,6 +6,11 @@ import PropTypes from 'prop-types'
 
 const Verification = (props) => {
   const [modalOpen, setModalOpen] = useState(false)
+  const [errorModalOpen, setErrorModalOpen] = useState(false)
+
+  // useEffect(() => {
+  //   setErrorModalOpen(Router.asPath.includes('verificatonError=true'))
+  // })
 
   const handleConfirmModal = async () => {
     const signThruUrl = `/api/verify?meid=${props.meid}`
@@ -30,6 +35,7 @@ const Verification = (props) => {
                     code sets out principles and behaviours that the Voluntarily community reasonably
                     expects of people participating in voluntarily activities.
         </p>
+        {Router.asPath}
         <h3>Basic Principles</h3>
         <p>The community expects volunteers to:
           <ul>
@@ -40,6 +46,13 @@ const Verification = (props) => {
           </ul>
         </p>
       </Modal>
+      {
+        errorModalOpen && Modal.error({
+          title: 'Sorry something went wrong',
+          content: 'Ohh... we really appologise but something went wrong during the verification. Would you mind trying it again after some time?',
+          onClick: () => setErrorModalOpen(false)
+        })
+      }
     </section>
   )
 }

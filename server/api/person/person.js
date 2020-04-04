@@ -56,7 +56,6 @@ const personSchema = new Schema({
     default: 'active',
     enum: [...Object.values(PersonStatus)]
   },
-  tags: [String],
   // helper fields - these are only in the schema and don't need to be stored
   href: String,
   orgAdminFor: [{ type: Schema.Types.ObjectId, ref: 'Organisation' }],
