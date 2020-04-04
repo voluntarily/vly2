@@ -8,8 +8,8 @@ MY_DIR=$( dirname "${BASH_SOURCE[0]}" )
 
 ESCAPED_TAG_VERSION=${IMAGE_TAG_VERSION//\//-}
 
-# Get a docker login and run it
-source ${MY_DIR}/login-sydney
+# Get a docker login and run it, AS: don't think we need this
+# source ${MY_DIR}/login-sydney
 
 REVISION=`git describe --always --dirty`"_"`date -u +%Y%m%dT%H%M%SZ`
 
@@ -27,7 +27,7 @@ docker build --target production \
     --tag voluntarily/vly2:${ESCAPED_TAG_VERSION} .
 
 # tag the image
-UPSTREAM_TAG=585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-alpha:${ESCAPED_TAG_VERSION}
+UPSTREAM_TAG=${AWS_ACCOUNT_ID}.dkr.ecr.ap-southeast-2.amazonaws.com/vly-alpha:${ESCAPED_TAG_VERSION}
 
 docker tag voluntarily/vly2:${ESCAPED_TAG_VERSION} ${UPSTREAM_TAG}
 
