@@ -103,8 +103,10 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-    - name: Test Root __tests__
-      run: npm run test:root
+    - name: Test Root __tests__    
+    run: |
+      npm ci
+      npm run test:root
 
   testserver:
     name: Test Server
@@ -124,7 +126,9 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
     - name: Test Server (and security)
-      run: npm run test:server
+      run: |
+        npm ci
+        npm run test:server
 
   testcomponents:
     name: Test Components
@@ -144,7 +148,9 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
     - name: Test Server (and security)
-      run: npm run test:components
+      run: |
+        npm ci
+        npm run test:components
 
   testlibraries:
     name: Test Server
@@ -164,4 +170,6 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
     - name: Test Server (and security)
-      run: npm run test:lib
+      run: |
+        npm ci
+        npm run test:lib
