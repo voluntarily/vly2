@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { Modal } from 'antd'
+import { useRouter, Router } from 'next/router'
+import { Modal, Button } from 'antd'
 import VerifyButton from './VerifyButton'
 import PropTypes from 'prop-types'
 import { ErrorRedirectUrlQuery } from '../../server/api/personalVerification/personalVerification.constants'
@@ -13,7 +13,8 @@ const Verification = (props) => {
   useEffect(() => {
     if (router.asPath.includes(ErrorRedirectUrlQuery)) {
       setErrorModalOpen(true)
-      router.replace(router.asPath.replace(`&${ErrorRedirectUrlQuery}`, ''))
+      const newUrl = router.asPath.replace(`&${ErrorRedirectUrlQuery}`, '')
+      router.replace(router.asPath, newUrl, { shallow: true })
     }
   })
 
@@ -23,6 +24,10 @@ const Verification = (props) => {
     setModalOpen(false)
   }
 
+  const handleErrorModalClose = () => {
+    setErrorModalOpen(false)
+  }
+
   return (
     <section>
       <VerifyButton onClick={() => setModalOpen(true)} />
@@ -30,7 +35,7 @@ const Verification = (props) => {
         title='Code of Conduct'
         visible={modalOpen}
         onOk={() => handleConfirmModal()}
-        okButtonProps={({ type: 'promary' })}
+        okButtonProps={({ type: 'primary' })}
         onCancel={() => setModalOpen(false)}
       >
         <h1>Being a great volunteer </h1>
@@ -40,24 +45,27 @@ const Verification = (props) => {
                     code sets out principles and behaviours that the Voluntarily community reasonably
                     expects of people participating in voluntarily activities.
         </p>
-        {router.asPath}
         <h3>Basic Principles</h3>
-        <p>The community expects volunteers to:
-          <ul>
-            <li>Conduct themselves honestly and in good faith at all times. </li>
-            <li>Comply with all laws, including sale of goods and intellectual property laws. </li>
-            <li>Comply with Voluntariliy’s terms and conditions.</li>
-            <li>Accept the full Code of Conduct and Terms of Use</li>
-          </ul>
-        </p>
+        <p>The community expects volunteers to:</p>
+        <ul>
+          <li>Conduct themselves honestly and in good faith at all times. </li>
+          <li>Comply with all laws, including sale of goods and intellectual property laws. </li>
+          <li>Comply with Voluntariliy’s terms and conditions.</li>
+          <li>Accept the full Code of Conduct and Terms of Use</li>
+        </ul>
       </Modal>
-      {
-        errorModalOpen && Modal.error({
-          title: 'Sorry something went wrong',
-          content: 'Ohh... we really appologise but something went wrong during the verification. Would you mind trying it again after some time?',
-          onClick: () => setErrorModalOpen(false)
-        })
-      }
+
+      <Modal
+        title='Sorry something went wrong'
+        visible={errorModalOpen}
+        footer={[
+          <Button key='submit' type='primary' onClick={handleErrorModalClose}>
+            Ok
+          </Button>
+        ]}
+      >
+        <p>Ohh... we really apologise but something went wrong during the verification. Would you mind trying it again after some time?</p>
+      </Modal>
     </section>
   )
 }
