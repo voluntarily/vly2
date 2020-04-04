@@ -6,7 +6,12 @@
 
 MY_DIR=$( dirname "${BASH_SOURCE[0]}" )
 
+
 ESCAPED_TAG_VERSION=${IMAGE_TAG_VERSION//\//-}
+
+echo ${IMAGE_TAG_VERSION}
+
+echo ${ESCAPED_TAG_VERSION}
 
 # Get a docker login and run it, AS: don't think we need this
 # source ${MY_DIR}/login-sydney
