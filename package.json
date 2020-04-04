@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava",
     "test:root": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava __tests__/**/*.spec.js",
-    "test:server": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava server/**/__tests__/*.spec.js",
+    "test:server": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava --match 'server/**/__tests__/*.spec.js'",
     "test:components": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava components/**/__tests__/*.spec.js",
     "test:lib": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava lib/**/__tests__/*.spec.js",
     "watch:test": "npm run test -- --watch",

@@ -1,3 +1,0 @@
-# Test file to create trivial changes that are okay to push and kick off builds.
-
-Docker build should be gone from Cirrus.

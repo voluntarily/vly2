@@ -53,18 +53,10 @@ jobs:
       if: always()
       run: docker logout ${{ steps.login-ecr.outputs.registry }}
 
-    - name: Render Amazon ECS task definition
-      id: render-web-container
-      uses: aws-actions/amazon-ecs-render-task-definition@v1
-      with:
-        task-definition: task-definition.json
-        container-name: vly-alpha
-        image: 585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-alpha:master
-
     - name: Deploy to Amazon ECS service
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        task-definition: ${{ steps.render-web-container.outputs.task-definition }}
+        task-definition: vly-alpha:latest
         service: vly-alpha
         cluster: vly-alpha-ECSCluster
 
