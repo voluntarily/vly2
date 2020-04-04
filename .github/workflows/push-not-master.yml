@@ -86,8 +86,8 @@ jobs:
         npm ci
         npx standard
 
-  testall:
-    name: Test All
+  testroot:
+    name: Test Root
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -103,95 +103,73 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-    - name: Test All
+    - name: Test Root __tests__    
       run: |
         npm ci
-        npm run test
+        npm run test:root
 
-  # testroot:
-  #   name: Test Root
-  #   needs: setup
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Cache node modules
-  #     uses: actions/cache@v1
-  #     env:
-  #       cache-name: cache-node-modules
-  #     with:
-  #       path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-  #       key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-  #       restore-keys: |
-  #         ${{ runner.os }}-build-${{ env.cache-name }}-
-  #         ${{ runner.os }}-build-
-  #         ${{ runner.os }}-
-  #   - name: Test Root __tests__    
-  #     run: |
-  #       npm ci
-  #       npm run test:root
+  testserver:
+    name: Test Server
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Test Server (and security)
+      run: |
+        npm ci
+        npm run test:server
 
-  # testserver:
-  #   name: Test Server
-  #   needs: setup
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Cache node modules
-  #     uses: actions/cache@v1
-  #     env:
-  #       cache-name: cache-node-modules
-  #     with:
-  #       path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-  #       key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-  #       restore-keys: |
-  #         ${{ runner.os }}-build-${{ env.cache-name }}-
-  #         ${{ runner.os }}-build-
-  #         ${{ runner.os }}-
-  #   - name: Test Server (and security)
-  #     run: |
-  #       npm ci
-  #       npm run test:server
+  testcomponents:
+    name: Test Components
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Test Server (and security)
+      run: |
+        npm ci
+        npm run test:components
 
-  # testcomponents:
-  #   name: Test Components
-  #   needs: setup
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Cache node modules
-  #     uses: actions/cache@v1
-  #     env:
-  #       cache-name: cache-node-modules
-  #     with:
-  #       path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-  #       key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-  #       restore-keys: |
-  #         ${{ runner.os }}-build-${{ env.cache-name }}-
-  #         ${{ runner.os }}-build-
-  #         ${{ runner.os }}-
-  #   - name: Test Server (and security)
-  #     run: |
-  #       npm ci
-  #       npm run test:components
-
-  # testlibraries:
-  #   name: Test Libraries
-  #   needs: setup
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Cache node modules
-  #     uses: actions/cache@v1
-  #     env:
-  #       cache-name: cache-node-modules
-  #     with:
-  #       path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-  #       key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-  #       restore-keys: |
-  #         ${{ runner.os }}-build-${{ env.cache-name }}-
-  #         ${{ runner.os }}-build-
-  #         ${{ runner.os }}-
-  #   - name: Test Server (and security)
-  #     run: |
-  #       npm ci
-  #       npm run test:lib
+  testlibraries:
+    name: Test Libraries
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Test Server (and security)
+      run: |
+        npm ci
+        npm run test:lib
