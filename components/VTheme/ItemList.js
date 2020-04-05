@@ -90,7 +90,7 @@ font-size: 1.1rem;
 `
 
 export const EquipmentList = ({ equipment }) =>
-  equipment.length
+  equipment && equipment.length
     ? (
       <div>
         <Divider />
@@ -137,7 +137,7 @@ export const ItemLocation = ({ location }) =>
             description='Location label for acts and ops'
           />
         </strong>&nbsp;&nbsp;&nbsp;
-        {sanitize(location)}
+        {location && sanitize(location)}
       </ItemListing>
     )
     : ''
@@ -152,7 +152,20 @@ export const ItemVenue = ({ venue }) =>
         description='Venue label for acts and ops'
       />
     </strong>&nbsp;&nbsp;&nbsp;
-    <StreetAddressLinkLi address={sanitize(venue) || ''} />
+    <StreetAddressLinkLi address={sanitize(venue)} />
+  </ItemListing>
+
+export const ItemResource = ({ resource }) =>
+  <ItemListing>
+    🛠️
+    <strong>
+      <FormattedMessage
+        id='itemlist.resource'
+        defaultMessage='General:'
+        description='Resource label for acts and ops'
+      />
+    </strong>&nbsp;&nbsp;&nbsp;
+    {resource && sanitize(resource)}
   </ItemListing>
 
 export const ItemNeeds = ({ volunteers, equipment }) => {
