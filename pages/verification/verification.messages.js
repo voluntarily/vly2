@@ -1,22 +1,22 @@
 import { FormattedMessage } from 'react-intl'
 
-const codeOfConductConfirmationLabel = (
+const conductConfirmationLabel = (
   <FormattedMessage
-    id='verification.codeofconduct.confirmation'
-    defaultMessage='Accept Code of Conduct'
-    description='Lable for Code of Conduct confirmation button'
+    id='verification.conduct.confirmation'
+    defaultMessage='Accept and continue'
+    description='Label for Code of Conduct confirmation button'
   />
 )
 
-const trustAndSafetyConfirmationLabel = (
+const safetyConfirmationLabel = (
   <FormattedMessage
     id='verification.trustandsafety.confirmation'
     defaultMessage='Verify Identity'
-    description='Lable for Trust and Safety confirmation button'
+    description='Label for Trust and Safety confirmation button'
   />
 )
 
 export {
-  codeOfConductConfirmationLabel,
-  trustAndSafetyConfirmationLabel
+  conductConfirmationLabel,
+  safetyConfirmationLabel
 }

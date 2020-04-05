@@ -26,7 +26,7 @@ const Verification = () => {
 
   return (
     <section>
-      <VerifyButton onClick={() => router.push('/verification/codeofconduct')} />
+      <VerifyButton onClick={() => router.push('/verification/conduct')} />
       <Modal
         title={errorTitle}
         visible={errorModalOpen}

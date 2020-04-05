@@ -7,10 +7,10 @@ import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import { injectIntl } from 'react-intl'
 
-import privacyEn from './privacy-en-md.js'
+import conductEn from './conduct-en-md.js'
 
 const getText = locale => {
-  return privacyEn()
+  return conductEn()
 }
 
 const TermsSection = styled.div`
@@ -25,7 +25,7 @@ class Terms extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Privacy Policy - Voluntarily</title>
+          <title>Code of Conduct - Voluntarily</title>
         </Helmet>
         <TermsSection>
           <Markdown

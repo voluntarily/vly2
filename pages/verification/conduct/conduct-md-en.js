@@ -6,10 +6,11 @@ In order to support safety and trust in our community, we have a code of conduct
 
 ### Basic Principles
 
-The community expects volunteers to:
+The community expects volunteers to
 
-* Conduct themselves honestly and in good faith at all times.
-* Comply with all laws, including sale of goods and intellectual property laws.
-* Comply with Voluntariliy’s terms and conditions.
-* Accept the full Code of Conduct and Terms of Use.
+* Conduct themselves honestly and in good faith at all times
+* Comply with all laws, including sale of goods and intellectual property laws
+* Comply with Voluntariliy’s terms and conditions
+* Accept the full [Code of Conduct](/terms/conduct) and [Terms of Use](/terms)
+<br/><br/>
 `
