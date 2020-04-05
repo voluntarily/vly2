@@ -57,7 +57,7 @@ test('render OpTypeCount for offer op', t => {
       type={OpportunityType.OFFER}
     />
   )
-  t.is(wrapper.text(), '💁🏻2 offering to help')
+  t.is(wrapper.text(), '💁🏻2 people offering to help')
 })
 test('render OpTypeCount for ask op', t => {
   const wrapper = mountWithIntl(
@@ -66,7 +66,7 @@ test('render OpTypeCount for ask op', t => {
       type={OpportunityType.ASK}
     />
   )
-  t.is(wrapper.text(), '🙋5 asking for help')
+  t.is(wrapper.text(), '🙋5 people asking for help')
 })
 test('render OpTypeCount with no type', t => {
   const wrapper = mountWithIntl(
