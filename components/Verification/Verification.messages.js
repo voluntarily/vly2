@@ -17,16 +17,7 @@ const errorBody = (
   />
 )
 
-const codeOfConductTitle = (
-  <FormattedMessage
-    id='verification.codeofconduct.title'
-    defaultMessage='Code of Conduct'
-    description='Title for Code of Conduct modal'
-  />
-)
-
 export {
   errorTitle,
-  errorBody,
-  codeOfConductTitle
+  errorBody
 }

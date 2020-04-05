@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import Markdown from 'markdown-to-jsx'
 import { Modal, Button } from 'antd'
 import VerifyButton from './VerifyButton'
 import PropTypes from 'prop-types'
-import { errorTitle, errorBody, codeOfConductTitle } from './Verification.messages'
+import { errorTitle, errorBody } from './Verification.messages'
 import { ErrorRedirectUrlQuery } from '../../server/api/personalVerification/personalVerification.constants'
-import codeOfConduct from './verification.codeofconduct-md-en.js'
 
 const Verification = (props) => {
   const router = useRouter()
-  const [modalOpen, setModalOpen] = useState(false)
   const [errorModalOpen, setErrorModalOpen] = useState(false)
 
   useEffect(() => {
@@ -21,29 +18,13 @@ const Verification = (props) => {
     }
   })
 
-  const handleConfirmModal = async () => {
-    const redirectUrl = `/api/verify?meid=${props.meid}`
-    router.push(redirectUrl)
-    setModalOpen(false)
-  }
-
   const handleErrorModalClose = () => {
     setErrorModalOpen(false)
   }
 
   return (
     <section>
-      <VerifyButton onClick={() => setModalOpen(true)} />
-      <Modal
-        title={codeOfConductTitle}
-        visible={modalOpen}
-        onOk={() => handleConfirmModal()}
-        okButtonProps={({ type: 'primary' })}
-        onCancel={() => setModalOpen(false)}
-      >
-        <Markdown children={codeOfConduct()} />
-      </Modal>
-
+      <VerifyButton onClick={() => router.push('/verification/codeofconduct')} />
       <Modal
         title={errorTitle}
         visible={errorModalOpen}
