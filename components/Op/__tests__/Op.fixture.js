@@ -89,6 +89,7 @@ export default [
     // this has no requestor
     offerOrg: orgActionWhizzyFelt,
     status: 'active',
+    requestor,
     tags: [],
     date
   },

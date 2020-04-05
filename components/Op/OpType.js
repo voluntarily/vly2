@@ -39,19 +39,6 @@ export const OpType = ({ type }) => {
   return (<FormattedMessage {...OpTypeMessages[type]} />)
 }
 
-export const OpTypeVerbs = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.verb.ASK',
-    defaultMessage: 'asking for help',
-    description: 'Asking for help'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.verb.OFFER',
-    defaultMessage: 'offering to help',
-    description: 'Offering help'
-  }
-})
-
 export const OpTypeImperativeMsg = defineMessages({
   [ASK]: {
     id: 'OpportunityType.imp.ASK',
@@ -74,6 +61,19 @@ export const OpTypeEmoji = {
   [OFFER]: '💁🏻'
 }
 
+export const OpTypeVerbs = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.verb.ASK',
+    defaultMessage: '{count, plural, one {person} other {people}} asking for help',
+    description: 'Asking for help'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.verb.OFFER',
+    defaultMessage: '{count, plural, one {person} other {people}} offering to help',
+    description: 'Offering help'
+  }
+})
+
 /**
  * 10 offering to help
  * 10 asking for help
@@ -84,7 +84,7 @@ export const OpTypeCount = ({ counts, type }) => {
   if (!type || ![ASK, OFFER].includes(type)) return null
   const count = counts[type]
   if (!count) return null // print not zero results
-  return (<>{OpTypeEmoji[type]}{count}&nbsp;<FormattedMessage {...OpTypeVerbs[type]} /></>)
+  return (<>{OpTypeEmoji[type]}{count}&nbsp;<FormattedMessage {...OpTypeVerbs[type]} values={{ count }} /></>)
 }
 
 /** Converts an opportunity type to a Stamp - except for Active */
