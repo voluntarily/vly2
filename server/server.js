@@ -79,7 +79,7 @@ const appReady = app.prepare().then(() => {
   if (process.env.APP_URL.includes('live')) {
     server.get('/robots.txt', function (req, res) {
       res.type('text/plain')
-      res.send('User-agent: *\nDisallow: /\nAllow:/home')
+      res.send('User-agent: *\nDisallow: /api\nDisallow:/admin\nDisallow:/auth\nDisallow:/reports')
     })
   } else {
     server.get('/robots.txt', function (req, res) {
