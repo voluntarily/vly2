@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 import {
   ItemDescription,
   EquipmentList,
-  ItemSpace
+  ItemSpace,
+  ItemResource
 } from '../VTheme/ItemList'
 import { ProfilePanel } from '../VTheme/Profile'
 import { OpSectionGrid, DocumentList } from '../VTheme/VTheme'
@@ -16,15 +17,24 @@ export function ActResourcesPanel ({ act }) {
     <ProfilePanel>
       <OpSectionGrid>
         <div>
-          <h2>What you will need</h2>
+          <h2>
+            <FormattedMessage
+              id='ActResourcesPanel.title.youwillneed'
+              defaultMessage='What you will need'
+              description='title on activity resources panel'
+            />
+          </h2>
         </div>
-        <ItemDescription>
-          <ul>
-            <ItemSpace space={act.space} />
-          </ul>
-          <EquipmentList equipment={act.equipment} />
+        <div id='right_col'>
+          <ItemDescription>
+            <ul>
+              <ItemResource resource={act.resource} />
+              <ItemSpace space={act.space} />
 
-        </ItemDescription>
+            </ul>
+          </ItemDescription>
+          <EquipmentList equipment={act.equipment} />
+        </div>
       </OpSectionGrid>
       <Divider />
 
