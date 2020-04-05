@@ -148,23 +148,20 @@ const Footer = () => (
             <MenuItem>
               <a
                 href='/terms'
-                target='_blank'
                 rel='noopener noreferrer'
-              >Terms and Conditions
+              >Terms of Use
               </a>
             </MenuItem>
             <MenuItem>
               <a
                 href='/terms/privacy'
-                target='_blank'
                 rel='noopener noreferrer'
               >Privacy Policy
               </a>
             </MenuItem>
             <MenuItem>
               <a
-                href='https://github.com/voluntarily/vly2/blob/master/CODE_OF_CONDUCT.md'
-                target='_blank'
+                href='/terms/conduct'
                 rel='noopener noreferrer'
               >Code of Conduct
               </a>

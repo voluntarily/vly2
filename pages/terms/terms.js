@@ -7,62 +7,15 @@ import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import { injectIntl } from 'react-intl'
 
-import termEn from './term-en-md.js'
-import termMi from './term-mi-md.js'
+import termsEn from './terms-en-md.js'
 
 const getText = locale => {
-  switch (locale) {
-    case 'mi': {
-      return termMi()
-    }
-    case 'fr': {
-      return termMi()
-    }
-  }
-  return termEn()
+  return termsEn()
 }
 
 const TermsSection = styled.div`
-  margin: 0 0;
-
-  h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    color: gray;
-  }
-  h3 {
-    font-size: 2rem;
-  }
-  p {
-    font-size: 1rem;
-    font-weight: 400;
-    color: #333;
-
-    letter-spacing: 2;
-    padding-bottom: 0.5rem;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    width: calc(100vw - 4rem);
-    margin: 2rem 0 2rem 0;
-    h1 {
-      font-size: 2.5rem;
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    width: calc(100vw - 2rem);
-    margin: 1rem 0 1rem 0;
-
-    h1 {
-      font-size: 2rem;
-      letter-spacing: -1.5px;
-    }
-
-    p {
-      font-size: 1.5rem;
-    }
-  }
+  max-width: 60rem;
+  margin: 10rem auto;
 `
 
 class Terms extends Component {
@@ -72,7 +25,7 @@ class Terms extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Terms and Conditions - Voluntarily</title>
+          <title>Terms of Use - Voluntarily</title>
         </Helmet>
         <TermsSection>
           <Markdown
