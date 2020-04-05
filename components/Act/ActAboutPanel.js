@@ -1,64 +1,82 @@
 /* Dumb React component Shows contents of an opportunity
  */
+import { Button, Divider } from 'antd'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
+import { config } from '../../config/clientConfig'
+import { ShareLinks } from '../Op/OpShareLinks'
 import TagDisplay from '../Tags/TagDisplay'
-import Html from '../VTheme/Html'
+import { HtmlMore } from '../VTheme/Html'
 import { TagContainer } from '../VTheme/ItemList'
 import { ProfilePanel } from '../VTheme/Profile'
 import { OpSectionGrid } from '../VTheme/VTheme'
-import { Button, Divider } from 'antd'
-import { ShareLinks } from '../Op/OpShareLinks'
-import { config } from '../../config/clientConfig'
 import { ActReadMore } from './ActReadMore'
 import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
+import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
+import { ActOpsPanel } from './ActOpsPanel'
+import { useSelector } from 'react-redux'
+import { Role } from '../../server/services/authorize/role.js'
+
+const { ASK, OFFER } = OpportunityType
+export const ActAboutSection = ({ act }) =>
+  <OpSectionGrid>
+    <div id='left_column'>
+      <h2><FormattedMessage id='ActAboutPanel.section.title.about' defaultMessage='About' /></h2>
+      <TagContainer>
+        <TagDisplay tags={act.tags} />
+      </TagContainer>
+    </div>
+    <div id='right_column'>
+      <HtmlMore>
+        {act.description}
+      </HtmlMore>
+    </div>
+  </OpSectionGrid>
+
+export const ActActivityGuideSection = ({ act }) =>
+  <OpSectionGrid>
+    <div id='left_column'>
+      <h2>
+        <FormattedMessage
+          id='ActAboutPanel.section.title.guide'
+          defaultMessage='Activity Guide'
+        />
+      </h2>
+    </div>
+    <div id='right_column'>
+      <p>
+        <FormattedMessage
+          id='ActAboutPanel.section.prompt.guide'
+          defaultMessage='A description of what you need to prepare and do before you can do the thing.'
+        />
+      </p>
+      <ActReadMore act={act} />
+      <Link href={`/acts/${act._id}?tab=resources`}>
+        <Button block shape='round' size='large'>
+          <FormattedMessage
+            id='ActAboutPanel.button.guide'
+            defaultMessage='See all resources'
+          />
+        </Button>
+      </Link>
+
+    </div>
+  </OpSectionGrid>
+
 export function ActAboutPanel ({ act }) {
-  const description = act.description || ''
   const appUrl = `${config.appUrl}/acts/act._id`
+  const me = useSelector(state => state.session.me)
+
+  const vp = me.role.includes(Role.VOLUNTEER)
   return (
     <ProfilePanel>
-      <OpSectionGrid>
-        <div id='left_column'>
-          <h2><FormattedMessage id='ActAboutPanel.section.title.about' defaultMessage='About' /></h2>
-          <TagContainer>
-            <TagDisplay tags={act.tags} />
-          </TagContainer>
-        </div>
-        <div id='right_column'>
-          <Html>
-            {description}
-          </Html>
-        </div>
-      </OpSectionGrid>
+      <ActAboutSection act={act} />
       <Divider />
-      <OpSectionGrid>
-        <div id='left_column'>
-          <h2>
-            <FormattedMessage
-              id='ActAboutPanel.section.title.guide'
-              defaultMessage='Activity Guide'
-            />
-          </h2>
-        </div>
-        <div id='right_column'>
-          <p>
-            <FormattedMessage
-              id='ActAboutPanel.section.prompt.guide'
-              defaultMessage='A description of what you need to prepare and do before you can do the thing.'
-            />
-          </p>
-          <ActReadMore act={act} />
-          <Link href={`/acts/${act._id}?tab=resources`}>
-            <Button block shape='round' size='large'>
-              <FormattedMessage
-                id='ActAboutPanel.button.guide'
-                defaultMessage='See all resources'
-              />
-            </Button>
-          </Link>
-
-        </div>
-      </OpSectionGrid>
+      <ActActivityGuideSection act={act} />
+      <Divider />
+      <ActOpsPanel act={act} type={OFFER} limit={6} />
+      <Divider />
+      {vp && <ActOpsPanel act={act} type={ASK} limit={6} />}
       <Divider />
       <OpSectionGrid>
         <section>
@@ -66,15 +84,6 @@ export function ActAboutPanel ({ act }) {
           <ShareLinks url={appUrl} />
         </section>
       </OpSectionGrid>
-      <Divider />
-
-      <OpSectionGrid>
-        <section>
-          <h5><FormattedMessage id='ActAboutPanel.share' defaultMessage='Share' /></h5>
-          <ShareLinks url={appUrl} />
-        </section>
-      </OpSectionGrid>
-      <Divider />
     </ProfilePanel>)
 }
 
