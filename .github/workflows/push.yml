@@ -1,0 +1,237 @@
+name: V2LY not master
+
+on: [push]
+
+# Still not comfortable that github actions events are granular to do what we want, 
+# so using an if statement below instead
+
+jobs:
+  setup:    
+    name: Set up NPM, use cache, NPM CI
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/master' #If we're not being pushed to master, do all the test steps
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache node modules #Caches everything for the other tasks to run
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
+    - name: Use Node 12
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+        mongoms_download_mirror: http://downloads.mongodb.org
+        mongoms_version: 4.0.5
+        mongoms_disable_postinstall: 1
+        ci_node_index: 0
+        ci_node_total: 1
+
+    - name: Set up dependencies  #Warm cache
+      run: npm ci
+
+  lang:
+    name: Lang #Do our language file weirdness and make sure we're all good going to build
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Lang
+      run: |
+        npm ci
+        cp lang/en.json lang/en.orig.json
+        npm run build:lang
+        diff lang/en.json lang/en.orig.json
+
+  lint:
+    name: Lint
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: lint
+      run: |
+        npm ci
+        npx standard
+
+  testroot:
+    name: Test Root #Test only the high level tests 
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Test Root __tests__    
+      run: |
+        npm ci
+        npm run test:root
+
+  testserver:
+    name: Test Server #Test server side, includes security
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Test Server (and security)
+      run: |
+        npm ci
+        npm run test:server
+
+  testcomponents:
+    name: Test Components #Test components
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Test Server (and security)
+      run: |
+        npm ci
+        npm run test:components
+
+  testlibraries:
+    name: Test Libraries #Test libs
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Test Server (and security)
+      run: |
+        npm ci
+        npm run test:lib
+
+  build-and-deploy:
+    name: Build and push docker container
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' #If we are pushing to master, assume (because permissions) all the tests were run on PRs, just do a deploy step
+    steps:
+
+    - name: Check out
+      uses: actions/checkout@v2
+
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-  
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-southeast-2
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push image to Amazon ECR
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: vly-alpha
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+    - name: Logout of Amazon ECR
+      if: always()
+      run: docker logout ${{ steps.login-ecr.outputs.registry }}
+
+    - name: ECS Deployment
+      uses: donaldpiret/ecs-deploy@v0.0.1
+      with:
+        cluster: vly-alpha-ECSCluster
+        target: vly-alpha
+        image: vly-alpha:latest
+
+      env:
+        REVISION: 
+        APP_URL: https://alpha.voluntarily.nz
+        VLY_PRIVATE_KEY: ${{ secrets.VLY_PRIVATE_KEY }}
+        SMTP_ID: ${{ secrets.SMTP_ID }}
+        BADGR_USERNAME: andrew+badgr@voluntarily.nz
+        BADGR_PASSWORD: ${{ secrets.BADGR_PASSWORD }}
+        SMTP_PWD: ${{ secrets.SMTP_PWD }}
+        RAYGUN_EXPRESS_SERVER_API_KEY: ${{ secrets.RAYGUN_EXPRESS_SERVER_API_KEY }}
+        RAYGUN_REACT_CLIENT_API_KEY: ${{ secrets.RAYGUN_REACT_CLIENT_API_KEY }}
+
