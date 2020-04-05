@@ -16,7 +16,7 @@ class VerificationTrustAndSafetyPage extends Component {
           <title>Voluntarily - Trust and Safety</title>
         </Helmet>
         <Markdown children={trustandsafety()} />
-        <Button type='primary' onClick={() => Router.push('/api/verify')}>{trustAndSafetyConfirmationLabel}</Button>
+        <Button shape='round' type='primary' onClick={() => Router.push('/api/verify')}>{trustAndSafetyConfirmationLabel}</Button>
       </FullPage>
     )
   }

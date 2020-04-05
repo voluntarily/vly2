@@ -17,7 +17,7 @@ class VerificationCodeOfConductPage extends Component {
         </Helmet>
         <Markdown children={codeOfConduct()} />
         <Link href='./trustandsafety'>
-          <Button type='primary'>{codeOfConductConfirmationLabel}</Button>
+          <Button shape='round' type='primary'>{codeOfConductConfirmationLabel}</Button>
         </Link>
       </FullPage>
     )
