@@ -173,7 +173,7 @@ jobs:
         npm run test:lib
 
   build-and-deploy:
-    name: Build and push docker container
+    name: Build to ECR, deploy to ECS
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' #If we are pushing to master, assume (because permissions) all the tests were run on PRs, just do a deploy step
     steps:
@@ -200,33 +200,15 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-southeast-2
 
-    - name: Login to Amazon ECR
+    - name: Log in to ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Build, tag, and push image to Amazon ECR
+    - name: Build, tag, and push image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: vly-alpha
         IMAGE_TAG: ${{ github.sha }}
-      run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
-
-    - name: Logout of Amazon ECR
-      if: always()
-      run: docker logout ${{ steps.login-ecr.outputs.registry }}
-
-    - name: ECS Deployment
-      uses: donaldpiret/ecs-deploy@v0.0.1
-      with:
-        cluster: vly-alpha-ECSCluster
-        target: vly-alpha
-        image: vly-alpha $ECR_REGISTRY/$ECR_REPOSITORY:master
-
-      env:
-        REVISION: 
         APP_URL: https://alpha.voluntarily.nz
         VLY_PRIVATE_KEY: ${{ secrets.VLY_PRIVATE_KEY }}
         SMTP_ID: ${{ secrets.SMTP_ID }}
@@ -235,4 +217,21 @@ jobs:
         SMTP_PWD: ${{ secrets.SMTP_PWD }}
         RAYGUN_EXPRESS_SERVER_API_KEY: ${{ secrets.RAYGUN_EXPRESS_SERVER_API_KEY }}
         RAYGUN_REACT_CLIENT_API_KEY: ${{ secrets.RAYGUN_REACT_CLIENT_API_KEY }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
 
+    - name: Log out of ECR
+      if: always()
+      run: docker logout ${{ steps.login-ecr.outputs.registry }}
+
+    - name: Deploy to ECS
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: vly-alpha      
+      uses: donaldpiret/ecs-deploy@v0.0.1
+      with:
+        cluster: vly-alpha-ECSCluster
+        target: vly-alpha
+        image: vly-alpha $ECR_REGISTRY/$ECR_REPOSITORY:master
