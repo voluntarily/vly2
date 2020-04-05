@@ -7,7 +7,15 @@ import styled from 'styled-components'
 import conduct from './conduct-md-en.js'
 import Link from 'next/link'
 import { Button } from 'antd'
-import { conductConfirmationLabel } from '../verification.messages'
+import { FormattedMessage } from 'react-intl'
+
+const conductConfirmationLabel = (
+  <FormattedMessage
+    id='verification.conduct.confirmation'
+    defaultMessage='Accept and continue'
+    description='Label for Code of Conduct confirmation button'
+  />
+)
 
 const TermsSection = styled.div`
   max-width: 35rem;

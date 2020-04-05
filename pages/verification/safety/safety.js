@@ -6,8 +6,16 @@ import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
 import safety from './safety-md-en.js'
 import Router from 'next/router'
-import { safetyConfirmationLabel } from '../verification.messages'
 import { Button } from 'antd'
+import { FormattedMessage } from 'react-intl'
+
+const safetyConfirmationLabel = (
+  <FormattedMessage
+    id='verification.trustandsafety.confirmation'
+    defaultMessage='Verify Identity'
+    description='Label for Trust and Safety confirmation button'
+  />
+)
 
 const TermsSection = styled.div`
   max-width: 35rem;
