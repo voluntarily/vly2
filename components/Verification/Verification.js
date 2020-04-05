@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useRouter, Router } from 'next/router'
+import { useRouter } from 'next/router'
+import Markdown from 'markdown-to-jsx'
 import { Modal, Button } from 'antd'
 import VerifyButton from './VerifyButton'
 import PropTypes from 'prop-types'
+import { errorTitle, errorBody, codeOfConductTitle } from './Verification.messages'
 import { ErrorRedirectUrlQuery } from '../../server/api/personalVerification/personalVerification.constants'
+import codeOfConduct from './verification.codeofconduct-md-en.js'
 
 const Verification = (props) => {
   const router = useRouter()
@@ -32,39 +35,26 @@ const Verification = (props) => {
     <section>
       <VerifyButton onClick={() => setModalOpen(true)} />
       <Modal
-        title='Code of Conduct'
+        title={codeOfConductTitle}
         visible={modalOpen}
         onOk={() => handleConfirmModal()}
         okButtonProps={({ type: 'primary' })}
         onCancel={() => setModalOpen(false)}
       >
-        <h1>Being a great volunteer </h1>
-        <p>
-            In order to support safety and trust in our community,
-                    we have a code of conduct all volunteers need to follow in your heart. This
-                    code sets out principles and behaviours that the Voluntarily community reasonably
-                    expects of people participating in voluntarily activities.
-        </p>
-        <h3>Basic Principles</h3>
-        <p>The community expects volunteers to:</p>
-        <ul>
-          <li>Conduct themselves honestly and in good faith at all times. </li>
-          <li>Comply with all laws, including sale of goods and intellectual property laws. </li>
-          <li>Comply with Voluntariliy’s terms and conditions.</li>
-          <li>Accept the full Code of Conduct and Terms of Use</li>
-        </ul>
+        <Markdown children={codeOfConduct()} />
       </Modal>
 
       <Modal
-        title='Sorry something went wrong'
+        title={errorTitle}
         visible={errorModalOpen}
+        closable={false}
         footer={[
           <Button key='submit' type='primary' onClick={handleErrorModalClose}>
             Ok
           </Button>
         ]}
       >
-        <p>Ohh... we really apologise but something went wrong during the verification. Would you mind trying it again after some time?</p>
+        <p>{errorBody}</p>
       </Modal>
     </section>
   )

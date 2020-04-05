@@ -508,6 +508,9 @@
   "test-person.notavailable": "Sorry, this person is not available",
   "unverified.button": "Sign out and try again",
   "unverified.message": "\n  <h1>Email not verified</h1>\n  <p>You have signed in as {name} but your email account is not currently verified. </p>\n  <p>Please check your email inbox and spam box for a verification request to complete the registration process. </p>\n  <p>If problems continue please contact technical support.</p>",
+  "verification.codeofconduct.title": "Code of Conduct",
+  "verification.error.body": "Ohh... we really apologise but something went wrong during the verification. Would you mind trying it again after some time?",
+  "verification.error.title": "Sorry something went wrong",
   "version": "Version",
   "volunteer": "Volunteer"
 }
