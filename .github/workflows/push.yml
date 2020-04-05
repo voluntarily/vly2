@@ -222,6 +222,7 @@ jobs:
       with:
         service: vly-alpha
         cluster: vly-alpha-ECSCluster
+        target: vly-alphaTargetGroup
         image: vly-alpha:latest
 
       env:
