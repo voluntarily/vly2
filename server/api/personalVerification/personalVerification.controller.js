@@ -1,9 +1,11 @@
 const Person = require('../person/person')
 const { PersonFields } = require('../person/person.constants')
 const { PersonalVerification } = require('./personalVerification')
-const { PersonalVerificationStatus, ErrorRedirectUrlQuery } = require('./personalVerification.constants')
+const { PersonalVerificationStatus, VerificationResultUrlQueryParam } = require('./personalVerification.constants')
 const { createNonce, createReference, createUnixTimestamp, postCloudcheck, getCloudcheck } = require('./personalVerification.helpers')
 const { config } = require('../../../config/serverConfig')
+
+const redirectUrl = `${config.appUrl}/home?tab=profile&${VerificationResultUrlQueryParam}=`
 
 /**
   api/verify -> initiates the verification process
@@ -66,7 +68,7 @@ const initVerify = async (req, res) => {
     return res.redirect(liveResponse.capture.url)
   } catch (error) {
     console.error(error)
-    return res.redirect(`${config.appUrl}/home?tab=profile&${ErrorRedirectUrlQuery}`)
+    return res.redirect(`${redirectUrl}false`)
   }
 }
 
@@ -121,10 +123,10 @@ const verifyLiveCallback = async (req, res) => {
       )
     }
 
-    res.redirect(`${config.appUrl}/home?tab=profile`)
+    res.redirect(`${redirectUrl}true`)
   } catch (error) {
     console.error(error)
-    return res.redirect(`${config.appUrl}/home?tab=profile&${ErrorRedirectUrlQuery}`)
+    return res.redirect(`${redirectUrl}false`)
   } finally {
     await Person.findOneAndUpdate({ _id: personalVerification.person }, personUpdate, () => console.log('Updated Person with verification result'))
     await PersonalVerification.findOneAndUpdate(query, driversLicenceVerificationUpdate, () => console.log('Updated Personal Verification object'))

@@ -11,10 +11,10 @@ import MockExpressRequest from 'mock-express-request'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import { liveInitResponseError, liveInitResponseSuccess, liveResponseSuccess, verifyResponseData } from './personalVerification.cloudcheck.fixture'
 const { PersonFields } = require('../../person/person.constants')
-const { PersonalVerificationStatus, ErrorRedirectUrlQuery } = require('./../personalVerification.constants')
+const { PersonalVerificationStatus, VerificationResultUrlQueryParam } = require('./../personalVerification.constants')
 const { PersonalVerification } = require('./../personalVerification')
 
-const verificationErrorRedirectUrl = `${config.appUrl}/home?tab=profile&${ErrorRedirectUrlQuery}`
+const verificationErrorRedirectUrl = `${config.appUrl}/home?tab=profile&${VerificationResultUrlQueryParam}=false`
 
 test.before('before connect to database', async (t) => {
   try {
@@ -142,7 +142,7 @@ test.serial('verifyLiveCallback works', async t => {
   await verifyLiveCallback(request, response)
 
   t.is(1, fakeRedirect.callCount)
-  t.is(`${config.appUrl}/home?tab=profile`, fakeRedirect.lastArg)
+  t.is(`${config.appUrl}/home?tab=profile&verificationsuccessful=true`, fakeRedirect.lastArg)
 
   const updatedPerson = await Person.findById(testPerson._id)
   const verificationReference = verifyResponseData.body.verification.verificationReference
