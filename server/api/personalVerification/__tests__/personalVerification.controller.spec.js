@@ -11,8 +11,11 @@ import MockExpressRequest from 'mock-express-request'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import { liveInitResponseError, liveInitResponseSuccess, liveResponseSuccess, verifyResponseData } from './personalVerification.cloudcheck.fixture'
 const { PersonFields } = require('../../person/person.constants')
-const { PersonalVerificationStatus } = require('./../personalVerification.constants')
+const { PersonalVerificationStatus, ErrorRedirectUrlQuery } = require('./../personalVerification.constants')
 const { PersonalVerification } = require('./../personalVerification')
+
+
+const verificationErrorRedirectUrl = `${config.appUrl}/home?tab=profile&${ErrorRedirectUrlQuery}`
 
 test.before('before connect to database', async (t) => {
   try {
@@ -31,23 +34,23 @@ test.afterEach.always(async t => {
   await PersonalVerification.remove()
 })
 
-test.serial('initVerify should return 401 if person has no session', async t => {
-  const fakeSendStatus = sinon.fake()
+test.serial('initVerify should redirect with verification error if person has no session', async t => {
+  const fakeRedirect = sinon.fake()
   const response = new MockResponse()
-  response.sendStatus = (status) => { fakeSendStatus(status) }
+  response.redirect = (url) => { fakeRedirect(url) }
 
   const request = new MockExpressRequest()
   request.session = {}
 
   await initVerify({ session: {} }, response)
-  t.is(1, fakeSendStatus.callCount)
-  t.is(401, fakeSendStatus.lastArg)
+  t.is(1, fakeRedirect.callCount)
+  t.is(verificationErrorRedirectUrl, fakeRedirect.lastArg)
 })
 
-test.serial('initVerify should return 404 if person is not found', async t => {
-  const fakeSendStatus = sinon.fake()
+test.serial('initVerify should redirect with verification error if person is not found', async t => {
+  const fakeRedirect = sinon.fake()
   const response = new MockResponse()
-  response.sendStatus = (status) => { fakeSendStatus(status) }
+  response.redirect = (url) => { fakeRedirect(url) }
 
   const request = new MockExpressRequest()
   request.session = {
@@ -55,19 +58,16 @@ test.serial('initVerify should return 404 if person is not found', async t => {
   }
 
   await initVerify(request, response)
-  t.is(1, fakeSendStatus.callCount)
-  t.is(404, fakeSendStatus.lastArg)
+  t.is(1, fakeRedirect.callCount)
+  t.is(verificationErrorRedirectUrl, fakeRedirect.lastArg)
 })
 
-test.serial('initVerify should return 401 if cloudcheck returns an error', async t => {
+test.serial('initVerify should redirect with verification error if cloudcheck returns an error', async t => {
   await Person.create(people).catch((err) => console.error('Unable to create people:', err))
-  const fakeStatus = sinon.fake()
-  const fakeJson = sinon.fake()
+  const fakeRedirect = sinon.fake()
   const response = new MockResponse()
-  response.status = (status) => {
-    fakeStatus(status)
-    return response
-  }
+  response.redirect = (url) => { fakeRedirect(url) }
+
   response.json = (json) => { fakeJson(json) }
   t.context.mockServer.post(`${config.verification.cloudcheck.url}/live/`, liveInitResponseError)
 
@@ -80,9 +80,8 @@ test.serial('initVerify should return 401 if cloudcheck returns an error', async
   }
 
   await initVerify(request, response)
-  t.is(1, fakeStatus.callCount)
-  t.is(401, fakeStatus.lastArg)
-  t.is(1, fakeJson.callCount)
+  t.is(1, fakeRedirect.callCount)
+  t.is(verificationErrorRedirectUrl, fakeRedirect.lastArg)
 })
 
 test.serial('initVerify should update person, personal verification and redirect if everything works', async t => {

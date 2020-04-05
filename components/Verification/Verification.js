@@ -16,7 +16,7 @@ const Verification = (props) => {
   useEffect(() => {
     if (router.asPath.includes(ErrorRedirectUrlQuery)) {
       setErrorModalOpen(true)
-      const newUrl = router.asPath.replace(`&${ErrorRedirectUrlQuery}`, '')
+      const newUrl = (router.asPath || '' ).replace(`&${ErrorRedirectUrlQuery}`, '')
       router.replace(router.asPath, newUrl, { shallow: true })
     }
   })
