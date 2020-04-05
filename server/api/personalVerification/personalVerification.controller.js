@@ -90,6 +90,7 @@ const verifyLiveCallback = async (req, res) => {
     await PersonalVerification.findOneAndUpdate(query, update, () => console.log('Personal Verification updated with liveCapture & liveToken'))
 
     const driversLicence = await getDriversLicenceData(captureReference)
+
     const driversLicenceVerificationResult = await verifyDriversLicence(driversLicence, personalVerification.person, req.query.liveReference)
 
     if (!driversLicenceVerificationResult || driversLicenceVerificationResult.verification.error) {
@@ -106,8 +107,6 @@ const verifyLiveCallback = async (req, res) => {
       )
       throw Error('Error verifying Driverlicence data')
     } else {
-      console.log(driversLicenceVerificationResult)
-
       const verificationReference = driversLicenceVerificationResult.verification.verificationReference
 
       driversLicenceVerificationUpdate = {
@@ -161,15 +160,15 @@ const createPersonVerifiedUpdate = (
 }
 
 const verifyDriversLicence = async (driversLicence, personId, reference) => {
-  // TODO: Solve problem that we need the address to do the call
+  // TODO: Once we have the address enable verification
   const data = {
     details: {
-      address: {
-        suburb: 'Hillsborough',
-        street: '27 Indira Lane',
-        postcode: '8022',
-        city: 'Christchurch'
-      },
+      // address: {
+      //           suburb: 'Hillsborough',
+      //           street: '27 Indira Lane',
+      //           postcode: '8022',
+      //           city: 'Christchurch'
+      //   },
       name: {
         given: driversLicence.givenName ? driversLicence.givenName : undefined,
         middle: driversLicence.middleName ? driversLicence.middleName : undefined,
@@ -184,9 +183,6 @@ const verifyDriversLicence = async (driversLicence, personId, reference) => {
     reference,
     consent: 'Yes'
   }
-
-  // TODO: Remove
-  console.log(data)
 
   const objVerify = {
     data: JSON.stringify(data),

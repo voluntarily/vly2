@@ -9,7 +9,6 @@ const createReference = () => uuid()
 const createUnixTimestamp = () => moment().unix() * 1000
 const postCloudcheck = async (options) => {
   const path = options.path || ''
-  console.log('data: ' + options.data)
   const obj = options.data || {}
 
   const signature = generateSignature(path, obj)
