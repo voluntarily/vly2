@@ -40,7 +40,7 @@ export const ActDetailPage = ({
   const [tab, setTab] = useState(
     isNew
       ? 'edit'
-      : 'about'
+      : (router.query && router.query.tab ? router.query.tab : 'about')
   )
   const updateTab = (key, top) => {
     setTab(key)
