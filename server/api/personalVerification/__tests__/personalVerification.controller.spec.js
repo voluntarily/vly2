@@ -14,7 +14,6 @@ const { PersonFields } = require('../../person/person.constants')
 const { PersonalVerificationStatus, ErrorRedirectUrlQuery } = require('./../personalVerification.constants')
 const { PersonalVerification } = require('./../personalVerification')
 
-
 const verificationErrorRedirectUrl = `${config.appUrl}/home?tab=profile&${ErrorRedirectUrlQuery}`
 
 test.before('before connect to database', async (t) => {
@@ -68,7 +67,6 @@ test.serial('initVerify should redirect with verification error if cloudcheck re
   const response = new MockResponse()
   response.redirect = (url) => { fakeRedirect(url) }
 
-  response.json = (json) => { fakeJson(json) }
   t.context.mockServer.post(`${config.verification.cloudcheck.url}/live/`, liveInitResponseError)
 
   const personToQuery = await Person.find({ name: people[0].name })
