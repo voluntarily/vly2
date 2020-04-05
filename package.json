@@ -220,8 +220,7 @@
       "pages/api/*.js",
       "components/**/*.js",
       "server/**/*.js",
-      "lib/**/*.js",
-      "robots.txt.prod"
+      "lib/**/*.js"
     ],
     "exclude": [
       "**/__tests__/**",
