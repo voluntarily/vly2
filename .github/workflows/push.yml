@@ -220,9 +220,8 @@ jobs:
     - name: ECS Deployment
       uses: donaldpiret/ecs-deploy@v0.0.1
       with:
-        service: vly-alpha
         cluster: vly-alpha-ECSCluster
-        target: vly-alphaTargetGroup
+        target: vly-alpha
         image: vly-alpha:latest
 
       env:
