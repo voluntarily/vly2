@@ -222,7 +222,7 @@ jobs:
       with:
         cluster: vly-alpha-ECSCluster
         target: vly-alpha
-        image: vly-alpha:latest
+        image: vly-alpha vly-alpha:latest
 
       env:
         REVISION: 
