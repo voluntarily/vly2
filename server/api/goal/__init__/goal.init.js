@@ -28,7 +28,7 @@ module.exports = [
   },
   {
     group: GoalGroup.VP_NEW,
-    name: 'Suggest a topic',
+    name: 'Suggest a topic123',
     slug: 'activity-suggestion',
     subtitle: 'Suggest a topic you want help with, or can offer to help with',
     // badgeclass:
@@ -132,7 +132,6 @@ This goal will collect the required information and your permission to run the c
     rank: 4,
     evaluation: (personalGoal) => { return GoalTests.personBadged(personalGoal) }
   },
-
   /*********************************************/
   /* GROUP First steps for a new school        */
   /*********************************************/
@@ -154,8 +153,8 @@ This card will disappear when the profile is complete
     imgUrl: '/static/img/goal/goal-teacherSetup.png',
     startLink: '/my/org/op',
     rank: 1,
-    evaluation: async (personalGoal) => {
-      const { score, count } = await GoalTests.orgCompleteness(personalGoal, OrganisationRole.OPPORTUNITY_PROVIDER)
+    evaluation: async (op) => {
+      const { score, count } = await GoalTests.orgCompleteness(op, OrganisationRole.OPPORTUNITY_PROVIDER)
       return (score / count * 100 > 75)
     }
   },
