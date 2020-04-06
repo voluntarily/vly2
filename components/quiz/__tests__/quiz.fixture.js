@@ -27,7 +27,7 @@ export default [
       },
       {
         name: 'Sharon',
-        q: 'What is the name of the Requestor?',
+        q: 'What is the name of the person asking for help?',
         options: [
           'Shannon',
           'Shaza',
