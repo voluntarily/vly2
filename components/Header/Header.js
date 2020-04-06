@@ -23,20 +23,9 @@ const Notice = styled.div`
 
 const MenuGrid = styled.div`
   display: grid;
-  align-self: center;
-  grid-template-columns: 2fr 1fr 2fr 3rem;
-  @media screen and (max-width: 767px) {
-    grid-template-columns: 0fr 1fr 2fr 0.25rem;
-
-  }
+  grid-template-columns: 1fr 1fr;
 `
 
-const LogoContainer = styled.a`
-  margin: 0 auto;
-  @media screen and (max-width: 767px) {
-    margin: 0;
-  }
-`
 const Logo = styled.img`
   height: 3rem;
   width: 12rem;
@@ -44,11 +33,11 @@ const Logo = styled.img`
 
   background-image: url('/static/vlogolong.svg');
   background-repeat: no-repeat;
-  background-position: left top;
+  background-position: center;
+
   @media screen and (max-width: 767px) {
-    background-image: url('/static/vlogo.svg');
-  
     width: 2rem;
+    background-image: url('/static/vlogo.svg');  
   }
 `
 
@@ -92,26 +81,9 @@ const Header = () => {
     <Layout.Header style={headerStyle}>
       {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><Icon type='warning' /> {notice}</Notice>}
       <MenuGrid>
-        <div>
-          <Brand className='site-name' aria-hidden='true' />
-          {/* <SearchInput
-            placeholder='Search for cool ways to help out'
-            onSearch={handleSearch}
-            aria-label='Search for volunteering opportunties here'
-
-          /> */}
-        </div>
-        <Link href='/landing'>
-          <LogoContainer>
-            <Logo
-              src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
-              alt='Voluntarily logo'
-            />
-          </LogoContainer>
-        </Link>
+        <a href='/landing'><Logo src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' alt='Voluntarily logo' /></a>
         <div>
           <HeaderMenu state={state} />
-
         </div>
         {isAuthenticated &&
           <StyledAvatar>

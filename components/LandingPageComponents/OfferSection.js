@@ -3,6 +3,26 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import { Button } from 'antd'
 
+const HeroGrid = styled.div`
+display: grid;
+grid-template-columns: 1fr 1fr;
+
+@media screen and (min-width: 1282px) and (max-width: 1921px) {
+  grid-template-columns: 28rem 1fr;
+  grid-column-gap: 3rem;
+  height: 26rem;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1281px) {
+  grid-template-columns: 22rem 1fr;
+  grid-column-gap: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+  grid-template-columns: calc(100vw - 2rem);
+}
+`
+
 const OfferContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -24,22 +44,21 @@ const OfferContainer = styled.div`
 `
 
 const OfferCard = styled.div`
-
   padding: 3rem;
-display: grid;
-gap:1.5rem;
-grid-template-columns: 1fr;
-width: 100%;
+  display: grid;
+  gap:1.5rem;
+  grid-template-columns: 1fr;
+  width: 100%;
   background: #ffffff;
   box-shadow: 2px 2px 16px 0 rgba(118, 118, 118, 0.5);
   border-radius: 8px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
-min-height: 23rem;
+  min-height: 23rem;
 
-figcaption {
-  position: relative;
-}
+  figcaption {
+    position: relative;
+  }
 
   h3 {
     bottom: 0;
@@ -54,13 +73,18 @@ figcaption {
   p {
     font-size: 1.1rem;
   }
+
   small {
-  font-size: 1rem
-}
- img{ margin-top: 1rem;}
+    font-size: 1rem
+  }
+
+  img {
+    margin-top: 1rem;
+  }
 
   :hover {
     transform: scale(1.01);
+
     h3 {
       color: #653cad;
     }
@@ -69,7 +93,7 @@ figcaption {
   /* Tablet */
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     min-height: 19rem;
-   }
+  }
 
   /* Mobile */
   @media screen and (max-width: 768px) {
@@ -82,17 +106,16 @@ figcaption {
 
     width: calc(100vw - 2rem);
 
-  padding: 2rem;
-   
+    padding: 2rem;
 
-  h3 {
-    bottom: 0;
-    font-size: 1.5rem;
-  
+
+    h3 {
+      bottom: 0;
+      font-size: 1.5rem;
+
+    }
+
   }
-
-  }
-
 `
 
 const OfferSection = () => (
