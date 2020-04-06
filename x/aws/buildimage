@@ -3,11 +3,6 @@
 # AVW March 2019
 # run this in order to release a new version to production.
 # after the build update the service on the cluster.
-#/bin/bash
-# Build a docker image for the application and place in the Amazon ECR container repository
-# AVW March 2019
-# run this in order to release a new version to production.
-# after the build update the service on the cluster.
 
 MY_DIR=$( dirname "${BASH_SOURCE[0]}" )
 
@@ -33,35 +28,6 @@ docker build --target production \
 
 # tag the image
 UPSTREAM_TAG=585172581592.dkr.ecr.ap-southeast-2.amazonaws.com/vly-alpha:${ESCAPED_TAG_VERSION}
-
-docker tag voluntarily/vly2:${ESCAPED_TAG_VERSION} ${UPSTREAM_TAG}
-
-# push to the repository
-docker push ${UPSTREAM_TAG}
-MY_DIR=$( dirname "${BASH_SOURCE[0]}" )
-
-ESCAPED_TAG_VERSION=${IMAGE_TAG_VERSION//\//-}
-
-# Get a docker login and run it, AS: don't think we need this
-# source ${MY_DIR}/login-sydney
-
-REVISION=`git describe --always --dirty`"_"`date -u +%Y%m%dT%H%M%SZ`
-
-# build the docker image
-docker build --target production \
-    --build-arg BUILD_REVISION=${REVISION} \
-    --build-arg BUILD_APP_URL=${APP_URL} \
-    --build-arg BUILD_AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
-    --build-arg BUILD_AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
-    --build-arg BUILD_VLY_PRIVATE_KEY="${VLY_PRIVATE_KEY}" \
-    --build-arg BUILD_SMTP_ID=${SMTP_ID} \
-    --build-arg BUILD_BADGR_USERNAME=${BADGR_USERNAME}\
-    --build-arg BUILD_BADGR_PASSWORD=${BADGR_PASSWORD}\
-    --build-arg BUILD_SMTP_PWD=${SMTP_PWD} \
-    --tag voluntarily/vly2:${ESCAPED_TAG_VERSION} .
-
-# tag the image
-UPSTREAM_TAG=${AWS_ACCOUNT_ID}.dkr.ecr.ap-southeast-2.amazonaws.com/vly-alpha:${ESCAPED_TAG_VERSION}
 
 docker tag voluntarily/vly2:${ESCAPED_TAG_VERSION} ${UPSTREAM_TAG}
 
