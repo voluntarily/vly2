@@ -13,6 +13,7 @@ import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
 import { PersonBadgeSection } from './PersonBadge'
 import { VBanner, VBannerImg, ProfileBannerTitle } from '../VTheme/Profile'
+import Verification from '../Verification/Verification'
 
 const DetailItem = styled.div`
   margin-top: 0.5rem;
@@ -39,6 +40,7 @@ const PersonUl = styled.ul`
 `
 
 const PersonDetail = ({ person, panelEdit, personEdit, canEdit }, ...props) => (
+
   <div>
     <Head title={person.nickname} />
     <VBanner>
@@ -59,6 +61,8 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }, ...props) => (
                 description='Button to edit an person on PersonDetails page'
               />
             </Button>)}
+
+        <Verification />
 
         <p>{person.job && `${person.job}`} {person.placeOfWork && `- ${person.placeOfWork}`}</p>
       </ProfileBannerTitle>

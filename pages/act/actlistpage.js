@@ -9,7 +9,7 @@ import ActListSection from '../../components/Act/ActListSection'
 export const ActListPage = () =>
   <FullPage>
     <Helmet>
-      <title>Activites - Voluntarily</title>
+      <title>Activities - Voluntarily</title>
     </Helmet>
     <PageBannerNoTabs>
       <h1>

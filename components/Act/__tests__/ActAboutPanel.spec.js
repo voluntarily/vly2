@@ -4,6 +4,7 @@ import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import ActAboutPanel from '../ActAboutPanel'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
+import ops from '../../Op/__tests__/Op.fixture'
 
 // Initial activities
 const actMin = {
@@ -16,15 +17,24 @@ const actMin = {
   tags: []
 }
 
-const mockStore = configureStore()(
-  {
-    session: {
-      me: {
-        role: ['volunteer']
+test.before('Setup fixtures', (t) => {
+  t.context.mockStore = configureStore()(
+    {
+      session: {
+        me: {
+          role: ['volunteer']
+        }
+      },
+      opportunities: {
+        sync: true,
+        syncing: false,
+        loading: false,
+        data: ops,
+        request: null
       }
     }
-  }
-)
+  )
+})
 
 const actMax = {
   _id: '5cc903e5f94141437622cea7',
@@ -44,19 +54,19 @@ const actMax = {
 
 test('render the panel with short draft act', t => {
   const wrapper = mountWithIntl(
-    <Provider store={mockStore}>
+    <Provider store={t.context.mockStore}>
       <ActAboutPanel act={actMin} onPress={() => {}} />
     </Provider>
   )
-  t.is(wrapper.find('h2').text(), 'About this activity')
+  t.is(wrapper.find('h2').first().text(), 'About')
 })
 
 test('render the panel with full act', t => {
   const wrapper = mountWithIntl(
-    <Provider store={mockStore}>
+    <Provider store={t.context.mockStore}>
       <ActAboutPanel act={actMax} onPress={() => {}} />
     </Provider>)
-  t.is(wrapper.find('h2').text(), 'About this activity')
+  t.is(wrapper.find('h2').first().text(), 'About')
 })
 
 test('render the detail with no picture ', t => {
@@ -72,7 +82,7 @@ test('render the detail with no picture ', t => {
   }
 
   const wrapper = mountWithIntl(
-    <Provider store={mockStore}>
+    <Provider store={t.context.mockStore}>
       <ActAboutPanel act={actNoPic} onPress={() => {}} />
     </Provider>
   )

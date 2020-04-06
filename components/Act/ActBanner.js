@@ -2,9 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { config } from '../../config/clientConfig'
 import { Helmet } from 'react-helmet'
-import { SideBarGrid, BannerDetail } from '../VTheme/VTheme'
+import { OpSectionGrid, BannerDetail } from '../VTheme/VTheme'
 import {
-  Left,
   ItemContainer,
   ItemDuration,
   ItemImage,
@@ -13,7 +12,6 @@ import {
 import { OpStatusStamp, OpStatus } from '../Op/OpStatus'
 import { OpTypeCount } from '../Op/OpType'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
-import { ActReadMore } from './ActReadMore'
 const { ASK, OFFER } = OpportunityType
 
 export const ActBanner = ({ act, children }) => {
@@ -34,15 +32,13 @@ export const ActBanner = ({ act, children }) => {
         <meta property='og:image' content={act.imgUrl} />
       </Helmet>
 
-      <SideBarGrid>
-        <Left>
-          <OpStatusStamp status={act.status} />
-          <ItemImage src={act.imgUrl} alt={act.name} />
-        </Left>
-        <BannerDetail>
+      <OpSectionGrid>
+        <div>
           <h1>
-            <OpStatus status={act.status} />{act.name}
+            <OpStatus status={act.status} />
+            {act.name}
           </h1>
+          {act.subtitle && <p>{act.subtitle}</p>}
           {/* <ul>
             <ItemIdLine item={act.offerOrg} path='orgs' />
           </ul> */}
@@ -52,12 +48,14 @@ export const ActBanner = ({ act, children }) => {
             <li><OpTypeCount counts={act.opCounts} type={ASK} /></li>
             <li><OpTypeCount counts={act.opCounts} type={OFFER} /></li>
           </ItemContainer>
-          <ActReadMore act={act} />
-          <>
-            {children}
-          </>
+        </div>
+        <BannerDetail>
+          <OpStatusStamp status={act.status} />
+          <ItemImage src={act.imgUrl} alt={act.name} />
+
         </BannerDetail>
-      </SideBarGrid>
+      </OpSectionGrid>
+
     </>)
 }
 

@@ -1,15 +1,6 @@
-import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
-import Navigation from '../Navigation/Navigation'
 import { P, Spacer } from '../VTheme/VTheme'
-import links from './FooterMenu'
-
-const getAllowedLinks = isAuthenticated =>
-  links()
-    .filter(l => !l.authRequired || (l.authRequired && isAuthenticated))
-    .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
 
 const FooterBackground = styled.footer`
   background-color: #f3f3f3;
@@ -96,7 +87,7 @@ list-style: none;
   }
 `
 
-const Footer = ({ isAuthenticated, ...props }) => (
+const Footer = () => (
   <FooterBackground>
     <FooterContainer>
 
@@ -157,23 +148,20 @@ const Footer = ({ isAuthenticated, ...props }) => (
             <MenuItem>
               <a
                 href='/terms'
-                target='_blank'
                 rel='noopener noreferrer'
-              >Terms and Conditions
+              >Terms of Use
               </a>
             </MenuItem>
             <MenuItem>
               <a
                 href='/terms/privacy'
-                target='_blank'
                 rel='noopener noreferrer'
               >Privacy Policy
               </a>
             </MenuItem>
             <MenuItem>
               <a
-                href='https://github.com/voluntarily/vly2/blob/master/CODE_OF_CONDUCT.md'
-                target='_blank'
+                href='/terms/conduct'
                 rel='noopener noreferrer'
               >Code of Conduct
               </a>
@@ -240,19 +228,7 @@ const Footer = ({ isAuthenticated, ...props }) => (
       <Spacer />
 
     </FooterContainer>
-    {props.isAdmin && (
-      <Navigation items={getAllowedLinks(isAuthenticated)} {...props} />
-    )}
   </FooterBackground>
 )
 
-Footer.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired
-}
-
-const mapStateToProps = store => ({
-  isAuthenticated: store.session.isAuthenticated,
-  isAdmin: store.session.me.role && store.session.me.role.includes('admin')
-})
-
-export default connect(mapStateToProps)(Footer)
+export default Footer

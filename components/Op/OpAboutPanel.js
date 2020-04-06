@@ -19,10 +19,9 @@ export function OpAboutPanel ({ op }) {
     <ProfilePanel>
 
       <OpSectionGrid>
-        <h2><FormattedMessage id='OpAboutPanel.subtitle' defaultMessage='About this activity' /></h2>
+        <h2><FormattedMessage id='OpAboutPanel.section.title.about' defaultMessage='About' /></h2>
         <div>
           {subtitle}
-
           <Html>
             {description}
           </Html>

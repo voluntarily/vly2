@@ -14,44 +14,8 @@ const getText = locale => {
 }
 
 const TermsSection = styled.div`
-  width: 72rem;
-  margin: 0 0;
-
-  h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    color: gray;
-  }
-  h3 {
-    font-size: 2rem;
-  }
-  p {
-    font-size: 1rem;
-    font-weight: 400;
-    color: #333;
-    padding-bottom: 0.5rem;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    width: calc(100vw - 4rem);
-    margin: 2rem 0 2rem 0;
-    h1 {
-      font-size: 2.5rem;
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    width: calc(100vw - 2rem);
-    margin: 1rem 0 1rem 0;
-
-    h1 {
-      font-size: 2rem;
-    }
-
-    p {
-      font-size: 1.5rem;
-    }
-  }
+  max-width: 50rem;
+  margin: 10rem auto;
 `
 
 class Terms extends Component {
@@ -61,7 +25,7 @@ class Terms extends Component {
     return (
       <FullPage>
         <Helmet>
-          <title>Terms and Conditions - Voluntarily</title>
+          <title>Privacy Policy - Voluntarily</title>
         </Helmet>
         <TermsSection>
           <Markdown

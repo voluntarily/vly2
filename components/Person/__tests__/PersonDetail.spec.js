@@ -6,6 +6,8 @@ import people from '../../../server/api/person/__tests__/person.fixture'
 import PersonDetail from '../PersonDetail'
 import { ActivityContainer } from '../../VTheme/VTheme'
 import { VBanner, ProfileBannerTitle } from '../../VTheme/Profile'
+import * as nextRouter from 'next/router'
+import sinon from 'sinon'
 
 test.before('Setup People fixtures', (t) => {
   // not using mongo or server here so faking ids
@@ -16,6 +18,23 @@ test.before('Setup People fixtures', (t) => {
     me,
     people
   }
+
+  const router = () => {
+    return ({
+      pathname: '/test',
+      route: '/test',
+      query: { id: 12345 },
+      asPath: '/test/12345',
+      initialProps: {},
+      pageLoader: sinon.fake(),
+      App: sinon.fake(),
+      Component: sinon.fake(),
+      replace: sinon.fake(),
+      push: sinon.fake(),
+      back: sinon.fake()
+    })
+  }
+  sinon.replace(nextRouter, 'useRouter', router)
 })
 
 test('render person details', t => {

@@ -8,7 +8,7 @@
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
 <div style="background-color: rgb(255, 204, 0)">
-COVID-19 - The platform is undergoing a major pivot to be able to support a wider range of volunteering activities.
+COVID-19 - The platform is undergoing a major change to be able to support a wider range of volunteering activities.
 
 This means that the code base is undergoing a rapid period of change.  If you are considering using the platform in your own country please contact us about the best time to do that. 
 
