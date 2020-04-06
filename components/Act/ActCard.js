@@ -14,7 +14,7 @@ const { ASK, OFFER } = OpportunityType
 const ActCard = ({ act, onPress, ...props }) => {
   const cardImage = act.imgUrl ? act.imgUrl : '/static/missingimage.svg'
   return (
-    <Card style={{ minHeight: '22rem' }}>
+    <Card style={{ height: '23rem', overflow: 'auto' }}>
       <Link href={`/acts/${act._id}`}>
         <a>
           <div>
@@ -27,9 +27,11 @@ const ActCard = ({ act, onPress, ...props }) => {
               {act.name}
             </h1>
             <p>{act.subtitle}</p>
-            <p><OpTypeCount counts={act.opCounts} type={ASK} /></p>
-            <p><OpTypeCount counts={act.opCounts} type={OFFER} /></p>
-            <p><OpCommitment duration={act.duration} /></p>
+            <ul>
+              <li><OpTypeCount counts={act.opCounts} type={ASK} /></li>
+              <li><OpTypeCount counts={act.opCounts} type={OFFER} /></li>
+              <li><OpCommitment duration={act.duration} /></li>
+            </ul>
           </figcaption>
         </a>
       </Link>
