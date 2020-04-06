@@ -6,7 +6,7 @@ export default [
     src: 'https://www.youtube.com/embed/N0Ktkx8SYH0',
     questions: [
       {
-        name: 'Tama',
+        name: 'Offers name',
         q: 'What is the name of the Offer?',
         options: [
           'Tohu',
