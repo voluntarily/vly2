@@ -7,12 +7,12 @@ import { Helmet } from 'react-helmet'
 const readyqs = [
   {
     name: 'Are you ready to volunteer?',
-    description: 'Watch this video to learn what you need to know when volunteering with Voluntarily.',
+    description: 'Watch this video to learn what you need to know when volunteering.',
     src: 'https://www.youtube.com/embed/N0Ktkx8SYH0',
     badgeclass: 'Gp99Py5ERQGVeDFj63gizA',
     questions: [
       {
-        name: 'Tama',
+        name: 'Offers name',
         q: 'What is the name of the Offer?',
         options: [
           'Tohu',
@@ -33,7 +33,7 @@ const readyqs = [
       },
       {
         name: 'Sharon',
-        q: 'What is the name of the Requestor?',
+        q: 'What is the name of the person asking for help??',
         options: [
           'Shannon',
           'Shaza',
