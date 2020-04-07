@@ -1,5 +1,5 @@
 /* eslint-disable */
-require('./config/importEncryptedEnv')();
+require('./config/importEncryptedEnv')() // this will import during build step
 const withLess = require('@zeit/next-less')
 const withCSS = require('@zeit/next-css')
 const lessToJS = require('less-vars-to-js')
