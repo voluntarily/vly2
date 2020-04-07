@@ -4,7 +4,7 @@
   "description": "Voluntari.ly Client based on Next.js",
   "main": "server/server.js",
   "scripts": {
-    "test": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava",
+    "test": "npx cross-env NODE_ENV=test PORT=8080 ENV_ENVIRONMENT='development' ENV_SECRET='mwmBqNcTWiKxDHygMiKhwyffaKQCVoRQ' nyc --reporter=lcov --reporter=text ava",
     "test:root": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava `find __tests__/ -name \"*.spec.js\"`",
     "test:server": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava `find server/ -name \"*.spec.js\"`",
     "test:components": "npx cross-env NODE_ENV=test PORT=8080 nyc --reporter=lcov --reporter=text ava `find components/ -name \"*.spec.js\"`",
