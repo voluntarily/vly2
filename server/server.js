@@ -5,7 +5,7 @@ Intl.NumberFormat = IntlPolyfill.NumberFormat
 Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
 
 const UPLOAD_LIMIT = '6000kb'
-require('dotenv').config()
+require('../config/importEncryptedEnv')() // this will import during run step
 const express = require('express')
 const server = express()
 const bodyParser = require('body-parser')
