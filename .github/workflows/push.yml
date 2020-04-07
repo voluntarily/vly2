@@ -218,7 +218,7 @@ jobs:
         RAYGUN_EXPRESS_SERVER_API_KEY: ${{ secrets.RAYGUN_EXPRESS_SERVER_API_KEY }}
         RAYGUN_REACT_CLIENT_API_KEY: ${{ secrets.RAYGUN_REACT_CLIENT_API_KEY }}
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
 
