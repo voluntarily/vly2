@@ -207,9 +207,9 @@ jobs:
     - name: Build, tag, and push image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: vly-alpha
+        ECR_REPOSITORY: vly-beta
         IMAGE_TAG: ${{ github.sha }}
-        APP_URL: https://alpha.voluntarily.nz
+        APP_URL: https://beta.voluntarily.nz
         VLY_PRIVATE_KEY: ${{ secrets.VLY_PRIVATE_KEY }}
         SMTP_ID: ${{ secrets.SMTP_ID }}
         BADGR_USERNAME: andrew+badgr@voluntarily.nz
@@ -229,9 +229,9 @@ jobs:
     - name: Deploy to ECS
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: vly-alpha      
+        ECR_REPOSITORY: vly-beta
       uses: donaldpiret/ecs-deploy@v0.0.1
       with:
-        cluster: vly-alpha-ECSCluster
-        target: vly-alpha
-        image: vly-alpha $ECR_REGISTRY/$ECR_REPOSITORY:master
+        cluster: vly-beta-ECSCluster
+        target: vly-beta
+        image: vly-beta $ECR_REGISTRY/$ECR_REPOSITORY:master
