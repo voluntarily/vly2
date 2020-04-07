@@ -7,33 +7,56 @@ import { Helmet } from 'react-helmet'
 const readyqs = [
   {
     name: 'Are you ready to volunteer?',
-    description: 'Watch this video to learn what you need to know when volunteering with Voluntarily.',
-    src: 'https://www.youtube.com/embed/kv8GrLpfVNo',
-    badgeclass: 'Gp99Py5ERQGVeDFj63gizA',
+    description: 'Watch this video to learn what you need to know when volunteering.',
+    src: 'https://www.youtube.com/embed/N0Ktkx8SYH0',
+    badgeclass: '5e1e3adb46e0fb0034694f6c',
     questions: [
       {
-        name: 'tShirt',
-        q: 'What does Vaughan have on his t-shirt?',
+        name: 'Offersname',
+        q: 'What is the name of the Offer?',
         options: [
-          'Unicorn',
-          'Dinosaur',
-          'Robot bee',
-          'Jandals'
+          'Tohu',
+          'Tane',
+          'Tama',
+          'Tana'
         ]
       },
       {
-        name: 'launchDate',
-        q: 'When does Voluntarily Launch?',
+        name: 'Food',
+        q: 'What activity was requested?',
         options: [
-          '2020',
-          '2021',
-          '2022'
+          'Remote Working Policies',
+          'Delivering Medication',
+          'Groceries Delivery',
+          'Redux Tutorial'
+        ]
+      },
+      {
+        name: 'Sharon',
+        q: 'What is the name of the person asking for help??',
+        options: [
+          'Shannon',
+          'Shaza',
+          'Sam',
+          'Sharon'
+        ]
+      },
+      {
+        name: 'ActivityTab',
+        q: 'Which of these are not a tab found on the Activity Detail page?',
+        options: [
+          'About',
+          'Ask',
+          'Offer',
+          'Collaboration'
         ]
       }
     ],
     answers: {
-      tShirt: 1,
-      launchDate: 0
+      Offersname: 2,
+      Food: 2,
+      Sharon: 3,
+      ActivityTab: 3
     }
   }
 ]
@@ -45,7 +68,7 @@ export const Ready = ({ vqa, me }) => {
   return (
     <FullPage>
       <Helmet>
-        <title>SchoolReady - Voluntarily</title>
+        <title>Volunteer Ready - Voluntarily</title>
       </Helmet>
       <VideoQuiz vqa={vqa} me={me} onCompleted={handleCompleted} />
     </FullPage>
