@@ -1,4 +1,9 @@
-require('dotenv').config()
+const { checkEnvVars } = require('./env')
+checkEnvVars({
+  required: 'AUTH0_CLIENT_ID AUTH0_CLIENT_DOMAIN',
+  optional: 'PORT APPNAME NODE_ENV DBNAME MONGODB_URI SMTP_ID SMTP_PWD'
+})
+
 const databaseName = process.env.DBNAME || 'vly2'
 const serverPort = process.env.PORT || 3122
 
@@ -16,8 +21,8 @@ const completeConfig = {
       }
     },
     auth: {
-      AUTH0_CLIENT_ID: 'S4yd4VgZ92NIjhwO3vt4h0Gifb9mXv1k',
-      AUTH0_CLIENT_DOMAIN: 'voluntarily.au.auth0.com'
+      AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
+      AUTH0_CLIENT_DOMAIN: process.env.AUTH0_CLIENT_DOMAIN
     },
     apiVersion: 'v1',
     SMTP_ID: process.env.SMTP_ID || '',

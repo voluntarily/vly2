@@ -5,7 +5,6 @@ Intl.NumberFormat = IntlPolyfill.NumberFormat
 Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
 
 const UPLOAD_LIMIT = '6000kb'
-require('dotenv').config()
 const express = require('express')
 const server = express()
 const bodyParser = require('body-parser')
