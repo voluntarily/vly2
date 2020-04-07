@@ -1,6 +1,7 @@
 const nodecipher = require('node-cipher')
 const dotenv = require('dotenv')
 const dotenvExpand = require('dotenv-expand')
+const rimraf = require('rimraf')
 const { envHasKey } = require('./env')
 
 // importEnv(path?, secret?)
@@ -9,14 +10,18 @@ const { envHasKey } = require('./env')
 // path is an optional variable and will default to process.env.ENV_PATH
 // secret is an optional variable and will default to process.env.ENV_SECRET
 const importEnv = (env_name = process.env.ENV_ENVIRONMENT, secret = process.env.ENV_SECRET) => {
+  const input = `${env_name}.env.enc`;
+  const output = `${env_name}.env`;
+
   nodecipher.decryptSync({
-    input: `${env_name}.env.enc`,
-    output: `${env_name}.env`,
+    input,
+    output,
     password: secret
   });
 
-  var myEnv = dotenv.config({ path: `${env_name}.env` })
+  const myEnv = dotenv.config({ path: output })
   dotenvExpand(myEnv)
+  rimraf.sync(output)
 }
 
 // Public API
