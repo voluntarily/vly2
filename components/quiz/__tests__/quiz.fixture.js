@@ -6,7 +6,7 @@ export default [
     src: 'https://www.youtube.com/embed/N0Ktkx8SYH0',
     questions: [
       {
-        name: 'Offers name',
+        name: 'Offersname',
         q: 'What is the name of the Offer?',
         options: [
           'Tohu',
@@ -47,7 +47,7 @@ export default [
       }
     ],
     answers: {
-      Tama: 2,
+      Offername: 2,
       Food: 2,
       Sharon: 3,
       ActivityTab: 3

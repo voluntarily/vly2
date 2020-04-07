@@ -9,10 +9,10 @@ const readyqs = [
     name: 'Are you ready to volunteer?',
     description: 'Watch this video to learn what you need to know when volunteering.',
     src: 'https://www.youtube.com/embed/N0Ktkx8SYH0',
-    badgeclass: 'Gp99Py5ERQGVeDFj63gizA',
+    badgeclass: '5e1e3adb46e0fb0034694f6c',
     questions: [
       {
-        name: 'Offers name',
+        name: 'Offersname',
         q: 'What is the name of the Offer?',
         options: [
           'Tohu',
@@ -53,7 +53,7 @@ const readyqs = [
       }
     ],
     answers: {
-      Tama: 2,
+      Offersname: 2,
       Food: 2,
       Sharon: 3,
       ActivityTab: 3
