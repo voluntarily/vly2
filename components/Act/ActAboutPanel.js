@@ -52,7 +52,7 @@ export const ActActivityGuideSection = ({ act }) =>
       </p>
       <ActReadMore act={act} />
       <Link href={`/acts/${act._id}?tab=resources`}>
-        <Button block shape='round' size='large'>
+        <Button shape='round' size='large'>
           <FormattedMessage
             id='ActAboutPanel.button.guide'
             defaultMessage='See all resources'

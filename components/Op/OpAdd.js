@@ -25,7 +25,7 @@ export const OpAddNewBtn = () => {
 
   return (
     <Link href={href}>
-      <Button type='primary' block shape='round' size='large'>
+      <Button type='primary' shape='round' size='large'>
         <FormattedMessage
           id='OpAdd.newAskOffer'
           defaultMessage='New request or offering'
@@ -42,7 +42,7 @@ export const OpAddAskBtn = ({ actid }) => {
   }
   return (
     <Link href={href}>
-      <Button type='primary' block shape='round' size='large'>
+      <Button type='primary' shape='round' size='large'>
         <FormattedMessage
           id='OpAdd.newAsk'
           defaultMessage='Ask for help'
@@ -59,7 +59,7 @@ export const OpAddOfferBtn = ({ actid }) => {
   }
   return (
     <Link href={href}>
-      <Button type='primary' block shape='round' size='large'>
+      <Button type='primary' shape='round' size='large'>
         <FormattedMessage
           id='OpAdd.newOffer'
           defaultMessage='Offer to help'

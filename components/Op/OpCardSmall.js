@@ -19,11 +19,13 @@ const getOpPageURL = (isArchived, opid) => {
 
 const StyledIcon = styled(Icon)`
   font-size: 1rem;
-  margin-right: 0.5rem;
-
- 
+  margin-right: 0.5rem; 
 `
-
+const SingleLineTitle = styled('h2')`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
 // todo if image is not present then use a fallback.
 const OpCardSmall = ({ op }) => {
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
@@ -48,25 +50,23 @@ const OpCardSmall = ({ op }) => {
   // }
 
   return (
-    <SmallCard>
+    <SmallCard style={{ height: '10rem' }}>
       <Link href={getOpPageURL(isArchived, op._id)}>
         <a>
+          <SingleLineTitle>
+            {op.requestor.nickname} <OpType type={op.type} />
+          </SingleLineTitle>
           <SmallOpGrid>
-
             <img src={op.requestor.imgUrl} />
             <figcaption>
               {/* <p>  {op.subtitle}</p> */}
-              <h2>
-                {op.requestor.nickname} <OpType type={op.type} /> <br />
-
-              </h2>
-
-              <p> {startLocation}</p>
-              <p> {startTime} </p>
-              <p> {startDuration}</p>
-
+              <ul>
+                {startLocation && <li> {startLocation}</li>}
+                {startTime && <li> {startTime} </li>}
+                {startDuration && <li> {startDuration}</li>}
+                {op.createdAt && <li>{op.createdAt}</li>}
+              </ul>
               {interestIcon}
-
             </figcaption>
           </SmallOpGrid>
         </a>
