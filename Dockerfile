@@ -6,11 +6,13 @@ FROM base as production_build
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-ARG ENV_ENVIRONMENT='development'
-ARG ENV_SECRET='mwmBqNcTWiKxDHygMiKhwyffaKQCVoRQ'
-
 COPY package.json package-lock.json* ./
 RUN npm ci --production
+
+ARG ENV_ENVIRONMENT='development'
+ENV ENV_ENVIRONMENT=$ENV_ENVIRONMENT
+ARG ENV_SECRET='mwmBqNcTWiKxDHygMiKhwyffaKQCVoRQ'
+ENV ENV_SECRET=$ENV_SECRET
 COPY . ./
 RUN npm run prod-build
 
