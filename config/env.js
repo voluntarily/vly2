@@ -31,7 +31,7 @@ const checkEnvVars = ({ required, optional }) => {
   if (requiredEnv) {
     const unsetEnvs = requiredEnv.filter(key => !envHasKey(key))
     if (unsetEnvs.length > 0) {
-      throw new Error('Required ENV variables are not set: [' + unsetEnvs.join(', ') + ']')
+      console.error('Required ENV variables are not set: [' + unsetEnvs.join(', ') + ']')
     }
   }
   if (optionalEnv) {
