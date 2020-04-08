@@ -1,9 +1,9 @@
-import { Button, Icon } from 'antd'
+import { Icon } from 'antd'
 // import Router from 'next/router'
 import React from 'react'
-import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
-import Link from 'next/link'
+import styled from 'styled-components'
+import { LearnMoreButton, SignUpButton } from '../../components/VTheme/Buttons'
 import { AlertContainer } from '../VTheme/VTheme'
 
 // const Search = Input.Search
@@ -237,9 +237,16 @@ For official information and advice around COVID-19 visit  <a href='https://covi
         </HeroLeft>
 
         <HeroRight>
-          <HeroText>People helping people.
+          <HeroText>
+            <FormattedMessage
+              id='Hero.title.PeopleHelpingPeople'
+              defaultMessage='People helping people.'
+            />
             <p>
-          We connect people who can volunteer time, advice, or stuff to those who need it.
+              <FormattedMessage
+                id='Hero.body.WeConnect'
+                defaultMessage='We connect people who can volunteer time, advice, or stuff to those who need it.'
+              />
             </p>
           </HeroText>
           {/* <SearchBox>
@@ -255,10 +262,8 @@ For official information and advice around COVID-19 visit  <a href='https://covi
         </SearchBox> */}
           <div>
             {!isAuthenticated &&
-              <> <Link href='/home'><Button type='primary' shape='round' size='large' style={{ marginTop: '1rem', marginRight: '0.5rem' }}> Sign up </Button></Link></>}
-            <Button type='secondary' shape='round' size='large' href='https://blog.voluntarily.nz' style={{ marginTop: '1rem' }}>
-            Learn more
-            </Button>
+              <SignUpButton then='/flow/postSignUp' />}
+            <LearnMoreButton />
           </div>
         </HeroRight>
 

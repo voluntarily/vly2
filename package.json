@@ -37,6 +37,8 @@
     "@babel/polyfill": "^7.8.3",
     "@casl/ability": "^3.4.0",
     "@casl/mongoose": "^2.3.3",
+    "@mdx-js/loader": "^1.5.8",
+    "@next/mdx": "^9.3.4",
     "@storybook/addon-knobs": "^5.3.9",
     "@types/react-intl": "^3.0.0",
     "@uppy/core": "^1.7.0",

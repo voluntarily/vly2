@@ -1,46 +1,17 @@
-import { Button } from 'antd'
-import Markdown from 'markdown-to-jsx'
-import React, { Component } from 'react'
+import React from 'react'
 import { Helmet } from 'react-helmet'
-import styled from 'styled-components'
-import { FullPage } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
 import { injectIntl } from 'react-intl'
+import TermsEn from '../../assets/notices/terms-en.md'
+import { A4 } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
 
-import termsEn from './terms-en-md.js'
-
-const getText = locale => {
-  return termsEn()
-}
-
-const TermsSection = styled.div`
-  max-width: 60rem;
-  margin: 10rem auto;
-`
-
-class Terms extends Component {
-  render () {
-    const terms = getText(this.props.intl.locale)
-
-    return (
-      <FullPage>
-        <Helmet>
-          <title>Terms of Use - Voluntarily</title>
-        </Helmet>
-        <TermsSection>
-          <Markdown
-            children={terms}
-            options={{
-              overrides: {
-                Button: { component: Button }
-              }
-            }}
-          />
-        </TermsSection>
-      </FullPage>
-    )
-  }
-}
+const Terms = () =>
+  <A4>
+    <Helmet>
+      <title>Terms of Use - Voluntarily</title>
+    </Helmet>
+    <TermsEn />
+  </A4>
 
 export const TermsTest = Terms // for test
 

@@ -652,9 +652,22 @@ Need the form ones as well soon as we create other forms on top of the OpAskForm
 ====================================================
 */
 export const A4 = styled.div`
-  margin: 3em;
-  padding-bottom: 4em;
+  margin: 3rem;
+  padding: 4rem,0;
   max-width: 50em;
+  margin-left: auto;
+  margin-right: auto;
+  @media (max-width: 600px) {
+    .div {
+      margin: 0 3em;
+    }
+  }
+`
+// narrow page used for notices
+export const A5 = styled.div`
+  margin: 3em;
+  padding: 4em;
+  max-width: 40rem;
   margin-left: auto;
   margin-right: auto;
   @media (max-width: 600px) {

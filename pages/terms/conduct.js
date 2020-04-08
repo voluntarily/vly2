@@ -1,47 +1,18 @@
-import { Button } from 'antd'
-import Markdown from 'markdown-to-jsx'
-import React, { Component } from 'react'
+import React from 'react'
 import { Helmet } from 'react-helmet'
-import styled from 'styled-components'
-import { FullPage } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
 import { injectIntl } from 'react-intl'
+import ConductEn from '../../assets/notices/conduct-en.md'
+import { A4 } from '../../components/VTheme/VTheme'
+import publicPage from '../../hocs/publicPage'
 
-import conductEn from './conduct-en-md.js'
+const Conduct = () =>
+  <A4>
+    <Helmet>
+      <title>Code of Conduct - Voluntarily</title>
+    </Helmet>
+    <ConductEn />
+  </A4>
 
-const getText = locale => {
-  return conductEn()
-}
+export const ConductTest = Conduct // for test
 
-const TermsSection = styled.div`
-  max-width: 50rem;
-  margin: 10rem auto;
-`
-
-class Terms extends Component {
-  render () {
-    const terms = getText(this.props.intl.locale)
-
-    return (
-      <FullPage>
-        <Helmet>
-          <title>Code of Conduct - Voluntarily</title>
-        </Helmet>
-        <TermsSection>
-          <Markdown
-            children={terms}
-            options={{
-              overrides: {
-                Button: { component: Button }
-              }
-            }}
-          />
-        </TermsSection>
-      </FullPage>
-    )
-  }
-}
-
-export const TermsTest = Terms // for test
-
-export default publicPage(injectIntl(Terms))
+export default publicPage(injectIntl(Conduct))
