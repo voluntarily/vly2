@@ -21,6 +21,9 @@
     "end-to-end-test": "run-p -r dev testcafe-tests",
     "check-coverage": "nyc check-coverage --statements 90 --branches 90 --functions 90 --lines 90",
     "testcafe-tests": "wait-on -t 60000 -w 2000 -l http://localhost:3122 && node node_modules/testcafe/bin/testcafe.js --skip-js-errors firefox:headless systemtest/landing.test.js",
+    "lint": "standard",
+    "fix": "standard --fix",
+    "dev": "cross-env ENV_ENVIRONMENT='development' ENV_SECRET='mwmBqNcTWiKxDHygMiKhwyffaKQCVoRQ' nodemon -w lang -w server -w package.json server/server.js"
   },
   "dependencies": {
     "@babel/core": "^7.8.4",
