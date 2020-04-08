@@ -234,4 +234,4 @@ jobs:
       with:
         cluster: vly-beta
         target: voluntarily-beta-service
-        image: vly-beta $ECR_REGISTRY/$ECR_REPOSITORY:master
+        image: beta $ECR_REGISTRY/$ECR_REPOSITORY:master
