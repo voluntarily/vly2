@@ -19,6 +19,12 @@ const parseVar = (type, arg) => {
 // opts = { required, optional }
 // Both required and optional can be undefined, a string, or an array of strings.
 const checkEnvVars = ({ required, optional }) => {
+  if (Object.entries(process.env).length === 0) {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('Unable to checkEnvVars in frontend')
+    }
+    return
+  }
   const requiredEnv = parseVar('required', required)
   const optionalEnv = parseVar('optional', optional)
 
