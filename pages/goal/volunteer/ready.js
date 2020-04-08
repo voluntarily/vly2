@@ -4,7 +4,7 @@ import { VideoQuiz, hashObj } from '../../../components/quiz/quiz'
 import Router from 'next/router'
 import { Helmet } from 'react-helmet'
 
-const readyqs = [
+export const volunteerReadyQuiz = [
   {
     name: 'Are you ready to volunteer?',
     description: 'Watch this video to learn what you need to know when volunteering.',
@@ -75,7 +75,7 @@ export const Ready = ({ vqa, me }) => {
   )
 }
 Ready.getInitialProps = async ({ store }) => {
-  const vqa = { ...readyqs[0] } // TODO: move to database
+  const vqa = { ...volunteerReadyQuiz[0] } // TODO: move to database
   vqa.hash = hashObj(vqa.answers, store.getState().session.me.email)
   delete vqa.answers
   return { vqa }

@@ -1,8 +1,7 @@
 import test from 'ava'
-import { Ready as SchoolReady } from '../../../pages/goal/school/ready'
+import { Ready as VolunteerReady, volunteerReadyQuiz } from '../../../pages/goal/volunteer/ready'
 import { shallowWithIntl } from '../../../lib/react-intl-test-helper'
 import { hashObj } from '../../../components/quiz/quiz'
-import quiz from '../../../components/quiz/__tests__/quiz.fixture'
 import withMockRoute from '../../../server/util/mockRouter'
 import sinon from 'sinon'
 test('render OpList', async t => {
@@ -14,14 +13,14 @@ test('render OpList', async t => {
       return ({ session: { me } })
     }
   }
-  const hash = hashObj(quiz[0].answers, email)
-  const RoutedSchoolReady = withMockRoute(SchoolReady)
+  const hash = hashObj(volunteerReadyQuiz[0].answers, email)
+  const RoutedVolunteerReady = withMockRoute(VolunteerReady)
 
-  const props = await SchoolReady.getInitialProps({ store })
-  t.is(props.vqa.name, 'Are you School Ready?')
+  const props = await VolunteerReady.getInitialProps({ store })
+  t.is(props.vqa.name, volunteerReadyQuiz[0].name)
   t.is(props.vqa.hash, hash)
 
-  const outer = shallowWithIntl(<RoutedSchoolReady {...props} me={me} />)
+  const outer = shallowWithIntl(<RoutedVolunteerReady {...props} me={me} />)
 
   const router = outer.props().router
   router.push = sinon.spy()

@@ -1,4 +1,5 @@
 /* eslint-disable */
+const env = require('./config/importEncryptedEnv')() // this will import during build step
 const withLess = require('@zeit/next-less')
 const withCSS = require('@zeit/next-css')
 const lessToJS = require('less-vars-to-js')
@@ -33,4 +34,7 @@ if (process.env.NODE_ENV === 'test') {
   config.distDir = path.join('.test', uuid())
 }
 
-module.exports = config
+module.exports = {
+  ...config,
+  env // It's required to pass environment variables here to pass them into the frontend code
+}
