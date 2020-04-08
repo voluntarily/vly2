@@ -1,7 +1,7 @@
 {
   "name": "@voluntarily/vly2",
   "version": "1.0.0",
-  "description": "Voluntari.ly Client based on Next.js",
+  "description": "Voluntarily.nz Client based on Next.js",
   "main": "server/server.js",
   "scripts": {
     "test": "npx cross-env NODE_ENV=test PORT=8080 ENV_ENVIRONMENT='development' ENV_SECRET='mwmBqNcTWiKxDHygMiKhwyffaKQCVoRQ' nyc --reporter=lcov --reporter=text ava",
