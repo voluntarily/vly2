@@ -42,6 +42,11 @@ raygunClient.user = function (req) {
   }
 }
 
+if(process.env.NODE_ENV === 'production') {
+  const morgan = require('morgan')
+  server.use(morgan('combined'))
+}
+
 // We need to load and expose the translations on the request for the user's
 // locale. These will only be used in production, in dev the `defaultMessage` in
 // each message description in the source code will be used.

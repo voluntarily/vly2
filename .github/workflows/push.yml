@@ -209,16 +209,12 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: vly-beta
         IMAGE_TAG: ${{ github.sha }}
-        APP_URL: https://beta.voluntarily.nz
-        VLY_PRIVATE_KEY: ${{ secrets.VLY_PRIVATE_KEY }}
-        SMTP_ID: ${{ secrets.SMTP_ID }}
-        BADGR_USERNAME: andrew+badgr@voluntarily.nz
-        BADGR_PASSWORD: ${{ secrets.BADGR_PASSWORD }}
-        SMTP_PWD: ${{ secrets.SMTP_PWD }}
-        RAYGUN_EXPRESS_SERVER_API_KEY: ${{ secrets.RAYGUN_EXPRESS_SERVER_API_KEY }}
-        RAYGUN_REACT_CLIENT_API_KEY: ${{ secrets.RAYGUN_REACT_CLIENT_API_KEY }}
+        ENV_ENVIRONMENT: beta
+        ENV_SECRET: ${{ secrets.ENV_SECRET }}
       run: |
-        docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+        --build-arg ENV_ENVIRONMENT --build-arg ENV_SECRET \
+        .
         docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
 
@@ -232,6 +228,6 @@ jobs:
         ECR_REPOSITORY: vly-beta
       uses: donaldpiret/ecs-deploy@v0.0.1
       with:
-        cluster: vly-beta-ECSCluster
-        target: vly-beta
-        image: vly-beta $ECR_REGISTRY/$ECR_REPOSITORY:master
+        cluster: vly-beta
+        target: voluntarily-beta-service
+        image: beta $ECR_REGISTRY/$ECR_REPOSITORY:master
