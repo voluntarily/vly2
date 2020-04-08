@@ -86,7 +86,7 @@ test('Check QuestionGroup', t => {
     <QuestionGroup questions={q.questions} answers={hashedAnswers} me={me} onSubmit={handleSubmit} />
   )
   t.true(wrapper.exists('Button'))
-  t.is(wrapper.find('Question').length, 2)
+  t.is(wrapper.find('Question').length, 4)
   const e1 = {
     preventDefault: sinon.spy(),
     target: {
@@ -115,7 +115,7 @@ test('Check QuestionGroup', t => {
   e1.target.value = 1
   wrapper.find('Question').at(0).props().onChange(e1)
   wrapper.find('Button').first().props().onClick(e3)
-  t.true(handleSubmit.calledWith(true))
+  t.true(handleSubmit.calledWith(false))
 })
 
 test('Check VideoQuiz', async t => {
