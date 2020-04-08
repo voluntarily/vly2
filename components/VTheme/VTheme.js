@@ -235,7 +235,7 @@ align-self: center;
 `
 export const SmallOpGrid = styled.div`
 display: grid;
-grid-template-columns: 3rem 1fr;
+grid-template-columns: 4rem 1fr;
 gap: 0.5rem;
 align-items: center;
 `
@@ -733,6 +733,9 @@ a { text-decoration: none; }
 figcaption {
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
+
+  li { list-style: none }
+  ul { padding-left: 0; }
 }
 
 :hover {
@@ -815,12 +818,14 @@ box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
 padding: 1rem;
 border-radius: 8px;
 margin-bottom: 0;
-
+overflow: auto;
 a { text-decoration: none; }
 
 figcaption {
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
+  li { list-style: none }
+  ul { padding-left: 0; }
 }
 
 :hover {
@@ -844,15 +849,13 @@ h2 {
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   -webkit-transition: all 0.28s;
   transition: all 0.28s;
   font-weight: 700;
   font-size: 20px;
   line-height: 1.4;
-  -webkit-line-clamp: 3;
-
 }
 
 img {
@@ -860,15 +863,13 @@ img {
   -webkit-transition: all 0.2s;
  
   border-radius: 129px;
-  width: 3rem;
-  height: 3rem;
+  width: 4rem;
+  height: 4rem;
  
   background-color: rgba(0, 0, 0, 0);
   object-fit: cover;
   overflow: hidden;
   object-position: top;
-
-
 }
 
 time {

@@ -13,6 +13,7 @@ yarn.lock
 .ssh
 voluntarily.key
 .env
+*.env
 .vscode/launch.json
 public/static/upload/*
 public/static/upload-test/*

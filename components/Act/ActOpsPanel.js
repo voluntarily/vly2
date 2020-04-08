@@ -48,7 +48,7 @@ export const ActOpsPanel = ({ act, type, limit }) => {
           <OpListSmall ops={ops} />
           {showMore &&
             <Link href={`/acts/${act._id}?tab=${type}`}>
-              <Button block shape='round' size='large' style={{ marginTop: '1rem', float: 'right' }}>
+              <Button shape='round' size='large' style={{ marginTop: '1rem', float: 'right' }}>
                 <FormattedMessage
                   id='ActOpsPanel.button.showAll'
                   defaultMessage='See all'

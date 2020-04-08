@@ -5,7 +5,7 @@ Intl.NumberFormat = IntlPolyfill.NumberFormat
 Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
 
 const UPLOAD_LIMIT = '6000kb'
-require('dotenv').config()
+require('../config/importEncryptedEnv')() // this will import during run step
 const express = require('express')
 const server = express()
 const bodyParser = require('body-parser')
@@ -40,6 +40,11 @@ raygunClient.user = function (req) {
       fullName: req.person.name
     }
   }
+}
+
+if(process.env.NODE_ENV === 'production') {
+  const morgan = require('morgan')
+  server.use(morgan('combined'))
 }
 
 // We need to load and expose the translations on the request for the user's

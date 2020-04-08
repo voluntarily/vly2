@@ -13,6 +13,8 @@ import { useState } from 'react'
  */
 
 const showStaySafe = true
+const maxMessageLength = 400
+
 const staySafeUrl = 'https://voluntarily.atlassian.net/servicedesk/customer/portal/2/article/236486718'
 export const RegisterInterestMessageForm = ({
   visible,
@@ -50,7 +52,7 @@ export const RegisterInterestMessageForm = ({
       <p>{prompt}</p>
       <TextArea
         rows='3'
-        maxLength='200'
+        maxLength={maxMessageLength}
         value={message}
         onChange={e => {
           setMessage(e.target.value)
