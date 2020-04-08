@@ -233,5 +233,5 @@ jobs:
       uses: donaldpiret/ecs-deploy@v0.0.1
       with:
         cluster: vly-beta
-        target: vly-beta
+        target: voluntarily-beta-service
         image: vly-beta $ECR_REGISTRY/$ECR_REPOSITORY:master
