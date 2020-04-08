@@ -173,7 +173,7 @@ jobs:
         npm run test:lib
 
   build-and-deploy:
-    name: Build to ECR, deploy to ECS
+    name: Build, push to ECR, deploy to ECS
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' #If we are pushing to master, assume (because permissions) all the tests were run on PRs, just do a deploy step
     steps:
@@ -193,6 +193,14 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-  
 
+    - name: Build production
+      run: |
+        npm ci --production
+        npm run build:production
+      env:
+        ENV_ENVIRONMENT: beta
+        ENV_SECRET: ${{ secrets.ENV_SECRET }}
+        
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
