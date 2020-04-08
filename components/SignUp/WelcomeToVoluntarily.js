@@ -1,7 +1,7 @@
 import { FormattedMessage } from 'react-intl'
 import { HalfGrid } from '../../components/VTheme/VTheme'
 
-export const WelcomeToVoluntarily = () =>
+export const WelcomeToVoluntarily = ({ children }) =>
   <HalfGrid>
     <div>
       <img src='/static/img/sign-up/welcome-to-voluntarily.png' />
@@ -25,6 +25,7 @@ export const WelcomeToVoluntarily = () =>
           defaultMessage='Want to volunteer your time, or resources to help out someone in need? See what is needed and offer your skills.'
         />
       </p>
+      {children}
     </div>
   </HalfGrid>
 export default WelcomeToVoluntarily
