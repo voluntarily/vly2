@@ -15,7 +15,6 @@ export default async (req, res) => {
     // check parameters
     // const { org } = req.query
     const me = req.session && req.session.me
-    console.log(me)
 
     // We have a new volunteer
     if (!me.role.includes(Role.VOLUNTEER)) {
