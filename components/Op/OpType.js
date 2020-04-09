@@ -38,7 +38,7 @@ export const OpType = ({ type }) => {
   if (!type || ![ASK, OFFER].includes(type)) return null
   return (<FormattedMessage {...OpTypeMessages[type]} />)
 }
-
+//************OpTypeImperative*****************//
 export const OpTypeImperativeMsg = defineMessages({
   [ASK]: {
     id: 'OpportunityType.imp.ASK',
@@ -51,11 +51,51 @@ export const OpTypeImperativeMsg = defineMessages({
     description: 'Offering help command'
   }
 })
+
 export const OpTypeImperative = ({ type }) => {
   if (!type || ![ASK, OFFER].includes(type)) return null
   return (<FormattedMessage {...OpTypeImperativeMsg[type]} />)
 }
+//************OpTypeImperative*****************//
 
+//************OpTypeButtonLabelMsg*****************//
+export const OpTypeButtonLabelMsg  = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.imp.ASK',
+    defaultMessage: 'Ask for help with',
+    description: 'Asking for help command'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.imp.OFFER',
+    defaultMessage: 'Offer to help with',
+    description: 'Offering help command'
+  }
+})
+export const OpTypeButtonLabelMsg  = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpTypeButtonLabelMsg[type]} />)
+}
+//************OpTypeButtonLabelMsg*****************//
+
+//************OpTypeButtonLabel*****************//
+export const OpTypeButtonLabel = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.imp.ASK',
+    defaultMessage: 'Ask for help with',
+    description: 'Asking for help command'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.imp.OFFER',
+    defaultMessage: 'Offer to help with',
+    description: 'Offering help command'
+  }
+})
+
+export const OpTypeButtonLabel = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpTypeButtonLabel[type]} />)
+}
+//************OpTypeButtonLabel*****************//
 export const OpTypeEmoji = {
   [ASK]: '🙋',
   [OFFER]: '💁🏻'
