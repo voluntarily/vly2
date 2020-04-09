@@ -79,6 +79,9 @@ prod_docker_docker_builder:
     APP_URL: https://alpha.voluntarily.nz
     RAYGUN_EXPRESS_SERVER_API_KEY: ENCRYPTED[3974bfed615b2defe09eabc75e867ca8c4e7c23f894b32e30b06bb0be4b5e3aacce579b3c5984bb006f62a115828217f]
     RAYGUN_REACT_CLIENT_API_KEY: ENCRYPTED[3d157c56122be5408b0bc856a2974cfaab84c6ccd1bb6ce3a91f64c56e4f6745099da4837cff31bcb7564361dd0fb585]
+    ENV_ENVIRONMENT: alpha
+    ENV_SECRET: ENCRYPTED[727cb72b63113d9ee4faac35520b985f4bea08f606c98719171106e24e9827060bee1ad1955c80a1a01fadea55c82c3e]
+
   prepare_script:
     - pip install awscli
     - wget https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest -O ./ecs-cli
