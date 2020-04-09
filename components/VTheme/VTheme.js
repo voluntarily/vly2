@@ -558,18 +558,7 @@ export const H3Black = styled.h3`
 ` // end H3Black
 
 export const H4 = styled.h4`
-  letter-spacing: -0.3px;
-  font-size: 1.5rem;
-  color: #000;
-  margin-bottom: 0;
-
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    letter-spacing: -0.06rem;
-    font-size: 1.5rem;
-  }
-  @media screen and (max-width: 768px) {
-    font-size: 1rem;
-  }
+  // H4
 ` // H4
 
 export const H5 = styled.h5`
@@ -584,14 +573,7 @@ export const H5 = styled.h5`
 
 export const P = styled.p`
   font-weight: 400;
-  color: black;
-  font-size: 1rem;
-  margin: initial;
-  letter-spacing: -0.03rem;
-  @media screen and (max-width: 767px) {
-    font-size: 1rem;
-  }
-` // end P
+`
 
 export const PBold = styled.p`
   font-weight: 700;
@@ -1025,15 +1007,12 @@ export const PageAlert = styled.div`
 
   width: 100%;
   padding: 0.6rem;
-  border-radius: 8px;
-  box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
 
   display: grid;
   gap: 1rem;
   grid-template-columns: 3rem 3fr 1fr 1fr;
 
   background-color: rgb(37, 15, 81);
-  margin-bottom: -5rem;
   h4 {
     color: white;
     font-weight: 600;
