@@ -8,13 +8,16 @@ import { FullPage } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import callApi from '../../lib/callApi'
 import reduxApi from '../../lib/redux/reduxApi'
+import { useSelector } from 'react-redux'
+import { Role } from '../../server/services/authorize/role'
 
 const { Step } = Steps
 
 const PostSignUp = () => {
+  const me = useSelector(state => state.session.me)
   const [step, setStep] = useState(0)
   const [roleAsk, setRoleAsk] = useState(true)
-  const [roleOffer, setRoleOffer] = useState(false)
+  const [roleOffer, setRoleOffer] = useState(me.role.includes(Role.VOLUNTEER))
   // const orgs = useSelector(state => state.organisations.data)
   const router = useRouter()
 
@@ -94,8 +97,6 @@ const PostSignUp = () => {
   return (
     <FullPage>
       <h1><FormattedMessage defaultMessage='Welcome to Voluntarily' id='PostSignUp.title' /></h1>
-      {roleAsk ? 'asker' : 'not asker'}&nbsp;
-      {roleOffer ? 'volunteer' : 'not volunteer'}
 
       <p>
         <FormattedMessage
