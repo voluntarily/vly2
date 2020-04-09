@@ -1,5 +1,6 @@
 import { Button } from 'antd'
 import { FormattedMessage } from 'react-intl'
+import Link from 'next/link'
 
 export const BackButton = ({ onClick }) =>
   <Button
@@ -10,7 +11,6 @@ export const BackButton = ({ onClick }) =>
     <FormattedMessage
       id='Button.Back'
       defaultMessage='Back'
-      description='Back button label'
     />
   </Button>
 
@@ -26,12 +26,10 @@ export const DoneButton = ({ onClick }) =>
     <FormattedMessage
       id='DoneBtn.label'
       defaultMessage='Done'
-      description='General purpose done bytton'
     />
   </Button>
 
 export const SaveDraftButton = ({ onClick }) =>
-
   <Button
     id='saveDraftBtn'
     name='save'
@@ -39,8 +37,55 @@ export const SaveDraftButton = ({ onClick }) =>
     onClick={onClick}
   >
     <FormattedMessage
-      id='OpShortForm.editSaveDraft'
+      id='Button.editSaveDraft'
       defaultMessage='Save as draft'
-      description='Label for save as draft button on activity details form'
+    />
+  </Button>
+
+export const AcceptAndContinueButton = ({ onClick }) =>
+  <Button
+    id='acceptAndContinueBtn'
+    name='accept'
+    shape='round'
+    type='primary'
+    onClick={onClick}
+  >
+    <FormattedMessage
+      id='Button.AcceptAndContinue'
+      defaultMessage='Accept and Continue'
+    />
+  </Button>
+
+/** Click sign up - flow through privacy accept,
+ * then route to 'then' which being a secure page will trigger
+ * authentication */
+export const SignUpButton = ({ then }) =>
+  <Link href={`/flow/preAccept?then=${then}`}>
+    <Button
+      type='primary'
+      shape='round'
+      size='large'
+      style={{ marginTop: '1rem', marginRight: '0.5rem' }}
+    >
+      <FormattedMessage
+        id='Button.SignUp'
+        defaultMessage='Sign Up'
+      />
+    </Button>
+  </Link>
+
+/** Learn More button
+ * - links to CMS pages
+ * opens in separate tab */
+export const LearnMoreButton = () =>
+  <Button
+    type='secondary'
+    shape='round'
+    size='large'
+    href='https://blog.voluntarily.nz'
+  >
+    <FormattedMessage
+      id='Button.LearnMore'
+      defaultMessage='Learn More'
     />
   </Button>

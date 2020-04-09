@@ -7,10 +7,8 @@ import publicPage from '../../hocs/publicPage'
 import { Divider } from 'antd'
 import GiveSupportSection from '../../components/LandingPageComponents/GiveSupportSection'
 import TakeSupportSection from '../../components/LandingPageComponents/TakeSupportSection'
-
-export const Landing = props => (
+export const Landing = ({ isAuthenticated }) => (
   <>
-
     <Helmet>
       <title>Voluntarily — People helping people.</title>
     </Helmet>

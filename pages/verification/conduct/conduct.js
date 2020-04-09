@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { FullPage } from '../../../components/VTheme/VTheme'
 import securePage from '../../../hocs/securePage'
-import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
-import conduct from './conduct-md-en.js'
+import Conduct from '../../../assets/notices/conduct-short-en.md'
 import Link from 'next/link'
 import { Button } from 'antd'
 import { FormattedMessage } from 'react-intl'
@@ -32,7 +31,7 @@ class VerificationConductPage extends Component {
           <title>Voluntarily - Code of Conduct</title>
         </Helmet>
         <TermsSection>
-          <Markdown children={conduct()} />
+          <Conduct />
           <Link href='./safety'>
             <Button shape='round' type='primary'>{conductConfirmationLabel}</Button>
           </Link>

@@ -1,7 +1,7 @@
 {
   "name": "@voluntarily/vly2",
   "version": "1.0.0",
-  "description": "Voluntari.ly Client based on Next.js",
+  "description": "Voluntarily.nz Client based on Next.js",
   "main": "server/server.js",
   "scripts": {
     "test": "npx cross-env NODE_ENV=test PORT=8080 ENV_ENVIRONMENT='development' ENV_SECRET='mwmBqNcTWiKxDHygMiKhwyffaKQCVoRQ' nyc --reporter=lcov --reporter=text ava",
@@ -37,6 +37,8 @@
     "@babel/polyfill": "^7.8.3",
     "@casl/ability": "^3.4.0",
     "@casl/mongoose": "^2.3.3",
+    "@mdx-js/loader": "^1.5.8",
+    "@next/mdx": "^9.3.4",
     "@storybook/addon-knobs": "^5.3.9",
     "@types/react-intl": "^3.0.0",
     "@uppy/core": "^1.7.0",
