@@ -230,7 +230,7 @@ jobs:
       with:
         cluster: vly-alpha-ECSCluster
         target: vly-alpha
-        image: beta $ECR_REGISTRY/$ECR_REPOSITORY:master
+        image: vly-alpha $ECR_REGISTRY/$ECR_REPOSITORY:master
 
     - name: Deploy Beta to ECS
       env:
