@@ -1,8 +1,8 @@
 const { checkEnvVars } = require('./env')
-// checkEnvVars({
-//   required: 'AUTH0_CLIENT_ID AUTH0_CLIENT_DOMAIN',
-//   optional: 'PORT APPNAME NODE_ENV APP_URL'
-// })
+checkEnvVars({
+  required: 'AUTH0_CLIENT_ID AUTH0_CLIENT_DOMAIN',
+  optional: 'PORT APPNAME NODE_ENV APP_URL'
+})
 
 const serverPort = process.env.PORT || 3122
 
