@@ -210,10 +210,10 @@ jobs:
         ECR_REPOSITORY: vly-beta
         IMAGE_TAG: ${{ github.sha }}
         ENV_ENVIRONMENT: beta
-        ENV_SECRET: ${{ secrets.ENV_SECRET }}
+        ENV_SECRET: ${{ secrets.ENV_SECRET_BETA }}
       run: |
         docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-        --build-arg ENV_ENVIRONMENT --build-arg ENV_SECRET \
+        --build-arg ENV_ENVIRONMENT --build-arg ENV_SECRET_BETA \
         .
         docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
@@ -224,10 +224,10 @@ jobs:
         ECR_REPOSITORY: vly-alpha
         IMAGE_TAG: ${{ github.sha }}
         ENV_ENVIRONMENT: alpha
-        ENV_SECRET: ${{ secrets.ENV_SECRET }}
+        ENV_SECRET: ${{ secrets.ENV_SECRET_ALPHA }}
       run: |
         docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-        --build-arg ENV_ENVIRONMENT --build-arg ENV_SECRET \
+        --build-arg ENV_ENVIRONMENT --build-arg ENV_SECRET_ALPHA \
         .
         docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
