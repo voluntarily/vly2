@@ -4,7 +4,7 @@ import { Alert, Button, Row, Col } from 'antd';
 import Link from 'next/link'
 
 const HeroImage = styled.div`
-  height: 60vh;
+  height: 40vw;
   width: 100%;
   background-image: url(/static/img/hero2.png); 
   background-position: center;
@@ -12,7 +12,7 @@ const HeroImage = styled.div`
 `
 
 const HeroText = styled.div`
-  padding: 4rem;
+  padding: 5vw;
   h1 {
     font-size: 7vh;
     font-weight: 700;

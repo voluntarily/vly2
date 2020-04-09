@@ -14,7 +14,7 @@ export const Landing = ({ isAuthenticated }) => (
     </Helmet>
 
     <FullPage>
-      <Hero isAuthenticated={props.isAuthenticated} />
+      <Hero isAuthenticated={isAuthenticated} />
     </FullPage>
     <FullPage>
       <Divider />

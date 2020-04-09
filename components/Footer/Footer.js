@@ -135,16 +135,7 @@ const Footer = () => (
           <FooterGridItemTitle>Project</FooterGridItemTitle>
           <MenuWrapper>
 
-            <MenuItem><a href='https://blog.voluntarily.nz/get-involved' target='_blank' rel='noopener noreferrer'>Join the build</a></MenuItem>
             <MenuItem><a href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/17' target='_blank' rel='noreferrer noopener'>Suggest a Topic</a></MenuItem>
-            <MenuItem>
-              <a
-                href='https://voluntarily.statuspage.io'
-                target='_blank'
-                rel='noopener noreferrer'
-              >System Status
-              </a>
-            </MenuItem>
             <MenuItem>
               <a
                 href='/terms'
@@ -166,6 +157,15 @@ const Footer = () => (
               >Code of Conduct
               </a>
             </MenuItem>
+          </MenuWrapper>
+        </div>
+
+        <div>
+          <FooterGridItemTitle>Join the build</FooterGridItemTitle>
+          <MenuWrapper>
+            <MenuItem>
+              <a href='https://blog.voluntarily.nz/get-involved' target='_blank' rel='noopener noreferrer'>Join the build</a>
+            </MenuItem>
             <MenuItem>
               <a
                 href='https://github.com/voluntarily/vly2'
@@ -174,57 +174,21 @@ const Footer = () => (
               >Github
               </a>
             </MenuItem>
+            <MenuItem>
+              <a
+                href='https://voluntarily.statuspage.io'
+                target='_blank'
+                rel='noopener noreferrer'
+              >System Status
+              </a>
+            </MenuItem>
+        
           </MenuWrapper>
-        </div>
+        
+          </div>
 
-        <div>
-          <FooterGridItemTitle>Social</FooterGridItemTitle>
-          <MenuWrapper>
+        </FooterGrid>
 
-            <MenuItem>
-              <a
-                href='http://twitter.com/voluntarilyhq'
-                target='_blank'
-                rel='noopener noreferrer'
-              >Twitter
-              </a>
-            </MenuItem>
-            <MenuItem>
-              <a
-                href='https://www.linkedin.com/groups/13709208/'
-                target='_blank'
-                rel='noopener noreferrer'
-              >LinkedIn
-              </a>
-            </MenuItem>
-            <MenuItem>
-              <a
-                href='https://www.youtube.com/channel/UCEDwH63ojQSq-S8us3iRZAA'
-                target='_blank'
-                rel='noopener noreferrer'
-              >Youtube
-              </a>
-            </MenuItem>
-            <MenuItem>
-              <a
-                href='https://www.facebook.com/voluntarilyhq/'
-                target='_blank'
-                rel='noopener noreferrer'
-              >Facebook
-              </a>
-            </MenuItem>
-
-            <MenuItem>
-              <a
-                href='https://www.instagram.com/voluntarilyhq/'
-                target='_blank'
-                rel='noopener noreferrer'
-              >Instagram
-              </a>
-            </MenuItem>
-          </MenuWrapper>
-        </div>
-      </FooterGrid>
       <Spacer />
 
     </FooterContainer>
