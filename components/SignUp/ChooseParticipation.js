@@ -88,7 +88,7 @@ export const ChooseParticipation = ({ children, roleAsk, onChangeAsk, roleOffer,
             </h2>
             <p>
               <FormattedMessage
-                id='WelcomeToVoluntarily.bodyAsk'
+                id='ChooseParticipation.bodyAsk'
                 defaultMessage='Need volunteers to help you out with an Activity. See what is available and ask for help.'
               />
             </p>
@@ -105,7 +105,7 @@ export const ChooseParticipation = ({ children, roleAsk, onChangeAsk, roleOffer,
             </h2>
             <p>
               <FormattedMessage
-                id='WelcomeToVoluntarily.bodyOffer'
+                id='ChooseParticipation.bodyOffer'
                 defaultMessage='Want to volunteer your time, or resources to help out someone in need? See what is needed and offer your skills.'
               />
             </p>
