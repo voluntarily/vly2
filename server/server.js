@@ -42,7 +42,7 @@ raygunClient.user = function (req) {
   }
 }
 
-if(process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   const morgan = require('morgan')
   server.use(morgan('combined'))
 }
