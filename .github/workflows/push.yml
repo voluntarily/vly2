@@ -204,20 +204,6 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Beta build, tag, and push
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: vly-beta
-        IMAGE_TAG: ${{ github.sha }}
-        ENV_ENVIRONMENT: beta
-        ENV_SECRET: ${{ secrets.ENV_SECRET_BETA }}
-      run: |
-        docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-        --build-arg ENV_ENVIRONMENT --build-arg ENV_SECRET_BETA \
-        .
-        docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
-
     - name: Alpha build, tag, and push
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -236,16 +222,6 @@ jobs:
       if: always()
       run: docker logout ${{ steps.login-ecr.outputs.registry }}
 
-    - name: Deploy Beta to ECS
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: vly-beta
-      uses: donaldpiret/ecs-deploy@v0.0.1
-      with:
-        cluster: vly-beta
-        target: voluntarily-beta-service
-        image: beta $ECR_REGISTRY/$ECR_REPOSITORY:master
-
     - name: Deploy Alpha to ECS
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -254,4 +230,14 @@ jobs:
       with:
         cluster: vly-alpha-ECSCluster
         target: vly-alpha
+        image: beta $ECR_REGISTRY/$ECR_REPOSITORY:master
+
+    - name: Deploy Beta to ECS
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: vly-beta
+      uses: donaldpiret/ecs-deploy@v0.0.1
+      with:
+        cluster: vly-beta
+        target: voluntarily-beta-service
         image: beta $ECR_REGISTRY/$ECR_REPOSITORY:master
