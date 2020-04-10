@@ -1,34 +1,62 @@
 // [@TODO] - remove Input once actual search component is done
 import { Helmet } from 'react-helmet'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, defineMessages } from 'react-intl'
+import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 import { FullPage, PageBannerNoTabs, PageBannerButtons } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import ActAdd from '../../components/Act/ActAdd'
 import ActListSection from '../../components/Act/ActListSection'
+import { useRouter } from 'next/router'
 
-export const ActListPage = () =>
-  <FullPage>
-    <Helmet>
-      <title>Activities - Voluntarily</title>
-    </Helmet>
-    <PageBannerNoTabs>
-      <h1>
-        <FormattedMessage
-          id='ActListPage.Title'
-          defaultMessage='Activities'
-          description='Title of page listing resources for teachers'
-        />
-      </h1>
+const { ASK, OFFER } = OpportunityType
 
-      <PageBannerButtons>
-        <ActAdd />
-      </PageBannerButtons>
-      <FormattedMessage
-        defaultMessage='Find activities to help or be helped with'
-        id='act.list.subtitle'
-      />
-    </PageBannerNoTabs>
-    <ActListSection />
-  </FullPage>
+const ActListTitleMessages = defineMessages({
+  [ASK]: {
+    id: 'ActListPage.Ask.Title',
+    defaultMessage: 'People are asking for help',
+    description: 'Title of ask for help page'
+  },
+  [OFFER]: {
+    id: 'ActListPage.Offer.Title',
+    defaultMessage: 'Volunteers are offering help',
+    description: 'Title of the offerings page'
+  }
+})
+
+const ActListSubTitleMessages = defineMessages({
+  [ASK]: {
+    id: 'act.list.ask.subtitle',
+    defaultMessage: 'Find activities people are asking for help with',
+    description: 'Sub Title of page listing activities people are asking help with'
+  },
+  [OFFER]: {
+    id: 'act.list.offer.subtitle',
+    defaultMessage: 'Find activities volunteers are offering help with',
+    description: 'Sub Title of page listing offerings people have'
+  }
+})
+
+export const ActListPage = () => {
+  const router = useRouter()
+  const type = router.query.type
+
+  return (
+    <FullPage>
+      <Helmet>
+        <title>Activities - Voluntarily</title>
+      </Helmet>
+      <PageBannerNoTabs>
+        <h1>
+          <FormattedMessage {...ActListTitleMessages[type]} />
+        </h1>
+        <PageBannerButtons>
+          <ActAdd />
+        </PageBannerButtons>
+        <FormattedMessage {...ActListSubTitleMessages[type]} />
+      </PageBannerNoTabs>
+      <ActListSection />
+    </FullPage>
+  )
+}
 
 export default publicPage(ActListPage)
