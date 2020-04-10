@@ -213,7 +213,7 @@ jobs:
         ENV_SECRET: ${{ secrets.ENV_SECRET_ALPHA }}
       run: |
         docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-        --build-arg ENV_ENVIRONMENT --build-arg ENV_SECRET \
+        --build-arg ENV_ENVIRONMENT=$ENV_ENVIRONMENT --build-arg ENV_SECRET=$ENV_SECRET \
         .
         docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
