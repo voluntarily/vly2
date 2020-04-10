@@ -88,5 +88,5 @@ prod_docker_docker_builder:
     - chmod +x ./ecs-cli
     - mv ./ecs-cli /usr/local/bin/
     - which ecs-cli
-  build_script: ./x/aws/buildimage
-  deploy_script: ./x/aws/deploy-alpha
+#  build_script: ./x/aws/buildimage
+#  deploy_script: ./x/aws/deploy-alpha
