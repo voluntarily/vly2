@@ -112,21 +112,6 @@ const Footer = () => (
             Pam Fergusson Charitable Trust
               </a>
             </P>
-            <P>
-              <FormattedMessage
-                id='version'
-                defaultMessage='Version'
-                description='Source coder version label.'
-              />
-          :&nbsp;
-              <FormattedMessage
-                id='revision' // set in server.js
-                defaultMessage='local-build'
-                description='Source code revision, auto generated.'
-              >
-                {txt => <a href={'https://github.com/voluntarily/vly2/commit/' + txt.split(/[ \- _ ]+/)[0]} rel='noopener noreferrer' target='_blank'>{txt}</a>}
-              </FormattedMessage>
-            </P>
 
           </FooterText>
         </div>
@@ -135,7 +120,7 @@ const Footer = () => (
           <FooterGridItemTitle>Project</FooterGridItemTitle>
           <MenuWrapper>
 
-            <MenuItem><a href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/17' target='_blank' rel='noreferrer noopener'>Suggest a Topic</a></MenuItem>
+            <MenuItem><a href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/17' target='_blank' rel='noreferrer noopener'>Suggest a topic</a></MenuItem>
             <MenuItem>
               <a
                 href='/terms'
@@ -164,7 +149,7 @@ const Footer = () => (
           <FooterGridItemTitle>Join the build</FooterGridItemTitle>
           <MenuWrapper>
             <MenuItem>
-              <a href='https://blog.voluntarily.nz/get-involved' target='_blank' rel='noopener noreferrer'>Join the build</a>
+              <a href='https://blog.voluntarily.nz/get-involved' target='_blank' rel='noopener noreferrer'>Get involved</a>
             </MenuItem>
             <MenuItem>
               <a
@@ -179,10 +164,21 @@ const Footer = () => (
                 href='https://voluntarily.statuspage.io'
                 target='_blank'
                 rel='noopener noreferrer'
-              >System Status
+              >System status
               </a>
             </MenuItem>
-        
+            <MenuItem>
+              <small>
+                <FormattedMessage
+                  id='revision' // set in server.js
+                  defaultMessage='local-build'
+                  description='Source code revision, auto generated.'
+                >
+                  {txt => <a href={'https://github.com/voluntarily/vly2/commit/' + txt.split(/[ \- _ ]+/)[0]} rel='noopener noreferrer' target='_blank'>This revision</a>}
+                </FormattedMessage>
+              </small>
+            </MenuItem>
+
           </MenuWrapper>
         
           </div>
