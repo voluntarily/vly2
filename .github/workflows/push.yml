@@ -213,7 +213,7 @@ jobs:
         ENV_SECRET: ${{ secrets.ENV_SECRET_ALPHA }}
       run: |
         docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-        --build-arg ENV_ENVIRONMENT --build-arg ENV_SECRET_ALPHA \
+        --build-arg ENV_ENVIRONMENT=$ENV_ENVIRONMENT --build-arg ENV_SECRET=$ENV_SECRET \
         .
         docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
@@ -225,12 +225,9 @@ jobs:
     - name: Deploy Alpha to ECS
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: vly-alpha
-      uses: donaldpiret/ecs-deploy@v0.0.1
-      with:
-        cluster: vly-alpha-ECSCluster
-        target: vly-alpha
-        image: beta $ECR_REGISTRY/$ECR_REPOSITORY:master
+        ECR_REPOSITORY: vly-alpha  
+      run: |
+        aws ecs update-service --service vly-alpha --cluster vly-alpha-ECSCluster --force-new-deployment --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50
 
     - name: Deploy Beta to ECS
       env:

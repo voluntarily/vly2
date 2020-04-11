@@ -123,6 +123,7 @@ const appReady = app.prepare().then(() => {
   server.get('*', routerHandler)
   // Start server
   if (process.env.NODE_ENV !== 'test') {
+    console.log(config) // TODO must remove\
     server.use(raygunClient.expressHandler)
     server.listen(config.serverPort, () =>
       console.log(`${config.appName} (${process.env.REVISION || 'local_build'}) running on ${config.appUrl} ${config.env}/ Be Awesome`))
