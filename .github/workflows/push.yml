@@ -217,6 +217,7 @@ jobs:
         docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$SHA \
         --build-arg ENV_ENVIRONMENT --build-arg ENV_SECRET \
         .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$SHA
         docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$SHA $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME
 
