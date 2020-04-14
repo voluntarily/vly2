@@ -39,15 +39,15 @@ const LogoContainer = styled.a`
 `
 const Logo = styled.img`
   height: 3rem;
-  width: 12rem;
+  width: 25rem;
   margin: 0.7rem;
 
-  background-image: url('/static/vlogolong.svg');
+  background-image: url('/static/vocationally_logo.svg');
   background-repeat: no-repeat;
   background-position: left top;
   @media screen and (max-width: 767px) {
     background-image: url('/static/vlogo.svg');
-  
+
     width: 2rem;
   }
 `
