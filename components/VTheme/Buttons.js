@@ -60,7 +60,7 @@ export const AcceptAndContinueButton = ({ onClick }) =>
  * then route to 'then' which being a secure page will trigger
  * authentication */
 export const SignUpButton = ({ then }) =>
-  <Link href={`/flow/preAccept?then=${then}`}>
+  <Link href={`/flow/postSignUp?then=${then}`}>
     <Button
       type='primary'
       shape='round'
