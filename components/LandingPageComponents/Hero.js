@@ -13,7 +13,7 @@ const AwesomeHeroContainer = styled.div`
   margin: 0 auto;
   height: auto;
   width: auto;
-  
+
 
   @media screen and (min-width: 768px) {
     margin-top: 2rem;
@@ -50,7 +50,7 @@ export const HeroGrid = styled.div`
     grid-column-gap: 3rem;
     height: 26rem;
 
- 
+
   }
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
@@ -93,7 +93,7 @@ const AwesomeImage = styled.img`
   position: relative;
   text-align: center;
   margin: 0 auto;
-  
+
 
   overflow: hidden;
   object-fit: contain;
@@ -105,7 +105,7 @@ const AwesomeImage = styled.img`
   }
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
-   
+
     height: 22rem;
 
   }
@@ -133,7 +133,7 @@ width: 100%;
 // start right hand copy + search + button side
 
 const HeroRight = styled.div`
- 
+
   display: grid;
   align-self: center;
 
@@ -240,12 +240,12 @@ For official information and advice around COVID-19 visit  <a href='https://covi
           <HeroText>
             <FormattedMessage
               id='Hero.title.PeopleHelpingPeople'
-              defaultMessage='People helping people.'
+              defaultMessage='Kiwis helping kiwis.'
             />
             <p>
               <FormattedMessage
                 id='Hero.body.WeConnect'
-                defaultMessage='We connect people who can volunteer time, advice, or stuff to those who need it.'
+                defaultMessage='We connect people and organisations to available job opportunities.'
               />
             </p>
           </HeroText>
