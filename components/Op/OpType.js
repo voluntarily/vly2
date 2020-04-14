@@ -212,3 +212,19 @@ export const OpTypeNoResults = ({ type }) => {
   if (!type || ![ASK, OFFER].includes(type)) return null
   return (<FormattedMessage {...OpTypeNoResultsMsg[type]} />)
 }
+
+const OpTypeTopicGroupMsg = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.prompt.topic.ASK',
+    defaultMessage: 'What would you like to get help with?'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.prompt.topic.OFFER',
+    defaultMessage: 'What would you like to help with?'
+  }
+})
+
+export const OpTypeTopicGroup = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpTypeTopicGroupMsg[type]} />)
+}
