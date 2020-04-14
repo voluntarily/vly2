@@ -20,16 +20,14 @@ const personSchema = new Schema({
   imgUrlSm: { type: 'String', default: '/static/img/person/person.png' }, // url to small profile image (24x24)
   pronoun: { type: 'Object', default: { subject: 'they', object: 'them', possessive: 'their' } },
   language: { type: 'String', default: 'EN', lowercase: true }, // en, mi, fr etc
+  tags: [String], // skills Tag list e.g. ['physics', 'chemistry', 'robots']
+  topicGroups: [String], // org/topic group tags e.g. ['business', 'community', 'schools' ]
 
   // Personal Private Information
   phone: { type: 'String' }, // +64 27 7031007
   dob: Date,
   address: String,
-  verified: [VerificationSchema],
-
-  // supporting recommendations
-  tags: [String],
-  location: { type: 'String', default: '' },
+  location: { type: 'String', default: '' }, // deprecated use locations
   locations: { type: [String], default: [] },
 
   // Social Information
@@ -44,11 +42,15 @@ const personSchema = new Schema({
 
   // System Status and Flags
   sendEmailNotifications: { type: 'Boolean', default: true, required: true },
+
   role: {
     type: [String],
     default: [Role.BASIC],
     enum: [...Object.values(Role)]
   },
+  // supporting recommendations
+  verified: [VerificationSchema],
+
   // used to indicate whether people show up in searches.
   status: {
     type: String,
