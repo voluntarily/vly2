@@ -230,7 +230,7 @@ For official information and advice around COVID-19 visit  <a href='https://covi
         <HeroLeft>
 
           <AwesomeImage
-            src='/static/img/hero2.png'
+            src='/static/img/dream_job.jpg'
             alt={<FormattedMessage id='heroImgText' defaultMessage='Children Playing with Robots' description='Description for the hero image' />}
           />
 
