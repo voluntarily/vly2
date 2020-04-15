@@ -50,6 +50,7 @@ export const AboutYou = ({ children, person, onChange }) => {
             />
           </label>
           <Input
+            id='nickname'
             prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
             placeholder='nickname'
             value={person.nickname}
@@ -67,14 +68,12 @@ export const AboutYou = ({ children, person, onChange }) => {
               defaultMessage='Where are you located?'
             />
           </label>
-          <p>
-            <TagSelect
-              values={locations}
-              value={person.locations}
-              onChange={locations => onChange({ locations })}
-              placeholder='Select one or more locations'
-            />
-          </p>
+          <TagSelect
+            values={locations}
+            value={person.locations}
+            onChange={locations => onChange({ locations })}
+            placeholder='Select one or more locations'
+          />
         </InputSpacer>
         {children}
       </div>
