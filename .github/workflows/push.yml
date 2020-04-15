@@ -214,6 +214,7 @@ jobs:
       run: |
         docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
         --build-arg ENV_ENVIRONMENT=$ENV_ENVIRONMENT --build-arg ENV_SECRET=$ENV_SECRET \
+        --build-arg REVISION=$IMAGE_TAG \
         .
         docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
@@ -238,3 +239,4 @@ jobs:
         cluster: vly-beta
         target: voluntarily-beta-service
         image: beta $ECR_REGISTRY/$ECR_REPOSITORY:master
+        env_vars: beta REVISION ${{ github.sha }}
