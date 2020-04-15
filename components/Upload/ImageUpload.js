@@ -1,17 +1,27 @@
-import { message } from 'antd'
+import { Button, message } from 'antd'
 import React, { Component } from 'react'
 import callApi from '../../lib/callApi'
 import '@uppy/core/dist/style.css'
 import '@uppy/dashboard/dist/style.css'
+import '@uppy/webcam/dist/style.css'
+import { FormattedMessage } from 'react-intl'
 
-const { Dashboard } = require('@uppy/react')
+import { DashboardModal } from '@uppy/react'
+// const { Dashboard } = require('@uppy/react')
 const Uppy = require('@uppy/core')
+const Webcam = require('@uppy/webcam')
 
 class ImageUpload extends Component {
   TWO_MEGABYTES = 2000000
 
   constructor (props) {
     super(props)
+    this.state = {
+      modalOpen: false
+    }
+    this.onUpload = this.onUpload.bind(this)
+    this.handleOpen = this.handleOpen.bind(this)
+    this.handleClose = this.handleClose.bind(this)
 
     this.uppy = Uppy({
       id: 'uppy',
@@ -26,9 +36,27 @@ class ImageUpload extends Component {
       },
       meta: {}
     })
-    this.onUpload = this.onUpload.bind(this)
     this.uppy.on('file-removed', (e) => { this.props.setImgUrl('') })
+    this.uppy.use(Webcam, {
+      // Options
+      modes: [
+        'picture'
+      ]
+    })
+    // this.uppy.use(Url)
     this.uppy.addUploader(this.onUpload)
+  }
+
+  handleOpen () {
+    this.setState({
+      modalOpen: true
+    })
+  }
+
+  handleClose () {
+    this.setState({
+      modalOpen: false
+    })
   }
 
   onUpload (fileIDs) {
@@ -44,13 +72,27 @@ class ImageUpload extends Component {
       })
     }
     FR.readAsBinaryString(file.data)
+    this.handleClose()
   }
 
   render () {
     const up = (process.env.NODE_ENV !== 'test') &&
-      <div onChange={this.handleChange}>
-        <Dashboard uppy={this.uppy} inline width='100%' height={200} proudlyDisplayPoweredByUppy={false} hideUploadButton />
-      </div>
+      <>
+        <Button shape='round' onClick={this.handleOpen}>
+          <FormattedMessage
+            id='ImageUpload.button'
+            defaultMessage='Upload Photo'
+          />
+        </Button>
+        <DashboardModal
+          uppy={this.uppy}
+          proudlyDisplayPoweredByUppy={false}
+          closeModalOnClickOutside
+          open={this.state.modalOpen}
+          onRequestClose={this.handleClose}
+          plugins={['Webcam']}
+        />
+      </>
     return up
   }
 }
