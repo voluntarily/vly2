@@ -211,8 +211,8 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: vocationally
         SHA: ${{ github.sha }}
-        ENV_ENVIRONMENT: ${{ secrets.ENV_ENVIRONMENT }}
-        ENV_SECRET: ${{ secrets.ENV_SECRET }}
+        ENV_ENVIRONMENT: '${{ secrets.ENV_ENVIRONMENT }}'
+        ENV_SECRET: '${{ secrets.ENV_SECRET }}'
       run: |
         docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$SHA \
         --build-arg ENV_ENVIRONMENT --build-arg ENV_SECRET \
