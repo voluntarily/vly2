@@ -3,7 +3,7 @@ import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import AboutYou from '../AboutYou'
 import sinon from 'sinon'
 import { Provider } from 'react-redux'
-import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
+import { makeStore } from '../../../lib/redux/reduxApi'
 
 const person = {
   nickname: 'testy',
@@ -35,7 +35,7 @@ test('AboutYou renders properly', t => {
   // wrapper.find('Input#nickname').simulate('change', { target: { value: 'TestyNickname' } })
   wrapper.find('Input#nickname').props().onChange({ target: { value: 'TestyNickname' } })
   t.true(handleAboutYou.calledOnce)
-  wrapper.find('ImageUpload').props().setImgUrl('https://example.com/imgUrl.png', { lg:'https://example.com/imgUrl.png', sm: 'https://example.com/imgUrl.png' })
+  wrapper.find('ImageUpload').props().setImgUrl('https://example.com/imgUrl.png', { lg: 'https://example.com/imgUrl.png', sm: 'https://example.com/imgUrl.png' })
   t.true(handleAboutYou.calledTwice)
   wrapper.find('TagSelect').props().onChange(['Christchurch'])
   t.true(handleAboutYou.calledThrice)
