@@ -22,29 +22,30 @@ class ImageUpload extends Component {
     this.onUpload = this.onUpload.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
-
-    this.uppy = Uppy({
-      id: 'uppy',
-      autoProceed: true,
-      debug: false,
-      formData: true,
-      restrictions: {
-        maxFileSize: this.TWO_MEGABYTES,
-        maxNumberOfFiles: 1,
-        minNumberOfFiles: 0,
-        allowedFileTypes: ['.jpg', '.jpeg', '.png', '.svg']
-      },
-      meta: {}
-    })
-    this.uppy.on('file-removed', (e) => { this.props.setImgUrl('') })
-    this.uppy.use(Webcam, {
+    if (process.env.NODE_ENV !== 'test') {
+      this.uppy = Uppy({
+        id: 'uppy',
+        autoProceed: true,
+        debug: false,
+        formData: true,
+        restrictions: {
+          maxFileSize: this.TWO_MEGABYTES,
+          maxNumberOfFiles: 1,
+          minNumberOfFiles: 0,
+          allowedFileTypes: ['.jpg', '.jpeg', '.png', '.svg']
+        },
+        meta: {}
+      })
+      this.uppy.on('file-removed', (e) => { this.props.setImgUrl('') })
+      this.uppy.use(Webcam, {
       // Options
-      modes: [
-        'picture'
-      ]
-    })
-    // this.uppy.use(Url)
-    this.uppy.addUploader(this.onUpload)
+        modes: [
+          'picture'
+        ]
+      })
+      // this.uppy.use(Url)
+      this.uppy.addUploader(this.onUpload)
+    }
   }
 
   handleOpen () {
