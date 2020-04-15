@@ -10,9 +10,9 @@ export function AvatarProfile ({ person }) {
       <a>
         <Avatar
           size='large'
-          shape='square'
+          shape='round'
           onClick={() => Router.push(`/people/${person._id}`)}
-          src={person.imgUrlsm}
+          src={person.imgUrlSm}
           icon='user'
         />&nbsp;&nbsp;
         <span>{person.nickname}</span>
