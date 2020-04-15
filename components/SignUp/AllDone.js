@@ -56,7 +56,7 @@ const TopicSummary = ({ type, topicGroups }) =>
 export const AllDone = ({ children, type, topicGroups, person }) =>
   <HalfGrid>
     <div>
-      <img src='/static/img/sign-up/welcome-to-voluntarily.png' />
+      <img src='/static/img/sign-up/alldone.svg' />
     </div>
     <div>
       <h1>

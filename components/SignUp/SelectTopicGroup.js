@@ -62,7 +62,7 @@ export const SelectTopicGroup = ({ children, type, topicGroups, onChange }) =>
           <div>
             <h2>
               <FormattedMessage
-                id='SelectTopicGroup.title.school'
+                id='SelectTopicGroup.title.education'
                 defaultMessage='Schools'
               />
             </h2>
