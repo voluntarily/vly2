@@ -7,11 +7,12 @@ test('ToggleLi renders properly', t => {
   const handleChange = sinon.fake()
 
   const wrapper = mountWithIntl(
-    <ToggleLi 
-      key='1' 
-      icon='school' 
-      checked={false} 
-      onChange={handleChange}>
+    <ToggleLi
+      key='1'
+      icon='school'
+      checked={false}
+      onChange={handleChange}
+    >
       <p>Test children</p>
     </ToggleLi>
   )

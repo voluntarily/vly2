@@ -534,7 +534,7 @@
   "SelectTopicGroup.education.OFFER": "Offer your skills and time to students and teachers",
   "SelectTopicGroup.title.business": "Small Businesses",
   "SelectTopicGroup.title.community": "Communities",
-  "SelectTopicGroup.title.school": "Schools",
+  "SelectTopicGroup.title.education": "Schools",
   "showPeople": "Show All",
   "SignUp": "Sign up",
   "sortCommitment": "commitment",
@@ -564,8 +564,5 @@
   "verification.success.title": "Nice, you're all set!",
   "verification.trustandsafety.confirmation": "Verify Identity",
   "version": "Version",
-  "volunteer": "Volunteer",
-  "WelcomeToVoluntarily.bodyAsk": "Need volunteers to help you out with an Activity. See what is available and ask for help.",
-  "WelcomeToVoluntarily.bodyOffer": "Want to volunteer your time, or resources to help out someone in need? See what is needed and offer your skills.",
-  "WelcomeToVoluntarily.title": "Welcome to Voluntarily"
+  "volunteer": "Volunteer"
 }

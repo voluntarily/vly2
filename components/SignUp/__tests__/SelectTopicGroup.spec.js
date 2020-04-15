@@ -36,4 +36,4 @@ test('SelectTopicGroup renders properly', t => {
   t.is(education.find('h2 FormattedMessage').props().id, 'SelectTopicGroup.title.education')
   education.props().onChange({ education: true })
   t.true(handleChange.calledThrice)
-  })
+})
