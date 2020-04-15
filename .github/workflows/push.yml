@@ -2,11 +2,11 @@ name: V2LY not master
 
 on: [push]
 
-# Still not comfortable that github actions events are granular to do what we want, 
+# Still not comfortable that github actions events are granular to do what we want,
 # so using an if statement below instead
 
 jobs:
-  setup:    
+  setup:
     name: Set up NPM, use cache, NPM CI
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/master' #If we're not being pushed to master, do all the test steps
@@ -85,7 +85,7 @@ jobs:
         npx standard
 
   testroot:
-    name: Test Root #Test only the high level tests 
+    name: Test Root #Test only the high level tests
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -101,7 +101,7 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-    - name: Test Root __tests__    
+    - name: Test Root __tests__
       run: |
         npm ci
         npm run test:root
@@ -172,12 +172,10 @@ jobs:
         npm ci
         npm run test:lib
 
-  build-and-deploy:
+  build-and-push:
     name: Build to ECR, deploy to ECS
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' #If we are pushing to master, assume (because permissions) all the tests were run on PRs, just do a deploy step
     steps:
-
     - name: Check out
       uses: actions/checkout@v2
 
@@ -191,7 +189,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
-          ${{ runner.os }}-  
+          ${{ runner.os }}-
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -200,41 +198,29 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-southeast-2
 
+    - name: Extract branch name
+      shell: bash
+      run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
+
     - name: Log in to ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Alpha build, tag, and push
+    - name: build, tag, and push
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: vly-alpha
-        IMAGE_TAG: ${{ github.sha }}
-        ENV_ENVIRONMENT: alpha
-        ENV_SECRET: ${{ secrets.ENV_SECRET_ALPHA }}
+        ECR_REPOSITORY: vocationally
+        SHA: ${{ github.sha }}
+        ENV_ENVIRONMENT: '${{ secrets.ENV_ENVIRONMENT }}'
+        ENV_SECRET: '${{ secrets.ENV_SECRET }}'
       run: |
-        docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-        --build-arg ENV_ENVIRONMENT=$ENV_ENVIRONMENT --build-arg ENV_SECRET=$ENV_SECRET \
+        docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$SHA \
+        --build-arg ENV_ENVIRONMENT --build-arg ENV_SECRET \
         .
-        docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$SHA
+        docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$SHA $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME
 
     - name: Log out of ECR
       if: always()
       run: docker logout ${{ steps.login-ecr.outputs.registry }}
-
-    - name: Deploy Alpha to ECS
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: vly-alpha  
-      run: |
-        aws ecs update-service --service vly-alpha --cluster vly-alpha-ECSCluster --force-new-deployment --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50
-
-    - name: Deploy Beta to ECS
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: vly-beta
-      uses: donaldpiret/ecs-deploy@v0.0.1
-      with:
-        cluster: vly-beta
-        target: voluntarily-beta-service
-        image: beta $ECR_REGISTRY/$ECR_REPOSITORY:master
