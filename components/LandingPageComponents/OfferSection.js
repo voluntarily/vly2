@@ -12,7 +12,7 @@ const OfferContainer = styled.div`
     grid-template-columns: 1fr 1fr ;
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
-    
+
     grid-template-columns: 1fr ;
     margin: 2rem 0 ;
   }
@@ -25,7 +25,7 @@ const OfferContainer = styled.div`
 
 const OfferCard = styled.div`
 
-  padding: 3rem;
+  padding: 1.5rem;
 display: grid;
 gap:1.5rem;
 grid-template-columns: 1fr;
@@ -83,12 +83,12 @@ figcaption {
     width: calc(100vw - 2rem);
 
   padding: 2rem;
-   
+
 
   h3 {
     bottom: 0;
     font-size: 1.5rem;
-  
+
   }
 
   }
@@ -101,17 +101,14 @@ const OfferSection = () => (
     <OfferContainer>
 
       <Link href='/acts'>
-
         <a>
-
           <OfferCard>
             <figcaption>
 
-              <small>New!</small>
-              <h3>Offer to help</h3>
-              <p>
-            Want to volunteer your time, or resources to help out someone in need? See what is needed and offer your skills.
-              </p><Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>See who needs help</Button>
+              <h3>Find jobs</h3>
+              <p>Jobs to suit any situation. Full time, temporary, seasonal or voluntary. Help support local businesses providing services during the pandemic. We can help match you with the right job in your area.</p>
+              <Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0', marginBottom: 60 }}>I'm looking for work</Button>
+              <Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>I'm a group looking for work</Button>
             </figcaption>
           </OfferCard>
         </a>
@@ -123,29 +120,15 @@ const OfferSection = () => (
 
             <figcaption>
 
-              <small>New!</small>
-              <h3>Ask for help</h3>
-              <p>It is easy to get what you need. All you have to do is ask.
-              </p>
-              <Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>See who can help you</Button>
+              <h3>List jobs</h3>
+              <p>If you need one additional employee or a large group to cover a sudden demand we can help. Advertise any type of employment whether it's full time, temporary, seasonal or voluntary.</p>
+              <Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0', marginBottom: 60 }}>I have jobs available</Button>
+              <Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>I have jobs available for a group</Button>
             </figcaption>
           </OfferCard>
         </a>
       </Link>
 
-      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
-        <OfferCard>
-
-          <figcaption>
-            <small>Open Source</small>
-            <h3>Join the<br />Community Build</h3>
-            <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
-            </p>
-
-            <Button size='large' shape='round' type='primary' style={{ position: 'absolute', bottom: '0' }}>Join the build</Button>
-          </figcaption>
-        </OfferCard>
-      </a>
     </OfferContainer>
 
   </div>
