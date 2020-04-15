@@ -23,7 +23,7 @@ export const TagSelect = ({ values, onChange, value, placeholder }) => {
 
   return (
     <>
-      <Select showSearch value={undefined} placeholder={placeholder} onChange={addTag}>
+      <Select style={{ width: '100%' }} showSearch value={undefined} placeholder={placeholder} onChange={addTag}>
         {unselectedTags.map(val => <Option key={val}>{val}</Option>)}
       </Select>
 

@@ -26,6 +26,21 @@ const registerPerson = async (req, res) => {
     if (prefs.topicGroups) {
       me.topicGroups = prefs.topicGroups
     }
+    // set the person data
+    if (prefs.person) {
+      if (prefs.person.nickname) {
+        me.nickname = prefs.person.nickname
+      }
+      if (prefs.person.imgUrl) {
+        me.imgUrl = prefs.person.imgUrl
+      }
+      if (prefs.person.imgUrlSm) {
+        me.imgUrlSm = prefs.person.imgUrlSm
+      }
+      if (prefs.person.locations.length) {
+        me.locations = prefs.person.locations
+      }
+    }
     await me.save()
     res.json(me)
   } catch (e) {

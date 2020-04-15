@@ -1,15 +1,15 @@
 import { Button, Steps } from 'antd'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
 import AllDone from '../../components/SignUp/AllDone'
+import AboutYou from '../../components/SignUp/AboutYou'
 import AcceptPrivacy from '../../components/SignUp/AcceptPrivacy'
 import SelectTopicGroup from '../../components/SignUp/SelectTopicGroup'
 import ChooseParticipation from '../../components/SignUp/ChooseParticipation'
 import { FullPage } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import callApi from '../../lib/callApi'
-import reduxApi from '../../lib/redux/reduxApi'
 import { useSelector } from 'react-redux'
 import { Role } from '../../server/services/authorize/role'
 import { AcceptAndContinueButton } from '../../components/VTheme/Buttons'
@@ -17,6 +17,13 @@ import { OpportunityType } from '../../server/api/opportunity/opportunity.consta
 const { ASK, OFFER } = OpportunityType
 
 const { Step } = Steps
+const messages = defineMessages({
+  privacy: { id: 'PostSignUp.step.privacy', defaultMessage: 'Protecting your Privacy' },
+  participate: { id: 'PostSignUp.step.participate', defaultMessage: 'Participate' },
+  topicgroups: { id: 'PostSignUp.step.topicgroups', defaultMessage: 'Groups' },
+  aboutyou: { id: 'PostSignUp.step.aboutyou', defaultMessage: 'About you' },
+  done: { id: 'PostSignUp.step.done', defaultMessage: 'Done' }
+})
 
 const PostSignUp = () => {
   const me = useSelector(state => state.session.me)
@@ -24,7 +31,12 @@ const PostSignUp = () => {
   const [roleAsk, setRoleAsk] = useState(true)
   const [roleOffer, setRoleOffer] = useState(me.role.includes(Role.VOLUNTEER))
   const [topicGroups, setTopicGroups] = useState({ business: false, community: false, education: false })
-
+  const [person, setperson] = useState({
+    nickname: me.nickname,
+    imgUrl: me.imgUrl,
+    imgUrlSm: me.imgUrlSm,
+    locations: me.locations
+  })
   // const orgs = useSelector(state => state.organisations.data)
   const router = useRouter()
   const opType = roleOffer ? OFFER : ASK
@@ -41,9 +53,9 @@ const PostSignUp = () => {
     const profileUpdate = {
       roleOffer,
       roleAsk,
-      topicGroups: Object.keys(topicGroups).filter(key => topicGroups[key])
+      topicGroups: Object.keys(topicGroups).filter(key => topicGroups[key]),
+      person
     }
-    console.log(profileUpdate.topicGroups)
     callApi('signUp', 'post', profileUpdate)
 
     router.replace('/home')
@@ -58,12 +70,12 @@ const PostSignUp = () => {
         )}
         {done && (
           <Button type='primary' shape='round' onClick={lastStep}>
-            <FormattedMessage defaultMessage='Done' id='PostSignUp.btn.done' />
+            <FormattedMessage defaultMessage='Confirm' id='PostSignUp.btn.done' />
           </Button>
         )}
         {prev && (
           <Button shape='round' style={{ margin: 8 }} onClick={prevStep}>
-            <FormattedMessage defaultMessage='Previous' id='PostSignUp.btn.previous' />
+            <FormattedMessage defaultMessage='Back' id='PostSignUp.btn.previous' />
           </Button>
         )}
       </>
@@ -72,9 +84,13 @@ const PostSignUp = () => {
   const handleSelectTopicGroup = update => {
     setTopicGroups({ ...topicGroups, ...update })
   }
+  const handleAboutYou = update => {
+    setperson({ ...person, ...update })
+  }
+  const { formatMessage } = useIntl()
   const steps = [
     {
-      title: <FormattedMessage defaultMessage='Protecting your Privacy' id='PostSignUp.step.privacy' />,
+      title: formatMessage(messages.privacy),
       content: (
         <AcceptPrivacy>
           <AcceptAndContinueButton onClick={nextStep} />
@@ -82,7 +98,15 @@ const PostSignUp = () => {
       )
     },
     {
-      title: <FormattedMessage defaultMessage='How to get started' id='PostSignUp.step.participate' />,
+      title: formatMessage(messages.aboutyou),
+      content: (
+        <AboutYou person={person} onChange={handleAboutYou}>
+          <NextPrevBtns next prev />
+        </AboutYou>
+      )
+    },
+    {
+      title: formatMessage(messages.participate),
       content: (
         <ChooseParticipation
           roleAsk={roleAsk} onChangeAsk={setRoleAsk}
@@ -93,7 +117,7 @@ const PostSignUp = () => {
       )
     },
     {
-      title: <FormattedMessage defaultMessage='Topic Group' id='PostSignUp.step.topicgroup' />,
+      title: formatMessage(messages.topicgroups),
       content: (
         <SelectTopicGroup
           type={opType} topicGroups={topicGroups} onChange={handleSelectTopicGroup}
@@ -102,15 +126,14 @@ const PostSignUp = () => {
         </SelectTopicGroup>
       )
     },
-    // ,{
-    //   title: 'Location',
-    //   content: <ChooseParticipation />
-    // },
-
     {
-      title: <FormattedMessage defaultMessage='Done' id='PostSignUp.step.done' />,
+      title: formatMessage(messages.done),
       content: (
-        <AllDone>
+        <AllDone
+          type={opType}
+          topicGroups={topicGroups}
+          person={person}
+        >
           <NextPrevBtns done prev />
         </AllDone>
       )
@@ -127,23 +150,14 @@ const PostSignUp = () => {
           defaultMessage='To get you setup we have a few quick questions.'
         />
       </p>
-      <Steps current={step}>
-        {steps.map(item => (
-          <Step key={item.title} title={item.title} />
+      <Steps current={step} onChange={current => setStep(current)}>
+        {steps.map((item, index) => (
+          <Step key={index} title={item.title} />
         ))}
       </Steps>
       <div>{steps[step].content}</div>
-      <pre>{JSON.stringify(topicGroups)}</pre>
     </FullPage>
   )
-}
-
-PostSignUp.getInitProps = async ({ store, query }) => {
-  try {
-    await store.dispatch(reduxApi.actions.organisations.get())
-  } catch (err) {
-    console.error('error in getting organisations data', err)
-  }
 }
 
 export default securePage(PostSignUp)

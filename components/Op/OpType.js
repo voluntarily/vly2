@@ -74,6 +74,21 @@ export const OpTypeVerbs = defineMessages({
   }
 })
 
+const OpTypeTopicVerbMsg = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.prompt.topicverb.ASK',
+    defaultMessage: 'is asking for help with'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.prompt.topicverb.OFFER',
+    defaultMessage: 'is offering to help with'
+  }
+})
+
+export const OpTypeTopicVerb = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpTypeTopicVerbMsg[type]} />)
+}
 /**
  * 10 offering to help
  * 10 asking for help

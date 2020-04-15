@@ -48,6 +48,7 @@ const PersonListFields = [
   PersonFields.PRONOUN,
   PersonFields.TAGS,
   PersonFields.TOPIC_GROUPS,
+  PersonFields.LOCATIONS,
   PersonFields.SENDEMAILNOTIFICATIONS
 ]
 
