@@ -14,6 +14,8 @@ class LocationSelector extends React.Component {
         placeholder='Select the most applicable location'
         onChange={onChange}
         value={value}
+        mode='tags'
+        tokenSeparators={[',']}
         style={width && { width: width }}
       >
         {children}
