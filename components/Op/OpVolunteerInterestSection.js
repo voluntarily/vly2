@@ -2,7 +2,7 @@ import { Button } from 'antd'
 import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import RegisterInterestSection from '../Interest/RegisterInterestSection'
-import OpportunityType from 'OpType'
+import OpportunityType from '../Op/OpType'
 
 export const OfferToHelpAnonBtn = ({ opid }) =>
   <Link href={`/auth/sign-thru?redirect=/ops/${opid}`}>
