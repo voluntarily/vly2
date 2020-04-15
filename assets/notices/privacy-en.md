@@ -10,6 +10,6 @@ Our privacy policy is as follows:
 * Try to be kind, and to support those around you on the platform. 
 We'll try to do the same for you.
 
-<p><a href="/terms/privacy" target="_blank">Full Privacy Policy</a></p>
+View the [Full Privacy Policy](/terms/privacy) 
 
 

@@ -1,6 +1,6 @@
 import { Button } from 'antd'
 import { FormattedMessage } from 'react-intl'
-import Link from 'next/link'
+import { authorize } from '../../lib/auth/auth0'
 
 export const BackButton = ({ onClick }) =>
   <Button
@@ -59,20 +59,24 @@ export const AcceptAndContinueButton = ({ onClick }) =>
 /** Click sign up - flow through privacy accept,
  * then route to 'then' which being a secure page will trigger
  * authentication */
-export const SignUpButton = ({ then }) =>
-  <Link href={`/flow/preAccept?then=${then}`}>
+export const SignUpButton = ({ then }) => {
+  const handleAccept = () => {
+    authorize({ redirectUrl: then, screen_hint: 'signup' })
+  }
+  return (
     <Button
       type='primary'
       shape='round'
       size='large'
+      onClick={handleAccept}
       style={{ marginTop: '1rem', marginRight: '0.5rem' }}
     >
       <FormattedMessage
         id='Button.SignUp'
         defaultMessage='Sign Up'
       />
-    </Button>
-  </Link>
+    </Button>)
+}
 
 /** Learn More button
  * - links to CMS pages

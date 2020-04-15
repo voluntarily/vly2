@@ -26,7 +26,7 @@ export const makePerson = (role, name) => {
     sendEmailNotifications: true,
     pronoun: pronoun(),
     imgUrl: 'https://publicdomainvectors.org/photos/hand-6.png',
-    imgUrlsm: 'https://publicdomainvectors.org/photos/hand-6.png',
+    imgUrlSm: 'https://publicdomainvectors.org/photos/hand-6.png',
     role,
     status: 'active'
   })

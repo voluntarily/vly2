@@ -25,7 +25,7 @@ const makePeople = async (count) => {
       name: `${person.name.first} ${person.name.last}`,
       nickname: person.login.username,
       imgUrl: person.picture.medium,
-      imgUrlsm: person.picture.thumbnail,
+      imgUrlSm: person.picture.thumbnail,
       email,
       phone: person.phone,
       pronoun: pronoun(),

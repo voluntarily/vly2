@@ -30,7 +30,7 @@ const getPeople = async (numPeople) => {
       name: `${person.name.first} ${person.name.last}`,
       nickname: person.login.username,
       imgUrl: person.picture.medium,
-      imgUrlsm: person.picture.thumbnail,
+      imgUrlSm: person.picture.thumbnail,
       email: person.email
     })
   })

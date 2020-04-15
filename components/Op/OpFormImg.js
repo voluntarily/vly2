@@ -1,7 +1,7 @@
 import { Form, Icon, Input, Tooltip } from 'antd'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import ImageUpload from '../Upload/ImageUpload'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, TitleContainer } from '../VTheme/FormStyles'
 
 const opImgUrl = (

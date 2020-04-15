@@ -5,7 +5,7 @@ const { OpportunityListFields } = require('../opportunity/opportunity.constants'
 const getArchivedOpportunity = async (req, res, next) => {
   const got = await ArchivedOpportunity
     .findOne(req.params)
-    .populate('requestor', 'name imgUrl imgUrlsm')
+    .populate('requestor', 'name imgUrl imgUrlSm')
     .populate('offerOrg', 'name imgUrl role')
     .exec()
 
