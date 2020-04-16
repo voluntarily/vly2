@@ -60,7 +60,6 @@ object-position: center;
 
 export const ItemDuration = ({ duration }) =>
   <ItemListing>
-  ⏱
     <strong>
       <FormattedMessage
         id='itemlist.duration'
@@ -68,7 +67,7 @@ export const ItemDuration = ({ duration }) =>
         description='duration label for acts and ops'
       />
     </strong>&nbsp;&nbsp;&nbsp;
-    {sanitize(duration)}
+    {sanitize(duration)}s
   </ItemListing>
 
 export const ItemStatus = ({ status }) =>
@@ -176,7 +175,7 @@ export const ItemNeeds = ({ volunteers, equipment }) => {
         <strong>
           <FormattedMessage
             id='ItemNeeds.required'
-            defaultMessage='🤔Activity needs:'
+            defaultMessage='Positions available:'
             description='label for number of people required'
           />
         </strong>

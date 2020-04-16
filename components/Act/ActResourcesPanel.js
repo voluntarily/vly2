@@ -17,23 +17,23 @@ export function ActResourcesPanel ({ act }) {
     <ProfilePanel>
       <OpSectionGrid>
         <div>
-          <h2>
+          {/* <h2>
             <FormattedMessage
               id='ActResourcesPanel.title.youwillneed'
               defaultMessage='What you will need'
               description='title on activity resources panel'
             />
-          </h2>
+          </h2> */}
         </div>
         <div id='right_col'>
-          <ItemDescription>
+          {/* <ItemDescription>
             <ul>
               <ItemResource resource={act.resource} />
               <ItemSpace space={act.space} />
 
             </ul>
           </ItemDescription>
-          <EquipmentList equipment={act.equipment} />
+          <EquipmentList equipment={act.equipment} /> */}
         </div>
       </OpSectionGrid>
       <Divider />

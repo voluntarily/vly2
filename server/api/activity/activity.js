@@ -66,8 +66,9 @@ const ActivitySchema = new Schema({
   timestamps: true
 })
 
+const gra = (min, max) => { return (Math.round(Math.random() * (max - min) + min)) }
 ActivitySchema.pre('save', async function () {
-  this.slug = slug(this.name)
+  this.slug = slug(`${this.name}-${gra(10000, 99909)}`)
 })
 
 ActivitySchema.plugin(idvalidator)

@@ -13,7 +13,7 @@ const SearchContainer = styled.div`
 export const ActSearchInput = ({ value, onSearch, loading }) =>
   <SearchContainer>
     <Input.Search
-      placeholder='Enter keywords: orchard, wellington, group etc'
+      placeholder="Enter keywords: 'orchard', 'Wellington', 'group'..."
       // enterButton='Search'
       enterButton
       loading={loading}

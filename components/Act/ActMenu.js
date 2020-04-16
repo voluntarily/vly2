@@ -21,23 +21,25 @@ const countOfferOrgs = acts => {
 
 const ActivityMenu = styled(Menu)`
   height: 32px;
-  width: 240px;
-  font-size: 24px;
+  max-width: 320px;
+  font-size: 22px;
   font-weight: bold;
-
   letter-spacing: -0.3px;
   padding-left: 8px;
+
   .subheading {
     font-size: 1.2rem;
     font-weight: bold;
     letter-spacing: -0.2px;
-    line-height: 1.2rem;
-
+    line-height: 1.1rem;
   }
+
+  background-color: transparent !important;
 
   .color {
     color: #653cad;
   }
+
   @media screen and (max-width: 1280px) {
     display: none;
   }

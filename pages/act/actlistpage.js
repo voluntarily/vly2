@@ -13,7 +13,7 @@ const { ASK, OFFER } = OpportunityType
 const ActListTitleMessages = defineMessages({
   [ASK]: {
     id: 'ActListPage.Ask.Title',
-    defaultMessage: 'People are asking for help',
+    defaultMessage: 'Job list',
     description: 'Title of ask for help page'
   },
   [OFFER]: {
@@ -26,7 +26,7 @@ const ActListTitleMessages = defineMessages({
 const ActListSubTitleMessages = defineMessages({
   [ASK]: {
     id: 'act.list.ask.subtitle',
-    defaultMessage: 'Find activities people are asking for help with',
+    defaultMessage: 'Search for jobs and filter your results',
     description: 'Sub Title of page listing activities people are asking help with'
   },
   [OFFER]: {

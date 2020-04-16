@@ -21,6 +21,8 @@ export const ActOpsPanel = ({ act, type, limit }) => {
     error: state.opportunities.error
   }))
 
+  console.log('opportunities', opportunities);
+
   if (loadingState.loading || (!loadingState.sync && !loadingState.error) || loadingState.error) {
     return <ReduxLoading entity={loadingState} label='opportunities' />
   }

@@ -19,24 +19,31 @@ const actAboutTab =
     description='Tab label on ActTabs'
   />
 
-const actRequestsTab =
-  <FormattedMessage
-    id='actTabs.asks'
-    defaultMessage='Asks'
-    description='Tab label on ActTabs'
-  />
+// const actRequestsTab =
+//   <FormattedMessage
+//     id='actTabs.asks'
+//     defaultMessage='Asks'
+//     description='Tab label on ActTabs'
+//   />
 
-const actOffersTab =
+const actApplyTab =
   <FormattedMessage
     id='actTabs.offers'
-    defaultMessage='Offers'
+    defaultMessage='Apply'
     description='Tab label on ActTabs'
   />
 
-const actResourcesTab =
+const actDocumentsTab =
   <FormattedMessage
-    id='actTabs.resources'
-    defaultMessage='Resources'
+    id='actTabs.documents'
+    defaultMessage='Additional Documents'
+    description='Tab label on ActTabs'
+  />
+
+const actLearningTab =
+  <FormattedMessage
+    id='actTabs.learning'
+    defaultMessage='Learning Resources'
     description='Tab label on ActTabs'
   />
 // const opForumTab =
@@ -74,14 +81,16 @@ export const ActTabs = ({ act, onChange, canManage, canEdit, defaultTab }) => (
     <TabPane tab={actAboutTab} key='about'>
       <ActAboutPanel act={act} />
     </TabPane>
-    <TabPane tab={actRequestsTab} key='ask'>
+    {/* <TabPane tab={actRequestsTab} key='ask'>
+      <ActOpsPanel act={act} type={ASK} />
+    </TabPane> */}
+    <TabPane tab={actApplyTab} key='positions'>
       <ActOpsPanel act={act} type={ASK} />
     </TabPane>
-    <TabPane tab={actOffersTab} key='offer'>
-      <ActOpsPanel act={act} type={OFFER} />
-
+    <TabPane tab={actDocumentsTab} key='documents'>
+      <ActResourcesPanel act={act} />
     </TabPane>
-    <TabPane tab={actResourcesTab} key='resources'>
+    <TabPane tab={actLearningTab} key='learning'>
       <ActResourcesPanel act={act} />
     </TabPane>
 

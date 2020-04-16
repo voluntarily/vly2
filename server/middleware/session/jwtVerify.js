@@ -2,6 +2,8 @@ const { config } = require('../../../config/clientConfig')
 const jwksClient = require('jwks-rsa')
 const jwt = require('jsonwebtoken')
 
+console.log('auth', config.auth);
+
 const client = jwksClient({
   strictSsl: true, // Default value
   cache: true,

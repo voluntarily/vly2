@@ -11,7 +11,6 @@ border-bottom: 2px solid transparent;
 border-right: none;
 .ant-menu-item {
   border: none;
-  
 }
 
 @media screen and (max-width: 767px) {
