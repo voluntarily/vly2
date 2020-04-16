@@ -8,7 +8,7 @@ import { Card } from '../VTheme/VTheme'
 const ActCardSuggest = () => {
   return (
     <Card>
-      <a href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/17' target='_blank' rel='noreferrer noopener'>
+      <a href='https://support.voluntarily.nz/hc/en-nz/requests/new?ticket_form_id=360003338774' target='_blank' rel='noreferrer noopener'>
         <div>
           <img src='/static/img/activity/addActivity.png' />
         </div>

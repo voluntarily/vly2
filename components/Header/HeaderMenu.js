@@ -73,7 +73,7 @@ const menuItems = [
     key: 'help',
     show: [ANON, AUTH, VOLUNTEER, ADMIN],
     text: 'Support 🙋🏽‍♀️',
-    href: 'https://voluntarily.atlassian.net/servicedesk/customer/portals'
+    href: 'https://support.voluntarily.nz/hc/en-nz'
   },
   {
     key: 'hsignin',
