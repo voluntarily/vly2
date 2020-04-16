@@ -13,7 +13,7 @@ import TakeSupportSection from '../../components/LandingPageComponents/TakeSuppo
 export const Landing = ({ isAuthenticated }) => (
   <>
     <Helmet>
-      <title>Voluntarily</title>
+      <title>Vocationally</title>
     </Helmet>
 
     <Hero
