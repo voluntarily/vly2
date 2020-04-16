@@ -23,7 +23,7 @@ test('createCsv formats properly', async t => {
   ]
   const csv = createCsv(testMember)
 
-  const expected = 'data:text/csv;charset=utf-8,Name,Email,Phone,Role,CREATED_AT\nJared,jared@jared.com,12345678,member,12345'
+  const expected = 'data:text/csv;charset=utf-8,Name,Email,Phone,Role,Created At\nJared,jared@jared.com,12345678,member,12345'
 
   t.assert(csv === expected)
 })

@@ -46,6 +46,7 @@ test('Results', async t => {
     date: ['2017-09-03', '2013-07-26'],
     location: 'Testington',
     duration: 'long time',
+    requestor: { nickname: 'testy' },
     _id: 'id1'
   }, {
     name: 'test2',
@@ -53,6 +54,7 @@ test('Results', async t => {
     imgUrl: 'test.jpg',
     date: ['2017-09-03', '2013-07-26'],
     location: 'Testington',
+    requestor: { nickname: 'testy' },
     duration: 'long time',
     _id: 'id2'
   }]
