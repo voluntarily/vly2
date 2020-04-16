@@ -41,7 +41,6 @@ const OpportunityFields = {
   OFFER_ORG: 'offerOrg',
   REQUESTOR: 'requestor',
   FROM_ACTIVITY: 'fromActivity',
-  CREATED_AT: 'createdAt', // deprecated - use CREATED_AT
   CREATED_AT: 'createdAt',
   UPDATED_AT: 'updatedAt',
   TAGS: 'tags'
