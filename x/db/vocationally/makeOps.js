@@ -54,7 +54,7 @@ const makeOp = async (interestCount, fromActivity, companyName) => {
   const orgs = await Organisation.find({ role: OrganisationRole.OPPORTUNITY_PROVIDER, name: companyName })
   console.log('company to make op for: ', companyName);
 
-  console.log('getLocation', getLocation(companyName));
+  const location = getLocation(companyName);
 
   const org = orgs[gra(0, orgs.length - 1)]
   // find a member of op
@@ -69,15 +69,17 @@ const makeOp = async (interestCount, fromActivity, companyName) => {
   const endDate = startDate.add(gra(0, 4), 'days')
   const date = coin([startDate.format()], [startDate.format(), endDate.format()])
 
+  // console.log('fromActivity', fromActivity);
+
   const op = fromActivity
     ? {
       type: OpportunityType.ASK,
-      name: `${fromActivity.name} Opportunity`,
+      name: `${fromActivity.name} in ${location}`,
       imgUrl: fromActivity.imgUrl,
       subtitle: fromActivity.subtitle,
       description: fromActivity.description,
       duration: fromActivity.duration,
-      location: 'Northland',
+      location,
       venue: 'Venue Address',
       status: coin(OpportunityStatus.DRAFT, OpportunityStatus.ACTIVE),
       date,
@@ -112,9 +114,10 @@ const makeOp = async (interestCount, fromActivity, companyName) => {
 }
 
 const makeOps = async (count, interestCount, fromActivity, companyName) => {
-  console.log('makeOps', count, interestCount, fromActivity.name, companyName)
+  const positionsAvailable = fromActivity.volunteers;
+  console.log('makeOps', positionsAvailable, interestCount, fromActivity.name, companyName);
   return Promise.all(
-    Array(count).fill({}).map(() => makeOp(interestCount, fromActivity, companyName))
+    Array(positionsAvailable).fill({}).map(() => makeOp(interestCount, fromActivity, companyName))
   )
 }
 

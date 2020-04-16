@@ -26,10 +26,10 @@ const actAboutTab =
 //     description='Tab label on ActTabs'
 //   />
 
-const actApplyTab =
+const actListingsTab =
   <FormattedMessage
     id='actTabs.offers'
-    defaultMessage='Apply'
+    defaultMessage='Listings'
     description='Tab label on ActTabs'
   />
 
@@ -84,7 +84,7 @@ export const ActTabs = ({ act, onChange, canManage, canEdit, defaultTab }) => (
     {/* <TabPane tab={actRequestsTab} key='ask'>
       <ActOpsPanel act={act} type={ASK} />
     </TabPane> */}
-    <TabPane tab={actApplyTab} key='positions'>
+    <TabPane tab={actListingsTab} key='listings'>
       <ActOpsPanel act={act} type={ASK} />
     </TabPane>
     <TabPane tab={actDocumentsTab} key='documents'>

@@ -52,7 +52,7 @@ const images = {
 const makeAct = async (jobTitle, companyName, classification, ops, interested) => {
 
 
-  await makeCompanyOrg(OrganisationRole.ACTIVITY_PROVIDER, 10, 10, companyName);
+  await makeCompanyOrg(OrganisationRole.OPPORTUNITY_PROVIDER, 10, 10, companyName);
 
 
   // find a random op
@@ -89,13 +89,13 @@ const makeAct = async (jobTitle, companyName, classification, ops, interested) =
     owner: owner._id,
     volunteers: Math.random() > 0.5 ? gra(2, 50) : 1, // 50/50 chance to be group job vs individual
     tags,
-    status: coin(ActivityStatus.DRAFT, ActivityStatus.ACTIVE)
+    status: ActivityStatus.ACTIVE
   }
 
   const saved = await Activity.create(act)
 
   // now make some ops based on activity
-  const o = await makeOps(10, 10, act, companyName) //TODO
+  const o = await makeOps(10, 10, saved, companyName) //TODO
 
   // getLocation = (str) => District.
   // getLocation('asdf') => 'Porirua', 'Palmerston North', .. 
