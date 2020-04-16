@@ -18,7 +18,7 @@ const ActListTitleMessages = defineMessages({
   },
   [OFFER]: {
     id: 'ActListPage.Offer.Title',
-    defaultMessage: 'Volunteers are offering help',
+    defaultMessage: 'Job List',
     description: 'Title of the offerings page'
   }
 })
@@ -31,7 +31,7 @@ const ActListSubTitleMessages = defineMessages({
   },
   [OFFER]: {
     id: 'act.list.offer.subtitle',
-    defaultMessage: 'Find activities volunteers are offering help with',
+    defaultMessage: 'Search for jobs and filter your results',
     description: 'Sub Title of page listing offerings people have'
   }
 })
@@ -43,7 +43,7 @@ export const ActListPage = () => {
   return (
     <FullPage>
       <Helmet>
-        <title>Activities - Voluntarily</title>
+        <title>Vocationally</title>
       </Helmet>
       <PageBannerNoTabs>
         <h1>

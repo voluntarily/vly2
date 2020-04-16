@@ -1,4 +1,4 @@
-import { Menu } from 'antd'
+import { Menu, Radio } from 'antd'
 import styled from 'styled-components'
 
 /**
@@ -46,13 +46,30 @@ const ActivityMenu = styled(Menu)`
 const ActMenu = ({ acts, onClick }) => {
   const [counts, orgs] = countOfferOrgs(acts)
 
+  const radioStyle = {
+    display: 'block',
+    height: '30px',
+    lineHeight: '30px'
+  }
+
   return (
     <ActivityMenu>
       <Menu
         mode='vertical'
         onClick={onClick}
       >
-        <Menu.ItemGroup key='topics' title='Topics'>
+        <h3>Filter</h3>
+
+        <Radio.Group>
+          <Radio style={radioStyle} value={1}>
+            Individual
+          </Radio>
+          <Radio style={radioStyle} value={2}>
+            Group
+          </Radio>
+        </Radio.Group>
+
+        <Menu.ItemGroup key='topics'>
           {Object.keys(orgs).map(key => {
             const org = orgs[key]
             return (
