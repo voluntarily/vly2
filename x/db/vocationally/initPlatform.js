@@ -20,7 +20,7 @@ const jobs = {
     'Doctor': "Bay Health"
   },
   'Food and Beverage Production': {
-    'Baker': "Bread Boys",
+    'Baker': "The Bread Brothers",
     'Food Production Assistant': "Snack Squad",
     'Orchard Picker': "Forever Fruity"
   },
@@ -61,11 +61,19 @@ const jobs = {
 // ]
 
 
+const clearOps = async () => {
+  await Promise.all(
+    collections.map(coll => coll.deleteMany())
+  )
+}
+
 async function main () {
   connectDB()
 
   // First clear the current contents of the database.
   await clearCollections();
+
+  // TODO: Clear ops
 
   const params = {
     orgs: [
