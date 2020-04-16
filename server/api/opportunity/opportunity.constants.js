@@ -61,7 +61,8 @@ const OpportunityListFields = [
   OpportunityFields.DURATION,
   OpportunityFields.REQUESTOR,
   OpportunityFields.OFFER_ORG,
-  OpportunityFields.FROM_ACTIVITY
+  OpportunityFields.FROM_ACTIVITY,
+  OpportunityFields.CREATED_AT
 ]
 
 /* This list is currently used for both anon and signed in people
@@ -69,8 +70,7 @@ const OpportunityListFields = [
 */
 const OpportunityPublicFields = [
   ...OpportunityListFields,
-  OpportunityFields.TAGS,
-  OpportunityFields.CREATED_AT
+  OpportunityFields.TAGS
 ]
 
 module.exports = {

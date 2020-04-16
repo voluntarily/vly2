@@ -66,7 +66,6 @@ const OpCard = ({ op }) => {
           <figcaption>
             {op.requestor.nickname} <OpType type={op.type} />
             <h1>
-
               {draft}
               {op.name}
             </h1>
@@ -74,6 +73,7 @@ const OpCard = ({ op }) => {
               {startLocation && <li> {startLocation}</li>}
               {startTime && <li> {startTime} </li>}
               {startDuration && <li> {startDuration}</li>}
+              {op.createdAt && <li>🎬{moment(op.createdAt).fromNow()}</li>}
             </ul>
 
             <DescriptionWrapper>
@@ -81,11 +81,12 @@ const OpCard = ({ op }) => {
               {/* <OpType type={op.type} /> */}
             </DescriptionWrapper>
 
-            {orgName &&
-              <DescriptionWrapper>
-                <i>{orgName}</i>
-              </DescriptionWrapper>}
-            {interestIcon}
+            <DescriptionWrapper>
+              {orgName &&
+                <i>Via {orgName}&nbsp;</i>}
+              <i>{moment(op.createdAt).fromNow()}</i>
+              {interestIcon}
+            </DescriptionWrapper>
 
           </figcaption>
         </a>

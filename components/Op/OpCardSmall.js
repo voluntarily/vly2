@@ -29,9 +29,10 @@ const SingleLineTitle = styled('h2')`
 // todo if image is not present then use a fallback.
 const OpCardSmall = ({ op }) => {
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
-  const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA - ddd DD/MM/YY') : ''
+  const startTime = op.date[0] ? moment(op.date[0]).format('🗓 ddd DD/MM/YY') : '🗓 Negotiable'
+
   const startLocation = op.location ? `📍 ${op.location}` : ''
-  const startDuration = op.duration ? `⏱ ${op.duration}` : ''
+  // const startDuration = op.duration ? `⏱ ${op.duration}` : ''
   const interestIcon = ((interest) => {
     if (!interest) { return '' }
     switch (interest.status) {
@@ -61,10 +62,10 @@ const OpCardSmall = ({ op }) => {
             <figcaption>
               {/* <p>  {op.subtitle}</p> */}
               <ul>
-                {startLocation && <li> {startLocation}</li>}
                 {startTime && <li> {startTime} </li>}
-                {startDuration && <li> {startDuration}</li>}
-                {op.createdAt && <li>{op.createdAt}</li>}
+                {startLocation && <li> {startLocation}</li>}
+                {/* {startDuration && <li> {startDuration}</li>} */}
+                {op.createdAt && <li>🎬{moment(op.createdAt).fromNow()}</li>}
               </ul>
               {interestIcon}
             </figcaption>
