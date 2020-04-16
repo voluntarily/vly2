@@ -23,7 +23,7 @@ const completeConfig = {
       AUTH0_CLIENT_DOMAIN: process.env.AUTH0_CLIENT_DOMAIN || 'voluntarily.au.auth0.com'
     },
     apiVersion: 'v1',
-    knowledgebaseURL: 'https://voluntarily.atlassian.net/servicedesk/customer/portals?q='
+    knowledgebaseURL: 'https://support.voluntarily.nz/hc/en-nz/search?query='
   },
 
   development: {
