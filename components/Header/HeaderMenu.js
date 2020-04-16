@@ -20,36 +20,36 @@ const menuItems = [
     defaultMessage='Home'
   />
   },
-  {
-    key: 'acts_ask',
-    show: [AUTH, VOLUNTEER, ADMIN],
-    href: '/a/ask',
-    text:
-  <FormattedMessage
-    id='HeaderMenu.acts_ask'
-    defaultMessage='Ask for help'
-  />
-  },
-  {
-    key: 'acts_offer',
-    show: [VOLUNTEER, ADMIN],
-    href: '/a/offer',
-    text:
-  <FormattedMessage
-    id='HeaderMenu.acts_offer'
-    defaultMessage='Offer to help'
-  />
-  },
-  {
-    key: 'habout',
-    show: [ANON],
-    href: 'https://blog.voluntarily.nz',
-    text:
-  <FormattedMessage
-    id='HeaderMenu.about'
-    defaultMessage='About'
-  />
-  },
+  // {
+  //   key: 'acts_ask',
+  //   show: [AUTH, VOLUNTEER, ADMIN],
+  //   href: '/a/ask',
+  //   text:
+  // <FormattedMessage
+  //   id='HeaderMenu.acts_ask'
+  //   defaultMessage='Ask for help'
+  // />
+  // },
+  // {
+  //   key: 'acts_offer',
+  //   show: [VOLUNTEER, ADMIN],
+  //   href: '/a/offer',
+  //   text:
+  // <FormattedMessage
+  //   id='HeaderMenu.acts_offer'
+  //   defaultMessage='Offer to help'
+  // />
+  // },
+  // {
+  //   key: 'habout',
+  //   show: [ANON],
+  //   href: 'https://blog.voluntarily.nz',
+  //   text:
+  // <FormattedMessage
+  //   id='HeaderMenu.about'
+  //   defaultMessage='About'
+  // />
+  // },
   {
     key: 'admin',
     text: 'Admin',
@@ -69,12 +69,12 @@ const menuItems = [
     href: '/people',
     show: [ADMIN]
   },
-  {
-    key: 'help',
-    show: [ANON, AUTH, VOLUNTEER, ADMIN],
-    text: 'Support 🙋🏽‍♀️',
-    href: 'https://voluntarily.atlassian.net/servicedesk/customer/portals'
-  },
+  // {
+  //   key: 'help',
+  //   show: [ANON, AUTH, VOLUNTEER, ADMIN],
+  //   text: 'Support 🙋🏽‍♀️',
+  //   href: 'https://voluntarily.atlassian.net/servicedesk/customer/portals'
+  // },
   {
     key: 'hsignin',
     show: [ANON],
