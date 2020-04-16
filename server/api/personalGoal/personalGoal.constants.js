@@ -13,7 +13,7 @@ const PersonalGoalFields = {
   PERSON: 'person',
   GOAL: 'goal',
   STATUS: 'status',
-  DATE_ADDED: 'createdAt',
+  CREATED_AT: 'createdAt',
   DATE_STARTED: 'dateStarted',
   DATE_HIDDEN: 'dateHidden',
   DATE_COMPLETED: 'dateCompleted'

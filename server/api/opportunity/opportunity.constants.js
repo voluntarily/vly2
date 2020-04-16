@@ -41,7 +41,9 @@ const OpportunityFields = {
   OFFER_ORG: 'offerOrg',
   REQUESTOR: 'requestor',
   FROM_ACTIVITY: 'fromActivity',
-  DATE_ADDED: 'createdAt',
+  CREATED_AT: 'createdAt', // deprecated - use CREATED_AT
+  CREATED_AT: 'createdAt',
+  UPDATED_AT: 'updatedAt',
   TAGS: 'tags'
 }
 
@@ -69,7 +71,7 @@ const OpportunityListFields = [
 const OpportunityPublicFields = [
   ...OpportunityListFields,
   OpportunityFields.TAGS,
-  OpportunityFields.DATE_ADDED
+  OpportunityFields.CREATED_AT
 ]
 
 module.exports = {

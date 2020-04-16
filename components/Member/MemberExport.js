@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 
 export const createCsv = (members) => {
   let membersCsv = 'data:text/csv;charset=utf-8,'
-  membersCsv += 'Name,Email,Phone,Role,Date_Added\n'
+  membersCsv += 'Name,Email,Phone,Role,CREATED_AT\n'
   if (members) {
     membersCsv += members.map(member => (
       `${member.person.name},${member.person.email},${member.person.phone},${member.status},${member.createdAt}`
