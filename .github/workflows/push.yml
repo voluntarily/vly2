@@ -239,4 +239,3 @@ jobs:
         cluster: vly-beta
         target: voluntarily-beta-service
         image: beta $ECR_REGISTRY/$ECR_REPOSITORY:master
-        env_vars: beta REVISION ${{ github.sha }}
