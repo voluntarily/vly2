@@ -981,16 +981,13 @@ font-weight: 500;
 background-color: #e8e8e8;
 `
 // we use this tag for op state
-export const TagState = styled.p`
-
+export const TagState = styled.span`
   display: inline-block;
-
   padding:0.2rem 0.5rem;
   font-size: 1rem;
   font-weight: 700;
   border-radius: 8px;
   margin: 0.5rem 0 0 0;
-
 `
 
 export const StyledIcon = styled(Icon)`
