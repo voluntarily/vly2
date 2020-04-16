@@ -11,7 +11,7 @@ test.before('Setup mailer', async (t) => {
 test('Should setup and send test email', async t => {
   // const transport = await getTransportTest()
   const info = await t.context.transport.sendMail({
-    from: 'no-reply@voluntarily.nz', // sender address
+    from: 'no-reply@vocationally.marscloud.co.nz', // sender address
     to: 'bar@example.com, baz@example.com', // list of receivers
     subject: 'Email Verification ✔', // Subject line
     text: 'Click on the link below to validate your email', // plain text body

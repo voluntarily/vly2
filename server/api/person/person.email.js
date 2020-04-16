@@ -16,7 +16,7 @@ module.exports.emailPerson = async (template, to, props, renderOnly = false) => 
   const transport = getTransport()
   const email = new Email({
     message: {
-      from: 'no-reply@voluntarily.nz'
+      from: 'no-reply@vocationally.marscloud.co.nz'
     },
     // uncomment below to send emails in development/test env:
     send: true,
