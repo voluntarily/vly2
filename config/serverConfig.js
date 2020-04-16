@@ -1,7 +1,7 @@
 const { checkEnvVars } = require('./env')
 checkEnvVars({
   required: 'AUTH0_CLIENT_ID AUTH0_CLIENT_DOMAIN',
-  optional: 'PORT APPNAME NODE_ENV DBNAME MONGODB_URI SMTP_ID SMTP_PWD'
+  optional: 'PORT APPNAME NODE_ENV DBNAME MONGODB_URI SMTP_ID SMTP_PWD REVISION'
 })
 
 const databaseName = process.env.DBNAME || 'vly2'
@@ -14,6 +14,7 @@ const completeConfig = {
     serverPort,
     env: process.env.NODE_ENV || 'development',
     databaseUrl: process.env.MONGODB_URI || `mongodb://localhost/${databaseName}`,
+    revision: process.env.REVISION || 'local-build',
     jsonOptions: {
       headers: {
         Accept: 'application/json',
