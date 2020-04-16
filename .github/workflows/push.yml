@@ -204,6 +204,7 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
+    # Builds aplha image, uses same image to tag and push beta
     - name: Alpha build, tag, and push
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -214,9 +215,13 @@ jobs:
       run: |
         docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
         --build-arg ENV_ENVIRONMENT=$ENV_ENVIRONMENT --build-arg ENV_SECRET=$ENV_SECRET \
+        --build-arg REVISION=$IMAGE_TAG \
         .
         docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
+
+        docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:master $ECR_REGISTRY/vly-beta:master
+        docker push $ECR_REGISTRY/vly-beta:master
 
     - name: Log out of ECR
       if: always()
@@ -232,9 +237,7 @@ jobs:
     - name: Deploy Beta to ECS
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: vly-beta
-      uses: donaldpiret/ecs-deploy@v0.0.1
-      with:
-        cluster: vly-beta
-        target: voluntarily-beta-service
-        image: beta $ECR_REGISTRY/$ECR_REPOSITORY:master
+        ECR_REPOSITORY: vly-beta  
+      run: |
+        aws ecs update-service --service voluntarily-beta-service --cluster vly-beta --force-new-deployment --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50
+  

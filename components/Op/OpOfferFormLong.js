@@ -9,7 +9,7 @@ import LocationSelector from '../Form/Input/LocationSelector'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
-import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import ImageUpload from '../Upload/ImageUpload'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, ShortInputContainer, TitleContainer } from '../VTheme/FormStyles'
 
 const { TextArea } = Input

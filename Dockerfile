@@ -17,6 +17,8 @@ COPY . ./
 RUN npm run prod-build
 
 FROM node:12-alpine as production
+ARG REVISION='local'
+ENV REVISION=$REVISION
 ENV PORT 3122
 EXPOSE 3122
 

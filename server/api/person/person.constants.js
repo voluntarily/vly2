@@ -25,6 +25,7 @@ const PersonFields = {
   STATUS: 'status',
   PRONOUN: 'pronoun',
   TAGS: 'tags',
+  TOPIC_GROUPS: 'topicGroups',
   EDUCATION: 'education',
   JOB: 'job',
   SENDEMAILNOTIFICATIONS: 'sendEmailNotifications',
@@ -46,6 +47,8 @@ const PersonListFields = [
   PersonFields.ROLE,
   PersonFields.PRONOUN,
   PersonFields.TAGS,
+  PersonFields.TOPIC_GROUPS,
+  PersonFields.LOCATIONS,
   PersonFields.SENDEMAILNOTIFICATIONS
 ]
 

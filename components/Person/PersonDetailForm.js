@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import EducationSelector from '../Form/Input/EducationSelector'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import TagInput from '../Form/Input/TagInput'
-import ImageUpload from '../UploadComponent/ImageUploadComponent'
+import ImageUpload from '../Upload/ImageUpload'
 import {
   DescriptionContainer,
   FormGrid,
