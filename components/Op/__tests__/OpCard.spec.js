@@ -26,11 +26,10 @@ test('Card include name school/org imgUrl location duration and subtitle', t => 
   t.is(wrapper.find('figcaption').find('span').text(), op.offerOrg.name)
   t.is(wrapper.find('img').prop('src'), op.imgUrl)
   // four p tags for location time duration subtitle+interest
-  t.is(wrapper.find('figcaption').find('p').length, 3)
-  t.is(wrapper.find('figcaption').find('p').first().text(), ` 📍 ${op.location}`)
-  // second p for time and should be blank as time is not set
-  t.is(wrapper.find('figcaption').find('p').at(1).text().trim().length, 0)
-  t.is(wrapper.find('figcaption').find('p').at(2).text(), ` ⏱ ${op.duration}`)
+  t.is(wrapper.find('figcaption').find('li').length, 2)
+  t.is(wrapper.find('figcaption').find('li').first().text(), ` 📍 ${op.location}`)
+  // second li for time and should be blank as time is not set
+  t.is(wrapper.find('figcaption').find('li').at(1).text(), ` ⏱ ${op.duration}`)
   t.is(wrapper.find('figcaption').find(DescriptionWrapper).first().text(), `${op.subtitle}`)
 })
 
@@ -78,7 +77,7 @@ test('ops with start and end date should be display start date', t => {
     <OpCard op={op} />
   )
   t.true(wrapper.find('figcaption').find('h1').text().includes(op.name))
-  t.is(wrapper.find('figcaption').find('p').at(1).text(), moment(op.date[0]).format(' 🗓 h:mmA - ddd DD/MM/YY '))
+  t.is(wrapper.find('figcaption').find('li').at(1).text(), moment(op.date[0]).format(' 🗓 h:mmA - ddd DD/MM/YY '))
 })
 
 test('op with an interest status should have related icon appear in card', t => {
@@ -126,7 +125,7 @@ test('op with no interest status should not have related icon appear in card', t
   t.is(wrapper.find('i.anticon').length, 0)
 })
 
-test('ops without location and duration should display P tags with blank', t => {
+test('ops without location and duration should skip lines', t => {
   const op = t.context.ops[4]
   op.location = undefined
   op.duration = undefined
@@ -134,7 +133,8 @@ test('ops without location and duration should display P tags with blank', t => 
     <OpCard op={op} />
   )
   t.true(wrapper.find('figcaption').find('h1').text().includes(op.name))
-  t.is(wrapper.find('figcaption').find('p').at(1).text(), moment(op.date[0]).format(' 🗓 h:mmA - ddd DD/MM/YY '))
-  t.is(wrapper.find('figcaption').find('p').at(0).text().trim().length, 0)
-  t.is(wrapper.find('figcaption').find('p').at(2).text().trim().length, 0)
+  t.is(wrapper.find('figcaption').find('li').length, 1)
+  t.is(wrapper.find('figcaption').find('li').at(0).text(), moment(op.date[0]).format(' 🗓 h:mmA - ddd DD/MM/YY '))
+  // t.is(wrapper.find('figcaption').find('p').at(0).text().trim().length, 0)
+  // t.is(wrapper.find('figcaption').find('p').at(2).text().trim().length, 0)
 })

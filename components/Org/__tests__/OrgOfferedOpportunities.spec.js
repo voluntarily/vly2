@@ -51,6 +51,7 @@ test('Results', async t => {
     ],
     location: 'Online',
     duration: '5 min',
+    requestor: { nickname: 'testy' },
     offerOrg: {
       imgUrl: '/static/img/organisation/organisation.png',
       role: [

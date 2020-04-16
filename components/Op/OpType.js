@@ -64,12 +64,12 @@ export const OpTypeEmoji = {
 export const OpTypeVerbs = defineMessages({
   [ASK]: {
     id: 'OpportunityType.verb.ASK',
-    defaultMessage: '{count, plural, one {person} other {people}} asking for help',
+    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} asking for help',
     description: 'Asking for help'
   },
   [OFFER]: {
     id: 'OpportunityType.verb.OFFER',
-    defaultMessage: '{count, plural, one {person} other {people}} offering to help',
+    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} offering to help',
     description: 'Offering help'
   }
 })
@@ -90,16 +90,17 @@ export const OpTypeTopicVerb = ({ type }) => {
   return (<FormattedMessage {...OpTypeTopicVerbMsg[type]} />)
 }
 /**
- * 10 offering to help
- * 10 asking for help
+ * 0 -> No people offering to help
+ * 1 -> one person offering to help
+ * 2 -> 2 people offering to help
+ * 10 people asking for help
  * @param {*} param0
  */
 export const OpTypeCount = ({ counts, type }) => {
   if (!counts) return null
   if (!type || ![ASK, OFFER].includes(type)) return null
   const count = counts[type]
-  if (!count) return null // print not zero results
-  return (<>{OpTypeEmoji[type]}{count}&nbsp;<FormattedMessage {...OpTypeVerbs[type]} values={{ count }} /></>)
+  return (<>{OpTypeEmoji[type]}{count || ''}&nbsp;<FormattedMessage {...OpTypeVerbs[type]} values={{ count }} /></>)
 }
 
 /** Converts an opportunity type to a Stamp - except for Active */

@@ -14,6 +14,9 @@ const ops = [
     duration: '15 Minutes',
     location: 'Newmarket, Auckland',
     status: 'draft',
+    requestor: {
+      nickname: 'Testy McTestface'
+    },
     date: [
       {
         $date: '2019-05-23T12:26:18.000Z'
@@ -32,6 +35,9 @@ const ops = [
     duration: '2 hours',
     location: 'Albany, Auckland',
     status: 'draft',
+    requestor: {
+      nickname: 'Testy McTestface'
+    },
     date: [
       {
         $date: '2019-05-23T12:26:18.000Z'

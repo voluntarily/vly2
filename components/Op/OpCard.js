@@ -8,6 +8,7 @@ import moment from 'moment'
 import { Card, DescriptionWrapper, TagState } from '../VTheme/VTheme'
 import { Icon } from 'antd'
 import styled from 'styled-components'
+import { OpType } from './OpType'
 
 const getOpPageURL = (isArchived, opid) => {
   if (isArchived) {
@@ -63,30 +64,29 @@ const OpCard = ({ op }) => {
             {/* <OpTypeStamp type={op.type} /> */}
           </ImageWrapper>
           <figcaption>
+            {op.requestor.nickname} <OpType type={op.type} />
             <h1>
-
               {draft}
               {op.name}
             </h1>
+            <ul>
+              {startLocation && <li> {startLocation}</li>}
+              {startTime && <li> {startTime} </li>}
+              {startDuration && <li> {startDuration}</li>}
+              {op.createdAt && <li>🎬{moment(op.createdAt).fromNow()}</li>}
+            </ul>
 
-            <p> {startLocation}</p>
-            <p> {startTime} </p>
-            <p> {startDuration}</p>
             <DescriptionWrapper>
               {op.subtitle}<br />
               {/* <OpType type={op.type} /> */}
             </DescriptionWrapper>
 
-            {orgName &&
-              <>
-                <DescriptionWrapper>
-
-                  <i>
-                    {orgName}
-                  </i>
-                </DescriptionWrapper>
-              </>}
-            {interestIcon}
+            <DescriptionWrapper>
+              {orgName &&
+                <i>Via {orgName}&nbsp;</i>}
+              <i>{moment(op.createdAt).fromNow()}</i>
+              {interestIcon}
+            </DescriptionWrapper>
 
           </figcaption>
         </a>
