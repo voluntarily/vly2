@@ -21,7 +21,7 @@ import { Role } from '../../server/services/authorize/role.js'
 
 const blankOp = {
   name: '',
-  tyep: OpportunityType.ASK,
+  type: OpportunityType.ASK,
   subtitle: '',
   imgUrl: '/static/img/opportunity/opportunity.png',
   duration: '',
@@ -193,6 +193,7 @@ export const OpDetailPage = ({
           canRegisterInterest={canRegisterInterest}
           opid={op && op._id}
           meid={me && me._id}
+          type={op.type}
         />
       </OpBanner>
       <OpTabs op={op} canManage={canManage} canEdit={canManage} defaultTab={tab} onChange={handleTabChange} author={me._id} />

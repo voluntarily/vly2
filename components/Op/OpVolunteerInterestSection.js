@@ -2,7 +2,7 @@ import { Button } from 'antd'
 import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import RegisterInterestSection from '../Interest/RegisterInterestSection'
-import OpportunityType from '../Op/OpType'
+import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 
 export const OfferToHelpAnonBtn = ({ opid }) =>
   <Link href={`/auth/sign-thru?redirect=/ops/${opid}`}>
@@ -10,12 +10,14 @@ export const OfferToHelpAnonBtn = ({ opid }) =>
       <FormattedMessage id='offertohelp-anon' defaultMessage='Offer to help' description='Registration button on an op that leads to sign in page' />
     </Button>
   </Link>
+
 export const AskForHelpAnonBtn = ({ opid }) =>
   <Link href={`/auth/sign-thru?redirect=/ops/${opid}`}>
     <Button type='primary' style={{ width: '50%' }} size='large' shape='round'>
       <FormattedMessage id='askforhelp-anon' defaultMessage='Ask for help' description='Registration button on an op that leads to sign in page' />
     </Button>
   </Link>
+
 export const OpVolunteerInterestSection = ({ isAuthenticated, canRegisterInterest, opid, meid, type }) => {
   // if not signed in then the interested button signs in first
   if (!isAuthenticated) {
@@ -33,4 +35,5 @@ export const OpVolunteerInterestSection = ({ isAuthenticated, canRegisterInteres
   }
   return null
 }
+
 export default OpVolunteerInterestSection
