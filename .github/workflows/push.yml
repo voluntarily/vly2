@@ -204,6 +204,7 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
+    # Builds aplha image, uses same image to tag and push beta
     - name: Alpha build, tag, and push
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -218,6 +219,9 @@ jobs:
         .
         docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
+
+        docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:master $ECR_REGISTRY/vly-beta:master
+        docker push $ECR_REGISTRY/vly-beta:master
 
     - name: Log out of ECR
       if: always()
