@@ -56,6 +56,23 @@ export const OpTypeImperative = ({ type }) => {
   return (<FormattedMessage {...OpTypeImperativeMsg[type]} />)
 }
 
+export const OpTypeButtonLabelMsg = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.imp.ASK',
+    defaultMessage: 'Ask for help with',
+    description: 'Asking for help command'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.imp.OFFER',
+    defaultMessage: 'Offer to help with',
+    description: 'Offering help command'
+  }
+})
+export const OpTypeButtonLabel = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpTypeImperativeMsg[type]} />)
+}
+
 export const OpTypeEmoji = {
   [ASK]: '🙋',
   [OFFER]: '💁🏻'

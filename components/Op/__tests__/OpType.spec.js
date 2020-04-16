@@ -1,7 +1,7 @@
 import React from 'react'
 import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
-import { OpTypeStamp, OpType, OpTypeCount, OpCommitment } from '../OpType'
+import { OpTypeDateTitle, OpTypeDescriptionTitle, OpTypeStamp, OpType, OpTypeCount, OpCommitment, OpTypeTitle, OpTypeImperative, OpTypeButtonLabel, OpTypeNoResults, OpTypeDescriptionPrompt, OpTypeDatePrompt, OpTypeLocationPrompt } from '../OpType'
 import { OpportunityType } from '../../../server/api/opportunity/opportunity.constants'
 
 test('render OpTypeStamp for ask op', t => {
@@ -53,7 +53,7 @@ test('render OpType with no type', t => {
 test('render OpTypeCount for offer op', t => {
   const wrapper = mountWithIntl(
     <OpTypeCount
-      counts={{ ask: 5, offer: 2 }}
+      counts={{ offer: 2 }}
       type={OpportunityType.OFFER}
     />
   )
@@ -62,7 +62,7 @@ test('render OpTypeCount for offer op', t => {
 test('render OpTypeCount for ask op', t => {
   const wrapper = mountWithIntl(
     <OpTypeCount
-      counts={{ ask: 5, offer: 2 }}
+      counts={{ ask: 5 }}
       type={OpportunityType.ASK}
     />
   )
@@ -87,4 +87,148 @@ test('render OpCommitment with no type', t => {
     <OpCommitment />
   )
   t.is(wrapper.text(), '')
+})
+
+test('render OpTypeTitle with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeTitle />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeTitle with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeTitle
+      type={OpportunityType.OFFER}
+    />
+  )
+  t.is(wrapper.text(), 'Offers')
+})
+
+test('render OpTypeImperative with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeImperative />
+  )
+  t.is(wrapper.find('span').length, 0)
+})
+
+test('render OpTypeImperative with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeImperative
+      type={OpportunityType.OFFER}
+    />
+  )
+  t.is(wrapper.text(), 'Offer to help with')
+})
+
+test('render OpTypeButtonLabel with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeButtonLabel />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeButtonLabel with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeButtonLabel
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), 'Ask for help with')
+})
+
+test('render OpTypeNoResults with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeNoResults />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeNoResults with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeNoResults
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), 'Waiting for someone to ask for help.')
+})
+
+test('render OpTypeDescriptionPrompt with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDescriptionPrompt />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeDatePrompt with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDatePrompt />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeDatePrompt with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDatePrompt
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), 'Let people know how much time you need, and if there are only a few dates you can be available.')
+})
+
+test('render OpTypeLocationPrompt with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeLocationPrompt />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeLocationPrompt with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeLocationPrompt
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), 'Where do you need help?')
+})
+
+test('render OpTypeDateTitle with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDateTitle />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeDateTitle with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDateTitle
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), 'When do you need help?')
+})
+
+test('render OpTypeDescriptionTitle with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDescriptionTitle />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeDescriptionTitle with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDescriptionTitle
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), 'Anything Else?')
+})
+
+test('render OpTypeDescriptionPrompt with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDescriptionPrompt
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), 'Is there anything else the helpers need to know to help you? Please don’t put your personal or contact details on here, we’ll take care of that later')
 })
