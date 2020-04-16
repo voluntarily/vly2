@@ -123,8 +123,6 @@
   "getTeacherRegistration.registrationError": "Registration number not found, does not match your name, or is expired please verify at ",
   "goalListTitle": "Goals Index",
   "GoalsListPage.AssignGoalGroupToMe": "Assign me this group",
-  "HeaderMenu.acts_ask": "Ask for help",
-  "HeaderMenu.acts_offer": "Offer to help",
   "HeaderMenu.home": "Home",
   "HeaderMenu.sign-in": "Sign in",
   "HeaderMenu.sign-out": "Sign out",
