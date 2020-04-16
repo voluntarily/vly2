@@ -25,9 +25,9 @@ export const ActOpsPanel = ({ act, type, limit }) => {
     return <ReduxLoading entity={loadingState} label='opportunities' />
   }
 
-  if (opportunities.length === 0) {
-    return <Alert message={<OpTypeNoResults type={type} />} type='info' showIcon />
-  }
+  // if (opportunities.length === 0) {
+  //   return <Alert message={<OpTypeNoResults type={type} />} type='info' showIcon />
+  // }
 
   // TODO - sort the results by number of interested people
   let ops = opportunities.filter(op => op.type === type)
@@ -36,14 +36,31 @@ export const ActOpsPanel = ({ act, type, limit }) => {
   return (
     <>
       <OpSectionGrid>
-        <h2>
-          <div id='left_column'>
-            <h2>
-              {/* TODO: handle no people offering  */}
-              <OpTypeCount counts={act.opCounts} type={type}> </OpTypeCount>
-            </h2>
-          </div>
-        </h2>
+        <div id='left_column'>
+          <h2>
+            <OpTypeCount counts={act.opCounts} type={type}> </OpTypeCount>
+          </h2>
+          {type === OFFER &&
+            <>
+              <p style={{ marginBottom: '1rem' }}>
+                <FormattedMessage
+                  id='ActOpsPanel.prompt.OpAddAskBtn'
+                  defaultMessage="Can't see anyone who can help you?"
+                />
+              </p>
+              <OpAddAskBtn actid={act._id} />
+            </>}
+          {type === ASK &&
+            <>
+              <p style={{ marginBottom: '1rem' }}>
+                <FormattedMessage
+                  id='ActOpsPanel.prompt.OpAddOfferBtn'
+                  defaultMessage="Can't see anyone needing your help?"
+                />
+              </p>
+              <OpAddOfferBtn actid={act._id} />
+            </>}
+        </div>
         <div>
           <OpListSmall ops={ops} />
           {showMore &&
@@ -55,27 +72,6 @@ export const ActOpsPanel = ({ act, type, limit }) => {
                 />
               </Button>
             </Link>}
-          <Spacer />
-          {type === ASK &&
-            <>
-              <p style={{ marginBottom: '1rem' }}>
-                <FormattedMessage
-                  id='ActOpsPanel.prompt.OpAddAskBtn'
-                  defaultMessage="Can't see anyone who can help you?"
-                />
-              </p>
-              <OpAddAskBtn actid={act._id} />
-            </>}
-          {type === OFFER &&
-            <>
-              <p style={{ marginBottom: '1rem' }}>
-                <FormattedMessage
-                  id='ActOpsPanel.prompt.OpAddOfferBtn'
-                  defaultMessage="Can't see anyone needing your help?"
-                />
-              </p>
-              <OpAddOfferBtn actid={act._id} />
-            </>}
         </div>
       </OpSectionGrid>
     </>
