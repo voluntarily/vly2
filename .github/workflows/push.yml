@@ -233,9 +233,7 @@ jobs:
     - name: Deploy Beta to ECS
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: vly-beta
-      uses: donaldpiret/ecs-deploy@v0.0.1
-      with:
-        cluster: vly-beta
-        target: voluntarily-beta-service
-        image: beta $ECR_REGISTRY/$ECR_REPOSITORY:master
+        ECR_REPOSITORY: vly-beta  
+      run: |
+        aws ecs update-service --service vly-beta --cluster vly-beta-ECSCluster --force-new-deployment --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50
+  
