@@ -12,7 +12,7 @@ const { addMember } = require('../member/member.lib')
 const { OrganisationRole } = require('../organisation/organisation.constants')
 
 class SchoolInvite {
-  static async send (req, res) {
+  static async send(req, res) {
     res.setHeader('Content-Type', 'application/json')
 
     if (!SchoolInvite.isPostRequest(req)) {
@@ -76,11 +76,11 @@ class SchoolInvite {
     }
   }
 
-  static isPostRequest (req) {
+  static isPostRequest(req) {
     return (req.method === 'POST')
   }
 
-  static userCanSendInvite (req) {
+  static userCanSendInvite(req) {
     return (
       req.session &&
       req.session.isAuthenticated &&
@@ -88,7 +88,7 @@ class SchoolInvite {
     )
   }
 
-  static getMissingRequiredFields (postData) {
+  static getMissingRequiredFields(postData) {
     const missingFields = []
 
     for (const requiredField of ['schoolId', 'inviteeName', 'inviteeEmail']) {
@@ -100,12 +100,12 @@ class SchoolInvite {
     return missingFields
   }
 
-  static async sendInviteEmail (emailData) {
+  static async sendInviteEmail(emailData) {
     const emailTransport = await getTransport()
 
     const inviteEmail = new Email({
       message: {
-        from: 'no-reply@voluntarily.nz'
+        from: 'no-reply@vocationally.marscloud.co.nz'
       },
       send: true,
       subjectPrefix: config.env === 'production' ? '' : `[${config.env.toUpperCase()}] `,
@@ -134,7 +134,7 @@ class SchoolInvite {
     }
   }
 
-  static async accept (request, response) {
+  static async accept(request, response) {
     return handleToken(request, response, {
       join: async (props) => {
         try {
@@ -152,7 +152,7 @@ class SchoolInvite {
     })
   }
 
-  static async createOrganisationFromSchool (schoolId) {
+  static async createOrganisationFromSchool(schoolId) {
     const schoolData = await SchoolLookUp.findOne({ schoolId: schoolId })
 
     if (!schoolData) {
@@ -185,7 +185,7 @@ class SchoolInvite {
     return Organisation.create(initialOrganisationData)
   }
 
-  static async linkPersonToOrganisationAsAdmin (organisationId, personId) {
+  static async linkPersonToOrganisationAsAdmin(organisationId, personId) {
     return addMember({
       person: personId,
       organisation: organisationId,
