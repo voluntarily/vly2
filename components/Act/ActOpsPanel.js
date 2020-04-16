@@ -26,7 +26,7 @@ export const ActOpsPanel = ({ act, type, limit }) => {
   }
 
   if (opportunities.length === 0) {
-    return <Alert message={<OpTypeNoResults type={type} />} type='info' showIcon />
+    // return <Alert message={<OpTypeNoResults type={type} />} type='info' showIcon />
   }
 
   // TODO - sort the results by number of interested people
