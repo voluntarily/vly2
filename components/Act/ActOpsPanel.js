@@ -1,14 +1,14 @@
-import OpListSmall from '../Op/OpListSmall'
-import React from 'react'
-import { useSelector } from 'react-redux'
-import ReduxLoading from '../Loading'
-import { OpSectionGrid, Spacer } from '../VTheme/VTheme'
-import { OpTypeCount, OpTypeNoResults } from '../Op/OpType'
-import { Button, Alert } from 'antd'
+import { Button } from 'antd'
 import Link from 'next/link'
+import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { OpAddAskBtn, OpAddOfferBtn } from '../Op/OpAdd'
+import { useSelector } from 'react-redux'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
+import ReduxLoading from '../Loading'
+import { OpAddAskBtn, OpAddOfferBtn } from '../Op/OpAdd'
+import OpListSmall from '../Op/OpListSmall'
+import { OpTypeCount } from '../Op/OpType'
+import { OpSectionGrid } from '../VTheme/VTheme'
 const { ASK, OFFER } = OpportunityType
 
 export const ActOpsPanel = ({ act, type, limit }) => {

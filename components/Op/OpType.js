@@ -100,7 +100,7 @@ export const OpTypeCount = ({ counts, type }) => {
   if (!counts) return null
   if (!type || ![ASK, OFFER].includes(type)) return null
   const count = counts[type]
-  return (<>{OpTypeEmoji[type]}{count?count:''}&nbsp;<FormattedMessage {...OpTypeVerbs[type]} values={{ count }} /></>)
+  return (<>{OpTypeEmoji[type]}{count || ''}&nbsp;<FormattedMessage {...OpTypeVerbs[type]} values={{ count }} /></>)
 }
 
 /** Converts an opportunity type to a Stamp - except for Active */
