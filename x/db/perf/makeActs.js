@@ -43,6 +43,10 @@ const makeAct = async (ops, interested) => {
   }
 
   const saved = await Activity.create(act)
+
+  console.log('act', act);
+  console.log('saved', saved);
+
   // now make some ops based on activity
   const o = await makeOps(ops, interested, act)
   console.log('act:', saved.name, ' with associated ops:', o.length)

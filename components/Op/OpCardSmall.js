@@ -2,12 +2,14 @@
   Display an activity record in card format with a picture, name, and commitment.
 */
 // import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
 import { SmallCard, SmallOpGrid, TagState } from '../VTheme/VTheme'
-import { Icon } from 'antd'
+import { Icon, Button, notification } from 'antd'
 import styled from 'styled-components'
+import RegisterInterestMessageForm from '../Interest/RegisterInterestMessageForm'
 import { OpType } from './OpType'
 const getOpPageURL = (isArchived, opid) => {
   if (isArchived) {
@@ -31,6 +33,29 @@ const SingleLineTitle = styled('h2')`
 `
 // todo if image is not present then use a fallback.
 const OpCardSmall = ({ op }) => {
+
+  const [showAcceptForm, setShowAcceptForm] = useState(false);
+
+  const handleApplyClick = (e) => {
+    e.preventDefault();
+    setShowAcceptForm(true);
+  }
+
+  const handleAcceptSubmit = (ok, message) => {
+    setShowAcceptForm(false)
+    if (ok) {
+      //TODO
+
+      // onAccept(message)
+      // if (options.acceptNotifyHeading) {
+      //   notification.success({
+      //     message: options.acceptNotifyHeading,
+      //     description: options.acceptNotifyMessage
+      //   })
+      // }
+    }
+  }
+
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
   const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA - ddd DD/MM/YY') : ''
   const startLocation = op.location ? `📍 ${op.location}` : ''
@@ -53,31 +78,50 @@ const OpCardSmall = ({ op }) => {
   // }
 
   return (
-    <SmallCard style={{ height: '10rem' }}>
-      <Link href={getOpPageURL(isArchived, op._id)}>
-        <a>
-          <SingleLineTitle>
-            {op.location}
-            {/* {op.requestor.nickname} <OpType type={op.type} /> */}
-          </SingleLineTitle>
-          <ApplyButtonContainer>
-            apply
-          </ApplyButtonContainer>
-          {/* <SmallOpGrid>
-            <img src={op.requestor.imgUrl} />
-            <figcaption>
-              <ul>
-                {startLocation && <li> {startLocation}</li>}
-                {startTime && <li> {startTime} </li>}
-                {startDuration && <li> {startDuration}</li>}
-                {op.createdAt && <li>{op.createdAt}</li>}
-              </ul>
-              {interestIcon}
-            </figcaption>
-          </SmallOpGrid> */}
-        </a>
-      </Link>
-    </SmallCard>
+    <>
+      <RegisterInterestMessageForm
+        id='acceptRegisterInterestForm'
+        title={`Apply for position: ${op.name}`}
+        prompt={'Please provide a message to support your application.'}
+        showTerms={false}
+        onSubmit={handleAcceptSubmit}
+        visible={showAcceptForm}
+      />
+      <SmallCard style={{ height: '10rem' }} onClick={handleApplyClick}>
+        {/* <Link href={getOpPageURL(isArchived, op._id)}> */}
+          <a>
+            <SingleLineTitle>
+              {op.location}
+              {/* {op.requestor.nickname} <OpType type={op.type} /> */}
+            </SingleLineTitle>
+            <ApplyButtonContainer>
+              <Button
+                id='applyButton'
+                name='apply'
+                size='large'
+                shape='round'
+                type='primary'
+                onClick={handleApplyClick}
+              >
+                Apply
+              </Button>
+            </ApplyButtonContainer>
+            {/* <SmallOpGrid>
+              <img src={op.requestor.imgUrl} />
+              <figcaption>
+                <ul>
+                  {startLocation && <li> {startLocation}</li>}
+                  {startTime && <li> {startTime} </li>}
+                  {startDuration && <li> {startDuration}</li>}
+                  {op.createdAt && <li>{op.createdAt}</li>}
+                </ul>
+                {interestIcon}
+              </figcaption>
+            </SmallOpGrid> */}
+          </a>
+        {/* </Link> */}
+      </SmallCard>
+    </>
   )
 }
 

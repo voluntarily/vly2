@@ -66,7 +66,7 @@ export const ActOpsPanel = ({ act, type, limit }) => {
               </Button>
             </Link>}
           <Spacer />
-          {type === ASK &&
+          {/* {type === ASK &&
             <>
               <p style={{ marginBottom: '1rem' }}>
                 <FormattedMessage
@@ -85,7 +85,7 @@ export const ActOpsPanel = ({ act, type, limit }) => {
                 />
               </p>
               <OpAddOfferBtn actid={act._id} />
-            </>}
+            </>} */}
         </div>
       </OpSectionGrid>
     </>

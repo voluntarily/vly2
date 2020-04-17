@@ -10,7 +10,7 @@ const CardWrapper = styled.div`
   width: 100%;
   height: 100%;
   overflow: visible;
-  padding: 10px;
+  padding-right: 5px;
 `
 const CardContainer = styled.div`
 

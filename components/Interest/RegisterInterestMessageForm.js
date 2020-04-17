@@ -35,7 +35,7 @@ export const RegisterInterestMessageForm = ({
       visible={visible}
       onOk={handleOk}
       onCancel={handleCancel}
-      width={400}
+      width={600}
       footer={[
 
         <Button
