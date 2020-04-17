@@ -1,6 +1,9 @@
 name: V2LY not master
 
-on: [push]
+on: 
+  push:
+    branches:
+      - master
 
 # Still not comfortable that github actions events are granular to do what we want, 
 # so using an if statement below instead

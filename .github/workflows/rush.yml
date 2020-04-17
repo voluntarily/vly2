@@ -1,0 +1,182 @@
+name: V2LY Continuous Integration Pipeline
+
+on:
+  push:
+    branches:
+      - feature/VP-1758-use-single-cache-actions
+      - master
+  pull_request:
+    branches: 
+      - master 
+
+env:
+  cache-name: node-cache
+
+# defaults:
+  # run:
+  #   working-directory: 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build app and build docker image if branch is master
+
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@v2
+
+    - name: Cache node modules #Caches everything for the other tasks to run
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
+    - name: Use Node 12
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.16.1
+        mongoms_download_mirror: http://downloads.mongodb.org
+        mongoms_version: 4.0.5
+        mongoms_disable_postinstall: 1
+        ci_node_index: 0
+        ci_node_total: 1
+
+    - name: Set up dependencies  #Warm cache
+      run: npm ci
+       
+    - name: Lang
+      run: |
+        cp lang/en.json lang/en.orig.json
+        npm run build:lang
+        diff lang/en.json lang/en.orig.json
+
+    - name: Lint
+      run: |
+        pwd
+        ls -la
+        npx standard
+
+  format:
+    name: Test
+    needs: build #  this might be forma
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: Cache node modules #Caches everything for the other tasks to run
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    
+    # - name: Codecov
+    #   uses: codecov/codecov-action@v1.0.6
+    #   with:
+    #     name: # optional
+    #     # Repository upload token - get it from codecov.io. Required only for private repositories
+    #     token: # optional
+    #     # Path to coverage file to upload
+    #     file: # optional
+    #     # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
+    #     flags: # optional
+    #     # Specify whether or not CI build should fail if Codecov runs into an error during upload
+    #     fail_ci_if_error: # optional
+
+    - name: Test Root __tests__    
+      run: |
+        npm run test:root
+    
+    - name: Test Server (and security)
+      run: |
+        npm run test:server
+
+  artefact:
+    name: Build Image and push to ECR
+    needs: build 
+    if: github.ref == 'refs/heads/master'
+    # I am not sure if this is correct - LANG outputs file and 
+    # are these needed to build as we are not cacheing those..
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: checkout repository
+      uses: actions/checkout@v2
+
+    - name: Cache node modules #Caches everything for the other tasks to run
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-southeast-2
+
+    - name: Log in to ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+      
+      # Builds aplha image, uses same image to tag and push beta
+      # we may want to create artefacts on each commit but deploy only on master
+    - name: Alpha build, tag, and push
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: vly-alpha
+        IMAGE_TAG: ${{ github.sha }}
+        ENV_ENVIRONMENT: alpha
+        ENV_SECRET: ${{ secrets.ENV_SECRET_ALPHA }}
+      run: |
+        docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+        --build-arg ENV_ENVIRONMENT=$ENV_ENVIRONMENT --build-arg ENV_SECRET=$ENV_SECRET \
+        --build-arg REVISION=$IMAGE_TAG \
+        .
+        docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
+
+    - name: Log out of ECR
+      if: always()
+      run: docker logout ${{ steps.login-ecr.outputs.registry }}
+
+
+  deploy:
+    name: Deploy alpha to ECS
+    runs-on: ubuntu-latest
+    needs: artefact 
+    if: github.ref == 'refs/heads/master' #If we are pushing to master, assume (because permissions) all the tests were run on PRs, just do a deploy step
+    steps: 
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-southeast-2
+
+    - name: Log in to ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Deploy Alpha to ECS
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: vly-alpha  
+      run: |
+        aws ecs update-service --service vly-alpha --cluster vly-alpha-ECSCluster --force-new-deployment --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50
+
+    - name: Log out of ECR
+      if: always()
+      run: docker logout ${{ steps.login-ecr.outputs.registry }}

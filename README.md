@@ -3,7 +3,7 @@
 </p>
 
 # vly2
-[![Build Status](https://api.cirrus-ci.com/github/voluntarily/vly2.svg)](https://cirrus-ci.com/github/voluntarily/vly2)
+[![Build Status](https://github.com/voluntarily/vly2/workflows/push/badge.svg)](https://github.com/voluntarily/vly2/actions)
 [![codecov](https://codecov.io/gh/voluntarily/vly2/branch/master/graph/badge.svg)](https://codecov.io/gh/voluntarily/vly2)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
