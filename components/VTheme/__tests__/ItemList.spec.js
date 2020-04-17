@@ -7,7 +7,7 @@ import {
   EquipmentList,
   ItemIdLine,
   ItemDate,
-  ItemLocation,
+  LocationsList,
   ItemVenue,
   ItemResource,
   ItemSpace
@@ -69,13 +69,13 @@ test('render null ItemResource', t => {
   t.true(wrapper.exists(ItemResource))
 })
 test('render ItemLocation', t => {
-  const wrapper = renderWithIntl(<ItemLocation location='Northland' />)
-  t.true(wrapper.exists(ItemLocation))
+  const wrapper = renderWithIntl(<LocationsList locations={['Northland','Auckland']} />)
+  t.true(wrapper.exists(LocationsList))
 })
 
 test('render null ItemLocation', t => {
-  const wrapper = renderWithIntl(<ItemLocation />)
-  t.true(wrapper.exists(ItemLocation))
+  const wrapper = renderWithIntl(<LocationsList />)
+  t.true(wrapper.exists(LocationsList))
 })
 
 test('render ItemVenue', t => {

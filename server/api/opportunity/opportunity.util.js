@@ -22,14 +22,13 @@ const getLocationRecommendations = async (me) => {
 
   let locationOps = await Opportunity
     .find({
-      location: { $in: regionNames },
+      locations: { $in: regionNames },
       requestor: { $ne: me._id }
     })
     .sort('name')
     .collation({ locale: 'en_US', strength: 1 })
     .populate('requestor', 'name nickname imgUrl')
     .populate('offerOrg', 'name imgUrl role')
-
   // if user has specified a territory, we should show the exact matches first, because we know
   // they are closest to the user.
   const userIsInTerritory = !me.locations.includes(regionNames)

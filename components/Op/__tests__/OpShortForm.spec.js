@@ -15,7 +15,7 @@ const op = {
   imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
   description: 'Project to grow something in the garden',
   duration: '15 Minutes',
-  location: 'Newmarket, Auckland',
+  locations: ['Northland', 'Online'],
   date: [
     {
       $date: '2019-06-16T05:57:01.000Z'
@@ -38,7 +38,7 @@ const blankAsk = {
   imgUrl: '',
   description: '',
   duration: '',
-  location: '',
+  locations: ['Online'],
   status: OpportunityStatus.DRAFT,
   tags: [],
   startDate: null,
@@ -53,7 +53,7 @@ const blankOffer = {
   imgUrl: '',
   description: '',
   duration: '',
-  location: '',
+  locations: ['Online'],
   status: OpportunityStatus.DRAFT,
   tags: [],
   startDate: null,
@@ -143,9 +143,9 @@ test('render the detail with new blank ask op', t => {
   t.falsy(submitOp.calledOnce)
   wrapper.update()
 
-  const locationInput = wrapper.find('LocationSelector').first()
-  locationInput.props().onChange('Auckland')
-
+  const locationField = wrapper.find('OpFormLocation').first()
+  const locationInput = locationField.find('TagSelect').first()
+  locationInput.props().onChange(['Auckland'])
   wrapper.update()
 
   const duration = wrapper.find('input#opportunity_detail_form_duration').first()
@@ -186,9 +186,9 @@ test('render the detail with new blank offer op', t => {
   t.falsy(submitOp.calledOnce)
   wrapper.update()
 
-  const locationInput = wrapper.find('LocationSelector').first()
-  locationInput.props().onChange('Auckland')
-
+  const locationField = wrapper.find('OpFormLocation').first()
+  const locationInput = locationField.find('TagSelect').first()
+  locationInput.props().onChange(['Auckland'])
   wrapper.update()
 
   const duration = wrapper.find('input#opportunity_detail_form_duration').first()
