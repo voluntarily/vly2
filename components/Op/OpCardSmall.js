@@ -17,6 +17,9 @@ const getOpPageURL = (isArchived, opid) => {
   }
 }
 
+const ApplyButtonContainer = styled.div`
+`
+
 const StyledIcon = styled(Icon)`
   font-size: 1rem;
   margin-right: 0.5rem; 
@@ -54,12 +57,15 @@ const OpCardSmall = ({ op }) => {
       <Link href={getOpPageURL(isArchived, op._id)}>
         <a>
           <SingleLineTitle>
-            {op.requestor.nickname} <OpType type={op.type} />
+            {op.location}
+            {/* {op.requestor.nickname} <OpType type={op.type} /> */}
           </SingleLineTitle>
-          <SmallOpGrid>
+          <ApplyButtonContainer>
+            apply
+          </ApplyButtonContainer>
+          {/* <SmallOpGrid>
             <img src={op.requestor.imgUrl} />
             <figcaption>
-              {/* <p>  {op.subtitle}</p> */}
               <ul>
                 {startLocation && <li> {startLocation}</li>}
                 {startTime && <li> {startTime} </li>}
@@ -68,7 +74,7 @@ const OpCardSmall = ({ op }) => {
               </ul>
               {interestIcon}
             </figcaption>
-          </SmallOpGrid>
+          </SmallOpGrid> */}
         </a>
       </Link>
     </SmallCard>

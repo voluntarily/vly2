@@ -101,7 +101,7 @@ test('render Volunteers per student properly if the value is < 1', t => {
 //   t.context.act.volunteers = 0.2
   const equipment = ['a tisket', 'a tasket', 'a little yellow basket']
   const wrapper = renderWithIntl(<ItemNeeds volunteers={0.2} type='act' equipment={equipment} />)
-  t.is(wrapper.text(), '🙋One volunteer for each 5 people')
+  t.is(wrapper.text(), 'One volunteer for each 5 people')
 })
 test('render volunteer properly if the value is >= 1', t => {
 //   t.context.act.volunteers = 5

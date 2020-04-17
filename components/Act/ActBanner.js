@@ -45,8 +45,8 @@ export const ActBanner = ({ act, children }) => {
           <ItemContainer>
             <ItemDuration duration={act.duration} />
             <ItemNeeds volunteers={act.volunteers} />
-            <li><OpTypeCount counts={act.opCounts} type={ASK} /></li>
-            <li><OpTypeCount counts={act.opCounts} type={OFFER} /></li>
+            {/* <li><OpTypeCount counts={act.opCounts} type={ASK} /></li>
+            <li><OpTypeCount counts={act.opCounts} type={OFFER} /></li> */}
           </ItemContainer>
         </div>
         <BannerDetail>

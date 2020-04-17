@@ -66,7 +66,7 @@ export const ItemDuration = ({ duration }) =>
         defaultMessage='Duration:'
         description='duration label for acts and ops'
       />
-    </strong>&nbsp;&nbsp;&nbsp;
+    </strong>&nbsp;
     {sanitize(duration)}s
   </ItemListing>
 
@@ -181,7 +181,7 @@ export const ItemNeeds = ({ volunteers, equipment }) => {
         </strong>
         <FormattedMessage
           id='ItemNeeds.volunteers'
-          defaultMessage=' {volunteers, number} {volunteers, plural, one {person} other {people}}'
+          defaultMessage=' {volunteers, number}'
           description='label for number of people required'
           values={{
             volunteers

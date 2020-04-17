@@ -57,8 +57,8 @@ export const OpTypeImperative = ({ type }) => {
 }
 
 export const OpTypeEmoji = {
-  [ASK]: '🙋',
-  [OFFER]: '💁🏻'
+  [ASK]: '',
+  [OFFER]: ''
 }
 
 export const OpTypeVerbs = defineMessages({

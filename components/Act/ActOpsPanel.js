@@ -31,6 +31,10 @@ export const ActOpsPanel = ({ act, type, limit }) => {
     // return <Alert message={<OpTypeNoResults type={type} />} type='info' showIcon />
   }
 
+  const totalPositions = act.volunteers;
+  const totalLocations = opportunities.length;
+  console.log('There are number of locations');
+
   // TODO - sort the results by number of interested people
   let ops = opportunities.filter(op => op.type === type)
   const showMore = limit && ops.length > limit
@@ -42,7 +46,11 @@ export const ActOpsPanel = ({ act, type, limit }) => {
           <div id='left_column'>
             <h2>
               {/* TODO: handle no people offering  */}
-              <OpTypeCount counts={act.opCounts} type={type}> </OpTypeCount>
+              {/* <OpTypeCount counts={act.opCounts} type={type}> </OpTypeCount> */}
+              <div>
+                {`There ${totalPositions > 1 ? `are ${totalPositions} positions` : `is 1 position`} available `}
+                {totalLocations > 1 ? `across ${totalLocations} locations.` : 'at 1 location.'}
+                </div>
             </h2>
           </div>
         </h2>

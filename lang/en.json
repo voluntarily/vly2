@@ -214,7 +214,7 @@
   "ItemList.space": "Space:",
   "itemlist.status": "Status:",
   "itemlist.venue": "Venue:",
-  "ItemList.volunteerratio": "🙋One volunteer for each {ratio, number} people",
+  "ItemList.volunteerratio": "One volunteer for each {ratio, number} people",
   "ItemNeeds.items": ", {count, number} {count, plural, one {item} other {items} }",
   "ItemNeeds.required": "🤔Activity needs:",
   "ItemNeeds.volunteers": " {volunteers, number} {volunteers, plural, one {person} other {people}}",
