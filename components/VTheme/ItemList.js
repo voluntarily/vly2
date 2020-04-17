@@ -15,7 +15,6 @@ export const Right = styled.div`
 ul {
   padding-left: 0;
 }
-
 `
 
 export const ItemContainer = styled.ul`
@@ -43,9 +42,7 @@ export const ItemDescription = styled.div`
   ul {
     padding-left: 0;
   }
-
-
-  `
+`
 
 export const TagContainer = styled.div`
   margin-top: 0.2rem;
@@ -125,19 +122,41 @@ export const ItemDate = ({ startDate, endDate }) =>
     {startDate}{' '}{endDate}
   </ItemListing>
 
-export const ItemLocation = ({ location }) =>
-  location
+const LocationUl = styled.ul`
+  padding: 0;
+  display: inline-block;
+  li {
+    list-style: none;
+    display: inline-block;
+    padding-right: 0.4rem;
+    ::after { 
+      content: ','
+    }
+    :last-child {
+      ::after { 
+        content: ''
+      }
+    }
+  }
+`
+
+export const LocationsList = ({ locations }) =>
+  locations.length
     ? (
       <ItemListing>
    📍
         <strong>
           <FormattedMessage
-            id='itemlist.location'
-            defaultMessage='Location:'
+            id='itemlist.locations'
+            defaultMessage='Locations:'
             description='Location label for acts and ops'
           />
         </strong>&nbsp;&nbsp;&nbsp;
-        {location && sanitize(location)}
+        <LocationUl>
+          {locations.map(
+            (loc, index) => <li key={index}>{loc}</li>
+          )}
+        </LocationUl>
       </ItemListing>
     )
     : ''

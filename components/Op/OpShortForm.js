@@ -43,7 +43,9 @@ class OpShortForm extends Component {
           // op.subtitle = values.subtitle
           // op.tags = values.tags
           op.duration = values.duration
-          op.location = values.location
+          op.locations = values.locations
+          console.log(values.locations, op.locations)
+          delete op.location
           op.offerOrg = values.offerOrg && values.offerOrg.key
           op.description = values.description
           // op.imgUrl = values.imgUrl
@@ -108,7 +110,7 @@ OpShortForm.propTypes = {
     subtitle: PropTypes.string,
     imgUrl: PropTypes.string,
     duration: PropTypes.string,
-    location: PropTypes.string,
+    locations: PropTypes.arrayOf(PropTypes.string),
     offerOrg: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({
@@ -124,6 +126,7 @@ OpShortForm.propTypes = {
   }),
   me: PropTypes.shape({
     _id: PropTypes.string,
+    locations: PropTypes.arrayOf(PropTypes.string),
     orgMembership: PropTypes.arrayOf(
       PropTypes.shape({
         _id: PropTypes.string,
@@ -150,7 +153,7 @@ export default Form.create({
       // subtitle: Form.createFormField({ value: props.op.subtitle }),
       description: Form.createFormField({ value: props.op.description }),
       duration: Form.createFormField({ value: props.op.duration }),
-      location: Form.createFormField({ value: props.op.location }),
+      locations: Form.createFormField({ value: props.op.locations }),
       offerOrg: Form.createFormField({ value: { key: props.op.offerOrg ? props.op.offerOrg._id : '' } }),
       // imgUrl: Form.createFormField({ value: props.op.imgUrl }),
       // status: Form.createFormField({ value: props.op.status }),
