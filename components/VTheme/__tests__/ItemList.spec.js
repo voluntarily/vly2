@@ -69,7 +69,7 @@ test('render null ItemResource', t => {
   t.true(wrapper.exists(ItemResource))
 })
 test('render ItemLocation', t => {
-  const wrapper = renderWithIntl(<LocationsList locations={['Northland','Auckland']} />)
+  const wrapper = renderWithIntl(<LocationsList locations={['Northland', 'Auckland']} />)
   t.true(wrapper.exists(LocationsList))
 })
 
