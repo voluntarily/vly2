@@ -141,7 +141,7 @@ const LocationUl = styled.ul`
 `
 
 export const LocationsList = ({ locations }) =>
-  locations.length
+  locations && locations.length
     ? (
       <ItemListing>
    📍
