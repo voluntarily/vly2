@@ -21,7 +21,7 @@ export const ActOpsPanel = ({ act, type, limit }) => {
     error: state.opportunities.error
   }))
 
-  console.log('opportunities', opportunities);
+  // console.log('opportunities', opportunities);
 
   if (loadingState.loading || (!loadingState.sync && !loadingState.error) || loadingState.error) {
     return <ReduxLoading entity={loadingState} label='opportunities' />
@@ -33,7 +33,7 @@ export const ActOpsPanel = ({ act, type, limit }) => {
 
   const totalPositions = act.volunteers;
   const totalLocations = opportunities.length;
-  console.log('There are number of locations');
+  // console.log('There are number of locations');
 
   // TODO - sort the results by number of interested people
   let ops = opportunities.filter(op => op.type === type)

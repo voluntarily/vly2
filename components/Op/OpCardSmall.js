@@ -19,7 +19,14 @@ const getOpPageURL = (isArchived, opid) => {
   }
 }
 
-const ApplyButtonContainer = styled.div`
+const CardContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const PositionsAvailableText = styled.div`
+  margin-bottom: 14px;
+  font-size: 12pt;
 `
 
 const StyledIcon = styled(Icon)`
@@ -59,7 +66,7 @@ const OpCardSmall = ({ op }) => {
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
   const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA - ddd DD/MM/YY') : ''
   const startLocation = op.location ? `📍 ${op.location}` : ''
-  const startDuration = op.duration ? `⏱ ${op.duration}` : ''
+  const startDuration = op.duration ? ` ${op.duration}` : ''
   const interestIcon = ((interest) => {
     if (!interest) { return '' }
     switch (interest.status) {
@@ -76,6 +83,8 @@ const OpCardSmall = ({ op }) => {
   // if (op.offerOrg) {
   //   orgName = <span>{op.offerOrg.name}</span>
   // }
+
+  console.log('op', op);
 
   return (
     <>
@@ -94,7 +103,8 @@ const OpCardSmall = ({ op }) => {
               {op.location}
               {/* {op.requestor.nickname} <OpType type={op.type} /> */}
             </SingleLineTitle>
-            <ApplyButtonContainer>
+            <CardContent>
+            <PositionsAvailableText>{op.subtitle}</PositionsAvailableText>
               <Button
                 id='applyButton'
                 name='apply'
@@ -105,7 +115,8 @@ const OpCardSmall = ({ op }) => {
               >
                 Apply
               </Button>
-            </ApplyButtonContainer>
+              
+          </CardContent>
             {/* <SmallOpGrid>
               <img src={op.requestor.imgUrl} />
               <figcaption>

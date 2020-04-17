@@ -87,7 +87,7 @@ const makeAct = async (jobTitle, companyName, classification, ops, interested) =
     // venue: 'Venue Address',
     offerOrg: org._id,
     owner: owner._id,
-    volunteers: Math.random() > 0.5 ? gra(2, 50) : 1, // 50/50 chance to be group job vs individual
+    volunteers: Math.random() > 0.5 ? gra(2, 35) : 1, // 50/50 chance to be group job vs individual
     tags,
     status: ActivityStatus.ACTIVE
   }
@@ -102,7 +102,7 @@ const makeAct = async (jobTitle, companyName, classification, ops, interested) =
 
 
   // console.log('act:', saved.name, ' with associated ops:', o.length)
-  return act;
+  return saved;
 }
 
 // very parallel version

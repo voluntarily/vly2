@@ -47,14 +47,14 @@ const makeInterestedVolunteers = async (op, interestStatus, interestCount) => {
  * @param {*} interestCount - number of people to add as interested
  */
 
-const makeOp = async (interestCount, fromActivity, companyName) => {
-  console.log('makeOp', interestCount, fromActivity.name)
+const makeOp = async (interestCount, fromActivity, companyName, location, positionsAtLocation) => {
+  console.log('makeOp', interestCount, fromActivity.name, companyName, location, positionsAtLocation)
 
   // find a random op
   const orgs = await Organisation.find({ role: OrganisationRole.OPPORTUNITY_PROVIDER, name: companyName })
   console.log('company to make op for: ', companyName);
 
-  const location = getLocation(companyName);
+  // const location = getLocation(companyName);
 
   const org = orgs[gra(0, orgs.length - 1)]
   // find a member of op
@@ -70,18 +70,18 @@ const makeOp = async (interestCount, fromActivity, companyName) => {
   const date = coin([startDate.format()], [startDate.format(), endDate.format()])
 
   // console.log('fromActivity', fromActivity);
-
+  console.log();
   const op = fromActivity
     ? {
       type: OpportunityType.ASK,
       name: `${fromActivity.name} in ${location}`,
       imgUrl: fromActivity.imgUrl,
-      subtitle: fromActivity.subtitle,
-      description: fromActivity.description,
+      subtitle: `${positionsAtLocation === 1 ? `1 position` : `${positionsAtLocation} positions`} available`,
+      description: `${positionsAtLocation === 1 ? `1 position` : `${positionsAtLocation} positions`} available`,
       duration: fromActivity.duration,
       location,
       venue: 'Venue Address',
-      status: coin(OpportunityStatus.DRAFT, OpportunityStatus.ACTIVE),
+      status: OpportunityStatus.ACTIVE,
       date,
       fromActivity: fromActivity._id,
       offerOrg: org._id,
@@ -113,11 +113,33 @@ const makeOp = async (interestCount, fromActivity, companyName) => {
   return saved
 }
 
+const splitInt = async (number) => {
+  let n = number;
+  let a = [];
+  while (n > 0) {
+    let s = Math.round(Math.random() * (n - 1)) + 1;;
+    a.push(s);
+    n -= s;
+  }
+  return a;
+}
+
 const makeOps = async (count, interestCount, fromActivity, companyName) => {
   const positionsAvailable = fromActivity.volunteers;
-  console.log('makeOps', positionsAvailable, interestCount, fromActivity.name, companyName);
+  const positionsPerLocation = positionsAvailable > 1 ? await splitInt(positionsAvailable) : [1];
+  const numberOfLocations = positionsPerLocation.length;
+  let locations = [];
+  for (let i = 0; i < numberOfLocations; i += 1) {
+    locations.push(getLocation(companyName));
+  }
+
+  console.log('===');
+  console.log('positionsAvailable', positionsAvailable);
+  console.log('positionsPerLocation', positionsPerLocation);
+  console.log('numberOfLocations', numberOfLocations);
+  // console.log('makeOps', positionsAvailable, interestCount, fromActivity.name, companyName);
   return Promise.all(
-    Array(positionsAvailable).fill({}).map(() => makeOp(interestCount, fromActivity, companyName))
+    Array(numberOfLocations).fill({}).map((_, index) => makeOp(interestCount, fromActivity, companyName, locations[index], positionsPerLocation[index]))
   )
 }
 

@@ -31,9 +31,10 @@ const gra = (min, max) => { return (Math.round(Math.random() * (max - min) + min
 
 // todo if image is not present then use a fallback.
 const ActCard = ({ act, onPress, ...props }) => {
+  console.log('act', act);
   const cardImage = act.imgUrl ? act.imgUrl : '/static/missingimage.svg'
   return (
-    <Card style={{ height: '22rem', overflow: 'auto' }}>
+    <Card style={{ height: '21rem', overflow: 'auto' }}>
       <Link href={`/acts/${act._id}`}>
         <a>
           <div>
@@ -47,8 +48,9 @@ const ActCard = ({ act, onPress, ...props }) => {
             </h1>
             <p>{act.subtitle}</p>
             <ul>
-              <li><OpTypeCount counts={act.opCounts} type={ASK} /></li>
-              <li><OpTypeCount counts={act.opCounts} type={OFFER} /></li>
+              {/* <li><OpTypeCount counts={act.opCounts} type={ASK} /></li>
+              <li><OpTypeCount counts={act.opCounts} type={OFFER} /></li> */}
+              <li>{`Positions available ${act.opCounts.ask > 1 ? `across ${act.opCounts.ask} locations` : `at 1 location`}`}</li>
               <li><OpCommitment duration={act.duration} /></li>
             </ul>
             {/* <LogoContainer>

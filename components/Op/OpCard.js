@@ -36,7 +36,7 @@ const OpCard = ({ op }) => {
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
   const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA - ddd DD/MM/YY') : ''
   const startLocation = op.location ? `📍 ${op.location}` : ''
-  const startDuration = op.duration ? `⏱ ${op.duration}` : ''
+  const startDuration = op.duration ? ` ${op.duration}` : ''
   const interestIcon = ((interest) => {
     if (!interest) { return '' }
     switch (interest.status) {

@@ -102,7 +102,6 @@ const makeOp = async (interestCount, fromActivity) => {
   const interesteds = await makeInterestedVolunteers(saved, InterestStatus.INTERESTED, split)
   const inviteds = await makeInterestedVolunteers(saved, InterestStatus.INVITED, split)
   const committeds = await makeInterestedVolunteers(saved, InterestStatus.COMMITTED, split)
-  console.log('op:', saved.name, interesteds.length + inviteds.length + committeds.length)
   return saved
 }
 

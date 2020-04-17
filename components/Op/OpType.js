@@ -5,7 +5,7 @@ const { ASK, OFFER } = OpportunityType
 export const OpTypeMessages = defineMessages({
   [ASK]: {
     id: 'OpportunityType.ASK',
-    defaultMessage: 'is asking for help',
+    defaultMessage: 'positions available',
     description: 'Ask label prefix'
   },
   [OFFER]: {
@@ -64,7 +64,7 @@ export const OpTypeEmoji = {
 export const OpTypeVerbs = defineMessages({
   [ASK]: {
     id: 'OpportunityType.verb.ASK',
-    defaultMessage: '{count, plural, one {person} other {people}} asking for help',
+    defaultMessage: '{count, plural, one {position} other {positions}} available',
     description: 'Asking for help'
   },
   [OFFER]: {
@@ -79,11 +79,11 @@ export const OpTypeVerbs = defineMessages({
  * 10 asking for help
  * @param {*} param0
  */
-export const OpTypeCount = ({ counts, type }) => {
-  if (!counts) return null
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  const count = counts[type]
-  if (!count) return null // print not zero results
+export const OpTypeCount = ({ count, type }) => {
+  // if (!counts) return null
+  // if (!type || ![ASK, OFFER].includes(type)) return null
+  // const count = counts[type]
+  // if (!count) return null // print not zero results
   return (<>{OpTypeEmoji[type]}{count}&nbsp;<FormattedMessage {...OpTypeVerbs[type]} values={{ count }} /></>)
 }
 
@@ -101,7 +101,7 @@ export const OpCommitment = ({ duration }) => {
   if (!duration) return null
   return (
     <>
-      ⏱{duration}&nbsp;
+      {duration}&nbsp;
       <FormattedMessage
         id='OpType.duration'
         defaultMessage='commitment'
