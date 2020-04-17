@@ -85,8 +85,8 @@ const OpCard = ({ op }) => {
               {orgName &&
                 <i>Via {orgName}&nbsp;</i>}
               <i>{moment(op.createdAt).fromNow()}</i>
-              {interestIcon}
             </DescriptionWrapper>
+            {interestIcon}
 
           </figcaption>
         </a>
