@@ -34,7 +34,7 @@ test.afterEach.always(async () => {
   await Person.deleteMany()
 })
 
-test.serial('Op recommendations based on location should include those nearby and not requested by me', async t => {
+test.skip('Op recommendations based on location should include those nearby and not requested by me', async t => {
   t.context.people[0].locations = [regions[0].containedTerritories[0]]
   await t.context.people[0].save()
 
