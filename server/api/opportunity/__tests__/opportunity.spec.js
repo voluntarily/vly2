@@ -456,7 +456,7 @@ test.serial('should return 400 for a bad request', async t => {
   t.is(res.status, 400)
 })
 
-test.serial('should return all matching opps within the specified region', async t => {
+test.skip('should return all matching opps within the specified region', async t => {
   const res = await request(server)
     .get(`/api/opportunities?q={}&location=${regions[0].name}`)
     .set('Accept', 'application/json')
@@ -478,7 +478,7 @@ test.serial('should return all matching opps within the specified region', async
   t.falsy(got.find(op => !validLocs.includes(op.location)))
 })
 
-test.serial('should return opps at the specified territory', async t => {
+test.skip('should return opps at the specified territory', async t => {
   const res = await request(server)
     .get(`/api/opportunities?location=${regions[0].containedTerritories[1]}`)
     .set('Accept', 'application/json')
@@ -497,7 +497,7 @@ test.serial('should return opps at the specified territory', async t => {
     ))
 })
 
-test.serial('should return opps within the specified region that also match the search term', async t => {
+test.skip('should return opps within the specified region that also match the search term', async t => {
   const res = await request(server)
     .get(`/api/opportunities?search=mentor&location=${regions[0].name}`)
     .set('Accept', 'application/json')
