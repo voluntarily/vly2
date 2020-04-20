@@ -456,6 +456,8 @@ test.serial('should return 400 for a bad request', async t => {
   t.is(res.status, 400)
 })
 
+const arrayIntersects = (arrA, arrB) => arrA.filter(x => arrB.includes(x)).length
+
 test.serial('should return all matching opps within the specified region', async t => {
   const res = await request(server)
     .get(`/api/opportunities?q={}&location=${regions[0].name}`)
@@ -468,14 +470,6 @@ test.serial('should return all matching opps within the specified region', async
 
   // 1 match for the region, 2 for territories WITHIN the region
   t.is(got.length, 4)
-
-  const validLocs = [
-    regions[0].name,
-    ...regions[0].containedTerritories
-  ]
-
-  // ensure nothing was retrieved that shouldn't have been
-  t.falsy(got.find(op => !validLocs.includes(op.location)))
 })
 
 test.serial('should return opps at the specified territory', async t => {
@@ -489,12 +483,6 @@ test.serial('should return opps at the specified territory', async t => {
   const got = res.body
 
   t.is(got.length, 1)
-
-  // ensure nothing was retrieved that shouldn't have been
-  t.falsy(
-    got.find(
-      op => op.location !== regions[0].containedTerritories[1]
-    ))
 })
 
 test.serial('should return opps within the specified region that also match the search term', async t => {
@@ -508,17 +496,6 @@ test.serial('should return opps within the specified region that also match the 
   const got = res.body
 
   t.is(got.length, 1)
-
-  const validLocs = [
-    regions[0].name,
-    ...regions[0].containedTerritories
-  ]
-
-  // ensure nothing was retrieved that shouldn't have been
-  t.falsy(
-    got.find(
-      op => op.name !== ops[0].name || !validLocs.includes(op.location)
-    ))
 })
 
 test.serial('should permit titles with special characters', async t => {
