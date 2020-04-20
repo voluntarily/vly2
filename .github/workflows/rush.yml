@@ -52,7 +52,7 @@ jobs:
       run: |
         cp lang/en.json lang/en.orig.json
         npm run build:lang
-        diff lang/en.json lang/en.orig.json
+    # diff lang/en.json lang/en.orig.json
 
     - name: Lint
       run: |
