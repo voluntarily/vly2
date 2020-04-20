@@ -1,10 +1,6 @@
 // for now, this is hardcoded to all TLAs and regions in NZ
 const regions = [
   {
-    name: 'Online', // special location, i.e. online volunteer opportunities
-    containedTerritories: []
-  },
-  {
     name: 'Canterbury',
     containedTerritories: [
       'Addington, Canterbury',
@@ -959,7 +955,11 @@ const regions = [
       'Wataroa, Westland',
       'Whataroa, Westland'
     ]
-  }
+  },
+  {
+    name: 'Online', // special location, i.e. online volunteer opportunities
+    containedTerritories: []
+  },
 ]
 
 // construct a list of territories from the regions
