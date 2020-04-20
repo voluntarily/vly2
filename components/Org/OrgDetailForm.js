@@ -1,4 +1,4 @@
-import { Button, Checkbox, Divider, Form, Input, Tooltip, Icon } from 'antd'
+import { Button, Checkbox, Divider, Form, Input, Tooltip, Icon, Affix } from 'antd'
 import slug from 'limax'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
@@ -586,44 +586,46 @@ class OrgDetailForm extends Component {
               </Form.Item>
             </InputContainer>
           </FormGrid>
-          <FormGrid>
-            <DescriptionContainer>
-              <TitleContainer>
-                <h3>Confirm</h3>
-              </TitleContainer>
-              <p>Check before you go</p>
-            </DescriptionContainer>
-            <InputContainer>
-              <Button
-                type='primary'
-                size='large'
-                htmlType='submit'
-                shape='round'
-                disabled={hasErrors(getFieldsError())}
-                style={{ marginLeft: 8 }}
-              >
-                <FormattedMessage
-                  id='org.save'
-                  defaultMessage='Save'
-                  description='Label for submit button on organisation details form'
-                />
-              </Button>
-              &nbsp;&nbsp;
-              <Button
-                type='secondary'
-                htmlType='button'
-                shape='round'
-                size='large'
-                onClick={this.props.onCancel}
-              >
-                <FormattedMessage
-                  id='org.cancel'
-                  defaultMessage='Cancel'
-                  description='Label for cancel button on organisation details form'
-                />
-              </Button>
-            </InputContainer>
-          </FormGrid>
+          <Affix offsetBottom={0}>
+            <FormGrid style={{ backgroundColor: 'white', paddingTop: 15 }}>
+              <DescriptionContainer>
+                <TitleContainer>
+                  <h3>Confirm</h3>
+                </TitleContainer>
+                <p>Check before you go</p>
+              </DescriptionContainer>
+              <InputContainer>
+                <Button
+                  type='primary'
+                  size='large'
+                  htmlType='submit'
+                  shape='round'
+                  disabled={hasErrors(getFieldsError())}
+                  style={{ marginLeft: 8 }}
+                >
+                  <FormattedMessage
+                    id='org.save'
+                    defaultMessage='Save'
+                    description='Label for submit button on organisation details form'
+                  />
+                </Button>
+                &nbsp;&nbsp;
+                <Button
+                  type='secondary'
+                  htmlType='button'
+                  shape='round'
+                  size='large'
+                  onClick={this.props.onCancel}
+                >
+                  <FormattedMessage
+                    id='org.cancel'
+                    defaultMessage='Cancel'
+                    description='Label for cancel button on organisation details form'
+                  />
+                </Button>
+              </InputContainer>
+            </FormGrid>
+          </Affix>
         </Form>
       </div>
     )
