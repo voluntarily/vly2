@@ -20,3 +20,5 @@ public/static/upload-test/*
 .vs/
 /.test/
 dump
+prod.priv.pem
+
