@@ -210,7 +210,6 @@ test.serial('getLocationRecommendations - I can work in two places', async (t) =
     email: 'john@mail.com'
   })
 
-  
   // (Mount Victoria being a territory/child of Wellington and Blaketown in Westland)
   await Opportunity.create({
     name: 'Mount Victoria, Wellington op',
