@@ -1,7 +1,7 @@
 const Opportunity = require('./opportunity')
 const { regions } = require('../location/locationData')
 
-export const arrayIntersects = (arrA, arrB) => arrA.filter(x => arrB.includes(x)).length
+const arrayIntersects = (arrA, arrB) => arrA.filter(x => arrB.includes(x)).length
 
 /**
  *
