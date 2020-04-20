@@ -62,4 +62,4 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: vly-beta  
       run: |
-        aws ecs update-service --service vly-beta --cluster vly-beta --force-new-deployment --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50
+        aws ecs update-service --service voluntarily-beta-service --cluster vly-beta --force-new-deployment --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50
