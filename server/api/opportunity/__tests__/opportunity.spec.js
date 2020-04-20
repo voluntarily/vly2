@@ -456,8 +456,6 @@ test.serial('should return 400 for a bad request', async t => {
   t.is(res.status, 400)
 })
 
-const arrayIntersects = (arrA, arrB) => arrA.filter(x => arrB.includes(x)).length
-
 test.serial('should return all matching opps within the specified region', async t => {
   const res = await request(server)
     .get(`/api/opportunities?q={}&location=${regions[0].name}`)
