@@ -8,7 +8,7 @@ import {
   ItemContainer,
   // ItemVenue,
   ItemDuration,
-  ItemLocation,
+  LocationsList,
   ItemDate,
   ItemImage
 } from '../VTheme/ItemList'
@@ -53,7 +53,7 @@ const OpBanner = ({ op, children }) => {
             <ItemIdLine item={op.fromActivity} path='acts' /> */}
           </ul>
           <ItemContainer>
-            <ItemLocation location={op.location} />
+            <LocationsList locations={op.locations} />
             {/* {op.venue && <ItemVenue venue={op.venue} />} */}
             {op.duration && <ItemDuration duration={op.duration} />}
             <ItemDate startDate={startDate} endDate={endDate} />

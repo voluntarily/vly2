@@ -1,6 +1,8 @@
 const Opportunity = require('./opportunity')
 const { regions } = require('../location/locationData')
 
+const arrayIntersects = (arrA, arrB) => arrA.filter(x => arrB.includes(x)).length
+
 /**
  *
  * @param {{ locations: string[], _id }} me
@@ -22,20 +24,22 @@ const getLocationRecommendations = async (me) => {
 
   let locationOps = await Opportunity
     .find({
-      location: { $in: regionNames },
+      locations: { $in: regionNames },
       requestor: { $ne: me._id }
     })
     .sort('name')
     .collation({ locale: 'en_US', strength: 1 })
     .populate('requestor', 'name nickname imgUrl')
     .populate('offerOrg', 'name imgUrl role')
-
   // if user has specified a territory, we should show the exact matches first, because we know
   // they are closest to the user.
   const userIsInTerritory = !me.locations.includes(regionNames)
   if (userIsInTerritory) {
-    const closestOpportunities = locationOps.filter((opportunity) => me.locations.includes(opportunity.location))
-    const otherOpportunities = locationOps.filter((opportunity) => !me.locations.includes(opportunity.location))
+    const closestOpportunities = []
+    const otherOpportunities = []
+    locationOps.map(op => {
+      (arrayIntersects(me.locations, op.locations) ? closestOpportunities : otherOpportunities).push(op)
+    })
 
     locationOps = closestOpportunities.concat(otherOpportunities)
   }
