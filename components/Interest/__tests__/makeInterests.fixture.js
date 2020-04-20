@@ -23,7 +23,7 @@ export const opportunity = {
   imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
   description: 'Project to grow something in the garden',
   duration: '15 Minutes',
-  location: 'Newmarket, Auckland',
+  locations: ['Newmarket, Auckland'],
   requestor,
   offerOrg,
   tags: ['one', 'two', 'three'],

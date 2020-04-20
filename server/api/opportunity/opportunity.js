@@ -32,7 +32,8 @@ const opportunitySchema = new Schema({
   imgUrl: { type: 'String', required: false, default: '/static/img/opportunity/opportunity.png' }, // "https://image.flaticon.com/icons/svg/206/206857.svg",
   description: String, // "Project to grow something in the garden",
   duration: String, // "15 Minutes",
-  location: String, // region or city,
+  location: String, // region or city,  deprecated - use locations array
+  locations: { type: [String], default: [] }, // list of places where Op is of interest region or city,
   venue: String, // actual address
   date: [Date], // start and optional end dates
   fromActivity: { type: Schema.Types.ObjectId, ref: 'Activity', required: false },

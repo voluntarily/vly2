@@ -43,7 +43,8 @@ class OpShortForm extends Component {
           // op.subtitle = values.subtitle
           // op.tags = values.tags
           op.duration = values.duration
-          op.location = values.location
+          op.locations = values.locations
+          delete op.location
           op.offerOrg = values.offerOrg && values.offerOrg.key
           op.description = values.description
           // op.imgUrl = values.imgUrl
@@ -108,7 +109,7 @@ OpShortForm.propTypes = {
     subtitle: PropTypes.string,
     imgUrl: PropTypes.string,
     duration: PropTypes.string,
-    location: PropTypes.string,
+    locations: PropTypes.arrayOf(PropTypes.string),
     offerOrg: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({
@@ -124,6 +125,7 @@ OpShortForm.propTypes = {
   }),
   me: PropTypes.shape({
     _id: PropTypes.string,
+    locations: PropTypes.arrayOf(PropTypes.string),
     orgMembership: PropTypes.arrayOf(
       PropTypes.shape({
         _id: PropTypes.string,
@@ -144,24 +146,25 @@ OpShortForm.propTypes = {
 
 export default Form.create({
   name: 'opportunity_detail_form',
-  mapPropsToFields (props) {
+  mapPropsToFields ({ op }) {
+    if (!op.locations) { op.locations = [op.location] }
     return {
-      // name: Form.createFormField({ ...props.op.name, value: props.op.name }),
-      // subtitle: Form.createFormField({ value: props.op.subtitle }),
-      description: Form.createFormField({ value: props.op.description }),
-      duration: Form.createFormField({ value: props.op.duration }),
-      location: Form.createFormField({ value: props.op.location }),
-      offerOrg: Form.createFormField({ value: { key: props.op.offerOrg ? props.op.offerOrg._id : '' } }),
-      // imgUrl: Form.createFormField({ value: props.op.imgUrl }),
-      // status: Form.createFormField({ value: props.op.status }),
-      // tags: Form.createFormField({ value: props.op.tags }),
+      // name: Form.createFormField({ ...op.name, value: op.name }),
+      // subtitle: Form.createFormField({ value: op.subtitle }),
+      description: Form.createFormField({ value: op.description }),
+      duration: Form.createFormField({ value: op.duration }),
+      locations: Form.createFormField({ value: op.locations }),
+      offerOrg: Form.createFormField({ value: { key: op.offerOrg ? op.offerOrg._id : '' } }),
+      // imgUrl: Form.createFormField({ value: op.imgUrl }),
+      // status: Form.createFormField({ value: op.status }),
+      // tags: Form.createFormField({ value: op.tags }),
       startDate: Form.createFormField({
-        value: props.op.startDate != null ? moment(props.op.startDate) : null
+        value: op.startDate != null ? moment(op.startDate) : null
       })
       // endDate: Form.createFormField({
-      //   value: props.op.endDate != null ? moment(props.op.endDate) : null
+      //   value: op.endDate != null ? moment(op.endDate) : null
       // }),
-      // venue: Form.createFormField({ value: props.op.venue || '' })
+      // venue: Form.createFormField({ value: op.venue || '' })
     }
   }
 
