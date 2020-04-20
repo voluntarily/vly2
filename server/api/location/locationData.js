@@ -959,7 +959,7 @@ const regions = [
   {
     name: 'Online', // special location, i.e. online volunteer opportunities
     containedTerritories: []
-  },
+  }
 ]
 
 // construct a list of territories from the regions
