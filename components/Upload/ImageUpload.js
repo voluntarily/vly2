@@ -8,8 +8,8 @@ import { FormattedMessage } from 'react-intl'
 
 import { DashboardModal } from '@uppy/react'
 // const { Dashboard } = require('@uppy/react')
-const Uppy = require('@uppy/core')
-const Webcam = require('@uppy/webcam')
+import Uppy from '@uppy/core'
+import Webcam from '@uppy/webcam'
 
 class ImageUpload extends Component {
   TWO_MEGABYTES = 2000000
