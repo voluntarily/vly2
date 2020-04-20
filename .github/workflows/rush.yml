@@ -94,11 +94,20 @@ jobs:
 
     - name: Test Root __tests__    
       run: |
+        npm ci
         npm run test:root
     
     - name: Test Server (and security)
       run: |
         npm run test:server
+    
+    - name: Test Components
+      run: |
+        npm run test:components
+        
+    - name: Test Libraries
+      run: |
+        npm run test:lib
 
   artefact:
     name: Build Image and push to ECR
