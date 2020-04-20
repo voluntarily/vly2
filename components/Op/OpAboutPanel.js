@@ -22,10 +22,11 @@ export function OpAboutPanel ({ op }) {
         <h2><FormattedMessage id='OpAboutPanel.section.title.about' defaultMessage='About' /></h2>
         <div>
           {subtitle}
-          <Html>
-            {description}
-          </Html>
-          <Divider />
+          {description &&
+            <>
+              <Html>{description}</Html>
+              <Divider />
+            </>}
           {op.fromActivity &&
             <>
               <Html>

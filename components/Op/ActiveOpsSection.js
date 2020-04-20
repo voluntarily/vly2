@@ -27,11 +27,17 @@ export const ActiveOpsSection = () => {
       <ProfileSection>
         <ProfileSectionTitle>
           <FormattedMessage
-            id='ActivOpsSection.title'
+            id='ActiveOpsSection.title'
             defaultMessage='You are asking for'
-            decription='Subtitle for teacher home page for active opportunities that have been hosted'
+            description='Subtitle for home page for active opportunities that have been hosted'
           />
-          <small>Activities you requested help from Volunteers with are listed below:</small>
+          <small>
+            <FormattedMessage
+              id='ActiveOpsSection.prompt'
+              defaultMessage='Activities you requested help from Volunteers with are listed below:'
+              description='prompt for home page for active opportunities that have been hosted'
+            />
+          </small>
         </ProfileSectionTitle>
         <OpList ops={ops} />
       </ProfileSection>

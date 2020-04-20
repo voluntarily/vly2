@@ -203,7 +203,7 @@ class OpOfferForm extends Component {
           op.subtitle = values.subtitle
           op.tags = values.tags
           op.duration = values.duration
-          op.location = values.location
+          op.locations = values.locations
           op.offerOrg = values.offerOrg && values.offerOrg.key
           op.description = values.description
           op.imgUrl = values.imgUrl

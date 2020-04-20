@@ -25,7 +25,7 @@ const blankOp = {
   subtitle: '',
   imgUrl: '/static/img/opportunity/opportunity.png',
   duration: '',
-  location: 'Online',
+  locations: ['Online'],
   status: OpportunityStatus.DRAFT,
   date: [],
   startDate: null,
@@ -243,7 +243,7 @@ OpDetailPage.propTypes = {
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     duration: PropTypes.string,
-    location: PropTypes.string,
+    locations: PropTypes.arrayOf(PropTypes.string),
     _id: PropTypes.string.isRequired
   }),
   params: PropTypes.shape({

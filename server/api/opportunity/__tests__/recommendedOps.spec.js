@@ -47,13 +47,13 @@ test.serial('Op recommendations based on location should include those nearby an
   const numMatchingOps = 3
 
   // matches location but was requested by me
-  t.context.opportunities[0].location = regions[0].name
+  t.context.opportunities[0].locations = [regions[0].name]
   t.context.opportunities[0].requestor = me
 
   // matches location
-  t.context.opportunities[1].location = regions[0].containedTerritories[0]
-  t.context.opportunities[2].location = regions[0].containedTerritories[1]
-  t.context.opportunities[3].location = regions[0].name
+  t.context.opportunities[1].locations = [regions[0].containedTerritories[0]]
+  t.context.opportunities[2].locations = [regions[0].containedTerritories[1]]
+  t.context.opportunities[3].locations = [regions[0].name]
 
   t.context.opportunities.forEach(async op => {
     await op.save()
@@ -71,7 +71,7 @@ test.serial('Op recommendations based on location should include those nearby an
   t.is(got.basedOnLocation.length, numMatchingOps)
 
   // ensure matches are ranked (i.e. closest match first)
-  t.is(got.basedOnLocation[0].location, regions[0].containedTerritories[0])
+  t.is(got.basedOnLocation[0].locations[0], regions[0].containedTerritories[0])
 })
 
 test.serial('Ops recommended based on skills should match at least one of my skills and be ranked', async t => {

@@ -95,21 +95,23 @@ const listOpportunities = async (req, res, next) => {
 }
 
 const getOpportunityRecommendations = async (req, res) => {
-  const meId = req.query.me
+  let meId = req.query.me
   if (!meId) {
-    return res.status(400).send('Must include "me" parameter')
+    // return res.status(400).send('Must include "me" parameter')
+    // if not specified assume its for the logged in person
+    meId = req.session.me._id
   }
-
   try {
-    const me = await Person.findById(meId)
-    if (!me) {
-      return res.status(400).send('Could not find the specified user')
+    const person = await Person.findById(meId)
+
+    if (!person) {
+      return res.status(400).send('Could not find the specified person')
     }
 
-    const locationOps = await getLocationRecommendations(me)
-    const skillsOps = await getSkillsRecommendations(me)
+    const basedOnLocation = await getLocationRecommendations(person)
+    const basedOnSkills = await getSkillsRecommendations(person)
 
-    return res.json({ basedOnLocation: locationOps, basedOnSkills: skillsOps })
+    return res.json({ basedOnLocation, basedOnSkills })
   } catch (e) {
     return res.status(500).send(e)
   }
@@ -125,8 +127,6 @@ const getOpportunity = async (req, res, next) => {
       .populate('fromActivity', ActivityOpFields.join(' '))
       .exec()
     if (got == null) {
-      // BUG: [VP-478] populate tags with many tags can cause a 507 Insufficient Space error.
-      // Also this error message is not helpful.  Catch and do something useful
       throw Error()
     }
     req.crudify = { result: got }
