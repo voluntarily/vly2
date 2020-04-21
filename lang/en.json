@@ -125,7 +125,7 @@
   "error.servererror.title": "There was a problem",
   "footer.credit": "Voluntarily is an open source volunteering platform, built by volunteers, to help volunteers volunteer voluntarily for volunteering projects.",
   "getTeacherRegistration.registrationError": "Registration number not found, does not match your name, or is expired please verify at ",
-  "GiveSupportSection": "See all Activites",
+  "GiveSupportSection.offer": "See all activities",
   "goalListTitle": "Goals Index",
   "GoalsListPage.AssignGoalGroupToMe": "Assign me this group",
   "HeaderMenu.about": "About",
