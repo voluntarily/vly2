@@ -234,6 +234,39 @@ class OrgDetailForm extends Component {
 
     // Only show error after a field is touched.
     const orgNameError = isFieldTouched('name') && getFieldError('name')
+    const isTest = process.env.NODE_ENV === 'test'
+    const saveAndCancelBtns = (
+      <InputContainer>
+        <Button
+          type='primary'
+          size='large'
+          htmlType='submit'
+          shape='round'
+          disabled={hasErrors(getFieldsError())}
+          style={{ marginLeft: 8 }}
+        >
+          <FormattedMessage
+            id='org.save'
+            defaultMessage='Save'
+            description='Label for submit button on organisation details form'
+          />
+        </Button>
+                &nbsp;&nbsp;
+        <Button
+          type='secondary'
+          htmlType='button'
+          shape='round'
+          size='large'
+          onClick={this.props.onCancel}
+        >
+          <FormattedMessage
+            id='org.cancel'
+            defaultMessage='Cancel'
+            description='Label for cancel button on organisation details form'
+          />
+        </Button>
+      </InputContainer>
+    )
     return (
       <div className='OrgDetailForm'>
         <PageTitle>
@@ -248,6 +281,7 @@ class OrgDetailForm extends Component {
         </PageTitle>
 
         <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
+
           {this.props.isAdmin && (
             <>
               <FormGrid>
@@ -586,46 +620,18 @@ class OrgDetailForm extends Component {
               </Form.Item>
             </InputContainer>
           </FormGrid>
-          <Affix offsetBottom={0}>
-            <FormGrid style={{ backgroundColor: 'white', paddingTop: 15 }}>
-              <DescriptionContainer>
-                <TitleContainer>
-                  <h3>Confirm</h3>
-                </TitleContainer>
-                <p>Check before you go</p>
-              </DescriptionContainer>
-              <InputContainer>
-                <Button
-                  type='primary'
-                  size='large'
-                  htmlType='submit'
-                  shape='round'
-                  disabled={hasErrors(getFieldsError())}
-                  style={{ marginLeft: 8 }}
-                >
-                  <FormattedMessage
-                    id='org.save'
-                    defaultMessage='Save'
-                    description='Label for submit button on organisation details form'
-                  />
-                </Button>
-                &nbsp;&nbsp;
-                <Button
-                  type='secondary'
-                  htmlType='button'
-                  shape='round'
-                  size='large'
-                  onClick={this.props.onCancel}
-                >
-                  <FormattedMessage
-                    id='org.cancel'
-                    defaultMessage='Cancel'
-                    description='Label for cancel button on organisation details form'
-                  />
-                </Button>
-              </InputContainer>
-            </FormGrid>
-          </Affix>
+          {isTest ? saveAndCancelBtns : 
+            <Affix offsetBottom={0}>
+              <FormGrid style={{ backgroundColor: 'white', paddingTop: 15 }}>
+                <DescriptionContainer>
+                  <TitleContainer>
+                    <h3>Confirm</h3>
+                  </TitleContainer>
+                  <p>Check before you go</p>
+                </DescriptionContainer>
+                {saveAndCancelBtns}
+              </FormGrid>
+            </Affix>}
         </Form>
       </div>
     )
