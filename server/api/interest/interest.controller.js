@@ -5,6 +5,8 @@ const { TOPIC_INTEREST__UPDATE, TOPIC_INTEREST__MESSAGE, TOPIC_INTEREST__DELETE 
 const PubSub = require('pubsub-js')
 const { Role } = require('../../services/authorize/role')
 const { InterestStatus } = require('./interest.constants')
+const Opportunity = require('../opportunity/opportunity')
+const Person = require('../person/person')
 
 /**
   api/interests -> list all interests
@@ -38,7 +40,19 @@ const listInterestsA = InterestModel => async (req, res) => {
 
     if (req.query.me) {
       find.person = req.query.me
-      populateList.push({ path: 'opportunity' })
+      populateList.push({
+        path: 'opportunity',
+        model: Opportunity,
+        populate: [{
+          path: 'requestor',
+          model: Person,
+          select: 'nickname'
+        }, {
+          path: 'offerOrg',
+          select: 'name'
+        }
+        ]
+      })
     }
     const query = InterestModel.find(find)
 

@@ -11,6 +11,6 @@ test('shallows the tabs', t => {
   const wrapper = shallow(
     <HomeTabs person={person} onChange={() => {}} />
   )
-  t.is(wrapper.find('TabPane').length, 3)
+  t.is(wrapper.find('TabPane').length, 4)
   t.true(wrapper.exists('PersonalGoalSection'))
 })

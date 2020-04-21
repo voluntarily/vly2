@@ -9,16 +9,8 @@ const { Option } = Select
  * @param {{ values: string[], onChange: (newValue: string[]) => {}, value: string[] }} props
  */
 export const TagSelect = ({ values, onChange, value, placeholder }) => {
-  /**
-   * @param {string} tag
-   */
-  const addTag = (tag) => onChange(value.concat(tag))
-
-  /**
-   * @param {string} removedTag
-   */
+  const addTag = tag => onChange(value.concat(tag))
   const removeTag = removedTag => onChange(value.filter(tag => tag !== removedTag))
-
   const unselectedTags = values.filter(val => !value.includes(val))
 
   return (
@@ -26,7 +18,6 @@ export const TagSelect = ({ values, onChange, value, placeholder }) => {
       <Select style={{ width: '100%' }} showSearch value={undefined} placeholder={placeholder} onChange={addTag}>
         {unselectedTags.map(val => <Option key={val}>{val}</Option>)}
       </Select>
-
       {value && value.map(tag =>
         <TagStyle
           key={tag}

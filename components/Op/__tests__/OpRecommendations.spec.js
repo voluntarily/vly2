@@ -21,11 +21,10 @@ test.serial('ensure recommendations component renders all locations when provide
     basedOnSkills: [],
     basedOnLocation: ops
   }
-  const wrapper = mountWithIntl(<OpRecommendations recommendedOps={recommendations} />)
+  const wrapper = mountWithIntl(<OpRecommendations type='ask' recommendedOps={recommendations} />)
   const numOpCards = wrapper.find('OpCard').length
-
-  t.true(('' + wrapper.html()).includes('Nearby opportunities'))
-  t.false(('' + wrapper.html()).includes('Based on your skills'))
+  t.is(wrapper.find('h3').length, 1)
+  t.is(wrapper.find('h3').first().text(), 'Based on your locations')
   t.is(numOpCards, ops.length)
 })
 
@@ -34,11 +33,10 @@ test.serial('ensure recommendations component renders all recommendations on ski
     basedOnSkills: ops,
     basedOnLocation: []
   }
-  const wrapper = mountWithIntl(<OpRecommendations recommendedOps={recommendations} />)
+  const wrapper = mountWithIntl(<OpRecommendations type='ask' recommendedOps={recommendations} />)
   const numOpCards = wrapper.find('OpCard').length
-
-  t.false(('' + wrapper.html()).includes('Nearby opportunities'))
-  t.true(('' + wrapper.html()).includes('Based on your skills'))
+  t.is(wrapper.find('h3').length, 1)
+  t.is(wrapper.find('h3').first().text(), 'Based on your skills and interests')
   t.is(numOpCards, ops.length)
 })
 
@@ -47,11 +45,9 @@ test.serial('ensure recommendations component renders all recommendations on ski
     basedOnLocation: ops.slice(0, 3),
     basedOnSkills: ops.slice(3, 5)
   }
-  const wrapper = mountWithIntl(<OpRecommendations recommendedOps={recommendations} />)
+  const wrapper = mountWithIntl(<OpRecommendations type='ask' recommendedOps={recommendations} />)
   const numOpCards = wrapper.find('OpCard').length
-
-  t.true(wrapper.html().includes('Nearby opportunities'))
-  t.true(wrapper.html().includes('Based on your skills'))
+  t.is(wrapper.find('h3').length, 2)
   t.is(numOpCards, ops.length)
 })
 
@@ -60,10 +56,8 @@ test.serial('ensure recommendations renders correctly with no matching locations
     basedOnSkills: [],
     basedOnLocation: []
   }
-  const wrapper = mountWithIntl(<OpRecommendations recommendedOps={recommendations} />)
+  const wrapper = mountWithIntl(<OpRecommendations type='ask' recommendedOps={recommendations} />)
   const numOpCards = wrapper.find('OpCard').length
-
-  t.false(('' + wrapper.html()).includes('Nearby opportunities'))
-  t.false(('' + wrapper.html()).includes('Based on your skills'))
+  t.is(wrapper.find('h3').length, 0)
   t.is(numOpCards, 0)
 })

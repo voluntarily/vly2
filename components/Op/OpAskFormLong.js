@@ -202,7 +202,7 @@ class OpAskFormLong extends Component {
           op.subtitle = values.subtitle
           op.tags = values.tags
           op.duration = values.duration
-          op.location = values.location
+          op.locations = values.locations
           op.offerOrg = values.offerOrg && values.offerOrg.key
           op.description = values.description
           op.imgUrl = values.imgUrl
@@ -466,7 +466,7 @@ class OpAskFormLong extends Component {
               </ShortInputContainer>
               <MediumInputContainer>
                 <Form.Item label={opLocation}>
-                  {getFieldDecorator('location')(
+                  {getFieldDecorator('locations')(
                     <LocationSelector
                       existingLocations={this.props.existingLocations}
                     />
@@ -621,7 +621,7 @@ OpAskFormLong.propTypes = {
     subtitle: PropTypes.string,
     imgUrl: PropTypes.string,
     duration: PropTypes.string,
-    location: PropTypes.string,
+    locations: PropTypes.arrayOf(PropTypes.string),
     offerOrg: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({
@@ -663,7 +663,7 @@ export default Form.create({
       subtitle: Form.createFormField({ value: props.op.subtitle }),
       description: Form.createFormField({ value: props.op.description }),
       duration: Form.createFormField({ value: props.op.duration }),
-      location: Form.createFormField({ value: props.op.location }),
+      locations: Form.createFormField({ value: props.op.locations }),
       offerOrg: Form.createFormField({ value: { key: props.op.offerOrg ? props.op.offerOrg._id : '' } }),
       imgUrl: Form.createFormField({ value: props.op.imgUrl }),
       status: Form.createFormField({ value: props.op.status }),
