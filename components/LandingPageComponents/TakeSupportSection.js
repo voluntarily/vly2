@@ -1,7 +1,8 @@
 
 import React from 'react'
 import styled from 'styled-components'
-
+import Link from 'next/link'
+import { FormattedMessage } from 'react-intl'
 import { Grid, HeroSectionHeader, HeroSectionButtonContainer } from '../VTheme/VTheme'
 import { Button } from 'antd'
 const PersonaBox = styled.section`
@@ -87,7 +88,16 @@ const TakeSupportSection = () => (
     <HeroSectionHeader>
       <h2>How people can support you</h2>
       <HeroSectionButtonContainer>
-        <Button type='secondary' size='large' shape='round' block>See all Activities</Button>
+        <Link href='/a/ask'>
+          <Button shape='round' size='large'>
+            <FormattedMessage
+              id='TakeSupportSection.ask'
+              defaultMessage='See all activities'
+              description='Button to link to activities page'
+            />
+          </Button>
+        </Link>
+
       </HeroSectionButtonContainer>
     </HeroSectionHeader>
     <Grid>
