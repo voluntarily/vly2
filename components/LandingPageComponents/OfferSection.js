@@ -100,7 +100,7 @@ const OfferSection = () => (
 
     <OfferContainer>
 
-      <Link href='/acts'>
+      <Link href='/a/offer'>
 
         <a>
 
@@ -117,7 +117,7 @@ const OfferSection = () => (
         </a>
       </Link>
 
-      <Link href='/acts'>
+      <Link href='/a/ask'>
         <a>
           <OfferCard>
 
