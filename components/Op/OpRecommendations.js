@@ -1,34 +1,35 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import OpList from './OpList'
+import { FormattedMessage } from 'react-intl'
 
-import { ProfileSectionTitle } from '../VTheme/Profile'
-import { Divider } from 'antd'
+export const OpRecommendations = ({ type, recommendedOps }) => {
+  const locs = recommendedOps.basedOnLocation.filter(op => op.type === type)
+  const skills = recommendedOps.basedOnSkills.filter(op => op.type === type)
+  return (
+    <>
+      {locs.length !== 0 &&
+        <div>
+          <h3>
+            <FormattedMessage
+              id='OpRecommendations.sectiontitle.basedOnLocation'
+              defaultMessage='Based on your locations'
+            />
+          </h3>
+          <OpList ops={locs} />
+        </div>}
 
-class OpRecommendations extends React.Component {
-  render () {
-    const { recommendedOps } = this.props
-    return (
-      <>
-        {recommendedOps.basedOnLocation.length !== 0 &&
-          <div>
-            <Divider />
-            <ProfileSectionTitle>
-              Nearby opportunities
-            </ProfileSectionTitle>
-            <OpList ops={recommendedOps.basedOnLocation} />
-          </div>}
-
-        {recommendedOps.basedOnSkills.length !== 0 &&
-          <div>
-            <Divider />
-            <ProfileSectionTitle>
-              Based on your skills
-            </ProfileSectionTitle>
-            <OpList ops={recommendedOps.basedOnSkills} />
-          </div>}
-      </>)
-  }
+      {skills.length !== 0 &&
+        <div>
+          <h3>
+            <FormattedMessage
+              id='OpRecommendations.sectiontitle.basedOnSkills'
+              defaultMessage='Based on your skills and interests'
+            />
+          </h3>
+          <OpList ops={skills} />
+        </div>}
+    </>)
 }
 
 OpRecommendations.propTypes = {

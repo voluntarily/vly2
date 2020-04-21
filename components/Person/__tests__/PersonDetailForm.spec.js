@@ -70,7 +70,7 @@ test('render the detail with op', t => {
   t.true(wrapper.exists('ForwardRef(EducationSelector)'))
   const educationSelector = wrapper.find('ForwardRef(EducationSelector)').first()
   educationSelector.props().onChange('medium')
-  wrapper.find('ImageUpload').first().props().setImgUrl('https://example.com/picture.png')
+  // wrapper.find('ImageUpload').first().props().setImgUrl('https://example.com/picture.png')
 
   t.is(wrapper.find('PersonDetail').length, 1)
   t.is(wrapper.find('TagInput').length, 1)

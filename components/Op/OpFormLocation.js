@@ -1,10 +1,10 @@
 import { Form, Icon, Tooltip } from 'antd'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import LocationSelector from '../Form/Input/LocationSelector'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, TitleContainer } from '../VTheme/FormStyles'
 import { OpTypeLocationPrompt } from './OpType'
 import OpFormOrg from './OpFormOrg'
+import TagSelect from '../Form/Input/TagSelect'
 
 const opLocation = (
   <span>
@@ -21,7 +21,6 @@ const opLocation = (
   </span>
 )
 export const OpFormLocation = ({ getFieldDecorator, type, existingLocations, orgMembership }) =>
-
   <FormGrid>
     <DescriptionContainer>
       <TitleContainer>
@@ -33,14 +32,11 @@ export const OpFormLocation = ({ getFieldDecorator, type, existingLocations, org
     <InputContainer>
       <MediumInputContainer>
         <Form.Item label={opLocation}>
-          {getFieldDecorator('location')(
-            <LocationSelector
-              existingLocations={existingLocations}
-            />
+          {getFieldDecorator('locations')(
+            <TagSelect values={existingLocations} placeholder='Select location' />
           )}
         </Form.Item>
         <OpFormOrg getFieldDecorator={getFieldDecorator} type={type} orgMembership={orgMembership} />
-
       </MediumInputContainer>
     </InputContainer>
   </FormGrid>

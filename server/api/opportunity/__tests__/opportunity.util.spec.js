@@ -48,7 +48,7 @@ test.serial('getLocationRecommendations > no opportunities', async (t) => {
 
   const recommendedLocations = await getLocationRecommendations({
     _id: mongoose.Types.ObjectId(),
-    locations: ['Wellington']
+    locations: ['Westland']
   })
 
   t.deepEqual(recommendedLocations, [])
@@ -65,7 +65,7 @@ test.serial('getLocationRecommendations > no opportunities for requestor', async
 test.serial('getLocationRecommendations > opportunities', async (t) => {
   const recommendedLocations = await getLocationRecommendations({
     _id: mongoose.Types.ObjectId(),
-    locations: ['Northland']
+    locations: ['Canterbury']
   })
 
   t.is(recommendedLocations.length, 4)
@@ -85,7 +85,7 @@ test.serial('getLocationRecommendations > opportunities', async (t) => {
 test.serial('getLocationRecommendations > closest opportunities', async (t) => {
   const testData = [
     {
-      locations: ['Whangarei District'],
+      locations: ['Akaroa, Canterbury'],
       expectedSortedNames: [
         'Test 2',
         'Test 3',
@@ -94,7 +94,7 @@ test.serial('getLocationRecommendations > closest opportunities', async (t) => {
       ]
     },
     {
-      locations: ['Kaipara District'],
+      locations: ['Allenton, Canterbury'],
       expectedSortedNames: [
         'Test 4',
         'Test 1',
@@ -103,7 +103,7 @@ test.serial('getLocationRecommendations > closest opportunities', async (t) => {
       ]
     },
     {
-      locations: ['Waikato'],
+      locations: ['Hawke\'s Bay'],
       expectedSortedNames: [
         'Test 5'
       ]
@@ -115,7 +115,6 @@ test.serial('getLocationRecommendations > closest opportunities', async (t) => {
       _id: mongoose.Types.ObjectId(),
       locations: data.locations
     })
-
     const expectedResultsCount = data.expectedSortedNames.length
 
     t.is(recommendedLocations.length, expectedResultsCount)
@@ -137,32 +136,31 @@ test.serial('getLocationRecommendations - multiple person locations should match
   // Auckland opportunity
   await Opportunity.create({
     name: 'Auckland op',
-    location: 'Auckland',
+    locations: ['South Auckland'],
     status: OpportunityStatus.ACTIVE,
     requestor: john._id
   })
   // Wellington opportunity
   await Opportunity.create({
     name: 'Wellington op',
-    location: 'Wellington',
+    locations: ['Wellington'],
     status: OpportunityStatus.ACTIVE,
     requestor: john._id
   })
   // Christchurch opportunity
   await Opportunity.create({
     name: 'Christchurch op',
-    location: 'Christchurch',
+    locations: ['Christchurch'],
     status: OpportunityStatus.ACTIVE,
     requestor: john._id
   })
 
   const me = {
     _id: mongoose.Types.ObjectId(),
-    locations: ['Auckland', 'Wellington']
+    locations: ['South Auckland', 'Wellington']
   }
 
   const recommendedOps = await getLocationRecommendations(me)
-
   // 'me' is interested in opportunities in both Auckland and Wellington, and two opportunities match this
   t.is(recommendedOps.length, 2)
   t.truthy(recommendedOps.find(op => op.name === 'Auckland op'))
@@ -170,7 +168,7 @@ test.serial('getLocationRecommendations - multiple person locations should match
 })
 
 /**
- * If a person has specified their location as a territory (i.e. Lower Hutt City), we should still return
+ * If a person has specified their location as a territory (i.e. Mount Victoria, Wellington), we should still return
  * opportunities for the parent region (i.e. Wellington)
  */
 test.serial('getLocationRecommendations - return opportunity of parent region of "my" territory', async (t) => {
@@ -181,11 +179,11 @@ test.serial('getLocationRecommendations - return opportunity of parent region of
     email: 'john@mail.com'
   })
 
-  // Lower Hutt City opportunity
-  // (Lower Hutt City being a territory/child of Wellington)
+  // Mount Victoria, Wellington opportunity
+  // (Mount Victoria, Wellington being a territory/child of Wellington)
   await Opportunity.create({
-    name: 'Lower Hutt City op',
-    location: 'Lower Hutt City',
+    name: 'Mount Victoria, Wellington op',
+    locations: ['Mount Victoria, Wellington'],
     status: OpportunityStatus.ACTIVE,
     requestor: john._id
   })
@@ -198,5 +196,68 @@ test.serial('getLocationRecommendations - return opportunity of parent region of
   const recommendedOps = await getLocationRecommendations(me)
 
   t.is(recommendedOps.length, 1)
-  t.truthy(recommendedOps[0].name === 'Lower Hutt City op')
+  t.truthy(recommendedOps[0].name === 'Mount Victoria, Wellington op')
+})
+
+/**
+ * handle multiple locations for person and for ops
+ */
+test.serial('getLocationRecommendations - I can work in two places', async (t) => {
+  await Opportunity.deleteMany()
+
+  const john = await Person.create({
+    name: 'John',
+    email: 'john@mail.com'
+  })
+
+  // (Mount Victoria being a territory/child of Wellington and Blaketown in Westland)
+  await Opportunity.create({
+    name: 'Mount Victoria, Wellington op',
+    locations: ['Mount Victoria, Wellington', 'Blaketown, Westland'],
+    status: OpportunityStatus.ACTIVE,
+    requestor: john._id
+  })
+
+  // (Blaketown being a territory/child of Westland and Abbotsford in Otago )
+  await Opportunity.create({
+    name: 'Abbotsford, Otago op',
+    locations: ['Abbotsford, Otago', 'Mount Victoria, Wellington'],
+    status: OpportunityStatus.ACTIVE,
+    requestor: john._id
+  })
+
+  // (Blaketown being a territory/child of Westland and Abbotsford in Otago )
+  await Opportunity.create({
+    name: 'Blaketown, Westland op',
+    locations: ['Blaketown, Westland', 'Abbotsford, Otago'],
+    status: OpportunityStatus.ACTIVE,
+    requestor: john._id
+  })
+
+  const p1 = {
+    _id: mongoose.Types.ObjectId(),
+    locations: ['Wellington', 'Westland']
+  }
+
+  let recommendedOps = await getLocationRecommendations(p1)
+  t.is(recommendedOps.length, 3)
+  t.is(recommendedOps[0].name, 'Abbotsford, Otago op') // closest match.
+
+  const p2 = {
+    _id: mongoose.Types.ObjectId(),
+    locations: ['Otago', 'Wellington']
+  }
+
+  recommendedOps = await getLocationRecommendations(p2)
+  t.is(recommendedOps.length, 3)
+  t.is(recommendedOps[0].name, 'Abbotsford, Otago op') // closest match.
+
+  const p3 = {
+    _id: mongoose.Types.ObjectId(),
+    locations: ['Auckland', 'Otago']
+  }
+
+  recommendedOps = await getLocationRecommendations(p3)
+  t.is(recommendedOps.length, 2)
+  t.is(recommendedOps[0].name, 'Abbotsford, Otago op') // closest match.
 })
