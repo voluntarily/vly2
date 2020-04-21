@@ -620,18 +620,22 @@ class OrgDetailForm extends Component {
               </Form.Item>
             </InputContainer>
           </FormGrid>
-          {isTest ? saveAndCancelBtns : 
-            <Affix offsetBottom={0}>
-              <FormGrid style={{ backgroundColor: 'white', paddingTop: 15 }}>
-                <DescriptionContainer>
-                  <TitleContainer>
-                    <h3>Confirm</h3>
-                  </TitleContainer>
-                  <p>Check before you go</p>
-                </DescriptionContainer>
-                {saveAndCancelBtns}
-              </FormGrid>
-            </Affix>}
+          {
+            isTest ? saveAndCancelBtns
+              : (
+                <Affix offsetBottom={0}>
+                  <FormGrid style={{ backgroundColor: 'white', paddingTop: 15 }}>
+                    <DescriptionContainer>
+                      <TitleContainer>
+                        <h3>Confirm</h3>
+                      </TitleContainer>
+                      <p>Check before you go</p>
+                    </DescriptionContainer>
+                    {saveAndCancelBtns}
+                  </FormGrid>
+                </Affix>
+              )
+          }
         </Form>
       </div>
     )
