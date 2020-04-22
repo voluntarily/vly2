@@ -82,8 +82,9 @@ export const ItemStatus = ({ status }) =>
   </ItemListing>
 
 const EquipmentListItem = styled.li`
-margin: 0.5rem 0 1.5rem 0;
-font-size: 1.1rem;
+// margin: 0.5rem 0 1.5rem 0;
+// font-size: 1.1rem;
+list-style-type: '\u25A1 '; // thumbs up sign;
 `
 
 export const EquipmentList = ({ equipment }) =>
@@ -91,13 +92,13 @@ export const EquipmentList = ({ equipment }) =>
     ? (
       <div>
         <Divider />
-        <h5><strong>
+        <h3>
           <FormattedMessage
             id='itemlist.equipment'
-            defaultMessage='Equipment needed:'
+            defaultMessage='Equipment:'
             description='Equipment label for acts and ops'
-          /></strong>
-        </h5>
+          />
+        </h3>
         <ul>
           {equipment.map((item, index) => <EquipmentListItem key={index}>{item}</EquipmentListItem>)}
         </ul>

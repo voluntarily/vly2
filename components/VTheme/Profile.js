@@ -83,7 +83,8 @@ export const ProfileSectionTitle = styled.h2`
 
   small {
     display: block;
-    line-height: 2rem;
-    font-size: 50%;
+    padding-top: 0.5rem;
+    max-width: 40rem;
+    font-size: 66%;
   }
 `
