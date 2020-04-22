@@ -13,12 +13,12 @@ const { ASK, OFFER } = OpportunityType
 const ActListTitleMessages = defineMessages({
   [ASK]: {
     id: 'ActListPage.Ask.Title',
-    defaultMessage: 'People are asking for help',
+    defaultMessage: 'Volunteers are offering help',
     description: 'Title of ask for help page'
   },
   [OFFER]: {
     id: 'ActListPage.Offer.Title',
-    defaultMessage: 'Volunteers are offering help',
+    defaultMessage: 'People are asking for help',
     description: 'Title of the offerings page'
   }
 })
@@ -26,12 +26,12 @@ const ActListTitleMessages = defineMessages({
 const ActListSubTitleMessages = defineMessages({
   [ASK]: {
     id: 'act.list.ask.subtitle',
-    defaultMessage: 'Find activities people are asking for help with',
+    defaultMessage: 'Find activities volunteers are offering to help you with',
     description: 'Sub Title of page listing activities people are asking help with'
   },
   [OFFER]: {
     id: 'act.list.offer.subtitle',
-    defaultMessage: 'Find activities volunteers are offering help with',
+    defaultMessage: 'Find activities you can offer to help with',
     description: 'Sub Title of page listing offerings people have'
   }
 })
