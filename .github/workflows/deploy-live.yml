@@ -3,7 +3,7 @@ name: VLY2 deploy live
 on:
   push:
     branches:
-      - live
+      - releases/live
 
 jobs:
   build-and-deploy-live:

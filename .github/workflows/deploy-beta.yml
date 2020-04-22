@@ -3,7 +3,7 @@ name: VLY2 deploy beta
 on:
   push:
     branches:
-      - beta
+      - releases/beta
 
 jobs:
   build-and-deploy-beta:

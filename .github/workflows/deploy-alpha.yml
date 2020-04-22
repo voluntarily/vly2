@@ -1,13 +1,13 @@
-name: VLY2 deploy gamma
+name: VLY2 deploy master to alpha
 
 on:
   push:
     branches:
-      - releases/gamma
+      - master
 
 jobs:
-  build-and-deploy-gamma:
-    name: Build to Gamma ECR, deploy to Gamma ECS
+  build-and-deploy:
+    name: Build to Alpha ECR, deploy to Alpha ECS
     runs-on: ubuntu-latest
     steps:
 
@@ -37,14 +37,14 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    # Builds aplha image, uses same image to tag and push gamma
-    - name: Gamma build, tag, and push
+    # Builds aplha image, uses same image to tag and push beta
+    - name: Alpha build, tag, and push
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: vly-gamma
+        ECR_REPOSITORY: vly-alpha
         IMAGE_TAG: ${{ github.sha }}
-        ENV_ENVIRONMENT: gamma
-        ENV_SECRET: ${{ secrets.ENV_SECRET_GAMMA }}
+        ENV_ENVIRONMENT: alpha
+        ENV_SECRET: ${{ secrets.ENV_SECRET_ALPHA }}
       run: |
         docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
         --build-arg ENV_ENVIRONMENT=$ENV_ENVIRONMENT --build-arg ENV_SECRET=$ENV_SECRET \
@@ -53,13 +53,16 @@ jobs:
         docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
 
+        docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:master $ECR_REGISTRY/vly-beta:master
+        docker push $ECR_REGISTRY/vly-beta:master
+
     - name: Log out of ECR
       if: always()
       run: docker logout ${{ steps.login-ecr.outputs.registry }}
 
-    - name: Deploy Gamma to ECS
+    - name: Deploy Alpha to ECS
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: vly-gamma  
+        ECR_REPOSITORY: vly-alpha  
       run: |
-        aws ecs update-service --service vly-gamma --cluster vly-gamma-ECSCluster --force-new-deployment --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50
+        aws ecs update-service --service vly-alpha --cluster vly-alpha-ECSCluster --force-new-deployment --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50
