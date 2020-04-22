@@ -130,7 +130,7 @@ const setSession = async (req, res, next) => {
   }
 
   req.session = {
-    isAuthenticated: user.email_verified,
+    isAuthenticated: true, // user.email_verified,
     user,
     me,
     idToken

@@ -32,7 +32,7 @@ const securePageHoc = Page => {
       return { isAuthenticated: false }
     }
     // we have a session - check user validation
-    if (!session.user.email_verified) {
+    if (!session.isAuthenticated) {
       // do not allow page props to be fetched if email not verified.
       return {
         isAuthenticated: false,

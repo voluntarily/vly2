@@ -6,8 +6,9 @@ export const PersonRole = ({ role }) => {
   const roleOptions = {
     admin: <FormattedMessage id='admin' defaultMessage='Admin' />,
     orgAdmin: <FormattedMessage id='orgAdmin' defaultMessage='Organisation-Admin' />,
-    opportunityProvider: <FormattedMessage id='opportunityProvider' defaultMessage='Requestor' />,
-    volunteer: <FormattedMessage id='volunteer' defaultMessage='Volunteer' />,
+    opportunityProvider: <FormattedMessage id='opportunityProvider' defaultMessage='Make Requests' />,
+    basic: <FormattedMessage id='basic' defaultMessage='Ask' />,
+    volunteer: <FormattedMessage id='volunteer' defaultMessage='Offer' />,
     activityProvider: <FormattedMessage id='activityProvider' defaultMessage='Activity Provider' />,
     resourceProvider: <FormattedMessage id='resourceProvider' defaultMessage='Resource Provider' />,
     support: <FormattedMessage id='test' defaultMessage='Test' />

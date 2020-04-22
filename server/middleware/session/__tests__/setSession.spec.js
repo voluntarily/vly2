@@ -70,11 +70,11 @@ test('Check session set for API call with Bearer header', async t => {
   t.truthy(next.calledOnce)
 })
 
-test('Check session not Auth if email not verified', async t => {
+test('Check session is allowed if email not verified', async t => {
   const next = sinon.spy()
   const req = { url: '/api/foo', headers: { authorization: `Bearer ${jwtDataBob.idToken}` } }
   await setSession(req, null, next)
-  t.false(req.session.isAuthenticated)
+  t.true(req.session.isAuthenticated)
   t.truthy(next.calledOnce)
 })
 
