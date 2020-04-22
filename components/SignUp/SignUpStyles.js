@@ -35,18 +35,23 @@ export const ButtonLi = styled.li`
   i {
     font-size: 4rem;
     align-self: center;
-    color: ${props => props.on ? 'green' : 'red'};
+    color: ${props => props.on ? 'green' : 'grey'};
   }
 `
+const uncheckSquare = () => (
+  <svg viewBox='64 64 896 896' focusable='false' class='' data-icon='check-square' width='1em' height='1em' fill='currentColor' aria-hidden='true'>
+    <path d='M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zm-40 728H184V184h656v656z' />
+  </svg>
+)
 
 export const ToggleTick = ({ on }) => {
-  return on &&
-    (
-      <Icon type='check-circle' />
+  return on
+    ? (
+      <Icon type='check-square' />
     )
-    // : (
-    //   <Icon type='close-circle' />
-    // )
+    : (
+      <Icon component={uncheckSquare} />
+    )
 }
 
 export const ToggleLi = ({ checked, icon, children, onChange }) => {
