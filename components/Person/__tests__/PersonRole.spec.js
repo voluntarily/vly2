@@ -4,7 +4,7 @@ import PersonRoles, { PersonRole } from '../PersonRole'
 import { renderWithIntl } from '../../../lib/react-intl-test-helper'
 
 test('Person Role renders properly', t => {
-  t.is(renderWithIntl(<PersonRole role='volunteer' />).text(), 'Volunteer')
+  t.is(renderWithIntl(<PersonRole role='volunteer' />).text(), 'Offer')
   t.is(renderWithIntl(<PersonRole role='support' />).text(), 'Test')
 })
 
@@ -15,7 +15,7 @@ test('Person Role list renders properly', t => {
     'activityProvider'
   ]
   const wrapper = renderWithIntl(<PersonRoles roles={roles} />)
-  t.is(wrapper.find('span').first().text(), 'Volunteer')
+  t.is(wrapper.find('span').first().text(), 'Offer')
   t.is(wrapper.find('span').last().text(), 'Activity Provider')
 })
 
