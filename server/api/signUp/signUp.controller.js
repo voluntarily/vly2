@@ -1,5 +1,24 @@
 const { Role } = require('../../services/authorize/role')
 
+/**
+ * add or remove a role from the array
+ * @param {*} me - contains a roles array
+ * @param {Boolean} flag - true to set role
+ * @param {Role} role - which role to set
+ */
+const updateRole = (me, flag, role) => {
+  if (flag) {
+    if (!me.role.includes(role)) {
+      me.role.push(role)
+    }
+  } else {
+    const index = me.role.indexOf(role)
+    if (index > -1) {
+      me.role.splice(index, 1)
+    }
+  }
+}
+
 /* the registerPerson endpoint allows a person to
    register as volunteer or asker with some initial values set.
 
@@ -17,10 +36,12 @@ const registerPerson = async (req, res) => {
     const prefs = req.body
     // const { org } = req.query
     const me = req.session && req.session.me
+
+    // is the person an asker?
+    updateRole(me, prefs.roleAsk, Role.BASIC)
+
     // is the person a volunteer?
-    if (prefs.roleOffer && !me.role.includes(Role.VOLUNTEER)) {
-      me.role.push(Role.VOLUNTEER)
-    }
+    updateRole(me, prefs.roleOffer, Role.VOLUNTEER)
 
     // set the chosen topic groups
     if (prefs.topicGroups) {
@@ -44,11 +65,11 @@ const registerPerson = async (req, res) => {
     await me.save()
     res.json(me)
   } catch (e) {
-    console.error('registerVolunteer:', e)
-    res.status(500).end()
+    res.status(500).send(e)
   }
 }
 
 module.exports = {
+  updateRole,
   registerPerson
 }
