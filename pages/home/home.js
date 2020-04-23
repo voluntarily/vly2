@@ -45,14 +45,7 @@ export const PersonHomePage = () => {
       <Helmet>
         <title>{person.nickname} - Voluntarily</title>
       </Helmet>
-      <HomeBanner person={person}>
-        {/* <PageBannerButtons>
-          <OpAddNewBtn />
-        </PageBannerButtons>
-        <PageBannerButtons>
-          <ActAdd roles={person.roles} />
-        </PageBannerButtons> */}
-      </HomeBanner>
+      <HomeBanner person={person} />
       <HomeTabs
         person={person}
         defaultTab={tab}

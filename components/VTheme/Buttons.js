@@ -78,6 +78,26 @@ export const SignUpButton = ({ then }) => {
     </Button>)
 }
 
+/** Click sign up - flow through privacy accept,
+ * then route to 'then' which being a secure page will trigger
+ * authentication */
+export const SignInButton = ({ then }) => {
+  const handleAccept = () => {
+    authorize({ redirectUrl: then })
+  }
+  return (
+    <Button
+      shape='round'
+      size='large'
+      onClick={handleAccept}
+      style={{ marginTop: '1rem', marginRight: '0.5rem' }}
+    >
+      <FormattedMessage
+        id='Button.SignIn'
+        defaultMessage='Sign In'
+      />
+    </Button>)
+}
 /** Learn More button
  * - links to CMS pages
  * opens in separate tab */
