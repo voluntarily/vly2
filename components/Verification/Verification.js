@@ -25,7 +25,7 @@ const Verification = () => {
   })
 
   return (
-    <section>
+    <>
       <VerifyButton onClick={() => router.push('/verification/conduct')} />
       <Modal
         title={errorTitle}
@@ -52,7 +52,7 @@ const Verification = () => {
       >
         <p>{successBody}</p>
       </Modal>
-    </section>
+    </>
   )
 }
 

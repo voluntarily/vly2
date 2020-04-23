@@ -3,17 +3,18 @@ import Navigation from '../Navigation/Navigation'
 
 export const MenuShowState = {
   ANON: 'anon', // option shows for non signed in people
+  AUTH: 'auth',
   BASIC: 'basic', // option shows for signed in people
   VOLUNTEER: 'volunteer', // option shows for signed in volunteer
   BOTH: 'both', // option shows for both ask and offer
   ADMIN: 'admin' // option shows for signed in admin
 }
-const { ANON, BASIC, VOLUNTEER, BOTH, ADMIN } = MenuShowState
+const { ANON, AUTH, BASIC, VOLUNTEER, BOTH, ADMIN } = MenuShowState
 
 const menuItems = [
   {
     key: 'home',
-    show: [BASIC, VOLUNTEER, BOTH, ADMIN],
+    show: [AUTH, BASIC, VOLUNTEER, BOTH, ADMIN],
     href: '/home',
     text:
   <FormattedMessage
@@ -43,7 +44,7 @@ const menuItems = [
   },
   {
     key: 'habout',
-    show: [ANON],
+    show: [AUTH, ANON],
     href: 'https://blog.voluntarily.nz',
     text:
   <FormattedMessage
@@ -72,7 +73,7 @@ const menuItems = [
   },
   {
     key: 'help',
-    show: [ANON, BASIC, VOLUNTEER, BOTH, ADMIN],
+    show: [ANON, AUTH, BASIC, VOLUNTEER, BOTH, ADMIN],
     text: 'Support 🙋🏽‍♀️',
     href: 'https://support.voluntarily.nz/hc/en-nz'
   },
@@ -88,7 +89,7 @@ const menuItems = [
   },
   {
     key: 'hsignoff',
-    show: [BASIC, VOLUNTEER, BOTH, ADMIN],
+    show: [AUTH, BASIC, VOLUNTEER, BOTH, ADMIN],
     href: '/auth/sign-off',
     text:
   <FormattedMessage
