@@ -28,7 +28,7 @@ const messages = defineMessages({
 const PostSignUp = () => {
   const me = useSelector(state => state.session.me)
   const [step, setStep] = useState(0)
-  const [roleAsk, setRoleAsk] = useState(true)
+  const [roleAsk, setRoleAsk] = useState(me.role.includes(Role.BASIC))
   const [roleOffer, setRoleOffer] = useState(me.role.includes(Role.VOLUNTEER))
   const [topicGroups, setTopicGroups] = useState({ business: false, community: false, education: false })
   const [person, setperson] = useState({
