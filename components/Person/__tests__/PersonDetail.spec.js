@@ -46,6 +46,7 @@ test.before('Setup People fixtures', (t) => {
     }
   ]
   me.education = 'Some College'
+  me.topicGroups = ['business']
 
   t.context = {
     me,
@@ -115,8 +116,10 @@ test('render person details as self', t => {
 
   )
   t.truthy(wrapper.find('Head'))
+  t.is(wrapper.find('h1').length, 3)
   t.is(wrapper.find('h1').first().text(), t.context.me.name)
-  t.is(wrapper.find('h1').last().text(), 'How do you want to use Voluntarily?')
+  t.is(wrapper.find('h1').at(1).text(), 'How do you want to use Voluntarily?')
+  t.is(wrapper.find('h1').at(2).text(), 'What would you like to get help with?')
   t.truthy(wrapper.find(ActivityContainer))
   t.truthy(wrapper.find(VBanner))
   t.is(wrapper.find(ProfileBannerTitle).length, 1)

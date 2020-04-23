@@ -19,62 +19,70 @@ export const topicGroupMessages = {
     [OFFER]: { id: 'SelectTopicGroup.education.OFFER', defaultMessage: 'Offer your skills and time to students and teachers' }
   })
 }
+
 /**
  * This page asks the person to select whether they are an asker or offerer
  */
-export const SelectTopicGroup = ({ children, type, topicGroups, onChange }) =>
+export const SelectTopicGroupButtons = ({ type, topicGroups, onChange }) =>
+  <>
+    <h1>
+      <OpTypeTopicGroup type={type} />
+    </h1>
+    <ToggleUl id='topicGroup_options'>
+      <ToggleLi key='group_business' icon='business' checked={topicGroups.business} onChange={(on) => onChange({ business: on })}>
+        <div>
+          <h2>
+            <FormattedMessage
+              id='SelectTopicGroup.title.business'
+              defaultMessage='Small Businesses'
+            />
+          </h2>
+          <p>
+            <FormattedMessage {...topicGroupMessages.business[type]} />
+          </p>
+        </div>
+      </ToggleLi>
+      <ToggleLi key='group_community' icon='community' checked={topicGroups.community} onChange={(on) => onChange({ community: on })}>
+        <div>
+          <h2>
+            <FormattedMessage
+              id='SelectTopicGroup.title.community'
+              defaultMessage='Communities'
+            />
+          </h2>
+          <p>
+            <FormattedMessage {...topicGroupMessages.community[type]} />
+          </p>
+        </div>
+      </ToggleLi>
+      <ToggleLi key='group_education' icon='school' checked={topicGroups.education} onChange={(on) => onChange({ education: on })}>
+        <div>
+          <h2>
+            <FormattedMessage
+              id='SelectTopicGroup.title.education'
+              defaultMessage='Schools'
+            />
+          </h2>
+          <p>
+            <FormattedMessage {...topicGroupMessages.education[type]} />
+
+          </p>
+        </div>
+      </ToggleLi>
+    </ToggleUl>
+  </>
+
+/**
+ * This page asks the person to select whether they are an asker or offerer
+ */
+export const SelectTopicGroup = (props) =>
   <HalfGrid style={{ paddingTop: 0 }}>
     <div id='leftCol'>
       <img style={{ width: '100%' }} src='/static/img/sign-up/topic.svg' />
     </div>
     <div id='rightCol'>
-      <h1>
-        <OpTypeTopicGroup type={type} />
-      </h1>
-      <ToggleUl id='topicGroup_options'>
-        <ToggleLi key='group_business' icon='business' checked={topicGroups.business} onChange={(on) => onChange({ business: on })}>
-          <div>
-            <h2>
-              <FormattedMessage
-                id='SelectTopicGroup.title.business'
-                defaultMessage='Small Businesses'
-              />
-            </h2>
-            <p>
-              <FormattedMessage {...topicGroupMessages.business[type]} />
-            </p>
-          </div>
-        </ToggleLi>
-        <ToggleLi key='group_community' icon='community' checked={topicGroups.community} onChange={(on) => onChange({ community: on })}>
-          <div>
-            <h2>
-              <FormattedMessage
-                id='SelectTopicGroup.title.community'
-                defaultMessage='Communities'
-              />
-            </h2>
-            <p>
-              <FormattedMessage {...topicGroupMessages.community[type]} />
-            </p>
-          </div>
-        </ToggleLi>
-        <ToggleLi key='group_education' icon='school' checked={topicGroups.education} onChange={(on) => onChange({ education: on })}>
-          <div>
-            <h2>
-              <FormattedMessage
-                id='SelectTopicGroup.title.education'
-                defaultMessage='Schools'
-              />
-            </h2>
-            <p>
-              <FormattedMessage {...topicGroupMessages.education[type]} />
-
-            </p>
-          </div>
-        </ToggleLi>
-      </ToggleUl>
-      {children}
+      <SelectTopicGroupButtons {...props} />
+      {props.children}
     </div>
-
   </HalfGrid>
 export default SelectTopicGroup

@@ -51,14 +51,14 @@ export const ChooseParticipationButtons = ({ roleAsk, onChangeAsk, roleOffer, on
 /**
  * This page asks the person to select whether they are an asker or offerer
  */
-export const ChooseParticipation = ({ children, roleAsk, onChangeAsk, roleOffer, onChangeOffer }) =>
+export const ChooseParticipation = (props) =>
   <HalfGrid style={{ paddingTop: 0 }}>
     <div id='leftCol'>
       <img style={{ width: '100%' }} src='/static/img/sign-up/chooseparticipation.svg' />
     </div>
     <div id='rightCol'>
-      <ChooseParticipationButtons />
-      {children}
+      <ChooseParticipationButtons {...props} />
+      {props.children}
     </div>
   </HalfGrid>
 

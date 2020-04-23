@@ -14,6 +14,7 @@ import { PersonBadgeSection } from './PersonBadge'
 import { VBanner, VBannerImg, ProfileBannerTitle } from '../VTheme/Profile'
 import Verification from '../Verification/Verification'
 import { ParticipationSection } from './ParticipationSection'
+import { TopicGroupSection } from './TopicGroupSection'
 const DetailItem = styled.div`
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -74,6 +75,13 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
           <h2><FormattedMessage defaultMessage='Participation' id='PersonDetail.Participation' description='Participation section header for a person profile' /> </h2>
           <div>
             <ParticipationSection person={person} />
+          </div>
+        </ActivityContainer>
+        <Divider />
+        <ActivityContainer>
+          <h2><FormattedMessage defaultMessage='Follow Groups' id='PersonDetail.TopicGroups' description='TopicGroups section header for a person profile' /> </h2>
+          <div>
+            <TopicGroupSection person={person} />
           </div>
         </ActivityContainer>
         <Divider />
