@@ -3,14 +3,13 @@
 */
 import { Button } from 'antd'
 import Link from 'next/link'
-import PropTypes from 'prop-types'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { connect } from 'react-redux'
 import { Role } from '../../server/services/authorize/role'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
-
+import { SignUpInviteModal } from '../SignUp/SignUpInviteModal'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 
 const OppAddButtons = styled.div`
     display: flex;
@@ -41,15 +40,14 @@ export const OpAddAskBtn = ({ actid }) => {
     href = href.concat(`?act=${actid}`)
   }
   return (
-    <Link href={href}>
-      <Button type='primary' shape='round' size='large'>
-        <FormattedMessage
-          id='OpAdd.newAsk'
-          defaultMessage='Ask for help'
-          description='Button to create a new Ask opportunity used on multiple pages'
-        />
-      </Button>
-    </Link>)
+    <SignUpInviteModal href={href}>
+      <FormattedMessage
+        id='OpAdd.newAsk'
+        defaultMessage='Ask for help'
+        description='Button to create a new Ask opportunity used on multiple pages'
+      />
+    </SignUpInviteModal>
+  )
 }
 
 export const OpAddOfferBtn = ({ actid }) => {
@@ -58,18 +56,18 @@ export const OpAddOfferBtn = ({ actid }) => {
     href = href.concat(`?act=${actid}`)
   }
   return (
-    <Link href={href}>
-      <Button type='primary' shape='round' size='large'>
-        <FormattedMessage
-          id='OpAdd.newOffer'
-          defaultMessage='Offer to help'
-          description='Button to create a new offer opportunity used on multiple pages'
-        />
-      </Button>
-    </Link>)
+    <SignUpInviteModal href={href}>
+      <FormattedMessage
+        id='OpAdd.newOffer'
+        defaultMessage='Offer to help'
+        description='Button to create a new offer opportunity used on multiple pages'
+      />
+    </SignUpInviteModal>)
 }
 
-const OpAdd = ({ roles, actid }) => {
+export const OpAdd = ({ actid }) => {
+  const roles = useSelector(state => state.session.me.role || [])
+
   if (!roles.length || !roles.includes(Role.OPPORTUNITY_PROVIDER)) return null
   return (
     <OppAddButtons>
@@ -79,15 +77,4 @@ const OpAdd = ({ roles, actid }) => {
   )
 }
 
-OpAdd.propTypes = {
-  roles: PropTypes.array.isRequired
-}
-
-// Warning me will be {} if not signed in and role will be undefined.
-const mapStateToProps = store => ({
-  roles: store.session.me.role || []
-})
-
-export default connect(
-  mapStateToProps
-)(OpAdd)
+export default OpAdd
