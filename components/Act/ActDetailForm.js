@@ -667,7 +667,7 @@ class ActDetailForm extends Component {
                 })(
                   <Switch
                     checkedChildren={<Icon type='check' />}
-                    unCheckedChildren={<Icon type='cross' />}
+                    unCheckedChildren={<Icon type='close' />}
                   />)}
               </Form.Item>
 
