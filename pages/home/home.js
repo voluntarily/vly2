@@ -12,9 +12,8 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 import { useSelector } from 'react-redux'
 
 export const PersonHomePage = () => {
-
-  const [people, members, opportunities, interests] = useSelector(
-    state => [state.people, state.members, state.opportunities, state.members]
+  const [me, members, opportunities, interests] = useSelector(
+    state => [state.session.me, state.members, state.opportunities.data, state.interests.data]
   )
   const router = useRouter()
   const activityCount = opportunities.length + interests.length
@@ -22,7 +21,6 @@ export const PersonHomePage = () => {
     (router.query && router.query.tab) ||
     (activityCount ? 'active' : 'discover')
   )
-
 
   const updateTab = (key, top) => {
     setTab(key)
