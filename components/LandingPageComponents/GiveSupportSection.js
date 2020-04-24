@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import { Button } from 'antd'
-import { Grid, HeroSectionHeader, HeroSectionButtonContainer } from '../VTheme/VTheme'
+import { Grid, HeroSectionHeader, HeroSectionButtonContainer, HalfGrid } from '../VTheme/VTheme'
+
 const PersonaBox = styled.section`
   margin-bottom: 2rem;
 
@@ -82,47 +83,6 @@ const Text = styled.p`
 `
 
 const GiveSupportSection = () => (
-  <PersonaBox>
-    <HeroSectionHeader>
-      <h2>How you can support others</h2>
-      <HeroSectionButtonContainer>
-        <Link href='/a/offer'>
-          <Button shape='round' size='large'>
-            <FormattedMessage
-              id='GiveSupportSection.offer'
-              defaultMessage='See all activities'
-              description='Button to link to activities page'
-            />
-          </Button>
-        </Link>
-      </HeroSectionButtonContainer>
-    </HeroSectionHeader>
-    <Grid>
-      <PersonaContainer>
-        <Image src='./static/img/landingcards/business.png' alt='' />
-        <Title>Help small businesses</Title>
-        <Text>Offer your knowledge to smaller businesses who need the support to set up remote working.</Text>
-      </PersonaContainer>
-
-      <PersonaContainer>
-        <Image src='./static/img/landingcards/community.png' alt='' />
-        <Title>Help your community</Title>
-        <Text>Spread your kindness and offer help to those that cannot leave their homes.</Text>
-      </PersonaContainer>
-
-      <PersonaContainer>
-        <Image src='./static/img/landingcards/educator.png' alt='' />
-        <Title>Help teachers</Title>
-        <Text>Help teachers create a distance learning plan for their kura or school. </Text>
-      </PersonaContainer>
-
-      <PersonaContainer>
-        <Image src='./static/img/landingcards/senior.png' alt='' />
-        <Title>Help seniors</Title>
-        <Text>Reach out to our most at-risk citizens and help look out for those over 70.</Text>
-      </PersonaContainer>
-    </Grid>
-
-  </PersonaBox>
+  <HalfGrid>aaa</HalfGrid>
 )
 export default GiveSupportSection

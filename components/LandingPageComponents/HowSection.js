@@ -2,7 +2,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { HalfGrid } from '../VTheme/VTheme'
-
+import { Button } from 'antd'
 const PersonaBox = styled.section`
   margin-bottom: 2rem;
   h3 {
@@ -38,38 +38,57 @@ const PersonaBox = styled.section`
  
 `
 const PersonaHeader = styled.div`
-  h2 {
-    font-size: 3rem;
-    margin-bottom: 0;
-    font-weight: 400;
-  }
+h2 {
+  font-size: 3rem;
+  margin-bottom: 0;
+  font-weight: 400;
+}
+@media screen and (max-width: 1025px) {
 
-  /* Tablet */
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    h2 {
-    font-size: 2rem;
-  }
+h2 {
+  font-size: 2rem;
+}
+
+}
 
  /* Mobile */
  @media screen and (max-width: 768px) {
 
-  h2 {
-    font-size: 2rem;
-  }
- }
+h3 {
+  font-size: 1.1rem;
+}
+}
 
- 
-`
+@media screen and (max-width: 480px) {
+  h2 {
+  font-size: 2rem;
+}
+  }
+  `
+
 const PersonaContainer = styled.div`
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
   margin-bottom: 2rem;
+ article {
+   margin: 1rem 0;
+   display: grid;
+   grid-column-gap: 1rem;
+   grid-row-gap: 2rem;
+    grid-template-columns: 3.5rem 1fr;
+ }
+ div{ 
+   width: 80%;
+ }
 
-  :hover {
-    border-radius: 8px;
-    transform: scale(1.04);
-  }
 
+ /* Mobile */
+ @media screen and (max-width: 768px) {
+
+div {
+  width: 100%;
+}
+}
 
 
 
@@ -84,7 +103,7 @@ const Title = styled.h4`
   color: black;
 
   @media screen and (max-width: 768px) {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 `
 
@@ -96,12 +115,17 @@ const Text = styled.p`
   letter-spacing: -0.1px;
   line-height: 24px;
 
+@media screen and (max-width: 1025px) {
+width: 90%;
+}
+
   @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
     /* iPhone X */
     font-size: 1rem;
     line-height: 1.4;
     height: auto;
     margin-bottom: 1rem;
+
   }
 
   @media screen and (max-width: 480px) {
@@ -121,15 +145,43 @@ const HowSection = () => (
     <HalfGrid>
       <PersonaContainer>
         <h3>If you ask for help...</h3>
-        <Title>Help small businesses</Title>
-        <Text>Offer your knowledge to smaller businesses who need the support to set up remote working.</Text>
+        <article>
+          <img src='./static/img/icons/ask2.svg' alt='' />
+          <div>
+            <Title>Tell volunteers what you are asking for
+            </Title>
+            <Text>Let volunteers know how they can help you out</Text>
+          </div>
+
+          <img src='./static/img/icons/ask2.svg' alt='' />
+          <div>
+            <Title>Help small businesses</Title>
+            <Text>Offer your knowledge to smaller businesses who need the support to set up remote working.</Text>
+          </div>
+        </article>
+
+        <Button size='large' shape='round' type='primary'>Join the build</Button>
       </PersonaContainer>
 
       <PersonaContainer>
 
         <h3>If you can offer help...</h3>
-        <Title>Help your community</Title>
-        <Text>Spread your kindness and offer help to those that cannot leave their homes.</Text>
+        <article>
+          <img src='./static/img/icons/ask2.svg' alt='' />
+          <div>
+            <Title>Tell volunteers what you are asking for
+            </Title>
+            <Text>Let volunteers know how they can help you out</Text>
+          </div>
+
+          <img src='./static/img/icons/ask2.svg' alt='' />
+          <div>
+            <Title>Help small businesses</Title>
+            <Text>Offer your knowledge to smaller businesses who need the support to set up remote working.</Text>
+          </div>
+        </article>
+
+        <Button size='large' shape='round' type='primary'>Join the build</Button>
       </PersonaContainer>
 
     </HalfGrid>
