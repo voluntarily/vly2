@@ -91,7 +91,7 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
       possessive: 'their'
     },
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
-    role: ['volunteer'],
+    role: ['support', 'volunteer'],
     status: 'active',
     tags: []
   },
