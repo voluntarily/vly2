@@ -18,6 +18,7 @@ const PersonFields = {
   PHONE: 'phone',
   LANGUAGE: 'language',
   IMG_URL: 'imgUrl',
+  IMG_URL_SMALL: 'imgUrlSm',
   FACEBOOK: 'facebook',
   WEBSITE: 'website',
   TWITTER: 'twitter',
@@ -44,18 +45,19 @@ const PersonListFields = [
   PersonFields.NAME,
   PersonFields.STATUS,
   PersonFields.IMG_URL,
+  PersonFields.IMG_URL_SMALL,
   PersonFields.ROLE,
   PersonFields.PRONOUN,
   PersonFields.TAGS,
   PersonFields.TOPIC_GROUPS,
   PersonFields.LOCATIONS,
-  PersonFields.SENDEMAILNOTIFICATIONS
+  PersonFields.SENDEMAILNOTIFICATIONS,
+  PersonFields.VERIFIED
 ]
 
 const PersonPublicFields = [
   ...PersonListFields,
   PersonFields.ABOUT,
-  PersonFields.LOCATIONS,
   PersonFields.FACEBOOK,
   PersonFields.WEBSITE,
   PersonFields.TWITTER

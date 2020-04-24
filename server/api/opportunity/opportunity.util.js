@@ -1,7 +1,11 @@
 const Opportunity = require('./opportunity')
 const { regions } = require('../location/locationData')
+const { Role } = require('../../services/authorize/role')
+const { OpportunityType } = require('./opportunity.constants')
+const { ASK, OFFER } = OpportunityType
 
 const arrayIntersects = (arrA, arrB) => arrA.filter(x => arrB.includes(x)).length
+const MAX_RECOMMENDATIONS = 10
 
 /**
  *
@@ -44,42 +48,44 @@ const getLocationRecommendations = async (me) => {
     locationOps = closestOpportunities.concat(otherOpportunities)
   }
 
-  return locationOps.slice(0, 10)
+  return locationOps.slice(0, MAX_RECOMMENDATIONS)
 }
 
 const getSkillsRecommendations = async (me) => {
-  const tagsToMatch = me.tags
+  const tagsToMatch = [...me.tags, ...me.topicGroups]
 
-  // mongoose isn't happy if we provide an empty array as an expression
-  if (tagsToMatch.length > 0) {
-    const opsWithMatchingTags = await Opportunity
-      .find({
-        tags: { $in: tagsToMatch },
-        requestor: { $ne: me._id }
-      })
-      .populate('requestor', 'name nickname imgUrl')
-      .populate('offerOrg', 'name imgUrl role')
-    const opsWithCounts = []
-
-    opsWithMatchingTags.forEach(op => {
-      let count = 0
-      op.tags.forEach(tag => {
-        if (tagsToMatch.includes(tag)) {
-          count++
-        }
-      })
-
-      opsWithCounts.push({ count, op })
-    })
-
-    opsWithCounts.sort((a, b) => {
-      return b.count - a.count
-    })
-
-    return opsWithCounts.map(op => op.op).slice(0, 10)
-  } else {
+  const types = []
+  if (me.role.includes(Role.BASIC)) { types.push(ASK) }
+  if (me.role.includes(Role.VOLUNTEER)) { types.push(OFFER) }
+  if (!tagsToMatch.length || !types.length) {
     return []
   }
+
+  const opsWithMatchingTags = await Opportunity
+    .find({
+      tags: { $in: tagsToMatch },
+      type: { $in: types },
+      requestor: { $ne: me._id }
+    })
+    .populate('requestor', 'name nickname imgUrl')
+    .populate('offerOrg', 'name imgUrl role')
+  const opsWithCounts = []
+
+  opsWithMatchingTags.forEach(op => {
+    let count = 0
+    op.tags.forEach(tag => {
+      if (tagsToMatch.includes(tag)) {
+        count++
+      }
+    })
+
+    opsWithCounts.push({ count, op })
+  })
+
+  opsWithCounts.sort((a, b) => {
+    return b.count - a.count
+  })
+  return opsWithCounts.map(op => op.op).slice(0, MAX_RECOMMENDATIONS)
 }
 
 module.exports = { getLocationRecommendations, getSkillsRecommendations }
