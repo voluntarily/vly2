@@ -24,7 +24,9 @@ test.before('Setup fixtures', (t) => {
     }
   }
   const me = {
-    nickname: 'Testy'
+    nickname: 'Testy',
+    tags: ['one', 'two', 'three'],
+    topicGroups: ['business']
   }
   t.context.defaultstore = {
     session: {
@@ -36,7 +38,7 @@ test.before('Setup fixtures', (t) => {
       sync: true,
       syncing: false,
       loading: false,
-      data: [acts[0]],
+      data: acts,
       request: null
     }
   }
@@ -61,17 +63,33 @@ test.before('Setup Route', (t) => {
   sinon.replace(nextRouter, 'useRouter', router)
 })
 
-test('render ActListSection', async t => {
-  // const props = await ActListSection.getInitialProps({ store: t.context.store })
+test.serial('render ActListSection', async t => {
   const router = nextRouter.useRouter()
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
       <ActListSection />
     </Provider>
   )
+  t.is(wrapper.find('ActCard').length, 5)
 
   // handle search
   const search = wrapper.find('Search').first()
   search.props().onSearch('moon')
   t.deepEqual(router.replace.args[0][1], { query: { search: 'moon' } })
+})
+
+test.serial('render ActListSection with selected Org', async t => {
+  t.context.mockStore.clearActions()
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <ActListSection />
+    </Provider>
+  )
+
+  t.is(t.context.mockStore.getActions().length, 1)
+  // handle selected Org
+  const menu = wrapper.find('ActMenu').first()
+  menu.props().onClick({ key: 'orgOmgTech' })
+  wrapper.update()
+  t.is(t.context.mockStore.getActions().length, 2)
 })
