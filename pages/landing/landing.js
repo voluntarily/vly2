@@ -10,6 +10,7 @@ import publicPage from '../../hocs/publicPage'
 import { Divider } from 'antd'
 import GiveSupportSection from '../../components/LandingPageComponents/GiveSupportSection'
 import TakeSupportSection from '../../components/LandingPageComponents/TakeSupportSection'
+import HowSection from '../../components/LandingPageComponents/HowSection'
 export const Landing = ({ isAuthenticated }) => (
   <>
     <Helmet>
@@ -23,6 +24,7 @@ export const Landing = ({ isAuthenticated }) => (
     <FullPage>
       <OfferSection />
       <Divider />
+      <HowSection />
       <GiveSupportSection />
       <Divider />
       <TakeSupportSection />

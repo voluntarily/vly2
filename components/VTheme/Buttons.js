@@ -69,7 +69,7 @@ export const SignUpButton = ({ then }) => {
       shape='round'
       size='large'
       onClick={handleAccept}
-      style={{ marginTop: '1rem', marginRight: '0.5rem' }}
+      style={{ marginRight: '0.5rem' }}
     >
       <FormattedMessage
         id='Button.SignUp'
