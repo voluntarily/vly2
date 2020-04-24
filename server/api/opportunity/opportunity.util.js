@@ -84,7 +84,6 @@ const getSkillsRecommendations = async (me) => {
   opsWithCounts.sort((a, b) => {
     return b.count - a.count
   })
-  console.log(opsWithCounts)
   return opsWithCounts.map(op => op.op).slice(0, MAX_RECOMMENDATIONS)
 }
 
