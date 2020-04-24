@@ -7,7 +7,7 @@ import MemoryMongo from '../../../util/test-memory-mongo'
 import people from '../../person/__tests__/person.fixture'
 import ops from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
-import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
+import { jwtData, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
 
 const { regions } = require('../../location/locationData')
 
@@ -76,20 +76,22 @@ test.serial('Op recommendations based on location should include those nearby an
 
 test.serial('Ops recommended based on skills should match at least one of my skills and be ranked', async t => {
   // set my tags as all tags but the first one in the db
-  t.context.people[0].tags = t.context.tags.slice(1)
-  await t.context.people[0].save()
-  const me = t.context.people[0]._id
+  t.context.people[1].tags = t.context.tags.slice(1)
+  await t.context.people[1].save()
+  const me = t.context.people[1]._id
 
   const ops = t.context.opportunities
   ops.forEach((op) => {
     op.tags = []
-    op.requestor = t.context.people[1]._id // not me
+    op.type = 'offer'
+    op.requestor = t.context.people[2]._id // not me
   })
 
   const numMatchingOps = 3
 
   // matches but was requested by me (so shouldn't be included)
   ops[0].tags = t.context.tags
+  ops[0].topicGroups = []
   ops[0].requestor = me
 
   // contains matches (in order of most to least)
@@ -104,14 +106,13 @@ test.serial('Ops recommended based on skills should match at least one of my ski
   const res = await request(server)
     .get(`/api/opportunities/recommended?me=${me}`)
     .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
 
   // ensure all matches returned
   t.is(got.basedOnSkills.length, numMatchingOps)
-
   // ensure matches are ranked (i.e. closest match first)
   t.is(got.basedOnSkills[0]._id, ops[1]._id.toString())
   t.is(got.basedOnSkills[1]._id, ops[2]._id.toString())
@@ -136,7 +137,7 @@ test.serial('When I havent provided any skills, nothing should be recommended', 
   const res = await request(server)
     .get(`/api/opportunities/recommended?me=${me}`)
     .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
@@ -148,7 +149,7 @@ test.serial('Should return bad request when specified person does not exist in d
   const res = await request(server)
     .get('/api/opportunities/recommended?me=999999999999999999999999')
     .set('Accept', 'application/json')
-    .set('Cookie', [`idToken=${jwtData.idToken}`])
+    .set('Cookie', [`idToken=${jwtDataDali.idToken}`])
 
   t.is(res.status, 400)
 })

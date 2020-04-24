@@ -53,14 +53,13 @@ const getLocationRecommendations = async (me) => {
 
 const getSkillsRecommendations = async (me) => {
   const tagsToMatch = [...me.tags, ...me.topicGroups]
-
-  const types = []
-  if (me.role.includes(Role.BASIC)) { types.push(ASK) }
-  if (me.role.includes(Role.VOLUNTEER)) { types.push(OFFER) }
-  if (!tagsToMatch.length || !types.length) {
+  if (!tagsToMatch.length) {
     return []
   }
 
+  const types = []
+  if (me.role.includes(Role.VOLUNTEER)) { types.push(OFFER) }
+  if (me.role.includes(Role.BASIC) || types.length === 0) { types.push(ASK) }
   const opsWithMatchingTags = await Opportunity
     .find({
       tags: { $in: tagsToMatch },
@@ -85,6 +84,7 @@ const getSkillsRecommendations = async (me) => {
   opsWithCounts.sort((a, b) => {
     return b.count - a.count
   })
+  console.log(opsWithCounts)
   return opsWithCounts.map(op => op.op).slice(0, MAX_RECOMMENDATIONS)
 }
 
