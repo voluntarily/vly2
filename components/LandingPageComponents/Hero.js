@@ -9,7 +9,7 @@ import { LearnMoreButton, SignUpButton } from '../../components/VTheme/Buttons'
 
 // this is the big container block that holds the container together lol
 const AwesomeHeroContainer = styled.div`
-  margin: 4rem auto;
+  margin: 7rem auto;
   height: auto;
   width: auto;
   
@@ -89,8 +89,9 @@ const AwesomeImage = styled.img`
   position: relative;
   text-align: center;
   margin: 0 auto;
-  
-
+  width: 80%;
+  display: grid;
+ justify-self: end;
   overflow: hidden;
   object-fit: contain;
   background-color: white;
@@ -154,7 +155,7 @@ letter-spacing: 0;
 }
 @media screen and (min-width: 1282px) and (max-width: 1921px) {
  p {
-   width: 70%;
+   width: 90%;
   
  }
   }
@@ -246,7 +247,7 @@ const Hero = ({ isAuthenticated }) => (
             <p>
               <FormattedMessage
                 id='Hero.body.WeConnect'
-                defaultMessage='We connect people who can volunteer time, advice, or stuff to those who need it.'
+                defaultMessage='Connecting people, community movements, and schools with the support they need from volunteers and volunteering programmes'
               />
             </p>
           </HeroText>

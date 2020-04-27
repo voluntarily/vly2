@@ -8,9 +8,12 @@ import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 // import moment from 'moment'
 import { Divider } from 'antd'
+
+import CorporateSection from '../../components/LandingPageComponents/CorporateSection'
 import GiveSupportSection from '../../components/LandingPageComponents/GiveSupportSection'
 import TakeSupportSection from '../../components/LandingPageComponents/TakeSupportSection'
 import HowSection from '../../components/LandingPageComponents/HowSection'
+import Testimonial from '../../components/LandingPageComponents/Testimonial'
 export const Landing = ({ isAuthenticated }) => (
   <>
     <Helmet>
@@ -25,17 +28,20 @@ export const Landing = ({ isAuthenticated }) => (
       <OfferSection />
       <Divider />
       <HowSection />
+      <Divider />
+      <Testimonial />
+      <Divider />
       <GiveSupportSection />
       <Divider />
       <TakeSupportSection />
-      {/*
-      <OpListSection
-        store={props.store}
-        filter={{
-          date: [moment().subtract(1, 'days'), moment().add(60, 'days')]
-        }}
-      /> */}
-
+      <Divider />
+      <CorporateSection />
+      <Divider />
+      <GiveSupportSection />
+      <Divider />
+      <TakeSupportSection />
+      <Divider />
+      <GiveSupportSection />
     </FullPage>
   </>
 )

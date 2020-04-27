@@ -260,12 +260,12 @@ export const HalfGrid = styled.div`
   display: grid;
   position: relative;
   margin: 0;
-  grid-template-columns: 39rem 39rem;
+  grid-template-columns: 1fr 1fr;
   grid-column-gap: 2rem;
   margin: 4rem 0 ;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
-    grid-template-columns: calc(50vw - 4rem) calc(50vw - 4rem);
+    grid-template-columns: 1fr 1fr;
     grid-column-gap: 2rem;
   }
 
@@ -298,12 +298,13 @@ export const SideBarGrid = styled.div`
 // end halfgrid
 export const TripleGrid = styled.div`
   display: grid;
-  grid-template-columns: 25rem 25rem 25rem;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 2.5rem;
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
+    margin: 0 auto;
     grid-template-columns: repeat(auto-fit, 25rem);
-    justify-content: start;
+    justify-content: center;
     justify-items: center;
   }
 
@@ -449,7 +450,10 @@ export const ContentCard = styled.div`
     border-radius: 150px;
   }
 `
-
+export const TitleContainerMid = styled.div`
+margin: 4rem auto;
+text-align: center;
+`
 /*
 ====================================================
 
@@ -507,13 +511,31 @@ export const H1 = styled.h1`
 `
 // End H1
 
+// Start H2
+export const H2 = styled.h2`
+font-style: normal;
+font-weight: 400;
+font-size: 2.5rem;
+line-height: 3.5rem;
+letter-spacing: -1.1px;
+margin: 0;
+padding: 0;
+color: #000000;
+
+
+`
+
 export const H3 = styled.h3`
-  font-size: 2rem;
-  font-weight: 400;
-  letter-spacing: -0.04em;
-  margin: initial;
+
+
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: -0.3px;
+    color: #333;
+ 
+  margin: 0;
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     letter-spacing: -0.02em;
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
@@ -573,10 +595,15 @@ export const H4 = styled.h4`
 ` // H4
 
 export const H5 = styled.h5`
-  line-height: 2;
-  font-size: 1.1rem;
-  color: #333;
+  line-height: 1.5;
+  font-size: 1.2rem;
+  color: #000;
   letter-spacing: -0.2px;
+  margin: 0;
+
+  strong {
+    font-weight: 700;
+  }
   @media screen and (max-width: 768px) {
     line-height: 1.5;
   }
@@ -962,6 +989,36 @@ export const DocumentList = styled.li`
           color: #653cad;
         }
       }
+
+`
+
+// Promo card for topics on landing page
+export const PromoCard = styled.article`
+
+transition: all 0.3s;
+img{
+  border-radius: 8px;
+}
+a {
+  color: #653cad;
+}
+
+:hover {
+  transform: scale(1.04);
+}
+`
+// Stat container for landing page with checks
+export const StatContainer = styled.div`
+margin: 2rem 0;
+display: grid;
+align-self: center;
+grid-template-columns: 2rem 1fr;
+grid-column-gap: 1rem;
+grid-row-gap: 1.5rem;
+p {
+  align-self: center;
+}
+
 
 `
 

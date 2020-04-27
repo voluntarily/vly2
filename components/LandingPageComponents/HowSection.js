@@ -1,17 +1,13 @@
 
 import React from 'react'
 import styled from 'styled-components'
-import { HalfGrid } from '../VTheme/VTheme'
+import { HalfGrid, H2, H3 } from '../VTheme/VTheme'
 import { Button } from 'antd'
 const PersonaBox = styled.section`
   margin-bottom: 2rem;
-  h3 {
-    font-size: 1.5rem;
-    width: 60%;
-    font-weight: 400;
-    letter-spacing: -0.3px;
-    color: #333;
-  }
+h3 {
+  width: 60%;
+}
 
   /* Tablet */
   @media screen and (min-width: 768px) and (max-width: 1025px) {
@@ -37,34 +33,6 @@ const PersonaBox = styled.section`
 
  
 `
-const PersonaHeader = styled.div`
-h2 {
-  font-size: 3rem;
-  margin-bottom: 0;
-  font-weight: 400;
-}
-@media screen and (max-width: 1025px) {
-
-h2 {
-  font-size: 2rem;
-}
-
-}
-
- /* Mobile */
- @media screen and (max-width: 768px) {
-
-h3 {
-  font-size: 1.1rem;
-}
-}
-
-@media screen and (max-width: 480px) {
-  h2 {
-  font-size: 2rem;
-}
-  }
-  `
 
 const PersonaContainer = styled.div`
     -webkit-transition: all 0.3s;
@@ -138,10 +106,10 @@ width: 90%;
 
 const HowSection = () => (
   <PersonaBox>
-    <PersonaHeader>
-      <h2>How it works</h2>
-      <h3>We add smarts to your volunteering. Voluntarily is an open-source matchmaking platform to connect volunteers who can help with people asking for help.</h3>
-    </PersonaHeader>
+    <div>
+      <H2>How it works</H2>
+      <H3>We add smarts to your volunteering. Voluntarily is an open-source matchmaking platform to connect volunteers who can help with people asking for help.</H3>
+    </div>
     <HalfGrid>
       <PersonaContainer>
         <h3>If you ask for help...</h3>
