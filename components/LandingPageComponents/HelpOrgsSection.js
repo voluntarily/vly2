@@ -6,14 +6,11 @@ import { FormattedMessage } from 'react-intl'
 import { Button, Divider } from 'antd'
 import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
 
-const GiveSupportSection = () => (
+const HelpOrgsSection = () => (
   <>
     <HalfGrid>
-
-      <ImageContainer src='/static/img/about/askforhelp.png' />
-
       <div>
-        <H2>Ask for help from Volunteers</H2>
+        <H2>Empower your organization</H2>
         <H3>Skilled volunteers are offering to help you out. We get all the admin and annoying stuff out of the way to give you more time</H3>
 
         <StatContainer>
@@ -30,19 +27,21 @@ const GiveSupportSection = () => (
           size='large'
           href='https://blog.voluntarily.nz'
           style={{ marginRight: '1rem' }}
-        >Ask for help
+        >Offer to help
         </Button>
         <Button
           type='secondary'
           shape='round'
           size='large'
           href='https://blog.voluntarily.nz'
-        >Join as a community group
+        >Join as a business
         </Button>
       </div>
+      <ImageContainer src='/static/img/about/askforhelp.png' />
+
     </HalfGrid>
     <Divider />
-    <TitleContainerMid><H2>Featured offers to help</H2></TitleContainerMid>
+    <TitleContainerMid><H2>People are asking for help with...</H2></TitleContainerMid>
     <TripleGrid>
       <a>
         <PromoCard>
@@ -78,4 +77,4 @@ const GiveSupportSection = () => (
     </TitleContainerMid>
   </>
 )
-export default GiveSupportSection
+export default HelpOrgsSection

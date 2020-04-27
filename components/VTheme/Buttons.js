@@ -73,7 +73,7 @@ export const SignUpButton = ({ then }) => {
     >
       <FormattedMessage
         id='Button.SignUp'
-        defaultMessage='Sign Up'
+        defaultMessage='Get started'
       />
     </Button>)
 }
@@ -110,6 +110,6 @@ export const LearnMoreButton = () =>
   >
     <FormattedMessage
       id='Button.LearnMore'
-      defaultMessage='Learn More'
+      defaultMessage='Learn more'
     />
   </Button>

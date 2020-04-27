@@ -15,7 +15,7 @@ const AwesomeHeroContainer = styled.div`
   
 
   @media screen and (min-width: 1200px) {
-    width: 80rem;
+   
   }
 
   p {
@@ -34,6 +34,7 @@ const AwesomeHeroContainer = styled.div`
 
 export const HeroGrid = styled.div`
   display: grid;
+  margin: 0 auto;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 2rem;
 
@@ -41,8 +42,7 @@ export const HeroGrid = styled.div`
 
 
   @media screen and (min-width: 1282px) and (max-width: 1921px) {
-    grid-template-columns: 28rem 1fr;
-    grid-column-gap: 3rem;
+
     height: 26rem;
 
  
@@ -51,6 +51,7 @@ export const HeroGrid = styled.div`
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: 22rem 1fr;
     grid-column-gap: 2rem;
+    margin: 2rem;
   }
 
   @media screen and (max-width: 768px) {
@@ -144,36 +145,39 @@ const HeroRight = styled.div`
 `
 
 const HeroText = styled.h1`
-font-weight: 500;
+font-weight: 700;
 font-size: 3rem;
 line-height: 1.5;
 letter-spacing: -0.5px;
 margin-bottom: 0;
 p {
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
   font-weight: 400;
 letter-spacing: 0;
 }
 @media screen and (min-width: 1282px) and (max-width: 1921px) {
  p {
-   width: 90%;
+   width: 95%;
   
  }
   }
 @media screen and (min-width: 1026px) and (max-width: 1281px) {
   font-size:2.5rem;
   p {
-   width: 60%;
+   width: 80%;
   line-height: 1.5;
  }
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     font-size:2.5rem;
     p {
-   width: 70%;
+   width: 90%;
   line-height: 1.5;
  }
   }
   @media screen and (max-width: 768px) {
+  
     font-size: 2.5rem;
     line-height: 1.5;
     margin-bottom: 1rem;

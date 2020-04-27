@@ -14,6 +14,8 @@ import GiveSupportSection from '../../components/LandingPageComponents/GiveSuppo
 import TakeSupportSection from '../../components/LandingPageComponents/TakeSupportSection'
 import HowSection from '../../components/LandingPageComponents/HowSection'
 import Testimonial from '../../components/LandingPageComponents/Testimonial'
+import HelpSocialSection from '../../components/LandingPageComponents/HelpSocialSection'
+import HelpOrgsSection from '../../components/LandingPageComponents/HelpOrgsSection'
 export const Landing = ({ isAuthenticated }) => (
   <>
     <Helmet>
@@ -37,11 +39,10 @@ export const Landing = ({ isAuthenticated }) => (
       <Divider />
       <CorporateSection />
       <Divider />
-      <GiveSupportSection />
+      <HelpSocialSection />
       <Divider />
-      <TakeSupportSection />
-      <Divider />
-      <GiveSupportSection />
+      <HelpOrgsSection />
+
     </FullPage>
   </>
 )

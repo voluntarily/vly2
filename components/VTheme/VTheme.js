@@ -514,7 +514,7 @@ export const H1 = styled.h1`
 // Start H2
 export const H2 = styled.h2`
 font-style: normal;
-font-weight: 400;
+font-weight: 500;
 font-size: 2.5rem;
 line-height: 3.5rem;
 letter-spacing: -1.1px;
@@ -1104,5 +1104,18 @@ export const PageAlert = styled.div`
   h4 {
     color: white;
     font-weight: 600;
+  }
+`
+
+// imagecontainer for halfgrid
+export const ImageContainer = styled.img`
+width: 100%;
+
+@media screen and (min-width: 768px) and (max-width: 1281px) {
+    width: 100%;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 50%;
   }
 `

@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import Link from 'next/link'
 
 const OfferContainer = styled.div`
   display: grid;
@@ -113,37 +112,32 @@ const OfferSection = () => (
 
     <OfferContainer>
 
-      <Link href='/a/ask'>
+      <a href='#ask'>
 
-        <a>
+        <OfferCard>
+          <figcaption>
+            <img src='/static/img/started-1.png' />
+            <h3>Ask for help from volunteers</h3>
+            <p>Connect with people who want to help you, and organise how they can volunteer to help
 
-          <OfferCard>
-            <figcaption>
-              <img src='/static/img/started-1.png' />
-              <h3>Ask for help from volunteers</h3>
-              <p>Connect with people who want to help you, and organise how they can volunteer to help
+            </p>
+          </figcaption>
+        </OfferCard>
+      </a>
 
-              </p>
-            </figcaption>
-          </OfferCard>
-        </a>
-      </Link>
+      <a href='#offer'>
+        <OfferCard>
 
-      <Link href='/a/offer'>
-        <a>
-          <OfferCard>
+          <figcaption>
+            <img src='/static/img/started-2.png' />
+            <h3>Offer to help your community</h3>
+            <p>Connect with people in your community who need help
+            </p>
+          </figcaption>
+        </OfferCard>
+      </a>
 
-            <figcaption>
-              <img src='/static/img/started-2.png' />
-              <h3>Offer to help your community</h3>
-              <p>Connect with people in your community who need help
-              </p>
-            </figcaption>
-          </OfferCard>
-        </a>
-      </Link>
-
-      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
+      <a href='#org'>
         <OfferCard>
 
           <figcaption>
@@ -156,6 +150,7 @@ const OfferSection = () => (
           </figcaption>
         </OfferCard>
       </a>
+
     </OfferContainer>
 
   </div>

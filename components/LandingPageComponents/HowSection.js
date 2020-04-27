@@ -124,11 +124,11 @@ const HowSection = () => (
           <img src='./static/img/icons/ask2.svg' alt='' />
           <div>
             <Title>Help small businesses</Title>
-            <Text>Offer your knowledge to smaller businesses who need the support to set up remote working.</Text>
+            <Text>Our matchmaking system finds skilled volunteers who want to help you</Text>
           </div>
         </article>
 
-        <Button size='large' shape='round' type='primary'>Join the build</Button>
+        <Button size='large' shape='round' type='primary'>See what volunteers can help with</Button>
       </PersonaContainer>
 
       <PersonaContainer>
@@ -137,9 +137,9 @@ const HowSection = () => (
         <article>
           <img src='./static/img/icons/ask2.svg' alt='' />
           <div>
-            <Title>Tell volunteers what you are asking for
+            <Title>Tell volunteers how you can help
             </Title>
-            <Text>Let volunteers know how they can help you out</Text>
+            <Text>Let people know how you can help out in your community</Text>
           </div>
 
           <img src='./static/img/icons/ask2.svg' alt='' />
@@ -149,7 +149,7 @@ const HowSection = () => (
           </div>
         </article>
 
-        <Button size='large' shape='round' type='primary'>Join the build</Button>
+        <Button size='large' shape='round' type='primary'>See the community is asking for</Button>
       </PersonaContainer>
 
     </HalfGrid>

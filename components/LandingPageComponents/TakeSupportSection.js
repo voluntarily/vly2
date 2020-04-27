@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import { Button, Divider } from 'antd'
-import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid } from '../VTheme/VTheme'
+import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
 
 const TakeSupportSection = () => (
   <>
@@ -37,7 +37,7 @@ const TakeSupportSection = () => (
         >Join as a business
         </Button>
       </div>
-      <img src='/static/img/about/askforhelp.png' />
+      <ImageContainer src='/static/img/about/askforhelp.png' />
 
     </HalfGrid>
     <Divider />
