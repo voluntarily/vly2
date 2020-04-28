@@ -114,7 +114,7 @@ const HowSection = () => (
       <PersonaContainer>
         <h3>If you ask for help...</h3>
         <article>
-          <img src='./static/img/icons/ask2.svg' alt='' />
+          <img src='./static/img/icons/ask3.svg' alt='' />
           <div>
             <Title>Tell volunteers what you are asking for
             </Title>
@@ -123,7 +123,7 @@ const HowSection = () => (
 
           <img src='./static/img/icons/ask2.svg' alt='' />
           <div>
-            <Title>Help small businesses</Title>
+            <Title>Voluntarily finds you volunteers that are keen</Title>
             <Text>Our matchmaking system finds skilled volunteers who want to help you</Text>
           </div>
         </article>
@@ -135,16 +135,16 @@ const HowSection = () => (
 
         <h3>If you can offer help...</h3>
         <article>
-          <img src='./static/img/icons/ask2.svg' alt='' />
+          <img src='./static/img/icons/offer2.svg' alt='' />
           <div>
             <Title>Tell volunteers how you can help
             </Title>
             <Text>Let people know how you can help out in your community</Text>
           </div>
 
-          <img src='./static/img/icons/ask2.svg' alt='' />
+          <img src='./static/img/icons/offer3.svg' alt='' />
           <div>
-            <Title>Help small businesses</Title>
+            <Title>Voluntarily finds you people to help</Title>
             <Text>Offer your knowledge to smaller businesses who need the support to set up remote working.</Text>
           </div>
         </article>

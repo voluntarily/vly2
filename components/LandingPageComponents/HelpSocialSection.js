@@ -10,7 +10,7 @@ const HelpSocialSection = () => (
   <>
     <HalfGrid>
 
-      <ImageContainer src='/static/img/about/askforhelp.png' />
+      <ImageContainer src='/static/img/about/yourmovement.png' />
 
       <div>
         <H2>Supercharge your Movement</H2>

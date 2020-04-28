@@ -34,7 +34,7 @@ const HelpOrgsSection = () => (
         >Join as a business
         </Button>
       </div>
-      <ImageContainer src='/static/img/about/askforhelp.png' />
+      <ImageContainer src='/static/img/about/empower.png' />
 
     </HalfGrid>
     <Divider />

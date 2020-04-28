@@ -110,7 +110,6 @@ width: 100%;
 
 const OfferSection = () => (
   <div>
-    <TitleContainerMid><H2>How to get started</H2></TitleContainerMid>
     <OfferContainer>
 
       <a href='#ask'>

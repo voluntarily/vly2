@@ -10,7 +10,7 @@ const GiveContentSection = () => (
   <>
     <HalfGrid>
 
-      <ImageContainer src='/static/img/about/askforhelp.png' />
+      <ImageContainer src='/static/img/about/content.png' />
 
       <div>
         <H2>Content &amp; Programmes</H2>

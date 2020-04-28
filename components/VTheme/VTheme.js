@@ -529,9 +529,13 @@ color: #000000;
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     font-size: 2rem;
     letter-spacing: -0.05rem;
+
+line-height: 1.5;
   }
 
   @media screen and (max-width: 768px) {
+
+line-height: 1.5;
     font-size: 2rem;
     margin-right: initial;
     letter-spacing: -0.03em;
