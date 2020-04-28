@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { TitleContainerMid, H2 } from '../VTheme/VTheme'
 
 const OfferContainer = styled.div`
   display: grid;
@@ -109,7 +110,7 @@ width: 100%;
 
 const OfferSection = () => (
   <div>
-
+    <TitleContainerMid><H2>How to get started</H2></TitleContainerMid>
     <OfferContainer>
 
       <a href='#ask'>

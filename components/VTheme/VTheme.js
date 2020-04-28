@@ -521,7 +521,21 @@ letter-spacing: -1.1px;
 margin: 0;
 padding: 0;
 color: #000000;
+@media screen and (min-width: 1026px) and (max-width: 1281px) {
+    font-size: 2rem;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    font-size: 2rem;
+    letter-spacing: -0.05rem;
+  }
 
+  @media screen and (max-width: 768px) {
+    font-size: 2rem;
+    margin-right: initial;
+    letter-spacing: -0.03em;
+  }
 
 `
 

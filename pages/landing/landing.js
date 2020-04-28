@@ -11,6 +11,8 @@ import { Divider } from 'antd'
 
 import CorporateSection from '../../components/LandingPageComponents/CorporateSection'
 import GiveSupportSection from '../../components/LandingPageComponents/GiveSupportSection'
+
+import GiveContentSection from '../../components/LandingPageComponents/GiveContentSection'
 import TakeSupportSection from '../../components/LandingPageComponents/TakeSupportSection'
 import HowSection from '../../components/LandingPageComponents/HowSection'
 import Testimonial from '../../components/LandingPageComponents/Testimonial'
@@ -42,6 +44,8 @@ export const Landing = ({ isAuthenticated }) => (
       <HelpSocialSection />
       <Divider />
       <HelpOrgsSection />
+      <Divider />
+      <GiveContentSection />
 
     </FullPage>
   </>

@@ -37,7 +37,7 @@ const TakeSupportSection = () => (
         >Join as a business
         </Button>
       </div>
-      <ImageContainer src='/static/img/about/askforhelp.png' />
+      <ImageContainer src='/static/img/about/offer.png' />
 
     </HalfGrid>
     <Divider />

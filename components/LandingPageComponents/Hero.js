@@ -9,7 +9,7 @@ import { LearnMoreButton, SignUpButton } from '../../components/VTheme/Buttons'
 
 // this is the big container block that holds the container together lol
 const AwesomeHeroContainer = styled.div`
-  margin: 7rem auto;
+  margin: 7rem auto 0 auto;
   height: auto;
   width: auto;
   
@@ -20,6 +20,10 @@ const AwesomeHeroContainer = styled.div`
 
   p {
     font-size: 1.5rem;
+  }
+  @media screen and (max-width: 1280px) {
+
+  margin: 7rem auto 0rem auto;
   }
 
   @media screen and (max-width: 768px) {
@@ -89,8 +93,8 @@ width: 100vw;
 const AwesomeImage = styled.img`
   position: relative;
   text-align: center;
-  margin: 0 auto;
-  width: 80%;
+  margin: 0 0 0 auto;
+  width: 50%;
   display: grid;
  justify-self: end;
   overflow: hidden;
@@ -100,6 +104,8 @@ const AwesomeImage = styled.img`
   @media screen and (min-width: 1282px) and (max-width: 1921px) {
     width: 100%;
     height: 28rem;
+
+    object-position: right;
   }
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
@@ -156,9 +162,17 @@ p {
   font-weight: 400;
 letter-spacing: 0;
 }
+@media screen and (min-width: 1922px) {
+ p {
+  
+width: 50%;
+  
+ }
+}
+
 @media screen and (min-width: 1282px) and (max-width: 1921px) {
  p {
-   width: 95%;
+   width: 80%;
   
  }
   }

@@ -63,7 +63,7 @@ width: 100%;
 }
  img{ 
    margin-bottom: 1rem;
-  width: 100%;
+  width: 60%;
 }
 
   :hover {
@@ -77,7 +77,7 @@ width: 100%;
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     min-height: 19rem;
     img{ 
-  width: 60%;
+  width: 30%; 
     }
     p {
       width: 60%;
@@ -107,6 +107,8 @@ width: 100%;
 
   }
 
+
+
 `
 
 const CorporateSection = () => (
@@ -120,7 +122,7 @@ const CorporateSection = () => (
 
           <OfferCard>
             <figcaption>
-              <img src='/static/img/started-1.png' />
+              <img src='/static/img/about/org-1.svg' />
               <h3>Businesses</h3>
               <p>Connect with people who want to help you, and organise how they can volunteer to help
 
@@ -135,7 +137,7 @@ const CorporateSection = () => (
           <OfferCard>
 
             <figcaption>
-              <img src='/static/img/started-2.png' />
+              <img src='/static/img/about/org-2.svg' />
               <h3>Community groups</h3>
               <p>Connect with people who want to help you, and organise how they can volunteer to help
 
@@ -149,7 +151,7 @@ const CorporateSection = () => (
         <OfferCard>
 
           <figcaption>
-            <img src='/static/img/started-3.png' />
+            <img src='/static/img/about/org-3.svg' />
             <h3>Industry groups</h3>
             <p>Manage your business CSR programme and supercharge your community movement
 
