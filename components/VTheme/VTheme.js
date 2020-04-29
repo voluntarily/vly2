@@ -309,7 +309,8 @@ export const TripleGrid = styled.div`
   }
 
   @media screen and (max-width: 767px) {
-    grid-template-columns: calc(100vw - 2rem);
+    grid-template-columns: 1fr;
+    grid-row-gap: 2rem;
     grid-gap: 0rem;
   }
 ` // end triplegrid
@@ -366,7 +367,11 @@ export const Grid8 = styled.div`
 ` // end grid
 
 export const DescriptionWrapper = styled.p`
-margin-top: 0.5rem;
+margin: 1rem 0;
+color: #333;
+i {
+  font-size: 0.8rem;
+}
 `
 
 export const GridContainer = styled.div`
@@ -782,33 +787,41 @@ export const FillWindow = styled.div`
 */
 export const Card = styled.figure`
 
--webkit-transition: all 0.28s;
 padding-bottom: 0.5rem;
 
-
+-webkit-transition: all 0.3s;
+  transition: all 0.3s;
+p {
+  margin: 0.5rem 0 -0.1rem 0;
+  color: #444;
+}
 a { text-decoration: none; }
 
 figcaption {
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
 
-  li { list-style: none }
+  li { list-style: none;
+   }
   ul { padding-left: 0; }
 }
 
 :hover {
-  transition: all 0.3s;
   box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
-  transform: scale(1.02);
+  transform: scale(1.04);
   border-radius: 8px;
+ p, ul {
+   color: black;
+ }
   h1 {
-    color: #6549aa;
+
+  color: #6549aa;
   }
+
   img {
     border-radius: 8px 8px 0 0;
   }
   figcaption {
     transform: scale(0.94);
+    transition: all 0.3s;
   }
 }
 img {
@@ -816,9 +829,8 @@ img {
   min-width: 18rem;
 }
 h1 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
+  margin: 0.2rem 0 0.4rem 0;
+  font-size: 1.4rem;
   vertical-align: middle;
   color: #000;
   text-overflow: ellipsis;
@@ -826,18 +838,13 @@ h1 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  -webkit-transition: all 0.28s;
-  transition: all 0.28s;
   font-weight: 700;
-  font-size: 20px;
   line-height: 1.4;
   -webkit-line-clamp: 3;
 
 }
 
 img {
-  transition: all 0.2s;
-  -webkit-transition: all 0.2s;
   width: 100%;
   height: 10rem;
   max-height: 10rem;
@@ -1136,4 +1143,103 @@ width: 100%;
   @media screen and (max-width: 768px) {
     width: 50%;
   }
+`
+
+export const OfferCard = styled.div`
+  
+display: grid;
+gap:1.5rem;
+grid-template-columns: 1fr;
+width: 100%;
+text-align: center;
+  background: #ffffff;
+
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+
+figcaption {
+  position: relative;
+
+  margin: 0;
+width: 100%;
+
+}
+
+  h3 {
+    bottom: 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: -0.38px;
+    line-height: 1.5;
+    color: #653cad;
+
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+  }
+  small {
+  font-size: 1rem
+}
+ img{ 
+   margin-bottom: 1rem;
+  width: 100%;
+}
+
+  :hover {
+    transform: scale(1.01);
+    h3 {
+      color: #653cad;
+    }
+  }
+
+  /* Tablet */
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+
+    min-height: 10rem;
+    figcaption {
+      display: grid;
+      grid-column-gap: 2rem;
+      grid-template-columns: 1fr 2fr;
+  
+    }
+    div {
+      align-self: center;
+      text-align: left;
+    }
+    
+    img{ 
+  width: 100%;
+  align-self: center;
+  justify-self: end;
+    }
+    p {
+      width: 100%;
+      margin: 0 auto;
+    }
+   }
+
+  /* Mobile */
+  @media screen and (max-width: 768px) {
+    min-height: 22rem;
+    
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 668px) {
+    min-height: 22rem;
+
+    width: calc(100vw - 2rem);
+    text-align: left;
+   
+
+  h3 {
+    bottom: 0;
+    font-size: 1.5rem;
+  
+  }
+
+  }
+
 `

@@ -41,9 +41,10 @@ export const Landing = ({ isAuthenticated }) => (
       <Divider />
       <CorporateSection />
       <Divider />
-      <HelpSocialSection />
-      <Divider />
       <HelpOrgsSection />
+      <Divider />
+      <HelpSocialSection />
+
       <Divider />
       <GiveContentSection />
 

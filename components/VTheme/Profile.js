@@ -36,6 +36,7 @@ export const VBannerImg = styled.img`
   justify-self: center;
   padding: 2.5rem;
   margin-left: 4rem;
+  border-radius: 100%;
 
 @media screen and (max-width: 767px) {
   margin-left: initial;
@@ -80,10 +81,20 @@ ul {
 `
 export const ProfileSectionTitle = styled.h2`
   margin: 1.5rem 0 ;
-
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.28px;
   small {
+    margin: 0.25rem 0 2.5rem 0;
+    font-size: 1.25rem;
+    font-weight: 400;
     display: block;
     line-height: 2rem;
-    font-size: 50%;
+    @media screen and (max-width: 768px) {
+
+      font-size: 1.2rem;
+      width: 90%;
   }
+
+
 `

@@ -8,7 +8,7 @@ import moment from 'moment'
 import { Card, DescriptionWrapper, TagState } from '../VTheme/VTheme'
 import { Icon } from 'antd'
 import styled from 'styled-components'
-import { OpType } from './OpType'
+import { OpTypeSuffix } from './OpType'
 
 const getOpPageURL = (isArchived, opid) => {
   if (isArchived) {
@@ -64,7 +64,9 @@ const OpCard = ({ op }) => {
             {/* <OpTypeStamp type={op.type} /> */}
           </ImageWrapper>
           <figcaption>
-            {op.requestor.nickname} <OpType type={op.type} />
+            <p>
+              {op.requestor.nickname} <OpTypeSuffix type={op.type} />
+            </p>
             <h1>
               {draft}
               {op.name}
@@ -82,9 +84,9 @@ const OpCard = ({ op }) => {
             </DescriptionWrapper>
 
             <DescriptionWrapper>
-              {orgName &&
-                <i>Via {orgName}&nbsp;</i>}
-              <i>{moment(op.createdAt).fromNow()}</i>
+              {/* {orgName &&
+                <i>Via {orgName}&nbsp;</i>} */}
+              <i> created {moment(op.createdAt).fromNow()}</i>
             </DescriptionWrapper>
             {interestIcon}
 

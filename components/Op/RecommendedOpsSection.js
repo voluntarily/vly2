@@ -26,14 +26,15 @@ export const RecommendedOpsSection = () => {
               defaultMessage='Opportunities to Volunteer'
               decription='Title on volunteer home page for recommended opportunities'
             />
+            <small>
+              <FormattedMessage
+                id='recommendedOpsSection.subtitle.volunteer'
+                defaultMessage='Here are some people you could help right now.'
+                decription='Subtitle on volunteer home page for recommended opportunities'
+              />
+            </small>
           </ProfileSectionTitle>
-          <p>
-            <FormattedMessage
-              id='recommendedOpsSection.subtitle.volunteer'
-              defaultMessage='Here are some people you could help right now.'
-              decription='Subtitle on volunteer home page for recommended opportunities'
-            />
-          </p>
+
           <OpRecommendations recommendedOps={ops} type={ASK} />
         </ProfileSection>}
 
@@ -44,14 +45,15 @@ export const RecommendedOpsSection = () => {
             defaultMessage='People offering help'
             decription='Title on volunteer home page for recommended opportunities'
           />
+          <small>
+            <FormattedMessage
+              id='recommendedOpsSection.subtitle'
+              defaultMessage='Here are some opportunities volunteers are offering'
+              decription='Subtitle on volunteer home page for recommended opportunities'
+            />
+          </small>
         </ProfileSectionTitle>
-        <p>
-          <FormattedMessage
-            id='recommendedOpsSection.subtitle'
-            defaultMessage='Here are some opportunities volunteers are offering'
-            decription='Subtitle on volunteer home page for recommended opportunities'
-          />
-        </p>
+
         <OpRecommendations recommendedOps={ops} type={OFFER} />
       </ProfileSection>
     </>

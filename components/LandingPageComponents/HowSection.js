@@ -50,6 +50,7 @@ const PersonaContainer = styled.div`
  }
 
 
+
  /* Mobile */
  @media screen and (max-width: 768px) {
 
@@ -128,7 +129,7 @@ const HowSection = () => (
           </div>
         </article>
 
-        <Button size='large' shape='round' type='primary'>See what volunteers can help with</Button>
+        <Button size='large' shape='round' type='primary'>See all offers</Button>
       </PersonaContainer>
 
       <PersonaContainer>
@@ -149,7 +150,7 @@ const HowSection = () => (
           </div>
         </article>
 
-        <Button size='large' shape='round' type='primary'>See the community is asking for</Button>
+        <Button size='large' shape='round' type='primary'>See all asks</Button>
       </PersonaContainer>
 
     </HalfGrid>
