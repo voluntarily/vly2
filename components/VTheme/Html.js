@@ -17,18 +17,18 @@ export const HtmlExpander = styled(Html)`
 `
 
 export const MoreOrLessButton = ({ more, onClick }) =>
-  <Button shape='round' style={{ float: 'right' }} onClick={onClick}>
+  <Button shape='round' size='large' style={{ float: 'left' }} onClick={onClick}>
     {more
       ? (
         <FormattedMessage
           id='MoreOrLessButton.Less'
-          defaultMessage='Read less'
+          defaultMessage='Close'
         />
       )
       : (
         <FormattedMessage
           id='MoreOrLessButton.More'
-          defaultMessage='Read more'
+          defaultMessage='Learn more'
         />)}
   </Button>
 

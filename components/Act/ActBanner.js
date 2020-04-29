@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { config } from '../../config/clientConfig'
 import { Helmet } from 'react-helmet'
-import { OpSectionGrid, BannerDetail } from '../VTheme/VTheme'
+import { OpSectionGrid, BannerDetail, H2 } from '../VTheme/VTheme'
 import {
   ItemContainer,
   ItemDuration,
@@ -34,17 +34,17 @@ export const ActBanner = ({ act, children }) => {
 
       <OpSectionGrid>
         <div>
-          <h1>
+          <H2>
             <OpStatus status={act.status} />
             {act.name}
-          </h1>
+          </H2>
           {act.subtitle && <p>{act.subtitle}</p>}
           {/* <ul>
             <ItemIdLine item={act.offerOrg} path='orgs' />
           </ul> */}
           <ItemContainer>
-            <ItemDuration duration={act.duration} />
-            <ItemNeeds volunteers={act.volunteers} />
+            <li><ItemDuration duration={act.duration} /></li>
+            <li><ItemNeeds volunteers={act.volunteers} /></li>
             <li><OpTypeCount counts={act.opCounts} type={ASK} /></li>
             <li><OpTypeCount counts={act.opCounts} type={OFFER} /></li>
           </ItemContainer>

@@ -195,7 +195,7 @@ export const ItemNeeds = ({ volunteers, equipment }) => {
         <strong>
           <FormattedMessage
             id='ItemNeeds.required'
-            defaultMessage='🤔Activity needs:'
+            defaultMessage='🤔 Activity needs:'
             description='label for number of people required'
           />
         </strong>
