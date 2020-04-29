@@ -157,7 +157,7 @@ export const ActDetailPage = ({
         </PageBannerButtons>
         <ActTryBelow counts={act.opCounts} role={me.role} />
       </ActBanner>
-      <ActTabs act={act} canManage={canManage} canEdit={canManage} defaultTab={tab} onChange={handleTabChange} owner={me._id} />
+      <ActTabs act={act} me={me} canManage={canManage} canEdit={canManage} defaultTab={tab} onChange={handleTabChange} owner={me._id} />
     </FullPage>)
 }
 
