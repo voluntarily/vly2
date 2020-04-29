@@ -5,7 +5,7 @@ import TagDisplay from '../Tags/TagDisplay'
 import Html from '../VTheme/Html'
 import { ItemIdLine, TagContainer } from '../VTheme/ItemList'
 import { ProfilePanel, ProfileSection } from '../VTheme/Profile'
-import { OpSectionGrid, Spacer } from '../VTheme/VTheme'
+import { OpSectionGrid, Spacer, H3 } from '../VTheme/VTheme'
 import { Divider } from 'antd'
 import { ShareLinks } from './OpShareLinks'
 import { config } from '../../config/clientConfig'
@@ -19,7 +19,7 @@ export function OpAboutPanel ({ op }) {
     <ProfilePanel>
 
       <OpSectionGrid>
-        <h2><FormattedMessage id='OpAboutPanel.section.title.about' defaultMessage='About' /></h2>
+        <H3><FormattedMessage id='OpAboutPanel.section.title.about' defaultMessage='About' /></H3>
         <div>
           {subtitle}
           {description &&

@@ -57,7 +57,7 @@ object-position: center;
 
 export const ItemDuration = ({ duration }) =>
   <ItemListing>
-  ⏱
+  ⏱&nbsp;
     <strong>
       <FormattedMessage
         id='itemlist.duration'
@@ -111,7 +111,7 @@ export const ItemIdLine = ({ item, path }) =>
 
 export const ItemDate = ({ startDate, endDate }) =>
   <ItemListing>
-    🗓
+    🗓&nbsp;
     <strong>
       <FormattedMessage
         id='itemlist.date'

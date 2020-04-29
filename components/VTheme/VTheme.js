@@ -45,10 +45,11 @@ div{
 h1 {
   align-self: center;
   font-size: 1.5rem;
-  line-height: 1.5
+  line-height: 1;
+  margin-bottom: 0.25rem;
 }
 p {
-  margin-top: -0.1rem;
+  margin: 0;
   font-size: 1.25rem;
   color: #333;
 }
@@ -960,11 +961,12 @@ align-self: center;
 
 ul {
   padding: 0;
-  margin-bottom: 0;
+  margin: 0.25rem 0 0 0;
+
 }
 small {
 
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 500;
   color: #333;
 @media screen and (max-width: 768px) {

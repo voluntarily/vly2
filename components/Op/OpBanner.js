@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { config } from '../../config/clientConfig'
 import { Helmet } from 'react-helmet'
-import { SideBarGrid, BannerDetail } from '../VTheme/VTheme'
+import { SideBarGrid, BannerDetail, H2 } from '../VTheme/VTheme'
 import {
   Left,
   ItemContainer,
@@ -47,7 +47,9 @@ const OpBanner = ({ op, children }) => {
         </Left>
         <BannerDetail>
           <small>{op.requestor.nickname} <OpType type={op.type} /> with</small>
-          <h1> {op.name}</h1>
+          <H2>
+            {op.name}
+          </H2>
           <ul>
             {/* <ItemIdLine item={op.offerOrg} path='orgs' />
             <ItemIdLine item={op.fromActivity} path='acts' /> */}
