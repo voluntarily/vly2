@@ -317,21 +317,22 @@ export const TripleGrid = styled.div`
 ` // end triplegrid
 
 export const Grid = styled.div`
-  position: relative;
   display: grid;
-  grid-template-columns: 18.5rem 18.5rem 18.5rem 18.5rem;
-  grid-gap: 2rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-column-gap: 1.5rem;
+  grid-row-gap: 2rem;
   overflow: visible;
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
-    grid-template-columns: repeat(auto-fit, 18.5rem);
-    justify-content: start;
-    justify-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+
   }
 
-  @media screen and (max-width: 767px) {
-    grid-template-columns: calc(100vw - 2rem);
-    grid-gap: 0rem;
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media screen and (max-width: 640px) {
+    grid-template-columns: 1fr;
   }
 ` // end grid
 
@@ -827,7 +828,6 @@ figcaption {
 }
 img {
   border-radius: 8px;
-  min-width: 18rem;
 }
 h1 {
   margin: 0.2rem 0 0.4rem 0;

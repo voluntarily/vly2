@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import OpCard from './OpCard'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
+import { Grid } from '../VTheme/VTheme'
 
 const CardWrapper = styled.div`
   width: 100%;
@@ -29,7 +30,7 @@ overflow: visible;
 `
 
 const OpList = ({ ops, ...props }) => (
-  <CardContainer>
+  <Grid>
     {ops ? (
       ops.map((op, index) =>
         <CardWrapper key={index}>
@@ -43,7 +44,7 @@ const OpList = ({ ops, ...props }) => (
         description='no opportunities message in OpList'
       />
     )}
-  </CardContainer>
+  </Grid>
 )
 
 OpList.propTypes = {
