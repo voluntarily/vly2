@@ -2,7 +2,6 @@ import { defaultToHttpScheme } from '../../lib/urlUtil'
 import { Divider, Button } from 'antd'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
-import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
@@ -14,7 +13,8 @@ import PersonPronouns from './PersonPronoun'
 import { PersonBadgeSection } from './PersonBadge'
 import { VBanner, VBannerImg, ProfileBannerTitle } from '../VTheme/Profile'
 import Verification from '../Verification/Verification'
-
+import { ParticipationSection } from './ParticipationSection'
+import { TopicGroupSection } from './TopicGroupSection'
 const DetailItem = styled.div`
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -39,43 +39,61 @@ const PersonUl = styled.ul`
   }
 `
 
-const PersonDetail = ({ person, panelEdit, personEdit, canEdit }, ...props) => (
-
-  <div>
+const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
+  <>
     <Head title={person.nickname} />
     <VBanner>
       <VBannerImg src={person.imgUrl} alt={person.nickname} />
       <ProfileBannerTitle>
         <h1>{person.name}</h1>
-
-        {canEdit
-          ? (
-            <Button id='editPersonBtn' style={{ float: 'right' }} type='primary' shape='round' onClick={personEdit}>
-              <FormattedMessage id='PersonDetail.edit' defaultMessage='Edit' description='Button to edit a person' />
-            </Button>)
-          : (
-            <Button style={{ float: 'right' }} type='primary' shape='round' onClick={panelEdit}>
-              <FormattedMessage
-                id='PersonDetail.panel.edit'
-                defaultMessage='Edit'
-                description='Button to edit an person on PersonDetails page'
-              />
-            </Button>)}
-
-        <Verification />
-
-        <p>{person.job && `${person.job}`} {person.placeOfWork && `- ${person.placeOfWork}`}</p>
+        {canEdit &&
+          <div>
+            {personEdit &&
+              <Button id='editPersonBtn' type='primary' shape='round' onClick={personEdit}>
+                <FormattedMessage id='PersonDetail.edit' defaultMessage='Edit Profile' description='Button to edit a person' />
+              </Button>}
+            {panelEdit &&
+              <Button type='primary' shape='round' onClick={panelEdit}>
+                <FormattedMessage
+                  id='PersonDetail.panel.edit'
+                  defaultMessage='Edit Profile'
+                  description='Button to edit an person on PersonDetails page'
+                />
+              </Button>}
+            &nbsp;<Verification />
+          </div>}
+        <p>
+          {person.job && `${person.job}`}
+          {person.placeOfWork && ` - ${person.placeOfWork}`}
+        </p>
       </ProfileBannerTitle>
     </VBanner>
     <Divider />
+    {canEdit &&
+      <>
+        <ActivityContainer>
+          <h2><FormattedMessage defaultMessage='Participation' id='PersonDetail.Participation' description='Participation section header for a person profile' /> </h2>
+          <div>
+            <ParticipationSection person={person} />
+          </div>
+        </ActivityContainer>
+        <Divider />
+        <ActivityContainer>
+          <h2><FormattedMessage defaultMessage='Follow Groups' id='PersonDetail.TopicGroups' description='TopicGroups section header for a person profile' /> </h2>
+          <div>
+            <TopicGroupSection person={person} />
+          </div>
+        </ActivityContainer>
+        <Divider />
+      </>}
     {(person.about || person.tags) &&
       <>
         <ActivityContainer>
-          <h2><FormattedMessage defaultMessage='About' id='personAbout' description='About section header for a person profile' /> </h2>
+          <h2><FormattedMessage defaultMessage='About' id='PersonDetail.About' description='About section header for a person profile' /> </h2>
           <div>
             {person.about &&
               <div>
-                <Html children={person.about || ''} />
+                <Html children={person.about} />
                 <Divider />
               </div>}
             {person.tags &&
@@ -83,7 +101,7 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }, ...props) => (
                 <h5>
                   <FormattedMessage
                     defaultMessage='Interests and Skills'
-                    id='person.skills.title'
+                    id='PersonDetail.skills.title'
                     description='subheading for tags on person details page'
                   />
                 </h5>
@@ -98,7 +116,7 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }, ...props) => (
       <h2>
         <FormattedMessage
           defaultMessage='Contact'
-          id='personContact'
+          id='PersonDetail.Contact'
           description='Heading for contact details on person details page'
         />
       </h2>
@@ -223,7 +241,7 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }, ...props) => (
     </ActivityContainer>
 
     <Divider />
-  </div>
+  </>
 
 )
 
@@ -246,6 +264,7 @@ PersonDetail.propTypes = {
     role: PropTypes.arrayOf(
       PropTypes.oneOf([
         'admin',
+        'basic',
         'opportunityProvider',
         'volunteer',
         'activityProvider',

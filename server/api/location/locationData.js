@@ -1,4 +1,4 @@
-const suburbs = require('./locationSuburbsData')
+// const suburbs = require('./locationSuburbsData')
 
 // for now, this is hardcoded to all TLAs and regions in NZ
 const regions = [
@@ -151,18 +151,10 @@ const territories = regions.map(r => r.containedTerritories).reduce((acc, val) =
 
 const sortedLocations = [
   ...regions.map(r => r.name),
-  ...territories,
-  ...suburbs
+  ...territories
+  // ,...suburbs
 ]
-sortedLocations.sort((l1, l2) => {
-  if (l1 < l2) {
-    return -1
-  } else if (l1 > l2) {
-    return 1
-  } else {
-    return 0
-  }
-})
+sortedLocations.sort((l1, l2) => l1.localeCompare(l2))
 
 module.exports = {
   regions,

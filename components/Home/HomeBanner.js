@@ -9,7 +9,7 @@ export const HomeBanner = ({ person, children }) =>
       <img src={person.imgUrl} />
       <div>
         <h1>{person.name}</h1>
-        {person.nickname && <p>Welcome back, {person.nickname} 🥳</p>}
+        {person.nickname && <p>Kia ora, {person.nickname} 🥳</p>}
       </div>
     </article>
     {children}

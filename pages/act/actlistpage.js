@@ -38,7 +38,7 @@ const ActListSubTitleMessages = defineMessages({
 
 export const ActListPage = () => {
   const router = useRouter()
-  const type = router.query.type
+  const type = router.query.type || 'ask'
 
   return (
     <FullPage>

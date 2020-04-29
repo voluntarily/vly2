@@ -84,7 +84,7 @@ const Header = () => {
     backgroundColor: 'white'
   }
 
-  let state = MenuShowState.ANON
+  let state = isAuthenticated ? MenuShowState.AUTH : MenuShowState.ANON
   if (me.role.includes(Role.BASIC)) state = MenuShowState.BASIC
   if (me.role.includes(Role.VOLUNTEER)) state = MenuShowState.VOLUNTEER
   if (me.role.includes(Role.VOLUNTEER) && me.role.includes(Role.BASIC)) state = MenuShowState.BOTH

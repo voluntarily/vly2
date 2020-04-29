@@ -38,10 +38,10 @@ const registerPerson = async (req, res) => {
     const me = req.session && req.session.me
 
     // is the person an asker?
-    updateRole(me, prefs.roleAsk, Role.BASIC)
+    if (prefs.roleAsk !== undefined) { updateRole(me, prefs.roleAsk, Role.BASIC) }
 
     // is the person a volunteer?
-    updateRole(me, prefs.roleOffer, Role.VOLUNTEER)
+    if (prefs.roleOffer !== undefined) { updateRole(me, prefs.roleOffer, Role.VOLUNTEER) }
 
     // set the chosen topic groups
     if (prefs.topicGroups) {

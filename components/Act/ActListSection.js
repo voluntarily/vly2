@@ -39,19 +39,22 @@ export const ActListSection = () => {
   const [search, setSearch] = useState(router.query.search)
   const [selectedOrg, setSelectedOrg] = useState()
 
-  const activities = useSelector(
-    state => state.activities // list of ops I own
-  )
+  const [me, activities] = useSelector(state => [state.session.me, state.activities])
   const dispatch = useDispatch()
 
   useEffect(() => {
     const getActivities = async () => {
+      const q = { status: 'active' }
       const query = { }
-      if (search) {
-        query.search = search
+      if (me.topicGroups && me.topicGroups.length) {
+        q.tags = { $in: me.topicGroups }
       }
       if (selectedOrg) {
-        query.q = JSON.stringify({ offerOrg: selectedOrg })
+        q.offerOrg = selectedOrg
+      }
+      query.q = JSON.stringify(q)
+      if (search) {
+        query.search = search
       }
       await dispatch(reduxApi.actions.activities.get(query))
     }

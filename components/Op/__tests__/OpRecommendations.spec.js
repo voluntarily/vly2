@@ -36,7 +36,7 @@ test.serial('ensure recommendations component renders all recommendations on ski
   const wrapper = mountWithIntl(<OpRecommendations type='ask' recommendedOps={recommendations} />)
   const numOpCards = wrapper.find('OpCard').length
   t.is(wrapper.find('h3').length, 1)
-  t.is(wrapper.find('h3').first().text(), 'Based on your skills and interests')
+  t.is(wrapper.find('h3').first().text(), 'Based on your preferences')
   t.is(numOpCards, ops.length)
 })
 
