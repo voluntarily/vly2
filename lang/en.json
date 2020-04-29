@@ -71,7 +71,7 @@
   "admin-page.access-denied.heading": "Access denied",
   "AllDone.title": "You are ready to go",
   "askforhelp-anon": "Ask for help",
-  "basic": "Ask",
+  "basic": "Asker",
   "Button.AcceptAndContinue": "Accept and Continue",
   "Button.Back": "Back",
   "Button.editSaveDraft": "Save as draft",
@@ -366,7 +366,6 @@
   "OpOfferForm.Tags": "Tags",
   "OpOfferForm.Title": "Title",
   "OpOfferForm.Venue": "Address",
-  "opportunityProvider": "Make Requests",
   "OpportunityStatus.active": "Active",
   "OpportunityStatus.completed": "Completed",
   "OpportunityStatus.draft": "Draft",
@@ -566,13 +565,13 @@
   "storyDescription": "Description",
   "storyName": "Title",
   "storyUpdate": "Check here for updates about this activity",
+  "support": "Help Desk",
   "TakeSupportSection.ask": "See all activities",
   "TeacherRegistrationRecord.Category": "Category",
   "TeacherRegistrationRecord.Expiry": "Expiry",
   "TeacherRegistrationRecord.name": "Name",
   "TeacherRegistrationRecord.registrationNumber": "Registration Number",
   "TeacherRegistrationRecord.title": "Teacher Registration Record",
-  "test": "Test",
   "test-person.notavailable": "Sorry, this person is not available",
   "unverified.button": "Sign out and try again",
   "unverified.message": "\n  <h1>Email not verified</h1>\n  <p>You have signed in as {name} but your email account is not currently verified. </p>\n  <p>Please check your email inbox and spam box for a verification request to complete the registration process. </p>\n  <p>If problems continue please contact technical support.</p>",
@@ -584,5 +583,5 @@
   "verification.trustandsafety.confirmation": "Verify Identity",
   "VerifyButton.label": "Verify Identity",
   "version": "Version",
-  "volunteer": "Offer"
+  "volunteer": "Volunteer"
 }
