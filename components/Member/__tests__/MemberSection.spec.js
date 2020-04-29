@@ -95,7 +95,7 @@ test.serial('followers can become members and then be removed', async t => {
   membersSection = wrapper.find('section').at(2)
   t.is(membersSection.find('tbody tr').length, 2)
   const member2 = membersSection.find('tbody tr').at(1)
-  t.is(member2.find('td').at(MTF.NAME).text().trim(), firstFollower.person.nickname)
+  t.regex(member2.find('td').at(MTF.NAME).text().trim(), new RegExp(firstFollower.person.nickname))
 
   // test Remove button
   const removeButton = member2.find('button').first()
@@ -167,7 +167,7 @@ test.serial('joiners can become members ', async t => {
   membersSection = wrapper.find('section').at(2)
   t.is(membersSection.find('tbody tr').length, memberCount + 1)
   const member2 = membersSection.find('tbody tr').at(1)
-  t.is(member2.find('td a span').at(MTF.NAME).text(), firstJoiner.person.nickname)
+  t.regex(member2.find('td a span').at(MTF.NAME).text(), new RegExp(firstJoiner.person.nickname))
 
   // one joiner left
   joinersSection = wrapper.find('section').at(1)
@@ -176,7 +176,7 @@ test.serial('joiners can become members ', async t => {
   const orgValidators = orgMembers.filter(member => member.status === MemberStatus.VALIDATOR)
   const firstValidator = orgValidators[0]
 
-  t.is(firstJoinerRow.find('td').at(MTF.NAME).text().trim(), firstValidator.person.nickname)
+  t.regex(firstJoinerRow.find('td').at(MTF.NAME).text().trim(), new RegExp(firstValidator.person.nickname))
   t.is(firstJoinerRow.find('td').at(MTF.STATUS).text(), MemberStatus.VALIDATOR)
 
   // test Reject button

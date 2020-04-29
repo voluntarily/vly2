@@ -35,7 +35,7 @@ const listInterestsA = InterestModel => async (req, res) => {
 
     if (req.query.op) {
       find.opportunity = req.query.op
-      populateList.push({ path: 'person', select: 'nickname name imgUrl email website phone job placeOfWork' })
+      populateList.push({ path: 'person', select: 'nickname name imgUrl role email website phone job placeOfWork' })
     }
 
     if (req.query.me) {
