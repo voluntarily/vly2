@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const VBanner = styled.header`
-margin: 5rem 0 0rem 0;
+margin: 0rem 0 0rem 0;
 display: grid;
 grid-template-columns: 100%;
 align-self: center;
@@ -70,7 +70,7 @@ export const ProfileTab = styled.span`
 
 export const ProfilePanel = styled.article`
   text-align: left;
-  margin: 2rem 0;
+  margin: 0rem 0;
 `
 
 export const ProfileSection = styled.section`
