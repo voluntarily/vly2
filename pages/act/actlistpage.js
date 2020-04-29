@@ -2,7 +2,7 @@
 import { Helmet } from 'react-helmet'
 import { FormattedMessage, defineMessages } from 'react-intl'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
-import { FullPage, PageBannerNoTabs, PageBannerButtons, H2 } from '../../components/VTheme/VTheme'
+import { FullPage, PageBannerNoTabs, PageBannerButtons } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import ActAdd from '../../components/Act/ActAdd'
 import ActListSection from '../../components/Act/ActListSection'
@@ -13,7 +13,7 @@ const { ASK, OFFER } = OpportunityType
 const ActListTitleMessages = defineMessages({
   [ASK]: {
     id: 'ActListPage.Ask.Title',
-    defaultMessage: 'Volunteers can help with',
+    defaultMessage: 'Volunteers are offering to help with',
     description: 'Title of ask for help page'
   },
   [OFFER]: {
@@ -46,9 +46,9 @@ export const ActListPage = () => {
         <title>Activities - Voluntarily</title>
       </Helmet>
       <PageBannerNoTabs>
-        <H2>
+        <h1>
           <FormattedMessage {...ActListTitleMessages[type]} />
-        </H2>
+        </h1>
         <PageBannerButtons>
           <ActAdd />
         </PageBannerButtons>

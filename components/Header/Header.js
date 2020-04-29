@@ -94,6 +94,14 @@ const Header = () => {
       {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><Icon type='warning' /> {notice}</Notice>}
       <MenuGrid>
         <div>
+          <Link href='/landing'>
+            <LogoContainer>
+              <Logo
+                src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+                alt='Voluntarily logo'
+              />
+            </LogoContainer>
+          </Link>
           <Brand className='site-name' aria-hidden='true' />
           {/* <SearchInput
             placeholder='Search for cool ways to help out'
@@ -102,14 +110,8 @@ const Header = () => {
 
           /> */}
         </div>
-        <Link href='/landing'>
-          <LogoContainer>
-            <Logo
-              src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
-              alt='Voluntarily logo'
-            />
-          </LogoContainer>
-        </Link>
+        <div />
+
         <div>
           <HeaderMenu state={state} />
 

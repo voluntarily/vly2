@@ -77,7 +77,7 @@ export const NavigationV = ({ items }) => {
   )
 }
 
-const COLLAPSE_MENU_WIDTH = 767
+const COLLAPSE_MENU_WIDTH = 1020
 const Navigation = (props) => {
   const [width] = useWindowSize()
   return (width < COLLAPSE_MENU_WIDTH)
