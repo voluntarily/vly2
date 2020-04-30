@@ -48,7 +48,8 @@ const personSchema = new Schema({
     default: [Role.BASIC],
     enum: [...Object.values(Role)]
   },
-  // supporting recommendations
+
+  // verification level and supporting recommendations
   verified: [VerificationSchema],
 
   // used to indicate whether people show up in searches.
