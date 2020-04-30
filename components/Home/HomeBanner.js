@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-
+import { PersonRoleIcons } from '../../components/Person/PersonRole'
+import { PersonVerificationBadge } from '../../components/Person/PersonVerification'
 import { PageBanner } from '../../components/VTheme/VTheme'
 
 export const HomeBanner = ({ person, children }) =>
@@ -8,8 +9,11 @@ export const HomeBanner = ({ person, children }) =>
     <article>
       <img src={person.imgUrl} />
       <div>
-        <h1>{person.name}</h1>
-        {person.nickname && <p>Kia ora, {person.nickname} 🥳</p>}
+        <h1>{person.name}
+          <PersonRoleIcons roles={person.role} />
+          <PersonVerificationBadge person={person} />
+        </h1>
+        {person.nickname && <p>Kia ora, {person.nickname}</p>}
       </div>
     </article>
     {children}
