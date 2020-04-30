@@ -57,11 +57,11 @@ export const PersonRoles = ({ roles }) =>
     : null
 
 const RoleBadge = styled.span`
-  background-color: #fff;
-  border: solid 1px #a08db8;
-  border-radius: 100%;
+  // background-color: #fff;
+  // border: solid 1px #a08db8;
+  // border-radius: 100%;
   padding: 0.2rem ;
-  margin-left: 0.5rem;
+  // margin-left: 0.5rem;
 `
 export const PersonRoleIcons = ({ roles }) => {
   const key = Object.keys(roleIcons).find(role => roles.includes(role))

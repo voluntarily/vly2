@@ -3,6 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import Router from 'next/router'
 import { PersonRoleIcons } from '../Person/PersonRole'
+import { PersonVerificationBadge } from '../Person/PersonVerification'
 export function AvatarProfile ({ person }) {
   if (!person) return null
   return (
@@ -17,6 +18,7 @@ export function AvatarProfile ({ person }) {
         />&nbsp;&nbsp;
         <span>{person.nickname}</span>
         <PersonRoleIcons roles={person.role} />
+        <PersonVerificationBadge person={person} />
       </a>
     </Link>
   )
