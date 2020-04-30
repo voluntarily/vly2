@@ -17,7 +17,7 @@ export function AvatarProfile ({ person }) {
           icon='user'
         />&nbsp;&nbsp;
         <span>{person.nickname}</span>
-        <PersonRoleIcons roles={person.role} />
+        {person.role && <PersonRoleIcons roles={person.role} />}
         <PersonVerificationBadge person={person} />
       </a>
     </Link>
