@@ -4,7 +4,7 @@ const { PersonalVerification } = require('./personalVerification')
 const { PersonalVerificationStatus, VerificationResultUrlQueryParam } = require('./personalVerification.constants')
 const { createNonce, createReference, createUnixTimestamp, postCloudcheck, getCloudcheck } = require('./personalVerification.helpers')
 const { config } = require('../../../config/serverConfig')
-
+const { NOT_VERIFIED, VERIFIED, IN_PROGRESS, FAILED } = PersonalVerificationStatus
 const redirectUrl = `${config.appUrl}/home?tab=profile&${VerificationResultUrlQueryParam}=`
 
 /**
@@ -42,24 +42,24 @@ const initVerify = async (req, res) => {
       nonce,
       timestamp
     }
-
+    console.log('postCloudcheck: /live', obj)
     const liveResponse = await postCloudcheck({
       data: obj,
       path: '/live/'
     })
-
+    console.log(('postCloudcheck: ', liveResponse))
     if (!(liveResponse && liveResponse.capture)) {
       throw Error(`Cloudcheck initVerification failed for reference: ${reference}, nonce: ${nonce}`)
     }
 
     const query = { voluntarilyReference: liveResponse.capture.reference }
-    const update = { captureReference: liveResponse.capture.captureReference, status: PersonalVerificationStatus.IN_PROGRESS }
+    const update = { captureReference: liveResponse.capture.captureReference, status: IN_PROGRESS }
 
     await Person.findOneAndUpdate({ _id: me._id }, {
       verified: [
-        { name: PersonFields.NAME, status: PersonalVerificationStatus.IN_PROGRESS },
-        { name: PersonFields.ADDRESS, status: PersonalVerificationStatus.IN_PROGRESS },
-        { name: PersonFields.DOB, status: PersonalVerificationStatus.IN_PROGRESS }
+        { name: PersonFields.NAME, status: IN_PROGRESS },
+        { name: PersonFields.ADDRESS, status: IN_PROGRESS },
+        { name: PersonFields.DOB, status: IN_PROGRESS }
       ]
     }, () => console.log('Person verified* updated to IN_PROGRESS'))
 
@@ -92,32 +92,37 @@ const verifyLiveCallback = async (req, res) => {
     const driversLicence = await getDriversLicenceData(captureReference)
 
     const driversLicenceVerificationResult = await verifyDriversLicence(driversLicence, personalVerification.person, req.query.liveReference)
+    console.log('verifyDriversLicence', JSON.stringify(driversLicenceVerificationResult, null, 2))
 
     if (!driversLicenceVerificationResult || driversLicenceVerificationResult.verification.error) {
-      console.error(`Failed verification of drivers licence with message: ${driversLicenceVerificationResult.verification}`)
+      console.error('Failed verification of drivers licence with message:', driversLicenceVerificationResult.verification)
       driversLicenceVerificationUpdate = {
-        status: PersonalVerificationStatus.FAILED,
+        status: FAILED,
         verificationObject: driversLicenceVerificationResult
       }
       personUpdate = createPersonVerifiedUpdate(
-        PersonalVerificationStatus.FAILED,
-        PersonalVerificationStatus.FAILED,
-        PersonalVerificationStatus.FAILED,
+        FAILED, undefined,
+        FAILED, undefined,
+        FAILED, undefined,
         undefined
       )
       throw Error('Error verifying Driverlicence data')
     } else {
-      const verificationReference = driversLicenceVerificationResult.verification.verificationReference
+      const dlv = driversLicenceVerificationResult.verification
+      const verificationReference = dlv.verificationReference
 
       driversLicenceVerificationUpdate = {
-        status: driversLicenceVerificationResult.verification.verificationSuccess ? PersonalVerificationStatus.VERIFIED : PersonalVerificationStatus.NOT_VERIFIED,
+        status: dlv.verificationSuccess ? VERIFIED : NOT_VERIFIED,
         verificationReference,
         verificationObject: driversLicenceVerificationResult
       }
       personUpdate = createPersonVerifiedUpdate(
-        driversLicenceVerificationResult.verification.validated.name ? PersonalVerificationStatus.VERIFIED : PersonalVerificationStatus.NOT_VERIFIED,
-        driversLicenceVerificationResult.verification.validated.address ? PersonalVerificationStatus.VERIFIED : PersonalVerificationStatus.NOT_VERIFIED,
-        driversLicenceVerificationResult.verification.validated.dateofbirth ? PersonalVerificationStatus.VERIFIED : PersonalVerificationStatus.NOT_VERIFIED,
+        dlv.validated.name ? VERIFIED : NOT_VERIFIED,
+        `${dlv.details.name.given} ${dlv.details.name.middle} ${dlv.details.name.family}`,
+        dlv.validated.address ? VERIFIED : NOT_VERIFIED,
+        `${dlv.details.address.street} ${dlv.details.address.suburb} ${dlv.details.address.city} ${dlv.details.address.postcode}`,
+        dlv.validated.dateofbirth ? VERIFIED : NOT_VERIFIED,
+        dlv.details.dateofbirth,
         verificationReference
       )
     }
@@ -133,9 +138,9 @@ const verifyLiveCallback = async (req, res) => {
 }
 
 const createPersonVerifiedUpdate = (
-  nameStatus,
-  addressStatus,
-  dateOfBirthStatus,
+  nameStatus, nameValue,
+  addressStatus, addressValue,
+  dateOfBirthStatus, dateOfBirthValue,
   verificationReference
 ) => {
   return {
@@ -143,16 +148,19 @@ const createPersonVerifiedUpdate = (
       {
         name: PersonFields.DOB,
         status: dateOfBirthStatus,
+        value: dateOfBirthValue,
         verificationReference
       },
       {
         name: PersonFields.ADDRESS,
         status: addressStatus,
+        value: addressValue,
         verificationReference
       },
       {
         name: PersonFields.NAME,
         status: nameStatus,
+        value: nameValue,
         verificationReference
       }
     ]
@@ -163,12 +171,12 @@ const verifyDriversLicence = async (driversLicence, personId, reference) => {
   // TODO: Once we have the address enable verification
   const data = {
     details: {
-      // address: {
-      //           suburb: 'Hillsborough',
-      //           street: '27 Indira Lane',
-      //           postcode: '8022',
-      //           city: 'Christchurch'
-      //   },
+      address: {
+        suburb: 'Auckland Central',
+        street: '5F 16 Gore St',
+        postcode: '1010',
+        city: 'Auckland'
+      },
       name: {
         given: driversLicence.givenName ? driversLicence.givenName : undefined,
         middle: driversLicence.middleName ? driversLicence.middleName : undefined,
@@ -191,7 +199,7 @@ const verifyDriversLicence = async (driversLicence, personId, reference) => {
     timestamp: createUnixTimestamp(),
     username: personId
   }
-
+  console.log('verifyDriversLicence', objVerify)
   return postCloudcheck({
     path: '/verify/',
     data: objVerify
@@ -210,9 +218,9 @@ const getDriversLicenceData = async (captureReference) => {
     path: '/live/response/',
     data: obj
   })
-
+  console.log('getCloudcheck /live/response', obj, liveResponseData)
   const driversLicences = liveResponseData.recognizedDocuments.filter(document => document.documentType === 'NZ_DRIVER_LICENCE')
-
+  console.log('driversLicences', driversLicences)
   if (driversLicences.length !== 1) {
     throw Error('No Drivers Licence found.') // TODO hanlde no drivers licence
   }

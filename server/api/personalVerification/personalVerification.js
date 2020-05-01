@@ -22,19 +22,20 @@ const VerificationStatus = {
 const VerificationSchema = new mongoose.Schema({
   name: { type: String, required: true },
   status: VerificationStatus,
-  verificationReference: { type: String, required: false }
+  value: String,
+  verificationReference: String
 }, {
   timestamps: true
 })
 
 const personalVerificationSchema = new Schema({
   status: VerificationStatus,
-  verificationReference: { type: String, required: false },
+  verificationReference: String,
   person: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
   voluntarilyReference: { type: String, required: true },
-  captureReference: { type: String, required: false },
-  liveCaptured: { type: String, required: false },
-  liveToken: { type: String, required: false },
+  captureReference: String,
+  liveCaptured: String,
+  liveToken: String,
   verificationObject: { type: 'object', required: false }
 }, {
   timestamps: true
