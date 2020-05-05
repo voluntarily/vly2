@@ -43,8 +43,8 @@ class OpShortForm extends Component {
           // op.subtitle = values.subtitle
           // op.tags = values.tags
           op.duration = values.duration
-          op.locations = values.locations
-          delete op.location
+          // op.locations = values.locations
+          // delete op.location
           op.offerOrg = values.offerOrg && values.offerOrg.key
           op.description = values.description
           // op.imgUrl = values.imgUrl
@@ -52,6 +52,7 @@ class OpShortForm extends Component {
           op.status = draftOrPublish === 'publish'
             ? OpportunityStatus.ACTIVE
             : OpportunityStatus.DRAFT
+         
           this.props.onSubmit(op)
         } else {
           window.scrollTo(0, 0)
