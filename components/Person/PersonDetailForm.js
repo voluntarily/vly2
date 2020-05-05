@@ -38,7 +38,7 @@ class PersonDetail extends Component {
   componentDidMount () {
     // To disabled submit button at the beginning.
     this.props.form.validateFields()
-  }
+  } 
 
   setImgUrl = (imgUrl, sizeVariants) => {
     this.avatar = sizeVariants
