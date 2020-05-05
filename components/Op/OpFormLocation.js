@@ -102,7 +102,7 @@ export const OpFormLocation = ({ getFieldDecorator, type, existingLocations, org
 
   useEffect(() => {
     if (scriptLoaded && mounted.current) {
-      const widget = new AddressFinder.Widget(
+      const widget = new window.AddressFinder.Widget(
         addressRef.current.input,
         'RGE83VMK4UYHXNJBP69W', // ADDRESSFINDER_KEY
         'NZ', {
@@ -139,7 +139,7 @@ export const OpFormLocation = ({ getFieldDecorator, type, existingLocations, org
           </Form.Item> */}
           <Form.Item label={opAddress}>
             {getFieldDecorator('address')(
-              <Input ref={addressRef} placeholder='Address line' allowClear	/>
+              <Input ref={addressRef} placeholder='Address line' allowClear />
             )}
           </Form.Item>
           <Row type='flex' justify='space-between'>

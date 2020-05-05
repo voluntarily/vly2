@@ -52,7 +52,7 @@ class OpShortForm extends Component {
           op.status = draftOrPublish === 'publish'
             ? OpportunityStatus.ACTIVE
             : OpportunityStatus.DRAFT
-         
+
           this.props.onSubmit(op)
         } else {
           window.scrollTo(0, 0)
