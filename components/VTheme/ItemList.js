@@ -57,14 +57,14 @@ object-position: center;
 
 export const ItemDuration = ({ duration }) =>
   <ItemListing>
-  ⏱&nbsp;
+  ⏱{' '}
     <strong>
       <FormattedMessage
         id='itemlist.duration'
         defaultMessage='Duration:'
         description='duration label for acts and ops'
       />
-    </strong>&nbsp;&nbsp;&nbsp;
+    </strong>{' '}
     {sanitize(duration)}
   </ItemListing>
 
