@@ -1,24 +1,30 @@
 version: '3.4'
 services:
-  web:
+  voluntarily-web:
+    container_name: voluntarily-web
     build:
       context: ./
       # dockerfile: x/docker/Dockerfile
       target: development
     depends_on:
-      - db
+      - voluntarily-mongodb
     ports:
       - "${WEB_PORT:-3122}:3122"
     volumes:
       - .:/usr/src/app
     environment:
       NODE_ENV: development
-      MONGODB_URI: mongodb://db:27017/vly-dev
+      MONGODB_URI: mongodb://voluntarily-mongodb:27017/vly-dev
     stdin_open: true
     tty: true
-  db:
+
+  voluntarily-mongodb:
+    container_name: voluntarily-mongodb
     image: mongo:latest
     volumes:
       - dbdata:/data/db
+    ports:
+      - 27017:27017
+
 volumes:
   dbdata:

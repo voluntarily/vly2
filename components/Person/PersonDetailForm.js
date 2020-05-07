@@ -20,6 +20,7 @@ import { Role } from '../../server/services/authorize/role'
 import TagSelect from '../Form/Input/TagSelect'
 
 const EducationSelectorRef = forwardRef(EducationSelector)
+const TagSelectRef = forwardRef(TagSelect)
 const developerSettings = process.env.NODE_ENV !== 'production'
 const { TextArea } = Input
 
@@ -252,24 +253,27 @@ class PersonDetail extends Component {
     ]
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
+    const tagsError = isFieldTouched('tags') && getFieldError('tags')
     const isTest = process.env.NODE_ENV === 'test'
+    const isVolunteer = this.props.person.role.some(r => r === 'volunteer')
+
     return (
       <div className='PersonDetailForm'>
         <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
-          <FormGrid> {/* // About You */}
+          <FormGrid> {/* // Your Name */}
             <DescriptionContainer>
               <TitleContainer>
                 <H3Bold>
                   <FormattedMessage
-                    id='PersonDetailForm.SectionTitle.AboutYou'
-                    defaultMessage='About you'
+                    id='PersonDetailForm.SectionTitle.YourName'
+                    defaultMessage='Your name'
                   />
                 </H3Bold>
               </TitleContainer>
               <P>
                 <FormattedMessage
-                  id='PersonDetailForm.SectionDescription.AboutYou'
-                  defaultMessage='Tell the people you will be volunteering for something about yourself. How we should address you, education and job etc.'
+                  id='PersonDetailForm.SectionDescription.YourName'
+                  defaultMessage='Set your nickname and your formal name to help people to recoginise you.'
                 />
               </P>
             </DescriptionContainer>
@@ -294,108 +298,33 @@ class PersonDetail extends Component {
                   )}
                 </Form.Item>
               </ShortInputContainer>
-
-              <ShortInputContainer>
-                <Row>
-                  <Col span={24}>
-                    <label>{personPronoun}</label>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={8}>
-                    <Form.Item layout='inline' style={{ width: '100%', marginRight: 0 }}>
-                      {getFieldDecorator('pronoun_subject', {
-                        rules: []
-                      })(<Input placeholder='they' />)}
-                    </Form.Item>
-                  </Col>
-                  <Col span={8}>
-                    <Form.Item layout='inline'>
-                      {getFieldDecorator('pronoun_object', {
-                        rules: []
-                      })(<Input placeholder='them' />)}
-                    </Form.Item>
-                  </Col>
-                  <Col span={8}>
-                    <Form.Item layout='inline'>
-                      {getFieldDecorator('pronoun_possessive', {
-                        rules: []
-                      })(<Input placeholder='theirs' />)}
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </ShortInputContainer>
-
-              <Form.Item label={personAbout}>
-                {getFieldDecorator('about', {
-                  rules: []
-                })(
-                  isTest ? (
-                    <TextArea
-                      rows={20}
-                      placeholder='Tell everyone about yourself here'
-                    />
-                  ) : (
-                    <RichTextEditor />
-                  )
-                )}
-              </Form.Item>
-
-              <Form.Item label={personEducation}>
-                {getFieldDecorator('education')(
-                  <EducationSelectorRef />
-                )}
-              </Form.Item>
-              <Form.Item label={personplaceOfWork}>
-                {getFieldDecorator('placeOfWork')(
-                  <Input placeholder='Enter your place of work here' />
-                )}
-              </Form.Item>
-              <ShortInputContainer>
-                <Form.Item label={personJob}>
-                  {getFieldDecorator('job')(
-                    <Input placeholder='Enter your job title here' />
-                  )}
-                </Form.Item>
-              </ShortInputContainer>
             </InputContainer>
           </FormGrid>
           <Divider />
-
-          <FormGrid> {/* // Skills and Interests */}
+          <FormGrid> {/* // Avatar */}
             <DescriptionContainer>
-              <TitleContainer>
-                <H3Bold>
-                  <FormattedMessage
-                    id='PersonDetailForm.SectionTitle.SkillsAndInterests'
-                    defaultMessage='Activity Recommendations'
-                  />
-                </H3Bold>
-              </TitleContainer>
-              <P>
+              <H3Bold>
                 <FormattedMessage
-                  id='PersonDetailForm.SectionDescription.SkillsAndInterests'
-                  defaultMessage='This section helps us find the right things for you to do. Tell us the region you in and your skills and interests. Use keywords like: accounting, video conferencing etc.'
+                  id='PersonDetailForm.SectionTitle.Avatar'
+                  defaultMessage='Profile Photo'
                 />
-              </P>
+              </H3Bold>
+              <FormattedMessage
+                id='PersonDetailForm.SectionDescription.Avatar'
+                defaultMessage='Upload a photo to help people to recognise you and reflect your character.'
+              />
+              {this.props.person.imgUrlSm &&
+                <p>
+                  <Avatar size={128} src={this.props.person.imgUrl} />
+                </p>}
             </DescriptionContainer>
-
             <InputContainer>
-              <Form.Item label={personLocation}>
-                {getFieldDecorator('locations')(
-                  <TagSelect values={this.props.locations} placeholder='Select location' />
-                )}
-              </Form.Item>
-              <Form.Item label={personTags}>
-                {getFieldDecorator('tags', {
-                  initialValue: [],
-                  rules: []
-                })(<TagInput existingTags={this.props.existingTags} />)}
+              <Form.Item label={personAvatar}>
+                <ImageUpload setImgUrl={this.setImgUrl} usages='profile-photo' />
               </Form.Item>
             </InputContainer>
           </FormGrid>
           <Divider />
-
           <FormGrid> {/* // Contact Details */}
             <DescriptionContainer>
               <TitleContainer>
@@ -432,27 +361,114 @@ class PersonDetail extends Component {
             </InputContainer>
           </FormGrid>
           <Divider />
-
-          <FormGrid> {/* // Avatar */}
+          <FormGrid> {/* // Location, Skills and Interests */}
             <DescriptionContainer>
-              <H3Bold>
-                <FormattedMessage
-                  id='PersonDetailForm.SectionTitle.Avatar'
-                  defaultMessage='Profile Photo'
-                />
-              </H3Bold>
-              <FormattedMessage
-                id='PersonDetailForm.SectionDescription.Avatar'
-                defaultMessage='Upload a photo to help people to recognise you and reflect your character.'
-              />
-              {this.props.person.imgUrlSm &&
-                <p>
-                  <Avatar size={128} src={this.props.person.imgUrl} />
-                </p>}
+              <TitleContainer>
+                <H3Bold>
+                  <FormattedMessage
+                    id='PersonDetailForm.SectionTitle.SkillsAndInterests'
+                    defaultMessage='Activity Recommendations'
+                  />
+                </H3Bold>
+              </TitleContainer>
+              <P>
+                {isVolunteer
+                  ? (
+                    <FormattedMessage
+                      id='PersonDetailForm.SectionDescription.SkillsAndInterests'
+                      defaultMessage='This section helps us find the right things for you to do. Tell us the region you in and your skills and interests. Use keywords like: accounting, video conferencing etc.'
+                    />
+                  )
+                  : (
+                    <FormattedMessage
+                      id='PersonDetailForm.SectionDescription.Location'
+                      defaultMessage='This section helps us find the right things for you to do. Tell us the region you in.'
+                    />
+                  )}
+              </P>
             </DescriptionContainer>
             <InputContainer>
-              <Form.Item label={personAvatar}>
-                <ImageUpload setImgUrl={this.setImgUrl} usages='profile-photo' />
+              <Form.Item label={personLocation}>
+                {getFieldDecorator('locations')(
+                  <TagSelectRef values={this.props.locations} placeholder='Select location' />
+                )}
+              </Form.Item>
+              {isVolunteer && (
+                <Form.Item
+                  label={personTags}
+                  validateStatus={tagsError ? 'error' : ''}
+                  help={tagsError || ''}
+                >
+                  {getFieldDecorator('tags', {
+                    initialValue: [],
+                    rules: [{ required: true, message: 'Skills & Interests are required' }]
+                  })(<TagInput existingTags={this.props.existingTags} />)}
+                </Form.Item>
+              )}
+            </InputContainer>
+          </FormGrid>
+          <Divider />
+          <FormGrid> {/* // Pronoun */}
+            <DescriptionContainer>
+              <TitleContainer>
+                <H3Bold>
+                  <FormattedMessage
+                    id='PersonDetailForm.SectionTitle.AboutYou'
+                    defaultMessage='About you'
+                  />
+                </H3Bold>
+              </TitleContainer>
+              <P>
+                <FormattedMessage
+                  id='PersonDetailForm.SectionDescription.AboutYou'
+                  defaultMessage='Optional: Tell the people you will be volunteering for something about yourself. And How we should address you.'
+                />
+              </P>
+            </DescriptionContainer>
+            <InputContainer>
+              <ShortInputContainer>
+                <Row>
+                  <Col span={24}>
+                    <label>{personPronoun}</label>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={8}>
+                    <Form.Item layout='inline' style={{ width: '100%', marginRight: 0 }}>
+                      {getFieldDecorator('pronoun_subject', {
+                        rules: []
+                      })(<Input placeholder='they' />)}
+                    </Form.Item>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item layout='inline'>
+                      {getFieldDecorator('pronoun_object', {
+                        rules: []
+                      })(<Input placeholder='them' />)}
+                    </Form.Item>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item layout='inline'>
+                      {getFieldDecorator('pronoun_possessive', {
+                        rules: []
+                      })(<Input placeholder='theirs' />)}
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </ShortInputContainer>
+              <Form.Item label={personAbout}>
+                {getFieldDecorator('about', {
+                  rules: []
+                })(
+                  isTest ? (
+                    <TextArea
+                      rows={20}
+                      placeholder='Tell everyone about yourself here'
+                    />
+                  ) : (
+                    <RichTextEditor />
+                  )
+                )}
               </Form.Item>
             </InputContainer>
           </FormGrid>
@@ -475,6 +491,14 @@ class PersonDetail extends Component {
               </P>
             </DescriptionContainer>
             <InputContainer>
+              <Form.Item label={personFacebook}>
+                {getFieldDecorator('facebook', {
+                  rules: []
+                })(<Input addonBefore='https://www.facebook.com/' />)}
+              </Form.Item>
+              <Form.Item label={personTwitter}>
+                {getFieldDecorator('twitter', {})(<Input addonBefore='@' />)}
+              </Form.Item>
               <Form.Item label={personWebSite}>
                 {getFieldDecorator('website', {
                   rules: [
@@ -485,15 +509,44 @@ class PersonDetail extends Component {
                   ]
                 })(<Input placeholder='Website' />)}
               </Form.Item>
-              <Form.Item label={personFacebook}>
-                {getFieldDecorator('facebook', {
-                  rules: []
-                })(<Input addonBefore='https://www.facebook.com/' />)}
+            </InputContainer>
+          </FormGrid>
+          <Divider />
+          <FormGrid> {/* // Work & Education */}
+            <DescriptionContainer>
+              <TitleContainer>
+                <H3Bold>
+                  <FormattedMessage
+                    id='PersonDetailForm.SectionTitle.WorkAndEducation'
+                    defaultMessage='Work & Education'
+                  />
+                </H3Bold>
+              </TitleContainer>
+              <P>
+                <FormattedMessage
+                  id='PersonDetailForm.SectionDescription.WorkAndEducation'
+                  defaultMessage='Tell the people your education, place of work and job to help people know you better and help find recommendations.'
+                />
+              </P>
+            </DescriptionContainer>
+            <InputContainer>
+              <Form.Item label={personEducation}>
+                {getFieldDecorator('education')(
+                  <EducationSelectorRef />
+                )}
               </Form.Item>
-              <Form.Item label={personTwitter}>
-                {getFieldDecorator('twitter', {})(<Input addonBefore='@' />)}
+              <Form.Item label={personplaceOfWork}>
+                {getFieldDecorator('placeOfWork')(
+                  <Input placeholder='Enter your place of work here' />
+                )}
               </Form.Item>
-
+              <ShortInputContainer>
+                <Form.Item label={personJob}>
+                  {getFieldDecorator('job')(
+                    <Input placeholder='Enter your job title here' />
+                  )}
+                </Form.Item>
+              </ShortInputContainer>
             </InputContainer>
           </FormGrid>
           <Divider />
@@ -554,7 +607,6 @@ class PersonDetail extends Component {
               <Divider />
             </>
           )}
-
           <FormGrid> {/* // Buttons */}
             <DescriptionContainer />
             <InputContainer>
@@ -633,7 +685,7 @@ PersonDetail.propTypes = {
 const PersonDetailForm = Form.create({
   name: 'person_detail_form',
   onFieldsChange (props, changedFields) {
-    // props.onChange(changedFields);
+    // props.onChange(changedFields)
   },
   mapPropsToFields (props) {
     return {
