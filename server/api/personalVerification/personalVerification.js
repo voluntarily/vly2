@@ -22,7 +22,7 @@ const VerificationStatus = {
 const VerificationSchema = new mongoose.Schema({
   name: { type: String, required: true },
   status: VerificationStatus,
-  value: String,
+  value: Object,
   verificationReference: String
 }, {
   timestamps: true
