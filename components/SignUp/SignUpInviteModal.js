@@ -30,6 +30,9 @@ export const SignUpInviteModal = ({ children, href }) => {
   const handleClick = () => {
     setShowModal(true)
   }
+  const handleCancel = () => {
+    setShowModal(false)
+  }
   return (
     <>
       <Button type='primary' shape='round' size='large' style={{ width: '10rem' }} onClick={handleClick}>
@@ -43,6 +46,7 @@ export const SignUpInviteModal = ({ children, href }) => {
           <SignUpButton key='sign-up' then='/flow/postSignUp' />,
           <SignInButton key='sign-in' then={href} />
         ]}
+        onCancel={handleCancel}
       >
         <FormattedMessage
           id='SignUpModal.body'
