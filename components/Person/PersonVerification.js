@@ -3,7 +3,7 @@ import { defineMessages, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { ShieldSvg } from '../VTheme/Icons'
 import { getVerificationLevels, VerificationLevel } from '../../server/api/personalVerification/verified'
-const { EMAIL, IDENTITY, VET_STARTED, VETTED, NOT_OK } = VerificationLevel
+const { EMAIL, NAME, ADDRESS, VET_STARTED, VETTED, NOT_OK } = VerificationLevel
 
 const VerificationBadge = styled.span`
   vertical-align: text-top;
@@ -21,7 +21,8 @@ const VerificationList = styled.ul`
 
 const verificationMessages = defineMessages({
   [EMAIL]: { defaultMessage: 'Email verified', id: 'verificationlabel.email' },
-  [IDENTITY]: { defaultMessage: 'Identity confirmed', id: 'verificationlabel.identity' },
+  [NAME]: { defaultMessage: 'Name confirmed', id: 'verificationlabel.name' },
+  [ADDRESS]: { defaultMessage: 'Address confirmed', id: 'verificationlabel.address' },
   [VET_STARTED]: { defaultMessage: 'Police vet started', id: 'verificationlabel.vet_started' },
   [VETTED]: { defaultMessage: 'Police vet passed', id: 'verificationlabel.vetted' },
   [NOT_OK]: { defaultMessage: 'Police vet failed', id: 'verificationlabel.not_ok' }
