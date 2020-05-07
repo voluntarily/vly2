@@ -58,7 +58,7 @@ test.before('before connect to database', async (t) => {
   t.context.ops = await Promise.all(t.context.activities.map(act => {
     const activeOps = Array(activeCount).fill({}).map(i => makeActiveOp(act, i))
     const draftOps = Array(draftCount).fill({}).map(i => makeDraftOp(act, i))
-    return Opportunity.create([ ...activeOps, ...draftOps ])
+    return Opportunity.create([...activeOps, ...draftOps])
   }))
 })
 
