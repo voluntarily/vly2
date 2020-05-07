@@ -17,6 +17,28 @@ export const gra = (min, max) => { return (Math.round(Math.random() * (max - min
 export const coin = (a, b) => { return gra(0, 1) ? a : b }
 
 const opCount = 10
+const draftCount = 5
+const activeCount = opCount - draftCount
+
+const makeOp = (opStatus) => (fromActivity, index) => {
+  return ({
+    name: `${fromActivity.name} Opportunity ${cuid}`,
+    imgUrl: fromActivity.imgUrl,
+    subtitle: fromActivity.subtitle,
+    description: fromActivity.description,
+    duration: fromActivity.duration,
+    location: 'Northland',
+    type: coin(OpportunityType.ASK, OpportunityType.OFFER),
+    status: opStatus,
+    fromActivity: fromActivity._id,
+    // offerOrg: fromActivity.offerOrg._id,
+    requestor: fromActivity.owner._id,
+    tags: ['one']
+  })
+}
+
+const makeActiveOp = makeOp(OpportunityStatus.ACTIVE)
+const makeDraftOp = makeOp(OpportunityStatus.DRAFT)
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -34,31 +56,15 @@ test.before('before connect to database', async (t) => {
   t.context.activities = await Activity.create(acts)
   // create some ops from the act - we only care about type and fromAct
   t.context.ops = await Promise.all(t.context.activities.map(act => {
-    const ops = Array(opCount).fill({}).map(i => makeOp(act, i))
-    return Opportunity.create(ops)
+    const activeOps = Array(activeCount).fill({}).map(i => makeActiveOp(act, i))
+    const draftOps = Array(draftCount).fill({}).map(i => makeDraftOp(act, i))
+    return Opportunity.create([...activeOps, ...draftOps])
   }))
 })
 
 test.after.always(async (t) => {
   await t.context.memMongo.stop()
 })
-
-const makeOp = (fromActivity, index) => {
-  return ({
-    name: `${fromActivity.name} Opportunity ${cuid}`,
-    imgUrl: fromActivity.imgUrl,
-    subtitle: fromActivity.subtitle,
-    description: fromActivity.description,
-    duration: fromActivity.duration,
-    location: 'Northland',
-    type: coin(OpportunityType.ASK, OpportunityType.OFFER),
-    status: coin(OpportunityStatus.DRAFT, OpportunityStatus.ACTIVE),
-    fromActivity: fromActivity._id,
-    // offerOrg: fromActivity.offerOrg._id,
-    requestor: fromActivity.owner._id,
-    tags: ['one']
-  })
-}
 
 test.serial('verify fixture database has acts and ops', async t => {
   const count = await Activity.countDocuments()
@@ -76,8 +82,9 @@ test.serial('verify fixture database has acts and ops', async t => {
   const countOps = await Opportunity.countDocuments()
   t.is(countOps, opCount * t.context.activities.length)
 
+  // can find active ops
   await Promise.all(t.context.activities.map(async act => {
     const counts = await getOpsForActivity(act._id)
-    t.is(counts.ask + counts.offer, opCount)
+    t.is(counts.ask + counts.offer, activeCount)
   }))
 })
