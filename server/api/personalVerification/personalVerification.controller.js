@@ -118,9 +118,9 @@ const verifyLiveCallback = async (req, res) => {
       }
       personUpdate = createPersonVerifiedUpdate(
         dlv.validated.name ? VERIFIED : NOT_VERIFIED,
-        `${dlv.details.name.given} ${dlv.details.name.middle} ${dlv.details.name.family}`,
+        dlv.details.name,
         dlv.validated.address ? VERIFIED : NOT_VERIFIED,
-        `${dlv.details.address.street} ${dlv.details.address.suburb} ${dlv.details.address.city} ${dlv.details.address.postcode}`,
+        dlv.details,
         dlv.validated.dateofbirth ? VERIFIED : NOT_VERIFIED,
         dlv.details.dateofbirth,
         verificationReference
@@ -137,50 +137,61 @@ const verifyLiveCallback = async (req, res) => {
   }
 }
 
+const titlify = str => str[0].toUpperCase() + str.slice(1)
 const createPersonVerifiedUpdate = (
   nameStatus, nameValue,
   addressStatus, addressValue,
   dateOfBirthStatus, dateOfBirthValue,
   verificationReference
 ) => {
-  return {
+  const update = {
     verified: [
-      {
-        name: PersonFields.DOB,
-        status: dateOfBirthStatus,
-        value: dateOfBirthValue,
-        verificationReference
-      },
-      {
-        name: PersonFields.ADDRESS,
-        status: addressStatus,
-        value: addressValue,
-        verificationReference
-      },
       {
         name: PersonFields.NAME,
         status: nameStatus,
         value: nameValue,
         verificationReference
+      }, {
+        name: PersonFields.DOB,
+        status: dateOfBirthStatus,
+        value: dateOfBirthValue,
+        verificationReference
+      }, {
+        name: PersonFields.ADDRESS,
+        status: addressStatus,
+        value: addressValue,
+        verificationReference
       }
     ]
   }
+  if (nameStatus === VERIFIED) {
+    update.name = Object.keys(nameValue).map(key => nameValue[key]).join(' ')
+  }
+  if (dateOfBirthStatus === VERIFIED) {
+    update.dob = Date(dateOfBirthValue)
+  }
+  if (addressStatus === VERIFIED) {
+    update.address = Object.keys(nameValue).map(key => titlify(nameValue[key])).join()
+  }
+
+  console.log('person.update', update)
+  return update
 }
 
 const verifyDriversLicence = async (driversLicence, personId, reference) => {
   // TODO: Once we have the address enable verification
   const data = {
     details: {
-      address: {
-        suburb: 'Auckland Central',
-        street: '5F 16 Gore St',
-        postcode: '1010',
-        city: 'Auckland'
-      },
+      // address: {
+      //   suburb: '',
+      //   street: '',
+      //   postcode: '',
+      //   city: ''
+      // },
       name: {
-        given: driversLicence.givenName ? driversLicence.givenName : undefined,
-        middle: driversLicence.middleName ? driversLicence.middleName : undefined,
-        family: driversLicence.familyName ? driversLicence.familyName : undefined
+        given: driversLicence.givenName ? driversLicence.givenName : '',
+        middle: driversLicence.middleName ? driversLicence.middleName : '',
+        family: driversLicence.familyName ? driversLicence.familyName : ''
       },
       dateofbirth: driversLicence.dateOfBirth ? driversLicence.dateOfBirth : undefined,
       driverslicence: {

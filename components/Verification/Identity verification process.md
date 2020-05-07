@@ -201,7 +201,7 @@ We check the recognised documents list for an NZ_DRIVER_LICENCE
 ( not sure what we do if its not NZ )
 we now have a full name, dob and dl number
 
-### verify the details on the driver's licence
+### validate the details on the driver's licence with NZTA
 verifyDriversLicence: We create another request to cloudcheck that contains the given information plus the address.
 ````
 verifyDriversLicence {
@@ -246,7 +246,7 @@ verifyDriversLicence {
   }
 }
 ````
-* handle errors
+#### handle errors
   if there is no dl verify result or the result contains an error we update the PV record with
       status: PersonalVerificationStatus.FAILED,
       verificationObject: driversLicenceVerificationResult
@@ -254,7 +254,7 @@ verifyDriversLicence {
   and update the person with 
   NAME, DOB, ADDRESS as PersonalVerificationStatus.FAILED,
 
-* handle good response
+#### handle good response but failed validation
   the response may not be an error but may still not validate the requested fields
 
       "validated": {
@@ -268,4 +268,14 @@ verifyDriversLicence {
         verificationReference,
         verificationObject: driversLicenceVerificationResult
       
+
+#### handle good response and successful or partially successful validation
+  in this case the validated section includes 
+  
+   "verificationSuccess": true,
+    "validated": {
+      "dateofbirth": true,
+      "address": false,
+      "name": true
+    },
 
