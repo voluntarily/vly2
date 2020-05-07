@@ -1,5 +1,5 @@
 const Person = require('../../api/person/person')
-const { PersonListFields, PersonFields } = require('../../api/person/person.constants')
+const { PersonFields } = require('../../api/person/person.constants')
 const { Role } = require('../../services/authorize/role')
 const { TOPIC_PERSON__CREATE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
