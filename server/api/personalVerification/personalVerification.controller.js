@@ -42,12 +42,10 @@ const initVerify = async (req, res) => {
       nonce,
       timestamp
     }
-    console.log('postCloudcheck: /live', obj)
     const liveResponse = await postCloudcheck({
       data: obj,
       path: '/live/'
     })
-    console.log(('postCloudcheck: ', liveResponse))
     if (!(liveResponse && liveResponse.capture)) {
       throw Error(`Cloudcheck initVerification failed for reference: ${reference}, nonce: ${nonce}`)
     }
@@ -61,9 +59,9 @@ const initVerify = async (req, res) => {
         { name: PersonFields.ADDRESS, status: IN_PROGRESS },
         { name: PersonFields.DOB, status: IN_PROGRESS }
       ]
-    }, () => console.log('Person verified* updated to IN_PROGRESS'))
+    })
 
-    await PersonalVerification.findOneAndUpdate(query, update, () => console.log('Personal Verification updated to IN_PROGRESS'))
+    await PersonalVerification.findOneAndUpdate(query, update)
 
     return res.redirect(liveResponse.capture.url)
   } catch (error) {
@@ -92,7 +90,6 @@ const verifyLiveCallback = async (req, res) => {
     const driversLicence = await getDriversLicenceData(captureReference)
 
     const driversLicenceVerificationResult = await verifyDriversLicence(driversLicence, personalVerification.person, req.query.liveReference)
-    console.log('verifyDriversLicence', JSON.stringify(driversLicenceVerificationResult, null, 2))
 
     if (!driversLicenceVerificationResult || driversLicenceVerificationResult.verification.error) {
       console.error('Failed verification of drivers licence with message:', driversLicenceVerificationResult.verification)
@@ -132,8 +129,8 @@ const verifyLiveCallback = async (req, res) => {
     console.error(error)
     return res.redirect(`${redirectUrl}false`)
   } finally {
-    await Person.findOneAndUpdate({ _id: personalVerification.person }, personUpdate, () => console.log('Updated Person with verification result'))
-    await PersonalVerification.findOneAndUpdate(query, driversLicenceVerificationUpdate, () => console.log('Updated Personal Verification object'))
+    await Person.findOneAndUpdate({ _id: personalVerification.person }, personUpdate)
+    await PersonalVerification.findOneAndUpdate(query, driversLicenceVerificationUpdate)
   }
 }
 
@@ -173,8 +170,6 @@ const createPersonVerifiedUpdate = (
   if (addressStatus === VERIFIED) {
     update.address = Object.keys(nameValue).map(key => titlify(nameValue[key])).join()
   }
-
-  console.log('person.update', update)
   return update
 }
 
@@ -210,7 +205,7 @@ const verifyDriversLicence = async (driversLicence, personId, reference) => {
     timestamp: createUnixTimestamp(),
     username: personId
   }
-  console.log('verifyDriversLicence', objVerify)
+
   return postCloudcheck({
     path: '/verify/',
     data: objVerify
@@ -229,9 +224,7 @@ const getDriversLicenceData = async (captureReference) => {
     path: '/live/response/',
     data: obj
   })
-  console.log('getCloudcheck /live/response', obj, liveResponseData)
   const driversLicences = liveResponseData.recognizedDocuments.filter(document => document.documentType === 'NZ_DRIVER_LICENCE')
-  console.log('driversLicences', driversLicences)
   if (driversLicences.length !== 1) {
     throw Error('No Drivers Licence found.') // TODO hanlde no drivers licence
   }
