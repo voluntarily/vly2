@@ -1,6 +1,6 @@
 const Activity = require('./activity')
 const Opportunity = require('../opportunity/opportunity')
-const { OpportunityType } = require('../opportunity/opportunity.constants')
+const { OpportunityStatus, OpportunityType } = require('../opportunity/opportunity.constants')
 
 const findActivity = async (req, res) => {
   // filter by role if present  e.g /my/org/vp
@@ -20,8 +20,8 @@ const findActivity = async (req, res) => {
   */
 const getOpsForActivity = async (actid) => {
   const counts = {
-    [OpportunityType.ASK]: await Opportunity.countDocuments({ fromActivity: actid, type: OpportunityType.ASK }),
-    [OpportunityType.OFFER]: await Opportunity.countDocuments({ fromActivity: actid, type: OpportunityType.OFFER })
+    [OpportunityType.ASK]: await Opportunity.countDocuments({ fromActivity: actid, type: OpportunityType.ASK, status: OpportunityStatus.ACTIVE }),
+    [OpportunityType.OFFER]: await Opportunity.countDocuments({ fromActivity: actid, type: OpportunityType.OFFER, status: OpportunityStatus.ACTIVE })
   }
   return counts
 }
