@@ -52,7 +52,7 @@ const makeOp = (fromActivity, index) => {
     duration: fromActivity.duration,
     location: 'Northland',
     type: coin(OpportunityType.ASK, OpportunityType.OFFER),
-    status: coin(OpportunityStatus.DRAFT, OpportunityStatus.ACTIVE),
+    status: OpportunityStatus.ACTIVE,
     fromActivity: fromActivity._id,
     // offerOrg: fromActivity.offerOrg._id,
     requestor: fromActivity.owner._id,
@@ -76,6 +76,7 @@ test.serial('verify fixture database has acts and ops', async t => {
   const countOps = await Opportunity.countDocuments()
   t.is(countOps, opCount * t.context.activities.length)
 
+  // can find active ops
   await Promise.all(t.context.activities.map(async act => {
     const counts = await getOpsForActivity(act._id)
     t.is(counts.ask + counts.offer, opCount)
