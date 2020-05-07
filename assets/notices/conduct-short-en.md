@@ -1,6 +1,6 @@
 # Being a great volunteer
 
-In order to support safety and trust in our community, we have a code of conduct all volunteers need to follow in your heart. This code sets out principles and behaviours that the Voluntarily community reasonably expects of people participating in voluntarily activities.
+In order to support safety and trust in our community, we have a code of conduct all volunteers need to follow in your heart. This code sets out principles and behaviours that the Voluntarily community reasonably expects of people participating in Voluntarily activities.
 
 ### Basic Principles
 
