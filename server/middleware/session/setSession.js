@@ -123,12 +123,12 @@ const setSession = async (req, res, next) => {
 
   let me = false
   try {
-    me = await Person.findOne({ email: user.email }, PersonListFields.join(' ')).exec()
+    me = await Person.findOne({ email: user.email }).exec()
     if (!me) {
       me = await createPersonFromUser(user)
     } else {
       if (user.email_verified && !isEmailVerified(me)) {
-        await setEmailVerified(PersonalVerificationStatus.VERIFIED, me)
+        await setEmailVerified(PersonalVerificationStatus.VERIFIED, user.email, me)
       }
       await getPersonRoles(me)
     }
