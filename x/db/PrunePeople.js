@@ -13,7 +13,7 @@
 
 const mongoose = require('mongoose')
 const { config } = require('../../config/serverConfig')
-const Person = require('../../server/api/person/person')
+require('../../server/api/person/person')
 const Member = require('../../server/api/member/member')
 const { Interest } = require('../../server/api/interest/interest')
 const Story = require('../../server/api/story/story')
@@ -38,7 +38,7 @@ const prunePerson = async (model, field) => {
 
 async function main () {
   mongoose.Promise = Promise
-
+  console.log('This will remove all docs that reference people that non longer exist in the database.')
   try {
     await mongoose.connect(
       config.databaseUrl,
