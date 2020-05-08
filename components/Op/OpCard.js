@@ -49,11 +49,11 @@ const OpCard = ({ op }) => {
     }
   })(op.interest)
 
-  let orgName = ''
+  // let orgName = ''
 
-  if (op.offerOrg) {
-    orgName = <span>{op.offerOrg.name}</span>
-  }
+  // if (op.offerOrg) {
+  //   orgName = <span>{op.offerOrg.name}</span>
+  // }
 
   return (
     <Card>

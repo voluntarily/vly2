@@ -1,8 +1,6 @@
 
 import React from 'react'
-import styled from 'styled-components'
-import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
+
 import { Button, Divider } from 'antd'
 import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
 
