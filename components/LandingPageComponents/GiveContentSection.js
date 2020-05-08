@@ -4,14 +4,14 @@ import React from 'react'
 import { Button, Divider } from 'antd'
 import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
 
-const GiveSupportSection = () => (
+const GiveContentSection = () => (
   <>
     <HalfGrid>
 
-      <ImageContainer src='/static/img/about/askforhelp.png' />
+      <ImageContainer src='/static/img/about/content.png' />
 
       <div>
-        <H2>Ask for help from Volunteers</H2>
+        <H2>Content &amp; Programmes</H2>
         <H3>Skilled volunteers are offering to help you out. We get all the admin and annoying stuff out of the way to give you more time</H3>
 
         <StatContainer>
@@ -28,32 +28,30 @@ const GiveSupportSection = () => (
           size='large'
           href='https://blog.voluntarily.nz'
           style={{ marginRight: '1rem' }}
-        >Ask for help
+        >Learn more
         </Button>
-        <Button
-          type='secondary'
-          shape='round'
-          size='large'
-          href='https://blog.voluntarily.nz'
-        >Join as a community group
-        </Button>
+
       </div>
     </HalfGrid>
     <Divider />
-    <TitleContainerMid><H2>Featured offers to help</H2></TitleContainerMid>
+    <TitleContainerMid><H2>Supporting groups on voluntarily</H2></TitleContainerMid>
     <TripleGrid>
       <a>
         <PromoCard>
           <img src='https://picsum.photos/400/240' />
-          <H5><strong>Get help with Remote Work</strong></H5>
-          <H5><a>45 people offering to help you</a></H5>
+          <div>
+            <H5><strong>Get help with Remote Work</strong></H5>
+            <H5><a>45 people offering to help you</a></H5>
+          </div>
         </PromoCard>
       </a>
       <a>
         <PromoCard>
           <img src='https://picsum.photos/400/240' />
-          <H5><strong>Get help with Remote Work</strong></H5>
-          <H5><a>45 people offering to help you</a></H5>
+          <div>
+            <H5><strong>Get help with Remote Work</strong></H5>
+            <H5><a>45 people offering to help you</a></H5>
+          </div>
         </PromoCard>
       </a>
       <a>
@@ -76,4 +74,4 @@ const GiveSupportSection = () => (
     </TitleContainerMid>
   </>
 )
-export default GiveSupportSection
+export default GiveContentSection

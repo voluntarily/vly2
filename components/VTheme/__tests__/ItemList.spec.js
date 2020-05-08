@@ -94,7 +94,7 @@ test('render ItemListing', t => {
 
 test('render duration if the value is 3 hours', t => {
   const wrapper = renderWithIntl(<ItemDuration duration='3 hours' />)
-  t.is(wrapper.text(), '⏱Duration:   3 hours')
+  t.is(wrapper.text(), '⏱ Duration: 3 hours')
 })
 
 test('render Volunteers per student properly if the value is < 1', t => {
@@ -108,7 +108,7 @@ test('render volunteer properly if the value is >= 1', t => {
   const equipment = ['a tisket', 'a tasket', 'a little yellow basket']
 
   const wrapper = renderWithIntl(<ItemNeeds volunteers={5} type='act' equipment={equipment} />)
-  t.is(wrapper.text(), '🤔Activity needs: 5 people, 3 items')
+  t.is(wrapper.text(), '🤔 Activity needs: 5 people, 3 items')
 })
 test('render volunteer values === 0 properly', t => {
 //   t.context.volunteers = 0

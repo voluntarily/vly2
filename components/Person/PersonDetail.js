@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
 import TagDisplay from '../Tags/TagDisplay'
-import { ActivityContainer, StyledIcon } from '../VTheme/VTheme'
+import { ActivityContainer, StyledIcon, H2, H3 } from '../VTheme/VTheme'
 import Html from '../VTheme/Html'
 import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
@@ -45,7 +45,11 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
     <VBanner>
       <VBannerImg src={person.imgUrl} alt={person.nickname} />
       <ProfileBannerTitle>
-        <h1>{person.name}</h1>
+        <H2>{person.name}</H2>
+        <p>
+          {person.job && `${person.job}`}
+          {person.placeOfWork && ` - ${person.placeOfWork}`}
+        </p>
         {canEdit &&
           <div>
             {personEdit &&
@@ -62,24 +66,20 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
               </Button>}
             &nbsp;<Verification />
           </div>}
-        <p>
-          {person.job && `${person.job}`}
-          {person.placeOfWork && ` - ${person.placeOfWork}`}
-        </p>
       </ProfileBannerTitle>
     </VBanner>
     <Divider />
     {canEdit &&
       <>
         <ActivityContainer>
-          <h2><FormattedMessage defaultMessage='Participation' id='PersonDetail.Participation' description='Participation section header for a person profile' /> </h2>
+          <H3><FormattedMessage defaultMessage='How to get involved' id='PersonDetail.Participation' description='Participation section header for a person profile' /> </H3>
           <div>
             <ParticipationSection person={person} />
           </div>
         </ActivityContainer>
         <Divider />
         <ActivityContainer>
-          <h2><FormattedMessage defaultMessage='Follow Groups' id='PersonDetail.TopicGroups' description='TopicGroups section header for a person profile' /> </h2>
+          <H3><FormattedMessage defaultMessage='Your Interests' id='PersonDetail.TopicGroups' description='TopicGroups section header for a person profile' /> </H3>
           <div>
             <TopicGroupSection person={person} />
           </div>
@@ -89,7 +89,7 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
     {(person.about || person.tags) &&
       <>
         <ActivityContainer>
-          <h2><FormattedMessage defaultMessage='About' id='PersonDetail.About' description='About section header for a person profile' /> </h2>
+          <H3><FormattedMessage defaultMessage='About' id='PersonDetail.About' description='About section header for a person profile' /> </H3>
           <div>
             {person.about &&
               <div>
@@ -113,13 +113,13 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
         <Divider />
       </>}
     <ActivityContainer>
-      <h2>
+      <H3>
         <FormattedMessage
           defaultMessage='Contact'
           id='PersonDetail.Contact'
           description='Heading for contact details on person details page'
         />
-      </h2>
+      </H3>
       <InfoSection>
         <PersonUl>
 
@@ -192,13 +192,13 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
     </ActivityContainer>
     <Divider />
     <ActivityContainer>
-      <h2>
+      <H3>
         <FormattedMessage
           id='PersonDetail.subheading.membership'
           defaultMessage='Organisations'
           description='Header for list of orgs I belong to'
         />
-      </h2>
+      </H3>
       <div>
 
         {person.orgMembership &&
@@ -229,13 +229,13 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
     <Divider />
     <ActivityContainer>
 
-      <h2>
+      <H3>
         <FormattedMessage
           id='PersonDetail.subheading.achievements'
           defaultMessage='Recognition'
           description='Header for list of badges I have obtained'
         />
-      </h2>
+      </H3>
 
       <PersonBadgeSection person={person} />
     </ActivityContainer>

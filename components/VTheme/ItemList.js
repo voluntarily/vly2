@@ -57,14 +57,14 @@ object-position: center;
 
 export const ItemDuration = ({ duration }) =>
   <ItemListing>
-  ⏱
+  ⏱{' '}
     <strong>
       <FormattedMessage
         id='itemlist.duration'
         defaultMessage='Duration:'
         description='duration label for acts and ops'
       />
-    </strong>&nbsp;&nbsp;&nbsp;
+    </strong>{' '}
     {sanitize(duration)}
   </ItemListing>
 
@@ -111,7 +111,7 @@ export const ItemIdLine = ({ item, path }) =>
 
 export const ItemDate = ({ startDate, endDate }) =>
   <ItemListing>
-    🗓
+    🗓&nbsp;
     <strong>
       <FormattedMessage
         id='itemlist.date'
@@ -195,7 +195,7 @@ export const ItemNeeds = ({ volunteers, equipment }) => {
         <strong>
           <FormattedMessage
             id='ItemNeeds.required'
-            defaultMessage='🤔Activity needs:'
+            defaultMessage='🤔 Activity needs:'
             description='label for number of people required'
           />
         </strong>

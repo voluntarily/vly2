@@ -9,6 +9,7 @@ const Article = styled.article`
   padding: 1rem;
   button {
     margin: 3px;
+    
   }
   border-bottom: 1px solid;
 `
