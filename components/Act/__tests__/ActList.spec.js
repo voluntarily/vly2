@@ -39,7 +39,7 @@ test('renders the list with acts to get card coverage', t => {
     <ActList acts={acts} handleShowAct={() => {}} handleDeleteAct={() => {}} />
   )
 
-  t.is(wrapper.find('a').length, 4)
+  t.is(wrapper.find('a').length, 3)
 })
 
 test('renders the list with no acts', t => {
@@ -47,5 +47,5 @@ test('renders the list with no acts', t => {
     <ActList handleShowAct={() => {}} handleDeleteAct={() => {}} />
   )
   t.is(wrapper.find('ActCard').length, 0)
-  t.is(wrapper.text(), 'No matching activitiesSuggest a topicSuggest a topic you want help with, or can offer to help with.Learn more')
+  t.is(wrapper.text(), 'No matching activitiesSuggest a topicSuggest a topic you want help with, or can offer to help with.')
 })

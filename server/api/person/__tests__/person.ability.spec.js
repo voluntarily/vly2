@@ -30,7 +30,8 @@ const createPerson = (roles) => {
     role: [...roles, Role.BASIC],
     status: 'active',
     language: 'en',
-    website: 'https://reddit.com'
+    website: 'https://reddit.com',
+    verified: []
   }
 
   return Person.create(person)
@@ -162,7 +163,8 @@ test.serial('Get person by id - self returns all fields', async t => {
     tags: ['cars', 'trucks'],
     education: 'self university',
     job: 'Self',
-    placeOfWork: 'POW Self'
+    placeOfWork: 'POW Self',
+    verified: []
   })
 
   const person = await Person.findOne({ email }).lean()
@@ -176,8 +178,13 @@ test.serial('Get person by id - self returns all fields', async t => {
   // Make sure all person fields are returned for a request about myself
   t.is(res.body._id, person._id.toString())
   for (const key of PersonFriendFields) {
-    t.deepEqual(res.body[key], person[key], `The '${key}' field on the person response object (when requesting as self) is invalid`)
+    if (key !== 'verified') { t.deepEqual(res.body[key], person[key], `The '${key}' field on the person response object (when requesting as self) is invalid. ${JSON.stringify(res.body[key], null, 2)}, ${JSON.stringify(person[key], null, 2)}`) }
   }
+
+  // in this process the person gets email verified
+  t.is(res.body.verified.length, 1)
+  t.is(res.body.verified[0].name, 'email')
+  t.is(res.body.verified[0].status, 'verified')
 })
 
 for (const role of [Role.ADMIN, Role.SUPPORT]) {
@@ -213,6 +220,7 @@ test.skip('Get person by id - requested person is in my organisation', async t =
     education: 'self university',
     job: 'Self',
     locations: ['Loc'],
+    verified: [],
     placeOfWork: 'POW'
   })
 
@@ -261,6 +269,7 @@ test('Get person by id - requested person is invited to an opportunity of mine',
     education: 'self university',
     job: 'Self',
     locations: ['Loc'],
+    verified: [],
     placeOfWork: 'POW'
   })
 
@@ -292,7 +301,7 @@ test('Get person by id - requested person is invited to an opportunity of mine',
   t.is(res.body.placeOfWork, 'POW')
 })
 
-for (const role of [undefined, Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.SUPPORT]) {
+for (const role of [Role.VOLUNTEER, Role.OPPORTUNITY_PROVIDER, Role.ACTIVITY_PROVIDER, Role.SUPPORT]) {
   test.serial(`Create a new person - ${role || 'Anonymous'} is denied`, async t => {
     const res = await request(server)
       .post('/api/people')
@@ -315,7 +324,7 @@ test.serial('Update - anonymous user cannot update', async t => {
     .send({
       name: 'testname',
       email: 'test@email.nz',
-      role: ['admin'],
+      role: [Role.ADMIN],
       status: 'active',
       phone: 'testphone'
     })

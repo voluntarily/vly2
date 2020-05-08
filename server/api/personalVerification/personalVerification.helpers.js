@@ -61,7 +61,7 @@ const getCloudcheck = async (options) => {
       return data.capture
     }).catch(error => {
       console.error(error)
-      throw Error(`Error caling cloudcheck with Path: ${path}`)
+      throw Error(`Error calling cloudcheck with Path: ${path}`)
     })
 }
 

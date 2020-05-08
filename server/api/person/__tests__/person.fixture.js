@@ -64,7 +64,7 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
       possessive: 'her'
     },
     imgUrl: 'https://publicdomainvectors.org/photos/teacher.png',
-    role: ['opportunityProvider', 'volunteer'],
+    role: ['opportunityProvider', 'basic'],
     status: 'active',
     tags: [],
     teacher: {
@@ -105,7 +105,7 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     sendEmailNotifications: true,
     pronoun: { subject: 'they', object: 'them', possesive: 'ȁǹy' },
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
-    role: ['support', 'volunteer'],
+    role: ['volunteer'],
     status: 'active',
     tags: []
   },
@@ -118,7 +118,7 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     phone: '027 444 5555',
     sendEmailNotifications: true,
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
-    role: ['support', 'volunteer'],
+    role: ['volunteer'],
     status: 'active',
     tags: []
   },
@@ -131,7 +131,7 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     phone: '027 444 5554',
     sendEmailNotifications: true,
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
-    role: ['support', 'volunteer'],
+    role: ['volunteer'],
     status: 'active',
     tags: []
   },

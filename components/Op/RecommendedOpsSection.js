@@ -1,7 +1,7 @@
 import React from 'react'
 import { ProfileSection, ProfileSectionTitle } from '../VTheme/Profile'
 import { FormattedMessage } from 'react-intl'
-import OpRecommendations from './OpRecommendations'
+import { OpRecommendations, NoRecommendations } from './OpRecommendations'
 import { useSelector } from 'react-redux'
 import Loading from '../Loading'
 import { Role } from '../../server/services/authorize/role'
@@ -14,10 +14,13 @@ export const RecommendedOpsSection = () => {
 
   const me = useSelector(state => state.session.me)
   const vp = me.role.includes(Role.VOLUNTEER)
+  const bp = me.role.includes(Role.BASIC)
   const ops = recommendedOps.data[0]
 
   return (
     <>
+      {!vp && !bp &&
+        <NoRecommendations />}
       {vp &&
         <ProfileSection id='volunteerRecommendations'>
           <ProfileSectionTitle>
@@ -38,6 +41,7 @@ export const RecommendedOpsSection = () => {
           <OpRecommendations recommendedOps={ops} type={ASK} />
         </ProfileSection>}
 
+      {bp &&
       <ProfileSection id='basicRecommendations'>
         <ProfileSectionTitle>
           <FormattedMessage
@@ -55,7 +59,8 @@ export const RecommendedOpsSection = () => {
         </ProfileSectionTitle>
 
         <OpRecommendations recommendedOps={ops} type={OFFER} />
-      </ProfileSection>
+      </ProfileSection>}
+
     </>
   )
 }

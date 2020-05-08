@@ -89,12 +89,14 @@ export const ProfileSectionTitle = styled.h2`
     font-size: 1.25rem;
     font-weight: 400;
     display: block;
+
     line-height: 2rem;
     @media screen and (max-width: 768px) {
 
       font-size: 1.2rem;
       width: 90%;
-  }
 
+  }
+}
 
 `
