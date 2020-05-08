@@ -54,7 +54,7 @@ test('render the detail with short draft act', t => {
   t.truthy(wrapper.find('Head'))
   t.is(wrapper.find('h2').text(), `Draft: ${actMin.name}`)
   t.is(wrapper.find({ duration: actMin.duration }).length, 1)
-  t.is(wrapper.find('li').length, 3) // only minimal items shown
+  t.is(wrapper.find('li').length, 5) // only minimal items shown
 })
 
 test('render the detail with full act', t => {
@@ -65,7 +65,7 @@ test('render the detail with full act', t => {
   t.truthy(wrapper.find('Head'))
   t.is(wrapper.find('h2').text(), actMax.name)
   t.is(wrapper.find({ volunteers: actMax.volunteers }).length, 1)
-  t.is(wrapper.find('li').length, 4)
+  t.is(wrapper.find('li').length, 6)
 })
 
 test('render the detail with no picture ', t => {
