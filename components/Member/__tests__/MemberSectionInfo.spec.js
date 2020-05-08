@@ -19,6 +19,7 @@ test.before('Setup fixtures', t => {
   const initStore = {
     members: {
       loading: false,
+      sync: true,
       data: []
     },
     session: {
@@ -46,12 +47,19 @@ function sleep (ms) {
 
 test.serial('What instructions non members see', async t => {
   const org = t.context.orgs[0]
-  const orgid = org._id
-  // this org has no members
-  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, [])
-
-  const wrapper = await mountWithIntl(
-    <Provider store={t.context.store}>
+  const initStore = {
+    members: {
+      loading: false,
+      sync: true,
+      data: []
+    },
+    session: {
+      me: t.context.people[1]
+    }
+  }
+  const store = makeStore(initStore)
+  const wrapper = mountWithIntl(
+    <Provider store={store}>
       <MemberSection org={org} />
     </Provider>
   )
@@ -66,10 +74,19 @@ test.serial('What instructions non members see', async t => {
 
 test.serial('What instructions followers see', async t => {
   const org = t.context.orgs[0]
-  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${org._id}`, t.context.orgMembers(MemberStatus.FOLLOWER, 1))
-
-  const wrapper = await mountWithIntl(
-    <Provider store={t.context.store}>
+  const initStore = {
+    members: {
+      loading: false,
+      sync: true,
+      data: t.context.orgMembers(MemberStatus.FOLLOWER, 1)
+    },
+    session: {
+      me: t.context.people[1]
+    }
+  }
+  const store = makeStore(initStore)
+  const wrapper = mountWithIntl(
+    <Provider store={store}>
       <MemberSection org={org} />
     </Provider>
   )
@@ -84,10 +101,19 @@ test.serial('What instructions followers see', async t => {
 
 test.serial('What instructions joiners see', async t => {
   const org = t.context.orgs[0]
-  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${org._id}`, t.context.orgMembers(MemberStatus.JOINER, 1))
-
-  const wrapper = await mountWithIntl(
-    <Provider store={t.context.store}>
+  const initStore = {
+    members: {
+      loading: false,
+      sync: true,
+      data: t.context.orgMembers(MemberStatus.JOINER, 1)
+    },
+    session: {
+      me: t.context.people[1]
+    }
+  }
+  const store = makeStore(initStore)
+  const wrapper = mountWithIntl(
+    <Provider store={store}>
       <MemberSection org={org} />
     </Provider>
   )
@@ -102,10 +128,19 @@ test.serial('What instructions joiners see', async t => {
 
 test.serial('What instructions validators see', async t => {
   const org = t.context.orgs[0]
-  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${org._id}`, t.context.orgMembers(MemberStatus.VALIDATOR, 1))
-
-  const wrapper = await mountWithIntl(
-    <Provider store={t.context.store}>
+  const initStore = {
+    members: {
+      loading: false,
+      sync: true,
+      data: t.context.orgMembers(MemberStatus.VALIDATOR, 1)
+    },
+    session: {
+      me: t.context.people[1]
+    }
+  }
+  const store = makeStore(initStore)
+  const wrapper = mountWithIntl(
+    <Provider store={store}>
       <MemberSection org={org} />
     </Provider>
   )
@@ -120,10 +155,19 @@ test.serial('What instructions validators see', async t => {
 
 test.serial('What instructions members see', async t => {
   const org = t.context.orgs[0]
-  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${org._id}`, t.context.orgMembers(MemberStatus.MEMBER, 1))
-
-  const wrapper = await mountWithIntl(
-    <Provider store={t.context.store}>
+  const initStore = {
+    members: {
+      loading: false,
+      sync: true,
+      data: t.context.orgMembers(MemberStatus.MEMBER, 1)
+    },
+    session: {
+      me: t.context.people[1]
+    }
+  }
+  const store = makeStore(initStore)
+  const wrapper = mountWithIntl(
+    <Provider store={store}>
       <MemberSection org={org} />
     </Provider>
   )
@@ -138,13 +182,9 @@ test.serial('What instructions members see', async t => {
 
 test.serial('What instructions non members see when no info', async t => {
   const org = t.context.orgs[0]
-  const orgid = org._id
   delete (org.info)
 
-  // this org has no members
-  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, [])
-
-  const wrapper = await mountWithIntl(
+  const wrapper = mountWithIntl(
     <Provider store={t.context.store}>
       <MemberSection org={org} />
     </Provider>
@@ -160,10 +200,19 @@ test.serial('What instructions non members see when no info', async t => {
 const testNoInfo = async (t, status) => {
   const org = t.context.orgs[0]
   delete (org.info)
-  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${org._id}`, t.context.orgMembers(status, 1))
-
-  const wrapper = await mountWithIntl(
-    <Provider store={t.context.store}>
+  const initStore = {
+    members: {
+      loading: false,
+      sync: true,
+      data: t.context.orgMembers(status, 1)
+    },
+    session: {
+      me: t.context.people[1]
+    }
+  }
+  const store = makeStore(initStore)
+  const wrapper = mountWithIntl(
+    <Provider store={store}>
       <MemberSection org={org} />
     </Provider>
   )
