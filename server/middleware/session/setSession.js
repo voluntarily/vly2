@@ -1,11 +1,14 @@
 const Person = require('../../api/person/person')
+const { PersonFields } = require('../../api/person/person.constants')
 const { Role } = require('../../services/authorize/role')
-
 const { TOPIC_PERSON__CREATE } = require('../../services/pubsub/topic.constants')
 const PubSub = require('pubsub-js')
 const { TokenExpiredError } = require('jsonwebtoken')
 const { jwtVerify } = require('./jwtVerify')
 const { getPersonRoles } = require('../../api/member/member.lib')
+const { isEmailVerified, setEmailVerified } = require('../../api/personalVerification/verified')
+const { PersonalVerificationStatus } = require('../../api/personalVerification/personalVerification.constants')
+
 const DEFAULT_SESSION = {
   isAuthenticated: false,
   user: null,
@@ -46,7 +49,12 @@ const createPersonFromUser = async (user) => {
     name: user.name,
     email: user.email,
     nickname: user.nickname,
-    imgUrl: user.picture
+    imgUrl: user.picture,
+    topicGroups: [],
+    verified: []
+  }
+  if (user.email_verified) {
+    person.verified.push({ name: PersonFields.EMAIL, status: PersonalVerificationStatus.VERIFIED })
   }
   try {
     const p = new Person(person)
@@ -112,17 +120,16 @@ const setSession = async (req, res, next) => {
   }
   req.session.idToken = idToken
   req.session.user = user
-  // if (!user.email_verified) {
-  //   // remove login token here
-  //   // console.error('setSession Warning: user email not verified')
-  //   return next()
-  // }
+
   let me = false
   try {
-    me = await Person.findOne({ email: user.email }, 'name nickname email role imgUrlSm locations sendEmailNotifications').exec()
+    me = await Person.findOne({ email: user.email }).exec()
     if (!me) {
       me = await createPersonFromUser(user)
     } else {
+      if (user.email_verified && !isEmailVerified(me)) {
+        await setEmailVerified(PersonalVerificationStatus.VERIFIED, user.email, me)
+      }
       await getPersonRoles(me)
     }
   } catch (err) {

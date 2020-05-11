@@ -13,12 +13,12 @@ const { ASK, OFFER } = OpportunityType
 const ActListTitleMessages = defineMessages({
   [ASK]: {
     id: 'ActListPage.Ask.Title',
-    defaultMessage: 'Volunteers are offering help',
+    defaultMessage: 'Volunteers are offering to help with',
     description: 'Title of ask for help page'
   },
   [OFFER]: {
     id: 'ActListPage.Offer.Title',
-    defaultMessage: 'People are asking for help',
+    defaultMessage: 'People are asking for help with',
     description: 'Title of the offerings page'
   }
 })
@@ -38,7 +38,7 @@ const ActListSubTitleMessages = defineMessages({
 
 export const ActListPage = () => {
   const router = useRouter()
-  const type = router.query.type
+  const type = router.query.type || 'ask'
 
   return (
     <FullPage>

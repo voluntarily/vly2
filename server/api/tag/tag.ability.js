@@ -30,8 +30,9 @@ const ruleBuilder = (session) => {
 
   return {
     [Role.ANON]: basicAbilities,
-    [Role.BASIC]: basicAbilities,
     [Role.VOLUNTEER]: basicAbilities,
+    [Role.BASIC]: basicAbilities,
+    [Role.OPPORTUNITY_PROVIDER]: basicAbilities,
     [Role.SUPPORT]: adminAbilities,
     [Role.ADMIN]: adminAbilities
   }

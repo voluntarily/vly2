@@ -19,7 +19,7 @@ const listMembers = async (req, res) => {
 
     if (req.query.orgid) {
       find.organisation = req.query.orgid
-      populateList.push({ path: 'person', select: 'nickname name imgUrl email phone sendEmailNotifications' })
+      populateList.push({ path: 'person', select: 'nickname name imgUrl role email phone sendEmailNotifications' })
       populateList.push({ path: 'organisation', select: 'name imgUrl groups role' })
     }
 

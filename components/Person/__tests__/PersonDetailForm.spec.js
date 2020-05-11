@@ -64,7 +64,8 @@ test('render the detail with op', t => {
   const wrapper = mountWithIntl(
     <PersonDetailForm person={t.context.me} existingTags={tagList} locations={sortedLocations} onSubmit={submitOp} onCancel={cancelOp} me={t.context.me} />
   )
-  const locationInput = wrapper.find('TagSelect').first()
+  t.true(wrapper.exists('ForwardRef(TagSelect)'))
+  const locationInput = wrapper.find('ForwardRef(TagSelect)').first()
   locationInput.props().onChange(['Auckland'])
 
   t.true(wrapper.exists('ForwardRef(EducationSelector)'))
@@ -73,7 +74,7 @@ test('render the detail with op', t => {
   // wrapper.find('ImageUpload').first().props().setImgUrl('https://example.com/picture.png')
 
   t.is(wrapper.find('PersonDetail').length, 1)
-  t.is(wrapper.find('TagInput').length, 1)
+  t.is(wrapper.find('TagInput').length, 0)
   t.is(wrapper.find('button').length, 2)
   wrapper.find('button').first().simulate('click')
   t.truthy(cancelOp.calledOnce)

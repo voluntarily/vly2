@@ -16,7 +16,7 @@ const ActCardSuggest = () => {
           <h1>
             Suggest a topic
           </h1>
-          <p>Suggest a topic you want help with, or can offer to help with.<br /><a>Learn more</a></p>
+          <p>Suggest a topic you want help with, or can offer to help with.</p>
         </figcaption>
       </a>
     </Card>

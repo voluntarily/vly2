@@ -179,10 +179,10 @@ OrgDetailPage.getInitialProps = async ({ store, query }) => {
   } else if (query && query.id) {
     await store.dispatch(reduxApi.actions.organisations.get(query))
     if (store.getState().session.isAuthenticated) {
-      // get my membership of this org
-      const meid = store.getState().session.me._id.toString()
+      // get available membership of this org - either just me or all
+      // const meid = store.getState().session.me._id.toString()
       await store.dispatch(
-        reduxApi.actions.members.get({ orgid: query.id, meid: meid })
+        reduxApi.actions.members.get({ orgid: query.id })
       )
     }
     return {

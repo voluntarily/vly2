@@ -48,7 +48,9 @@ export const EditablePersonPanel = ({ person, me }) => {
   }
 
   return (
-    <PersonDetail person={person} panelEdit={() => setEditing(true)} />
+    <>
+      <PersonDetail person={person} canEdit panelEdit={() => setEditing(true)} />
+    </>
   )
 }
 

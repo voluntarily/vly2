@@ -9,6 +9,7 @@ const { SubMenu, Item } = Menu
 const VMenu = styled(Menu)`
 border-bottom: 2px solid transparent;
 border-right: none;
+font-weight: 700;
 .ant-menu-item {
   border: none;
   
@@ -30,9 +31,14 @@ export const NavigationH = ({ items }) => {
     >
       {items.map(item => (
         <Menu.Item key={item.key}>
-          <Link key={item.href} href={item.href}>
-            <a>{item.text}</a>
-          </Link>
+          {item.href.startsWith('http')
+            ? ( // offsite links
+              <a key={item.href} href={item.href}>{item.text}</a>
+            ) : (
+              <Link key={item.href} href={item.href}>
+                <a>{item.text}</a>
+              </Link>
+            )}
         </Menu.Item>
       ))}
 
@@ -56,9 +62,14 @@ export const NavigationV = ({ items }) => {
       >
         {items.map(item => (
           <Item key={item.key}>
-            <Link key={item.href} href={item.href}>
-              <a>{item.text}</a>
-            </Link>
+            {item.href.startsWith('http')
+              ? ( // offsite links
+                <a key={item.href} href={item.href}>{item.text}</a>
+              ) : (
+                <Link key={item.href} href={item.href}>
+                  <a>{item.text}</a>
+                </Link>
+              )}
           </Item>
         ))}
       </SubMenu>
@@ -67,7 +78,7 @@ export const NavigationV = ({ items }) => {
   )
 }
 
-const COLLAPSE_MENU_WIDTH = 767
+const COLLAPSE_MENU_WIDTH = 1020
 const Navigation = (props) => {
   const [width] = useWindowSize()
   return (width < COLLAPSE_MENU_WIDTH)

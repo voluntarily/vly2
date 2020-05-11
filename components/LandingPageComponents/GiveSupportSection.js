@@ -1,128 +1,79 @@
 
 import React from 'react'
-import styled from 'styled-components'
-import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
-import { Button } from 'antd'
-import { Grid, HeroSectionHeader, HeroSectionButtonContainer } from '../VTheme/VTheme'
-const PersonaBox = styled.section`
-  margin-bottom: 2rem;
 
- 
-  @media screen and (max-width: 768px) {
-    margin-bottom: 2rem;
-  }
-`
-
-const PersonaContainer = styled.div`
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
-  margin-bottom: 2rem;
-
-  :hover {
-    border-radius: 8px;
-    transform: scale(1.04);
-  }
-
-
-
-
-`
-const Image = styled.img`
-  width: 100%;
-  object-fit: cover;
-
-  @media screen and (max-width: 768px) {
-    height: 20rem;
-    object-position: top;
-  }
-
-  @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
-  /* iPhone X */
-  height: 20rem;
-  object-position: top;
-  }
-`
-
-const Title = styled.h3`
-  height: auto;
-  margin: 0.2rem 0 0 0;
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.1px;
-  color: black;
-
-  @media screen and (max-width: 768px) {
-    font-size: 1.5rem;
-  }
-`
-
-const Text = styled.p`
-  margin: 0rem 0rem 0.5rem 0rem;
-  font-size: 1rem;
-  font-weight: 400;
-  color: black;
-  letter-spacing: -0.1px;
-  line-height: 24px;
-
-  @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
-    /* iPhone X */
-    font-size: 1rem;
-    line-height: 1.4;
-    height: auto;
-    margin-bottom: 1rem;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 1rem;
-    line-height: 1.4;
-    height: auto;
-    margin-bottom: 1rem;
-  }
-`
+import { Button, Divider } from 'antd'
+import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
 
 const GiveSupportSection = () => (
-  <PersonaBox>
-    <HeroSectionHeader>
-      <h2>How you can support others</h2>
-      <HeroSectionButtonContainer>
-        <Link href='/a/offer'>
-          <Button shape='round' size='large'>
-            <FormattedMessage
-              id='GiveSupportSection.offer'
-              defaultMessage='See all activities'
-              description='Button to link to activities page'
-            />
-          </Button>
-        </Link>
-      </HeroSectionButtonContainer>
-    </HeroSectionHeader>
-    <Grid>
-      <PersonaContainer>
-        <Image src='./static/img/landingcards/business.png' alt='' />
-        <Title>Help small businesses</Title>
-        <Text>Offer your knowledge to smaller businesses who need the support to set up remote working.</Text>
-      </PersonaContainer>
+  <>
+    <HalfGrid>
 
-      <PersonaContainer>
-        <Image src='./static/img/landingcards/community.png' alt='' />
-        <Title>Help your community</Title>
-        <Text>Spread your kindness and offer help to those that cannot leave their homes.</Text>
-      </PersonaContainer>
+      <ImageContainer src='/static/img/about/askforhelp.png' />
 
-      <PersonaContainer>
-        <Image src='./static/img/landingcards/educator.png' alt='' />
-        <Title>Help teachers</Title>
-        <Text>Help teachers create a distance learning plan for their kura or school. </Text>
-      </PersonaContainer>
+      <div>
+        <H2>Ask for help from Volunteers</H2>
+        <H3>Skilled volunteers are offering to help you out. We get all the admin and annoying stuff out of the way to give you more time</H3>
 
-      <PersonaContainer>
-        <Image src='./static/img/landingcards/senior.png' alt='' />
-        <Title>Help seniors</Title>
-        <Text>Reach out to our most at-risk citizens and help look out for those over 70.</Text>
-      </PersonaContainer>
-    </Grid>
+        <StatContainer>
+          <img src='./static/img/icons/check.svg' />
+          <P>Safe — everyone gets ID checked to keep you safe - for groups</P>
+          <img src='./static/img/icons/check.svg' />
+          <P>Personalised — we connect you with local people, for an activity at a time that suits</P>
+          <img src='./static/img/icons/check.svg' />
+          <P>Recognition and support — we help you through the process, and celebrate success</P>
+        </StatContainer>
+        <Button
+          type='primary'
+          shape='round'
+          size='large'
+          href='https://blog.voluntarily.nz'
+          style={{ marginRight: '1rem' }}
+        >Ask for help
+        </Button>
+        <Button
+          type='secondary'
+          shape='round'
+          size='large'
+          href='https://blog.voluntarily.nz'
+        >Join as a community group
+        </Button>
+      </div>
+    </HalfGrid>
+    <Divider />
+    <TitleContainerMid><H2>Featured offers to help</H2></TitleContainerMid>
+    <TripleGrid>
+      <a>
+        <PromoCard>
+          <img src='https://picsum.photos/400/240' />
+          <H5><strong>Get help with Remote Work</strong></H5>
+          <H5><a>45 people offering to help you</a></H5>
+        </PromoCard>
+      </a>
+      <a>
+        <PromoCard>
+          <img src='https://picsum.photos/400/240' />
+          <H5><strong>Get help with Remote Work</strong></H5>
+          <H5><a>45 people offering to help you</a></H5>
+        </PromoCard>
+      </a>
+      <a>
+        <PromoCard>
+          <img src='https://picsum.photos/400/240' />
+          <H5><strong>Get help with Remote Work</strong></H5>
+          <H5><a>45 people offering to help you</a></H5>
+        </PromoCard>
+      </a>
 
-  </PersonaBox>
+    </TripleGrid>
+    <TitleContainerMid>
+      <Button
+        type='secondary'
+        shape='round'
+        size='large'
+        href='https://blog.voluntarily.nz'
+      >See more offers from your community
+      </Button>
+    </TitleContainerMid>
+  </>
 )
 export default GiveSupportSection

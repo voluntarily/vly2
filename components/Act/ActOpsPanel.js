@@ -1,4 +1,4 @@
-import { Button } from 'antd'
+import { Button, Divider } from 'antd'
 import Link from 'next/link'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -74,6 +74,7 @@ export const ActOpsPanel = ({ act, type, limit }) => {
             </Link>}
         </div>
       </OpSectionGrid>
+      <Divider />
     </>
   )
 }

@@ -67,17 +67,17 @@ export function ActAboutPanel ({ act }) {
   const appUrl = `${config.appUrl}/acts/act._id`
   const me = useSelector(state => state.session.me)
 
-  const vp = me.role.includes(Role.VOLUNTEER)
+  const isAnon = me.role.includes(Role.ANON)
+  const vp = me.role.includes(Role.VOLUNTEER) || isAnon
+  const bp = me.role.includes(Role.BASIC) || isAnon
   return (
     <ProfilePanel>
       <ActAboutSection act={act} />
       <Divider />
       <ActActivityGuideSection act={act} />
       <Divider />
-      <ActOpsPanel act={act} type={OFFER} limit={6} />
-      <Divider />
+      {bp && <ActOpsPanel act={act} type={OFFER} limit={6} />}
       {vp && <ActOpsPanel act={act} type={ASK} limit={6} />}
-      <Divider />
       <OpSectionGrid>
         <section>
           <h5><FormattedMessage id='ActAboutPanel.share' defaultMessage='Share' /></h5>

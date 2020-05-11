@@ -71,7 +71,7 @@ const ruleBuilder = session => {
     [Role.ANON]: anonAbilities,
     [Role.BASIC]: basicRules,
     [Role.VOLUNTEER]: basicRules,
-    // [Role.OPPORTUNITY_PROVIDER]: basicRules,
+    [Role.OPPORTUNITY_PROVIDER]: basicRules,
     [Role.ADMIN]: adminAbilities,
     [Role.ACTIVITY_PROVIDER]: basicRules,
     [Role.SUPPORT]: basicRules,

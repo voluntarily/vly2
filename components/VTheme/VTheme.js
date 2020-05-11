@@ -45,10 +45,11 @@ div{
 h1 {
   align-self: center;
   font-size: 1.5rem;
-  line-height: 1.5
+  line-height: 1;
+  margin-bottom: 0.25rem;
 }
 p {
-  margin-top: -0.1rem;
+  margin: 0;
   font-size: 1.25rem;
   color: #333;
 }
@@ -260,12 +261,12 @@ export const HalfGrid = styled.div`
   display: grid;
   position: relative;
   margin: 0;
-  grid-template-columns: 39rem 39rem;
+  grid-template-columns: 1fr 1fr;
   grid-column-gap: 2rem;
   margin: 4rem 0 ;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
-    grid-template-columns: calc(50vw - 4rem) calc(50vw - 4rem);
+    grid-template-columns: 1fr 1fr;
     grid-column-gap: 2rem;
   }
 
@@ -298,37 +299,40 @@ export const SideBarGrid = styled.div`
 // end halfgrid
 export const TripleGrid = styled.div`
   display: grid;
-  grid-template-columns: 25rem 25rem 25rem;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 2.5rem;
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
+    margin: 0 auto;
     grid-template-columns: repeat(auto-fit, 25rem);
-    justify-content: start;
+    justify-content: center;
     justify-items: center;
   }
 
   @media screen and (max-width: 767px) {
-    grid-template-columns: calc(100vw - 2rem);
+    grid-template-columns: 1fr;
+    grid-row-gap: 2rem;
     grid-gap: 0rem;
   }
 ` // end triplegrid
 
 export const Grid = styled.div`
-  position: relative;
   display: grid;
-  grid-template-columns: 18.5rem 18.5rem 18.5rem 18.5rem;
-  grid-gap: 2rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-column-gap: 1.5rem;
+  grid-row-gap: 2rem;
   overflow: visible;
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
-    grid-template-columns: repeat(auto-fit, 18.5rem);
-    justify-content: start;
-    justify-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+
   }
 
-  @media screen and (max-width: 767px) {
-    grid-template-columns: calc(100vw - 2rem);
-    grid-gap: 0rem;
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media screen and (max-width: 640px) {
+    grid-template-columns: 1fr;
   }
 ` // end grid
 
@@ -365,7 +369,11 @@ export const Grid8 = styled.div`
 ` // end grid
 
 export const DescriptionWrapper = styled.p`
-margin-top: 0.5rem;
+margin: 1rem 0;
+color: #333;
+i {
+  font-size: 0.8rem;
+}
 `
 
 export const GridContainer = styled.div`
@@ -449,7 +457,10 @@ export const ContentCard = styled.div`
     border-radius: 150px;
   }
 `
-
+export const TitleContainerMid = styled.div`
+margin: 4rem auto;
+text-align: center;
+`
 /*
 ====================================================
 
@@ -507,13 +518,49 @@ export const H1 = styled.h1`
 `
 // End H1
 
+// Start H2
+export const H2 = styled.h2`
+font-style: normal;
+font-weight: 500;
+font-size: 2.5rem;
+line-height: 3.5rem;
+letter-spacing: -1.1px;
+margin: 0;
+padding: 0;
+color: #000000;
+@media screen and (min-width: 1026px) and (max-width: 1281px) {
+    font-size: 2rem;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1025px) {
+    font-size: 2rem;
+    letter-spacing: -0.05rem;
+
+line-height: 1.5;
+  }
+
+  @media screen and (max-width: 768px) {
+
+line-height: 1.5;
+    font-size: 2rem;
+    margin-right: initial;
+    letter-spacing: -0.03em;
+  }
+
+`
+
 export const H3 = styled.h3`
-  font-size: 2rem;
-  font-weight: 400;
-  letter-spacing: -0.04em;
-  margin: initial;
+
+
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: -0.3px;
+    color: #333;
+ 
+  margin: 0;
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     letter-spacing: -0.02em;
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
@@ -573,10 +620,15 @@ export const H4 = styled.h4`
 ` // H4
 
 export const H5 = styled.h5`
-  line-height: 2;
-  font-size: 1.1rem;
-  color: #333;
+  line-height: 1.5;
+  font-size: 1.2rem;
+  color: #000;
   letter-spacing: -0.2px;
+  margin: 0;
+
+  strong {
+    font-weight: 700;
+  }
   @media screen and (max-width: 768px) {
     line-height: 1.5;
   }
@@ -737,43 +789,49 @@ export const FillWindow = styled.div`
 */
 export const Card = styled.figure`
 
--webkit-transition: all 0.28s;
 padding-bottom: 0.5rem;
 
-
+-webkit-transition: all 0.3s;
+  transition: all 0.3s;
+p {
+  margin: 0.5rem 0 -0.1rem 0;
+  color: #444;
+}
 a { text-decoration: none; }
 
 figcaption {
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
 
-  li { list-style: none }
+  li { list-style: none;
+   }
   ul { padding-left: 0; }
 }
 
 :hover {
-  transition: all 0.3s;
   box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
-  transform: scale(1.02);
+  transform: scale(1.04);
   border-radius: 8px;
+ p, ul {
+   color: black;
+ }
   h1 {
-    color: #6549aa;
+
+  color: #6549aa;
   }
+
   img {
     border-radius: 8px 8px 0 0;
   }
   figcaption {
     transform: scale(0.94);
+    transition: all 0.3s;
   }
 }
 img {
   border-radius: 8px;
-  min-width: 18rem;
 }
 h1 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
+  margin: 0.2rem 0 0.4rem 0;
+  font-size: 1.4rem;
   vertical-align: middle;
   color: #000;
   text-overflow: ellipsis;
@@ -781,18 +839,13 @@ h1 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  -webkit-transition: all 0.28s;
-  transition: all 0.28s;
   font-weight: 700;
-  font-size: 20px;
   line-height: 1.4;
   -webkit-line-clamp: 3;
 
 }
 
 img {
-  transition: all 0.2s;
-  -webkit-transition: all 0.2s;
   width: 100%;
   height: 10rem;
   max-height: 10rem;
@@ -908,11 +961,12 @@ align-self: center;
 
 ul {
   padding: 0;
-  margin-bottom: 0;
+  margin: 0.25rem 0 0 0;
+
 }
 small {
 
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 500;
   color: #333;
 @media screen and (max-width: 768px) {
@@ -962,6 +1016,36 @@ export const DocumentList = styled.li`
           color: #653cad;
         }
       }
+
+`
+
+// Promo card for topics on landing page
+export const PromoCard = styled.article`
+
+transition: all 0.3s;
+img{
+  border-radius: 8px;
+}
+a {
+  color: #653cad;
+}
+
+:hover {
+  transform: scale(1.04);
+}
+`
+// Stat container for landing page with checks
+export const StatContainer = styled.div`
+margin: 2rem 0;
+display: grid;
+align-self: center;
+grid-template-columns: 2rem 1fr;
+grid-column-gap: 1rem;
+grid-row-gap: 1.5rem;
+p {
+  align-self: center;
+}
+
 
 `
 
@@ -1048,4 +1132,116 @@ export const PageAlert = styled.div`
     color: white;
     font-weight: 600;
   }
+`
+
+// imagecontainer for halfgrid
+export const ImageContainer = styled.img`
+width: 100%;
+
+@media screen and (min-width: 768px) and (max-width: 1281px) {
+    width: 100%;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 50%;
+  }
+`
+
+export const OfferCard = styled.div`
+  
+display: grid;
+gap:1.5rem;
+grid-template-columns: 1fr;
+width: 100%;
+text-align: center;
+  background: #ffffff;
+
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+
+figcaption {
+  position: relative;
+
+  margin: 0;
+width: 100%;
+
+}
+
+  h3 {
+    bottom: 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: -0.38px;
+    line-height: 1.5;
+    color: #653cad;
+
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+  }
+  small {
+  font-size: 1rem
+}
+ img{ 
+   margin-bottom: 1rem;
+  width: 100%;
+}
+
+  :hover {
+    transform: scale(1.01);
+    h3 {
+      color: #653cad;
+    }
+  }
+
+  /* Tablet */
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+
+    min-height: 10rem;
+    figcaption {
+      display: grid;
+      grid-column-gap: 2rem;
+      grid-template-columns: 1fr 2fr;
+  
+    }
+    div {
+      align-self: center;
+      text-align: left;
+    }
+    
+    img{ 
+  width: 100%;
+  align-self: center;
+  justify-self: end;
+    }
+    p {
+      width: 100%;
+      margin: 0 auto;
+    }
+   }
+
+  /* Mobile */
+  @media screen and (max-width: 768px) {
+    min-height: 22rem;
+    
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 668px) {
+    min-height: 22rem;
+
+    width: calc(100vw - 2rem);
+    text-align: left;
+   
+
+  h3 {
+    bottom: 0;
+    font-size: 1.5rem;
+  
+  }
+
+  }
+
 `

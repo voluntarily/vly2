@@ -8,7 +8,7 @@ const { OrganisationRole } = require('../organisation/organisation.constants')
 /* get a single member record with org and person populated out */
 const getMemberbyId = id => {
   return Member.findOne({ _id: id })
-    .populate({ path: 'person', select: 'nickname name imgUrl email sendEmailNotifications' })
+    .populate({ path: 'person', select: 'nickname name imgUrl role email sendEmailNotifications' })
     .populate({ path: 'organisation', select: 'name imgUrl role' })
     .exec()
 }

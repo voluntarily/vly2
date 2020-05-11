@@ -2,7 +2,8 @@ import { Avatar } from 'antd'
 import React from 'react'
 import Link from 'next/link'
 import Router from 'next/router'
-
+import { PersonRoleIcons } from '../Person/PersonRole'
+import { PersonVerificationBadge } from '../Person/PersonVerification'
 export function AvatarProfile ({ person }) {
   if (!person) return null
   return (
@@ -12,10 +13,12 @@ export function AvatarProfile ({ person }) {
           size='large'
           shape='round'
           onClick={() => Router.push(`/people/${person._id}`)}
-          src={person.imgUrlSm}
+          src={person.imgUrl}
           icon='user'
         />&nbsp;&nbsp;
         <span>{person.nickname}</span>
+        {person.role && <PersonRoleIcons roles={person.role} />}
+        <PersonVerificationBadge person={person} />
       </a>
     </Link>
   )

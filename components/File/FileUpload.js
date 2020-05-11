@@ -160,7 +160,7 @@ class FileUpload extends Component {
   }
 }
 
-FileUpload.PropTypes = {
+FileUpload.propTypes = {
   maxFileSize: PropTypes.number,
   maxNumberOfFiles: PropTypes.number,
   allowedFileTypes: PropTypes.arrayOf(PropTypes.string),

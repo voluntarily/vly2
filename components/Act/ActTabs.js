@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import { ActAboutPanel } from './ActAboutPanel'
 import { ActOpsPanel } from './ActOpsPanel'
 import { ActResourcesPanel } from './ActResourcesPanel'
-// import { ActReportsPanel } from './ActReportsPanel'
+import { Role } from '../../server/services/authorize/role.js'
 import VTabs from '../VTheme/VTabs'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 const { ASK, OFFER } = OpportunityType
@@ -69,23 +69,27 @@ const actEditTab =
 
 // const isNotProd = process.env.NODE_ENV !== 'production'
 
-export const ActTabs = ({ act, onChange, canManage, canEdit, defaultTab }) => (
-  <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
-    <TabPane tab={actAboutTab} key='about'>
-      <ActAboutPanel act={act} />
-    </TabPane>
-    <TabPane tab={actRequestsTab} key='ask'>
-      <ActOpsPanel act={act} type={ASK} />
-    </TabPane>
-    <TabPane tab={actOffersTab} key='offer'>
-      <ActOpsPanel act={act} type={OFFER} />
+export const ActTabs = ({ act, me, onChange, canManage, canEdit, defaultTab }) => {
+  const vp = me.role.includes(Role.VOLUNTEER)
+  const bp = me.role.includes(Role.BASIC)
+  return (
+    <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
+      <TabPane tab={actAboutTab} key='about'>
+        <ActAboutPanel act={act} />
+      </TabPane>
+      {vp &&
+        <TabPane tab={actRequestsTab} key='ask'>
+          <ActOpsPanel act={act} type={ASK} />
+        </TabPane>}
+      {bp &&
+        <TabPane tab={actOffersTab} key='offer'>
+          <ActOpsPanel act={act} type={OFFER} />
+        </TabPane>}
+      <TabPane tab={actResourcesTab} key='resources'>
+        <ActResourcesPanel act={act} />
+      </TabPane>
 
-    </TabPane>
-    <TabPane tab={actResourcesTab} key='resources'>
-      <ActResourcesPanel act={act} />
-    </TabPane>
-
-    {/*
+      {/*
     {isNotProd && (
       <TabPane tab={opForumTab} key='question'>
         <OpQuestionPanel act={act} />
@@ -96,16 +100,17 @@ export const ActTabs = ({ act, onChange, canManage, canEdit, defaultTab }) => (
         <OpUpdatePanel albumId={act._id} author={author} />
       </TabPane>
     )} */}
-    {/* {canManage && (
+      {/* {canManage && (
       <TabPane tab={actReportsTab} key='reports'>
         <ActReportsPanel act={act} />
       </TabPane>
     )} */}
-    {canEdit && (
-      <TabPane tab={actEditTab} key='edit' />
-    )}
-  </VTabs>
-)
+      {canEdit && (
+        <TabPane tab={actEditTab} key='edit' />
+      )}
+    </VTabs>
+  )
+}
 
 ActTabs.propTypes = {
   act: PropTypes.shape({

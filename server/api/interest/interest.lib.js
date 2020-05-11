@@ -18,7 +18,7 @@ const personInterestCountA = InterestSchema => (personId) => {
 const personInterestCount = personInterestCountA(Interest)
 const personInterestArchiveCount = personInterestCountA(InterestArchive)
 
-const personFields = 'name nickname email imgUrl pronoun sendEmailNotifications'
+const personFields = 'name nickname email role imgUrl pronoun sendEmailNotifications'
 
 const getInterestDetailA = InterestSchema => async (interestID) => {
   // Get the interest and populate out key information needed for emailing
