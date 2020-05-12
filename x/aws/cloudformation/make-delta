@@ -1,5 +1,0 @@
-aws cloudformation deploy \
-  --capabilities CAPABILITY_NAMED_IAM \
-  --template-file fargate.yml \
-  --stack-name vly-delta \
-  --parameter-overrides ServiceName=vly-delta AppUrl=https://delta.voluntarily.nz
