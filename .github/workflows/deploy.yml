@@ -3,15 +3,11 @@ name: VLY2 deploy
 on:
   push:
     branches:
-      # - master
-      - feature/VP-1808-tagging-for-CI
+      - master
     tags: 
-      - beta
-      - gamma
+      - beta*
+      - gamma*
       - v*
-
-env: 
-  BUILDNUM: ${{ github.run_number }}
 
 jobs:
   build-and-deploy:
@@ -24,25 +20,34 @@ jobs:
     
     - name: Set tag vars
       run: |
-        echo ::set-env name=TAG::${GITHUB_REF:11}
-        echo ::set-env name=SHORTSHA::$(git rev-parse --short=6 ${{ github.sha }})
+        echo ::set-env name=TAG::${GITHUB_REF:10}
 
     - name: Set var for tags vs PR merge
       run: |
         [[ $TAG == 'master' ]] && echo ::set-env name=ENVM::alpha || echo ::set-env name=ENVM::$TAG
 
-    - name: Set env type var
+    - name: Set env type var and secret
       run: |
-        [[ $ENVM == 'v'* ]] && echo ::set-env name=ENVM_TYPE::live || echo ::set-env name=ENVM_TYPE::$ENVM
+        if [[ $ENVM == 'v'* ]];then 
+          echo ::set-env name=ENVM_TYPE::live
+          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_LIVE }} 
+        elif [[ $ENVM == 'beta'* ]];then 
+          echo ::set-env name=ENVM_TYPE::beta
+          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_BETA }}
+        elif [[ $ENVM == 'gamma'* ]];then 
+          echo ::set-env name=ENVM_TYPE::gamma 
+          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_GAMMA }}
+        else
+          echo ::set-env name=ENVM_TYPE::alpha 
+          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_ALPHA }}
+        fi
 
     - name: Check vars
       run: |
-        echo $SHORTSHA
-        echo $BUILDNUM
         echo $TAG
         echo $ENVM
         echo $ENVM_TYPE
-
+        echo $ENV_SECRET
 
     - name: Cache node modules
       uses: actions/cache@v1
@@ -67,14 +72,13 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    # Builds aplha image, uses same image to tag and push live
-    - name: Live build, tag, and push
+    # Builds image, uses same image to tag and push to appropriate environment
+    - name: Build, tag, and push
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: vly-${{ env.ENVM_TYPE }}
         IMAGE_TAG: ${{ github.sha }}
         ENV_ENVIRONMENT: ${{ env.ENVM_TYPE }}
-        ENV_SECRET: ${{ secrets.ENV_SECRET_LIVE }}
       run: |
         docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
         --build-arg ENV_ENVIRONMENT=$ENV_ENVIRONMENT --build-arg ENV_SECRET=$ENV_SECRET \
