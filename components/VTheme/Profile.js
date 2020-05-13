@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const VBanner = styled.header`
-margin: 5rem 0 0rem 0;
+margin: 0rem 0 0rem 0;
 display: grid;
 grid-template-columns: 100%;
 align-self: center;
@@ -36,6 +36,7 @@ export const VBannerImg = styled.img`
   justify-self: center;
   padding: 2.5rem;
   margin-left: 4rem;
+  border-radius: 100%;
 
 @media screen and (max-width: 767px) {
   margin-left: initial;
@@ -69,7 +70,7 @@ export const ProfileTab = styled.span`
 
 export const ProfilePanel = styled.article`
   text-align: left;
-  margin: 2rem 0;
+  margin: 0rem 0;
 `
 
 export const ProfileSection = styled.section`
@@ -80,11 +81,22 @@ ul {
 `
 export const ProfileSectionTitle = styled.h2`
   margin: 1.5rem 0 ;
-
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.28px;
   small {
+    margin: 0.25rem 0 2.5rem 0;
+    font-size: 1.25rem;
+    font-weight: 400;
     display: block;
-    margin-top: 0.3rem;
-    line-height: 1.2rem;
-    font-size: 70%;
+
+    line-height: 2rem;
+    @media screen and (max-width: 768px) {
+
+      font-size: 1.2rem;
+      width: 90%;
+
   }
+}
+
 `

@@ -1,0 +1,99 @@
+name: VLY2 deploy
+
+on:
+  push:
+    branches:
+      - master
+    tags: 
+      - beta*
+      - gamma*
+      - v*
+
+jobs:
+  build-and-deploy:
+    name: Build and push image to ECR, deploy to ECS
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Check out
+      uses: actions/checkout@v2
+    
+    - name: Set tag vars
+      run: |
+        echo ::set-env name=TAG::${GITHUB_REF:10}
+
+    - name: Set var for tags vs PR merge
+      run: |
+        [[ $TAG == 'master' ]] && echo ::set-env name=ENVM::alpha || echo ::set-env name=ENVM::$TAG
+
+    - name: Set env type var and secret
+      run: |
+        if [[ $ENVM == 'v'* ]];then 
+          echo ::set-env name=ENVM_TYPE::live
+          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_LIVE }} 
+        elif [[ $ENVM == 'beta'* ]];then 
+          echo ::set-env name=ENVM_TYPE::beta
+          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_BETA }}
+        elif [[ $ENVM == 'gamma'* ]];then 
+          echo ::set-env name=ENVM_TYPE::gamma 
+          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_GAMMA }}
+        else
+          echo ::set-env name=ENVM_TYPE::alpha 
+          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_ALPHA }}
+        fi
+
+    - name: Check vars
+      run: |
+        echo $TAG
+        echo $ENVM
+        echo $ENVM_TYPE
+        echo $ENV_SECRET
+
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-  
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-southeast-2
+
+    - name: Log in to ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    # Builds image, uses same image to tag and push to appropriate environment
+    - name: Build, tag, and push
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: vly-${{ env.ENVM_TYPE }}
+        IMAGE_TAG: ${{ github.sha }}
+        ENV_ENVIRONMENT: ${{ env.ENVM_TYPE }}
+      run: |
+        docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+        --build-arg ENV_ENVIRONMENT=$ENV_ENVIRONMENT --build-arg ENV_SECRET=$ENV_SECRET \
+        --build-arg REVISION=$IMAGE_TAG \
+        .
+        docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
+
+    - name: Log out of ECR
+      if: always()
+      run: docker logout ${{ steps.login-ecr.outputs.registry }}
+
+    - name: Deploy to ECS
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: vly-${{ env.ENVM_TYPE }}  
+      run: |
+        aws ecs update-service --service vly-${{ env.ENVM_TYPE }}  --cluster vly-${{ env.ENVM_TYPE }}-ECSCluster --force-new-deployment --desired-count 3 --deployment-configuration maximumPercent=100,minimumHealthyPercent=50

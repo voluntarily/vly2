@@ -34,7 +34,7 @@ Parameters:
     Description: What port number the application inside the docker container is binding to
   CertificateARN:
     Type: String
-    Default: arn:aws:acm:ap-southeast-2:585172581592:certificate/0b192399-d518-42c9-b5b8-c32bbf7069fd
+    Default: arn:aws:acm:ap-southeast-2:585172581592:certificate/0c35c8c3-61b4-4212-9b60-16d2c195aa3f
     Description: Certificate to use for HTTPS
   ContainerCpu:
     Type: Number

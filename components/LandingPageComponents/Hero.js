@@ -1,37 +1,36 @@
-import { Icon } from 'antd'
+
 // import Router from 'next/router'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { LearnMoreButton, SignUpButton } from '../../components/VTheme/Buttons'
-import { AlertContainer } from '../VTheme/VTheme'
 
 // const Search = Input.Search
 
 // this is the big container block that holds the container together lol
 const AwesomeHeroContainer = styled.div`
-  margin: 0 auto;
+  margin: 7rem auto 0 auto;
   height: auto;
   width: auto;
   
 
-  @media screen and (min-width: 768px) {
-    margin-top: 2rem;
-    p {
-    font-size: 1rem;
-  }
-  }
-
   @media screen and (min-width: 1200px) {
-    width: 80rem;
+   
   }
 
   p {
     font-size: 1.5rem;
   }
+  @media screen and (max-width: 1280px) {
+
+  margin: 7rem auto 0rem auto;
+  }
 
   @media screen and (max-width: 768px) {
    margin-top: 0;
+   p {
+    font-size: 1rem;
+  }
   }
 
 
@@ -39,15 +38,15 @@ const AwesomeHeroContainer = styled.div`
 
 export const HeroGrid = styled.div`
   display: grid;
+  margin: 0 auto;
   grid-template-columns: 1fr 1fr;
-
+  grid-column-gap: 2rem;
 
 
 
 
   @media screen and (min-width: 1282px) and (max-width: 1921px) {
-    grid-template-columns: 28rem 1fr;
-    grid-column-gap: 3rem;
+
     height: 26rem;
 
  
@@ -56,10 +55,12 @@ export const HeroGrid = styled.div`
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: 22rem 1fr;
     grid-column-gap: 2rem;
+    margin: 2rem;
   }
 
   @media screen and (max-width: 768px) {
     grid-template-columns: calc(100vw - 2rem);
+    grid-column-gap: 0;
   }
 ` // end HeroGrid
 
@@ -92,20 +93,23 @@ width: 100vw;
 const AwesomeImage = styled.img`
   position: relative;
   text-align: center;
-  margin: 0 auto;
-  
-
+  margin: 0 0 0 auto;
+  width: 50%;
+  display: grid;
+ justify-self: end;
   overflow: hidden;
   object-fit: contain;
   background-color: white;
 
   @media screen and (min-width: 1282px) and (max-width: 1921px) {
-    width: 28rem;
+    width: 100%;
     height: 28rem;
+
+    object-position: right;
   }
 
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
-   
+    width: 100%;
     height: 22rem;
 
   }
@@ -136,6 +140,9 @@ const HeroRight = styled.div`
  
   display: grid;
   align-self: center;
+  @media screen and (min-width: 768px) and (max-width: 1025px) { 
+    margin-top: 2rem;
+  }
 
   @media screen and (max-width: 768px) {
     margin: 1rem 1rem 0 1rem;
@@ -145,25 +152,46 @@ const HeroRight = styled.div`
 
 const HeroText = styled.h1`
 font-weight: 700;
-font-size: 3.5rem;
-letter-spacing: -1.2px;
-line-height: 1.7;
+font-size: 3rem;
+line-height: 1.5;
+letter-spacing: -0.5px;
+margin-bottom: 0;
+p {
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+  font-weight: 400;
+letter-spacing: 0;
+}
+@media screen and (min-width: 1922px) {
+ p {
+  
+width: 50%;
+  
+ }
+}
+
 @media screen and (min-width: 1282px) and (max-width: 1921px) {
  p {
-   width: 60%;
+   width: 80%;
+  
  }
   }
 @media screen and (min-width: 1026px) and (max-width: 1281px) {
   font-size:2.5rem;
   p {
-   width: 60%;
+   width: 80%;
   line-height: 1.5;
  }
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     font-size:2.5rem;
+    p {
+   width: 90%;
+  line-height: 1.5;
+ }
   }
   @media screen and (max-width: 768px) {
+  
     font-size: 2.5rem;
     line-height: 1.5;
     margin-bottom: 1rem;
@@ -215,14 +243,6 @@ line-height: 1.7;
 // begin actual component
 const Hero = ({ isAuthenticated }) => (
   <>
-    <div>
-      <a href='https://covid19.govt.nz/' rel='noopener noreferrer' target='_blank'>
-        <AlertContainer>
-          <Icon type='question-circle-o' />&nbsp;
-For official information and advice around COVID-19 visit  <a href='https://covid19.govt.nz/' rel='noopener noreferrer' target='_blank'>covid19.govt.nz</a>
-        </AlertContainer>
-      </a>
-    </div>
     <AwesomeHeroContainer>
 
       <HeroGrid>
@@ -230,7 +250,7 @@ For official information and advice around COVID-19 visit  <a href='https://covi
         <HeroLeft>
 
           <AwesomeImage
-            src='/static/img/hero2.png'
+            src='/static/img/hero3.png'
             alt={<FormattedMessage id='heroImgText' defaultMessage='Children Playing with Robots' description='Description for the hero image' />}
           />
 
@@ -245,7 +265,7 @@ For official information and advice around COVID-19 visit  <a href='https://covi
             <p>
               <FormattedMessage
                 id='Hero.body.WeConnect'
-                defaultMessage='We connect people who can volunteer time, advice, or stuff to those who need it.'
+                defaultMessage='Connecting people, community movements, and schools with the support they need from volunteers and volunteering programmes'
               />
             </p>
           </HeroText>

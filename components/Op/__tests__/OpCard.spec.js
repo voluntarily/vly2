@@ -23,7 +23,6 @@ test('Card include name school/org imgUrl location duration and subtitle', t => 
   )
   t.is(wrapper.find('a').length, 1)
   t.true(wrapper.find('figcaption').find('h1').text().includes(op.name))
-  t.is(wrapper.find('figcaption').find('span').text(), op.offerOrg.name)
   t.is(wrapper.find('img').prop('src'), op.imgUrl)
   // four p tags for location time duration subtitle+interest
   t.is(wrapper.find('figcaption').find('li').length, 2)

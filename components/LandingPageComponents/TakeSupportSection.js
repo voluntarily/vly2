@@ -1,132 +1,78 @@
 
 import React from 'react'
-import styled from 'styled-components'
-import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
-import { Grid, HeroSectionHeader, HeroSectionButtonContainer } from '../VTheme/VTheme'
-import { Button } from 'antd'
-const PersonaBox = styled.section`
-  margin-bottom: 2rem;
 
- 
-  @media screen and (max-width: 768px) {
-    margin-bottom: 2rem;
-  }
-`
-
-const PersonaContainer = styled.div`
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
-  margin-bottom: 2rem;
-
-  :hover {
-    border-radius: 8px;
-    transform: scale(1.04);
- 
-
-
-  }
-
-`
-const Image = styled.img`
-  width: 100%;
-  object-fit: cover;
-
-
-
-  @media screen and (max-width: 768px) {
-    height: 20rem;
-    object-position: top;
-  }
-
-  @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
-  /* iPhone X */
-  height: 20rem;
-  object-position: top;
-  }
-`
-
-const Title = styled.h3`
-  height: auto;
-  margin: 0.2rem 0 0 0;
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.1px;
-  color: black;
-
-  @media screen and (max-width: 768px) {
-    font-size: 1.5rem;
-  }
-`
-
-const Text = styled.p`
-  margin: 0rem 0rem 0.5rem 0rem;
-  font-size: 1rem;
-  font-weight: 400;
-  color: black;
-  letter-spacing: -0.1px;
-  line-height: 24px;
-
-  @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
-    /* iPhone X */
-    font-size: 1rem;
-    line-height: 1.4;
-    height: auto;
-    margin-bottom: 1rem;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 1rem;
-    line-height: 1.4;
-    height: auto;
-    margin-bottom: 1rem;
-  }
-`
+import { Button, Divider } from 'antd'
+import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
 
 const TakeSupportSection = () => (
-  <PersonaBox>
-    <HeroSectionHeader>
-      <h2>How people can support you</h2>
-      <HeroSectionButtonContainer>
-        <Link href='/a/ask'>
-          <Button shape='round' size='large'>
-            <FormattedMessage
-              id='TakeSupportSection.ask'
-              defaultMessage='See all activities'
-              description='Button to link to activities page'
-            />
-          </Button>
-        </Link>
+  <>
+    <HalfGrid>
+      <div>
+        <H2>Offer to help people</H2>
+        <H3>Skilled volunteers are offering to help you out. We get all the admin and annoying stuff out of the way to give you more time</H3>
 
-      </HeroSectionButtonContainer>
-    </HeroSectionHeader>
-    <Grid>
+        <StatContainer>
+          <img src='./static/img/icons/check.svg' />
+          <P>Safe — everyone gets ID checked to keep you safe - for groups</P>
+          <img src='./static/img/icons/check.svg' />
+          <P>Personalised — we connect you with local people, for an activity at a time that suits</P>
+          <img src='./static/img/icons/check.svg' />
+          <P>Recognition and support — we help you through the process, and celebrate success</P>
+        </StatContainer>
+        <Button
+          type='primary'
+          shape='round'
+          size='large'
+          href='https://blog.voluntarily.nz'
+          style={{ marginRight: '1rem' }}
+        >Offer to help
+        </Button>
+        <Button
+          type='secondary'
+          shape='round'
+          size='large'
+          href='https://blog.voluntarily.nz'
+        >Join as a business
+        </Button>
+      </div>
+      <ImageContainer src='/static/img/about/offer.png' />
 
-      <PersonaContainer>
-        <Image src='./static/img/landingcards/RemoteWorking.png' alt='' />
-        <Title>Suddenly working remotely?</Title>
-        <Text>Find someone to tell you all about remote working apps, and tips for working from home efficiently.</Text>
-      </PersonaContainer>
+    </HalfGrid>
+    <Divider />
+    <TitleContainerMid><H2>People are asking for help with...</H2></TitleContainerMid>
+    <TripleGrid>
+      <a>
+        <PromoCard>
+          <img src='https://picsum.photos/400/240' />
+          <H5><strong>Get help with Remote Work</strong></H5>
+          <H5><a>45 people offering to help you</a></H5>
+        </PromoCard>
+      </a>
+      <a>
+        <PromoCard>
+          <img src='https://picsum.photos/400/240' />
+          <H5><strong>Get help with Remote Work</strong></H5>
+          <H5><a>45 people offering to help you</a></H5>
+        </PromoCard>
+      </a>
+      <a>
+        <PromoCard>
+          <img src='https://picsum.photos/400/240' />
+          <H5><strong>Get help with Remote Work</strong></H5>
+          <H5><a>45 people offering to help you</a></H5>
+        </PromoCard>
+      </a>
 
-      <PersonaContainer>
-        <Image src='./static/img/landingcards/SchoolClosed.png' alt='' />
-        <Title>School closed?</Title>
-        <Text>Talk to educators who can guide you to platforms and resources to help you keep teaching or learning online.</Text>
-      </PersonaContainer>
-
-      <PersonaContainer>
-        <Image src='./static/img/landingcards/Isolation.png' alt='' />
-        <Title>Self isolating and struggling?</Title>
-        <Text>Meet someone who can help you run errands, check in on you, or just someone to talk to. </Text>
-      </PersonaContainer>
-
-      <PersonaContainer>
-        <Image src='./static/img/landingcards/ElderlyRisk.png' alt='' />
-        <Title>Over seventy?</Title>
-        <Text>Or worried about an over seventy? Find someone to check in to make isolation a little less lonely.</Text>
-      </PersonaContainer>
-    </Grid>
-
-  </PersonaBox>
+    </TripleGrid>
+    <TitleContainerMid>
+      <Button
+        type='secondary'
+        shape='round'
+        size='large'
+        href='https://blog.voluntarily.nz'
+      >See more offers from your community
+      </Button>
+    </TitleContainerMid>
+  </>
 )
 export default TakeSupportSection

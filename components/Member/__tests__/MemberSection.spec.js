@@ -19,17 +19,6 @@ const MTF = {
 
 test.before('Setup fixtures', t => {
   fixture(t)
-
-  const initStore = {
-    members: {
-      loading: false,
-      data: []
-    },
-    session: {
-      me: t.context.people[0]
-    }
-  }
-  t.context.store = makeStore(initStore)
   t.context.fetchMock = fetchMock.sandbox()
   t.context.fetchMock.config.overwriteRoutes = false
   reduxApi.use('fetch', adapterFetch(t.context.fetchMock))
@@ -44,17 +33,23 @@ test.serial('followers can become members and then be removed', async t => {
   const org = t.context.orgs[4]
   const orgid = org._id
   const orgMembers = members.filter(member => member.organisation._id === orgid)
+  const initStore = {
+    members: {
+      sync: true,
+      loading: false,
+      data: orgMembers
+    },
+    session: {
+      me: t.context.people[0]
+    }
+  }
+  const store = makeStore(initStore)
 
-  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, orgMembers)
-
-  const wrapper = await mountWithIntl(
-    <Provider store={t.context.store}>
+  const wrapper = mountWithIntl(
+    <Provider store={store}>
       <MemberSection org={org} isAdmin />
     </Provider>
   )
-  await sleep(1) // allow asynch fetch to complete
-  wrapper.update()
-
   let membersSection = wrapper.find('section').at(2)
   t.regex(membersSection.find('h2').first().text(), /Members/)
   // there should be one member initally
@@ -119,16 +114,117 @@ test.serial('followers can become members and then be removed', async t => {
   t.context.fetchMock.restore()
 })
 
-test.serial('joiners can become members ', async t => {
+test.serial('members can become admins ', async t => {
+  const members = [...t.context.members]
+  const org = t.context.orgs[5]
+  const orgid = org._id
+  const orgMembers = members.filter(member => member.organisation._id === orgid)
+  const trueMembers = orgMembers.filter(member => [MemberStatus.MEMBER].includes(member.status))
+  const initStore = {
+    members: {
+      sync: true,
+      loading: false,
+      data: orgMembers
+    },
+    session: {
+      me: t.context.people[0]
+    }
+  }
+  const store = makeStore(initStore)
+
+  const wrapper = mountWithIntl(
+    <Provider store={store}>
+      <MemberSection org={org} isAdmin />
+    </Provider>
+  )
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
+
+  // there should be 2 members initally
+  let membersSection = wrapper.find('section').at(2)
+  // console.log(membersSection.debug())
+  t.regex(membersSection.find('h2').first().text(), /Members/)
+  t.is(membersSection.find('tbody tr').length, 2)
+
+  // check orgAdmin can't change own state
+  const memberRow1 = membersSection.find('tbody tr').at(0)
+  t.is(memberRow1.find('td').at(MTF.STATUS).text(), MemberStatus.ORGADMIN)
+  t.is(memberRow1.find('button').length, 0)
+
+  let memberRow2 = membersSection.find('tbody tr').at(1)
+  t.is(memberRow2.find('td').at(MTF.STATUS).text(), MemberStatus.MEMBER)
+
+  const firstMember = trueMembers[0]
+  t.is(memberRow2.find('td a span').at(MTF.NAME).text(), firstMember.person.nickname)
+
+  // test Make Admin button
+  const adminButton = memberRow2.find('button').last()
+  t.is(adminButton.text(), 'Make Admin')
+  const newOrgAdmin = Object.assign({}, firstMember)
+  newOrgAdmin.status = MemberStatus.ORGADMIN
+  t.context.fetchMock.putOnce(`${API_URL}/members/${firstMember._id}`, newOrgAdmin)
+  adminButton.simulate('click')
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
+
+  // check status change
+  membersSection = wrapper.find('section').at(2)
+  memberRow2 = membersSection.find('tbody tr').at(1)
+  t.is(memberRow2.find('td').at(MTF.STATUS).text(), MemberStatus.ORGADMIN)
+})
+
+test.serial('admins can see exportMembers button', async t => {
   const members = t.context.members
   const org = t.context.orgs[5]
   const orgid = org._id
   const orgMembers = members.filter(member => member.organisation._id === orgid)
+  const initStore = {
+    members: {
+      sync: true,
+      loading: false,
+      data: orgMembers
+    },
+    session: {
+      me: t.context.people[0]
+    }
+  }
+  const store = makeStore(initStore)
 
-  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, orgMembers)
+  const wrapper = mountWithIntl(
+    <Provider store={store}>
+      <MemberSection org={org} isAdmin />
+    </Provider>
+  )
+  await sleep(1) // allow asynch fetch to complete
+  wrapper.update()
 
-  const wrapper = await mountWithIntl(
-    <Provider store={t.context.store}>
+  // export members button should be visible
+  const exportMemberSection = wrapper.find('section').at(4)
+  t.true(exportMemberSection.find('Button').exists())
+  const exportMembersButton = exportMemberSection.find('Button').at(0)
+
+  t.is(exportMembersButton.text(), 'Export Members')
+})
+
+test.serial('joiners can become members ', async t => {
+  const members = [...t.context.members]
+  const org = t.context.orgs[5]
+  const orgid = org._id
+  const orgMembers = members.filter(member => member.organisation._id === orgid)
+  const initStore = {
+    members: {
+      sync: true,
+      loading: false,
+      data: orgMembers
+    },
+    session: {
+      me: t.context.people[0]
+    }
+  }
+  const store = makeStore(initStore)
+
+  const wrapper = mountWithIntl(
+    <Provider store={store}>
       <MemberSection org={org} isAdmin />
     </Provider>
   )
@@ -198,75 +294,4 @@ test.serial('joiners can become members ', async t => {
   t.is(membersSection.find('tbody tr').length, memberCount + 1)
   t.truthy(t.context.fetchMock.done())
   t.context.fetchMock.restore()
-})
-
-test.serial('members can become admins ', async t => {
-  const members = t.context.members
-  const org = t.context.orgs[5]
-  const orgid = org._id
-  const orgMembers = members.filter(member => member.organisation._id === orgid)
-  const trueMembers = orgMembers.filter(member => [MemberStatus.MEMBER].includes(member.status))
-  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, orgMembers)
-
-  const wrapper = await mountWithIntl(
-    <Provider store={t.context.store}>
-      <MemberSection org={org} isAdmin />
-    </Provider>
-  )
-  await sleep(1) // allow asynch fetch to complete
-  wrapper.update()
-
-  // there should be 2 members initally
-  let membersSection = wrapper.find('section').at(2)
-  t.regex(membersSection.find('h2').first().text(), /Members/)
-  t.is(membersSection.find('tbody tr').length, 2)
-
-  // check orgAdmin can't change own state
-  const memberRow1 = membersSection.find('tbody tr').at(0)
-  t.is(memberRow1.find('td').at(MTF.STATUS).text(), MemberStatus.ORGADMIN)
-  t.is(memberRow1.find('button').length, 0)
-
-  let memberRow2 = membersSection.find('tbody tr').at(1)
-  t.is(memberRow2.find('td').at(MTF.STATUS).text(), MemberStatus.MEMBER)
-
-  const firstMember = trueMembers[0]
-  t.is(memberRow2.find('td a span').at(MTF.NAME).text(), firstMember.person.nickname)
-
-  // test Make Admin button
-  const adminButton = memberRow2.find('button').last()
-  t.is(adminButton.text(), 'Make Admin')
-  const newOrgAdmin = Object.assign({}, firstMember)
-  newOrgAdmin.status = MemberStatus.ORGADMIN
-  t.context.fetchMock.putOnce(`${API_URL}/members/${firstMember._id}`, newOrgAdmin)
-  adminButton.simulate('click')
-  await sleep(1) // allow asynch fetch to complete
-  wrapper.update()
-
-  // check status change
-  membersSection = wrapper.find('section').at(2)
-  memberRow2 = membersSection.find('tbody tr').at(1)
-  t.is(memberRow2.find('td').at(MTF.STATUS).text(), MemberStatus.ORGADMIN)
-})
-
-test.serial('admins can see exportMembers button', async t => {
-  const members = t.context.members
-  const org = t.context.orgs[5]
-  const orgid = org._id
-  const orgMembers = members.filter(member => member.organisation._id === orgid)
-  t.context.fetchMock.getOnce(`${API_URL}/members/?orgid=${orgid}`, orgMembers)
-
-  const wrapper = await mountWithIntl(
-    <Provider store={t.context.store}>
-      <MemberSection org={org} isAdmin />
-    </Provider>
-  )
-  await sleep(1) // allow asynch fetch to complete
-  wrapper.update()
-
-  // export members button should be visible
-  const exportMemberSection = wrapper.find('section').at(4)
-  t.true(exportMemberSection.find('Button').exists())
-  const exportMembersButton = exportMemberSection.find('Button').at(0)
-
-  t.is(exportMembersButton.text(), 'Export Members')
 })

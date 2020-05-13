@@ -9,6 +9,7 @@ const { SubMenu, Item } = Menu
 const VMenu = styled(Menu)`
 border-bottom: 2px solid transparent;
 border-right: none;
+font-weight: 700;
 .ant-menu-item {
   border: none;
   
@@ -77,7 +78,7 @@ export const NavigationV = ({ items }) => {
   )
 }
 
-const COLLAPSE_MENU_WIDTH = 767
+const COLLAPSE_MENU_WIDTH = 1020
 const Navigation = (props) => {
   const [width] = useWindowSize()
   return (width < COLLAPSE_MENU_WIDTH)

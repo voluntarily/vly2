@@ -15,6 +15,19 @@ export const OpTypeMessages = defineMessages({
   }
 })
 
+export const OpType2 = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.ASK2',
+    defaultMessage: 'needs help with',
+    description: 'Ask label prefix'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.OFFER2',
+    defaultMessage: 'can help with',
+    description: 'Offer label prefix'
+  }
+})
+
 export const OpTypeAct = defineMessages({
   [ASK]: {
     id: 'OpportunityType.ActASK',
@@ -27,6 +40,11 @@ export const OpTypeAct = defineMessages({
     description: 'Offer label prefix'
   }
 })
+
+export const OpTypeSuffix = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpType2[type]} />)
+}
 
 export const OpTypeTitle = ({ type }) => {
   if (!type || ![ASK, OFFER].includes(type)) return null

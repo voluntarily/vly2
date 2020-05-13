@@ -1,0 +1,5 @@
+aws cloudformation deploy \
+  --capabilities CAPABILITY_NAMED_IAM \
+  --template-file fargate.yml \
+  --stack-name vly-beta \
+  --parameter-overrides ServiceName=vly-beta AppUrl=https://beta.voluntarily.nz
