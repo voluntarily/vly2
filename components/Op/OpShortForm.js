@@ -43,7 +43,7 @@ class OpShortForm extends Component {
           // op.subtitle = values.subtitle
           // op.tags = values.tags
           op.duration = values.duration
-          // op.locations = values.locations
+          op.location = [values.city, values.region]
           // delete op.location
           op.offerOrg = values.offerOrg && values.offerOrg.key
           op.description = values.description
@@ -76,7 +76,8 @@ class OpShortForm extends Component {
     const op = this.props.op
 
     const {
-      getFieldDecorator
+      getFieldDecorator,
+      setFieldsValue
     } = this.props.form
 
     // Only show error after a field is touched.
@@ -89,7 +90,7 @@ class OpShortForm extends Component {
         <OpFormTitle type={op.type} title={op.name} onBack={this.props.onCancel} />
         <Divider />
         <Form colon={false}>
-          <OpFormLocation getFieldDecorator={getFieldDecorator} type={op.type} existingLocations={this.props.existingLocations} orgMembership={orgMembership} />
+          <OpFormLocation getFieldDecorator={getFieldDecorator} setFieldsValue={setFieldsValue} type={op.type} existingLocations={this.props.existingLocations} orgMembership={orgMembership} addressFinderKey={this.props.addressFinderKey} />
           <Divider />
           <OpFormDate getFieldDecorator={getFieldDecorator} type={op.type} onChange={this.handleStartDateChange} />
           {/* <OpFormTags getFieldDecorator={getFieldDecorator} existingTags={this.props.existingTags} /> */}
@@ -141,7 +142,8 @@ OpShortForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
-  existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired
+  existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired,
+  addressFinderKey: PropTypes.string.isRequired
   // dispatch: PropTypes.func.isRequired,
 }
 
