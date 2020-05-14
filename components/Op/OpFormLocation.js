@@ -70,13 +70,9 @@ const opRegion = (
     />
   </span>
 )
-export const OpFormLocation = ({ getFieldDecorator, type, existingLocations, orgMembership }) => {
+export const OpFormLocation = ({ getFieldDecorator, type, existingLocations, orgMembership, addressFinderKey, setFieldsValue }) => {
   const [scriptLoaded, setScriptLoaded] = useState(false)
-  const regionRef = useRef(null)
   const addressRef = useRef(null)
-  const suburbRef = useRef(null)
-  const cityRef = useRef(null)
-  const postcodeRef = useRef(null)
   const mounted = useRef(false)
 
   useEffect(() => {
@@ -104,19 +100,19 @@ export const OpFormLocation = ({ getFieldDecorator, type, existingLocations, org
     if (scriptLoaded && mounted.current) {
       const widget = new window.AddressFinder.Widget(
         addressRef.current.input,
-        'RGE83VMK4UYHXNJBP69W', // ADDRESSFINDER_KEY
+        addressFinderKey, // ADDRESSFINDER_KEY
         'NZ', {
-          address_params: {},
           show_locations: true,
           empty_content: 'No addresses were found. This could be a new address, or you may need to check the spelling.'
         }
       )
-      widget.on('address:select', function (fullAddress, metaData) {
-        addressRef.current.input.value = metaData.address_line_1
-        suburbRef.current.input.value = metaData.selected_suburb
-        cityRef.current.input.value = metaData.selected_city
-        postcodeRef.current.input.value = metaData.postcode
-        regionRef.current.input.value = metaData.region
+      widget.on('result:select', function (fullAddress, metaData) {
+        const region = metaData.region.split(' ')
+        setFieldsValue({ address: metaData.address_line_1 })
+        setFieldsValue({ suburb: metaData.selected_suburb })
+        setFieldsValue({ city: metaData.selected_city })
+        setFieldsValue({ postcode: metaData.postcode })
+        setFieldsValue({ region: region[0] })
       })
     }
   }, [scriptLoaded])
@@ -146,14 +142,14 @@ export const OpFormLocation = ({ getFieldDecorator, type, existingLocations, org
             <Col span={10}>
               <Form.Item label={opSuburb}>
                 {getFieldDecorator('suburb')(
-                  <Input ref={suburbRef} placeholder='Suburb' />
+                  <Input placeholder='Suburb' />
                 )}
               </Form.Item>
             </Col>
             <Col span={10}>
               <Form.Item label={opCity}>
                 {getFieldDecorator('city')(
-                  <Input ref={cityRef} placeholder='City' />
+                  <Input placeholder='City' />
                 )}
               </Form.Item>
             </Col>
@@ -162,14 +158,14 @@ export const OpFormLocation = ({ getFieldDecorator, type, existingLocations, org
             <Col span={10}>
               <Form.Item label={opPostcode}>
                 {getFieldDecorator('postcode')(
-                  <Input ref={postcodeRef} placeholder='Postcode' />
+                  <Input placeholder='Postcode' />
                 )}
               </Form.Item>
             </Col>
             <Col span={10}>
               <Form.Item label={opRegion}>
                 {getFieldDecorator('region')(
-                  <Input ref={regionRef} placeholder='Region' />
+                  <Input placeholder='Region' />
                 )}
               </Form.Item>
             </Col>
