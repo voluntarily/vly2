@@ -3,6 +3,7 @@
 const GoalGroup = {
   VP_NEW: 'Getting Started as a Volunteer',
   OP_NEW: 'Getting Started creating opportunities',
+  OF_NEW: 'Getting help from Volunteers',
   AP_NEW: 'Getting Started as as Activity Provider',
   ORG_OP_NEW: 'First steps for a new school',
   ORG_VP_NEW: 'First steps for a new business',

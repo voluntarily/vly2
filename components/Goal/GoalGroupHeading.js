@@ -20,6 +20,14 @@ export const goalGroupHeading = goalGroup => {
         id: 'GoalSection.OP_NEW.subtitle', defaultMessage: 'Get up and running with your first activites:'
       }
     }
+    case GoalGroup.OF_NEW: return {
+      title: {
+        id: 'GoalSection.OF_NEW.title', defaultMessage: 'Getting help from Volunteers'
+      },
+      subtitle: {
+        id: 'GoalSection.OF_NEW.subtitle', defaultMessage: 'Let your calls for help be heard from volunteers'
+      }
+    }
     case GoalGroup.AP_NEW: return {
       title: {
         id: 'GoalSection.AP_NEW.title', defaultMessage: 'Getting Started as an Activity Provider'

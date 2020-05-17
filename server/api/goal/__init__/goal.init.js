@@ -27,6 +27,23 @@ module.exports = [
     }
   },
   {
+    group: GoalGroup.OF_NEW,
+    name: 'Find Activities you can offer',
+    slug: 'find-activities',
+    subtitle: 'Find activities that you can offer',
+    // badgeclass:
+    imgUrl: '/static/img/goal/goal-complete-profile.png',
+    description: 'Complete your profile by adding a picture, skills list, where you are, your job, things you are interested in and tell us about yourself. It is really important to fill in your location and your skills. This will mean it will be easier to match you once we are ready to go.',
+    preconditions: [],
+    startLink: '/my/person',
+    language: 'en',
+    rank: 1,
+    evaluation: async (personalGoal) => {
+      const { score, count } = await GoalTests.personCompleteness(personalGoal)
+      return (score / count * 100 > 85)
+    }
+  },
+  {
     group: GoalGroup.VP_NEW,
     name: 'Suggest a topic',
     slug: 'activity-suggestion',
