@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - bugfix/VP-1808-tagging-for-CI
     tags: 
       - beta*
       - gamma*
