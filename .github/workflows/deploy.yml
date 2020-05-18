@@ -9,6 +9,12 @@ on:
       - gamma*
       - v*
 
+env:
+  secret_live = ${{ secrets.ENV_SECRET_ALPHA }} 
+  secret_alpha = ${{ secrets.ENV_SECRET_BETA }} 
+  secret_beta = ${{ secrets.ENV_SECRET_BETA }} 
+  secret_gamma = ${{ secrets.ENV_SECRET_GAMMA }} 
+
 jobs:
   build-and-deploy:
     name: Build and push image to ECR, deploy to ECS
@@ -30,16 +36,16 @@ jobs:
       run: |
         if [[ $ENVM == 'v'* ]];then 
           echo ::set-env name=ENVM_TYPE::live
-          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_LIVE }} 
+          echo ::set-env name=ENV_SECRET::$secret_live
         elif [[ $ENVM == 'beta'* ]];then 
           echo ::set-env name=ENVM_TYPE::beta
-          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_BETA }}
+          echo ::set-env name=ENV_SECRET::$secret_beta
         elif [[ $ENVM == 'gamma'* ]];then 
           echo ::set-env name=ENVM_TYPE::gamma 
-          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_GAMMA }}
+          echo ::set-env name=ENV_SECRET::$secret_gamma
         else
           echo ::set-env name=ENVM_TYPE::alpha 
-          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_ALPHA }}
+          echo ::set-env name=ENV_SECRET::$secret_alpha
         fi
 
     - name: Check vars
