@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { OfferCard } from '../VTheme/VTheme'
-import {Link} from 'next/link'
 
 const OfferContainer = styled.div`
   display: grid;
