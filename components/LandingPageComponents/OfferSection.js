@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { OfferCard } from '../VTheme/VTheme'
+import {Link} from 'next/link'
 
 const OfferContainer = styled.div`
   display: grid;
@@ -27,7 +28,7 @@ const OfferSection = () => (
   <div>
     <OfferContainer>
 
-      <a href='#ask'>
+      <a href='/a/ask'>
 
         <OfferCard>
           <figcaption style={{ gridColumnGap: '0rem' }}>
@@ -41,7 +42,7 @@ const OfferSection = () => (
         </OfferCard>
       </a>
 
-      <a href='#offer'>
+      <a href='/a/offer'>
         <OfferCard>
 
           <figcaption style={{ gridColumnGap: '0rem' }}>
