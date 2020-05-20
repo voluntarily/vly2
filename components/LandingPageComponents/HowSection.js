@@ -128,8 +128,9 @@ const HowSection = () => (
             <Text>Our matchmaking system finds skilled volunteers who want to help you</Text>
           </div>
         </article>
-
-        <Button size='large' shape='round' type='primary'>See all offers</Button>
+        <a href='/a/offer'>
+          <Button size='large' shape='round' type='primary'>See all offers</Button>
+        </a>
       </PersonaContainer>
 
       <PersonaContainer>
@@ -149,10 +150,10 @@ const HowSection = () => (
             <Text>Offer your knowledge to smaller businesses who need the support to set up remote working.</Text>
           </div>
         </article>
-
-        <Button size='large' shape='round' type='primary'>See all asks</Button>
+        <a href='/a/ask'>
+          <Button size='large' shape='round' type='primary'>See all asks</Button>
+        </a>
       </PersonaContainer>
-
     </HalfGrid>
 
   </PersonaBox>
