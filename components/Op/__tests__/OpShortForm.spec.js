@@ -143,10 +143,10 @@ test('render the detail with new blank ask op', t => {
   t.falsy(submitOp.calledOnce)
   wrapper.update()
 
-  const locationField = wrapper.find('OpFormLocation').first()
-  const locationInput = locationField.find('TagSelect').first()
-  locationInput.props().onChange(['Auckland'])
-  wrapper.update()
+  // const locationField = wrapper.find('OpFormLocation').first()
+  // const locationInput = locationField.find('TagSelect').first()
+  // locationInput.props().onChange(['Auckland'])
+  // wrapper.update()
 
   const duration = wrapper.find('input#opportunity_detail_form_duration').first()
   duration.simulate('change', { target: { value: '10 hours' } })
@@ -186,10 +186,10 @@ test('render the detail with new blank offer op', t => {
   t.falsy(submitOp.calledOnce)
   wrapper.update()
 
-  const locationField = wrapper.find('OpFormLocation').first()
-  const locationInput = locationField.find('TagSelect').first()
-  locationInput.props().onChange(['Auckland'])
-  wrapper.update()
+  // const locationField = wrapper.find('OpFormLocation').first()
+  // const locationInput = locationField.find('TagSelect').first()
+  // locationInput.props().onChange(['Auckland'])
+  // wrapper.update()
 
   const duration = wrapper.find('input#opportunity_detail_form_duration').first()
   duration.simulate('change', { target: { value: '10 hours' } })

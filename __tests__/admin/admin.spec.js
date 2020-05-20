@@ -114,3 +114,12 @@ test.serial('Load invite school page as authenticated', async (t) => {
 
   t.truthy(response.text.includes('<h1>Access denied</h1><p>You do not have permission to view this page.</p>'))
 })
+
+// TEST
+test.serial('Load admin/test page as admin', async (t) => {
+  const response = await request(server)
+    .get('/admin/test')
+    .set('Cookie', [`idToken=${sessions[0].idToken}`])
+
+  t.is(response.status, 200, 'Should be allowed to view page')
+})
