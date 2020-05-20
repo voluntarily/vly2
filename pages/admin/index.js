@@ -16,6 +16,11 @@ export const AdminPage = () =>
           <a>Goal Cards</a>
         </Link>
       </li>
+      <li>
+        <Link href='/admin/test'>
+          <a>E2E Testing Launcher</a>
+        </Link>
+      </li>
     </ul>
 
   </FullPage>
