@@ -178,7 +178,6 @@ class OpOfferForm extends Component {
         if (!err) {
           const op = this.props.op
           const { dateRangeValue } = this.state
-          op.date = [] // Dirty work around to not change schema
           op.date = dateRangeValue
           op.name = values.name
           op.subtitle = values.subtitle
