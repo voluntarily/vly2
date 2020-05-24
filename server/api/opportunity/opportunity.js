@@ -34,6 +34,11 @@ const opportunitySchema = new Schema({
   duration: String, // "15 Minutes",
   location: String, // region or city,  deprecated - use locations array
   locations: { type: [String], default: [] }, // list of places where Op is of interest region or city,
+  address: String,
+  suburb: String,
+  city: String,
+  postcode: String,
+  region: String,
   venue: String, // actual address
   date: [Date], // start and optional end dates
   fromActivity: { type: Schema.Types.ObjectId, ref: 'Activity', required: false },
