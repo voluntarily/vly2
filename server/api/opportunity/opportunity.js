@@ -5,6 +5,14 @@ const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongo
 const { OpportunityStatus, OpportunityType } = require('./opportunity.constants')
 const { SchemaName } = require('./opportunity.constants')
 
+const opportunityAddressSchema = new Schema({
+  street: String,
+  suburb: String,
+  city: String,
+  postcode: String,
+  region: String
+})
+
 const opportunitySchema = new Schema({
   type: {
     type: String,
@@ -34,11 +42,7 @@ const opportunitySchema = new Schema({
   duration: String, // "15 Minutes",
   location: String, // region or city,  deprecated - use locations array
   locations: { type: [String], default: [] }, // list of places where Op is of interest region or city,
-  address: String,
-  suburb: String,
-  city: String,
-  postcode: String,
-  region: String,
+  address: opportunityAddressSchema,
   venue: String, // actual address
   date: [Date], // start and optional end dates
   fromActivity: { type: Schema.Types.ObjectId, ref: 'Activity', required: false },
