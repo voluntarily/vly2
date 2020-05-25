@@ -1,9 +1,10 @@
 import { Form, Icon, Tooltip, Input, Row, Col } from 'antd'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, TitleContainer } from '../VTheme/FormStyles'
 import { OpTypeLocationPrompt } from './OpType'
 import OpFormOrg from './OpFormOrg'
+import { withAddressFinder } from '../Address/AddressFinder'
 // import TagSelect from '../Form/Input/TagSelect'
 
 // const opLocation = (
@@ -20,16 +21,16 @@ import OpFormOrg from './OpFormOrg'
 //     </Tooltip>
 //   </span>
 // )
-const opAddress = (
+const opStreet = (
   <span>
     {' '}
     <FormattedMessage
-      id='OpShortForm.Address'
-      defaultMessage='Address'
-      description='activity Address label in OpAskForm Form'
+      id='OpShortForm.Street'
+      defaultMessage='Street'
+      description='activity Street label in OpAskForm Form'
     />
     &nbsp;
-    <Tooltip title='set the specific address for this activity'>
+    <Tooltip title='set the street address for this activity'>
       <Icon type='question-circle-o' />
     </Tooltip>
   </span>
@@ -70,49 +71,27 @@ const opRegion = (
     />
   </span>
 )
-export const OpFormLocation = ({ getFieldDecorator, type, existingLocations, orgMembership, addressFinderKey, setFieldsValue }) => {
-  const [scriptLoaded, setScriptLoaded] = useState(false)
-  const addressRef = useRef(null)
-  const mounted = useRef(false)
+
+export const OpFormLocation = ({ getFieldDecorator, setFieldsValue, type, orgMembership, scriptLoaded, addressFinderKey }) => {
+  const streetRef = useRef(null)
 
   useEffect(() => {
-    mounted.current = true
-    if (window.AddressFinder) {
-      setScriptLoaded(true)
-      return
-    }
-    const script = document.createElement('script')
-    script.src = 'https://api.addressfinder.io/assets/v3/widget.js'
-    script.async = true
-    script.addEventListener('load', () => {
-      if (mounted.current) {
-        setScriptLoaded(true)
-      }
-    })
-    window.document.body.appendChild(script)
-    return () => {
-      mounted.current = false
-      window.document.body.removeChild(script)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (scriptLoaded && mounted.current) {
+    if (scriptLoaded) {
       const widget = new window.AddressFinder.Widget(
-        addressRef.current.input,
+        streetRef.current.input,
         addressFinderKey, // ADDRESSFINDER_KEY
         'NZ', {
           show_locations: true,
           empty_content: 'No addresses were found. This could be a new address, or you may need to check the spelling.'
         }
       )
-      widget.on('result:select', function (fullAddress, metaData) {
-        const region = metaData.region.split(' ')
-        setFieldsValue({ address: metaData.address_line_1 })
+      widget.on('result:select', (_, metaData) => {
+        const region = metaData.region.replace(/\sRegion/, '')
+        setFieldsValue({ street: metaData.address_line_1 })
         setFieldsValue({ suburb: metaData.selected_suburb })
         setFieldsValue({ city: metaData.selected_city })
         setFieldsValue({ postcode: metaData.postcode })
-        setFieldsValue({ region: region[0] })
+        setFieldsValue({ region: region })
       })
     }
   }, [scriptLoaded])
@@ -130,12 +109,12 @@ export const OpFormLocation = ({ getFieldDecorator, type, existingLocations, org
         <MediumInputContainer>
           {/* <Form.Item label={opLocation}>
             {getFieldDecorator('locations')(
-              <TagSelect ref={regionRef} values={existingLocations} placeholder='Select location' />
+              <TagSelect values={existingLocations} placeholder='Select location' />
             )}
           </Form.Item> */}
-          <Form.Item label={opAddress}>
-            {getFieldDecorator('address')(
-              <Input ref={addressRef} placeholder='Address line' allowClear />
+          <Form.Item label={opStreet}>
+            {getFieldDecorator('street')(
+              <Input ref={streetRef} placeholder='Street address' allowClear />
             )}
           </Form.Item>
           <Row type='flex' justify='space-between'>
@@ -177,4 +156,4 @@ export const OpFormLocation = ({ getFieldDecorator, type, existingLocations, org
   )
 }
 
-export default OpFormLocation
+export default withAddressFinder(OpFormLocation)
