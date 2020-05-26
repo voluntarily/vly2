@@ -32,7 +32,7 @@
     "posttest": "rimraf .test",
     "posttest-all": "rimraf .test",
     "e2e": "npx codeceptjs run -c e2e_tests/codecept.conf.js",
-    "e2e:ci":  "cross-env CI=TRUE npx codeceptjs run -c e2e_tests/codecept.conf.js",
+    "e2e:ci": "cross-env CI=TRUE npx codeceptjs run -c e2e_tests/codecept.conf.js",
     "e2e:shell": "npx codeceptjs shell -c e2e_tests/codecept.conf.js"
   },
   "dependencies": {

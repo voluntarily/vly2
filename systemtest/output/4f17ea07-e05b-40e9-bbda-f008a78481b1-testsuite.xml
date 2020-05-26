@@ -1,0 +1,52 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1584787403435' stop='1584789872131'>
+    <name>Voluntarily Portal Checks</name>
+    <title>Voluntarily Portal Checks</title>
+    <test-cases>
+        <test-case start='1584787412353' status='failed' stop='1584789872122'>
+            <name>Smoke Test for Voluntarily Portal Navigation @smoke</name>
+            <title>Smoke Test for Voluntarily Portal Navigation @smoke</title>
+            <labels>
+                <label name='tag' value='@smoke'/>
+            </labels>
+            <parameters/>
+            <steps>
+                <step start='1584787412671' status='failed' stop='1584789871952'>
+                    <name>Given I open the Voluntarily portal </name>
+                    <title>Given I open the Voluntarily portal </title>
+                    <attachments/>
+                    <steps>
+                        <step start='1584787412672' status='failed' stop='1584789871952'>
+                            <name>LoginPage: openPortal </name>
+                            <title>LoginPage: openPortal </title>
+                            <attachments/>
+                            <steps>
+                                <step start='1584787412672' status='failed' stop='1584789870797'>
+                                    <name>I am on page "https://voluntarily.nz/"</name>
+                                    <title>I am on page "https://voluntarily.nz/"</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                            </steps>
+                        </step>
+                    </steps>
+                </step>
+            </steps>
+            <attachments/>
+            <failure>
+                <message>No active session with ID af336279-87b4-4e06-9eb1-377e886c1588</message>
+                <stack-trace>invalid session id: No active session with ID af336279-87b4-4e06-9eb1-377e886c1588
+                    at getErrorFromResponseBody (C:\Users\Yogi\vly2\node_modules\webdriver\build\utils.js:175:10)
+                    at Request._callback (C:\Users\Yogi\vly2\node_modules\webdriver\build\request.js:110:64)
+                    at Request.self.callback (C:\Users\Yogi\vly2\node_modules\request\request.js:185:22)
+                    at Request.emit (events.js:189:13)
+                    at Request.EventEmitter.emit (domain.js:441:20)
+                    at Request.&lt;anonymous> (C:\Users\Yogi\vly2\node_modules\request\request.js:1161:10)
+                    at Request.emit (events.js:189:13)
+                    at Request.EventEmitter.emit (domain.js:441:20)
+                    at IncomingMessage.&lt;anonymous> (C:\Users\Yogi\vly2\node_modules\request\request.js:1083:12)
+                    at Object.onceWrapper (events.js:277:13)</stack-trace>
+            </failure>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

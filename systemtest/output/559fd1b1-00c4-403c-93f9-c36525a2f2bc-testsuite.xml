@@ -1,0 +1,95 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1571125943944' stop='1571125964048'>
+    <name>Voluntarily Portal Checks</name>
+    <title>Voluntarily Portal Checks</title>
+    <test-cases>
+        <test-case start='1571125956116' status='failed' stop='1571125961450'>
+            <name>Smoke Test for Voluntarily Portal Navigation @smoke</name>
+            <title>Smoke Test for Voluntarily Portal Navigation @smoke</title>
+            <labels>
+                <label name='tag' value='@smoke'/>
+            </labels>
+            <parameters/>
+            <steps>
+                <step start='1571125956122' status='passed' stop='1571125959459'>
+                    <name>Given I open the Voluntarily portal </name>
+                    <title>Given I open the Voluntarily portal </title>
+                    <attachments/>
+                    <steps>
+                        <step start='1571125956122' status='passed' stop='1571125959459'>
+                            <name>LoginPage: openPortal </name>
+                            <title>LoginPage: openPortal </title>
+                            <attachments/>
+                            <steps>
+                                <step start='1571125956122' status='passed' stop='1571125959281'>
+                                    <name>I am on page "https://voluntarily.nz/"</name>
+                                    <title>I am on page "https://voluntarily.nz/"</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                                <step start='1571125959281' status='passed' stop='1571125959459'>
+                                    <name>I see "We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."</name>
+                                    <title>I see "We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                            </steps>
+                        </step>
+                    </steps>
+                </step>
+                <step start='1571125959459' status='failed' stop='1571125961450'>
+                    <name>Then I can navigate through all pages successfully </name>
+                    <title>Then I can navigate through all pages successfully </title>
+                    <attachments/>
+                    <steps>
+                        <step start='1571125959459' status='passed' stop='1571125960518'>
+                            <name>LandingPage: checkAboutPage </name>
+                            <title>LandingPage: checkAboutPage </title>
+                            <attachments/>
+                            <steps>
+                                <step start='1571125959459' status='passed' stop='1571125960413'>
+                                    <name>I am on page "https://voluntarily.nz/about"</name>
+                                    <title>I am on page "https://voluntarily.nz/about"</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                                <step start='1571125960413' status='passed' stop='1571125960518'>
+                                    <name>I see "About Voluntarily"</name>
+                                    <title>I see "About Voluntarily"</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                            </steps>
+                        </step>
+                        <step start='1571125960518' status='failed' stop='1571125961450'>
+                            <name>LandingPage: checkGetInvolvedPage </name>
+                            <title>LandingPage: checkGetInvolvedPage </title>
+                            <attachments/>
+                            <steps>
+                                <step start='1571125960518' status='passed' stop='1571125961386'>
+                                    <name>I am on page "https://voluntarily.nz/get-involved"</name>
+                                    <title>I am on page "https://voluntarily.nz/get-involved"</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                                <step start='1571125961386' status='failed' stop='1571125961449'>
+                                    <name>I see "Developers"</name>
+                                    <title>I see "Developers"</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                            </steps>
+                        </step>
+                    </steps>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title='Last Seen Screenshot' source='2c23901a-68e4-40e7-a467-72916e9403cb-attachment.png' type='image/png' size='1461019'/>
+            </attachments>
+            <failure>
+                <message></message>
+                <stack-trace>undefined</stack-trace>
+            </failure>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

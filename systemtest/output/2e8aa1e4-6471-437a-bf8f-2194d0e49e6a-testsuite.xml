@@ -1,0 +1,64 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1584787139930' stop='1584787203484'>
+    <name>Voluntarily Portal Checks</name>
+    <title>Voluntarily Portal Checks</title>
+    <test-cases>
+        <test-case start='1584787156821' status='failed' stop='1584787203432'>
+            <name>Smoke Test for Voluntarily Portal Navigation @smoke</name>
+            <title>Smoke Test for Voluntarily Portal Navigation @smoke</title>
+            <labels>
+                <label name='tag' value='@smoke'/>
+            </labels>
+            <parameters/>
+            <steps>
+                <step start='1584787157074' status='failed' stop='1584787202310'>
+                    <name>Given I open the Voluntarily portal </name>
+                    <title>Given I open the Voluntarily portal </title>
+                    <attachments/>
+                    <steps>
+                        <step start='1584787157074' status='failed' stop='1584787202310'>
+                            <name>LoginPage: openPortal </name>
+                            <title>LoginPage: openPortal </title>
+                            <attachments/>
+                            <steps>
+                                <step start='1584787157074' status='passed' stop='1584787202117'>
+                                    <name>I am on page "https://voluntarily.nz/"</name>
+                                    <title>I am on page "https://voluntarily.nz/"</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                                <step start='1584787202119' status='failed' stop='1584787202268'>
+                                    <name>I see "We connect people who can volunteer time, advice, or stuff to those who need it."</name>
+                                    <title>I see "We connect people who can volunteer time, advice, or stuff to those who need it."</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                            </steps>
+                        </step>
+                    </steps>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title='Last Seen Screenshot' source='58f80f32-f2bc-4cf8-92ec-8e081a7e9d4f-attachment.png' type='image/png' size='16397'/>
+            </attachments>
+            <failure>
+                <message>move target out of bounds: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.
+                  (Session info: headless chrome=80.0.3987.149)
+                  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.18362 x86_64)</message>
+                <stack-trace>Error: move target out of bounds: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.
+                  (Session info: headless chrome=80.0.3987.149)
+                  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.18362 x86_64)
+                    at getErrorFromResponseBody (C:\Users\Yogi\vly2\node_modules\webdriver\build\utils.js:175:10)
+                    at Request._callback (C:\Users\Yogi\vly2\node_modules\webdriver\build\request.js:110:64)
+                    at Request.self.callback (C:\Users\Yogi\vly2\node_modules\request\request.js:185:22)
+                    at Request.emit (events.js:189:13)
+                    at Request.EventEmitter.emit (domain.js:441:20)
+                    at Request.&lt;anonymous> (C:\Users\Yogi\vly2\node_modules\request\request.js:1161:10)
+                    at Request.emit (events.js:189:13)
+                    at Request.EventEmitter.emit (domain.js:441:20)
+                    at IncomingMessage.&lt;anonymous> (C:\Users\Yogi\vly2\node_modules\request\request.js:1083:12)
+                    at Object.onceWrapper (events.js:277:13)</stack-trace>
+            </failure>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

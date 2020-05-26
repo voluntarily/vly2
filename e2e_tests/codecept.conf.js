@@ -6,14 +6,20 @@ setHeadlessWhen(process.env.CI)
 setWindowSize(1600, 1200)
 
 exports.config = {
-  tests: './*_test.js',
+  tests: './features/*',
   output: './output',
   helpers: {
     Puppeteer: {
-      url: 'http://localhost:3122',
+      url: 'https://alpha.voluntarily.nz',
       show: true
       // windowSize: '1200x900'
     }
+  },
+  "gherkin": {
+    "features": "./features/*.feature",
+    "steps": [
+      "./step_definitions/steps.js"
+    ]
   },
   include: {
     I: './steps_file.js',
@@ -31,4 +37,5 @@ exports.config = {
       enabled: true
     }
   }
+  
 }

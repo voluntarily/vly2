@@ -1,0 +1,214 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1584743523666' stop='1584743575985'>
+    <name>Voluntarily Portal Checks</name>
+    <title>Voluntarily Portal Checks</title>
+    <test-cases>
+        <test-case start='1584743549977' status='failed' stop='1584743561480'>
+            <name>Smoke Test for Voluntarily Portal Navigation @smoke</name>
+            <title>Smoke Test for Voluntarily Portal Navigation @smoke</title>
+            <labels>
+                <label name='tag' value='@smoke'/>
+            </labels>
+            <parameters/>
+            <steps>
+                <step start='1584743550342' status='failed' stop='1584743561480'>
+                    <name>Given I open the Voluntarily portal </name>
+                    <title>Given I open the Voluntarily portal </title>
+                    <attachments/>
+                    <steps>
+                        <step start='1584743550342' status='failed' stop='1584743561480'>
+                            <name>LoginPage: openPortal </name>
+                            <title>LoginPage: openPortal </title>
+                            <attachments/>
+                            <steps>
+                                <step start='1584743550342' status='passed' stop='1584743560807'>
+                                    <name>I am on page "https://voluntarily.nz/"</name>
+                                    <title>I am on page "https://voluntarily.nz/"</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                                <step start='1584743560836' status='failed' stop='1584743561035'>
+                                    <name>I see "We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."</name>
+                                    <title>I see "We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                            </steps>
+                        </step>
+                    </steps>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title='Last Seen Screenshot' source='00ebb3ba-a40a-40d2-acaa-e3a5a6d25163-attachment.png' type='image/png' size='717592'/>
+            </attachments>
+            <failure>
+                <message></message>
+                <stack-trace>undefined</stack-trace>
+            </failure>
+        </test-case>
+        <test-case start='1584743562879' status='failed' stop='1584743564889'>
+            <name>Voluntarily Login as an Admin</name>
+            <title>Voluntarily Login as an Admin</title>
+            <labels/>
+            <parameters/>
+            <steps>
+                <step start='1584743562956' status='failed' stop='1584743564889'>
+                    <name>Given I open the Voluntarily portal </name>
+                    <title>Given I open the Voluntarily portal </title>
+                    <attachments/>
+                    <steps>
+                        <step start='1584743562956' status='failed' stop='1584743564889'>
+                            <name>LoginPage: openPortal </name>
+                            <title>LoginPage: openPortal </title>
+                            <attachments/>
+                            <steps>
+                                <step start='1584743562956' status='passed' stop='1584743564526'>
+                                    <name>I am on page "https://voluntarily.nz/"</name>
+                                    <title>I am on page "https://voluntarily.nz/"</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                                <step start='1584743564551' status='failed' stop='1584743564841'>
+                                    <name>I see "We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."</name>
+                                    <title>I see "We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                            </steps>
+                        </step>
+                    </steps>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title='Last Seen Screenshot' source='70d45bf1-7c9f-4b6a-85fc-14e91a0253bf-attachment.png' type='image/png' size='717609'/>
+            </attachments>
+            <failure>
+                <message></message>
+                <stack-trace>undefined</stack-trace>
+            </failure>
+        </test-case>
+        <test-case start='1584743566294' status='failed' stop='1584743568008'>
+            <name>Voluntarily Login as a Provider</name>
+            <title>Voluntarily Login as a Provider</title>
+            <labels/>
+            <parameters/>
+            <steps>
+                <step start='1584743566399' status='failed' stop='1584743568008'>
+                    <name>Given I open the Voluntarily portal </name>
+                    <title>Given I open the Voluntarily portal </title>
+                    <attachments/>
+                    <steps>
+                        <step start='1584743566400' status='failed' stop='1584743568008'>
+                            <name>LoginPage: openPortal </name>
+                            <title>LoginPage: openPortal </title>
+                            <attachments/>
+                            <steps>
+                                <step start='1584743566400' status='passed' stop='1584743567768'>
+                                    <name>I am on page "https://voluntarily.nz/"</name>
+                                    <title>I am on page "https://voluntarily.nz/"</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                                <step start='1584743567800' status='failed' stop='1584743567972'>
+                                    <name>I see "We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."</name>
+                                    <title>I see "We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                            </steps>
+                        </step>
+                    </steps>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title='Last Seen Screenshot' source='9b3dc09c-36ee-4fe5-891f-f54c7c67f307-attachment.png' type='image/png' size='717609'/>
+            </attachments>
+            <failure>
+                <message></message>
+                <stack-trace>undefined</stack-trace>
+            </failure>
+        </test-case>
+        <test-case start='1584743569557' status='failed' stop='1584743571218'>
+            <name>Voluntarily Login as a Provider</name>
+            <title>Voluntarily Login as a Provider</title>
+            <labels/>
+            <parameters/>
+            <steps>
+                <step start='1584743569630' status='failed' stop='1584743571218'>
+                    <name>Given I open the Voluntarily portal </name>
+                    <title>Given I open the Voluntarily portal </title>
+                    <attachments/>
+                    <steps>
+                        <step start='1584743569630' status='failed' stop='1584743571218'>
+                            <name>LoginPage: openPortal </name>
+                            <title>LoginPage: openPortal </title>
+                            <attachments/>
+                            <steps>
+                                <step start='1584743569630' status='passed' stop='1584743570913'>
+                                    <name>I am on page "https://voluntarily.nz/"</name>
+                                    <title>I am on page "https://voluntarily.nz/"</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                                <step start='1584743570950' status='failed' stop='1584743571161'>
+                                    <name>I see "We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."</name>
+                                    <title>I see "We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                            </steps>
+                        </step>
+                    </steps>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title='Last Seen Screenshot' source='fa61c7d6-9531-4309-a3e0-c5293388bab3-attachment.png' type='image/png' size='717609'/>
+            </attachments>
+            <failure>
+                <message></message>
+                <stack-trace>undefined</stack-trace>
+            </failure>
+        </test-case>
+        <test-case start='1584743572629' status='failed' stop='1584743574385'>
+            <name>Voluntarily Login after Registeration Test</name>
+            <title>Voluntarily Login after Registeration Test</title>
+            <labels/>
+            <parameters/>
+            <steps>
+                <step start='1584743572754' status='failed' stop='1584743574384'>
+                    <name>Given I open the Voluntarily portal </name>
+                    <title>Given I open the Voluntarily portal </title>
+                    <attachments/>
+                    <steps>
+                        <step start='1584743572754' status='failed' stop='1584743574384'>
+                            <name>LoginPage: openPortal </name>
+                            <title>LoginPage: openPortal </title>
+                            <attachments/>
+                            <steps>
+                                <step start='1584743572754' status='passed' stop='1584743574131'>
+                                    <name>I am on page "https://voluntarily.nz/"</name>
+                                    <title>I am on page "https://voluntarily.nz/"</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                                <step start='1584743574170' status='failed' stop='1584743574351'>
+                                    <name>I see "We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."</name>
+                                    <title>I see "We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                            </steps>
+                        </step>
+                    </steps>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title='Last Seen Screenshot' source='83acca59-d128-4a3f-bbfc-acaac4f803b2-attachment.png' type='image/png' size='717609'/>
+            </attachments>
+            <failure>
+                <message></message>
+                <stack-trace>undefined</stack-trace>
+            </failure>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

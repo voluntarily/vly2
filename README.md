@@ -63,8 +63,7 @@ If you see the message _"Please make sure Mongodb is installed and running!"_  t
 Press `ctrl + c` to exit the node application.
 
 #######################Running BDD Tests#########################
-
-    cd systemtest
+    cd e2e_tests
     npx codeceptjs run --grep "@smoke" --plugins allure   
     allure serve output
 
