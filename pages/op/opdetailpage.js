@@ -120,6 +120,7 @@ export const OpDetailPage = ({
     // init from activity if provided
     if (actid) {
       const act = activities.data[0]
+
       op = {
         ...blankOp,
         name: act.name,
@@ -248,6 +249,13 @@ OpDetailPage.propTypes = {
       locations: PropTypes.string.isRequired,
       addressFinderKey: PropTypes.string.isRequired
     })),
+    address: PropTypes.shape({
+      street: PropTypes.string,
+      suburb: PropTypes.string,
+      city: PropTypes.string,
+      postcode: PropTypes.string,
+      region: PropTypes.string
+    }),
     _id: PropTypes.string.isRequired
   }),
   params: PropTypes.shape({
