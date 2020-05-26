@@ -11,7 +11,9 @@ import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
 import ImageUpload from '../Upload/ImageUpload'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, ShortInputContainer, TitleContainer } from '../VTheme/FormStyles'
+
 const { TextArea } = Input
+const { RangePicker } = DatePicker
 
 // get translated labels
 const opTitle = (
@@ -27,7 +29,6 @@ const opTitle = (
     </Tooltip>
   </span>
 )
-
 const opSubtitle = (
   <span>
     {' '}
@@ -110,36 +111,20 @@ const opDescription = (
     </Tooltip>
   </span>
 )
-const opStartDate = (
+const opDateRange = (
   <span>
     {' '}
     <FormattedMessage
-      id='OpAskFormLong.StartDate'
-      defaultMessage='Start Date'
-      description='activity start date label in OpAskForm Form'
+      id='OpAskFormLong.DateRange'
+      defaultMessage='Date Range'
+      description='activity date range label in OpAskForm Form'
     />
     &nbsp;
-    <Tooltip title='Set a start date if the activity needs to be done at a specific time'>
+    <Tooltip title='Set a date range if the activity needs more than one day.'>
       <Icon type='question-circle-o' />
     </Tooltip>
   </span>
 )
-
-const opEndDate = (
-  <span>
-    {' '}
-    <FormattedMessage
-      id='OpAskFormLong.EndDate'
-      defaultMessage='End Date'
-      description='activity end date label in OpAskForm Form'
-    />
-    &nbsp;
-    <Tooltip title='Set an end date if the activity needs more than one day.'>
-      <Icon type='question-circle-o' />
-    </Tooltip>
-  </span>
-)
-
 const opImgUrl = (
   <span>
     <FormattedMessage
@@ -153,7 +138,6 @@ const opImgUrl = (
     </Tooltip>
   </span>
 )
-
 const opTags = (
   <FormattedMessage
     id='OpAskFormLong.Tags'
@@ -167,8 +151,7 @@ class OpAskFormLong extends Component {
     super(props)
 
     this.state = {
-      startDateValue: null,
-      endDateValue: null
+      dateRangeValue: null
     }
     // this.setDescriptin = this.setDescription.bind(this)
     this.setImgUrl = this.setImgUrl.bind(this)
@@ -179,8 +162,7 @@ class OpAskFormLong extends Component {
     // // empty callback supresses a default which prints to the console.
     // this.props.form.validateFields(['title']);
     const op = this.props.op
-    this.setState({ startDateValue: op.date[0] })
-    this.setState({ endDateValue: op.date[1] })
+    this.setState({ dateRangeValue: op.date })
   }
 
   setImgUrl = value => {
@@ -195,9 +177,8 @@ class OpAskFormLong extends Component {
       this.props.form.validateFields((err, values) => {
         if (!err) {
           const op = this.props.op
-          const { startDateValue, endDateValue } = this.state
-          op.date = [] // Dirty work around to not change schema
-          op.date.push(startDateValue, endDateValue)
+          const { dateRangeValue } = this.state
+          op.date = dateRangeValue
           op.name = values.name
           op.subtitle = values.subtitle
           op.tags = values.tags
@@ -229,32 +210,8 @@ class OpAskFormLong extends Component {
     })
   }
 
-  handleEndDateChange = value => {
-    this.changeFormValue('endDateValue', value)
-  }
-
-  handleStartDateChange = value => {
-    this.changeFormValue('startDateValue', value)
-  }
-
-  disabledStartDate = startDateValue => {
-    const { endDateValue } = this.state
-    if (this.isEitherFirstOrSecondValueNull(startDateValue, endDateValue)) {
-      return false
-    }
-    return startDateValue.valueOf() > endDateValue.valueOf()
-  }
-
-  disabledEndDate = endDateValue => {
-    const { startDateValue } = this.state
-    if (this.isEitherFirstOrSecondValueNull(startDateValue, endDateValue)) {
-      return false
-    }
-    return endDateValue.valueOf() <= startDateValue.valueOf()
-  }
-
-  isEitherFirstOrSecondValueNull = (firstValue, secondValue) => {
-    return !firstValue || !secondValue
+  handleDateRangeChange = value => {
+    this.changeFormValue('dateRangeValue', value)
   }
 
   render () {
@@ -431,34 +388,19 @@ class OpAskFormLong extends Component {
                   })(<Input className='commitment' placeholder='4 hours' />)}
                 </Form.Item>
                 <Form.Item
-                  label={opStartDate}
-                  name='Start date'
+                  label={opDateRange}
+                  name='Date range'
                 >
-                  {getFieldDecorator('startDate')(
-                    <DatePicker
-                      showTime
+                  {getFieldDecorator('dateRange')(
+                    <RangePicker
                       disabledDate={current => {
                         return (
                           moment().add(-1, 'days') >= current ||
                           moment().add(1, 'year') <= current
                         )
                       }}
-                      format='DD-MM-YYYY HH:mm:ss'
-                      onChange={this.handleStartDateChange}
-                      style={{ width: '100%' }}
-                    />
-                  )}
-                </Form.Item>
-                <Form.Item
-                  label={opEndDate}
-                  name='End date'
-                >
-                  {getFieldDecorator('endDate')(
-                    <DatePicker
-                      showTime
-                      disabledDate={this.disabledEndDate}
-                      format='DD-MM-YYYY HH:mm:ss'
-                      onChange={this.handleEndDateChange}
+                      format='DD-MM-YYYY'
+                      onChange={this.handleDateRangeChange}
                       style={{ width: '100%' }}
                     />
                   )}
@@ -668,11 +610,8 @@ export default Form.create({
       imgUrl: Form.createFormField({ value: props.op.imgUrl }),
       status: Form.createFormField({ value: props.op.status }),
       tags: Form.createFormField({ value: props.op.tags }),
-      startDate: Form.createFormField({
-        value: props.op.startDate != null ? moment(props.op.startDate) : null
-      }),
-      endDate: Form.createFormField({
-        value: props.op.endDate != null ? moment(props.op.endDate) : null
+      dateRange: Form.createFormField({
+        value: props.op.date != null ? [moment((props.op.date)[0]), moment((props.op.date)[1])] : null
       }),
       venue: Form.createFormField({ value: props.op.venue || '' })
     }
