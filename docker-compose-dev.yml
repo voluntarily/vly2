@@ -6,6 +6,7 @@ services:
     depends_on:
       - db
       - mail
+      - randomuser
     ports:
       - "${WEB_PORT:-3122}:3122"
     volumes:
@@ -18,6 +19,7 @@ services:
       MONGODB_URI: mongodb://db:27017/vly-dev
       MONGOMS_DOWNLOAD_MIRROR: "http://downloads.mongodb.org"
       MONGOMS_VERSION: "v4.0-latest"
+      RANDOMUSER_URI: http://randomuser:3000
       VLY_SMTP_HOST: mail
       VLY_SMTP_PORT: 1025
   db:
@@ -26,10 +28,18 @@ services:
       - "27017:27017"
     volumes:
       - dbdata:/data/db
+  
   mail:
     image: 'mailhog/mailhog:latest'
     ports:
       - "8025:8025"
-
+  randomuser:
+    image: 'voluntarily/randomuser:latest'
+    environment:
+      MONGODB_URI: mongodb://db:27017/vly-randomuser
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
 volumes:
   dbdata:

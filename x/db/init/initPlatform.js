@@ -2,6 +2,8 @@ const { connectDB, disconnectDB, asyncForEach } = require('./util')
 const { makeActs } = require('./makeActs')
 const { makeOrgs } = require('./makeOrgs')
 const { clearCollections } = require('./clearCollections')
+const { makeDefaultOrgs } = require('./makeDefaultOrgs')
+const { loadGoals } = require('../../../server/api/goal/loadGoals')
 const { OrganisationRole } = require('../../../server/api/organisation/organisation.constants')
 
 /**
@@ -79,6 +81,8 @@ async function main () {
   if (!(process.argv[3] && process.argv[3] === '--keep')) {
     await clearCollections()
   }
+  await makeDefaultOrgs()
+  await loadGoals()
   const params = scale[size]
   try {
     await asyncForEach(params.orgs, async org => {

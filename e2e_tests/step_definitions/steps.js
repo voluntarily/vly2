@@ -37,7 +37,7 @@ When('I click all offers', () => {
 Then('I can see the offers page', () => {
   // From "features/public.feature" {"line":17,"column":5}
   I.see('People are asking for help with')
-  I.seeElement('input').withAttr({ placeholder: 'search for' });  // search
+  I.seeElement(locate('input').withAttr({ placeholder: 'search for' }))  // search
   I.seeElement('figure') // opportunity
 })
 

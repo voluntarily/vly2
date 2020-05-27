@@ -14,6 +14,7 @@ const clearCollections = async () => {
     collections.map(coll => coll.deleteMany())
   )
 }
+
 module.exports = {
   clearCollections
 }

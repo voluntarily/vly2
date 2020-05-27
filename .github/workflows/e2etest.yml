@@ -1,0 +1,73 @@
+name: VLY2 Push branch, PR master, all tests
+
+on:
+  push:
+    branches-ignore:
+      - master
+      - releases/*
+  # pull_request:
+  #   branches:
+  #     - master
+
+jobs:
+  setup:    
+    name: Set up NPM, use cache, NPM CI
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/master' #If we're not being pushed to master, do all the test steps
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache node modules #Caches everything for the other tasks to run
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
+    - name: Use Node 12
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.16.1
+        mongoms_download_mirror: http://downloads.mongodb.org
+        mongoms_version: 4.0.5
+        mongoms_disable_postinstall: 1
+        ci_node_index: 0
+        ci_node_total: 1
+
+    - name: Set up dependencies  #Warm cache
+      run: npm ci
+
+
+  end2endTests:
+    name: End to end smoke tests
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Build the docker-compose stack
+      run: docker-compose -f docker-compose-dev.yml up -d
+    - name: Check running containers
+      run: docker ps -a
+    - name: Check logs
+      run: docker-compose -f docker-compose-dev.yml logs 
+
+    - name: Test server is running
+      run: |
+        curl http://localhost:3122/api/health
+        

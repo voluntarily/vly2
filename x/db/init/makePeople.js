@@ -9,7 +9,7 @@ const pronoun = () => {
 }
 
 // const peopleService = 'https://randomuser.me'
-const peopleService = 'http://localhost:3000'
+const peopleService = process.env.RANDOMUSER_URI || 'http://localhost:3000'
 
 const makePeople = async (count) => {
   const url = `${peopleService}/api/?results=${count}`

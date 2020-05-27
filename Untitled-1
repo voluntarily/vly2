@@ -1,0 +1,20 @@
+
+  Scenario: Voluntarily Login as an Admin
+    Given I open the Voluntarily portal
+    Then I can login into the Voluntarily system as "Admin"
+    And I can create an opportunity
+
+  Scenario: Voluntarily Login as a Provider
+    Given I open the Voluntarily portal
+    Then I can login into the Voluntarily system as "Provider"
+    And I can create an opportunity
+
+  Scenario: Voluntarily Login as a Provider
+    Given I open the Voluntarily portal
+    Then I can login into the Voluntarily system as "Organisation"
+    And I can create an opportunity
+
+  Scenario: Voluntarily Login after Registeration Test
+    Given I open the Voluntarily portal
+    When I can register into the Voluntarily system
+    Then I can login into the Voluntarily system

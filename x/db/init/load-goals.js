@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const { config } = require('../../config/serverConfig')
-const { loadGoals } = require('../../server/api/goal/loadGoals')
+const { config } = require('../../../config/serverConfig')
+const { loadGoals } = require('../../../server/api/goal/loadGoals')
 
 async function main () {
   mongoose.Promise = Promise

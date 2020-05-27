@@ -1,0 +1,6 @@
+# start voluntarily server with test database in background
+VLY_DB=vly-e2e
+mongo vly-e2e --eval "printjson(db.dropDatabase())"
+cross-env MONGODB_URI=mongodb://localhost/$VLY_DB ENV_ENVIRONMENT='development' ENV_SECRET='mwmBqNcTWiKxDHygMiKhwyffaKQCVoRQ' nodemon -w lang -w server -w package.json server/server.js &
+# 
+node --http-parser=legacy x/db/load-goals.js
