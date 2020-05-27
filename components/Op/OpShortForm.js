@@ -45,6 +45,13 @@ class OpShortForm extends Component {
           op.duration = values.duration
           op.locations = [values.city, values.region]
           delete op.location
+          op.address = {
+            street: values.street,
+            suburb: values.suburb,
+            city: values.city,
+            postcode: values.postcode,
+            region: values.region
+          }
           op.offerOrg = values.offerOrg && values.offerOrg.key
           op.description = values.description
           // op.imgUrl = values.imgUrl
@@ -112,6 +119,13 @@ OpShortForm.propTypes = {
     imgUrl: PropTypes.string,
     duration: PropTypes.string,
     locations: PropTypes.arrayOf(PropTypes.string),
+    address: PropTypes.shape({
+      street: PropTypes.string,
+      suburb: PropTypes.string,
+      city: PropTypes.string,
+      postcode: PropTypes.string,
+      region: PropTypes.string
+    }),
     offerOrg: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({
@@ -156,7 +170,11 @@ export default Form.create({
       // subtitle: Form.createFormField({ value: op.subtitle }),
       description: Form.createFormField({ value: op.description }),
       duration: Form.createFormField({ value: op.duration }),
-      locations: Form.createFormField({ value: op.locations }),
+      street: Form.createFormField({ value: op.address && op.address.street }),
+      suburb: Form.createFormField({ value: op.address && op.address.suburb }),
+      city: Form.createFormField({ value: op.address && op.address.city }),
+      postcode: Form.createFormField({ value: op.address && op.address.postcode }),
+      region: Form.createFormField({ value: op.address && op.address.region }),
       offerOrg: Form.createFormField({ value: { key: op.offerOrg ? op.offerOrg._id : '' } }),
       // imgUrl: Form.createFormField({ value: op.imgUrl }),
       // status: Form.createFormField({ value: op.status }),
