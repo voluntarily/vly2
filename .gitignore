@@ -21,4 +21,5 @@ public/static/upload-test/*
 /.test/
 dump
 prod.priv.pem
+e2e_tests/output/*
 

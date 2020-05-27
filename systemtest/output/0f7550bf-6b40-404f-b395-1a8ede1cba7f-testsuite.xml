@@ -1,0 +1,50 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1582434861557' stop='1582434887631'>
+    <name>Voluntarily Portal Checks</name>
+    <title>Voluntarily Portal Checks</title>
+    <test-cases>
+        <test-case start='1582434879557' status='failed' stop='1582434884866'>
+            <name>Smoke Test for Voluntarily Portal Navigation @smoke</name>
+            <title>Smoke Test for Voluntarily Portal Navigation @smoke</title>
+            <labels>
+                <label name='tag' value='@smoke'/>
+            </labels>
+            <parameters/>
+            <steps>
+                <step start='1582434879575' status='failed' stop='1582434884866'>
+                    <name>Given I open the Voluntarily portal </name>
+                    <title>Given I open the Voluntarily portal </title>
+                    <attachments/>
+                    <steps>
+                        <step start='1582434879576' status='failed' stop='1582434884866'>
+                            <name>LoginPage: openPortal </name>
+                            <title>LoginPage: openPortal </title>
+                            <attachments/>
+                            <steps>
+                                <step start='1582434879576' status='passed' stop='1582434884288'>
+                                    <name>I am on page "https://voluntarily.nz/"</name>
+                                    <title>I am on page "https://voluntarily.nz/"</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                                <step start='1582434884288' status='failed' stop='1582434884864'>
+                                    <name>I see "We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."</name>
+                                    <title>I see "We are building a platform that connects corporate volunteer time with classrooms to teach science, technology, engineering, entrepreneurship, arts and design with the help of engaging content supplied by New Zealand’s leading innovators in educational content."</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                            </steps>
+                        </step>
+                    </steps>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title='Last Seen Screenshot' source='f9dd7789-a39f-424e-a124-ef01fdb168b7-attachment.png' type='image/png' size='1736258'/>
+            </attachments>
+            <failure>
+                <message></message>
+                <stack-trace>undefined</stack-trace>
+            </failure>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

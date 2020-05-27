@@ -1,0 +1,64 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1584786538182' stop='1584786598111'>
+    <name>Voluntarily Portal Checks</name>
+    <title>Voluntarily Portal Checks</title>
+    <test-cases>
+        <test-case start='1584786554141' status='failed' stop='1584786598059'>
+            <name>Smoke Test for Voluntarily Portal Navigation @smoke</name>
+            <title>Smoke Test for Voluntarily Portal Navigation @smoke</title>
+            <labels>
+                <label name='tag' value='@smoke'/>
+            </labels>
+            <parameters/>
+            <steps>
+                <step start='1584786554394' status='failed' stop='1584786597301'>
+                    <name>Given I open the Voluntarily portal </name>
+                    <title>Given I open the Voluntarily portal </title>
+                    <attachments/>
+                    <steps>
+                        <step start='1584786554394' status='failed' stop='1584786597301'>
+                            <name>LoginPage: openPortal </name>
+                            <title>LoginPage: openPortal </title>
+                            <attachments/>
+                            <steps>
+                                <step start='1584786554394' status='passed' stop='1584786596918'>
+                                    <name>I am on page "https://voluntarily.nz/"</name>
+                                    <title>I am on page "https://voluntarily.nz/"</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                                <step start='1584786596993' status='failed' stop='1584786597148'>
+                                    <name>I see "We connect people who can volunteer time, advice, or stuff to those who need it."</name>
+                                    <title>I see "We connect people who can volunteer time, advice, or stuff to those who need it."</title>
+                                    <attachments/>
+                                    <steps/>
+                                </step>
+                            </steps>
+                        </step>
+                    </steps>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title='Last Seen Screenshot' source='71262293-5207-49c2-a6c4-ef102646f93c-attachment.png' type='image/png' size='31161'/>
+            </attachments>
+            <failure>
+                <message>move target out of bounds: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.
+                  (Session info: chrome=80.0.3987.149)
+                  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.18362 x86_64)</message>
+                <stack-trace>Error: move target out of bounds: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.
+                  (Session info: chrome=80.0.3987.149)
+                  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.18362 x86_64)
+                    at getErrorFromResponseBody (C:\Users\Yogi\vly2\node_modules\webdriver\build\utils.js:175:10)
+                    at Request._callback (C:\Users\Yogi\vly2\node_modules\webdriver\build\request.js:110:64)
+                    at Request.self.callback (C:\Users\Yogi\vly2\node_modules\request\request.js:185:22)
+                    at Request.emit (events.js:189:13)
+                    at Request.EventEmitter.emit (domain.js:441:20)
+                    at Request.&lt;anonymous> (C:\Users\Yogi\vly2\node_modules\request\request.js:1161:10)
+                    at Request.emit (events.js:189:13)
+                    at Request.EventEmitter.emit (domain.js:441:20)
+                    at IncomingMessage.&lt;anonymous> (C:\Users\Yogi\vly2\node_modules\request\request.js:1083:12)
+                    at Object.onceWrapper (events.js:277:13)</stack-trace>
+            </failure>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>
