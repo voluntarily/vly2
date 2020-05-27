@@ -30,12 +30,6 @@ module.exports = {
     I.click(this.submitButton)
   },
 
-  openPortal () {
-    console.log('Going to open voluntarily portal')
-    I.amOnPage('https://voluntarily.nz/')
-    I.see('We connect people who can volunteer time, advice, or stuff to those who need it.')
-  },
-
   register (email, password) {
     // use another page object inside current one
     registerPage.registerUser({ email, password })

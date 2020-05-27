@@ -13,15 +13,12 @@ module.exports = {
   submitButton: { css: '#new_user_basic input[type=submit]' },
 
   openPortal () {
-    console.log('Going to open voluntarily portal')
-    I.amOnPage('https://voluntarily.nz/')
-    I.see('About')
-    I.see('Organisations')
-    I.see('Lost 🧐')
+    I.amOnPage('/')
   },
 
   checkAboutPage () {
-    I.amOnPage('https://blog.voluntarily.nz/')
+    I.click('About');
+    // I.amOnPage('https://blog.voluntarily.nz/')
     I.see('With Aotearoa NZ facing a future filled with uncertainty, helping each other is needed now more than ever.')
   },
 
