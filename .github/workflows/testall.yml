@@ -3,6 +3,7 @@ name: VLY2 Push branch, PR master, all tests
 on:
   push:
     branches-ignore:
+      - VP-1818*
       - master
       - releases/*
   # pull_request:

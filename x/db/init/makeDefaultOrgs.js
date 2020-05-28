@@ -7,7 +7,7 @@ const Person = require('../../../server/api/person/person')
 /**
  * Create the first admin in the system and the two default organisations
  * Voluntarily - an OP to which everyone is joined
- * Voluntarily Support - the Admin org to which admins are joined. 
+ * Voluntarily Support - the Admin org to which admins are joined.
  * place the super admin in both
  */
 //
