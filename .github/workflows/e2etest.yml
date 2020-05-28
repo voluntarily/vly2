@@ -50,11 +50,12 @@ jobs:
     - name: Build the docker-compose stack
       run: docker-compose -f docker-compose-dev.yml up -d
     - name: Check running containers
-      run: docker ps -a
+      run: |
+        docker ps -a
+        x/wait-for-it.sh localhost:3122 -t 20 -- docker ps -a
     - name: Check logs
       run: docker-compose -f docker-compose-dev.yml logs 
     - name: Run Codecept
-      uses: ianwalter/puppeteer@v2.0.0
       run: |
         ls
         npm run e2e:ci
