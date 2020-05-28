@@ -63,15 +63,14 @@ jobs:
       run: docker ps -a
     - name: Check logs
       run: docker-compose -f docker-compose-dev.yml logs 
-    - name: 
-        uses: ianwalter/puppeteer@v2.0.0
-        with:
-          args: yarn        
-
-    - name: Run test suite
-      run: |
-        cross-env CI=TRUE npx codeceptjs run  --features -c e2e_tests/codecept.conf.js
+    - name: Install Puppeteer
+      uses: ianwalter/puppeteer@v2.0.0
+      with:
+        args: yarn    
+    - name: Run Codecept
+      uses: ianwalter/puppeteer@v2.0.0
+      with:
+        args: cross-env CI=TRUE npx codeceptjs run  --features -c e2e_tests/codecept.conf.js
         
     - name: Test server is running
-      run: |
-        curl http://localhost:3122/api/health
+      run: curl http://localhost:3122/api/health
