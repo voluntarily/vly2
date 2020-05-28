@@ -11,7 +11,7 @@ const rimraf = require('rimraf')
 const importEnv = (envName = process.env.ENV_ENVIRONMENT, secret = process.env.ENV_SECRET) => {
   if (envName && secret) {
     const input = `${envName}.env.enc`
-    const output = `${envName}.env`
+    const output = `/tmp/${envName}.env`
 
     nodecipher.decryptSync({
       input,
