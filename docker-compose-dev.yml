@@ -13,6 +13,12 @@ services:
       - .:/home/node/app
     working_dir: /home/node/app
     command: x/docker-dev/web-container-start-command.sh
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3122/api/health"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
     environment:
       NEXT_TELEMETRY_DISABLED: 1
       NODE_ENV: development

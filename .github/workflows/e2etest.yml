@@ -1,4 +1,4 @@
-name: VLY2 Push branch, PR master, all tests
+name: VLY2 Push branch, E2E Tests
 
 on:
   push:
