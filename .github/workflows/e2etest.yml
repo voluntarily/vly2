@@ -10,67 +10,54 @@ on:
   #     - master
 
 jobs:
-  setup:    
-    name: Set up NPM, use cache, NPM CI
-    runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/master' #If we're not being pushed to master, do all the test steps
-    steps:
-    - uses: actions/checkout@v2
+  # setup:    
+  #   name: Set up NPM, use cache, NPM CI
+  #   runs-on: ubuntu-latest
+  #   if: github.ref != 'refs/heads/master' #If we're not being pushed to master, do all the test steps
+  #   steps:
+  #   - uses: actions/checkout@v2
 
-    - name: Cache node modules #Caches everything for the other tasks to run
-      uses: actions/cache@v1
-      env:
-        cache-name: cache-node-modules
-      with:
-        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+  #   - name: Cache node modules #Caches everything for the other tasks to run
+  #     uses: actions/cache@v1
+  #     env:
+  #       cache-name: cache-node-modules
+  #     with:
+  #       path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+  #       key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+  #       restore-keys: |
+  #         ${{ runner.os }}-build-${{ env.cache-name }}-
+  #         ${{ runner.os }}-build-
+  #         ${{ runner.os }}-
 
-    - name: Use Node 12
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.16.1
-        ci_node_index: 0
-        ci_node_total: 1
+  #   - name: Use Node 12
+  #     uses: actions/setup-node@v1
+  #     with:
+  #       node-version: 12.16.1
+  #       ci_node_index: 0
+  #       ci_node_total: 1
 
-    - name: Set up dependencies  #Warm cache
-      run: npm ci
+  #   - name: Set up dependencies  #Warm cache
+  #     run: npm ci
 
 
   end2endTests:
     name: End to end smoke tests
-    needs: setup
+    # needs: setup
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Cache node modules
-      uses: actions/cache@v1
-      env:
-        cache-name: cache-node-modules
-      with:
-        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+    - name: Checkout
+      uses: actions/checkout@v2
     - name: Build the docker-compose stack
       run: docker-compose -f docker-compose-dev.yml up -d
     - name: Check running containers
       run: docker ps -a
     - name: Check logs
       run: docker-compose -f docker-compose-dev.yml logs 
-    - name: Install Puppeteer
-      uses: ianwalter/puppeteer@v2.0.0
-      with:
-        args: yarn    
     - name: Run Codecept
       uses: ianwalter/puppeteer@v2.0.0
-      with:
-        args: cross-env CI=TRUE npx codeceptjs run  --features -c e2e_tests/codecept.conf.js
+      run: |
+        ls
+        npm run e2e:ci
         
-    - name: Test server is running
-      run: curl http://localhost:3122/api/health
+    # - name: Test server is running
+    #   run: curl http://localhost:3122/api/health
