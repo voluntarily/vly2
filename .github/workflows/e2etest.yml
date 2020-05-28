@@ -54,11 +54,11 @@ jobs:
         docker ps -a
         x/wait-for-it.sh localhost:3122 -t 20 -- docker ps -a
     - name: Check logs
-      run: docker-compose -f docker-compose-dev.yml logs 
+      run: docker-compose -f docker-compose-dev.yml logs | grep web
+    - name: Test server is running
+      run: curl http://localhost:3122/api/health
     - name: Run Codecept
       run: |
-        ls
+        npm ci
         npm run e2e:ci
         
-    # - name: Test server is running
-    #   run: curl http://localhost:3122/api/health
