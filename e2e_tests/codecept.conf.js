@@ -12,8 +12,10 @@ exports.config = {
   helpers: {
     Puppeteer: {
       url: 'http://localhost:3122',
-      show: true
-      // windowSize: '1200x900'
+      show: true,
+      smartWait: 1000,
+      waitForTimeout: 60000,
+      windowSize: '1200x900'
     }
   },
   gherkin: {
