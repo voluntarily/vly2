@@ -55,6 +55,15 @@ jobs:
       run: |
         docker ps -a
         x/wait-for-it.sh localhost:3122 -t 20 -- docker ps -a
+    - name: wait for service healthy
+      uses: nick-invision/retry@v1
+      with:
+        timeout_minutes: 4
+        max_attempts: 3
+        command: docker inspect --format='{{json .State.Health.Status}}' vly2_web_1 | grep -q "healthy"
+    - name: Check running containers again
+      run: |
+        docker ps -a
     - name: Check logs
       run: docker-compose -f docker-compose-dev.yml logs web
     # - name: Test server is running
