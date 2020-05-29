@@ -60,7 +60,7 @@ jobs:
       with:
         timeout_minutes: 4
         max_attempts: 3
-        command: docker inspect --format='{{json .State.Health.Status}}' vly2_web_1 | grep -q "healthy"
+        command: npm run e2e:healthy
     - name: Check running containers again
       run: |
         docker ps -a

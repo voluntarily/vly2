@@ -37,7 +37,8 @@
     "e2e:tests": "cross-env MONGODB_URI=mongodb://localhost/vly-e2e npx codeceptjs run --tests -c e2e_tests/codecept.test.js",
     "e2e:features": "npx codeceptjs run --features -c e2e_tests/codecept.conf.js",
     "e2e:ci": "cross-env CI=TRUE npx codeceptjs run  --features -c e2e_tests/codecept.conf.js",
-    "e2e:shell": "npx codeceptjs shell -c e2e_tests/codecept.conf.js"
+    "e2e:shell": "npx codeceptjs shell -c e2e_tests/codecept.conf.js",
+    "e2e:healthy": "docker inspect --format='{{json .State.Health.Status}}' vly2_web_1 | grep -q 'healthy'"
   },
   "dependencies": {
     "@babel/core": "^7.8.4",
