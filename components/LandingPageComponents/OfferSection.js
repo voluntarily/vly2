@@ -3,11 +3,12 @@ import styled from 'styled-components'
 import { OfferCard } from '../VTheme/VTheme'
 
 const OfferContainer = styled.div`
+margin-top: 2rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
   @media screen and (min-width: 1026px) and (max-width: 1289px) {
-    grid-template-columns: 1fr 1fr ;
+    grid-template-columns: 1fr ;
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     

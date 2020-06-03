@@ -7,6 +7,7 @@ import { OpQuestionPanel } from './OpQuestionPanel'
 import OpUpdatePanel from './OpUpdatePanel'
 import { OpManagePanel } from './OpManagePanel'
 import VTabs from '../VTheme/VTabs'
+import OpChatPanel from './OpChatPanel'
 
 const { TabPane } = Tabs
 
@@ -14,6 +15,12 @@ const opAboutTab =
   <FormattedMessage
     id='opTabs.about'
     defaultMessage='About'
+    description='Tab label on OpDetailsPage'
+  />
+const opChatTab =
+  <FormattedMessage
+    id='opTabs.chat'
+    defaultMessage='Messages'
     description='Tab label on OpDetailsPage'
   />
 
@@ -52,7 +59,11 @@ export const OpTabs = ({ op, onChange, canManage, canEdit, defaultTab, author })
     <TabPane tab={opAboutTab} key='about'>
       <OpAboutPanel op={op} />
     </TabPane>
-
+    {isNotProd && (
+      <TabPane tab={opChatTab} key='chat'>
+        <OpChatPanel />
+      </TabPane>
+    )}
     {isNotProd && (
       <TabPane tab={opForumTab} key='question'>
         <OpQuestionPanel op={op} />
@@ -63,6 +74,7 @@ export const OpTabs = ({ op, onChange, canManage, canEdit, defaultTab, author })
         <OpUpdatePanel albumId={op._id} author={author} />
       </TabPane>
     )}
+
     {canManage && (
       <TabPane tab={opManageTab} key='manage'>
         <OpManagePanel op={op} />
