@@ -40,7 +40,7 @@ export const ActOpsPanel = ({ act, type, limit }) => {
           <h2>
             <OpTypeCount counts={act.opCounts} type={type}> </OpTypeCount>
           </h2>
-          {type === OFFER &&
+          {type === ASK &&
             <>
               <p style={{ marginBottom: '1rem' }}>
                 <FormattedMessage
@@ -50,7 +50,7 @@ export const ActOpsPanel = ({ act, type, limit }) => {
               </p>
               <OpAddAskBtn actid={act._id} />
             </>}
-          {type === ASK &&
+          {type === OFFER &&
             <>
               <p style={{ marginBottom: '1rem' }}>
                 <FormattedMessage
