@@ -80,12 +80,12 @@ ul {
 }
 `
 export const ProfileSectionTitle = styled.h2`
-  margin: 1.5rem 0 ;
+  margin: 1.5rem 0 0 0;
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: -0.28px;
   small {
-    margin: 0.25rem 0 2.5rem 0;
+    margin: 0.25rem 0 1rem 0;
     font-size: 1.25rem;
     font-weight: 400;
     display: block;
