@@ -57,7 +57,7 @@ const EventContainer = styled.div`
 display: grid;
 grid-template-columns: 1fr auto 1fr;
 align-items: center;
-
+margin: 1rem 0;
 p {
   font-weight: 700;
   padding: 1rem;
@@ -72,7 +72,10 @@ p {
   border-radius: 32px;
   margin: 0 auto;
 }
-
+article{ 
+  display: flex;
+  justify-content: center;
+}
 
 `
 
@@ -99,6 +102,28 @@ const OpChatPanel = ({ author }) => {
         </AskContainer>
 
       </OpSectionGrid>
+
+      <Comment>
+        <DateBlock>
+          <p>
+          29 Jan 2019
+            <br />
+          11:59PM
+          </p>
+        </DateBlock>
+        <EventContainer>
+          <div />
+          <section>
+            <p>
+   USERNAME123 said you helped them
+            </p>
+            <article>
+              <Button shape='round' size='large' type='secondary'>Give feedback</Button>
+            </article>
+          </section>
+          <div />
+        </EventContainer>
+      </Comment>
       <Comment>
         <DateBlock>
           <p>
