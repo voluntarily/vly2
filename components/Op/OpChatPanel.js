@@ -1,5 +1,5 @@
 
-import { OpSectionGrid, ContentCard, P } from '../VTheme/VTheme'
+import { OpSectionGrid, ContentCard } from '../VTheme/VTheme'
 import styled from 'styled-components'
 
 import { Button, Input } from 'antd'
@@ -38,13 +38,17 @@ const ButtonContainer = styled.div`
 `
 // start date block
 const DateBlock = styled.div`
+display: flex;
+align-items: center;
+justify-content: flex-end;
   p {
-    padding-top: 1rem;
+  
     color: #999;
     letter-spacing: -0.3px;
     text-align: right;
     line-height: 24px;
     font-size: 1rem;
+    margin: 0;
 
 
   @media screen and (max-width: 768px) {
@@ -58,11 +62,14 @@ display: grid;
 grid-template-columns: 1fr auto 1fr;
 align-items: center;
 margin: 1rem 0;
-p {
+strong {
   font-weight: 700;
-  padding: 1rem;
-  margin: 0;
+}
+p {
+ 
+  margin: 0 1rem;
   max-width: 40rem;
+  text-align: center;
 }
 
  div {
@@ -76,6 +83,9 @@ article{
   display: flex;
   justify-content: center;
 }
+button {
+  margin-top: 0.5rem;
+}
 
 `
 
@@ -84,7 +94,7 @@ const OpChatPanel = ({ author }) => {
     <>
       <OpSectionGrid>
         <div>
-          <h2>You offered to help USERNAME123</h2>
+          <h2>You offered to help <br />USERNAME123</h2>
           <>
 
           </>
@@ -92,8 +102,8 @@ const OpChatPanel = ({ author }) => {
         </div>
 
         <AskContainer>
-          <p>USERNAME is asking for your help - message them here</p>
-          <TextArea rows={3} placeholder='Ask a question here' />
+          <p>Send message</p>
+          <TextArea rows={3} placeholder='USERNAME is asking for your help - message them here' />
           <ButtonContainer>
             <Button shape='round' size='large' type='primary'>
               Submit
@@ -115,7 +125,7 @@ const OpChatPanel = ({ author }) => {
           <div />
           <section>
             <p>
-   USERNAME123 said you helped them
+              <strong>USERNAME123</strong> said you helped them
             </p>
             <article>
               <Button shape='round' size='large' type='secondary'>Give feedback</Button>
@@ -183,7 +193,7 @@ const OpChatPanel = ({ author }) => {
         <EventContainer>
           <div />
           <p>
-        You offered to help USERNAME123
+        You offered to help<br /><strong>USERNAME123</strong>
           </p>
           <div />
         </EventContainer>

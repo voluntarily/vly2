@@ -4,7 +4,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { OpAboutPanel } from './OpAboutPanel'
 import { OpQuestionPanel } from './OpQuestionPanel'
-import OpUpdatePanel from './OpUpdatePanel'
+// import OpUpdatePanel from './OpUpdatePanel'
 import { OpManagePanel } from './OpManagePanel'
 import VTabs from '../VTheme/VTabs'
 import OpChatPanel from './OpChatPanel'
@@ -31,12 +31,12 @@ const opForumTab =
     description='Tab label for Question panel on Opportunity'
   />
 
-const opUpdateTab =
-  <FormattedMessage
-    id='opTabs.update'
-    defaultMessage='Updates'
-    description='Tab label for News/Updates panel on Opportunity'
-  />
+// const opUpdateTab =
+//   <FormattedMessage
+//     id='opTabs.update'
+//     defaultMessage='Updates'
+//     description='Tab label for News/Updates panel on Opportunity'
+//   />
 
 const opManageTab =
   <FormattedMessage
@@ -69,11 +69,11 @@ export const OpTabs = ({ op, onChange, canManage, canEdit, defaultTab, author })
         <OpQuestionPanel op={op} />
       </TabPane>
     )}
-    {isNotProd && (
+    {/* {isNotProd && (
       <TabPane tab={opUpdateTab} key='news'>
         <OpUpdatePanel albumId={op._id} author={author} />
       </TabPane>
-    )}
+    )} */}
 
     {canManage && (
       <TabPane tab={opManageTab} key='manage'>
