@@ -87,6 +87,13 @@ button {
   margin-top: 0.5rem;
 }
 
+@media screen and (max-width: 768px) {
+  grid-template-columns: 1fr;
+  div {
+    margin: 1.5rem 0;
+  }
+}
+
 `
 
 const OpChatPanel = ({ author }) => {
