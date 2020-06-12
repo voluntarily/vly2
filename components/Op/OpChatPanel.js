@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { Button, Input } from 'antd'
 import OpFeedback from './OpFeedback'
 import OpMessage from './OpMessage'
+import OpEvent from './OpEvent'
 const { TextArea } = Input
 // start question
 
@@ -121,48 +122,24 @@ const OpChatPanel = ({ author }) => {
         </AskContainer>
 
       </OpSectionGrid>
-      <OpFeedback date='22 jan 2022' time='11:00pm' username='Potato' />
+      <OpFeedback date='22 Jan 2022' time='11:00pm' username='Ben' />
 
       <OpMessage
-        date='12 jan 2020'
+        date='12 Jan 2020'
         time='5:00pm'
         comment='Hello can I get potatoes pls'
         image='https://images.unsplash.com/photo-1588614478415-f25a77edc40f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1583&q=80'
-        username='Walrus'
+        username='WalrusWalnut Processor'
       />
-      <Comment>
-        <DateBlock>
-          <p>
-          29 Jan 2019
-            <br />
-          11:59PM
-          </p>
-        </DateBlock>
-        <ContentCard>
-          <p>Can I get free parking at the school? Happy to help but I need somewhere to park my car</p>
-          <div style={{ display: 'flex', alignSelf: 'center' }}>
-            <div style={{ height: '2rem', width: '2rem', backgroundColor: 'black', borderRadius: '16px', marginRight: '0.5rem' }} />
-            <p style={{ marginBottom: '0', alignSelf: 'center' }}>aaaaaaaaa</p>
-          </div>
-        </ContentCard>
-      </Comment>
-      <Comment>
-        <DateBlock>
-          <p>
-          29 Jan 2019
-            <br />
-          11:59PM
-          </p>
-        </DateBlock>
-        <EventContainer>
-          <div />
-          <p>
-        You offered to help<br /><strong>USERNAME123</strong>
-          </p>
-          <div />
-        </EventContainer>
-      </Comment>
+      <OpMessage
+        date='12 Jan 2020'
+        time='5:00pm'
+        comment='Hello can I get potatoes pls'
+        image='https://images.unsplash.com/photo-1588614478415-f25a77edc40f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1583&q=80'
+        username='Ben the Potato Farmer'
+      />
 
+      <OpEvent date='12 jan 2020' username='Ben' />
     </>
   )
 }
