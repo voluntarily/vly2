@@ -33,20 +33,18 @@ export const ActBanner = ({ act, children }) => {
       </Helmet>
 
       <OpSectionGrid>
-        <div style={{ paddingTop: '1rem' }}>
+        <div style={{ paddingTop: '3rem' }}>
           <h1>
             <OpStatus status={act.status} />
             {act.name}
           </h1>
-          {act.subtitle && <p>{act.subtitle}</p>}
+          {/* {act.subtitle && <p>{act.subtitle}</p>} */}
           {/* <ul>
             <ItemIdLine item={act.offerOrg} path='orgs' />
           </ul> */}
           <ItemContainer>
             <li><ItemDuration duration={act.duration} /></li>
             <li><ItemNeeds volunteers={act.volunteers} /></li>
-            <li><OpTypeCount counts={act.opCounts} type={ASK} /></li>
-            <li><OpTypeCount counts={act.opCounts} type={OFFER} /></li>
           </ItemContainer>
         </div>
         <BannerDetail>

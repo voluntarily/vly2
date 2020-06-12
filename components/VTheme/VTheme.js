@@ -744,7 +744,7 @@ export const A5 = styled.div`
   so that the page looks like a piece of paper.
 */
 export const FullPage = styled.div`
-  margin: 6rem 2rem;
+  margin: 6rem auto;
   max-width: 80rem;
   overflow: visible;
   height: auto;
