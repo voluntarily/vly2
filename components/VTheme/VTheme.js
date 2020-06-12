@@ -453,7 +453,6 @@ export const ContentCard = styled.div`
     height: 2rem;
     width: 2rem;
 
-    background-color: purple;
     border-radius: 150px;
   }
 `

@@ -3,6 +3,8 @@ import { OpSectionGrid, ContentCard } from '../VTheme/VTheme'
 import styled from 'styled-components'
 
 import { Button, Input } from 'antd'
+import OpFeedback from './OpFeedback'
+import OpMessage from './OpMessage'
 const { TextArea } = Input
 // start question
 
@@ -119,60 +121,15 @@ const OpChatPanel = ({ author }) => {
         </AskContainer>
 
       </OpSectionGrid>
+      <OpFeedback date='22 jan 2022' time='11:00pm' username='Potato' />
 
-      <Comment>
-        <DateBlock>
-          <p>
-          29 Jan 2019
-            <br />
-          11:59PM
-          </p>
-        </DateBlock>
-        <EventContainer>
-          <div />
-          <section>
-            <p>
-              <strong>USERNAME123</strong> said you helped them
-            </p>
-            <article>
-              <Button shape='round' size='large' type='secondary'>Give feedback</Button>
-            </article>
-          </section>
-          <div />
-        </EventContainer>
-      </Comment>
-      <Comment>
-        <DateBlock>
-          <p>
-          29 Jan 2019
-            <br />
-          11:59PM
-          </p>
-        </DateBlock>
-        <ContentCard>
-          <p>Can I get free parking at the school? Happy to help but I need somewhere to park my car</p>
-          <div style={{ display: 'flex', alignSelf: 'center' }}>
-            <div style={{ height: '2rem', width: '2rem', backgroundColor: 'black', borderRadius: '100%', marginRight: '0.5rem' }} />
-            <p style={{ marginBottom: '0', alignSelf: 'center' }}>aaaaaaaaa</p>
-          </div>
-        </ContentCard>
-      </Comment>
-      <Comment>
-        <DateBlock>
-          <p>
-          29 Jan 2019
-            <br />
-          11:59PM
-          </p>
-        </DateBlock>
-        <ContentCard>
-          <p>Can I get free parking at the school? Happy to help but I need somewhere to park my car</p>
-          <div style={{ display: 'flex', alignSelf: 'center' }}>
-            <div style={{ height: '2rem', width: '2rem', backgroundColor: 'black', borderRadius: '100%', marginRight: '0.5rem' }} />
-            <p style={{ marginBottom: '0', alignSelf: 'center' }}>aaaaaaaaa</p>
-          </div>
-        </ContentCard>
-      </Comment>
+      <OpMessage
+        date='12 jan 2020'
+        time='5:00pm'
+        comment='Hello can I get potatoes pls'
+        image='https://images.unsplash.com/photo-1588614478415-f25a77edc40f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1583&q=80'
+        username='Walrus'
+      />
       <Comment>
         <DateBlock>
           <p>
