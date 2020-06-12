@@ -850,7 +850,7 @@ img {
   border-radius: 8px;
 }
 h1 {
-  margin: 0.2rem 0 0.4rem 0;
+  margin: 0.5rem 0;
   font-size: 1.4rem;
   vertical-align: middle;
   color: #000;
