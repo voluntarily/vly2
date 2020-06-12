@@ -45,7 +45,7 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
     <VBanner>
       <VBannerImg src={person.imgUrl} alt={person.nickname} />
       <ProfileBannerTitle>
-        <H2>{person.name}</H2>
+        <h1>{person.name}</h1>
         <p>
           {person.job && `${person.job}`}
           {person.placeOfWork && ` - ${person.placeOfWork}`}

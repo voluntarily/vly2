@@ -75,7 +75,6 @@ const OpCard = ({ op }) => {
               {startLocation && <li> {startLocation}</li>}
               {startTime && <li> {startTime} </li>}
               {startDuration && <li> {startDuration}</li>}
-              {op.createdAt && <li>🎬{moment(op.createdAt).fromNow()}</li>}
             </ul>
 
             <DescriptionWrapper>

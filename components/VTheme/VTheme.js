@@ -373,6 +373,7 @@ margin: 1rem 0;
 color: #333;
 i {
   font-size: 0.8rem;
+  color: #999;
 }
 `
 
@@ -802,7 +803,10 @@ figcaption {
 
   li { list-style: none;
    }
-  ul { padding-left: 0; }
+  ul { 
+    padding-left: 0;
+    margin-top: 1rem;
+   }
 }
 
 :hover {
