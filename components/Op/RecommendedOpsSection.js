@@ -39,6 +39,7 @@ export const RecommendedOpsSection = () => {
           </ProfileSectionTitle>
 
           <OpRecommendations recommendedOps={ops} type={ASK} />
+  
         </ProfileSection>}
 
       {bp &&

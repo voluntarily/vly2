@@ -47,9 +47,9 @@ const OpBanner = ({ op, children }) => {
         </Left>
         <BannerDetail>
           <small>{op.requestor.nickname} <OpType type={op.type} /> with</small>
-          <H2>
+          <h1>
             {op.name}
-          </H2>
+          </h1>
           <ul>
             {/* <ItemIdLine item={op.offerOrg} path='orgs' />
             <ItemIdLine item={op.fromActivity} path='acts' /> */}

@@ -969,7 +969,7 @@ ul {
 }
 small {
 
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
   color: #333;
 @media screen and (max-width: 768px) {
