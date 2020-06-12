@@ -73,7 +73,7 @@ const Header = () => {
   const isAuthenticated = useSelector(state => state.session.isAuthenticated)
   let notice = intl.formatMessage({ id: 'notice', defaultMessage: 'none' })
   if (notice === 'none') notice = '' // wipe notice if its set to none
-  const height = '56px'
+  const height = '64px'
   const headerColor = isAuthenticated ? me.role.includes(Role.SUPPORT) ? 'solid 10px #faad14' : me.role.includes(Role.ADMIN) ? 'solid 10px #7826ff' : 'none' : 'none'
   const headerStyle = {
     borderTop: headerColor,

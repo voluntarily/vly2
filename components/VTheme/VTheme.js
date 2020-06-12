@@ -222,6 +222,9 @@ grid-template-columns: 5fr 2fr;
 margin: 2rem 0 1rem 0;
 
 align-self: center;
+strong {
+  font-weight: 700;
+}
 
 @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: 1fr 13rem;
@@ -281,10 +284,9 @@ export const SideBarGrid = styled.div`
   display: grid;
   position: relative;
   margin: 0;
-  grid-template-columns: 29rem 49rem;
+  grid-template-columns: 29rem auto;
   grid-column-gap: 2rem;
-  margin: 2rem 0 4rem 0 ;
-  padding-top: 5rem;
+  margin: 0 0 2rem 0 ;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: calc(40vw - 4rem) calc(60vw - 4rem);
@@ -733,8 +735,8 @@ export const A5 = styled.div`
   so that the page looks like a piece of paper.
 */
 export const FullPage = styled.div`
-  margin: 6rem auto;
-  width: 80rem;
+  margin: 6rem 2rem;
+  max-width: 80rem;
   overflow: visible;
   height: auto;
 
@@ -791,8 +793,8 @@ export const Card = styled.figure`
 
 padding-bottom: 0.5rem;
 
--webkit-transition: all 0.3s;
-  transition: all 0.3s;
+-webkit-transition: all 0.2s;
+  transition: all 0.2s;
 p {
   margin: 0.5rem 0 -0.1rem 0;
   color: #444;
@@ -826,8 +828,14 @@ figcaption {
   }
   figcaption {
     transform: scale(0.94);
-    transition: all 0.3s;
+
   }
+}
+
+figcaption {
+
+-webkit-transition: all 0.2s;
+  transition: all 0.2s;
 }
 img {
   border-radius: 8px;
@@ -882,7 +890,7 @@ time {
 export const SmallCard = styled.figure`
 
 -webkit-transition: all 0.28s;
-
+transition: all 0.28s;
 box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
 padding: 1rem;
 border-radius: 8px;
@@ -891,14 +899,11 @@ overflow: auto;
 a { text-decoration: none; }
 
 figcaption {
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
   li { list-style: none }
   ul { padding-left: 0; }
 }
 
 :hover {
-  transition: all 0.3s;
   transform: scale(1.02);
   border-radius: 8px;
   h2 {
@@ -968,7 +973,6 @@ ul {
 
 }
 small {
-
   font-size: 1rem;
   font-weight: 500;
   color: #333;

@@ -24,6 +24,9 @@ text-align: center;
 @media screen and (min-width: 767px) {
 
   text-align: left;
+  p {
+    margin-left: 2px;
+  }
 }
 
 `

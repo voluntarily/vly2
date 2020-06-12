@@ -10,8 +10,7 @@ export const BackAndTitle = styled.div`
   margin: 0;
   grid-template-columns: 8rem 1fr;
   grid-column-gap: 2rem;
-  margin: 2rem 0 4rem 0 ;
-  padding-top: 5rem;
+
 
 `
 
