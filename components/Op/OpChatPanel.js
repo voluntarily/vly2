@@ -26,7 +26,7 @@ const OpChatPanel = ({ op }) => {
     <>
       <OpSectionGrid>
         <div>
-          <h2>You offered to help <br />{op.requestor.nickname}</h2>
+          <h2>You offered to help {op.requestor.nickname}</h2>
           <>
 
           </>
@@ -44,24 +44,24 @@ const OpChatPanel = ({ op }) => {
         </AskContainer>
 
       </OpSectionGrid>
-      <OpFeedback date='22 Jan 2022' time='11:00pm' username='Ben' />
+      <OpFeedback date='22 Jan 2022' time='11:00pm' username={op.requestor.nickname} />
 
       <OpMessage
         date='12 Jan 2020'
         time='5:00pm'
-        comment='Hello can I get potatoes pls'
+        comment='yes i can supply agile potato training'
         image='https://images.unsplash.com/photo-1588614478415-f25a77edc40f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1583&q=80'
-        username='WalrusWalnut Processor'
+        username={op.requestor.nickname}
       />
       <OpMessage
         date='12 Jan 2020'
         time='5:00pm'
-        comment='Hello can I get potatoes pls'
-        image='https://images.unsplash.com/photo-1588614478415-f25a77edc40f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1583&q=80'
-        username='Ben the Potato Farmer'
+        comment='Hello can I get agile potatoes pls'
+        image='https://images.unsplash.com/photo-1591647053371-504b4a2958e4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'
+        username='You'
       />
 
-      <OpEvent date='12 jan 2020' username='Ben' />
+      <OpEvent date='12 jan 2020' username={op.requestor.nickname} />
     </>
   )
 }

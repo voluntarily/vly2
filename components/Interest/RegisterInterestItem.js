@@ -140,7 +140,7 @@ export const RegisterInterestItem = ({
           <Button
             id='acceptBtn'
             block
-            type='primary' shape='round' size='large' style={{ placeSelf: 'center' }}
+            type='primary' shape='round' size='large' style={{ placeSelf: 'start', maxWidth: '15rem' }}
             onClick={handleAcceptClick}
           >
             {options.acceptButtonText}
@@ -153,7 +153,7 @@ export const RegisterInterestItem = ({
             shape='round'
             size='large'
             block
-            style={{ placeSelf: 'center' }}
+            type='primary' style={{ placeSelf: 'start', maxWidth: '15rem' }}
             onClick={handleRejectClick}
           >
             {options.rejectButtonText}
@@ -164,8 +164,8 @@ export const RegisterInterestItem = ({
             id='messageBtn'
             size='large'
             block
-            style={{ placeSelf: 'center' }}
-            shape='round' onClick={handleMessageClick}
+            type='primary' shape='round' style={{ placeSelf: 'start', maxWidth: '15rem' }}
+            onClick={handleMessageClick}
           >
             <FormattedMessage
               id='RegisterInterestItem.MessageOp'

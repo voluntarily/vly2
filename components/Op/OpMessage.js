@@ -55,7 +55,7 @@ const OpMessage = ({ date, time, comment, image, username }) => (
       <p>{comment}</p>
       <div style={{ display: 'flex', alignSelf: 'center' }}>
         <img src={image} style={{ height: '2rem', width: '2rem', borderRadius: '100%', marginRight: '0.5rem', border: 'none', backgroundColor: 'none' }} />
-        <p style={{ marginBottom: '0', alignSelf: 'center' }}>{username}</p>
+        <p style={{ marginBottom: '0', alignSelf: 'center', fontWeight: '500' }}>{username}</p>
       </div>
     </ContentCard>
   </Comment>

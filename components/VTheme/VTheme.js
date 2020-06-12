@@ -455,6 +455,8 @@ export const ContentCard = styled.div`
   img {
     height: 2rem;
     width: 2rem;
+    object-fit: cover;
+    object-position: center;
 
     border-radius: 150px;
   }

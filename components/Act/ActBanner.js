@@ -34,10 +34,10 @@ export const ActBanner = ({ act, children }) => {
 
       <OpSectionGrid>
         <div>
-          <H2>
+          <h1>
             <OpStatus status={act.status} />
             {act.name}
-          </H2>
+          </h1>
           {act.subtitle && <p>{act.subtitle}</p>}
           {/* <ul>
             <ItemIdLine item={act.offerOrg} path='orgs' />
