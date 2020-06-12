@@ -8,6 +8,7 @@ import { ActResourcesPanel } from './ActResourcesPanel'
 import { Role } from '../../server/services/authorize/role.js'
 import VTabs from '../VTheme/VTabs'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
+import { OpTypeCount } from '../Op/OpType'
 const { ASK, OFFER } = OpportunityType
 
 const { TabPane } = Tabs
@@ -16,20 +17,6 @@ const actAboutTab =
   <FormattedMessage
     id='actTabs.about'
     defaultMessage='About'
-    description='Tab label on ActTabs'
-  />
-
-const actRequestsTab =
-  <FormattedMessage
-    id='actTabs.asks'
-    defaultMessage='Asks'
-    description='Tab label on ActTabs'
-  />
-
-const actOffersTab =
-  <FormattedMessage
-    id='actTabs.offers'
-    defaultMessage='Offers'
     description='Tab label on ActTabs'
   />
 
@@ -70,6 +57,8 @@ const actEditTab =
 // const isNotProd = process.env.NODE_ENV !== 'production'
 
 export const ActTabs = ({ act, me, onChange, canManage, canEdit, defaultTab }) => {
+  const actRequestsTab = <OpTypeCount counts={act.opCounts} type={ASK} />
+  const actOffersTab = <OpTypeCount counts={act.opCounts} type={OFFER} />
   const vp = me.role.includes(Role.VOLUNTEER)
   const bp = me.role.includes(Role.BASIC)
   return (

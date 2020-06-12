@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
 import { SmallCard, SmallOpGrid, TagState } from '../VTheme/VTheme'
-import { Icon } from 'antd'
+import { Icon, Divider } from 'antd'
 import styled from 'styled-components'
 import { OpType } from './OpType'
 const getOpPageURL = (isArchived, opid) => {
@@ -51,21 +51,25 @@ const OpCardSmall = ({ op }) => {
   // }
 
   return (
-    <SmallCard style={{ height: '10rem' }}>
+    <SmallCard style={{ minHeight: '10rem' }}>
       <Link href={getOpPageURL(isArchived, op._id)}>
         <a>
-          <SingleLineTitle>
-            {op.requestor.nickname} <OpType type={op.type} />
-          </SingleLineTitle>
+          <p>
+            {op.description && <p>{op.description}</p> || <p>I <OpType type={op.type} /> with {op.name}</p>}
+          </p>
+
+          <Divider />
           <SmallOpGrid>
             <img src={op.requestor.imgUrl} />
             <figcaption>
               {/* <p>  {op.subtitle}</p> */}
               <ul>
-                {startTime && <li> {startTime} </li>}
-                {startLocation && <li> {startLocation}</li>}
+                <li> <strong>{op.requestor.nickname} <OpType type={op.type} /></strong></li>
+                <li>   {startTime && <p>{startTime}</p>}  {startLocation && <p>{startLocation}</p>}
+
+                </li>
                 {/* {startDuration && <li> {startDuration}</li>} */}
-                {op.createdAt && <li>🎬{moment(op.createdAt).fromNow()}</li>}
+                {op.createdAt && <li><i>Created {moment(op.createdAt).fromNow()}</i></li>}
               </ul>
               {interestIcon}
             </figcaption>

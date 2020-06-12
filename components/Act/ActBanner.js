@@ -33,7 +33,7 @@ export const ActBanner = ({ act, children }) => {
       </Helmet>
 
       <OpSectionGrid>
-        <div>
+        <div style={{ paddingTop: '1rem' }}>
           <h1>
             <OpStatus status={act.status} />
             {act.name}

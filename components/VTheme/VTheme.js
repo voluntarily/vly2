@@ -242,6 +242,13 @@ display: grid;
 grid-template-columns: 4rem 1fr;
 gap: 0.5rem;
 align-items: center;
+strong {
+  font-weight: 700;
+}
+i {
+  font-size: 0.8rem;
+  color: #777;
+}
 `
 
 export const OpSectionGrid = styled.div`
@@ -898,12 +905,12 @@ padding: 1rem;
 border-radius: 8px;
 margin-bottom: 0;
 overflow: auto;
+p {margin: 0}
 a { text-decoration: none; }
+li { list-style: none }
+  ul { padding-left: 0;
+  margin: 0; }
 
-figcaption {
-  li { list-style: none }
-  ul { padding-left: 0; }
-}
 
 :hover {
   transform: scale(1.02);
@@ -912,9 +919,7 @@ figcaption {
     color: #6549aa;
   }
  
-  figcaption {
-    transform: scale(0.96);
-  }
+ 
 }
 
 h2 {
@@ -970,8 +975,7 @@ display: grid;
 align-self: center;
 
 ul {
-  padding: 0;
-  margin: 0.25rem 0 0 0;
+  
 
 }
 small {
@@ -1196,6 +1200,7 @@ width: 100%;
  img{ 
    margin-bottom: 1rem;
   width: 100%;
+  max-height: 10rem;
 }
 
   :hover {
@@ -1221,7 +1226,7 @@ width: 100%;
     }
     
     img{ 
-  width: 100%;
+  height: 100%;
   align-self: center;
   justify-self: end;
     }
@@ -1233,13 +1238,13 @@ width: 100%;
 
   /* Mobile */
   @media screen and (max-width: 768px) {
-    min-height: 22rem;
+   
     
   }
 
   /* Mobile */
   @media screen and (max-width: 668px) {
-    min-height: 22rem;
+ 
 
     width: calc(100vw - 2rem);
     text-align: left;

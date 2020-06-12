@@ -11,13 +11,13 @@ export const Html = ({ className, children }) =>
   <div className={className} dangerouslySetInnerHTML={{ __html: children }} />
 
 export const HtmlExpander = styled(Html)`
-  max-height: ${props => props.more ? 'none' : '14.6rem'};
+  max-height: ${props => props.more ? 'none' : '6.6rem'};
   word-wrap: break-word;
   overflow: hidden;
 `
 
 export const MoreOrLessButton = ({ more, onClick }) =>
-  <Button shape='round' size='large' style={{ float: 'left' }} onClick={onClick}>
+  <Button shape='round' size='large' style={{ float: 'left', marginBottom: '1rem' }} onClick={onClick}>
     {more
       ? (
         <FormattedMessage
