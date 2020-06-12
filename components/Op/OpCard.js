@@ -71,7 +71,9 @@ const OpCard = ({ op }) => {
               {draft}
               {op.name}
             </h1>
+            {interestIcon}
             <ul>
+
               {startLocation && <li> {startLocation}</li>}
               {startTime && <li> {startTime} </li>}
               {startDuration && <li> {startDuration}</li>}
@@ -87,7 +89,7 @@ const OpCard = ({ op }) => {
                 <i>Via {orgName}&nbsp;</i>} */}
               <i> created {moment(op.createdAt).fromNow()}</i>
             </DescriptionWrapper>
-            {interestIcon}
+
 
           </figcaption>
         </a>

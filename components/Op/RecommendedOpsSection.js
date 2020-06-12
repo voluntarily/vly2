@@ -26,20 +26,14 @@ export const RecommendedOpsSection = () => {
           <ProfileSectionTitle>
             <FormattedMessage
               id='recommendedOpsSection.title.volunteer'
-              defaultMessage='Opportunities to Volunteer'
+              defaultMessage='Discover ways to help out'
               decription='Title on volunteer home page for recommended opportunities'
             />
-            <small>
-              <FormattedMessage
-                id='recommendedOpsSection.subtitle.volunteer'
-                defaultMessage='Here are some people you could help right now.'
-                decription='Subtitle on volunteer home page for recommended opportunities'
-              />
-            </small>
+
           </ProfileSectionTitle>
 
           <OpRecommendations recommendedOps={ops} type={ASK} />
-  
+
         </ProfileSection>}
 
       {bp &&

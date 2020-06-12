@@ -15,7 +15,7 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 
 export const PageBanner = styled.div`
  width: auto;
-  margin: 2rem 0 2rem 0;
+  margin: 0 0 2rem 0;
   display: inline-block;
 /* 
   padding: 1rem;
@@ -247,15 +247,16 @@ align-items: center;
 export const OpSectionGrid = styled.div`
   margin: 2rem 0;
   display: grid;
-  grid-template-columns: 25rem 1fr;
+  grid-template-columns: 1fr 50rem;
   gap: 5rem;
   text-align: left;
   @media screen and (min-width: 768px) and (max-width: 1281px) {
-    grid-template-columns: calc(50vw - 4rem) calc(50vw - 4rem);
+    grid-template-columns: 14rem 1fr;
     grid-column-gap: 2rem;
   }
 
   @media screen and (max-width: 768px) {
+    gap: 0;
     grid-template-columns: calc(100vw - 2rem);
   }
 `// end OpSection
@@ -282,11 +283,10 @@ export const HalfGridContainer = styled.div``
 // 30% left, 60% right two column
 export const SideBarGrid = styled.div`
   display: grid;
-  position: relative;
-  margin: 0;
+  position: relative;;
   grid-template-columns: 29rem auto;
   grid-column-gap: 2rem;
-  margin: 0 0 2rem 0 ;
+  margin: 8rem 0 2rem 0 ;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: calc(40vw - 4rem) calc(60vw - 4rem);
@@ -746,7 +746,7 @@ export const FullPage = styled.div`
     margin-right: 2rem;
   }
   @media screen and (max-width: 767px) {
-    margin-top: 4rem;
+    margin: 4rem auto;
     width: calc(100vw - 2rem);
   }
 ` // end fullpage
@@ -1134,7 +1134,7 @@ export const PageAlert = styled.div`
   grid-template-columns: 3rem 3fr 1fr 1fr;
 
   background-color: rgb(37, 15, 81);
-  margin-bottom: -5rem;
+  margin: 0rem;
   h4 {
     color: white;
     font-weight: 600;

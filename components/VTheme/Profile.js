@@ -54,7 +54,7 @@ export const VBannerImg = styled.img`
 
 export const ProfileTabs = styled.nav`
   text-align: left;
-  display: grid;
+  display: block;
   grid-template-columns: 100%;
   margin-top: 3rem;
   margin-bottom: 3rem;

@@ -27,7 +27,7 @@ const { ASK, OFFER } = OpportunityType
 const AffixTopBar = ({ children }) => {
   return (process.env.NODE_ENV === 'test')
     ? <>{children}</>
-    : <Affix style={{ width: '100%', position: 'absolute', top: 0, left: 0 }} offsetTop={56}>{children}</Affix>
+    : <Affix style={{ width: '100%', position: 'absolute', top: '-5rem', left: 0 }} offsetTop={56}>{children}</Affix>
 }
 
 const MessagePanel = styled.section`
@@ -169,9 +169,9 @@ export const RegisterInterestItem = ({
           >
             <FormattedMessage
               id='RegisterInterestItem.MessageOp'
-              defaultMessage='Message {nickname}'
+              defaultMessage=' Send Message'
               description='Button allowing volunteer send a message to the organiser'
-              values={{ nickname: op.requestor.nickname }}
+
             />
           </Button>
         )}
@@ -188,40 +188,13 @@ export const RegisterInterestItem = ({
           <AffixTopBar>
             <PageAlert>
               <Icon type='history' style={{ fontSize: '32px', color: 'white', placeSelf: 'center' }} />
-              <h4 style={{ alignSelf: 'center' }}>{options.statusMessage}</h4>
+              <h4 style={{ alignSelf: 'center', margin: 0 }}>{options.statusMessage}</h4>
               <RegisterButtons />
             </PageAlert>
           </AffixTopBar>
         )
         : <RegisterButtons />}
-      <MessagePanel onClick={() => showMessages()}>
-        <InterestMessageItem message={latestMsg} />
-      </MessagePanel>
 
-      <RegisterInterestMessageForm
-        id='acceptRegisterInterestForm'
-        title={options.acceptFormTitle}
-        prompt={options.acceptFormPrompt}
-        showTerms={!interest.termsAccepted}
-        onSubmit={handleAcceptSubmit}
-        visible={showAcceptForm}
-      />
-      <RegisterInterestMessageForm
-        id='rejectRegisterInterestForm'
-        title={options.rejectFormTitle}
-        prompt={options.rejectFormPrompt}
-        showTerms={!interest.termsAccepted}
-        onSubmit={handleRejectSubmit}
-        visible={showRejectForm}
-      />
-      <RegisterInterestMessageForm
-        id='messageRegisterInterestForm'
-        title={messageForm.title}
-        prompt={messageForm.prompt}
-        showTerms={!interest.termsAccepted}
-        onSubmit={handleMessageSubmit}
-        visible={showMessageForm}
-      />
     </>
   )
 }

@@ -3,6 +3,7 @@ import { Tabs } from 'antd'
 
 const VTabs = styled(Tabs)`
 
+
 .ant-tabs-tab {
 overflow: visible;
 text-align: left;
