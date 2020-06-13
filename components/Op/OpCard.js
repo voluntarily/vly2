@@ -61,6 +61,7 @@ const OpCard = ({ op }) => {
         <a>
           <ImageWrapper>
             <img src={cardImage} alt={op.name} />
+            {interestIcon}
             {/* <OpTypeStamp type={op.type} /> */}
           </ImageWrapper>
           <figcaption>
@@ -71,7 +72,6 @@ const OpCard = ({ op }) => {
               {draft}
               {op.name}
             </h1>
-            {interestIcon}
             <ul>
 
               {startLocation && <li> {startLocation}</li>}

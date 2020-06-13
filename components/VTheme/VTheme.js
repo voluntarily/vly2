@@ -1079,7 +1079,8 @@ background-color: #e8e8e8;
 `
 // we use this tag for op state
 export const TagState = styled.span`
-  display: inline-block;
+left: 0.5rem;
+  position: absolute;
   padding:0.2rem 0.5rem;
   font-size: 1rem;
   font-weight: 700;
