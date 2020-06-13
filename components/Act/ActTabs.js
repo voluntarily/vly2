@@ -63,20 +63,22 @@ export const ActTabs = ({ act, me, onChange, canManage, canEdit, defaultTab }) =
   const bp = me.role.includes(Role.BASIC)
   return (
     <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
-      <TabPane tab={actAboutTab} key='about'>
-        <ActAboutPanel act={act} />
-      </TabPane>
-      {vp &&
-        <TabPane tab={actRequestsTab} key='ask'>
-          <ActOpsPanel act={act} type={ASK} />
+      {act.description &&
+        <TabPane tab={actAboutTab} key='about'>
+          <ActAboutPanel act={act} />
         </TabPane>}
       {bp &&
         <TabPane tab={actOffersTab} key='offer'>
           <ActOpsPanel act={act} type={OFFER} />
         </TabPane>}
-      <TabPane tab={actResourcesTab} key='resources'>
-        <ActResourcesPanel act={act} />
-      </TabPane>
+      {vp &&
+        <TabPane tab={actRequestsTab} key='ask'>
+          <ActOpsPanel act={act} type={ASK} />
+        </TabPane>}
+      {act.resources &&
+        <TabPane tab={actResourcesTab} key='resources'>
+          <ActResourcesPanel act={act} />
+        </TabPane>}
 
       {/*
     {isNotProd && (
