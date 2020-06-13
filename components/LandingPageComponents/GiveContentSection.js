@@ -5,7 +5,7 @@ import { Button, Divider } from 'antd'
 import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
 
 const GiveContentSection = () => (
-  <>
+  <div id='content'>
     <HalfGrid>
 
       <ImageContainer src='/static/img/about/content.png' />
@@ -72,6 +72,6 @@ const GiveContentSection = () => (
       >See more offers from your community
       </Button>
     </TitleContainerMid>
-  </>
+  </div>
 )
 export default GiveContentSection

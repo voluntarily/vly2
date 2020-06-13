@@ -40,7 +40,7 @@ const GiveSupportSection = () => (
       </div>
     </HalfGrid>
     <Divider />
-    <TitleContainerMid><H2>Featured offers to help</H2></TitleContainerMid>
+    <TitleContainerMid><H2>Featured offers from volunteers</H2></TitleContainerMid>
     <TripleGrid>
       <a>
         <PromoCard>

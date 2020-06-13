@@ -50,10 +50,10 @@ const OpBanner = ({ op, children }) => {
           <h1>
             {op.name}
           </h1>
-          <ul>
-            {/* <ItemIdLine item={op.offerOrg} path='orgs' />
-            <ItemIdLine item={op.fromActivity} path='acts' /> */}
-          </ul>
+          {/* <ul>
+             <ItemIdLine item={op.offerOrg} path='orgs' />
+            <ItemIdLine item={op.fromActivity} path='acts' />
+          </ul> */}
           <ItemContainer>
             <LocationsList locations={op.locations} />
             {/* {op.venue && <ItemVenue venue={op.venue} />} */}

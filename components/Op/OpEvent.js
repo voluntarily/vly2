@@ -81,7 +81,7 @@ button {
 
 `
 
-const OpEvent = ({ date, time, username }) => (
+const OpEvent = ({ date, time, username, message }) => (
 
   <Comment>
     <DateBlock>
@@ -95,7 +95,7 @@ const OpEvent = ({ date, time, username }) => (
       <div />
       <section>
         <p>
-          <strong>{username}</strong> asked for your help
+          {message} <strong>{username}</strong>
         </p>
 
       </section>

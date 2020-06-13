@@ -4,7 +4,7 @@ import { Button, Divider } from 'antd'
 import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
 
 const HelpOrgsSection = () => (
-  <>
+  <div id='orgs'>
     <HalfGrid>
       <div>
         <H2>Empower your organization</H2>
@@ -72,6 +72,6 @@ const HelpOrgsSection = () => (
       >See more offers from your community
       </Button>
     </TitleContainerMid>
-  </>
+  </div>
 )
 export default HelpOrgsSection

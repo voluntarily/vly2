@@ -265,7 +265,7 @@ const Hero = ({ isAuthenticated }) => (
             <p>
               <FormattedMessage
                 id='Hero.body.WeConnect'
-                defaultMessage='Connecting people, community movements, and schools with the support they need from volunteers and volunteering programmes'
+                defaultMessage='We connect people who can volunteer time, advice, or stuff to those who need it.'
               />
             </p>
           </HeroText>

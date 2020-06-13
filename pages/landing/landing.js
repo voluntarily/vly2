@@ -44,7 +44,6 @@ export const Landing = ({ isAuthenticated }) => (
       <HelpOrgsSection />
       <Divider />
       <HelpSocialSection />
-
       <Divider />
       <GiveContentSection />
 

@@ -273,7 +273,7 @@ export const HalfGrid = styled.div`
   position: relative;
   margin: 0;
   grid-template-columns: 1fr 1fr;
-  grid-column-gap: 2rem;
+  grid-column-gap: 4rem;
   margin: 4rem 0 ;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {

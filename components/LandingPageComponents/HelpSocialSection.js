@@ -5,12 +5,12 @@ import { Button, Divider } from 'antd'
 import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
 
 const HelpSocialSection = () => (
-  <>
+  <div>
     <HalfGrid>
 
       <ImageContainer src='/static/img/about/yourmovement.png' />
 
-      <div>
+      <div id='groups'>
         <H2>Supercharge your Movement</H2>
         <H3>Skilled volunteers are offering to help you out. We get all the admin and annoying stuff out of the way to give you more time</H3>
 
@@ -74,6 +74,6 @@ const HelpSocialSection = () => (
       >See more offers from your community
       </Button>
     </TitleContainerMid> */}
-  </>
+  </div>
 )
 export default HelpSocialSection

@@ -90,7 +90,6 @@ const OpCard = ({ op }) => {
               <i> created {moment(op.createdAt).fromNow()}</i>
             </DescriptionWrapper>
 
-
           </figcaption>
         </a>
       </Link>

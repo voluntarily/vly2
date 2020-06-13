@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import Loading from '../Loading'
 import { Role } from '../../server/services/authorize/role'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
+import { Divider } from 'antd'
 const { ASK, OFFER } = OpportunityType
 
 export const RecommendedOpsSection = () => {
@@ -22,19 +23,22 @@ export const RecommendedOpsSection = () => {
       {!vp && !bp &&
         <NoRecommendations />}
       {vp &&
-        <ProfileSection id='volunteerRecommendations'>
-          <ProfileSectionTitle>
-            <FormattedMessage
-              id='recommendedOpsSection.title.volunteer'
-              defaultMessage='Discover ways to help out'
-              decription='Title on volunteer home page for recommended opportunities'
-            />
+        <>
+          <ProfileSection id='volunteerRecommendations'>
+            <ProfileSectionTitle>
+              <FormattedMessage
+                id='recommendedOpsSection.title.volunteer'
+                defaultMessage='Discover ways to help out'
+                decription='Title on volunteer home page for recommended opportunities'
+              />
 
-          </ProfileSectionTitle>
+            </ProfileSectionTitle>
 
-          <OpRecommendations recommendedOps={ops} type={ASK} />
+            <OpRecommendations recommendedOps={ops} type={ASK} />
 
-        </ProfileSection>}
+          </ProfileSection>
+          <Divider />
+        </>}
 
       {bp &&
         <ProfileSection id='basicRecommendations'>

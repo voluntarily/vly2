@@ -25,44 +25,38 @@ const OfferContainer = styled.div`
 `
 
 const CorporateSection = () => (
-  <div>
+  <div id='org'>
     <TitleContainerMid><H2>How we help organizations</H2></TitleContainerMid>
     <OfferContainer>
 
-      <Link href='/a/ask'>
+      <a href='#orgs'>
+        <OfferCard>
+          <figcaption>
+            <img src='/static/img/about/org-1.svg' />
+            <div>
+              <h3>Businesses</h3>
+              <p>Connect with people who want to help you, and organise how they can volunteer to help
+              </p>
+            </div>
+          </figcaption>
+        </OfferCard>
+      </a>
 
-        <a>
+      <a href='#groups'>
+        <OfferCard>
 
-          <OfferCard>
-            <figcaption>
-              <img src='/static/img/about/org-1.svg' />
-              <div>
-                <h3>Businesses</h3>
-                <p>Connect with people who want to help you, and organise how they can volunteer to help
-                </p>
-              </div>
-            </figcaption>
-          </OfferCard>
-        </a>
-      </Link>
+          <figcaption>
 
-      <Link href='/a/offer'>
-        <a>
-          <OfferCard>
+            <img src='/static/img/about/org-2.svg' />
+            <div>
+              <h3>Community groups</h3>
+              <p>Connect with people who want to help you, and organise how they can volunteer to help</p>
+            </div>
+          </figcaption>
+        </OfferCard>
+      </a>
 
-            <figcaption>
-
-              <img src='/static/img/about/org-2.svg' />
-              <div>
-                <h3>Community groups</h3>
-                <p>Connect with people who want to help you, and organise how they can volunteer to help</p>
-              </div>
-            </figcaption>
-          </OfferCard>
-        </a>
-      </Link>
-
-      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
+      <a href='#content'>
         <OfferCard>
 
           <figcaption>
@@ -76,7 +70,6 @@ const CorporateSection = () => (
         </OfferCard>
       </a>
     </OfferContainer>
-
   </div>
 
 )
