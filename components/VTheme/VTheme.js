@@ -274,7 +274,7 @@ export const HalfGrid = styled.div`
   margin: 0;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 4rem;
-  margin: 4rem 0 ;
+  padding: 4rem 0 ;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: 1fr 1fr;
@@ -378,7 +378,7 @@ export const Grid8 = styled.div`
 ` // end grid
 
 export const DescriptionWrapper = styled.p`
-margin: 1rem 0;
+margin: 0.5rem 0;
 color: #333;
 i {
   font-size: 0.8rem;
@@ -469,7 +469,8 @@ export const ContentCard = styled.div`
   }
 `
 export const TitleContainerMid = styled.div`
-margin: 4rem auto;
+margin: 0 auto;
+padding: 2rem 0 4rem 0;
 text-align: center;
 `
 /*
@@ -805,8 +806,8 @@ padding-bottom: 0.5rem;
 -webkit-transition: all 0.2s;
   transition: all 0.2s;
 p {
-  margin: 0.5rem 0 -0.1rem 0;
-  color: #444;
+  margin: 0.25rem 0 -0.1rem 0;
+  color: #555;
 }
 a { text-decoration: none; }
 
@@ -816,7 +817,8 @@ figcaption {
    }
   ul { 
     padding-left: 0;
-    margin-top: 1rem;
+    margin: 1rem 0 0 0;
+
    }
 }
 
@@ -850,7 +852,7 @@ img {
   border-radius: 8px;
 }
 h1 {
-  margin: 0.5rem 0;
+  margin: 0.25rem 0;
   font-size: 1.4rem;
   vertical-align: middle;
   color: #000;
@@ -1146,6 +1148,8 @@ export const PageAlert = styled.div`
     color: white;
     font-weight: 600;
   }
+
+
 `
 
 // imagecontainer for halfgrid
@@ -1177,7 +1181,7 @@ figcaption {
   position: relative;
 
   margin: 0;
-width: 100%;
+height: 100%;
 
 }
 
@@ -1202,6 +1206,7 @@ width: 100%;
    margin-bottom: 1rem;
   width: 100%;
   max-height: 10rem;
+  
 }
 
   :hover {
@@ -1230,6 +1235,7 @@ width: 100%;
   height: 100%;
   align-self: center;
   justify-self: end;
+  
     }
     p {
       width: 100%;
@@ -1248,13 +1254,18 @@ width: 100%;
  
 
     width: calc(100vw - 2rem);
-    text-align: left;
+    text-align: center;
    
 
   h3 {
     bottom: 0;
     font-size: 1.5rem;
   
+  }
+  p {
+    max-width: 70vw;
+    font-size: 1rem;
+    margin: 0 auto 1rem auto;
   }
 
   }

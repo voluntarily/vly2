@@ -79,7 +79,7 @@ const Header = () => {
     borderTop: headerColor,
     position: 'fixed',
     height,
-    zIndex: 10,
+    zIndex: 1000000,
     width: '100%',
     backgroundColor: 'white'
   }

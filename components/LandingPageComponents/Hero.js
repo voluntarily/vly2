@@ -165,14 +165,14 @@ letter-spacing: 0;
 @media screen and (min-width: 1922px) {
  p {
   
-width: 50%;
+width: 40%;
   
  }
 }
 
 @media screen and (min-width: 1282px) and (max-width: 1921px) {
  p {
-   width: 80%;
+   width: 50%;
   
  }
   }
@@ -184,7 +184,7 @@ width: 50%;
  }
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
-    font-size:2.5rem;
+    font-size:2rem;
     p {
    width: 90%;
   line-height: 1.5;
@@ -192,14 +192,14 @@ width: 50%;
   }
   @media screen and (max-width: 768px) {
   
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     line-height: 1.5;
     margin-bottom: 1rem;
 
   }
 
   @media screen and (max-width: 560px) {
-    font-size: 2rem;
+    font-size: 1.5rem;
 
     p {
       font-size: 1.2rem;

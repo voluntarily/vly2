@@ -72,18 +72,17 @@ const OpCard = ({ op }) => {
               {draft}
               {op.name}
             </h1>
+
+            <DescriptionWrapper>
+              {op.subtitle}<br />
+              {/* <OpType type={op.type} /> */}
+            </DescriptionWrapper>
             <ul>
 
               {startLocation && <li> {startLocation}</li>}
               {startTime && <li> {startTime} </li>}
               {startDuration && <li> {startDuration}</li>}
             </ul>
-
-            <DescriptionWrapper>
-              {op.subtitle}<br />
-              {/* <OpType type={op.type} /> */}
-            </DescriptionWrapper>
-
             <DescriptionWrapper>
               {/* {orgName &&
                 <i>Via {orgName}&nbsp;</i>} */}

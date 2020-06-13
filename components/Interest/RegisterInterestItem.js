@@ -188,7 +188,7 @@ export const RegisterInterestItem = ({
           <AffixTopBar>
             <PageAlert>
               <Icon type='history' style={{ fontSize: '32px', color: 'white', placeSelf: 'center' }} />
-              <h4 style={{ alignSelf: 'center', margin: 0 }}>{options.statusMessage}</h4>
+              <h4 style={{ alignSelf: 'center', margin: 0, fontWeight: 400, fontSize: '1.25rem' }}>{options.statusMessage}</h4>
               <RegisterButtons />
             </PageAlert>
           </AffixTopBar>
