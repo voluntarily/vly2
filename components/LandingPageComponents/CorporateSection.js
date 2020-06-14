@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import Link from 'next/link'
 import { TitleContainerMid, H2, OfferCard } from '../VTheme/VTheme'
 
 const OfferContainer = styled.div`

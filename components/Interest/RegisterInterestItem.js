@@ -3,15 +3,15 @@
 //   Unlike InterestItem, this one is a Form allowing state changes.
 // */
 
-import { Affix, Button, Icon, notification } from 'antd'
+import { Affix, Button, Icon } from 'antd'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import React from 'react'
 import { useIntl, defineMessages, FormattedMessage } from 'react-intl'
 // import RegisterInterestMessageForm from './RegisterInterestMessageForm'
 import { PageAlert } from '../VTheme/VTheme'
 import { InterestStatus } from '../../server/api/interest/interest.constants'
-import { InterestMessageItem, InterestMessageList } from './InterestMessage'
-import styled from 'styled-components'
+// import { InterestMessageItem, InterestMessageList } from './InterestMessage'
+// import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 const { ASK, OFFER } = OpportunityType
@@ -30,20 +30,20 @@ const AffixTopBar = ({ children }) => {
     : <Affix style={{ width: '100%', position: 'absolute', top: '-5rem', left: 0 }} offsetTop={56}>{children}</Affix>
 }
 
-const MessagePanel = styled.section`
-box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
-margin-top: 1rem;
-border-radius: 8px;
--webkit-transition: all 0.3s;
-transition: all 0.3s;
-:hover {
-  border-radius: 8px;
-  transform: scale(1.02);
-  h3 {
-    color: #6549AA;
-  }
-}
-`
+// const MessagePanel = styled.section`
+// box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
+// margin-top: 1rem;
+// border-radius: 8px;
+// -webkit-transition: all 0.3s;
+// transition: all 0.3s;
+// :hover {
+//   border-radius: 8px;
+//   transform: scale(1.02);
+//   h3 {
+//     color: #6549AA;
+//   }
+// }
+// `
 /* <MessagePanel>
 <InterestMessageList messages={interest.messages} />
 </MessagePanel>
@@ -56,82 +56,82 @@ export const RegisterInterestItem = ({
   onReject,
   onMessage
 }) => {
-  const [showAcceptForm, setShowAcceptForm] = useState(false)
-  const [showRejectForm, setShowRejectForm] = useState(false)
-  const [showMessageForm, setShowMessageForm] = useState(false)
+  // const [showAcceptForm, setShowAcceptForm] = useState(false)
+  // const [showRejectForm, setShowRejectForm] = useState(false)
+  // const [showMessageForm, setShowMessageForm] = useState(false)
   // Options to configure the controls on this page based on the state of the interest.
   // get current op from the store - should be only one.
   const op = useSelector(state => state.opportunities.data[0])
   const options = getOptions(interest.status, op.type, op.requestor)
 
-  const showMessages = () => {
-    notification.info({
-      message: `${interest.messages.length} Messages`,
-      description: <InterestMessageList messages={interest.messages} />,
-      placement: 'bottomRight',
-      duration: 4.5, // never close
-      style: {
-        maxHeight: '30rem',
-        overflow: 'auto'
-        // width: '20rem',
-        // marginLeft: 335 - 600
-      }
+  // const showMessages = () => {
+  //   notification.info({
+  //     message: `${interest.messages.length} Messages`,
+  //     description: <InterestMessageList messages={interest.messages} />,
+  //     placement: 'bottomRight',
+  //     duration: 4.5, // never close
+  //     style: {
+  //       maxHeight: '30rem',
+  //       overflow: 'auto'
+  //       // width: '20rem',
+  //       // marginLeft: 335 - 600
+  //     }
 
-    })
-  }
-  const handleAcceptSubmit = (ok, message) => {
-    setShowAcceptForm(false)
-    if (ok) {
-      onAccept(message)
-      if (options.acceptNotifyHeading) {
-        notification.success({
-          message: options.acceptNotifyHeading,
-          description: options.acceptNotifyMessage
-        })
-      }
-    }
-  }
+  //   })
+  // }
+  // const handleAcceptSubmit = (ok, message) => {
+  //   setShowAcceptForm(false)
+  //   if (ok) {
+  //     onAccept(message)
+  //     if (options.acceptNotifyHeading) {
+  //       notification.success({
+  //         message: options.acceptNotifyHeading,
+  //         description: options.acceptNotifyMessage
+  //       })
+  //     }
+  //   }
+  // }
 
   const handleAcceptClick = (e) => {
     e.preventDefault()
-    setShowAcceptForm(true)
+  //  setShowAcceptForm(true)
   }
 
-  const handleRejectSubmit = (ok, message) => {
-    setShowRejectForm(false)
-    if (ok) {
-      onReject(message)
-      if (options.rejectNotifyHeading) {
-        notification.success({
-          message: options.rejectNotifyHeading,
-          description: options.rejectNotifyMessage
-        })
-      }
-    }
-  }
+  // const handleRejectSubmit = (ok, message) => {
+  //   setShowRejectForm(false)
+  //   if (ok) {
+  //     onReject(message)
+  //     if (options.rejectNotifyHeading) {
+  //       notification.success({
+  //         message: options.rejectNotifyHeading,
+  //         description: options.rejectNotifyMessage
+  //       })
+  //     }
+  //   }
+  // }
   const handleRejectClick = (e) => {
     e.preventDefault()
-    setShowRejectForm(true)
+  //  setShowRejectForm(true)
   }
   const handleMessageClick = (e) => {
     e.preventDefault()
-    setShowMessageForm(true)
+    // setShowMessageForm(true)
   }
 
-  const handleMessageSubmit = (ok, message) => {
-    setShowMessageForm(false)
-    if (ok) {
-      onMessage(message)
-      notification.success({
-        message: <FormattedMessage id='messageNotify.title' defaultMessage='Done' description='Completed sending email notification' />,
-        description: <FormattedMessage id='messageNotify.description' defaultMessage="We've emailed your message" description='Completed sending email notification' />
-      })
-    }
-  }
-  const messageForm = {
-    title: <FormattedMessage id='messageForm.title' defaultMessage='Message {nickname}' description='Form title message the organiser' values={{ nickname: op.requestor.nickname }} />,
-    prompt: '' // <FormattedMessage id='messageForm.prompt' defaultMessage='This message will be emailed to the activity organiser' description='Form prompt message the organiser' />
-  }
+  // const handleMessageSubmit = (ok, message) => {
+  //   setShowMessageForm(false)
+  //   if (ok) {
+  //     onMessage(message)
+  //     notification.success({
+  //       message: <FormattedMessage id='messageNotify.title' defaultMessage='Done' description='Completed sending email notification' />,
+  //       description: <FormattedMessage id='messageNotify.description' defaultMessage="We've emailed your message" description='Completed sending email notification' />
+  //     })
+  //   }
+  // }
+  // const messageForm = {
+  //   title: <FormattedMessage id='messageForm.title' defaultMessage='Message {nickname}' description='Form title message the organiser' values={{ nickname: op.requestor.nickname }} />,
+  //   prompt: '' // <FormattedMessage id='messageForm.prompt' defaultMessage='This message will be emailed to the activity organiser' description='Form prompt message the organiser' />
+  // }
 
   const RegisterButtons = () => {
     return (
@@ -179,7 +179,7 @@ export const RegisterInterestItem = ({
     )
   }
 
-  const latestMsg = interest.messages.slice(-1)[0]
+  //  const latestMsg = interest.messages.slice(-1)[0]
 
   return (
     <>

@@ -187,7 +187,7 @@ const OpTypeLocationMsg = defineMessages({
   },
   [OFFER]: {
     id: 'OpportunityType.location.OFFER',
-    defaultMessage: 'Where do you want to help? (Optional)',
+    defaultMessage: 'Where can you help? (Optional)',
     description: 'Offering location prompt'
   }
 })
@@ -204,7 +204,7 @@ const OpTypeDateTitleMsg = defineMessages({
   },
   [OFFER]: {
     id: 'OpportunityType.date.title.OFFER',
-    defaultMessage: 'When do you want to help?',
+    defaultMessage: 'When can you help?',
     description: 'Offering date title'
   }
 })

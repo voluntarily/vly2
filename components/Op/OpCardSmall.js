@@ -21,11 +21,7 @@ const StyledIcon = styled(Icon)`
   font-size: 1rem;
   margin-right: 0.5rem; 
 `
-const SingleLineTitle = styled('h2')`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`
+
 // todo if image is not present then use a fallback.
 const OpCardSmall = ({ op }) => {
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
@@ -55,7 +51,8 @@ const OpCardSmall = ({ op }) => {
       <Link href={getOpPageURL(isArchived, op._id)}>
         <a>
           <p>
-            {op.description && <p>{op.description}</p> || <p>{op.requestor.nickname} <OpType type={op.type} /> with {op.name}</p>}
+
+            {(op.description && <p>{op.description}</p>) || <p>{op.requestor.nickname} <OpType type={op.type} /> with {op.name}</p>}
           </p>
 
           <Divider />

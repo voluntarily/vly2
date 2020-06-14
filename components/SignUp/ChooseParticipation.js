@@ -5,12 +5,7 @@ import { ToggleUl, ToggleLi } from './SignUpStyles'
 
 export const ChooseParticipationButtons = ({ roleAsk, onChangeAsk, roleOffer, onChangeOffer }) =>
   <>
-    <h1>
-      <FormattedMessage
-        id='ChooseParticipation.intro'
-        defaultMessage='How do you want to use Voluntarily?'
-      />
-    </h1>
+
     <ToggleUl id='role_options'>
       <ToggleLi key='role_ask' icon='ask' checked={roleAsk} onChange={onChangeAsk}>
         <div>

@@ -1,5 +1,4 @@
 import { HalfGrid } from '../VTheme/VTheme'
-import { OpTypeTopicGroup } from '../Op/OpType'
 import { ToggleUl, ToggleLi } from './SignUpStyles'
 import { FormattedMessage, defineMessages } from 'react-intl'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
@@ -25,9 +24,7 @@ export const topicGroupMessages = {
  */
 export const SelectTopicGroupButtons = ({ type, topicGroups, onChange }) =>
   <>
-    <h1>
-      <OpTypeTopicGroup type={type} />
-    </h1>
+
     <ToggleUl id='topicGroup_options'>
       <ToggleLi key='group_business' icon='business' checked={topicGroups.business} onChange={(on) => onChange({ business: on })}>
         <div>

@@ -813,7 +813,7 @@ a { text-decoration: none; }
 
 figcaption {
 
-  li { list-style: none;
+  li { list-style: none; margin-bottom: 0.2rem;
    }
   ul { 
     padding-left: 0;
@@ -981,7 +981,7 @@ ul {
 
 }
 small {
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 500;
   color: #333;
 @media screen and (max-width: 768px) {

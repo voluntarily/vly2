@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { config } from '../../config/clientConfig'
 import { Helmet } from 'react-helmet'
-import { OpSectionGrid, BannerDetail, H2 } from '../VTheme/VTheme'
+import { OpSectionGrid, BannerDetail } from '../VTheme/VTheme'
 import {
   ItemContainer,
   ItemDuration,
@@ -10,9 +10,9 @@ import {
   ItemNeeds
 } from '../VTheme/ItemList'
 import { OpStatusStamp, OpStatus } from '../Op/OpStatus'
-import { OpTypeCount } from '../Op/OpType'
-import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
-const { ASK, OFFER } = OpportunityType
+// import { OpTypeCount } from '../Op/OpType'
+// import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
+// const { ASK, OFFER } = OpportunityType
 
 export const ActBanner = ({ act, children }) => {
   // SEO Metadata
