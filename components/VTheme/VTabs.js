@@ -53,7 +53,6 @@ color: #6549AA;
 
 .ant-tabs-nav-scroll, .ant-tabs-nav {
   display: flex;
-  justify-content: space-evenly;
   flex-flow: row nowrap;
   align-content: flex-start;
 

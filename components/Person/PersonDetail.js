@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
 import TagDisplay from '../Tags/TagDisplay'
-import { ActivityContainer, StyledIcon, H2, H3, OpSectionGrid } from '../VTheme/VTheme'
+import { StyledIcon, OpSectionGrid } from '../VTheme/VTheme'
 import Html from '../VTheme/Html'
 import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
@@ -103,13 +103,13 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
               </div>}
             {person.tags &&
               <div>
-                <h5>
+                <p>
                   <FormattedMessage
                     defaultMessage='Interests and Skills'
                     id='PersonDetail.skills.title'
                     description='subheading for tags on person details page'
                   />
-                </h5>
+                </p>
                 <TagDisplay tags={person.tags} />
               </div>}
           </div>

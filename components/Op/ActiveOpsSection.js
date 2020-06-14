@@ -21,7 +21,7 @@ export const ActiveOpsSection = () => {
   )
   if (!opportunities.sync) return <Loading label='opportunities' entity={opportunities} />
   const ops = opportunities.data
-  if (!ops.length) return null
+  if (!ops.length) return <p>No activities lined up!</p>
   return (
     <>
       <ProfileSection>

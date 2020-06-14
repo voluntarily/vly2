@@ -21,7 +21,7 @@ export const ArchivedOpsSection = () => {
   )
   if (!archivedOpportunities.sync) return <Loading label='archivedOpportunities' entity={archivedOpportunities} />
   const ops = archivedOpportunities.data
-  if (!ops.length) return null
+  if (!ops.length) return <p>No istory</p>
   return (
     <>
       <ProfileSection>

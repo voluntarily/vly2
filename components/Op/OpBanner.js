@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { config } from '../../config/clientConfig'
 import { Helmet } from 'react-helmet'
-import { SideBarGrid, BannerDetail, H2 } from '../VTheme/VTheme'
+import { SideBarGrid, BannerDetail } from '../VTheme/VTheme'
 import {
   Left,
   ItemContainer,

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { TitleContainerMid, H2, OfferCard } from '../VTheme/VTheme'
 
 const OfferContainer = styled.div`
-margin-top: 2rem;
+
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
