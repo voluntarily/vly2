@@ -198,7 +198,7 @@ margin: 4rem 0 3rem 0;
 
 @media screen and (max-width: 768px) {
     grid-template-columns: calc(100vw - 2rem);
-    margin: 2rem 0;
+  margin: 2rem 0;
   }
 
 `
@@ -206,6 +206,30 @@ export const HeroSectionButtonContainer = styled.div`
 @media screen and (max-width: 768px) {
     display: none;
   }
+`
+export const EmptyContainer = styled.section`
+display: flex;
+justify-content: center;
+align-self: center;
+text-align: center;
+h3 {
+  margin-top: 1rem;
+
+}
+img {
+  max-height: 15rem;
+
+}
+div {
+  display: flex;
+  flex-direction: column;
+padding: 2rem;
+min-height: 50vh
+max-width: 40rem;
+}
+button {
+  margin-bottom: 1rem;
+}
 `
 
 export const SpacerSmall = styled.div`
