@@ -57,7 +57,7 @@ test('render OpTypeCount for offer op', t => {
       type={OpportunityType.OFFER}
     />
   )
-  t.is(wrapper.text(), '💁🏻2 people offering to help')
+  t.is(wrapper.text(), '💁🏻2 people offering to help ')
 })
 test('render OpTypeCount for ask op', t => {
   const wrapper = mountWithIntl(
@@ -189,7 +189,7 @@ test('render OpTypeLocationPrompt with type', t => {
       type={OpportunityType.ASK}
     />
   )
-  t.is(wrapper.text(), 'Where do you need help?')
+  t.is(wrapper.text(), 'Where do you need help? (Optional)')
 })
 
 test('render OpTypeDateTitle with no type', t => {
@@ -221,7 +221,7 @@ test('render OpTypeDescriptionTitle with type', t => {
       type={OpportunityType.ASK}
     />
   )
-  t.is(wrapper.text(), 'Anything Else?')
+  t.is(wrapper.text(), 'How do you want volunteers to help? (Optional)')
 })
 
 test('render OpTypeDescriptionPrompt with type', t => {
@@ -230,5 +230,5 @@ test('render OpTypeDescriptionPrompt with type', t => {
       type={OpportunityType.ASK}
     />
   )
-  t.is(wrapper.text(), 'Is there anything else the helpers need to know to help you? Please don’t put your personal or contact details on here, we’ll take care of that later')
+  t.is(wrapper.text(), 'Is there anything specific you need help with? Let volunteers know how to help you by writing about it here')
 })

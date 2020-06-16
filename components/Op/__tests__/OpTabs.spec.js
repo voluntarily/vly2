@@ -25,7 +25,6 @@ test('render OpTabs for active op', t => {
   t.is(wrapper.find('TabPane').length, 3)
   t.true(wrapper.exists('OpAboutPanel'))
   t.true(wrapper.exists('OpQuestionPanel'))
-  t.true(wrapper.exists('Connect(OpUpdatePanel)'))
   t.false(wrapper.exists('OpManagePanel'))
 })
 
@@ -50,7 +49,6 @@ test('render OpTabs for manager', t => {
 
   t.true(wrapper.exists('OpAboutPanel'))
   t.true(wrapper.exists('OpQuestionPanel'))
-  t.true(wrapper.exists('Connect(OpUpdatePanel)'))
   t.true(wrapper.exists('OpManagePanel'))
 })
 
@@ -74,6 +72,5 @@ test('render OpTabs for editor', t => {
   t.is(wrapper.find('TabPane').length, 5)
   t.true(wrapper.exists('OpAboutPanel'))
   t.true(wrapper.exists('OpQuestionPanel'))
-  t.true(wrapper.exists('Connect(OpUpdatePanel)'))
   t.true(wrapper.exists('OpManagePanel'))
 })

@@ -18,7 +18,6 @@ test('ChooseParticipation renders properly', t => {
     </ChooseParticipation>
   )
   t.is(wrapper.find('img').first().props().src, '/static/img/sign-up/chooseparticipation.svg')
-  t.is(wrapper.find('h1').first().text(), 'How do you want to use Voluntarily?')
   t.is(wrapper.find('ToggleLi').length, 2)
   const ask = wrapper.find('ToggleLi').first()
   const offer = wrapper.find('ToggleLi').last()
