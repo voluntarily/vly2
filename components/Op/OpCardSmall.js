@@ -52,7 +52,7 @@ const OpCardSmall = ({ op }) => {
         <a>
           <p>
 
-            {(op.description && <p>{op.description}</p>) || <p>{op.requestor.nickname} <OpType type={op.type} /> with {op.name}</p>}
+            {op.description ? <p>{op.description}</p> : <p>{op.requestor.nickname} <OpType type={op.type} /> with {op.name}</p>}
           </p>
 
           <Divider />
