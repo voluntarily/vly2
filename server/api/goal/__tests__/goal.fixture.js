@@ -118,25 +118,6 @@ This card will disappear when the profile is complete
     rank: 1,
     evaluation: 'async (personalGoal) => { return false }'
   },
-  {
-    group: GoalGroup.ORG_OP_NEW,
-    name: 'Run Inspiring the Future',
-    slug: 'goal-run-itfb',
-    imgUrl: '/static/img/goal/goal-itf.png',
-    subtitle: 'Connect children and young people with volunteers from the world of work through this fun in-school activity.',
-    description:
-`Click Start below to open the Inspiring the Future Activity Template, 
-If it sounds like something you could run in your school then click 
-the DO THIS button. 
-
-This creates a new Activity page where you can setup the time and place details
-
-Once Published we will start finding volunteers
-`,
-    startLink: '/activity/inspiring-the-future',
-    rank: 2,
-    evaluation: 'async (personalGoal) => { return true }'
-  },
 
   {
     group: 'Throwers',

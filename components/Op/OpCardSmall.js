@@ -81,6 +81,7 @@ OpCardSmall.propTypes = {
   op: PropTypes.shape({
     name: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
+    description: PropTypes.string,
     imgUrl: PropTypes.any,
     date: PropTypes.arrayOf.string,
     location: PropTypes.string,

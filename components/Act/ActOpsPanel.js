@@ -49,20 +49,22 @@ export const ActOpsPanel = ({ act, type, limit }) => {
               <p style={{ marginBottom: '1rem' }}>
                 <FormattedMessage
                   id='ActOpsPanel.prompt.OpAddAskBtn'
-                  defaultMessage='Offer to help people in your community'
+                  defaultMessage='Need help? Hit the button below '
+
                 />
               </p>
-              <OpAddOfferBtn actid={act._id} />
+              <OpAddAskBtn actid={act._id} />
             </>}
           {type === ASK &&
             <>
               <p style={{ marginBottom: '1rem' }}>
                 <FormattedMessage
                   id='ActOpsPanel.prompt.OpAddOfferBtn'
-                  defaultMessage='Need help? Hit the button below '
+                  defaultMessage='Offer to help people in your community'
                 />
               </p>
-              <OpAddAskBtn actid={act._id} />
+
+              <OpAddOfferBtn actid={act._id} />
             </>}
         </div>
         <div>

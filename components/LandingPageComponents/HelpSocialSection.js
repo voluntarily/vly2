@@ -46,21 +46,21 @@ const HelpSocialSection = () => (
         <PromoCard>
           <img src='https://picsum.photos/400/240' />
           <H5><strong>ITP is helping train teachers and principals with technology</strong></H5>
-          <H5><a>45 people offering to help you</a></H5>
+          <H5>45 people offering to help you</H5>
         </PromoCard>
       </a>
       <a>
         <PromoCard>
           <img src='https://picsum.photos/400/240' />
           <H5><strong>Get help with Remote Work</strong></H5>
-          <H5><a>45 people offering to help you</a></H5>
+          <H5>45 people offering to help you</H5>
         </PromoCard>
       </a>
       <a>
         <PromoCard>
           <img src='https://picsum.photos/400/240' />
           <H5><strong>Get help with Remote Work</strong></H5>
-          <H5><a>45 people offering to help you</a></H5>
+          <H5>45 people offering to help you</H5>
         </PromoCard>
       </a>
 
