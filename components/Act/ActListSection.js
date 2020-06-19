@@ -14,7 +14,7 @@ const escapeRegex = require('../../server/util/regexUtil')
 export const SidebarGrid = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: 18.5rem 1fr;
+  grid-template-columns: 16rem 1fr;
   grid-gap: 2rem;
   overflow: visible;
 

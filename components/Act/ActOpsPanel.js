@@ -38,7 +38,11 @@ export const ActOpsPanel = ({ act, type, limit }) => {
       <OpSectionGrid>
         <div id='left_column'>
           <h2>
-            <OpTypeCount counts={act.opCounts} type={type}> </OpTypeCount>
+            <OpTypeCount counts={act.opCounts} type={type} />
+            <FormattedMessage
+              id='ActOpsPanel.prompt.with'
+              defaultMessage=' with'
+            /> {act.name}
           </h2>
           {type === OFFER &&
             <>
