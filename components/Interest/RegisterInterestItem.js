@@ -27,7 +27,7 @@ const { ASK, OFFER } = OpportunityType
 const AffixTopBar = ({ children }) => {
   return (process.env.NODE_ENV === 'test')
     ? <>{children}</>
-    : <Affix style={{ width: '100%', position: 'absolute', top: 0, left: 0 }} offsetTop={56}>{children}</Affix>
+    : <Affix style={{ width: '100%', position: 'absolute', top: '-5rem', left: 0 }} offsetTop={56}>{children}</Affix>
 }
 
 const MessagePanel = styled.section`
