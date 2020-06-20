@@ -113,10 +113,6 @@ export const RegisterInterestItem = ({
     e.preventDefault()
     setShowRejectForm(true)
   }
-  const handleMessageClick = (e) => {
-    e.preventDefault()
-    setShowMessageForm(true)
-  }
 
   const handleMessageSubmit = (ok, message) => {
     setShowMessageForm(false)
@@ -157,22 +153,6 @@ export const RegisterInterestItem = ({
             onClick={handleRejectClick}
           >
             {options.rejectButtonText}
-          </Button>
-        )}
-        {options.showMessageButton && (
-          <Button
-            id='messageBtn'
-            size='large'
-            block
-            style={{ placeSelf: 'center' }}
-            shape='round' onClick={handleMessageClick}
-          >
-            <FormattedMessage
-              id='RegisterInterestItem.MessageOp'
-              defaultMessage='Message {nickname}'
-              description='Button allowing volunteer send a message to the organiser'
-              values={{ nickname: op.requestor.nickname }}
-            />
           </Button>
         )}
       </>

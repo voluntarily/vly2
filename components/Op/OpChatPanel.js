@@ -3,8 +3,9 @@ import { OpSectionGrid } from '../VTheme/VTheme'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Button, Input, Divider } from 'antd'
+import reduxApi from '../../lib/redux/reduxApi'
 import moment from 'moment'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import OpFeedback from './OpFeedback'
 import OpMessage from './OpMessage'
 import OpEvent from './OpEvent'
@@ -56,7 +57,27 @@ li {
 const OpChatPanel = ({ op }) => {
   const Placeholder = op.requestor.nickname + ' is asking for your help - message them here'
   const interests = useSelector(state => state.interests)
+  const dispatch = useDispatch()
+  const textRef = React.useRef(null)
   const messages = interests.sync && interests.data ? sortMessage(interests.data) : []
+
+  const sendMessage = () => {
+    const status = interests.data[0].status
+    const newStatus = status
+    const message = textRef.current.state.value
+    const putInterest = {
+      ...((status !== newStatus) && { status: newStatus }),
+      ...(message && { messages: [{ body: message }] }),
+      type: 'message',
+      termsAccepted: true // can't get here without accepting the terms button.
+    }
+    if (interests.data[0]._id) {
+      return dispatch(reduxApi.actions.interests.put({ id: interests.data[0]._id }, { body: JSON.stringify(putInterest) }))
+    }
+
+    const postInterest = { ...interests.data[0], ...putInterest }
+    dispatch(reduxApi.actions.interests.post({}, { body: JSON.stringify(postInterest) }))
+  }
 
   return (
     <>
@@ -79,9 +100,9 @@ const OpChatPanel = ({ op }) => {
 
         <AskContainer>
           <p>Send message</p>
-          <TextArea rows={3} placeholder={Placeholder} />
+          <TextArea rows={3} placeholder={Placeholder} ref={textRef}/>
           <ButtonContainer>
-            <Button shape='round' size='large' type='primary'>
+            <Button shape='round' size='large' type='primary' onClick={sendMessage}>
               Submit
             </Button>
           </ButtonContainer>
@@ -121,5 +142,5 @@ function sortMessage(interestsData) {
   let allMessage = interestsData.reduce((acc, currentValue) => {
     return [...acc, ...currentValue.messages]
   }, [])
-  return allMessage
+  return allMessage.reverse()
 }
