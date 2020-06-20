@@ -4,7 +4,6 @@ import { shallowWithIntl } from '../../../lib/react-intl-test-helper'
 import OpBanner from '../OpBanner'
 import ops from './Op.fixture'
 import moment from 'moment'
-import { H2 } from '../../VTheme/VTheme'
 
 test.before('Setup fixtures', (t) => {
   // Initial opportunities

@@ -1,12 +1,11 @@
-
+import React from 'react'
 import { OpSectionGrid } from '../VTheme/VTheme'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Button, Input, Divider } from 'antd'
+import { Button, Input } from 'antd'
 import reduxApi from '../../lib/redux/reduxApi'
 import moment from 'moment'
 import { useSelector, useDispatch } from 'react-redux'
-import OpFeedback from './OpFeedback'
 import OpMessage from './OpMessage'
 import OpEvent from './OpEvent'
 import { OpTypeTense } from './OpType'
@@ -42,18 +41,6 @@ h3 {
   margin: 0;
 }
 `
-
-const ProfileDetails = styled.div`
-ul{  }
-li {
-    white-space: normal;
-    width: 100%;
-}
-
-
-  }
-`
-
 const OpChatPanel = ({ op }) => {
   const Placeholder = op.requestor.nickname + ' is asking for your help - message them here'
   const interests = useSelector(state => state.interests)
@@ -90,7 +77,7 @@ const OpChatPanel = ({ op }) => {
 
         <AskContainer>
           <p>Send message</p>
-          <TextArea rows={3} placeholder={Placeholder} ref={textRef}/>
+          <TextArea rows={3} placeholder={Placeholder} ref={textRef} />
           <ButtonContainer>
             <Button shape='round' size='large' type='primary' onClick={sendMessage}>
               Submit
@@ -99,15 +86,8 @@ const OpChatPanel = ({ op }) => {
         </AskContainer>
       </OpSectionGrid>
       {!interests.sync && <img src='/static/loading.svg' />}
-      {interests.sync && messages.map((message) => <OpMessage
-        date={moment(message.createdAt).format("Do MMM YYYY")}
-        time={moment(message.createdAt).format("h:mm a")}
-        comment={message.body}
-        key={message._id}
-        image={message.author.imgUrl}
-        username={message.author.nickname}
-      />)}
-      { interests.data[0] && <OpEvent date={moment(interests.data[0].createdAt).format('Do MMM YYYY')} username={op.requestor.nickname} message='You offered to help' />}
+      {interests.sync && messages.map((message) => <OpMessage date={moment(message.createdAt).format('Do MMM YYYY')} time={moment(message.createdAt).format('h:mm a')} comment={message.body} key={message._id} image={message.author.imgUrl} username={message.author.nickname} />)}
+      {interests.data[0] && <OpEvent date={moment(interests.data[0].createdAt).format('Do MMM YYYY')} username={op.requestor.nickname} message='You offered to help' />}
     </>
   )
 }
@@ -127,8 +107,8 @@ OpChatPanel.propTypes = {
 
 export default OpChatPanel
 
-function sortMessage(interestsData) {
-  let allMessage = interestsData.reduce((acc, currentValue) => {
+function sortMessage (interestsData) {
+  const allMessage = interestsData.reduce((acc, currentValue) => {
     return [...acc, ...currentValue.messages]
   }, [])
   return allMessage.reverse()
