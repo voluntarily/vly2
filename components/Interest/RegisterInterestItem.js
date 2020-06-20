@@ -99,7 +99,7 @@ export const RegisterInterestItem = ({
           <Button
             id='acceptBtn'
             block
-            type='primary' shape='round' size='large' style={{ placeSelf: 'start', maxWidth: '15rem' }}
+            type='primary' shape='round' size='large' style={{ placeSelf: 'start', maxWidth: '20rem' }}
             onClick={handleAcceptClick}
           >
             {options.acceptButtonText}
@@ -112,7 +112,7 @@ export const RegisterInterestItem = ({
             shape='round'
             size='large'
             block
-            style={{ placeSelf: 'start', maxWidth: '15rem' }}
+            style={{ placeSelf: 'start', maxWidth: '20rem' }}
             onClick={handleRejectClick}
           >
             {options.rejectButtonText}
