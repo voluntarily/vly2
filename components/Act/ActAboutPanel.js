@@ -74,7 +74,7 @@ export function ActAboutPanel ({ act }) {
       <Divider />
       {bp && <ActOpsPanel act={act} type={OFFER} limit={6} />}
       {vp && <ActOpsPanel act={act} type={ASK} limit={6} />}
-      <Divider />
+
       <ActActivityGuideSection act={act} />
       <OpSectionGrid>
         <section>

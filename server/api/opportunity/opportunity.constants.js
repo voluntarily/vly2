@@ -54,6 +54,7 @@ const OpportunityListFields = [
   OpportunityFields.TYPE,
   OpportunityFields.NAME,
   OpportunityFields.SUBTITLE,
+  OpportunityFields.DESCRIPTION,
   OpportunityFields.IMG_URL,
   OpportunityFields.STATUS,
   OpportunityFields.DATE,

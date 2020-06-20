@@ -17,7 +17,7 @@ export const HtmlExpander = styled(Html)`
 `
 
 export const MoreOrLessButton = ({ more, onClick }) =>
-  <Button shape='round' size='large' style={{ float: 'left', marginBottom: '1rem' }} onClick={onClick}>
+  <Button shape='round' size='large' style={{ float: 'left', marginTop: '1rem' }} onClick={onClick}>
     {more
       ? (
         <FormattedMessage
