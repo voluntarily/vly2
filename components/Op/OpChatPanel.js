@@ -90,7 +90,7 @@ const OpChatPanel = ({ op }) => {
 
         <AskContainer>
           <p>Send message</p>
-          <TextArea rows={3} placeholder={Placeholder} ref={textRef}/>
+          <TextArea rows={3} placeholder={Placeholder} ref={textRef} />
           <ButtonContainer>
             <Button shape='round' size='large' type='primary' onClick={sendMessage}>
               Submit
@@ -100,14 +100,14 @@ const OpChatPanel = ({ op }) => {
       </OpSectionGrid>
       {!interests.sync && <img src='/static/loading.svg' />}
       {interests.sync && messages.map((message) => <OpMessage
-        date={moment(message.createdAt).format("Do MMM YYYY")}
-        time={moment(message.createdAt).format("h:mm a")}
+        date={moment(message.createdAt).format('Do MMM YYYY')}
+        time={moment(message.createdAt).format('h:mm a')}
         comment={message.body}
         key={message._id}
         image={message.author.imgUrl}
         username={message.author.nickname}
       />)}
-      { interests.data[0] && <OpEvent date={moment(interests.data[0].createdAt).format('Do MMM YYYY')} username={op.requestor.nickname} message='You offered to help' />}
+      {interests.data[0] && <OpEvent date={moment(interests.data[0].createdAt).format('Do MMM YYYY')} username={op.requestor.nickname} message='You offered to help' />}
     </>
   )
 }
@@ -127,8 +127,8 @@ OpChatPanel.propTypes = {
 
 export default OpChatPanel
 
-function sortMessage(interestsData) {
-  let allMessage = interestsData.reduce((acc, currentValue) => {
+function sortMessage (interestsData) {
+  const allMessage = interestsData.reduce((acc, currentValue) => {
     return [...acc, ...currentValue.messages]
   }, [])
   return allMessage.reverse()
