@@ -10,9 +10,6 @@ import {
   ItemNeeds
 } from '../VTheme/ItemList'
 import { OpStatusStamp, OpStatus } from '../Op/OpStatus'
-import { OpTypeCount } from '../Op/OpType'
-import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
-const { ASK, OFFER } = OpportunityType
 
 export const ActBanner = ({ act, children }) => {
   // SEO Metadata

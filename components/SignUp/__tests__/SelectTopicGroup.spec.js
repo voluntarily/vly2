@@ -22,7 +22,6 @@ test('SelectTopicGroup renders properly', t => {
     </SelectTopicGroup>
   )
   t.is(wrapper.find('img').first().props().src, '/static/img/sign-up/topic.svg')
-  t.is(wrapper.find('h1').first().text(), 'What would you like to get help with?')
   t.is(wrapper.find('ToggleLi').length, 3)
   const business = wrapper.find('ToggleLi').at(0)
   const community = wrapper.find('ToggleLi').at(1)

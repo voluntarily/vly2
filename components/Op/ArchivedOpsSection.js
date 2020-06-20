@@ -26,14 +26,14 @@ const OpArchiveEmpty = ({ type }) => (
       <img src='/static/img/about/askforhelp.png' />
       <h3>
         <FormattedMessage
-          id='ActiveOpsSection.empty.title'
+          id='ArchivedOpsSection.empty.title'
           defaultMessage='Activities you’ve done in the past will show up here'
           description='title for empty op section'
         />
       </h3>
       <p>
         <FormattedMessage
-          id='ActiveOpsSection.empty.subtitle'
+          id='ArchivedOpsSection.empty.subtitle'
           defaultMessage=' In the meantime, let’s find cool ways to volunteer'
           description='title for empty op section'
         />
@@ -42,7 +42,7 @@ const OpArchiveEmpty = ({ type }) => (
         <a>
           <Button type='primary' shape='round' size='large'>
             <FormattedMessage
-              id='ActiveOpsSection.empty.button'
+              id='ArchivedOpsSection.empty.button'
               defaultMessage='Browse Activities'
               decription='button to update profile on empty recommendations box'
             />
