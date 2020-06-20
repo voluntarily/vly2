@@ -13,27 +13,21 @@ const AwesomeHeroContainer = styled.div`
   height: auto;
   width: auto;
   
-
   @media screen and (min-width: 1200px) {
    
   }
-
   p {
     font-size: 1.5rem;
   }
   @media screen and (max-width: 1280px) {
-
   margin: 7rem auto 0rem auto;
   }
-
   @media screen and (max-width: 768px) {
    margin-top: 0;
    p {
     font-size: 1rem;
   }
   }
-
-
 `
 
 export const HeroGrid = styled.div`
@@ -41,23 +35,15 @@ export const HeroGrid = styled.div`
   margin: 0 auto;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 2rem;
-
-
-
-
   @media screen and (min-width: 1282px) and (max-width: 1921px) {
-
     height: 26rem;
-
  
   }
-
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: 22rem 1fr;
     grid-column-gap: 2rem;
     margin: 2rem;
   }
-
   @media screen and (max-width: 768px) {
     grid-template-columns: calc(100vw - 2rem);
     grid-column-gap: 0;
@@ -66,22 +52,14 @@ export const HeroGrid = styled.div`
 
 // start left hand video side
 const HeroLeft = styled.div`
-
-
-
-
-
   @media screen and (min-width: 769px) and (max-width: 1025px) {
     width: 22rem;
-
     height: auto;
   }
-
   @media screen and (max-width: 768px) {
 height: 22rem;
 width: 100vw;
   }
-
   @media screen and (max-width: 767px) {
     position: relative;
     height: 12rem;
@@ -100,18 +78,14 @@ const AwesomeImage = styled.img`
   overflow: hidden;
   object-fit: contain;
   background-color: white;
-
   @media screen and (min-width: 1282px) and (max-width: 1921px) {
     width: 100%;
     height: 28rem;
-
     object-position: right;
   }
-
   @media screen and (min-width: 1026px) and (max-width: 1281px) {
     width: 100%;
     height: 22rem;
-
   }
   @media screen and (min-width: 769px) and (max-width: 1025px) {
     width: calc(100% - 2rem);
@@ -123,10 +97,8 @@ width: 100%;
     object-fit: cover;
     object-position: center;
   }
-
   @media screen and (max-width: 767px) {
     height: 16rem;
-
     width: 100%;
     object-fit: cover;
     object-position: center;
@@ -143,11 +115,9 @@ const HeroRight = styled.div`
   @media screen and (min-width: 768px) and (max-width: 1025px) { 
     margin-top: 2rem;
   }
-
   @media screen and (max-width: 768px) {
     margin: 1rem 1rem 0 1rem;
   }
-
 `
 
 const HeroText = styled.h1`
@@ -165,14 +135,13 @@ letter-spacing: 0;
 @media screen and (min-width: 1922px) {
  p {
   
-width: 50%;
+width: 40%;
   
  }
 }
-
 @media screen and (min-width: 1282px) and (max-width: 1921px) {
  p {
-   width: 80%;
+   width: 50%;
   
  }
   }
@@ -184,7 +153,7 @@ width: 50%;
  }
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
-    font-size:2.5rem;
+    font-size:2rem;
     p {
    width: 90%;
   line-height: 1.5;
@@ -192,15 +161,12 @@ width: 50%;
   }
   @media screen and (max-width: 768px) {
   
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     line-height: 1.5;
     margin-bottom: 1rem;
-
   }
-
   @media screen and (max-width: 560px) {
-    font-size: 2rem;
-
+    font-size: 1.5rem;
     p {
       font-size: 1.2rem;
     }
@@ -265,7 +231,7 @@ const Hero = ({ isAuthenticated }) => (
             <p>
               <FormattedMessage
                 id='Hero.body.WeConnect'
-                defaultMessage='Connecting people, community movements, and schools with the support they need from volunteers and volunteering programmes'
+                defaultMessage='We connect people who can volunteer time, advice, or stuff to those who need it.'
               />
             </p>
           </HeroText>

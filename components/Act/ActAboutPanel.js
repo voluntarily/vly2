@@ -22,9 +22,7 @@ export const ActAboutSection = ({ act }) =>
   <OpSectionGrid>
     <div id='left_column'>
       <h2><FormattedMessage id='ActAboutPanel.section.title.about' defaultMessage='About' /></h2>
-      <TagContainer>
-        <TagDisplay tags={act.tags} />
-      </TagContainer>
+
     </div>
     <div id='right_column'>
       <HtmlMore>
@@ -74,21 +72,25 @@ export function ActAboutPanel ({ act }) {
     <ProfilePanel>
       <ActAboutSection act={act} />
       <Divider />
-      <ActActivityGuideSection act={act} />
-      <Divider />
       {bp && <ActOpsPanel act={act} type={OFFER} limit={6} />}
       {vp && <ActOpsPanel act={act} type={ASK} limit={6} />}
+      <Divider />
+      <ActActivityGuideSection act={act} />
       <OpSectionGrid>
         <section>
           <h5><FormattedMessage id='ActAboutPanel.share' defaultMessage='Share' /></h5>
           <ShareLinks url={appUrl} />
         </section>
+        <TagContainer>
+          <TagDisplay tags={act.tags} />
+        </TagContainer>
       </OpSectionGrid>
     </ProfilePanel>)
 }
 
 ActAboutPanel.propTypes = {
   act: PropTypes.shape({
+    name: PropTypes.string,
     tags: PropTypes.arrayOf(
       PropTypes.string
     ),

@@ -7,6 +7,7 @@ export const BackButton = ({ onClick }) =>
     id='backBtn'
     onClick={onClick}
     shape='round'
+    size='large'
   >
     <FormattedMessage
       id='Button.Back'
@@ -20,6 +21,7 @@ export const DoneButton = ({ onClick }) =>
     name='done'
     shape='round'
     type='primary'
+    size='large'
     onClick={onClick}
     // style={{ marginLeft: 8 }}
   >

@@ -3,9 +3,10 @@ import { Icon } from 'antd'
 import { useState } from 'react'
 import styled from 'styled-components'
 export const ToggleUl = styled.ul`
-  margin: 1.5rem 0 1rem 0;
+  margin: 0 0 1rem 0;
   padding-left: 0;
   list-style: none;
+  cursor: pointer;
 `
 
 export const ButtonLi = styled.li`

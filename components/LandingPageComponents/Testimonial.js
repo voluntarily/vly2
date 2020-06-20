@@ -8,7 +8,11 @@ const OfferContainer = styled.div`
   gap: 2rem;
   margin-bottom: 5rem;
   @media screen and (min-width: 1026px) and (max-width: 1289px) {
-    grid-template-columns: 1fr 1fr ;
+    grid-template-columns: 1fr ;
+    grid-row-gap: 3rem;
+    align-self: center;
+    max-width: 40vw;
+    margin: 0 auto;
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     
