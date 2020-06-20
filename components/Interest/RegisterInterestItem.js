@@ -27,7 +27,7 @@ const { ASK, OFFER } = OpportunityType
 const AffixTopBar = ({ children }) => {
   return (process.env.NODE_ENV === 'test')
     ? <>{children}</>
-    : <Affix style={{ width: '100%', position: 'absolute', top: '-5rem', left: 0 }} offsetTop={56}>{children}</Affix>
+    : <div style={{ width: '100%', position: 'relative', left: 0 }} offsetTop={56}>{children}</div>
 }
 
 const MessagePanel = styled.section`
@@ -194,9 +194,6 @@ export const RegisterInterestItem = ({
           </AffixTopBar>
         )
         : <RegisterButtons />}
-      <MessagePanel onClick={() => showMessages()}>
-        <InterestMessageItem message={latestMsg} />
-      </MessagePanel>
 
       <RegisterInterestMessageForm
         id='acceptRegisterInterestForm'

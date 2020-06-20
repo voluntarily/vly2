@@ -185,21 +185,22 @@ export const OpDetailPage = ({
   }
   return (
     <FullPage>
+      <OpVolunteerInterestSection
+        isAuthenticated={isAuthenticated}
+        canRegisterInterest={canRegisterInterest}
+        opid={op && op._id}
+        meid={me && me._id}
+        type={op.type}
+      />
       <Helmet>
         <title>{op.type} {op.name} - Voluntarily</title>
       </Helmet>
-      <OpVolunteerInterestSection
-          isAuthenticated={isAuthenticated}
-          canRegisterInterest={canRegisterInterest}
-          opid={op && op._id}
-          meid={me && me._id}
-          type={op.type}
-        />
+
       <OpBanner op={op}>
         {/* <OpStatusStamp status={op.status} /> */}
 
       </OpBanner>
-      <OpTabs op={op}  canManage={canManage} canEdit={canManage} defaultTab={tab} onChange={handleTabChange} author={me._id} />
+      <OpTabs op={op} canManage={canManage} canEdit={canManage} defaultTab={tab} onChange={handleTabChange} author={me._id} />
     </FullPage>)
 }
 
