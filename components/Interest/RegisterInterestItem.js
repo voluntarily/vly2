@@ -27,7 +27,7 @@ const { ASK, OFFER } = OpportunityType
 const AffixTopBar = ({ children }) => {
   return (process.env.NODE_ENV === 'test')
     ? <>{children}</>
-    : <div style={{ width: '100%', position: 'relative', left: 0 }} offsetTop={56}>{children}</div>
+    : <div style={{ width: '100%', position: 'absolute', top: '-5rem', left: 0 }} offsetTop={56}>{children}</div>
 }
 
 const MessagePanel = styled.section`
@@ -136,7 +136,7 @@ export const RegisterInterestItem = ({
           <Button
             id='acceptBtn'
             block
-            type='primary' shape='round' size='large' style={{ placeSelf: 'center' }}
+            type='primary' shape='round' size='large' style={{ placeSelf: 'start', maxWidth: '15rem' }}
             onClick={handleAcceptClick}
           >
             {options.acceptButtonText}
@@ -149,7 +149,7 @@ export const RegisterInterestItem = ({
             shape='round'
             size='large'
             block
-            style={{ placeSelf: 'center' }}
+            style={{ placeSelf: 'start', maxWidth: '15rem' }}
             onClick={handleRejectClick}
           >
             {options.rejectButtonText}

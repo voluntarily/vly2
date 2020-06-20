@@ -234,7 +234,7 @@ test('send "PUT" request to redux-api when opportunity is canceled and confirmed
     </Provider>
   )
   // click on management tab
-  wrapper.find('.ant-tabs-tab').at(3).simulate('click')
+  wrapper.find('.ant-tabs-tab').at(2).simulate('click')
   t.context.mockStore.clearActions()
   wrapper.find('Popconfirm').filter('#cancelOpPopConfirm').props().onConfirm({})
   t.is(t.context.mockStore.getActions()[0].type, '@@redux-api@opportunities')
@@ -258,7 +258,7 @@ test('send "PUT" request to redux-api when opportunity is completed on OpDetailP
     </Provider>
   )
   // click on management tab
-  wrapper.find('.ant-tabs-tab').at(3).simulate('click')
+  wrapper.find('.ant-tabs-tab').at(2).simulate('click')
   t.context.mockStore.clearActions()
   wrapper.find('Popconfirm').filter('#completedOpPopConfirm').props().onConfirm({})
   t.is(t.context.mockStore.getActions()[0].type, '@@redux-api@opportunities')
@@ -283,7 +283,7 @@ test('can Edit the Op', t => {
     </Provider>
   )
   // click on edit tab
-  wrapper.find('.ant-tabs-tab').at(4).simulate('click')
+  wrapper.find('.ant-tabs-tab').at(3).simulate('click')
 
   // should switch into edit mode
   const cancelButton = wrapper.find('#backBtn').first()
@@ -291,7 +291,7 @@ test('can Edit the Op', t => {
   cancelButton.simulate('click')
   wrapper.find('.ant-tabs-tab').at(3).text('Edit')
   // click on edit tab
-  wrapper.find('.ant-tabs-tab').at(4).simulate('click')
+  wrapper.find('.ant-tabs-tab').at(3).simulate('click')
 
   const saveButton = wrapper.find('#doneBtn').first()
   t.is(saveButton.text(), 'Done')

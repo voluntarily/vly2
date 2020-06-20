@@ -1,6 +1,6 @@
-import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
+import { OpportunityType } from '../../../server/api/opportunity/opportunity.constants'
 import { FormattedMessage, useIntl, defineMessages } from 'react-intl'
-import { Stamp } from '../../components/VTheme/Stamp'
+import { Stamp } from '../../../components/VTheme/Stamp'
 const { ASK, OFFER } = OpportunityType
 export const OpTypeMessages = defineMessages({
   [ASK]: {

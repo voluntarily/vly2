@@ -45,7 +45,7 @@ test('render OpTabs for manager', t => {
       author='TestyId'
     />
   )
-  t.is(wrapper.find('TabPane').length, 4)
+  t.is(wrapper.find('TabPane').length, 3)
 
   t.true(wrapper.exists('OpAboutPanel'))
   t.true(wrapper.exists('OpQuestionPanel'))
@@ -69,7 +69,7 @@ test('render OpTabs for editor', t => {
       author='TestyId'
     />
   )
-  t.is(wrapper.find('TabPane').length, 5)
+  t.is(wrapper.find('TabPane').length, 4)
   t.true(wrapper.exists('OpAboutPanel'))
   t.true(wrapper.exists('OpQuestionPanel'))
   t.true(wrapper.exists('OpManagePanel'))
