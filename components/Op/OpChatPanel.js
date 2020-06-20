@@ -78,7 +78,7 @@ const OpChatPanel = ({ op }) => {
     const postInterest = { ...interests.data[0], ...putInterest }
     dispatch(reduxApi.actions.interests.post({}, { body: JSON.stringify(postInterest) }))
   }
-
+  console.log(op.requestor)
   return (
     <>
       <OpSectionGrid>
@@ -87,15 +87,6 @@ const OpChatPanel = ({ op }) => {
             <img src={op.requestor.imgUrl} />
             <h3><OpTypeTense type={op.type} /> {op.requestor.nickname}</h3>
           </ProfileCard>
-          <Divider />
-          <ProfileDetails>
-            <p>Contact details</p>
-            <ul>
-              <li>027 328 0872</li>
-
-              <li>waltissomewhere@gmail.com</li>
-            </ul>
-          </ProfileDetails>
         </div>
 
         <AskContainer>
@@ -107,7 +98,6 @@ const OpChatPanel = ({ op }) => {
             </Button>
           </ButtonContainer>
         </AskContainer>
-
       </OpSectionGrid>
       {!interests.sync && <img src='/static/loading.svg' />}
       {interests.sync && messages.map((message) => <OpMessage
@@ -118,7 +108,7 @@ const OpChatPanel = ({ op }) => {
         image={message.author.imgUrl}
         username={message.author.nickname}
       />)}
-      <OpEvent date='12 jan 2020' username={op.requestor.nickname} message='You offered to help' />
+      { interests.data[0] && <OpEvent date={moment(interests.data[0].createdAt).format('Do MMM YYYY')} username={op.requestor.nickname} message='You offered to help' />}
     </>
   )
 }
