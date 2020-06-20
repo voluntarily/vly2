@@ -31,13 +31,6 @@ const opForumTab =
     description='Tab label for Question panel on Opportunity'
   />
 
-// const opUpdateTab =
-//   <FormattedMessage
-//     id='opTabs.update'
-//     defaultMessage='Updates'
-//     description='Tab label for News/Updates panel on Opportunity'
-//   />
-
 const opManageTab =
   <FormattedMessage
     id='opTabs.manage'
@@ -69,11 +62,6 @@ export const OpTabs = ({ op, onChange, canManage, canEdit, defaultTab, author })
         <OpQuestionPanel op={op} />
       </TabPane>
     )}
-    {/* {isNotProd && (
-      <TabPane tab={opUpdateTab} key='news'>
-        <OpUpdatePanel albumId={op._id} author={author} />
-      </TabPane>
-    )} */}
 
     {canManage && (
       <TabPane tab={opManageTab} key='manage'>

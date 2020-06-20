@@ -55,6 +55,7 @@ export const OpDetailPage = ({
   locations
 }) => {
   const router = useRouter()
+
   const [tab, setTab] = useState(isNew ? 'edit' : router.query.tab)
 
   const updateTab = (key, top) => {
@@ -165,7 +166,6 @@ export const OpDetailPage = ({
   }
   const canManage = isOwner || isAdmin || isOrgAdmin
   const canRegisterInterest = isAuthenticated && !isOwner
-
   if (tab === 'edit') {
     return (
       <FullPage>
@@ -188,17 +188,18 @@ export const OpDetailPage = ({
       <Helmet>
         <title>{op.type} {op.name} - Voluntarily</title>
       </Helmet>
-      <OpBanner op={op}>
-        {/* <OpStatusStamp status={op.status} /> */}
-        <OpVolunteerInterestSection
+      <OpVolunteerInterestSection
           isAuthenticated={isAuthenticated}
           canRegisterInterest={canRegisterInterest}
           opid={op && op._id}
           meid={me && me._id}
           type={op.type}
         />
+      <OpBanner op={op}>
+        {/* <OpStatusStamp status={op.status} /> */}
+
       </OpBanner>
-      <OpTabs op={op} canManage={canManage} canEdit={canManage} defaultTab={tab} onChange={handleTabChange} author={me._id} />
+      <OpTabs op={op}  canManage={canManage} canEdit={canManage} defaultTab={tab} onChange={handleTabChange} author={me._id} />
     </FullPage>)
 }
 

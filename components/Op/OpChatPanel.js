@@ -3,6 +3,8 @@ import { OpSectionGrid } from '../VTheme/VTheme'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Button, Input, Divider } from 'antd'
+import moment from 'moment'
+import { useSelector } from 'react-redux'
 import OpFeedback from './OpFeedback'
 import OpMessage from './OpMessage'
 import OpEvent from './OpEvent'
@@ -18,7 +20,7 @@ const AskContainer = styled.div`
   border-radius: 8px;
   @media screen and (max-width: 1280px) {
       max-height: 14rem;
-      
+
   }
 `
 
@@ -47,12 +49,15 @@ li {
     width: 100%;
 }
 
-      
+
   }
 `
 
 const OpChatPanel = ({ op }) => {
   const Placeholder = op.requestor.nickname + ' is asking for your help - message them here'
+  const interests = useSelector(state => state.interests)
+  const messages = interests.sync && interests.data ? sortMessage(interests.data) : []
+
   return (
     <>
       <OpSectionGrid>
@@ -83,31 +88,15 @@ const OpChatPanel = ({ op }) => {
         </AskContainer>
 
       </OpSectionGrid>
-      <OpFeedback date='22 Jan 2022' time='11:00pm' username={op.requestor.nickname} />
-      <OpMessage
-        date='12 Jan 2020'
-        time='5:00pm'
-        comment='yes i can supply agile potato training'
-        image='https://images.unsplash.com/photo-1588614478415-f25a77edc40f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1583&q=80'
-        username={op.requestor.nickname}
-      />
-
-      <OpEvent date='12 jan 2020' username={op.requestor.nickname} message='Your offer was accepted by ' />
-      <OpMessage
-        date='12 Jan 2020'
-        time='5:00pm'
-        comment='yes i can supply agile potato training'
-        image='https://images.unsplash.com/photo-1588614478415-f25a77edc40f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1583&q=80'
-        username={op.requestor.nickname}
-      />
-      <OpMessage
-        date='12 Jan 2020'
-        time='5:00pm'
-        comment='Hello can I get agile potatoes pls'
-        image='https://images.unsplash.com/photo-1591647053371-504b4a2958e4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'
-        username='You'
-      />
-
+      {!interests.sync && <img src='/static/loading.svg' />}
+      {interests.sync && messages.map((message) => <OpMessage
+        date={moment(message.createdAt).format("Do MMM YYYY")}
+        time={moment(message.createdAt).format("h:mm a")}
+        comment={message.body}
+        key={message._id}
+        image={message.author.imgUrl}
+        username={message.author.nickname}
+      />)}
       <OpEvent date='12 jan 2020' username={op.requestor.nickname} message='You offered to help' />
     </>
   )
@@ -127,3 +116,10 @@ OpChatPanel.propTypes = {
 }
 
 export default OpChatPanel
+
+function sortMessage(interestsData) {
+  let allMessage = interestsData.reduce((acc, currentValue) => {
+    return [...acc, ...currentValue.messages]
+  }, [])
+  return allMessage
+}
