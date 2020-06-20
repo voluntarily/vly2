@@ -144,7 +144,7 @@ export const LocationsList = ({ locations }) =>
   locations && locations.length
     ? (
       <ItemListing>
-   📍
+   📍&nbsp;
         <strong>
           <FormattedMessage
             id='itemlist.locations'

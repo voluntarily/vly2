@@ -22,6 +22,7 @@ export const NoRecommendations = ({ type }) =>
             decription='title on empty recommendations box'
           />
         </h2>
+        <br />
         <span>
           <FormattedMessage
             id='NoRecommendations.prompt'

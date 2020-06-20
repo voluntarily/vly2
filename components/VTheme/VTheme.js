@@ -15,7 +15,7 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 
 export const PageBanner = styled.div`
  width: auto;
-  margin: 2rem 0 2rem 0;
+  margin: 0 0 2rem 0;
   display: inline-block;
 /* 
   padding: 1rem;
@@ -198,7 +198,7 @@ margin: 4rem 0 3rem 0;
 
 @media screen and (max-width: 768px) {
     grid-template-columns: calc(100vw - 2rem);
-    margin: 2rem 0;
+  margin: 2rem 0;
   }
 
 `
@@ -206,6 +206,30 @@ export const HeroSectionButtonContainer = styled.div`
 @media screen and (max-width: 768px) {
     display: none;
   }
+`
+export const EmptyContainer = styled.section`
+display: flex;
+justify-content: center;
+align-self: center;
+text-align: center;
+h3 {
+  margin-top: 1rem;
+
+}
+img {
+  max-height: 15rem;
+
+}
+div {
+  display: flex;
+  flex-direction: column;
+padding: 2rem;
+min-height: 50vh
+max-width: 40rem;
+}
+button {
+  margin-bottom: 1rem;
+}
 `
 
 export const SpacerSmall = styled.div`
@@ -222,6 +246,9 @@ grid-template-columns: 5fr 2fr;
 margin: 2rem 0 1rem 0;
 
 align-self: center;
+strong {
+  font-weight: 700;
+}
 
 @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: 1fr 13rem;
@@ -239,20 +266,28 @@ display: grid;
 grid-template-columns: 4rem 1fr;
 gap: 0.5rem;
 align-items: center;
+strong {
+  font-weight: 700;
+}
+i {
+  font-size: 0.8rem;
+  color: #777;
+}
 `
 
 export const OpSectionGrid = styled.div`
   margin: 2rem 0;
   display: grid;
-  grid-template-columns: 25rem 1fr;
+  grid-template-columns: 1fr 50rem;
   gap: 5rem;
   text-align: left;
   @media screen and (min-width: 768px) and (max-width: 1281px) {
-    grid-template-columns: calc(50vw - 4rem) calc(50vw - 4rem);
+    grid-template-columns: 14rem 1fr;
     grid-column-gap: 2rem;
   }
 
   @media screen and (max-width: 768px) {
+    gap: 0;
     grid-template-columns: calc(100vw - 2rem);
   }
 `// end OpSection
@@ -262,8 +297,8 @@ export const HalfGrid = styled.div`
   position: relative;
   margin: 0;
   grid-template-columns: 1fr 1fr;
-  grid-column-gap: 2rem;
-  margin: 4rem 0 ;
+  grid-column-gap: 4rem;
+  padding: 4rem 0 ;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: 1fr 1fr;
@@ -279,12 +314,10 @@ export const HalfGridContainer = styled.div``
 // 30% left, 60% right two column
 export const SideBarGrid = styled.div`
   display: grid;
-  position: relative;
-  margin: 0;
-  grid-template-columns: 29rem 49rem;
+  position: relative;;
+  grid-template-columns: 29rem auto;
   grid-column-gap: 2rem;
-  margin: 2rem 0 4rem 0 ;
-  padding-top: 5rem;
+  margin: 8rem 0 2rem 0 ;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: calc(40vw - 4rem) calc(60vw - 4rem);
@@ -369,10 +402,11 @@ export const Grid8 = styled.div`
 ` // end grid
 
 export const DescriptionWrapper = styled.p`
-margin: 1rem 0;
+margin: 0.5rem 0;
 color: #333;
 i {
   font-size: 0.8rem;
+  color: #999;
 }
 `
 
@@ -452,13 +486,15 @@ export const ContentCard = styled.div`
   img {
     height: 2rem;
     width: 2rem;
+    object-fit: cover;
+    object-position: center;
 
-    background-color: purple;
     border-radius: 150px;
   }
 `
 export const TitleContainerMid = styled.div`
-margin: 4rem auto;
+margin: 0 auto;
+padding: 2rem 0 4rem 0;
 text-align: center;
 `
 /*
@@ -734,7 +770,7 @@ export const A5 = styled.div`
 */
 export const FullPage = styled.div`
   margin: 6rem auto;
-  width: 80rem;
+  max-width: 80rem;
   overflow: visible;
   height: auto;
 
@@ -744,7 +780,7 @@ export const FullPage = styled.div`
     margin-right: 2rem;
   }
   @media screen and (max-width: 767px) {
-    margin-top: 4rem;
+    margin: 4rem auto;
     width: calc(100vw - 2rem);
   }
 ` // end fullpage
@@ -791,19 +827,23 @@ export const Card = styled.figure`
 
 padding-bottom: 0.5rem;
 
--webkit-transition: all 0.3s;
-  transition: all 0.3s;
+-webkit-transition: all 0.2s;
+  transition: all 0.2s;
 p {
-  margin: 0.5rem 0 -0.1rem 0;
-  color: #444;
+  margin: 0.25rem 0 -0.1rem 0;
+  color: #555;
 }
 a { text-decoration: none; }
 
 figcaption {
 
-  li { list-style: none;
+  li { list-style: none; margin-bottom: 0.2rem;
    }
-  ul { padding-left: 0; }
+  ul { 
+    padding-left: 0;
+    margin: 1rem 0 0 0;
+
+   }
 }
 
 :hover {
@@ -823,14 +863,20 @@ figcaption {
   }
   figcaption {
     transform: scale(0.94);
-    transition: all 0.3s;
+
   }
+}
+
+figcaption {
+
+-webkit-transition: all 0.2s;
+  transition: all 0.2s;
 }
 img {
   border-radius: 8px;
 }
 h1 {
-  margin: 0.2rem 0 0.4rem 0;
+  margin: 0.25rem 0;
   font-size: 1.4rem;
   vertical-align: middle;
   color: #000;
@@ -879,32 +925,27 @@ time {
 export const SmallCard = styled.figure`
 
 -webkit-transition: all 0.28s;
-
+transition: all 0.28s;
 box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
 padding: 1rem;
 border-radius: 8px;
 margin-bottom: 0;
 overflow: auto;
+p {margin: 0}
 a { text-decoration: none; }
+li { list-style: none }
+  ul { padding-left: 0;
+  margin: 0; }
 
-figcaption {
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-  li { list-style: none }
-  ul { padding-left: 0; }
-}
 
 :hover {
-  transition: all 0.3s;
   transform: scale(1.02);
   border-radius: 8px;
   h2 {
     color: #6549aa;
   }
  
-  figcaption {
-    transform: scale(0.96);
-  }
+ 
 }
 
 h2 {
@@ -960,13 +1001,11 @@ display: grid;
 align-self: center;
 
 ul {
-  padding: 0;
-  margin: 0.25rem 0 0 0;
+  
 
 }
 small {
-
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 500;
   color: #333;
 @media screen and (max-width: 768px) {
@@ -1066,7 +1105,8 @@ background-color: #e8e8e8;
 `
 // we use this tag for op state
 export const TagState = styled.span`
-  display: inline-block;
+left: 0.5rem;
+  position: absolute;
   padding:0.2rem 0.5rem;
   font-size: 1rem;
   font-weight: 700;
@@ -1127,11 +1167,13 @@ export const PageAlert = styled.div`
   grid-template-columns: 3rem 3fr 1fr 1fr;
 
   background-color: rgb(37, 15, 81);
-  margin-bottom: -5rem;
+  margin: 0rem;
   h4 {
     color: white;
     font-weight: 600;
   }
+
+
 `
 
 // imagecontainer for halfgrid
@@ -1163,7 +1205,7 @@ figcaption {
   position: relative;
 
   margin: 0;
-width: 100%;
+height: 100%;
 
 }
 
@@ -1187,6 +1229,8 @@ width: 100%;
  img{ 
    margin-bottom: 1rem;
   width: 100%;
+  max-height: 10rem;
+  
 }
 
   :hover {
@@ -1212,9 +1256,10 @@ width: 100%;
     }
     
     img{ 
-  width: 100%;
+  height: 100%;
   align-self: center;
   justify-self: end;
+  
     }
     p {
       width: 100%;
@@ -1224,22 +1269,27 @@ width: 100%;
 
   /* Mobile */
   @media screen and (max-width: 768px) {
-    min-height: 22rem;
+   
     
   }
 
   /* Mobile */
   @media screen and (max-width: 668px) {
-    min-height: 22rem;
+ 
 
     width: calc(100vw - 2rem);
-    text-align: left;
+    text-align: center;
    
 
   h3 {
     bottom: 0;
     font-size: 1.5rem;
   
+  }
+  p {
+    max-width: 70vw;
+    font-size: 1rem;
+    margin: 0 auto 1rem auto;
   }
 
   }

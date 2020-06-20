@@ -7,17 +7,15 @@ const OfferContainer = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
   @media screen and (min-width: 1026px) and (max-width: 1289px) {
-    grid-template-columns: 1fr 1fr ;
+    grid-template-columns: 1fr ;
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     
     grid-template-columns: 1fr ;
     margin: 2rem 0 ;
   }
-
   @media screen and (max-width: 768px) {
     grid-template-columns: 1fr;
-
   gap: 0;
     margin: 0 ;
   }
