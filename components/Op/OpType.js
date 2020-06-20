@@ -117,12 +117,12 @@ export const OpTypeEmoji = {
 export const OpTypeVerbs = defineMessages({
   [ASK]: {
     id: 'OpportunityType.verb.ASK',
-    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} asking for help',
+    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} asking you for help',
     description: 'Asking for help'
   },
   [OFFER]: {
     id: 'OpportunityType.verb.OFFER',
-    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} offering to help ',
+    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} offering to help you ',
     description: 'Offering help'
   }
 })

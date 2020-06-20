@@ -51,8 +51,8 @@ const OpCardSmall = ({ op }) => {
       <Link href={getOpPageURL(isArchived, op._id)}>
         <a>
           <p>
-
-            {op.description ? <p>{op.description}</p> : <p>{op.requestor.nickname} <OpType type={op.type} /> with {op.name}</p>}
+            {!op.description && <p>{op.requestor.nickname} <OpType type={op.type} /> with {op.name}</p>}
+            {op.description}
           </p>
 
           <Divider />

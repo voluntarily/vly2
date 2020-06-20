@@ -38,12 +38,26 @@ export const ActOpsPanel = ({ act, type, limit }) => {
       <OpSectionGrid>
         <div id='left_column'>
           <h2>
-            <OpTypeCount counts={act.opCounts} type={type} />
+            <OpTypeCount counts={act.opCounts} type={type} /><br />
             <FormattedMessage
               id='ActOpsPanel.prompt.with'
               defaultMessage=' with'
             /> {act.name}
           </h2>
+
+        </div>
+        <div>
+          <OpListSmall ops={ops} />
+          {showMore &&
+            <Link href={`/acts/${act._id}?tab=${type}`}>
+              <Button shape='round' size='large' style={{ marginTop: '1rem', float: 'right' }}>
+                <FormattedMessage
+                  id='ActOpsPanel.button.showAll'
+                  defaultMessage='See all'
+                />
+              </Button>
+            </Link>}
+          <Divider />
           {type === OFFER &&
             <>
               <p style={{ marginBottom: '1rem' }}>
@@ -64,18 +78,6 @@ export const ActOpsPanel = ({ act, type, limit }) => {
               </p>
               <OpAddOfferBtn actid={act._id} />
             </>}
-        </div>
-        <div>
-          <OpListSmall ops={ops} />
-          {showMore &&
-            <Link href={`/acts/${act._id}?tab=${type}`}>
-              <Button shape='round' size='large' style={{ marginTop: '1rem', float: 'right' }}>
-                <FormattedMessage
-                  id='ActOpsPanel.button.showAll'
-                  defaultMessage='See all'
-                />
-              </Button>
-            </Link>}
         </div>
       </OpSectionGrid>
       <Divider />
