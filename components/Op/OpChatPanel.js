@@ -78,7 +78,6 @@ const OpChatPanel = ({ op }) => {
     const postInterest = { ...interests.data[0], ...putInterest }
     dispatch(reduxApi.actions.interests.post({}, { body: JSON.stringify(postInterest) }))
   }
-  console.log(op.requestor)
   return (
     <>
       <OpSectionGrid>
