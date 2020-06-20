@@ -5,7 +5,7 @@ const { ASK, OFFER } = OpportunityType
 export const OpTypeMessages = defineMessages({
   [ASK]: {
     id: 'OpportunityType.ASK',
-    defaultMessage: 'is asking for help',
+    defaultMessage: 'is asking for your help',
     description: 'Ask label prefix'
   },
   [OFFER]: {
@@ -199,12 +199,12 @@ export const OpTypeLocationPrompt = ({ type }) => {
 const OpTypeDateTitleMsg = defineMessages({
   [ASK]: {
     id: 'OpportunityType.date.title.ASK',
-    defaultMessage: 'When do you need help?',
+    defaultMessage: 'When do you need help? (Optional)',
     description: 'Asking date title'
   },
   [OFFER]: {
     id: 'OpportunityType.date.title.OFFER',
-    defaultMessage: 'When can you help?',
+    defaultMessage: 'When can you help? (Optional)',
     description: 'Offering date title'
   }
 })
