@@ -279,10 +279,10 @@ export const OpSectionGrid = styled.div`
   margin: 2rem 0;
   display: grid;
   grid-template-columns: 1fr 50rem;
-  gap: 5rem;
+  grid-column-gap: 5rem;
   text-align: left;
   @media screen and (min-width: 768px) and (max-width: 1281px) {
-    grid-template-columns: 14rem 1fr;
+    grid-template-columns: 1fr;
     grid-column-gap: 2rem;
   }
 
