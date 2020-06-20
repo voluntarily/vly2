@@ -52,11 +52,10 @@ export const OpTabs = ({ op, onChange, canManage, canEdit, defaultTab, author })
     <TabPane tab={opAboutTab} key='about'>
       <OpAboutPanel op={op} />
     </TabPane>
-    {isNotProd && (
+    {isNotProd && !canManage &&
       <TabPane tab={opChatTab} key='chat'>
         <OpChatPanel op={op} />
-      </TabPane>
-    )}
+      </TabPane>}
     {isNotProd && (
       <TabPane tab={opForumTab} key='question'>
         <OpQuestionPanel op={op} />
