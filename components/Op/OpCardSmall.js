@@ -25,7 +25,7 @@ const StyledIcon = styled(Icon)`
 // todo if image is not present then use a fallback.
 const OpCardSmall = ({ op }) => {
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
-  const startTime = op.date[0] ? moment(op.date[0]).format('🗓 ddd DD/MM/YY') : '🗓 Negotiable'
+  const startTime = op.date[0] ? moment(op.date[0]).format('🗓 ddd DD/MM/YY') : null
 
   const startLocation = op.location ? `📍 ${op.location}` : ''
   // const startDuration = op.duration ? `⏱ ${op.duration}` : ''
@@ -51,6 +51,7 @@ const OpCardSmall = ({ op }) => {
       <Link href={getOpPageURL(isArchived, op._id)}>
         <a>
           <p>
+
             {!op.description && <p>{op.requestor.nickname} <OpType type={op.type} /> with {op.name}</p>}
             {op.description}
           </p>

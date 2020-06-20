@@ -280,6 +280,7 @@ export const OpSectionGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 50rem;
   grid-column-gap: 5rem;
+  grid-row-gap: 2rem;
   text-align: left;
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: 1fr;
@@ -931,6 +932,7 @@ padding: 1rem;
 border-radius: 8px;
 margin-bottom: 0;
 overflow: auto;
+
 p {margin: 0}
 a { text-decoration: none; }
 li { list-style: none }
@@ -1164,7 +1166,7 @@ export const PageAlert = styled.div`
 
   display: grid;
   gap: 1rem;
-  grid-template-columns: 3rem 3fr 1fr 1fr;
+  grid-template-columns: 3rem 3fr 1fr;
 
   background-color: rgb(37, 15, 81);
   margin: 0rem;
