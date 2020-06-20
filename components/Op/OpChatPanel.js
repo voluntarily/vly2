@@ -16,6 +16,10 @@ const AskContainer = styled.div`
   background: #ffffff;
   box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
   border-radius: 8px;
+  @media screen and (max-width: 1280px) {
+      max-height: 14rem;
+      
+  }
 `
 
 const ButtonContainer = styled.div`
@@ -34,7 +38,17 @@ img {
 h3 {
   margin: 0;
 }
+`
 
+const ProfileDetails = styled.div`
+ul{  }
+li {
+    white-space: normal;
+    width: 100%;
+}
+
+      
+  }
 `
 
 const OpChatPanel = ({ op }) => {
@@ -48,13 +62,14 @@ const OpChatPanel = ({ op }) => {
             <h3><OpTypeTense type={op.type} /> {op.requestor.nickname}</h3>
           </ProfileCard>
           <Divider />
-          <p>Contact details</p>
-          <ul>
-            <li>027 328 0872</li>
+          <ProfileDetails>
+            <p>Contact details</p>
+            <ul>
+              <li>027 328 0872</li>
 
-            <li>waltissomewhere@gmail.com</li>
-          </ul>
-
+              <li>waltissomewhere@gmail.com</li>
+            </ul>
+          </ProfileDetails>
         </div>
 
         <AskContainer>
