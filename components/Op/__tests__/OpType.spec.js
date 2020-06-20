@@ -5,7 +5,7 @@ const { ASK, OFFER } = OpportunityType
 export const OpTypeMessages = defineMessages({
   [ASK]: {
     id: 'OpportunityType.ASK',
-    defaultMessage: 'is asking for help',
+    defaultMessage: 'is asking for your help',
     description: 'Ask label prefix'
   },
   [OFFER]: {
@@ -117,12 +117,12 @@ export const OpTypeEmoji = {
 export const OpTypeVerbs = defineMessages({
   [ASK]: {
     id: 'OpportunityType.verb.ASK',
-    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} asking for help',
+    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} asking you for help',
     description: 'Asking for help'
   },
   [OFFER]: {
     id: 'OpportunityType.verb.OFFER',
-    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} offering to help ',
+    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} offering to help you ',
     description: 'Offering help'
   }
 })
@@ -199,15 +199,16 @@ export const OpTypeLocationPrompt = ({ type }) => {
 const OpTypeDateTitleMsg = defineMessages({
   [ASK]: {
     id: 'OpportunityType.date.title.ASK',
-    defaultMessage: 'When do you need help?',
+    defaultMessage: 'When do you need help? (Optional)',
     description: 'Asking date title'
   },
   [OFFER]: {
     id: 'OpportunityType.date.title.OFFER',
-    defaultMessage: 'When can you help?',
+    defaultMessage: 'When can you help? (Optional)',
     description: 'Offering date title'
   }
 })
+
 export const OpTypeDateTitle = ({ type }) => {
   if (!type || ![ASK, OFFER].includes(type)) return null
   return (<FormattedMessage {...OpTypeDateTitleMsg[type]} />)
