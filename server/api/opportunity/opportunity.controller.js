@@ -203,29 +203,6 @@ const createOpportunity = async (req, res, next) => {
     return res.sendStatus(401)
   }
 
-  const canCreate = async () => {
-    if (me.role.includes(Role.ADMIN)) {
-      return true
-    }
-    if (me.role.includes(Role.ORG_ADMIN) && req.body.offerOrg && me.orgAdminFor.includes(req.body.offerOrg)) {
-      return true
-    }
-    if (me.role.includes(Role.OPPORTUNITY_PROVIDER) || me.role.includes(Role.VOLUNTEER)) {
-      if (!req.body.offerOrg) {
-        return false
-      }
-
-      // The offerOrg must be one the current user is a member of
-      return (await Member.find({ person: me._id, organisation: req.body.offerOrg })).length > 0
-    }
-
-    return false
-  }
-
-  if (!(await canCreate())) {
-    return res.status(403).send('Must have create permission')
-  }
-
   try {
     const result = await Opportunity.create(req.body)
 

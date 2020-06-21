@@ -4,9 +4,10 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { OpAboutPanel } from './OpAboutPanel'
 import { OpQuestionPanel } from './OpQuestionPanel'
-import OpUpdatePanel from './OpUpdatePanel'
+// import OpUpdatePanel from './OpUpdatePanel'
 import { OpManagePanel } from './OpManagePanel'
 import VTabs from '../VTheme/VTabs'
+import OpChatPanel from './OpChatPanel'
 
 const { TabPane } = Tabs
 
@@ -16,19 +17,18 @@ const opAboutTab =
     defaultMessage='About'
     description='Tab label on OpDetailsPage'
   />
+const opChatTab =
+  <FormattedMessage
+    id='opTabs.chat'
+    defaultMessage='Messages'
+    description='Tab label on OpDetailsPage'
+  />
 
 const opForumTab =
   <FormattedMessage
     id='opTabs.questions'
     defaultMessage='Questions'
     description='Tab label for Question panel on Opportunity'
-  />
-
-const opUpdateTab =
-  <FormattedMessage
-    id='opTabs.update'
-    defaultMessage='Updates'
-    description='Tab label for News/Updates panel on Opportunity'
   />
 
 const opManageTab =
@@ -52,17 +52,16 @@ export const OpTabs = ({ op, onChange, canManage, canEdit, defaultTab, author })
     <TabPane tab={opAboutTab} key='about'>
       <OpAboutPanel op={op} />
     </TabPane>
-
+    {isNotProd && !canManage &&
+      <TabPane tab={opChatTab} key='chat'>
+        <OpChatPanel op={op} />
+      </TabPane>}
     {isNotProd && (
       <TabPane tab={opForumTab} key='question'>
         <OpQuestionPanel op={op} />
       </TabPane>
     )}
-    {isNotProd && (
-      <TabPane tab={opUpdateTab} key='news'>
-        <OpUpdatePanel albumId={op._id} author={author} />
-      </TabPane>
-    )}
+
     {canManage && (
       <TabPane tab={opManageTab} key='manage'>
         <OpManagePanel op={op} />

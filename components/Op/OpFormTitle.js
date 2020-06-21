@@ -10,8 +10,7 @@ export const BackAndTitle = styled.div`
   margin: 0;
   grid-template-columns: 8rem 1fr;
   grid-column-gap: 2rem;
-  margin: 2rem 0 4rem 0 ;
-  padding-top: 5rem;
+
 
 `
 
@@ -21,7 +20,7 @@ const MiddleButton = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%
+  width: 100%;
 `
 export const OpFormTitle = ({ type, title, onBack }) => {
   return (

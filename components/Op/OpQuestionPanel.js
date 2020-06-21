@@ -17,6 +17,7 @@ const AskContainer = styled.div`
   background: #ffffff;
   box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
   border-radius: 8px;
+
 `
 
 const ButtonContainer = styled.div`
@@ -148,7 +149,8 @@ export function OpQuestionPanel ({ op }) {
           <h2>Questions</h2>
         </div>
         <AskContainer>
-          <TextArea rows={3} placeholder='Ask a question here' />
+          <p>Got any questions?</p>
+          <TextArea rows={3} placeholder='Type your a question here' />
           <ButtonContainer>
             <Button shape='round' size='large' type='primary'>
               Submit

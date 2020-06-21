@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { config } from '../../config/clientConfig'
 import { Helmet } from 'react-helmet'
-import { OpSectionGrid, BannerDetail, H2 } from '../VTheme/VTheme'
+import { OpSectionGrid, BannerDetail } from '../VTheme/VTheme'
 import {
   ItemContainer,
   ItemDuration,
@@ -10,9 +10,6 @@ import {
   ItemNeeds
 } from '../VTheme/ItemList'
 import { OpStatusStamp, OpStatus } from '../Op/OpStatus'
-import { OpTypeCount } from '../Op/OpType'
-import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
-const { ASK, OFFER } = OpportunityType
 
 export const ActBanner = ({ act, children }) => {
   // SEO Metadata
@@ -33,20 +30,18 @@ export const ActBanner = ({ act, children }) => {
       </Helmet>
 
       <OpSectionGrid>
-        <div>
-          <H2>
+        <div style={{ paddingTop: '3rem' }}>
+          <h1>
             <OpStatus status={act.status} />
             {act.name}
-          </H2>
-          {act.subtitle && <p>{act.subtitle}</p>}
+          </h1>
+          {/* {act.subtitle && <p>{act.subtitle}</p>} */}
           {/* <ul>
             <ItemIdLine item={act.offerOrg} path='orgs' />
           </ul> */}
           <ItemContainer>
             <li><ItemDuration duration={act.duration} /></li>
             <li><ItemNeeds volunteers={act.volunteers} /></li>
-            <li><OpTypeCount counts={act.opCounts} type={ASK} /></li>
-            <li><OpTypeCount counts={act.opCounts} type={OFFER} /></li>
           </ItemContainer>
         </div>
         <BannerDetail>

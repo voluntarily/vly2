@@ -11,29 +11,9 @@ test('render OpTypeStamp for ask op', t => {
     />
   )
   t.is(wrapper.find('span').length, 1)
-  t.is(wrapper.find('span').text(), 'is asking for help')
+  t.is(wrapper.find('span').text(), 'is asking for your help')
 })
 
-test('render OpTypeStamp for offer op', t => {
-  const wrapper = mountWithIntl(
-    <OpTypeStamp
-      type={OpportunityType.OFFER}
-    />
-  )
-  t.is(wrapper.find('span').length, 1)
-})
-test('render OpTypeStamp for no type', t => {
-  const wrapper = mountWithIntl(
-    <OpTypeStamp />
-  )
-  t.is(wrapper.find('span').length, 0)
-})
-test('render OpTypeStamp for invalid type', t => {
-  const wrapper = mountWithIntl(
-    <OpTypeStamp type='INVALID' />
-  )
-  t.is(wrapper.find('span').length, 0)
-})
 test('render OpType for offer op', t => {
   const wrapper = mountWithIntl(
     <OpType
@@ -57,7 +37,7 @@ test('render OpTypeCount for offer op', t => {
       type={OpportunityType.OFFER}
     />
   )
-  t.is(wrapper.text(), '💁🏻2 people offering to help')
+  t.is(wrapper.text(), '💁🏻2 people offering to help you ')
 })
 test('render OpTypeCount for ask op', t => {
   const wrapper = mountWithIntl(
@@ -66,7 +46,7 @@ test('render OpTypeCount for ask op', t => {
       type={OpportunityType.ASK}
     />
   )
-  t.is(wrapper.text(), '🙋5 people asking for help')
+  t.is(wrapper.text(), '🙋5 people asking you for help')
 })
 test('render OpTypeCount with no type', t => {
   const wrapper = mountWithIntl(
@@ -189,7 +169,7 @@ test('render OpTypeLocationPrompt with type', t => {
       type={OpportunityType.ASK}
     />
   )
-  t.is(wrapper.text(), 'Where do you need help?')
+  t.is(wrapper.text(), 'Where do you need help? (Optional)')
 })
 
 test('render OpTypeDateTitle with no type', t => {
@@ -205,7 +185,7 @@ test('render OpTypeDateTitle with type', t => {
       type={OpportunityType.ASK}
     />
   )
-  t.is(wrapper.text(), 'When do you need help?')
+  t.is(wrapper.text(), 'When do you need help? (Optional)')
 })
 
 test('render OpTypeDescriptionTitle with no type', t => {
@@ -221,7 +201,7 @@ test('render OpTypeDescriptionTitle with type', t => {
       type={OpportunityType.ASK}
     />
   )
-  t.is(wrapper.text(), 'Anything Else?')
+  t.is(wrapper.text(), 'How do you want volunteers to help?')
 })
 
 test('render OpTypeDescriptionPrompt with type', t => {
@@ -230,5 +210,5 @@ test('render OpTypeDescriptionPrompt with type', t => {
       type={OpportunityType.ASK}
     />
   )
-  t.is(wrapper.text(), 'Is there anything else the helpers need to know to help you? Please don’t put your personal or contact details on here, we’ll take care of that later')
+  t.is(wrapper.text(), 'Is there anything specific you need help with? Let volunteers know how to help you by writing about it here')
 })

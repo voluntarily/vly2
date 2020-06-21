@@ -61,6 +61,7 @@ const OpCard = ({ op }) => {
         <a>
           <ImageWrapper>
             <img src={cardImage} alt={op.name} />
+            {interestIcon}
             {/* <OpTypeStamp type={op.type} /> */}
           </ImageWrapper>
           <figcaption>
@@ -71,24 +72,22 @@ const OpCard = ({ op }) => {
               {draft}
               {op.name}
             </h1>
-            <ul>
-              {startLocation && <li> {startLocation}</li>}
-              {startTime && <li> {startTime} </li>}
-              {startDuration && <li> {startDuration}</li>}
-              {op.createdAt && <li>🎬{moment(op.createdAt).fromNow()}</li>}
-            </ul>
 
             <DescriptionWrapper>
               {op.subtitle}<br />
               {/* <OpType type={op.type} /> */}
             </DescriptionWrapper>
+            <ul>
 
+              {startLocation && <li> {startLocation}</li>}
+              {startTime && <li> {startTime} </li>}
+              {startDuration && <li> {startDuration}</li>}
+            </ul>
             <DescriptionWrapper>
               {/* {orgName &&
                 <i>Via {orgName}&nbsp;</i>} */}
               <i> created {moment(op.createdAt).fromNow()}</i>
             </DescriptionWrapper>
-            {interestIcon}
 
           </figcaption>
         </a>

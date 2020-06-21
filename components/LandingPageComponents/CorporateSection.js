@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import Link from 'next/link'
 import { TitleContainerMid, H2, OfferCard } from '../VTheme/VTheme'
 
 const OfferContainer = styled.div`
@@ -8,61 +7,53 @@ const OfferContainer = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
   @media screen and (min-width: 1026px) and (max-width: 1289px) {
-    grid-template-columns: 1fr 1fr ;
+    grid-template-columns: 1fr ;
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     
     grid-template-columns: 1fr ;
     margin: 2rem 0 ;
   }
-
   @media screen and (max-width: 768px) {
     grid-template-columns: 1fr;
-
   gap: 0;
     margin: 0 ;
   }
 `
 
 const CorporateSection = () => (
-  <div>
+  <div id='org'>
     <TitleContainerMid><H2>How we help organizations</H2></TitleContainerMid>
     <OfferContainer>
 
-      <Link href='/a/ask'>
+      <a href='#orgs'>
+        <OfferCard>
+          <figcaption>
+            <img src='/static/img/about/org-1.svg' />
+            <div>
+              <h3>Businesses</h3>
+              <p>Connect with people who want to help you, and organise how they can volunteer to help
+              </p>
+            </div>
+          </figcaption>
+        </OfferCard>
+      </a>
 
-        <a>
+      <a href='#groups'>
+        <OfferCard>
 
-          <OfferCard>
-            <figcaption>
-              <img src='/static/img/about/org-1.svg' />
-              <div>
-                <h3>Businesses</h3>
-                <p>Connect with people who want to help you, and organise how they can volunteer to help
-                </p>
-              </div>
-            </figcaption>
-          </OfferCard>
-        </a>
-      </Link>
+          <figcaption>
 
-      <Link href='/a/offer'>
-        <a>
-          <OfferCard>
+            <img src='/static/img/about/org-2.svg' />
+            <div>
+              <h3>Community groups</h3>
+              <p>Connect with people who want to help you, and organise how they can volunteer to help</p>
+            </div>
+          </figcaption>
+        </OfferCard>
+      </a>
 
-            <figcaption>
-
-              <img src='/static/img/about/org-2.svg' />
-              <div>
-                <h3>Community groups</h3>
-                <p>Connect with people who want to help you, and organise how they can volunteer to help</p>
-              </div>
-            </figcaption>
-          </OfferCard>
-        </a>
-      </Link>
-
-      <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
+      <a href='#content'>
         <OfferCard>
 
           <figcaption>
@@ -76,7 +67,6 @@ const CorporateSection = () => (
         </OfferCard>
       </a>
     </OfferContainer>
-
   </div>
 
 )
