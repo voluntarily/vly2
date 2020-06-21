@@ -19,6 +19,7 @@ import { Role } from '../../server/services/authorize/role.js'
 
 const { ASK, OFFER } = OpportunityType
 export const ActAboutSection = ({ act }) =>
+
   <OpSectionGrid>
     <div id='left_column'>
       <h2><FormattedMessage id='ActAboutPanel.section.title.about' defaultMessage='About' /></h2>

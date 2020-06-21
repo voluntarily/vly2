@@ -44,14 +44,14 @@ const OpEmpty = ({ type }) => (
       <h3>
         <FormattedMessage
           id='ActiveOpsSection.empty.title'
-          defaultMessage="You haven't signed up for anything yet"
+          defaultMessage='Let’s find cool ways to volunteer'
           description='title for empty op section'
         />
       </h3>
       <p>
         <FormattedMessage
           id='ActiveOpsSection.empty.subtitle'
-          defaultMessage=' Let’s find cool ways to volunteer'
+          defaultMessage=' Get started by finding something to volunteer for'
           description='title for empty op section'
         />
       </p>

@@ -22,6 +22,7 @@ export const RecommendedOpsSection = () => {
     <>
       {!vp && !bp &&
         <NoRecommendations />}
+
       {vp &&
         <>
           <ProfileSection id='volunteerRecommendations'>

@@ -234,12 +234,12 @@ export const OpTypeDatePrompt = ({ type }) => {
 const OpTypeDescriptionTitleMsg = defineMessages({
   [ASK]: {
     id: 'OpportunityType.description.title.ASK',
-    defaultMessage: 'How do you want volunteers to help? (Optional)',
+    defaultMessage: 'How do you want volunteers to help?',
     description: 'Asking description title'
   },
   [OFFER]: {
     id: 'OpportunityType.description.title.OFFER',
-    defaultMessage: 'How can you help? (Optional)',
+    defaultMessage: 'How can you help?',
     description: 'Offering description title'
   }
 })

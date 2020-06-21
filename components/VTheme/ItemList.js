@@ -22,13 +22,14 @@ export const ItemContainer = styled.ul`
   padding-left: 0;
   list-style: none;
 `
-export const ItemListing = styled.li`
+export const ItemListing = styled.ul`
   list-style: none;
   font-weight: 500;
   font-size: 1rem;
   opacity: 1;
   color: initial;
   margin-bottom: 0.3rem;
+  padding-left: 0;
 `
 export const ItemDescription = styled.div`
   letter-spacing: -0.02rem;

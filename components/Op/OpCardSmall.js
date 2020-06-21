@@ -52,7 +52,7 @@ const OpCardSmall = ({ op }) => {
         <a>
           <p>
 
-            {!op.description && <p>{op.requestor.nickname} <OpType type={op.type} /> with {op.name}</p>}
+            {!op.description && <>{op.requestor.nickname} <OpType type={op.type} /> with {op.name}</>}
             {op.description}
           </p>
 

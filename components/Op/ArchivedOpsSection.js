@@ -27,7 +27,7 @@ const OpArchiveEmpty = ({ type }) => (
       <h3>
         <FormattedMessage
           id='ArchivedOpsSection.empty.title'
-          defaultMessage='Activities you’ve done in the past will show up here'
+          defaultMessage='Activities you volunteered for in the past will show up here'
           description='title for empty op section'
         />
       </h3>

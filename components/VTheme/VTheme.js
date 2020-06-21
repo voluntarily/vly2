@@ -831,8 +831,8 @@ padding-bottom: 0.5rem;
 -webkit-transition: all 0.2s;
   transition: all 0.2s;
 p {
-  margin: 0.25rem 0 -0.1rem 0;
-  color: #555;
+  margin: 0.5rem 0 -0.1rem 0;
+  color: #333;
 }
 a { text-decoration: none; }
 
