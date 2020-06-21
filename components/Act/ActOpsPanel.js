@@ -7,9 +7,8 @@ import { OpportunityType } from '../../server/api/opportunity/opportunity.consta
 import ReduxLoading from '../Loading'
 import { OpAddAskBtn, OpAddOfferBtn } from '../Op/OpAdd'
 import OpListSmall from '../Op/OpListSmall'
-import { OpTypeCount } from '../Op/OpType'
+import { OpTypeCount, OpTypeTopicVerb } from '../Op/OpType'
 import { OpSectionGrid, HalfGrid, ImageContainer } from '../VTheme/VTheme'
-import { OpTypeTopicVerb } from '../Op/__tests__/OpType.spec.js'
 
 const { ASK, OFFER } = OpportunityType
 const OpEmpty = ({ type, act }) => (
