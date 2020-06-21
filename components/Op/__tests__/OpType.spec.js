@@ -1,300 +1,214 @@
+import React from 'react'
+import test from 'ava'
+import { mountWithIntl } from '../../../lib/react-intl-test-helper'
+import { OpTypeDateTitle, OpTypeDescriptionTitle, OpTypeStamp, OpType, OpTypeCount, OpCommitment, OpTypeTitle, OpTypeImperative, OpTypeButtonLabel, OpTypeNoResults, OpTypeDescriptionPrompt, OpTypeDatePrompt, OpTypeLocationPrompt } from '../OpType'
 import { OpportunityType } from '../../../server/api/opportunity/opportunity.constants'
-import { FormattedMessage, useIntl, defineMessages } from 'react-intl'
-import { Stamp } from '../../../components/VTheme/Stamp'
-const { ASK, OFFER } = OpportunityType
-export const OpTypeMessages = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.ASK',
-    defaultMessage: 'is asking for your help',
-    description: 'Ask label prefix'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.OFFER',
-    defaultMessage: 'can help you',
-    description: 'Offer label prefix'
-  }
+
+test('render OpTypeStamp for ask op', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeStamp
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.find('span').length, 1)
+  t.is(wrapper.find('span').text(), 'is asking for your help')
 })
 
-export const OpType2 = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.ASK2',
-    defaultMessage: 'needs help with',
-    description: 'Ask label prefix'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.OFFER2',
-    defaultMessage: 'can help with',
-    description: 'Offer label prefix'
-  }
+test('render OpType for offer op', t => {
+  const wrapper = mountWithIntl(
+    <OpType
+      type={OpportunityType.OFFER}
+    />
+  )
+  t.is(wrapper.text(), 'can help you')
 })
 
-export const OpType3 = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.ASK3',
-    defaultMessage: 'You offered to help',
-    description: 'Ask label prefix'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.OFFER3',
-    defaultMessage: 'You asked for help from',
-    description: 'Offer label prefix'
-  }
+test('render OpType with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpType />
+  )
+  t.is(wrapper.text(), '')
 })
 
-export const OpTypeAct = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.ActASK',
-    defaultMessage: 'Requests',
-    description: 'Ask label prefix'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.ActOFFER',
-    defaultMessage: 'Offers',
-    description: 'Offer label prefix'
-  }
+test('render OpTypeCount for offer op', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeCount
+      counts={{ offer: 2 }}
+      type={OpportunityType.OFFER}
+    />
+  )
+  t.is(wrapper.text(), '💁🏻2 people offering to help you ')
+})
+test('render OpTypeCount for ask op', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeCount
+      counts={{ ask: 5 }}
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), '🙋5 people asking you for help')
+})
+test('render OpTypeCount with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeCount />
+  )
+  t.is(wrapper.text(), '')
 })
 
-export const OpTypeSuffix = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpType2[type]} />)
-}
-
-export const OpTypeTitle = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpTypeAct[type]} />)
-}
-
-export const OpTypeTense = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpType3[type]} />)
-}
-
-/** Converts an opportunity type to a translated display string */
-export const OpType = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpTypeMessages[type]} />)
-}
-
-export const OpTypeImperativeMsg = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.imp.ASK',
-    defaultMessage: 'Ask for help with',
-    description: 'Asking for help command'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.imp.OFFER',
-    defaultMessage: 'Offer to help with',
-    description: 'Offering help command'
-  }
-})
-export const OpTypeImperative = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpTypeImperativeMsg[type]} />)
-}
-
-export const OpTypeButtonLabelMsg = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.imp.ASK',
-    defaultMessage: 'Ask for help with',
-    description: 'Asking for help command'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.imp.OFFER',
-    defaultMessage: 'Offer to help with',
-    description: 'Offering help command'
-  }
-})
-export const OpTypeButtonLabel = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpTypeImperativeMsg[type]} />)
-}
-
-export const OpTypeEmoji = {
-  [ASK]: '🙋',
-  [OFFER]: '💁🏻'
-}
-
-export const OpTypeVerbs = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.verb.ASK',
-    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} asking you for help',
-    description: 'Asking for help'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.verb.OFFER',
-    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} offering to help you ',
-    description: 'Offering help'
-  }
+test('render OpCommitment ', t => {
+  const wrapper = mountWithIntl(
+    <OpCommitment duration='4 hours' />
+  )
+  t.is(wrapper.text(), '⏱4 hours commitment')
 })
 
-const OpTypeTopicVerbMsg = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.prompt.topicverb.ASK',
-    defaultMessage: 'is asking for help with'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.prompt.topicverb.OFFER',
-    defaultMessage: 'is offering to help with'
-  }
+test('render OpCommitment with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpCommitment />
+  )
+  t.is(wrapper.text(), '')
 })
 
-export const OpTypeTopicVerb = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpTypeTopicVerbMsg[type]} />)
-}
-/**
- * 0 -> No people offering to help
- * 1 -> one person offering to help
- * 2 -> 2 people offering to help
- * 10 people asking for help
- * @param {*} param0
- */
-export const OpTypeCount = ({ counts, type }) => {
-  if (!counts) return null
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  const count = counts[type]
-  return (<>{OpTypeEmoji[type]}{count || ''}&nbsp;<FormattedMessage {...OpTypeVerbs[type]} values={{ count }} /></>)
-}
-
-/** Converts an opportunity type to a Stamp - except for Active */
-export const OpTypeStamp = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  const intl = useIntl()
-  return (
-    <Stamp>
-      {intl.formatMessage(OpTypeMessages[type])}
-    </Stamp>)
-}
-
-export const OpCommitment = ({ duration }) => {
-  if (!duration) return null
-  return (
-    <>
-      ⏱{duration}&nbsp;
-      <FormattedMessage
-        id='OpType.duration'
-        defaultMessage='commitment'
-        description='e.g 10 hours commitment'
-      />
-    </>)
-}
-
-const OpTypeLocationMsg = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.location.ASK',
-    defaultMessage: 'Where do you need help? (Optional)',
-    description: 'Asking location prompt'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.location.OFFER',
-    defaultMessage: 'Where can you help? (Optional)',
-    description: 'Offering location prompt'
-  }
-})
-export const OpTypeLocationPrompt = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpTypeLocationMsg[type]} />)
-}
-
-const OpTypeDateTitleMsg = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.date.title.ASK',
-    defaultMessage: 'When do you need help? (Optional)',
-    description: 'Asking date title'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.date.title.OFFER',
-    defaultMessage: 'When can you help? (Optional)',
-    description: 'Offering date title'
-  }
+test('render OpTypeTitle with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeTitle />
+  )
+  t.is(wrapper.text(), '')
 })
 
-export const OpTypeDateTitle = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpTypeDateTitleMsg[type]} />)
-}
-const OpTypeDatePromptMsg = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.date.prompt.ASK',
-    defaultMessage: 'Let people know how much time you need, and if there are only a few dates you can be available.',
-    description: 'Asking date prompt'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.date.prompt.OFFER',
-    defaultMessage: 'Let people know how much time you have to give and if there are only a few dates you can give time.',
-    description: 'Offering date prompt'
-  }
+test('render OpTypeTitle with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeTitle
+      type={OpportunityType.OFFER}
+    />
+  )
+  t.is(wrapper.text(), 'Offers')
 })
 
-export const OpTypeDatePrompt = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpTypeDatePromptMsg[type]} />)
-}
-
-const OpTypeDescriptionTitleMsg = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.description.title.ASK',
-    defaultMessage: 'How do you want volunteers to help?',
-    description: 'Asking description title'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.description.title.OFFER',
-    defaultMessage: 'How can you help?',
-    description: 'Offering description title'
-  }
-})
-export const OpTypeDescriptionTitle = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpTypeDescriptionTitleMsg[type]} />)
-}
-
-const OpTypeDescriptionPromptMsg = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.description.prompt.ASK',
-    defaultMessage: 'Is there anything specific you need help with? Let volunteers know how to help you by writing about it here',
-    description: 'Asking description prompt'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.description.prompt.OFFER',
-    defaultMessage: 'Is there anything else you need to tell the people asking for help? Please don’t put personal or contact details here, we’ll take care of that later.',
-    description: 'Offering description prompt'
-  }
-})
-export const OpTypeDescriptionPrompt = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpTypeDescriptionPromptMsg[type]} />)
-}
-
-const OpTypeNoResultsMsg = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.prompt.notfound.ASK',
-    defaultMessage: 'Waiting for someone to ask for help.',
-    description: 'Message to display when an activity does not have any archived opportunities'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.prompt.notfound.OFFER',
-    defaultMessage: 'Waiting for someone to offer to help.',
-    description: 'Message to display when an activity does not have any archived opportunities'
-  }
+test('render OpTypeImperative with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeImperative />
+  )
+  t.is(wrapper.find('span').length, 0)
 })
 
-export const OpTypeNoResults = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpTypeNoResultsMsg[type]} />)
-}
-
-const OpTypeTopicGroupMsg = defineMessages({
-  [ASK]: {
-    id: 'OpportunityType.prompt.topic.ASK',
-    defaultMessage: 'What would you like to get help with?'
-  },
-  [OFFER]: {
-    id: 'OpportunityType.prompt.topic.OFFER',
-    defaultMessage: 'What would you like to help with?'
-  }
+test('render OpTypeImperative with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeImperative
+      type={OpportunityType.OFFER}
+    />
+  )
+  t.is(wrapper.text(), 'Offer to help with')
 })
 
-export const OpTypeTopicGroup = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
-  return (<FormattedMessage {...OpTypeTopicGroupMsg[type]} />)
-}
+test('render OpTypeButtonLabel with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeButtonLabel />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeButtonLabel with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeButtonLabel
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), 'Ask for help with')
+})
+
+test('render OpTypeNoResults with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeNoResults />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeNoResults with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeNoResults
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), 'Waiting for someone to ask for help.')
+})
+
+test('render OpTypeDescriptionPrompt with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDescriptionPrompt />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeDatePrompt with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDatePrompt />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeDatePrompt with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDatePrompt
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), 'Let people know how much time you need, and if there are only a few dates you can be available.')
+})
+
+test('render OpTypeLocationPrompt with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeLocationPrompt />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeLocationPrompt with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeLocationPrompt
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), 'Where do you need help? (Optional)')
+})
+
+test('render OpTypeDateTitle with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDateTitle />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeDateTitle with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDateTitle
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), 'When do you need help? (Optional)')
+})
+
+test('render OpTypeDescriptionTitle with no type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDescriptionTitle />
+  )
+  t.is(wrapper.text(), '')
+})
+
+test('render OpTypeDescriptionTitle with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDescriptionTitle
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), 'How do you want volunteers to help?')
+})
+
+test('render OpTypeDescriptionPrompt with type', t => {
+  const wrapper = mountWithIntl(
+    <OpTypeDescriptionPrompt
+      type={OpportunityType.ASK}
+    />
+  )
+  t.is(wrapper.text(), 'Is there anything specific you need help with? Let volunteers know how to help you by writing about it here')
+})
