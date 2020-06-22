@@ -8,16 +8,19 @@ import { FullPage } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 // import moment from 'moment'
 import { Divider } from 'antd'
+import HowSection from '../../components/LandingPageComponents/HowSection'
 
 import CorporateSection from '../../components/LandingPageComponents/CorporateSection'
 import GiveSupportSection from '../../components/LandingPageComponents/GiveSupportSection'
 
 import GiveContentSection from '../../components/LandingPageComponents/GiveContentSection'
 import TakeSupportSection from '../../components/LandingPageComponents/TakeSupportSection'
-import HowSection from '../../components/LandingPageComponents/HowSection'
 import Testimonial from '../../components/LandingPageComponents/Testimonial'
 import HelpSocialSection from '../../components/LandingPageComponents/HelpSocialSection'
 import HelpOrgsSection from '../../components/LandingPageComponents/HelpOrgsSection'
+
+const isNotProd = process.env.NODE_ENV !== 'production'
+
 export const Landing = ({ isAuthenticated }) => (
   <>
     <Helmet>
@@ -32,22 +35,25 @@ export const Landing = ({ isAuthenticated }) => (
       <OfferSection />
       <Divider />
       <HowSection />
-      <Divider />
-      <Testimonial />
-      <Divider />
-      <GiveSupportSection />
-      <Divider />
-      <TakeSupportSection />
-      <Divider />
-      <CorporateSection />
-      <Divider />
-      <HelpOrgsSection />
-      <Divider />
-      <HelpSocialSection />
+      {isNotProd &&
+        <>
 
-      <Divider />
-      <GiveContentSection />
+          <Divider />
+          <Testimonial />
+          <Divider />
+          <GiveSupportSection />
+          <Divider />
+          <TakeSupportSection />
+          <Divider />
+          <CorporateSection />
+          <Divider />
+          <HelpOrgsSection />
+          <Divider />
+          <HelpSocialSection />
 
+          <Divider />
+          <GiveContentSection />
+        </>}
     </FullPage>
   </>
 )

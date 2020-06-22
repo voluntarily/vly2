@@ -5,7 +5,7 @@ import { Button, Divider } from 'antd'
 import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
 
 const GiveContentSection = () => (
-  <>
+  <div id='content'>
     <HalfGrid>
 
       <ImageContainer src='/static/img/about/content.png' />
@@ -16,11 +16,11 @@ const GiveContentSection = () => (
 
         <StatContainer>
           <img src='./static/img/icons/check.svg' />
-          <P>Safe — everyone gets ID checked to keep you safe - for groups</P>
+          <P>Safe — everyone gets ID checked to keep you safe - for groups</P>
           <img src='./static/img/icons/check.svg' />
-          <P>Personalised — we connect you with local people, for an activity at a time that suits</P>
+          <P>Personalised — we connect you with local people, for an activity at a time that suits</P>
           <img src='./static/img/icons/check.svg' />
-          <P>Recognition and support — we help you through the process, and celebrate success</P>
+          <P>Recognition and support — we help you through the process, and celebrate success</P>
         </StatContainer>
         <Button
           type='primary'
@@ -41,7 +41,7 @@ const GiveContentSection = () => (
           <img src='https://picsum.photos/400/240' />
           <div>
             <H5><strong>Get help with Remote Work</strong></H5>
-            <H5><a>45 people offering to help you</a></H5>
+            <H5>45 people offering to help you</H5>
           </div>
         </PromoCard>
       </a>
@@ -50,7 +50,7 @@ const GiveContentSection = () => (
           <img src='https://picsum.photos/400/240' />
           <div>
             <H5><strong>Get help with Remote Work</strong></H5>
-            <H5><a>45 people offering to help you</a></H5>
+            <H5>45 people offering to help you</H5>
           </div>
         </PromoCard>
       </a>
@@ -58,7 +58,7 @@ const GiveContentSection = () => (
         <PromoCard>
           <img src='https://picsum.photos/400/240' />
           <H5><strong>Get help with Remote Work</strong></H5>
-          <H5><a>45 people offering to help you</a></H5>
+          <H5>45 people offering to help you</H5>
         </PromoCard>
       </a>
 
@@ -72,6 +72,6 @@ const GiveContentSection = () => (
       >See more offers from your community
       </Button>
     </TitleContainerMid>
-  </>
+  </div>
 )
 export default GiveContentSection

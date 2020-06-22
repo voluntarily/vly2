@@ -97,10 +97,10 @@ test.serial('archivedOpDetailPage should have banner and tabs panels', t => {
   )
   t.true(wrapper.exists('OpBanner'))
   t.true(wrapper.exists('OpTabs'))
-  t.is(wrapper.find('TabPane').length, 4)
+  t.is(wrapper.find('TabPane').length, 3)
   t.true(wrapper.exists('OpAboutPanel'))
 
-  wrapper.find('.ant-tabs-tab').at(3).simulate('click')
+  wrapper.find('.ant-tabs-tab').at(2).simulate('click')
   wrapper.update()
   t.true(wrapper.exists('OpManagePanel'))
 })

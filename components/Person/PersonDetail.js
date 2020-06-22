@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
 import TagDisplay from '../Tags/TagDisplay'
-import { ActivityContainer, StyledIcon, H2, H3 } from '../VTheme/VTheme'
+import { StyledIcon, OpSectionGrid } from '../VTheme/VTheme'
 import Html from '../VTheme/Html'
 import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
@@ -47,7 +47,7 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
     <VBanner>
       <VBannerImg src={person.imgUrl} alt={person.nickname} />
       <ProfileBannerTitle>
-        <H2>{person.name}</H2>
+        <h1>{person.name}</h1>
         <p>
           {person.job && `${person.job}`}
           {person.placeOfWork && ` - ${person.placeOfWork}`}
@@ -73,25 +73,30 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
     <Divider />
     {canEdit &&
       <>
-        <ActivityContainer>
-          <H3><FormattedMessage defaultMessage='How to get involved' id='PersonDetail.Participation' description='Participation section header for a person profile' /> </H3>
+        <OpSectionGrid>
+          <h3>
+            <FormattedMessage
+              id='ChooseParticipation.intro'
+              defaultMessage='How do you want to use Voluntarily?'
+            />
+          </h3>
           <div>
             <ParticipationSection person={person} />
           </div>
-        </ActivityContainer>
+        </OpSectionGrid>
         <Divider />
-        <ActivityContainer>
-          <H3><FormattedMessage defaultMessage='Your Interests' id='PersonDetail.TopicGroups' description='TopicGroups section header for a person profile' /> </H3>
+        <OpSectionGrid>
+          <h3><FormattedMessage defaultMessage='Your Interests' id='PersonDetail.TopicGroups' description='TopicGroups section header for a person profile' /> </h3>
           <div>
             <TopicGroupSection person={person} />
           </div>
-        </ActivityContainer>
+        </OpSectionGrid>
         <Divider />
       </>}
     {(person.about || person.tags) &&
       <>
-        <ActivityContainer>
-          <H3><FormattedMessage defaultMessage='About' id='PersonDetail.About' description='About section header for a person profile' /> </H3>
+        <OpSectionGrid>
+          <h3><FormattedMessage defaultMessage='About' id='PersonDetail.About' description='About section header for a person profile' /> </h3>
           <div>
             {person.about &&
               <div>
@@ -100,28 +105,28 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
               </div>}
             {person.tags &&
               <div>
-                <h5>
+                <p>
                   <FormattedMessage
                     defaultMessage='Interests and Skills'
                     id='PersonDetail.skills.title'
                     description='subheading for tags on person details page'
                   />
-                </h5>
+                </p>
                 <TagDisplay tags={person.tags} />
               </div>}
           </div>
 
-        </ActivityContainer>
+        </OpSectionGrid>
         <Divider />
       </>}
-    <ActivityContainer>
-      <H3>
+    <OpSectionGrid>
+      <h3>
         <FormattedMessage
           defaultMessage='Contact'
           id='PersonDetail.Contact'
           description='Heading for contact details on person details page'
         />
-      </H3>
+      </h3>
       <InfoSection>
         <PersonUl>
 
@@ -197,16 +202,16 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
             </li>}
         </PersonUl>
       </InfoSection>
-    </ActivityContainer>
+    </OpSectionGrid>
     <Divider />
-    <ActivityContainer>
-      <H3>
+    <OpSectionGrid>
+      <h3>
         <FormattedMessage
           id='PersonDetail.subheading.membership'
           defaultMessage='Organisations'
           description='Header for list of orgs I belong to'
         />
-      </H3>
+      </h3>
       <div>
 
         {person.orgMembership &&
@@ -233,20 +238,20 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
             <MemberUl members={person.orgFollowership} />
           </DetailItem>}
       </div>
-    </ActivityContainer>
+    </OpSectionGrid>
     <Divider />
-    <ActivityContainer>
+    <OpSectionGrid>
 
-      <H3>
+      <h3>
         <FormattedMessage
           id='PersonDetail.subheading.achievements'
           defaultMessage='Recognition'
           description='Header for list of badges I have obtained'
         />
-      </H3>
+      </h3>
 
       <PersonBadgeSection person={person} />
-    </ActivityContainer>
+    </OpSectionGrid>
 
     <Divider />
   </>

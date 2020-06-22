@@ -15,17 +15,11 @@ const CardContainer = styled.div`
 
 overflow: visible;
   display:grid;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr;
   grid-column-gap: 2rem;
   grid-row-gap: 2rem;
   
-  @media screen and (min-width: 768px) {
-    grid-template-columns: 1fr 1fr;
-  }
 
-  @media screen and (min-width: 998px) {
-    grid-template-columns: 1fr 1fr;
-  }
 `
 
 const OpList = ({ ops }) => (

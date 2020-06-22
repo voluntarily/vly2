@@ -5,7 +5,7 @@ const { ASK, OFFER } = OpportunityType
 export const OpTypeMessages = defineMessages({
   [ASK]: {
     id: 'OpportunityType.ASK',
-    defaultMessage: 'is asking for help',
+    defaultMessage: 'is asking for your help',
     description: 'Ask label prefix'
   },
   [OFFER]: {
@@ -24,6 +24,19 @@ export const OpType2 = defineMessages({
   [OFFER]: {
     id: 'OpportunityType.OFFER2',
     defaultMessage: 'can help with',
+    description: 'Offer label prefix'
+  }
+})
+
+export const OpType3 = defineMessages({
+  [ASK]: {
+    id: 'OpportunityType.ASK3',
+    defaultMessage: 'You offered to help',
+    description: 'Ask label prefix'
+  },
+  [OFFER]: {
+    id: 'OpportunityType.OFFER3',
+    defaultMessage: 'You asked for help from',
     description: 'Offer label prefix'
   }
 })
@@ -49,6 +62,11 @@ export const OpTypeSuffix = ({ type }) => {
 export const OpTypeTitle = ({ type }) => {
   if (!type || ![ASK, OFFER].includes(type)) return null
   return (<FormattedMessage {...OpTypeAct[type]} />)
+}
+
+export const OpTypeTense = ({ type }) => {
+  if (!type || ![ASK, OFFER].includes(type)) return null
+  return (<FormattedMessage {...OpType3[type]} />)
 }
 
 /** Converts an opportunity type to a translated display string */
@@ -99,12 +117,12 @@ export const OpTypeEmoji = {
 export const OpTypeVerbs = defineMessages({
   [ASK]: {
     id: 'OpportunityType.verb.ASK',
-    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} asking for help',
+    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} asking you for help',
     description: 'Asking for help'
   },
   [OFFER]: {
     id: 'OpportunityType.verb.OFFER',
-    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} offering to help',
+    defaultMessage: '{count, plural, =0{No people} one {person} other {people}} offering to help you ',
     description: 'Offering help'
   }
 })
@@ -164,12 +182,12 @@ export const OpCommitment = ({ duration }) => {
 const OpTypeLocationMsg = defineMessages({
   [ASK]: {
     id: 'OpportunityType.location.ASK',
-    defaultMessage: 'Where do you need help?',
+    defaultMessage: 'Where do you need help? (Optional)',
     description: 'Asking location prompt'
   },
   [OFFER]: {
     id: 'OpportunityType.location.OFFER',
-    defaultMessage: 'Where do you want to help?',
+    defaultMessage: 'Where can you help? (Optional)',
     description: 'Offering location prompt'
   }
 })
@@ -181,12 +199,12 @@ export const OpTypeLocationPrompt = ({ type }) => {
 const OpTypeDateTitleMsg = defineMessages({
   [ASK]: {
     id: 'OpportunityType.date.title.ASK',
-    defaultMessage: 'When do you need help?',
+    defaultMessage: 'When do you need help? (Optional)',
     description: 'Asking date title'
   },
   [OFFER]: {
     id: 'OpportunityType.date.title.OFFER',
-    defaultMessage: 'When do you want to help?',
+    defaultMessage: 'When can you help? (Optional)',
     description: 'Offering date title'
   }
 })
@@ -215,12 +233,12 @@ export const OpTypeDatePrompt = ({ type }) => {
 const OpTypeDescriptionTitleMsg = defineMessages({
   [ASK]: {
     id: 'OpportunityType.description.title.ASK',
-    defaultMessage: 'Anything Else?',
+    defaultMessage: 'How do you want volunteers to help?',
     description: 'Asking description title'
   },
   [OFFER]: {
     id: 'OpportunityType.description.title.OFFER',
-    defaultMessage: 'Anything Else?',
+    defaultMessage: 'How can you help?',
     description: 'Offering description title'
   }
 })
@@ -232,7 +250,7 @@ export const OpTypeDescriptionTitle = ({ type }) => {
 const OpTypeDescriptionPromptMsg = defineMessages({
   [ASK]: {
     id: 'OpportunityType.description.prompt.ASK',
-    defaultMessage: 'Is there anything else the helpers need to know to help you? Please don’t put your personal or contact details on here, we’ll take care of that later',
+    defaultMessage: 'Is there anything specific you need help with? Let volunteers know how to help you by writing about it here',
     description: 'Asking description prompt'
   },
   [OFFER]: {

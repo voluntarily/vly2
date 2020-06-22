@@ -165,7 +165,6 @@ test('interested state', t => {
   )
   t.false(wrapper.exists('#acceptBtn'))
   t.true(wrapper.exists('#rejectBtn'))
-  t.true(wrapper.exists('#messageBtn'))
 
   // click reject button and get popup form
   wrapper.find('#rejectBtn').first().simulate('click')
@@ -221,44 +220,6 @@ test(InterestStatus.INVITED, t => {
   // status change callback is called.
   t.true(handleReject.calledOnce)
   t.true(handleReject.calledWith('Withdraw message'))
-})
-
-test(InterestStatus.COMMITTED, t => {
-  const handleAccept = sinon.fake()
-  const handleReject = sinon.fake()
-  const handleMessage = sinon.fake()
-  const realStore = makeStore(initStore)
-
-  const wrapper = mountWithIntl(
-    <Provider store={realStore}>
-      <RegisterInterestItem
-        interest={interests[3]}
-        onAccept={handleAccept}
-        onReject={handleReject}
-        onMessage={handleMessage}
-      />
-    </Provider>
-  )
-  t.false(wrapper.exists('#acceptBtn'))
-  t.true(wrapper.exists('#rejectBtn'))
-  t.true(wrapper.exists('#messageBtn'))
-
-  // click message button and get popup form
-  wrapper.find('#messageBtn').first().simulate('click')
-  const messageForm = wrapper.find('#messageRegisterInterestForm').first()
-  t.true(messageForm.props().visible)
-
-  // add message
-  const comment = messageForm.find('textarea').first()
-  comment.simulate('change', { target: { value: 'Hello message' } })
-  wrapper.update()
-
-  // commit the form
-  wrapper.find('#sendBtn').first().simulate('click')
-
-  // status change callback is called.
-  t.true(handleMessage.calledOnce)
-  t.true(handleMessage.calledWith('Hello message'))
 })
 
 test(InterestStatus.DECLINED, t => {

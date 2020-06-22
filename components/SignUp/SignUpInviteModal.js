@@ -8,7 +8,7 @@ import { SignUpButton, SignInButton } from '../../components/VTheme/Buttons'
 const SignUpInviteTitle = (
   <FormattedMessage
     id='SignUpModal.title'
-    defaultMessage='Ready to get involved'
+    defaultMessage='Get involved'
     description='title on sign up or sign in invitation '
   />
 )

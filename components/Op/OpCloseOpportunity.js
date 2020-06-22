@@ -53,7 +53,7 @@ export const OpCloseOpportunity = ({ op, dispatch }) => {
         </h4>
 
         <ControlGrid>
-          <h5><strong>Finish this activity</strong><br />Only use this button once your activity is complete</h5>
+          <h3><strong>Finish this activity</strong><br />Only use this button once your activity is complete</h3>
           <Popconfirm id='completedOpPopConfirm' title='Confirm completion of this opportunity.' onConfirm={handleCompleteOpportunity} okText='Yes' cancelText='No'>
             <Button type='primary' shape='round' size='large'>
               <FormattedMessage id='completedOp' defaultMessage='Completed' description='Button to confirm opportunity is completed on OpDetails page' />
@@ -62,7 +62,7 @@ export const OpCloseOpportunity = ({ op, dispatch }) => {
         </ControlGrid>
         <Divider />
         <ControlGrid>
-          <h5><strong>Cancel this activity</strong><br />This will end the activity and stop volunteers from seeing it</h5>
+          <h3><strong>Cancel this activity</strong><br />This will end the activity and stop volunteers from seeing it</h3>
           <Popconfirm id='cancelOpPopConfirm' title='Confirm cancel of this opportunity.' onConfirm={handleCancelOpportunity} okText='Yes' cancelText='No'>
             <Button type='danger' shape='round' size='large'>
               <FormattedMessage id='cancelOp' defaultMessage='Cancel Request' description='Button to cancel an opportunity on OpDetails page' />

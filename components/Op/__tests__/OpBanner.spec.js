@@ -4,7 +4,6 @@ import { shallowWithIntl } from '../../../lib/react-intl-test-helper'
 import OpBanner from '../OpBanner'
 import ops from './Op.fixture'
 import moment from 'moment'
-import { H2 } from '../../VTheme/VTheme'
 
 test.before('Setup fixtures', (t) => {
   // Initial opportunities
@@ -22,7 +21,6 @@ test('Banner for op with no date', t => {
   const img = wrapper.find('ItemList__ItemImage').first()
   t.true(wrapper.exists('ItemList__ItemImage'))
   t.is(img.props().src, op.imgUrl)
-  t.true(wrapper.find(H2).text().includes(op.name))
   t.is(wrapper.find('ItemDate').props().startDate, 'Negotiable')
 })
 
@@ -33,7 +31,7 @@ test('Banner for op with open date', t => {
       <p>child</p>
     </OpBanner>
   )
-  t.true(wrapper.find(H2).text().includes(op.name))
+  t.true(wrapper.find('h1').text().includes(op.name))
   t.is(wrapper.find('ItemDuration').props().duration, op.duration)
   const dateStr = moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
   t.is(wrapper.find('ItemDate').props().startDate, dateStr)
@@ -49,7 +47,7 @@ test('Banner for op with date range', t => {
   const img = wrapper.find('ItemList__ItemImage').first()
   t.true(wrapper.exists('ItemList__ItemImage'))
   t.is(img.props().src, op.imgUrl)
-  t.true(wrapper.find(H2).text().includes(op.name))
+  t.true(wrapper.find('h1').text().includes(op.name))
   t.is(wrapper.find('ItemDuration').props().duration, op.duration)
   const startDateStr = moment(op.date[0]).format('h:mmA · ddd DD/MM/YY')
   const endDateStr = moment(op.date[1]).format('  →  h:mmA · ddd DD/MM/YY')

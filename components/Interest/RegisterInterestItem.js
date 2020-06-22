@@ -3,15 +3,13 @@
 //   Unlike InterestItem, this one is a Form allowing state changes.
 // */
 
-import { Affix, Button, Icon, notification } from 'antd'
+import { Button, Icon, notification } from 'antd'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { useIntl, defineMessages, FormattedMessage } from 'react-intl'
 import RegisterInterestMessageForm from './RegisterInterestMessageForm'
 import { PageAlert } from '../VTheme/VTheme'
 import { InterestStatus } from '../../server/api/interest/interest.constants'
-import { InterestMessageItem, InterestMessageList } from './InterestMessage'
-import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 const { ASK, OFFER } = OpportunityType
@@ -27,28 +25,8 @@ const { ASK, OFFER } = OpportunityType
 const AffixTopBar = ({ children }) => {
   return (process.env.NODE_ENV === 'test')
     ? <>{children}</>
-    : <Affix style={{ width: '100%', position: 'absolute', top: 0, left: 0 }} offsetTop={56}>{children}</Affix>
+    : <div style={{ width: '100%', position: 'absolute', top: '-5rem', left: 0 }} offsetTop={56}>{children}</div>
 }
-
-const MessagePanel = styled.section`
-box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.5);
-margin-top: 1rem;
-border-radius: 8px;
--webkit-transition: all 0.3s;
-transition: all 0.3s;
-:hover {
-  border-radius: 8px;
-  transform: scale(1.02);
-  h3 {
-    color: #6549AA;
-  }
-}
-`
-/* <MessagePanel>
-<InterestMessageList messages={interest.messages} />
-</MessagePanel>
-      style: 'backgroundColor: #A0B0C0'
-*/
 
 export const RegisterInterestItem = ({
   interest,
@@ -64,21 +42,6 @@ export const RegisterInterestItem = ({
   const op = useSelector(state => state.opportunities.data[0])
   const options = getOptions(interest.status, op.type, op.requestor)
 
-  const showMessages = () => {
-    notification.info({
-      message: `${interest.messages.length} Messages`,
-      description: <InterestMessageList messages={interest.messages} />,
-      placement: 'bottomRight',
-      duration: 4.5, // never close
-      style: {
-        maxHeight: '30rem',
-        overflow: 'auto'
-        // width: '20rem',
-        // marginLeft: 335 - 600
-      }
-
-    })
-  }
   const handleAcceptSubmit = (ok, message) => {
     setShowAcceptForm(false)
     if (ok) {
@@ -113,10 +76,6 @@ export const RegisterInterestItem = ({
     e.preventDefault()
     setShowRejectForm(true)
   }
-  const handleMessageClick = (e) => {
-    e.preventDefault()
-    setShowMessageForm(true)
-  }
 
   const handleMessageSubmit = (ok, message) => {
     setShowMessageForm(false)
@@ -140,7 +99,7 @@ export const RegisterInterestItem = ({
           <Button
             id='acceptBtn'
             block
-            type='primary' shape='round' size='large' style={{ placeSelf: 'center' }}
+            type='primary' shape='round' size='large' style={{ placeSelf: 'start', maxWidth: '20rem' }}
             onClick={handleAcceptClick}
           >
             {options.acceptButtonText}
@@ -153,34 +112,15 @@ export const RegisterInterestItem = ({
             shape='round'
             size='large'
             block
-            style={{ placeSelf: 'center' }}
+            style={{ placeSelf: 'start', maxWidth: '20rem' }}
             onClick={handleRejectClick}
           >
             {options.rejectButtonText}
           </Button>
         )}
-        {options.showMessageButton && (
-          <Button
-            id='messageBtn'
-            size='large'
-            block
-            style={{ placeSelf: 'center' }}
-            shape='round' onClick={handleMessageClick}
-          >
-            <FormattedMessage
-              id='RegisterInterestItem.MessageOp'
-              defaultMessage='Message {nickname}'
-              description='Button allowing volunteer send a message to the organiser'
-              values={{ nickname: op.requestor.nickname }}
-            />
-          </Button>
-        )}
       </>
     )
   }
-
-  const latestMsg = interest.messages.slice(-1)[0]
-
   return (
     <>
       {options.showStatus
@@ -194,9 +134,6 @@ export const RegisterInterestItem = ({
           </AffixTopBar>
         )
         : <RegisterButtons />}
-      <MessagePanel onClick={() => showMessages()}>
-        <InterestMessageItem message={latestMsg} />
-      </MessagePanel>
 
       <RegisterInterestMessageForm
         id='acceptRegisterInterestForm'

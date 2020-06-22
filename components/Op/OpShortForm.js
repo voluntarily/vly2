@@ -102,8 +102,7 @@ class OpShortForm extends Component {
           <OpFormDate getFieldDecorator={getFieldDecorator} type={op.type} onChange={this.handleStartDateChange} />
           {/* <OpFormTags getFieldDecorator={getFieldDecorator} existingTags={this.props.existingTags} /> */}
           <Divider />
-          <OpFormDescription getFieldDecorator={getFieldDecorator} type={op.type} />
-          <Divider />
+
           <OpFormPublishBtns getFieldDecorator={getFieldDecorator} type={op.type} onSubmit={this.handleSubmit} onCancel={this.props.onCancel} />
         </Form>
       </div>

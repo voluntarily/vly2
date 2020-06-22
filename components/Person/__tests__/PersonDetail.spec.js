@@ -93,7 +93,7 @@ test('render person details as other person', t => {
     <PersonDetail person={t.context.me} />
   )
   t.truthy(wrapper.find('Head'))
-  t.is(wrapper.find('h2').text(), t.context.me.name)
+  t.is(wrapper.find('h1').text(), t.context.me.name)
   t.truthy(wrapper.find(ActivityContainer))
   t.truthy(wrapper.find(VBanner))
   t.is(wrapper.find(ProfileBannerTitle).length, 1)
@@ -116,8 +116,8 @@ test('render person details as self', t => {
 
   )
   t.truthy(wrapper.find('Head'))
-  t.is(wrapper.find('h1').length, 2)
-  t.is(wrapper.find('h1').at(1).text(), 'What would you like to get help with?')
+  t.is(wrapper.find('h1').length, 1)
+
   t.truthy(wrapper.find(ActivityContainer))
   t.truthy(wrapper.find(VBanner))
   t.is(wrapper.find(ProfileBannerTitle).length, 1)

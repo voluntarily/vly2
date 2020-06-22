@@ -41,7 +41,7 @@ const OpCard = ({ op }) => {
   const interestIcon = ((interest) => {
     if (!interest) { return '' }
     switch (interest.status) {
-      case 'interested': return <TagState style={{ color: '#222', backgroundColor: '#E1E1E1' }}><StyledIcon type='mail' />You offered to help</TagState>
+      case 'interested': return <TagState style={{ color: '#222', backgroundColor: '#E1E1E1' }}><StyledIcon type='mail' />Signed up</TagState>
       case 'invited': return <TagState style={{ color: 'white', backgroundColor: '#653CAD' }}><StyledIcon type='calendar' />You are invited</TagState>
       case 'committed': return <TagState style={{ color: 'black', backgroundColor: '#36F482' }}><StyledIcon type='check-circle' />Accepted</TagState>
       case 'declined': return <TagState style={{ color: 'white', backgroundColor: '#F44336' }}><StyledIcon type='close-circle' />Cancelled</TagState>
@@ -61,6 +61,7 @@ const OpCard = ({ op }) => {
         <a>
           <ImageWrapper>
             <img src={cardImage} alt={op.name} />
+            {interestIcon}
             {/* <OpTypeStamp type={op.type} /> */}
           </ImageWrapper>
           <figcaption>
@@ -71,24 +72,22 @@ const OpCard = ({ op }) => {
               {draft}
               {op.name}
             </h1>
-            <ul>
-              {startLocation && <li> {startLocation}</li>}
-              {startTime && <li> {startTime} </li>}
-              {startDuration && <li> {startDuration}</li>}
-              {op.createdAt && <li>🎬{moment(op.createdAt).fromNow()}</li>}
-            </ul>
 
             <DescriptionWrapper>
               {op.subtitle}<br />
               {/* <OpType type={op.type} /> */}
             </DescriptionWrapper>
+            <ul>
 
+              {startLocation && <li> {startLocation}</li>}
+              {startTime && <li> {startTime} </li>}
+              {startDuration && <li> {startDuration}</li>}
+            </ul>
             <DescriptionWrapper>
               {/* {orgName &&
                 <i>Via {orgName}&nbsp;</i>} */}
               <i> created {moment(op.createdAt).fromNow()}</i>
             </DescriptionWrapper>
-            {interestIcon}
 
           </figcaption>
         </a>
