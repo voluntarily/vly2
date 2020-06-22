@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import OpFormDate from './OpFormDate'
-import OpFormDescription from './OpFormDescription'
+// import OpFormDescription from './OpFormDescription'
 import OpFormPublishBtns from './OpFormDoneBtns'
 import OpFormLocation from './OpFormLocation'
 import OpFormTitle from './OpFormTitle'
@@ -157,7 +157,7 @@ OpShortForm.propTypes = {
   existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   locations: PropTypes.shape({
     addressFinderKey: PropTypes.string.isRequired
-  }),
+  })
   // dispatch: PropTypes.func.isRequired,
 }
 
