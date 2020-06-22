@@ -134,7 +134,6 @@ const verifyLiveCallback = async (req, res) => {
   }
 }
 
-const titlify = str => str[0].toUpperCase() + str.slice(1)
 const createPersonVerifiedUpdate = (
   nameStatus, nameValue,
   addressStatus, addressValue,
@@ -167,22 +166,22 @@ const createPersonVerifiedUpdate = (
   if (dateOfBirthStatus === VERIFIED) {
     update.dob = Date(dateOfBirthValue)
   }
-  if (addressStatus === VERIFIED) {
-    update.address = Object.keys(nameValue).map(key => titlify(nameValue[key])).join()
-  }
   return update
 }
 
+const enterAddress = async (address) => {
+  address.suburb = address.suburb ? address.suburb : ''
+  address.street = address.street ? address.street : ''
+  address.postcode = address.postcode ? address.postcode : ''
+  address.city = address.city ? address.city : ''
+  return address
+}
+
 const verifyDriversLicence = async (driversLicence, personId, reference) => {
-  // TODO: Once we have the address enable verification
+  const person = await Person.findOne({ _id: personId })
   const data = {
     details: {
-      // address: {
-      //   suburb: '',
-      //   street: '',
-      //   postcode: '',
-      //   city: ''
-      // },
+      address: person.address ? enterAddress(person.address) : undefined,
       name: {
         given: driversLicence.givenName ? driversLicence.givenName : '',
         middle: driversLicence.middleName ? driversLicence.middleName : '',
