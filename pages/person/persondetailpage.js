@@ -159,12 +159,13 @@ export class PersonDetailPage extends Component {
     const canEdit = (isOrgAdmin || isAdmin || (person && person._id === this.props.me._id))
 
     if (this.state.editing) {
+      const locations = this.props.locations.data[0]
       return (
         <FullPage>
           <Helmet>
             <title>Edit {person.name} - Voluntarily</title>
           </Helmet>
-          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancelEdit.bind(this)} locations={this.props.locations.data} existingTags={this.props.tags.data} me={this.props.me} />
+          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancelEdit.bind(this)} locations={locations} existingTags={this.props.tags.data} me={this.props.me} />
         </FullPage>)
     }
 
