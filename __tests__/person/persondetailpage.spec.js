@@ -260,18 +260,18 @@ test('render Dalis PersonDetailPage as self dali', async t => {
   const editPerson = personDetail.find('Button#editPersonBtn')
   editPerson.props().onClick()
   // we should now be in edit mode
-  t.true(wrapper.exists('Connect(WrappedWithAddressFinderComponent)'))
+  t.true(wrapper.exists('Connect(Form(WrappedWithAddressFinderComponent))'))
   // cancel the edit
-  wrapper.find('Connect(WrappedWithAddressFinderComponent)').first().props().onCancel()
+  wrapper.find('Connect(Form(WrappedWithAddressFinderComponent))').first().props().onCancel()
   personDetail = wrapper.find('PersonDetail').first().dive()
 
   t.is(personDetail.find('Button').length, 1)
 
   // edit again
   editPerson.props().onClick()
-  t.true(wrapper.exists('Connect(WrappedWithAddressFinderComponent)'))
+  t.true(wrapper.exists('Connect(Form(WrappedWithAddressFinderComponent))'))
   // save the edit
-  await wrapper.find('Connect(WrappedWithAddressFinderComponent)').first().props().onSubmit(dali)
+  await wrapper.find('Connect(Form(WrappedWithAddressFinderComponent))').first().props().onSubmit(dali)
   personDetail = wrapper.find('PersonDetail').first().dive()
   t.true(personDetail.exists('#editPersonBtn'))
   t.is(props.dispatch.callCount, 1)
@@ -303,13 +303,13 @@ test('render new PersonDetailPage as admin ', async t => {
   const wrapper = outer.dive()
 
   // we should start in edit mode
-  t.true(wrapper.exists('Connect(WrappedWithAddressFinderComponent)'))
+  t.true(wrapper.exists('Connect(Form(WrappedWithAddressFinderComponent))'))
   // cancel the edit
-  wrapper.find('Connect(WrappedWithAddressFinderComponent)').first().props().onCancel()
+  wrapper.find('Connect(Form(WrappedWithAddressFinderComponent))').first().props().onCancel()
   t.is(router.back.callCount, 1)
 
   // save the edit
-  await wrapper.find('Connect(WrappedWithAddressFinderComponent)').first().props().onSubmit(alice)
+  await wrapper.find('Connect(Form(WrappedWithAddressFinderComponent))').first().props().onSubmit(alice)
   t.is(props.dispatch.callCount, 1)
   t.is(router.replace.lastArg, '/people')
 })

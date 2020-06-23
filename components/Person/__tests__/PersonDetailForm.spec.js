@@ -57,7 +57,7 @@ test('shallow the detail with person', t => {
   const wrapper = shallowWithIntl(
     <PersonDetailForm person={t.context.me} existingTags={tagList} locations={locations} onSubmit={() => {}} onCancel={() => {}} me={t.context.me} />
   )
-  t.is(wrapper.find('Form(WrappedWithAddressFinderComponent)').length, 1)
+  t.is(wrapper.find('WrappedWithAddressFinderComponent').length, 1)
 })
 
 test('render the detail with op', t => {
