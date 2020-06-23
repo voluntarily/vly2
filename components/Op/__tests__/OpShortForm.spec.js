@@ -104,7 +104,7 @@ test('render the detail with op', t => {
     <OpShortForm
       op={op}
       me={me}
-      onSubmit={submitOp} 
+      onSubmit={submitOp}
       onCancel={cancelOp}
       existingTags={[]}
       locations={locations}
