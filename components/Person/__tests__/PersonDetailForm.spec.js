@@ -14,6 +14,11 @@ import { Role } from '../../../server/services/authorize/role'
 
 const { sortedLocations } = require('../../../server/api/location/locationData')
 
+const locations = {
+  locations: sortedLocations,
+  addressFinderKey: 'hyijekahlfjsoe'
+}
+
 MockWindowScrollTo.replaceForTest(test, global)
 
 test.before(t => {
@@ -50,9 +55,9 @@ test.after.always(() => {
 
 test('shallow the detail with person', t => {
   const wrapper = shallowWithIntl(
-    <PersonDetailForm person={t.context.me} existingTags={tagList} locations={sortedLocations} onSubmit={() => {}} onCancel={() => {}} me={t.context.me} />
+    <PersonDetailForm person={t.context.me} existingTags={tagList} locations={locations} onSubmit={() => {}} onCancel={() => {}} me={t.context.me} />
   )
-  t.is(wrapper.find('PersonDetail').length, 1)
+  t.is(wrapper.find('Form(WrappedWithAddressFinderComponent)').length, 1)
 })
 
 test('render the detail with op', t => {
@@ -62,7 +67,7 @@ test('render the detail with op', t => {
   const cancelOp = sinon.spy()
 
   const wrapper = mountWithIntl(
-    <PersonDetailForm person={t.context.me} existingTags={tagList} locations={sortedLocations} onSubmit={submitOp} onCancel={cancelOp} me={t.context.me} />
+    <PersonDetailForm person={t.context.me} existingTags={tagList} locations={locations} onSubmit={submitOp} onCancel={cancelOp} me={t.context.me} />
   )
   t.true(wrapper.exists('ForwardRef(TagSelect)'))
   const locationInput = wrapper.find('ForwardRef(TagSelect)').first()

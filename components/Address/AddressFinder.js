@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 
 // A high order component to load a <script> of Address Finder Widget
 export const withAddressFinder = (Component) => {
-  const WrappedComponent = (props) => {
+  const WrappedWithAddressFinderComponent = (props) => {
     const [scriptLoaded, setScriptLoaded] = useState(false)
     const mounted = useRef(false)
 
@@ -30,5 +30,5 @@ export const withAddressFinder = (Component) => {
     return <Component {...props} scriptLoaded={scriptLoaded} />
   }
 
-  return WrappedComponent
+  return WrappedWithAddressFinderComponent
 }

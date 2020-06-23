@@ -167,11 +167,14 @@ async function updatePersonDetail (req, res, next) {
   }
 
   // Populate the city and region field of person address into the locations array
-  if (Object.keys(person.address).includes('city') || Object.keys(person.address).includes('region')) {
-    let locationsFromPersonAddress = [...new Set([person.address.city, person.address.region])] // remove duplicated value
-    if (locationsFromPersonAddress.length > 0) {
-      locationsFromPersonAddress = locationsFromPersonAddress.filter(val => val) // remove null value
-      person.locations = person.locations.concat(locationsFromPersonAddress)
+  if (person.address) {
+    if (Object.keys(person.address).includes('city') || Object.keys(person.address).includes('region')) {
+      // remove duplicated value
+      let locationsFromPersonAddress = [...new Set([person.address.city, person.address.region])] 
+      if (locationsFromPersonAddress.length > 0) {
+        locationsFromPersonAddress = locationsFromPersonAddress.filter(val => val) // remove null value
+        person.locations = person.locations.concat(locationsFromPersonAddress)
+      }
     }
   }
 

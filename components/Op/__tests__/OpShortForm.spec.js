@@ -60,6 +60,12 @@ const blankOffer = {
   endDate: null,
   date: []
 }
+
+const locations = {
+  locations: sortedLocations,
+  addressFinderKey: 'hyijekahlfjsoe'
+}
+
 // const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p`)
 // global.window = dom// setting a mock window global object so the upload image component is not complaining
 // global.SVGElement = Array
@@ -98,12 +104,13 @@ test('render the detail with op', t => {
     <OpShortForm
       op={op}
       me={me}
-      onSubmit={submitOp}
+      onSubmit={submitOp} 
       onCancel={cancelOp}
-      existingLocations={sortedLocations}
       existingTags={[]}
+      locations={locations}
     />
   )
+
   t.is(wrapper.find('OpShortForm').length, 1)
   t.is(wrapper.find('button').length, 3)
   wrapper.find('#backBtn').first().simulate('click')
@@ -124,8 +131,8 @@ test('render the detail with new blank ask op', t => {
       me={me}
       onSubmit={submitOp}
       onCancel={cancelOp}
-      existingLocations={sortedLocations}
       existingTags={[]}
+      locations={locations}
     />
   )
   const datePicker = wrapper.find('.ant-calendar-picker')
@@ -167,8 +174,8 @@ test('render the detail with new blank offer op', t => {
       me={me}
       onSubmit={submitOp}
       onCancel={cancelOp}
-      existingLocations={sortedLocations}
       existingTags={[]}
+      locations={locations}
     />
   )
   const datePicker = wrapper.find('.ant-calendar-picker')
@@ -221,8 +228,8 @@ test('Save a op as draft with correct validation', async t => {
       me={me}
       onSubmit={submitOp}
       onCancel={cancelOp}
-      existingLocations={sortedLocations}
       existingTags={[]}
+      locations={locations}
     />
   )
 
@@ -263,8 +270,8 @@ test('Publish a op with correct validation', t => {
       me={me}
       onSubmit={submitOp}
       onCancel={cancelOp}
-      existingLocations={sortedLocations}
       existingTags={[]}
+      locations={locations}
     />
   )
 
