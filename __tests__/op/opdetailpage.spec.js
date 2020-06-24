@@ -495,5 +495,5 @@ test('page loads when user is not signed in but does not show edit VP-499', t =>
       <OpDetailPageWithOps {...props} />
     </Provider>
   )
-  t.is(wrapper.find('.ant-tabs-tab').length, 3)
+  t.is(wrapper.find('.ant-tabs-tab').length, 2)
 })

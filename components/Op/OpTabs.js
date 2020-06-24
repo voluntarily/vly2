@@ -50,7 +50,6 @@ const isNotProd = process.env.NODE_ENV !== 'production'
 
 export const OpTabs = ({ op, onChange, canManage, canEdit, defaultTab, author }) => {
   const interest = useSelector(state => state.interests.data[0])
-  console.log((interest))
   return (
     <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
       <TabPane tab={opAboutTab} key='about'>
