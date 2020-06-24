@@ -43,7 +43,7 @@ class OpShortForm extends Component {
           // op.subtitle = values.subtitle
           // op.tags = values.tags
           op.duration = values.duration
-          op.locations = [values.city, values.region]
+          op.locations = [...new Set([values.city, values.region])]
           delete op.location
           op.address = {
             street: values.street,
