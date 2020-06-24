@@ -8,6 +8,7 @@ import { OpQuestionPanel } from './OpQuestionPanel'
 import { OpManagePanel } from './OpManagePanel'
 import VTabs from '../VTheme/VTabs'
 import OpChatPanel from './OpChatPanel'
+import { useSelector } from 'react-redux'
 
 const { TabPane } = Tabs
 
@@ -47,32 +48,35 @@ const opEditTab =
 
 const isNotProd = process.env.NODE_ENV !== 'production'
 
-export const OpTabs = ({ op, onChange, canManage, canEdit, defaultTab, author }) => (
-  <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
-    <TabPane tab={opAboutTab} key='about'>
-      <OpAboutPanel op={op} />
-    </TabPane>
-    {!canManage &&
-      <TabPane tab={opChatTab} key='chat'>
-        <OpChatPanel op={op} />
-      </TabPane>}
-    {isNotProd && (
-      <TabPane tab={opForumTab} key='question'>
-        <OpQuestionPanel op={op} />
+export const OpTabs = ({ op, onChange, canManage, canEdit, defaultTab, author }) => {
+  const interest = useSelector(state => state.interests.data[0])
+  console.log((interest))
+  return (
+    <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
+      <TabPane tab={opAboutTab} key='about'>
+        <OpAboutPanel op={op} />
       </TabPane>
-    )}
+      {!canManage && !(interest === undefined) &&
+        <TabPane tab={opChatTab} key='chat'>
+          <OpChatPanel op={op} />
+        </TabPane>}
+      {isNotProd && (
+        <TabPane tab={opForumTab} key='question'>
+          <OpQuestionPanel op={op} />
+        </TabPane>
+      )}
 
-    {canManage && (
-      <TabPane tab={opManageTab} key='manage'>
-        <OpManagePanel op={op} />
-      </TabPane>
-    )}
-    {canEdit && (
-      <TabPane tab={opEditTab} key='edit' />
-    )}
-  </VTabs>
-)
-
+      {canManage && (
+        <TabPane tab={opManageTab} key='manage'>
+          <OpManagePanel op={op} />
+        </TabPane>
+      )}
+      {canEdit && (
+        <TabPane tab={opEditTab} key='edit' />
+      )}
+    </VTabs>
+  )
+}
 OpTabs.propTypes = {
   op: PropTypes.shape({
     name: PropTypes.string.isRequired,
