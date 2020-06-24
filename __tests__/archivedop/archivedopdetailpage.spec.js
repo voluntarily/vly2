@@ -54,6 +54,9 @@ test.before('Setup fixtures', (t) => {
         sync: true,
         loading: false,
         data: []
+      },
+      interests: {
+        data: []
       }
     }
   )
