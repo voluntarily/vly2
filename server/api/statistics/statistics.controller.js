@@ -1,10 +1,22 @@
 const { InterestArchive } = require('../interest/interest')
 const Member = require('../member/member')
 const mongoose = require('mongoose')
+const moment = require('moment')
 
 const getSummary = async (req, res) => {
-  const { orgId } = req.params
-  // TODO: use timeframe in query
+  const { orgId, timeframe } = req.params
+
+  let afterDate
+  switch (timeframe) {
+    case 'month':
+      afterDate = moment().subtract(1, 'months').toDate()
+      break
+    case 'year':
+      afterDate = moment().subtract(1, 'years').toDate()
+      break
+    default:
+      return res.status(400).send({ message: 'invalid timeframe: must be month/year' })
+  }
 
   try {
     // the volunteers for an organisation are those that have attended an opportunity
@@ -19,16 +31,6 @@ const getSummary = async (req, res) => {
           localField: 'person',
           foreignField: 'person',
           as: 'archivedInterests'
-        }
-      },
-      // find members that have at least one attended archived interest
-      {
-        $match: {
-          archivedInterests: {
-            $elemMatch: {
-              status: 'attended'
-            }
-          }
         }
       },
       // filter to have only attended archived interests
@@ -52,6 +54,36 @@ const getSummary = async (req, res) => {
           localField: 'archivedInterests.opportunity',
           foreignField: '_id',
           as: 'opportunitiesAttended'
+        }
+      },
+      // filter opportunites within the given timeframe
+      {
+        $addFields: {
+          opportunitiesAttended: {
+            $filter: {
+              input: '$opportunitiesAttended',
+              cond: {
+                $gt: [
+                  {
+                    $arrayElemAt: ['$$opportunitiesAttended.date', 0]
+                  },
+                  afterDate
+                ]
+              },
+              as: 'opportunitiesAttended'
+            }
+          }
+        }
+      },
+      // remove members that havent attended opportunities within the timeframe
+      {
+        $match: {
+          opportunitiesAttended: {
+            $exists: true,
+            $not: {
+              $size: 0
+            }
+          }
         }
       }
     ])
