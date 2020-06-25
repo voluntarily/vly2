@@ -1,6 +1,8 @@
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 import { FormattedMessage, useIntl, defineMessages } from 'react-intl'
 import { Stamp } from '../../components/VTheme/Stamp'
+import { displayDuration } from '../../lib/durationUtil'
+
 const { ASK, OFFER } = OpportunityType
 export const OpTypeMessages = defineMessages({
   [ASK]: {
@@ -170,7 +172,7 @@ export const OpCommitment = ({ duration }) => {
   if (!duration) return null
   return (
     <>
-      ⏱{duration}&nbsp;
+      ⏱&nbsp;{displayDuration(duration)}&nbsp;
       <FormattedMessage
         id='OpType.duration'
         defaultMessage='commitment'
