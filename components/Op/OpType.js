@@ -172,7 +172,7 @@ export const OpCommitment = ({ duration }) => {
   if (!duration) return null
   return (
     <>
-      ⏱&nbsp;{displayDuration(duration)}&nbsp;
+      ⏱{' '}{displayDuration(duration)}&nbsp;
       <FormattedMessage
         id='OpType.duration'
         defaultMessage='commitment'

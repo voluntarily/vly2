@@ -258,8 +258,10 @@ test('render the detail with new blank act', t => {
     .simulate('change', { target: { value: 'My new value' } })
   wrapper.update()
 
-  const duration = wrapper.find('input#activity_detail_form_duration').first()
-  duration.simulate('change', { target: { value: '10 hours' } })
+  const durationHours = wrapper.find('input#activity_detail_form_durationHours').first()
+  durationHours.simulate('change', { target: { value: 10 } })
+  const durationMinutes = wrapper.find('input#activity_detail_form_durationMinutes').first()
+  durationMinutes.simulate('change', { target: { value: 25 } })
 
   // fake select an image
   // const testImg = 'https://example.com/img/banana.jpeg'
