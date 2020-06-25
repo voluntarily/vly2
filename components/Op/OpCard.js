@@ -9,6 +9,7 @@ import { Card, DescriptionWrapper, TagState } from '../VTheme/VTheme'
 import { Icon } from 'antd'
 import styled from 'styled-components'
 import { OpTypeSuffix } from './OpType'
+import { displayDuration } from '../../lib/durationUtil'
 
 const getOpPageURL = (isArchived, opid) => {
   if (isArchived) {
@@ -37,7 +38,7 @@ const OpCard = ({ op }) => {
   const isArchived = op.status === 'completed' || op.status === 'cancelled'
   const startTime = op.date[0] ? moment(op.date[0]).format('🗓 h:mmA - ddd DD/MM/YY') : ''
   const startLocation = op.location ? `📍 ${op.location}` : ''
-  const startDuration = op.duration ? `⏱ ${op.duration}` : ''
+  const startDuration = op.duration ? `⏱ ${displayDuration(op.duration)}` : ''
   const interestIcon = ((interest) => {
     if (!interest) { return '' }
     switch (interest.status) {
