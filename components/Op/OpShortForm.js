@@ -42,7 +42,12 @@ class OpShortForm extends Component {
           // op.name = values.name
           // op.subtitle = values.subtitle
           // op.tags = values.tags
-          op.duration = values.duration
+
+          const duration = moment.duration()
+          duration.add(Number(values.durationHours), 'hours')
+          duration.add(Number(values.durationMinutes), 'minutes')
+          op.duration = duration.toISOString()
+
           op.locations = [values.city, values.region]
           delete op.location
           op.address = {
@@ -166,11 +171,15 @@ export default Form.create({
   name: 'opportunity_detail_form',
   mapPropsToFields ({ op }) {
     if (!op.locations) { op.locations = [op.location] }
+
+    const isoDuration = moment.duration(op.duration)
+
     return {
       // name: Form.createFormField({ ...op.name, value: op.name }),
       // subtitle: Form.createFormField({ value: op.subtitle }),
       description: Form.createFormField({ value: op.description }),
-      duration: Form.createFormField({ value: op.duration }),
+      durationHours: Form.createFormField({ value: isoDuration.hours() }),
+      durationMinutes: Form.createFormField({ value: isoDuration.minutes() }),
       street: Form.createFormField({ value: op.address && op.address.street }),
       suburb: Form.createFormField({ value: op.address && op.address.suburb }),
       city: Form.createFormField({ value: op.address && op.address.city }),
