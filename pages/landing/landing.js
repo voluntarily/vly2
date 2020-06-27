@@ -1,6 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import Hero from '../../components/LandingPageComponents/Hero'
+import OfferSection from '../../components/LandingPageComponents/OfferSection'
 // import OpAdd from '../../components/Op/OpAdd'
 // import OpListSection from '../../components/Op/OpListSection'
 import { FullPage } from '../../components/VTheme/VTheme'
@@ -32,6 +33,8 @@ export const Landing = ({ isAuthenticated }) => (
 
     <FullPage style={{ marginTop: '0' }}>
 
+      <OfferSection />
+      <Divider />
       <HowSection />
       {isNotProd &&
         <>

@@ -1,73 +1,145 @@
 import React from 'react'
 import styled from 'styled-components'
-import { OfferCard } from '../VTheme/VTheme'
+import { Card, Grid, TitleContainerMid } from '../VTheme/VTheme'
+const ImageWrapper = styled.div`
+  position: relative;
 
-const OfferContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 2rem;
-  @media screen and (min-width: 1026px) and (max-width: 1289px) {
-    grid-template-columns: 1fr ;
-  }
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    
-    grid-template-columns: 1fr ;
-    margin: 2rem 0 ;
-  }
-  @media screen and (max-width: 768px) {
-    grid-template-columns: 1fr;
-  gap: 0;
-    margin: 0 ;
-  }
 `
-
 const OfferSection = () => (
   <div>
-    <OfferContainer>
+    <TitleContainerMid><h1>Featured activities</h1></TitleContainerMid>
+    <Grid>
+      <Card>
+        <a href='https://live.voluntarily.nz/acts/5e7abf953d0c1400117903c0'>
+          <ImageWrapper>
 
-      <a href='/a/ask'>
+            <img src='/static/img/landing-pages/featuredacts/cyber.png' />
 
-        <OfferCard>
-          <figcaption style={{ gridColumnGap: '0rem' }}>
-            <img src='/static/img/started-1.png' />
-            <div>
-              <h3>Ask for help from volunteers</h3>
-              <p>Connect with people who want to help you, and organise how they can volunteer to help
-              </p>
-            </div>
+            {/* <OpTypeStamp type={op.type} /> */}
+          </ImageWrapper>
+          <figcaption>
+
+            <p>
+              Cybersecurity Advice
+            </p>
           </figcaption>
-        </OfferCard>
-      </a>
+        </a>
+      </Card>
+      <Card>
+        <a href='https://live.voluntarily.nz/acts/5e86804c9f1b8e0011d262ea'>
+          <ImageWrapper>
 
-      <a href='/a/offer'>
-        <OfferCard>
+            <img src='/static/img/landing-pages/featuredacts/homeoffice.png' />
 
-          <figcaption style={{ gridColumnGap: '0rem' }}>
-            <img src='/static/img/started-2.png' />
-            <div>
-              <h3>Offer to help your community</h3>
-              <p>Connect with people in your community who need help
-              </p>
-            </div>
+            {/* <OpTypeStamp type={op.type} /> */}
+          </ImageWrapper>
+          <figcaption>
+
+            <p>
+              Setting Up a home office
+            </p>
           </figcaption>
-        </OfferCard>
-      </a>
+        </a>
+      </Card>
+      <Card>
+        <a href='https://live.voluntarily.nz/acts/5e7ad512bce4460011276ed1'>
+          <ImageWrapper>
 
-      <a href='#org'>
-        <OfferCard>
+            <img src='/static/img/landing-pages/featuredacts/cashflow.png' />
 
-          <figcaption style={{ gridColumnGap: '0rem' }}>
-            <img src='/static/img/started-3.png' />
-            <div>
-              <h3>Bring your organisation</h3>
-              <p>Manage your business CSR programme and supercharge your community movement
-              </p>
-            </div>
+            {/* <OpTypeStamp type={op.type} /> */}
+          </ImageWrapper>
+          <figcaption>
+
+            <p>
+              Cashflow &amp; Budgeting Advice
+            </p>
           </figcaption>
-        </OfferCard>
-      </a>
+        </a>
+      </Card>
+      <Card>
+        <a href='https://live.voluntarily.nz/acts/5e7ac24baefa5a0011056daf'>
+          <ImageWrapper>
 
-    </OfferContainer>
+            <img src='/static/img/landing-pages/featuredacts/health.png' />
+
+            {/* <OpTypeStamp type={op.type} /> */}
+          </ImageWrapper>
+          <figcaption>
+
+            <p>
+              Health &amp; Safety
+            </p>
+          </figcaption>
+        </a>
+      </Card>
+      <Card>
+        <a href='https://live.voluntarily.nz/acts/5eaa53c799524f0013d82c04'>
+          <ImageWrapper>
+
+            <img src='/static/img/landing-pages/featuredacts/remote.png' />
+
+            {/* <OpTypeStamp type={op.type} /> */}
+          </ImageWrapper>
+          <figcaption>
+
+            <p>
+              Remote Learning Support
+            </p>
+          </figcaption>
+        </a>
+      </Card>
+      <Card>
+        <a href='https://live.voluntarily.nz/acts/5e7ac2a43d0c1400117903cf'>
+          <ImageWrapper>
+
+            <img src='/static/img/landing-pages/featuredacts/legal.png' />
+
+            {/* <OpTypeStamp type={op.type} /> */}
+          </ImageWrapper>
+          <figcaption>
+
+            <p>
+              Legal Help
+            </p>
+          </figcaption>
+        </a>
+      </Card>
+      <Card>
+        <a href='https://live.voluntarily.nz/acts/5e7ac165aefa5a0011056da6'>
+          <ImageWrapper>
+
+            <img src='/static/img/landing-pages/featuredacts/tax.png' />
+
+            {/* <OpTypeStamp type={op.type} /> */}
+          </ImageWrapper>
+          <figcaption>
+
+            <p>
+              Tax
+            </p>
+          </figcaption>
+        </a>
+      </Card>
+
+      <Card>
+        <a href='https://live.voluntarily.nz/acts/5e7ab8fc229dbd0011aae2aa'>
+          <ImageWrapper>
+
+            <img src='/static/img/landing-pages/featuredacts/video.png' />
+
+            {/* <OpTypeStamp type={op.type} /> */}
+          </ImageWrapper>
+          <figcaption>
+
+            <p>
+              Video Conferencing
+            </p>
+          </figcaption>
+        </a>
+      </Card>
+
+    </Grid>
 
   </div>
 
