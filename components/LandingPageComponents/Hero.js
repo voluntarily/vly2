@@ -4,14 +4,16 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { LearnMoreButton, SignUpButton } from '../../components/VTheme/Buttons'
-
+import { Button, Divider } from 'antd'
 // const Search = Input.Search
 
 // this is the big container block that holds the container together lol
 const AwesomeHeroContainer = styled.div`
-  margin: 7rem auto 0 auto;
+  margin: 2rem auto 0 auto;
   height: auto;
-  width: auto;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   
   @media screen and (min-width: 1200px) {
    
@@ -20,156 +22,130 @@ const AwesomeHeroContainer = styled.div`
     font-size: 1.5rem;
   }
   @media screen and (max-width: 1280px) {
-  margin: 7rem auto 0rem auto;
   }
-  @media screen and (max-width: 768px) {
-   margin-top: 0;
-   p {
-    font-size: 1rem;
-  }
+  @media screen and (max-width: 600px) {
+    margin-top: 3rem;
+ grid-template-columns: 1fr;
   }
 `
 
-export const HeroGrid = styled.div`
-  display: grid;
-  margin: 0 auto;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 2rem;
-  @media screen and (min-width: 1282px) and (max-width: 1921px) {
-    height: 26rem;
- 
-  }
-  @media screen and (min-width: 768px) and (max-width: 1281px) {
-    grid-template-columns: 22rem 1fr;
-    grid-column-gap: 2rem;
-    margin: 2rem;
-  }
-  @media screen and (max-width: 768px) {
-    grid-template-columns: calc(100vw - 2rem);
-    grid-column-gap: 0;
-  }
-` // end HeroGrid
-
 // start left hand video side
-const HeroLeft = styled.div`
-  @media screen and (min-width: 769px) and (max-width: 1025px) {
-    width: 22rem;
-    height: auto;
-  }
+const HeroItem = styled.div`
+position: relative;
+    width: 100%;
+    background-color: black;
+    height: 80vh;
+    overflow: hidden;
+  
+    img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+
+    z-index: 0;
+    object-fit: cover;
+    object-position: center;
+    }
+  
   @media screen and (max-width: 768px) {
-height: 22rem;
-width: 100vw;
+height:50vh;
   }
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 600px) {
     position: relative;
-    height: 12rem;
+    height: 20rem;
     width: 100vw;
     overflow: hidden;
   }
 `
 
-const AwesomeImage = styled.img`
-  position: relative;
-  text-align: center;
-  margin: 0 0 0 auto;
-  width: 50%;
-  display: grid;
- justify-self: end;
-  overflow: hidden;
-  object-fit: contain;
-  background-color: white;
-  @media screen and (min-width: 1282px) and (max-width: 1921px) {
-    width: 100%;
-    height: 28rem;
-    object-position: right;
-  }
-  @media screen and (min-width: 1026px) and (max-width: 1281px) {
-    width: 100%;
-    height: 22rem;
-  }
-  @media screen and (min-width: 769px) and (max-width: 1025px) {
-    width: calc(100% - 2rem);
-    margin-left: 2rem;
-  }
-  @media screen and (max-width: 768px) {
-height: 22rem;
-width: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-  @media screen and (max-width: 767px) {
-    height: 16rem;
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-`
 // end left hand video side
 
-// start right hand copy + search + button side
-
-const HeroRight = styled.div`
- 
-  display: grid;
-  align-self: center;
-  @media screen and (min-width: 768px) and (max-width: 1025px) { 
-    margin-top: 2rem;
-  }
-  @media screen and (max-width: 768px) {
-    margin: 1rem 1rem 0 1rem;
-  }
-`
-
-const HeroText = styled.h1`
+const HeroText = styled.section`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+    height: 100%;
+    align-self: center;
+    justify-content: center;
+text-align: center;
+z-index: 100;
+button {
+  z-index: 100;
+  max-width: 15rem;
+  margin: 0 auto;
+}
+    h1 {
 font-weight: 700;
 font-size: 3rem;
 line-height: 1.5;
 letter-spacing: -0.5px;
-margin-bottom: 0;
+z-index: 100;
+
+color: white;
+}
 p {
   font-size: 1.25rem;
   margin-top: 0.5rem;
   font-weight: 400;
 letter-spacing: 0;
+z-index: 100;
+
+color: white;
 }
-@media screen and (min-width: 1922px) {
- p {
-  
-width: 40%;
-  
- }
-}
-@media screen and (min-width: 1282px) and (max-width: 1921px) {
- p {
-   width: 50%;
-  
- }
-  }
+
 @media screen and (min-width: 1026px) and (max-width: 1281px) {
   font-size:2.5rem;
   p {
-   width: 80%;
+  
   line-height: 1.5;
  }
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
+    h1 {
     font-size:2rem;
+  }
     p {
-   width: 90%;
+padding: 0 2rem;
   line-height: 1.5;
  }
   }
   @media screen and (max-width: 768px) {
-  
+  h1 {
     font-size: 1.5rem;
     line-height: 1.5;
     margin-bottom: 1rem;
   }
-  @media screen and (max-width: 560px) {
-    font-size: 1.5rem;
-    p {
-      font-size: 1.2rem;
-    }
+  }
+  
+`
+
+const CTAGrid = styled.section`
+max-width: 80rem;
+margin: 0 auto;
+padding: 4rem 2rem 2.5rem 2rem;
+display: grid;
+grid-template-columns: 1fr 15rem 15rem;
+a {
+  color: #653cad;
+}
+h2 {
+  font-size: 2rem;
+}
+@media screen and (min-width: 1280px) {
+
+  padding: 4rem 2rem 2.5rem 0rem;
+}
+@media screen and (max-width: 768px) {
+ padding: 1rem;
+ grid-template-columns: 1fr;
+ grid-row-gap: 1rem;
+ h2 {
+   font-size: 1.5rem;
+   text-align: center;
+   margin: 2rem 0;
+ }
   }
 `
 
@@ -211,31 +187,62 @@ const Hero = ({ isAuthenticated }) => (
   <>
     <AwesomeHeroContainer>
 
-      <HeroGrid>
+      <HeroItem>
 
-        <HeroLeft>
-
-          <AwesomeImage
-            src='/static/img/hero3.png'
-            alt={<FormattedMessage id='heroImgText' defaultMessage='Children Playing with Robots' description='Description for the hero image' />}
-          />
-
-        </HeroLeft>
-
-        <HeroRight>
-          <HeroText>
+        <HeroText>
+          <h1>
             <FormattedMessage
-              id='Hero.title.PeopleHelpingPeople'
-              defaultMessage='People helping people.'
+              id='Hero.title.Volunteer'
+              defaultMessage='Volunteer to help'
             />
-            <p>
-              <FormattedMessage
-                id='Hero.body.WeConnect'
-                defaultMessage='We connect people who can volunteer time, advice, or stuff to those who need it.'
-              />
-            </p>
-          </HeroText>
-          {/* <SearchBox>
+          </h1>
+          <p>
+            <FormattedMessage
+              id='Hero.body.Volunteer'
+              defaultMessage='Volunteer to help people around your community'
+            />
+          </p>
+
+          <a href='/a/offer'>
+            <Button
+              block
+              type='primary'
+              shape='round'
+              size='large'
+            > See activities
+            </Button>
+          </a>
+        </HeroText>
+        <img src='/static/img/landing-pages/volunteerbg.png' />
+      </HeroItem>
+
+      <HeroItem>
+        <HeroText>
+          <h1>
+            <FormattedMessage
+              id='Hero.title.AskForHelp'
+              defaultMessage='Ask for help'
+            />
+          </h1>
+          <p>
+            <FormattedMessage
+              id='Hero.body.AskForHelp'
+              defaultMessage='Get help from volunteers around your community'
+            />
+          </p>
+          <a href='/a/ask'>
+            <Button
+              block
+              type='primary'
+              shape='round'
+              size='large'
+            > See offers
+            </Button>
+          </a>
+        </HeroText>
+
+        <img src='/static/img/landing-pages/askbg.png' />
+        {/* <SearchBox>
           <Search
             placeholder="Try 'remote learning'"
             prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -246,15 +253,15 @@ const Hero = ({ isAuthenticated }) => (
             aria-label='Search for volunteering opportunties here'
           />
         </SearchBox> */}
-          <div>
-            {!isAuthenticated &&
-              <SignUpButton then='/flow/postSignUp' />}
-            <LearnMoreButton />
-          </div>
-        </HeroRight>
 
-      </HeroGrid>
+      </HeroItem>
     </AwesomeHeroContainer>
+    <CTAGrid><h2>Voluntarily helps <a href='https://blog.voluntarily.nz' target='_blank' rel='noopener noreferrer'>people help people.</a></h2>
+      {!isAuthenticated &&
+        <SignUpButton then='/flow/postSignUp' />}  <LearnMoreButton />
+
+    </CTAGrid>
+    <Divider />
   </>
 )
 // LAUNCH IT. WOOOSH!
