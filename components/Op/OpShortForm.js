@@ -173,12 +173,13 @@ export default Form.create({
     if (!op.locations) { op.locations = [op.location] }
 
     const isoDuration = moment.duration(op.duration)
+    const totalHours = Math.floor(isoDuration.asHours())
 
     return {
       // name: Form.createFormField({ ...op.name, value: op.name }),
       // subtitle: Form.createFormField({ value: op.subtitle }),
       description: Form.createFormField({ value: op.description }),
-      durationHours: Form.createFormField({ value: isoDuration.hours() }),
+      durationHours: Form.createFormField({ value: totalHours }),
       durationMinutes: Form.createFormField({ value: isoDuration.minutes() }),
       street: Form.createFormField({ value: op.address && op.address.street }),
       suburb: Form.createFormField({ value: op.address && op.address.suburb }),

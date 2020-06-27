@@ -804,13 +804,14 @@ export default Form.create({
     }
 
     const isoDuration = moment.duration(act.duration)
+    const totalHours = Math.floor(isoDuration.asHours())
 
     return {
       name: Form.createFormField({ value: act.name }),
       subtitle: Form.createFormField({ value: act.subtitle }),
       description: Form.createFormField({ value: act.description }),
       offerOrg: Form.createFormField({ value: { key: act.offerOrg ? act.offerOrg._id : '' } }),
-      durationHours: Form.createFormField({ value: isoDuration.hours() }),
+      durationHours: Form.createFormField({ value: totalHours }),
       durationMinutes: Form.createFormField({ value: isoDuration.minutes() }),
       location: Form.createFormField({ value: act.location }),
       imgUrl: Form.createFormField({ value: act.imgUrl }),
