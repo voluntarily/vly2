@@ -57,6 +57,7 @@ height:50vh;
     height: 20rem;
     width: 100vw;
     overflow: hidden;
+
   }
 `
 
@@ -107,7 +108,6 @@ color: white;
     font-size:2rem;
   }
     p {
-padding: 0 2rem;
   line-height: 1.5;
  }
   }
@@ -115,7 +115,11 @@ padding: 0 2rem;
   h1 {
     font-size: 1.5rem;
     line-height: 1.5;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    
+  }
+  p {
+    margin: 1rem 2rem ;
   }
   }
   

@@ -67,6 +67,7 @@ const GiveSupportSection = () => (
     </TripleGrid>
     <TitleContainerMid>
       <Button
+        block
         type='secondary'
         shape='round'
         size='large'
