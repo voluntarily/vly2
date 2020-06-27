@@ -20,7 +20,7 @@ const OfferSection = () => (
           <figcaption>
 
             <p>
-              Cybersecurity Advice
+              Cybersecurity
             </p>
           </figcaption>
         </a>
@@ -36,7 +36,7 @@ const OfferSection = () => (
           <figcaption>
 
             <p>
-              Setting Up a home office
+              Setting up a home office
             </p>
           </figcaption>
         </a>
