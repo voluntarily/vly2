@@ -4,7 +4,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { LearnMoreButton, SignUpButton } from '../../components/VTheme/Buttons'
-
+import { Button, Divider } from 'antd'
 // const Search = Input.Search
 
 // this is the big container block that holds the container together lol
@@ -31,13 +31,23 @@ const AwesomeHeroContainer = styled.div`
 
 // start left hand video side
 const HeroItem = styled.div`
+position: relative;
     width: 100%;
-    background-color: purple;
+    background-color: black;
     height: 80vh;
-    display: grid;
-    grid-template-columns: 1fr;
-    align-self: center;
-    justify-self: center;
+    overflow: hidden;
+  
+    img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+
+    z-index: 0;
+    object-fit: cover;
+    object-position: center;
+    }
   
   @media screen and (max-width: 768px) {
 height:50vh;
@@ -52,50 +62,39 @@ height:50vh;
 
 // end left hand video side
 
-// start right hand copy + search + button side
-
-const HeroRight = styled.div`
- 
- background-color: black;
-  display: grid;
-  align-self: center;
-  @media screen and (min-width: 768px) and (max-width: 1025px) { 
-    margin-top: 2rem;
-  }
-  @media screen and (max-width: 768px) {
-    margin: 1rem 1rem 0 1rem;
-  }
-`
-
 const HeroText = styled.section`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+    height: 100%;
     align-self: center;
-    justify-self: center;
+    justify-content: center;
 text-align: center;
+z-index: 100;
+button {
+  z-index: 100;
+  max-width: 15rem;
+  margin: 0 auto;
+}
     h1 {
 font-weight: 700;
 font-size: 3rem;
 line-height: 1.5;
 letter-spacing: -0.5px;
+z-index: 100;
+
+color: white;
 }
 p {
   font-size: 1.25rem;
   margin-top: 0.5rem;
   font-weight: 400;
 letter-spacing: 0;
-}
-@media screen and (min-width: 1922px) {
- p {
-  
+z-index: 100;
 
-  
- }
+color: white;
 }
-@media screen and (min-width: 1282px) and (max-width: 1921px) {
- p {
 
-  
- }
-  }
 @media screen and (min-width: 1026px) and (max-width: 1281px) {
   font-size:2.5rem;
   p {
@@ -108,7 +107,7 @@ letter-spacing: 0;
     font-size:2rem;
   }
     p {
-
+padding: 0 2rem;
   line-height: 1.5;
  }
   }
@@ -120,6 +119,34 @@ letter-spacing: 0;
   }
   }
   
+`
+
+const CTAGrid = styled.section`
+max-width: 80rem;
+margin: 0 auto;
+padding: 4rem 2rem 2.5rem 2rem;
+display: grid;
+grid-template-columns: 1fr 15rem 15rem;
+a {
+  color: #653cad;
+}
+h2 {
+  font-size: 2rem;
+}
+@media screen and (min-width: 1280px) {
+
+  padding: 4rem 2rem 2.5rem 0rem;
+}
+@media screen and (max-width: 768px) {
+ padding: 1rem;
+ grid-template-columns: 1fr;
+ grid-row-gap: 1rem;
+ h2 {
+   font-size: 1.5rem;
+   text-align: center;
+   margin: 2rem 0;
+ }
+  }
 `
 
 // const SearchBox = styled.div`
@@ -175,7 +202,18 @@ const Hero = ({ isAuthenticated }) => (
               defaultMessage='Volunteer to help people around your community'
             />
           </p>
+
+          <a href='/a/offer'>
+            <Button
+              block
+              type='primary'
+              shape='round'
+              size='large'
+            > See activities
+            </Button>
+          </a>
         </HeroText>
+        <img src='/static/img/landing-pages/volunteerbg.png' />
       </HeroItem>
 
       <HeroItem>
@@ -192,7 +230,18 @@ const Hero = ({ isAuthenticated }) => (
               defaultMessage='Get help from volunteers around your community'
             />
           </p>
+          <a href='/a/ask'>
+            <Button
+              block
+              type='primary'
+              shape='round'
+              size='large'
+            > See offers
+            </Button>
+          </a>
         </HeroText>
+
+        <img src='/static/img/landing-pages/askbg.png' />
         {/* <SearchBox>
           <Search
             placeholder="Try 'remote learning'"
@@ -206,11 +255,13 @@ const Hero = ({ isAuthenticated }) => (
         </SearchBox> */}
 
       </HeroItem>
-
     </AwesomeHeroContainer>
+    <CTAGrid><h2>Voluntarily helps <a href='https://blog.voluntarily.nz' target='_blank' rel='noopener noreferrer'>people help people.</a></h2>
+      {!isAuthenticated &&
+        <SignUpButton then='/flow/postSignUp' />}  <LearnMoreButton />
 
-    {!isAuthenticated &&
-      <SignUpButton then='/flow/postSignUp' />}  <LearnMoreButton />
+    </CTAGrid>
+    <Divider />
   </>
 )
 // LAUNCH IT. WOOOSH!
