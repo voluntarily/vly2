@@ -497,6 +497,7 @@ export const TitleContainerMid = styled.div`
 margin: 0 auto;
 padding: 2rem 0 4rem 0;
 text-align: center;
+
 `
 /*
 ====================================================
@@ -1066,6 +1067,7 @@ export const PromoCard = styled.article`
 transition: all 0.3s;
 img{
   border-radius: 8px;
+  width: 100%;
 }
 a {
   color: #653cad;

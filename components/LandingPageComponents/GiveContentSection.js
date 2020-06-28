@@ -69,7 +69,7 @@ const GiveContentSection = () => (
         shape='round'
         size='large'
         href='https://blog.voluntarily.nz'
-      >See more offers from your community
+      >See all offers
       </Button>
     </TitleContainerMid>
   </div>
