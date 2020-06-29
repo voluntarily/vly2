@@ -59,7 +59,7 @@ test('render OpCommitment ', t => {
   const wrapper = mountWithIntl(
     <OpCommitment duration='4 hours' />
   )
-  t.is(wrapper.text(), '⏱4 hours commitment')
+  t.is(wrapper.text(), '⏱ 4 hours commitment')
 })
 
 test('render OpCommitment with no type', t => {
