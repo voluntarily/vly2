@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import OpFormDate from './OpFormDate'
-import OpFormDescription from './OpFormDescription'
+// import OpFormDescription from './OpFormDescription'
 import OpFormPublishBtns from './OpFormDoneBtns'
 import OpFormLocation from './OpFormLocation'
 import OpFormTitle from './OpFormTitle'
@@ -43,12 +43,13 @@ class OpShortForm extends Component {
           // op.subtitle = values.subtitle
           // op.tags = values.tags
 
+
           const duration = moment.duration()
           duration.add(Number(values.durationHours), 'hours')
           duration.add(Number(values.durationMinutes), 'minutes')
           op.duration = duration.toISOString()
 
-          op.locations = [values.city, values.region]
+          op.locations = [...new Set([values.city, values.region])]
           delete op.location
           op.address = {
             street: values.street,
@@ -102,9 +103,7 @@ class OpShortForm extends Component {
         <OpFormTitle type={op.type} title={op.name} onBack={this.props.onCancel} />
         <Divider />
         <Form colon={false}>
-          <OpFormDescription getFieldDecorator={getFieldDecorator} type={op.type} />
-          <Divider />
-          <OpFormLocation getFieldDecorator={getFieldDecorator} setFieldsValue={setFieldsValue} type={op.type} existingLocations={this.props.existingLocations} orgMembership={orgMembership} addressFinderKey={this.props.addressFinderKey} />
+          <OpFormLocation getFieldDecorator={getFieldDecorator} setFieldsValue={setFieldsValue} type={op.type} orgMembership={orgMembership} addressFinderKey={this.props.locations.addressFinderKey} />
           <Divider />
           <OpFormDate getFieldDecorator={getFieldDecorator} type={op.type} onChange={this.handleStartDateChange} />
           {/* <OpFormTags getFieldDecorator={getFieldDecorator} existingTags={this.props.existingTags} /> */}
@@ -162,8 +161,9 @@ OpShortForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
-  existingLocations: PropTypes.arrayOf(PropTypes.string).isRequired,
-  addressFinderKey: PropTypes.string.isRequired
+  locations: PropTypes.shape({
+    addressFinderKey: PropTypes.string.isRequired
+  })
   // dispatch: PropTypes.func.isRequired,
 }
 
