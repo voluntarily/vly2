@@ -4,6 +4,7 @@ import IdLine from './IdLine'
 import { Divider } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { StreetAddressLinkLi } from '../Address/StreetAddress'
+import { displayDuration } from '../../lib/durationUtil'
 /* These are used to create small lists of properties for
   orgs, ops and acts in their details pages
 */
@@ -56,18 +57,23 @@ object-fit: cover;
 object-position: center;
 `
 
-export const ItemDuration = ({ duration }) =>
-  <ItemListing>
-  ⏱{' '}
-    <strong>
-      <FormattedMessage
-        id='itemlist.duration'
-        defaultMessage='Duration:'
-        description='duration label for acts and ops'
-      />
-    </strong>{' '}
-    {sanitize(duration)}
-  </ItemListing>
+export const ItemDuration = ({ duration }) => {
+  const durationString = displayDuration(sanitize(duration))
+
+  return (
+    <ItemListing>
+      ⏱{' '}
+      <strong>
+        <FormattedMessage
+          id='itemlist.duration'
+          defaultMessage='Duration:'
+          description='duration label for acts and ops'
+        />
+      </strong>{' '}
+      {durationString}
+    </ItemListing>
+  )
+}
 
 export const ItemStatus = ({ status }) =>
   <ItemListing>

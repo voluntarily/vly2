@@ -1,4 +1,4 @@
-import { Button, Divider, Form, Icon, Input, Tooltip, Radio, Switch } from 'antd'
+import { Button, Divider, Form, Icon, Input, Tooltip, Radio, Switch, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -10,6 +10,7 @@ import OrgSelector from '../Org/OrgSelector'
 import { DynamicFieldSet } from '../DynamicFieldSet/DynamicFieldSet'
 import slug from 'limax'
 import { ActivityFields, ActivityStatus } from '../../server/api/activity/activity.constants'
+import moment from 'moment'
 
 import {
   DescriptionContainer,
@@ -117,7 +118,12 @@ class ActDetailForm extends Component {
         act.name = values.name
         act.slug = slug(act.name)
         act.subtitle = values.subtitle
-        act.duration = values.duration
+
+        const duration = moment.duration()
+        duration.add(Number(values.durationHours), 'hours')
+        duration.add(Number(values.durationMinutes), 'minutes')
+        act.duration = duration.toISOString()
+
         act.resource = values.resource
         act.volunteers = !this.state.input1Disabled
           ? this.state.totalVolunteerRequired
@@ -451,20 +457,43 @@ class ActDetailForm extends Component {
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
-                <Form.Item
-                  label={actCommitment}
-                  validateStatus={durationError ? 'error' : ''}
-                  help={durationError || ''}
-                >
-                  {getFieldDecorator(ActivityFields.DURATION, {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Commitment level is required'
-                      }
-                    ]
-                  })(<Input placeholder='4 hours' required />)}
-                </Form.Item>
+                <Row type='flex' justify='space-between'>
+                  <Col span={10}>
+                    <Form.Item
+                      label={actCommitment}
+                      validateStatus={durationError ? 'error' : ''}
+                      help={durationError || ''}
+                    >
+                      {getFieldDecorator('durationHours', {
+                        rules: [
+                          {
+                            type: 'number',
+                            required: true,
+                            message: 'Commitment level is required, must be a non negative integer',
+                            validator: (_rule, value) => value >= 0
+                          }
+                        ]
+                      })(<Input placeholder='4 hours' required addonAfter='hours' />)}
+                    </Form.Item>
+                  </Col>
+                  <Col span={10}>
+                    <Form.Item
+                      label=' '
+                      validateStatus={durationError ? 'error' : ''}
+                      help={durationError || ''}
+                    >
+                      {getFieldDecorator('durationMinutes', {
+                        rules: [
+                          {
+                            type: 'number',
+                            message: 'Minutes must be a non negative integer',
+                            validator: (_rule, value) => value >= 0
+                          }
+                        ]
+                      })(<Input placeholder='4 hours' addonAfter='minutes' />)}
+                    </Form.Item>
+                  </Col>
+                </Row>
                 <Form.Item label={actResource}>
                   {getFieldDecorator(ActivityFields.RESOURCE)(
                     <Input placeholder='5 people, classroom, projector' />
@@ -773,12 +802,17 @@ export default Form.create({
     } else if (act.volunteers < 1) {
       volunteerPerStudent = Math.round(1 / act.volunteers)
     }
+
+    const isoDuration = moment.duration(act.duration)
+    const totalHours = Math.floor(isoDuration.asHours())
+
     return {
       name: Form.createFormField({ value: act.name }),
       subtitle: Form.createFormField({ value: act.subtitle }),
       description: Form.createFormField({ value: act.description }),
       offerOrg: Form.createFormField({ value: { key: act.offerOrg ? act.offerOrg._id : '' } }),
-      duration: Form.createFormField({ value: act.duration }),
+      durationHours: Form.createFormField({ value: totalHours }),
+      durationMinutes: Form.createFormField({ value: isoDuration.minutes() }),
       location: Form.createFormField({ value: act.location }),
       imgUrl: Form.createFormField({ value: act.imgUrl }),
       documents: Form.createFormField({ value: act.documents }),

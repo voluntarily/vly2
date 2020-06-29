@@ -28,7 +28,6 @@ const OpCardSmall = ({ op }) => {
   const startTime = op.date[0] ? moment(op.date[0]).format('🗓 ddd DD/MM/YY') : null
 
   const startLocation = op.location ? `📍 ${op.location}` : ''
-  // const startDuration = op.duration ? `⏱ ${op.duration}` : ''
   const interestIcon = ((interest) => {
     if (!interest) { return '' }
     switch (interest.status) {
