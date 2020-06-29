@@ -5,22 +5,7 @@ import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, T
 import { OpTypeLocationPrompt } from './OpType'
 import OpFormOrg from './OpFormOrg'
 import { withAddressFinder } from '../Address/AddressFinder'
-// import TagSelect from '../Form/Input/TagSelect'
 
-// const opLocation = (
-//   <span>
-//     {' '}
-//     <FormattedMessage
-//       id='OpShortForm.Location'
-//       defaultMessage='Region'
-//       description='activity Location label in OpAskForm Form'
-//     />
-//     &nbsp;
-//     <Tooltip title='set the town or suburb for this activity'>
-//       <Icon type='question-circle-o' />
-//     </Tooltip>
-//   </span>
-// )
 const opStreet = (
   <span>
     {' '}
@@ -107,11 +92,6 @@ export const OpFormLocation = ({ getFieldDecorator, setFieldsValue, type, orgMem
       </DescriptionContainer>
       <InputContainer>
         <MediumInputContainer>
-          {/* <Form.Item label={opLocation}>
-            {getFieldDecorator('locations')(
-              <TagSelect values={existingLocations} placeholder='Select location' />
-            )}
-          </Form.Item> */}
           <Form.Item label={opStreet}>
             {getFieldDecorator('street')(
               <Input ref={streetRef} placeholder='Street address' allowClear />

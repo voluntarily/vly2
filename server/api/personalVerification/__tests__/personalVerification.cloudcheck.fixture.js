@@ -77,7 +77,7 @@ export const verifyResponseData = {
   body: {
     verification: {
       details: {
-        addres: {
+        address: {
           suburb: 'Anytown',
           street: '123 Poplar Road',
           postcode: '1234',

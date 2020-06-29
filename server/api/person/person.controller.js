@@ -166,6 +166,18 @@ async function updatePersonDetail (req, res, next) {
     }
   }
 
+  // Populate the city and region field of person address into the locations array
+  if (person.address) {
+    if (Object.keys(person.address).includes('city') || Object.keys(person.address).includes('region')) {
+      // remove duplicated value
+      let locationsFromPersonAddress = [...new Set([person.address.city, person.address.region])]
+      if (locationsFromPersonAddress.length > 0) {
+        locationsFromPersonAddress = locationsFromPersonAddress.filter(val => val) // remove null value
+        person.locations = person.locations.concat(locationsFromPersonAddress)
+      }
+    }
+  }
+
   if (isProd) { delete person.role } // cannot save role - its virtual
   let resultUpdate
   try {

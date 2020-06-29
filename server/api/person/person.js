@@ -26,9 +26,16 @@ const personSchema = new Schema({
   // Personal Private Information
   phone: { type: 'String' }, // +64 27 7031007
   dob: Date,
-  address: String,
   location: { type: 'String', default: '' }, // deprecated use locations
   locations: { type: [String], default: [] },
+  address: {
+    street: { type: 'String' },
+    suburb: { type: 'String' },
+    city: { type: 'String' },
+    postcode: { type: 'String' },
+    region: { type: 'String' },
+    addressSummary: { type: 'String' }
+  },
 
   // Social Information
   website: { type: 'String' },

@@ -178,8 +178,7 @@ export const OpDetailPage = ({
           onSubmit={handleSubmit}
           onCancel={handleCancel}
           existingTags={tags.data}
-          existingLocations={locations.data[0].locations}
-          addressFinderKey={locations.data[0].addressFinderKey}
+          locations={locations.data[0]}
         />
       </FullPage>)
   }
@@ -247,10 +246,7 @@ OpDetailPage.propTypes = {
     subtitle: PropTypes.string,
     imgUrl: PropTypes.any,
     duration: PropTypes.string,
-    locations: PropTypes.arrayOf(PropTypes.shape({
-      locations: PropTypes.string.isRequired,
-      addressFinderKey: PropTypes.string.isRequired
-    })),
+    locations: PropTypes.arrayOf(PropTypes.string),
     address: PropTypes.shape({
       street: PropTypes.string,
       suburb: PropTypes.string,

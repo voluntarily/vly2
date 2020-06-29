@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { ContactIcon } from '../VTheme/VTheme'
+import { StreetAddressLinkLi } from '../Address/StreetAddress'
 
 const PersonContainer = styled.section`
 height: auto;
@@ -76,6 +77,9 @@ const PersonCard = ({ person }) => (
 
         <p className='personName'><ContactIcon type='phone' />{person.phone}</p>}
 
+      {person.phone && person.address && person.address.addressSummary &&
+
+        <p className='personName'><ContactIcon type='home' /><StreetAddressLinkLi address={person.address.addressSummary} /></p>}
     </section>
 
     <style jsx>{`
