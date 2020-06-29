@@ -43,7 +43,6 @@ class OpShortForm extends Component {
           // op.subtitle = values.subtitle
           // op.tags = values.tags
 
-
           const duration = moment.duration()
           duration.add(Number(values.durationHours), 'hours')
           duration.add(Number(values.durationMinutes), 'minutes')
