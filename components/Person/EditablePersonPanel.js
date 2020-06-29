@@ -41,7 +41,7 @@ export const EditablePersonPanel = ({ person, me }) => {
       <PersonDetailForm
         person={person}
         existingTags={tags.data}
-        locations={locations.data[0].locations}
+        locations={locations.data[0]}
         onSubmit={handleUpdate}
         onCancel={doneEditing}
       />)

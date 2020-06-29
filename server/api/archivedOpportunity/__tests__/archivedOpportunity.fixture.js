@@ -10,6 +10,7 @@ const OpList = [
     description: 'We want to set up our Connect Ed programme, help us understand how to communication with businesses, build a website and contact group etc.',
     duration: '1 week, 1 hour sessions',
     location: regions[0].name,
+    address: null,
     status: OpportunityStatus.COMPLETED,
     tags: [],
     date: [
@@ -28,6 +29,7 @@ const OpList = [
     description: '# NZTA Innovation Centre\n \n We have 6 model cars with sensors for vision, proximity etc, \n controlled by Arduinos teach them to solve \n 4 challenges - move, follow a line, avoid obstacles, \n get to a destination etc. \n \n ## We need:\n * Open space with room for the test tracks - e.g a school hall\n * teams of 5 students\n * on adult helper per team, should be able to follow instructions and understand a little C++\n \n ## Learning outcomes:\n * programming a remote device\n * simple coding\n * algorithmic thinking\n * problem solving.\n \n',
     duration: '55 hours',
     location: regions[0].containedTerritories[1],
+    address: null,
     status: OpportunityStatus.COMPLETED,
     tags: [],
     date: [
@@ -46,6 +48,7 @@ const OpList = [
     description: 'Project to destroy something in the garden',
     duration: '6 hours',
     location: regions[0].containedTerritories[1],
+    address: null,
     status: OpportunityStatus.COMPLETED,
     tags: [],
     date: [
@@ -64,6 +67,7 @@ const OpList = [
     description: 'Project to build a simple rocket that will reach 100m',
     duration: '2 hours',
     location: regions[0].containedTerritories[2],
+    address: null,
     status: OpportunityStatus.CANCELLED,
     tags: [],
     date: [
@@ -82,6 +86,7 @@ const OpList = [
     description: 'Attempting to go where no man has gone before',
     duration: '2 days',
     location: regions[2].name,
+    address: null,
     status: OpportunityStatus.CANCELLED,
     tags: [],
     date: [

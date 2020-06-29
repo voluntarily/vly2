@@ -15,6 +15,8 @@ import { VBanner, VBannerImg, ProfileBannerTitle } from '../VTheme/Profile'
 import Verification from '../Verification/Verification'
 import { ParticipationSection } from './ParticipationSection'
 import { TopicGroupSection } from './TopicGroupSection'
+import { StreetAddressLinkLi } from '../Address/StreetAddress'
+
 const DetailItem = styled.div`
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -141,6 +143,12 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
                 {person.phone}
               </a>
             </li>}
+
+          {person.phone && person.address && person.address.addressSummary &&
+            <li>
+              <StyledIcon type='home' />
+              <StreetAddressLinkLi address={person.address.addressSummary} />
+            </li>}
           {person.website &&
             <li>
               <a href={defaultToHttpScheme(person.website)} rel='noopener noreferrer' target='_blank'>
@@ -162,7 +170,7 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
                 {person.twitter}
               </a>
             </li>}
-          {person.locations &&
+          {person.locations && person.locations.length > 0 &&
             <li>
               <StyledIcon type='compass' />
               {person.locations.join(', ')}
@@ -256,6 +264,9 @@ PersonDetail.propTypes = {
     nickname: PropTypes.string,
     about: PropTypes.string,
     locations: PropTypes.arrayOf(PropTypes.string),
+    address: PropTypes.shape({
+      addressSummary: PropTypes.string
+    }),
     email: PropTypes.string,
     phone: PropTypes.string,
     facebook: PropTypes.string,

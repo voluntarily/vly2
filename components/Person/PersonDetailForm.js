@@ -18,6 +18,7 @@ import { H3Bold, P } from '../VTheme/VTheme'
 import { websiteRegex } from '../../server/api/person/person.validation'
 import { Role } from '../../server/services/authorize/role'
 import TagSelect from '../Form/Input/TagSelect'
+import { withAddressFinder } from '../Address/AddressFinder'
 
 const EducationSelectorRef = forwardRef(EducationSelector)
 const TagSelectRef = forwardRef(TagSelect)
@@ -33,11 +34,47 @@ class PersonDetail extends Component {
   constructor (props) {
     super(props)
     this.setImgUrl = this.setImgUrl.bind(this)
+    // To save various fields of address
+    this.address = {
+      street: null,
+      suburb: null,
+      city: null,
+      postcode: null,
+      region: null,
+      addressSummary: null
+    }
   }
 
   componentDidMount () {
     // To disabled submit button at the beginning.
     this.props.form.validateFields()
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (this.props.scriptLoaded !== prevProps.scriptLoaded) {
+      this.addressListener()
+    }
+  }
+
+  addressListener = () => {
+    const widget = new window.AddressFinder.Widget(
+      document.getElementById('person_detail_form_address'),
+      this.props.locations.addressFinderKey, // ADDRESSFINDER_KEY
+      'NZ', {
+        show_locations: true,
+        empty_content: 'No addresses were found. This could be a new address, or you may need to check the spelling.'
+      }
+    )
+    widget.on('result:select', (_, metaData) => {
+      const region = metaData.region.replace(/\sRegion/, '')
+      this.address.street = metaData.address_line_1
+      this.address.suburb = metaData.suburb
+      this.address.city = metaData.city
+      this.address.postcode = metaData.postcode
+      this.address.region = region
+      this.address.addressSummary = metaData.a
+      this.props.form.setFieldsValue({ address: metaData.a })
+    })
   }
 
   setImgUrl = (imgUrl, sizeVariants) => {
@@ -53,6 +90,7 @@ class PersonDetail extends Component {
         person.nickname = values.nickname
         person.email = values.email
         person.phone = values.phone
+        person.address = this.address.addressSummary ? this.address : this.props.person.address
         person.sendEmailNotifications = values.sendEmailNotifications
         person.pronoun = {
           subject: values.pronoun_subject,
@@ -122,6 +160,19 @@ class PersonDetail extends Component {
         defaultMessage='Phone'
         description='person phone label in personDetails Form'
       />
+    )
+    const personAddress = (
+      <span>
+        <FormattedMessage
+          id='personAddress'
+          defaultMessage='Address'
+          description='person physical/postal address label in personDetails Form'
+        />
+        &nbsp;
+        <Tooltip title='Let us verify your identity if you are a volunteer or you need to get deliveries'>
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
     )
     const personSendEmailNotifications = (
       <FormattedMessage
@@ -254,6 +305,7 @@ class PersonDetail extends Component {
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
     const tagsError = isFieldTouched('tags') && getFieldError('tags')
+    const addressError = isFieldTouched('address') && getFieldError('address')
     const isTest = process.env.NODE_ENV === 'test'
     const isVolunteer = this.props.person.role.some(r => r === 'volunteer')
 
@@ -357,7 +409,31 @@ class PersonDetail extends Component {
                   })(<Input placeholder='000 000 0000' />)}
                 </Form.Item>
               </ShortInputContainer>
-              <Divider />
+              {/* make address required for volunteer for validation purpose and optional for asker */}
+              {isVolunteer
+                ? (
+                  <ShortInputContainer>
+                    <Form.Item
+                      label={personAddress}
+                      validateStatus={addressError ? 'error' : ''}
+                      help={addressError || ''}
+                    >
+                      {getFieldDecorator('address', {
+                        rules: [{ required: true, message: 'Address is required' }]
+                      })(<Input placeholder='Physical Address' allowClear />)}
+                    </Form.Item>
+                  </ShortInputContainer>
+                ) : (
+                  <ShortInputContainer>
+                    <Form.Item
+                      label={personAddress}
+                    >
+                      {getFieldDecorator('address', {
+                        rules: []
+                      })(<Input placeholder='Physical or Postal Address' allowClear />)}
+                    </Form.Item>
+                  </ShortInputContainer>
+                )}
             </InputContainer>
           </FormGrid>
           <Divider />
@@ -390,7 +466,7 @@ class PersonDetail extends Component {
             <InputContainer>
               <Form.Item label={personLocation}>
                 {getFieldDecorator('locations')(
-                  <TagSelectRef values={this.props.locations} placeholder='Select location' />
+                  <TagSelectRef values={this.props.locations.locations} placeholder='Select location' />
                 )}
               </Form.Item>
               {isVolunteer && (
@@ -648,6 +724,14 @@ PersonDetail.propTypes = {
     nickname: PropTypes.string,
     about: PropTypes.string,
     locations: PropTypes.arrayOf(PropTypes.string),
+    address: PropTypes.shape({
+      street: PropTypes.string,
+      suburb: PropTypes.string,
+      city: PropTypes.string,
+      postcode: PropTypes.string,
+      region: PropTypes.string,
+      addressSummary: PropTypes.string
+    }),
     email: PropTypes.string,
     phone: PropTypes.string,
     sendEmailNotifications: PropTypes.bool,
@@ -677,7 +761,10 @@ PersonDetail.propTypes = {
   }),
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  locations: PropTypes.arrayOf(PropTypes.string),
+  locations: PropTypes.shape({
+    locations: PropTypes.arrayOf(PropTypes.string),
+    addressFinderKey: PropTypes.string
+  }),
   existingTags: PropTypes.arrayOf(PropTypes.string).isRequired
   // dispatch: PropTypes.func.isRequired,
 }
@@ -725,6 +812,10 @@ const PersonDetailForm = Form.create({
         ...props.person.phone,
         value: props.person.phone
       }),
+      address: Form.createFormField({
+        ...props.person.address,
+        value: props.person.address ? props.person.address.addressSummary : ''
+      }),
       sendEmailNotifications: Form.createFormField({
         ...props.person.sendEmailNotifications,
         value: props.person.sendEmailNotifications
@@ -769,7 +860,7 @@ const PersonDetailForm = Form.create({
   },
   onValuesChange (_, values) {
   }
-})(PersonDetail)
+})(withAddressFinder(PersonDetail))
 
 export default connect(store => ({ me: store.session.me }))(PersonDetailForm)
 export { PersonDetailForm }
