@@ -5,6 +5,12 @@ const ImageWrapper = styled.div`
   position: relative;
 
 `
+const CardTitle = styled.h4`
+margin-top: 0.5rem;
+font-size: 1.25rem;
+font-weight: 400;
+`
+
 const OfferSection = () => (
   <div>
     <TitleContainerMid><h1>Featured activities</h1></TitleContainerMid>
@@ -19,9 +25,9 @@ const OfferSection = () => (
           </ImageWrapper>
           <figcaption>
 
-            <p>
+            <CardTitle>
               Cybersecurity
-            </p>
+            </CardTitle>
           </figcaption>
         </a>
       </Card>
@@ -35,9 +41,9 @@ const OfferSection = () => (
           </ImageWrapper>
           <figcaption>
 
-            <p>
+            <CardTitle>
               Setting up a home office
-            </p>
+            </CardTitle>
           </figcaption>
         </a>
       </Card>
@@ -51,9 +57,9 @@ const OfferSection = () => (
           </ImageWrapper>
           <figcaption>
 
-            <p>
+            <CardTitle>
               Cashflow &amp; Budgeting Advice
-            </p>
+            </CardTitle>
           </figcaption>
         </a>
       </Card>
@@ -67,9 +73,9 @@ const OfferSection = () => (
           </ImageWrapper>
           <figcaption>
 
-            <p>
+            <CardTitle>
               Health &amp; Safety
-            </p>
+            </CardTitle>
           </figcaption>
         </a>
       </Card>
@@ -83,9 +89,9 @@ const OfferSection = () => (
           </ImageWrapper>
           <figcaption>
 
-            <p>
+            <CardTitle>
               Remote Learning Support
-            </p>
+            </CardTitle>
           </figcaption>
         </a>
       </Card>
@@ -99,9 +105,9 @@ const OfferSection = () => (
           </ImageWrapper>
           <figcaption>
 
-            <p>
+            <CardTitle>
               Legal Help
-            </p>
+            </CardTitle>
           </figcaption>
         </a>
       </Card>
@@ -115,9 +121,9 @@ const OfferSection = () => (
           </ImageWrapper>
           <figcaption>
 
-            <p>
+            <CardTitle>
               Tax
-            </p>
+            </CardTitle>
           </figcaption>
         </a>
       </Card>
@@ -132,9 +138,9 @@ const OfferSection = () => (
           </ImageWrapper>
           <figcaption>
 
-            <p>
+            <CardTitle>
               Video Conferencing
-            </p>
+            </CardTitle>
           </figcaption>
         </a>
       </Card>

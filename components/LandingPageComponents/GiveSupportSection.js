@@ -72,7 +72,7 @@ const GiveSupportSection = () => (
         shape='round'
         size='large'
         href='https://blog.voluntarily.nz'
-      >See more offers from your community
+      >See more offers
       </Button>
     </TitleContainerMid>
   </>
