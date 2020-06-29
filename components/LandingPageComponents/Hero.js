@@ -11,7 +11,7 @@ import { Button, Divider } from 'antd'
 const AwesomeHeroContainer = styled.div`
   margin: 2rem auto 0 auto;
   height: auto;
-  width: 100vw;
+  width: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   
@@ -55,7 +55,7 @@ height:50vh;
   @media screen and (max-width: 600px) {
     position: relative;
     height: 20rem;
-    width: 100vw;
+    width: auto;
     overflow: hidden;
 
   }
@@ -128,7 +128,7 @@ color: white;
 const CTAGrid = styled.section`
 max-width: 80rem;
 margin: 0 auto;
-padding: 4rem 2rem 2.5rem 2rem;
+padding: 4rem 2rem 2.5rem 0rem;
 display: grid;
 grid-template-columns: 1fr 15rem 15rem;
 a {
@@ -137,9 +137,9 @@ a {
 h2 {
   font-size: 2rem;
 }
-@media screen and (min-width: 1280px) {
+@media screen and (max-width: 1281px) {
 
-  padding: 4rem 2rem 2.5rem 0rem;
+  padding: 4rem 2rem 2.5rem 2rem;
 }
 @media screen and (max-width: 768px) {
  padding: 1rem;
