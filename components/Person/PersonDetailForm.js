@@ -169,7 +169,7 @@ class PersonDetail extends Component {
           description='person physical/postal address label in personDetails Form'
         />
         &nbsp;
-        <Tooltip title='Let us verifiy your identity if you are a volunteer or you need to get deliveries'>
+        <Tooltip title='Let us verify your identity if you are a volunteer or you need to get deliveries'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
