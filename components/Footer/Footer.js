@@ -48,7 +48,8 @@ const FooterText = styled.div`
   margin-top: 1rem;
   width: 24rem;
   @media screen and (max-width: 768px) {
-
+ 
+word-break: break-all;
 width: 100%;
 }
 `
@@ -79,6 +80,7 @@ list-style: none;
     color: #333333;
     letter-spacing: -0.2px;
     line-height: 2;
+ 
 
     :hover {
       color: #6549AA;

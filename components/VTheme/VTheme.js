@@ -855,7 +855,7 @@ figcaption {
  p, ul {
    color: black;
  }
-  h1 {
+  h1,h4 {
 
   color: #6549aa;
   }
