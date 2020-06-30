@@ -1,9 +1,21 @@
 const moment = require('moment')
 const { getMembersWithAttendedInterests } = require('./statistics.lib')
 const Organisation = require('../organisation/organisation')
+const { Role } = require('../../services/authorize/role')
 
 const getSummary = async (req, res) => {
   const { orgId, timeframe } = req.params
+
+  // authentication
+  const currentUser = req.session.me
+  if (!currentUser || !req.session.isAuthenticated) {
+    return res.status(401).send()
+  }
+
+  // authorisation
+  if (!Array.isArray(currentUser.role) || !currentUser.role.includes(Role.ORG_ADMIN) || !Array.isArray(currentUser.orgAdminFor) || !currentUser.orgAdminFor.includes(orgId)) {
+    return res.status(403).send()
+  }
 
   let afterDate
   switch (timeframe) {
