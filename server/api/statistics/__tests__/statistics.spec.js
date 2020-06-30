@@ -76,3 +76,21 @@ test(
     );
   }
 );
+
+test(
+  "Test getSummary returns error when timeframe doesn't exist",
+  async (t) => {
+    const mockReq = new MockExpressRequest();
+    const mockRes = new MockExpressResponse();
+
+    mockReq.params = { orgId: firstOrgId, timeframe: "jerry" };
+
+    await getSummary(mockReq, mockRes);
+    const expectedStatusCode = 400;
+
+    t.assert(
+      expectedStatusCode === mockRes.statusCode,
+      "Status code should be 400 NOT FOUND"
+    );
+  }
+);
