@@ -83,84 +83,96 @@ const archivedOpportunities = [
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
     duration: 'PT2H20M',
-    locations: ['Auckland', 'Auckland']
+    locations: ['Auckland', 'Auckland'],
+    tags: ['JavaScript', 'React']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
     duration: 'PT1H20M',
-    locations: ['Auckland', 'Auckland']
+    locations: ['Auckland', 'Auckland'],
+    tags: []
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
     duration: 'PT3H',
-    locations: ['Auckland', 'Auckland']
+    locations: ['Auckland', 'Auckland'],
+    tags: ['Robots']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
     duration: 'PT25M',
-    locations: ['Wellington', 'Wellington']
+    locations: ['Wellington', 'Wellington'],
+    tags: ['Python', 'react']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
     duration: 'PT1H50M',
-    locations: ['Online', 'Online']
+    locations: ['Online', 'Online'],
+    tags: ['Public speaking', 'DevOps', 'JavaScript', 'Python']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
     duration: 'P1DT2H20M',
-    locations: ['Auckland', 'Auckland']
+    locations: ['Auckland', 'Auckland'],
+    tags: ['Baking', 'DevOps']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
     duration: 'P1DT1H20M',
-    locations: ['Wellington', 'Wellington']
+    locations: ['Wellington', 'Wellington'],
+    tags: ['Baking', 'DevOps']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
     duration: 'PT3H20M',
-    locations: ['Wellington', 'Wellington']
+    locations: ['Wellington', 'Wellington'],
+    tags: ['iOS', 'DevOps']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
     duration: 'PT1H10M',
-    locations: ['Wellington', 'Wellington']
+    locations: ['Wellington', 'Wellington'],
+    tags: ['Public speaking', 'GoLang']
   },
   {
     _id: generateObjectId(),
     date: [threeYearsAgo, null],
     requestor: people[3]._id,
     duration: 'PT5H20M',
-    locations: ['Auckland', 'Auckland']
+    locations: ['Auckland', 'Auckland'],
+    tags: ['ASP.NET Core', 'C#']
   },
   {
     _id: generateObjectId(),
     date: [threeYearsAgo, null],
     requestor: people[3]._id,
     duration: 'PT6H20M',
-    locations: ['Auckland', 'Auckland']
+    locations: ['Auckland', 'Auckland'],
+    tags: ['Docker', 'DevOps']
   },
   {
     _id: generateObjectId(),
     date: [threeYearsAgo, null],
     requestor: people[3]._id,
     duration: 'PT7H20M',
-    locations: ['Auckland', 'Auckland']
+    locations: ['Auckland', 'Auckland'],
+    tags: ['Kubernetes', 'Containerisation', 'Block Chain', 'Machine Learning', 'Artifical Intelligence']
   }
 ]
 
