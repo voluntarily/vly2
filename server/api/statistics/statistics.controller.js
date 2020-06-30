@@ -89,11 +89,22 @@ const getSummary = async (req, res) => {
     ])
 
     const totalVolunteers = membersWithAttendedInterests.length
+    const totalDuration = moment.duration();
 
-    // TODO: send totalVolunteerHours once opportunity.duration is stable/parseable
+    // accumulate total hours for each opportunity attended by each member
+    membersWithAttendedInterests.forEach(member => {
+      member.opportunitiesAttended.forEach(opportunity => {
+        totalDuration.add(moment.duration(opportunity.duration))
+      })
+    })
+   
+    const totalHours = totalDuration.asHours() 
+    const avgHoursPerVolunteer =  totalVolunteers ? totalHours / totalVolunteers : 0; 
 
     res.send({
-      totalVolunteers
+      totalVolunteers,
+      totalHours,
+      avgHoursPerVolunteer
     })
   } catch (e) {
     res.status(500).send(e)
