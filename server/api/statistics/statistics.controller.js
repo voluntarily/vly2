@@ -1,5 +1,5 @@
 const moment = require('moment')
-const {getMembersWithAttendedInterests} = require('./statistics.lib')
+const { getMembersWithAttendedInterests } = require('./statistics.lib')
 const Organisation = require('../organisation/organisation')
 
 const getSummary = async (req, res) => {
@@ -19,13 +19,13 @@ const getSummary = async (req, res) => {
 
   try {
     // the volunteers for an organisation are those that have attended an opportunity
-    if(!(await Organisation.exists({_id: orgId}))) {
-      return res.status(404).send({error: "Organisation not found"})
+    if (!(await Organisation.exists({ _id: orgId }))) {
+      return res.status(404).send({ error: 'Organisation not found' })
     }
     const membersWithAttendedInterests = await getMembersWithAttendedInterests(orgId, afterDate)
 
     const totalVolunteers = membersWithAttendedInterests.length
-    const totalDuration = moment.duration();
+    const totalDuration = moment.duration()
 
     // accumulate total hours for each opportunity attended by each member
     membersWithAttendedInterests.forEach(member => {
@@ -33,9 +33,9 @@ const getSummary = async (req, res) => {
         totalDuration.add(moment.duration(opportunity.duration))
       })
     })
-   
-    const totalHours = totalDuration.asHours() 
-    const avgHoursPerVolunteer =  totalVolunteers ? totalHours / totalVolunteers : 0; 
+
+    const totalHours = totalDuration.asHours()
+    const avgHoursPerVolunteer = totalVolunteers ? totalHours / totalVolunteers : 0
 
     res.send({
       totalVolunteers,
@@ -43,7 +43,7 @@ const getSummary = async (req, res) => {
       avgHoursPerVolunteer
     })
   } catch (e) {
-    res.status(500).send({error: e.message})
+    res.status(500).send({ error: e.message })
   }
 }
 
