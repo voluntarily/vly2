@@ -107,7 +107,70 @@ const getLocations = async (req, res) => {
   }
 }
 
+const getActivityTags = async (req, res) => {
+  const { orgId, timeframe } = req.params
+
+  // authentication
+  const currentUser = req.session.me
+  if (!currentUser || !req.session.isAuthenticated) {
+    return res.status(401).send()
+  }
+
+  // authorisation
+  if (!Array.isArray(currentUser.role) || !currentUser.role.includes(Role.ORG_ADMIN) || !Array.isArray(currentUser.orgAdminFor) || !currentUser.orgAdminFor.includes(orgId)) {
+    return res.status(403).send()
+  }
+
+  let afterDate
+  try {
+    afterDate = parseStatisticsTimeframe(timeframe)
+  } catch (e) {
+    return res.status(400).send({ message: e.message })
+  }
+
+  try {
+    // the volunteers for an organisation are those that have attended an opportunity
+    if (!(await Organisation.exists({ _id: orgId }))) {
+      return res.status(404).send({ error: 'Organisation not found' })
+    }
+    const membersWithAttendedInterests = await getMembersWithAttendedInterests(orgId, afterDate)
+
+    // consolidate location (city) opportunity data
+    const activityTagsMap = {}
+    membersWithAttendedInterests.forEach(member => {
+      member.opportunitiesAttended.forEach(opportunity => {
+        const tags = opportunity.tags
+        if (!tags) {
+          return
+        }
+
+        // tags counts are divided by the number of tags per opportunity
+        // so that one opporunity with a lot of tags cannot skew the statistics
+        // from other opportunities with a low amount of tags
+        const weightedCount = 1 / tags.length
+
+        tags.forEach(tag => {
+          tag = tag.toLowerCase()
+          if (tag in activityTagsMap) {
+            activityTagsMap[tag] += weightedCount
+          } else {
+            activityTagsMap[tag] = weightedCount
+          }
+        })
+      })
+    })
+
+    // convert locations map to array for client consumption
+    const activityTagsArray = Object.keys(activityTagsMap).map(tag => ({ name: tag, value: activityTagsMap[tag] }))
+
+    res.send(activityTagsArray)
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+
 module.exports = {
   getSummary,
-  getLocations
+  getLocations,
+  getActivityTags
 }
