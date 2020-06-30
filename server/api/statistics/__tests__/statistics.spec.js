@@ -32,7 +32,7 @@ test.after.always(async (t) => {
   await t.context.memMongo.stop();
 });
 
-test.serial(
+test(
   "Test getSummary returns correct volunteers and hours",
   async (t) => {
     const mockReq = new MockExpressRequest();
@@ -55,5 +55,24 @@ test.serial(
       "Status code should be 200 OK"
     );
     t.deepEqual(responseData, expectedData);
+  }
+);
+
+test(
+  "Test getSummary returns error when organisation doesn't exist",
+  async (t) => {
+    const mockReq = new MockExpressRequest();
+    const mockRes = new MockExpressResponse();
+
+    mockReq.params = { orgId: "5e73112a7f283c001151efc2", timeframe: "year" };
+
+    await getSummary(mockReq, mockRes);
+    const expectedStatusCode = 404;
+
+
+    t.assert(
+      expectedStatusCode === mockRes.statusCode,
+      "Status code should be 404 NOT FOUND"
+    );
   }
 );
