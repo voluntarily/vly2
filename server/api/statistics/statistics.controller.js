@@ -1,5 +1,5 @@
 const moment = require('moment')
-const { getMembersWithAttendedInterests } = require('./statistics.lib')
+const { getMembersWithAttendedInterests, parseStatisticsTimeframe } = require('./statistics.lib')
 const Organisation = require('../organisation/organisation')
 const { Role } = require('../../services/authorize/role')
 
@@ -18,15 +18,10 @@ const getSummary = async (req, res) => {
   }
 
   let afterDate
-  switch (timeframe) {
-    case 'month':
-      afterDate = moment().subtract(1, 'months').toDate()
-      break
-    case 'year':
-      afterDate = moment().subtract(1, 'years').toDate()
-      break
-    default:
-      return res.status(400).send({ message: 'invalid timeframe: must be month/year' })
+  try {
+    afterDate = parseStatisticsTimeframe(timeframe)
+  } catch (e) {
+    return res.status(400).send({ message: e.message })
   }
 
   try {
