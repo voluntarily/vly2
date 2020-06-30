@@ -82,73 +82,85 @@ const archivedOpportunities = [
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
-    duration: 'PT2H20M'
+    duration: 'PT2H20M',
+    locations: ['Auckland', 'Auckland']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
-    duration: 'PT1H20M'
+    duration: 'PT1H20M',
+    locations: ['Auckland', 'Auckland']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
-    duration: 'PT3H'
+    duration: 'PT3H',
+    locations: ['Auckland', 'Auckland']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
-    duration: 'PT25M'
+    duration: 'PT25M',
+    locations: ['Wellington', 'Wellington']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
-    duration: 'PT1H50M'
+    duration: 'PT1H50M',
+    locations: ['Online', 'Online']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
-    duration: 'P1DT2H20M'
+    duration: 'P1DT2H20M',
+    locations: ['Auckland', 'Auckland']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
-    duration: 'P1DT1H20M'
+    duration: 'P1DT1H20M',
+    locations: ['Wellington', 'Wellington']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
-    duration: 'PT3H20M'
+    duration: 'PT3H20M',
+    locations: ['Wellington', 'Wellington']
   },
   {
     _id: generateObjectId(),
     date: [sixMonthsAgo, null],
     requestor: people[3]._id,
-    duration: 'PT1H10M'
+    duration: 'PT1H10M',
+    locations: ['Wellington', 'Wellington']
   },
   {
     _id: generateObjectId(),
     date: [threeYearsAgo, null],
     requestor: people[3]._id,
-    duration: 'PT5H20M'
+    duration: 'PT5H20M',
+    locations: ['Auckland', 'Auckland']
   },
   {
     _id: generateObjectId(),
     date: [threeYearsAgo, null],
     requestor: people[3]._id,
-    duration: 'PT6H20M'
+    duration: 'PT6H20M',
+    locations: ['Auckland', 'Auckland']
   },
   {
     _id: generateObjectId(),
     date: [threeYearsAgo, null],
     requestor: people[3]._id,
-    duration: 'PT7H20M'
+    duration: 'PT7H20M',
+    locations: ['Auckland', 'Auckland']
   }
 ]
 
