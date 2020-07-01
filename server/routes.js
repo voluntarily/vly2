@@ -27,5 +27,6 @@ module.exports = routes()
 
   .add('act', '/acts/:id', 'act/actdetailpage')
   .add('actnew', '/act/:new', 'act/actdetailpage')
+  .add('statistics', '/statistics', 'statistics/orgstatisticspage')
   // .add('actsection', '/act/section', 'act/actlistsection')
 // Usage inside Page.getInitialProps (req = { pathname, asPath, query } = { pathname: '/', asPath: '/about', query: { slug: 'about' } })
