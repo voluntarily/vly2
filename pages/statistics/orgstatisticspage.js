@@ -4,6 +4,7 @@ import { withStatistics } from '../../lib/redux/reduxApi'
 import { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Divider } from 'antd'
+import OrgStatisticsTabs from '../../components/Statistics/OrgStatisticsTabs'
 
 const OrgStatisticsPage = (props) => {
   useEffect(() => {
@@ -32,6 +33,9 @@ const OrgStatisticsPage = (props) => {
           defaultMessage='What was your volunteering impact?'
         />
       </PageBanner>
+
+      <OrgStatisticsTabs />
+
       <Divider />
       {totalVolunteers} {totalHours} {avgHoursPerVolunteer}
     </FullPage>
