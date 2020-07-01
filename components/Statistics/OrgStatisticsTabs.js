@@ -1,8 +1,9 @@
+import React, { useEffect } from 'react'
 import { Tabs } from 'antd'
 import VTabs from '../VTheme/VTabs'
 import { connect } from 'react-redux'
 import { withOrgs } from '../../lib/redux/reduxApi.js'
-import { useEffect } from 'react'
+
 import ReduxLoading from '../Loading'
 
 const OrgStatisticsTabs = (props) => {
