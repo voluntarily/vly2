@@ -1,6 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { LoadSpinner } from '../Loading'
 import fetch from 'isomorphic-fetch'
+import { Row, Col } from 'antd'
+import styled from 'styled-components'
+import _ from 'lodash'
+
+const SummaryValue = styled.p`
+  font-weight: 600;
+  font-size: 80px;
+  margin-bottom: 0;
+  text-align: center;
+`
+
+const SummaryLabel = styled.p`
+  font-size: 24px;
+  text-align: center;
+`
 
 const StatisticsSummaryReport = ({ orgId, timeframe }) => {
   const [summaryData, setSummaryData] = useState()
@@ -36,9 +51,20 @@ const StatisticsSummaryReport = ({ orgId, timeframe }) => {
     summaryData || {}
 
   return (
-    <div>
-      {totalVolunteers} {totalHours} {avgHoursPerVolunteer}
-    </div>
+    <Row type='flex'>
+      <Col xs={24} s={24} md={8}>
+        <SummaryValue>{totalVolunteers || 0}</SummaryValue>
+        <SummaryLabel>volunteer{totalVolunteers === 1 ? '' : 's'}</SummaryLabel>
+      </Col>
+      <Col xs={24} s={24} md={8}>
+        <SummaryValue>{_.round(totalHours, 1) || 0}</SummaryValue>
+        <SummaryLabel>hours total</SummaryLabel>
+      </Col>
+      <Col xs={24} s={24} md={8}>
+        <SummaryValue>{_.round(avgHoursPerVolunteer, 1) || 0}</SummaryValue>
+        <SummaryLabel>average hours per volunteer</SummaryLabel>
+      </Col>
+    </Row>
   )
 }
 
