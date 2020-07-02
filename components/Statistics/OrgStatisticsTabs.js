@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { withOrgs } from '../../lib/redux/reduxApi.js'
 
 import ReduxLoading from '../Loading'
+import StatisticsPanel from './StatisticsPanel'
 
 const OrgStatisticsTabs = (props) => {
   useEffect(() => {
@@ -26,7 +27,7 @@ const OrgStatisticsTabs = (props) => {
       {orgs &&
         orgs.map((org) => (
           <Tabs.TabPane tab={org.name} key={org._id}>
-            TODO: add dashboard component
+            <StatisticsPanel orgId={org._id} timeframe={props.timeframe} />
           </Tabs.TabPane>
         ))}
     </VTabs>
