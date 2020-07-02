@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { LoadSpinner } from '../Loading'
 import fetch from 'isomorphic-fetch'
 
 const StatisticsSummaryReport = ({ orgId, timeframe }) => {
-  const idToken = useSelector((state) => state.session.idToken)
   const [summaryData, setSummaryData] = useState()
   const [summaryError, setSummaryError] = useState()
   const [summaryLoading, setSummaryLoading] = useState()
 
   useEffect(() => {
     setSummaryLoading(true)
-    fetch(`/api/statistics/summary/${orgId}/${timeframe}`, {
-      headers: { Authorization: `Bearer ${idToken}` }
-    })
+    fetch(`/api/statistics/summary/${orgId}/${timeframe}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error()
@@ -24,7 +20,7 @@ const StatisticsSummaryReport = ({ orgId, timeframe }) => {
       .then((data) => setSummaryData(data))
       .catch((err) => setSummaryError(err))
       .finally(() => setSummaryLoading(false))
-  }, [orgId, timeframe, idToken])
+  }, [orgId, timeframe])
 
   if (summaryLoading) {
     return <LoadSpinner />
