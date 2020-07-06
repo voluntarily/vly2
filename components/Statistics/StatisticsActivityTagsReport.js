@@ -13,9 +13,9 @@ const Container = styled.div`
   flex-direction: column;
 `
 
-const StatisticsLocationsReport = ({ orgId, timeframe }) => {
+const StatisticsActivityTagsReport = ({ orgId, timeframe }) => {
   const { data, error, loading } = useStatisticsAPI(
-    'locations',
+    'activityTags',
     orgId,
     timeframe
   )
@@ -27,22 +27,22 @@ const StatisticsLocationsReport = ({ orgId, timeframe }) => {
   if (error) {
     return (
       <p>
-        Locations information currently unavailable. Please try again later.
+        Activity tags information currently unavailable. Please try again later.
       </p>
     )
   }
 
   if (!data || !data.length) {
-    return <p>No location data found.</p>
+    return <p>No activity tags data found.</p>
   }
 
   return (
     <Container>
       <h3>
         <FormattedMessage
-          id='StatisticsLocationsReport.title'
-          defaultMessage='Where did volunteers help?'
-          description='Title on statistics locations report'
+          id='StatisticsActivityTagsReport.title'
+          defaultMessage='What did they do?'
+          description='Title on statistics activity tags report'
         />
       </h3>
       <PieChart width={800} height={400}>
@@ -62,4 +62,4 @@ const StatisticsLocationsReport = ({ orgId, timeframe }) => {
   )
 }
 
-export default StatisticsLocationsReport
+export default StatisticsActivityTagsReport

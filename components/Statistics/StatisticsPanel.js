@@ -2,6 +2,7 @@ import React from 'react'
 import { Divider } from 'antd'
 import StatisticsSummaryReport from './StatisticsSummaryReport'
 import StatisticsLocationsReport from './StatisticsLocationsReport'
+import StatisticsActivityTagsReport from './StatisticsActivityTagsReport'
 
 const StatisticsPanel = ({ orgId, timeframe }) => {
   return (
@@ -9,6 +10,8 @@ const StatisticsPanel = ({ orgId, timeframe }) => {
       <StatisticsSummaryReport orgId={orgId} timeframe={timeframe} />
       <Divider />
       <StatisticsLocationsReport orgId={orgId} timeframe={timeframe} />
+      <Divider />
+      <StatisticsActivityTagsReport orgId={orgId} timeframe={timeframe} />
       <Divider />
     </div>
   )
