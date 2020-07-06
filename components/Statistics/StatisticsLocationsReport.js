@@ -1,48 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { LoadSpinner } from '../Loading'
-import fetch from 'isomorphic-fetch'
 import { PieChart, Pie, Tooltip, Legend, Cell } from 'recharts'
 import styled from 'styled-components'
+import { useStatisticsAPI } from '../../lib/statistics/statisticsHooks'
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#653CAD']
 
 const Container = styled.div`
-display: flex;
-align-items: center;
-flex-direction: column;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 `
 
 const StatisticsLocationsReport = ({ orgId, timeframe }) => {
-  const [locationsData, setLocationsData] = useState([])
-  const [locationsError, setLocationsError] = useState()
-  const [locationsLoading, setLocationsLoading] = useState()
+  const { data, error, loading } = useStatisticsAPI(
+    'locations',
+    orgId,
+    timeframe
+  )
 
-  useEffect(() => {
-    setLocationsLoading(true)
-    fetch(`/api/statistics/locations/${orgId}/${timeframe}`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error()
-        }
-        setLocationsError(undefined)
-        return res.json()
-      })
-      .then((data) => setLocationsData(data))
-      .catch((err) => setLocationsError(err))
-      .finally(() => setLocationsLoading(false))
-  }, [orgId, timeframe])
-
-  if (locationsLoading) {
+  if (loading) {
     return <LoadSpinner />
   }
 
-  if (locationsError) {
+  if (error) {
     return (
       <p>
         Locations information currently unavailable. Please try again later.
       </p>
     )
+  }
+
+  if (!data || !data.length) {
+    return <p>No location data found.</p>
   }
 
   return (
@@ -55,10 +46,14 @@ const StatisticsLocationsReport = ({ orgId, timeframe }) => {
         />
       </h3>
       <PieChart width={800} height={400}>
-        <Pie data={locationsData} outerRadius={80} label>
-          {locationsData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
+        <Pie data={data} outerRadius={80} label>
+          {data &&
+            data.map((_entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
+            ))}
         </Pie>
         <Tooltip />
         <Legend />

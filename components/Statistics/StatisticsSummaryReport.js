@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useStatisticsAPI } from '../../lib/statistics/statisticsHooks'
 import { LoadSpinner } from '../Loading'
-import fetch from 'isomorphic-fetch'
 import { Row, Col } from 'antd'
 import styled from 'styled-components'
 import _ from 'lodash'
@@ -18,37 +18,23 @@ const SummaryLabel = styled.p`
 `
 
 const StatisticsSummaryReport = ({ orgId, timeframe }) => {
-  const [summaryData, setSummaryData] = useState()
-  const [summaryError, setSummaryError] = useState()
-  const [summaryLoading, setSummaryLoading] = useState()
+  const { data, error, loading } = useStatisticsAPI(
+    'summary',
+    orgId,
+    timeframe
+  )
 
-  useEffect(() => {
-    setSummaryLoading(true)
-    fetch(`/api/statistics/summary/${orgId}/${timeframe}`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error()
-        }
-        setSummaryError(undefined)
-        return res.json()
-      })
-      .then((data) => setSummaryData(data))
-      .catch((err) => setSummaryError(err))
-      .finally(() => setSummaryLoading(false))
-  }, [orgId, timeframe])
-
-  if (summaryLoading) {
+  if (loading) {
     return <LoadSpinner />
   }
 
-  if (summaryError) {
+  if (error) {
     return (
       <p>Summary information currently unavailable. Please try again later.</p>
     )
   }
 
-  const { totalVolunteers, totalHours, avgHoursPerVolunteer } =
-    summaryData || {}
+  const { totalVolunteers, totalHours, avgHoursPerVolunteer } = data || {}
 
   return (
     <Row type='flex'>
