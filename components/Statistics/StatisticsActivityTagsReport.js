@@ -26,9 +26,7 @@ const StatisticsActivityTagsReport = ({ orgId, timeframe }) => {
 
   if (error) {
     return (
-      <p>
-        Activity tags information currently unavailable. Please try again later.
-      </p>
+      <p>Activity tags information currently unavailable. Please try again later.</p>
     )
   }
 
