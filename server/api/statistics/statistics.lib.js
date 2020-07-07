@@ -1,6 +1,7 @@
 const { InterestArchive } = require('../interest/interest')
 const Member = require('../member/member')
 const mongoose = require('mongoose')
+const moment = require('moment')
 
 const getMembersWithAttendedInterests = async (orgId, afterDate) =>
   Member.aggregate([
@@ -70,6 +71,18 @@ const getMembersWithAttendedInterests = async (orgId, afterDate) =>
     }
   ])
 
+const parseStatisticsTimeframe = timeframe => {
+  switch (timeframe) {
+    case 'month':
+      return moment().subtract(1, 'months').toDate()
+    case 'year':
+      return moment().subtract(1, 'years').toDate()
+    default:
+      throw Error('invalid timeframe: must be month/year')
+  }
+}
+
 module.exports = {
-  getMembersWithAttendedInterests
+  getMembersWithAttendedInterests,
+  parseStatisticsTimeframe
 }
