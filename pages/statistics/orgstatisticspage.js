@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import OrgStatisticsTabs from '../../components/Statistics/OrgStatisticsTabs'
 import StatisticsTimeframeSelector from '../../components/Statistics/StatisticsTimeframeSelector'
 
-const OrgStatisticsPage = (props) => {
+export const OrgStatisticsPage = (props) => {
   const [timeframe, setTimeframe] = useState('month')
 
   return (
