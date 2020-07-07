@@ -7,7 +7,7 @@ import { withOrgs } from '../../lib/redux/reduxApi.js'
 import ReduxLoading from '../Loading'
 import StatisticsPanel from './StatisticsPanel'
 
-const OrgStatisticsTabs = (props) => {
+export const OrgStatisticsTabs = (props) => {
   useEffect(() => {
     props.dispatch(
       props.organisationsActions.get({
