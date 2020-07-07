@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { LoadSpinner } from '../Loading'
-import { PieChart, Pie, Tooltip, Legend, Cell } from 'recharts'
+import { PieChart, Pie, Tooltip, Legend, Cell, ResponsiveContainer } from 'recharts'
 import styled from 'styled-components'
 import { useStatisticsAPI } from '../../lib/statistics/statisticsHooks'
 
@@ -45,19 +45,21 @@ const StatisticsLocationsReport = ({ orgId, timeframe }) => {
           description='Title on statistics locations report'
         />
       </h3>
-      <PieChart width={800} height={400}>
-        <Pie data={data} outerRadius={80} label>
-          {data &&
+      <ResponsiveContainer width='95%' height={400}>
+        <PieChart width={800} height={400}>
+          <Pie data={data} outerRadius={80} label>
+            {data &&
             data.map((_entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[index % COLORS.length]}
               />
             ))}
-        </Pie>
-        <Tooltip />
-        <Legend />
-      </PieChart>
+          </Pie>
+          <Tooltip />
+          <Legend />
+        </PieChart>
+      </ResponsiveContainer>
     </Container>
   )
 }
