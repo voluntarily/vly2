@@ -727,7 +727,7 @@ test.serial.failing(
   }
 )
 
-test.failing(
+test.serial.failing(
   'getSkillsRecommendations > alias tag matches, topic group matches',
   async (t) => {
     await Person.deleteMany()
@@ -877,10 +877,81 @@ test.serial(
   }
 )
 
-// These tests are to be implemented once the getSkillsRecommendations has an updated scoring system in place
-test.todo('getSkillsRecommendations > partial matches and alias matches')
-test.todo('getSkillsRecommendations > partial matches and full matches')
-test.todo('getSkillsRecommendations > alias matches and full matches')
+test.serial.failing(
+  'getSkillsRecommendations > mixture of partial, alias, and full matches',
+  async (t) => {
+    await Person.deleteMany()
+    const john = await Person.create({
+      name: 'John',
+      email: 'john@mail.com'
+    })
+
+    const userTags = ['tutor', 'remote', 'marketing']
+    const person = {
+      _id: mongoose.Types.ObjectId(),
+      role: Role.VOLUNTEER,
+      tags: userTags,
+      topicGroups: []
+    }
+
+    await Opportunity.deleteMany()
+    await Opportunity.create({
+      name: 'Fully matched op',
+      status: OpportunityStatus.ACTIVE,
+      type: OpportunityType.OFFER,
+      requestor: john._id,
+      tags: userTags
+    })
+
+    await Opportunity.create({
+      name: 'Op with full match, partial match, and alias match of distinct tags',
+      status: OpportunityStatus.ACTIVE,
+      type: OpportunityType.OFFER,
+      requestor: john._id,
+      tags: ['tutor', 'remote learning', 'advertising']
+    })
+
+    await Opportunity.create({
+      name: 'Op with full match, and partial matches of distinct tags',
+      status: OpportunityStatus.ACTIVE,
+      type: OpportunityType.OFFER,
+      requestor: john._id,
+      tags: ['tutor', 'remote learning', 'markets']
+    })
+
+    await Opportunity.create({
+      name: 'Op with alias matches of distinct tags',
+      status: OpportunityStatus.ACTIVE,
+      type: OpportunityType.OFFER,
+      requestor: john._id,
+      tags: ['teaching', 'distant', 'advertising']
+    })
+
+    await Opportunity.create({
+      name: 'Op with full match, and multiple partial matches of the same tag',
+      status: OpportunityStatus.ACTIVE,
+      type: OpportunityType.OFFER,
+      requestor: john._id,
+      tags: ['tutor', 'remote learning', 'remote working']
+    })
+
+    await Opportunity.create({
+      name: 'Op with full match, and multiple alias matches of the same tag',
+      status: OpportunityStatus.ACTIVE,
+      type: OpportunityType.OFFER,
+      requestor: john._id,
+      tags: ['tutor', 'marketing', 'seo']
+    })
+
+    const recommendedSkills = await getSkillsRecommendations(person)
+    t.is(recommendedSkills.length, 6)
+    t.is(
+      recommendedSkills[0].name,
+      'Fully matched op'
+    ) // closest match.
+    // TODO: Add ranking checks once the scoring system is in place
+  }
+)
 
 /**
  * Select random tags from the array
