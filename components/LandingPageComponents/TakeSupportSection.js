@@ -38,7 +38,7 @@ const TakeSupportSection = () => (
       <ImageContainer src='/static/img/about/offer.png' />
 
     </HalfGrid>
-    <Divider />
+    {/* <Divider />
     <TitleContainerMid><H2>People are asking for help with...</H2></TitleContainerMid>
     <TripleGrid>
       <a>
@@ -72,7 +72,7 @@ const TakeSupportSection = () => (
         href='https://blog.voluntarily.nz'
       >See all offers
       </Button>
-    </TitleContainerMid>
+    </TitleContainerMid> */}
   </>
 )
 export default TakeSupportSection

@@ -44,21 +44,18 @@ const HelpOrgsSection = () => (
         <PromoCard>
           <img src='https://picsum.photos/400/240' />
           <H5><strong>Spark</strong></H5>
-          <H5>Mobilizing their staff to help in the community</H5>
         </PromoCard>
       </a>
       <a>
         <PromoCard>
           <img src='https://picsum.photos/400/240' />
           <H5><strong>Westpac</strong></H5>
-          <H5>45 people offering to help you</H5>
         </PromoCard>
       </a>
       <a>
         <PromoCard>
           <img src='https://picsum.photos/400/240' />
           <H5><strong>Datacom</strong></H5>
-          <H5>45 people offering to help you</H5>
         </PromoCard>
       </a>
 
