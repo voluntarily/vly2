@@ -35,6 +35,7 @@ position: relative;
     width: 100%;
     background-color: black;
     height:40vh;
+    min-height: 400px;
     overflow: hidden;
   
     img {
@@ -128,6 +129,7 @@ padding: 0 1rem;
   p {
     font-size: 1.5rem;
     margin: 1rem;
+    padding: 0 1rem;
   }
   }
   
@@ -171,6 +173,10 @@ padding-right:2rem;
    font-size: 3.5rem;
    text-align: left;
    margin: 0;
+ }
+ h3 {
+   margin-top: 0.5rem;
+   font-size: 1.2rem;
  }
   }
 `
