@@ -19,8 +19,6 @@ import Testimonial from '../../components/LandingPageComponents/Testimonial'
 import HelpSocialSection from '../../components/LandingPageComponents/HelpSocialSection'
 import HelpOrgsSection from '../../components/LandingPageComponents/HelpOrgsSection'
 
-const isNotProd = process.env.NODE_ENV !== 'production'
-
 export const Landing = ({ isAuthenticated }) => (
   <>
     <Helmet>
@@ -36,25 +34,24 @@ export const Landing = ({ isAuthenticated }) => (
       <OfferSection />
       <Divider />
       <HowSection />
-      {isNotProd &&
-        <>
+      <>
 
-          <Divider />
-          <Testimonial />
-          <Divider />
-          <GiveSupportSection />
-          <Divider />
-          <TakeSupportSection />
-          <Divider />
-          <CorporateSection />
-          <Divider />
-          <HelpOrgsSection />
-          <Divider />
-          <HelpSocialSection />
+        <Divider />
+        <Testimonial />
+        <Divider />
+        <GiveSupportSection />
+        <Divider />
+        <TakeSupportSection />
+        <Divider />
+        <CorporateSection />
+        <Divider />
+        <HelpOrgsSection />
+        <Divider />
+        <HelpSocialSection />
 
-          <Divider />
-          <GiveContentSection />
-        </>}
+        <Divider />
+        <GiveContentSection />
+      </>
     </FullPage>
   </>
 )
