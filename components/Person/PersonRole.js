@@ -65,10 +65,11 @@ const RoleBadge = styled.span`
 `
 export const PersonRoleIcons = ({ roles }) => {
   const key = Object.keys(roleIcons).find(role => roles.includes(role))
-  return (key &&
+  return (key ? (
     <Popover content={<PersonRoles roles={roles} />} title='Role' trigger='hover'>
       <RoleBadge>{roleIcons[key]}</RoleBadge>
     </Popover>
+  ) : ''
   )
 }
 export default PersonRoles
