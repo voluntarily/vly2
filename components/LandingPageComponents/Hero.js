@@ -4,7 +4,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { LearnMoreButton, SignUpButton } from '../../components/VTheme/Buttons'
-import { Button, Divider } from 'antd'
+import { Button } from 'antd'
 // const Search = Input.Search
 
 // this is the big container block that holds the container together lol
@@ -13,7 +13,7 @@ const AwesomeHeroContainer = styled.div`
   height: auto;
   width: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   
   @media screen and (min-width: 1200px) {
    
@@ -23,7 +23,7 @@ const AwesomeHeroContainer = styled.div`
   }
   @media screen and (max-width: 1280px) {
   }
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 768px) {
     margin-top: 3rem;
  grid-template-columns: 1fr;
   }
@@ -34,7 +34,8 @@ const HeroItem = styled.div`
 position: relative;
     width: 100%;
     background-color: black;
-    height: 80vh;
+    height:40vh;
+    min-height: 400px;
     overflow: hidden;
   
     img {
@@ -79,7 +80,7 @@ button {
 }
     h1 {
 font-weight: 700;
-font-size: 3rem;
+font-size: 2.5rem;
 line-height: 1.5;
 letter-spacing: -0.5px;
 z-index: 100;
@@ -92,34 +93,43 @@ p {
   font-weight: 400;
 letter-spacing: 0;
 z-index: 100;
+padding: 0 4rem;
 
 color: white;
 }
 
 @media screen and (min-width: 1026px) and (max-width: 1281px) {
-  font-size:2.5rem;
+  h1 {
+  font-size:2rem;
+  }
   p {
   
+padding: 0 2rem;
   line-height: 1.5;
  }
   }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
     h1 {
-    font-size:2rem;
+    font-size:1.5rem;
   }
     p {
+      font-size: 1rem;
   line-height: 1.5;
+
+padding: 0 1rem;
  }
   }
   @media screen and (max-width: 768px) {
   h1 {
-    font-size: 1.5rem;
+    font-size: 2rem;
     line-height: 1.5;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
     
   }
   p {
-    margin: 1rem 2rem ;
+    font-size: 1.5rem;
+    margin: 1rem;
+    padding: 0 1rem;
   }
   }
   
@@ -128,27 +138,45 @@ color: white;
 const CTAGrid = styled.section`
 max-width: 80rem;
 margin: 0 auto;
-padding: 4rem 2rem 2.5rem 0rem;
-display: grid;
-grid-template-columns: 1fr 15rem 15rem;
+padding: 10rem 2rem 8rem 0rem;
+
 a {
   color: #653cad;
 }
-h2 {
-  font-size: 2rem;
+h1 {
+  font-size: 5rem;
+  letter-spacing: -3px;
 }
-@media screen and (max-width: 1281px) {
 
-  padding: 4rem 2rem 2.5rem 2rem;
+h3{
+  margin-bottom: 1rem;
+}
+
+
+@media screen and (max-width: 1400px) {
+
+padding-right:2rem;
+}
+
+@media screen and (max-width: 1281px) {
+  h1 {
+  font-size: 4rem;
+  letter-spacing: -3px;
+}
+  padding: 6rem 2rem 2.5rem 2rem;
 }
 @media screen and (max-width: 768px) {
- padding: 1rem;
+ padding: 5rem 1rem 2rem 1rem;
  grid-template-columns: 1fr;
  grid-row-gap: 1rem;
- h2 {
-   font-size: 1.5rem;
-   text-align: center;
-   margin: 2rem 0;
+ h1 {
+   font-size: 3.5rem;
+   text-align: left;
+   margin: 0;
+ }
+ h3 {
+   margin-top: 0.5rem;
+   font-size: 1.2rem;
  }
   }
 `
@@ -189,6 +217,15 @@ h2 {
 // begin actual component
 const Hero = ({ isAuthenticated }) => (
   <>
+    <CTAGrid>
+      <div>
+        <h1>Help people.</h1>
+        <h3>Find volunteering opportunities and training.<br />Make an impact in your community.</h3>
+        {!isAuthenticated &&
+          <SignUpButton then='/flow/postSignUp' />}  <LearnMoreButton />
+      </div>
+
+    </CTAGrid>
     <AwesomeHeroContainer>
 
       <HeroItem>
@@ -197,7 +234,7 @@ const Hero = ({ isAuthenticated }) => (
           <h1>
             <FormattedMessage
               id='Hero.title.Volunteer'
-              defaultMessage='Volunteer to help'
+              defaultMessage='Want to help people?'
             />
           </h1>
           <p>
@@ -213,7 +250,7 @@ const Hero = ({ isAuthenticated }) => (
               type='primary'
               shape='round'
               size='large'
-            > See activities
+            > Browse activities
             </Button>
           </a>
         </HeroText>
@@ -225,13 +262,13 @@ const Hero = ({ isAuthenticated }) => (
           <h1>
             <FormattedMessage
               id='Hero.title.AskForHelp'
-              defaultMessage='Ask for help'
+              defaultMessage='Need support?'
             />
           </h1>
           <p>
             <FormattedMessage
               id='Hero.body.AskForHelp'
-              defaultMessage='Get help from volunteers around your community'
+              defaultMessage='Browse Volunteers that want to help '
             />
           </p>
           <a href='/a/ask'>
@@ -240,7 +277,7 @@ const Hero = ({ isAuthenticated }) => (
               type='primary'
               shape='round'
               size='large'
-            > See offers
+            > Browse offers
             </Button>
           </a>
         </HeroText>
@@ -259,13 +296,38 @@ const Hero = ({ isAuthenticated }) => (
         </SearchBox> */}
 
       </HeroItem>
-    </AwesomeHeroContainer>
-    <CTAGrid><h2>Voluntarily helps <a href='https://blog.voluntarily.nz' target='_blank' rel='noopener noreferrer'>people help people.</a></h2>
-      {!isAuthenticated &&
-        <SignUpButton then='/flow/postSignUp' />}  <LearnMoreButton />
 
-    </CTAGrid>
-    <Divider />
+      <HeroItem>
+
+        <HeroText>
+          <h1>
+            <FormattedMessage
+              id='Hero.title.partner'
+              defaultMessage='Partner with us'
+            />
+          </h1>
+          <p>
+            <FormattedMessage
+              id='Hero.body.partner'
+              defaultMessage='Empower your Organisation or Community Group with Volunteers from Voluntarily'
+            />
+          </p>
+
+          <a href='/a/offer'>
+            <Button
+              block
+              type='primary'
+              shape='round'
+              size='large'
+            > Learn more
+            </Button>
+          </a>
+        </HeroText>
+        <img src='/static/img/landing-pages/partnerbg.png' />
+      </HeroItem>
+
+    </AwesomeHeroContainer>
+
   </>
 )
 // LAUNCH IT. WOOOSH!
