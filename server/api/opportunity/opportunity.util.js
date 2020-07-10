@@ -76,7 +76,7 @@ const getSkillsRecommendations = async (me) => {
   }
   var regexTags = new RegExp(tagsToMatch.join("|"));
   const opsWithMatchingTags = await Opportunity.find({
-    tags: { $in: regexTags},
+    tags: { $in: regexTags },
     type: { $in: types },
     requestor: { $ne: me._id },
   })
@@ -84,21 +84,18 @@ const getSkillsRecommendations = async (me) => {
     .populate("offerOrg", "name imgUrl role");
   const opsWithCounts = [];
 
-  console.log("i am here" + regexTags);
-
-  const opsWithPartiallyMatchingTags = await Opportunity.find({
-    tags: { $regex: regexTags, $options: 'i' },
-  })
-    .populate("requestor", "name nickname imgUrl")
-    .populate("offerOrg", "name imgUrl role");
-    console.log("these are partial tags matches" + opsWithPartiallyMatchingTags);
-
   opsWithMatchingTags.forEach((op) => {
     let count = 0;
     op.tags.forEach((tag) => {
       if (tagsToMatch.includes(tag)) {
         count++;
-      } 
+      } else {
+        let simRating = stringSimilarity.findBestMatch(tag, tagsToMatch);
+        if (simRating.bestMatch.rating > 0.5) {
+          count =
+            count + Math.round((simRating.bestMatch.rating + Number.EPSILON) * 100) / 100;
+        }
+      }
     });
     // tagsToMatch.forEach((tag) => {
     //   let count = 0;
@@ -110,8 +107,7 @@ const getSkillsRecommendations = async (me) => {
     //   if (simRating.rating > 0.5) {
     //     // Only consider partial matches that are more than 50%
     //     // Update count with the rating score rounded to 2 decimal places
-    //     count =
-    //       count + Math.round((simRating.rating + Number.EPSILON) * 100) / 100;
+
     //   }
     // });
     opsWithCounts.push({ count, op });
