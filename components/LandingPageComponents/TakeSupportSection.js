@@ -1,8 +1,8 @@
 
 import React from 'react'
 
-import { Button, Divider } from 'antd'
-import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
+import { Button } from 'antd'
+import { HalfGrid, H2, H3, P, StatContainer, ImageContainer } from '../VTheme/VTheme'
 
 const TakeSupportSection = () => (
   <>
@@ -38,7 +38,7 @@ const TakeSupportSection = () => (
       <ImageContainer src='/static/img/about/offer.png' />
 
     </HalfGrid>
-    <Divider />
+    {/* <Divider />
     <TitleContainerMid><H2>People are asking for help with...</H2></TitleContainerMid>
     <TripleGrid>
       <a>
@@ -72,7 +72,7 @@ const TakeSupportSection = () => (
         href='https://blog.voluntarily.nz'
       >See all offers
       </Button>
-    </TitleContainerMid>
+    </TitleContainerMid> */}
   </>
 )
 export default TakeSupportSection
