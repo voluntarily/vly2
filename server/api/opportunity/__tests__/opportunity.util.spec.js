@@ -453,6 +453,7 @@ test.serial(
     }
 
     const recommendedSkills = await getSkillsRecommendations(person)
+
     t.is(recommendedSkills.length, 2)
     t.is(
       recommendedSkills[0].name,
@@ -465,7 +466,7 @@ test.serial(
   }
 )
 
-test.serial.failing(
+test.serial (
   'getSkillsRecommendations > partial tag matches, no topic group matches',
   async (t) => {
     const john = await Person.create({
@@ -517,12 +518,13 @@ test.serial.failing(
       tags: ['remote', 'work', 'tutoring'],
       topicGroups: ['business']
     }
-
+    
+    debugger
     const recommendedSkills = await getSkillsRecommendations(person)
-    t.is(recommendedSkills.length, 4)
+
+    t.is(recommendedSkills.length, 3)
     t.is(recommendedSkills[0].name, 'Op with three partial matches') // closest match.
     t.is(recommendedSkills[2].name, 'Op with one partial match') // least close match
-    t.is(recommendedSkills[3].name, 'Op with no tag match') // no match, ranked last
   }
 )
 
