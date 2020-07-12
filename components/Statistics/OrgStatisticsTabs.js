@@ -1,41 +1,38 @@
 import React, { useEffect } from 'react'
 import { Tabs } from 'antd'
 import VTabs from '../VTheme/VTabs'
-import { connect } from 'react-redux'
 import { withOrgs } from '../../lib/redux/reduxApi.js'
-
 import ReduxLoading from '../Loading'
 import StatisticsPanel from './StatisticsPanel'
+import { useSelector, useDispatch } from 'react-redux'
 
-export const OrgStatisticsTabs = (props) => {
+const OrgStatisticsTabs = (props) => {
+  const orgAdminFor = useSelector((state) => state.session.me.orgAdminFor)
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    props.dispatch(
+    dispatch(
       props.organisationsActions.get({
-        q: JSON.stringify({ _id: { $in: props.orgAdminFor } })
+        q: JSON.stringify({ _id: { $in: orgAdminFor } })
       })
     )
-  }, [props.orgAdminFor])
+  }, [orgAdminFor])
 
-  if (!props.organisations.sync) {
+  if (!props.organisations || !props.organisations.sync) {
     return <ReduxLoading entity={props.organisations} label='organisations' />
   }
 
-  const orgs = props.organisations.data
+  const orgs = props.organisations.data || []
 
   return (
     <VTabs size='large'>
-      {orgs &&
-        orgs.map((org) => (
-          <Tabs.TabPane tab={org.name} key={org._id}>
-            <StatisticsPanel orgId={org._id} timeframe={props.timeframe} />
-          </Tabs.TabPane>
-        ))}
+      {orgs.map((org) => (
+        <Tabs.TabPane tab={org.name} key={org._id}>
+          <StatisticsPanel orgId={org._id} timeframe={props.timeframe} />
+        </Tabs.TabPane>
+      ))}
     </VTabs>
   )
 }
 
-const mapStateToProps = (store) => ({
-  orgAdminFor: store.session.me.orgAdminFor
-})
-
-export default connect(mapStateToProps)(withOrgs(OrgStatisticsTabs))
+export default withOrgs(OrgStatisticsTabs)
