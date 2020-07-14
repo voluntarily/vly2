@@ -4,6 +4,7 @@ import React from 'react'
 import { Button, Divider } from 'antd'
 import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
 
+const isNotProd = process.env.NODE_ENV !== 'production'
 const GiveSupportSection = () => (
   <>
     <HalfGrid>
@@ -40,41 +41,45 @@ const GiveSupportSection = () => (
       </div>
     </HalfGrid>
     <Divider />
-    <TitleContainerMid><H2>Featured offers from volunteers</H2></TitleContainerMid>
-    <TripleGrid>
-      <a>
-        <PromoCard>
-          <img src='https://picsum.photos/400/240' />
-          <H5><strong>Get help with Remote Work</strong></H5>
-          <H5>45 people offering to help you</H5>
-        </PromoCard>
-      </a>
-      <a>
-        <PromoCard>
-          <img src='https://picsum.photos/400/240' />
-          <H5><strong>Get help with Remote Work</strong></H5>
-          <H5>45 people offering to help you</H5>
-        </PromoCard>
-      </a>
-      <a>
-        <PromoCard>
-          <img src='https://picsum.photos/400/240' />
-          <H5><strong>Get help with Remote Work</strong></H5>
-          <H5>45 people offering to help you</H5>
-        </PromoCard>
-      </a>
+    {isNotProd &&
+      <>
+        <TitleContainerMid><H2>Featured offers from volunteers</H2></TitleContainerMid>
+        <TripleGrid>
+          <a>
+            <PromoCard>
+              <img src='https://picsum.photos/400/240' />
+              <H5><strong>Get help with Remote Work</strong></H5>
+              <H5>45 people offering to help you</H5>
+            </PromoCard>
+          </a>
+          <a>
+            <PromoCard>
+              <img src='https://picsum.photos/400/240' />
+              <H5><strong>Get help with Remote Work</strong></H5>
+              <H5>45 people offering to help you</H5>
+            </PromoCard>
+          </a>
+          <a>
+            <PromoCard>
+              <img src='https://picsum.photos/400/240' />
+              <H5><strong>Get help with Remote Work</strong></H5>
+              <H5>45 people offering to help you</H5>
+            </PromoCard>
+          </a>
 
-    </TripleGrid>
-    <TitleContainerMid>
-      <Button
-        block
-        type='secondary'
-        shape='round'
-        size='large'
-        href='https://blog.voluntarily.nz'
-      >See more offers
-      </Button>
-    </TitleContainerMid>
+        </TripleGrid>
+        <TitleContainerMid>
+          <Button
+            block
+            type='secondary'
+            shape='round'
+            size='large'
+            href='https://blog.voluntarily.nz'
+          >See more offers
+          </Button>
+        </TitleContainerMid>
+      </>}
+
   </>
 )
 export default GiveSupportSection

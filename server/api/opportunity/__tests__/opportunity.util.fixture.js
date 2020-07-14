@@ -53,5 +53,55 @@ module.exports = {
       tags: []
     }
   ],
-  organisations: []
+  organisations: [],
+  tagCategories: {
+    technology: {
+      tags: [
+        'coding',
+        'programming',
+        'development',
+        'java',
+        'javascript',
+        'react',
+        'mongodb',
+        'c++',
+        'web',
+        'web development',
+        'mobile development',
+        'websites',
+        'technology',
+        'cloud',
+        'cloud-based',
+        'file storage',
+        'cybersecurity',
+        'ict security',
+        'infosec',
+        'hacker',
+        'hacking',
+        'software'
+      ]
+    },
+    business: {
+      tags: [
+        'business',
+        'entrepreneurship',
+        'commerce',
+        'productivity',
+        'planning',
+        'collaboration',
+        'agile',
+        'meetings',
+        'teamwork',
+        'leadership',
+        'messaging apps',
+        'whatsapp',
+        'phone apps',
+        'apps',
+        'zoom',
+        'slack',
+        'conference apps',
+        'effective communication'
+      ]
+    }
+  }
 }
