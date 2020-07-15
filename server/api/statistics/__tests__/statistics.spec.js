@@ -11,14 +11,11 @@ import {
   archivedOpportunities,
   interestArchives
 } from './statistics.fixture'
-import { Role } from '../../../services/authorize/role'
 const { InterestArchive } = require('../../interest/interest')
 const Member = require('../../member/member')
 const ArchivedOpportunity = require('../../archivedOpportunity/archivedOpportunity')
 const Organisation = require('../../organisation/organisation')
 const Person = require('../../person/person')
-const { authoriseStatistics } = require('../statistics.middleware')
-const sinon = require('sinon')
 
 test.before('Create a mock database and populate it with data ', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -222,85 +219,3 @@ test(
     )
   }
 )
-
-test('Test statistics auth returns error when user is not authenticated', async (t) => {
-  const mockReq = new MockExpressRequest()
-  const mockRes = new MockExpressResponse()
-  const mockNext = sinon.spy()
-
-  mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-  mockReq.session = {}
-
-  await authoriseStatistics(mockReq, mockRes, mockNext)
-  const expectedStatusCode = 401
-
-  t.assert(
-    expectedStatusCode === mockRes.statusCode,
-    'Status code should be 401 UNAUTHORIZED'
-  )
-
-  t.assert(mockNext.notCalled, 'Middleware chain should not be continued')
-})
-
-test('Test statistics auth returns error when user is not an organisation administrator', async (t) => {
-  const mockReq = new MockExpressRequest()
-  const mockRes = new MockExpressResponse()
-  const mockNext = sinon.spy()
-
-  mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-  mockReq.session = {
-    isAuthenticated: true,
-    me: { role: [Role.VOLUNTEER] },
-    user: {}
-  }
-
-  await authoriseStatistics(mockReq, mockRes, mockNext)
-  const expectedStatusCode = 403
-
-  t.assert(
-    expectedStatusCode === mockRes.statusCode,
-    'Status code should be 403 FORBIDDEN'
-  )
-
-  t.assert(mockNext.notCalled, 'Middleware chain should not be continued')
-})
-
-test('Test statistics auth returns error when user is not an organisation administrator associated with the dashboard requested', async (t) => {
-  const mockReq = new MockExpressRequest()
-  const mockRes = new MockExpressResponse()
-  const mockNext = sinon.spy()
-
-  mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-  mockReq.session = {
-    isAuthenticated: true,
-    me: { role: [Role.VOLUNTEER], orgAdminFor: ['some other organisation id'] },
-    user: {}
-  }
-
-  await authoriseStatistics(mockReq, mockRes, mockNext)
-  const expectedStatusCode = 403
-
-  t.assert(
-    expectedStatusCode === mockRes.statusCode,
-    'Status code should be 403 FORBIDDEN'
-  )
-
-  t.assert(mockNext.notCalled, 'Middleware chain should not be continued')
-})
-
-test('Test statistics auth continues middleware when user is authorised', async (t) => {
-  const mockReq = new MockExpressRequest()
-  const mockRes = new MockExpressResponse()
-  const mockNext = sinon.spy()
-
-  mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-  mockReq.session = {
-    isAuthenticated: true,
-    me: { role: [Role.ORG_ADMIN], orgAdminFor: [firstOrgId] },
-    user: {}
-  }
-
-  await authoriseStatistics(mockReq, mockRes, mockNext)
-
-  t.assert(mockNext.calledOnce, 'Middleware chain should be continued')
-})
