@@ -17,6 +17,8 @@ const Member = require('../../member/member')
 const ArchivedOpportunity = require('../../archivedOpportunity/archivedOpportunity')
 const Organisation = require('../../organisation/organisation')
 const Person = require('../../person/person')
+const { authoriseStatistics } = require('../statistics.middleware')
+const sinon = require('sinon')
 
 test.before('Create a mock database and populate it with data ', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -40,11 +42,6 @@ test(
     const mockRes = new MockExpressResponse()
 
     mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.ORG_ADMIN], orgAdminFor: [firstOrgId] },
-      user: {}
-    }
 
     await getSummary(mockReq, mockRes)
     const responseData = mockRes._getJSON()
@@ -73,11 +70,6 @@ test(
     const nonExistentOrgId = '5e73112a7f283c001151efc2'
 
     mockReq.params = { orgId: nonExistentOrgId, timeframe: 'year' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.ORG_ADMIN], orgAdminFor: [nonExistentOrgId] },
-      user: {}
-    }
 
     await getSummary(mockReq, mockRes)
     const expectedStatusCode = 404
@@ -96,11 +88,6 @@ test(
     const mockRes = new MockExpressResponse()
 
     mockReq.params = { orgId: firstOrgId, timeframe: 'jerry' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.ORG_ADMIN], orgAdminFor: [firstOrgId] },
-      user: {}
-    }
 
     await getSummary(mockReq, mockRes)
     const expectedStatusCode = 400
@@ -113,82 +100,12 @@ test(
 )
 
 test(
-  'Test getSummary returns error when user is not authenticated',
-  async (t) => {
-    const mockReq = new MockExpressRequest()
-    const mockRes = new MockExpressResponse()
-
-    mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-    mockReq.session = {}
-
-    await getSummary(mockReq, mockRes)
-    const expectedStatusCode = 401
-
-    t.assert(
-      expectedStatusCode === mockRes.statusCode,
-      'Status code should be 401 UNAUTHORIZED'
-    )
-  }
-)
-
-test(
-  'Test getSummary returns error when user is not an organisation administrator',
-  async (t) => {
-    const mockReq = new MockExpressRequest()
-    const mockRes = new MockExpressResponse()
-
-    mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.VOLUNTEER] },
-      user: {}
-    }
-
-    await getSummary(mockReq, mockRes)
-    const expectedStatusCode = 403
-
-    t.assert(
-      expectedStatusCode === mockRes.statusCode,
-      'Status code should be 403 FORBIDDEN'
-    )
-  }
-)
-
-test(
-  'Test getSummary returns error when user is not an organisation administrator associated with the dashboard requested',
-  async (t) => {
-    const mockReq = new MockExpressRequest()
-    const mockRes = new MockExpressResponse()
-
-    mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.VOLUNTEER], orgAdminFor: ['some other organisation id'] },
-      user: {}
-    }
-
-    await getSummary(mockReq, mockRes)
-    const expectedStatusCode = 403
-
-    t.assert(
-      expectedStatusCode === mockRes.statusCode,
-      'Status code should be 403 FORBIDDEN'
-    )
-  }
-)
-
-test(
   'Test getLocations returns correct locations and counts',
   async (t) => {
     const mockReq = new MockExpressRequest()
     const mockRes = new MockExpressResponse()
 
     mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.ORG_ADMIN], orgAdminFor: [firstOrgId] },
-      user: {}
-    }
 
     await getLocations(mockReq, mockRes)
     const responseData = mockRes._getJSON()
@@ -214,11 +131,6 @@ test(
     const nonExistentOrgId = '5e73112a7f283c001151efc2'
 
     mockReq.params = { orgId: nonExistentOrgId, timeframe: 'year' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.ORG_ADMIN], orgAdminFor: [nonExistentOrgId] },
-      user: {}
-    }
 
     await getLocations(mockReq, mockRes)
     const expectedStatusCode = 404
@@ -237,11 +149,6 @@ test(
     const mockRes = new MockExpressResponse()
 
     mockReq.params = { orgId: firstOrgId, timeframe: 'jerry' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.ORG_ADMIN], orgAdminFor: [firstOrgId] },
-      user: {}
-    }
 
     await getLocations(mockReq, mockRes)
     const expectedStatusCode = 400
@@ -254,82 +161,12 @@ test(
 )
 
 test(
-  'Test getLocations returns error when user is not authenticated',
-  async (t) => {
-    const mockReq = new MockExpressRequest()
-    const mockRes = new MockExpressResponse()
-
-    mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-    mockReq.session = {}
-
-    await getLocations(mockReq, mockRes)
-    const expectedStatusCode = 401
-
-    t.assert(
-      expectedStatusCode === mockRes.statusCode,
-      'Status code should be 401 UNAUTHORIZED'
-    )
-  }
-)
-
-test(
-  'Test getLocations returns error when user is not an organisation administrator',
-  async (t) => {
-    const mockReq = new MockExpressRequest()
-    const mockRes = new MockExpressResponse()
-
-    mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.VOLUNTEER] },
-      user: {}
-    }
-
-    await getLocations(mockReq, mockRes)
-    const expectedStatusCode = 403
-
-    t.assert(
-      expectedStatusCode === mockRes.statusCode,
-      'Status code should be 403 FORBIDDEN'
-    )
-  }
-)
-
-test(
-  'Test getLocations returns error when user is not an organisation administrator associated with the dashboard requested',
-  async (t) => {
-    const mockReq = new MockExpressRequest()
-    const mockRes = new MockExpressResponse()
-
-    mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.VOLUNTEER], orgAdminFor: ['some other organisation id'] },
-      user: {}
-    }
-
-    await getLocations(mockReq, mockRes)
-    const expectedStatusCode = 403
-
-    t.assert(
-      expectedStatusCode === mockRes.statusCode,
-      'Status code should be 403 FORBIDDEN'
-    )
-  }
-)
-
-test(
   'Test getActivityTags returns correct activity tags and counts',
   async (t) => {
     const mockReq = new MockExpressRequest()
     const mockRes = new MockExpressResponse()
 
     mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.ORG_ADMIN], orgAdminFor: [firstOrgId] },
-      user: {}
-    }
 
     await getActivityTags(mockReq, mockRes)
     const responseData = mockRes._getJSON()
@@ -357,11 +194,6 @@ test(
     const nonExistentOrgId = '5e73112a7f283c001151efc2'
 
     mockReq.params = { orgId: nonExistentOrgId, timeframe: 'year' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.ORG_ADMIN], orgAdminFor: [nonExistentOrgId] },
-      user: {}
-    }
 
     await getActivityTags(mockReq, mockRes)
     const expectedStatusCode = 404
@@ -380,11 +212,6 @@ test(
     const mockRes = new MockExpressResponse()
 
     mockReq.params = { orgId: firstOrgId, timeframe: 'jerry' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.ORG_ADMIN], orgAdminFor: [firstOrgId] },
-      user: {}
-    }
 
     await getActivityTags(mockReq, mockRes)
     const expectedStatusCode = 400
@@ -396,67 +223,84 @@ test(
   }
 )
 
-test(
-  'Test getActivityTags returns error when user is not authenticated',
-  async (t) => {
-    const mockReq = new MockExpressRequest()
-    const mockRes = new MockExpressResponse()
+test('Test statistics auth returns error when user is not authenticated', async (t) => {
+  const mockReq = new MockExpressRequest()
+  const mockRes = new MockExpressResponse()
+  const mockNext = sinon.spy()
 
-    mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-    mockReq.session = {}
+  mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
+  mockReq.session = {}
 
-    await getActivityTags(mockReq, mockRes)
-    const expectedStatusCode = 401
+  await authoriseStatistics(mockReq, mockRes, mockNext)
+  const expectedStatusCode = 401
 
-    t.assert(
-      expectedStatusCode === mockRes.statusCode,
-      'Status code should be 401 UNAUTHORIZED'
-    )
+  t.assert(
+    expectedStatusCode === mockRes.statusCode,
+    'Status code should be 401 UNAUTHORIZED'
+  )
+
+  t.assert(mockNext.notCalled, 'Middleware chain should not be continued')
+})
+
+test('Test statistics auth returns error when user is not an organisation administrator', async (t) => {
+  const mockReq = new MockExpressRequest()
+  const mockRes = new MockExpressResponse()
+  const mockNext = sinon.spy()
+
+  mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
+  mockReq.session = {
+    isAuthenticated: true,
+    me: { role: [Role.VOLUNTEER] },
+    user: {}
   }
-)
 
-test(
-  'Test getActivityTags returns error when user is not an organisation administrator',
-  async (t) => {
-    const mockReq = new MockExpressRequest()
-    const mockRes = new MockExpressResponse()
+  await authoriseStatistics(mockReq, mockRes, mockNext)
+  const expectedStatusCode = 403
 
-    mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.VOLUNTEER] },
-      user: {}
-    }
+  t.assert(
+    expectedStatusCode === mockRes.statusCode,
+    'Status code should be 403 FORBIDDEN'
+  )
 
-    await getActivityTags(mockReq, mockRes)
-    const expectedStatusCode = 403
+  t.assert(mockNext.notCalled, 'Middleware chain should not be continued')
+})
 
-    t.assert(
-      expectedStatusCode === mockRes.statusCode,
-      'Status code should be 403 FORBIDDEN'
-    )
+test('Test statistics auth returns error when user is not an organisation administrator associated with the dashboard requested', async (t) => {
+  const mockReq = new MockExpressRequest()
+  const mockRes = new MockExpressResponse()
+  const mockNext = sinon.spy()
+
+  mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
+  mockReq.session = {
+    isAuthenticated: true,
+    me: { role: [Role.VOLUNTEER], orgAdminFor: ['some other organisation id'] },
+    user: {}
   }
-)
 
-test(
-  'Test getActivityTags returns error when user is not an organisation administrator associated with the dashboard requested',
-  async (t) => {
-    const mockReq = new MockExpressRequest()
-    const mockRes = new MockExpressResponse()
+  await authoriseStatistics(mockReq, mockRes, mockNext)
+  const expectedStatusCode = 403
 
-    mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
-    mockReq.session = {
-      isAuthenticated: true,
-      me: { role: [Role.VOLUNTEER], orgAdminFor: ['some other organisation id'] },
-      user: {}
-    }
+  t.assert(
+    expectedStatusCode === mockRes.statusCode,
+    'Status code should be 403 FORBIDDEN'
+  )
 
-    await getActivityTags(mockReq, mockRes)
-    const expectedStatusCode = 403
+  t.assert(mockNext.notCalled, 'Middleware chain should not be continued')
+})
 
-    t.assert(
-      expectedStatusCode === mockRes.statusCode,
-      'Status code should be 403 FORBIDDEN'
-    )
+test('Test statistics auth continues middleware when user is authorised', async (t) => {
+  const mockReq = new MockExpressRequest()
+  const mockRes = new MockExpressResponse()
+  const mockNext = sinon.spy()
+
+  mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
+  mockReq.session = {
+    isAuthenticated: true,
+    me: { role: [Role.ORG_ADMIN], orgAdminFor: [firstOrgId] },
+    user: {}
   }
-)
+
+  await authoriseStatistics(mockReq, mockRes, mockNext)
+
+  t.assert(mockNext.calledOnce, 'Middleware chain should be continued')
+})

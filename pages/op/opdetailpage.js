@@ -78,16 +78,17 @@ export const OpDetailPage = ({
     [isNew]
   )
   const handleSubmit = useCallback(
-    async (op) => {
+    async (op1) => {
       let res = {}
-      if (op._id) {
+      if (op1._id) {
         // update existing op
         res = await dispatch(
           reduxApi.actions.opportunities.put(
-            { id: op._id },
-            { body: JSON.stringify(op) }
+            { id: op1._id },
+            { body: JSON.stringify(op1) }
           )
         )
+        updateTab('about', true)
       } else {
         // save new opportunity
         res = await dispatch(
@@ -96,9 +97,9 @@ export const OpDetailPage = ({
             { body: JSON.stringify(op) })
         )
         op = res[0] // get new id
-        router.replace(`/ops/${op._id}`) // reload to the new id page
+        setTab('about')
+        router.replace(router.pathname, `/ops/${op._id}`) // reload to the new id page
       }
-      updateTab('about', true)
       message.success('Saved.')
     }, [])
 

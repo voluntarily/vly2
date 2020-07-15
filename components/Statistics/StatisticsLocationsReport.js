@@ -2,16 +2,10 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { LoadSpinner } from '../Loading'
 import { PieChart, Pie, Tooltip, Legend, Cell, ResponsiveContainer } from 'recharts'
-import styled from 'styled-components'
 import { useStatisticsAPI } from '../../lib/statistics/statisticsHooks'
+import { StatisticsReportContainer } from './StatisticsStyles'
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#653CAD']
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`
 
 const StatisticsLocationsReport = ({ orgId, timeframe }) => {
   const { data, error, loading } = useStatisticsAPI(
@@ -37,7 +31,7 @@ const StatisticsLocationsReport = ({ orgId, timeframe }) => {
   }
 
   return (
-    <Container>
+    <StatisticsReportContainer>
       <h3>
         <FormattedMessage
           id='StatisticsLocationsReport.title'
@@ -60,7 +54,7 @@ const StatisticsLocationsReport = ({ orgId, timeframe }) => {
           <Legend />
         </PieChart>
       </ResponsiveContainer>
-    </Container>
+    </StatisticsReportContainer>
   )
 }
 
