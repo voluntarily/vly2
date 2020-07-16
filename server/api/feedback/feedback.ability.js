@@ -7,10 +7,19 @@ const ruleBuilder = async (session) => {
   const volunteerRules = [
     {
       subject: SchemaName,
-      action: Action.CREATE,
+      action: [Action.CREATE, Action.LIST, Action.READ],
       conditions: { respondent: session.me._id }
     }
   ]
+
+  const orgAdminRules = [
+    {
+      subject: SchemaName,
+      action: [Action.LIST, Action.READ],
+      conditions: { respondentOrgs: { $in: session.me.orgAdminFor } }
+    }
+  ]
+
   const adminRules = [
     {
       subject: SchemaName,
@@ -20,7 +29,8 @@ const ruleBuilder = async (session) => {
 
   return {
     [Role.VOLUNTEER]: volunteerRules,
-    [Role.ADMIN]: adminRules
+    [Role.ADMIN]: adminRules,
+    [Role.ORG_ADMIN]: orgAdminRules
   }
 }
 module.exports = ruleBuilder
