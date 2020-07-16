@@ -1,4 +1,8 @@
-const { createFeedback, listFeedback } = require('./feedback.controller')
+const {
+  createFeedback,
+  listFeedback,
+  getFeedback
+} = require('./feedback.controller')
 const { SchemaName } = require('./feedback.constants')
 const {
   authorizeActions
@@ -7,7 +11,7 @@ const {
 module.exports = (server) => {
   server.use('/api/feedback', authorizeActions(SchemaName))
   server.get('/api/feedback', listFeedback)
-  // server.get("/api/feedback/:_id");
+  server.get('/api/feedback/:_id', getFeedback)
   server.post('/api/feedback', createFeedback)
   // server.put("/api/feedback/:_id");
   // server.delete("/api/feedback/:_id");

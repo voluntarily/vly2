@@ -28,7 +28,25 @@ const listFeedback = async (req, res) => {
   }
 
   try {
-    const feedback = await Feedback.accessibleBy(req.ability).find(query)
+    const feedback = await Feedback.accessibleBy(req.ability, Action.LIST).find(
+      query
+    )
+    return res.json(feedback)
+  } catch (e) {
+    return res.status(500).send({ error: e.message })
+  }
+}
+
+const getFeedback = async (req, res) => {
+  try {
+    const feedback = await Feedback.accessibleBy(req.ability, Action.READ)
+      // req.params = { _id: 'feedbackId'}
+      .findOne(req.params)
+
+    if (!feedback) {
+      return res.sendStatus(404)
+    }
+
     return res.json(feedback)
   } catch (e) {
     return res.status(500).send({ error: e.message })
@@ -37,5 +55,6 @@ const listFeedback = async (req, res) => {
 
 module.exports = {
   createFeedback,
-  listFeedback
+  listFeedback,
+  getFeedback
 }
