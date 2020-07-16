@@ -31,7 +31,7 @@ const listFeedback = async (req, res) => {
     const feedback = await Feedback.accessibleBy(req.ability, Action.LIST).find(
       query
     )
-    return res.json(feedback)
+    return res.status(201).json(feedback)
   } catch (e) {
     return res.status(500).send({ error: e.message })
   }
@@ -53,8 +53,33 @@ const getFeedback = async (req, res) => {
   }
 }
 
+const updateFeedback = async (req, res) => {
+  try {
+    const feedback = await Feedback.accessibleBy(
+      req.ability,
+      Action.READ
+    ).findOne(req.params)
+
+    if (!feedback) {
+      return res.sendStatus(404)
+    }
+
+    const updatedFeedback = Object.assign(feedback, req.body)
+
+    if (!req.ability.can(Action.UPDATE, updatedFeedback)) {
+      return res.sendStatus(403)
+    }
+
+    await updatedFeedback.save()
+    return res.json(updatedFeedback)
+  } catch (e) {
+    return res.status(500).send({ error: e.message })
+  }
+}
+
 module.exports = {
   createFeedback,
   listFeedback,
-  getFeedback
+  getFeedback,
+  updateFeedback
 }
