@@ -29,8 +29,8 @@ const ruleBuilder = async (session) => {
 
   return {
     [Role.VOLUNTEER]: volunteerRules,
-    [Role.ADMIN]: adminRules,
-    [Role.ORG_ADMIN]: orgAdminRules
+    [Role.ORG_ADMIN]: orgAdminRules,
+    [Role.ADMIN]: adminRules
   }
 }
 module.exports = ruleBuilder

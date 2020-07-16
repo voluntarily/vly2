@@ -2,7 +2,8 @@ const {
   createFeedback,
   listFeedback,
   getFeedback,
-  updateFeedback
+  updateFeedback,
+  deleteFeedback
 } = require('./feedback.controller')
 const { SchemaName } = require('./feedback.constants')
 const {
@@ -15,5 +16,5 @@ module.exports = (server) => {
   server.get('/api/feedback/:_id', getFeedback)
   server.post('/api/feedback', createFeedback)
   server.put('/api/feedback/:_id', updateFeedback)
-  // server.delete("/api/feedback/:_id");
+  server.delete('/api/feedback/:_id', deleteFeedback)
 }

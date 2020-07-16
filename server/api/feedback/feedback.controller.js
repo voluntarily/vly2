@@ -77,9 +77,26 @@ const updateFeedback = async (req, res) => {
   }
 }
 
+const deleteFeedback = async (req, res) => {
+  try {
+    const result = await Feedback
+      .accessibleBy(req.ability, Action.DELETE)
+      .deleteOne(req.params)
+
+    if (result.nDeleted === 0) {
+      return res.sendStatus(404)
+    }
+  } catch (e) {
+    return res.status(500).send({ error: e.message })
+  }
+
+  return res.sendStatus(204)
+}
+
 module.exports = {
   createFeedback,
   listFeedback,
   getFeedback,
-  updateFeedback
+  updateFeedback,
+  deleteFeedback
 }
