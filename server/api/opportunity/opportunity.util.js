@@ -71,12 +71,16 @@ const getSkillsRecommendations = async (me) => {
   if (me.role.includes(Role.BASIC) || types.length === 0) { types.push(ASK) }
 
   // Stem the tags to contain the root of a word
-  var stemmedTags = tagsToMatch.map(tag => natural.PorterStemmer.stem(tag))
-  // Turn stemmed words to regular expression
+  var format = new RegExp(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/) // Tags with special characters are not stemmed
+  var stemmedTags = tagsToMatch.map((tag) => {
+    if (!format.test(tag)) {
+      return natural.PorterStemmer.stem(tag)
+    }
+  })
+  // Turn stemmed words to a regular expression
   var regexTags = new RegExp(stemmedTags.join('|'), 'i')
   // Join arrays of tags and tag word roots for search
   var tagsToSearch = tagsToMatch.concat(regexTags)
-
   const opsWithMatchingTags = await Opportunity
     .find({
       tags: { $in: tagsToSearch },
@@ -92,7 +96,7 @@ const getSkillsRecommendations = async (me) => {
     op.tags.forEach(tag => {
       if (tagsToMatch.includes(tag)) {
         count++
-      } else {
+      } else if (stemmedTags.length !== 0) {
         // Calculate similarity score that will be added to the score
         const simScore = stringSimilarity.findBestMatch(tag, stemmedTags).bestMatch.rating
         count = count + simScore

@@ -303,6 +303,35 @@ test.serial(
 )
 
 test.serial(
+  'getSkillsRecommendations > no tags in ops and user',
+  async (t) => {
+    const john = await Person.create({
+      name: 'John',
+      email: 'john@mail.com'
+    })
+
+    await Opportunity.deleteMany()
+    await Opportunity.create({
+      name: 'Technology opportunity',
+      status: OpportunityStatus.ACTIVE,
+      type: OpportunityType.OFFER,
+      requestor: john._id,
+      tags: []
+    })
+
+    const person = {
+      _id: mongoose.Types.ObjectId(),
+      role: Role.VOLUNTEER,
+      tags: [],
+      topicGroups: []
+    }
+
+    const recommendedSkills = await getSkillsRecommendations(person)
+    t.deepEqual(recommendedSkills, [])
+  }
+)
+
+test.serial(
   'getSkillsRecommendations > no tags match, no topic group match',
   async (t) => {
     const john = await Person.create({
