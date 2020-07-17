@@ -10,7 +10,7 @@ const createFeedback = async (req, res) => {
   }
   try {
     await feedback.save()
-    res.json(feedback)
+    res.status(201).json(feedback)
   } catch (e) {
     if (e.name === 'ValidationError') {
       return res.status(400).send({ error: e.message })
@@ -31,7 +31,7 @@ const listFeedback = async (req, res) => {
     const feedback = await Feedback.accessibleBy(req.ability, Action.LIST).find(
       query
     )
-    return res.status(201).json(feedback)
+    return res.json(feedback)
   } catch (e) {
     return res.status(500).send({ error: e.message })
   }
@@ -73,6 +73,10 @@ const updateFeedback = async (req, res) => {
     await updatedFeedback.save()
     return res.json(updatedFeedback)
   } catch (e) {
+    if (e.name === 'ValidationError') {
+      return res.status(400).send({ error: e.message })
+    }
+
     return res.status(500).send({ error: e.message })
   }
 }
@@ -83,7 +87,7 @@ const deleteFeedback = async (req, res) => {
       .accessibleBy(req.ability, Action.DELETE)
       .deleteOne(req.params)
 
-    if (result.nDeleted === 0) {
+    if (result.deletedCount === 0) {
       return res.sendStatus(404)
     }
   } catch (e) {
