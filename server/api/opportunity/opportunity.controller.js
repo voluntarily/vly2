@@ -185,7 +185,7 @@ const deleteOpportunity = async (req, res, next) => {
       .accessibleBy(req.ability, Action.DELETE)
       .deleteOne({ _id: req.params._id })
 
-    if (result.nDeleted === 0) {
+    if (result.deletedCount === 0) {
       return res.sendStatus(404)
     }
   } catch (e) {
