@@ -6,15 +6,19 @@ import { jwtData } from '../../../../server/middleware/session/__tests__/setSess
 import Person from '../../person/person'
 import Activity from '../../activity/activity'
 import Opportunity from '../../opportunity/opportunity'
-import { people, activities, opportunities, feedback } from './feedback.fixture'
+import { people, activities, opportunities, feedback, organisations, members } from './feedback.fixture'
 import request from 'supertest'
 import mongoose from 'mongoose'
+import Organisation from '../../organisation/organisation'
+import Member from '../../member/member'
 
 test.before('Create a mock database and populate it with data', async t => {
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
 
   await Person.create(people)
+  await Organisation.create(organisations)
+  await Member.create(members)
   await Activity.create(activities)
   await Opportunity.create(opportunities)
 
