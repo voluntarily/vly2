@@ -157,29 +157,25 @@ h3{
 }
 
 
-@media screen and (max-width: 1400px) {
 
-padding-right:2rem;
-}
+@media screen and (max-width: 1024px) {
 
-@media screen and (max-width: 1281px) {
-  h1 {
-  font-size: 4rem;
-  letter-spacing: -3px;
-}
-  padding: 6rem 2rem 2.5rem 2rem;
+  margin: 8rem auto 3rem auto;
 }
 @media screen and (max-width: 768px) {
- padding: 5rem 1rem 2rem 1rem;
+
+margin-bottom: 6rem;
  grid-template-columns: 1fr;
- grid-row-gap: 1rem;
+ 
  h1 {
-   font-size: 3.5rem;
-   text-align: left;
+   font-size: 2.5rem;
+line-height: 1.2;
+
+letter-spacing: -1.5px;
    margin: 0;
  }
  h3 {
-   margin-top: 0.5rem;
+   margin-top: 1rem;
    font-size: 1.2rem;
  }
   }
