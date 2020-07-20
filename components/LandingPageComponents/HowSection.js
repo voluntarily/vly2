@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { HalfGrid, H2, H3 } from '../VTheme/VTheme'
 import { Button } from 'antd'
 const PersonaBox = styled.section`
-  margin-bottom: 2rem;
 
  
 `
@@ -16,6 +15,10 @@ max-width: 60rem;
 h2 {
   font-weight: 700;
   
+}
+
+@media screen and (max-width: 768px) {
+  margin-top: 2rem;
 }
 `
 
@@ -56,9 +59,14 @@ text-align: left;
 
  /* Mobile */
  @media screen and (max-width: 768px) {
-
+padding: 1.5rem;
 div {
   width: 100%;
+}
+}
+@media screen and (max-width: 560px) {
+  article {
+grid-template-columns:1fr;
 }
 }
 `

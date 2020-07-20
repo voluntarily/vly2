@@ -308,6 +308,8 @@ export const HalfGrid = styled.div`
 
   @media screen and (max-width: 768px) {
     grid-template-columns: calc(100vw - 2rem);
+
+  padding: 2rem 0 ;
   }
 ` // end halfgrid
 export const HalfGridContainer = styled.div``
@@ -497,6 +499,9 @@ export const TitleContainerMid = styled.div`
 margin: 0 auto;
 padding: 2rem 0 4rem 0;
 text-align: center;
+@media screen and (max-width: 600px) {
+  padding: 2rem 0;
+}
 `
 /*
 ====================================================

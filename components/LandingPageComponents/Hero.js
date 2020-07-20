@@ -53,6 +53,16 @@ padding: 1.5rem;
     object-position: center;
     }
   
+
+@media screen and (min-width: 1400px) {
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+:hover {
+  box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
+  transform: scale(1.04);
+}
+}
+
     @media screen and (max-width: 1024px) {
   border-radius: 0;
   height:50vh;
@@ -65,20 +75,9 @@ padding: 1.5rem;
   @media screen and (max-width: 768px) {
 height:50vh;
   }
-  @media screen and (max-width: 600px) {
-    position: relative;
-    height: 20rem;
-    width: auto;
-    overflow: hidden;
+ 
 
-  }
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-:hover {
-  box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
-  transform: scale(1.04);
 
-}
 `
 
 // end left hand video side
