@@ -3,8 +3,8 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import { LearnMoreButton, SignUpButton } from '../../components/VTheme/Buttons'
-import { Button } from 'antd'
+// import { LearnMoreButton, SignUpButton } from '../../components/VTheme/Buttons'
+// import { Button } from 'antd'
 // const Search = Input.Search
 
 // this is the big container block that holds the container together lol
