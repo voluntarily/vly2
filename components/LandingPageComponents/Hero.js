@@ -53,6 +53,22 @@ padding: 1.5rem;
     object-position: center;
     }
   
+
+@media screen and (min-width: 1400px) {
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+:hover {
+  box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
+  transform: scale(1.04);
+  
+  h1 {
+    -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+    color: #FFD9FB;
+  }
+}
+}
+
     @media screen and (max-width: 1024px) {
   border-radius: 0;
   height:50vh;
@@ -65,20 +81,9 @@ padding: 1.5rem;
   @media screen and (max-width: 768px) {
 height:50vh;
   }
-  @media screen and (max-width: 600px) {
-    position: relative;
-    height: 20rem;
-    width: auto;
-    overflow: hidden;
+ 
 
-  }
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-:hover {
-  box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
-  transform: scale(1.04);
 
-}
 `
 
 // end left hand video side
@@ -141,7 +146,7 @@ color: white;
 
 const CTAGrid = styled.section`
 max-width: 80rem;
-margin: 8rem auto 3rem auto;
+margin: 8rem auto 6rem auto;
 text-align: center;
 
 a {
@@ -159,8 +164,15 @@ h3{
 
 
 @media screen and (max-width: 1024px) {
+  h1 {
+  font-size: 3rem;
+  letter-spacing: -2.5px;
+}
 
-  margin: 8rem auto 3rem auto;
+h3{
+  margin-bottom: 1rem;
+}
+  margin: 8rem auto 5rem auto;
 }
 @media screen and (max-width: 768px) {
 
@@ -178,6 +190,21 @@ letter-spacing: -1.5px;
    margin-top: 1rem;
    font-size: 1.2rem;
  }
+  }
+
+  @media screen and (max-width: 568px) {
+    margin: 5rem 1rem 0 1rem;
+  h1 {
+    font-size: 2rem;
+    text-align: left;
+  }
+  h3 {
+    text-align: left;
+  }
+  br {
+    display: none;
+  }
+
   }
 `
 
@@ -220,7 +247,7 @@ const Hero = ({ isAuthenticated }) => (
     <CTAGrid>
       <div>
         <h1>Where volunteering happens.</h1>
-        <h3>Find volunteering opportunities and training.<br />Make an impact in your community.</h3>
+        <h3>Find volunteering opportunities and training.<br /> Make an impact in your community.</h3>
         {/* {!isAuthenticated &&
           <SignUpButton then='/flow/postSignUp' />}  <LearnMoreButton /> */}
       </div>

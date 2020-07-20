@@ -31,17 +31,17 @@ export const Landing = ({ isAuthenticated }) => (
 
     <FullPage style={{ marginTop: '0' }}>
 
-      <Divider />
       <HowSection />
       <>
 
-        <OfferSection />
-        <Divider />
         <Testimonial />
         <Divider />
+
         <GiveSupportSection />
         <Divider />
         <TakeSupportSection />
+        <Divider />
+        <OfferSection />
         <Divider />
         <CorporateSection />
         <Divider />

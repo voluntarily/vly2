@@ -1,19 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Card, Grid, TitleContainerMid } from '../VTheme/VTheme'
+import { Card, Grid, TitleContainerMid, H2 } from '../VTheme/VTheme'
 const ImageWrapper = styled.div`
   position: relative;
 
 `
 const CardTitle = styled.h4`
 margin-top: 0.5rem;
-font-size: 1.25rem;
-font-weight: 400;
+font-size: 1.15rem;
+font-weight: 500;
+text-align: center;
 `
 
 const OfferSection = () => (
   <div>
-    <TitleContainerMid><h1>Featured activities</h1></TitleContainerMid>
+    <TitleContainerMid><H2>Featured activities </H2></TitleContainerMid>
     <Grid>
       <Card>
         <a href='https://live.voluntarily.nz/acts/5e7abf953d0c1400117903c0'>

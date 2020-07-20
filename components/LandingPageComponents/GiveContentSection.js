@@ -1,14 +1,12 @@
 
 import React from 'react'
 
-import { Button, Divider } from 'antd'
-import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
+import { Button } from 'antd'
+import { HalfGrid, H2, H3, P, StatContainer, ImageContainer } from '../VTheme/VTheme'
 
 const GiveContentSection = () => (
   <div id='content'>
     <HalfGrid>
-
-      <ImageContainer src='/static/img/about/content.png' />
 
       <div>
         <H2>Content &amp; Programmes</H2>
@@ -32,46 +30,9 @@ const GiveContentSection = () => (
         </Button>
 
       </div>
-    </HalfGrid>
-    <Divider />
-    <TitleContainerMid><H2>Supporting groups on voluntarily</H2></TitleContainerMid>
-    <TripleGrid>
-      <a>
-        <PromoCard>
-          <img src='https://picsum.photos/400/240' />
-          <div>
-            <H5><strong>Get help with Remote Work</strong></H5>
-            <H5>45 people offering to help you</H5>
-          </div>
-        </PromoCard>
-      </a>
-      <a>
-        <PromoCard>
-          <img src='https://picsum.photos/400/240' />
-          <div>
-            <H5><strong>Get help with Remote Work</strong></H5>
-            <H5>45 people offering to help you</H5>
-          </div>
-        </PromoCard>
-      </a>
-      <a>
-        <PromoCard>
-          <img src='https://picsum.photos/400/240' />
-          <H5><strong>Get help with Remote Work</strong></H5>
-          <H5>45 people offering to help you</H5>
-        </PromoCard>
-      </a>
 
-    </TripleGrid>
-    <TitleContainerMid>
-      <Button
-        type='secondary'
-        shape='round'
-        size='large'
-        href='https://blog.voluntarily.nz'
-      >See all offers
-      </Button>
-    </TitleContainerMid>
+      <ImageContainer src='/static/img/about/content.png' />
+    </HalfGrid>
   </div>
 )
 export default GiveContentSection
