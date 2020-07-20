@@ -270,8 +270,8 @@ const Hero = ({ isAuthenticated }) => (
             <p>
               <FormattedMessage
                 id='Hero.body.AskForHelp'
-                defaultMessage='Get help from trained volunteers
-                in your community'
+                defaultMessage='Ask for help from trained volunteers
+                who have skills or time to spare'
               />
             </p>
 
@@ -305,7 +305,7 @@ const Hero = ({ isAuthenticated }) => (
             <p>
               <FormattedMessage
                 id='Hero.body.Volunteer'
-                defaultMessage='Volunteer to help people around your community'
+                defaultMessage='Volunteer to receive training and help people in your community'
               />
             </p>
 
