@@ -123,11 +123,11 @@ const HowSection = () => (
 
       <PersonaContainer>
 
-        <h3>If you want to volunteer</h3>
+        <h3>Want to volunteer?</h3>
         <article>
           <img src='./static/img/icons/offer2.svg' alt='' />
           <div>
-            <Title>Tell volunteers how you can help
+            <Title>List how you want to help
             </Title>
             <Text>Let people know how you can help out in your community</Text>
           </div>
@@ -139,15 +139,15 @@ const HowSection = () => (
           </div>
         </article>
         <a href='/a/ask'>
-          <Button size='large' shape='round' type='primary' block>See all asks</Button>
+          <Button size='large' shape='round' type='primary' block>See activities</Button>
         </a>
       </PersonaContainer>
       <PersonaContainer>
-        <h3>If you want for help</h3>
+        <h3>Want help with something?</h3>
         <article>
           <img src='./static/img/icons/ask3.svg' alt='' />
           <div>
-            <Title>Tell volunteers what you are asking for
+            <Title>List what you need help with
             </Title>
             <Text>Let volunteers what you need help with, when you need help, and volunteers will get involved</Text>
           </div>
