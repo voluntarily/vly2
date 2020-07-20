@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { Button, Divider } from 'antd'
-import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
+import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
 
 const HelpOrgsSection = () => (
   <div id='orgs'>

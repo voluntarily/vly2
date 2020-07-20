@@ -1,13 +1,12 @@
 
 import React from 'react'
 
-import { Button, Divider } from 'antd'
-import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
+import { Button } from 'antd'
+import { HalfGrid, H2, H3, P, StatContainer, ImageContainer } from '../VTheme/VTheme'
 
 const GiveContentSection = () => (
   <div id='content'>
     <HalfGrid>
-
 
       <div>
         <H2>Content &amp; Programmes</H2>
