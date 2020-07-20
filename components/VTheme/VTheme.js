@@ -497,7 +497,6 @@ export const TitleContainerMid = styled.div`
 margin: 0 auto;
 padding: 2rem 0 4rem 0;
 text-align: center;
-
 `
 /*
 ====================================================
@@ -559,7 +558,7 @@ export const H1 = styled.h1`
 // Start H2
 export const H2 = styled.h2`
 font-style: normal;
-font-weight: 500;
+font-weight: 700;
 font-size: 2.5rem;
 line-height: 3.5rem;
 letter-spacing: -1.1px;

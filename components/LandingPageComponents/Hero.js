@@ -141,7 +141,7 @@ color: white;
 
 const CTAGrid = styled.section`
 max-width: 80rem;
-margin: 8rem auto 3rem auto;
+margin: 8rem auto 6rem auto;
 text-align: center;
 
 a {

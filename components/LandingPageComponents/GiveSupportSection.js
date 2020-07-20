@@ -40,8 +40,7 @@ const GiveSupportSection = () => (
         </Button>
       </div>
     </HalfGrid>
-    <Divider />
-    {isNotProd &&
+    {/* {isNotProd &&
       <>
         <TitleContainerMid><H2>Featured offers from volunteers</H2></TitleContainerMid>
         <TripleGrid>
@@ -78,7 +77,7 @@ const GiveSupportSection = () => (
           >See more offers
           </Button>
         </TitleContainerMid>
-      </>}
+      </>} */}
 
   </>
 )
