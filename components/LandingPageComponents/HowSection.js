@@ -60,11 +60,14 @@ text-align: left;
  /* Mobile */
  @media screen and (max-width: 768px) {
 padding: 1.5rem;
+margin-right: 2rem;
 div {
   width: 100%;
 }
 }
 @media screen and (max-width: 560px) {
+
+margin-right: 0;
   article {
 grid-template-columns:1fr;
 }

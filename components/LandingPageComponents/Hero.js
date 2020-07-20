@@ -54,7 +54,7 @@ padding: 1.5rem;
     }
   
 
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1025px) {
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
 :hover {
@@ -160,7 +160,9 @@ h1 {
 h3{
   margin-bottom: 1rem;
 }
-
+@media screen and (max-width: 1380px) {
+  margin: 6rem auto 3rem auto;
+}
 
 
 @media screen and (max-width: 1024px) {
