@@ -89,5 +89,5 @@ test('render landing page ', t => {
     <Provider store={t.context.mockStore}>
       <Landing {...props} />
     </Provider>)
-  t.is(wrapper.find('h1').first().text(), 'Help people.')
+  t.is(wrapper.find('h1').first().text(), 'Where volunteering happens.')
 })

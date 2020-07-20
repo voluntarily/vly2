@@ -3,42 +3,45 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import { LearnMoreButton, SignUpButton } from '../../components/VTheme/Buttons'
-import { Button } from 'antd'
+// import { LearnMoreButton, SignUpButton } from '../../components/VTheme/Buttons'
+// import { Button } from 'antd'
 // const Search = Input.Search
 
 // this is the big container block that holds the container together lol
 const AwesomeHeroContainer = styled.div`
+max-width: 80rem;
   margin: 2rem auto 0 auto;
   height: auto;
   width: auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 2.5rem;
   
-  @media screen and (min-width: 1200px) {
-   
+  @media screen and (max-width: 1360px) {
+   padding: 2.5rem;
   }
-  p {
-    font-size: 1.5rem;
-  }
-  @media screen and (max-width: 1280px) {
+ 
+  @media screen and (max-width: 1024px) {
+  padding: 0;
+  grid-template-columns: 1fr;
   }
   @media screen and (max-width: 768px) {
     margin-top: 3rem;
- grid-template-columns: 1fr;
   }
 `
 
 // start left hand video side
 const HeroItem = styled.div`
 position: relative;
+padding: 1.5rem;
     width: 100%;
     background-color: black;
     height:40vh;
     min-height: 400px;
     overflow: hidden;
-  
-    img {
+    border-radius: 24px;
+    box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.25);
+        img {
       position: absolute;
       width: 100%;
       height: 100%;
@@ -50,6 +53,15 @@ position: relative;
     object-position: center;
     }
   
+    @media screen and (max-width: 1024px) {
+  border-radius: 0;
+  height:50vh;
+  img {
+    height: 100%;
+
+    object-position: center top;
+  }
+  }
   @media screen and (max-width: 768px) {
 height:50vh;
   }
@@ -60,6 +72,13 @@ height:50vh;
     overflow: hidden;
 
   }
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+:hover {
+  box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
+  transform: scale(1.04);
+
+}
 `
 
 // end left hand video side
@@ -69,54 +88,41 @@ const HeroText = styled.section`
   flex-direction: column;
   flex-wrap: wrap;
     height: 100%;
-    align-self: center;
-    justify-content: center;
-text-align: center;
+    align-items: flex-start;
+    justify-content: flex-end;
 z-index: 100;
-button {
-  z-index: 100;
-  max-width: 15rem;
-  margin: 0 auto;
-}
+
+
     h1 {
-font-weight: 700;
-font-size: 2.5rem;
+font-weight: 600;
+font-size: 2rem;
 line-height: 1.5;
-letter-spacing: -0.5px;
+letter-spacing: -0.2px;
 z-index: 100;
 
 color: white;
 }
 p {
+  min-height: 60px;
   font-size: 1.25rem;
-  margin-top: 0.5rem;
   font-weight: 400;
 letter-spacing: 0;
 z-index: 100;
-padding: 0 4rem;
+margin-bottom: 0;
 
 color: white;
 }
 
-@media screen and (min-width: 1026px) and (max-width: 1281px) {
-  h1 {
-  font-size:2rem;
-  }
-  p {
-  
-padding: 0 2rem;
-  line-height: 1.5;
- }
-  }
   @media screen and (min-width: 768px) and (max-width: 1025px) {
+    padding: 1.5rem;
     h1 {
-    font-size:1.5rem;
+    font-size:2.5rem;
   }
     p {
-      font-size: 1rem;
+      font-size: 1.5rem;
   line-height: 1.5;
+  min-height: initial;
 
-padding: 0 1rem;
  }
   }
   @media screen and (max-width: 768px) {
@@ -128,8 +134,6 @@ padding: 0 1rem;
   }
   p {
     font-size: 1.5rem;
-    margin: 1rem;
-    padding: 0 1rem;
   }
   }
   
@@ -137,15 +141,15 @@ padding: 0 1rem;
 
 const CTAGrid = styled.section`
 max-width: 80rem;
-margin: 0 auto;
-padding: 10rem 2rem 8rem 0rem;
+margin: 8rem auto 3rem auto;
+text-align: center;
 
 a {
   color: #653cad;
 }
 h1 {
-  font-size: 5rem;
-  letter-spacing: -3px;
+  font-size: 4rem;
+  letter-spacing: -2.5px;
 }
 
 h3{
@@ -153,29 +157,25 @@ h3{
 }
 
 
-@media screen and (max-width: 1400px) {
 
-padding-right:2rem;
-}
+@media screen and (max-width: 1024px) {
 
-@media screen and (max-width: 1281px) {
-  h1 {
-  font-size: 4rem;
-  letter-spacing: -3px;
-}
-  padding: 6rem 2rem 2.5rem 2rem;
+  margin: 8rem auto 3rem auto;
 }
 @media screen and (max-width: 768px) {
- padding: 5rem 1rem 2rem 1rem;
+
+margin-bottom: 6rem;
  grid-template-columns: 1fr;
- grid-row-gap: 1rem;
+ 
  h1 {
-   font-size: 3.5rem;
-   text-align: left;
+   font-size: 2.5rem;
+line-height: 1.2;
+
+letter-spacing: -1.5px;
    margin: 0;
  }
  h3 {
-   margin-top: 0.5rem;
+   margin-top: 1rem;
    font-size: 1.2rem;
  }
   }
@@ -219,71 +219,36 @@ const Hero = ({ isAuthenticated }) => (
   <>
     <CTAGrid>
       <div>
-        <h1>Help people.</h1>
+        <h1>Where volunteering happens.</h1>
         <h3>Find volunteering opportunities and training.<br />Make an impact in your community.</h3>
-        {!isAuthenticated &&
-          <SignUpButton then='/flow/postSignUp' />}  <LearnMoreButton />
+        {/* {!isAuthenticated &&
+          <SignUpButton then='/flow/postSignUp' />}  <LearnMoreButton /> */}
       </div>
 
     </CTAGrid>
     <AwesomeHeroContainer>
 
-      <HeroItem>
+      <a href='/a/ask'>
+        <HeroItem>
+          <HeroText>
+            <h1>
+              <FormattedMessage
+                id='Hero.title.AskForHelp'
+                defaultMessage='Ask for help'
+              />
+            </h1>
+            <p>
+              <FormattedMessage
+                id='Hero.body.AskForHelp'
+                defaultMessage='Get help from trained volunteers
+                in your community'
+              />
+            </p>
 
-        <HeroText>
-          <h1>
-            <FormattedMessage
-              id='Hero.title.Volunteer'
-              defaultMessage='Want to help people?'
-            />
-          </h1>
-          <p>
-            <FormattedMessage
-              id='Hero.body.Volunteer'
-              defaultMessage='Volunteer to help people around your community'
-            />
-          </p>
+          </HeroText>
 
-          <a href='/a/offer'>
-            <Button
-              block
-              type='primary'
-              shape='round'
-              size='large'
-            > Browse activities
-            </Button>
-          </a>
-        </HeroText>
-        <img src='/static/img/landing-pages/volunteerbg.png' />
-      </HeroItem>
-
-      <HeroItem>
-        <HeroText>
-          <h1>
-            <FormattedMessage
-              id='Hero.title.AskForHelp'
-              defaultMessage='Need support?'
-            />
-          </h1>
-          <p>
-            <FormattedMessage
-              id='Hero.body.AskForHelp'
-              defaultMessage='Browse Volunteers that want to help '
-            />
-          </p>
-          <a href='/a/ask'>
-            <Button
-              block
-              type='primary'
-              shape='round'
-              size='large'
-            > Browse offers
-            </Button>
-          </a>
-        </HeroText>
-
-        <img src='/static/img/landing-pages/askbg.png' />
-        {/* <SearchBox>
+          <img src='/static/img/landing-pages/ask-bg.png' />
+          {/* <SearchBox>
           <Search
             placeholder="Try 'remote learning'"
             prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -295,37 +260,52 @@ const Hero = ({ isAuthenticated }) => (
           />
         </SearchBox> */}
 
-      </HeroItem>
+        </HeroItem>
+      </a>
+      <a href='/a/offer'>
+        <HeroItem>
 
-      <HeroItem>
+          <HeroText>
+            <h1>
+              <FormattedMessage
+                id='Hero.title.Volunteer'
+                defaultMessage='Volunteer to help'
+              />
+            </h1>
+            <p>
+              <FormattedMessage
+                id='Hero.body.Volunteer'
+                defaultMessage='Volunteer to help people around your community'
+              />
+            </p>
 
-        <HeroText>
-          <h1>
-            <FormattedMessage
-              id='Hero.title.partner'
-              defaultMessage='Partner with us'
-            />
-          </h1>
-          <p>
-            <FormattedMessage
-              id='Hero.body.partner'
-              defaultMessage='Empower your Organisation or Community Group with Volunteers from Voluntarily'
-            />
-          </p>
+          </HeroText>
+          <img src='/static/img/landing-pages/offer-bg.png' />
+        </HeroItem>
+      </a>
 
-          <a href='/a/offer'>
-            <Button
-              block
-              type='primary'
-              shape='round'
-              size='large'
-            > Learn more
-            </Button>
-          </a>
-        </HeroText>
-        <img src='/static/img/landing-pages/partnerbg.png' />
-      </HeroItem>
+      <a href='/a/offer'>
+        <HeroItem>
 
+          <HeroText>
+            <h1>
+              <FormattedMessage
+                id='Hero.title.partner'
+                defaultMessage='Partner with us'
+              />
+            </h1>
+            <p>
+              <FormattedMessage
+                id='Hero.body.partner'
+                defaultMessage='Empower your community group or
+                organisation with Voluntarily'
+              />
+            </p>
+
+          </HeroText>
+          <img src='/static/img/landing-pages/partner-bg.png' />
+        </HeroItem>
+      </a>
     </AwesomeHeroContainer>
 
   </>
