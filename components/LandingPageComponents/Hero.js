@@ -159,8 +159,15 @@ h3{
 
 
 @media screen and (max-width: 1024px) {
+  h1 {
+  font-size: 3rem;
+  letter-spacing: -2.5px;
+}
 
-  margin: 8rem auto 3rem auto;
+h3{
+  margin-bottom: 1rem;
+}
+  margin: 8rem auto 5rem auto;
 }
 @media screen and (max-width: 768px) {
 
@@ -178,6 +185,21 @@ letter-spacing: -1.5px;
    margin-top: 1rem;
    font-size: 1.2rem;
  }
+  }
+
+  @media screen and (max-width: 568px) {
+    margin: 5rem 1rem 0 1rem;
+  h1 {
+    font-size: 2rem;
+    text-align: left;
+  }
+  h3 {
+    text-align: left;
+  }
+  br {
+    display: none;
+  }
+
   }
 `
 
@@ -220,7 +242,7 @@ const Hero = ({ isAuthenticated }) => (
     <CTAGrid>
       <div>
         <h1>Where volunteering happens.</h1>
-        <h3>Find volunteering opportunities and training.<br />Make an impact in your community.</h3>
+        <h3>Find volunteering opportunities and training.<br /> Make an impact in your community.</h3>
         {/* {!isAuthenticated &&
           <SignUpButton then='/flow/postSignUp' />}  <LearnMoreButton /> */}
       </div>

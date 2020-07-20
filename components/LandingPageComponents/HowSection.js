@@ -15,6 +15,7 @@ text-align: left;
 max-width: 60rem;
 h2 {
   font-weight: 700;
+  
 }
 `
 
