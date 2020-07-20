@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { Button, Divider } from 'antd'
-import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
+import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
 
 const HelpOrgsSection = () => (
   <div id='orgs'>
@@ -40,35 +40,33 @@ const HelpOrgsSection = () => (
     <Divider />
     <TitleContainerMid><H2>Organisations on Voluntarily</H2></TitleContainerMid>
     <TripleGrid>
-      <a>
-        <PromoCard>
-          <img src='https://picsum.photos/400/240' />
-          <H5><strong>Spark</strong></H5>
-        </PromoCard>
-      </a>
-      <a>
-        <PromoCard>
-          <img src='https://picsum.photos/400/240' />
-          <H5><strong>Westpac</strong></H5>
-        </PromoCard>
-      </a>
-      <a>
-        <PromoCard>
-          <img src='https://picsum.photos/400/240' />
-          <H5><strong>Datacom</strong></H5>
-        </PromoCard>
-      </a>
+
+      <PromoCard>
+        <img src='https://picsum.photos/400/240' />
+      </PromoCard>
+
+      <PromoCard>
+        <img src='https://picsum.photos/400/240' />
+      </PromoCard>
+
+      <PromoCard>
+        <img src='https://picsum.photos/400/240' />
+      </PromoCard>
+
+      <PromoCard>
+        <img src='https://picsum.photos/400/240' />
+      </PromoCard>
+
+      <PromoCard>
+        <img src='https://picsum.photos/400/240' />
+      </PromoCard>
+
+      <PromoCard>
+        <img src='https://picsum.photos/400/240' />
+      </PromoCard>
 
     </TripleGrid>
-    <TitleContainerMid>
-      <Button
-        type='secondary'
-        shape='round'
-        size='large'
-        href='https://blog.voluntarily.nz'
-      >See all offers
-      </Button>
-    </TitleContainerMid>
+
   </div>
 )
 export default HelpOrgsSection
