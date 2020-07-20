@@ -98,9 +98,6 @@ const Text = styled.p`
   letter-spacing: -0.1px;
   line-height: 24px;
 
-@media screen and (max-width: 1025px) {
-width: 90%;
-}
 
   @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
     /* iPhone X */
