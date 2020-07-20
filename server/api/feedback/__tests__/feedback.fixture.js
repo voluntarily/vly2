@@ -1,4 +1,8 @@
-import { OpportunityStatus, OpportunityType } from '../../opportunity/opportunity.constants'
+import {
+  OpportunityStatus,
+  OpportunityType
+} from '../../opportunity/opportunity.constants'
+import { InterestStatus } from '../../interest/interest.constants'
 import mongoose from 'mongoose'
 
 export const people = [
@@ -25,7 +29,7 @@ export const people = [
 export const organisations = [
   {
     _id: mongoose.Types.ObjectId(),
-    name: 'charles\' angels',
+    name: "charles' angels",
     slug: 'charles-angles',
     role: ['vp']
   },
@@ -45,11 +49,11 @@ export const members = [
   }
 ]
 
-export const opportunities = [
+export const archivedOpportunities = [
   {
     _id: mongoose.Types.ObjectId(),
     type: OpportunityType.ASK,
-    status: OpportunityStatus.ACTIVE,
+    status: OpportunityStatus.COMPLETED,
     tags: [],
     requestor: people[0]._id
   }
@@ -70,7 +74,7 @@ export const feedback = [
     _id: mongoose.Types.ObjectId(),
     respondent: people[0]._id,
     activity: activities[0]._id,
-    opportunity: opportunities[0]._id,
+    opportunity: archivedOpportunities[0]._id,
     respondentOrgs: [organisations[1]._id],
     rating: 2
   },
@@ -78,8 +82,26 @@ export const feedback = [
     _id: mongoose.Types.ObjectId(),
     respondent: people[1]._id,
     activity: activities[0]._id,
-    opportunity: opportunities[0]._id,
+    opportunity: archivedOpportunities[0]._id,
     respondentOrgs: [organisations[0]._id],
     rating: 3
+  }
+]
+
+export const interestArchives = [
+  {
+    person: people[0],
+    opportunity: archivedOpportunities[0]._id,
+    status: InterestStatus.ATTENDED
+  },
+  {
+    person: people[1],
+    opportunity: archivedOpportunities[0]._id,
+    status: InterestStatus.ATTENDED
+  },
+  {
+    person: people[2],
+    opportunity: archivedOpportunities[0]._id,
+    status: InterestStatus.ATTENDED
   }
 ]

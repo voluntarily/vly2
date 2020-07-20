@@ -1,5 +1,6 @@
 const Feedback = require('./feedback')
 const { Action } = require('../../services/abilities/ability.constants')
+const { verifyAttendance } = require('./feedback.lib')
 
 const createFeedback = async (req, res) => {
   const feedbackData = req.body
@@ -8,6 +9,11 @@ const createFeedback = async (req, res) => {
   if (!req.ability.can(Action.CREATE, feedback)) {
     return res.sendStatus(403)
   }
+
+  if (!await verifyAttendance(feedback)) {
+    return res.sendStatus(403)
+  }
+
   try {
     await feedback.save()
     res.status(201).json(feedback)
@@ -67,6 +73,10 @@ const updateFeedback = async (req, res) => {
     const updatedFeedback = Object.assign(feedback, req.body)
 
     if (!req.ability.can(Action.UPDATE, updatedFeedback)) {
+      return res.sendStatus(403)
+    }
+
+    if (!await verifyAttendance(updatedFeedback)) {
       return res.sendStatus(403)
     }
 

@@ -13,7 +13,7 @@ const feedbackSchema = new Schema(
     },
     opportunity: {
       type: Schema.Types.ObjectId,
-      ref: 'Opportunity',
+      ref: 'ArchivedOpportunity',
       required: true
     },
     activity: { type: Schema.Types.ObjectId, ref: 'Activity', required: true },

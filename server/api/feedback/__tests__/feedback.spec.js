@@ -5,12 +5,13 @@ import Feedback from '../feedback'
 import { jwtData } from '../../../../server/middleware/session/__tests__/setSession.fixture'
 import Person from '../../person/person'
 import Activity from '../../activity/activity'
-import Opportunity from '../../opportunity/opportunity'
-import { people, activities, opportunities, feedback, organisations, members } from './feedback.fixture'
+import ArchivedOpportunity from '../../archivedOpportunity/archivedOpportunity'
+import { people, activities, archivedOpportunities, feedback, organisations, members, interestArchives } from './feedback.fixture'
 import request from 'supertest'
 import mongoose from 'mongoose'
 import Organisation from '../../organisation/organisation'
 import Member from '../../member/member'
+import { InterestArchive } from '../../interest/interest'
 
 test.before('Create a mock database and populate it with data', async t => {
   t.context.memMongo = new MemoryMongo()
@@ -20,7 +21,8 @@ test.before('Create a mock database and populate it with data', async t => {
   await Organisation.create(organisations)
   await Member.create(members)
   await Activity.create(activities)
-  await Opportunity.create(opportunities)
+  await ArchivedOpportunity.create(archivedOpportunities)
+  await InterestArchive.create(interestArchives)
 
   await appReady
 })
@@ -50,7 +52,7 @@ test.serial('Test create valid feedback should return 201', async t => {
 })
 
 test.serial('Test create invalid feedback should return 400', async t => {
-  const payload = { apples: 21 } // invalid object
+  const payload = { respondent: people[0]._id, opportunity: archivedOpportunities[0]._id, rating: 'abc' } // invalid object
   const res = await request(server).post('/api/feedback').send(payload).set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 400)

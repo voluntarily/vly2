@@ -5,12 +5,13 @@ import Feedback from '../feedback'
 import { jwtDataDali as jwtVolunteer, jwtDataCharles as jwtOrgAdmin } from '../../../../server/middleware/session/__tests__/setSession.fixture'
 import Person from '../../person/person'
 import Activity from '../../activity/activity'
-import Opportunity from '../../opportunity/opportunity'
-import { people, activities, opportunities, organisations, feedback, members } from './feedback.fixture'
+import ArchivedOpportunity from '../../archivedOpportunity/archivedOpportunity'
+import { people, activities, archivedOpportunities, organisations, feedback, members, interestArchives } from './feedback.fixture'
 import request from 'supertest'
 import mongoose from 'mongoose'
 import Member from '../../member/member'
 import Organisation from '../../organisation/organisation'
+import { InterestArchive } from '../../interest/interest'
 
 test.before('Create a mock database and populate it with data', async t => {
   t.context.memMongo = new MemoryMongo()
@@ -20,7 +21,7 @@ test.before('Create a mock database and populate it with data', async t => {
   await Organisation.create(organisations)
   await Member.create(members)
   await Activity.create(activities)
-  await Opportunity.create(opportunities)
+  await ArchivedOpportunity.create(archivedOpportunities)
   await Member.create(members)
 
   await appReady
@@ -28,6 +29,7 @@ test.before('Create a mock database and populate it with data', async t => {
 
 test.beforeEach('Populate database with test data', async t => {
   await Feedback.create(feedback)
+  await InterestArchive.create(interestArchives)
 })
 
 test.afterEach.always(async t => {
@@ -92,6 +94,20 @@ test.serial('Test volunteer creates feedback for other person should return 403'
   t.falsy(savedFeedback)
 })
 
+test.serial('Test volunteer creates feedback for event they did not attend return 403', async t => {
+  await InterestArchive.deleteMany() // delete all so volunteer has no longer attended the opportunity
+
+  const newId = mongoose.Types.ObjectId()
+  const payload = { ...feedback[1], _id: newId }
+
+  const res = await request(server).post('/api/feedback').send(payload).set('Cookie', [`idToken=${jwtVolunteer.idToken}`])
+
+  t.is(res.status, 403)
+
+  const savedFeedback = await Feedback.findOne({ _id: newId })
+  t.falsy(savedFeedback)
+})
+
 test.serial('Test volunteer listing feedback should return only his feedback', async t => {
   const res = await request(server).get('/api/feedback').set('Cookie', [`idToken=${jwtVolunteer.idToken}`])
 
@@ -117,6 +133,20 @@ test.serial('Test volunteer updating other users feedback should return 404', as
   const savedFeedback = await Feedback.findOne({ _id: payload._id })
   t.truthy(savedFeedback)
   t.is(savedFeedback.rating, 2) // not updated
+})
+
+test.serial('Test volunteer updating their feedback to an event they did not attend should return 403', async t => {
+  await InterestArchive.deleteMany() // delete all so volunteer has no longer attended the opportunity
+
+  const payload = { ...feedback[1], rating: 5 }
+  const res = await request(server).put(`/api/feedback/${payload._id}`).send(payload).set('Cookie', [`idToken=${jwtVolunteer.idToken}`])
+
+  // volunteer shouldnt be indicated that the forbidden resource exists
+  t.is(res.status, 403)
+
+  const savedFeedback = await Feedback.findOne({ _id: payload._id })
+  t.truthy(savedFeedback)
+  t.is(savedFeedback.rating, 3) // not updated
 })
 
 test.serial('Test volunteer deleting feedback should return 403', async t => {
