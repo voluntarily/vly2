@@ -38,6 +38,7 @@ padding: 1.5rem;
     background-color: black;
     height:40vh;
     min-height: 400px;
+    max-height: 450px;
     overflow: hidden;
     border-radius: 24px;
     box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.25);

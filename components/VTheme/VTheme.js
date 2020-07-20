@@ -308,7 +308,7 @@ export const HalfGrid = styled.div`
   }
 
   @media screen and (max-width: 768px) {
-    grid-template-columns: calc(100vw - 2rem);
+    grid-template-columns: calc(100vw - 4rem);
 
   padding: 2rem 0 ;
   }
