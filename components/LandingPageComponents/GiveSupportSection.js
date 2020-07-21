@@ -1,10 +1,9 @@
 
 import React from 'react'
 
-import { Button, Divider } from 'antd'
-import { HalfGrid, TripleGrid, H2, H3, P, StatContainer, PromoCard, H5, TitleContainerMid, ImageContainer } from '../VTheme/VTheme'
+import { Button } from 'antd'
+import { HalfGrid, H2, H3, P, StatContainer, ImageContainer } from '../VTheme/VTheme'
 
-const isNotProd = process.env.NODE_ENV !== 'production'
 const GiveSupportSection = () => (
   <>
     <HalfGrid>
@@ -40,8 +39,7 @@ const GiveSupportSection = () => (
         </Button>
       </div>
     </HalfGrid>
-    <Divider />
-    {isNotProd &&
+    {/* {isNotProd &&
       <>
         <TitleContainerMid><H2>Featured offers from volunteers</H2></TitleContainerMid>
         <TripleGrid>
@@ -78,7 +76,7 @@ const GiveSupportSection = () => (
           >See more offers
           </Button>
         </TitleContainerMid>
-      </>}
+      </>} */}
 
   </>
 )
