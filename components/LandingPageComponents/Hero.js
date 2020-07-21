@@ -1,9 +1,9 @@
 
-// import Router from 'next/router'
+import Router from 'next/router'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-// import { LearnMoreButton, SignUpButton } from '../../components/VTheme/Buttons'
+import { LearnMoreButton, SignUpButton } from '../../components/VTheme/Buttons'
 // import { Button } from 'antd'
 // const Search = Input.Search
 
@@ -41,7 +41,9 @@ padding: 1.5rem;
     max-height: 450px;
     overflow: hidden;
     border-radius: 24px;
-    box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.25);
+    
+ box-shadow:  20px 20px 60px #d9d9d9, 
+             -20px -20px 60px #ffffff; 
         img {
       position: absolute;
       width: 100%;
@@ -147,7 +149,11 @@ color: white;
 
 const CTAGrid = styled.section`
 max-width: 80rem;
-margin: 8rem auto 6rem auto;
+border-radius: 24px;
+ box-shadow:  20px 20px 60px #d9d9d9, 
+             -20px -20px 60px #ffffff; 
+padding: 4rem 0;
+margin: 6rem auto 4.5rem auto;
 text-align: center;
 
 a {
@@ -155,14 +161,53 @@ a {
 }
 h1 {
   font-size: 4rem;
-  letter-spacing: -2.5px;
+  letter-spacing: -2px;
+  
 }
 
 h3{
   margin-bottom: 1rem;
 }
+
+strong {
+  font-weight: 700;
+  color: #f35626;
+background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+-webkit-animation: hue 10s infinite linear;
+}
+
+}
+
+@-webkit-keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+  }
+}
+@keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+  }
+}
+
+
+
+@media screen and (max-width: 1440px) {
+margin-top: 5rem;
+margin-bottom: 2.5rem;
+padding: 3rem 0;
+}
+
 @media screen and (max-width: 1380px) {
   margin: 6rem auto 3rem auto;
+  
 }
 
 
@@ -175,7 +220,7 @@ h3{
 h3{
   margin-bottom: 1rem;
 }
-  margin: 8rem auto 5rem auto;
+  margin: 8rem 3rem 5rem 3rem;
 }
 @media screen and (max-width: 768px) {
 
@@ -197,15 +242,22 @@ letter-spacing: -1.5px;
 
   @media screen and (max-width: 568px) {
     margin: 5rem 1rem 0 1rem;
+    padding: 2rem;
   h1 {
     font-size: 2rem;
     text-align: left;
+    padding-right: 3rem;
   }
   h3 {
+    width: 100%;
     text-align: left;
   }
   br {
     display: none;
+  }
+  button,a {
+    width: 100%;
+    margin-top: 1rem;
   }
 
   }
@@ -249,10 +301,10 @@ const Hero = ({ isAuthenticated }) => (
   <>
     <CTAGrid>
       <div>
-        <h1>Where volunteering happens.</h1>
+        <h1>Where <strong>Volunteering</strong> happens.</h1>
         <h3>Find volunteering opportunities and training.<br /> Make an impact in your community.</h3>
-        {/* {!isAuthenticated &&
-          <SignUpButton then='/flow/postSignUp' />}  <LearnMoreButton /> */}
+        {!isAuthenticated &&
+          <SignUpButton then='/flow/postSignUp' />}  <LearnMoreButton />
       </div>
 
     </CTAGrid>

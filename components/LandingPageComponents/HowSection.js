@@ -27,7 +27,7 @@ h2 {
 
 const PersonaContainer = styled.div`
 padding: 2rem;
-border-radius: 16px;
+border-radius: 24px;
 
 box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.25);
 text-align: left;
