@@ -304,10 +304,11 @@ export const HalfGrid = styled.div`
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 2rem;
+   
   }
 
   @media screen and (max-width: 768px) {
-    grid-template-columns: calc(100vw - 2rem);
+    grid-template-columns: calc(100vw - 4rem);
 
   padding: 2rem 0 ;
   }

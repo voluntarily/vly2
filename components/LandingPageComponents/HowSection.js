@@ -4,7 +4,9 @@ import styled from 'styled-components'
 import { HalfGrid, H2, H3 } from '../VTheme/VTheme'
 import { Button } from 'antd'
 const PersonaBox = styled.section`
-
+@media screen and (max-width: 1300px) {
+  margin: 0 1rem;
+}
  
 `
 
@@ -17,6 +19,7 @@ h2 {
   
 }
 
+
 @media screen and (max-width: 768px) {
   margin-top: 2rem;
 }
@@ -24,7 +27,7 @@ h2 {
 
 const PersonaContainer = styled.div`
 padding: 2rem;
-border-radius: 16px;
+border-radius: 24px;
 
 box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.25);
 text-align: left;
@@ -60,11 +63,14 @@ text-align: left;
  /* Mobile */
  @media screen and (max-width: 768px) {
 padding: 1.5rem;
+margin-right: 2rem;
 div {
   width: 100%;
 }
 }
 @media screen and (max-width: 560px) {
+
+margin-right: 0;
   article {
 grid-template-columns:1fr;
 }
@@ -92,9 +98,6 @@ const Text = styled.p`
   letter-spacing: -0.1px;
   line-height: 24px;
 
-@media screen and (max-width: 1025px) {
-width: 90%;
-}
 
   @media only screen and (min-width: 375px) and (max-width: 812px) and (-webkit-device-pixel-ratio: 3) {
     /* iPhone X */
