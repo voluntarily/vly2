@@ -5,6 +5,7 @@ const { OpportunityType } = require('./opportunity.constants')
 const { ASK, OFFER } = OpportunityType
 const stringSimilarity = require('string-similarity')
 const natural = require('natural')
+const stopword = require('stopword')
 const arrayIntersects = (arrA, arrB) =>
   arrA.filter((x) => arrB.includes(x)).length
 const MAX_RECOMMENDATIONS = 10
@@ -74,10 +75,15 @@ const getSkillsRecommendations = async (me) => {
     types.push(ASK)
   }
 
-  // Stem the tags to contain the root of a word
+  // Split composite tags into singular words
+  var splitTags = tagsToMatch.flatMap((tag) => {
+    return stopword.removeStopwords(tag.split(' '))
+  })
   // Tags with special characters are not stemmed
   var format = new RegExp(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/)
-  var stemmedTags = tagsToMatch
+
+  // Stem the tags to contain the root of a word
+  var stemmedTags = splitTags
     .filter((tag) => {
       if (format.test(tag)) {
         return false
@@ -88,6 +94,7 @@ const getSkillsRecommendations = async (me) => {
     .map((tag) => {
       return natural.PorterStemmer.stem(tag)
     })
+
   // Turn stemmed words into a regular expression
   var regexTags = new RegExp(stemmedTags.join('|'), 'i')
   // Join arrays of tags and tag word roots for search
@@ -106,14 +113,13 @@ const getSkillsRecommendations = async (me) => {
     op.tags.forEach((tag) => {
       if (tagsToMatch.includes(tag)) {
         count++
-      } else if (stemmedTags.length !== 0) {
+      } else if (tagsToSearch.length !== 0) {
         // Calculate similarity score that will be added to the score
         const simScore = stringSimilarity.findBestMatch(tag, stemmedTags)
           .bestMatch.rating
         count = count + simScore
       }
     })
-
     opsWithCounts.push({ count, op })
   })
 
