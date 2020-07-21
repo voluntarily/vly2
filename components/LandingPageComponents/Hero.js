@@ -150,7 +150,7 @@ max-width: 80rem;
 border-radius: 24px;
  box-shadow:  20px 20px 60px #d9d9d9, 
              -20px -20px 60px #ffffff; 
-padding: 4rem 0 2.5rem 0;
+padding: 2.5rem 0 3.5rem 0 ;
 margin: 6rem auto 4.5rem auto;
 text-align: center;
 
