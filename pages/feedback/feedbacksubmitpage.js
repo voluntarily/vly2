@@ -11,7 +11,7 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 import { useEffect } from 'react'
 import Loading from '../../components/Loading'
 
-const FeedbackSubmitPage = ({ feedbackActions }) => {
+export const FeedbackSubmitPage = ({ feedbackActions }) => {
   const { query: { rating, opportunity } } = useRouter()
   const [me, members, opportunities, feedback] = useSelector(state => [state.session.me, state.members, state.archivedOpportunities, state.feedback])
   const dispatch = useDispatch()
