@@ -42,8 +42,7 @@ padding: 1.5rem;
     overflow: hidden;
     border-radius: 24px;
     
- box-shadow:  20px 20px 60px #d9d9d9, 
-             -20px -20px 60px #ffffff; 
+ box-shadow:  20px 20px 60px #d9d9d9; 
         img {
       position: absolute;
       width: 100%;
@@ -152,8 +151,8 @@ max-width: 80rem;
 border-radius: 24px;
  box-shadow:  20px 20px 60px #d9d9d9, 
              -20px -20px 60px #ffffff; 
-padding: 4rem 0;
-margin: 6rem auto 4.5rem auto;
+padding: 4rem 0 2.5rem 0;
+margin: 6rem auto 2.5rem auto;
 text-align: center;
 
 a {
@@ -167,6 +166,7 @@ h1 {
 
 h3{
   margin-bottom: 1rem;
+  font-weight: 400;
 }
 
 strong {
@@ -260,6 +260,12 @@ letter-spacing: -1.5px;
     margin-top: 1rem;
   }
 
+  }
+
+  @media screen and (max-width: 320px) {
+    h3 {
+      font-size: 1rem;
+    }
   }
 `
 
