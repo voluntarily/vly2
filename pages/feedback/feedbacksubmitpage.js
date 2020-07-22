@@ -3,13 +3,13 @@ import {
   PageBannerNoTabs
 } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
-import { FormattedMessage } from 'react-intl'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import reduxApi, { withFeedback } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import { useEffect } from 'react'
 import Loading from '../../components/Loading'
+import Link from 'next/link'
 
 export const FeedbackSubmitPage = ({ feedbackActions }) => {
   const { query: { rating, opportunity } } = useRouter()
@@ -35,20 +35,19 @@ export const FeedbackSubmitPage = ({ feedbackActions }) => {
     dispatch(feedbackActions.post({}, { body: JSON.stringify(feedback) }))
   }, [])
 
+  const op = opportunities.data[0]
+
   return (
     <FullPage>
       <PageBannerNoTabs>
         <h1>
-          <FormattedMessage
-            id='feedbacksubmitpage.title'
-            defaultMessage='Leaving Feedback'
-            description='Title on feedback submit page'
-          />
+          Thanks for leaving feedback 🥳
         </h1>
 
       </PageBannerNoTabs>
-      {feedback.sync && <p>Your rating has been recorded.</p>}
+      {feedback.sync && <p>Your rating has been recorded for opportunity: <Link href={`/archivedops/${op._id}`}>{op.name}</Link>.</p>}
       {feedback.error && <p>Your rating could not be recorded at this time.</p>}
+
     </FullPage>
   )
 }
