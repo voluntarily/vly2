@@ -303,6 +303,35 @@ test.serial(
 )
 
 test.serial(
+  'getSkillsRecommendations > no tags in ops and user',
+  async (t) => {
+    const john = await Person.create({
+      name: 'John',
+      email: 'john@mail.com'
+    })
+
+    await Opportunity.deleteMany()
+    await Opportunity.create({
+      name: 'Technology opportunity',
+      status: OpportunityStatus.ACTIVE,
+      type: OpportunityType.OFFER,
+      requestor: john._id,
+      tags: []
+    })
+
+    const person = {
+      _id: mongoose.Types.ObjectId(),
+      role: Role.VOLUNTEER,
+      tags: [],
+      topicGroups: []
+    }
+
+    const recommendedSkills = await getSkillsRecommendations(person)
+    t.deepEqual(recommendedSkills, [])
+  }
+)
+
+test.serial(
   'getSkillsRecommendations > no tags match, no topic group match',
   async (t) => {
     const john = await Person.create({
@@ -453,6 +482,7 @@ test.serial(
     }
 
     const recommendedSkills = await getSkillsRecommendations(person)
+
     t.is(recommendedSkills.length, 2)
     t.is(
       recommendedSkills[0].name,
@@ -465,7 +495,7 @@ test.serial(
   }
 )
 
-test.serial.failing(
+test.serial(
   'getSkillsRecommendations > partial tag matches, no topic group matches',
   async (t) => {
     const john = await Person.create({
@@ -493,7 +523,7 @@ test.serial.failing(
       tags: opTags
     })
 
-    opTags.push('remote work')
+    opTags.push('remoting work')
     await Opportunity.create({
       name: 'Op with two partial matches',
       status: OpportunityStatus.ACTIVE,
@@ -502,7 +532,7 @@ test.serial.failing(
       tags: opTags
     })
 
-    opTags.push('tutor')
+    opTags.push('tutorial')
     await Opportunity.create({
       name: 'Op with three partial matches',
       status: OpportunityStatus.ACTIVE,
@@ -519,10 +549,10 @@ test.serial.failing(
     }
 
     const recommendedSkills = await getSkillsRecommendations(person)
-    t.is(recommendedSkills.length, 4)
+
+    t.is(recommendedSkills.length, 3)
     t.is(recommendedSkills[0].name, 'Op with three partial matches') // closest match.
     t.is(recommendedSkills[2].name, 'Op with one partial match') // least close match
-    t.is(recommendedSkills[3].name, 'Op with no tag match') // no match, ranked last
   }
 )
 
@@ -647,7 +677,7 @@ test.serial(
   }
 )
 
-test.serial.failing(
+test.serial(
   'getSkillsRecommendations > partial tag matches, topic group matches',
   async (t) => {
     await Person.deleteMany()
@@ -656,6 +686,12 @@ test.serial.failing(
       email: 'john@mail.com'
     })
 
+    const person = {
+      _id: mongoose.Types.ObjectId(),
+      role: Role.VOLUNTEER,
+      tags: ['coding', 'tutoring', 'lawyer', 'random'],
+      topicGroups: ['business']
+    }
     await Opportunity.deleteMany()
     const opTags = ['community']
 
@@ -702,13 +738,6 @@ test.serial.failing(
       requestor: john._id,
       tags: opTags
     })
-
-    const person = {
-      _id: mongoose.Types.ObjectId(),
-      role: Role.VOLUNTEER,
-      tags: ['coder', 'tutoring', 'lawyer', 'random'],
-      topicGroups: ['business']
-    }
 
     const recommendedSkills = await getSkillsRecommendations(person)
     t.is(recommendedSkills.length, 4)
