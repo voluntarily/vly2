@@ -63,7 +63,6 @@ text-align: left;
  /* Mobile */
  @media screen and (max-width: 768px) {
 padding: 1.5rem;
-margin-right: 2rem;
 div {
   width: 100%;
 }

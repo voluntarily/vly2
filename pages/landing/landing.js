@@ -10,15 +10,15 @@ import publicPage from '../../hocs/publicPage'
 import { Divider } from 'antd'
 import HowSection from '../../components/LandingPageComponents/HowSection'
 
-import CorporateSection from '../../components/LandingPageComponents/CorporateSection'
 import GiveSupportSection from '../../components/LandingPageComponents/GiveSupportSection'
 
-import GiveContentSection from '../../components/LandingPageComponents/GiveContentSection'
 import TakeSupportSection from '../../components/LandingPageComponents/TakeSupportSection'
-import Testimonial from '../../components/LandingPageComponents/Testimonial'
-import HelpSocialSection from '../../components/LandingPageComponents/HelpSocialSection'
-import HelpOrgsSection from '../../components/LandingPageComponents/HelpOrgsSection'
-
+// import Testimonial from '../../components/LandingPageComponents/Testimonial'
+// import CorporateSection from '../../components/LandingPageComponents/CorporateSection'
+// import GiveContentSection from '../../components/LandingPageComponents/GiveContentSection'
+// import HelpSocialSection from '../../components/LandingPageComponents/HelpSocialSection'
+// import HelpOrgsSection from '../../components/LandingPageComponents/HelpOrgsSection'
+import Sponsors from '../../components/LandingPageComponents/Sponsors'
 export const Landing = ({ isAuthenticated }) => (
   <>
     <Helmet>
@@ -33,8 +33,8 @@ export const Landing = ({ isAuthenticated }) => (
 
       <HowSection />
       <>
-
-        <Testimonial />
+        <Sponsors />
+        {/* <Testimonial /> */}
         <Divider />
 
         <GiveSupportSection />
@@ -42,7 +42,7 @@ export const Landing = ({ isAuthenticated }) => (
         <TakeSupportSection />
         <Divider />
         <OfferSection />
-        <Divider />
+        {/* <Divider />
         <CorporateSection />
         <Divider />
         <HelpOrgsSection />
@@ -50,7 +50,7 @@ export const Landing = ({ isAuthenticated }) => (
         <HelpSocialSection />
 
         <Divider />
-        <GiveContentSection />
+        <GiveContentSection /> */}
       </>
     </FullPage>
   </>

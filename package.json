@@ -96,6 +96,7 @@
     "mongoose-crudify": "^0.2.0",
     "mongoose-id-validator": "^0.5.4",
     "morgan": "^1.10.0",
+    "natural": "^2.1.5",
     "next": "^9.3.4",
     "next-redux-wrapper": "^4.0.1",
     "next-routes": "^1.4.2",
@@ -125,6 +126,8 @@
     "run": "^1.4.0",
     "sanitize-html": "^1.20.1",
     "slug": "^2.1.0",
+    "stopword": "^1.0.1",
+    "string-similarity": "^4.0.1",
     "styled-components": "^5.0.0",
     "uuidv4": "^6.0.6",
     "webpack": "^4.42.0"

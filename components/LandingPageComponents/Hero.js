@@ -199,13 +199,12 @@ background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
 
 
 @media screen and (max-width: 1440px) {
-margin-top: 5rem;
-margin-bottom: 2.5rem;
+margin: 5rem 2rem 2.5rem 2rem;
 padding: 3rem 0;
 }
 
 @media screen and (max-width: 1380px) {
-  margin: 6rem auto 3rem auto;
+  margin: 6rem 2rem 3rem 2rem;
   
 }
 
