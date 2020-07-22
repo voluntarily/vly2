@@ -2,7 +2,7 @@
 import React from 'react'
 
 import { Button } from 'antd'
-import { HalfGrid, H2, H3, P, StatContainer, ImageContainer, FeatureContainer } from '../VTheme/VTheme'
+import { HalfGrid, H2, P, StatContainer, ImageContainer, FeatureContainer } from '../VTheme/VTheme'
 
 const TakeSupportSection = () => (
   <>
