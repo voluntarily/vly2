@@ -2,42 +2,41 @@
 import React from 'react'
 
 import { Button } from 'antd'
-import { HalfGrid, H2, H3, P, StatContainer, ImageContainer } from '../VTheme/VTheme'
-
+import { HalfGrid, H2, P, StatContainer, ImageContainer, FeatureContainer } from '../VTheme/VTheme'
 const GiveSupportSection = () => (
   <>
     <HalfGrid>
 
       <ImageContainer src='/static/img/about/askforhelp.png' />
 
-      <div>
+      <FeatureContainer>
         <H2>Ask for help from Volunteers</H2>
-        <H3>Skilled volunteers are offering to help you out. We get all the admin and annoying stuff out of the way to give you more time</H3>
 
         <StatContainer>
           <img src='./static/img/icons/check.svg' />
-          <P>Safe — everyone gets ID checked to keep you safe - for groups</P>
+          <P><strong>Everyone gets ID checked</strong> to keep you safe </P>
           <img src='./static/img/icons/check.svg' />
-          <P>Personalised — we connect you with local people, for an activity at a time that suits</P>
+          <P><strong>We connect you with local people</strong>, for an activity at a time that suits</P>
           <img src='./static/img/icons/check.svg' />
-          <P>Recognition and support — we help you through the process, and celebrate success</P>
+          <P><strong>We help you</strong> through the process, and celebrate success</P>
         </StatContainer>
         <Button
           type='primary'
           shape='round'
           size='large'
-          href='https://blog.voluntarily.nz'
-          style={{ marginRight: '1rem' }}
+          href='/a/ask'
+          style={{ margin: '1rem 1rem 0 0' }}
         >Ask for help
         </Button>
         <Button
           type='secondary'
           shape='round'
           size='large'
-          href='https://blog.voluntarily.nz'
+          href='https://blog.voluntarily.nz/contact-us'
         >Join as a community group
         </Button>
-      </div>
+      </FeatureContainer>
+
     </HalfGrid>
     {/* {isNotProd &&
       <>
