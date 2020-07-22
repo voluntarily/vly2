@@ -9,6 +9,17 @@ block copybig
 block copy
   p Kia ora #{to.nickname},
   p We want to thank you for volunteering for #{op.name}. 
+  p How did it go? We would love if you could rate the event from 1 - 5 by clicking on a star below.
+  table(width="100%")
+    tr
+      td(align="center")
+        each n in [1, 2, 3, 4, 5]
+          a(href=`${op.feedback.href}&rating=${n}` target="_blank")
+            figure(style="display: inline-block; margin-inline-start: 5px; margin-inline-end: 5px")
+              include ../theme/star.pug
+              figcaption #{n} 
+          span &nbsp; 
+  p
     span This activity has now been moved to your history tab.
     span Any rewards or badges from the activity will be added to your profile.
   p Want to do more? Check out the recommendations link for other activities still needing volunteers.

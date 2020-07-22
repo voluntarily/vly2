@@ -117,6 +117,10 @@ module.exports = (server) => {
         return
       }
 
+      if (interest.status === InterestStatus.ATTENDED) {
+        op.feedback = { href: `${config.appUrl}/feedback/submit?opportunity=${op._id}` }
+      }
+
       op.requestor.href = `${config.appUrl}/home`
       op.href = `${config.appUrl}/ops/${op._id}`
 
