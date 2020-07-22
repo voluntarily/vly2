@@ -83,7 +83,7 @@ test.serial('FeedbackSubmitPage renders correctly', t => {
   const wrapper = mountWithIntl(<Provider store={t.context.store}><FeedbackSubmitPage feedbackActions={t.context.props.feedbackActions} /> </Provider>)
 
   t.true(wrapper.exists())
-  t.is(wrapper.find('h1').first().text(), 'Leaving Feedback')
+  t.is(wrapper.find('h1').first().text(), 'Thanks for leaving feedback 🥳')
 })
 
 test.serial.cb('FeedbackSubmitPage makes correct request', t => {
