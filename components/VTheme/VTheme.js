@@ -300,6 +300,7 @@ export const HalfGrid = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 4rem;
   padding: 4rem 0 ;
+  place-items: center;
 
   @media screen and (min-width: 768px) and (max-width: 1281px) {
     grid-template-columns: 1fr 1fr;
@@ -308,7 +309,7 @@ export const HalfGrid = styled.div`
   }
 
   @media screen and (max-width: 768px) {
-    grid-template-columns: calc(100vw - 4rem);
+    grid-template-columns: 1fr;
 
   padding: 2rem 0 ;
   }
@@ -1082,6 +1083,25 @@ a {
   transform: scale(1.04);
 }
 `
+
+export const FeatureContainer = styled.div`
+
+@media screen and (max-width: 768px) {
+order: 2000;
+  margin-top: 2rem;
+  text-align: center;
+
+  p {
+    text-align: left;
+  }
+ a {
+   width: 100%;
+   margin: 1rem auto;
+ }
+}
+
+`
+
 // Stat container for landing page with checks
 export const StatContainer = styled.div`
 margin: 2rem 0;
@@ -1093,6 +1113,8 @@ grid-row-gap: 1.5rem;
 p {
   align-self: center;
 }
+
+
 
 
 `

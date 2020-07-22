@@ -2,14 +2,13 @@
 import React from 'react'
 
 import { Button } from 'antd'
-import { HalfGrid, H2, H3, P, StatContainer, ImageContainer } from '../VTheme/VTheme'
+import { HalfGrid, H2, P, StatContainer, ImageContainer, FeatureContainer } from '../VTheme/VTheme'
 
 const TakeSupportSection = () => (
   <>
     <HalfGrid>
-      <div>
+      <FeatureContainer>
         <H2>Offer to help people</H2>
-        <H3>Skilled volunteers are offering to help you out. We get all the admin and annoying stuff out of the way to give you more time</H3>
 
         <StatContainer>
           <img src='./static/img/icons/check.svg' />
@@ -23,18 +22,19 @@ const TakeSupportSection = () => (
           type='primary'
           shape='round'
           size='large'
-          href='https://blog.voluntarily.nz'
+          href='/a/offer'
           style={{ marginRight: '1rem' }}
+
         >Offer to help
         </Button>
         <Button
           type='secondary'
           shape='round'
           size='large'
-          href='https://blog.voluntarily.nz'
+          href='https://blog.voluntarily.nz/contact-us'
         >Join as a business
         </Button>
-      </div>
+      </FeatureContainer>
       <ImageContainer src='/static/img/about/offer.png' />
 
     </HalfGrid>
