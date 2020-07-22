@@ -10,6 +10,8 @@ import { MemberStatus } from '../../server/api/member/member.constants'
 import { useEffect } from 'react'
 import Loading from '../../components/Loading'
 import Link from 'next/link'
+import { Button, Typography } from 'antd'
+import { FormattedMessage } from 'react-intl'
 
 export const FeedbackSubmitPage = ({ feedbackActions }) => {
   const { query: { rating, opportunity } } = useRouter()
@@ -46,7 +48,23 @@ export const FeedbackSubmitPage = ({ feedbackActions }) => {
 
       </PageBannerNoTabs>
       {feedback.sync && <p>Your rating has been recorded for opportunity: <Link href={`/archivedops/${op._id}`}>{op.name}</Link>.</p>}
-      {feedback.error && <p>Your rating could not be recorded at this time.</p>}
+      {feedback.error && <Typography.Paragraph type='danger'>Your rating could not be recorded at this time.</Typography.Paragraph>}
+
+      <p>
+        <FormattedMessage
+          id='feedbacksubmitpage.text.recommended'
+          defaultMessage='Want to do more? Check out the recommendations button for other activities still needing volunteers.'
+        />
+
+      </p>
+      <Link href='/home'>
+        <Button shape='round' size='large' type='primary'>
+          <FormattedMessage
+            id='feedbacksubmitpage.button.recommended'
+            defaultMessage='Recommendations'
+          />
+        </Button>
+      </Link>
 
     </FullPage>
   )
