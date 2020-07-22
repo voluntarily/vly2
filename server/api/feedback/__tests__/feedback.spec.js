@@ -40,6 +40,8 @@ test.after.always(async t => {
 })
 
 test.serial('Test create valid feedback should return 201', async t => {
+  await Feedback.deleteMany() // clear existing feedback to avoid conflicts
+
   const newId = mongoose.Types.ObjectId()
   const payload = { ...feedback[0], _id: newId }
   const res = await request(server).post('/api/feedback').send(payload).set('Cookie', [`idToken=${jwtData.idToken}`])
@@ -52,10 +54,23 @@ test.serial('Test create valid feedback should return 201', async t => {
 })
 
 test.serial('Test create invalid feedback should return 400', async t => {
+  await Feedback.deleteMany() // clear existing feedback to avoid conflicts
+
   const payload = { respondent: people[0]._id, opportunity: archivedOpportunities[0]._id, rating: 'abc' } // invalid object
   const res = await request(server).post('/api/feedback').send(payload).set('Cookie', [`idToken=${jwtData.idToken}`])
 
   t.is(res.status, 400)
+})
+
+test.serial('Test create duplicate feedback should return 409', async t => {
+  const newId = mongoose.Types.ObjectId()
+  const payload = { ...feedback[0], _id: newId } // duplicate for person x opportunity
+  const res = await request(server).post('/api/feedback').send(payload).set('Cookie', [`idToken=${jwtData.idToken}`])
+
+  t.is(res.status, 409)
+
+  const savedFeedback = await Feedback.findOne({ _id: newId })
+  t.falsy(savedFeedback)
 })
 
 test.serial('Test list feedback without query should return 200', async t => {

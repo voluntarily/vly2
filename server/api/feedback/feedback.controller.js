@@ -15,8 +15,16 @@ const createFeedback = async (req, res) => {
   }
 
   try {
+    // find feedback for the person and opportuntiy
+    // the person can only submit feedback once
+    if (await Feedback.exists({ respondent: feedback.respondent, opportunity: feedback.opportunity })) {
+      // HTTP STATUS CODE 409 CONFLICT
+      // https://stackoverflow.com/a/3826024
+      return res.status(409).send({ error: `User ${feedback.respondent.toString()} has already submitted feedback for opportunity ${feedback.opportunity.toString()} ` })
+    }
+
     await feedback.save()
-    res.status(201).json(feedback)
+    return res.status(201).json(feedback)
   } catch (e) {
     if (e.name === 'ValidationError') {
       return res.status(400).send({ error: e.message })

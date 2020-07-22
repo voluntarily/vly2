@@ -160,6 +160,8 @@ test.serial('Test volunteer deleting feedback should return 403', async t => {
 })
 
 test.serial('Test volunteer creates feedback for himself should return 201', async t => {
+  await Feedback.deleteMany() // clear existing feedback to avoid conflicts
+
   const newId = mongoose.Types.ObjectId()
   const payload = { ...feedback[1], _id: newId } // respondent is himself
   const res = await request(server).post('/api/feedback').send(payload).set('Cookie', [`idToken=${jwtVolunteer.idToken}`])
