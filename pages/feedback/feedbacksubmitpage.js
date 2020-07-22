@@ -47,7 +47,7 @@ export const FeedbackSubmitPage = ({ feedbackActions }) => {
         </h1>
 
       </PageBannerNoTabs>
-      {feedback.sync && <p>Your rating has been recorded for opportunity: <Link href={`/archivedops/${op._id}`}>{op.name}</Link>.</p>}
+      {feedback.sync && <p>Your rating has been recorded for opportunity: <Link href={`/archivedops/${op._id}`}><a>{op.name}</a></Link>.</p>}
       {feedback.error && <Typography.Paragraph type='danger'>Your rating could not be recorded at this time.</Typography.Paragraph>}
 
       <p>
