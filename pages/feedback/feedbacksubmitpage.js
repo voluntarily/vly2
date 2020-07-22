@@ -49,6 +49,7 @@ export const FeedbackSubmitPage = ({ feedbackActions }) => {
       </PageBannerNoTabs>
       {feedback.sync && <p>Your rating has been recorded for opportunity: <Link href={`/archivedops/${op._id}`}><a>{op.name}</a></Link>.</p>}
       {feedback.error && <Typography.Paragraph type='danger'>Your rating could not be recorded at this time.</Typography.Paragraph>}
+      {!['1', '2', '3', '4', '5'].includes(rating) && <Typography.Paragraph type='danger'>Please enter a rating between 1 and 5.</Typography.Paragraph>}
 
       <p>
         <FormattedMessage
