@@ -80,6 +80,16 @@ const updateFeedback = async (req, res) => {
 
     const updatedFeedback = Object.assign(feedback, req.body)
 
+    for (const prop in updatedFeedback) {
+      // field is being updated
+      if (updatedFeedback[prop] !== feedback[prop]) {
+        // check that the user is allowed to edit this field
+        if (!req.ability.can(Action.UPDATE, 'Feedback', prop)) {
+          return res.send(403)
+        }
+      }
+    }
+
     if (!req.ability.can(Action.UPDATE, updatedFeedback)) {
       return res.sendStatus(403)
     }

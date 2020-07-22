@@ -7,8 +7,14 @@ const ruleBuilder = async (session) => {
   const volunteerRules = [
     {
       subject: SchemaName,
-      action: [Action.CREATE, Action.UPDATE, Action.LIST, Action.READ],
+      action: [Action.CREATE, Action.LIST, Action.READ],
       conditions: { respondent: session.me._id }
+    },
+    {
+      subject: SchemaName,
+      action: [Action.UPDATE],
+      conditions: { respondent: session.me._id },
+      fields: ['rating']
     }
   ]
 

@@ -135,13 +135,10 @@ test.serial('Test volunteer updating other users feedback should return 404', as
   t.is(savedFeedback.rating, 2) // not updated
 })
 
-test.serial('Test volunteer updating their feedback to an event they did not attend should return 403', async t => {
-  await InterestArchive.deleteMany() // delete all so volunteer has no longer attended the opportunity
-
-  const payload = { ...feedback[1], rating: 5 }
+test.serial('Test volunteer updating own feedback restricted fields should return 403', async t => {
+  const payload = { ...feedback[1], rating: 5, opportunity: mongoose.Types.ObjectId().toString() }
   const res = await request(server).put(`/api/feedback/${payload._id}`).send(payload).set('Cookie', [`idToken=${jwtVolunteer.idToken}`])
 
-  // volunteer shouldnt be indicated that the forbidden resource exists
   t.is(res.status, 403)
 
   const savedFeedback = await Feedback.findOne({ _id: payload._id })
