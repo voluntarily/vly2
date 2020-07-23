@@ -253,11 +253,61 @@ const interestArchives = [
   }
 ]
 
+const activities = [
+  {
+    _id: generateObjectId(),
+    name: "1 What's my line - Careers panel game",
+    imgUrl:
+      'https://www.tvnz.co.nz/content/dam/images/news/2015/01/26/pacific-island-mentors-with-kelston-high-school-students.jpg.hashed.0d58ef7e.desktop.story.share.jpg',
+    status: 'active'
+  }
+]
+
+const feedback = [
+  {
+    respondent: people[0]._id,
+    respondentOrgs: [organisations[0]._id],
+    opportunity: archivedOpportunities[0]._id,
+    activity: activities[0]._id,
+    rating: 1
+  },
+  {
+    respondent: people[0]._id,
+    respondentOrgs: [organisations[0]._id],
+    opportunity: archivedOpportunities[0]._id,
+    activity: activities[0]._id,
+    rating: 1
+  },
+  {
+    respondent: people[0]._id,
+    respondentOrgs: [organisations[0]._id],
+    opportunity: archivedOpportunities[0]._id,
+    activity: activities[0]._id,
+    rating: 4
+  },
+  {
+    respondent: people[0]._id,
+    respondentOrgs: [organisations[0]._id],
+    opportunity: archivedOpportunities[9]._id,
+    activity: activities[0]._id,
+    rating: 1
+  },
+  {
+    respondent: people[0]._id,
+    respondentOrgs: [organisations[1]._id],
+    opportunity: archivedOpportunities[0]._id,
+    activity: activities[0]._id,
+    rating: 4
+  }
+]
+
 module.exports = {
   firstOrgId,
   organisations,
   people,
   members,
   archivedOpportunities,
-  interestArchives
+  interestArchives,
+  activities,
+  feedback
 }
