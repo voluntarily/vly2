@@ -3,13 +3,15 @@ import {
   PageBannerNoTabs
 } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
-import { FormattedMessage } from 'react-intl'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import reduxApi, { withFeedback } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import { useEffect } from 'react'
 import Loading from '../../components/Loading'
+import Link from 'next/link'
+import { Button, Typography } from 'antd'
+import { FormattedMessage } from 'react-intl'
 
 export const FeedbackSubmitPage = ({ feedbackActions }) => {
   const { query: { rating, opportunity } } = useRouter()
@@ -35,20 +37,36 @@ export const FeedbackSubmitPage = ({ feedbackActions }) => {
     dispatch(feedbackActions.post({}, { body: JSON.stringify(feedback) }))
   }, [])
 
+  const op = opportunities.data[0]
+
   return (
     <FullPage>
       <PageBannerNoTabs>
         <h1>
-          <FormattedMessage
-            id='feedbacksubmitpage.title'
-            defaultMessage='Leaving Feedback'
-            description='Title on feedback submit page'
-          />
+          Thanks for leaving feedback 🥳
         </h1>
 
       </PageBannerNoTabs>
-      {feedback.sync && <p>Your rating has been recorded.</p>}
-      {feedback.error && <p>Your rating could not be recorded at this time.</p>}
+      {feedback.sync && <p>Your rating has been recorded for opportunity: <Link href={`/archivedops/${op._id}`}><a>{op.name}</a></Link>.</p>}
+      {feedback.error && <Typography.Paragraph type='danger'>Your rating could not be recorded at this time.</Typography.Paragraph>}
+      {!['1', '2', '3', '4', '5'].includes(rating) && <Typography.Paragraph type='danger'>Please enter a rating between 1 and 5.</Typography.Paragraph>}
+
+      <p>
+        <FormattedMessage
+          id='feedbacksubmitpage.text.recommended'
+          defaultMessage='Want to do more? Check out the recommendations button for other activities still needing volunteers.'
+        />
+
+      </p>
+      <Link href='/home'>
+        <Button shape='round' size='large' type='primary'>
+          <FormattedMessage
+            id='feedbacksubmitpage.button.recommended'
+            defaultMessage='Recommendations'
+          />
+        </Button>
+      </Link>
+
     </FullPage>
   )
 }
