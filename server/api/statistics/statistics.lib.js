@@ -2,6 +2,8 @@ const { InterestArchive } = require('../interest/interest')
 const Member = require('../member/member')
 const mongoose = require('mongoose')
 const moment = require('moment')
+const Feedback = require('../feedback/feedback')
+const ArchivedOpportunity = require('../archivedOpportunity/archivedOpportunity')
 
 const getMembersWithAttendedInterests = async (orgId, afterDate) =>
   Member.aggregate([
@@ -71,6 +73,42 @@ const getMembersWithAttendedInterests = async (orgId, afterDate) =>
     }
   ])
 
+const getFeedback = async (orgId, afterDate) =>
+  Feedback.aggregate([
+    {
+      $match: {
+        respondentOrgs: {
+          $in: [
+            mongoose.Types.ObjectId(orgId)
+          ]
+        }
+      }
+    }, {
+      $lookup: {
+        from: ArchivedOpportunity.collection.name,
+        localField: 'opportunity',
+        foreignField: '_id',
+        as: 'opportunity'
+      }
+    }, {
+      $unwind: {
+        path: '$opportunity'
+      }
+    }, {
+      $match: {
+        $expr: {
+          $gt: [
+            {
+              $arrayElemAt: [
+                '$opportunity.date', 0
+              ]
+            }, afterDate
+          ]
+        }
+      }
+    }
+  ])
+
 const parseStatisticsTimeframe = timeframe => {
   switch (timeframe) {
     case 'month':
@@ -84,5 +122,6 @@ const parseStatisticsTimeframe = timeframe => {
 
 module.exports = {
   getMembersWithAttendedInterests,
-  parseStatisticsTimeframe
+  parseStatisticsTimeframe,
+  getFeedback
 }

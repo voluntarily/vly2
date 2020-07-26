@@ -2,14 +2,16 @@ import test from 'ava'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import MockExpressRequest from 'mock-express-request'
 import MockExpressResponse from 'mock-express-response'
-import { getSummary, getLocations, getActivityTags } from '../statistics.controller'
+import { getSummary, getLocations, getActivityTags, getRatings } from '../statistics.controller'
 import {
   firstOrgId,
   organisations,
   people,
   members,
   archivedOpportunities,
-  interestArchives
+  interestArchives,
+  activities,
+  feedback
 } from './statistics.fixture'
 import { Role } from '../../../services/authorize/role'
 const { InterestArchive } = require('../../interest/interest')
@@ -18,6 +20,8 @@ const ArchivedOpportunity = require('../../archivedOpportunity/archivedOpportuni
 const Organisation = require('../../organisation/organisation')
 const Person = require('../../person/person')
 const { authoriseStatistics } = require('../statistics.middleware')
+const Activity = require('../../activity/activity')
+const Feedback = require('../../feedback/feedback')
 const sinon = require('sinon')
 
 test.before('Create a mock database and populate it with data ', async (t) => {
@@ -29,6 +33,8 @@ test.before('Create a mock database and populate it with data ', async (t) => {
   await Member.create(members)
   await ArchivedOpportunity.create(archivedOpportunities)
   await InterestArchive.create(interestArchives)
+  await Activity.create(activities)
+  await Feedback.create(feedback)
 })
 
 test.after.always(async (t) => {
@@ -214,6 +220,66 @@ test(
     mockReq.params = { orgId: firstOrgId, timeframe: 'jerry' }
 
     await getActivityTags(mockReq, mockRes)
+    const expectedStatusCode = 400
+
+    t.assert(
+      expectedStatusCode === mockRes.statusCode,
+      'Status code should be 400 NOT FOUND'
+    )
+  }
+)
+
+test(
+  'Test getRatings returns correct ratings',
+  async (t) => {
+    const mockReq = new MockExpressRequest()
+    const mockRes = new MockExpressResponse()
+
+    mockReq.params = { orgId: firstOrgId, timeframe: 'year' }
+
+    await getRatings(mockReq, mockRes)
+    const responseData = mockRes._getJSON()
+    const expectedStatusCode = 200
+    const expectedData = [{ name: 1, value: 2 }, { name: 2, value: 0 }, { name: 3, value: 0 }, { name: 4, value: 1 }, { name: 5, value: 0 }]
+
+    t.assert(
+      expectedStatusCode === mockRes.statusCode,
+      'Status code should be 200 OK'
+    )
+    t.assert(Array.isArray(responseData), 'response should be an array')
+    t.deepEqual(responseData, expectedData)
+  }
+)
+
+test(
+  "Test getRatings returns error when organisation doesn't exist",
+  async (t) => {
+    const mockReq = new MockExpressRequest()
+    const mockRes = new MockExpressResponse()
+
+    const nonExistentOrgId = '5e73112a7f283c001151efc2'
+
+    mockReq.params = { orgId: nonExistentOrgId, timeframe: 'year' }
+
+    await getRatings(mockReq, mockRes)
+    const expectedStatusCode = 404
+
+    t.assert(
+      expectedStatusCode === mockRes.statusCode,
+      'Status code should be 404 NOT FOUND'
+    )
+  }
+)
+
+test(
+  "Test getRatings returns error when timeframe doesn't exist",
+  async (t) => {
+    const mockReq = new MockExpressRequest()
+    const mockRes = new MockExpressResponse()
+
+    mockReq.params = { orgId: firstOrgId, timeframe: 'jerry' }
+
+    await getRatings(mockReq, mockRes)
     const expectedStatusCode = 400
 
     t.assert(

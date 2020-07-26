@@ -1,5 +1,5 @@
 const moment = require('moment')
-const { getMembersWithAttendedInterests, parseStatisticsTimeframe } = require('./statistics.lib')
+const { getMembersWithAttendedInterests, parseStatisticsTimeframe, getFeedback } = require('./statistics.lib')
 const Organisation = require('../organisation/organisation')
 
 const getSummary = async (req, res) => {
@@ -135,8 +135,37 @@ const getActivityTags = async (req, res) => {
   }
 }
 
+const getRatings = async (req, res) => {
+  const { orgId, timeframe } = req.params
+
+  let afterDate
+  try {
+    afterDate = parseStatisticsTimeframe(timeframe)
+  } catch (e) {
+    return res.status(400).send({ message: e.message })
+  }
+
+  try {
+    if (!(await Organisation.exists({ _id: orgId }))) {
+      return res.status(404).send({ error: 'Organisation not found' })
+    }
+
+    const feedback = await getFeedback(orgId, afterDate)
+
+    const ratings = [1, 2, 3, 4, 5].map(i => ({ name: i, value: 0 }))
+    feedback.forEach(f => {
+      ratings[f.rating - 1].value++
+    })
+
+    return res.status(200).send(ratings)
+  } catch (e) {
+    return res.status(500).send({ error: e.message })
+  }
+}
+
 module.exports = {
   getSummary,
   getLocations,
-  getActivityTags
+  getActivityTags,
+  getRatings
 }
