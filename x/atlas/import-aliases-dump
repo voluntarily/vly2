@@ -1,0 +1,2 @@
+# after running alpha-restore-local, run this script to import aliases into db
+mongorestore --drop -d vly2 dump/vly2-aliases
