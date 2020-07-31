@@ -65,7 +65,54 @@ const getTagAliasSet = async (req, res) => {
   }
 }
 
+/**
+ * Delete a tag from the alias collection, and delete it from other alias lists
+ * @param req
+ * @param res
+ * @returns void
+ * Future TODO: Delete tag from tag list
+ */
 const deleteTag = async (req, res) => {
+  try {
+    var tagToDelete = req.params.tag
+
+    if (!(await AliasSet.exists({ tag: tagToDelete }))) {//tagToDelete))) {
+      return res.status(404).send({ error: 'Tag not found' })
+    }
+
+    //Delete tag from the aliases set of other tags
+    const tagToDeleteWithAliases = await AliasSet
+      .findOne({ tag: tagToDelete })
+
+    const tagToDeleteAliases = tagToDeleteWithAliases.aliases
+    if (tagToDeleteAliases.length == 0) {
+      //tag has no aliases in the system
+    } else {
+      for (const tag of tagToDeleteAliases) {
+        const tagWithAliases = await AliasSet
+          .findOne({ tag })
+
+        const otherAliases = tagWithAliases.aliases //List of aliases of which the tag to delete is a part of
+
+        const index = otherAliases.indexOf(tagToDelete);
+        if (index > -1) {
+          otherAliases.splice(index, 1);
+        }
+
+        //Remove the tag from alias collection
+        await AliasSet.updateOne({ tag: tagWithAliases.tag }, { aliases: otherAliases })
+      }
+    }
+
+    //Delete tag from alias collection
+    const aliasSet = await AliasSet
+      .findOne({ tag: tagToDelete })
+      .then(item => item.remove().then(() => res.json({ success: true })))
+      .catch(err => res.status(404).json({ success: false }))
+
+  } catch (e) {
+    res.status(500).send({ error: e })
+  }
 
 }
 
