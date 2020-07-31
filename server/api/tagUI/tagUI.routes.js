@@ -15,7 +15,7 @@ const {
 module.exports = (server) => {
   server.get('/api/tagUI/allTags', getAllTags) 
   server.get('/api/tagUI/allAliases', getAllTagAliasSets)
-  server.get('', getTagAliasSet)
+  server.get('/api/tagUI/getAliases/:tag', getTagAliasSet)
   server.delete('', deleteTag)
   server.delete('', deleteTagAlias)
   server.put('', editTag)

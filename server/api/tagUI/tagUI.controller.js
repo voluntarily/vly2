@@ -42,8 +42,27 @@ const getAllTagAliasSets = async (req, res) => {
   }
 }
 
+/**
+ * Get a tag and its aliases from the alias collection
+ * @param req
+ * @param res
+ * @returns void
+ */
 const getTagAliasSet = async (req, res) => {
+  try {
+    const { tag } = req.params
 
+    if (!(await AliasSet.exists({ tag: tag }))) {
+      return res.status(404).send({ error: 'Tag not found' })
+    }
+
+    const tagWithAliasSet = await AliasSet
+      .findOne({ tag })
+
+    res.json(tagWithAliasSet)
+  } catch (e) {
+    res.status(500).send({ error: e })
+  }
 }
 
 const deleteTag = async (req, res) => {
