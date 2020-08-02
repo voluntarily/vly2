@@ -44,6 +44,7 @@ const getAllTagAliasSets = async (req, res) => {
 
 /**
  * Get a tag and its aliases from the alias collection
+ * +++++++++++++++++
  * @param req
  * @param res
  * @returns void
@@ -119,7 +120,49 @@ const deleteTagAlias = async (req, res) => {
 }
 
 const editTag = async (req, res) => {
+  try {
+    var originalTag = req.params.originalTag
+    var newTag = req.params.newTag
+    
+    if (!(await AliasSet.exists({ tag: originalTag }))) {
+      return res.status(404).send({ error: 'Tag not found' })
+    }
 
+    // Update the tag in the aliases set of other tags
+    const tagToEditWithAliases = await AliasSet
+      .findOne({ tag: originalTag })
+     
+    const tagToEditAliases = tagToEditWithAliases.aliases
+    if (tagToEditAliases.length === 0) {
+      // tag has no aliases in the system
+    } else {
+      for (const tag of tagToEditAliases) {
+        const tagWithAliases = await AliasSet
+          .findOne({ tag })
+          
+          if (tagWithAliases===null){
+            return res.status(404).send({ error: 'An alias is not found as a tag' })
+          }
+          
+        const otherAliases = tagWithAliases.aliases // List of aliases of which the tag to edit is a part of
+
+        const index = otherAliases.indexOf(originalTag)  
+        if (index > -1) {
+          otherAliases[index] = newTag
+        }
+
+        // Update the tag in the alias collection
+        await AliasSet.updateOne({ tag: tagWithAliases.tag }, { aliases: otherAliases })
+      }
+    }
+
+    // Edit the tag in the alias collection
+    await AliasSet.updateOne({ _id: tagToEditWithAliases._id }, { tag: newTag })
+      .then(() => res.json({ success: true }))
+      .catch(err => res.status(404).json({ success: false }).send({ error: err }))
+  } catch (e) {
+    res.status(500).send({ error: e })
+  }
 }
 
 const editTagAlias = async (req, res) => {

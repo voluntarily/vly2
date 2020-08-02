@@ -18,7 +18,7 @@ module.exports = (server) => {
   server.get('/api/tagUI/getAliases/:tag', getTagAliasSet)
   server.delete('/api/tagUI/deleteTag/:tag', deleteTag)
   server.delete('', deleteTagAlias)
-  server.put('', editTag)
+  server.put('/api/tagUI/editTag/:originalTag/:newTag', editTag)
   server.put('', editTagAlias)
   server.post('', addTag)
   server.post('', addTagToAliasSets)
