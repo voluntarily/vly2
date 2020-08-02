@@ -93,6 +93,10 @@ const deleteTag = async (req, res) => {
         const tagWithAliases = await AliasSet
           .findOne({ tag })
 
+        if (tagWithAliases === null) {
+          return res.status(404).send({ error: 'An alias is not found as a tag' })
+        }
+
         const otherAliases = tagWithAliases.aliases // List of aliases of which the tag to delete is a part of
 
         const index = otherAliases.indexOf(tagToDelete)
@@ -123,7 +127,7 @@ const editTag = async (req, res) => {
   try {
     var originalTag = req.params.originalTag
     var newTag = req.params.newTag
-    
+
     if (!(await AliasSet.exists({ tag: originalTag }))) {
       return res.status(404).send({ error: 'Tag not found' })
     }
@@ -131,7 +135,7 @@ const editTag = async (req, res) => {
     // Update the tag in the aliases set of other tags
     const tagToEditWithAliases = await AliasSet
       .findOne({ tag: originalTag })
-     
+
     const tagToEditAliases = tagToEditWithAliases.aliases
     if (tagToEditAliases.length === 0) {
       // tag has no aliases in the system
@@ -139,14 +143,14 @@ const editTag = async (req, res) => {
       for (const tag of tagToEditAliases) {
         const tagWithAliases = await AliasSet
           .findOne({ tag })
-          
-          if (tagWithAliases===null){
-            return res.status(404).send({ error: 'An alias is not found as a tag' })
-          }
-          
+
+        if (tagWithAliases === null) {
+          return res.status(404).send({ error: 'An alias is not found as a tag' })
+        }
+
         const otherAliases = tagWithAliases.aliases // List of aliases of which the tag to edit is a part of
 
-        const index = otherAliases.indexOf(originalTag)  
+        const index = otherAliases.indexOf(originalTag)
         if (index > -1) {
           otherAliases[index] = newTag
         }
