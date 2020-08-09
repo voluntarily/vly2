@@ -1,5 +1,4 @@
 const AliasSet = require('./aliasSet')
-const { DefaultAliasSet } = require('./tagUI.constants')
 const { listTags } = require('./../tag/tag.controller')
 
 /**
@@ -9,7 +8,7 @@ const { listTags } = require('./../tag/tag.controller')
  * @returns void
  */
 const getAllTags = async (req, res) => {
-  //Redirect to tag.controller ListTags
+  // Redirect to tag.controller ListTags
   listTags(req, res)
 }
 
@@ -76,46 +75,43 @@ const deleteTag = async (req, res) => {
   try {
     var tagToDelete = req.params.tag
 
-    if (!(await AliasSet.exists({ tag: tagToDelete }))) {//tagToDelete))) {
+    if (!(await AliasSet.exists({ tag: tagToDelete }))) { // tagToDelete))) {
       return res.status(404).send({ error: 'Tag not found' })
     }
 
-    //Delete tag from the aliases set of other tags
+    // Delete tag from the aliases set of other tags
     const tagToDeleteWithAliases = await AliasSet
       .findOne({ tag: tagToDelete })
 
     const tagToDeleteAliases = tagToDeleteWithAliases.aliases
-    if (tagToDeleteAliases.length == 0) {
-      //tag has no aliases in the system
+    if (tagToDeleteAliases.length === 0) {
+      // tag has no aliases in the system
     } else {
       for (const tag of tagToDeleteAliases) {
         const tagWithAliases = await AliasSet
           .findOne({ tag })
 
-        const otherAliases = tagWithAliases.aliases //List of aliases of which the tag to delete is a part of
+        const otherAliases = tagWithAliases.aliases // List of aliases of which the tag to delete is a part of
 
-        const index = otherAliases.indexOf(tagToDelete);
+        const index = otherAliases.indexOf(tagToDelete)
         if (index > -1) {
-          otherAliases.splice(index, 1);
+          otherAliases.splice(index, 1)
         }
 
-        //Remove the tag from alias collection
+        // Remove the tag from alias collection
         await AliasSet.updateOne({ tag: tagWithAliases.tag }, { aliases: otherAliases })
       }
     }
 
-    //Delete tag from alias collection
-    const aliasSet = await AliasSet
+    // Delete tag from alias collection
+    await AliasSet
       .findOne({ tag: tagToDelete })
       .then(item => item.remove().then(() => res.json({ success: true })))
-      .catch(err => res.status(404).json({ success: false }))
-
+      .catch(() => res.status(404).json({ success: false }))
   } catch (e) {
     res.status(500).send({ error: e })
   }
-
 }
-
 
 const deleteTagAlias = async (req, res) => {
 
@@ -134,7 +130,7 @@ const addTag = async (req, res) => {
 }
 
 const addTagToAliasSets = async (req, res) => {
-  //New tag or existing tag?
+  // New tag or existing tag?
 }
 
 const searchForTag = async (req, res) => {
@@ -144,7 +140,6 @@ const searchForTag = async (req, res) => {
 const searchForTagAliasSet = async (req, res) => {
 
 }
-
 
 module.exports = {
   getAllTags,

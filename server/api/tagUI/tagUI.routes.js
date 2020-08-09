@@ -13,7 +13,7 @@ const {
 } = require('./tagUI.controller')
 
 module.exports = (server) => {
-  server.get('/api/tagUI/allTags', getAllTags) 
+  server.get('/api/tagUI/allTags', getAllTags)
   server.get('/api/tagUI/allAliases', getAllTagAliasSets)
   server.get('/api/tagUI/getAliases/:tag', getTagAliasSet)
   server.delete('/api/tagUI/deleteTag/:tag', deleteTag)
@@ -24,5 +24,5 @@ module.exports = (server) => {
   server.post('', addTagToAliasSets)
   server.get('', searchForTag)
   server.get('', searchForTagAliasSet)
-  //server.get('/api/statistics/activityTags/:orgId/:timeframe', getActivityTags)
+  // server.get('/api/statistics/activityTags/:orgId/:timeframe', getActivityTags)
 }
