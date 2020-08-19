@@ -370,7 +370,7 @@ const Hero = ({ isAuthenticated }) => (
         </HeroItem>
       </a>
 
-      <a href='/a/offer'>
+      <a href='https://blog.voluntarily.nz/contact-us'>
         <HeroItem>
 
           <HeroText>
