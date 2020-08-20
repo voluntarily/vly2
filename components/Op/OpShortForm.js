@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import OpFormDate from './OpFormDate'
-// import OpFormDescription from './OpFormDescription'
+import OpFormDescription from './OpFormDescription'
 import OpFormPublishBtns from './OpFormDoneBtns'
 import OpFormLocation from './OpFormLocation'
 import OpFormTitle from './OpFormTitle'
@@ -40,7 +40,7 @@ class OpShortForm extends Component {
           op.date = [] // Dirty work around to not change schema
           op.date.push(startDateValue, endDateValue)
           // op.name = values.name
-          // op.subtitle = values.subtitle
+          op.subtitle = values.subtitle
           // op.tags = values.tags
 
           const duration = moment.duration()
@@ -102,6 +102,8 @@ class OpShortForm extends Component {
         <OpFormTitle type={op.type} title={op.name} onBack={this.props.onCancel} />
         <Divider />
         <Form colon={false}>
+          <OpFormDescription getFieldDecorator={getFieldDecorator} type={op.type} />
+          <Divider />
           <OpFormLocation getFieldDecorator={getFieldDecorator} setFieldsValue={setFieldsValue} type={op.type} orgMembership={orgMembership} addressFinderKey={this.props.locations.addressFinderKey} />
           <Divider />
           <OpFormDate getFieldDecorator={getFieldDecorator} type={op.type} onChange={this.handleStartDateChange} />
@@ -176,7 +178,7 @@ export default Form.create({
 
     return {
       // name: Form.createFormField({ ...op.name, value: op.name }),
-      // subtitle: Form.createFormField({ value: op.subtitle }),
+      subtitle: Form.createFormField({ value: op.subtitle }),
       description: Form.createFormField({ value: op.description }),
       durationHours: Form.createFormField({ value: totalHours }),
       durationMinutes: Form.createFormField({ value: isoDuration.minutes() }),
