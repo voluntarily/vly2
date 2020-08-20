@@ -21,12 +21,6 @@ export function OpAboutPanel ({ op }) {
       <OpSectionGrid>
         <H3><FormattedMessage id='OpAboutPanel.section.title.about' defaultMessage='About' /></H3>
         <div>
-          {subtitle}
-          {description &&
-            <>
-              <Html>{description}</Html>
-              <Divider />
-            </>}
           {op.fromActivity &&
             <>
               <Html>
@@ -34,7 +28,13 @@ export function OpAboutPanel ({ op }) {
               </Html>
               <Divider />
             </>}
+          {description &&
+            <>
+              <Html>{description}</Html>
+              <Divider />
+            </>}
 
+          {subtitle}
           <TagContainer>
             <h5><FormattedMessage id='OpAboutPanel.categories' defaultMessage='Categories' /></h5>
             <TagDisplay tags={op.tags} />
