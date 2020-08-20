@@ -1,4 +1,5 @@
 const AliasSet = require('./aliasSet')
+// const { DefaultAliasSet } = require('./tagUI.constants')
 const { listTags } = require('./../tag/tag.controller')
 
 /**
@@ -213,7 +214,23 @@ const editTag = async (req, res) => {
 }
 
 const addTag = async (req, res) => {
+  try {
+    var newTag = req.params.tag
+    //Need to make sure that the user can add a new tag, activites controller has examples
+    //Need to also add the tag to the tag list (tag list is not very extensive atm)
 
+    if (await AliasSet.exists({ tag: newTag })) {
+      return res.status(404).send({ error: 'Tag is already in database' })
+    }
+
+    console.log(req.body)
+    const aliasSet = await AliasSet.create(req.body)
+    res.status(200).send(aliasSet)
+
+  } catch (e){
+    console.log(e)
+    res.status(500).send({ error: e })
+  }
 }
 
 const addTagToAliasSets = async (req, res) => {
