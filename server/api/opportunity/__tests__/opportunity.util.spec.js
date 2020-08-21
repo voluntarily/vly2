@@ -342,7 +342,7 @@ test.serial(
     await Opportunity.deleteMany()
     const opTags = getRandomTags(fixtures.tagCategories.technology.tags, 5)
     // Add a topic group tag
-    opTags.push('community')
+    opTags.push('school')
 
     await Opportunity.create({
       name: 'Technology opportunity',
@@ -364,6 +364,7 @@ test.serial(
     }
 
     const recommendedSkills = await getSkillsRecommendations(person)
+    console.log(recommendedSkills)
     t.deepEqual(recommendedSkills, [])
   }
 )
@@ -787,7 +788,7 @@ test.serial.failing(
 
     opTags.push('business')
     await Opportunity.create({
-      name: 'Op with one alias match and a topic group match',
+      name: 'Op with one alias match and topic group match',
       status: OpportunityStatus.ACTIVE,
       type: OpportunityType.OFFER,
       requestor: john._id,
@@ -833,7 +834,7 @@ test.serial(
     })
 
     await Opportunity.deleteMany()
-    const opTags = ['community']
+    const opTags = ['school']
     const tags = await getRandomTags(fixtures.tagCategories.business.tags, 5)
 
     await Opportunity.create({
@@ -886,6 +887,7 @@ test.serial(
     }
 
     const recommendedSkills = await getSkillsRecommendations(person)
+
     t.is(recommendedSkills.length, 4)
     t.is(
       recommendedSkills[0].name,
