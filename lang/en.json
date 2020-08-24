@@ -613,5 +613,11 @@
   "verificationlabel.vetted": "Police vet passed",
   "VerifyButton.label": "Verify Identity",
   "version": "Version",
-  "volunteer": "Volunteer"
+  "volunteer": "Volunteer",
+  "who.body.business": "Connect with experts to mentor and give free advice",
+  "who.body.communities": "White label the site to manage your volunteers safely",
+  "who.body.schools": "Connect your class or school with industry volunteers and experts",
+  "who.title.business": "Small businesses ",
+  "who.title.communities": "Communities",
+  "who.title.schools": "Schools"
 }

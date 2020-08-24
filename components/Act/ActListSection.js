@@ -6,7 +6,7 @@ import ActSearchInput from './ActSearchInput'
 import ActMenu from './ActMenu'
 import ActCard from './ActCard'
 import styled from 'styled-components'
-import { List } from 'antd'
+import { List, Card } from 'antd'
 import { useRouter } from 'next/router'
 
 const escapeRegex = require('../../server/util/regexUtil')
@@ -80,31 +80,42 @@ export const ActListSection = () => {
       <ActSearchInput value={search} onSearch={handleSearch} loading={activities.loading} />
       <SidebarGrid>
         <ActMenu acts={acts} onClick={handleMenu} />
-        <List
+        <div>
+          <List
           // grid={{ gutter: 16, column: 3 }}
-          grid={{
-            gutter: 16,
-            xs: 1,
-            sm: 2,
-            md: 2,
-            lg: 3,
-            xl: 3,
-            xxl: 3
-          }}
-          dataSource={acts}
-          loading={activities.loading}
-          pagination={{
-            defaultCurrent: 1,
-            defaultPageSize: 12,
-            hideOnSinglePage: true
+            grid={{
+              gutter: 16,
+              xs: 1,
+              sm: 2,
+              md: 2,
+              lg: 3,
+              xl: 3,
+              xxl: 3
+            }}
+            dataSource={acts}
+            loading={activities.loading}
+            pagination={{
+              defaultCurrent: 1,
+              defaultPageSize: 12,
+              hideOnSinglePage: true
             // size: 'small'
-          }}
-          renderItem={(act) => (
-            <List.Item>
-              <ActCard act={act} />
-            </List.Item>
-          )}
-        />,
+            }}
+            renderItem={(act) => (
+              <List.Item>
+                <ActCard act={act} />
+              </List.Item>
+            )}
+          />
+          <Card>Cant find what you want?
+            <a
+              target='_blank'
+              rel='noopener noreferrer'
+              href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/17'
+            >
+            Suggest an activity here
+            </a>
+          </Card>
+        </div>
       </SidebarGrid>
     </>
   )
