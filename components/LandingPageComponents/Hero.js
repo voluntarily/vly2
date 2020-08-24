@@ -3,6 +3,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { LearnMoreButton, SignUpButton } from '../../components/VTheme/Buttons'
+import { HeroItem, HeroText } from '../VTheme/VTheme'
 // import { Button } from 'antd'
 // const Search = Input.Search
 
@@ -27,122 +28,6 @@ max-width: 80rem;
   @media screen and (max-width: 768px) {
     margin-top: 3rem;
   }
-`
-
-// start left hand video side
-const HeroItem = styled.div`
-position: relative;
-padding: 1.5rem;
-    width: 100%;
-    background-color: black;
-    height:40vh;
-    min-height: 400px;
-    max-height: 450px;
-    overflow: hidden;
-    border-radius: 24px;
-    
- box-shadow:  20px 20px 60px #d9d9d9; 
-        img {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-
-    z-index: 0;
-    object-fit: cover;
-    object-position: center;
-    }
-  
-
-@media screen and (min-width: 1025px) {
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-:hover {
-  box-shadow: 1px 1px 12px 2px rgba(10,10,10,0.1);
-  transform: scale(1.04);
-  
-  h1 {
-    -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-    color: #FFD9FB;
-  }
-}
-}
-
-    @media screen and (max-width: 1024px) {
-  border-radius: 0;
-  height:50vh;
-  img {
-    height: 100%;
-
-    object-position: center top;
-  }
-  }
-  @media screen and (max-width: 768px) {
-height:50vh;
-  }
- 
-
-
-`
-
-// end left hand video side
-
-const HeroText = styled.section`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-    height: 100%;
-    align-items: flex-start;
-    justify-content: flex-end;
-z-index: 100;
-
-
-    h1 {
-font-weight: 600;
-font-size: 2rem;
-line-height: 1.5;
-letter-spacing: -0.2px;
-z-index: 100;
-
-color: white;
-}
-p {
-  min-height: 60px;
-  font-size: 1.25rem;
-  font-weight: 400;
-letter-spacing: 0;
-z-index: 100;
-margin-bottom: 0;
-
-color: white;
-}
-
-  @media screen and (min-width: 768px) and (max-width: 1025px) {
-    padding: 1.5rem;
-    h1 {
-    font-size:2.5rem;
-  }
-    p {
-      font-size: 1.5rem;
-  line-height: 1.5;
-  min-height: initial;
-
- }
-  }
-  @media screen and (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-    line-height: 1.5;
-    margin-bottom: 0;
-    
-  }
-  p {
-    font-size: 1.5rem;
-  }
-  }
-  
 `
 
 const CTAGrid = styled.section`
