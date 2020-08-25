@@ -6,6 +6,8 @@ const { ASK, OFFER } = OpportunityType
 const stringSimilarity = require('string-similarity')
 const natural = require('natural')
 const stopword = require('stopword')
+const AliasSet = require('../tagUI/aliasSet')
+
 const arrayIntersects = (arrA, arrB) =>
   arrA.filter((x) => arrB.includes(x)).length
 const MAX_RECOMMENDATIONS = 10
@@ -82,7 +84,17 @@ const getSkillsRecommendations = async (me) => {
   // Tags with special characters are not stemmed
   var format = new RegExp(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/)
 
+  // Find all aliases of the user's tags
+  var aliasesJSON = await AliasSet.find({ tag: { $in: splitTags } })
+  var aliases = []
+  aliasesJSON.forEach((aliasSet) => {
+    aliasSet.aliases.forEach((alias) => {
+      aliases.push(alias)
+    })
+  })
+
   // Stem the tags to contain the root of a word
+  splitTags = splitTags.concat(aliases)
   var stemmedTags = splitTags
     .filter((tag) => {
       if (format.test(tag)) {
@@ -98,7 +110,8 @@ const getSkillsRecommendations = async (me) => {
   // Turn stemmed words into a regular expression
   var regexTags = new RegExp(stemmedTags.join('|'), 'i')
   // Join arrays of tags and tag word roots for search
-  var tagsToSearch = tagsToMatch.concat(regexTags)
+  var tagsToSearch = tagsToMatch.concat(aliases, regexTags)
+
   const opsWithMatchingTags = await Opportunity.find({
     tags: { $in: tagsToSearch },
     type: { $in: types },
@@ -114,10 +127,15 @@ const getSkillsRecommendations = async (me) => {
       if (tagsToMatch.includes(tag)) {
         count++
       } else if (tagsToSearch.length !== 0) {
-        // Calculate similarity score that will be added to the score
-        const simScore = stringSimilarity.findBestMatch(tag, stemmedTags)
-          .bestMatch.rating
-        count = count + simScore
+        if (aliases.includes(tag)) {
+          // An alias match is half as valuable as a full match
+          count = count + 0.5
+        } else {
+          // Calculate similarity score that will be added to the score
+          const simScore = stringSimilarity.findBestMatch(tag, stemmedTags)
+            .bestMatch.rating
+          count = count + simScore
+        }
       }
     })
     opsWithCounts.push({ count, op })
