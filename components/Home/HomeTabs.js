@@ -59,12 +59,13 @@ export const HomeTabs = ({ person, onChange, defaultTab }) =>
   <VTabs defaultActiveKey={defaultTab} onChange={onChange}>
     <TabPane tab={homeDiscoverTab} key='discover' style={{ overflow: 'visible' }}>
       <ProfilePanel>
+        <PersonalGoalSection />
         <RecommendedOpsSection />
       </ProfilePanel>
     </TabPane>
     <TabPane tab={homeActiveTab} key='active' style={{ overflow: 'visible' }}>
       <ProfilePanel>
-        <PersonalGoalSection />
+
         <ActiveOpsSection />
         <InterestedOpsSection />
       </ProfilePanel>

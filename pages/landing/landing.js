@@ -1,7 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import Hero from '../../components/LandingPageComponents/Hero'
-import OfferSection from '../../components/LandingPageComponents/OfferSection'
+// import OfferSection from '../../components/LandingPageComponents/OfferSection'
 // import OpAdd from '../../components/Op/OpAdd'
 // import OpListSection from '../../components/Op/OpListSection'
 import { FullPage } from '../../components/VTheme/VTheme'
@@ -19,6 +19,7 @@ import TakeSupportSection from '../../components/LandingPageComponents/TakeSuppo
 // import HelpSocialSection from '../../components/LandingPageComponents/HelpSocialSection'
 // import HelpOrgsSection from '../../components/LandingPageComponents/HelpOrgsSection'
 import Sponsors from '../../components/LandingPageComponents/Sponsors'
+import WhoSection from '../../components/LandingPageComponents/WhoSection'
 export const Landing = ({ isAuthenticated }) => (
   <>
     <Helmet>
@@ -29,9 +30,12 @@ export const Landing = ({ isAuthenticated }) => (
       isAuthenticated={isAuthenticated}
     />
 
-    <FullPage style={{ marginTop: '0' }}>
-
+    <FullPage>
+      <Divider />
+      <WhoSection />
+      <Divider />
       <HowSection />
+
       <>
         <Sponsors />
         {/* <Testimonial /> */}
@@ -41,7 +45,7 @@ export const Landing = ({ isAuthenticated }) => (
         <Divider />
         <TakeSupportSection />
         <Divider />
-        <OfferSection />
+        {/* <OfferSection /> */}
         {/* <Divider />
         <CorporateSection />
         <Divider />

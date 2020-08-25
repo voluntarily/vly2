@@ -1,6 +1,8 @@
 import { Menu } from 'antd'
 import styled from 'styled-components'
 
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 /**
  *
  * @param {*} acts - array of activities with offerOrg
@@ -45,7 +47,7 @@ const ActivityMenu = styled(Menu)`
 
 const ActMenu = ({ acts, onClick }) => {
   const [counts, orgs] = countOfferOrgs(acts)
-
+  const router = useRouter()
   return (
     <ActivityMenu>
       <Menu
@@ -61,6 +63,13 @@ const ActMenu = ({ acts, onClick }) => {
               </Menu.Item>
             )
           })}
+
+          <Menu.Item key='back'>
+            <Link href={`/a/${router.query.type}`}>
+           See all
+            </Link>
+          </Menu.Item>
+
         </Menu.ItemGroup>
         {/* <Menu.ItemGroup className='color'>More filters</Menu.ItemGroup> */}
       </Menu>
