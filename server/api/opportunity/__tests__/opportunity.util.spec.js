@@ -340,7 +340,7 @@ test.serial(
     })
 
     await Opportunity.deleteMany()
-    const opTags = getRandomTags(fixtures.tagCategories.technology.tags, 5)
+    const opTags = getSomeTags(fixtures.tagCategories.technology.tags, 5)
     // Add a topic group tag
     opTags.push('community')
 
@@ -352,7 +352,7 @@ test.serial(
       tags: opTags
     })
 
-    const userTags = await getRandomTags(
+    const userTags = await getSomeTags(
       fixtures.tagCategories.business.tags,
       5
     )
@@ -364,7 +364,8 @@ test.serial(
     }
 
     const recommendedSkills = await getSkillsRecommendations(person)
-    t.deepEqual(recommendedSkills, [])
+    // console.log(recommendedSkills.length)
+    t.is(recommendedSkills.length, 0)
   }
 )
 
@@ -377,7 +378,7 @@ test.serial(
     })
 
     await Opportunity.deleteMany()
-    const opTags = getRandomTags(fixtures.tagCategories.technology.tags, 5)
+    const opTags = getSomeTags(fixtures.tagCategories.technology.tags, 5)
 
     // Add a topic group tag
     opTags.push('education')
@@ -438,7 +439,7 @@ test.serial(
     })
 
     await Opportunity.deleteMany()
-    const opTags = getRandomTags(fixtures.tagCategories.technology.tags, 5)
+    const opTags = getSomeTags(fixtures.tagCategories.technology.tags, 5)
 
     // Add a topic group tag
     opTags.push('education')
@@ -470,7 +471,7 @@ test.serial(
       tags: opTags
     })
 
-    const userTags = await getRandomTags(
+    const userTags = await getSomeTags(
       fixtures.tagCategories.business.tags,
       5
     )
@@ -834,7 +835,7 @@ test.serial(
 
     await Opportunity.deleteMany()
     const opTags = ['community']
-    const tags = await getRandomTags(fixtures.tagCategories.business.tags, 5)
+    const tags = await getSomeTags(fixtures.tagCategories.business.tags, 5)
 
     await Opportunity.create({
       name: 'Op with no tag match',
@@ -886,6 +887,7 @@ test.serial(
     }
 
     const recommendedSkills = await getSkillsRecommendations(person)
+    // console.log('rec skils', recommendedSkills)
     t.is(recommendedSkills.length, 4)
     t.is(
       recommendedSkills[0].name,
@@ -987,7 +989,12 @@ test.serial.failing(
  * @param {} tagArr array of tags
  * @param {*} numOfElements number of elements to be selected
  */
-function getRandomTags (tagArr, numOfElements) {
-  const shuffledArr = tagArr.sort(() => 0.5 - Math.random())
-  return shuffledArr.slice(0, numOfElements)
+// function getSomeTags (tagArr, numOfElements) {
+//   const shuffledArr = tagArr.sort(() => 0.5 - Math.random())
+//   return shuffledArr.slice(0, numOfElements)
+// }
+// Non random version
+function getSomeTags (tagArr, numOfElements) {
+  // const shuffledArr = tagArr.sort(() => 0.5 - Math.random())
+  return tagArr.slice(0, numOfElements)
 }

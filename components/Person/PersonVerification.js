@@ -38,7 +38,9 @@ export const PersonVerification = ({ levels }) =>
           </li>
       )}
     </VerificationList>
-    <a href='#'><FormattedMessage id='PersonVerification.learnmore' defaultMessage='Learn More' /></a>
+    {/* TODO: awaiting a support desk page explaining the levels
+      <a href='#'><FormattedMessage id='PersonVerification.learnmore' defaultMessage='Learn More' /></a>
+    */}
   </>
 
 const popoverTitle = <FormattedMessage id='PersonVerification.popover.title' defaultMessage='Verification Level' />

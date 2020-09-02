@@ -1,0 +1,18 @@
+Pages with Image upload
+
+Person profile PersonDetailForm
+after upload img is shown on left column
+because we have complex avatar sizes we use local state to force the field to update
+
+Activity
+after upload image is not updated but URL is in edit field.
+tie the img src to getFieldValue and it works.
+
+- after creating a new ACT if you don't set it up right you can't find it again on the activity listing
+
+OpFormImg - unused
+short form doesn't allow for changing image
+
+OrgDetailForm - doesn't show uploaded pic
+
+AboutYou.js - post sign up - correct.
