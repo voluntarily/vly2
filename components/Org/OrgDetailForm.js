@@ -363,6 +363,11 @@ class OrgDetailForm extends Component {
                   description='Title for about section of organisation edit form'
                 />
               </p>
+              <img
+                style={{ width: '50%', float: 'right' }}
+                src={this.props.form.getFieldValue('imgUrl')}
+                alt=''
+              />
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
@@ -396,9 +401,7 @@ class OrgDetailForm extends Component {
                 </Form.Item>
               </ShortInputContainer>
               <Form.Item label={orgImgUrl}>
-                {getFieldDecorator('imgUrl', {
-                  rules: []
-                })(<Input />)}
+                {getFieldDecorator('imgUrl')(<Input />)}
                 <ImageUpload setImgUrl={this.setImgUrl} />
               </Form.Item>
             </InputContainer>

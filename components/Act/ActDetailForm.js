@@ -615,16 +615,14 @@ class ActDetailForm extends Component {
               </p>
               <img
                 style={{ width: '50%', float: 'right' }}
-                src={this.props.act.imgUrl}
+                src={this.props.form.getFieldValue(ActivityFields.IMG_URL)}
                 alt=''
               />
             </DescriptionContainer>
             <InputContainer>
               <MediumInputContainer>
                 <Form.Item label={actImgUrl}>
-                  {getFieldDecorator(ActivityFields.IMG_URL, {
-                    rules: []
-                  })(<Input />)}
+                  {getFieldDecorator(ActivityFields.IMG_URL)(<Input />)}
                   <ImageUpload setImgUrl={this.setImgUrl} />
                 </Form.Item>
                 {/* // TODO: [VP-304] add suggest photo button to ActDetailForm */}
