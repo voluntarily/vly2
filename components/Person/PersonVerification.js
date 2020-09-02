@@ -38,8 +38,8 @@ export const PersonVerification = ({ levels }) =>
           </li>
       )}
     </VerificationList>
-    {/* TODO: awaiting a support desk page explaining the levels 
-      <a href='#'><FormattedMessage id='PersonVerification.learnmore' defaultMessage='Learn More' /></a> 
+    {/* TODO: awaiting a support desk page explaining the levels
+      <a href='#'><FormattedMessage id='PersonVerification.learnmore' defaultMessage='Learn More' /></a>
     */}
   </>
 
