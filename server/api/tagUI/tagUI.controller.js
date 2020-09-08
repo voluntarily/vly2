@@ -223,7 +223,6 @@ const addTag = async (req, res) => {
       return res.status(404).send({ error: 'Tag is already in database' })
     }
 
-    console.log(req.body)
     const aliasSet = await AliasSet.create(req.body)
     res.status(200).send(aliasSet)
   } catch (e) {
@@ -232,8 +231,47 @@ const addTag = async (req, res) => {
   }
 }
 
-const addTagToAliasSets = async (req, res) => {
+const addAliasToTag = async (req, res) => {
   // New tag or existing tag?
+  // The alias relationships are bidirectional, so if tag A is added to the alias list of tag B,
+  // then we must also add tag B from the alias list of tag A
+  try {
+    var tag = [req.params.tagA, req.params.tagB]
+    var aliastoAdd = [req.params.tagB, req.params.tagA]
+
+    var i
+    for (i = 0; i < tag.length; i++) {
+      if (!(await AliasSet.exists({ tag: tag[i] }))) {
+        return res.status(404).send({ error: 'Tag not found' })
+      }
+
+      const tagWithAliases = await AliasSet
+        .findOne({ tag: tag[i] })
+
+      const aliases = tagWithAliases.aliases // List of aliases of which the new alias will be added to
+
+      const index = aliases.indexOf(aliastoAdd[i])
+      if (index > -1) {
+        return res.status(404).send({ error: 'Alias is already added to tag' })
+      }
+
+      if (!(await AliasSet.exists({ tag: aliastoAdd[i] }))) {
+        // Alias is new to collection
+        await AliasSet.create({
+          tag: aliastoAdd[i],
+          aliases: []
+        })
+      }
+      // Add the alias to alias collection
+      aliases.push(aliastoAdd[i])
+
+      await AliasSet.updateOne({ tag: tag[i] }, { aliases: aliases })
+        .then(() => res.json({ success: true }))
+        .catch(err => res.status(404).json({ success: false }).send({ error: err }))
+    }
+  } catch (e) {
+    res.status(500).send({ error: e })
+  }
 }
 
 const searchForTag = async (req, res) => {
@@ -252,7 +290,7 @@ module.exports = {
   deleteTagAlias,
   editTag,
   addTag,
-  addTagToAliasSets,
+  addAliasToTag,
   searchForTag,
   searchForTagAliasSet
 }

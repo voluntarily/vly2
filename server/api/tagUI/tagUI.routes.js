@@ -6,7 +6,7 @@ const {
   deleteTagAlias,
   editTag,
   addTag,
-  addTagToAliasSets,
+  addAliasToTag,
   searchForTag,
   searchForTagAliasSet
 } = require('./tagUI.controller')
@@ -19,7 +19,7 @@ module.exports = (server) => {
   server.delete('/api/tagUI/deleteAlias/:tagA/:tagB', deleteTagAlias)
   server.put('/api/tagUI/editTag/:originalTag/:newTag', editTag)
   server.post('/api/tagUI/addTag/:tag', addTag)
-  server.post('', addTagToAliasSets)
+  server.post('/api/tagUI/addAlias/:tagA/:tagB', addAliasToTag)
   server.get('', searchForTag)
   server.get('', searchForTagAliasSet)
 }
