@@ -223,7 +223,10 @@ const addTag = async (req, res) => {
       return res.status(404).send({ error: 'Tag is already in database' })
     }
 
-    const aliasSet = await AliasSet.create(req.body)
+    const aliasSet = await AliasSet.create({
+      tag: newTag,
+      aliases: []
+    })
     res.status(200).send(aliasSet)
   } catch (e) {
     console.log(e)
