@@ -105,7 +105,7 @@ const deleteTag = async (req, res) => {
   if (!adminRole) {
     return res.status(403).send({ error: 'User does not have permission to perform this action' })
   }
-  
+
   try {
     var tagToDelete = req.params.tag
 
@@ -167,7 +167,7 @@ const deleteTagAlias = async (req, res) => {
   if (!adminRole) {
     return res.status(403).send({ error: 'User does not have permission to perform this action' })
   }
-  
+
   try {
     var tag = [req.params.tagA, req.params.tagB]
     var aliastoDelete = [req.params.tagB, req.params.tagA]
@@ -215,7 +215,7 @@ const editTag = async (req, res) => {
   if (!adminRole) {
     return res.status(403).send({ error: 'User does not have permission to perform this action' })
   }
-  
+
   try {
     var originalTag = req.params.originalTag
     var newTag = req.params.newTag
@@ -269,7 +269,7 @@ const addTag = async (req, res) => {
   if (!adminRole) {
     return res.status(403).send({ error: 'User does not have permission to perform this action' })
   }
-  
+
   try {
     var newTag = req.params.tag
     // Need to make sure that the user can add a new tag, activites controller has examples
@@ -301,7 +301,7 @@ const addAliasToTag = async (req, res) => {
   if (!adminRole) {
     return res.status(403).send({ error: 'User does not have permission to perform this action' })
   }
-  
+
   try {
     var tag = [req.params.tagA, req.params.tagB]
     var aliastoAdd = [req.params.tagB, req.params.tagA]
