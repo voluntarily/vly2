@@ -339,7 +339,7 @@ test.serial(
     })
 
     await Opportunity.deleteMany()
-    const opTags = getRandomTags(fixtures.tagCategories.technology.tags, 5)
+    const opTags = getSomeTags(fixtures.tagCategories.technology.tags, 5)
 
     // Add a topic group tag
     opTags.push('education')
@@ -400,7 +400,7 @@ test.serial(
     })
 
     await Opportunity.deleteMany()
-    const opTags = getRandomTags(fixtures.tagCategories.technology.tags, 5)
+    const opTags = getSomeTags(fixtures.tagCategories.technology.tags, 5)
 
     // Add a topic group tag
     opTags.push('education')
@@ -432,7 +432,7 @@ test.serial(
       tags: opTags
     })
 
-    const userTags = await getRandomTags(
+    const userTags = await getSomeTags(
       fixtures.tagCategories.business.tags,
       5
     )
@@ -848,7 +848,6 @@ test.serial(
     }
 
     const recommendedSkills = await getSkillsRecommendations(person)
-
     t.is(
       recommendedSkills[0].name,
       'Op with two full matches and a topic group match'
@@ -947,7 +946,12 @@ test.serial(
  * @param {} tagArr array of tags
  * @param {*} numOfElements number of elements to be selected
  */
-function getRandomTags (tagArr, numOfElements) {
-  const shuffledArr = tagArr.sort(() => 0.5 - Math.random())
-  return shuffledArr.slice(0, numOfElements)
+// function getSomeTags (tagArr, numOfElements) {
+//   const shuffledArr = tagArr.sort(() => 0.5 - Math.random())
+//   return shuffledArr.slice(0, numOfElements)
+// }
+// Non random version
+function getSomeTags (tagArr, numOfElements) {
+  // const shuffledArr = tagArr.sort(() => 0.5 - Math.random())
+  return tagArr.slice(0, numOfElements)
 }

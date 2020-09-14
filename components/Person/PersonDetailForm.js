@@ -33,6 +33,9 @@ function hasErrors (fieldsError) {
 class PersonDetail extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      imgUrl: null
+    }
     this.setImgUrl = this.setImgUrl.bind(this)
     // To save various fields of address
     this.address = {
@@ -48,6 +51,7 @@ class PersonDetail extends Component {
   componentDidMount () {
     // To disabled submit button at the beginning.
     this.props.form.validateFields()
+    this.setState({ imgUrl: this.props.person.imgUrl })
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -79,6 +83,8 @@ class PersonDetail extends Component {
 
   setImgUrl = (imgUrl, sizeVariants) => {
     this.avatar = sizeVariants
+    this.props.person.imgUrl = imgUrl
+    this.setState({ imgUrl: imgUrl })
   }
 
   handleSubmit = e => {
@@ -148,11 +154,17 @@ class PersonDetail extends Component {
       />
     )
     const personEmail = (
-      <FormattedMessage
-        id='personEmail'
-        defaultMessage='Email'
-        description='person email label in personDetails Form'
-      />
+      <span>
+        <FormattedMessage
+          id='personEmail'
+          defaultMessage='Email'
+          description='person email label in personDetails Form'
+        />
+        &nbsp;
+        <Tooltip title="As we use your email as your unique id you can't change it here. Use the Support menu to ask for an email change.">
+          <Icon type='question-circle-o' />
+        </Tooltip>
+      </span>
     )
     const personPhone = (
       <FormattedMessage
@@ -169,7 +181,7 @@ class PersonDetail extends Component {
           description='person physical/postal address label in personDetails Form'
         />
         &nbsp;
-        <Tooltip title='Let us verify your identity if you are a volunteer or you need to get deliveries'>
+        <Tooltip title='Required for volunteers to help verify your identity. Optional for askers but required if you want to get home deliveries'>
           <Icon type='question-circle-o' />
         </Tooltip>
       </span>
@@ -304,6 +316,7 @@ class PersonDetail extends Component {
     ]
     // Only show error after a field is touched.
     const nameError = isFieldTouched('name') && getFieldError('name')
+    const nicknameError = isFieldTouched('nickname') && getFieldError('nickname')
     const tagsError = isFieldTouched('tags') && getFieldError('tags')
     const addressError = isFieldTouched('address') && getFieldError('address')
     const isTest = process.env.NODE_ENV === 'test'
@@ -311,7 +324,7 @@ class PersonDetail extends Component {
 
     return (
       <div className='PersonDetailForm'>
-        <Form onSubmit={this.handleSubmit} hideRequiredMark colon={false}>
+        <Form onSubmit={this.handleSubmit} colon={false}>
           <FormGrid> {/* // Your Name */}
             <DescriptionContainer>
               <TitleContainer>
@@ -331,7 +344,11 @@ class PersonDetail extends Component {
             </DescriptionContainer>
             <InputContainer>
               <ShortInputContainer>
-                <Form.Item label={personnickname}>
+                <Form.Item
+                  label={personnickname}
+                  validateStatus={nicknameError ? 'error' : ''}
+                  help={nicknameError || ''}
+                >
                   {getFieldDecorator('nickname', {
                     rules: []
                   })(<Input placeholder='e.g Dali' />)}
@@ -365,9 +382,9 @@ class PersonDetail extends Component {
                 id='PersonDetailForm.SectionDescription.Avatar'
                 defaultMessage='Upload a photo to help people to recognise you and reflect your character.'
               />
-              {this.props.person.imgUrlSm &&
+              {this.state.imgUrl &&
                 <p>
-                  <Avatar size={128} src={this.props.person.imgUrl} />
+                  <Avatar size={128} src={this.state.imgUrl} />
                 </p>}
             </DescriptionContainer>
             <InputContainer>
@@ -397,16 +414,12 @@ class PersonDetail extends Component {
             <InputContainer>
               <ShortInputContainer>
                 <Form.Item label={personEmail}>
-                  {getFieldDecorator('email', {
-                    rules: []
-                  })(<Input placeholder='salvador@dali.com' readOnly />)}
+                  {getFieldDecorator('email')(<Input placeholder='salvador@dali.com' readOnly />)}
                 </Form.Item>
               </ShortInputContainer>
               <ShortInputContainer>
                 <Form.Item label={personPhone}>
-                  {getFieldDecorator('phone', {
-                    rules: []
-                  })(<Input placeholder='000 000 0000' />)}
+                  {getFieldDecorator('phone')(<Input placeholder='000 000 0000' />)}
                 </Form.Item>
               </ShortInputContainer>
               {/* make address required for volunteer for validation purpose and optional for asker */}
@@ -419,7 +432,7 @@ class PersonDetail extends Component {
                       help={addressError || ''}
                     >
                       {getFieldDecorator('address', {
-                        rules: [{ required: true, message: 'Address is required' }]
+                        rules: [{ required: true, message: 'Address is required for volunteers' }]
                       })(<Input placeholder='Physical Address' allowClear />)}
                     </Form.Item>
                   </ShortInputContainer>
