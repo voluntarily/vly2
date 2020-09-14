@@ -1,5 +1,5 @@
 const AliasSet = require('./aliasSet')
-// const { DefaultAliasSet } = require('./tagUI.constants')
+const { Role } = require('../../services/authorize/role')
 const { listTags } = require('./../tag/tag.controller')
 
 /**
@@ -10,6 +10,14 @@ const { listTags } = require('./../tag/tag.controller')
  */
 const getAllTags = async (req, res) => {
   // Redirect to tag.controller ListTags
+  const personRoles = req.session.me.role
+
+  const adminRole = personRoles.includes(Role.ADMIN)
+
+  if (!adminRole) {
+    return res.status(403).send({ error: 'User does not have permission to perform this action' })
+  }
+
   listTags(req, res)
 }
 
@@ -20,6 +28,14 @@ const getAllTags = async (req, res) => {
  * @returns void
  */
 const getAllTagAliasSets = async (req, res) => {
+  const personRoles = req.session.me.role
+
+  const adminRole = personRoles.includes(Role.ADMIN)
+
+  if (!adminRole) {
+    return res.status(403).send({ error: 'User does not have permission to perform this action' })
+  }
+
   let query = {}
   let sort = 'tag'
   let select = null
@@ -50,6 +66,14 @@ const getAllTagAliasSets = async (req, res) => {
  * @returns void
  */
 const getTagAliasSet = async (req, res) => {
+  const personRoles = req.session.me.role
+
+  const adminRole = personRoles.includes(Role.ADMIN)
+
+  if (!adminRole) {
+    return res.status(403).send({ error: 'User does not have permission to perform this action' })
+  }
+
   try {
     const { tag } = req.params
 
@@ -74,6 +98,14 @@ const getTagAliasSet = async (req, res) => {
  * Future TODO: Delete tag from tag list
  */
 const deleteTag = async (req, res) => {
+  const personRoles = req.session.me.role
+
+  const adminRole = personRoles.includes(Role.ADMIN)
+
+  if (!adminRole) {
+    return res.status(403).send({ error: 'User does not have permission to perform this action' })
+  }
+
   try {
     var tagToDelete = req.params.tag
 
@@ -128,6 +160,14 @@ const deleteTag = async (req, res) => {
 const deleteTagAlias = async (req, res) => {
   // The alias relationships are bidirectional, so if tag A is removed from the alias list of tag B,
   // then we must also remove tag B from the alias list of tag A
+  const personRoles = req.session.me.role
+
+  const adminRole = personRoles.includes(Role.ADMIN)
+
+  if (!adminRole) {
+    return res.status(403).send({ error: 'User does not have permission to perform this action' })
+  }
+
   try {
     var tag = [req.params.tagA, req.params.tagB]
     var aliastoDelete = [req.params.tagB, req.params.tagA]
@@ -168,6 +208,14 @@ const deleteTagAlias = async (req, res) => {
  * Future TODO: Edit tag from tag list
  */
 const editTag = async (req, res) => {
+  const personRoles = req.session.me.role
+
+  const adminRole = personRoles.includes(Role.ADMIN)
+
+  if (!adminRole) {
+    return res.status(403).send({ error: 'User does not have permission to perform this action' })
+  }
+
   try {
     var originalTag = req.params.originalTag
     var newTag = req.params.newTag
@@ -214,6 +262,14 @@ const editTag = async (req, res) => {
 }
 
 const addTag = async (req, res) => {
+  const personRoles = req.session.me.role
+
+  const adminRole = personRoles.includes(Role.ADMIN)
+
+  if (!adminRole) {
+    return res.status(403).send({ error: 'User does not have permission to perform this action' })
+  }
+
   try {
     var newTag = req.params.tag
     // Need to make sure that the user can add a new tag, activites controller has examples
@@ -223,8 +279,10 @@ const addTag = async (req, res) => {
       return res.status(404).send({ error: 'Tag is already in database' })
     }
 
-    console.log(req.body)
-    const aliasSet = await AliasSet.create(req.body)
+    const aliasSet = await AliasSet.create({
+      tag: newTag,
+      aliases: []
+    })
     res.status(200).send(aliasSet)
   } catch (e) {
     console.log(e)
@@ -232,8 +290,55 @@ const addTag = async (req, res) => {
   }
 }
 
-const addTagToAliasSets = async (req, res) => {
+const addAliasToTag = async (req, res) => {
   // New tag or existing tag?
+  // The alias relationships are bidirectional, so if tag A is added to the alias list of tag B,
+  // then we must also add tag B from the alias list of tag A
+  const personRoles = req.session.me.role
+
+  const adminRole = personRoles.includes(Role.ADMIN)
+
+  if (!adminRole) {
+    return res.status(403).send({ error: 'User does not have permission to perform this action' })
+  }
+
+  try {
+    var tag = [req.params.tagA, req.params.tagB]
+    var aliastoAdd = [req.params.tagB, req.params.tagA]
+
+    var i
+    for (i = 0; i < tag.length; i++) {
+      if (!(await AliasSet.exists({ tag: tag[i] }))) {
+        return res.status(404).send({ error: 'Tag not found' })
+      }
+
+      const tagWithAliases = await AliasSet
+        .findOne({ tag: tag[i] })
+
+      const aliases = tagWithAliases.aliases // List of aliases of which the new alias will be added to
+
+      const index = aliases.indexOf(aliastoAdd[i])
+      if (index > -1) {
+        return res.status(404).send({ error: 'Alias is already added to tag' })
+      }
+
+      if (!(await AliasSet.exists({ tag: aliastoAdd[i] }))) {
+        // Alias is new to collection
+        await AliasSet.create({
+          tag: aliastoAdd[i],
+          aliases: []
+        })
+      }
+      // Add the alias to alias collection
+      aliases.push(aliastoAdd[i])
+
+      await AliasSet.updateOne({ tag: tag[i] }, { aliases: aliases })
+        .then(() => res.json({ success: true }))
+        .catch(err => res.status(404).json({ success: false }).send({ error: err }))
+    }
+  } catch (e) {
+    res.status(500).send({ error: e })
+  }
 }
 
 const searchForTag = async (req, res) => {
@@ -252,7 +357,7 @@ module.exports = {
   deleteTagAlias,
   editTag,
   addTag,
-  addTagToAliasSets,
+  addAliasToTag,
   searchForTag,
   searchForTagAliasSet
 }
