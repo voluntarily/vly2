@@ -796,7 +796,7 @@ test.serial(
 
     await Opportunity.deleteMany()
     const opTags = ['school']
-    const tags = await getRandomTags(fixtures.tagCategories.business.tags, 5)
+    const tags = await getSomeTags(fixtures.tagCategories.business.tags, 5)
 
     await Opportunity.create({
       name: 'Op with no tag match',
