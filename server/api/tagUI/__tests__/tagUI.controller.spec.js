@@ -5,7 +5,7 @@ import request from 'supertest'
 import sinon from 'sinon'
 import AliasSet from '../aliasSet'
 import { aliases } from './tagUI.fixture'
-import { jwtData as jwtAdmin, jwtData } from '../../../../server/middleware/session/__tests__/setSession.fixture'
+import { jwtData as jwtAdmin } from '../../../../server/middleware/session/__tests__/setSession.fixture'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -28,14 +28,6 @@ test.failing('Return an empty array when there are no aliases in the DB', async 
   const res = await request(server).get('/api/tagUI/allAliases').expect(200).expect('Content-Type', /json/)
 
   t.deepEqual(res.body.length, 0, 'json should receive empty array')
-})
-
-test.failing('Test volunteer listing feedback should return only his feedback', async t => {
-  const res = await request(server).get('/api/feedback').set('Cookie', [`idToken=${jwtVolunteer.idToken}`])
-
-  t.is(res.status, 200)
-  t.true(Array.isArray(res.body))
-  res.body.forEach(f => t.is(f.respondent, people[1]._id.toString())) // all returned entries are for himself
 })
 
 test.failing('Return the alias sets that exist in the DB', async (t) => {
@@ -66,7 +58,7 @@ test.failing('Getting aliases for a non-existing tag returns 404', async (t) => 
 test.failing('Deleting a tag', async (t) => {
   await AliasSet.create(aliases)
   await request(server).get('/api/tagUI/getAliases/programming').expect(200).expect('Content-Type', /json/)
-  await request(server).delete('/api/tagUI/deleteTag/programming').set('Cookie', [`idToken=${jwtData.idToken}`]).expect(200)
+  await request(server).delete('/api/tagUI/deleteTag/programming').set('Cookie', [`idToken=${jwtAdmin.idToken}`]).expect(200)
 
   // The deleted tag does not exist in the alias collection
   await request(server).get('/api/tagUI/getAliases/programming').expect(404)
