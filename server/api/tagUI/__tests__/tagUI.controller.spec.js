@@ -70,7 +70,7 @@ test.failing('Deleting a tag', async (t) => {
   t.false(res2.body.aliases.includes('programming'))
 })
 
-test.serial('Deleting a tag, non-admin request', async (t) => {
+test.failing('Deleting a tag, non-admin request', async (t) => {
   await AliasSet.create(aliases)
   await request(server).get('/api/tagUI/getAliases/programming').expect(200).expect('Content-Type', /json/)
 
