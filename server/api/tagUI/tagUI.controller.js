@@ -341,14 +341,6 @@ const addAliasToTag = async (req, res) => {
   }
 }
 
-const searchForTag = async (req, res) => {
-
-}
-
-const searchForTagAliasSet = async (req, res) => {
-
-}
-
 module.exports = {
   getAllTags,
   getAllTagAliasSets,
@@ -357,7 +349,5 @@ module.exports = {
   deleteTagAlias,
   editTag,
   addTag,
-  addAliasToTag,
-  searchForTag,
-  searchForTagAliasSet
+  addAliasToTag
 }
