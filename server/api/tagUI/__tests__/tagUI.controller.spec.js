@@ -5,10 +5,12 @@ import request from 'supertest'
 import sinon from 'sinon'
 import AliasSet from '../aliasSet'
 import { aliases } from './tagUI.fixture'
+import { jwtData as jwtAdmin} from '../../../../server/middleware/session/__tests__/setSession.fixture'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
+  await Person.create(people)
 
   t.context.sandbox = sinon.createSandbox()
   await appReady
@@ -20,7 +22,6 @@ test.afterEach.always(async (t) => {
 
 test.after.always(async (t) => {
   await t.context.memMongo.stop()
-  t.context.sandbox.restore()
 })
 
 test.serial('Return an empty array when there are no aliases in the DB', async (t) => {
@@ -58,7 +59,7 @@ test.serial('Deleting a tag', async (t) => {
   await AliasSet.create(aliases)
   await request(server).get('/api/tagUI/getAliases/programming').expect(200).expect('Content-Type', /json/)
 
-  await request(server).delete('/api/tagUI/deleteTag/programming').expect(200)
+  await request(server).delete('/api/tagUI/deleteTag/programming').set('Cookie', [`idToken=${jwtAdmin.idToken}`]).expect(200)
 
   // The deleted tag does not exist in the alias collection
   await request(server).get('/api/tagUI/getAliases/programming').expect(404)
@@ -68,4 +69,17 @@ test.serial('Deleting a tag', async (t) => {
   t.false(res1.body.aliases.includes('programming'))
   const res2 = await request(server).get('/api/tagUI/getAliases/development')
   t.false(res2.body.aliases.includes('programming'))
+})
+
+test.serial('Deleting a tag, non-admin request', async (t) => {
+  await AliasSet.create(aliases)
+  await request(server).get('/api/tagUI/getAliases/programming').expect(200).expect('Content-Type', /json/)
+
+  await request(server).delete('/api/tagUI/deleteTag/programming').expect(403)
+
+  // The tag requested for deletion is NOT removed from aliases of other tags
+  const res1 = await request(server).get('/api/tagUI/getAliases/coding')
+  t.true(res1.body.aliases.includes('programming'))
+  const res2 = await request(server).get('/api/tagUI/getAliases/development')
+  t.true(res2.body.aliases.includes('programming'))
 })
