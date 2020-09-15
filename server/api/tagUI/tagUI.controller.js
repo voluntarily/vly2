@@ -10,14 +10,6 @@ const { listTags } = require('./../tag/tag.controller')
  */
 const getAllTags = async (req, res) => {
   // Redirect to tag.controller ListTags
-  const personRoles = req.session.me.role
-
-  const adminRole = personRoles.includes(Role.ADMIN)
-
-  if (!adminRole) {
-    return res.status(403).send({ error: 'User does not have permission to perform this action' })
-  }
-
   listTags(req, res)
 }
 
@@ -28,14 +20,6 @@ const getAllTags = async (req, res) => {
  * @returns void
  */
 const getAllTagAliasSets = async (req, res) => {
-  const personRoles = req.session.me.role
-
-  const adminRole = personRoles.includes(Role.ADMIN)
-
-  if (!adminRole) {
-    return res.status(403).send({ error: 'User does not have permission to perform this action' })
-  }
-
   let query = {}
   let sort = 'tag'
   let select = null
@@ -66,14 +50,6 @@ const getAllTagAliasSets = async (req, res) => {
  * @returns void
  */
 const getTagAliasSet = async (req, res) => {
-  const personRoles = req.session.me.role
-
-  const adminRole = personRoles.includes(Role.ADMIN)
-
-  if (!adminRole) {
-    return res.status(403).send({ error: 'User does not have permission to perform this action' })
-  }
-
   try {
     const { tag } = req.params
 
