@@ -5,12 +5,11 @@ import request from 'supertest'
 import sinon from 'sinon'
 import AliasSet from '../aliasSet'
 import { aliases } from './tagUI.fixture'
-import { jwtData as jwtAdmin} from '../../../../server/middleware/session/__tests__/setSession.fixture'
+import { jwtData as jwtAdmin } from '../../../../server/middleware/session/__tests__/setSession.fixture'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
   await t.context.memMongo.start()
-  await Person.create(people)
 
   t.context.sandbox = sinon.createSandbox()
   await appReady
