@@ -1,17 +1,10 @@
 const AliasSet = require('./aliasSet')
 const { Role } = require('../../services/authorize/role')
-const { listTags } = require('./../tag/tag.controller')
 
-/**
- * Get all tags in the default tag collection ###### Change to get all tags from the alias list?
- * @param req
- * @param res
- * @returns void
- */
-const getAllTags = async (req, res) => {
-  // Redirect to tag.controller ListTags
-  listTags(req, res)
-}
+//These API calls allow users to add, get, edit and delete tags to/from the "alias2" collection in the
+//vly2 database. There are also calls to add, get, edit and delete tags in the alias list of another tag.
+//The API doesn't currently make changes to the "tag" collection in the vly2 database.
+//TODO: Sync tags in "alias2" collection with those in "tag" collection (possibly combine collections?)
 
 /**
  * Get all tags and their aliases in the alias collection
@@ -44,7 +37,6 @@ const getAllTagAliasSets = async (req, res) => {
 
 /**
  * Get a tag and its aliases from the alias collection
- * +++++++++++++++++
  * @param req
  * @param res
  * @returns void
@@ -71,7 +63,6 @@ const getTagAliasSet = async (req, res) => {
  * @param req
  * @param res
  * @returns void
- * Future TODO: Delete tag from tag list
  */
 const deleteTag = async (req, res) => {
   const personRoles = req.session.me.role
@@ -181,7 +172,6 @@ const deleteTagAlias = async (req, res) => {
  * @param req
  * @param res
  * @returns void
- * Future TODO: Edit tag from tag list
  */
 const editTag = async (req, res) => {
   const personRoles = req.session.me.role
@@ -248,9 +238,6 @@ const addTag = async (req, res) => {
 
   try {
     var newTag = req.params.tag
-    // Need to make sure that the user can add a new tag, activites controller has examples
-    // Need to also add the tag to the tag list (tag list is not very extensive atm)
-
     if (await AliasSet.exists({ tag: newTag })) {
       return res.status(404).send({ error: 'Tag is already in database' })
     }
@@ -267,7 +254,7 @@ const addTag = async (req, res) => {
 }
 
 const addAliasToTag = async (req, res) => {
-  // New tag or existing tag?
+  // An alias can ber a new tag to the collection or be an existing tag
   // The alias relationships are bidirectional, so if tag A is added to the alias list of tag B,
   // then we must also add tag B from the alias list of tag A
   const personRoles = req.session.me.role
@@ -318,7 +305,6 @@ const addAliasToTag = async (req, res) => {
 }
 
 module.exports = {
-  getAllTags,
   getAllTagAliasSets,
   getTagAliasSet,
   deleteTag,

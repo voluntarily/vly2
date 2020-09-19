@@ -1,5 +1,4 @@
 const {
-  getAllTags,
   getAllTagAliasSets,
   getTagAliasSet,
   deleteTag,
@@ -10,7 +9,6 @@ const {
 } = require('./tagUI.controller')
 
 module.exports = (server) => {
-  server.get('/api/tagUI/allTags', getAllTags)
   server.get('/api/tagUI/allAliases', getAllTagAliasSets)
   server.get('/api/tagUI/getAliases/:tag', getTagAliasSet)
   server.delete('/api/tagUI/deleteTag/:tag', deleteTag)
