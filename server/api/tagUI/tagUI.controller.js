@@ -1,10 +1,10 @@
 const AliasSet = require('./aliasSet')
 const { Role } = require('../../services/authorize/role')
 
-//These API calls allow users to add, get, edit and delete tags to/from the "alias2" collection in the
-//vly2 database. There are also calls to add, get, edit and delete tags in the alias list of another tag.
-//The API doesn't currently make changes to the "tag" collection in the vly2 database.
-//TODO: Sync tags in "alias2" collection with those in "tag" collection (possibly combine collections?)
+// These API calls allow users to add, get, edit and delete tags to/from the "alias2" collection in the
+// vly2 database. There are also calls to add, get, edit and delete tags in the alias list of another tag.
+// The API doesn't currently make changes to the "tag" collection in the vly2 database.
+// TODO: Sync tags in "alias2" collection with those in "tag" collection (possibly combine collections?)
 
 /**
  * Get all tags and their aliases in the alias collection
