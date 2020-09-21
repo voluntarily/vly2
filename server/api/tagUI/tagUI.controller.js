@@ -159,9 +159,8 @@ const deleteTagAlias = async (req, res) => {
 
       // Remove the tag from alias collection
       await AliasSet.updateOne({ tag: tag[i] }, { aliases: aliases })
-        .then(() => res.json({ success: true }))
-        .catch(err => res.status(404).json({ success: false }).send({ error: err }))
     }
+    return res.json({ success: true })
   } catch (e) {
     res.status(500).send({ error: e })
   }
@@ -296,9 +295,8 @@ const addAliasToTag = async (req, res) => {
       aliases.push(aliastoAdd[i])
 
       await AliasSet.updateOne({ tag: tag[i] }, { aliases: aliases })
-        .then(() => res.json({ success: true }))
-        .catch(err => res.status(404).json({ success: false }).send({ error: err }))
     }
+    return res.json({ success: true })
   } catch (e) {
     res.status(500).send({ error: e })
   }
