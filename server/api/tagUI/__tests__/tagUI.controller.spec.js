@@ -6,6 +6,31 @@ import sinon from 'sinon'
 import AliasSet from '../aliasSet'
 import { aliases } from './tagUI.fixture'
 import { jwtData as jwtAdmin } from '../../../../server/middleware/session/__tests__/setSession.fixture'
+import uuid from 'uuid'
+import { Role } from '../../../../server/services/authorize/role'
+import Person from '../../../../server/api/person/person'
+import jsonwebtoken from 'jsonwebtoken'
+
+/**
+ * Create a new user with the OrganisationRole.ADMIN role.
+ * @param {string[]} roles Array of roles.
+ */
+const createAdminAndGetToken = async () => {
+  // Create a new user in the database directly
+  const person = {
+    name: 'name',
+    email: `${uuid()}@test.com`,
+    role: [Role.ADMIN],
+    status: 'active'
+  }
+
+  await Person.create(person)
+
+  const jwt = { ...jwtAdmin }
+  jwt.idTokenPayload.email = person.email
+
+  return jsonwebtoken.sign(jwt.idTokenPayload, 'secret')
+}
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -54,10 +79,10 @@ test.serial('Getting aliases for a non-existing tag returns 404', async (t) => {
   t.is(res.status, 404)
 })
 
-test.serial('Deleting a tag', async (t) => {
+test.serial('Deleting a tag', async t => {
   await AliasSet.create(aliases)
   await request(server).get('/api/tagUI/getAliases/programming').expect(200).expect('Content-Type', /json/)
-  await request(server).delete('/api/tagUI/deleteTag/programming').set('Cookie', [`idToken=${jwtAdmin.idToken}`]).expect(200)
+  await request(server).delete('/api/tagUI/deleteTag/programming').set('Cookie', [`idToken=${await createAdminAndGetToken()}`]).expect(200).expect('Content-Type', /json/)
 
   // The deleted tag does not exist in the alias collection
   await request(server).get('/api/tagUI/getAliases/programming').expect(404)
@@ -90,7 +115,7 @@ test.serial('Deleting a tag alias', async (t) => {
   t.true(res1.body.aliases.includes('coding'))
 
   // Delete TagB ('coding') from alias set of TagA ('programming')
-  await request(server).delete('/api/tagUI/deleteAlias/programming/coding').set('Cookie', [`idToken=${jwtAdmin.idToken}`]).expect(200)
+  await request(server).delete('/api/tagUI/deleteAlias/programming/coding').set('Cookie', [`idToken=${await createAdminAndGetToken()}`]).expect(200)
 
   // The deleted alias, TagB, is no longer exists in the alias set of TagA
   const res2 = await request(server).get('/api/tagUI/getAliases/programming')
@@ -125,7 +150,7 @@ test.serial('Deleting a tag alias, non-admin request', async (t) => {
 test.serial('Editting a tag', async (t) => {
   await AliasSet.create(aliases)
   await request(server).get('/api/tagUI/getAliases/programming').expect(200).expect('Content-Type', /json/)
-  await request(server).put('/api/tagUI/editTag/programming/edittedprogramming').set('Cookie', [`idToken=${jwtAdmin.idToken}`]).expect(200)
+  await request(server).put('/api/tagUI/editTag/programming/edittedprogramming').set('Cookie', [`idToken=${await createAdminAndGetToken()}`]).expect(200)
 
   // The original tag does not exist in the alias collection
   await request(server).get('/api/tagUI/getAliases/programming').expect(404)
@@ -138,7 +163,7 @@ test.serial('Editting a tag', async (t) => {
   t.false(res1.body.aliases.includes('programming'))
 
   // The editted tag does exist in the alias collection of other tags
-  t.true(res1.body.aliases.includes('programming'))
+  t.true(res1.body.aliases.includes('edittedprogramming'))
 })
 
 test.serial('Editting a tag, non-admin request', async (t) => {
@@ -158,16 +183,17 @@ test.serial('Editting a tag, non-admin request', async (t) => {
   t.true(res1.body.aliases.includes('programming'))
 
   // The editted tag does exist in the alias collection of other tags
-  t.false(res1.body.aliases.includes('programming'))
+  t.false(res1.body.aliases.includes('edittedprogramming'))
 })
 
 test.serial('Adding a tag', async (t) => {
   await AliasSet.create(aliases)
   await request(server).get('/api/tagUI/getAliases/newtag').expect(404)
-  await request(server).post('/api/tagUI/addTag/newtag').set('Cookie', [`idToken=${jwtAdmin.idToken}`]).expect(200)
+  await request(server).post('/api/tagUI/addTag/newtag').set('Cookie', [`idToken=${await createAdminAndGetToken()}`]).expect(200)
 
   // The newly added tag is now in the alias collection
-  await request(server).get('/api/tagUI/getAliases/newtag').expect(200).expect('Content-Type', /json/)
+  const res = await request(server).get('/api/tagUI/getAliases/newtag').expect(200).expect('Content-Type', /json/)
+  t.is(res.status, 200)
 })
 
 test.serial('Adding a tag, non-admin request', async (t) => {
@@ -176,14 +202,15 @@ test.serial('Adding a tag, non-admin request', async (t) => {
   await request(server).post('/api/tagUI/addTag/newtag').expect(403)
 
   // The add request fails and the new tag is not in the alias collection
-  await request(server).get('/api/tagUI/getAliases/newtag').expect(404)
+  const res = await request(server).get('/api/tagUI/getAliases/newtag').expect(404)
+  t.is(res.status, 404)
 })
 
 test.serial('Adding an existing tag to the alias list of another tag', async (t) => {
   await AliasSet.create(aliases)
   // Add a new tag (tagB) to the database
   await request(server).get('/api/tagUI/getAliases/newtag').expect(404)
-  await request(server).post('/api/tagUI/addTag/newtag').set('Cookie', [`idToken=${jwtAdmin.idToken}`]).expect(200)
+  await request(server).post('/api/tagUI/addTag/newtag').set('Cookie', [`idToken=${await createAdminAndGetToken()}`]).expect(200)
 
   // TagB is now in the alias collection
   await request(server).get('/api/tagUI/getAliases/newtag').expect(200).expect('Content-Type', /json/)
@@ -193,7 +220,7 @@ test.serial('Adding an existing tag to the alias list of another tag', async (t)
   t.false(res1.body.aliases.includes('newtag'))
 
   // Add tagB to the alias list of tagA
-  await request(server).post('/api/tagUI/addAlias/programming/newtag').set('Cookie', [`idToken=${jwtAdmin.idToken}`]).expect(200)
+  await request(server).post('/api/tagUI/addAlias/programming/newtag').set('Cookie', [`idToken=${await createAdminAndGetToken()}`]).expect(200)
 
   // TagB is now an alias of tagA
   const res2 = await request(server).get('/api/tagUI/getAliases/programming')
@@ -208,7 +235,7 @@ test.serial('Adding an existing tag to the alias list of another tag, non-admin 
   await AliasSet.create(aliases)
   // Add a new tag (tagB) to the database
   await request(server).get('/api/tagUI/getAliases/newtag').expect(404)
-  await request(server).post('/api/tagUI/addTag/newtag').set('Cookie', [`idToken=${jwtAdmin.idToken}`]).expect(200)
+  await request(server).post('/api/tagUI/addTag/newtag').set('Cookie', [`idToken=${await createAdminAndGetToken()}`]).expect(200)
 
   // TagB is now in the alias collection
   await request(server).get('/api/tagUI/getAliases/newtag').expect(200).expect('Content-Type', /json/)
@@ -239,7 +266,7 @@ test.serial('Adding a new tag to the alias list of another tag', async (t) => {
   t.false(res1.body.aliases.includes('newtag'))
 
   // Add new tag (tagB) to the alias list of tagA
-  await request(server).post('/api/tagUI/addAlias/programming/newtag').set('Cookie', [`idToken=${jwtAdmin.idToken}`]).expect(200)
+  await request(server).post('/api/tagUI/addAlias/programming/newtag').set('Cookie', [`idToken=${await createAdminAndGetToken()}`]).expect(200)
 
   // TagB is now an alias of tagA
   const res2 = await request(server).get('/api/tagUI/getAliases/programming')
