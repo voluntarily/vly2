@@ -11,7 +11,7 @@ import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
 import { OpportunityStatus, OpportunityType } from '../opportunity.constants'
 import { Role } from '../../../services/authorize/role'
-import AliasSet from '../../tagUI/aliasSet'
+import AliasSet from '../../aliases/aliasSet'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
