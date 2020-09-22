@@ -9,11 +9,11 @@ const {
 } = require('./tagUI.controller')
 
 module.exports = (server) => {
-  server.get('/api/tagUI/allAliases', getAllTagAliasSets)
-  server.get('/api/tagUI/getAliases/:tag', getTagAliasSet)
-  server.delete('/api/tagUI/deleteTag/:tag', deleteTag)
-  server.delete('/api/tagUI/deleteAlias/:tagA/:tagB', deleteTagAlias)
-  server.put('/api/tagUI/editTag/:originalTag/:newTag', editTag)
-  server.post('/api/tagUI/addTag/:tag', addTag)
-  server.post('/api/tagUI/addAlias/:tagA/:tagB', addAliasToTag)
+  server.get('/api/tagUI', getAllTagAliasSets)
+  server.get('/api/tagUI/:tag', getTagAliasSet)
+  server.delete('/api/tagUI/tag/:tag', deleteTag)
+  server.delete('/api/tagUI/alias/:tag', deleteTagAlias) // body must contain "aliasToDelete" entry
+  server.put('/api/tagUI/tag/:tag', editTag) // body must contain "edittedTag" entry
+  server.post('/api/tagUI/tag/:tag', addTag)
+  server.post('/api/tagUI/alias/:tag', addAliasToTag) // body must contain "aliasToAdd" entry
 }
