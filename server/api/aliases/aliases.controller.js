@@ -110,9 +110,11 @@ const deleteTag = async (req, res) => {
     }
 
     // Delete tag from alias collection
-    await AliasSet
-      .findOne({ tag: tagToDelete })
-      .then(item => item.remove().then(() => res.json({ success: true })))
+    await AliasSet.findOne({ tag: tagToDelete }).then(item => item.remove()
+      .catch(err => res.status(404).json({ success: false }).send({ error: err })))
+
+    // Delete the tag in the taglist collection
+    await deleteATag(req, res)
       .catch(err => res.status(404).json({ success: false }).send({ error: err }))
   } catch (e) {
     res.status(500).send({ error: e })
@@ -225,6 +227,7 @@ const editTag = async (req, res) => {
     await AliasSet.updateOne({ _id: tagToEditWithAliases._id }, { tag: newTag })
       .catch(err => res.status(404).json({ success: false }).send({ error: err }))
 
+    // Edit the tag in the taglist collection
     await editATag(req, res)
       .catch(err => res.status(404).json({ success: false }).send({ error: err }))
   } catch (e) {
