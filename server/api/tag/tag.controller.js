@@ -23,6 +23,34 @@ async function listTags (req, res) {
   }
 }
 
+const editATag = async (req, res) => {
+  try {
+    var originalTag = req.params.tag
+    var newTag = req.body.edittedTag
+
+    // const tagList = await Tag.findone({name: 'default'}, 'tags' )
+    const q = { name: (req.query && req.query.name) || DefaultTagList }
+    const tagList = await Tag.findOne(q, 'tags', { lean: true })
+
+    const tagArray = tagList.tags
+
+    const index = tagArray.indexOf(originalTag)
+    if (index > -1) {
+      tagArray[index] = newTag
+    } else {
+      return res.status(404).send({ error: 'Tag not found in taglist' })
+    }
+
+    // Edit the tag in the taglist collection
+    await Tag.updateOne({ name: 'default', tags: tagArray })
+      .then(() => res.json({ success: true }))
+      .catch(err => res.status(404).json({ success: false }).send({ error: err }))
+  } catch (e) {
+    res.status(500).send({ error: e })
+  }
+}
+
 module.exports = {
-  listTags
+  listTags,
+  editATag
 }

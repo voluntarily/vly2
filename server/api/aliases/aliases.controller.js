@@ -1,7 +1,8 @@
 const AliasSet = require('./aliasSet')
 const { Role } = require('../../services/authorize/role')
+const { editATag, deleteATag } = require('./../tag/tag.controller')
 
-// These API calls allow users to add, get, edit and delete tags to/from the "alias2" collection in the
+// These API calls allow users to add, get, edit and delete tags to/from the "alias" collection in the
 // vly2 database. There are also calls to add, get, edit and delete tags in the alias list of another tag.
 // The API doesn't currently make changes to the "tag" collection in the vly2 database.
 // TODO: Sync tags in "alias2" collection with those in "tag" collection (possibly combine collections?)
@@ -222,7 +223,9 @@ const editTag = async (req, res) => {
 
     // Edit the tag in the alias collection
     await AliasSet.updateOne({ _id: tagToEditWithAliases._id }, { tag: newTag })
-      .then(() => res.json({ success: true }))
+      .catch(err => res.status(404).json({ success: false }).send({ error: err }))
+
+    await editATag(req, res)
       .catch(err => res.status(404).json({ success: false }).send({ error: err }))
   } catch (e) {
     res.status(500).send({ error: e })
@@ -305,6 +308,15 @@ const addAliasToTag = async (req, res) => {
   }
 }
 
+const test = async (req, res) => {
+  try {
+    await editATag(req, res)
+      .catch(err => res.status(404).json({ success: false }).send({ error: err }))
+  } catch (e) {
+    res.status(500).send({ error: e })
+  }
+}
+
 module.exports = {
   getAllTagAliasSets,
   getTagAliasSet,
@@ -312,5 +324,6 @@ module.exports = {
   deleteTagAlias,
   editTag,
   addTag,
-  addAliasToTag
+  addAliasToTag,
+  test
 }
