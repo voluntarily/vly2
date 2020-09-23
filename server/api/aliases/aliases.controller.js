@@ -311,14 +311,14 @@ const addAliasToTag = async (req, res) => {
   }
 }
 
-const test = async (req, res) => {
-  try {
-    await editATag(req, res)
-      .catch(err => res.status(404).json({ success: false }).send({ error: err }))
-  } catch (e) {
-    res.status(500).send({ error: e })
-  }
-}
+// const test = async (req, res) => {
+//   try {
+//     await deleteATag(req, res)
+//       .catch(err => res.status(404).json({ success: false }).send({ error: err }))
+//   } catch (e) {
+//     res.status(500).send({ error: e })
+//   }
+// }
 
 module.exports = {
   getAllTagAliasSets,
@@ -328,5 +328,5 @@ module.exports = {
   editTag,
   addTag,
   addAliasToTag,
-  test
+//  test
 }
