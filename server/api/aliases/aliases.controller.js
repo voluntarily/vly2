@@ -1,6 +1,8 @@
 const AliasSet = require('./aliasSet')
 const { Role } = require('../../services/authorize/role')
 const { editATag, deleteATag } = require('./../tag/tag.controller')
+const { initializeTags } = require('./../../util/initTags')
+const sinon = require('sinon')
 
 // These API calls allow users to add, get, edit and delete tags to/from the "alias" collection in the
 // vly2 database. There are also calls to add, get, edit and delete tags in the alias list of another tag.
@@ -254,6 +256,12 @@ const addTag = async (req, res) => {
       tag: newTag,
       aliases: []
     })
+
+    const next = sinon.fake()
+
+    initializeTags(req, res, next)
+      .catch(err => res.status(404).json({ success: false }).send({ error: err }))
+
     res.status(200).send(aliasSet)
   } catch (e) {
     console.log(e)
@@ -311,15 +319,6 @@ const addAliasToTag = async (req, res) => {
   }
 }
 
-// const test = async (req, res) => {
-//   try {
-//     await deleteATag(req, res)
-//       .catch(err => res.status(404).json({ success: false }).send({ error: err }))
-//   } catch (e) {
-//     res.status(500).send({ error: e })
-//   }
-// }
-
 module.exports = {
   getAllTagAliasSets,
   getTagAliasSet,
@@ -328,5 +327,4 @@ module.exports = {
   editTag,
   addTag,
   addAliasToTag
-//  test
 }
