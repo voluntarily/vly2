@@ -307,12 +307,18 @@ const addAliasToTag = async (req, res) => {
           tag: aliastoAdd[i],
           aliases: []
         })
+
+        const next = sinon.fake()
+
+        initializeTags(req, res, next)
+          .catch(err => res.status(404).json({ success: false }).send({ error: err }))
       }
       // Add the alias to alias collection
       aliases.push(aliastoAdd[i])
 
       await AliasSet.updateOne({ tag: tag[i] }, { aliases: aliases })
     }
+
     return res.json({ success: true })
   } catch (e) {
     res.status(500).send({ error: e })
