@@ -4,7 +4,6 @@ import TagSelect from "../Form/Input/TagSelect";
 import { TagStyle } from '../VTheme/VTheme'
 import AliasDisplay from './AliasDisplay'
 
-
 const dataSource = [
   {
     key: "1",
@@ -43,12 +42,14 @@ const columns = [
     title: "Action",
     dataIndex: "action",
     key: "action",
+    render: (action) => (<div>         
+    <a style={{paddingRight: "1em"}}>Edit</a>
+    <a>Remove tag</a>
+    </div>)
   },
 ];
 
-function onChange() {
-  console.log("On change triggered")
-}
+
 export const TagTable = (props) => {
   return <Table dataSource={dataSource} columns={columns} />;
 };

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import { TagStyle } from '../VTheme/VTheme'
 import styled from 'styled-components'
 import {TagDisplay} from "../Tags/TagDisplay";
+import { Icon } from 'antd'
 
 
 const TagContainer = styled.div`
@@ -21,7 +22,9 @@ export function AliasDisplay ({ tags }) {
     </TagContainer>
   )
 }
-
+function onChange() {
+  console.log("On change triggered")
+}
 TagDisplay.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string)
 }
