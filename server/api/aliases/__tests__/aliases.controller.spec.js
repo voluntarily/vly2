@@ -219,12 +219,23 @@ test.serial('Editting a tag, non-admin request', async (t) => {
 
 test.serial('Adding a tag', async (t) => {
   await AliasSet.create(aliases)
+  const tagList = ['test', 'programming', 'test2', 'test3']
+  await Tag.create({ tags: tagList })
+  // Tag is not in alias collection
   await request(server).get('/api/aliases/newtag').expect(404)
-  await request(server).post('/api/aliases/tag/newtag').set('Cookie', [`idToken=${await createAdminAndGetToken()}`]).expect(200)
 
+  // Tag is not in taglist collection
+  const res1 = await request(server).get('/api/tags').expect(200).expect('Content-Type', /json/)
+  t.false(res1.body.includes('newtag'))
+
+  await request(server).post('/api/aliases/tag/newtag').set('Cookie', [`idToken=${await createAdminAndGetToken()}`]).send({ tags: ['newtag'] }).expect(200)
   // The newly added tag is now in the alias collection
-  const res = await request(server).get('/api/aliases/newtag').expect(200).expect('Content-Type', /json/)
-  t.is(res.status, 200)
+  const res2 = await request(server).get('/api/aliases/newtag').expect(200).expect('Content-Type', /json/)
+  t.is(res2.status, 200)
+
+  // The newly added tag is now in the taglist collection
+  const res3 = await request(server).get('/api/tags').expect(200).expect('Content-Type', /json/)
+  t.true(res3.body.includes('newtag'))
 })
 
 test.serial('Adding a tag, non-admin request', async (t) => {
@@ -288,6 +299,9 @@ test.serial('Adding an existing tag to the alias list of another tag, non-admin 
 
 test.serial('Adding a new tag to the alias list of another tag', async (t) => {
   await AliasSet.create(aliases)
+  const tagList = ['test', 'programming', 'test2', 'test3']
+  await Tag.create({ tags: tagList })
+
   // A new tag (tagB) does not exist in the alias collection
   await request(server).get('/api/aliases/newtag').expect(404)
 
@@ -295,17 +309,25 @@ test.serial('Adding a new tag to the alias list of another tag', async (t) => {
   const res1 = await request(server).get('/api/aliases/programming')
   t.false(res1.body.aliases.includes('newtag'))
 
+  // TagB is also not in taglist collection
+  const res2 = await request(server).get('/api/tags').expect(200).expect('Content-Type', /json/)
+  t.false(res2.body.includes('newtag'))
+
   // Add new tag (tagB) to the alias list of tagA
-  await request(server).post('/api/aliases/alias/programming').set('Cookie', [`idToken=${await createAdminAndGetToken()}`]).send({ aliasToAdd: 'newtag' }).expect(200)
+  await request(server).post('/api/aliases/alias/programming').set('Cookie', [`idToken=${await createAdminAndGetToken()}`]).send({ aliasToAdd: 'newtag', tags: ['newtag'] }).expect(200)
 
   // TagB is now an alias of tagA
-  const res2 = await request(server).get('/api/aliases/programming')
-  t.true(res2.body.aliases.includes('newtag'))
+  const res3 = await request(server).get('/api/aliases/programming')
+  t.true(res3.body.aliases.includes('newtag'))
 
   // TagB has been added to the alias collection, and tagA is an alias of tagB
   await request(server).get('/api/aliases/newtag').expect(200).expect('Content-Type', /json/)
-  const res3 = await request(server).get('/api/aliases/newtag')
-  t.true(res3.body.aliases.includes('programming'))
+  const res4 = await request(server).get('/api/aliases/newtag')
+  t.true(res4.body.aliases.includes('programming'))
+
+  // The newly added tag is also now in the taglist collection
+  const res5 = await request(server).get('/api/tags').expect(200).expect('Content-Type', /json/)
+  t.true(res5.body.includes('newtag'))
 })
 
 test.serial('Adding a new tag to the alias list of another tag, non-admin request', async (t) => {
