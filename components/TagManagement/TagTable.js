@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Table, Tag, Space } from "antd";
-import {TagDisplay} from "../Tags/TagDisplay";
 import TagSelect from "../Form/Input/TagSelect";
 import { TagStyle } from '../VTheme/VTheme'
+import AliasDisplay from './AliasDisplay'
 
 
 const dataSource = [
@@ -36,8 +36,7 @@ const columns = [
     title: "Aliases",
     dataIndex: "aliases",
     key: "aliases",
-    render: aliases => (
-    aliases.map(alias => <TagStyle key={alias} closable onClose={()=>onChange()}>{alias}</TagStyle>)
+    render: aliases => (<AliasDisplay tags={aliases}/>
     )
   },
   {
