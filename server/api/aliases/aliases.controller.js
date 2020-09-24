@@ -327,6 +327,6 @@ module.exports = {
   deleteTagAlias,
   editTag,
   addTag,
-  addAliasToTag,
+  addAliasToTag
 //  test
 }

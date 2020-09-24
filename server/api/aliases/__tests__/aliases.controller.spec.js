@@ -10,6 +10,7 @@ import uuid from 'uuid'
 import { Role } from '../../../services/authorize/role'
 import Person from '../../person/person'
 import jsonwebtoken from 'jsonwebtoken'
+import Tag from './../../tag/tag'
 
 /**
  * Create a new user with the OrganisationRole.ADMIN role.
@@ -42,6 +43,7 @@ test.before('before connect to database', async (t) => {
 
 test.afterEach.always(async (t) => {
   await AliasSet.deleteMany()
+  await Tag.deleteMany()
 })
 
 test.after.always(async (t) => {
@@ -81,17 +83,29 @@ test.serial('Getting aliases for a non-existing tag returns 404', async (t) => {
 
 test.serial('Deleting a tag', async t => {
   await AliasSet.create(aliases)
+  const tagList = ['test', 'programming', 'test2', 'test3']
+  await Tag.create({ tags: tagList })
+
+  // Check tag is in alias collection
   await request(server).get('/api/aliases/programming').expect(200).expect('Content-Type', /json/)
+  // Check tag is in taglist collection
+  const res1 = await request(server).get('/api/tags').expect(200).expect('Content-Type', /json/)
+  t.true(res1.body.includes('programming'))
+
   await request(server).delete('/api/aliases/tag/programming').set('Cookie', [`idToken=${await createAdminAndGetToken()}`]).expect(200).expect('Content-Type', /json/)
 
   // The deleted tag does not exist in the alias collection
   await request(server).get('/api/aliases/programming').expect(404)
 
   // The deleted tag is removed from aliases of other tags
-  const res1 = await request(server).get('/api/aliases/coding')
-  t.false(res1.body.aliases.includes('programming'))
-  const res2 = await request(server).get('/api/aliases/development')
+  const res2 = await request(server).get('/api/aliases/coding')
   t.false(res2.body.aliases.includes('programming'))
+  const res3 = await request(server).get('/api/aliases/development')
+  t.false(res3.body.aliases.includes('programming'))
+
+  // The original tag does not exist in the taglist collection
+  const res4 = await request(server).get('/api/tags').expect(200).expect('Content-Type', /json/)
+  t.false(res4.body.includes('programming'))
 })
 
 test.serial('Deleting a tag, non-admin request', async (t) => {
@@ -149,21 +163,38 @@ test.serial('Deleting a tag alias, non-admin request', async (t) => {
 
 test.serial('Editting a tag', async (t) => {
   await AliasSet.create(aliases)
+
+  const tagList = ['test', 'programming', 'test2', 'test3']
+  await Tag.create({ tags: tagList })
+
+  // Check that tag is in alias collection
   await request(server).get('/api/aliases/programming').expect(200).expect('Content-Type', /json/)
+
+  // Check that tag is in taglist collection
+  const res1 = await request(server).get('/api/tags').expect(200).expect('Content-Type', /json/)
+  t.true(res1.body.includes('programming'))
+
   await request(server).put('/api/aliases/tag/programming').set('Cookie', [`idToken=${await createAdminAndGetToken()}`]).send({ edittedTag: 'edittedprogramming' }).expect(200)
 
-  // The original tag does not exist in the alias collection
+  // The original tag is removed from the alias collection
   await request(server).get('/api/aliases/programming').expect(404)
 
   // The editted tag does exist in the alias collection
   await request(server).get('/api/aliases/edittedprogramming').expect(200).expect('Content-Type', /json/)
 
   // The original tag is removed from aliases of other tags
-  const res1 = await request(server).get('/api/aliases/coding')
-  t.false(res1.body.aliases.includes('programming'))
+  const res2 = await request(server).get('/api/aliases/coding')
+  t.false(res2.body.aliases.includes('programming'))
 
   // The editted tag does exist in the alias collection of other tags
-  t.true(res1.body.aliases.includes('edittedprogramming'))
+  t.true(res2.body.aliases.includes('edittedprogramming'))
+
+  // The original tag does not exist in the taglist collection
+  const res3 = await request(server).get('/api/tags').expect(200).expect('Content-Type', /json/)
+  t.false(res3.body.includes('programming'))
+
+  // The editted tag does exist in the taglist collection
+  t.true(res3.body.includes('edittedprogramming'))
 })
 
 test.serial('Editting a tag, non-admin request', async (t) => {
