@@ -11,6 +11,7 @@ import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
 import { OpportunityStatus, OpportunityType } from '../opportunity.constants'
 import { Role } from '../../../services/authorize/role'
+import AliasSet from '../../aliases/aliasSet'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -20,7 +21,7 @@ test.before('before connect to database', async (t) => {
 test.beforeEach('Load fixtures', async (t) => {
   await Person.create(fixtures.people)
   await Organisation.create(fixtures.organisations)
-
+  await AliasSet.create(fixtures.aliases)
   const person = await Person.findOne()
   await Opportunity.create(
     fixtures.opportunities.map((opportunity) => {
@@ -34,6 +35,7 @@ test.afterEach.always('Clear fixtures', async (t) => {
   await Person.deleteMany()
   await Opportunity.deleteMany()
   await Organisation.deleteMany()
+  await AliasSet.deleteMany()
 })
 
 test.after.always(async (t) => {
@@ -302,72 +304,31 @@ test.serial(
   }
 )
 
-test.serial(
-  'getSkillsRecommendations > no tags in ops and user',
-  async (t) => {
-    const john = await Person.create({
-      name: 'John',
-      email: 'john@mail.com'
-    })
+test.serial('getSkillsRecommendations > no tags in ops and user', async (t) => {
+  const john = await Person.create({
+    name: 'John',
+    email: 'john@mail.com'
+  })
 
-    await Opportunity.deleteMany()
-    await Opportunity.create({
-      name: 'Technology opportunity',
-      status: OpportunityStatus.ACTIVE,
-      type: OpportunityType.OFFER,
-      requestor: john._id,
-      tags: []
-    })
+  await Opportunity.deleteMany()
+  await Opportunity.create({
+    name: 'Technology opportunity',
+    status: OpportunityStatus.ACTIVE,
+    type: OpportunityType.OFFER,
+    requestor: john._id,
+    tags: []
+  })
 
-    const person = {
-      _id: mongoose.Types.ObjectId(),
-      role: Role.VOLUNTEER,
-      tags: [],
-      topicGroups: []
-    }
-
-    const recommendedSkills = await getSkillsRecommendations(person)
-    t.deepEqual(recommendedSkills, [])
+  const person = {
+    _id: mongoose.Types.ObjectId(),
+    role: Role.VOLUNTEER,
+    tags: [],
+    topicGroups: []
   }
-)
 
-test.serial(
-  'getSkillsRecommendations > no tags match, no topic group match',
-  async (t) => {
-    const john = await Person.create({
-      name: 'John',
-      email: 'john@mail.com'
-    })
-
-    await Opportunity.deleteMany()
-    const opTags = getSomeTags(fixtures.tagCategories.technology.tags, 5)
-    // Add a topic group tag
-    opTags.push('community')
-
-    await Opportunity.create({
-      name: 'Technology opportunity',
-      status: OpportunityStatus.ACTIVE,
-      type: OpportunityType.OFFER,
-      requestor: john._id,
-      tags: opTags
-    })
-
-    const userTags = await getSomeTags(
-      fixtures.tagCategories.business.tags,
-      5
-    )
-    const person = {
-      _id: mongoose.Types.ObjectId(),
-      role: Role.VOLUNTEER,
-      tags: userTags,
-      topicGroups: ['business']
-    }
-
-    const recommendedSkills = await getSkillsRecommendations(person)
-    // console.log(recommendedSkills.length)
-    t.is(recommendedSkills.length, 0)
-  }
-)
+  const recommendedSkills = await getSkillsRecommendations(person)
+  t.deepEqual(recommendedSkills, [])
+})
 
 test.serial(
   'getSkillsRecommendations > user has no tags, topic group match',
@@ -418,7 +379,7 @@ test.serial(
     }
 
     const recommendedSkills = await getSkillsRecommendations(person)
-    t.is(recommendedSkills.length, 2)
+
     t.is(
       recommendedSkills[0].name,
       'Technology opportunity 2 topic group matches'
@@ -484,7 +445,6 @@ test.serial(
 
     const recommendedSkills = await getSkillsRecommendations(person)
 
-    t.is(recommendedSkills.length, 2)
     t.is(
       recommendedSkills[0].name,
       'Technology opportunity 2 topic group matches'
@@ -557,7 +517,7 @@ test.serial(
   }
 )
 
-test.serial.failing(
+test.serial(
   'getSkillsRecommendations > alias tag matches, no topic group matches',
   async (t) => {
     const john = await Person.create({
@@ -566,7 +526,7 @@ test.serial.failing(
     })
 
     await Opportunity.deleteMany()
-    const opTags = ['community']
+    const opTags = ['school']
 
     await Opportunity.create({
       name: 'Op with no tag match',
@@ -611,6 +571,7 @@ test.serial.failing(
     }
 
     const recommendedSkills = await getSkillsRecommendations(person)
+
     t.is(recommendedSkills.length, 3)
     t.is(recommendedSkills[0].name, 'Op with three alias matches') // closest match.
     t.is(recommendedSkills[2].name, 'Op with one alias match') // least close match
@@ -757,7 +718,7 @@ test.serial(
   }
 )
 
-test.serial.failing(
+test.serial(
   'getSkillsRecommendations > alias tag matches, topic group matches',
   async (t) => {
     await Person.deleteMany()
@@ -788,7 +749,7 @@ test.serial.failing(
 
     opTags.push('business')
     await Opportunity.create({
-      name: 'Op with one alias match and a topic group match',
+      name: 'Op with one alias match and topic group match',
       status: OpportunityStatus.ACTIVE,
       type: OpportunityType.OFFER,
       requestor: john._id,
@@ -834,7 +795,7 @@ test.serial(
     })
 
     await Opportunity.deleteMany()
-    const opTags = ['community']
+    const opTags = ['school']
     const tags = await getSomeTags(fixtures.tagCategories.business.tags, 5)
 
     await Opportunity.create({
@@ -887,8 +848,6 @@ test.serial(
     }
 
     const recommendedSkills = await getSkillsRecommendations(person)
-    // console.log('rec skils', recommendedSkills)
-    t.is(recommendedSkills.length, 4)
     t.is(
       recommendedSkills[0].name,
       'Op with two full matches and a topic group match'
@@ -908,7 +867,7 @@ test.serial(
   }
 )
 
-test.serial.failing(
+test.serial(
   'getSkillsRecommendations > mixture of partial, alias, and full matches',
   async (t) => {
     await Person.deleteMany()
@@ -935,7 +894,8 @@ test.serial.failing(
     })
 
     await Opportunity.create({
-      name: 'Op with full match, partial match, and alias match of distinct tags',
+      name:
+        'Op with full match, partial match, and alias match of distinct tags',
       status: OpportunityStatus.ACTIVE,
       type: OpportunityType.OFFER,
       requestor: john._id,
@@ -975,12 +935,9 @@ test.serial.failing(
     })
 
     const recommendedSkills = await getSkillsRecommendations(person)
+
     t.is(recommendedSkills.length, 6)
-    t.is(
-      recommendedSkills[0].name,
-      'Fully matched op'
-    ) // closest match.
-    // TODO: Add ranking checks once the scoring system is in place
+    t.is(recommendedSkills[0].name, 'Fully matched op') // closest match.
   }
 )
 

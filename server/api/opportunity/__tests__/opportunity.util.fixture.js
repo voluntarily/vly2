@@ -103,5 +103,60 @@ module.exports = {
         'effective communication'
       ]
     }
-  }
+  },
+  aliases: [
+    {
+      tag: 'programming',
+      aliases: [
+        'coding',
+        'development'
+      ]
+    },
+    {
+      tag: 'coding',
+      aliases: [
+        'programming',
+        'development'
+      ]
+    },
+    {
+      tag: 'tutoring',
+      aliases: [
+        'teaching',
+        'education',
+        'teacher'
+      ]
+    },
+    {
+      tag: 'teacher',
+      aliases: [
+        'tutoring',
+        'teaching'
+      ]
+    },
+    {
+      tag: 'legal',
+      aliases: [
+        'law'
+      ]
+    },
+    {
+      tag: 'law',
+      aliases: [
+        'legal'
+      ]
+    },
+    {
+      tag: 'marketing',
+      aliases: [
+        'advertising'
+      ]
+    },
+    {
+      tag: 'advertising',
+      aliases: [
+        'marketing'
+      ]
+    }
+  ]
 }
