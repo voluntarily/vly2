@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { Table, Tag, Space } from "antd";
+import { Table, Tag, Space, Typography } from "antd";
 import TagSelect from "../Form/Input/TagSelect";
 import { TagStyle } from '../VTheme/VTheme'
 import AliasDisplay from './AliasDisplay'
+import { EditableTagCell } from "./EditableTagCell";
 
 const dataSource = [
   {
@@ -30,6 +31,7 @@ const columns = [
     title: "Tag",
     dataIndex: "tag",
     key: "tag",
+  render: tag => (<EditableTagCell tag={tag}/>)
   },
   {
     title: "Aliases",
@@ -48,7 +50,6 @@ const columns = [
     </div>)
   },
 ];
-
 
 export const TagTable = (props) => {
   return <Table dataSource={dataSource} columns={columns} />;
