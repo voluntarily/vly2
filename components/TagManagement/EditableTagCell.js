@@ -17,13 +17,11 @@ const StyledIcon = styled(Icon)`
 const StyledInput = styled(Input);
 export const EditableTagCell = ({ tag }) => {
   const [editing, setEditing] = useState(false);
-  const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
 
   const onFinish = (values) => {
     setEditing(editing => false)
   };
 
-  const tagError = isFieldTouched('tag') && getFieldError('tag');
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
