@@ -6,7 +6,7 @@ const { ASK, OFFER } = OpportunityType
 const stringSimilarity = require('string-similarity')
 const natural = require('natural')
 const stopword = require('stopword')
-const AliasSet = require('../tagUI/aliasSet')
+const AliasSet = require('../aliases/aliasSet')
 
 const arrayIntersects = (arrA, arrB) =>
   arrA.filter((x) => arrB.includes(x)).length
