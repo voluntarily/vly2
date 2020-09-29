@@ -36,9 +36,6 @@ const TagManagementTab = (props) => {
         </Link>
         <TagTable />
       </Tabs.TabPane>
-      <Tabs.TabPane tab={"Tag Groups"} key={2}>
-        <h1>Test</h1>
-      </Tabs.TabPane>
     </VTabs>
   );
 };

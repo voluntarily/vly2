@@ -48,10 +48,8 @@ const columns = [
     title: "Action",
     dataIndex: "action",
     key: "action",
-    render: (action) => (<div>         
-    <a style={{paddingRight: "1em"}}>Edit</a>
-    <a>Remove tag</a>
-    </div>)
+    render: (action) => (     
+    <a>Remove tag</a>)
   },
 ];
 
