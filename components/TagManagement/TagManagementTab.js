@@ -1,11 +1,10 @@
 import React from 'react'
-import { Tabs, Button } from 'antd'
+import { Tabs, Button, Typography } from 'antd'
 import VTabs from '../VTheme/VTabs'
 import { withOrgs } from '../../lib/redux/reduxApi.js'
 import { TagTable } from './TagTable'
 import TagInput from '../Form/Input/TagInput'
 import Link from 'next/link'
-import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 
 const SearchContainer = styled.div`
@@ -26,9 +25,7 @@ const TagManagementTab = (props) => {
         </SearchContainer>
         <Link href=''>
           <Button shape='round' size='default' type='primary'>
-            <FormattedMessage
-              defaultMessage='Add tag'
-            />
+            Add Tag
           </Button>
         </Link>
         <TagTable />

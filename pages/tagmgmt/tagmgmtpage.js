@@ -1,6 +1,5 @@
 import { FullPage, PageBanner } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
-import { FormattedMessage } from 'react-intl'
 import TagManagementTab from '../../components/TagManagement/TagManagementTab'
 
 export const TagMgmtPage = (props) => {
@@ -8,9 +7,7 @@ export const TagMgmtPage = (props) => {
     <FullPage>
       <PageBanner>
         <h1>
-          <FormattedMessage
-            defaultMessage='Tag Management'
-          />
+          Tag Management
         </h1>
       </PageBanner>
 
