@@ -1,9 +1,7 @@
 import { FullPage, PageBanner } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
-import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import TagManagementTab from '../../components/TagManagement/TagManagementTab'
-import StatisticsTimeframeSelector from '../../components/Statistics/StatisticsTimeframeSelector'
 
 export const TagMgmtPage = (props) => {
   return (
