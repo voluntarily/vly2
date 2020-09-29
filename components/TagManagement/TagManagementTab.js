@@ -27,7 +27,7 @@ const TagManagementTab = (props) => {
           <TagInput />{" "}
         </SearchContainer>
         <Link href={""}>
-          <Button shape="round" size="medium" type="primary">
+          <Button shape="round" size="default" type="primary">
             <FormattedMessage
               id="TagManagement.button.search"
               defaultMessage="Add tag"
