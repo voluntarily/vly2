@@ -2,7 +2,6 @@ import React from 'react'
 import { Tabs, Button } from 'antd'
 import VTabs from '../VTheme/VTabs'
 import { withOrgs } from '../../lib/redux/reduxApi.js'
-
 import { TagTable } from './TagTable'
 import TagInput from '../Form/Input/TagInput'
 import Link from 'next/link'
@@ -28,7 +27,7 @@ const TagManagementTab = (props) => {
         <Link href=''>
           <Button shape='round' size='default' type='primary'>
             <FormattedMessage
-              id='TagManagement.button.search'
+              id='TagManagement.button.add'
               defaultMessage='Add tag'
             />
           </Button>
