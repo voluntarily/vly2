@@ -9,9 +9,7 @@ export const TagMgmtPage = (props) => {
       <PageBanner>
         <h1>
           <FormattedMessage
-            id='tagmgmtpage.title'
             defaultMessage='Tag Management'
-            description='Title on tag management page'
           />
         </h1>
       </PageBanner>

@@ -27,7 +27,6 @@ const TagManagementTab = (props) => {
         <Link href=''>
           <Button shape='round' size='default' type='primary'>
             <FormattedMessage
-              id='TagManagement.button.add'
               defaultMessage='Add tag'
             />
           </Button>
