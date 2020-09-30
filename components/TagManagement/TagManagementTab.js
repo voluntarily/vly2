@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tabs, Button, Typography } from 'antd'
+import { Tabs, Button } from 'antd'
 import VTabs from '../VTheme/VTabs'
 import { withOrgs } from '../../lib/redux/reduxApi.js'
 import { TagTable } from './TagTable'
