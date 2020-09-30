@@ -7,7 +7,7 @@ export const TagMgmtPage = (props) => {
   return (
     <FullPage>
       <PageBanner>
-        <FormattedMessage id='TagManagement.title' defaultMessage='Tag Management' description='Header of the tag management page' />
+        <h1>Tag TagManagement</h1>
       </PageBanner>
       <TagManagementTab />
 
