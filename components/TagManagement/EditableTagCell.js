@@ -1,11 +1,10 @@
-import { Icon, Typography, Input, Form, Button } from "antd";
-import React, { useState, useRef, useEffect } from "react";
-import AliasDisplay from "./AliasDisplay";
-import styled from "styled-components";
+import { Icon, Typography, Input, Form, Button } from 'antd'
+import React, { useState } from 'react'
+import styled from 'styled-components'
 
 const TagWrapper = styled.div`
   display: inline-block;
-`;
+`
 const StyledIcon = styled(Icon)`
   font-size: 1rem;
   margin-right: 0.5rem;
@@ -13,60 +12,70 @@ const StyledIcon = styled(Icon)`
     color: #6549aa;
     font-size: 1.2rem;
   }
-`;
-const StyledInput = styled(Input);
-export const EditableTagCell = ({ tag }) => {
-  const [editing, setEditing] = useState(false);
+`
 
-  const onFinish = (values) => {
-    setEditing(editing => false)
-  };
+const StyledButton = styled(Button)`
+  margin-right: 0.5rem;
+`
 
+const EditableTagCell = (props) => {
+  const [editing, setEditing] = useState(false)
+  const { getFieldDecorator } = props.form
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+  // TODO: Check if a tag to be submitted exists in the db
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    props.form.validateFields((err, values) => {
+      if (!err) {
+        setEditing(false)
+        console.log('Received values of form: ', values)
+      }
+    })
+  }
 
   if (!editing) {
     return (
       <TagWrapper>
         <Typography>
-          {tag}{" "}
+          {props.tag}{' '}
           <StyledIcon
-            type="edit"
+            type='edit'
             onClick={() => setEditing((editing) => true)}
           />
         </Typography>
       </TagWrapper>
-    );
+    )
   } else {
     return (
       <TagWrapper>
         <Form
-          name="basic"
+          name='basic'
           initialValues={{
-            remember: true,
+            tag: props.tag
           }}
-          onSubmit={onFinish}
+          onSubmit={handleSubmit}
         >
-          <Form.Item 
-            name="tag"
-            rules={[
-              {
-                required: true,
-                message: "Please input your username!",
-              },
-            ]}
-          >
-            <Input/>
+          <Form.Item name='tag'>
+            {getFieldDecorator('tag', {
+              initialValue: props.tag,
+              rules: [{ required: true, message: 'Please input the tag!' }]
+            })(<Input name='tag' />)}
           </Form.Item>
           <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
+            <StyledButton type='primary' htmlType='submit'>
+              Submit
+            </StyledButton>
+            <StyledButton
+              type='secondary'
+              onClick={(editing) => setEditing(false)}
+            >
+              Cancel
+            </StyledButton>
+          </Form.Item>
         </Form>
       </TagWrapper>
-    );
+    )
   }
-};
+}
+
+export default Form.create()(EditableTagCell)
