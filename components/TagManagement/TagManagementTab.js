@@ -6,6 +6,9 @@ import { TagTable } from './TagTable'
 import TagInput from '../Form/Input/TagInput'
 import Link from 'next/link'
 import styled from 'styled-components'
+import reduxApi, { withTagManagement } from '../../lib/redux/reduxApi.js'
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 
 const SearchContainer = styled.div`
   display: inline-block;
@@ -16,6 +19,14 @@ const SearchContainer = styled.div`
 `
 
 const TagManagementTab = (props) => {
+  const [aliases, tagManagement, tags] = useSelector(state => [state.aliases, state.tagManagement, state.tags])
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(reduxApi.actions.aliases.get())
+    dispatch(reduxApi.actions.tags.get())
+
+  }, [])
   return (
     <VTabs size='large'>
       <Tabs.TabPane tab='Tags' key={1}>
@@ -28,10 +39,10 @@ const TagManagementTab = (props) => {
             Add Tag
           </Button>
         </Link>
-        <TagTable />
+        <TagTable aliases={aliases.data}/>
       </Tabs.TabPane>
     </VTabs>
   )
 }
 
-export default withOrgs(TagManagementTab)
+export default withTagManagement(TagManagementTab)

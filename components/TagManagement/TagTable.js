@@ -48,5 +48,14 @@ const columns = [
 ]
 
 export const TagTable = (props) => {
-  return <Table dataSource={dataSource} columns={columns} />
+  let data = [];
+  props.aliases.map((alias, index) => {
+    data.push({
+    key: index,
+    tag: alias.tag,
+    aliases: alias.aliases,
+    action: 'x'})
+  })
+  console.log("this is my data " + JSON.stringify(data))
+  return <Table dataSource={data} columns={columns} />
 }
