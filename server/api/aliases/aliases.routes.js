@@ -9,8 +9,8 @@ const {
 } = require('./aliases.controller')
 
 module.exports = (server) => {
-  server.get('/api/aliases', getAllTagAliasSets)
-  server.get('/api/aliases/:tag', getTagAliasSet)
+  server.get('/api/aliases/alias', getAllTagAliasSets)
+  server.get('/api/aliases/alias/:tag', getTagAliasSet)
   server.delete('/api/aliases/tag/:tag', deleteTag)
   server.delete('/api/aliases/alias/:tag', deleteTagAlias) // body must contain "aliasToDelete" entry
   server.put('/api/aliases/tag/:tag', editTag) // body must contain "edittedTag" entry
