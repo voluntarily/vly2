@@ -1,6 +1,9 @@
 import { Icon, Typography, Input, Form, Button } from 'antd'
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import reduxApi, { withTagManagement } from '../../lib/redux/reduxApi.js'
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 
 const TagWrapper = styled.div`
   display: inline-block;
@@ -19,6 +22,14 @@ const StyledButton = styled(Button)`
 `
 
 const EditableTagCell = (props) => {
+  const [aliases, tagManagement, tags] = useSelector(state => [state.aliases, state.tagManagement, state.tags])
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(reduxApi.actions.aliases.get())
+    dispatch(reduxApi.actions.tags.get())
+
+  }, [])
   const [editing, setEditing] = useState(false)
   const { getFieldDecorator } = props.form
 

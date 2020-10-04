@@ -3,27 +3,6 @@ import AliasDisplay from './AliasDisplay'
 import EditableTagCell from './EditableTagCell'
 import AddAlias from './AddAlias'
 
-const dataSource = [
-  {
-    key: '1',
-    tag: 'programming',
-    aliases: ['development', 'coding'],
-    action: 'x'
-  },
-  {
-    key: '2',
-    tag: 'development',
-    aliases: ['programming', 'coding'],
-    action: 'x'
-  },
-  {
-    key: '3',
-    tag: 'coding',
-    aliases: ['programming', 'development'],
-    action: 'x'
-  }
-]
-
 const columns = [
   {
     title: 'Tag',
@@ -56,6 +35,6 @@ export const TagTable = (props) => {
     aliases: alias.aliases,
     action: 'x'})
   })
-  console.log("this is my data " + JSON.stringify(data))
+
   return <Table dataSource={data} columns={columns} />
 }
