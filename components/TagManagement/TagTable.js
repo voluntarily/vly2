@@ -2,6 +2,9 @@ import { Table } from 'antd'
 import AliasDisplay from './AliasDisplay'
 import EditableTagCell from './EditableTagCell'
 import AddAlias from './AddAlias'
+import { withTagManagement } from '../../lib/redux/reduxApi.js'
+import { useSelector } from 'react-redux'
+import ReduxLoading from '../Loading'
 
 const columns = [
   {
@@ -27,14 +30,33 @@ const columns = [
 ]
 
 export const TagTable = (props) => {
-  let data = [];
-  props.aliases.map((alias, index) => {
-    data.push({
-    key: index,
-    tag: alias.tag,
-    aliases: alias.aliases,
-    action: 'x'})
-  })
+  const [aliases] = useSelector(state => [state.aliases])
+  const data = []
+
+  if (!aliases || !aliases.sync) {
+    return <ReduxLoading entity={aliases} label='aliases' />
+  }
+  if (props.searchVal) {
+    aliases.data.filter(alias => alias.tag.toLowerCase().includes(props.searchVal.toLowerCase())).map((alias, index) => {
+      data.push({
+        key: index,
+        tag: alias.tag,
+        aliases: alias.aliases,
+        action: 'x'
+      })
+    })
+  } else {
+    aliases.data.map((alias, index) => {
+      data.push({
+        key: index,
+        tag: alias.tag,
+        aliases: alias.aliases,
+        action: 'x'
+      })
+    })
+  }
 
   return <Table dataSource={data} columns={columns} />
 }
+
+export default withTagManagement(TagTable)

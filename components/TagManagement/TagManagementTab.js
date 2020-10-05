@@ -1,14 +1,13 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { Tabs, Button } from 'antd'
 import VTabs from '../VTheme/VTabs'
-import { withOrgs } from '../../lib/redux/reduxApi.js'
 import { TagTable } from './TagTable'
 import Link from 'next/link'
 import styled from 'styled-components'
 import reduxApi, { withTagManagement } from '../../lib/redux/reduxApi.js'
-import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
-import {TagSearch} from './TagSearch'
+import { useDispatch } from 'react-redux'
+
+import { TagSearch } from './TagSearch'
 
 const SearchContainer = styled.div`
   display: inline-block;
@@ -19,14 +18,17 @@ const SearchContainer = styled.div`
 `
 
 const TagManagementTab = (props) => {
-  const [aliases, tagManagement, tags] = useSelector(state => [state.aliases, state.tagManagement, state.tags])
+  const [searchVal, setSearchVal] = useState('')
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(reduxApi.actions.aliases.get())
     dispatch(reduxApi.actions.tags.get())
-
   }, [])
+
+  const handleSearch = (value) => {
+    setSearchVal(value)
+  }
 
   return (
     <VTabs size='large'>
@@ -34,14 +36,14 @@ const TagManagementTab = (props) => {
         <SearchContainer>
           {' '}
           {/* <TagInput value={[]} existingTags={tags.data} onChange={e => console.log("Changed!!")}/>{' '} */}
-          <TagSearch value={[]}  existingTags={tags.data} />
+          <TagSearch value={[]} handleSearch={handleSearch} />
         </SearchContainer>
         <Link href=''>
           <Button shape='round' size='default' type='primary'>
             Add Tag
           </Button>
         </Link>
-        <TagTable aliases={aliases.data}/>
+        <TagTable searchVal={searchVal} />
       </Tabs.TabPane>
     </VTabs>
   )
