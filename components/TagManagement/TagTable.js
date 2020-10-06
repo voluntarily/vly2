@@ -1,10 +1,12 @@
-import { Table } from 'antd'
+import { Table, Modal } from 'antd'
 import AliasDisplay from './AliasDisplay'
 import EditableTagCell from './EditableTagCell'
 import AddAlias from './AddAlias'
-import { withTagManagement } from '../../lib/redux/reduxApi.js'
-import { useSelector } from 'react-redux'
+import reduxApi, { withTagManagement } from '../../lib/redux/reduxApi.js'
+import { useSelector, useDispatch } from 'react-redux'
 import ReduxLoading from '../Loading'
+
+const { confirm } = Modal; 
 
 const columns = [
   {
@@ -23,16 +25,32 @@ const columns = [
   {
     title: 'Action',
     dataIndex: 'action',
-    key: 'action',
-    render: (action) => (
-      <a>Remove tag</a>)
+    key: 'action'
   }
 ]
 
 export const TagTable = (props) => {
-  const [aliases] = useSelector(state => [state.aliases])
+  const [aliases, tags] = useSelector(state => [state.aliases, state.tagManagement])
   const data = []
+  const dispatch = useDispatch()
 
+  const removeTag = (tag) => {
+    console.log("Removing " + tag)
+  }
+
+  const confirmDelete = (tag) => {
+    confirm({
+      title: 'Do you want to delete these items?',
+      content:  (
+        <div>
+          Would you like to delete tag <b>{tag}</b> and all of its aliases?
+        </div>
+      ),
+      onOk() { return dispatch(reduxApi.actions.tagManagement.delete({id: "3d"}))
+      },
+      onCancel() {console.log("Canceled deletion of " + tag)},
+    });
+  }
   if (!aliases || !aliases.sync) {
     return <ReduxLoading entity={aliases} label='aliases' />
   }
@@ -42,7 +60,7 @@ export const TagTable = (props) => {
         key: index,
         tag: alias.tag,
         aliases: alias.aliases,
-        action: 'x'
+        action: <a onClick={(e) => confirmDelete(alias.tag)}>Remove tag</a>
       })
     })
   } else {
@@ -51,7 +69,7 @@ export const TagTable = (props) => {
         key: index,
         tag: alias.tag,
         aliases: alias.aliases,
-        action: 'x'
+        action: <a onClick={(e) => confirmDelete(alias.tag)}>Remove tag</a>
       })
     })
   }
