@@ -1,17 +1,33 @@
 import { FullPage, PageBanner } from '../../components/VTheme/VTheme'
 import securePage from '../../hocs/securePage'
 import TagManagementTab from '../../components/TagManagement/TagManagementTab'
+import reduxApi from '../../lib/redux/reduxApi.js'
+import Loading from '../../components/Loading'
+import { useSelector } from 'react-redux'
 
 export const TagMgmtPage = (props) => {
-  return (
-    <FullPage>
-      <PageBanner>
-        <h1>Tag Management</h1>
-      </PageBanner>
-      <TagManagementTab />
+  const aliases = useSelector(state => state.aliases)
 
-    </FullPage>
-  )
+  if (!aliases.sync) { return <FullPage><Loading label='aliases' entity={aliases} /></FullPage> }
+  if (aliases.sync) {
+    return (
+      <FullPage>
+        <PageBanner>
+          <h1>Tag Management</h1>
+        </PageBanner>
+        <TagManagementTab aliases={aliases} />
+
+      </FullPage>
+    )
+  }
+}
+
+TagMgmtPage.getInitialProps = async ({ store }) => {
+  try {
+    return store.dispatch(reduxApi.actions.aliases.get())
+  } catch (err) {
+    console.errpr('error in getting tag management page data', err)
+  }
 }
 
 export default securePage(TagMgmtPage)

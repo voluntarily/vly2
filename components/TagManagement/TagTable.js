@@ -3,10 +3,11 @@ import AliasDisplay from './AliasDisplay'
 import EditableTagCell from './EditableTagCell'
 import AddAlias from './AddAlias'
 import reduxApi, { withTagManagement } from '../../lib/redux/reduxApi.js'
-import { useSelector, useDispatch } from 'react-redux'
-import ReduxLoading from '../Loading'
+import { useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react'
+import Loading from '../Loading'
 
-const { confirm } = Modal; 
+const { confirm } = Modal
 
 const columns = [
   {
@@ -29,52 +30,70 @@ const columns = [
   }
 ]
 
+// await Promise.all([
+//   store.dispatch(reduxApi.actions.locations.get()),
+//   store.dispatch(reduxApi.actions.tags.get())
+// ])
+
 export const TagTable = (props) => {
-  const [aliases, tags] = useSelector(state => [state.aliases, state.tagManagement])
-  const data = []
+  const [aliases] = useState(props.aliases)
+  const [deletedWords, addDeletedWord] = useState([])
   const dispatch = useDispatch()
 
-  const removeTag = (tag) => {
-    console.log("Removing " + tag)
+  if (!aliases.sync) {
+    return (<Loading label='aliases' entity={aliases} />)
   }
 
-  const confirmDelete = (tag) => {
+  useEffect(() => {
+  }, [deletedWords])
+  const confirmDelete = (e, tag) => {
+    e.preventDefault()
     confirm({
       title: 'Do you want to delete these items?',
-      content:  (
-        <div>
-          Would you like to delete tag <b>{tag}</b> and all of its aliases?
-        </div>
+      content: (
+        <div>Would you like to delete tag <b>{tag}</b> and all of its aliases?</div>
       ),
-      onOk() { return dispatch(reduxApi.actions.tagManagement.delete({id: "3d"}))
+      onOk () {
+        deleteTag(tag)
       },
-      onCancel() {console.log("Canceled deletion of " + tag)},
-    });
-  }
-  if (!aliases || !aliases.sync) {
-    return <ReduxLoading entity={aliases} label='aliases' />
-  }
-  if (props.searchVal) {
-    aliases.data.filter(alias => alias.tag.toLowerCase().includes(props.searchVal.toLowerCase())).map((alias, index) => {
-      data.push({
-        key: index,
-        tag: alias.tag,
-        aliases: alias.aliases,
-        action: <a onClick={(e) => confirmDelete(alias.tag)}>Remove tag</a>
-      })
-    })
-  } else {
-    aliases.data.map((alias, index) => {
-      data.push({
-        key: index,
-        tag: alias.tag,
-        aliases: alias.aliases,
-        action: <a onClick={(e) => confirmDelete(alias.tag)}>Remove tag</a>
-      })
+      onCancel () { console.log('Canceled deletion of ' + tag) }
     })
   }
 
-  return <Table dataSource={data} columns={columns} />
+  const deleteTag = async (tag) => {
+    try {
+      await dispatch(reduxApi.actions.tagManagement.delete({ id: tag }))
+      addDeletedWord(oldArray => [...oldArray, tag])
+    } catch {
+      console.error('YEAH NAH')
+    }
+  }
+
+  if (props.searchVal) {
+    return (
+      <Table
+        dataSource={aliases.data.filter(alias => (alias.tag.toLowerCase().includes(props.searchVal.toLowerCase())) && deletedWords.indexOf(alias.tag) === -1).map((alias, index) => {
+          return {
+            key: index,
+            tag: alias.tag,
+            aliases: alias.aliases,
+            action: <a onClick={(e) => confirmDelete(e, alias.tag)}>Remove tag</a>
+          }
+        })} columns={columns}
+      />)
+  }
+
+  return (
+    <Table
+      dataSource={aliases.data.filter(alias => deletedWords.indexOf(alias.tag) === -1).map((alias, index) => {
+        return {
+          key: index,
+          tag: alias.tag,
+          aliases: alias.aliases,
+          action: <a onClick={(e) => confirmDelete(e, alias.tag)}>Remove tag</a>
+        }
+      })} columns={columns}
+    />)
 }
 
 export default withTagManagement(TagTable)

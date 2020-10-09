@@ -1,11 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Tabs, Button } from 'antd'
 import VTabs from '../VTheme/VTabs'
 import { TagTable } from './TagTable'
 import Link from 'next/link'
 import styled from 'styled-components'
-import reduxApi, { withTagManagement } from '../../lib/redux/reduxApi.js'
-import { useDispatch } from 'react-redux'
 
 import { TagSearch } from './TagSearch'
 
@@ -19,12 +17,6 @@ const SearchContainer = styled.div`
 
 const TagManagementTab = (props) => {
   const [searchVal, setSearchVal] = useState('')
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(reduxApi.actions.aliases.get())
-    dispatch(reduxApi.actions.tags.get())
-  }, [])
 
   const handleSearch = (value) => {
     setSearchVal(value)
@@ -35,7 +27,6 @@ const TagManagementTab = (props) => {
       <Tabs.TabPane tab='Tags' key={1}>
         <SearchContainer>
           {' '}
-          {/* <TagInput value={[]} existingTags={tags.data} onChange={e => console.log("Changed!!")}/>{' '} */}
           <TagSearch value={[]} handleSearch={handleSearch} />
         </SearchContainer>
         <Link href=''>
@@ -43,10 +34,10 @@ const TagManagementTab = (props) => {
             Add Tag
           </Button>
         </Link>
-        <TagTable searchVal={searchVal} />
+        <TagTable searchVal={searchVal} aliases={props.aliases} />
       </Tabs.TabPane>
     </VTabs>
   )
 }
 
-export default withTagManagement(TagManagementTab)
+export default TagManagementTab
