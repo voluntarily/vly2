@@ -1,6 +1,8 @@
 import { Icon, Typography, Input, Form, Button } from 'antd'
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useSelector, useDispatch } from 'react-redux'
+import reduxApi from '../../lib/redux/reduxApi.js'
 
 const TagWrapper = styled.div`
   display: inline-block;
@@ -20,23 +22,56 @@ const StyledButton = styled(Button)`
 
 const EditableTagCell = (props) => {
   const [editing, setEditing] = useState(false)
+  const [allowed, setAllowed] = useState(false)
   const { getFieldDecorator } = props.form
+  const [tag, setTag] = useState(props.tag)
+  const tags = useSelector(state => state.tags)
+  const dispatch = useDispatch()
 
-  // TODO: Check if a tag to be submitted exists in the db
   const handleSubmit = (e) => {
     e.preventDefault()
-    props.form.validateFields((err, values) => {
-      if (!err) {
-        setEditing(false)
-      }
-    })
+    console.log('HANDLE SUBMIT')
   }
 
+  const validateTagName = (rule, value, callback) => {
+    const trimmedTag = value.trim().toLowerCase()
+    let callbackText = ''
+    if (tags.data.findIndex(item => trimmedTag.toLowerCase() === item.toLowerCase()) === -1) {
+      setAllowed(true)
+      return {
+        validateStatus: 'success',
+        errorMsg: ''
+      }
+      // Do not allow submit if the input is the same as the orginal tag
+    }
+    if (tag === trimmedTag) {
+      setAllowed(false)
+      callbackText = 'This is the original name of the tag'
+      callback(callbackText)
+      return {
+        validateStatus: 'error',
+        errorMsg: 'This is the original name of the tag'
+      }
+    }
+    callbackText = 'A tag with this name already exists'
+    callback(callbackText)
+    setAllowed(false)
+    return {
+      validateStatus: 'error',
+      errorMsg: 'A tag with this name already exists'
+    }
+  }
+
+  const editTagName = (edit) => {
+    setEditing(false)
+    dispatch(reduxApi.actions.tagManagement.put({ id: props.tag }, { body: JSON.stringify({ edittedTag: edit }) }))
+    setTag(edit)
+  }
   if (!editing) {
     return (
       <TagWrapper>
         <Typography>
-          {props.tag}{' '}
+          {tag}
           <StyledIcon
             type='edit'
             onClick={() => setEditing((editing) => true)}
@@ -50,25 +85,22 @@ const EditableTagCell = (props) => {
         <Form
           name='basic'
           initialValues={{
-            tag: props.tag
+            tag: tag
           }}
           onSubmit={handleSubmit}
         >
           <Form.Item name='tag'>
             {getFieldDecorator('tag', {
-              initialValue: props.tag,
-              rules: [{ required: true, message: 'Please input the tag!' }]
+              initialValue: tag,
+              rules: [{ required: true, message: 'Please input the tag!' }, { validator: validateTagName }]
             })(<Input name='tag' />)}
           </Form.Item>
           <Form.Item>
-            <StyledButton type='primary' htmlType='submit'>
-              Submit
-            </StyledButton>
+            <StyledButton type='primary' htmlType='submit' onClick={e => editTagName(props.form.getFieldValue('tag'))} disabled={!allowed}>Submit</StyledButton>
             <StyledButton
               type='secondary'
               onClick={(editing) => setEditing(false)}
-            >
-              Cancel
+            >Cancel
             </StyledButton>
           </Form.Item>
         </Form>

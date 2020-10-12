@@ -24,6 +24,7 @@ export const TagMgmtPage = (props) => {
 
 TagMgmtPage.getInitialProps = async ({ store }) => {
   try {
+    store.dispatch(reduxApi.actions.tags.get())
     return store.dispatch(reduxApi.actions.aliases.get())
   } catch (err) {
     console.errpr('error in getting tag management page data', err)

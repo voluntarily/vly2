@@ -65,7 +65,7 @@ export const TagTable = (props) => {
       await dispatch(reduxApi.actions.tagManagement.delete({ id: tag }))
       addDeletedWord(oldArray => [...oldArray, tag])
     } catch {
-      console.error('YEAH NAH')
+      console.error('YEAH NAH for deleting')
     }
   }
 
