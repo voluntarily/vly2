@@ -1,5 +1,4 @@
 import { Table, Modal } from 'antd'
-import AliasDisplay from './AliasDisplay'
 import EditableTagCell from './EditableTagCell'
 import AddAlias from './AddAlias'
 import reduxApi, { withTagManagement } from '../../lib/redux/reduxApi.js'
@@ -20,7 +19,7 @@ const columns = [
     title: 'Aliases',
     dataIndex: 'aliases',
     key: 'aliases',
-    render: aliases => (<span><AliasDisplay aliases={aliases[0]} tag={aliases[1]} /><AddAlias /></span>
+    render: aliases => (<span><AddAlias aliases={aliases[0]} tag={aliases[1]} /></span>
     )
   },
   {
@@ -63,7 +62,7 @@ export const TagTable = (props) => {
   const deleteTag = async (tag) => {
     try {
       await dispatch(reduxApi.actions.tagManagement.delete({ id: tag }))
-      addDeletedWord(oldArray => [...oldArray, tag])
+      addDeletedWord(deletedWords => [...deletedWords, tag])
     } catch {
       console.error('YEAH NAH for deleting')
     }

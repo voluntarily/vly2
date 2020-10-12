@@ -22,6 +22,7 @@ const StyledButton = styled(Button)`
 
 const EditableTagCell = (props) => {
   const [editing, setEditing] = useState(false)
+  const [edited, setEdited] = useState(false)
   const [allowed, setAllowed] = useState(false)
   const { getFieldDecorator } = props.form
   const [tag, setTag] = useState(props.tag)
@@ -66,17 +67,27 @@ const EditableTagCell = (props) => {
     setEditing(false)
     dispatch(reduxApi.actions.tagManagement.put({ id: props.tag }, { body: JSON.stringify({ edittedTag: edit }) }))
     setTag(edit)
+    setEdited(true)
   }
   if (!editing) {
     return (
       <TagWrapper>
-        <Typography>
-          {tag}
-          <StyledIcon
-            type='edit'
-            onClick={() => setEditing((editing) => true)}
-          />
-        </Typography>
+        {!edited &&
+          <Typography>
+            {props.tag}
+            <StyledIcon
+              type='edit'
+              onClick={() => setEditing((editing) => true)}
+            />
+          </Typography>}
+        {edited &&
+          <Typography>
+            {tag}
+            <StyledIcon
+              type='edit'
+              onClick={() => setEditing((editing) => true)}
+            />
+          </Typography>}
       </TagWrapper>
     )
   } else {

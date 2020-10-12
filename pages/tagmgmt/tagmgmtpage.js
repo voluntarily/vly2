@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux'
 
 export const TagMgmtPage = (props) => {
   const aliases = useSelector(state => state.aliases)
-
   if (!aliases.sync) { return <FullPage><Loading label='aliases' entity={aliases} /></FullPage> }
   if (aliases.sync) {
     return (

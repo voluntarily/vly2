@@ -23,6 +23,7 @@ export function AliasDisplay ({ aliases, tag }) {
     </TagContainer>
   )
 }
+
 function onChange (alias, tag, dispatch) {
   dispatch(reduxApi.actions.aliases.delete({ id: tag }, { body: JSON.stringify({ aliasToDelete: alias }) }))
 }

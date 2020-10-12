@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Icon, Form, Input, Button } from 'antd'
+import { useDispatch } from 'react-redux'
+import reduxApi from '../../lib/redux/reduxApi.js'
+import { TagStyle } from '../VTheme/VTheme'
 
-// we use this tag for categories
 export const StyledIcon = styled(Icon)`
   width: auto;
   max-width: 100%;
@@ -20,38 +22,73 @@ const StyledButton = styled(Button)`
 `
 
 const AddAlias = (props) => {
+  const [allowed, setAllowed] = useState(false)
   const [adding, setAdding] = useState(false)
   const { getFieldDecorator } = props.form
+  const [aliasList, setAliasList] = useState(props.aliases)
+  const [newAliasesList, setNewAliasesList] = useState([])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    props.form.validateFields((err, values) => {
-      if (!err) {
-        setAdding(false)
-        console.log('Received values of form: ', values)
+  const dispatch = useDispatch()
+
+  const validateAlias = (rule, value, callback) => {
+    const trimmedTag = value.trim().toLowerCase()
+    let callbackText = ''
+    if (aliasList.findIndex(item => trimmedTag.toLowerCase() === item.toLowerCase()) === -1) {
+      setAllowed(true)
+      return {
+        validateStatus: 'success',
+        errorMsg: ''
       }
-    })
+    }
+    callbackText = 'This alias is already on the list'
+    callback(callbackText)
+    setAllowed(false)
+    return {
+      validateStatus: 'error',
+      errorMsg: 'An alias with this name already exists'
+    }
   }
 
-  if (!adding) {
-    return <StyledIcon type='plus' onClick={(adding) => setAdding(true)} />
+  console.log('new alias list ' + newAliasesList)
+  const addAlias = (aliasToAdd) => {
+    dispatch(reduxApi.actions.aliases.post({ id: props.tag }, { body: JSON.stringify({ aliasToAdd: aliasToAdd }) }))
+    setAliasList(...aliasList, aliasToAdd)
+    setNewAliasesList(newAliasesList => [...newAliasesList, aliasToAdd])
+    setAdding(false)
+  }
+
+  const deleteAlias = (aliasToDelete) => {
+    dispatch(reduxApi.actions.aliases.delete({ id: props.tag }, { body: JSON.stringify({ aliasToDelete: aliasToDelete }) }))
+  }
+
+  if (!adding && aliasList) {
+    return (
+      <span>
+        {props.aliases.map(alias => { return <TagStyle key={alias} closable onClose={() => deleteAlias(alias)}>{alias}</TagStyle> })}
+        {newAliasesList.map(alias => { return <TagStyle key={alias} closable onClose={() => deleteAlias(alias)}>{alias}</TagStyle> })}
+        <StyledIcon type='plus' onClick={() => setAdding(true)} />
+      </span>)
   } else {
     return (
-      <Form name='basic' onSubmit={handleSubmit}>
-        <Form.Item name='tag'>
-          {getFieldDecorator('tag', {
-            rules: [{ required: true, message: 'Please input the tag!' }]
-          })(<Input name='tag' />)}
-        </Form.Item>
-        <Form.Item>
-          <StyledButton type='primary' htmlType='submit'>
+      <span>
+        {props.aliases.map(alias => { return <TagStyle key={alias} closable onClose={() => deleteAlias(alias)}>{alias}</TagStyle> })}
+        {newAliasesList.map(alias => { return <TagStyle key={alias} closable onClose={() => deleteAlias(alias)}>{alias}</TagStyle> })}
+        <Form name='basic'>
+          <Form.Item name='tag'>
+            {getFieldDecorator('tag', {
+              rules: [{ required: true, message: 'Please input the tag!' }, { validator: validateAlias }]
+            })(<Input name='tag' />)}
+          </Form.Item>
+          <Form.Item>
+            <StyledButton type='primary' htmlType='submit' disabled={!allowed} onClick={() => addAlias((props.form.getFieldValue('tag')))}>
             Submit
-          </StyledButton>
-          <StyledButton type='secondary' onClick={(adding) => setAdding(false)}>
+            </StyledButton>
+            <StyledButton type='secondary' onClick={() => setAdding(false)}>
             Cancel
-          </StyledButton>
-        </Form.Item>
-      </Form>
+            </StyledButton>
+          </Form.Item>
+        </Form>
+      </span>
     )
   }
 }
