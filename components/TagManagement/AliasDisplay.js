@@ -2,6 +2,8 @@ import PropTypes from 'prop-types'
 import { TagStyle } from '../VTheme/VTheme'
 import styled from 'styled-components'
 import { TagDisplay } from '../Tags/TagDisplay'
+import { useDispatch } from 'react-redux'
+import reduxApi from '../../lib/redux/reduxApi.js'
 
 const TagContainer = styled.div`
 display: inline-block;
@@ -10,21 +12,22 @@ width: auto;
 
 `
 
-export function AliasDisplay ({ tags }) {
-  if (!tags) return ''
+export function AliasDisplay ({ aliases, tag }) {
+  const dispatch = useDispatch()
+  if (!aliases) return ''
   return (
     <TagContainer>
-      {tags.map(tag => {
-        return <TagStyle key={tag} closable onClose={() => onChange()}>{tag}</TagStyle>
+      {aliases.map(alias => {
+        return <TagStyle key={alias} closable onClose={() => onChange(alias, tag, dispatch)}>{alias}</TagStyle>
       })}
     </TagContainer>
   )
 }
-function onChange () {
-  console.log('On change triggered')
+function onChange (alias, tag, dispatch) {
+  dispatch(reduxApi.actions.aliases.delete({ id: tag }, { body: JSON.stringify({ aliasToDelete: alias }) }))
 }
 TagDisplay.propTypes = {
-  tags: PropTypes.arrayOf(PropTypes.string)
+  aliases: PropTypes.arrayOf(PropTypes.string)
 }
 
 export default AliasDisplay

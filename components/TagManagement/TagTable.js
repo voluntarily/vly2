@@ -20,7 +20,7 @@ const columns = [
     title: 'Aliases',
     dataIndex: 'aliases',
     key: 'aliases',
-    render: aliases => (<span><AliasDisplay tags={aliases} /><AddAlias /></span>
+    render: aliases => (<span><AliasDisplay aliases={aliases[0]} tag={aliases[1]} /><AddAlias /></span>
     )
   },
   {
@@ -76,7 +76,7 @@ export const TagTable = (props) => {
           return {
             key: index,
             tag: alias.tag,
-            aliases: alias.aliases,
+            aliases: [alias.aliases, alias.tag],
             action: <a onClick={(e) => confirmDelete(e, alias.tag)}>Remove tag</a>
           }
         })} columns={columns}
@@ -89,7 +89,7 @@ export const TagTable = (props) => {
         return {
           key: index,
           tag: alias.tag,
-          aliases: alias.aliases,
+          aliases: [alias.aliases, alias.tag],
           action: <a onClick={(e) => confirmDelete(e, alias.tag)}>Remove tag</a>
         }
       })} columns={columns}
