@@ -10,3 +10,4 @@ The community expects volunteers to
 * Comply with all laws, including sale of goods and intellectual property laws
 * Comply with Voluntarily’s terms and conditions
 * Accept the full [Code of Conduct](/terms/conduct) and [Terms of Use](/terms)
+
