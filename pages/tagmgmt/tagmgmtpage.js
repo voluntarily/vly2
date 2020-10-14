@@ -1,5 +1,5 @@
 import { FullPage, PageBanner } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
+import adminPage from '../../hocs/adminPage'
 import TagManagementTab from '../../components/TagManagement/TagManagementTab'
 import reduxApi from '../../lib/redux/reduxApi.js'
 import Loading from '../../components/Loading'
@@ -30,4 +30,4 @@ TagMgmtPage.getInitialProps = async ({ store }) => {
   }
 }
 
-export default securePage(TagMgmtPage)
+export default adminPage(TagMgmtPage)
