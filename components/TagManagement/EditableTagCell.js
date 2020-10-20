@@ -19,13 +19,12 @@ const StyledIcon = styled(Icon)`
 const StyledButton = styled(Button)`
   margin-right: 0.5rem;
 `
-
 const EditableTagCell = (props) => {
   const [editing, setEditing] = useState(false)
   const [edited, setEdited] = useState(false)
   const [allowed, setAllowed] = useState(false)
   const { getFieldDecorator } = props.form
-  const [tag, setTag] = useState(props.tag)
+  const [tag] = useState(props.tag)
   const tags = useSelector(state => state.tags)
   const dispatch = useDispatch()
 
@@ -63,10 +62,10 @@ const EditableTagCell = (props) => {
     }
   }
 
-  const editTagName = (edit) => {
+  const editTagName = async (edit) => {
     setEditing(false)
-    dispatch(reduxApi.actions.tagManagement.put({ id: props.tag }, { body: JSON.stringify({ edittedTag: edit }) }))
-    setTag(edit)
+    await dispatch(reduxApi.actions.tagManagement.put({ id: props.tag }, { body: JSON.stringify({ edittedTag: edit }) }))
+    await dispatch(reduxApi.actions.aliases.get())
     setEdited(true)
   }
   if (!editing) {

@@ -49,7 +49,6 @@ const AddAlias = (props) => {
     }
   }
 
-  console.log('new alias list ' + newAliasesList)
   const addAlias = (aliasToAdd) => {
     dispatch(reduxApi.actions.aliases.post({ id: props.tag }, { body: JSON.stringify({ aliasToAdd: aliasToAdd }) }))
     setAliasList(...aliasList, aliasToAdd)

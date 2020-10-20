@@ -37,6 +37,7 @@ const columns = [
 export const TagTable = (props) => {
   const [aliases] = useState(props.aliases)
   const [deletedWords, addDeletedWord] = useState([])
+  const [addedWords, addAddedWord] = useState([])
   const dispatch = useDispatch()
 
   if (!aliases.sync) {
@@ -44,7 +45,7 @@ export const TagTable = (props) => {
   }
 
   useEffect(() => {
-  }, [deletedWords])
+  }, [deletedWords, addedWords])
   const confirmDelete = (e, tag) => {
     e.preventDefault()
     confirm({
@@ -66,6 +67,14 @@ export const TagTable = (props) => {
     } catch {
       console.error('YEAH NAH for deleting')
     }
+  }
+
+  if (props.tagToAdd) {
+    const update = async () => {
+      await dispatch(reduxApi.actions.aliases.get())
+    }
+    update()
+    addAddedWord(addedWords => [...addedWords, props.tagToAdd])
   }
 
   if (props.searchVal) {
