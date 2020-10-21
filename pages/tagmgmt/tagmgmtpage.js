@@ -15,11 +15,13 @@ import AddAlias from '../../components/TagManagement/AddAlias'
 const { confirm } = Modal
 
 const SearchContainer = styled.div`
-  display: inline-block;
+  display: flex;
   position: relative;
   width: auto;
-  padding-bottom: 1em;
-  padding-right: 2em;
+`
+const ButtonContainer = styled.div `
+padding-left: 1em;
+padding-top: 0.2em;
 `
 const columns = [
   {
@@ -48,6 +50,7 @@ export const TagMgmtPage = (props) => {
   const aliases = useSelector((state) => state.aliases)
   useSelector((state) => state.tagManagement)
   const [searchVal, setSearchVal] = useState('')
+  const [addButtonDisabled, setAddButtonDisabled] = useState(false)
   const [deletedWords] = useState([])
   const dispatch = useDispatch()
 
@@ -99,21 +102,24 @@ export const TagMgmtPage = (props) => {
     return (
       <FullPage>
         <PageBanner>
-          <h1>Tag Management</h1>
+          <h1 >Tag Management</h1>
         </PageBanner>
         <VTabs size='large'>
           <Tabs.TabPane tab='Tags' key={1}>
             <SearchContainer>
-              <TagSearch value={searchVal} handleSearch={handleSearch} />
-            </SearchContainer>
+              <TagSearch value={searchVal} handleSearch={handleSearch} setDisable={setAddButtonDisabled}/>
+              <ButtonContainer>
             <Button
               shape='round'
               size='default'
               type='primary'
+              disabled={addButtonDisabled}
               onClick={() => addTag(searchVal)}
             >
             Add Tag
             </Button>
+            </ButtonContainer>
+            </SearchContainer>
             {searchVal && (
               <Table
                 dataSource={aliases.data

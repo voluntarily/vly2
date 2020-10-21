@@ -11,7 +11,7 @@ export const TagSearch = (props) => {
     const trimmedTag = value.trim().toLowerCase()
     let callbackText = ''
     if (tags.data.findIndex(item => trimmedTag.toLowerCase() === item.toLowerCase()) === -1) {
-      // setAllowed(true)
+    props.setDisable(false)
       return {
         validateStatus: 'success',
         errorMsg: ''
@@ -19,17 +19,17 @@ export const TagSearch = (props) => {
       // Do not allow submit if the input is the same as the orginal tag
     }
     if (inputvalue === trimmedTag) {
-      // setAllowed(false)
       callbackText = 'This is the original name of the tag'
+      props.setDisable(true)
       callback(callbackText)
       return {
         validateStatus: 'error',
         errorMsg: 'This is the original name of the tag'
       }
     }
+    props.setDisable(true)
     callbackText = 'A tag with this name already exists'
     callback(callbackText)
-    // setAllowed(false)
     return {
       validateStatus: 'error',
       errorMsg: 'A tag with this name already exists'
@@ -45,7 +45,6 @@ export const TagSearch = (props) => {
       {' '}
       <Form>
         <Form.Item name='tag'>
-
           {getFieldDecorator('tag', {
             initialValue: inputvalue,
             rules: [{ required: true, message: 'Please input the tag!' }, { validator: validateTagName }]
