@@ -19,12 +19,13 @@ const StyledIcon = styled(Icon)`
 const StyledButton = styled(Button)`
   margin-right: 0.5rem;
 `
+
 const EditableTagCell = (props) => {
   const [editing, setEditing] = useState(false)
   const [edited, setEdited] = useState(false)
   const [allowed, setAllowed] = useState(false)
   const { getFieldDecorator } = props.form
-  const [tag] = useState(props.tag)
+  const [ tag ] = useState(props.tag)
   const tags = useSelector(state => state.tags)
   const dispatch = useDispatch()
 

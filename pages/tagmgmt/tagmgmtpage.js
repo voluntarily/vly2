@@ -19,7 +19,7 @@ const SearchContainer = styled.div`
   position: relative;
   width: auto;
 `
-const ButtonContainer = styled.div `
+const ButtonContainer = styled.div`
 padding-left: 1em;
 padding-top: 0.2em;
 `
@@ -102,23 +102,23 @@ export const TagMgmtPage = (props) => {
     return (
       <FullPage>
         <PageBanner>
-          <h1 >Tag Management</h1>
+          <h1>Tag Management</h1>
         </PageBanner>
         <VTabs size='large'>
           <Tabs.TabPane tab='Tags' key={1}>
             <SearchContainer>
-              <TagSearch value={searchVal} handleSearch={handleSearch} setDisable={setAddButtonDisabled}/>
+              <TagSearch value={searchVal} handleSearch={handleSearch} setDisable={setAddButtonDisabled} />
               <ButtonContainer>
-            <Button
-              shape='round'
-              size='default'
-              type='primary'
-              disabled={addButtonDisabled}
-              onClick={() => addTag(searchVal)}
-            >
+                <Button
+                  shape='round'
+                  size='default'
+                  type='primary'
+                  disabled={addButtonDisabled}
+                  onClick={() => addTag(searchVal)}
+                >
             Add Tag
-            </Button>
-            </ButtonContainer>
+                </Button>
+              </ButtonContainer>
             </SearchContainer>
             {searchVal && (
               <Table

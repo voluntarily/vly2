@@ -11,7 +11,7 @@ export const TagSearch = (props) => {
     const trimmedTag = value.trim().toLowerCase()
     let callbackText = ''
     if (tags.data.findIndex(item => trimmedTag.toLowerCase() === item.toLowerCase()) === -1) {
-    props.setDisable(false)
+      props.setDisable(false)
       return {
         validateStatus: 'success',
         errorMsg: ''

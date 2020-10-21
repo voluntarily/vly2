@@ -14,7 +14,7 @@ width: auto;
 
 export function AliasDisplay ({ aliases, tag }) {
   const dispatch = useDispatch()
-  if (!aliases) return ''
+
   return (
     <TagContainer>
       {aliases.map(alias => {
@@ -24,8 +24,9 @@ export function AliasDisplay ({ aliases, tag }) {
   )
 }
 
-function onChange (alias, tag, dispatch) {
-  dispatch(reduxApi.actions.aliases.delete({ id: tag }, { body: JSON.stringify({ aliasToDelete: alias }) }))
+async function onChange (alias, tag, dispatch) {
+  await dispatch(reduxApi.actions.aliases.delete({ id: tag }, { body: JSON.stringify({ aliasToDelete: alias }) }))
+  await dispatch(reduxApi.actions.aliases.get())
 }
 TagDisplay.propTypes = {
   aliases: PropTypes.arrayOf(PropTypes.string)

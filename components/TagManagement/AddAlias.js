@@ -33,7 +33,11 @@ const AddAlias = (props) => {
   const validateAlias = (rule, value, callback) => {
     const trimmedTag = value.trim().toLowerCase()
     let callbackText = ''
-    if (aliasList.findIndex(item => trimmedTag.toLowerCase() === item.toLowerCase()) === -1) {
+    if (
+      aliasList.findIndex(
+        (item) => trimmedTag.toLowerCase() === item.toLowerCase()
+      ) === -1
+    ) {
       setAllowed(true)
       return {
         validateStatus: 'success',
@@ -49,41 +53,86 @@ const AddAlias = (props) => {
     }
   }
 
-  const addAlias = (aliasToAdd) => {
-    dispatch(reduxApi.actions.aliases.post({ id: props.tag }, { body: JSON.stringify({ aliasToAdd: aliasToAdd }) }))
+  const addAlias = async (aliasToAdd) => {
+    await dispatch(
+      reduxApi.actions.aliases.post(
+        { id: props.tag },
+        { body: JSON.stringify({ aliasToAdd: aliasToAdd }) }
+      )
+    )
+    await dispatch(reduxApi.actions.aliases.get())
     setAliasList(...aliasList, aliasToAdd)
-    setNewAliasesList(newAliasesList => [...newAliasesList, aliasToAdd])
+    setNewAliasesList((newAliasesList) => [...newAliasesList, aliasToAdd])
     setAdding(false)
   }
 
-  const deleteAlias = (aliasToDelete) => {
-    dispatch(reduxApi.actions.aliases.delete({ id: props.tag }, { body: JSON.stringify({ aliasToDelete: aliasToDelete }) }))
+  const deleteAlias = async (aliasToDelete) => {
+    await dispatch(
+      reduxApi.actions.aliases.delete(
+        { id: props.tag },
+        { body: JSON.stringify({ aliasToDelete: aliasToDelete }) }
+      )
+    )
+    await dispatch(reduxApi.actions.aliases.get())
   }
 
   if (!adding && aliasList) {
     return (
       <span>
-        {props.aliases.map(alias => { return <TagStyle key={alias} closable onClose={() => deleteAlias(alias)}>{alias}</TagStyle> })}
-        {newAliasesList.map(alias => { return <TagStyle key={alias} closable onClose={() => deleteAlias(alias)}>{alias}</TagStyle> })}
+        {props.aliases.map((alias) => {
+          return (
+            <TagStyle key={alias} closable onClose={() => deleteAlias(alias)}>
+              {alias}
+            </TagStyle>
+          )
+        })}
+        {newAliasesList.map((alias) => {
+          return (
+            <TagStyle key={alias} closable onClose={() => deleteAlias(alias)}>
+              {alias}
+            </TagStyle>
+          )
+        })}
         <StyledIcon type='plus' onClick={() => setAdding(true)} />
-      </span>)
+      </span>
+    )
   } else {
     return (
       <span>
-        {props.aliases.map(alias => { return <TagStyle key={alias} closable onClose={() => deleteAlias(alias)}>{alias}</TagStyle> })}
-        {newAliasesList.map(alias => { return <TagStyle key={alias} closable onClose={() => deleteAlias(alias)}>{alias}</TagStyle> })}
+        {props.aliases.map((alias) => {
+          return (
+            <TagStyle key={alias} closable onClose={() => deleteAlias(alias)}>
+              {alias}
+            </TagStyle>
+          )
+        })}
+        {newAliasesList.map((alias) => {
+          return (
+            <TagStyle key={alias} closable onClose={() => deleteAlias(alias)}>
+              {alias}
+            </TagStyle>
+          )
+        })}
         <Form name='basic'>
           <Form.Item name='tag'>
             {getFieldDecorator('tag', {
-              rules: [{ required: true, message: 'Please input the tag!' }, { validator: validateAlias }]
+              rules: [
+                { required: true, message: 'Please input the tag!' },
+                { validator: validateAlias }
+              ]
             })(<Input name='tag' />)}
           </Form.Item>
           <Form.Item>
-            <StyledButton type='primary' htmlType='submit' disabled={!allowed} onClick={() => addAlias((props.form.getFieldValue('tag')))}>
-            Submit
+            <StyledButton
+              type='primary'
+              htmlType='submit'
+              disabled={!allowed}
+              onClick={() => addAlias(props.form.getFieldValue('tag'))}
+            >
+              Submit
             </StyledButton>
             <StyledButton type='secondary' onClick={() => setAdding(false)}>
-            Cancel
+              Cancel
             </StyledButton>
           </Form.Item>
         </Form>
