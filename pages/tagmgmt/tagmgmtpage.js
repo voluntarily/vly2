@@ -19,7 +19,7 @@ const SearchContainer = styled.div`
   position: relative;
   width: auto;
   padding-bottom: 1em;
-  padding-right: 4em;
+  padding-right: 2em;
 `
 const columns = [
   {
@@ -46,7 +46,9 @@ const columns = [
 ]
 export const TagMgmtPage = (props) => {
   const aliases = useSelector((state) => state.aliases)
+  useSelector((state) => state.tagManagement)
   const [searchVal, setSearchVal] = useState('')
+  const [deletedWords] = useState([])
   const dispatch = useDispatch()
 
   if (!aliases.sync || aliases.loading) {
@@ -75,7 +77,7 @@ export const TagMgmtPage = (props) => {
       await dispatch(reduxApi.actions.tagManagement.delete({ id: tag }))
       await dispatch(reduxApi.actions.aliases.get())
     } catch {
-      console.error('YEAH NAH for deleting')
+      console.error('Failed to delete tag ' + tag)
     }
   }
 
@@ -89,7 +91,6 @@ export const TagMgmtPage = (props) => {
         reduxApi.actions.tagManagement.post({ id: value }, { tags: [value] })
       )
       await dispatch(reduxApi.actions.aliases.get())
-      // setTagToAdd(value)
     } catch {
       console.error('YEAH NAH for adding for tag' + value)
     }
@@ -118,7 +119,8 @@ export const TagMgmtPage = (props) => {
                 dataSource={aliases.data
                   .filter(
                     (alias) =>
-                      alias.tag.toLowerCase().includes(searchVal.toLowerCase())
+                      alias.tag.toLowerCase().includes(searchVal.toLowerCase()) &&
+                    deletedWords.indexOf(alias.tag) === -1
                   )
                   .map((alias, index) => {
                     return {
@@ -138,6 +140,7 @@ export const TagMgmtPage = (props) => {
             {!searchVal && (
               <Table
                 dataSource={aliases.data
+                  .filter((alias) => deletedWords.indexOf(alias.tag) === -1)
                   .map((alias, index) => {
                     return {
                       key: index,
