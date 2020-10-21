@@ -25,7 +25,7 @@ const EditableTagCell = (props) => {
   const [edited, setEdited] = useState(false)
   const [allowed, setAllowed] = useState(false)
   const { getFieldDecorator } = props.form
-  const [ tag ] = useState(props.tag)
+  const [tag] = useState(props.tag)
   const tags = useSelector(state => state.tags)
   const dispatch = useDispatch()
 

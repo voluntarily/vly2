@@ -98,6 +98,7 @@ export const TagMgmtPage = (props) => {
       console.error('YEAH NAH for adding for tag' + value)
     }
   }
+
   if (aliases.sync) {
     return (
       <FullPage>
