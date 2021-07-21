@@ -6,52 +6,56 @@ export const MenuShowState = {
   AUTH: 'auth',
   BASIC: 'basic', // option shows for signed in people
   VOLUNTEER: 'volunteer', // option shows for signed in volunteer
-  BOTH: 'both', // option shows for both ask and offer
+  OPPORTUNITY_PROVIDER: 'opportunityProvider',
+  ORG_ADMIN: 'orgAdmin',
   ADMIN: 'admin' // option shows for signed in admin
 }
-const { ANON, AUTH, BASIC, VOLUNTEER, BOTH, ADMIN } = MenuShowState
+const { ANON, AUTH, BASIC, VOLUNTEER, OPPORTUNITY_PROVIDER, ACTIVITY_PROVIDER, RESOURCE_PROVIDER, ORG_ADMIN, ADMIN } = MenuShowState
 
 const menuItems = [
+
   {
-    key: 'home',
-    show: [AUTH, BASIC, VOLUNTEER, BOTH, ADMIN],
-    href: '/home',
+    key: 'dashboard',
+    show: [AUTH, BASIC, VOLUNTEER, OPPORTUNITY_PROVIDER, ACTIVITY_PROVIDER, RESOURCE_PROVIDER, ORG_ADMIN, ADMIN],
+    href: '/',
     text:
   <FormattedMessage
-    id='HeaderMenu.home'
-    defaultMessage='Home'
+    id='HeaderMenu.dashboard'
+    defaultMessage='Dashboard'
+  />
+  },
+  {
+    key: 'org',
+    show: [VOLUNTEER, BASIC, OPPORTUNITY_PROVIDER, ACTIVITY_PROVIDER, RESOURCE_PROVIDER, ORG_ADMIN, ADMIN],
+    href: '/org',
+    text:
+  <FormattedMessage
+    id='HeaderMenu.org'
+    defaultMessage='Organisations'
   />
   },
   {
     key: 'acts_ask',
-    show: [BASIC, BOTH, ADMIN],
+    show: [OPPORTUNITY_PROVIDER, ACTIVITY_PROVIDER, ORG_ADMIN, ADMIN],
     href: '/a/ask',
     text:
   <FormattedMessage
     id='HeaderMenu.acts_ask'
-    defaultMessage='Ask for help'
+    defaultMessage='Find volunteers'
   />
   },
+
   {
     key: 'acts_offer',
-    show: [VOLUNTEER, BOTH, ADMIN],
-    href: '/a/offer',
+    show: [VOLUNTEER, BASIC, AUTH, ADMIN],
+    href: '/search',
     text:
   <FormattedMessage
     id='HeaderMenu.acts_offer'
-    defaultMessage='Offer to help'
+    defaultMessage='Volunteer to help'
   />
   },
-  {
-    key: 'habout',
-    show: [AUTH, ANON],
-    href: 'https://blog.voluntarily.nz',
-    text:
-  <FormattedMessage
-    id='HeaderMenu.about'
-    defaultMessage='About'
-  />
-  },
+  
   {
     key: 'admin',
     text: 'Admin',
@@ -59,23 +63,10 @@ const menuItems = [
     show: [ADMIN]
   },
   {
-    key: 'orgs',
-    text: 'Groups',
-    href: '/orgs',
-    show: [ADMIN]
-
-  },
-  {
     key: 'people',
     text: 'People',
     href: '/people',
     show: [ADMIN]
-  },
-  {
-    key: 'help',
-    show: [ANON, AUTH, BASIC, VOLUNTEER, BOTH, ADMIN],
-    text: 'Support 🙋🏽‍♀️',
-    href: 'https://support.voluntarily.nz/hc/en-nz'
   },
   {
     key: 'hsignin',
@@ -89,7 +80,7 @@ const menuItems = [
   },
   {
     key: 'hsignoff',
-    show: [AUTH, BASIC, VOLUNTEER, BOTH, ADMIN],
+    show: [AUTH, VOLUNTEER, BASIC, OPPORTUNITY_PROVIDER, ACTIVITY_PROVIDER, RESOURCE_PROVIDER, ORG_ADMIN, ADMIN],
     href: '/auth/sign-off',
     text:
   <FormattedMessage

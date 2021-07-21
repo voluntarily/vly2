@@ -4,31 +4,31 @@ import { FormattedMessage } from 'react-intl'
 
 const OpOrderby = ({ onChange }) => {
   const style = {
-    width: 150,
+    width: 250,
     float: 'right',
     position: 'relative',
     marginTop: -60
   }
   return (
-    <Select placeholder='Sort By' defaultValue='Date' style={style} onChange={onChange}>
+    <Select placeholder='Sort By' defaultValue='Sort by date' lable='Sort by' style={style} onChange={onChange}>
       <Select.Option name='date' value='date'>
         <FormattedMessage
           id='sortDate'
-          defaultMessage='Date'
+          defaultMessage='Sort by date'
           description='Sort order by Date'
         />
       </Select.Option>
       <Select.Option value='name'>
         <FormattedMessage
           id='sortName'
-          defaultMessage='Name'
+          defaultMessage='Sort by name'
           description='Sort order by Name'
         />
       </Select.Option>
       <Select.Option value='commitment'>
         <FormattedMessage
           id='sortCommitment'
-          defaultMessage='commitment'
+          defaultMessage='Sort by time commitment'
           description='Sort order by commitment'
         />
       </Select.Option>

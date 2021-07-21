@@ -7,8 +7,8 @@ export const PersonRole = ({ role }) => {
   const roleOptions = {
     admin: <FormattedMessage id='admin' defaultMessage='Admin' />,
     orgAdmin: <FormattedMessage id='orgAdmin' defaultMessage='Organisation-Admin' />,
-    // opportunityProvider: <FormattedMessage id='opportunityProvider' defaultMessage='Make Requests' />,
-    basic: <FormattedMessage id='basic' defaultMessage='Asker' />,
+    opportunityProvider: <FormattedMessage id='opportunityProvider' defaultMessage='Make Requests' />,
+    basic: <FormattedMessage id='basic' defaultMessage='Volunteer' />,
     volunteer: <FormattedMessage id='volunteer' defaultMessage='Volunteer' />,
     activityProvider: <FormattedMessage id='activityProvider' defaultMessage='Activity Provider' />,
     resourceProvider: <FormattedMessage id='resourceProvider' defaultMessage='Resource Provider' />,
@@ -22,11 +22,12 @@ const roleIcons = {
   admin: '🌟',
   orgAdmin: '⭐',
   support: '💁',
+  opportunityProvider: '🤝',
   activityProvider: '🧑‍💻',
   resourceProvider: '🧑‍💻',
-  volunteer: '🤙', // 🤝,
-  basic: '🙋'
-  // opportunityProvider: '🤝'
+  volunteer: '🤙', 
+  basic: '🤙'
+  
 }
 
 export const PersonRoleIcon = ({ role }) => {

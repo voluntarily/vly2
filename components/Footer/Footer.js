@@ -138,15 +138,6 @@ const Footer = () => (
           <MenuWrapper>
 
             <MenuItem><a href='https://blog.voluntarily.nz/get-involved' target='_blank' rel='noopener noreferrer'>Join the build</a></MenuItem>
-            <MenuItem><a href='https://support.voluntarily.nz/hc/en-nz/requests/new?ticket_form_id=360003338774' target='_blank' rel='noreferrer noopener'>Suggest a Topic</a></MenuItem>
-            <MenuItem>
-              <a
-                href='https://voluntarily.statuspage.io'
-                target='_blank'
-                rel='noopener noreferrer'
-              >System Status
-              </a>
-            </MenuItem>
             <MenuItem>
               <a
                 href='/terms'

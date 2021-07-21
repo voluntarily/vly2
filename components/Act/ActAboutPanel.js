@@ -69,11 +69,12 @@ export function ActAboutPanel ({ act }) {
   const isAnon = me.role.includes(Role.ANON)
   const vp = me.role.includes(Role.VOLUNTEER) || isAnon
   const bp = me.role.includes(Role.BASIC) || isAnon
+  const op = me.role.includes(Role.OPPORTUNITY_PROVIDER) || isAnon
   return (
     <ProfilePanel>
       <ActAboutSection act={act} />
       <Divider />
-      {bp && <ActOpsPanel act={act} type={OFFER} limit={6} />}
+      {op && <ActOpsPanel act={act} type={OFFER} limit={6} />}
       {vp && <ActOpsPanel act={act} type={ASK} limit={6} />}
 
       <ActActivityGuideSection act={act} />

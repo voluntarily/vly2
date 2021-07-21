@@ -30,6 +30,7 @@ module.exports = options => async (req, res, next) => {
     for (const role of userRoles) {
       if (rules[role] == null) continue
       if (role) {
+        console.log(`Role ${role}`)
         allRules = allRules.concat(rules[role])
       }
       if (role === 'admin') break

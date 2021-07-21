@@ -46,9 +46,9 @@ export const ActListSection = () => {
     const getActivities = async () => {
       const q = { status: 'active' }
       const query = { }
-      if (me.topicGroups && me.topicGroups.length) {
-        q.tags = { $in: me.topicGroups }
-      }
+      //if (me.topicGroups && me.topicGroups.length) {
+      //  q.tags = { $in: me.topicGroups }
+      //}
       if (selectedOrg) {
         q.offerOrg = selectedOrg
       }
@@ -57,6 +57,7 @@ export const ActListSection = () => {
         query.search = search
       }
       await dispatch(reduxApi.actions.activities.get(query))
+      
     }
     getActivities()
   }, [search, selectedOrg])
@@ -106,15 +107,7 @@ export const ActListSection = () => {
               </List.Item>
             )}
           />
-          <Card>Cant find what you want?
-            <a
-              target='_blank'
-              rel='noopener noreferrer'
-              href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/17'
-            >
-            Suggest an activity here
-            </a>
-          </Card>
+         
         </div>
       </SidebarGrid>
     </>

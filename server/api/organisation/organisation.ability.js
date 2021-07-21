@@ -42,8 +42,9 @@ const ruleBuilder = (session) => {
 
   return {
     [Role.ANON]: defaultAbilities,
-    [Role.ACTIVITY_PROVIDER]: defaultAbilities,
+    [Role.BASIC]: defaultAbilities,
     [Role.VOLUNTEER]: defaultAbilities,
+    [Role.ACTIVITY_PROVIDER]: defaultAbilities,
     [Role.OPPORTUNITY_PROVIDER]: defaultAbilities,
     [Role.SUPPORT]: defaultAbilities,
     // ORG_ADMIN roles are further trimmed in each Controller Action

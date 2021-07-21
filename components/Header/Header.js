@@ -85,9 +85,10 @@ const Header = () => {
   }
 
   let state = isAuthenticated ? MenuShowState.AUTH : MenuShowState.ANON
-  if (me.role.includes(Role.BASIC)) state = MenuShowState.BASIC
+  if (me.role.includes(Role.AUTH)) state = MenuShowState.AUTH
   if (me.role.includes(Role.VOLUNTEER)) state = MenuShowState.VOLUNTEER
-  if (me.role.includes(Role.VOLUNTEER) && me.role.includes(Role.BASIC)) state = MenuShowState.BOTH
+  if (me.role.includes(Role.ORG_ADMIN)) state = MenuShowState.ORG_ADMIN
+  if (me.role.includes(Role.ACTIVITY_PROVIDER)) state = MenuShowState.ACTIVITY_PROVIDER
   if (me.role.includes(Role.ADMIN) || me.role.includes(Role.SUPPORT)) state = MenuShowState.ADMIN
   return (
     <Layout.Header style={headerStyle}>
