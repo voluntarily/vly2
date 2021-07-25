@@ -95,7 +95,7 @@ const Header = () => {
       {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><Icon type='warning' /> {notice}</Notice>}
       <MenuGrid>
         <div>
-          <Link href='/landing'>
+          <Link href='/'>
             <LogoContainer>
               <Logo
                 src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
