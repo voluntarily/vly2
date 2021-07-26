@@ -11,51 +11,44 @@ on:
 
 jobs:
   build-and-deploy:
+    env:
+      TAG: ${{ GITHUB_REF:10 }}
+      ENVM_TYPE: 'alpha'
+      ENV_SECRET: ${{ secrets.ENV_SECRET_ALPHA }}
+      ENVM: ${{ GITHUB_REF:10 }}
     name: Build and push image to ECR, deploy to ECS
     runs-on: ubuntu-latest
     steps:
 
     - name: Check out
       uses: actions/checkout@v2
-    
-    - name: Set tag vars
-      run: |
-        TAG = ${GITHUB_REF:10}
-        echo "name=TAG::$TAG" >> $GITHUB_ENV 
 
     - name: Set var for tags vs PR merge
+      if: ${{ env.TAG == 'master'}}
       run: |
-        if [[ $TAG == 'master' ]];then 
-          ENVM = 'alpha'
-        else
-          ENVM = $TAG
-        fi
-        echo "name=ENVM::$ENVM" >> $GITHUB_ENV
+        $env.ENVM = 'alpha'
+        
     - name: Set env type var and secret
       run: |
-        if [[ $ENVM == 'v'* ]];then 
-          ENVM_TYPE = 'live'
-          ENV_SECRET = ${{ secrets.ENV_SECRET_LIVE }}
+        if [[ $env.ENVM == 'v'* ]];then 
+          $env.ENVM_TYPE = 'live'
+          $env.ENV_SECRET = ${{ secrets.ENV_SECRET_LIVE }}
           
         elif [[ $ENVM == 'beta'* ]];then 
-          ENVM_TYPE = 'beta'
-          ENV_SECRET = ${{ secrets.ENV_SECRET_BETA }}
+          $env.ENVM_TYPE = 'beta'
+          $env.ENV_SECRET = ${{ secrets.ENV_SECRET_BETA }}
         elif [[ $ENVM == 'gamma'* ]];then 
-          ENVM_TYPE = 'gamma'
-          ENV_SECRET = ${{ secrets.ENV_SECRET_GAMMA }}
-        else
-          ENVM_TYPE = 'alpha'
-          ENV_SECRET = ${{ secrets.ENV_SECRET_ALPHA }}
+          $env.ENVM_TYPE = 'gamma'
+          $env.ENV_SECRET = ${{ secrets.ENV_SECRET_GAMMA }}
         fi
-        echo "name=ENVM_TYPE::$ENVM_TYPE" >> $GITHUB_ENV
-        echo "name=ENV_SECRET::$ENV_SECRET" >> $GITHUB_ENV
+
 
     - name: Check vars
       run: |
-        echo $TAG
-        echo $ENVM
-        echo $ENVM_TYPE
-        echo $ENV_SECRET
+        echo $env.TAG
+        echo $env.ENVM
+        echo $env.ENVM_TYPE
+        echo $env.ENV_SECRET
 
     - name: Cache node modules
       uses: actions/cache@v1
