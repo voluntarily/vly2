@@ -20,7 +20,7 @@ jobs:
     
     - name: Set tag vars
       run: |
-        echo "name=TAG::${ GITHUB_REF:10 }" >> $GITHUB_ENV 
+        echo "name=TAG::$( GITHUB_REF:10 )" >> $GITHUB_ENV 
 
     - name: Set var for tags vs PR merge
       run: |
