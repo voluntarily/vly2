@@ -67,7 +67,7 @@ export const OpAddOfferBtn = ({ actid }) => {
 
 export const OpAdd = ({ actid }) => {
   const roles = useSelector(state => state.session.me.role || [])
-
+  console.log(`actid ${actid}`)
   if (!roles.length || !roles.includes(Role.OPPORTUNITY_PROVIDER)) return null
   return (
     <OppAddButtons>

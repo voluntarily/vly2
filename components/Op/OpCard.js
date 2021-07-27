@@ -40,9 +40,12 @@ const OpCard = ({ op }) => {
   const startLocation = op.location ? `📍 ${op.location}` : ''
   const startDuration = op.duration ? `⏱ ${displayDuration(op.duration)}` : ''
   const interestIcon = ((interest) => {
+
+    console.log(`interest ${interest}`)
     if (!interest) { return '' }
+    
     switch (interest.status) {
-      case 'interested': return <TagState style={{ color: '#222', backgroundColor: '#E1E1E1' }}><StyledIcon type='mail' />Signed up</TagState>
+      case 'interested': return <TagState style={{ color: '#222', backgroundColor: '#E1E1E1' }}><StyledIcon type='mail' />Waiting to be invited</TagState>
       case 'invited': return <TagState style={{ color: 'white', backgroundColor: '#653CAD' }}><StyledIcon type='calendar' />You are invited</TagState>
       case 'committed': return <TagState style={{ color: 'black', backgroundColor: '#36F482' }}><StyledIcon type='check-circle' />Accepted</TagState>
       case 'declined': return <TagState style={{ color: 'white', backgroundColor: '#F44336' }}><StyledIcon type='close-circle' />Cancelled</TagState>
@@ -50,11 +53,14 @@ const OpCard = ({ op }) => {
     }
   })(op.interest)
 
-  // let orgName = ''
+  let orgName = ''
 
-  // if (op.offerOrg) {
-  //   orgName = <span>{op.offerOrg.name}</span>
-  // }
+  if (op.offerOrg) {
+    orgName = <span>{op.offerOrg.name}</span>
+  }
+  if (!op.requestor) {
+    op.requestor = {'nickname':'Unknown'}
+  }
 
   return (
     <Card>
@@ -63,12 +69,9 @@ const OpCard = ({ op }) => {
           <ImageWrapper>
             <img src={cardImage} alt={op.name} />
             {interestIcon}
-            {/* <OpTypeStamp type={op.type} /> */}
           </ImageWrapper>
           <figcaption>
-            <p>
-              {op.requestor.nickname} <OpTypeSuffix type={op.type} />
-            </p>
+            
             <h1>
               {draft}
               {op.name}
@@ -76,7 +79,6 @@ const OpCard = ({ op }) => {
 
             <DescriptionWrapper>
               {op.subtitle}<br />
-              {/* <OpType type={op.type} /> */}
             </DescriptionWrapper>
             <ul>
 

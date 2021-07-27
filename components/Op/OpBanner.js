@@ -28,6 +28,9 @@ const OpBanner = ({ op, children }) => {
   const description = op.description || ''
   const requestor = op.requestor || ''
   const creator = `@${requestor.name || ''}`
+  if (!op.requestor) {
+    op.requestor = {'nickname':'Unknown'}
+  }
   return (
     <>
       <Helmet>

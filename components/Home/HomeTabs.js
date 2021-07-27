@@ -65,7 +65,6 @@ export const HomeTabs = ({ person, onChange, defaultTab }) =>
     </TabPane>
     <TabPane tab={homeActiveTab} key='active' style={{ overflow: 'visible' }}>
       <ProfilePanel>
-
         <ActiveOpsSection />
         <InterestedOpsSection />
       </ProfilePanel>

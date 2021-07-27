@@ -26,21 +26,6 @@ module.exports = [
       return (score / count * 100 > 85)
     }
   },
-  {
-    group: GoalGroup.VP_NEW,
-    name: 'Suggest a topic',
-    slug: 'activity-suggestion',
-    subtitle: 'Suggest a topic you want help with, or can offer to help with',
-    // badgeclass:
-    imgUrl: '/static/img/goal/goal-suggest-act.png',
-    description: 'Complete your profile by adding a picture, skills list, where you are, your job, things you are interested in and tell us about yourself. It is really important to fill in your location and your skills. This will mean it will be easier to match you once we are ready to go.',
-    preconditions: [],
-    startLink: 'https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/17',
-    language: 'en',
-    rank: 2,
-    evaluation: (personalGoal) => { return GoalTests.personBadged(personalGoal) }
-
-  },
   /*  {
     group: GoalGroup.VP_NEW,
     name: 'Basic Training for Voluntarily',

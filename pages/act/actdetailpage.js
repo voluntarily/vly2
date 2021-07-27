@@ -104,13 +104,19 @@ export const ActDetailPage = ({
     act.owner = me
   } else { // existing act
     act = activities.data[0]
+    isNew = false
   }
   // Who can edit?
   const isAdmin = me && me.role.includes(Role.ADMIN)
   const isOwner =
       isNew ||
-      (me && act.onwer && me._id === act.owner._id)
-
+      (me && act.owner && me._id == act.owner._id)
+  
+  console.log(`isOwner ${isOwner}`)
+  console.log(`me._id ${me._id}`)
+  console.log(`act.owner._id ${act.owner._id}`)
+  console.log(`true ${me && act.owner && me._id === act.owner._id}`)
+  
   let isOrgAdmin = false
 
   // add org membership to me so it can be used for offerOrg
@@ -130,7 +136,7 @@ export const ActDetailPage = ({
   }
 
   const canManage = isOwner || isAdmin || isOrgAdmin
-
+  console.log(`canManage ${canManage}`)
   if (tab === 'edit') {
     return (
       <FullPage>

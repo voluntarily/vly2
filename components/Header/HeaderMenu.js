@@ -25,26 +25,15 @@ const menuItems = [
   />
   },
   {
-    key: 'org',
-    show: [VOLUNTEER, BASIC, OPPORTUNITY_PROVIDER, ACTIVITY_PROVIDER, RESOURCE_PROVIDER, ORG_ADMIN, ADMIN],
-    href: '/org',
-    text:
-  <FormattedMessage
-    id='HeaderMenu.org'
-    defaultMessage='Organisations'
-  />
-  },
-  {
     key: 'acts_ask',
-    show: [OPPORTUNITY_PROVIDER, ACTIVITY_PROVIDER, ORG_ADMIN, ADMIN],
-    href: '/a/ask',
+    show: [ ORG_ADMIN, ADMIN],
+    href: '/op',
     text:
   <FormattedMessage
     id='HeaderMenu.acts_ask'
-    defaultMessage='Find volunteers'
+    defaultMessage= 'My Volunteering requests'
   />
   },
-
   {
     key: 'acts_offer',
     show: [VOLUNTEER, BASIC, AUTH, ADMIN],
@@ -62,7 +51,17 @@ const menuItems = [
     text:
   <FormattedMessage
     id='HeaderMenu.acts'
-    defaultMessage='Our activities'
+    defaultMessage='Activity ideas'
+  />
+  },
+  {
+    key: 'org',
+    show: [AUTH, VOLUNTEER, BASIC, OPPORTUNITY_PROVIDER, ACTIVITY_PROVIDER, RESOURCE_PROVIDER, ORG_ADMIN, ADMIN],
+    href: '/org',
+    text:
+  <FormattedMessage
+    id='HeaderMenu.org'
+    defaultMessage='Organisations'
   />
   },
   {

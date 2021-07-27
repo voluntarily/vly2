@@ -7,11 +7,10 @@ import { useRouter } from 'next/router'
 
 const { SubMenu, Item } = Menu
 const VMenu = styled(Menu)`
-border-bottom: 2px solid transparent;
 border-right: none;
 font-weight: 700;
 .ant-menu-item {
-  border: none;
+  border: 2px solid transparent;
   
 }
 

@@ -40,27 +40,6 @@ export const RecommendedOpsSection = () => {
           </ProfileSection>
           <Divider />
         </>}
-
-      {bp &&
-        <ProfileSection id='basicRecommendations'>
-          <ProfileSectionTitle>
-            <FormattedMessage
-              id='recommendedOpsSection.title'
-              defaultMessage='People offering help'
-              decription='Title on volunteer home page for recommended opportunities'
-            />
-            <small>
-              <FormattedMessage
-                id='recommendedOpsSection.subtitle'
-                defaultMessage='Here are some opportunities volunteers are offering'
-                decription='Subtitle on volunteer home page for recommended opportunities'
-              />
-            </small>
-          </ProfileSectionTitle>
-
-          <OpRecommendations recommendedOps={ops} type={OFFER} />
-        </ProfileSection>}
-
     </>
   )
 }

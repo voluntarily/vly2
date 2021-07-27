@@ -40,6 +40,10 @@ export const RegisterInterestItem = ({
   // Options to configure the controls on this page based on the state of the interest.
   // get current op from the store - should be only one.
   const op = useSelector(state => state.opportunities.data[0])
+
+  if (!op.requestor) {
+    op.requestor = {'nickname':'Unknown'}
+  }
   const options = getOptions(interest.status, op.type, op.requestor)
 
   const handleAcceptSubmit = (ok, message) => {

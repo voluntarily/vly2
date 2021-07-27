@@ -20,7 +20,7 @@ import OpOrderby from '../../components/Op/OpOrderby'
 const { Item } = Menu
 
 const SearchPageContainer = styled.div`
-  margin-top: 14rem;
+  margin-top: 10rem;
   @media screen and (min-width: 768px) and (max-width: 1280px) {
     margin-top: 12rem;
   }
@@ -39,6 +39,7 @@ const SearchContainer = styled.div`
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 2rem;
+  margin-top: 2rem;
 `
 
 function filterVisibilityName (filterName) {
@@ -166,6 +167,9 @@ export class SearchPage extends Component {
     const searchTitle = 'Search results'
     return (
       <div>
+        <Helmet>
+            <title>Voluntarily - Search Results</title>
+        </Helmet>
         <HeaderSearch
           search={search}
           onSearch={this.handleSearch}
@@ -175,10 +179,14 @@ export class SearchPage extends Component {
           filterNames={[DATE_FILTER_NAME, LOCATION_FILTER_NAME]}
         />
         <FullPage>
-          <Helmet>
-            <title>Voluntarily - Search Results</title>
-          </Helmet>
           <SearchPageContainer>
+          <h1>
+            <FormattedMessage
+              id='searchpage.title'
+              defaultMessage='Find new volunteering opportunites'
+              description='Title on full opportunities list'
+            />
+          </h1>
             <SearchContainer>
               <Input.Search
                 placeholder='search for'

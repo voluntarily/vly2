@@ -71,28 +71,7 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
       </ProfileBannerTitle>
     </VBanner>
     <Divider />
-    {canEdit &&
-      <>
-        <OpSectionGrid>
-          <h3>
-            <FormattedMessage
-              id='ChooseParticipation.intro'
-              defaultMessage='How do you want to use Voluntarily?'
-            />
-          </h3>
-          <div>
-            <ParticipationSection person={person} />
-          </div>
-        </OpSectionGrid>
-        <Divider />
-        <OpSectionGrid>
-          <h3><FormattedMessage defaultMessage='Your Interests' id='PersonDetail.TopicGroups' description='TopicGroups section header for a person profile' /> </h3>
-          <div>
-            <TopicGroupSection person={person} />
-          </div>
-        </OpSectionGrid>
-        <Divider />
-      </>}
+   
     {(person.about || person.tags) &&
       <>
         <OpSectionGrid>
