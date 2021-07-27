@@ -20,11 +20,11 @@ jobs:
     
     - name: Set tag vars
       run: |
-        echo "TAG=:${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV 
+        echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV 
 
     - name: Set var for tags vs PR merge
       run: |
-        [[ $TAG == 'master' ]] && echo "ENVM=alpha" >> $GITHUB_ENV || echo "ENVM=${{TAG}}" >> $GITHUB_ENV
+        [[ $TAG == 'master' ]] && echo "ENVM=alpha" >> $GITHUB_ENV || echo "ENVM=${TAG}" >> $GITHUB_ENV
     - name: Set env type var and secret
       run: |
         if [[ $ENVM == 'v'* ]];then 
