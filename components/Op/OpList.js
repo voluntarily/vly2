@@ -13,7 +13,11 @@ const CardWrapper = styled.div`
   overflow: visible;
 `
 
-const OpList = ({ ops, ...props }) => (
+
+const OpList = ({ ops, ...props }) => {
+  
+  
+  return (
   <Grid>
     {ops ? (
       ops.map((op, index) =>
@@ -29,7 +33,9 @@ const OpList = ({ ops, ...props }) => (
       />
     )}
   </Grid>
-)
+  )
+}
+
 
 OpList.propTypes = {
   ops: PropTypes.arrayOf(
