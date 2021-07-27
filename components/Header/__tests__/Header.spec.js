@@ -25,7 +25,7 @@ test('renders the Header and Navigation for anon user', t => {
   )
 
   t.truthy(wrapper.find('Link').first().containsMatchingElement(<img />))
-  t.is(wrapper.find('a').length, 4)
+  t.is(wrapper.find('a').length, 2)
   t.is(wrapper.find('a').last().text(), 'Sign in')
   t.snapshot()
 
@@ -51,7 +51,7 @@ test('renders the Header and Navigation for basic auth user', t => {
     </Provider>
   )
   t.truthy(wrapper.find('Link').first().containsMatchingElement(<img />))
-  t.is(wrapper.find('a').length, 5)
+  t.is(wrapper.find('a').length, 4)
   t.is(wrapper.find('a').last().text(), 'Sign out')
   t.snapshot()
 })
@@ -72,7 +72,7 @@ test('renders the Header and Navigation for auth volunteer user', t => {
     </Provider>
   )
   t.truthy(wrapper.find('Link').first().containsMatchingElement(<img />))
-  t.is(wrapper.find('a').length, 6)
+  t.is(wrapper.find('a').length, 5)
   t.is(wrapper.find('a').last().text(), 'Sign out')
   t.snapshot()
 })
@@ -93,7 +93,7 @@ test('renders the Header and Navigation for auth admin/support user', t => {
     </Provider>
   )
   t.truthy(wrapper.find('Link').first().containsMatchingElement(<img />))
-  t.is(wrapper.find('a').length, 9)
+  t.is(wrapper.find('a').length, 8)
   t.is(wrapper.find('a').last().text(), 'Sign out')
   t.snapshot()
 })

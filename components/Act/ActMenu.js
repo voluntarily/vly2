@@ -11,7 +11,7 @@ import Link from 'next/link'
 const countOfferOrgs = acts => {
   const counts = {}
   const orgs = {}
-
+ 
   acts.forEach(act => {
     if (!act.offerOrg) return
     const id = act.offerOrg._id
@@ -78,10 +78,3 @@ const ActMenu = ({ acts, onClick }) => {
 }
 
 export default ActMenu
-
-// defaultSelectedKeys={selectedKeys}
-// defaultOpenKeys={['sub1']}
-// mode='horizontal'
-// multiple
-// selectable
-// // onClick={onClick}
