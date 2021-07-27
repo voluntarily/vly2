@@ -18,11 +18,11 @@ const defaultConvertRequestToAction = (req) => {
 const authorizeActions = (subject, convertRequestToAction = defaultConvertRequestToAction) => (req, res, next) => {
   const action = convertRequestToAction(req)
   const authorized = req.ability.can(action, subject)
-  console.log('authorizeActions', subject, action, authorized)
+  // console.log('authorizeActions', subject, action, authorized)
   if (authorized) {
     next()
   } else {
-    console.log(`Auth cannot ${action} ${subject}`)
+    // console.log(`Auth cannot ${action} ${subject}`)
     res.status(403).json({ error: `Auth cannot ${action} ${subject}` })
   }
 }
