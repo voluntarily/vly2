@@ -56,6 +56,16 @@ const menuItems = [
   />
   },
   {
+    key: 'acts',
+    show: [ACTIVITY_PROVIDER, ORG_ADMIN, ADMIN],
+    href: '/act',
+    text:
+  <FormattedMessage
+    id='HeaderMenu.acts'
+    defaultMessage='Our activities'
+  />
+  },
+  {
     key: 'admin',
     text: 'Admin',
     href: '/admin',

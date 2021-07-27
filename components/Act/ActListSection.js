@@ -58,6 +58,7 @@ export const ActListSection = () => {
       }
       await dispatch(reduxApi.actions.activities.get(query))
     }
+    console.log(`org ${selectedOrg}`)
     getActivities()
   }, [search, selectedOrg])
 
