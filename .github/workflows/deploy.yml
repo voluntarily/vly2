@@ -11,44 +11,42 @@ on:
 
 jobs:
   build-and-deploy:
-    env:
-      TAG: ${{ GITHUB_REF:10 }}
-      ENVM_TYPE: 'alpha'
-      ENV_SECRET: ${{ secrets.ENV_SECRET_ALPHA }}
-      ENVM: ${{ GITHUB_REF:10 }}
     name: Build and push image to ECR, deploy to ECS
     runs-on: ubuntu-latest
     steps:
 
     - name: Check out
       uses: actions/checkout@v2
+    
+    - name: Set tag vars
+      run: |
+        echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV 
 
     - name: Set var for tags vs PR merge
-      if: ${{ env.TAG == 'master'}}
       run: |
-        $env.ENVM = 'alpha'
-        
+        [[ $TAG == 'master' ]] && echo "ENVM=alpha" >> $GITHUB_ENV || echo "ENVM=${TAG}" >> $GITHUB_ENV
     - name: Set env type var and secret
       run: |
-        if [[ $env.ENVM == 'v'* ]];then 
-          $env.ENVM_TYPE = 'live'
-          $env.ENV_SECRET = ${{ secrets.ENV_SECRET_LIVE }}
-          
+        if [[ $ENVM == 'v'* ]];then 
+          echo "ENVM_TYPE=live" >> $GITHUB_ENV
+          echo "ENV_SECRET=${{ secrets.ENV_SECRET_LIVE }}" >> $GITHUB_ENV
         elif [[ $ENVM == 'beta'* ]];then 
-          $env.ENVM_TYPE = 'beta'
-          $env.ENV_SECRET = ${{ secrets.ENV_SECRET_BETA }}
+          echo "ENVM_TYPE=beta" >> $GITHUB_ENV
+          echo "ENV_SECRET=${{ secrets.ENV_SECRET_BETA }}" >> $GITHUB_ENV
         elif [[ $ENVM == 'gamma'* ]];then 
-          $env.ENVM_TYPE = 'gamma'
-          $env.ENV_SECRET = ${{ secrets.ENV_SECRET_GAMMA }}
+          echo "ENVM_TYPE=gamma" >> $GITHUB_ENV
+          echo "ENV_SECRET=${{ secrets.ENV_SECRET_GAMMA }}" >> $GITHUB_ENV
+        else
+          echo "ENVM_TYPE=alpha" >> $GITHUB_ENV
+          echo "ENV_SECRET=${{ secrets.ENV_SECRET_ALPHA }}" >> $GITHUB_ENV
         fi
-
 
     - name: Check vars
       run: |
-        echo $env.TAG
-        echo $env.ENVM
-        echo $env.ENVM_TYPE
-        echo $env.ENV_SECRET
+        echo $TAG
+        echo $ENVM
+        echo $ENVM_TYPE
+        echo $ENV_SECRET
 
     - name: Cache node modules
       uses: actions/cache@v1
