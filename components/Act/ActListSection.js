@@ -46,9 +46,9 @@ export const ActListSection = () => {
     const getActivities = async () => {
       const q = { status: 'active' }
       const query = {}
-      // if (me.topicGroups && me.topicGroups.length) {
-      //   q.tags = { $in: me.topicGroups }
-      // }
+      if (me.topicGroups && me.topicGroups.length) {
+        q.tags = { $in: me.topicGroups }
+      }
       if (selectedOrg) {
         q.offerOrg = selectedOrg
       }
