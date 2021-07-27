@@ -25,9 +25,8 @@ const roleIcons = {
   opportunityProvider: '🤝',
   activityProvider: '🧑‍💻',
   resourceProvider: '🧑‍💻',
-  volunteer: '🤙', 
+  volunteer: '🤙',
   basic: '🤙'
-  
 }
 
 export const PersonRoleIcon = ({ role }) => {

@@ -6,7 +6,7 @@ import ActSearchInput from './ActSearchInput'
 import ActMenu from './ActMenu'
 import ActCard from './ActCard'
 import styled from 'styled-components'
-import { List, Card } from 'antd'
+import { List } from 'antd'
 import { useRouter } from 'next/router'
 
 const escapeRegex = require('../../server/util/regexUtil')
@@ -39,16 +39,16 @@ export const ActListSection = () => {
   const [search, setSearch] = useState(router.query.search)
   const [selectedOrg, setSelectedOrg] = useState()
 
-  const [me, activities] = useSelector(state => [state.session.me, state.activities])
+  const [activities] = useSelector(state => [state.session.me, state.activities])
   const dispatch = useDispatch()
 
   useEffect(() => {
     const getActivities = async () => {
       const q = { status: 'active' }
-      const query = { }
-      //if (me.topicGroups && me.topicGroups.length) {
-      //  q.tags = { $in: me.topicGroups }
-      //}
+      const query = {}
+      // if (me.topicGroups && me.topicGroups.length) {
+      //   q.tags = { $in: me.topicGroups }
+      // }
       if (selectedOrg) {
         q.offerOrg = selectedOrg
       }
@@ -57,7 +57,6 @@ export const ActListSection = () => {
         query.search = search
       }
       await dispatch(reduxApi.actions.activities.get(query))
-      
     }
     getActivities()
   }, [search, selectedOrg])
@@ -83,7 +82,7 @@ export const ActListSection = () => {
         <ActMenu acts={acts} onClick={handleMenu} />
         <div>
           <List
-          // grid={{ gutter: 16, column: 3 }}
+            // grid={{ gutter: 16, column: 3 }}
             grid={{
               gutter: 16,
               xs: 1,
@@ -99,7 +98,7 @@ export const ActListSection = () => {
               defaultCurrent: 1,
               defaultPageSize: 12,
               hideOnSinglePage: true
-            // size: 'small'
+              // size: 'small'
             }}
             renderItem={(act) => (
               <List.Item>
@@ -107,7 +106,7 @@ export const ActListSection = () => {
               </List.Item>
             )}
           />
-         
+
         </div>
       </SidebarGrid>
     </>

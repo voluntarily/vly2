@@ -68,7 +68,6 @@ export function ActAboutPanel ({ act }) {
 
   const isAnon = me.role.includes(Role.ANON)
   const vp = me.role.includes(Role.VOLUNTEER) || isAnon
-  const bp = me.role.includes(Role.BASIC) || isAnon
   const op = me.role.includes(Role.OPPORTUNITY_PROVIDER) || isAnon
   return (
     <ProfilePanel>

@@ -201,8 +201,6 @@ export function OpQuestionPanel ({ op }) {
             </QuestionDetail>
           </ContentCard>
         </Response>
-        
-
       </QuestionSection>
     </>
   )

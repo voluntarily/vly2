@@ -1,4 +1,4 @@
-import { Button, Dropdown, Menu, Modal } from 'antd'
+import { Button, Dropdown, Menu, Modal, Input } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
@@ -11,14 +11,12 @@ import OpListSection from '../../components/Op/OpListSection'
 import FilterContainer from '../../components/Search/FilterContainer'
 import HeaderSearch from '../../components/Search/HeaderSearch'
 import LocationFilter from '../../components/Search/LocationFilter'
-import TypeFilter from '../../components/Search/TypeFilter'
 import { FullPage, Spacer } from '../../components/VTheme/VTheme'
 import publicPage from '../../hocs/publicPage'
 import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
 import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
 import OpOrderby from '../../components/Op/OpOrderby'
-import { Input } from 'antd'
-// const TitleString = {NumberResults} + "results for " + {SearchQuery}
+
 const { Item } = Menu
 
 const SearchPageContainer = styled.div`
@@ -34,8 +32,6 @@ const SearchPageContainer = styled.div`
 
 const LOCATION_FILTER_NAME = 'location'
 const DATE_FILTER_NAME = 'date'
-const TYPE_FILTER_NAME = 'type'
-const opTypeValue = ['All', 'Offer', 'Ask']
 
 const SearchContainer = styled.div`
   background: #ffffff;
@@ -167,10 +163,7 @@ export class SearchPage extends Component {
         </Item>
       </Menu>
     )
-
-    
     const searchTitle = 'Search results'
- 
     return (
       <div>
         <HeaderSearch
@@ -186,11 +179,10 @@ export class SearchPage extends Component {
             <title>Voluntarily - Search Results</title>
           </Helmet>
           <SearchPageContainer>
-          <SearchContainer>
+            <SearchContainer>
               <Input.Search
                 placeholder='search for'
                 enterButton='Search'
-                enterButton
                 size='large'
                 defaultValue={search}
                 onSearch={this.handleSearch}
@@ -201,17 +193,16 @@ export class SearchPage extends Component {
             <SectionTitle
               title={
                 <FormattedMessage
-                    defaultMessage={searchTitle}
+                  defaultMessage={searchTitle}
                   values={{ search }}
                   id='search.title'
                 />
               }
             />
-            
             <OpOrderby onChange={this.handleSort} />
             <FilterContainer
               onClose={this.handleClose}
-              title="Sort by"
+              title='Sort by'
               filterName={LOCATION_FILTER_NAME}
               onFilterApplied={this.handleFilterApplied}
               onFilterRemoved={this.handleFilterRemoved}
@@ -219,7 +210,6 @@ export class SearchPage extends Component {
             >
               <LocationFilter locations={existingLocations} />
             </FilterContainer>
-            
             {/* TODO: VP-445 modify date picker to use filter container (like with location). This will
              help reduce the complexity of this page component */}
             <Modal
@@ -248,9 +238,6 @@ export class SearchPage extends Component {
               />
             </Modal>
             <Spacer />
-
-            
-
             <OpListSection
               search={search}
               filter={this.state.filter}

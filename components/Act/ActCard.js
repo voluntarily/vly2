@@ -5,10 +5,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import { Card } from '../VTheme/VTheme'
-import { OpTypeCount, OpCommitment } from '../Op/OpType'
+import { OpCommitment } from '../Op/OpType'
 import { OpStatusStamp, OpStatus } from '../Op/OpStatus'
-import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
-const { ASK, OFFER } = OpportunityType
 
 // todo if image is not present then use a fallback.
 const ActCard = ({ act, onPress, ...props }) => {
@@ -28,7 +26,6 @@ const ActCard = ({ act, onPress, ...props }) => {
             </h1>
             <p>{act.subtitle}</p>
             <ul>
-              
               <li><OpCommitment duration={act.duration} /></li>
             </ul>
           </figcaption>

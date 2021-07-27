@@ -55,7 +55,6 @@ const menuItems = [
     defaultMessage='Volunteer to help'
   />
   },
-  
   {
     key: 'admin',
     text: 'Admin',
