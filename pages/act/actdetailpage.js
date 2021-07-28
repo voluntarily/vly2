@@ -111,12 +111,7 @@ export const ActDetailPage = ({
   const isOwner =
       isNew ||
       (me && act.owner && me._id == act.owner._id)
-  
-  console.log(`isOwner ${isOwner}`)
-  console.log(`me._id ${me._id}`)
-  console.log(`act.owner._id ${act.owner._id}`)
-  console.log(`true ${me && act.owner && me._id === act.owner._id}`)
-  
+   
   let isOrgAdmin = false
 
   // add org membership to me so it can be used for offerOrg
