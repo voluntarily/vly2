@@ -8,7 +8,6 @@ import moment from 'moment'
 import { Card, DescriptionWrapper, TagState } from '../VTheme/VTheme'
 import { Icon } from 'antd'
 import styled from 'styled-components'
-import { OpTypeSuffix } from './OpType'
 import { displayDuration } from '../../lib/durationUtil'
 
 const getOpPageURL = (isArchived, opid) => {
@@ -40,10 +39,7 @@ const OpCard = ({ op }) => {
   const startLocation = op.location ? `📍 ${op.location}` : ''
   const startDuration = op.duration ? `⏱ ${displayDuration(op.duration)}` : ''
   const interestIcon = ((interest) => {
-
-    console.log(`interest ${interest}`)
     if (!interest) { return '' }
-    
     switch (interest.status) {
       case 'interested': return <TagState style={{ color: '#222', backgroundColor: '#E1E1E1' }}><StyledIcon type='mail' />Waiting to be invited</TagState>
       case 'invited': return <TagState style={{ color: 'white', backgroundColor: '#653CAD' }}><StyledIcon type='calendar' />You are invited</TagState>
@@ -59,7 +55,7 @@ const OpCard = ({ op }) => {
     orgName = <span>{op.offerOrg.name}</span>
   }
   if (!op.requestor) {
-    op.requestor = {'nickname':'Unknown'}
+    op.requestor = { nickname: 'Unknown' }
   }
 
   return (
@@ -71,24 +67,21 @@ const OpCard = ({ op }) => {
             {interestIcon}
           </ImageWrapper>
           <figcaption>
-            
             <h1>
               {draft}
               {op.name}
             </h1>
-
             <DescriptionWrapper>
               {op.subtitle}<br />
             </DescriptionWrapper>
             <ul>
-
               {startLocation && <li> {startLocation}</li>}
               {startTime && <li> {startTime} </li>}
               {startDuration && <li> {startDuration}</li>}
             </ul>
             <DescriptionWrapper>
-              {/* {orgName &&
-                <i>Via {orgName}&nbsp;</i>} */}
+              {orgName &&
+                <i>Via {orgName}&nbsp;</i>}
               <i> created {moment(op.createdAt).fromNow()}</i>
             </DescriptionWrapper>
 

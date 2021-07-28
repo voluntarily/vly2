@@ -11,7 +11,6 @@ import Link from 'next/link'
 const countOfferOrgs = acts => {
   const counts = {}
   const orgs = {}
- 
   acts.forEach(act => {
     if (!act.offerOrg) return
     const id = act.offerOrg._id

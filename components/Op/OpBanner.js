@@ -29,7 +29,7 @@ const OpBanner = ({ op, children }) => {
   const requestor = op.requestor || ''
   const creator = `@${requestor.name || ''}`
   if (!op.requestor) {
-    op.requestor = {'nickname':'Unknown'}
+    op.requestor = { nickname: 'Unknown' }
   }
   return (
     <>

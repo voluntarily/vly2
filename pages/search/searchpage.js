@@ -168,7 +168,7 @@ export class SearchPage extends Component {
     return (
       <div>
         <Helmet>
-            <title>Voluntarily - Search Results</title>
+          <title>Voluntarily - Search Results</title>
         </Helmet>
         <HeaderSearch
           search={search}
@@ -180,13 +180,13 @@ export class SearchPage extends Component {
         />
         <FullPage>
           <SearchPageContainer>
-          <h1>
-            <FormattedMessage
-              id='searchpage.title'
-              defaultMessage='Find new volunteering opportunites'
-              description='Title on full opportunities list'
-            />
-          </h1>
+            <h1>
+              <FormattedMessage
+                id='searchpage.title'
+                defaultMessage='Find new volunteering opportunites'
+                description='Title on full opportunities list'
+              />
+            </h1>
             <SearchContainer>
               <Input.Search
                 placeholder='search for'

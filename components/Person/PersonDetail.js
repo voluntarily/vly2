@@ -13,8 +13,6 @@ import PersonPronouns from './PersonPronoun'
 import { PersonBadgeSection } from './PersonBadge'
 import { VBanner, VBannerImg, ProfileBannerTitle } from '../VTheme/Profile'
 import Verification from '../Verification/Verification'
-import { ParticipationSection } from './ParticipationSection'
-import { TopicGroupSection } from './TopicGroupSection'
 import { StreetAddressLinkLi } from '../Address/StreetAddress'
 
 const DetailItem = styled.div`
@@ -71,7 +69,6 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
       </ProfileBannerTitle>
     </VBanner>
     <Divider />
-   
     {(person.about || person.tags) &&
       <>
         <OpSectionGrid>

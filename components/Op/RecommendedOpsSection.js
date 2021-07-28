@@ -7,7 +7,7 @@ import Loading from '../Loading'
 import { Role } from '../../server/services/authorize/role'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 import { Divider } from 'antd'
-const { ASK, OFFER } = OpportunityType
+const { ASK } = OpportunityType
 
 export const RecommendedOpsSection = () => {
   const recommendedOps = useSelector(state => state.recommendedOps)

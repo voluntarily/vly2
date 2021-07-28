@@ -26,12 +26,12 @@ const menuItems = [
   },
   {
     key: 'acts_ask',
-    show: [ ORG_ADMIN, ADMIN],
+    show: [ORG_ADMIN, ADMIN],
     href: '/op',
     text:
   <FormattedMessage
     id='HeaderMenu.acts_ask'
-    defaultMessage= 'My Volunteering requests'
+    defaultMessage='My Volunteering requests'
   />
   },
   {

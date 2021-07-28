@@ -42,7 +42,7 @@ export const RegisterInterestItem = ({
   const op = useSelector(state => state.opportunities.data[0])
 
   if (!op.requestor) {
-    op.requestor = {'nickname':'Unknown'}
+    op.requestor = { nickname: 'Unknown' }
   }
   const options = getOptions(interest.status, op.type, op.requestor)
 

@@ -4,8 +4,6 @@ import OpList from './OpList'
 import { FormattedMessage } from 'react-intl'
 import { Button, Empty } from 'antd'
 import Link from 'next/link'
-import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
-const { ASK, OFFER } = OpportunityType
 
 export const NoRecommendations = ({ type }) =>
   <Empty
@@ -45,7 +43,7 @@ export const NoRecommendations = ({ type }) =>
       </a>&nbsp;
       {/* invert the type to switch from listing to doing */}
       {type &&
-        <Link href={`/search`}>
+        <Link href='/search'>
           <Button type='primary' shape='round'>
             <FormattedMessage
               id='NoRecommendations.button.browse'

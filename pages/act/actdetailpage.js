@@ -110,10 +110,8 @@ export const ActDetailPage = ({
   const isAdmin = me && me.role.includes(Role.ADMIN)
   const isOwner =
       isNew ||
-      (me && act.owner && me._id == act.owner._id)
-   
+      (me && act.owner && me._id.string === act.owner._id.string)
   let isOrgAdmin = false
-
   // add org membership to me so it can be used for offerOrg
   if (me && members.sync && members.data.length > 0) {
     me.orgMembership = members.data.filter(m =>

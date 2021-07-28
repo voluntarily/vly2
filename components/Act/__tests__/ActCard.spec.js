@@ -22,12 +22,10 @@ test('shallow the card with act', t => {
   const wrapper = shallowWithIntl(
     <ActCard act={act} onPress={() => {}} />
   )
-
   t.is((wrapper.find('Link').first().props().href), '/acts/' + act._id)
   t.is(wrapper.find('h1').text(), `<OpStatus />${act.name}`)
   t.is(wrapper.find('img').prop('src'), act.imgUrl)
   t.is(wrapper.find('figcaption').find('li').at(0).text(), '<OpCommitment />')
-
 })
 
 test('shallow the card with no pic', t => {
