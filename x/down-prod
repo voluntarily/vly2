@@ -1,0 +1,4 @@
+# stop mongo and docker locally using the production docker-compose.yml
+docker-compose \
+  -f docker-compose-prod.yml \
+  down
