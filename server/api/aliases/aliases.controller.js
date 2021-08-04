@@ -307,7 +307,7 @@ const addAliasToTag = async (req, res) => {
           aliases: []
         })
 
-        const next = sinon.fake()
+        const next = () => {}
 
         initializeTags(req, res, next)
           .catch(err => res.status(404).json({ success: false }).send({ error: err }))
