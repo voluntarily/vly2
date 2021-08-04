@@ -20,26 +20,25 @@ jobs:
     
     - name: Set tag vars
       run: |
-        echo ::set-env name=TAG::${GITHUB_REF:10}
+        echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV 
 
     - name: Set var for tags vs PR merge
       run: |
-        [[ $TAG == 'master' ]] && echo ::set-env name=ENVM::alpha || echo ::set-env name=ENVM::$TAG
-
+        [[ $TAG == 'master' ]] && echo "ENVM=alpha" >> $GITHUB_ENV || echo "ENVM=${TAG}" >> $GITHUB_ENV
     - name: Set env type var and secret
       run: |
         if [[ $ENVM == 'v'* ]];then 
-          echo ::set-env name=ENVM_TYPE::live
-          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_LIVE }} 
+          echo "ENVM_TYPE=live" >> $GITHUB_ENV
+          echo "ENV_SECRET=${{ secrets.ENV_SECRET_LIVE }}" >> $GITHUB_ENV
         elif [[ $ENVM == 'beta'* ]];then 
-          echo ::set-env name=ENVM_TYPE::beta
-          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_BETA }}
+          echo "ENVM_TYPE=beta" >> $GITHUB_ENV
+          echo "ENV_SECRET=${{ secrets.ENV_SECRET_BETA }}" >> $GITHUB_ENV
         elif [[ $ENVM == 'gamma'* ]];then 
-          echo ::set-env name=ENVM_TYPE::gamma 
-          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_GAMMA }}
+          echo "ENVM_TYPE=gamma" >> $GITHUB_ENV
+          echo "ENV_SECRET=${{ secrets.ENV_SECRET_GAMMA }}" >> $GITHUB_ENV
         else
-          echo ::set-env name=ENVM_TYPE::alpha 
-          echo ::set-env name=ENV_SECRET::${{ secrets.ENV_SECRET_ALPHA }}
+          echo "ENVM_TYPE=alpha" >> $GITHUB_ENV
+          echo "ENV_SECRET=${{ secrets.ENV_SECRET_ALPHA }}" >> $GITHUB_ENV
         fi
 
     - name: Check vars
