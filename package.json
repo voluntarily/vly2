@@ -123,7 +123,7 @@
     "reselect": "^4.0.0",
     "rimraf": "^3.0.0",
     "run": "^1.4.0",
-    "sanitize-html": "^1.20.1",
+    "sanitize-html": ">=2.3.2",
     "slug": "^2.1.0",
     "stopword": "^1.0.1",
     "string-similarity": "^4.0.1",
