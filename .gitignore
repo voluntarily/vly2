@@ -23,3 +23,5 @@ dump
 prod.priv.pem
 e2e_tests/output/*
 
+package.json
+package-lock.json
