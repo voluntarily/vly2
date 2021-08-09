@@ -80,7 +80,7 @@ jobs:
         ENV_ENVIRONMENT: ${{ env.ENVM_TYPE }}
       run: |
         docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-        --build-arg ENV_ENVIRONMENT=$ENV_ENVIRONMENT --build-arg ENV_SECRET=$ENV_SECRET \
+        --build-arg ENV_ENVIRONMENT=$ENV_ENVIRONMENT --build-arg ENV_SECRET=${{ env.ENV_SECRET }} \
         --build-arg REVISION=$IMAGE_TAG \
         .
         docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:master
