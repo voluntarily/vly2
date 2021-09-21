@@ -20,6 +20,9 @@ NextJS 9 -> 11
 * build and run up the local docker compose files. 
 * commit and check build runs on github.
 
+* bunch of time spent getting mongoose-crudify to work, code base on git keeps switching to ssh access which doesn't work.  consider pushing to npm. 
+* 
+
 # Test failures
 -   server › api › interest › interest.ability › Interest API - anon - list
     -   not repeatable.
