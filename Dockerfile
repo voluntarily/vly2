@@ -1,4 +1,4 @@
-FROM node:12 as base
+FROM node:16 as base
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
@@ -16,7 +16,7 @@ ENV ENV_SECRET=$ENV_SECRET
 COPY . ./
 RUN npm run prod-build
 
-FROM node:12-alpine as production
+FROM node:16-alpine as production
 ARG REVISION='local'
 ENV REVISION=$REVISION
 ENV PORT 3122

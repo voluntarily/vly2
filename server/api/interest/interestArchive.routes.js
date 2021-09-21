@@ -1,4 +1,4 @@
-const mongooseCrudify = require('mongoose-crudify')
+const mongooseCrudify = require('@voluntarily/mongoose-crudify')
 const helpers = require('../../services/helpers')
 const { InterestArchive } = require('./interest')
 const { listInterestArchives, updateInterestArchive, getInterestArchive } = require('../interest/interest.controller')
