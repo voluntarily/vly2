@@ -4,6 +4,7 @@ Goal - bring the Voluntarily code base up to latest versions of the major packag
 Ensure we have all necessary security patches, and remain on Long term support (LTS) versions of the framework and tools.
 
 Remove any package warnings and use of deprecated features. 
+Remove any redundant packages.
 
 ## Major updates:
 

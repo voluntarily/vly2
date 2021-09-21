@@ -92,7 +92,7 @@
     "mock-express-response": "^0.2.2",
     "moment": "^2.24.0",
     "mongoose": "^5.9.7",
-    "mongoose-crudify": "^0.2.0",
+    "mongoose-crudify": "github:voluntarily/mongoose-crudify",
     "mongoose-id-validator": "^0.5.4",
     "morgan": "^1.10.0",
     "natural": "^2.1.5",
