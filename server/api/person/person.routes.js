@@ -1,4 +1,4 @@
-const mongooseCrudify = require('mongoose-crudify')
+const mongooseCrudify = require('@voluntarily/mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Person = require('./person')
 const { ensureSanitized, listPeople, getPerson, updatePersonDetail, deletePerson } = require('./person.controller')

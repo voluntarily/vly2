@@ -1,4 +1,4 @@
-const mongooseCrudify = require('mongoose-crudify')
+const mongooseCrudify = require('@voluntarily/mongoose-crudify')
 const helpers = require('../../services/helpers')
 const SchoolLookUp = require('./school-lookup')
 const { getSchools } = require('./school-lookup.controller')

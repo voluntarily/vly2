@@ -1,4 +1,4 @@
-const mongooseCrudify = require('mongoose-crudify')
+const mongooseCrudify = require('@voluntarily/mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Activity = require('./activity')
 const { listActivities, getActivity, putActivity, createActivity } = require('./activity.controller')

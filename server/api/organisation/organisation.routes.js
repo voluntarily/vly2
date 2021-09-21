@@ -1,4 +1,4 @@
-const mongooseCrudify = require('mongoose-crudify')
+const mongooseCrudify = require('@voluntarily/mongoose-crudify')
 const helpers = require('../../services/helpers')
 const Organisation = require('./organisation')
 const { listOrganisations, putOrganisation, postOrganisation, deleteOrganisation } = require('./organisation.controller')

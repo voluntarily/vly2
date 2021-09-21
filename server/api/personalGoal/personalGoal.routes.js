@@ -1,4 +1,4 @@
-const mongooseCrudify = require('mongoose-crudify')
+const mongooseCrudify = require('@voluntarily/mongoose-crudify')
 const helpers = require('../../services/helpers')
 const PersonalGoal = require('./personalGoal')
 const { listPersonalGoals, updatePersonalGoal, createPersonalGoal } = require('./personalGoal.controller')
