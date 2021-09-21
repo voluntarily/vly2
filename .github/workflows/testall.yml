@@ -29,10 +29,10 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
 
-    - name: Use Node 12
+    - name: Use Node 16
       uses: actions/setup-node@v1
       with:
-        node-version: 12.16.1
+        node-version: 16
         mongoms_download_mirror: http://downloads.mongodb.org
         mongoms_version: 4.0.5
         mongoms_disable_postinstall: 1
