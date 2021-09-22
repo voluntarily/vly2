@@ -6,7 +6,8 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
 import { Card, DescriptionWrapper, TagState } from '../VTheme/VTheme'
-import { CheckCircleTwoTone,
+import {
+  CheckCircleTwoTone,
   MailTwoTone,
   CalendarTwoTone,
   CloseCircleTwoTone
@@ -27,13 +28,6 @@ const getOpPageURL = (isArchived, opid) => {
 const ImageWrapper = styled.div`
   position: relative;
 
-`
-
-const StyledIcon = styled(Icon)`
-  font-size: 1rem;
-  margin-right: 0.5rem;
-
- 
 `
 
 // todo if image is not present then use a fallback.

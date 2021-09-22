@@ -4,7 +4,7 @@ import { PersonRoleIcons } from '../../components/Person/PersonRole'
 import { PersonVerificationBadge } from '../../components/Person/PersonVerification'
 import { PageBanner } from '../../components/VTheme/VTheme'
 
-export const HomeBanner = ({ person, children }) =>
+export const HomeBanner = ({ person, children }) => (
   <PageBanner>
     <article>
       <img src={person.imgUrl} />
@@ -17,9 +17,8 @@ export const HomeBanner = ({ person, children }) =>
       </div>
     </article>
     {children}
-
   </PageBanner>
-
+)
 HomeBanner.propTypes = {
   person: PropTypes.shape({
     name: PropTypes.string.isRequired,

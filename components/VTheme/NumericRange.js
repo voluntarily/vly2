@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react';
 import { FormattedMessage } from 'react-intl'
 import { InputNumber } from 'antd'
 import styled from 'styled-components'
