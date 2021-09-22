@@ -59,6 +59,7 @@ we need to name the functions
         const Named = () => <div />;
         export default Named;
 
+Fixed these using npx @next/codemod name-default-component. 12 files affected.
 # Test failures
 -   server › api › interest › interest.ability › Interest API - anon - list
     -   not repeatable.
