@@ -1,4 +1,5 @@
-import { Avatar, Icon } from 'antd'
+import { SolutionOutlined, TeamOutlined } from '@ant-design/icons'
+import { Avatar } from 'antd'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -18,10 +19,10 @@ const OrgLi = ({ org, status }) =>
           size='small'
           shape='square'
           src={org.imgUrl}
-          icon='team'
+          icon={<TeamOutlined />}
         />&nbsp;&nbsp;
         {org.name}&nbsp;
-        {status === MemberStatus.ORGADMIN && <Icon type='solution' />}
+        {status === MemberStatus.ORGADMIN && <SolutionOutlined />}
       </li>
     </a>
   </Link>

@@ -37,6 +37,7 @@
     "e2e:shell": "npx codeceptjs shell -c e2e_tests/codecept.conf.js"
   },
   "dependencies": {
+    "@ant-design/compatible": "^1.0.8",
     "@ant-design/icons": "^4.6.4",
     "@babel/core": "^7.8.4",
     "@babel/polyfill": "^7.8.3",

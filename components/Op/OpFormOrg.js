@@ -1,4 +1,6 @@
-import { Form, Icon, Tooltip } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Tooltip } from 'antd'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import OrgSelector from '../Org/OrgSelector'

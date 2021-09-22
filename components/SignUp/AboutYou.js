@@ -1,4 +1,5 @@
-import { Avatar, Icon, Input } from 'antd'
+import { UserOutlined } from '@ant-design/icons'
+import { Avatar, Input } from 'antd'
 import { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
@@ -51,7 +52,7 @@ export const AboutYou = ({ children, person, onChange }) => {
           </label>
           <Input
             id='nickname'
-            prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
+            prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
             placeholder='nickname'
             value={person.nickname}
             onChange={(e) => onChange({ nickname: e.target.value })}

@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { Button, Form, Input } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Button, Input } from 'antd'
 import { FormGrid, InputContainer } from '../VTheme/FormStyles'
 import { FormattedMessage } from 'react-intl'
 

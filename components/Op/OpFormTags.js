@@ -1,4 +1,5 @@
-import { Form } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import TagInput from '../Form/Input/TagInput'

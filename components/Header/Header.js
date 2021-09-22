@@ -1,5 +1,6 @@
-// import { FormattedMessage } from 'react-intl'
-import { Avatar, Icon, Layout } from 'antd'
+import { UserOutlined, WarningOutlined } from '@ant-design/icons'
+
+import { Avatar, Layout } from 'antd'
 import Link from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
@@ -91,7 +92,7 @@ const Header = () => {
   if (me.role.includes(Role.ADMIN) || me.role.includes(Role.SUPPORT)) state = MenuShowState.ADMIN
   return (
     <Layout.Header style={headerStyle}>
-      {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><Icon type='warning' /> {notice}</Notice>}
+      {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><WarningOutlined /> {notice}</Notice>}
       <MenuGrid>
         <div>
           <Link href='/landing'>
@@ -122,7 +123,7 @@ const Header = () => {
               <Avatar
                 size='small'
                 src={me.imgUrlSm}
-                icon='user'
+                icon={<UserOutlined />}
                 alt='profile photo'
               />
             </Link>

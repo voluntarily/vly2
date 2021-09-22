@@ -1,4 +1,6 @@
-import { Form, Input } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Input } from 'antd'
 import React from 'react'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, TitleContainer } from '../VTheme/FormStyles'
 import { OpTypeDescriptionTitle, OpTypeDescriptionPrompt } from './OpType'

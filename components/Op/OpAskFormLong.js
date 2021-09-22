@@ -1,4 +1,6 @@
-import { Button, DatePicker, Divider, Form, Icon, Input, Tooltip } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Button, DatePicker, Divider, Input, Tooltip } from 'antd'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'

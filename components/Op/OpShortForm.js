@@ -1,4 +1,6 @@
-import { Divider, Form } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Divider } from 'antd'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Icon } from 'antd'
+import { DeploymentUnitOutlined } from '@ant-design/icons'
 import { PBold } from './VTheme'
 const ComingsoonContainer = styled.div`
   display: grid;
@@ -22,7 +22,7 @@ export function ComingSoon ({ children }) {
   return (
     <ComingsoonContainer>
       <ComingSoonGrid>
-        <Icon spin style={{ fontSize: '40px', color: '#333' }} type='deployment-unit' />
+        <DeploymentUnitOutlined spin style={{ fontSize: '40px', color: '#333' }} />
         <div>
           <PBold>Needs Work</PBold>
           <p>{children}</p>

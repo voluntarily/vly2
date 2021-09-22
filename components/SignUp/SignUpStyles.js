@@ -1,5 +1,5 @@
 
-import { Icon } from 'antd'
+import Icon, { CheckSquareOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import styled from 'styled-components'
 export const ToggleUl = styled.ul`
@@ -48,7 +48,7 @@ const uncheckSquare = () => (
 export const ToggleTick = ({ on }) => {
   return on
     ? (
-      <Icon type='check-square' />
+      <CheckSquareOutlined />
     )
     : (
       <Icon component={uncheckSquare} />

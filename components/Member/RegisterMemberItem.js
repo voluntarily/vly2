@@ -3,7 +3,11 @@
   Unlike MemberItem, this one is a Form allowing state changes.
 */
 
-import { Button, Col, Form, Row } from 'antd'
+import { Form } from '@ant-design/compatible'
+
+import '@ant-design/compatible/assets/index.css'
+
+import { Button, Col, Row } from 'antd'
 import Input from 'antd/lib/input/Input'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'

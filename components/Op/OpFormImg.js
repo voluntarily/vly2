@@ -1,4 +1,6 @@
-import { Form, Icon, Input, Tooltip } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Input, Tooltip } from 'antd'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import ImageUpload from '../Upload/ImageUpload'

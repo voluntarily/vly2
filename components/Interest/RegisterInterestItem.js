@@ -3,7 +3,9 @@
 //   Unlike InterestItem, this one is a Form allowing state changes.
 // */
 
-import { Button, Icon, notification } from 'antd'
+import { HistoryOutlined } from '@ant-design/icons'
+
+import { Button, notification } from 'antd'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { useIntl, defineMessages, FormattedMessage } from 'react-intl'
@@ -121,46 +123,44 @@ export const RegisterInterestItem = ({
       </>
     )
   }
-  return (
-    <>
-      {options.showStatus
-        ? (
-          <AffixTopBar>
-            <PageAlert>
-              <Icon type='history' style={{ fontSize: '32px', color: 'white', placeSelf: 'center' }} />
-              <h4 style={{ alignSelf: 'center' }}>{options.statusMessage}</h4>
-              <RegisterButtons />
-            </PageAlert>
-          </AffixTopBar>
-        )
-        : <RegisterButtons />}
+  return <>
+    {options.showStatus
+      ? (
+        <AffixTopBar>
+          <PageAlert>
+            <HistoryOutlined style={{ fontSize: '32px', color: 'white', placeSelf: 'center' }} />
+            <h4 style={{ alignSelf: 'center' }}>{options.statusMessage}</h4>
+            <RegisterButtons />
+          </PageAlert>
+        </AffixTopBar>
+      )
+      : <RegisterButtons />}
 
-      <RegisterInterestMessageForm
-        id='acceptRegisterInterestForm'
-        title={options.acceptFormTitle}
-        prompt={options.acceptFormPrompt}
-        showTerms={!interest.termsAccepted}
-        onSubmit={handleAcceptSubmit}
-        visible={showAcceptForm}
-      />
-      <RegisterInterestMessageForm
-        id='rejectRegisterInterestForm'
-        title={options.rejectFormTitle}
-        prompt={options.rejectFormPrompt}
-        showTerms={!interest.termsAccepted}
-        onSubmit={handleRejectSubmit}
-        visible={showRejectForm}
-      />
-      <RegisterInterestMessageForm
-        id='messageRegisterInterestForm'
-        title={messageForm.title}
-        prompt={messageForm.prompt}
-        showTerms={!interest.termsAccepted}
-        onSubmit={handleMessageSubmit}
-        visible={showMessageForm}
-      />
-    </>
-  )
+    <RegisterInterestMessageForm
+      id='acceptRegisterInterestForm'
+      title={options.acceptFormTitle}
+      prompt={options.acceptFormPrompt}
+      showTerms={!interest.termsAccepted}
+      onSubmit={handleAcceptSubmit}
+      visible={showAcceptForm}
+    />
+    <RegisterInterestMessageForm
+      id='rejectRegisterInterestForm'
+      title={options.rejectFormTitle}
+      prompt={options.rejectFormPrompt}
+      showTerms={!interest.termsAccepted}
+      onSubmit={handleRejectSubmit}
+      visible={showRejectForm}
+    />
+    <RegisterInterestMessageForm
+      id='messageRegisterInterestForm'
+      title={messageForm.title}
+      prompt={messageForm.prompt}
+      showTerms={!interest.termsAccepted}
+      onSubmit={handleMessageSubmit}
+      visible={showMessageForm}
+    />
+         </>
 }
 
 // Ensures the correct properties are being supplied to this component

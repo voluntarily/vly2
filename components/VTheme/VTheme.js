@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { Tag, Icon } from 'antd'
+import Icon from '@ant-design/icons'
+import { Tag } from 'antd'
 
 /*
 ====================================================
@@ -898,7 +899,7 @@ export const BigQuoteAuthor = styled.p`
 `
 // delegated props,  usage <ContactIcon icon={TwitterOutlined} />
 export const ContactIcon = ({ icon, children }) => {
-  const Icon = icon // Note: variable name _must_ start with a capital letter 
+  const Icon = icon // Note: variable name _must_ start with a capital letter
   return (
     <Icon
       twoToneColor='blue'
@@ -908,7 +909,6 @@ export const ContactIcon = ({ icon, children }) => {
     </Icon>
   )
 }
-
 
 /*
 ====================================================

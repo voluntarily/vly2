@@ -1,5 +1,7 @@
 import React, { useState, Component, forwardRef } from 'react'
-import { Avatar, Button, Checkbox, Divider, Form, Icon, Input, Radio, Tooltip, Row, Col } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Avatar, Button, Checkbox, Divider, Input, Radio, Tooltip, Row, Col } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
 
@@ -42,7 +44,7 @@ const personEmail = (
     />
     &nbsp;
     <Tooltip title="As we use your email as your unique id you can't change it here. Use the Support menu to ask for an email change.">
-    <QuestionCircleOutlined />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )

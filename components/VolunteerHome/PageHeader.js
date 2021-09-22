@@ -1,4 +1,5 @@
-import { Icon, Menu } from 'antd'
+import { AppstoreOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons'
+import { Menu } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { H3Black, SpacerSmall } from '../VTheme/VTheme'
@@ -34,7 +35,7 @@ const PageHeader = () => (
     <SpacerSmall />
     <Menu mode='horizontal'>
       <Menu.Item key='1'>
-        <Icon type='appstore' />
+        <AppstoreOutlined />
         <FormattedMessage
           id='home.ops'
           defaultMessage='Active Requests'
@@ -42,7 +43,7 @@ const PageHeader = () => (
         />
       </Menu.Item>
       <Menu.Item key='2'>
-        <Icon type='search' />
+        <SearchOutlined />
         <FormattedMessage
           id='home.search'
           defaultMessage='Search'
@@ -50,7 +51,7 @@ const PageHeader = () => (
         />
       </Menu.Item>
       <Menu.Item key='profile'>
-        <Icon type='setting' />
+        <SettingOutlined />
         <FormattedMessage
           id='home.profile'
           defaultMessage='Profile'

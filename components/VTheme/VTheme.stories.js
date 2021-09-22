@@ -2,7 +2,17 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { StoryIntroContainer } from './VStoryTheme'
 
-import { Button, Icon, Divider } from 'antd'
+import {
+  CalendarOutlined,
+  DownloadOutlined,
+  LeftOutlined,
+  MailOutlined,
+  PhoneOutlined,
+  ProfileOutlined,
+  RightOutlined
+} from '@ant-design/icons'
+
+import { Button, Divider } from 'antd'
 import { H1, H4 } from './VTheme'
 
 storiesOf('Minor Components', module)
@@ -37,24 +47,24 @@ storiesOf('Minor Components', module)
         Link
       </Button>
       <br /> <br /> <br />
-      <Button type='primary' icon='download' size='large' />
-      <Button type='primary' shape='circle' icon='calendar' size='large' />
-      <Button type='primary' shape='round' icon='phone' size='large' />
-      <Button type='primary' shape='round' icon='mail' size='large'>
+      <Button type='primary' icon={<DownloadOutlined />} size='large' />
+      <Button type='primary' shape='circle' icon={<CalendarOutlined />} size='large' />
+      <Button type='primary' shape='round' icon={<PhoneOutlined />} size='large' />
+      <Button type='primary' shape='round' icon={<MailOutlined />} size='large'>
         Download
       </Button>
-      <Button type='primary' icon='profile' size='large'>
+      <Button type='primary' icon={<ProfileOutlined />} size='large'>
         Download
       </Button>
       <br /> <br /> <br />
       <Button.Group size='large'>
         <Button type='primary'>
-          <Icon type='left' />
+          <LeftOutlined />
           Backward
         </Button>
         <Button type='primary'>
           Forward
-          <Icon type='right' />
+          <RightOutlined />
         </Button>
       </Button.Group>
     </StoryIntroContainer>

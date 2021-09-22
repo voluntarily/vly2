@@ -1,4 +1,6 @@
-import { Form, Icon, Tooltip, Input, Row, Col } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Tooltip, Input, Row, Col } from 'antd'
 import React, { useEffect, useRef } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, TitleContainer } from '../VTheme/FormStyles'

@@ -1,4 +1,6 @@
-import { Button, Checkbox, Divider, Form, Input, Tooltip, Icon, Affix } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Button, Checkbox, Divider, Input, Tooltip, Affix } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import slug from 'limax'
 import PropTypes from 'prop-types'

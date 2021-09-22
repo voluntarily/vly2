@@ -1,4 +1,6 @@
-import { Form, DatePicker, Icon, Input, Tooltip, Row, Col } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { DatePicker, Input, Tooltip, Row, Col } from 'antd'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { DescriptionContainer, FormGrid, ShortInputContainer, InputContainer, TitleContainer } from '../VTheme/FormStyles'

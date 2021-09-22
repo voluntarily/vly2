@@ -1,4 +1,11 @@
-import { Icon } from 'antd'
+import {
+  BankOutlined,
+  QuestionCircleOutlined,
+  ReadOutlined,
+  TeamOutlined,
+  ThunderboltOutlined
+} from '@ant-design/icons'
+
 import styled from 'styled-components'
 import { OrganisationRole } from '../../server/api/organisation/organisation.constants'
 
@@ -14,13 +21,13 @@ const HorUl = styled.ul`
 
 const OrgRoleItem = ({ orgRoleItem }) => {
   const roleOptions = [
-    { label: <Icon type='bank' />, value: OrganisationRole.VOLUNTEER_PROVIDER },
-    { label: <Icon type='read' />, value: OrganisationRole.OPPORTUNITY_PROVIDER },
-    { label: <Icon type='thunderbolt' />, value: OrganisationRole.ACTIVITY_PROVIDER },
-    { label: <Icon type='thunderbolt' />, value: OrganisationRole.RESOURCE_PROVIDER },
-    { label: <Icon type='team' />, value: OrganisationRole.AGENCY },
-    { label: <Icon type='team' />, value: OrganisationRole.ADMIN },
-    { label: <Icon type='question-circle' />, value: OrganisationRole.OTHER }
+    { label: <BankOutlined />, value: OrganisationRole.VOLUNTEER_PROVIDER },
+    { label: <ReadOutlined />, value: OrganisationRole.OPPORTUNITY_PROVIDER },
+    { label: <ThunderboltOutlined />, value: OrganisationRole.ACTIVITY_PROVIDER },
+    { label: <ThunderboltOutlined />, value: OrganisationRole.RESOURCE_PROVIDER },
+    { label: <TeamOutlined />, value: OrganisationRole.AGENCY },
+    { label: <TeamOutlined />, value: OrganisationRole.ADMIN },
+    { label: <QuestionCircleOutlined />, value: OrganisationRole.OTHER }
   ]
   const item = roleOptions
     .filter(role => role.value === orgRoleItem)[0].label

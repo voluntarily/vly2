@@ -1,4 +1,6 @@
-import { Avatar, Button, Checkbox, Divider, Form, Icon, Input, Radio, Tooltip, Row, Col } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Avatar, Button, Checkbox, Divider, Input, Radio, Tooltip, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component, forwardRef } from 'react'
 import { connect } from 'react-redux'

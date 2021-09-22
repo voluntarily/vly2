@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
 import TagDisplay from '../Tags/TagDisplay'
-import { StyledIcon, OpSectionGrid } from '../VTheme/VTheme'
+import { Icon, OpSectionGrid } from '../VTheme/VTheme'
 import Html from '../VTheme/Html'
 import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
@@ -132,72 +132,72 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
 
           <li>
             <a href={`mailto:${person.email}`}>
-              <StyledIcon type='mail' />
+              <Icon type='mail' />
               {person.email}
             </a>
           </li>
           {person.phone &&
             <li>
               <a href={`tel:${person.phone}`}>
-                <StyledIcon type='phone' />
+                <Icon type='phone' />
                 {person.phone}
               </a>
             </li>}
 
           {person.phone && person.address && person.address.addressSummary &&
             <li>
-              <StyledIcon type='home' />
+              <Icon type='home' />
               <StreetAddressLinkLi address={person.address.addressSummary} />
             </li>}
           {person.website &&
             <li>
               <a href={defaultToHttpScheme(person.website)} rel='noopener noreferrer' target='_blank'>
-                <StyledIcon type='global' />
+                <Icon type='global' />
                 {person.website}
               </a>
             </li>}
           {person.facebook &&
             <li>
               <a href={`https://www.facebook.com/${person.facebook}`} rel='noopener noreferrer' target='_blank'>
-                <StyledIcon type='facebook' />
+                <Icon type='facebook' />
                 {person.facebook}
               </a>
             </li>}
           {person.twitter &&
             <li>
               <a href={`https://www.twitter.com/${person.twitter}`} rel='noopener noreferrer' target='_blank'>
-                <StyledIcon type='twitter' />
+                <Icon type='twitter' />
                 {person.twitter}
               </a>
             </li>}
           {person.locations && person.locations.length > 0 &&
             <li>
-              <StyledIcon type='compass' />
+              <Icon type='compass' />
               {person.locations.join(', ')}
             </li>}
           {person.pronoun &&
             <li>
-              <StyledIcon type='idcard' />
+              <Icon type='idcard' />
               <PersonPronouns pronoun={person.pronoun} />
             </li>}
           {person.role &&
             <li>
-              <StyledIcon type='coffee' />
+              <Icon type='coffee' />
               <PersonRoles roles={person.role} />
             </li>}
           {person.education &&
             <li>
-              <StyledIcon type='book' />
+              <Icon type='book' />
               {person.education}
             </li>}
           {person.placeOfWork &&
             <li>
-              <StyledIcon type='bank' />
+              <Icon type='bank' />
               {person.placeOfWork}
             </li>}
           {person.job &&
             <li>
-              <StyledIcon type='coffee' />
+              <Icon type='coffee' />
               {person.job}
             </li>}
         </PersonUl>

@@ -1,4 +1,6 @@
-import { Button, Divider, Form, Icon, Input, Tooltip, Radio, Switch, Row, Col } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Button, Divider, Input, Tooltip, Radio, Switch, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -11,7 +13,7 @@ import { DynamicFieldSet } from '../DynamicFieldSet/DynamicFieldSet'
 import slug from 'limax'
 import { ActivityFields, ActivityStatus } from '../../server/api/activity/activity.constants'
 import moment from 'moment'
-import { QuestionCircleOutlined } from '@ant-design/icons'
+import { CheckOutlined, CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import {
   DescriptionContainer,
   FormGrid,
@@ -693,8 +695,8 @@ class ActDetailForm extends Component {
                   valuePropName: 'checked'
                 })(
                   <Switch
-                    checkedChildren={<Icon type='check' />}
-                    unCheckedChildren={<Icon type='close' />}
+                    checkedChildren={<CheckOutlined />}
+                    unCheckedChildren={<CloseOutlined />}
                   />)}
               </Form.Item>
 

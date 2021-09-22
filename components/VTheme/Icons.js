@@ -1,4 +1,4 @@
-import { Icon } from 'antd'
+import Icon from '@ant-design/icons'
 
 const shieldPathBody = `
 M45,0.06 

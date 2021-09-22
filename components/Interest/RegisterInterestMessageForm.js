@@ -1,5 +1,6 @@
 
-import { Button, Icon, Modal } from 'antd'
+import { WarningTwoTone } from '@ant-design/icons'
+import { Button, Modal } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import { FormattedMessage } from 'react-intl'
 import { useState } from 'react'
@@ -78,7 +79,7 @@ export const RegisterInterestMessageForm = ({
         </p>)}
       {showStaySafe && (
         <p style={{ float: 'right' }}>
-          <Icon type='warning' theme='twoTone' twoToneColor='#6549AA' />&nbsp;
+          <WarningTwoTone twoToneColor='#6549AA' />&nbsp;
           <a href={staySafeUrl} target='_blank' rel='noopener noreferrer'>
             <FormattedMessage
               id='RegisterInterestMessageForm.staysafeonline'
@@ -88,7 +89,6 @@ export const RegisterInterestMessageForm = ({
         </p>
       )}
     </Modal>
-
   )
 }
 
