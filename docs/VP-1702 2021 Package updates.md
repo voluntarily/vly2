@@ -32,6 +32,7 @@ These are deprecated and replaced with internal next css capability.  However we
 ### Icons
 Icons used to have a single <Icon> component with a type selector - this brings all the icons into the build. 
 Antd has a separate component for each Icon so <Icon type='home' > -> <HomeFilled />  each one used must be imported. 
+Icons were used in a large number of places. 
 ## Next-routes -> next-routes-extended
 This library has been abandoned and does not work with Next 11/ react 17.  However someone forked it into 
 next-routes-extended so we will use that for now. 
@@ -60,6 +61,9 @@ we need to name the functions
         export default Named;
 
 Fixed these using npx @next/codemod name-default-component. 12 files affected.
+
+## AntD Form updates
+Person/PersonDetailForm.js
 # Test failures
 -   server › api › interest › interest.ability › Interest API - anon - list
     -   not repeatable.

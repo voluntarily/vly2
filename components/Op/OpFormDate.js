@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import { DescriptionContainer, FormGrid, ShortInputContainer, InputContainer, TitleContainer } from '../VTheme/FormStyles'
 import { OpTypeDateTitle, OpTypeDatePrompt } from './OpType'
 import moment from 'moment'
-
+import { QuestionCircleOutlined } from '@ant-design/icons'
 const opCommitment = (
   <span>
     <FormattedMessage
@@ -14,7 +14,7 @@ const opCommitment = (
     />
     &nbsp;
     <Tooltip title='How much time overall is likely to be required for the activity?'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -29,7 +29,7 @@ const opStartDate = (
     />
     &nbsp;
     <Tooltip title='Set a start date if the activity needs to be done at a specific time, otherwise leave blank.'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -44,7 +44,7 @@ const opStartDate = (
 //     />
 //     &nbsp;
 //     <Tooltip title='Set an end date if the activity needs more than one day.'>
-//       <Icon type='question-circle-o' />
+//       <QuestionCircleOutlined />
 //     </Tooltip>
 //   </span>
 // )

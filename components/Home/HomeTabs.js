@@ -1,4 +1,5 @@
-import { Icon, Tabs } from 'antd'
+import { Tabs } from 'antd'
+import { InboxOutlined, HistoryOutlined, SettingOutlined, FileSearchOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -16,7 +17,7 @@ const { TabPane } = Tabs
 
 const homeActiveTab = (
   <>
-    <Icon type='inbox' />
+    <InboxOutlined />
     <FormattedMessage
       id='home.tab.active'
       defaultMessage='Upcoming'
@@ -26,7 +27,7 @@ const homeActiveTab = (
 )
 const homeHistoryTab = (
   <>
-    <Icon type='history' />
+    <HistoryOutlined />
     <FormattedMessage
       id='home.tab.history'
       defaultMessage='History'
@@ -36,7 +37,7 @@ const homeHistoryTab = (
 )
 const homeProfileTab = (
   <>
-    <Icon type='setting' />
+    <SettingOutlined />
     <FormattedMessage
       id='home.tab.profile'
       defaultMessage='Profile'
@@ -46,7 +47,7 @@ const homeProfileTab = (
 )
 const homeDiscoverTab = (
   <>
-    <Icon type='file-search' />
+    <FileSearchOutlined />
     <FormattedMessage
       id='home.tab.discover'
       defaultMessage='Discover'

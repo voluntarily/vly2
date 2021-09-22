@@ -2,7 +2,7 @@ import { Form, Icon, Tooltip } from 'antd'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import OrgSelector from '../Org/OrgSelector'
-
+import { QuestionCircleOutlined } from '@ant-design/icons'
 const opOrganisation = (
   <span>
     {' '}
@@ -13,7 +13,7 @@ const opOrganisation = (
     />
     &nbsp;
     <Tooltip title='Select Voluntarily, or another group you belong to'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )

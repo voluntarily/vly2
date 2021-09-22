@@ -11,7 +11,7 @@ import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
 import ImageUpload from '../Upload/ImageUpload'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, ShortInputContainer, TitleContainer } from '../VTheme/FormStyles'
-
+import { QuestionCircleOutlined } from '@ant-design/icons'
 const { TextArea } = Input
 const { RangePicker } = DatePicker
 
@@ -25,7 +25,7 @@ const opTitle = (
     />
     &nbsp;
     <Tooltip title="Choose something interesting like 'Help to get setup with Video Conferencing' ">
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -38,7 +38,7 @@ const opSubtitle = (
       description='activity Subtitle label in OpOfferForm Form'
     />{' '}
     <Tooltip title="Choose something interesting like 'we want to build robots' ">
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -51,7 +51,7 @@ const opCommitment = (
     />
     &nbsp;
     <Tooltip title='How much time overall is likely to be required for the activity?'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -65,7 +65,7 @@ const opLocation = (
     />
     &nbsp;
     <Tooltip title='set the region to help find local volunteers'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -79,7 +79,7 @@ const opVenue = (
     />
     &nbsp;
     <Tooltip title='Enter the address where this takes place'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -93,7 +93,7 @@ const opOrganisation = (
     />
     &nbsp;
     <Tooltip title='Which topic or group does this activity belong to?'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -107,7 +107,7 @@ const opDescription = (
     />
     &nbsp;
     <Tooltip title='Give a long description of what is needed and what people will be doing.'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -121,7 +121,7 @@ const opDateRange = (
     />
     &nbsp;
     <Tooltip title='Set a date range if the activity needs more than one day.'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -134,7 +134,7 @@ const opImgUrl = (
     />
     &nbsp;
     <Tooltip title="Choose something interesting like 'we want to build robots' ">
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )

@@ -39,7 +39,7 @@ const LogoContainer = styled.a`
 `
 const Logo = styled.img`
   height: 3rem;
-  width: 12rem;
+  width: 14rem;
   margin: 0.7rem;
 
   background-image: url('/static/vlogolong.svg');

@@ -89,6 +89,11 @@ list-style: none;
   }
 `
 
+const Revision = ({rev}) => {
+  const url = 'https://github.com/voluntarily/vly2/commit/' + rev[0]?.split(/[ \- _ ]+/)[0]
+  return (<a href={url} rel='noopener noreferrer' target='_blank'>{rev}</a>)
+}
+
 const Footer = () => (
   <FooterBackground>
     <FooterContainer>
@@ -126,7 +131,7 @@ const Footer = () => (
                 defaultMessage='local-build'
                 description='Source code revision, auto generated.'
               >
-                {txt => <a href={'https://github.com/voluntarily/vly2/commit/' + txt.split(/[ \- _ ]+/)[0]} rel='noopener noreferrer' target='_blank'>{txt}</a>}
+                {txt => <Revision rev={txt} />}
               </FormattedMessage>
             </P>
 

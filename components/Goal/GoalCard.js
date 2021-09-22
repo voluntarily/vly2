@@ -5,7 +5,7 @@ import { PersonalGoalStatus } from '../../server/api/personalGoal/personalGoal.c
 import reduxApi, { withPersonalGoals } from '../../lib/redux/reduxApi'
 import
 {
-  CheckCircleTwoTone,
+  CloseCircleTwoTone,
   PaperClipOutlined,
   TrophyOutlined
 } from '@ant-design/icons'
@@ -61,7 +61,7 @@ const CardSubtitle = styled.p`
   margin: 0 1rem 1rem 1rem;
 ` // GoalCardSubtitle
 
-const CloseIcon = styled(CheckCircleTwoTone)`
+const CloseIcon = styled(CloseCircleTwoTone)`
   font-size: 1rem;
   position: absolute;
   top: 0.5rem;

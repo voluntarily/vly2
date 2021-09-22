@@ -5,7 +5,7 @@ import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, T
 import { OpTypeLocationPrompt } from './OpType'
 import OpFormOrg from './OpFormOrg'
 import { withAddressFinder } from '../Address/AddressFinder'
-
+import { QuestionCircleOutlined } from '@ant-design/icons'
 const opStreet = (
   <span>
     {' '}
@@ -16,7 +16,7 @@ const opStreet = (
     />
     &nbsp;
     <Tooltip title='set the street address for this activity'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )

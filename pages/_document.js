@@ -1,5 +1,6 @@
 // import './static/empty.less'
-import Document, { Head, Main, NextScript } from 'next/document'
+import Document, { Html, Head, Main, NextScript } from 'next/document'
+
 import { ServerStyleSheet } from 'styled-components'
 
 // The document (which is SSR-only) needs to be customized to expose the locale
@@ -44,7 +45,7 @@ export default class IntlDocument extends Document {
     }`
 
     return (
-      <html lang={this.props.locale}>
+      <Html lang={this.props.locale}>
         <Head>
           <script dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -82,7 +83,7 @@ export default class IntlDocument extends Document {
             height='0' width='0' style={{ display: 'none', visibility: 'none' }}
           />
         </noscript>
-      </html>
+      </Html>
     )
   }
 }

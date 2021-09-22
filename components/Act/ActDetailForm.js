@@ -11,7 +11,7 @@ import { DynamicFieldSet } from '../DynamicFieldSet/DynamicFieldSet'
 import slug from 'limax'
 import { ActivityFields, ActivityStatus } from '../../server/api/activity/activity.constants'
 import moment from 'moment'
-
+import { QuestionCircleOutlined } from '@ant-design/icons'
 import {
   DescriptionContainer,
   FormGrid,
@@ -157,7 +157,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title="Choose something interesting like 'we want to build robots' ">
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -170,7 +170,7 @@ class ActDetailForm extends Component {
           description='activity Subtitle label in ActDetail Form'
         />{' '}
         <Tooltip title="Choose something interesting like 'we want to build robots' ">
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -183,7 +183,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='How much time overall is likely to be required for the activity?'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -198,7 +198,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Give a long description of what is needed and what people will be doing.'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -211,7 +211,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Make a list of any equipment or materials needed for this activity.'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -225,7 +225,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='How much space is required to run an activity? Indoor or Outdoor activity?'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -239,7 +239,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Give a long description of what is needed and what people will be doing.'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -252,7 +252,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Choose a picture that illustrates the activity, you can upload a picture or link to something on the Internet, Animated Gifs too.'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -265,7 +265,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Upload up to 5 pdf files that you would like to attach to this activity. These will be display on the activity for volunteers to read.'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -279,7 +279,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Which organisation is this activity for?'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -300,7 +300,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Enable lock to prevent people from changing the title and image when the base a request on this activity'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )

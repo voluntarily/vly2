@@ -1,4 +1,5 @@
 import { Button, Checkbox, Divider, Form, Input, Tooltip, Icon, Affix } from 'antd'
+import { QuestionCircleOutlined } from '@ant-design/icons'
 import slug from 'limax'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
@@ -110,7 +111,7 @@ class OrgDetailForm extends Component {
         />
       &nbsp;
         <Tooltip title='Used to match emails of the form name@org.domain to your organisation automatically.'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )

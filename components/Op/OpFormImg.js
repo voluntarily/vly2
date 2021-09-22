@@ -3,7 +3,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import ImageUpload from '../Upload/ImageUpload'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, TitleContainer } from '../VTheme/FormStyles'
-
+import { QuestionCircleOutlined } from '@ant-design/icons'
 const opImgUrl = (
   <span>
     <FormattedMessage
@@ -13,7 +13,7 @@ const opImgUrl = (
     />
     &nbsp;
     <Tooltip title="Choose something interesting like 'we want to build robots' ">
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
