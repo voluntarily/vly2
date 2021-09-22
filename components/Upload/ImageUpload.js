@@ -4,4 +4,6 @@ const ImageUpload = dynamic(() => import('./ImageUploadRaw'), {
   ssr: false
 })
 
-export default (props) => <ImageUpload {...props} />
+const ImageUploadComponent = props => <ImageUpload {...props} />
+
+export default ImageUploadComponent

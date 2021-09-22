@@ -15,7 +15,7 @@ export const options = {
     errors: ['rate<0.01'] // <1% errors
   }
 }
-export default function () {
+export default function PageLanding () {
   const res = http.get(`${host}/landing`)
 
   const pass = check(res, {

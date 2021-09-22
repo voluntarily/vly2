@@ -14,7 +14,7 @@ export const options = {
     errors: ['rate<0.01'] // <10% errors
   }
 }
-export default function () {
+export default function ApiPeople () {
   const query = JSON.stringify({ tags: 'fortran' })
   const options = {
     headers: {
