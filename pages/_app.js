@@ -1,4 +1,7 @@
-import '../assets/voluntarily.less'
+import 'antd/dist/antd.css'
+import '../styles/vars.css'
+import '../styles/global.css'
+
 import React from 'react'
 import App from 'next/app'
 import { Provider } from 'react-redux'

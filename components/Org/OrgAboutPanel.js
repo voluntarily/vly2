@@ -1,20 +1,19 @@
 import Html from '../VTheme/Html'
+import { HomeTwoTone, 
+  TwitterFilled,
+  FacebookFilled,
+  MailTwoTone,
+  CompassTwoTone,
+  PhoneTwoTone } from '@ant-design/icons'
+
 import PropTypes from 'prop-types'
 import React from 'react'
-import { ContactList, ActivityContainer } from '../VTheme/VTheme'
+import { ContactList, ContactIcon, ActivityContainer } from '../VTheme/VTheme'
 import { ProfilePanel } from '../VTheme/Profile'
 import { StreetAddressLinkLi } from '../Address/StreetAddress'
-import { Icon, Divider } from 'antd'
+import { Divider } from 'antd'
 import OrgRole from './OrgRole'
 import { OrganisationRole } from '../../server/api/organisation/organisation.constants'
-
-const ContactIcon = ({ type }) =>
-  <Icon
-    // theme='twoTone'
-    twoToneColor='blue'
-    type={type}
-    style={{ marginRight: '1rem', fontSize: '1.5rem', color: '#6549AA' }}
-  />
 
 export const OrgAboutPanel = ({ org, ...props }) => (
   <ProfilePanel>
@@ -36,22 +35,22 @@ export const OrgAboutPanel = ({ org, ...props }) => (
       <h2>Contact</h2>
       <ContactList>
         {org.website && (
-          <li><ContactIcon type='home' /><a href={org.website} target='_blank' rel='noopener noreferrer'>{org.website}</a></li>
+          <li><ContactIcon icon='HomeTwoTone' /><a href={org.website} target='_blank' rel='noopener noreferrer'>{org.website}</a></li>
         )}
         {org.twitter && (
-          <li>  <ContactIcon type='twitter' /><a href={`http://twitter.com/${org.twitter}`} target='_blank' rel='noopener noreferrer'>{org.twitter}</a></li>
+          <li>  <ContactIcon icon='TwitterFilled' /><a href={`http://twitter.com/${org.twitter}`} target='_blank' rel='noopener noreferrer'>{org.twitter}</a></li>
         )}
         {org.facebook && (
-          <li><ContactIcon type='facebook' /><a href={`https://www.facebook.com/${org.facebook}`} target='_blank' rel='noopener noreferrer'>{org.facebook}</a></li>
+          <li><ContactIcon type='FacebookFilled' /><a href={`https://www.facebook.com/${org.facebook}`} target='_blank' rel='noopener noreferrer'>{org.facebook}</a></li>
         )}
         {org.contactEmail && (
-          <li><ContactIcon type='mail' /><a href={`mailto:${org.contactEmail}`} target='_blank' rel='noopener noreferrer'>{org.contactEmail}</a></li>
+          <li><ContactIcon type='MailTwoTone' /><a href={`mailto:${org.contactEmail}`} target='_blank' rel='noopener noreferrer'>{org.contactEmail}</a></li>
         )}
         {org.address && (
-          <li><ContactIcon type='compass' /><StreetAddressLinkLi address={org.address} /></li>
+          <li><ContactIcon type='CompassTwoTone' /><StreetAddressLinkLi address={org.address} /></li>
         )}
         {org.contactPhoneNumber && (
-          <li><ContactIcon type='phone' /><a tel={org.contactPhoneNumber}>{org.contactPhoneNumber}</a></li>
+          <li><ContactIcon type='PhoneTwoTone' /><a tel={org.contactPhoneNumber}>{org.contactPhoneNumber}</a></li>
         )}
       </ContactList>
     </ActivityContainer>

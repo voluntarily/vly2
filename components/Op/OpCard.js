@@ -6,7 +6,12 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
 import { Card, DescriptionWrapper, TagState } from '../VTheme/VTheme'
-import { Icon } from 'antd'
+import { CheckCircleTwoTone,
+  MailTwoTone,
+  CalendarTwoTone,
+  CloseCircleTwoTone
+} from '@ant-design/icons'
+
 import styled from 'styled-components'
 import { OpTypeSuffix } from './OpType'
 import { displayDuration } from '../../lib/durationUtil'
@@ -42,10 +47,10 @@ const OpCard = ({ op }) => {
   const interestIcon = ((interest) => {
     if (!interest) { return '' }
     switch (interest.status) {
-      case 'interested': return <TagState style={{ color: '#222', backgroundColor: '#E1E1E1' }}><StyledIcon type='mail' />Signed up</TagState>
-      case 'invited': return <TagState style={{ color: 'white', backgroundColor: '#653CAD' }}><StyledIcon type='calendar' />You are invited</TagState>
-      case 'committed': return <TagState style={{ color: 'black', backgroundColor: '#36F482' }}><StyledIcon type='check-circle' />Accepted</TagState>
-      case 'declined': return <TagState style={{ color: 'white', backgroundColor: '#F44336' }}><StyledIcon type='close-circle' />Cancelled</TagState>
+      case 'interested': return <TagState style={{ color: '#222', backgroundColor: '#E1E1E1' }}><MailTwoTone />Signed up</TagState>
+      case 'invited': return <TagState style={{ color: 'white', backgroundColor: '#653CAD' }}><CalendarTwoTone />You are invited</TagState>
+      case 'committed': return <TagState style={{ color: 'black', backgroundColor: '#36F482' }}><CheckCircleTwoTone />Accepted</TagState>
+      case 'declined': return <TagState style={{ color: 'white', backgroundColor: '#F44336' }}><CloseCircleTwoTone />Cancelled</TagState>
       default: return ''
     }
   })(op.interest)

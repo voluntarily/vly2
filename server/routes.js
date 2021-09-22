@@ -1,4 +1,4 @@
-const routes = require('next-routes')
+const routes = require('next-routes-extended')
 
 // routesImplementation
 //   .add([identifier], pattern = /identifier, page = identifier)

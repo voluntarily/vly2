@@ -22,7 +22,7 @@ global.navigator = window.navigator
 
 // use .default export?
 const Enzyme = require('enzyme')
-const Adapter = require('enzyme-adapter-react-16')
+const Adapter = require('enzyme-adapter-react-17')
 Enzyme.configure({ adapter: new Adapter() })
 
 require('../../config/importEncryptedEnv')() // this will import during test step

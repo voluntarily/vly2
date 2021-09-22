@@ -1,7 +1,7 @@
 import React from 'react'
 import { FullPage, Spacer, H1 } from './VTheme/VTheme'
 
-export default () => (
+export const NotAuthorized = () => (
   <div>
     <FullPage>
       <Spacer />
@@ -25,3 +25,4 @@ export default () => (
     </FullPage>
   </div>
 )
+export default NotAuthorized
