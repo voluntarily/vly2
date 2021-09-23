@@ -32,8 +32,7 @@ These are deprecated and replaced with internal next css capability.  However we
 ### Icons
 Icons used to have a single <Icon> component with a type selector - this brings all the icons into the build. 
 Antd has a separate component for each Icon so <Icon type='home' > -> <HomeFilled />  each one used must be imported. 
-Icons were used in a large number of places. 
-## Next-routes -> next-routes-extended
+Icons were used in a large number of places. ## Next-routes -> next-routes-extended
 This library has been abandoned and does not work with Next 11/ react 17.  However someone forked it into 
 next-routes-extended so we will use that for now. 
 In future we should be able to replace all these routes with NextJS dynamic routing. 
@@ -47,7 +46,7 @@ This major update is still in beta but is the only version working with React 17
 
 ## "recharts": "^2.1.4",
 Recharts is a Redefined chart library built with React and D3.
-
+used for charts in the ratings and statistics pages.
 
 ## anon default components
 Anonymous arrow functions cause Fast Refresh to not preserve local component state.
@@ -62,6 +61,8 @@ we need to name the functions
 
 Fixed these using npx @next/codemod name-default-component. 12 files affected.
 
+## AntD Styles fix
+changes to how css is imported and less is out by default. fix by including a new package 
 ## AntD Form updates
 Person/PersonDetailForm.js
 # Test failures

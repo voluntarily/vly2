@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-export default () => `
+export const AboutMiVolunteerMd = () => `
 # Hello! You have stumbled upon an awesome open-source project.
 —
 
@@ -15,3 +15,4 @@ Voluntarily is an initiative by the Pam Fergusson Charitable Trust with support 
 
 Development has started as an open source project. Check out how you can get involved below:
 `
+export default AboutMiVolunteerMd

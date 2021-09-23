@@ -8,8 +8,8 @@ import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 import { FillWindow } from '../components/VTheme/VTheme'
 
-export const PublicPage = Page => {
-  const DefaultPage = (props) => {
+export function PublicPage (Page) {
+  function DefaultPage (props) {
     const isPlain = props.isPlain
     return (
       <Layout>

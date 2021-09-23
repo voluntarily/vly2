@@ -1,5 +1,7 @@
 import { defaultToHttpScheme } from '../../lib/urlUtil'
 import { Divider, Button } from 'antd'
+import { MailOutlined, PhoneOutlined } from '@ant-design/icons'
+
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
@@ -132,14 +134,14 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
 
           <li>
             <a href={`mailto:${person.email}`}>
-              <Icon type='mail' />
+              <MailOutlined />
               {person.email}
             </a>
           </li>
           {person.phone &&
             <li>
               <a href={`tel:${person.phone}`}>
-                <Icon type='phone' />
+                <PhoneOutlined />
                 {person.phone}
               </a>
             </li>}

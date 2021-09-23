@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import Icon from '@ant-design/icons'
 import { Tag } from 'antd'
 
 /*

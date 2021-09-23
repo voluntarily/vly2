@@ -7,17 +7,17 @@ import { useRouter } from 'next/router'
 
 const { SubMenu, Item } = Menu
 const VMenu = styled(Menu)`
-border-bottom: 2px solid transparent;
-border-right: none;
-font-weight: 700;
-.ant-menu-item {
-  border: none;
-  
-}
-
-@media screen and (max-width: 767px) {
-    // display: none;
+  border-bottom: 2px solid transparent;
+  border-right: none;
+  font-weight: 700;
+  .ant-menu-item {
+    border: none;
+    
   }
+
+  @media screen and (max-width: 767px) {
+      // display: none;
+    }
 `
 export const NavigationH = ({ items }) => {
   const router = useRouter()
@@ -81,6 +81,7 @@ export const NavigationV = ({ items }) => {
 const COLLAPSE_MENU_WIDTH = 1020
 const Navigation = (props) => {
   const [width] = useWindowSize()
+  console.log('navigation size', width)
   return (width < COLLAPSE_MENU_WIDTH)
     ? <NavigationV {...props} />
     : <NavigationH {...props} />
