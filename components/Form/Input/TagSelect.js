@@ -6,17 +6,17 @@ import { TagStyle } from '../../VTheme/VTheme'
 const { Option } = Select
 
 /**
- * @param {{ values: string[], onChange: (newValue: string[]) => {}, value: string[] }} props
+ * @param {{ options: string[], onChange: (newValue: string[]) => {}, value: string[] }} props
  */
-export const TagSelect = ({ values, onChange, value, placeholder }, ref) => {
+export const TagSelect = ({ options, onChange, value = {}, placeholder }) => {
+  if (!options) { console.log('TagSelect:', options, value); return ('No tag options supplied') }
   const addTag = tag => onChange(value.concat(tag))
   const removeTag = removedTag => onChange(value.filter(tag => tag !== removedTag))
-  const unselectedTags = values.filter(val => !value.includes(val))
-
+  const unselectedTags = options.filter(val => !value.includes(val))
   return (
     <>
       <Select style={{ width: '100%' }} showSearch value={undefined} placeholder={placeholder} onChange={addTag}>
-        {unselectedTags.map(val => <Option key={val}>{val}</Option>)}
+        {unselectedTags.map(opt => <Option key={opt}>{opt}</Option>)}
       </Select>
       {value && value.map(tag =>
         <TagStyle
@@ -31,7 +31,7 @@ export const TagSelect = ({ values, onChange, value, placeholder }, ref) => {
 
 // TagSelect.propTypes = {
 //   // The select items
-//   values: PropTypes.arrayOf(PropTypes.string).isRequired,
+//   options: PropTypes.arrayOf(PropTypes.string).isRequired,
 //   // When a tag is selected and the set of tags changes
 //   onChange: PropTypes.func,
 //   // The tags

@@ -1,10 +1,8 @@
 import React, { useState, Component, forwardRef } from 'react'
-import { Form } from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import { Avatar, Button, Checkbox, Divider, Input, Radio, Tooltip, Row, Col } from 'antd'
+import { Avatar, Button, Checkbox, Divider, Form, Input, Radio, Tooltip, Row, Col } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
-
 import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import EducationSelector from '../Form/Input/EducationSelector'
@@ -25,8 +23,6 @@ import { Role } from '../../server/services/authorize/role'
 import TagSelect from '../Form/Input/TagSelect'
 import { withAddressFinder } from '../Address/AddressFinder'
 
-const EducationSelectorRef = forwardRef(EducationSelector)
-const TagSelectRef = forwardRef(TagSelect)
 const developerSettings = process.env.NODE_ENV !== 'production'
 const { TextArea } = Input
 
@@ -234,8 +230,12 @@ const personPronoun = (
 //   })
 // }
 
-const PersonDetailForm = ({ person }) => {
-  // const [imgUrl, setImgUrl] = useState('')
+const PersonDetailForm = ({ me, person, onCancel, onSubmit, locations, existingTags }) => {
+  const [form] = Form.useForm()
+  const [avatar, setAvatar] = useState({
+    lg: person.imgUrl,
+    sm: person.imgUrlSm
+  })
   // To save various fields of address
   // const [address, setAddress] = useState({
   //   street: null,
@@ -246,34 +246,391 @@ const PersonDetailForm = ({ person }) => {
   //   addressSummary: null
   // })
 
+  const isTest = process.env.NODE_ENV === 'test'
+  const isVolunteer = person.role.some(r => r === Role.VOLUNTEER)
+
   const onFinish = (values) => {
     console.log('Received values of form: ', values)
+    person = {
+      ...person,
+      ...values
+    }
+    permissionTrimFields(person, me.role)
+    onSubmit(person)
   }
 
+  const setImgUrl = (imgUrl, sizeVariants) => {
+    console.log('setImgUrl', imgUrl, sizeVariants)
+    setAvatar(sizeVariants)
+    person.imgUrl = imgUrl
+    person.imgUrlSm = sizeVariants.sm
+  }
   return (
     <Form
+      form={form}
       name='person_detail_form'
-      layout='horizontal'
+      layout='vertical'
+      initialValues={person}
       onFinish={onFinish}
-      // fields={fields}
-      // onFieldsChange={(_, allFields) => {
-      //   onChange(allFields);
-      // }}
+      size='large'
     >
-      <Form.Item
-        label={personNickname}
-        name='personNickname'
-        rules={[
-          {
-            required: true,
-            message: <requiredMsg />
-          }
-        ]}
-        // validateStatus={nicknameError ? 'error' : ''}
-        // help={nicknameError || ''}
-      >
-        <Input placeholder='e.g Dali' />
-      </Form.Item>
+      <FormGrid> {/* // Your Name */}
+        <DescriptionContainer>
+          <TitleContainer>
+            <H3Bold>
+              <FormattedMessage
+                id='PersonDetailForm.SectionTitle.YourName'
+                defaultMessage='Your name'
+              />
+            </H3Bold>
+          </TitleContainer>
+          <P>
+            <FormattedMessage
+              id='PersonDetailForm.SectionDescription.YourName'
+              defaultMessage='Set your nickname and your formal name to help people to recoginise you.'
+            />
+          </P>
+        </DescriptionContainer>
+        <InputContainer>
+          <ShortInputContainer>
+            <Form.Item
+              label={personNickname}
+              name='nickname'
+              required
+              // validateStatus={nicknameError ? 'error' : ''}
+              // help={nicknameError || ''}
+            >
+              <Input placeholder='e.g Dali' />
+            </Form.Item>
+          </ShortInputContainer>
+          <ShortInputContainer>
+            <Form.Item
+              label={personName}
+              name='name'
+              required
+              // validateStatus={nameError ? 'error' : ''}
+              // help={nameError || ''}
+            >
+              <Input placeholder='e.g Salvador' />
+            </Form.Item>
+          </ShortInputContainer>
+        </InputContainer>
+      </FormGrid>
+
+      <Divider />
+      <FormGrid> {/* // Avatar */}
+        <DescriptionContainer>
+          <H3Bold>
+            <FormattedMessage
+              id='PersonDetailForm.SectionTitle.Avatar'
+              defaultMessage='Profile Photo'
+            />
+          </H3Bold>
+          <FormattedMessage
+            id='PersonDetailForm.SectionDescription.Avatar'
+            defaultMessage='Upload a photo to help people to recognise you and reflect your character.'
+          />
+          {avatar.lg &&
+            <p>
+              <Avatar size={128} src={avatar.lg} />
+              <Avatar size={32} src={avatar.sm} />
+            </p>}
+        </DescriptionContainer>
+        <InputContainer>
+          <Form.Item label={personAvatar}>
+            <ImageUpload setImgUrl={setImgUrl} usages='profile-photo' />
+          </Form.Item>
+        </InputContainer>
+      </FormGrid>
+
+      <Divider />
+      <FormGrid> {/* // Contact Details */}
+        <DescriptionContainer>
+          <TitleContainer>
+            <H3Bold>
+              <FormattedMessage
+                id='PersonDetailForm.SectionTitle.ContactDetails'
+                defaultMessage='Contact details'
+              />
+            </H3Bold>
+          </TitleContainer>
+          <P>
+            <FormattedMessage
+              id='PersonDetailForm.SectionDescription.ContactDetails'
+              defaultMessage='How do you want people to get in touch with you? Other people can only see this if you let them 🤫'
+            />
+          </P>
+        </DescriptionContainer>
+        <InputContainer>
+          <ShortInputContainer>
+            <Form.Item name='email' label={personEmail}>
+              <Input placeholder='salvador@dali.com' readOnly />
+            </Form.Item>
+          </ShortInputContainer>
+          <ShortInputContainer>
+            <Form.Item name='phone' label={personPhone}>
+              <Input placeholder='000 000 0000' />
+            </Form.Item>
+          </ShortInputContainer>
+          {/* make address required for volunteer for validation purpose and optional for asker */}
+          <ShortInputContainer>
+            <Form.Item
+              name='address'
+              label={personAddress}
+              rules={[
+                {
+                  required: isVolunteer,
+                  message: 'Address is required for volunteers'
+                }]}
+              // validateStatus={addressError ? 'error' : ''}
+              // help={addressError || ''}
+            >
+
+              <Input placeholder='Physical Address' allowClear />
+            </Form.Item>
+          </ShortInputContainer>
+
+        </InputContainer>
+      </FormGrid>
+      <Divider />
+
+      <FormGrid> {/* // Location, Skills and Interests */}
+        <DescriptionContainer>
+          <TitleContainer>
+            <H3Bold>
+              <FormattedMessage
+                id='PersonDetailForm.SectionTitle.SkillsAndInterests'
+                defaultMessage='Activity Recommendations'
+              />
+            </H3Bold>
+          </TitleContainer>
+          <P>
+            {isVolunteer
+              ? (
+                <FormattedMessage
+                  id='PersonDetailForm.SectionDescription.SkillsAndInterests'
+                  defaultMessage='This section helps us find the right things for you to do. Tell us the region you in and your skills and interests. Use keywords like: accounting, video conferencing etc.'
+                />
+              )
+              : (
+                <FormattedMessage
+                  id='PersonDetailForm.SectionDescription.Location'
+                  defaultMessage='This section helps us find the right things for you to do. Tell us the region you in.'
+                />
+              )}
+          </P>
+        </DescriptionContainer>
+        <InputContainer>
+          <Form.Item name='locations' label={personLocation}>
+            <TagSelect options={locations?.locations} placeholder='Select location' />
+          </Form.Item>
+          {isVolunteer && (
+            <Form.Item
+              name='tags'
+              label={personTags}
+              required
+            >
+              <TagInput existingTags={existingTags} />
+            </Form.Item>
+          )}
+        </InputContainer>
+      </FormGrid>
+      <Divider />
+      <FormGrid> {/* // Pronoun */}
+        <DescriptionContainer>
+          <TitleContainer>
+            <H3Bold>
+              <FormattedMessage
+                id='PersonDetailForm.SectionTitle.AboutYou'
+                defaultMessage='About you'
+              />
+            </H3Bold>
+          </TitleContainer>
+          <P>
+            <FormattedMessage
+              id='PersonDetailForm.SectionDescription.AboutYou'
+              defaultMessage='Optional: Tell the people you will be volunteering for something about yourself. And How we should address you.'
+            />
+          </P>
+        </DescriptionContainer>
+        <InputContainer>
+          <ShortInputContainer>
+            <Row>
+              <Col span={24}>
+                <label>{personPronoun}</label>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={8}>
+                <Form.Item name={['pronoun', 'subject']} layout='inline' style={{ width: '100%', marginRight: 0 }}>
+                  <Input placeholder='they' />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item name={['pronoun', 'object']} layout='inline'>
+                  <Input placeholder='them' />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item name={['pronoun', 'posessive']} layout='inline'>
+                  <Input placeholder='theirs' />
+                </Form.Item>
+              </Col>
+            </Row>
+          </ShortInputContainer>
+          <Form.Item name='about'>
+            <RichTextEditor />
+          </Form.Item>
+        </InputContainer>
+      </FormGrid>
+      <Divider />
+      <FormGrid> {/* // Social Links - Optional */}
+        <DescriptionContainer>
+          <TitleContainer>
+            <H3Bold>
+              <FormattedMessage
+                id='PersonDetailForm.SectionTitle.SocialLinks'
+                defaultMessage='Social Media'
+              />
+            </H3Bold>
+          </TitleContainer>
+          <P>
+            <FormattedMessage
+              id='PersonDetailForm.SectionDescription.SocialLinks'
+              defaultMessage='Optional: Share your social media links so the groups you work with can follow your social network.'
+            />
+          </P>
+        </DescriptionContainer>
+        <InputContainer>
+          <Form.Item name='facebook' label={personFacebook}>
+            <Input addonBefore='https://www.facebook.com/' />
+          </Form.Item>
+          <Form.Item name='twitter' label={personTwitter}>
+            <Input addonBefore='@' />
+          </Form.Item>
+          <Form.Item
+            name='website' label={personWebSite}
+            rules={[
+              {
+                pattern: websiteRegex,
+                message: 'Enter valid URL'
+              }
+            ]}
+          >
+            <Input placeholder='Website' />
+          </Form.Item>
+        </InputContainer>
+      </FormGrid>
+      <Divider />
+      <FormGrid> {/* // Work & Education */}
+        <DescriptionContainer>
+          <TitleContainer>
+            <H3Bold>
+              <FormattedMessage
+                id='PersonDetailForm.SectionTitle.WorkAndEducation'
+                defaultMessage='Work &amp; Education'
+              />
+            </H3Bold>
+          </TitleContainer>
+          <P>
+            <FormattedMessage
+              id='PersonDetailForm.SectionDescription.WorkAndEducation'
+              defaultMessage='Tell the people your education, place of work and job to help people know you better and help find recommendations.'
+            />
+          </P>
+        </DescriptionContainer>
+        <InputContainer>
+          <Form.Item name='education' label={personEducation}>
+            <EducationSelector />
+          </Form.Item>
+          <Form.Item name='placeOfWork' label={personplaceOfWork}>
+            <Input placeholder='Enter your place of work here' />
+          </Form.Item>
+          <ShortInputContainer>
+            <Form.Item name='job' label={personJob}>
+              <Input placeholder='Enter your job title here' />
+            </Form.Item>
+          </ShortInputContainer>
+        </InputContainer>
+      </FormGrid>
+      <Divider />
+      <FormGrid> {/* // Settings */}
+        <DescriptionContainer>
+          <TitleContainer>
+            <H3Bold>
+              <FormattedMessage
+                id='PersonDetailForm.SectionTitle.Settings'
+                defaultMessage='Settings'
+              />
+            </H3Bold>
+          </TitleContainer>
+          <P>
+            <FormattedMessage
+              id='PersonDetailForm.SectionDescription.Settings'
+              defaultMessage='Control your availability for volunteering and whether to receive emails.'
+            />
+          </P>
+        </DescriptionContainer>
+        <InputContainer>
+          <Form.Item name='status' label={personStatus} required>
+            <Radio.Group buttonStyle='solid'>
+              <Radio.Button value='inactive'>Not Available</Radio.Button>
+              <Radio.Button value='active'>Available</Radio.Button>
+            </Radio.Group>
+          </Form.Item>
+          <Form.Item name='sendEmailNotifications' valuePropName='checked'>
+            <Checkbox>{personSendEmailNotifications}</Checkbox>
+          </Form.Item>
+        </InputContainer>
+      </FormGrid>
+      <Divider />
+      {developerSettings && (
+        <>
+          <FormGrid> {/* // Dev Settings */}
+            <DescriptionContainer>
+              <TitleContainer>
+                <H3Bold>Developer Settings</H3Bold>
+              </TitleContainer>
+              <P>This section is only available to developers.</P>
+            </DescriptionContainer>
+            <InputContainer>
+              {' '}
+              <Form.Item name='role' required label={personRole}>
+                <Checkbox.Group options={roleOptions} />
+              </Form.Item>
+            </InputContainer>
+          </FormGrid>
+          <Divider />
+        </>
+      )}
+
+      <FormGrid> {/* // Buttons */}
+        <DescriptionContainer />
+        <InputContainer>
+          <Button
+            type='secondary'
+            htmlType='button'
+            onClick={onCancel}
+          >
+            <FormattedMessage
+              id='cancel'
+              defaultMessage='Cancel'
+              description='Label for cancel button on person details form'
+            />
+          </Button>
+          <Button
+            type='primary'
+            htmlType='submit'
+            style={{ marginLeft: 8 }}
+          >
+            <FormattedMessage
+              id='savePerson'
+              defaultMessage='Save'
+              description='Label for submit button on person details form'
+            />
+          </Button>
+        </InputContainer>
+      </FormGrid>
     </Form>
   )
 }
@@ -332,13 +689,15 @@ const PersonDetailForm = ({ person }) => {
 //   }
 // })
 
-//     const roleOptions = [
-//       { label: 'Admin', value: 'admin' },
-//       { label: 'Requestor', value: 'opportunityProvider' },
-//       { label: 'Volunteer', value: 'volunteer' },
-//       { label: 'Content provider', value: 'activityProvider' },
-//       { label: 'SUPPORT', value: 'support' }
-//     ]
+/* TODO: these should be translated - but we don't as they are developer only */
+const roleOptions = [
+  { label: 'Admin', value: 'admin' },
+  { label: 'Requestor', value: 'opportunityProvider' },
+  { label: 'Volunteer', value: 'volunteer' },
+  { label: 'Content provider', value: 'activityProvider' },
+  { label: 'SUPPORT', value: 'support' }
+]
+
 //     // Only show error after a field is touched.
 //     const nameError = isFieldTouched('name') && getFieldError('name')
 //     const nicknameError = isFieldTouched('nickname') && getFieldError('nickname')
@@ -908,15 +1267,15 @@ export { PersonDetailForm }
  * @param {*} person The person object to alter.
  * @param {string[]} roles The array of permission roles to use.
  */
-// export const permissionTrimFields = (person, roles) => {
-//   if (!roles.includes(Role.ADMIN) && !roles.includes(Role.SUPPORT)) {
-//     delete person.email
-//   }
+export const permissionTrimFields = (person, roles) => {
+  if (!roles.includes(Role.ADMIN) && !roles.includes(Role.SUPPORT)) {
+    delete person.email
+  }
 
-//   delete person.createdAt
+  delete person.createdAt
 
-//   const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]
-//   if (person.role) {
-//     person.role = person.role.filter(role => applicableRoles.includes(role))
-//   }
-// }
+  const applicableRoles = [Role.ACTIVITY_PROVIDER, Role.ADMIN, Role.OPPORTUNITY_PROVIDER, Role.RESOURCE_PROVIDER, Role.SUPPORT, Role.VOLUNTEER]
+  if (person.role) {
+    person.role = person.role.filter(role => applicableRoles.includes(role))
+  }
+}

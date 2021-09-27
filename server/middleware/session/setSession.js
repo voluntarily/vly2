@@ -123,7 +123,7 @@ const setSession = async (req, res, next) => {
 
   let me = false
   try {
-    me = await Person.findOne({ email: user.email }).exec()
+    me = await Person.findOne({ email: user.email }).lean()
     if (!me) {
       me = await createPersonFromUser(user)
     } else {

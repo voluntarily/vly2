@@ -78,14 +78,15 @@ export const NavigationV = ({ items }) => {
   )
 }
 
-const COLLAPSE_MENU_WIDTH = 1020
-const Navigation = (props) => {
-  const [width] = useWindowSize()
-  console.log('navigation size', width)
-  return (width < COLLAPSE_MENU_WIDTH)
-    ? <NavigationV {...props} />
-    : <NavigationH {...props} />
-}
+// useWindowSize is giving angry warnings from the SSR.
+// const COLLAPSE_MENU_WIDTH = 1020
+// const Navigation = (props) => {
+//   const [width] = useWindowSize()
+//   return (width < COLLAPSE_MENU_WIDTH && width !== 0)
+//     ? <NavigationV {...props} />
+//     : <NavigationH {...props} />
+// }
+const Navigation = NavigationH
 
 Navigation.propTypes = {
   items: PropTypes.arrayOf(
@@ -97,4 +98,4 @@ Navigation.propTypes = {
   defaultItem: PropTypes.string
 }
 
-export default Navigation
+export default NavigationH

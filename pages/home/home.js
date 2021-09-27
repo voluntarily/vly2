@@ -6,7 +6,7 @@ import { HomeBanner } from '../../components/Home/HomeBanner.js'
 import { HomeTabs } from '../../components/Home/HomeTabs.js'
 import Loading from '../../components/Loading'
 import { FullPage } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
+import securePage from '../../hocs/xsecurePage'
 import reduxApi from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import { useSelector } from 'react-redux'
@@ -34,7 +34,7 @@ export const PersonHomePage = () => {
   }
 
   // if (!people.sync) { return <FullPage><Loading label='people' entity={people} /></FullPage> }
-  if (!members.sync) { return <FullPage><Loading label='members' entity={members} /></FullPage> }
+  // if (!members.sync) { return <FullPage><Loading label='members' entity={members} /></FullPage> }
 
   // const person = people.data[0]
 
@@ -67,8 +67,10 @@ const allSettled = (promises) => {
     reason
   }))))
 }
-PersonHomePage.getInitialProps = async ({ store, query }) => {
+
+export async function getServerSideProps ({ store, query }) {
   try {
+    console.log('PersonHomePage.getInitialProps')
     const me = store.getState().session.me
     const meid = me._id.toString()
     const myOpportunities = {
@@ -87,6 +89,8 @@ PersonHomePage.getInitialProps = async ({ store, query }) => {
   } catch (err) {
     console.error('error in getting home page data', err)
   }
+  return {}
 }
 
 export default securePage(PersonHomePage)
+// export default PersonHomePage

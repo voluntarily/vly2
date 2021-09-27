@@ -1,5 +1,5 @@
 import React from 'react'
-import publicPage from './publicPage'
+import publicPage from './xpublicPage'
 import Router from 'next/router'
 import { Unverified } from '../components/Warnings/Unverified'
 
@@ -16,15 +16,13 @@ export const doSignThru = ctx => {
   }
 }
 
-const UnverifiedPage = publicPage(Unverified)
-
 const securePageHoc = Page => {
   const SecurePage = props =>
     props.isAuthenticated
       ? <Page {...props} />
-      : <UnverifiedPage {...props} />
+      : <Unverified {...props} />
 
-  SecurePage.getInitialProps = ctx => {
+  SecurePage.getInitialProps = async ctx => {
     const session = ctx.store.getState().session
     if (!session || !session.user) {
       // no session or not auth - redirect to sign in
@@ -40,9 +38,10 @@ const securePageHoc = Page => {
         user: session.user
       }
     }
-    // securePage always wraps publicPage so we know GIP exists.
-    return Page.getInitialProps(ctx)
+    console.log('secure page hoc', Page.getInitialProps )
+    // return ({ isAuthenticated: true })
+    return (Page.getInitialProps ? Page.getInitialProps(ctx) : { isAuthenticated: true })
   }
   return SecurePage
 }
-export default Page => securePageHoc(publicPage(Page))
+export default Page => securePageHoc(Page)

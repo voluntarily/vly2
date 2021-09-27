@@ -3,32 +3,6 @@
  */
 import React from 'react'
 import Head from 'next/head'
-import { FormattedMessage, useIntl, defineMessages } from 'react-intl'
-import { FullPage, Spacer } from '../components/VTheme/VTheme'
-import styled from 'styled-components'
-import publicPage from '../hocs/publicPage'
-
-const BugImage = styled.img`
-  width: 5rem;
-  height: 5rem;
-  position: relative;
-  animation: rotation 2s infinite linear;
-  float: left;
-
-  @keyframes rotation {
-    50% {
-      transform: rotate(20deg);
-    }
-    100% {
-      transform: rotate(0deg);
-    }
-  }
-`
-
-const BugContainer = styled.div`
-  margin-top: 1.5rem;
-  margin-left: 3rem;
-`
 
 const ErrorPage = ({ url, locale, errorCode, initialNow }) => {
   const intl = useIntl()

@@ -7,31 +7,38 @@ import React from 'react'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 import { FillWindow } from '../components/VTheme/VTheme'
-
+import { wrapper } from '../lib/redux/store'
+import { getSession } from '../lib/auth/auth'
+ 
 export function PublicPage (Page) {
   function DefaultPage (props) {
-    const isPlain = props.isPlain
     return (
       <Layout>
-        {!isPlain && <Header />}
+        {/* <Header /> */}
         <Layout.Content>
           <FillWindow>
             <Page {...props} />
           </FillWindow>
         </Layout.Content>
-        {!isPlain && <Footer {...props} />}
+        {/* <Footer {...props} /> */}
       </Layout>
     )
   }
 
-  DefaultPage.getInitialProps = async (ctx) => {
-    const pageProps = Page.getInitialProps && (await Page.getInitialProps(ctx))
-    const isPlain = false
-    return {
-      isPlain,
-      ...pageProps // page props can override these props
-    }
-  }
   return DefaultPage
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store =>
+  async ({ req, res }) => {
+    const session = await getSession(req, store)
+    const json = JSON.stringify(session)
+    console.log('5. Page.getServerSideProps ', json)
+    store.dispatch({ type: 'TICK', payload: 'set in GSSP index.js' })
+
+    // should session be in the props or the store or both?
+    return {
+    }
+  }
+)
+
 export default PublicPage

@@ -33,7 +33,7 @@ export const ButtonLi = styled.li`
       color: #653cad;
     }
   }
-  i {
+  span {
     font-size: 4rem;
     align-self: center;
     color: ${props => props.on ? 'green' : 'grey'};
@@ -59,10 +59,10 @@ export const ToggleLi = ({ checked, icon, children, onChange }) => {
   const [on, setOn] = useState(checked || false)
   const toggle = () => { onChange(!on); setOn(!on) }
   return (
-    <ButtonLi onClick={toggle} on={on}>
+    <ButtonLi onClick={toggle} on={on.toString()}>
       <img style={{ width: '100%' }} src={`/static/img/sign-up/${icon}.svg`} />
       {children}
-      <ToggleTick on={on} />
+      <ToggleTick on={on.toString()} />
     </ButtonLi>
   )
 }
