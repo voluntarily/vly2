@@ -8,7 +8,7 @@ import OrgBanner from '../../components/Org/OrgBanner'
 import OrgTabs from '../../components/Org/OrgTabs'
 import OrgDetailForm from '../../components/Org/OrgDetailForm'
 import { FullPage } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import { GroupTagList } from '../../server/api/tag/tag.constants'
@@ -193,4 +193,4 @@ OrgDetailPage.getInitialProps = async ({ store, query }) => {
 }
 
 export const OrgDetailPageWithOrgs = withOrgs(OrgDetailPage)
-export default publicPage(OrgDetailPageWithOrgs)
+export default OrgDetailPageWithOrgs

@@ -8,7 +8,7 @@ import OpTabs from '../../components/Op/OpTabs'
 import OpUnknown from '../../components/Op/OpUnknown'
 import OpArchivedHeader from '../../components/Op/OpArchivedHeader'
 import { FullPage } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+
 import reduxApi, { withArchivedOpportunities, withMembers } from '../../lib/redux/reduxApi.js'
 const { Role } = require('../../server/services/authorize/role')
 
@@ -93,4 +93,4 @@ ArchivedOpDetailPage.propTypes = {
 }
 
 export const ArchivedOpDetailPageWithArchivedOps = withMembers(withArchivedOpportunities(ArchivedOpDetailPage))
-export default publicPage(withMembers(withArchivedOpportunities(ArchivedOpDetailPage)))
+export default withMembers(withArchivedOpportunities(ArchivedOpDetailPage))

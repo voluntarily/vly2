@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import OrgList from '../../components/Org/OrgList'
 import { FullPage, PageBannerButtons, PageBannerNoTabs } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 
 export const OrgListPage = ({ organisations, me }) => {
@@ -46,4 +46,4 @@ OrgListPage.getInitialProps = async ({ store, query }) => {
   return store.dispatch(reduxApi.actions.organisations.get(select))
 }
 
-export default publicPage(withOrgs(OrgListPage))
+export default withOrgs(OrgListPage)

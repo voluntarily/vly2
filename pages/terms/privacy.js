@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import { injectIntl } from 'react-intl'
 import PrivacyEn from '../../assets/notices/privacy-full-en.md'
 import { A4 } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+
 
 const Privacy = () =>
   <A4>
@@ -15,4 +15,4 @@ const Privacy = () =>
 
 export const PrivacyTest = Privacy // for test
 
-export default publicPage(injectIntl(Privacy))
+export default injectIntl(Privacy)

@@ -63,8 +63,8 @@ const appReady = app.prepare().then(() => {
     req.locale = req.acceptsLanguages(supportedLanguages)
     req.locale = req.locale || 'en'
     // req.localeDataScript = getLocaleDataScript(req.locale)
-    req.messages = dev ? {} : getMessages(req.locale)
-    // req.messages = getMessages(req.locale)
+    // req.messages = dev ? {} : getMessages(req.locale)
+    req.messages = getMessages(req.locale)
     // const { gitDescribeSync } = require('git-describe')
     // const gitInfo = gitDescribeSync()
     // req.messages.revision = process.env.REVISION || gitInfo.raw

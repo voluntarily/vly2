@@ -1,5 +1,5 @@
 import { UseRouter } from '../../components/examples/UseRouter.js'
-import publicPage from '../../hocs/publicPage'
+
 import { FullPage } from '../../components/VTheme/VTheme'
 
 const TestRouter = () =>
@@ -8,4 +8,4 @@ const TestRouter = () =>
       Routes to Home page
     </UseRouter>
   </FullPage>
-export default publicPage(TestRouter)
+export default TestRouter

@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import { FormattedMessage, defineMessages } from 'react-intl'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 import { FullPage, PageBannerNoTabs, PageBannerButtons } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+
 import ActAdd from '../../components/Act/ActAdd'
 import ActListSection from '../../components/Act/ActListSection'
 import { useRouter } from 'next/router'
@@ -59,4 +59,4 @@ export const ActListPage = () => {
   )
 }
 
-export default publicPage(ActListPage)
+export default ActListPage

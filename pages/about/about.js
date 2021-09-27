@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
 import AboutCTA from '../../components/About/AboutCTA.js'
 import { FullPage, Spacer } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
 import { injectIntl } from 'react-intl'
 import aboutEn from './about-en-md.js'
 import aboutMi from './about-mi-md.js'
@@ -106,4 +105,4 @@ class About extends Component {
 
 export const AboutTest = About // for test
 
-export default publicPage(injectIntl(About))
+export default injectIntl(About)

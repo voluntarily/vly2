@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-export const AboutMiMD () => `
+export const AboutMiMD = () => `
 # About Voluntari.ly
 
 ### Industry in the classroom.

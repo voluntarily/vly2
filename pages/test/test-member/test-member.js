@@ -6,7 +6,7 @@ import MemberSection from '../../../components/Member/MemberSection'
 import MemberTable from '../../../components/Member/MemberTable'
 import RegisterMemberItem from '../../../components/Member/RegisterMemberItem'
 import { FullPage } from '../../../components/VTheme/VTheme'
-import publicPage from '../../../hocs/publicPage'
+
 import { MemberStatus } from '../../../server/api/member/member.constants'
 import orgs from '../../../server/api/organisation/__tests__/organisation.fixture'
 import people from '../../../server/api/person/__tests__/person.fixture'
@@ -73,4 +73,4 @@ const TestMemberPage = ({ ...props }) => (
 
   </FullPage>
 )
-export default publicPage(TestMemberPage)
+export default TestMemberPage

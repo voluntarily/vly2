@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
 import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
 import { BigQuote, BigQuoteAuthor, FullPage, H1, H3, H3Bold, H4, HalfGrid, P, PBold, Spacer, SpacerSmall, TripleGrid } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+
 
 const GridContainer = styled.div`
   position: relative;
@@ -427,4 +427,4 @@ export class ContentProvider extends Component {
   }
 }
 
-export default publicPage(ContentProvider)
+export default ContentProvider

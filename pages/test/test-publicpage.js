@@ -1,4 +1,3 @@
-import publicPage from '../../hocs/publicPage'
 import { FullPage } from '../../components/VTheme/VTheme'
 import styled from 'styled-components'
 
@@ -23,4 +22,4 @@ const TestPublicPage = ({ locale, session, isAuthenticated }) =>
     <p>Session: {isAuthenticated ? 'Authenticated' : 'Not Authenticated'}</p>
   </FullPage>
 
-export default publicPage(TestPublicPage)
+export default TestPublicPage

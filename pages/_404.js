@@ -6,7 +6,6 @@ import Head from 'next/head'
 import { FormattedMessage, useIntl, defineMessages } from 'react-intl'
 import { FullPage, Spacer } from '../components/VTheme/VTheme'
 import styled from 'styled-components'
-import publicPage from '../hocs/publicPage'
 
 const BugImage = styled.img`
   width: 5rem;
@@ -124,4 +123,4 @@ ErrorPage.getInitialProps = ({ res, xhr, req }) => {
 }
 export const ErrorPageTest = ErrorPage // for test
 
-export default publicPage(ErrorPage)
+export default ErrorPage

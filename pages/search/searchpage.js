@@ -13,7 +13,7 @@ import HeaderSearch from '../../components/Search/HeaderSearch'
 import LocationFilter from '../../components/Search/LocationFilter'
 import TypeFilter from '../../components/Search/TypeFilter'
 import { FullPage, Spacer } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+
 import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
 import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
 import OpOrderby from '../../components/Op/OpOrderby'
@@ -264,4 +264,4 @@ SearchPage.propTypes = {
   )
 }
 
-export default publicPage(withLocations(SearchPage))
+export default withLocations(SearchPage)

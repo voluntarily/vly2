@@ -12,7 +12,7 @@ import {
   SectionContainer
 
 } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+
 import Hero2 from '../../components/LandingPageComponents/Hero2'
 import {
   SponsorContainer,
@@ -230,4 +230,4 @@ export class Business extends Component {
   }
 }
 
-export default publicPage(Business)
+export default Business

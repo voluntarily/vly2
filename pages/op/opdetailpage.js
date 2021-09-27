@@ -7,7 +7,7 @@ import OpTabs from '../../components/Op/OpTabs'
 import {
   FullPage
 } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+
 import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import OpBanner from '../../components/Op/OpBanner'
@@ -263,4 +263,4 @@ OpDetailPage.propTypes = {
 }
 
 export const OpDetailPageWithOps = withMembers(withOps(OpDetailPage))
-export default publicPage(withMembers(withOps(OpDetailPage)))
+export default withMembers(withOps(OpDetailPage))

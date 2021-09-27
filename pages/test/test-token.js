@@ -1,4 +1,4 @@
-import publicPage from '../../hocs/publicPage'
+
 import React, { useState, useEffect } from 'react'
 import { FullPage } from '../../components/VTheme/VTheme'
 import callApi from '../../lib/callApi'
@@ -50,4 +50,4 @@ export const TestToken = () => {
       <button onClick={handleClick}>Refresh Token URL</button>
     </FullPage>)
 }
-export default publicPage(TestToken)
+export default TestToken

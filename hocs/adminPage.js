@@ -1,5 +1,5 @@
 import React from 'react'
-import publicPage from './publicPage'
+
 import { FullPage } from '../components/VTheme/VTheme'
 import { FormattedMessage } from 'react-intl'
 import { doSignThru } from './securePage'

@@ -3,6 +3,31 @@
  */
 import React from 'react'
 import Head from 'next/head'
+import { FormattedMessage, useIntl, defineMessages } from 'react-intl'
+import { FullPage, Spacer } from '../components/VTheme/VTheme'
+import styled from 'styled-components'
+
+const BugImage = styled.img`
+   width: 5rem;
+   height: 5rem;
+   position: relative;
+   animation: rotation 2s infinite linear;
+   float: left;
+ 
+   @keyframes rotation {
+     50% {
+       transform: rotate(20deg);
+     }
+     100% {
+       transform: rotate(0deg);
+     }
+   }
+ `
+
+const BugContainer = styled.div`
+   margin-top: 1.5rem;
+   margin-left: 3rem;
+ `
 
 const ErrorPage = ({ url, locale, errorCode, initialNow }) => {
   const intl = useIntl()
@@ -36,21 +61,21 @@ const ErrorPage = ({ url, locale, errorCode, initialNow }) => {
               id='error.pagenotfound.description'
               defaultMessage="The page you are looking for is not here. We have looked everywhere but it doesn't seem to exist. Perhaps it just hasn't been built yet."
             />
-                &nbsp;
+                 &nbsp;
             <a href='https://voluntarily.nz/get-involved'>
               <FormattedMessage
                 id='error.pagenotfound.contribute'
                 defaultMessage='If you can write code you can help fix that by becoming a contributor to the project.'
               />
             </a>
-                &nbsp;
+                 &nbsp;
           </div>
           <Spacer />
           <BugImage src='/static/img/bug.png' />
           <BugContainer>
             <p>
-                    An <strong>HTTP {errorCode}</strong> error occurred
-                    while trying to access{' '}
+                     An <strong>HTTP {errorCode}</strong> error occurred
+                     while trying to access{' '}
               <strong>{url}</strong>
             </p>
           </BugContainer>
@@ -78,11 +103,11 @@ const ErrorPage = ({ url, locale, errorCode, initialNow }) => {
             />
             <h4 className='display-4'>HTTP {errorCode} Error</h4>
             <p>
-                    An <strong>HTTP {errorCode}</strong> error occurred
-                    while trying to access{' '}
+                     An <strong>HTTP {errorCode}</strong> error occurred
+                     while trying to access{' '}
               <strong>{url}</strong>
             </p>
-                &nbsp;
+                 &nbsp;
           </div>
         </FullPage>
       )
@@ -98,4 +123,4 @@ ErrorPage.getInitialProps = ({ res, xhr, req }) => {
 }
 export const ErrorPageTest = ErrorPage // for test
 
-export default publicPage(ErrorPage)
+export default ErrorPage

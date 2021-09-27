@@ -1,4 +1,4 @@
-import publicPage from '../../hocs/publicPage'
+
 import { FullPage } from '../../components/VTheme/VTheme'
 import { HooksExample } from '../../components/examples/hooks'
 const Hi = () =>
@@ -7,4 +7,4 @@ const Hi = () =>
     <HooksExample />
   </FullPage>
 
-export default publicPage(Hi)
+export default Hi

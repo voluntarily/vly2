@@ -6,7 +6,6 @@ import { HomeBanner } from '../../components/Home/HomeBanner.js'
 import { HomeTabs } from '../../components/Home/HomeTabs.js'
 import Loading from '../../components/Loading'
 import { FullPage } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/xsecurePage'
 import reduxApi from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import { useSelector } from 'react-redux'
@@ -70,7 +69,7 @@ const allSettled = (promises) => {
 
 export async function getServerSideProps ({ store, query }) {
   try {
-    console.log('PersonHomePage.getInitialProps')
+    console.log('PersonHomePage.getServerSideProps')
     const me = store.getState().session.me
     const meid = me._id.toString()
     const myOpportunities = {
@@ -92,5 +91,5 @@ export async function getServerSideProps ({ store, query }) {
   return {}
 }
 
-export default securePage(PersonHomePage)
+export default PersonHomePage
 // export default PersonHomePage

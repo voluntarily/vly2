@@ -10,7 +10,7 @@ import ActTryBelow from '../../components/Act/ActTryBelow'
 import ActDetailForm from '../../components/Act/ActDetailForm'
 import Loading from '../../components/Loading'
 import { FullPage, PageBannerButtons } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
+
 import reduxApi, { withActs, withMembers } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import OpAdd from '../../components/Op/OpAdd'
@@ -213,4 +213,4 @@ ActDetailPage.propTypes = {
   })
 }
 export const ActDetailPageWithActs = withMembers(withActs(ActDetailPage))
-export default publicPage(withMembers(withActs(ActDetailPage)))
+export default withMembers(withActs(ActDetailPage))

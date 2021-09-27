@@ -1,5 +1,5 @@
 import React from 'react'
-import publicPage from './xpublicPage'
+
 import Router from 'next/router'
 import { Unverified } from '../components/Warnings/Unverified'
 

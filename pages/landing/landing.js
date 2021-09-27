@@ -5,7 +5,6 @@ import Hero from '../../components/LandingPageComponents/Hero'
 // import OpAdd from '../../components/Op/OpAdd'
 // import OpListSection from '../../components/Op/OpListSection'
 import { FullPage } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/xpublicPage'
 // import moment from 'moment'
 import { Divider } from 'antd'
 import HowSection from '../../components/LandingPageComponents/HowSection'
@@ -59,4 +58,4 @@ export const Landing = ({ isAuthenticated }) => (
     </FullPage>
   </>
 )
-export default publicPage(Landing)
+export default Landing
