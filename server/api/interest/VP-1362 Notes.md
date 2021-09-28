@@ -30,3 +30,10 @@ handles button clicks from the children to update interests.
 interest {_id: "5e56d91747407843da725789", __v: 0, comment: …}
 onChangeStatus bound handleChangeStatus
 onWithdraw bound handleWithdraw
+
+## HOCS
+the higher order components PublicPage and SecurePage have been replaced. 
+_App now does the overall layout that public page used to do.  If a page requires a specific layout it can be overridden by exporting a getLayout function.
+
+routing through to login is now handled by GuardRoutes wrapper in _App.  This has a list of routes that require the user to be signed in.  There's not as many as you would think as much of the site is public. However even public pages may expect a me and isAuthenticated values in the store so that they can control what gets displayed to the public. 
+

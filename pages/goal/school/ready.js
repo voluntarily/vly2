@@ -58,4 +58,4 @@ Ready.getInitialProps = async ({ store }) => {
   return { vqa }
 }
 
-export default securePage(Ready)
+export default Ready

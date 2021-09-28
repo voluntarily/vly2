@@ -89,7 +89,7 @@ list-style: none;
   }
 `
 
-const Revision = ({rev}) => {
+const Revision = ({ rev }) => {
   const url = 'https://github.com/voluntarily/vly2/commit/' + rev[0]?.split(/[ \- _ ]+/)[0]
   return (<a href={url} rel='noopener noreferrer' target='_blank'>{rev}</a>)
 }

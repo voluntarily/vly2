@@ -9,12 +9,14 @@ import OrgTabs from '../../components/Org/OrgTabs'
 import OrgDetailForm from '../../components/Org/OrgDetailForm'
 import { FullPage } from '../../components/VTheme/VTheme'
 
+import { reduxWrapper } from '../../lib/redux/store'
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import { GroupTagList } from '../../server/api/tag/tag.constants'
 import RegisterMemberSection from '../../components/Member/RegisterMemberSection'
 import { Helmet } from 'react-helmet'
 import { OrganisationRole } from '../../server/api/organisation/organisation.constants'
+import { useSelector } from 'react-redux'
 
 const blankOrg = {
   name: 'New Organisation',
@@ -167,30 +169,35 @@ export const OrgDetailPage = ({
     </FullPage>)
 }
 
-OrgDetailPage.getInitialProps = async ({ store, query }) => {
-  // Get one Org
-  await store.dispatch(reduxApi.actions.tags.get({ name: GroupTagList }))
-  const isNew = query && query.new && query.new === 'new'
-  if (isNew) {
-    return {
-      isNew: true,
-      orgid: null
+export const getServerSideProps = reduxWrapper.getServerSideProps(store =>
+  async ({ query }) => {
+    // console.log('orglistpage GSSP', store)
+    await store.dispatch(reduxApi.actions.tags.get({ name: GroupTagList }))
+    const isNew = query && query.new && query.new === 'new'
+    if (isNew) {
+      return {
+        props: {
+          isNew: true,
+          orgid: null
+        }
+      }
+    } else if (query && query.id) {
+      await store.dispatch(reduxApi.actions.organisations.get(query))
+      if (store.getState().session.isAuthenticated) {
+        // get available membership of this org - either just me or all
+        // const meid = store.getState().session.me._id.toString()
+        await store.dispatch(
+          reduxApi.actions.members.get({ orgid: query.id })
+        )
+      }
+      return {
+        props: {
+          isNew: false,
+          orgid: query.id
+        }
+      }
     }
-  } else if (query && query.id) {
-    await store.dispatch(reduxApi.actions.organisations.get(query))
-    if (store.getState().session.isAuthenticated) {
-      // get available membership of this org - either just me or all
-      // const meid = store.getState().session.me._id.toString()
-      await store.dispatch(
-        reduxApi.actions.members.get({ orgid: query.id })
-      )
-    }
-    return {
-      isNew: false,
-      orgid: query.id
-    }
-  }
-}
+  })
 
 export const OrgDetailPageWithOrgs = withOrgs(OrgDetailPage)
 export default OrgDetailPageWithOrgs

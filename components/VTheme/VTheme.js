@@ -896,18 +896,18 @@ export const BigQuoteAuthor = styled.p`
     line-height: 1.5;
   }
 `
-// delegated props,  usage <ContactIcon icon={TwitterOutlined} />
-export const ContactIcon = ({ icon, children }) => {
-  const Icon = icon // Note: variable name _must_ start with a capital letter
-  return (
-    <Icon
-      twoToneColor='blue'
-      style={{ marginRight: '1rem', fontSize: '1.5rem', color: '#6549AA' }}
-    >
-      {children}
-    </Icon>
-  )
-}
+// // delegated props,  usage <ContactIcon icon={TwitterOutlined} />
+// export const ContactIcon = ({ icon, children }) => {
+//   const Icon = icon // Note: variable name _must_ start with a capital letter
+//   return (
+//     <Icon
+//       twoToneColor='blue'
+//       style={{ marginRight: '1rem', fontSize: '1.5rem', color: '#6549AA' }}
+//     >
+//       {children}
+//     </Icon>
+//   )
+// }
 
 /*
 ====================================================

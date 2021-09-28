@@ -41,4 +41,4 @@ class VerificationSafetyPage extends Component {
   }
 }
 export const VerificationSafetyPageTest = VerificationSafetyPage
-export default securePage(VerificationSafetyPage)
+export default VerificationSafetyPage
