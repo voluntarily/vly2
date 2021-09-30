@@ -4,14 +4,11 @@ import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import OrgList from '../../components/Org/OrgList'
 import { FullPage, PageBannerButtons, PageBannerNoTabs } from '../../components/VTheme/VTheme'
-import { reduxWrapper } from '../../lib/redux/store'
-import { useSelector } from 'react-redux'
-import reduxApi from '../../lib/redux/reduxApi.js'
 
-const OrgListPage = () => {
-  // const orgs = organisations.data
-  const [me, orgs] = useSelector(state => [state.session.me, state.organisations.data])
+import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 
+export const OrgListPage = ({ organisations, me }) => {
+  const orgs = organisations.data
   const isAdmin = (me && me.role.includes('admin'))
   return (
     <FullPage>
@@ -44,11 +41,9 @@ const OrgListPage = () => {
     </FullPage>)
 }
 
-export const getServerSideProps = reduxWrapper.getServerSideProps(store =>
-  async () => {
-    // console.log('orglistpage GSSP', store)
-    const select = { p: 'name imgUrl role' }
-    await store.dispatch(reduxApi.actions.organisations.get(select))
-  })
+OrgListPage.getInitialProps = async ({ store, query }) => {
+  const select = { p: 'name imgUrl role' }
+  return store.dispatch(reduxApi.actions.organisations.get(select))
+}
 
-export default OrgListPage
+export default withOrgs(OrgListPage)

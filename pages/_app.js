@@ -4,14 +4,11 @@ import React from 'react'
 import App from 'next/app'
 import { IntlProvider } from 'react-intl'
 import { Layout } from 'antd'
-
-import { getSession } from '../lib/auth/auth.js'
-import { Role } from '../server/services/authorize/role.js'
-import Footer from '../components/Footer/Footer.js'
-import Header from '../components/Header/Header.js'
-import { FillWindow } from '../components/VTheme/VTheme.js'
-import { reduxWrapper } from '../lib/redux/store.js'
-import { RouteGuard } from '../components/RouteGuard.js'
+import Footer from '../components/Footer/Footer'
+import Header from '../components/Header/Header'
+import { FillWindow } from '../components/VTheme/VTheme'
+import { wrapper } from '../lib/redux/store'
+import { RouteGuard } from '../components/RouteGuard'
 
 function MyApp ({
   Component,
@@ -46,7 +43,7 @@ function MyApp ({
   ctx: includes req, res, store.
 */
 
-MyApp.getInitialProps = reduxWrapper.getInitialAppProps(store =>
+MyApp.getInitialProps = wrapper.getInitialAppProps(store =>
   async (appContext) => {
     const { req } = appContext.ctx
     const session = await getSession(req, store)
@@ -56,7 +53,6 @@ MyApp.getInitialProps = reduxWrapper.getInitialAppProps(store =>
       ...appProps.pageProps,
       isAuthenticated: session.isAuthenticated,
       isAdmin: session.me && session.me.role && session.me.role.includes(Role.ADMIN),
-      me: session.me,
       locale
     }
     // should session be in the props or the store or both?
@@ -68,4 +64,4 @@ MyApp.getInitialProps = reduxWrapper.getInitialAppProps(store =>
   }
 )
 
-export default reduxWrapper.withRedux(MyApp)
+export default wrapper.withRedux(MyApp)

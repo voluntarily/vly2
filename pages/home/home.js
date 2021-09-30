@@ -8,8 +8,8 @@ import { HomeTabs } from '../../components/Home/HomeTabs.js'
 import Loading from '../../components/Loading.js'
 import { FullPage } from '../../components/VTheme/VTheme.js'
 import reduxApi from '../../lib/redux/reduxApi.js'
-import { MemberStatus } from '../../server/api/member/member.constants.js'
-import { reduxWrapper } from '../../lib/redux/store.js'
+import { MemberStatus } from '../../server/api/member/member.constants'
+import { useSelector } from 'react-redux'
 
 export const PersonHomePage = () => {
   const [me, members, opportunities, interests] = useSelector(
@@ -68,31 +68,29 @@ const allSettled = (promises) => {
   }))))
 }
 
-export const getServerSideProps = reduxWrapper.getServerSideProps(store =>
-  async () => {
-    try {
-      console.log('PersonHomePage.getServerSideProps')
-      console.log(store ? 'I have a store' : 'I dont have a store ')
-      const me = store.getState().session.me
-      const meid = me._id.toString()
-      const myOpportunities = {
-        q: JSON.stringify({ requestor: meid })
-      }
-
-      await allSettled([
-        store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
-        store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),
-        store.dispatch(reduxApi.actions.interests.get({ me: meid })),
-        store.dispatch(reduxApi.actions.personalGoals.get({ meid: meid })),
-        store.dispatch(reduxApi.actions.members.get({ meid: meid })),
-        store.dispatch(reduxApi.actions.interestArchives.get({ me: meid })),
-        store.dispatch(reduxApi.actions.recommendedOps.get({ me: meid }))
-      ])
-    } catch (err) {
-      console.error('error in getting home page data', err)
+export async function getServerSideProps ({ store, query }) {
+  try {
+    console.log('PersonHomePage.getServerSideProps')
+    const me = store.getState().session.me
+    const meid = me._id.toString()
+    const myOpportunities = {
+      q: JSON.stringify({ requestor: meid })
     }
-    return {}
-  })
+
+    await allSettled([
+      store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
+      store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),
+      store.dispatch(reduxApi.actions.interests.get({ me: meid })),
+      store.dispatch(reduxApi.actions.personalGoals.get({ meid: meid })),
+      store.dispatch(reduxApi.actions.members.get({ meid: meid })),
+      store.dispatch(reduxApi.actions.interestArchives.get({ me: meid })),
+      store.dispatch(reduxApi.actions.recommendedOps.get({ me: meid }))
+    ])
+  } catch (err) {
+    console.error('error in getting home page data', err)
+  }
+  return {}
+}
 
 export default PersonHomePage
 // export default PersonHomePage

@@ -160,4 +160,4 @@ const PostSignUp = () => {
   )
 }
 
-export default PostSignUp
+export default securePage(PostSignUp)

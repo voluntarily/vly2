@@ -67,4 +67,4 @@ export class TestPerson extends Component {
   }
 }
 
-export default withPeople(withLocations(TestPerson))
+export default securePage(withPeople(withLocations(TestPerson)))

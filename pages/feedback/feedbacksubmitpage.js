@@ -82,4 +82,4 @@ FeedbackSubmitPage.getInitialProps = async ({ store, query }) => {
   }
 }
 
-export default withFeedback(FeedbackSubmitPage)
+export default securePage(withFeedback(FeedbackSubmitPage))

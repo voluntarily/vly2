@@ -34,4 +34,4 @@ export const OrgStatisticsPage = (props) => {
   )
 }
 
-export default OrgStatisticsPage
+export default securePage(OrgStatisticsPage)

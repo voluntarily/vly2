@@ -12,7 +12,6 @@ import Loading from '../../components/Loading'
 import { FullPage, PageBannerButtons } from '../../components/VTheme/VTheme'
 
 import reduxApi, { withActs, withMembers } from '../../lib/redux/reduxApi.js'
-import { wrapper } from '../../lib/redux/store'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import OpAdd from '../../components/Op/OpAdd'
 import { Role } from '../../server/services/authorize/role.js'
@@ -162,48 +161,43 @@ export const ActDetailPage = ({
     </FullPage>)
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store =>
-  async ({ query }) => {
-    const isAuthenticated = store.getState().session.isAuthenticated
-    console.log('ActDetailPage GSSP', isAuthenticated)
+ActDetailPage.getInitialProps = async ({ store, query }) => {
+  const isAuthenticated = store.getState().session.isAuthenticated
+  const me = store.getState().session.me
+  const isNew = query && query.new && query.new === 'new'
+  const actExists = !!(query && query.id) // !! converts to a boolean value
 
-    const me = store.getState().session.me
-    const isNew = !!(query && query.new && query.new === 'new')
-    const actExists = !!(query && query.id) // !! converts to a boolean value
-
-    if (isNew) {
-      await Promise.all([
-        isAuthenticated ? store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })) : Promise.resolve(),
-        store.dispatch(reduxApi.actions.tags.get())
-      ])
-      return {
-        isNew
-      }
-    } else {
-      if (actExists) {
-        try {
-          await Promise.all([
-            isAuthenticated ? store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })) : Promise.resolve(),
-            // store.dispatch(reduxApi.actions.tags.get()),
-            store.dispatch(reduxApi.actions.activities.get(query)),
-            store.dispatch(
-              reduxApi.actions.opportunities.get(
-                { q: JSON.stringify({ fromActivity: query.id }) }
-              )
+  if (isNew) {
+    await Promise.all([
+      isAuthenticated ? store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })) : Promise.resolve(),
+      store.dispatch(reduxApi.actions.tags.get())
+    ])
+    return {
+      isNew
+    }
+  } else {
+    if (actExists) {
+      try {
+        await Promise.all([
+          isAuthenticated ? store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })) : Promise.resolve(),
+          store.dispatch(reduxApi.actions.tags.get()),
+          store.dispatch(reduxApi.actions.activities.get(query)),
+          store.dispatch(
+            reduxApi.actions.opportunities.get(
+              { q: JSON.stringify({ fromActivity: query.id }) }
             )
-          ])
-        } catch (e) {
-          console.error('Error getting activity data:', e)
-        }
-      }
-      return {
-        props: {
-          isNew,
-          actExists
-        }
+          )
+        ])
+      } catch (e) {
+        console.error('Error getting activity data:', e)
       }
     }
-  })
+    return {
+      isNew,
+      actExists
+    }
+  }
+}
 
 ActDetailPage.propTypes = {
   act: PropTypes.shape({

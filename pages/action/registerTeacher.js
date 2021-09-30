@@ -89,4 +89,4 @@ export function RegisterTeacher () {
 //       <Input disabled />
 //     </p>
 //   </h5>
-export default RegisterTeacher
+export default securePage(RegisterTeacher)

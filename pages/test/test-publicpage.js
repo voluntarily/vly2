@@ -13,18 +13,13 @@ const Button = styled.button`
   border: 2px solid ${props => props.theme.main};
 `
 
-const TestPublicPage = ({ locale, gssp, isAuthenticated }) => {
-  return (
-    <FullPage>
-      <h1>Simple Public Page</h1>
-      <p>This page only has plain text on it and is wrapped by publicPage so has a header and footer</p>
-      <p>Locale is: {locale}</p>
-      <Button>Themed</Button>
-      <p>Session: {isAuthenticated ? 'Authenticated' : 'Not Authenticated'}</p>
-      {/* <p>Static Props: {gsp}</p> */}
-      {/* <p>ServerSide Props: {gssp}</p> */}
-
-    </FullPage>)
-}
+const TestPublicPage = ({ locale, session, isAuthenticated }) =>
+  <FullPage>
+    <h1>Simple Public Page</h1>
+    <p>This page only has plain text on it and is wrapped by publicPage so has a header and footer</p>
+    <p>Locale is: {locale}</p>
+    <Button>Themed</Button>
+    <p>Session: {isAuthenticated ? 'Authenticated' : 'Not Authenticated'}</p>
+  </FullPage>
 
 export default TestPublicPage

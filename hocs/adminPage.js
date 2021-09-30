@@ -22,7 +22,7 @@ export const AccessDenied = () =>
     </p>
   </FullPage>
 
-const AccessDeniedPage = AccessDenied
+const AccessDeniedPage = publicPage(AccessDenied)
 
 const adminPageHoc = Page => {
   const AdminPage = props =>
@@ -42,4 +42,4 @@ const adminPageHoc = Page => {
   return AdminPage
 }
 
-export default Page => adminPageHoc(Page)
+export default Page => adminPageHoc(publicPage(Page))

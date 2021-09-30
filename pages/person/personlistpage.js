@@ -43,4 +43,4 @@ class PersonListPage extends Component {
   }
 }
 export const PersonListPageTest = PersonListPage
-export default withPeople(PersonListPage)
+export default securePage(withPeople(PersonListPage))
