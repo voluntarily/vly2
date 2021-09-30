@@ -1,18 +1,25 @@
 import sinon from 'sinon'
 import * as nextRouter from 'next/router'
 
-export const mockUseRouter = (path) => (t) => {
+const actionWithPromise = () => {
+  // return new Promise((resolve, reject) => reject(Error('fail promise')))
+  return new Promise((resolve, reject) => resolve('route changed'))
+}
+
+export const mockUseRouter = (path, query = {}) => (t) => {
   t.context.router = {
     pathname: path,
     route: path,
     asPath: path,
+    query: query,
     initialProps: {},
     pageLoader: sinon.fake(),
     App: sinon.fake(),
     Component: sinon.fake(),
     replace: sinon.fake(),
     push: sinon.fake(),
-    back: sinon.fake()
+    back: sinon.fake(),
+    prefetch: actionWithPromise
   }
   sinon.replace(nextRouter, 'useRouter', () => t.context.router)
 }

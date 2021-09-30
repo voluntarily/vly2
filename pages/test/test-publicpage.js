@@ -21,13 +21,13 @@ const TestPublicPage = ({ locale, gssp, isAuthenticated }) => {
   return (
     <FullPage>
       <h1>Simple Public Page</h1>
-      <p>This page only has plain text on it and is wrapped by publicPage so has a header and footer</p>
+      {/* <p>This page only has plain text on it and is wrapped by publicPage so has a header and footer</p>
       <p>Locale is: {locale}</p>
       <p>Me is: {me.nickname} </p>
       <Button>Themed</Button>
       <p>Session: {isAuthenticated ? 'Authenticated' : 'Not Authenticated'}</p>
-      {/* <p>Static Props: {gsp}</p> */}
-      <p>ServerSide Props: {gssp}</p>
+      <p>Static Props: {gsp}</p> 
+      <p>ServerSide Props: {gssp}</p> */}
 
     </FullPage>)
 }
@@ -40,14 +40,14 @@ const TestPublicPage = ({ locale, gssp, isAuthenticated }) => {
 //   }
 // }
 
-export const getServerSideProps = reduxWrapper.getServerSideProps(store =>
-  async () => {
-    console.log('test-publicpage GSSP', store)
-    return {
-      props: {
-        gssp: 'test from GSSP'
-      } // will be passed to the page component as props
-    }
-  })
+// export const getServerSideProps = reduxWrapper.getServerSideProps(store =>
+//   async () => {
+//     console.log('test-publicpage GSSP', store)
+//     return {
+//       props: {
+//         gssp: 'test from GSSP'
+//       } // will be passed to the page component as props
+//     }
+//   })
 
 export default TestPublicPage

@@ -1,6 +1,5 @@
 import { Menu } from 'antd'
 import Link from 'next/link'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { useWindowSize } from '../../lib/useWindowSize'
 import { useRouter } from 'next/router'
@@ -79,23 +78,13 @@ export const NavigationV = ({ items }) => {
 }
 
 // useWindowSize is giving angry warnings from the SSR.
-// const COLLAPSE_MENU_WIDTH = 1020
-// const Navigation = (props) => {
-//   const [width] = useWindowSize()
-//   return (width < COLLAPSE_MENU_WIDTH && width !== 0)
-//     ? <NavigationV {...props} />
-//     : <NavigationH {...props} />
-// }
-const Navigation = NavigationH
-
-Navigation.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.string,
-      url: PropTypes.string
-    })
-  ),
-  defaultItem: PropTypes.string
+const COLLAPSE_MENU_WIDTH = 1020
+export const Navigation = (props) => {
+  const [width] = useWindowSize()
+  return (width < COLLAPSE_MENU_WIDTH && width !== 0)
+    ? <NavigationV {...props} />
+    : <NavigationH {...props} />
 }
+// export const Navigation = NavigationH
 
 export default NavigationH

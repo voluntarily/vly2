@@ -9,11 +9,7 @@ import { Layout } from 'antd'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 import { FillWindow } from '../components/VTheme/VTheme'
-<<<<<<< HEAD
 import { wrapper } from '../lib/redux/store'
-=======
-import { reduxWrapper } from '../lib/redux/store'
->>>>>>> parent of 142af4ae (major move to esm modules for server files)
 import { RouteGuard } from '../components/RouteGuard'
 
 function MyApp ({

@@ -136,12 +136,14 @@
     "uuidv4": "^6.0.6"
   },
   "devDependencies": {
+    "@ava/babel": "^2.0.0",
     "@babel/register": "^7.8.3",
     "@codeceptjs/configure": "^0.5.2",
     "@formatjs/cli": "^1.1.18",
     "@istanbuljs/nyc-config-babel": "^3.0.0",
     "@testing-library/dom": "^6.11.0",
     "@wdio/selenium-standalone-service": "^5.16.10",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
     "ava": "^3.15.0",
     "axios": "^0.21.4",
     "babel-eslint": "^10.0.3",
@@ -179,41 +181,6 @@
     "url": "https://github.com/voluntarily/vly2/issues"
   },
   "homepage": "https://github.com/voluntarily/vly2#readme",
-  "ava": {
-    "files": [
-      "__tests__/**/*.spec.js",
-      "server/**/__tests__/*.spec.js",
-      "components/**/__tests__/*.spec.js",
-      "lib/**/__tests__/*.spec.js"
-    ],
-    "helpers": [
-      "**/__tests__/**/*.fixture.js",
-      "lib/react-intl-test*.js"
-    ],
-    "sources": [
-      "components/**/*.js",
-      "hocs/**/*.js",
-      "lib/**/*.js",
-      "pages/**/*.js",
-      "server/**/*.js"
-    ],
-    "failFast": false,
-    "timeout": "2m",
-    "babel": {
-      "testOptions": {
-        "retainLines": true,
-        "plugins": [
-          "@babel/plugin-syntax-jsx"
-        ],
-        "presets": [
-          "next/babel"
-        ]
-      }
-    },
-    "require": [
-      "./server/util/setup-test-env.js"
-    ]
-  },
   "nyc": {
     "extends": "@istanbuljs/nyc-config-babel",
     "ignore-class-method": "GetInitialProps",

@@ -10,6 +10,7 @@ import * as nextRouter from 'next/router'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
+import mockUseRouter from '../../../server/util/mockUseRouter'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
@@ -45,23 +46,7 @@ test.before('Setup fixtures', (t) => {
   t.context.mockStore = configureStore([thunk])(t.context.defaultstore)
 })
 
-test.before('Setup Route', (t) => {
-  t.context.router = {
-    pathname: '/acts',
-    route: '/acts',
-    query: { search: 'sun' },
-    asPath: '/acts?search=sun',
-    initialProps: {},
-    pageLoader: sinon.fake(),
-    App: sinon.fake(),
-    Component: sinon.fake(),
-    replace: sinon.fake(),
-    push: sinon.fake(),
-    back: sinon.fake()
-  }
-  const router = () => { return (t.context.router) }
-  sinon.replace(nextRouter, 'useRouter', router)
-})
+test.before('Setup Route', mockUseRouter('/acts', { search: 'sun' }))
 
 test.serial('render ActListSection', async t => {
   const router = nextRouter.useRouter()

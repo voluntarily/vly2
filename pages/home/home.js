@@ -91,21 +91,8 @@ export const getServerSideProps = wrapper.getServerSideProps(store =>
     } catch (err) {
       console.error('error in getting home page data', err)
     }
-
-    await allSettled([
-      store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
-      store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),
-      store.dispatch(reduxApi.actions.interests.get({ me: meid })),
-      store.dispatch(reduxApi.actions.personalGoals.get({ meid: meid })),
-      store.dispatch(reduxApi.actions.members.get({ meid: meid })),
-      store.dispatch(reduxApi.actions.interestArchives.get({ me: meid })),
-      store.dispatch(reduxApi.actions.recommendedOps.get({ me: meid }))
-    ])
-  } catch (err) {
-    console.error('error in getting home page data', err)
-  }
-  return {}
-}
+    return {}
+  })
 
 export default PersonHomePage
 // export default PersonHomePage
