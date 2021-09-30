@@ -39,23 +39,23 @@ export const HealthReducer = (state = initialState, action) => {
   }
 }
 
-export class ReduxAsyncTest extends Component {
+export const ReduxAsyncTest = ({ name, health, fetchHealth }) => {
   // when save clicked copy the edited name to the savedname
-  handleClick = e => {
+  const handleClick = e => {
     // call redux dispatch with the addHealth Action and our new data.
-    this.props.fetchHealth()
+    fetchHealth()
   }
 
-  render = () => (
+  return (
     <div>
-      <p>Hi {this.props.name}</p>
-      <p>Health is {this.props.health.health}</p>
-      <p>Message is {this.props.health.message}</p>
-      <button type='button' onClick={this.handleClick}>
+      <p>Hi {name}</p>
+      <p>Health is {health.health}</p>
+      <p>Message is {health.message}</p>
+      <button type='button' onClick={handleClick}>
         Get Health
       </button>
       <hr />
-      <code>{JSON.stringify(this.props.health)}</code>
+      <code>{JSON.stringify(health)}</code>
     </div>
   )
 }
