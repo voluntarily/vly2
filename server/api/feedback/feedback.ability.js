@@ -1,6 +1,6 @@
-import { Role } from '../../services/authorize/role'
-import { SchemaName } from './feedback.constants'
-import { Action } from '../../services/abilities/ability.constants'
+const { Role } = require('../../services/authorize/role')
+const { SchemaName } = require('./feedback.constants')
+const { Action } = require('../../services/abilities/ability.constants')
 
 const ruleBuilder = async (session) => {
   if (!session.me || !session.me._id) return {}
@@ -39,4 +39,4 @@ const ruleBuilder = async (session) => {
     [Role.ADMIN]: adminRules
   }
 }
-export default ruleBuilder
+module.exports = ruleBuilder

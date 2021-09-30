@@ -1,11 +1,11 @@
-import routes from 'next-routes-extended'
+const routes = require('next-routes-extended')
 
 // routesImplementation
 //   .add([identifier], pattern = /identifier, page = identifier)
 //   .add('/blog/:slug', 'blogShow')
 //   .add('showBlogPostRoute', '/blog/:slug', 'blogShow')
 // Name   Page      Pattern
-export default routes()
+module.exports = routes()
   // Organisations
   .add('orgs', '/orgs', 'org/orglistpage')
   .add('org', '/orgs/:id', 'org/orgdetailpage')

@@ -1,7 +1,7 @@
-import { Role } from '../../services/authorize/role'
-import { Action } from '../../services/abilities/ability.constants'
-import { find } from '../archivedOpportunity/archivedOpportunity'
-import { InterestArchiveSchemaName } from './interest.constants'
+const { Role } = require('../../services/authorize/role')
+const { Action } = require('../../services/abilities/ability.constants')
+const ArchivedOpportunity = require('../archivedOpportunity/archivedOpportunity')
+const { InterestArchiveSchemaName } = require('./interest.constants')
 
 const ruleBuilder = async (session) => {
   const anonRules = [{
@@ -54,7 +54,7 @@ const ruleBuilder = async (session) => {
 
   const opportunityProviderRules = []
   if (session.me && session.me._id && session.me.role.includes(Role.OPPORTUNITY_PROVIDER)) {
-    const myOpportunities = await find({ requestor: session.me._id })
+    const myOpportunities = await ArchivedOpportunity.find({ requestor: session.me._id })
     const myOpportunityIds = myOpportunities.map(op => op._id.toString())
     opportunityProviderRules.push({
       subject: InterestArchiveSchemaName,
@@ -82,7 +82,7 @@ const ruleBuilder = async (session) => {
   const orgAdminRules = []
 
   if (session.me && session.me._id && session.me.role.includes(Role.ORG_ADMIN)) {
-    const myOpportunities = await find({ offerOrg: { $in: session.me.orgAdminFor } })
+    const myOpportunities = await ArchivedOpportunity.find({ offerOrg: { $in: session.me.orgAdminFor } })
     const myOpportunityIds = myOpportunities.map(op => op._id.toString())
 
     orgAdminRules.push({
@@ -137,4 +137,4 @@ const ruleBuilder = async (session) => {
   }
 }
 
-export default ruleBuilder
+module.exports = ruleBuilder

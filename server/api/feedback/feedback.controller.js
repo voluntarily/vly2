@@ -1,6 +1,6 @@
-import Feedback, { exists, accessibleBy } from './feedback'
-import { Action } from '../../services/abilities/ability.constants'
-import { verifyAttendance } from './feedback.lib'
+const Feedback = require('./feedback')
+const { Action } = require('../../services/abilities/ability.constants')
+const { verifyAttendance } = require('./feedback.lib')
 
 const createFeedback = async (req, res) => {
   const feedbackData = req.body
@@ -17,7 +17,7 @@ const createFeedback = async (req, res) => {
   try {
     // find feedback for the person and opportuntiy
     // the person can only submit feedback once
-    if (await exists({ respondent: feedback.respondent, opportunity: feedback.opportunity })) {
+    if (await Feedback.exists({ respondent: feedback.respondent, opportunity: feedback.opportunity })) {
       // HTTP STATUS CODE 409 CONFLICT
       // https://stackoverflow.com/a/3826024
       return res.status(409).send({ error: `User ${feedback.respondent.toString()} has already submitted feedback for opportunity ${feedback.opportunity.toString()} ` })
@@ -42,7 +42,7 @@ const listFeedback = async (req, res) => {
   }
 
   try {
-    const feedback = await accessibleBy(req.ability, Action.LIST).find(
+    const feedback = await Feedback.accessibleBy(req.ability, Action.LIST).find(
       query
     )
     return res.json(feedback)
@@ -53,7 +53,7 @@ const listFeedback = async (req, res) => {
 
 const getFeedback = async (req, res) => {
   try {
-    const feedback = await accessibleBy(req.ability, Action.READ)
+    const feedback = await Feedback.accessibleBy(req.ability, Action.READ)
       // req.params = { _id: 'feedbackId'}
       .findOne(req.params)
 
@@ -69,7 +69,7 @@ const getFeedback = async (req, res) => {
 
 const updateFeedback = async (req, res) => {
   try {
-    const feedback = await accessibleBy(
+    const feedback = await Feedback.accessibleBy(
       req.ability,
       Action.READ
     ).findOne(req.params)
@@ -111,7 +111,8 @@ const updateFeedback = async (req, res) => {
 
 const deleteFeedback = async (req, res) => {
   try {
-    const result = await accessibleBy(req.ability, Action.DELETE)
+    const result = await Feedback
+      .accessibleBy(req.ability, Action.DELETE)
       .deleteOne(req.params)
 
     if (result.deletedCount === 0) {
@@ -124,7 +125,7 @@ const deleteFeedback = async (req, res) => {
   return res.sendStatus(204)
 }
 
-export default {
+module.exports = {
   createFeedback,
   listFeedback,
   getFeedback,

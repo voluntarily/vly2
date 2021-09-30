@@ -1,11 +1,13 @@
-import mongoose from 'mongoose'
-import { accessibleRecordsPlugin, accessibleFieldsPlugin } from '@casl/mongoose'
-import idvalidator from 'mongoose-id-validator'
-
-import { SchemaName, PersonStatus } from './person.constants.js'
-import { VerificationSchema } from '../personalVerification/personalVerification.js'
-import { Role } from '../../services/authorize/role.js'
-const { Schema, models, model } = mongoose
+const mongoose = require('mongoose')
+const idvalidator = require('mongoose-id-validator')
+const Schema = mongoose.Schema
+const { SchemaName, PersonStatus } = require('./person.constants')
+const { VerificationSchema } = require('../personalVerification/personalVerification')
+const {
+  accessibleRecordsPlugin,
+  accessibleFieldsPlugin
+} = require('@casl/mongoose')
+const { Role } = require('../../services/authorize/role')
 
 // simplified version without Auth
 const personSchema = new Schema({
@@ -89,10 +91,10 @@ personSchema.index({ tags: 1 })
 // protect multiple imports
 var Person
 
-if (models && models.Person) {
-  Person = model(SchemaName)
+if (mongoose.models && mongoose.models.Person) {
+  Person = mongoose.model(SchemaName)
 } else {
-  Person = model(SchemaName, personSchema)
+  Person = mongoose.model(SchemaName, personSchema)
 }
 
-export default Person
+module.exports = Person

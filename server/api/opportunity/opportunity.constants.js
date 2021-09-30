@@ -1,22 +1,20 @@
-import { Action } from '../../services/abilities/ability.constants'
+const { Action } = require('../../services/abilities/ability.constants')
 
-export const SchemaName = 'Opportunity'
-
-export const OpportunityRoutes = {
+const OpportunityRoutes = {
   [Action.LIST]: '/api/opportunities',
   [Action.READ]: '/api/opportunities/:id',
   [Action.UPDATE]: '/api/opportunities/:id/edit',
   [Action.CREATE]: '/api/opportunities/new'
 }
 
-export const OpportunityStatus = {
+const OpportunityStatus = {
   DRAFT: 'draft',
   ACTIVE: 'active',
   COMPLETED: 'completed',
   CANCELLED: 'cancelled'
 }
 
-export const OpportunityType = {
+const OpportunityType = {
   ASK: 'ask',
   OFFER: 'offer'
 }
@@ -24,12 +22,12 @@ export const OpportunityType = {
 /**
  * An Opportunity is considered Published if it has one of these status.
  */
-export const OpportunityPublishedStatus = [
+const OpportunityPublishedStatus = [
   OpportunityStatus.ACTIVE,
   OpportunityStatus.COMPLETED
 ]
 
-export const OpportunityFields = {
+const OpportunityFields = {
   ID: '_id',
   TYPE: 'type',
   STATUS: 'status',
@@ -52,7 +50,7 @@ export const OpportunityFields = {
 /* This list is currently used for requests returning a LIST
 of opportunities, it contains fields required for the OpCard.
 */
-export const OpportunityListFields = [
+const OpportunityListFields = [
   OpportunityFields.ID,
   OpportunityFields.TYPE,
   OpportunityFields.NAME,
@@ -73,12 +71,13 @@ export const OpportunityListFields = [
 /* This list is currently used for both anon and signed in people
   all are required to make the OpDetailsPage work correctly.
 */
-export const OpportunityPublicFields = [
+const OpportunityPublicFields = [
   ...OpportunityListFields,
   OpportunityFields.TAGS
 ]
 
-export default {
+module.exports = {
+  SchemaName: 'Opportunity',
   OpportunityStatus,
   OpportunityPublishedStatus,
   OpportunityFields,

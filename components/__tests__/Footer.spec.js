@@ -1,15 +1,14 @@
 import React from 'react'
 import test from 'ava'
+import Footer from '../Footer/Footer'
+import { mountWithIntl } from '../../lib/react-intl-test-helper'
+import withMockRoute from '../../server/util/mockRouter'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
-
-import Footer from '../Footer/Footer'
-import { mountWithIntl } from '../../test-utils/react-intl-test-helper.js'
-import withMockRoute from '../../test-utils/mockRouter.js'
 // mock function to test the render of Women's Refuge button
-// global.ds07o6pcmkorn = function (e) {
-//   this.init = () => { }
-// }
+global.ds07o6pcmkorn = function (e) {
+  this.init = () => { }
+}
 const mockStore = configureStore()(
   {
     session: {

@@ -1,7 +1,7 @@
-import { Role } from '../../services/authorize/role'
-import { Action } from '../../services/abilities/ability.constants'
-import { SchemaName } from './archivedOpportunity.constants'
-import { OpportunityStatus, OpportunityFields, OpportunityListFields } from '../opportunity/opportunity.constants'
+const { Role } = require('../../services/authorize/role')
+const { Action } = require('../../services/abilities/ability.constants')
+const { SchemaName } = require('./archivedOpportunity.constants')
+const { OpportunityStatus, OpportunityFields, OpportunityListFields } = require('../opportunity/opportunity.constants')
 
 const ruleBuilder = session => {
   const anonAbilities = [{
@@ -111,4 +111,4 @@ const ruleBuilder = session => {
   }
 }
 
-export default ruleBuilder
+module.exports = ruleBuilder

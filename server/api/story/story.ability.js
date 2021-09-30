@@ -1,6 +1,6 @@
-import { Role } from '../../services/authorize/role'
-import { Action } from '../../services/abilities/ability.constants'
-import { SchemaName, StoryStatus } from './story.constants'
+const { Role } = require('../../services/authorize/role')
+const { Action } = require('../../services/abilities/ability.constants')
+const { SchemaName, StoryStatus } = require('./story.constants')
 
 const ruleBuilder = async (session) => {
   const anonRules = [{
@@ -49,4 +49,4 @@ const ruleBuilder = async (session) => {
   }
 }
 
-export default ruleBuilder
+module.exports = ruleBuilder

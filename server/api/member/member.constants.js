@@ -1,4 +1,4 @@
-export const MemberFields = {
+const MemberFields = {
   ID: '_id',
   STATUS: 'status',
   CREATED_AT: 'createdAt',
@@ -7,7 +7,7 @@ export const MemberFields = {
   VALIDATION: 'validation'
 }
 
-export const MemberStatus = {
+const MemberStatus = {
   NONE: 'none',
   FOLLOWER: 'follower', // person is a follower of the organisation
   JOINER: 'joiner', // person has requested to join the org
@@ -17,7 +17,7 @@ export const MemberStatus = {
   ORGADMIN: 'orgadmin' // person can manage other members
 }
 
-export default {
+module.exports = {
   SchemaName: 'Member',
   MemberFields,
   MemberStatus

@@ -1,9 +1,10 @@
-import { findOne, accessibleBy } from './archivedOpportunity'
-import { Action } from '../../services/abilities/ability.constants'
-import { OpportunityListFields } from '../opportunity/opportunity.constants'
+const ArchivedOpportunity = require('./archivedOpportunity')
+const { Action } = require('../../services/abilities/ability.constants')
+const { OpportunityListFields } = require('../opportunity/opportunity.constants')
 
 const getArchivedOpportunity = async (req, res, next) => {
-  const got = await findOne(req.params)
+  const got = await ArchivedOpportunity
+    .findOne(req.params)
     .populate('requestor', 'name imgUrl imgUrlSm')
     .populate('offerOrg', 'name imgUrl role')
     .exec()
@@ -31,7 +32,8 @@ const getArchivedOpportunities = async (req, res, next) => {
   }
 
   try {
-    const got = await accessibleBy(req.ability, Action.LIST)
+    const got = await ArchivedOpportunity
+      .accessibleBy(req.ability, Action.LIST)
       .find(query)
       .select(select)
       .populate('requestor', 'name nickname imgUrl')
@@ -46,7 +48,7 @@ const getArchivedOpportunities = async (req, res, next) => {
   }
 }
 
-export default {
+module.exports = {
   getArchivedOpportunity,
   getArchivedOpportunities
 }

@@ -1,6 +1,12 @@
-import { SchemaName, OpportunityStatus, OpportunityListFields, OpportunityPublicFields, OpportunityPublishedStatus } from './opportunity.constants'
-import { Role } from '../../services/authorize/role'
-import { Action } from '../../services/abilities/ability.constants'
+const {
+  SchemaName,
+  OpportunityStatus,
+  OpportunityListFields,
+  OpportunityPublicFields,
+  OpportunityPublishedStatus
+} = require('./opportunity.constants')
+const { Role } = require('../../services/authorize/role')
+const { Action } = require('../../services/abilities/ability.constants')
 
 /*
 // TypeScript definition
@@ -96,4 +102,4 @@ const ruleBuilder = session => {
   }
 }
 
-export default ruleBuilder
+module.exports = ruleBuilder

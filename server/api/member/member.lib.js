@@ -1,13 +1,12 @@
-import pubsub from 'pubsub-js'
-
-import Member from './member.js'
-import topics from '../../services/pubsub/topic.constants.js'
-import { MemberStatus } from './member.constants.js'
-import { Role } from '../../services/authorize/role.js'
-import { OrganisationRole } from '../organisation/organisation.constants.js'
+const Member = require('./member')
+const PubSub = require('pubsub-js')
+const { TOPIC_MEMBER__UPDATE } = require('../../services/pubsub/topic.constants')
+const { MemberStatus } = require('./member.constants')
+const { Role } = require('../../services/authorize/role')
+const { OrganisationRole } = require('../organisation/organisation.constants')
 
 /* get a single member record with org and person populated out */
-export const getMemberbyId = id => {
+const getMemberbyId = id => {
   return Member.findOne({ _id: id })
     .populate({ path: 'person', select: 'nickname name imgUrl role email sendEmailNotifications' })
     .populate({ path: 'organisation', select: 'name imgUrl role' })
@@ -15,7 +14,7 @@ export const getMemberbyId = id => {
 }
 
 // creates a new member or updates status of existing member
-export const addMember = async (member) => {
+const addMember = async (member) => {
   const found = await Member.findOneAndUpdate(
     { // check for a match
       person: member.person,
@@ -27,12 +26,12 @@ export const addMember = async (member) => {
   // get populated out member record
   const got = await getMemberbyId(found._id)
   if (found) {
-    pubsub.publish(topics.TOPIC_MEMBER__UPDATE, got)
+    PubSub.publish(TOPIC_MEMBER__UPDATE, got)
   }
   return got
 }
 
-export const findOrgByPersonIdAndRole = async (personId, role) => {
+const findOrgByPersonIdAndRole = async (personId, role) => {
   // search membership table for org matching role and person id
   const query = { person: personId }
   let myorgs = await Member.find(query).populate({ path: 'organisation', select: 'name role' }).exec()
@@ -74,7 +73,7 @@ const orgToRoleTable = {
 }
 // desired sort order for roles
 // ANON, VP, OP,AP, ORG_ADMIN, ADMIN
-export const sortRoles = roles => {
+const sortRoles = roles => {
   const desiredOrder = [
     Role.ANON,
     Role.BASIC,
@@ -93,9 +92,10 @@ export const sortRoles = roles => {
   return sortedRoles
 }
 
-export const getPersonRoles = async person => {
+const getPersonRoles = async person => {
   const membershipQuery = { person: person._id }
-  const membership = await Member.find(membershipQuery)
+  const membership = await Member
+    .find(membershipQuery)
     .populate({ path: 'organisation', select: 'name role' })
     .lean()
     .exec()
@@ -116,4 +116,12 @@ export const getPersonRoles = async person => {
   person.orgAdminFor = orgAdminFor
   person.role = sortRoles(role)
   return [role, orgAdminFor]
+}
+
+module.exports = {
+  getMemberbyId,
+  addMember,
+  findOrgByPersonIdAndRole,
+  getPersonRoles,
+  sortRoles
 }

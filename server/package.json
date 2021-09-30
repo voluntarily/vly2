@@ -1,7 +1,0 @@
-{
-  "name": "@voluntarily/vly2-server",
-  "version": "1.0.0",
-  "description": "Voluntarily.nz Server based on Next.js",
-  "main": "server/server.mjs",
-  "type": "module"
-}

@@ -1,14 +1,14 @@
-import { Action } from '../../services/abilities/ability.constants.js'
+const { Action } = require('../../services/abilities/ability.constants')
 
-export const SchemaName = 'Person'
+const SchemaName = 'Person'
 
-export const PersonRoutes = {
+const PersonRoutes = {
   [Action.LIST]: '/api/people',
   [Action.READ]: '/api/people/:id',
   [Action.UPDATE]: '/api/people/:id',
   [Action.CREATE]: '/api/people'
 }
-export const PersonFields = {
+const PersonFields = {
   ID: '_id',
   EMAIL: 'email',
   NICKNAME: 'nickname',
@@ -39,7 +39,7 @@ export const PersonFields = {
 /* This list is currently used for requests returning a LIST
 of people, it contains fields required for the person card.
 */
-export const PersonListFields = [
+const PersonListFields = [
   PersonFields.NICKNAME,
   PersonFields.LANGUAGE,
   PersonFields.NAME,
@@ -55,7 +55,7 @@ export const PersonListFields = [
   PersonFields.VERIFIED
 ]
 
-export const PersonPublicFields = [
+const PersonPublicFields = [
   ...PersonListFields,
   PersonFields.ABOUT,
   PersonFields.FACEBOOK,
@@ -63,7 +63,7 @@ export const PersonPublicFields = [
   PersonFields.TWITTER
 ]
 
-export const PersonFriendFields = [
+const PersonFriendFields = [
   ...PersonPublicFields,
   PersonFields.EMAIL,
   PersonFields.PHONE,
@@ -72,8 +72,18 @@ export const PersonFriendFields = [
   PersonFields.PLACEOFWORK
 ]
 
-export const PersonStatus = {
+const PersonStatus = {
   ACTIVE: 'active',
   INACTIVE: 'inactive',
   HOLD: 'hold'
+}
+
+module.exports = {
+  SchemaName,
+  PersonRoutes,
+  PersonFields,
+  PersonStatus,
+  PersonListFields,
+  PersonPublicFields,
+  PersonFriendFields
 }

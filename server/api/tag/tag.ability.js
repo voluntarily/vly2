@@ -1,6 +1,6 @@
-import { Role } from '../../services/authorize/role'
-import { Action } from '../../services/abilities/ability.constants'
-import { SchemaName } from './tag.constants'
+const { Role } = require('../../services/authorize/role')
+const { Action } = require('../../services/abilities/ability.constants')
+const { SchemaName } = require('./tag.constants')
 
 /*
 // TypeScript definition
@@ -38,4 +38,4 @@ const ruleBuilder = (session) => {
   }
 }
 
-export default ruleBuilder
+module.exports = ruleBuilder

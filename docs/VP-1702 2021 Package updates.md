@@ -68,16 +68,3 @@ Person/PersonDetailForm.js
 # Test failures
 -   server › api › interest › interest.ability › Interest API - anon - list
     -   not repeatable.
-
-
-## Modern Javascript
-
-- all modules are esm (mjs files) 
-- use import and export not require.
-- use type: module in server side package so that js files are ecmascript modules. 
-- https://nodejs.org/api/esm.html#esm_modules_ecmascript_modules
-
-Node.js treats JavaScript code as CommonJS modules by default. Authors can tell Node.js to treat JavaScript code as ECMAScript modules via the .mjs file extension, the package.json "type" field, or the --input-type flag. 
-
-
-

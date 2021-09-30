@@ -5,9 +5,7 @@
 //   AGENCY: 'admin',
 //   OTHER: 'other'
 // }
-export const SchemaName = 'Organisation'
-
-export const OrganisationRole = {
+const OrganisationRole = {
   VOLUNTEER_PROVIDER: 'vp',
   OPPORTUNITY_PROVIDER: 'op',
   ACTIVITY_PROVIDER: 'ap',
@@ -18,7 +16,7 @@ export const OrganisationRole = {
   OTHER: 'other' // whats next
 }
 
-export const OrganisationFields = {
+const OrganisationFields = {
   NAME: 'name',
   SLUG: 'slug',
   IMGURL: 'imgUrl',
@@ -38,7 +36,7 @@ export const OrganisationFields = {
   ADDRESS: 'address'
 }
 
-export const OrganisationListFields = [
+const OrganisationListFields = [
   OrganisationFields.ID,
   OrganisationFields.NAME,
   OrganisationFields.SLUG,
@@ -46,3 +44,12 @@ export const OrganisationListFields = [
   OrganisationFields.ROLE,
   OrganisationFields.GROUPS
 ]
+
+const SchemaName = 'Organisation'
+
+module.exports = {
+  OrganisationRole,
+  OrganisationFields,
+  OrganisationListFields,
+  SchemaName
+}

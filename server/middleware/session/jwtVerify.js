@@ -1,7 +1,6 @@
-import jwksClient from 'jwks-rsa'
-import jwt from 'jsonwebtoken'
-
-import config from '../../../config/clientConfig.js'
+const { config } = require('../../../config/clientConfig')
+const jwksClient = require('jwks-rsa')
+const jwt = require('jsonwebtoken')
 
 const client = jwksClient({
   strictSsl: true, // Default value
@@ -13,7 +12,7 @@ const client = jwksClient({
   requestAgentOptions: {} // Optional
 })
 
-export const getSigningKey = (header, callback) => {
+const getSigningKey = (header, callback) => {
   if (process.env.NODE_ENV === 'test') {
     callback(null, 'secret')
   } else if (process.env.NODE_ENV === 'development' && header.kid === 'dev') {
@@ -28,7 +27,7 @@ export const getSigningKey = (header, callback) => {
   }
 }
 
-export const jwtVerify = idToken => {
+const jwtVerify = idToken => {
   return new Promise((resolve, reject) => {
     jwt.verify(idToken, getSigningKey, {}, (err, decoded) => {
       if (err) { return reject(err) }
@@ -37,7 +36,10 @@ export const jwtVerify = idToken => {
   })
 }
 
-
+module.exports = {
+  jwtVerify,
+  getSigningKey
+}
 // const secretCallback = jwksRsa.expressJwtSecret({
 //   cache: true,
 //   rateLimit: true,

@@ -1,6 +1,6 @@
-import { Role } from '../../services/authorize/role'
-import { Action } from '../../services/abilities/ability.constants'
-import { ActivityStatus, SchemaName } from './activity.constants'
+const { Role } = require('../../services/authorize/role')
+const { Action } = require('../../services/abilities/ability.constants')
+const { ActivityStatus, SchemaName } = require('./activity.constants')
 
 const ruleBuilder = session => {
   const anonRules = [{
@@ -106,4 +106,4 @@ const ruleBuilder = session => {
   }
 }
 
-export default ruleBuilder
+module.exports = ruleBuilder

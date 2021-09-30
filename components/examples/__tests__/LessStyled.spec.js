@@ -1,6 +1,6 @@
 import test from 'ava'
-import { shallow } from 'enzyme'
 import LessStyled from '../LessStyled'
+import { shallow } from 'enzyme'
 
 test('renders properly', t => {
   const wrapper = shallow(

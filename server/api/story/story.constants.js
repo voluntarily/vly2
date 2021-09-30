@@ -1,4 +1,4 @@
-)
+const { Action } = require('../../services/abilities/ability.constants')
 
 const StoryRoutes = {
   [Action.READ]: 'api/stories/:id'
