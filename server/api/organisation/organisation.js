@@ -1,7 +1,8 @@
-const mongoose = require('mongoose')
-const { accessibleRecordsPlugin } = require('@casl/mongoose')
-const Schema = mongoose.Schema
-const { OrganisationRole } = require('./organisation.constants')
+import mongoose from 'mongoose'
+import { accessibleRecordsPlugin } from '@casl/mongoose'
+import { SchemaName, OrganisationRole } from './organisation.constants.js'
+
+const { Schema, models, model } = mongoose
 const organisationSchema = new Schema({
   name: { type: 'String', required: true, unique: true },
   slug: { type: 'String', required: true, unique: true },
@@ -46,12 +47,13 @@ const organisationSchema = new Schema({
 organisationSchema.plugin(accessibleRecordsPlugin)
 
 // protect multiple imports
-var Organisation
+// var Organisation
 
-if (mongoose.models.Organisation) {
-  Organisation = mongoose.model('Organisation')
-} else {
-  Organisation = mongoose.model('Organisation', organisationSchema)
-}
+// if (models.Organisation) {
+//   Organisation = mongoose.model(SchemaName)
+// } else {
+//   Organisation = mongoose.model(SchemaName, organisationSchema)
+// }
 
-module.exports = Organisation
+// export default Organisation
+export default mongoose.model(SchemaName, organisationSchema)

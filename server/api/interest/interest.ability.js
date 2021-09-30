@@ -1,7 +1,7 @@
-const { Role } = require('../../services/authorize/role')
-const { Action } = require('../../services/abilities/ability.constants')
-const Opportunity = require('../opportunity/opportunity')
-const { InterestSchemaName, InterestStatus } = require('./interest.constants')
+import { Role } from '../../services/authorize/role'
+import { Action } from '../../services/abilities/ability.constants'
+import { find } from '../opportunity/opportunity'
+import { InterestSchemaName, InterestStatus } from './interest.constants'
 
 const ruleBuilder = async (session) => {
   const anonRules = [{
@@ -55,7 +55,7 @@ const ruleBuilder = async (session) => {
   const opportunityProviderRules = []
 
   if (session.me && session.me._id && session.me.role.includes(Role.OPPORTUNITY_PROVIDER)) {
-    const myOpportunities = await Opportunity.find({ requestor: session.me._id })
+    const myOpportunities = await find({ requestor: session.me._id })
     const myOpportunityIds = myOpportunities.map(opportunity => opportunity._id.toString())
 
     opportunityProviderRules.push({
@@ -84,7 +84,7 @@ const ruleBuilder = async (session) => {
   const orgAdminRules = []
 
   if (session.me && session.me._id && session.me.role.includes(Role.ORG_ADMIN)) {
-    const myOpportunities = await Opportunity.find({ offerOrg: { $in: session.me.orgAdminFor } })
+    const myOpportunities = await find({ offerOrg: { $in: session.me.orgAdminFor } })
     const myOpportunityIds = myOpportunities.map(opportunity => opportunity._id.toString())
 
     orgAdminRules.push({
@@ -126,4 +126,4 @@ const ruleBuilder = async (session) => {
   }
 }
 
-module.exports = ruleBuilder
+export default ruleBuilder

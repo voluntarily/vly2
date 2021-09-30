@@ -1,6 +1,6 @@
-const { Role } = require('../../services/authorize/role')
-const { Action } = require('../../services/abilities/ability.constants')
-const { PersonFields } = require('./person.constants')
+import { Role } from '../../services/authorize/role.js'
+import { Action } from '../../services/abilities/ability.constants.js'
+import { PersonFields } from './person.constants.js'
 const SchemaName = 'Person'
 
 // WIKI rules : https://voluntarily.atlassian.net/wiki/spaces/VP/pages/18677761/API+Access+Security+Rules
@@ -80,4 +80,4 @@ const ruleBuilder = session => {
   }
 }
 
-module.exports = ruleBuilder
+export default ruleBuilder

@@ -1,6 +1,7 @@
-const glob = require('glob')
-const { Ability } = require('@casl/ability')
-const { Role } = require('../../services/authorize/role')
+import glob from 'glob'
+import path from 'path'
+import { Ability } from '@casl/ability'
+import { Role } from '../../services/authorize/role.js'
 
 // list paths for which ability is not required
 const OPEN_URL = ['/static/', '/_next/']
@@ -15,11 +16,11 @@ const openPath = url => {
   return false
 }
 
-module.exports = options => async (req, res, next) => {
+export default options => async (req, res, next) => {
   if (openPath(req.url)) {
     return next()
   }
-  const rootPath = require('path').join(__dirname, '/../../..')
+  const rootPath = path.join(import.meta.url, '/../../..')
   const pattern = rootPath + options.searchPattern
   const userRoles = req.session && req.session.me ? req.session.me.role : [Role.ANON]
   let allRules = []

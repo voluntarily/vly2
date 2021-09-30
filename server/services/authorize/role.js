@@ -1,4 +1,4 @@
-const Role = {
+export const Role = {
   ANON: 'anonymous',
   BASIC: 'basic', // person signed in but no other role.
   VOLUNTEER: 'volunteer',
@@ -10,7 +10,4 @@ const Role = {
   ADMIN: 'admin',
   ALL: 'all'
 }
-
-module.exports = {
-  Role
-}
+export default Role

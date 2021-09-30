@@ -1,7 +1,7 @@
-const Organisation = require('./organisation')
-const { Role } = require('../../services/authorize/role')
-const { validationRules } = require('../../../lib/fieldValidation')
-const { OrganisationListFields } = require('./organisation.constants')
+import Organisation from './organisation.js'
+import { Role } from '../../services/authorize/role.js'
+import { validationRules } from '../../../lib/fieldValidation.js'
+import { OrganisationListFields } from './organisation.constants.js'
 /**
  * Get all orgs
  * @param req
@@ -9,7 +9,7 @@ const { OrganisationListFields } = require('./organisation.constants')
  * @returns void
  */
 
-const listOrganisations = async (req, res) => {
+export const listOrganisations = async (req, res) => {
   let query = {}
   let sort = 'name'
   let select = OrganisationListFields.join(' ')
@@ -32,7 +32,7 @@ const listOrganisations = async (req, res) => {
 }
 
 // Update
-const putOrganisation = async (req, res) => {
+export const putOrganisation = async (req, res) => {
   const isAdmin = req.session.me.role.includes(Role.ADMIN)
 
   // The current user must be; an ADMIN, or an ORG_ADMIN of the requested organisation
@@ -53,7 +53,7 @@ const putOrganisation = async (req, res) => {
   }
 }
 // Create
-const postOrganisation = async (req, res) => {
+export const postOrganisation = async (req, res) => {
   if (!req.session.me.role.includes(Role.ADMIN)) {
     return res.status(403).send('Must be admin to create an organisation')
   }
@@ -63,7 +63,7 @@ const postOrganisation = async (req, res) => {
 }
 
 // Delete
-const deleteOrganisation = async (req, res) => {
+export const deleteOrganisation = async (req, res) => {
   if (!req.session.me.role.includes(Role.ADMIN)) {
     return res.status(403).send('Must be admin to delete an organisation')
   }
@@ -74,11 +74,4 @@ const deleteOrganisation = async (req, res) => {
 
   await Organisation.deleteOne({ _id: req.params._id })
   return res.status(204).end()
-}
-
-module.exports = {
-  listOrganisations,
-  putOrganisation,
-  postOrganisation,
-  deleteOrganisation
 }

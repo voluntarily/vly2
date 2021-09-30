@@ -37,3 +37,11 @@ _App now does the overall layout that public page used to do.  If a page require
 
 routing through to login is now handled by GuardRoutes wrapper in _App.  This has a list of routes that require the user to be signed in.  There's not as many as you would think as much of the site is public. However even public pages may expect a me and isAuthenticated values in the store so that they can control what gets displayed to the public. 
 
+## GetServerSideProps
+
+All GetInitialProps get replaced with GSSP.
+
+
+## COnvert everntyhing to EC modules - latest JS
+set module= true in package.json
+replace all requires with imports.

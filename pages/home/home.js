@@ -1,15 +1,15 @@
-// import { message } from 'antd'
-import { useRouter } from 'next/router'
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
+
 import { HomeBanner } from '../../components/Home/HomeBanner.js'
 import { HomeTabs } from '../../components/Home/HomeTabs.js'
-import Loading from '../../components/Loading'
-import { FullPage } from '../../components/VTheme/VTheme'
+import Loading from '../../components/Loading.js'
+import { FullPage } from '../../components/VTheme/VTheme.js'
 import reduxApi from '../../lib/redux/reduxApi.js'
-import { MemberStatus } from '../../server/api/member/member.constants'
-import { useSelector } from 'react-redux'
-import { wrapper } from '../../lib/redux/store'
+import { MemberStatus } from '../../server/api/member/member.constants.js'
+import { reduxWrapper } from '../../lib/redux/store.js'
 
 export const PersonHomePage = () => {
   const [me, members, opportunities, interests] = useSelector(
@@ -68,7 +68,7 @@ const allSettled = (promises) => {
   }))))
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store =>
+export const getServerSideProps = reduxWrapper.getServerSideProps(store =>
   async () => {
     try {
       console.log('PersonHomePage.getServerSideProps')

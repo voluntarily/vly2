@@ -1,13 +1,13 @@
-const Organisation = require('./organisation')
-const { OrganisationRole } = require('./organisation.constants')
+import { findById } from './organisation.js'
+import { OrganisationRole } from './organisation.constants.js'
 
-const orgProfileCompletenessById = async (orgId) => {
-  const org = await Organisation.findById(orgId).exec()
+export const orgProfileCompletenessById = async (orgId) => {
+  const org = await findById(orgId).exec()
   if (!org) return false
   return orgProfileCompleteness(org)
 }
 
-const orgProfileCompleteness = (org) => {
+export const orgProfileCompleteness = (org) => {
   let score = 0
   let count = 0
 
@@ -42,7 +42,7 @@ const orgProfileCompleteness = (org) => {
   return { score, count }
 }
 
-module.exports = {
+export default {
   orgProfileCompleteness,
   orgProfileCompletenessById
 }

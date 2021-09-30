@@ -1,5 +1,5 @@
 // envHasKey is a local utility function used to check if the environment variable has been defined
-const envHasKey = (key) => Object.prototype.hasOwnProperty.call(process.env, key)
+export const envHasKey = (key) => Object.prototype.hasOwnProperty.call(process.env, key)
 
 // parseVar is a local utility function utilised in checkEnvVars to parse the input variables
 const parseVar = (type, arg) => {
@@ -18,7 +18,7 @@ const parseVar = (type, arg) => {
 //
 // opts = { required, optional }
 // Both required and optional can be undefined, a string, or an array of strings.
-const checkEnvVars = ({ required, optional }) => {
+export const checkEnvVars = ({ required, optional }) => {
   if (Object.entries(process.env).length === 0) {
     if (process.env.NODE_ENV === 'development') {
       console.warn('Unable to checkEnvVars in frontend')
@@ -43,10 +43,4 @@ const checkEnvVars = ({ required, optional }) => {
       `)
     }
   }
-}
-
-// Public API
-module.exports = {
-  checkEnvVars,
-  envHasKey
 }

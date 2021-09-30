@@ -1,4 +1,4 @@
-const { Action } = require('../../services/abilities/ability.constants')
+import { Action } from '../../services/abilities/ability.constants'
 
 const defaultConvertRequestToAction = (req) => {
   switch (req.method) {
@@ -27,7 +27,7 @@ const authorizeActions = (subject, convertRequestToAction = defaultConvertReques
   }
 }
 
-module.exports = {
+export default {
   authorizeActions,
   defaultConvertRequestToAction
 }

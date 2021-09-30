@@ -1,11 +1,9 @@
-const mongoose = require('mongoose')
-const { PersonalVerificationStatus, SchemaName } = require('./personalVerification.constants')
-const Schema = mongoose.Schema
-const idvalidator = require('mongoose-id-validator')
-const {
-  accessibleRecordsPlugin,
-  accessibleFieldsPlugin
-} = require('@casl/mongoose')
+import mongoose from 'mongoose'
+import idvalidator from 'mongoose-id-validator'
+import { accessibleRecordsPlugin, accessibleFieldsPlugin } from '@casl/mongoose'
+
+import { PersonalVerificationStatus, SchemaName } from './personalVerification.constants.js'
+const { Schema, models, model } = mongoose
 
 const VerificationStatus = {
   type: String,
@@ -19,7 +17,7 @@ const VerificationStatus = {
   ]
 }
 // this is deliberately similar to the Story Schema.
-const VerificationSchema = new mongoose.Schema({
+export const VerificationSchema = new Schema({
   name: { type: String, required: true },
   status: VerificationStatus,
   value: Object,
@@ -44,14 +42,15 @@ personalVerificationSchema.plugin(idvalidator)
 personalVerificationSchema.plugin(accessibleFieldsPlugin)
 personalVerificationSchema.plugin(accessibleRecordsPlugin)
 // protect multiple imports
-var PersonalVerification
-if (mongoose.models.PersonalVerification) {
-  PersonalVerification = mongoose.model(SchemaName)
+
+export var PersonalVerification
+if (models.PersonalVerification) {
+  PersonalVerification = model(SchemaName)
 } else {
-  PersonalVerification = mongoose.model(SchemaName, personalVerificationSchema)
+  PersonalVerification = model(SchemaName, personalVerificationSchema)
 }
 
-module.exports = {
+export default {
   VerificationSchema,
   PersonalVerification
 }
