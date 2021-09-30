@@ -1,6 +1,6 @@
-const Story = require('./story')
-const { Action } = require('../../services/abilities/ability.constants')
-const { Role } = require('../../services/authorize/role')
+import Story, { find, findById, findOne } from './story'
+import { Action } from '../../services/abilities/ability.constants'
+import { Role } from '../../services/authorize/role'
 
 /**
   api/stories/ -> list all the stories assigned to the opportunity and get the story details
@@ -14,7 +14,7 @@ const listStory = async (req, res) => {
   }
 
   // Return enough info for a blog post
-  const got = await Story.find(query)
+  const got = await find(query)
     .accessibleBy(req.ability, Action.LIST)
     .populate('author', 'name imgUrl')
     .sort('-createdAt').exec() // sorts the data by date in the server
@@ -24,7 +24,7 @@ const listStory = async (req, res) => {
 
 const getStory = async (req, res) => {
   try {
-    const got = await Story.findById(req.params._id)
+    const got = await findById(req.params._id)
       .accessibleBy(req.ability, Action.READ)
       .populate('author', 'name imgUrl')
       .exec()
@@ -40,7 +40,7 @@ const getStory = async (req, res) => {
 }
 
 const putStory = async (req, res) => {
-  const storyToUpdate = await Story.findOne(req.params)
+  const storyToUpdate = await findOne(req.params)
     .accessibleBy(req.ability, Action.READ)
 
   if (storyToUpdate === null) {
@@ -89,7 +89,7 @@ const createStory = async (req, res) => {
   }
 }
 
-module.exports = {
+export default {
   listStory,
   getStory,
   putStory,

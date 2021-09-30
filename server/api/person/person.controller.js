@@ -1,21 +1,21 @@
-const Person = require('./person')
-const sanitizeHtml = require('sanitize-html')
-const { Action } = require('../../services/abilities/ability.constants')
-const { getPersonRoles } = require('../member/member.lib')
-const { Role } = require('../../services/authorize/role')
-const { supportedLanguages } = require('../../../lang/lang')
-const { websiteRegex } = require('./person.validation')
-const mongoose = require('mongoose')
-const { PersonPublicFields, PersonFriendFields } = require('./person.constants')
-const { mapValues, keyBy } = require('lodash')
-const { Interest } = require('../interest/interest')
-const Opportunity = require('../opportunity/opportunity')
-const { InterestStatus } = require('../interest/interest.constants')
+import Person from './person'
+import sanitizeHtml from 'sanitize-html'
+import { Action } from '../../services/abilities/ability.constants'
+import { getPersonRoles } from '../member/member.lib'
+import { Role } from '../../services/authorize/role'
+import { supportedLanguages } from '../../../lang/lang'
+import { websiteRegex } from './person.validation'
+import { Types } from 'mongoose'
+import { PersonPublicFields, PersonFriendFields } from './person.constants'
+import { mapValues, keyBy } from 'lodash'
+import { Interest } from '../interest/interest'
+import { find as _find } from '../opportunity/opportunity'
+import { InterestStatus } from '../interest/interest.constants'
 
 /* find a single person by searching for a key field.
 This is a convenience function usually used to call
 */
-async function getPerson (req, res, next) {
+export async function getPerson (req, res, next) {
   const query = req.params
 
   const me = req && req.session && req.session.me
@@ -37,7 +37,7 @@ async function getPerson (req, res, next) {
   // }
 
   const isPersonInvitedToMyOpportunities = async () => {
-    const myOps = await Opportunity.find({ requestor: me._id })
+    const myOps = await _find({ requestor: me._id })
     return !!(await Interest.findOne({
       opportunity: { $in: myOps },
       status: { $ne: InterestStatus.DECLINED },
@@ -55,8 +55,7 @@ async function getPerson (req, res, next) {
     isSelf
   const fields = (personalFriend) ? PersonFriendFields : PersonPublicFields
 
-  Person
-    .accessibleBy(req.ability, Action.READ)
+  Person.accessibleBy(req.ability, Action.READ)
     .findOne(query, mapValues(keyBy(fields), field => 1))
     .exec(async (_err, person) => {
       if (person) { // note if person does not exist middleware will already have 404d the result
@@ -70,7 +69,7 @@ async function getPerson (req, res, next) {
 /* return a list of people matching the search criteria
   if no params given then show all permitted.
 */
-function listPeople (req, res, next) {
+export function listPeople (req, res, next) {
   let query = {}
   let sort = 'nickname'
   let select = ''
@@ -92,7 +91,7 @@ function listPeople (req, res, next) {
 
 const isProd = process.env.NODE_ENV === 'production'
 
-async function updatePersonDetail (req, res, next) {
+export async function updatePersonDetail (req, res, next) {
   const { ability: userAbility, body: person } = req
 
   const me = req && req.session && req.session.me
@@ -195,7 +194,7 @@ async function updatePersonDetail (req, res, next) {
   next()
 }
 
-async function deletePerson (req, res, next) {
+export async function deletePerson (req, res, next) {
   const me = req && req.session && req.session.me
   if (!me) {
     return res.sendStatus(401)
@@ -206,7 +205,7 @@ async function deletePerson (req, res, next) {
     return res.status(400).send('Missing person identifier')
   }
 
-  const currentPerson = await Person.findById(personId).lean().exec()
+  const currentPerson = await findById(personId).lean().exec()
   if (!currentPerson) {
     return res.sendStatus(404)
   }
@@ -222,7 +221,7 @@ async function deletePerson (req, res, next) {
   }
 
   // VP-1297 - Anonymise user details instead of hard deleting their record
-  const result = await Person.deleteOne({ _id: mongoose.Types.ObjectId(personId) })
+  const result = await Person.deleteOne({ _id: Types.ObjectId(personId) })
 
   if (result.deletedCount === 0) {
     return res.sendStatus(400)
@@ -249,7 +248,7 @@ function normalizeDBRecordObject (dbRecord) {
   return dbRecord
 }
 
-function ensureSanitized (req, res, next) {
+export function ensureSanitized (req, res, next) {
   const szAbout = {
     allowedTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
       'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
@@ -270,7 +269,7 @@ function ensureSanitized (req, res, next) {
   next()
 }
 
-module.exports = {
+export default {
   ensureSanitized,
   listPeople,
   getPerson,

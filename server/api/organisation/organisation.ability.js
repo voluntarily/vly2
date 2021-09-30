@@ -1,6 +1,6 @@
-const { SchemaName } = require('./organisation.constants')
-const { Role } = require('../../services/authorize/role')
-const { Action } = require('../../services/abilities/ability.constants')
+import { SchemaName } from './organisation.constants.js'
+import { Role } from '../../services/authorize/role.js'
+import { Action } from '../../services/abilities/ability.constants.js'
 
 /*
 // TypeScript definition
@@ -14,7 +14,7 @@ interface Rule {
 }
 */
 
-const ruleBuilder = (session) => {
+export const ruleBuilder = (session) => {
   const defaultAbilities = [{
     subject: SchemaName,
     action: Action.READ
@@ -52,4 +52,4 @@ const ruleBuilder = (session) => {
   }
 }
 
-module.exports = ruleBuilder
+export default ruleBuilder

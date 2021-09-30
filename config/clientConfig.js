@@ -1,4 +1,4 @@
-const { checkEnvVars } = require('./env')
+import { checkEnvVars } from './env.js'
 checkEnvVars({
   required: 'AUTH0_CLIENT_ID AUTH0_CLIENT_DOMAIN',
   optional: 'PORT APPNAME NODE_ENV APP_URL'
@@ -41,6 +41,5 @@ const completeConfig = {
 }
 
 // Public API
-module.exports = {
-  config: { ...completeConfig.default, ...completeConfig[process.env.NODE_ENV] }
-}
+export const config = { ...completeConfig.default, ...completeConfig[process.env.NODE_ENV] }
+export default config

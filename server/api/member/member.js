@@ -1,8 +1,10 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-const idvalidator = require('mongoose-id-validator')
-const { accessibleRecordsPlugin } = require('@casl/mongoose')
-const { MemberStatus } = require('./member.constants')
+import mongoose from 'mongoose'
+import idvalidator from 'mongoose-id-validator'
+import { accessibleRecordsPlugin } from '@casl/mongoose'
+
+import memberConstants from './member.constants.js'
+const { MemberStatus } = memberConstants
+const { Schema, models, model } = mongoose
 
 const memberSchema = new Schema({
   person: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
@@ -49,9 +51,9 @@ memberSchema.plugin(accessibleRecordsPlugin)
 // protect multiple imports
 var Member
 
-if (mongoose.models.Member) {
-  Member = mongoose.model('Member')
+if (models.Member) {
+  Member = model('Member')
 } else {
-  Member = mongoose.model('Member', memberSchema)
+  Member = model('Member', memberSchema)
 }
-module.exports = Member
+export default Member

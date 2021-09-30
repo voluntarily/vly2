@@ -1,22 +1,28 @@
 const withLess = require('next-with-less')
+const path = require('path')
 
 const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/
 })
 
-let config = withMDX({
-  pageExtensions: ['js', 'jsx', 'md', 'mdx']
-})
-
-// const lessToJS = require('less-vars-to-js')
-// const fs = require('fs-extra')
-const path = require('path')
-
-// next.config.js
 const pathToLessFileWithVariables = path.resolve(__dirname, './assets/antd-custom.less')
 
+let config = withMDX({
+  pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.m?js$/,
+      type: 'javascript/auto',
+      resolve: {
+        fullySpecified: false
+      }
+    })
+    return config
+  }
+})
+
 config = withLess({
-  ...config, 
+  ...config,
   lessLoaderOptions: {
     /* ... */
     additionalData: (content) =>
@@ -38,9 +44,23 @@ if (process.env.NODE_ENV === 'test') {
   const uuid = require('uuid/v4')
   config.distDir = path.join('.test', uuid())
 }
-const env = require('./config/importEncryptedEnv')() // this will import during build step
+const env = require('./config/importEncryptedEnv.cjs')() // this will import during build step
 
 module.exports = {
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.m?js$/,
+      type: 'javascript/auto',
+      resolve: {
+        fullySpecified: false
+      }
+    })
+    return config
+  },
+  reactStrictMode: true,
+  poweredByHeader: false,
   ...config,
+  experimental: { esmExternals: true },
   env // It's required to pass environment variables here to pass them into the frontend code
+
 }

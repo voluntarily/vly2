@@ -1,35 +1,37 @@
 // Polyfill Node with `Intl` that has data for all locales.
 // See: https://formatjs.io/guides/runtime-environments/#server
-const IntlPolyfill = require('intl')
-Intl.NumberFormat = IntlPolyfill.NumberFormat
-Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
+// import { NumberFormat, DateTimeFormat } from 'intl'
+import next from 'next'
+import express from 'express'
+import mongoose from 'mongoose'
+import glob from 'glob'
+import path from 'path'
+import cookieParser from 'cookie-parser'
+import { Client } from 'raygun'
+
+import setSession from './middleware/session/setSession.js'
+import getAbility from './middleware/ability/getAbility.js'
+import routes from './routes.js'
+import config from '../config/serverConfig.js'
+import { supportedLanguages } from '../lang/lang.mjs'
+// import importEnv from '../config/importEncryptedEnv.mjs' // this will import during run step
+import { raygunExpressServerAPIKey } from '../lib/sec/keys.mjs'
+// Intl.NumberFormat = NumberFormat
+// Intl.DateTimeFormat = DateTimeFormat
+const { Promise: _Promise, connect, connection } = mongoose
 
 const UPLOAD_LIMIT = '6000kb'
-require('../config/importEncryptedEnv')() // this will import during run step
-const express = require('express')
 const server = express()
-const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
-const glob = require('glob')
-const next = require('next')
-const cookieParser = require('cookie-parser')
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
-const setSession = require('./middleware/session/setSession')
-const getAbility = require('./middleware/ability/getAbility')
 // server.use(bodyParser.urlencoded({ limit: UPLOAD_LIMIT, extended: true }))
 // server.use(bodyParser.json({ limit: UPLOAD_LIMIT, extended: true }))
 server.use(cookieParser())
 server.use(setSession)
 server.use(getAbility({ searchPattern: '/server/api/**/*.ability.js' }))
-const routes = require('./routes')
 const routerHandler = routes.getRequestHandler(app)
-const { config } = require('../config/serverConfig')
-const { supportedLanguages } = require('../lang/lang')
-
-const { raygunExpressServerAPIKey } = require('../lib/sec/keys')
-const raygun = require('raygun')
-const raygunClient = new raygun.Client().init({ apiKey: raygunExpressServerAPIKey })
+const raygunClient = new Client().init({ apiKey: raygunExpressServerAPIKey })
+// importEnv()
 
 raygunClient.excludedHostNames = ['localhost']
 raygunClient.user = function (req) {
@@ -43,7 +45,7 @@ raygunClient.user = function (req) {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  const morgan = require('morgan')
+  const morgan = import('morgan')
   server.use(morgan('combined'))
 }
 
@@ -51,20 +53,21 @@ if (process.env.NODE_ENV === 'production') {
 // locale. These will only be used in production, in dev the `defaultMessage` in
 // each message description in the source code will be used.
 const getMessages = locale => {
-  return require(`../lang/${locale}.json`)
+  console.log('loading language messages', locale)
+  return import(`../lang/${locale}.json`)
 }
 
 const appReady = app.prepare().then(() => {
   // Parse application/x-www-form-urlencoded
-  server.use(bodyParser.urlencoded({ limit: UPLOAD_LIMIT, extended: true }))
+  server.use(express.urlencoded({ limit: UPLOAD_LIMIT, extended: true }))
   // Parse application/json
-  server.use(bodyParser.json({ limit: UPLOAD_LIMIT, extended: true }))
+  server.use(express.json({ limit: UPLOAD_LIMIT, extended: true }))
   server.use(function (req, res, next) {
     req.locale = req.acceptsLanguages(supportedLanguages)
     req.locale = req.locale || 'en'
     // req.localeDataScript = getLocaleDataScript(req.locale)
-    // req.messages = dev ? {} : getMessages(req.locale)
-    req.messages = getMessages(req.locale)
+    req.messages = dev ? {} : getMessages(req.locale)
+    // req.messages = getMessages(req.locale)
     // const { gitDescribeSync } = require('git-describe')
     // const gitInfo = gitDescribeSync()
     // req.messages.revision = process.env.REVISION || gitInfo.raw
@@ -94,9 +97,8 @@ const appReady = app.prepare().then(() => {
   }
 
   // MongoDB
-  mongoose.Promise = Promise
   if (process.env.NODE_ENV !== 'test') {
-    mongoose.connect(config.databaseUrl,
+    connect(config.databaseUrl,
       {
         useNewUrlParser: true,
         useCreateIndex: true,
@@ -104,13 +106,13 @@ const appReady = app.prepare().then(() => {
         useFindAndModify: false
       })
       .then(console.log('mongodb connected'))
-    const db = mongoose.connection
+    const db = connection
     db.on('error', console.error.bind(console, 'connection error:'))
     // use the x/db scripts to populate a test database
   }
 
   // REST API routes
-  const rootPath = require('path').join(__dirname, '/..')
+  const rootPath = path.join(import.meta.url, '/..')
   glob.sync(rootPath + '/server/api/**/*.routes.js').forEach(controllerPath => {
     if (!controllerPath.includes('.spec.js')) require(controllerPath)(server)
   })
@@ -131,4 +133,4 @@ const appReady = app.prepare().then(() => {
   }
 })
 
-module.exports = { server, appReady }
+export default { server, appReady }

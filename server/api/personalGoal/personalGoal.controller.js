@@ -1,7 +1,7 @@
-const PersonalGoal = require('./personalGoal')
-const { getPersonalGoalbyId, evaluatePersonalGoals } = require('./personalGoal.lib')
-const { PersonalGoalStatus } = require('./personalGoal.constants')
-const { Action } = require('../../services/abilities/ability.constants')
+import PersonalGoal, { find, accessibleBy } from './personalGoal'
+import { getPersonalGoalbyId, evaluatePersonalGoals } from './personalGoal.lib'
+import { PersonalGoalStatus } from './personalGoal.constants'
+import { Action } from '../../services/abilities/ability.constants'
 
 /**
   api/PersonalGoals -> list all the goals assigned to me and get the goal details
@@ -14,7 +14,7 @@ const listPersonalGoals = async (req, res) => {
     res.status(500)
   }
   // Return enough info for a goalCard
-  const got = await PersonalGoal.find({ person: me })
+  const got = await find({ person: me })
     .accessibleBy(req.ability, Action.LIST)
     .populate({ path: 'goal' })
     .populate({ path: 'person', select: 'nickname name imgUrl' })
@@ -40,8 +40,7 @@ const updatePersonalGoal = async (req, res) => {
       break
   }
   try {
-    await PersonalGoal
-      .accessibleBy(req.ability, Action.UPDATE)
+    await accessibleBy(req.ability, Action.UPDATE)
       .updateOne({ _id: id }, { $set: set }).exec()
     const got = await getPersonalGoalbyId(id)
     res.json(got)
@@ -66,7 +65,7 @@ const createPersonalGoal = async (req, res) => {
   }
 }
 
-module.exports = {
+export default {
   listPersonalGoals,
   updatePersonalGoal,
   createPersonalGoal

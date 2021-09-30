@@ -1,12 +1,12 @@
-const { Interest, InterestArchive } = require('./interest')
-const { Action } = require('../../services/abilities/ability.constants')
-const { getInterestDetailA, getMyOpInterestDetailA } = require('./interest.lib')
-const { TOPIC_INTEREST__UPDATE, TOPIC_INTEREST__MESSAGE, TOPIC_INTEREST__DELETE } = require('../../services/pubsub/topic.constants')
-const PubSub = require('pubsub-js')
-const { Role } = require('../../services/authorize/role')
-const { InterestStatus } = require('./interest.constants')
-const Opportunity = require('../opportunity/opportunity')
-const Person = require('../person/person')
+import { Interest, InterestArchive } from './interest'
+import { Action } from '../../services/abilities/ability.constants'
+import { getInterestDetailA, getMyOpInterestDetailA } from './interest.lib'
+import { TOPIC_INTEREST__UPDATE, TOPIC_INTEREST__MESSAGE, TOPIC_INTEREST__DELETE } from '../../services/pubsub/topic.constants'
+import { publish } from 'pubsub-js'
+import { Role } from '../../services/authorize/role'
+import { InterestStatus } from './interest.constants'
+import Opportunity from '../opportunity/opportunity'
+import Person from '../person/person'
 
 /**
   api/interests -> list all interests
@@ -122,7 +122,7 @@ const createInterestA = InterestModel => async (req, res) => {
 
     const interestDetail = await getInterestDetailA(InterestModel)(interest._id)
     interestDetail.type = 'accept'
-    PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
+    publish(TOPIC_INTEREST__UPDATE, interestDetail)
 
     res.json(interestDetail)
   } catch (err) {
@@ -175,9 +175,9 @@ const updateInterestA = InterestModel => async (req, res) => {
     interestDetail.type = interestUpdateData.type
 
     if (interestUpdateData.type === 'message') {
-      PubSub.publish(TOPIC_INTEREST__MESSAGE, interestDetail)
+      publish(TOPIC_INTEREST__MESSAGE, interestDetail)
     } else {
-      PubSub.publish(TOPIC_INTEREST__UPDATE, interestDetail)
+      publish(TOPIC_INTEREST__UPDATE, interestDetail)
     }
 
     res.json(interestDetail)
@@ -215,7 +215,7 @@ const deleteInterest = async (req, res, next) => {
     if (result.deletedCount === 0) {
       return res.sendStatus(404)
     }
-    PubSub.publish(TOPIC_INTEREST__DELETE, req.params)
+    publish(TOPIC_INTEREST__DELETE, req.params)
 
     return res.status(200).send(req.params)
   } catch (e) {
@@ -224,7 +224,7 @@ const deleteInterest = async (req, res, next) => {
   }
 }
 
-module.exports = {
+export default {
   listInterests,
   getInterest,
   updateInterest,

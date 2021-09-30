@@ -2,15 +2,16 @@ import '../assets/voluntarily.less'
 
 import React from 'react'
 import App from 'next/app'
-import { getSession } from '../lib/auth/auth'
-import { Role } from '../server/services/authorize/role'
 import { IntlProvider } from 'react-intl'
 import { Layout } from 'antd'
-import Footer from '../components/Footer/Footer'
-import Header from '../components/Header/Header'
-import { FillWindow } from '../components/VTheme/VTheme'
-import { reduxWrapper } from '../lib/redux/store'
-import { RouteGuard } from '../components/RouteGuard'
+
+import { getSession } from '../lib/auth/auth.js'
+import { Role } from '../server/services/authorize/role.js'
+import Footer from '../components/Footer/Footer.js'
+import Header from '../components/Header/Header.js'
+import { FillWindow } from '../components/VTheme/VTheme.js'
+import { reduxWrapper } from '../lib/redux/store.js'
+import { RouteGuard } from '../components/RouteGuard.js'
 
 function MyApp ({
   Component,
@@ -18,6 +19,7 @@ function MyApp ({
   messages,
   pageProps
 }) {
+  console.log('MyApp', locale)
   return (
     <>
       <IntlProvider locale={locale} messages={messages} initialNow={Date.now()}>

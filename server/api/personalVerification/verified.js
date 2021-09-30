@@ -1,7 +1,7 @@
-const { PersonFields } = require('../person/person.constants')
-const { PersonalVerificationStatus } = require('./personalVerification.constants')
+import { PersonFields } from '../person/person.constants.js'
+import { PersonalVerificationStatus } from './personalVerification.constants.js'
 
-const isVerified = field => me => {
+export const isVerified = field => me => {
   return !!(me.verified && me.verified.find(check => check.name === field && check.status === PersonalVerificationStatus.VERIFIED))
 }
 
@@ -11,7 +11,7 @@ const isVerified = field => me => {
  * @param {} status -> new status
  * @param {Person} me -> person to update
  */
-const setVerified = field => async (status, value, me) => {
+export const setVerified = field => async (status, value, me) => {
   if (!me.verified) { me.verified = [] }
   const fieldVerified = me.verified.find(check => check.name === field)
   if (fieldVerified &&
@@ -27,12 +27,12 @@ const setVerified = field => async (status, value, me) => {
   await me.save()
 }
 
-const isEmailVerified = isVerified(PersonFields.EMAIL)
-const isNameVerified = isVerified(PersonFields.NAME)
-const isAddressVerified = isVerified(PersonFields.ADDRESS)
-const setEmailVerified = setVerified(PersonFields.EMAIL)
+export const isEmailVerified = isVerified(PersonFields.EMAIL)
+export const isNameVerified = isVerified(PersonFields.NAME)
+export const isAddressVerified = isVerified(PersonFields.ADDRESS)
+export const setEmailVerified = setVerified(PersonFields.EMAIL)
 
-const VerificationLevel = {
+export const VerificationLevel = {
   NOT_OK: -1, // vet completed - not ok.
   // NONE: 0,
   EMAIL: 1, // email verified
@@ -42,7 +42,7 @@ const VerificationLevel = {
   VETTED: 5 // police vet completed ok
 }
 
-const getVerificationLevels = person => {
+export const getVerificationLevels = person => {
   const levels = []
   if (isEmailVerified(person)) {
     levels.push(VerificationLevel.EMAIL)
@@ -55,13 +55,4 @@ const getVerificationLevels = person => {
   }
 
   return levels
-}
-
-module.exports = {
-  isVerified,
-  setVerified,
-  isEmailVerified,
-  setEmailVerified,
-  VerificationLevel,
-  getVerificationLevels
 }

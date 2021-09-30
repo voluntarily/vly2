@@ -1,8 +1,8 @@
-const Member = require('./member')
-const { getMemberbyId } = require('./member.lib')
-const { Action } = require('../../services/abilities/ability.constants')
-const { TOPIC_MEMBER__UPDATE } = require('../../services/pubsub/topic.constants')
-const PubSub = require('pubsub-js')
+import Member, { find as _find, accessibleBy } from './member'
+import { getMemberbyId } from './member.lib'
+import { Action } from '../../services/abilities/ability.constants'
+import { TOPIC_MEMBER__UPDATE } from '../../services/pubsub/topic.constants'
+import { publish } from 'pubsub-js'
 
 /**
   api/members -> list all members
@@ -28,7 +28,7 @@ const listMembers = async (req, res) => {
       populateList.push({ path: 'organisation', select: 'name imgUrl groups role' })
     }
 
-    const query = Member.find(find)
+    const query = _find(find)
 
     for (const populate of populateList) {
       query.populate(populate)
@@ -47,8 +47,7 @@ const listMembers = async (req, res) => {
 
 const getMember = async (req, res) => {
   try {
-    const member = await Member
-      .accessibleBy(req.ability, Action.READ)
+    const member = await accessibleBy(req.ability, Action.READ)
       .findOne(req.params)
 
     if (member === null) {
@@ -63,8 +62,7 @@ const getMember = async (req, res) => {
 
 const updateMember = async (req, res) => {
   try {
-    const member = await Member
-      .accessibleBy(req.ability, Action.READ)
+    const member = await accessibleBy(req.ability, Action.READ)
       .findOne(req.params)
 
     if (!member) {
@@ -79,7 +77,7 @@ const updateMember = async (req, res) => {
 
     await updatedMember.save()
     const resMember = await getMemberbyId(member._id)
-    PubSub.publish(TOPIC_MEMBER__UPDATE, resMember)
+    publish(TOPIC_MEMBER__UPDATE, resMember)
     res.json(resMember)
   } catch (err) {
     res.status(500).send(err)
@@ -103,14 +101,14 @@ const createMember = async (req, res) => {
     await member.save()
 
     const createdMember = await getMemberbyId(member._id)
-    PubSub.publish(TOPIC_MEMBER__UPDATE, createdMember)
+    publish(TOPIC_MEMBER__UPDATE, createdMember)
     res.json(createdMember)
   } catch (error) {
     return res.sendStatus(500)
   }
 }
 
-module.exports = {
+export default {
   listMembers,
   getMember,
   updateMember,

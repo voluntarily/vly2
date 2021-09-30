@@ -1,16 +1,16 @@
-const { Action } = require('../../services/abilities/ability.constants')
-const escapeRegex = require('../../util/regexUtil')
-const Opportunity = require('./opportunity')
-const { Interest, InterestArchive } = require('./../interest/interest')
-const Person = require('./../person/person')
-const ArchivedOpportunity = require('./../archivedOpportunity/archivedOpportunity')
-const { OpportunityStatus, OpportunityListFields } = require('./opportunity.constants')
-const { ActivityOpFields } = require('../activity/activity.constants')
-const { regions } = require('../location/locationData')
-const sanitizeHtml = require('sanitize-html')
-const { getLocationRecommendations, getSkillsRecommendations } = require('./opportunity.util')
-const { Role } = require('../../services/authorize/role')
-const Member = require('../member/member')
+import { Action } from '../../services/abilities/ability.constants'
+import escapeRegex from '../../util/regexUtil'
+import { accessibleBy, create, findById, deleteOne } from './opportunity'
+import { Interest, InterestArchive } from './../interest/interest'
+import { findById as _findById } from './../person/person'
+import ArchivedOpportunity from './../archivedOpportunity/archivedOpportunity'
+import { OpportunityStatus, OpportunityListFields } from './opportunity.constants'
+import { ActivityOpFields } from '../activity/activity.constants'
+import { regions } from '../location/locationData'
+import sanitizeHtml from 'sanitize-html'
+import { getLocationRecommendations, getSkillsRecommendations } from './opportunity.util'
+import { Role } from '../../services/authorize/role'
+import { find } from '../member/member'
 
 /**
  * Get all ops
@@ -74,8 +74,7 @@ const listOpportunities = async (req, res, next) => {
       }
     }
     try {
-      const got = await Opportunity
-        .accessibleBy(req.ability)
+      const got = await accessibleBy(req.ability)
         .find(query)
         .select(select)
         .populate('requestor', 'name nickname imgUrl')
@@ -102,7 +101,7 @@ const getOpportunityRecommendations = async (req, res) => {
     meId = req.session.me._id
   }
   try {
-    const person = await Person.findById(meId)
+    const person = await _findById(meId)
 
     if (!person) {
       return res.status(400).send('Could not find the specified person')
@@ -119,8 +118,7 @@ const getOpportunityRecommendations = async (req, res) => {
 
 const getOpportunity = async (req, res, next) => {
   try {
-    const got = await Opportunity
-      .accessibleBy(req.ability, Action.READ)
+    const got = await accessibleBy(req.ability, Action.READ)
       .findOne(req.params)
       .populate('requestor', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl role')
@@ -149,14 +147,13 @@ const putOpportunity = async (req, res, next) => {
       //   return res.status(400).send('Cannot change the fromActivity field')
       // }
 
-      if (req.body.offerOrg && (await Member.find({ person: me._id, organisation: req.body.offerOrg })).length === 0) {
+      if (req.body.offerOrg && (await find({ person: me._id, organisation: req.body.offerOrg })).length === 0) {
         return res.status(400).send('Invalid organisation')
       }
     }
 
     if (req.body.status === OpportunityStatus.COMPLETED || req.body.status === OpportunityStatus.CANCELLED) {
-      await Opportunity
-        .accessibleBy(req.ability, Action.UPDATE)
+      await accessibleBy(req.ability, Action.UPDATE)
         .updateOne({ _id: req.params._id }, req.body)
 
       const archOp = await archiveOpportunity(req.params._id)
@@ -164,8 +161,7 @@ const putOpportunity = async (req, res, next) => {
       req.crudify = { result: archOp }
       return next()
     } else {
-      const result = await Opportunity
-        .accessibleBy(req.ability, Action.UPDATE)
+      const result = await accessibleBy(req.ability, Action.UPDATE)
         .updateOne({ _id: req.params._id }, { $set: req.body })
       if (result.n === 0) {
         return res.sendStatus(404)
@@ -181,8 +177,7 @@ const putOpportunity = async (req, res, next) => {
 
 const deleteOpportunity = async (req, res, next) => {
   try {
-    const result = await Opportunity
-      .accessibleBy(req.ability, Action.DELETE)
+    const result = await accessibleBy(req.ability, Action.DELETE)
       .deleteOne({ _id: req.params._id })
 
     if (result.deletedCount === 0) {
@@ -204,7 +199,7 @@ const createOpportunity = async (req, res, next) => {
   }
 
   try {
-    const result = await Opportunity.create(req.body)
+    const result = await create(req.body)
 
     req.crudify = { result }
     res.status(200)
@@ -215,9 +210,9 @@ const createOpportunity = async (req, res, next) => {
 }
 
 const archiveOpportunity = async (id) => {
-  const opportunity = await Opportunity.findById(id).exec()
+  const opportunity = await findById(id).exec()
   await new ArchivedOpportunity(opportunity.toJSON()).save()
-  await Opportunity.deleteOne({ _id: id }).exec()
+  await deleteOne({ _id: id }).exec()
   return archiveOpportunity
 }
 
@@ -263,7 +258,7 @@ function ensureSanitized (req, res, next) {
   next()
 }
 
-module.exports = {
+export default {
   ensureSanitized,
   listOpportunities,
   getOpportunity,

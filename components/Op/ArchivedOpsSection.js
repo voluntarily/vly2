@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { ProfileSection, ProfileSectionTitle } from '../VTheme/Profile'
 import Loading from '../Loading'
 import OpList from './OpList'
-import { OpportunityStatus, OpportunityType } from '../../server/api/opportunity/opportunity.constants'
+import { OpportunityStatus, OpportunityType } from '../../server/api/opportunity/opportunity.constants.js'
 
 import { EmptyContainer } from '../VTheme/VTheme'
 

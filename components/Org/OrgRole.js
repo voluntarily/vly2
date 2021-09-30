@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons'
 
 import styled from 'styled-components'
-import { OrganisationRole } from '../../server/api/organisation/organisation.constants'
+import { OrganisationRole } from '../../server/api/organisation/organisation.constants.js'
 
 const HorUl = styled.ul`
   margin:0;

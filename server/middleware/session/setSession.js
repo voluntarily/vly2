@@ -1,13 +1,13 @@
-const Person = require('../../api/person/person')
-const { PersonFields } = require('../../api/person/person.constants')
-const { Role } = require('../../services/authorize/role')
-const { TOPIC_PERSON__CREATE } = require('../../services/pubsub/topic.constants')
-const PubSub = require('pubsub-js')
-const { TokenExpiredError } = require('jsonwebtoken')
-const { jwtVerify } = require('./jwtVerify')
-const { getPersonRoles } = require('../../api/member/member.lib')
-const { isEmailVerified, setEmailVerified } = require('../../api/personalVerification/verified')
-const { PersonalVerificationStatus } = require('../../api/personalVerification/personalVerification.constants')
+import pubsub from 'pubsub-js'
+import jwt from 'jsonwebtoken'
+import Person from '../../api/person/person.js'
+import { PersonFields } from '../../api/person/person.constants.js'
+import { Role } from '../../services/authorize/role.js'
+import topics from '../../services/pubsub/topic.constants.js'
+import { jwtVerify } from './jwtVerify.js'
+import { getPersonRoles } from '../../api/member/member.lib.js'
+import { isEmailVerified, setEmailVerified } from '../../api/personalVerification/verified.js'
+import { PersonalVerificationStatus } from '../../api/personalVerification/personalVerification.constants.js'
 
 const DEFAULT_SESSION = {
   isAuthenticated: false,
@@ -59,7 +59,7 @@ const createPersonFromUser = async (user) => {
   try {
     const p = new Person(person)
     await p.save()
-    PubSub.publish(TOPIC_PERSON__CREATE, p)
+    pubsub.publish(topics.TOPIC_PERSON__CREATE, p)
     return p
   } catch (err) {
     // will fail if email is a duplicate or database gone
@@ -68,7 +68,7 @@ const createPersonFromUser = async (user) => {
   }
 }
 
-const setSession = async (req, res, next) => {
+export const setSession = async (req, res, next) => {
   req.session = { ...DEFAULT_SESSION } // Default session object will get mutated after logged in. Deconstructing the objec will only get the attribute of it
   if (openPath(req.url)) { // skip if its a special path.
     return next()
@@ -84,7 +84,7 @@ const setSession = async (req, res, next) => {
   } catch (e) {
     // console.error('Jwt Verify failed', e)
 
-    if (e instanceof TokenExpiredError) {
+    if (e instanceof jwt.TokenExpiredError) {
       // If this is an API request then return 401 unauthorized
       if (req.url.startsWith('/api/')) {
         return res.sendStatus(401)
@@ -146,4 +146,4 @@ const setSession = async (req, res, next) => {
   next()
 }
 
-module.exports = setSession
+export default setSession

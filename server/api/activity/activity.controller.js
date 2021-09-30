@@ -1,12 +1,12 @@
-const Activity = require('./activity')
-const Organisation = require('../organisation/organisation')
-const escapeRegex = require('../../util/regexUtil')
-const { Action } = require('../../services/abilities/ability.constants')
-const { Role } = require('../../services/authorize/role')
-const sanitizeHtml = require('sanitize-html')
-const { ActivityListFields } = require('./activity.constants')
-const { isValidFileUrl } = require('../file/file.controller')
-const { getOpsForActivity } = require('./activity.lib')
+import { accessibleBy, updateOne, create } from './activity'
+import { find } from '../organisation/organisation'
+import escapeRegex from '../../util/regexUtil'
+import { Action } from '../../services/abilities/ability.constants'
+import { Role } from '../../services/authorize/role'
+import sanitizeHtml from 'sanitize-html'
+import { ActivityListFields } from './activity.constants'
+import { isValidFileUrl } from '../file/file.controller'
+import { getOpsForActivity } from './activity.lib'
 /**
  * Get all orgs
  * @param req
@@ -32,7 +32,7 @@ const listActivities = async (req, res) => {
       const regexSearch = escapeRegex(search)
       const searchExpression = new RegExp(regexSearch, 'i')
       // find any organization matching search
-      const matchingOrgIds = await Organisation.find({ name: searchExpression }, '_id').lean()
+      const matchingOrgIds = await find({ name: searchExpression }, '_id').lean()
 
       // split around one or more whitespace characters
       const keywordArray = search.split(/\s+/)
@@ -61,8 +61,7 @@ const listActivities = async (req, res) => {
     }
 
     try {
-      let acts = await Activity
-        .accessibleBy(req.ability, Action.LIST)
+      let acts = await accessibleBy(req.ability, Action.LIST)
         .find(query)
         .select(select)
         .populate('offerOrg', 'name')
@@ -87,8 +86,7 @@ const getActivity = async (req, res) => {
   const noCounts = req.query.nocounts
 
   try {
-    const act = await Activity
-      .accessibleBy(req.ability, Action.READ)
+    const act = await accessibleBy(req.ability, Action.READ)
       .findOne(req.params)
       .populate('owner', 'name nickname imgUrl')
       .populate('offerOrg', 'name imgUrl role')
@@ -107,8 +105,7 @@ const getActivity = async (req, res) => {
 }
 
 const putActivity = async (req, res) => {
-  const activityToUpdate = await Activity
-    .accessibleBy(req.ability, Action.UPDATE)
+  const activityToUpdate = await accessibleBy(req.ability, Action.UPDATE)
     .findOne({ _id: req.params._id })
 
   if (activityToUpdate === null) {
@@ -123,7 +120,7 @@ const putActivity = async (req, res) => {
       }
     }
   }
-  await Activity.updateOne({ _id: req.params._id }, { $set: req.body })
+  await updateOne({ _id: req.params._id }, { $set: req.body })
 
   getActivity(req, res)
 }
@@ -160,7 +157,7 @@ const createActivity = async (req, res) => {
   }
 
   try {
-    const activity = await Activity.create(req.body)
+    const activity = await create(req.body)
     res.status(200).send(activity)
   } catch (error) {
     console.log(error)
@@ -202,7 +199,7 @@ function ensureSanitized (req, res, next) {
   next()
 }
 
-module.exports = {
+export default {
   ensureSanitized,
   listActivities,
   getActivity,

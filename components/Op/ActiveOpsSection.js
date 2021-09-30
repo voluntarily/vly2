@@ -8,7 +8,7 @@ import Loading from '../Loading'
 import OpList from './OpList'
 import { Divider, Button } from 'antd'
 import Link from 'next/link'
-import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
+import { OpportunityType } from '../../server/api/opportunity/opportunity.constants.js'
 
 import { createSelector } from 'reselect'
 import { EmptyContainer } from '../VTheme/VTheme'

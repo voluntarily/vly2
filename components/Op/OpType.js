@@ -1,5 +1,6 @@
-import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 import { FormattedMessage, useIntl, defineMessages } from 'react-intl'
+
+import { OpportunityType } from '../../server/api/opportunity/opportunity.constants.js'
 import { Stamp } from '../../components/VTheme/Stamp'
 import { displayDuration } from '../../lib/durationUtil'
 
