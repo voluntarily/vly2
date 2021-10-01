@@ -6,6 +6,7 @@ import OrgList from '../../components/Org/OrgList'
 import { FullPage, PageBannerButtons, PageBannerNoTabs } from '../../components/VTheme/VTheme'
 
 import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
+import reduxWrapper from '../../lib/redux/store'
 
 export const OrgListPage = ({ organisations, me }) => {
   const orgs = organisations.data
@@ -41,9 +42,15 @@ export const OrgListPage = ({ organisations, me }) => {
     </FullPage>)
 }
 
-OrgListPage.getInitialProps = async ({ store, query }) => {
-  const select = { p: 'name imgUrl role' }
-  return store.dispatch(reduxApi.actions.organisations.get(select))
-}
+// OrgListPage.getInitialProps = async ({ store, query }) => {
+//   const select = { p: 'name imgUrl role' }
+//   return store.dispatch(reduxApi.actions.organisations.get(select))
+// }
+
+export const getServerSideProps = reduxWrapper.getServerSideProps(
+  store => async () => {
+    const select = { p: 'name imgUrl role' }
+    await store.dispatch(reduxApi.actions.organisations.get(select))
+  })
 
 export default withOrgs(OrgListPage)

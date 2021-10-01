@@ -9,7 +9,7 @@ import { FullPage } from '../../components/VTheme/VTheme'
 import reduxApi from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import { useSelector } from 'react-redux'
-import { wrapper } from '../../lib/redux/store'
+import { reduxWrapper } from '../../lib/redux/store'
 
 export const PersonHomePage = () => {
   const [me, members, opportunities, interests] = useSelector(
@@ -68,7 +68,7 @@ const allSettled = (promises) => {
   }))))
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store =>
+export const getServerSideProps = reduxWrapper.getServerSideProps(store =>
   async () => {
     try {
       console.log('PersonHomePage.getServerSideProps')

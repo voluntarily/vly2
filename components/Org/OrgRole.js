@@ -18,25 +18,25 @@ const HorUl = styled.ul`
     padding-right: 1em;
   }
 `
+const roleOptions = [
+  { label: <BankOutlined />, value: OrganisationRole.VOLUNTEER_PROVIDER },
+  { label: <ReadOutlined />, value: OrganisationRole.OPPORTUNITY_PROVIDER },
+  { label: <ThunderboltOutlined />, value: OrganisationRole.ACTIVITY_PROVIDER },
+  { label: <ThunderboltOutlined />, value: OrganisationRole.RESOURCE_PROVIDER },
+  { label: <TeamOutlined />, value: OrganisationRole.AGENCY },
+  { label: <TeamOutlined />, value: OrganisationRole.ADMIN },
+  { label: <QuestionCircleOutlined />, value: OrganisationRole.OTHER }
+]
 
-const OrgRoleItem = ({ orgRoleItem }) => {
-  const roleOptions = [
-    { label: <BankOutlined />, value: OrganisationRole.VOLUNTEER_PROVIDER },
-    { label: <ReadOutlined />, value: OrganisationRole.OPPORTUNITY_PROVIDER },
-    { label: <ThunderboltOutlined />, value: OrganisationRole.ACTIVITY_PROVIDER },
-    { label: <ThunderboltOutlined />, value: OrganisationRole.RESOURCE_PROVIDER },
-    { label: <TeamOutlined />, value: OrganisationRole.AGENCY },
-    { label: <TeamOutlined />, value: OrganisationRole.ADMIN },
-    { label: <QuestionCircleOutlined />, value: OrganisationRole.OTHER }
-  ]
-  const item = roleOptions
-    .filter(role => role.value === orgRoleItem)[0].label
+export const OrgRoleItem = ({ orgRoleItem }) => {
+  const item = roleOptions.filter(role => role.value === orgRoleItem)[0].label
+
   return (
     <li>{item}</li>
   )
 }
 
-const OrgRole = ({ orgRole }) =>
+export const OrgRole = ({ orgRole }) =>
   <HorUl>
     {orgRole.map((t, index) => <OrgRoleItem key={index} orgRoleItem={t} />)}
   </HorUl>
