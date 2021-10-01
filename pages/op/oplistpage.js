@@ -40,4 +40,4 @@ OpListPage.getInitialProps = async ({ store }) => {
   return store.dispatch(reduxApi.actions.opportunities.get())
 }
 
-export default securePage(withOps(OpListPage))
+export default withOps(OpListPage)

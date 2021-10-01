@@ -211,4 +211,4 @@ PersonDetailPage.propTypes = {
   })
 }
 
-export default securePage(withMembers(withPeople(withLocations(PersonDetailPage))))
+export default withMembers(withPeople(withLocations(PersonDetailPage)))
