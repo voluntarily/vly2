@@ -10,7 +10,9 @@ const config = require('../../../config/clientConfig').config
     This is useful when you want to see which instance you are talking to
   /api/health/config - prints the current config file and env vars.
 */
-export default (req, res) => {
+export default HealthParam
+
+export const HealthParam = (req, res) => {
   res.setHeader('Content-Type', 'application/json')
   const {
     query: { param }

@@ -33,7 +33,7 @@ const props = {
 }
 
 */
-export default (req, res) => handleToken(req, res, {
+export const OrgAction = (req, res) => handleToken(req, res, {
   join: async props => {
     // join the signed in person to the org in the request.
 
@@ -45,3 +45,4 @@ export default (req, res) => handleToken(req, res, {
     })
   }
 })
+export default OrgAction

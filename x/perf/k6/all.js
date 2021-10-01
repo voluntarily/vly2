@@ -23,7 +23,7 @@ function randomString (length) {
   return res
 }
 
-export default (authToken) => {
+export const K6All = (authToken) => {
   const requestConfigWithTag = tag => ({
     headers: {
       Authorization: `Bearer ${authToken}`
@@ -95,3 +95,4 @@ export default (authToken) => {
 
   sleep(1)
 }
+export default K6All
