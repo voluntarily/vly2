@@ -1,8 +1,10 @@
-import { useState, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button, message } from 'antd'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FormattedMessage } from 'react-intl'
+import reduxWrapper from '../../lib/redux/store'
+
 import Loading from '../../components/Loading'
 import OrgBanner from '../../components/Org/OrgBanner'
 import OrgTabs from '../../components/Org/OrgTabs'
@@ -72,25 +74,31 @@ export const OrgDetailPage = ({
   isAuthenticated,
   tags
 }) => {
-  const router = useRouter()
+  const { asPath, query, pathname, replace, back } = useRouter()
+  const initTab = () => isNew ? 'edit' : query.tab || 'about'
+  const [activeTab, setActiveTab] = useState(initTab)
   const [saved, setSaved] = useState(false)
-  const [tab, setTab] = useState(isNew ? 'edit' : router.query.tab)
+  // when path changes set the active tab. as this doesn't work in updateTab
+  useEffect(() => {
+    setActiveTab(asPath.match(/.*tab=(.*)/)[1])
+  }, [query])
 
   const updateTab = (key, top) => {
-    setTab(key)
+    console.log('updateTab', key, top)
     if (top) window.scrollTo(0, 0)
-    //  else { window.scrollTo(0, 400) }
+    else { window.scrollTo(0, 400) }
+
     const newpath = `/orgs/${org._id}?tab=${key}`
-    router.replace(router.pathname, newpath, { shallow: true })
+    replace(pathname, newpath, { shallow: true })
   }
-  const handleTabChange = (key, e) => {
+  const handleTabChange = (key) => {
     updateTab(key, key === 'edit')
   }
   const handleCancel = useCallback(
     () => {
       updateTab('about', true)
       if (isNew) { // return to previous
-        router.back()
+        back()
       }
     },
     [isNew]
@@ -113,7 +121,7 @@ export const OrgDetailPage = ({
           reduxApi.actions.organisations.post({}, { body: JSON.stringify(org) })
         )
         org = res[0]
-        router.replace(`/orgs/${org._id}`)
+        replace(`/orgs/${org._id}`)
       }
       setSaved(true)
       updateTab('about', true)
@@ -137,7 +145,7 @@ export const OrgDetailPage = ({
     members.data[0].status === MemberStatus.ORGADMIN
   const canManage = isAuthenticated && (isOrgAdmin || isAdmin)
 
-  if (tab === 'edit') {
+  if (activeTab === 'edit') {
     return (
       <FullPage>
         <Helmet>
@@ -163,34 +171,40 @@ export const OrgDetailPage = ({
         {isAuthenticated && <RegisterMemberSection orgid={org._id} meid={me._id.toString()} />}
         {saved && <HomeButton />}
       </OrgBanner>
-      <OrgTabs org={org} canManage={canManage} isAuthenticated={isAuthenticated} defaultTab={tab} onChange={handleTabChange} />
+      <OrgTabs
+        org={org} canManage={canManage} isAuthenticated={isAuthenticated}
+        tab={activeTab} onChange={handleTabChange}
+      />
     </FullPage>)
 }
 
-OrgDetailPage.getInitialProps = async ({ store, query }) => {
-  // Get one Org
-  await store.dispatch(reduxApi.actions.tags.get({ name: GroupTagList }))
-  const isNew = query && query.new && query.new === 'new'
-  if (isNew) {
-    return {
-      isNew: true,
-      orgid: null
+export const getServerSideProps = reduxWrapper.getServerSideProps(
+  store => async ({ query }) => {
+    // Get one Org
+    console.log('OrgDetailPage GSSP', query)
+    await store.dispatch(reduxApi.actions.tags.get({ name: GroupTagList }))
+    const isNew = query && query.new && query.new === 'new'
+    const props = {
+      props: {
+        isNew: !!isNew,
+        orgid: null
+      }
     }
-  } else if (query && query.id) {
-    await store.dispatch(reduxApi.actions.organisations.get(query))
-    if (store.getState().session.isAuthenticated) {
+    if (isNew) {
+      return props
+    } else if (query && query.id) {
+      props.props.orgid = query.id
+      await store.dispatch(reduxApi.actions.organisations.get(query))
+      if (store.getState().session.isAuthenticated) {
       // get available membership of this org - either just me or all
       // const meid = store.getState().session.me._id.toString()
-      await store.dispatch(
-        reduxApi.actions.members.get({ orgid: query.id })
-      )
+        await store.dispatch(
+          reduxApi.actions.members.get({ orgid: query.id })
+        )
+      }
+      return props
     }
-    return {
-      isNew: false,
-      orgid: query.id
-    }
-  }
-}
+  })
 
 export const OrgDetailPageWithOrgs = withOrgs(OrgDetailPage)
 export default OrgDetailPageWithOrgs

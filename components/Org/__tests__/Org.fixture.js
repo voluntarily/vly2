@@ -3,7 +3,7 @@ import { OrganisationRole } from '../../../server/api/organisation/organisation.
 
 export default [
   {
-    _id: objectid().toHexString(),
+    _id: objectid().toString(),
     createdAt: '2019-04-28T19:03:39.908Z',
     name: 'Voluntarily NZ',
     slug: 'voluntarily-nz',
@@ -30,7 +30,7 @@ export default [
     address: '237 Test Street, Testland'
   },
   {
-    _id: objectid().toHexString(),
+    _id: objectid().toString(),
     name: 'OMGTech',
     slug: 'omgtech',
     role: [OrganisationRole.ACTIVITY_PROVIDER, OrganisationRole.VOLUNTEER_PROVIDER],
@@ -40,7 +40,7 @@ export default [
     }
   },
   {
-    _id: objectid().toHexString(),
+    _id: objectid().toString(),
     name: 'Datacom',
     slug: 'datacom',
     role: [OrganisationRole.VOLUNTEER_PROVIDER],
@@ -48,7 +48,7 @@ export default [
     info: { about: 'some of our most loyal helpers' }
   },
   {
-    _id: objectid().toHexString(),
+    _id: objectid().toString(),
     name: 'Spark Ltd',
     slug: 'spark',
     role: [OrganisationRole.VOLUNTEER_PROVIDER],
@@ -56,7 +56,7 @@ export default [
     info: { about: 'more of our most loyal helpers' }
   },
   {
-    _id: objectid().toHexString(),
+    _id: objectid().toString(),
     imgUrl: 'https://image.shutterstock.com/image-vector/raven-sedentary-birds-never-voluntarily-260nw-1339914020.jpg',
     name: 'Westpac Ltd',
     slug: 'westpac',
@@ -64,7 +64,7 @@ export default [
     info: { about: 'even more of our most loyal helpers' }
   },
   {
-    _id: objectid().toHexString(),
+    _id: objectid().toString(),
     name: 'Albany High School',
     imgUrl: 'https://image.shutterstock.com/image-vector/raven-sedentary-birds-never-voluntarily-260nw-1339914020.jpg',
     slug: 'albany-high',

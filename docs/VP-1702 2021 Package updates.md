@@ -68,3 +68,16 @@ Person/PersonDetailForm.js
 # Test failures
 -   server › api › interest › interest.ability › Interest API - anon - list
     -   not repeatable.
+
+
+
+# Page checking
+
+## Organisation
+* OrgListPage  OrgListPage.spec.js
+* OrgDetailPage
+
+* OrgBanner
+* OrgCard
+* OrgRole
+* 
