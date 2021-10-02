@@ -1,11 +1,11 @@
 import React from 'react'
 import test from 'ava'
-// import { JSDOM } from 'jsdom'
-import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
-import objectid from 'objectid'
-import OrgDetailForm from '../OrgDetailForm'
 import sinon from 'sinon'
+import objectid from 'objectid'
+
+import OrgDetailForm from '../OrgDetailForm'
 import organisations from '../../../server/api/organisation/__tests__/organisation.fixture'
+import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-helper'
 import { MockWindowScrollTo } from '../../../server/util/mock-dom-helpers'
 
 MockWindowScrollTo.replaceForTest(test, global)

@@ -1,12 +1,16 @@
 /* eslint-disable */
-// To get normal classnames instead of CSS Modules classnames for testing
-// require('mock-css-modules') // removed causes a stack overflow
+// require('@babel/register')
 
-require('@babel/register')
-require('@babel/polyfill')
+// skip compiling css files.  Prevents errors loading AntD. 
+const addHook = require('pirates').addHook;
+addHook(
+  (code, filename) => "", 
+  { exts: ['.css'], ignoreNodeModules: false }
+);
+
+// require('@babel/polyfill')
 
 const { JSDOM } = require('jsdom');
-
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
 const { window } = jsdom;
 
