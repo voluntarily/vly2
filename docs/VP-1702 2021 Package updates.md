@@ -76,8 +76,14 @@ Person/PersonDetailForm.js
 ## Organisation
 * OrgListPage  OrgListPage.spec.js
 * OrgDetailPage
-
+* OrgDetailForm - passing but lots of warnings, Form needs to be modernised.
+* 
 * OrgBanner
 * OrgCard
 * OrgRole
-* 
+* OrgAboutPanel
+* OrgHistoryPanel
+  * get makeStore to use new store.js
+  * some match span changed to div in antd.
+* OrgOfferedActivities
+* OrgSelector
