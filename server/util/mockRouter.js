@@ -6,6 +6,7 @@ const actionWithPromise = () => {
   return new Promise((resolve, reject) => resolve('route changed'))
 }
 
+// TODO: deprecated - replace with mockUseRouter
 const withMockRoute = (WrappedComponent, path, query) => {
   // ...and returns another component...
   return class extends React.Component {

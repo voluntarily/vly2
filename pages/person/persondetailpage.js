@@ -1,16 +1,16 @@
+import { useState } from 'react'
 import { Button, message, Popconfirm } from 'antd'
 import Link from 'next/link'
-import Router from 'next/router'
-import PropTypes from 'prop-types'
-import { Component } from 'react'
+import { useRouter } from 'next/router'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
+import reduxWrapper from '../../lib/redux/store'
+
 import Loading from '../../components/Loading'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import { IssueBadgeButton } from '../../components/IssueBadge/issueBadge'
 import { FullPage } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
 import reduxApi, { withMembers, withPeople, withLocations } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 
@@ -62,153 +62,148 @@ const PersonNotAvailable = ({ isAdmin }) =>
       </>}
   </FullPage>
 
-export class PersonDetailPage extends Component {
-  state = {
-    editing: false
-  }
+export const PersonDetailPage = ({
+  isNew,
+  me,
+  people,
+  members,
+  locations,
+  tags,
+  dispatch
+}) => {
+  const [editing, setEditing] = useState(isNew)
+  const { replace, back } = useRouter()
 
-  static async getInitialProps ({ store, query, req }) {
-    // Get one Org
-    const isNew = query && query.new && query.new === 'new'
-    await store.dispatch(reduxApi.actions.locations.get())
-    await store.dispatch(reduxApi.actions.tags.get())
-    if (isNew) {
-      return {
-        isNew: true,
-        personid: null
-      }
-    } else if (query && query.id) {
-      const meid = query.id
-      try {
-        await store.dispatch(reduxApi.actions.people.get(query))
-        await store.dispatch(reduxApi.actions.members.get({ meid }))
-      } catch (err) {
-        // this can return a 403 forbidden if not signed in
-        console.error('Error in persondetailpage:', err)
-      }
-
-      return {
-        isNew: false,
-        personid: query.id
-      }
+  const handleCancelEdit = () => {
+    if (isNew) { // return to previous
+      return back()
     }
-  }
-
-  componentDidMount () {
-    if (this.props.isNew) {
-      this.setState({ editing: true })
-    }
-  }
-
-  handleCancelEdit = () => {
-    if (this.props.isNew) { // return to previous
-      return Router.back()
-    }
-    this.setState({ editing: false })
+    setEditing(false)
   }
 
   // TODO: [VP-209] only show person delete button for admins
-  async handleDeletePerson (person) {
-    await this.props.dispatch(reduxApi.actions.people.delete({ id: person._id }))
+  const handleDeletePerson = async (person) => {
+    await dispatch(reduxApi.actions.people.delete({ id: person._id }))
     // TODO error handling - how can this fail?
     message.success('Deleted. ')
-    Router.replace('/people')
+    replace('/people')
   }
 
-  async handleSubmit (person) {
+  const handleSubmit = async (person) => {
     // Actual data request
     let res = {}
     if (person._id) {
-      res = await this.props.dispatch(reduxApi.actions.people.put({ id: person._id }, { body: JSON.stringify(person) }))
-      this.setState({ editing: false })
+      res = await dispatch(reduxApi.actions.people.put({ id: person._id }, { body: JSON.stringify(person) }))
+      setEditing(false)
     } else {
-      res = await this.props.dispatch(reduxApi.actions.people.post({}, { body: JSON.stringify(person) }))
+      res = await dispatch(reduxApi.actions.people.post({}, { body: JSON.stringify(person) }))
       person = res[0]
-      Router.replace(`/people/${person._id}`)
+      replace(`/people/${person._id}`)
     }
     message.success('Saved.')
   }
 
-  handleCancelDelete = () => { message.error('Delete Cancelled') }
+  const handleCancelDelete = () => { message.error('Delete Cancelled') }
 
-  render () {
-    if (!this.props.people.sync) {
-      return <Loading label='person' entity={this.props.people} />
-    }
+  if (!people.sync) {
+    return <Loading label='person' entity={people} />
+  }
 
-    let person = null
-    if (this.props.isNew) {
-      person = blankPerson
-    } else {
-      const people = this.props.people.data
-      if (people.length > 0) {
-        person = people[0]
-        if (this.props.members.sync && this.props.members.data.length > 0) {
-          person.orgMembership = this.props.members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
-          person.orgFollowership = this.props.members.data.filter(m => m.status === MemberStatus.FOLLOWER)
-        }
+  let person = null
+  if (isNew) {
+    person = blankPerson
+  } else {
+    const peeps = people.data
+    if (peeps.length > 0) {
+      person = peeps[0]
+      if (members.sync && members.data.length > 0) {
+        person.orgMembership = members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
+        person.orgFollowership = members.data.filter(m => m.status === MemberStatus.FOLLOWER)
       }
     }
+  }
 
-    if (!person) {
-      return <PersonNotAvailable isAdmin />
-    }
-    const isAdmin = (this.props.me && this.props.me.role.includes('admin'))
-    const canRemove = isAdmin
-    const isOrgAdmin = false // TODO: [VP-473] is this person an admin for the org that person belongs to.
-    const canEdit = (isOrgAdmin || isAdmin || (person && person._id === this.props.me._id))
+  if (!person) {
+    return <PersonNotAvailable isAdmin />
+  }
+  const isAdmin = (me && me.role.includes('admin'))
+  const canRemove = isAdmin
+  const isOrgAdmin = false // TODO: [VP-473] is this person an admin for the org that person belongs to.
+  const canEdit = (isOrgAdmin || isAdmin || (person && person._id === me._id))
 
-    if (this.state.editing) {
-      const locations = this.props.locations.data[0]
-      return (
-        <FullPage>
-          <Helmet>
-            <title>Edit {person.name} - Voluntarily</title>
-          </Helmet>
-          <PersonDetailForm person={person} onSubmit={this.handleSubmit.bind(this, person)} onCancel={this.handleCancelEdit.bind(this)} locations={locations} existingTags={this.props.tags.data} me={this.props.me} />
-        </FullPage>)
-    }
-
+  if (editing) {
+    const locs = locations.data[0]
     return (
       <FullPage>
         <Helmet>
-          <title>{person.nickname} - Voluntarily</title>
+          <title>Edit {person.name} - Voluntarily</title>
         </Helmet>
-
-        <PersonDetail person={person} personEdit={() => this.setState({ editing: true })} canEdit={canEdit} />
-        {canRemove &&
-          <Popconfirm id='deletePersonConfirm' title='Confirm removal of this person.' onConfirm={this.handleDeletePerson.bind(this, person)} onCancel={this.handleCancelDelete.bind(this)} okText='Yes' cancelText='No'>
-            <Button id='deletePersonBtn' type='danger' shape='round'>
-              <FormattedMessage id='person.delete' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
-            </Button>
-          </Popconfirm>}
-            &nbsp;
-        {isAdmin &&
-          <IssueBadgeButton person={this.props.people.data[0]} />}
+        <PersonDetailForm
+          person={person}
+          onSubmit={handleSubmit}
+          onCancel={handleCancelEdit}
+          locations={locs}
+          existingTags={tags.data}
+          me={me}
+        />
       </FullPage>
     )
   }
+
+  return (
+    <FullPage>
+      <Helmet>
+        <title>{person.nickname} - Voluntarily</title>
+      </Helmet>
+
+      <PersonDetail person={person} personEdit={() => setEditing(true)} canEdit={canEdit} />
+      {canRemove &&
+        <Popconfirm
+          id='deletePersonConfirm' title='Confirm removal of this person.'
+          onConfirm={person => handleDeletePerson(person)}
+          onCancel={handleCancelDelete} okText='Yes' cancelText='No'
+        >
+          <Button id='deletePersonBtn' type='danger' shape='round'>
+            <FormattedMessage id='person.delete' defaultMessage='Remove Person' description='Button to remove an person on PersonDetails page' />
+          </Button>
+        </Popconfirm>}
+          &nbsp;
+      {isAdmin &&
+        <IssueBadgeButton person={people.data[0]} />}
+    </FullPage>
+  )
 }
 
-PersonDetailPage.propTypes = {
-  person: PropTypes.shape({
-    _id: PropTypes.object,
-    name: PropTypes.string,
-    nickname: PropTypes.string,
-    about: PropTypes.string,
-    locations: PropTypes.arrayOf(PropTypes.string),
-    email: PropTypes.string,
-    phone: PropTypes.string,
-    sendEmailNotifications: PropTypes.bool,
-    pronoun: PropTypes.object,
-    imgUrl: PropTypes.any,
-    role: PropTypes.arrayOf(PropTypes.oneOf(['admin', 'opportunityProvider', 'volunteer', 'activityProvider', 'support'])),
-    status: PropTypes.oneOf(['active', 'inactive', 'hold']),
-    tags: PropTypes.arrayOf(PropTypes.string)
-  }),
-  params: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  })
+export const getServerSideProps = reduxWrapper.getServerSideProps(
+  store => async (props) => gssp(store, ...props)
+)
+
+// factored out for easier testing.
+export const gssp = async ({ store, query }) => {
+  // Get one Org
+  const isNew = query && query.new && query.new === 'new'
+  await store.dispatch(reduxApi.actions.locations.get())
+  await store.dispatch(reduxApi.actions.tags.get())
+  if (isNew) {
+    return {
+      isNew: true,
+      personid: null
+    }
+  } else if (query && query.id) {
+    const meid = query.id
+    try {
+      await store.dispatch(reduxApi.actions.people.get(query))
+      await store.dispatch(reduxApi.actions.members.get({ meid }))
+    } catch (err) {
+      // this can return a 403 forbidden if not signed in
+      console.error('Error in persondetailpage:', err)
+    }
+
+    return {
+      isNew: false,
+      personid: query.id
+    }
+  }
 }
 
 export default withMembers(withPeople(withLocations(PersonDetailPage)))

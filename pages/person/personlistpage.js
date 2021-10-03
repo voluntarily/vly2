@@ -10,7 +10,6 @@ import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import PersonList from '../../components/Person/PersonList'
 import { FullPage } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
 import reduxApi, { withPeople } from '../../lib/redux/reduxApi.js'
 
 class PersonListPage extends Component {

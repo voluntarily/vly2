@@ -89,10 +89,21 @@ Person/PersonDetailForm.js
 * OrgSelector
 
 ## Person
-* PersonBadge
+
+* PersonBadge - passed
 * PersonCard - useLayoutEffect warning
 * PersonDetail - using useMockRouter - mock not passed down to verification so leave as is.
 * PersonDetailForm
-  * added back the address location widget - using useEffect
-  * when person is updated the session.me is not so the detail page is out of sync.
-  * locations list is updated from address every save duplicating locations.
+    * added back the address location widget - using useEffect
+    * when person is updated the session.me is not so the detail page is out of sync.
+    * locations list is updated from address every save duplicating locations.
+* PersonList - passed
+* PersonListItem - passed
+* all person components - passed
+
+* PersonDetailPage
+    * get server side props, factor out a version we can test using mock store. 
+    * switch from withMockRouter to mockUseRouter
+
+
+## Activity
