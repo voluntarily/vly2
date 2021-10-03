@@ -37,7 +37,7 @@ export const OpListPage = ({ opportunities, roles }) =>
 
 OpListPage.getInitialProps = async ({ store }) => {
   // Get all OpListPage
-  return store.dispatch(reduxApi.actions.opportunities.get())
+  return store.dispatch(reduxApi.actions.opportunities.get({}))
 }
 
 export default withOps(OpListPage)

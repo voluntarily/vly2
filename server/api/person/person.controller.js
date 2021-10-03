@@ -75,9 +75,9 @@ function listPeople (req, res, next) {
   let sort = 'nickname'
   let select = ''
   try {
-    query = req.query.q ? JSON.parse(req.query.q) : {}
-    sort = req.query.s ? JSON.parse(req.query.s) : sort
-    select = req.query.p ? JSON.parse(req.query.p) : {}
+    query = req.query.q ? JSON.parse(req.query.q) : query
+    sort = req.query.s ? req.query.s : sort
+    select = req.query.p ? req.query.p : select
 
     Person.find(query, select).sort(sort)
       .then(got => {

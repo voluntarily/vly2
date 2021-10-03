@@ -80,7 +80,7 @@ test('PersonDetailPage getServerSideProps existing person', async t => {
     }
   }
 
-  const props = await gssp({ store, query })
+  const { props } = await gssp({ store, query })
   t.false(props.isNew)
   t.is(props.personid, me._id)
   t.is(store.dispatch.callCount, 4)
@@ -98,7 +98,7 @@ test('PersonDetailPage gssp new person', async t => {
     }
   }
 
-  const props = await gssp({ store, query })
+  const { props } = await gssp({ store, query })
   t.true(props.isNew)
   t.is(props.personid, null)
   t.is(store.dispatch.callCount, 2)

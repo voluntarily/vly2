@@ -175,19 +175,21 @@ export const PersonDetailPage = ({
 }
 
 export const getServerSideProps = reduxWrapper.getServerSideProps(
-  store => async (props) => gssp(store, ...props)
+  store => async (props) => gssp({ store, query: props.query })
 )
 
 // factored out for easier testing.
 export const gssp = async ({ store, query }) => {
   // Get one Org
   const isNew = query && query.new && query.new === 'new'
-  await store.dispatch(reduxApi.actions.locations.get())
-  await store.dispatch(reduxApi.actions.tags.get())
+  await store.dispatch(reduxApi.actions.locations.get({}))
+  await store.dispatch(reduxApi.actions.tags.get({}))
   if (isNew) {
     return {
-      isNew: true,
-      personid: null
+      props: {
+        isNew: true,
+        personid: null
+      }
     }
   } else if (query && query.id) {
     const meid = query.id
@@ -200,8 +202,10 @@ export const gssp = async ({ store, query }) => {
     }
 
     return {
-      isNew: false,
-      personid: query.id
+      props: {
+        isNew: false,
+        personid: query.id
+      }
     }
   }
 }

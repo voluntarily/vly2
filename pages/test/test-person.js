@@ -13,8 +13,8 @@ export class TestPerson extends Component {
       try {
         await Promise.all([
           store.dispatch(reduxApi.actions.people.get(query)),
-          store.dispatch(reduxApi.actions.locations.get()),
-          store.dispatch(reduxApi.actions.tags.get())
+          store.dispatch(reduxApi.actions.locations.get({})),
+          store.dispatch(reduxApi.actions.tags.get({}))
         ])
       } catch (err) {
         // this can return a 403 forbidden if not signed in

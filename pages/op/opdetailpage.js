@@ -211,8 +211,8 @@ OpDetailPage.getInitialProps = async ({ store, query }) => {
   const isNew = query && query.new && [OpportunityType.ASK, OpportunityType.OFFER].includes(query.new)
   const opExists = !!(query && query.id) // !! converts to a boolean value
   await Promise.all([
-    store.dispatch(reduxApi.actions.locations.get()),
-    store.dispatch(reduxApi.actions.tags.get())
+    store.dispatch(reduxApi.actions.locations.get({})),
+    store.dispatch(reduxApi.actions.tags.get({}))
   ])
 
   if (me._id) {

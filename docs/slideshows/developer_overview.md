@@ -432,7 +432,7 @@ and smarter components or pages that obtain data and handle interactions
     class Ops extends Component {
       static async getInitialProps ({ store, query }) {
         // Get all Opportunities
-        const ops = await store.dispatch(reduxApi.actions.opportunities.get())
+        const ops = await store.dispatch(reduxApi.actions.opportunities.get({}))
         return { ops, query }
       }
 

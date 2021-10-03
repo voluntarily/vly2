@@ -105,5 +105,10 @@ Person/PersonDetailForm.js
     * get server side props, factor out a version we can test using mock store. 
     * switch from withMockRouter to mockUseRouter
 
+* PersonListPage
+    * people response not json serialisable. due to invalid json decoding on person.controller.  change to string decode for select and search.  This clearly has not been tested much. Ditto Organisation.controller.
+    * only get data required for person list item - much shorter than fetching all people.
+
+    * page is now sorted by name instead of nickname
 
 ## Activity

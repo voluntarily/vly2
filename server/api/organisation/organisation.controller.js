@@ -16,7 +16,7 @@ const listOrganisations = async (req, res) => {
 
   try {
     query = req.query.q ? JSON.parse(req.query.q) : query
-    sort = req.query.s ? JSON.parse(req.query.s) : sort
+    sort = req.query.s ? req.query.s : sort
     select = req.query.p ? req.query.p : select
   } catch (e) {
     // if there is something wrong with the query return a Bad Query

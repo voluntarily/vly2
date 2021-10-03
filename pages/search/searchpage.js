@@ -70,7 +70,7 @@ export class SearchPage extends Component {
   }
 
   static async getInitialProps ({ store, query: { search } }) {
-    await store.dispatch(reduxApi.actions.locations.get())
+    await store.dispatch(reduxApi.actions.locations.get({}))
     return {
       search
     }

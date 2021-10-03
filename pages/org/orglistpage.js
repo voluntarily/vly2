@@ -42,11 +42,6 @@ export const OrgListPage = ({ organisations, me }) => {
     </FullPage>)
 }
 
-// OrgListPage.getInitialProps = async ({ store, query }) => {
-//   const select = { p: 'name imgUrl role' }
-//   return store.dispatch(reduxApi.actions.organisations.get(select))
-// }
-
 export const getServerSideProps = reduxWrapper.getServerSideProps(
   store => async () => {
     const select = { p: 'name imgUrl role' }
