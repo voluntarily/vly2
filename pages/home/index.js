@@ -1,3 +1,1 @@
-import Home from './home.js'
-
-export default Home
+export { default, getServerSideProps } from './home.js'

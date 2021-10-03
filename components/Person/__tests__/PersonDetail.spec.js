@@ -12,6 +12,11 @@ import { ActivityContainer } from '../../VTheme/VTheme'
 import PersonDetail from '../PersonDetail'
 import thunk from 'redux-thunk'
 
+const actionWithPromise = () => {
+  // return new Promise((resolve, reject) => reject(Error('fail promise')))
+  return new Promise((resolve, reject) => resolve('route changed'))
+}
+
 test.before('Setup People fixtures', (t) => {
   // not using mongo or server here so faking ids
   people.map(p => { p._id = objectid().toString() })
@@ -65,7 +70,8 @@ test.before('Setup People fixtures', (t) => {
       Component: sinon.fake(),
       replace: sinon.fake(),
       push: sinon.fake(),
-      back: sinon.fake()
+      back: sinon.fake(),
+      prefetch: actionWithPromise
     })
   }
   sinon.replace(nextRouter, 'useRouter', router)

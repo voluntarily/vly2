@@ -1,8 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { ContactIcon } from '../VTheme/VTheme'
+import {
+  MailOutlined,
+  PhoneOutlined,
+  HomeOutlined
+} from '@ant-design/icons'
+
 import { StreetAddressLinkLi } from '../Address/StreetAddress'
 
 const PersonContainer = styled.section`
@@ -71,15 +75,15 @@ const PersonCard = ({ person }) => (
 
     <section>
       <h5>Contact details</h5>
-      <p className='personName'><ContactIcon type='mail' />{person.email}</p>
+      <p className='personName'><MailOutlined /> {person.email}</p>
 
       {person.phone &&
 
-        <p className='personName'><ContactIcon type='phone' />{person.phone}</p>}
+        <p className='personName'><PhoneOutlined /> {person.phone}</p>}
 
       {person.phone && person.address && person.address.addressSummary &&
 
-        <p className='personName'><ContactIcon type='home' /><StreetAddressLinkLi address={person.address.addressSummary} /></p>}
+        <p className='personName'><HomeOutlined /> <StreetAddressLinkLi address={person.address.addressSummary} /></p>}
     </section>
 
     <style jsx>{`
@@ -98,18 +102,5 @@ const PersonCard = ({ person }) => (
     </style>
   </PersonContainer>
 )
-
-PersonCard.propTypes = {
-  person: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    nickname: PropTypes.string.isRequired,
-    imgUrl: PropTypes.string,
-    job: PropTypes.string,
-    placeOfWork: PropTypes.string,
-    email: PropTypes.string,
-    phone: PropTypes.string,
-    _id: PropTypes.string.isRequired
-  }).isRequired
-}
 
 export default PersonCard

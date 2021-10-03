@@ -87,3 +87,12 @@ Person/PersonDetailForm.js
   * some match span changed to div in antd.
 * OrgOfferedActivities
 * OrgSelector
+
+## Person
+* PersonBadge
+* PersonCard - useLayoutEffect warning
+* PersonDetail - using useMockRouter - mock not passed down to verification so leave as is.
+* PersonDetailForm
+  * added back the address location widget - using useEffect
+  * when person is updated the session.me is not so the detail page is out of sync.
+  * locations list is updated from address every save duplicating locations.
