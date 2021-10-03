@@ -1,5 +1,5 @@
 import React from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { injectIntl } from 'react-intl'
 import PrivacyEn from '../../assets/notices/privacy-full-en.md'
 import { A4 } from '../../components/VTheme/VTheme'
@@ -7,9 +7,9 @@ import { A4 } from '../../components/VTheme/VTheme'
 
 const Privacy = () =>
   <A4>
-    <Helmet>
+    <Head>
       <title>Privacy Policy - Voluntarily</title>
-    </Helmet>
+    </Head>
     <PrivacyEn />
   </A4>
 

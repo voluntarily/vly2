@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import Loading from '../../components/Loading'
 import OpBanner from '../../components/Op/OpBanner'
 import OpTabs from '../../components/Op/OpTabs'
@@ -53,9 +53,9 @@ export const ArchivedOpDetailPage = ({
 
   return (
     <FullPage>
-      <Helmet>
+      <Head>
         <title>{op.name} Archived - Voluntarily</title>
-      </Helmet>
+      </Head>
       <OpArchivedHeader status={op.status} />
       <OpBanner op={op}>
         {/* <OpStatusStamp status={op.status} /> */}

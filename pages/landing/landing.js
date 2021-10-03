@@ -1,5 +1,5 @@
 import React from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import Hero from '../../components/LandingPageComponents/Hero'
 // import OfferSection from '../../components/LandingPageComponents/OfferSection'
 // import OpAdd from '../../components/Op/OpAdd'
@@ -21,9 +21,9 @@ import Sponsors from '../../components/LandingPageComponents/Sponsors'
 import WhoSection from '../../components/LandingPageComponents/WhoSection'
 export const Landing = ({ isAuthenticated }) => (
   <>
-    <Helmet>
+    <Head>
       <title>Voluntarily</title>
-    </Helmet>
+    </Head>
 
     <Hero
       isAuthenticated={isAuthenticated}

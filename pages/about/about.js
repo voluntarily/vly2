@@ -1,7 +1,7 @@
 import { Button } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import styled from 'styled-components'
 import AboutCTA from '../../components/About/AboutCTA.js'
 import { FullPage, Spacer } from '../../components/VTheme/VTheme'
@@ -69,9 +69,9 @@ class About extends Component {
 
     return (
       <FullPage>
-        <Helmet>
+        <Head>
           <title>Voluntarily - Home</title>
-        </Helmet>
+        </Head>
         <Spacer />
         <Spacer />
         <AboutSection>

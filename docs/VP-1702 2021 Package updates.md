@@ -71,6 +71,11 @@ we need to name the functions
 
 Fixed these using npx @next/codemod name-default-component. 12 files affected.
 
+## react-helmet
+
+* all uses of <Helmet> replaced with <Head> provided by Next/head.
+
+
 ## AntD Styles fix
 
 changes to how css is imported and less is out by default. fix by including a new package
@@ -121,6 +126,7 @@ Person/PersonDetailForm.js
     * added back the address location widget - using useEffect
     * when person is updated the session.me is not so the detail page is out of sync.
     * locations list is updated from address every save duplicating locations.
+    * TODO - convert to Antd 4 form
 * PersonList - passed
 * PersonListItem - passed
 * all person components - passed

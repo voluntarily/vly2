@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { FullPage } from '../../../components/VTheme/VTheme'
 import securePage from '../../../hocs/securePage'
 import styled from 'styled-components'
@@ -27,9 +27,9 @@ class VerificationConductPage extends Component {
   render () {
     return (
       <FullPage>
-        <Helmet>
+        <Head>
           <title>Voluntarily - Code of Conduct</title>
-        </Helmet>
+        </Head>
         <TermsSection>
           <Conduct />
           <Link href='./safety'>

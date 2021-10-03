@@ -1,5 +1,5 @@
 // [@TODO] - remove Input once actual search component is done
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { FormattedMessage, defineMessages } from 'react-intl'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 import { FullPage, PageBannerNoTabs, PageBannerButtons } from '../../components/VTheme/VTheme'
@@ -42,9 +42,9 @@ export const ActListPage = () => {
 
   return (
     <FullPage>
-      <Helmet>
+      <Head>
         <title>Activities - Voluntarily</title>
-      </Helmet>
+      </Head>
       <PageBannerNoTabs>
         <h1>
           <FormattedMessage {...ActListTitleMessages[type]} />

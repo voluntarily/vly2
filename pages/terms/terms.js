@@ -1,5 +1,5 @@
 import React from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { injectIntl } from 'react-intl'
 import TermsEn from '../../assets/notices/terms-en.md'
 import { A4 } from '../../components/VTheme/VTheme'
@@ -7,9 +7,9 @@ import { A4 } from '../../components/VTheme/VTheme'
 
 const Terms = () =>
   <A4>
-    <Helmet>
+    <Head>
       <title>Terms of Use - Voluntarily</title>
-    </Helmet>
+    </Head>
     <TermsEn />
   </A4>
 

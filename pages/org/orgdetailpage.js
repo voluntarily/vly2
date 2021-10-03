@@ -15,7 +15,7 @@ import reduxApi, { withOrgs } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import { GroupTagList } from '../../server/api/tag/tag.constants'
 import RegisterMemberSection from '../../components/Member/RegisterMemberSection'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { OrganisationRole } from '../../server/api/organisation/organisation.constants'
 
 const blankOrg = {
@@ -148,9 +148,9 @@ export const OrgDetailPage = ({
   if (activeTab === 'edit') {
     return (
       <FullPage>
-        <Helmet>
+        <Head>
           <title>Edit {org.name} - Voluntarily</title>
-        </Helmet>
+        </Head>
         <OrgDetailForm
           org={org}
           isAdmin={isAdmin}
@@ -163,9 +163,9 @@ export const OrgDetailPage = ({
 
   return (
     <FullPage>
-      <Helmet>
+      <Head>
         <title>{org.name} - Voluntarily</title>
-      </Helmet>
+      </Head>
 
       <OrgBanner org={org}>
         {isAuthenticated && <RegisterMemberSection orgid={org._id} meid={me._id.toString()} />}

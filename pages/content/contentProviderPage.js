@@ -1,6 +1,6 @@
 import { Button, Divider } from 'antd'
 import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import styled from 'styled-components'
 import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
 import { BigQuote, BigQuoteAuthor, FullPage, H1, H3, H3Bold, H4, HalfGrid, P, PBold, Spacer, SpacerSmall, TripleGrid } from '../../components/VTheme/VTheme'
@@ -206,9 +206,9 @@ export class ContentProvider extends Component {
     return (
       <div>
         <FullPage>
-          <Helmet>
+          <Head>
             <title>Voluntarily - Business</title>
-          </Helmet>
+          </Head>
           <HeroContainer>
             <HalfGrid>
               <GridContainer>

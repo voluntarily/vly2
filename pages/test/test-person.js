@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { FormattedMessage } from 'react-intl'
 import Loading from '../../components/Loading'
 import PersonDetail from '../../components/Person/PersonDetail'
@@ -58,9 +58,9 @@ export class TestPerson extends Component {
     }
     return (
       <FullPage>
-        <Helmet>
+        <Head>
           <title>Test Person - Voluntarily</title>
-        </Helmet>
+        </Head>
         {content}
       </FullPage>
     )

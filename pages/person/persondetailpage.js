@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Button, message, Popconfirm } from 'antd'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { FormattedMessage } from 'react-intl'
 import reduxWrapper from '../../lib/redux/store'
 
@@ -39,9 +39,9 @@ const blankPerson = {
 
 const PersonNotAvailable = ({ isAdmin }) =>
   <FullPage>
-    <Helmet>
+    <Head>
       <title>Person Unavailable - Voluntarily</title>
-    </Helmet>
+    </Head>
     <h2><FormattedMessage id='person.notavailable' defaultMessage='Sorry, this person is not available' description='message on person not found page' /></h2>
     {isAdmin &&
       <>
@@ -135,9 +135,9 @@ export const PersonDetailPage = ({
     const locs = locations.data[0]
     return (
       <FullPage>
-        <Helmet>
+        <Head>
           <title>Edit {person.name} - Voluntarily</title>
-        </Helmet>
+        </Head>
         <PersonDetailForm
           person={person}
           onSubmit={handleSubmit}
@@ -152,9 +152,9 @@ export const PersonDetailPage = ({
 
   return (
     <FullPage>
-      <Helmet>
+      <Head>
         <title>{person.nickname} - Voluntarily</title>
-      </Helmet>
+      </Head>
 
       <PersonDetail person={person} personEdit={() => setEditing(true)} canEdit={canEdit} />
       {canRemove &&

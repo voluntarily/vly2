@@ -2,7 +2,7 @@ import { Button, Dropdown, Menu, Modal } from 'antd'
 import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import SectionTitle from '../../components/LandingPageComponents/SectionSubtitle'
@@ -174,9 +174,9 @@ export class SearchPage extends Component {
           filterNames={[DATE_FILTER_NAME, LOCATION_FILTER_NAME, TYPE_FILTER_NAME]}
         />
         <FullPage>
-          <Helmet>
+          <Head>
             <title>Voluntarily - Search Results</title>
-          </Helmet>
+          </Head>
           <SearchPageContainer>
             <SectionTitle
               title={

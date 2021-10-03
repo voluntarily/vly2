@@ -5,7 +5,7 @@
 */
 import Cookie from 'js-cookie'
 import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { FormattedMessage } from 'react-intl'
 import GoalSection from '../../components/Goal/GoalSection'
 import { FullPage, Section } from '../../components/VTheme/VTheme'
@@ -54,9 +54,9 @@ class GoalListPage extends Component {
     const groups = groupBy(goals, 'group')
     return (
       <FullPage>
-        <Helmet>
+        <Head>
           <title>Voluntarily - Goals Index</title>
-        </Helmet>
+        </Head>
         <h1><FormattedMessage id='goalListTitle' defaultMessage='Goals Index' description='title on Goal index page' /></h1>
         <Section>
           <h2>Load Goals</h2>

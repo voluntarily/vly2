@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { config } from '../../config/clientConfig'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { OpSectionGrid, BannerDetail } from '../VTheme/VTheme'
 import {
   ItemContainer,
@@ -18,7 +18,7 @@ export const ActBanner = ({ act, children }) => {
   const creator = `@${owner.name || ''}`
   return (
     <>
-      <Helmet>
+      <Head>
         <title>{act.name} - Voluntarily</title>
         <meta name='twitter:card' content='summary' />
         <meta name='twitter:site' content='@voluntarilyHQ' />
@@ -27,7 +27,7 @@ export const ActBanner = ({ act, children }) => {
         <meta property='og:title' content={act.name} />
         <meta property='og:description' content={act.subtitle} />
         <meta property='og:image' content={act.imgUrl} />
-      </Helmet>
+      </Head>
 
       <OpSectionGrid>
         <div style={{ paddingTop: '3rem' }}>

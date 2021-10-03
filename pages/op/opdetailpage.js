@@ -14,7 +14,7 @@ import OpBanner from '../../components/Op/OpBanner'
 import OpUnknown from '../../components/Op/OpUnknown'
 import OpShortForm from '../../components/Op/OpShortForm'
 import OpVolunteerInterestSection from '../../components/Op/OpVolunteerInterestSection'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 // import { OpStatusStamp } from '../../components/Op/OpStatus'
 import { OpportunityStatus, OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 import { Role } from '../../server/services/authorize/role.js'
@@ -170,9 +170,9 @@ export const OpDetailPage = ({
   if (tab === 'edit') {
     return (
       <FullPage>
-        <Helmet>
+        <Head>
           <title>Edit {op.type} {op.name} - Voluntarily</title>
-        </Helmet>
+        </Head>
         <OpShortForm
           op={op}
           me={me}
@@ -186,9 +186,9 @@ export const OpDetailPage = ({
   return (
     <FullPage>
 
-      <Helmet>
+      <Head>
         <title>{op.type} {op.name} - Voluntarily</title>
-      </Helmet>
+      </Head>
 
       <OpBanner op={op}>
         {/* <OpStatusStamp status={op.status} /> */}

@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { Button, message } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { FullPage, Section } from '../../components/VTheme/VTheme'
@@ -15,9 +15,9 @@ const TestPage = () => {
 
   return (
     <FullPage>
-      <Helmet>
+      <Head>
         <title>Voluntarily - E2E Testing</title>
-      </Helmet>
+      </Head>
       <h1>
         <FormattedMessage id='runTestTitle' defaultMessage='End-To-End Testing' description='title on Test index page' />
       </h1>

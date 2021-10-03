@@ -1,9 +1,8 @@
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { FormattedMessage } from 'react-intl'
 import OpList from '../../components/Op/OpList'
 import OpAdd from '../../components/Op/OpAdd'
 import { FullPage, PageBanner, PageBannerButtons } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 
 /*
@@ -12,9 +11,9 @@ import reduxApi, { withOps } from '../../lib/redux/reduxApi.js'
 */
 export const OpListPage = ({ opportunities, roles }) =>
   <FullPage>
-    <Helmet>
-      <title>Opportunities / Voluntarily</title>
-    </Helmet>
+    <Head>
+      <title>Opportunities - Voluntarily</title>
+    </Head>
     <PageBanner>
       <h1>
         <FormattedMessage

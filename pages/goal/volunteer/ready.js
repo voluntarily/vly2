@@ -2,7 +2,7 @@ import securePage from '../../../hocs/securePage'
 import { FullPage } from '../../../components/VTheme/VTheme'
 import { VideoQuiz, hashObj } from '../../../components/quiz/quiz'
 import Router from 'next/router'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 
 export const volunteerReadyQuiz = [
   {
@@ -67,9 +67,9 @@ export const Ready = ({ vqa, me }) => {
   }
   return (
     <FullPage>
-      <Helmet>
+      <Head>
         <title>Volunteer Ready - Voluntarily</title>
-      </Helmet>
+      </Head>
       <VideoQuiz vqa={vqa} me={me} onCompleted={handleCompleted} />
     </FullPage>
   )

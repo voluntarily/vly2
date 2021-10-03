@@ -1,6 +1,6 @@
 import { Button } from 'antd'
 import Link from 'next/link'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { FormattedMessage } from 'react-intl'
 import OrgList from '../../components/Org/OrgList'
 import { FullPage, PageBannerButtons, PageBannerNoTabs } from '../../components/VTheme/VTheme'
@@ -13,9 +13,9 @@ export const OrgListPage = ({ organisations, me }) => {
   const isAdmin = (me && me.role.includes('admin'))
   return (
     <FullPage>
-      <Helmet>
-        <title>Organisations / Voluntarily</title>
-      </Helmet>
+      <Head>
+        <title>Organisations - Voluntarily</title>
+      </Head>
       <PageBannerNoTabs>
         <h1>
           <FormattedMessage

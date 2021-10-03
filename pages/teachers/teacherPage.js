@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import styled from 'styled-components'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { Button, Divider } from 'antd'
 import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
 import PersonaSection from '../../components/LandingPageComponents/PersonaSection'
@@ -126,9 +126,9 @@ export class Teacher extends Component {
     return (
       <div>
         <FullPage>
-          <Helmet>
+          <Head>
             <title>Voluntarily - for Teachers</title>
-          </Helmet>
+          </Head>
 
           <Hero2
             subheader='Voluntarily for Teachers'

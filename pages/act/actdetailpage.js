@@ -2,7 +2,7 @@ import { message } from 'antd'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useState, useCallback } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import ActBanner from '../../components/Act/ActBanner'
 import ActTabs from '../../components/Act/ActTabs'
 import ActUnknown from '../../components/Act/ActUnknown'
@@ -134,9 +134,9 @@ export const ActDetailPage = ({
   if (tab === 'edit') {
     return (
       <FullPage>
-        <Helmet>
+        <Head>
           <title>Edit {isNew ? 'Activity' : act.name} - Voluntarily</title>
-        </Helmet>
+        </Head>
         <ActDetailForm
           act={act}
           me={me}
@@ -148,9 +148,9 @@ export const ActDetailPage = ({
   }
   return (
     <FullPage>
-      <Helmet>
+      <Head>
         <title>{act.name} - Voluntarily</title>
-      </Helmet>
+      </Head>
       <ActBanner act={act}>
         <PageBannerButtons>
           <OpAdd actid={act._id} />

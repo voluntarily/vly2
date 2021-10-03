@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 
 import { HomeBanner } from '../../components/Home/HomeBanner.js'
 import { HomeTabs } from '../../components/Home/HomeTabs.js'
@@ -48,9 +48,9 @@ export const PersonHomePage = () => {
   // 'me' should be a cut down version of the person details.
   return (
     <FullPage>
-      <Helmet>
+      <Head>
         <title>{me.nickname} - Voluntarily</title>
-      </Helmet>
+      </Head>
       <HomeBanner person={me} />
       <HomeTabs
         person={me}

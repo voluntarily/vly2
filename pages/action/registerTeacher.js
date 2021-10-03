@@ -1,6 +1,6 @@
 import { Button, Divider } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { FormattedMessage } from 'react-intl'
 import TeacherRegistrationRecord from '../../components/Person/Teacher/TeacherRegistrationRecord'
 import GetTeacherRegistration from '../../components/Person/Teacher/GetTeacherRegistration'
@@ -32,9 +32,9 @@ export function RegisterTeacher () {
   }
   return (
     <FullPage>
-      <Helmet>
+      <Head>
         <title>Voluntarily - Register as a Teacher</title>
-      </Helmet>
+      </Head>
       <h3>
         <FormattedMessage
           id='registerRequestor.asaRequestor'

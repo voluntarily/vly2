@@ -6,7 +6,7 @@
 import React from 'react'
 import { Button } from 'antd'
 import Link from 'next/link'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { FormattedMessage } from 'react-intl'
 
 import PersonList from '../../components/Person/PersonList'
@@ -19,9 +19,9 @@ export const PersonListPage = ({
 }) => {
   return (
     <FullPage>
-      <Helmet>
+      <Head>
         <title>Voluntarily - People List</title>
-      </Helmet>
+      </Head>
       <h1><FormattedMessage id='personListTitle' defaultMessage='People' description='H1 on Person list page' /></h1>
       <Button shape='round'>
         <Link href='/person/new'>
