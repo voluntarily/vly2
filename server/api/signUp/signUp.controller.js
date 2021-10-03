@@ -1,4 +1,5 @@
 const { Role } = require('../../services/authorize/role')
+const Person = require('../person/person')
 
 /**
  * add or remove a role from the array
@@ -35,8 +36,12 @@ const registerPerson = async (req, res) => {
     // if (req.method !== 'POST' || !req.body) res.status(400).end()
     const prefs = req.body
     // const { org } = req.query
-    const me = req.session && req.session.me
+    const meid = req.session && req.session.me._id
 
+    const me = await Person.findById(meid).exec()
+    if (!me) {
+      return res.sendStatus(404)
+    }
     // is the person an asker?
     if (prefs.roleAsk !== undefined) { updateRole(me, prefs.roleAsk, Role.BASIC) }
 
@@ -65,6 +70,7 @@ const registerPerson = async (req, res) => {
     await me.save()
     res.json(me)
   } catch (e) {
+    console.log(e)
     res.status(500).send(e)
   }
 }

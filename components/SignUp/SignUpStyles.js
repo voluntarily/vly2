@@ -62,7 +62,7 @@ export const ToggleLi = ({ checked, icon, children, onChange }) => {
     <ButtonLi onClick={toggle} on={on.toString()}>
       <img style={{ width: '100%' }} src={`/static/img/sign-up/${icon}.svg`} />
       {children}
-      <ToggleTick on={on.toString()} />
+      <ToggleTick on={on} />
     </ButtonLi>
   )
 }

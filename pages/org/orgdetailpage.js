@@ -80,13 +80,11 @@ export const OrgDetailPage = ({
   const [saved, setSaved] = useState(false)
   // when path changes set the active tab. as this doesn't work in updateTab
   useEffect(() => {
-    console.log('aspath', asPath)
     const qtab = asPath.match(/.*tab=(.*)/)
     qtab && setActiveTab(qtab[1])
   }, [query])
 
   const updateTab = (key, top) => {
-    console.log('updateTab', key, top)
     if (top) window.scrollTo(0, 0)
     else { window.scrollTo(0, 400) }
 

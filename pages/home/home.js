@@ -1,7 +1,7 @@
-// import { message } from 'antd'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
 import { Helmet } from 'react-helmet'
+
 import { HomeBanner } from '../../components/Home/HomeBanner.js'
 import { HomeTabs } from '../../components/Home/HomeTabs.js'
 import Loading from '../../components/Loading'
@@ -15,19 +15,22 @@ export const PersonHomePage = () => {
   const [me, members, opportunities, interests] = useSelector(
     state => [state.session.me, state.members, state.opportunities.data, state.interests.data]
   )
-  const router = useRouter()
+  const { asPath, query, pathname, replace } = useRouter()
+
   const activityCount = opportunities.length + interests.length
   const [tab, setTab] = useState(
-    (router.query && router.query.tab) ||
+    (query && query.tab) ||
     (activityCount ? 'active' : 'discover')
   )
+  useEffect(() => {
+    const qtab = asPath.match(/.*tab=(.*)/)
+    qtab && setTab(qtab[1])
+  }, [query])
 
   const updateTab = (key, top) => {
-    setTab(key)
     if (top) window.scrollTo(0, 0)
-    //  else { window.scrollTo(0, 400) }
     const newpath = `/home?tab=${key}`
-    router.replace(router.pathname, newpath, { shallow: true })
+    replace(pathname, newpath, { shallow: true })
   }
   const handleTabChange = (key, e) => {
     updateTab(key, true)
@@ -51,7 +54,7 @@ export const PersonHomePage = () => {
       <HomeBanner person={me} />
       <HomeTabs
         person={me}
-        defaultTab={tab}
+        tab={tab}
         onChange={handleTabChange}
       />
     </FullPage>

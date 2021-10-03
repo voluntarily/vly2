@@ -1,7 +1,6 @@
+import React from 'react'
 import { Tabs } from 'antd'
 import { InboxOutlined, HistoryOutlined, SettingOutlined, FileSearchOutlined } from '@ant-design/icons'
-import PropTypes from 'prop-types'
-import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { ProfilePanel } from '../VTheme/Profile'
 import PersonalGoalSection from '../Goal/PersonalGoalSection'
@@ -12,7 +11,6 @@ import ArchivedInterestedOpsSection from '../Op/ArchivedInterestedOpsSection'
 import RecommendedOpsSection from '../Op/RecommendedOpsSection'
 import EditablePersonPanel from '../../components/Person/EditablePersonPanel'
 
-import VTabs from '../VTheme/VTabs'
 const { TabPane } = Tabs
 
 const homeActiveTab = (
@@ -56,8 +54,12 @@ const homeDiscoverTab = (
   </>
 )
 
-export const HomeTabs = ({ person, onChange, defaultTab }) =>
-  <VTabs defaultActiveKey={defaultTab} onChange={onChange}>
+export const HomeTabs = ({ person, onChange, tab }) =>
+  <Tabs
+    activeKey={tab} onChange={onChange}
+    type='card' size='large'
+    tabBarGutter='5px'
+  >
     <TabPane tab={homeDiscoverTab} key='discover' style={{ overflow: 'visible' }}>
       <ProfilePanel>
         <PersonalGoalSection />
@@ -83,12 +85,6 @@ export const HomeTabs = ({ person, onChange, defaultTab }) =>
         <EditablePersonPanel person={person} />
       </ProfilePanel>
     </TabPane>
-  </VTabs>
-
-HomeTabs.propTypes = {
-  person: PropTypes.shape({
-    name: PropTypes.string.isRequired
-  }).isRequired
-}
+  </Tabs>
 
 export default HomeTabs
