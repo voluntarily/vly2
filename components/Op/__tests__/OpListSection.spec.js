@@ -1,14 +1,15 @@
-import React from 'react'
 import test from 'ava'
+import { Provider } from 'react-redux'
+import fetchMock from 'fetch-mock'
+
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import OpListSection from '../OpListSection'
-import { Provider } from 'react-redux'
-import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
+import reduxApi from '../../../lib/redux/reduxApi'
+import { makeStore } from '../../../lib/redux/store'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import DatePickerType from '../DatePickerType.constant'
 import { API_URL } from '../../../lib/callApi'
 import ops, { orgActionWhizzyFelt, orgOmgTech } from './Op.fixture'
-import fetchMock from 'fetch-mock'
 
 const opsWithOpenEndDate = [
   ...ops,

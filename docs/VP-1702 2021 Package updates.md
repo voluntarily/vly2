@@ -176,3 +176,53 @@ Person/PersonDetailForm.js
 
 * ActListPage - passed
 
+## Ops
+
+* ActiveOpsSection.js
+* ArchivedInterestedOpsSection.js
+* ArchivedOpsSection.js
+* DatePickerType.constant.js
+* InterestedOpsSection.js
+* OpAboutPanel.js
+* OpAdd.js - passed
+* OpAddCard.js - passed
+* OpArchivedHeader.js - passed
+* OpAskFormLong.js
+* OpBanner.js - passed
+* OpCard.js - passed
+* OpChatPanel.js - no test
+* OpCloseOpportunity.js
+    * test changes to MemoizedFormattedMessage
+* OpEvent.js - no test
+* OpFeedback.js - no test
+* OpFormDate.js - subform
+* OpFormDescription.js - subform
+* OpFormDoneBtns.js - subform
+* OpFormImg.js - subform
+* OpFormLocation.js - subform
+* OpFormOrg.js - subform
+* OpFormTags.js - subform
+* OpFormTitle.js - subform
+* OpList.js - passed
+* OpListSection.js - passed
+    * Convert from class to function
+    * 
+* OpListSmall.js
+* OpManagePanel.js
+    * test changes to MemoizedFormattedMessage
+* OpMessage.js
+* OpOfferFormLong.js
+* OpOrderby.js
+    * Select changes to ForwardRef(InternalSelect) in test
+* OpQuestionPanel.js
+* OpRecommendations.js - passed
+* OpShareLinks.js - passed
+* OpShortForm.js
+* OpStatus.js
+* OpTabs.js
+    * update to use activeKey
+* OpType.js
+* OpUnknown.js
+* OpUpdatePanel.js
+* OpVolunteerInterestSection.js
+* RecommendedOpsSection.js

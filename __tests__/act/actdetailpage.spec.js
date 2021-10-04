@@ -9,8 +9,10 @@ import people from '../../server/api/person/__tests__/person.fixture'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import tags from '../../server/api/tag/__tests__/tag.fixture'
 import useMockRouter from '../../server/util/useMockRouter'
+import { MockWindowScrollTo } from '../../server/util/mock-dom-helpers'
 
 import { MemberStatus } from '../../server/api/member/member.constants'
+MockWindowScrollTo.replaceForTest(test, global)
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
@@ -150,7 +152,6 @@ test('Edit new ActDetailPage', async t => {
     dispatch: fn => { return [{ ...newAct, _id: 'newActId' }] }
   }
   const wrapper = shallowWithIntl(<ActDetailPage {...props} />)
-  console.log(wrapper.debug())
   t.is(wrapper.find('title').first().text(), 'Edit Activity - Voluntarily')
 
   const form = wrapper.find('Form(ActDetailForm)').first()

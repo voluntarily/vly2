@@ -1,6 +1,5 @@
-import { Tabs } from 'antd'
-import PropTypes from 'prop-types'
 import React from 'react'
+import { Tabs } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { ActAboutPanel } from './ActAboutPanel'
 import { ActOpsPanel } from './ActOpsPanel'
@@ -74,15 +73,4 @@ export const ActTabs = ({
   )
 }
 
-ActTabs.propTypes = {
-  act: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    subtitle: PropTypes.string,
-    imgUrl: PropTypes.any,
-    _id: PropTypes.string
-  }),
-  canManage: PropTypes.bool,
-  canEdit: PropTypes.bool,
-  onChange: PropTypes.func
-}
 export default ActTabs

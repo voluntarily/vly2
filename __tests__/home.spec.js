@@ -281,7 +281,7 @@ test.serial('run GetInitialProps', async t => {
     .get('path:/api/interestArchives/', { body: t.context.archivedInterestFixture })
   reduxApi.use('fetch', adapterFetch(t.context.mockServer))
 
-  await PersonHomePage.getInitialProps({ store: t.context.mockStore })
+  await getServerSideProps({ store: t.context.mockStore })
   // 2 actions for each call and success
   t.is(t.context.mockStore.getActions().length, 16)
 })

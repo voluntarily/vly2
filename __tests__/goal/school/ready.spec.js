@@ -16,7 +16,7 @@ test('render OpList', async t => {
   const hash = hashObj(volunteerReadyQuiz[0].answers, email)
   const RoutedVolunteerReady = withMockRoute(VolunteerReady)
 
-  const props = await VolunteerReady.getInitialProps({ store })
+  const props = await getServerSideProps({ store })
   t.is(props.vqa.name, volunteerReadyQuiz[0].name)
   t.is(props.vqa.hash, hash)
 

@@ -32,7 +32,7 @@ test.serial('render registerRequest with registered teacher', async t => {
   await act(async () => { }) // let the hooks complete
   wrapper.update()
   // should be showing teacher record
-  t.is(wrapper.find('TeacherRegistrationRecord').first().find('FormattedMessage').first().text(), 'Teacher Registration Record')
+  t.is(wrapper.find('TeacherRegistrationRecord').first().find('MemoizedFormattedMessage').first().text(), 'Teacher Registration Record')
 
   const resetBtn = wrapper.find('button').first()
   t.is(resetBtn.text(), 'Reset Registration')
@@ -50,7 +50,7 @@ test.serial('render registerRequest with un-registered teacher', async t => {
   await act(async () => { }) // let the hooks complete
   wrapper.update()
   // should be showing getTeacherRegistration form
-  t.is(wrapper.find('GetTeacherRegistration').first().find('FormattedMessage').first().text(), 'You can validate as a teacher using your teacher registration number:')
+  t.is(wrapper.find('GetTeacherRegistration').first().find('MemoizedFormattedMessage').first().text(), 'You can validate as a teacher using your teacher registration number:')
 })
 
 test.serial('render registerRequest with errors', async t => {
@@ -61,7 +61,7 @@ test.serial('render registerRequest with errors', async t => {
   wrapper.update()
 
   // should be showing error message
-  t.is(wrapper.find('GetTeacherRegistration').first().find('FormattedMessage').first().text(), 'You can validate as a teacher using your teacher registration number:')
+  t.is(wrapper.find('GetTeacherRegistration').first().find('MemoizedFormattedMessage').first().text(), 'You can validate as a teacher using your teacher registration number:')
 })
 
 test.serial('render registerRequest with registered teacher and erros', async t => {

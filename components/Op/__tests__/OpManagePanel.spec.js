@@ -11,7 +11,7 @@ test('render OpManagePanel for active op', t => {
     status: OpportunityStatus.ACTIVE
   }
   const wrapper = shallowWithIntl(<OpManagePanel op={op} />)
-  t.is(wrapper.find('h2').first().find('FormattedMessage').props().id, 'interestSection.ask.name')
+  t.is(wrapper.find('h2').first().find('MemoizedFormattedMessage').props().id, 'interestSection.ask.name')
   t.true(wrapper.exists('InterestSection'))
   t.true(wrapper.exists('Connect(OpCloseOpportunity)'))
 })
@@ -23,6 +23,6 @@ test('render OpManagePanel for completed op', t => {
     status: OpportunityStatus.COMPLETED
   }
   const wrapper = shallowWithIntl(<OpManagePanel op={op} />)
-  t.is(wrapper.find('h2').first().find('FormattedMessage').props().id, 'interestSection.ask.name')
+  t.is(wrapper.find('h2').first().find('MemoizedFormattedMessage').props().id, 'interestSection.ask.name')
   t.true(wrapper.exists('InterestArchivedSection'))
 })

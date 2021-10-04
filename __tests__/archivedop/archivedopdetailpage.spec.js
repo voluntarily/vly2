@@ -121,7 +121,7 @@ test.serial('ArchivedOpDetailPage GetInitialProps non member', async t => {
   myMock
     .get(`path:/api/archivedOpportunities/${t.context.op._id}`, { body: { status: 200 } })
     .get('path:/api/members/', { body: t.context.members })
-  const props = await ArchivedOpDetailPage.getInitialProps(ctx)
+  const props = await getServerSideProps(ctx)
   t.is(props, undefined)
 })
 

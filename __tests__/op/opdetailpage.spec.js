@@ -170,7 +170,7 @@ test.serial('OpDetailPage GetInitialProps non member', async t => {
     .get('path:/api/locations', { body: t.context.locations })
     .get('path:/api/tags/', { body: t.context.tags })
     .get('path:/api/members/', { body: t.context.members })
-  const props = await OpDetailPage.getInitialProps(ctx)
+  const props = await getServerSideProps(ctx)
   t.falsy(props.isNew)
   t.true(props.opExists)
 })
@@ -191,7 +191,7 @@ test.serial('OpDetailPage GetInitialProps new ask', async t => {
     .get('path:/api/tags/', { body: t.context.tags })
     .get('path:/api/members/', { body: t.context.members })
 
-  const props = await OpDetailPage.getInitialProps(ctx)
+  const props = await getServerSideProps(ctx)
   t.true(props.isNew)
   t.is(props.opType, 'ask')
   t.falsy(props.opExists)
@@ -213,7 +213,7 @@ test.serial('OpDetailPage GetInitialProps new offer', async t => {
     .get('path:/api/tags/', { body: t.context.tags })
     .get('path:/api/members/', { body: t.context.members })
 
-  const props = await OpDetailPage.getInitialProps(ctx)
+  const props = await getServerSideProps(ctx)
   t.true(props.isNew)
   t.is(props.opType, 'offer')
   t.falsy(props.opExists)

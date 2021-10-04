@@ -8,6 +8,7 @@ import OpTabs from '../../components/Op/OpTabs'
 import OpUnknown from '../../components/Op/OpUnknown'
 import OpArchivedHeader from '../../components/Op/OpArchivedHeader'
 import { FullPage } from '../../components/VTheme/VTheme'
+import reduxWrapper from '../../lib/redux/store'
 
 import reduxApi, { withArchivedOpportunities, withMembers } from '../../lib/redux/reduxApi.js'
 const { Role } = require('../../server/services/authorize/role')
@@ -64,7 +65,11 @@ export const ArchivedOpDetailPage = ({
     </FullPage>)
 }
 
-ArchivedOpDetailPage.getInitialProps = async ({ store, query }) => {
+export const getServerSideProps = reduxWrapper.getServerSideProps(
+  store => async (props) => gssp({ store, query: props.query })
+)
+
+export const gssp = async ({ store, query }) => {
   // console('getInitialProps: ArchivedOpDetailPage', store, query)
   const me = store.getState().session.me
   const opExists = !!(query && query.id) // !! converts to a boolean value

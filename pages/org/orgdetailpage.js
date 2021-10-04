@@ -179,32 +179,35 @@ export const OrgDetailPage = ({
 }
 
 export const getServerSideProps = reduxWrapper.getServerSideProps(
-  store => async ({ query }) => {
-    // Get one Org
-    console.log('OrgDetailPage GSSP', query)
-    await store.dispatch(reduxApi.actions.tags.get({ name: GroupTagList }))
-    const isNew = query && query.new && query.new === 'new'
-    const props = {
-      props: {
-        isNew: !!isNew,
-        orgid: null
-      }
+  store => async (props) => gssp({ store, query: props.query })
+)
+
+export const gssp = async ({ store, query }) => {
+  // Get one Org
+  console.log('OrgDetailPage GSSP', query)
+  await store.dispatch(reduxApi.actions.tags.get({ name: GroupTagList }))
+  const isNew = query && query.new && query.new === 'new'
+  const props = {
+    props: {
+      isNew: !!isNew,
+      orgid: null
     }
-    if (isNew) {
-      return props
-    } else if (query && query.id) {
-      props.props.orgid = query.id
-      await store.dispatch(reduxApi.actions.organisations.get(query))
-      if (store.getState().session.isAuthenticated) {
+  }
+  if (isNew) {
+    return props
+  } else if (query && query.id) {
+    props.props.orgid = query.id
+    await store.dispatch(reduxApi.actions.organisations.get(query))
+    if (store.getState().session.isAuthenticated) {
       // get available membership of this org - either just me or all
       // const meid = store.getState().session.me._id.toString()
-        await store.dispatch(
-          reduxApi.actions.members.get({ orgid: query.id })
-        )
-      }
-      return props
+      await store.dispatch(
+        reduxApi.actions.members.get({ orgid: query.id })
+      )
     }
-  })
+    return props
+  }
+}
 
 export const OrgDetailPageWithOrgs = withOrgs(OrgDetailPage)
 export default OrgDetailPageWithOrgs

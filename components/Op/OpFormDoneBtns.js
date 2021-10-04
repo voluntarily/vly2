@@ -2,7 +2,7 @@ import { FormattedMessage } from 'react-intl'
 import { BackButton, DoneButton } from '../VTheme/Buttons'
 import { DescriptionContainer, FormGrid, InputContainer, TitleContainer } from '../VTheme/FormStyles'
 
-export const OpFormDoneBtns = ({ getFieldDecorator, type, onSubmit, onCancel, showPrompt = false, canSaveDraft = false }) =>
+export const OpFormDoneBtns = ({ type, onSubmit, onCancel, showPrompt = false, canSaveDraft = false }) =>
   <FormGrid>
 
     <DescriptionContainer>
@@ -27,7 +27,10 @@ export const OpFormDoneBtns = ({ getFieldDecorator, type, onSubmit, onCancel, sh
         </>}
     </DescriptionContainer>
     <InputContainer>
-      <DoneButton onClick={() => onSubmit('publish')} />
+      <DoneButton
+        type='primary'
+        htmlType='submit'
+      />
       <BackButton onClick={onCancel} />
       {/* {canSaveDraft &&
         <SaveDraftButton onClick={() => onSubmit('publish')} />} */}

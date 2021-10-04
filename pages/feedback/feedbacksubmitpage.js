@@ -2,7 +2,6 @@ import {
   FullPage,
   PageBannerNoTabs
 } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import reduxApi, { withFeedback } from '../../lib/redux/reduxApi.js'
@@ -12,6 +11,7 @@ import Loading from '../../components/Loading'
 import Link from 'next/link'
 import { Button, Typography } from 'antd'
 import { FormattedMessage } from 'react-intl'
+import reduxWrapper from '../../lib/redux/store'
 
 export const FeedbackSubmitPage = ({ feedbackActions }) => {
   const { query: { rating, opportunity } } = useRouter()
@@ -71,7 +71,11 @@ export const FeedbackSubmitPage = ({ feedbackActions }) => {
   )
 }
 
-FeedbackSubmitPage.getInitialProps = async ({ store, query }) => {
+export const getServerSideProps = reduxWrapper.getServerSideProps(
+  store => async (props) => gssp({ store, query: props.query })
+)
+
+export const gssp = async ({ store, query }) => {
   try {
     const me = store.getState().session.me
     const meid = me._id.toString()

@@ -108,7 +108,7 @@ test('OrgDetailPage GetInitialProps non member', async t => {
     .get(`path:/api/organisations/${t.context.org._id}`, { body: { status: 200 } })
     .get('path:/api/members/', { body: { status: 200 } })
     .get('path:/api/tags/', { body: [] })
-  const props = await OrgDetailPage.getInitialProps(ctx)
+  const props = await getServerSideProps(ctx)
   t.false(props.isNew)
   t.is(props.orgid, t.context.org._id)
 })
@@ -154,7 +154,7 @@ test('OrgDetailPage GetInitialProps anon', async t => {
     .get(`path:/api/organisations/${t.context.org._id}`, { body: { status: 200 } })
     .get('path:/api/members/', { body: { status: 200 } })
     .get('path:/api/tags/', { body: [] })
-  const props = await OrgDetailPage.getInitialProps(ctx)
+  const props = await getServerSideProps(ctx)
   t.false(props.isNew)
   t.is(props.orgid, t.context.org._id)
 })
@@ -173,7 +173,7 @@ test('OrgDetailPage GetInitialProps new', async t => {
     .get(`path:/api/organisations/${t.context.org._id}`, { body: { status: 200 } })
     .get('path:/api/members/', { body: { status: 200 } })
     .get('path:/api/tags/', { body: [] })
-  const props = await OrgDetailPage.getInitialProps(ctx)
+  const props = await getServerSideProps(ctx)
   t.true(props.isNew)
   t.is(props.orgid, null)
 })
@@ -276,8 +276,8 @@ test('OrgUnknown', t => {
   const wrapper = shallowWithIntl(
     <OrgUnknown />
   )
-  t.is(wrapper.find('FormattedMessage').first().props().id, 'orgDetailPage.OrgNotFound')
-  t.is(wrapper.find('FormattedMessage').last().props().id, 'orgDetailPage.showOrgs')
+  t.is(wrapper.find('MemoizedFormattedMessage').first().props().id, 'orgDetailPage.OrgNotFound')
+  t.is(wrapper.find('MemoizedFormattedMessage').last().props().id, 'orgDetailPage.showOrgs')
 })
 
 test('edit and save existing org', async t => {

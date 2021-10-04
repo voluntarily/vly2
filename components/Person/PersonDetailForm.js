@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import '@ant-design/compatible/assets/index.css'
 import { Avatar, Button, Checkbox, Divider, Form, Input, Radio, Tooltip, Row, Col } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import { connect } from 'react-redux'
@@ -245,7 +244,7 @@ export const PersonDetailForm = ({ me, person, onCancel, onSubmit, locations, ex
     scriptLoaded && addressListener()
   }, [scriptLoaded])
 
-  const isTest = process.env.NODE_ENV === 'test'
+  // const isTest = process.env.NODE_ENV === 'test'
   const isVolunteer = person.role.some(r => r === Role.VOLUNTEER)
 
   const onFinish = (values) => {

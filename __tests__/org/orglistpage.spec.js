@@ -26,7 +26,7 @@ test('render OrgList', async t => {
       return Promise.resolve(t.context.props)
     }
   }
-  const props = await OrgListPage.getInitialProps({ store })
+  const props = await getServerSideProps({ store })
   const wrapper = shallowWithIntl(<OrgListPage {...props} />)
   t.is(wrapper.find('Button').length, 0)
   t.truthy(wrapper.find('OpList'))
@@ -44,7 +44,7 @@ test('render OrgList as admin', async t => {
       return Promise.resolve(t.context.props)
     }
   }
-  const props = await OrgListPage.getInitialProps({ store })
+  const props = await getServerSideProps({ store })
   const wrapper = shallowWithIntl(<OrgListPage me={me} {...props} />)
   t.is(wrapper.find('h1 FormattedMessage').first().props().id, 'org.list.heading')
   t.is(wrapper.find('Button').length, 1)
@@ -60,6 +60,6 @@ test('render OpList with dispatch error', async t => {
     }
   }
   await t.throwsAsync(async () => {
-    await OrgListPage.getInitialProps({ store })
+    await getServerSideProps({ store })
   }, { message: 'Catch This!' })
 })

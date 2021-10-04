@@ -1,12 +1,10 @@
-import { Tabs } from 'antd'
-import PropTypes from 'prop-types'
 import React from 'react'
+import { Tabs } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { OpAboutPanel } from './OpAboutPanel'
 import { OpQuestionPanel } from './OpQuestionPanel'
 // import OpUpdatePanel from './OpUpdatePanel'
 import { OpManagePanel } from './OpManagePanel'
-import VTabs from '../VTheme/VTabs'
 import OpChatPanel from './OpChatPanel'
 import { useSelector } from 'react-redux'
 
@@ -48,10 +46,21 @@ const opEditTab =
 
 const isNotProd = process.env.NODE_ENV !== 'production'
 
-export const OpTabs = ({ op, onChange, canManage, canEdit, defaultTab, author }) => {
+export const OpTabs = ({
+  op,
+  onChange,
+  canManage,
+  canEdit,
+  tab
+}) => {
   const interest = useSelector(state => state.interests.data[0])
   return (
-    <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
+    <Tabs
+      activeKey={tab} onChange={onChange}
+      defaultActiveKey='about'
+      type='card' size='large'
+      tabBarGutter='5px'
+    >
       <TabPane tab={opAboutTab} key='about'>
         <OpAboutPanel op={op} />
       </TabPane>
@@ -73,23 +82,8 @@ export const OpTabs = ({ op, onChange, canManage, canEdit, defaultTab, author })
       {canEdit && (
         <TabPane tab={opEditTab} key='edit' />
       )}
-    </VTabs>
+    </Tabs>
   )
 }
-OpTabs.propTypes = {
-  op: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    subtitle: PropTypes.string,
-    imgUrl: PropTypes.any,
-    duration: PropTypes.string,
-    location: PropTypes.string,
-    _id: PropTypes.string
-  }),
-  canManage: PropTypes.bool,
-  canEdit: PropTypes.bool,
-  onChange: PropTypes.func,
-  params: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  })
-}
+
 export default OpTabs

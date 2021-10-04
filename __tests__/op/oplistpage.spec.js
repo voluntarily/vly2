@@ -26,7 +26,7 @@ test('render OpList', async t => {
       return Promise.resolve(t.context.props)
     }
   }
-  const props = await OpListPage.getInitialProps({ store })
+  const props = await getServerSideProps({ store })
   const wrapper = shallowWithIntl(<OpListPage {...props} />)
   t.is(wrapper.find('h1 FormattedMessage').first().props().id, 'oplistpage.title')
   t.truthy(wrapper.find('Button'))
@@ -42,6 +42,6 @@ test('render OpList with dispatch error', async t => {
     }
   }
   await t.throwsAsync(async () => {
-    await OpListPage.getInitialProps({ store })
+    await getServerSideProps({ store })
   }, { message: 'Catch This!' })
 })

@@ -27,12 +27,12 @@ test('shallow GoalStartButton', t => {
   )
   // t.is(wrapper.props().href, '/test')
   t.is(wrapper.find('GoalCard__BottomRightButton').first().props().onClick, handleClick)
-  t.is(wrapper.find('FormattedMessage').first().props().defaultMessage, 'Start')
+  t.is(wrapper.find('MemoizedFormattedMessage').first().props().defaultMessage, 'Start')
 
   wrapper = shallowWithIntl(
     <GoalStartButton status={PersonalGoalStatus.ACTIVE} href='/test' onClick={handleClick} />
   )
-  t.is(wrapper.find('FormattedMessage').first().props().defaultMessage, 'Continue')
+  t.is(wrapper.find('MemoizedFormattedMessage').first().props().defaultMessage, 'Continue')
   wrapper = shallowWithIntl(
     <GoalStartButton status={PersonalGoalStatus.COMPLETED} href='/test' onClick={handleClick} />
   )

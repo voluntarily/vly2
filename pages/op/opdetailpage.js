@@ -1,7 +1,6 @@
-import { useState, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { message } from 'antd'
 import { useRouter } from 'next/router'
-import PropTypes from 'prop-types'
 import Loading from '../../components/Loading'
 import OpTabs from '../../components/Op/OpTabs'
 import {
@@ -9,6 +8,8 @@ import {
 } from '../../components/VTheme/VTheme'
 
 import reduxApi, { withMembers, withOps } from '../../lib/redux/reduxApi.js'
+import reduxWrapper from '../../lib/redux/store'
+
 import { MemberStatus } from '../../server/api/member/member.constants'
 import OpBanner from '../../components/Op/OpBanner'
 import OpUnknown from '../../components/Op/OpUnknown'
@@ -54,29 +55,28 @@ export const OpDetailPage = ({
   tags,
   locations
 }) => {
-  const router = useRouter()
+  const { asPath, query, pathname, replace, back } = useRouter()
 
-  const [tab, setTab] = useState(isNew ? 'edit' : router.query.tab)
+  const [tab, setTab] = useState(isNew ? 'edit' : query.tab)
+  useEffect(() => {
+    const qtab = asPath.match(/.*tab=(.*)/)
+    qtab && setTab(qtab[1])
+  }, [query])
 
   const updateTab = (key, top) => {
-    setTab(key)
     if (top) window.scrollTo(0, 0)
-    //  else { window.scrollTo(0, 400) }
     const newpath = `/ops/${op._id}?tab=${key}`
-    router.replace(router.pathname, newpath, { shallow: true })
+    replace(pathname, newpath, { shallow: true })
   }
   const handleTabChange = (key, e) => {
     updateTab(key, key === 'edit')
   }
-  const handleCancel = useCallback(
-    () => {
-      updateTab('about', true)
-      if (isNew) { // return to previous
-        router.back()
-      }
-    },
-    [isNew]
-  )
+  const handleCancel = () => {
+    updateTab('about', true)
+    if (isNew) { // return to previous
+      back()
+    }
+  }
   const handleSubmit = useCallback(
     async (op1) => {
       let res = {}
@@ -98,7 +98,7 @@ export const OpDetailPage = ({
         )
         op = res[0] // get new id
         setTab('about')
-        router.replace(router.pathname, `/ops/${op._id}`) // reload to the new id page
+        replace(pathname, `/ops/${op._id}`) // reload to the new id page
       }
       message.success('Saved.')
     }, [])
@@ -200,15 +200,26 @@ export const OpDetailPage = ({
           type={op.type}
         />
       </OpBanner>
-      <OpTabs op={op} canManage={canManage} canEdit={canManage} defaultTab={tab} onChange={handleTabChange} author={me._id} />
+      <OpTabs
+        op={op}
+        canManage={canManage}
+        canEdit={canManage}
+        tab={tab}
+        onChange={handleTabChange}
+        author={me._id}
+      />
     </FullPage>)
 }
 
-OpDetailPage.getInitialProps = async ({ store, query }) => {
+export const getServerSideProps = reduxWrapper.getServerSideProps(
+  store => async (props) => gssp({ store, query: props.query })
+)
+
+export const gssp = async ({ store, query }) => {
   // console('getInitialProps: OpDetailPage', store, query)
   const me = store.getState().session.me
   // Get one Org
-  const isNew = query && query.new && [OpportunityType.ASK, OpportunityType.OFFER].includes(query.new)
+  const isNew = !!(query && query.new && [OpportunityType.ASK, OpportunityType.OFFER].includes(query.new))
   const opExists = !!(query && query.id) // !! converts to a boolean value
   await Promise.all([
     store.dispatch(reduxApi.actions.locations.get({})),
@@ -225,9 +236,11 @@ OpDetailPage.getInitialProps = async ({ store, query }) => {
       await store.dispatch(reduxApi.actions.activities.get({ id: query.act }))
     }
     return {
-      isNew,
-      opType: query.new,
-      actid: query.act
+      props: {
+        isNew,
+        opType: query.new,
+        actid: query.act
+      }
     }
   } else {
     if (opExists) {
@@ -235,31 +248,12 @@ OpDetailPage.getInitialProps = async ({ store, query }) => {
       await store.dispatch(reduxApi.actions.opportunities.get(query))
     }
     return {
-      isNew,
-      opExists
+      props: {
+        isNew,
+        opExists
+      }
     }
   }
-}
-
-OpDetailPage.propTypes = {
-  op: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    subtitle: PropTypes.string,
-    imgUrl: PropTypes.any,
-    duration: PropTypes.string,
-    locations: PropTypes.arrayOf(PropTypes.string),
-    address: PropTypes.shape({
-      street: PropTypes.string,
-      suburb: PropTypes.string,
-      city: PropTypes.string,
-      postcode: PropTypes.string,
-      region: PropTypes.string
-    }),
-    _id: PropTypes.string.isRequired
-  }),
-  params: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  })
 }
 
 export const OpDetailPageWithOps = withMembers(withOps(OpDetailPage))
