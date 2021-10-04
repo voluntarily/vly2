@@ -106,7 +106,7 @@ export const ActListSection = () => {
               </List.Item>
             )}
           />
-          <Card>Cant find what you want?
+          <Card>Can't find what you want?
             <a
               target='_blank'
               rel='noopener noreferrer'

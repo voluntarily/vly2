@@ -6,7 +6,7 @@ const actionWithPromise = () => {
   return new Promise((resolve, reject) => resolve('route changed'))
 }
 
-export const mockUseRouter = (path, query = {}) => (t) => {
+export const useMockRouter = (path, query = {}) => (t) => {
   t.context.router = {
     pathname: path,
     route: path,
@@ -21,8 +21,11 @@ export const mockUseRouter = (path, query = {}) => (t) => {
     back: sinon.fake(),
     prefetch: actionWithPromise
   }
-  sinon.replace(nextRouter, 'useRouter', () => t.context.router)
+  t.context.nextRouter = sinon.replace(nextRouter, 'useRouter', () => t.context.router)
 }
 
+export const unuseMockRouter = (t) => {
+  sinon.replace(nextRouter, 'useRouter', t.context.nextRouter)
+}
 // test.afterEach.always(t => t.context.mockServer.reset())
-export default mockUseRouter
+export default useMockRouter

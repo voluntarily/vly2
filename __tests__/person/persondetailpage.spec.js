@@ -1,14 +1,14 @@
 import test from 'ava'
 import sinon from 'sinon'
 import { shallowWithIntl } from '../../lib/react-intl-test-helper'
-import mockUseRouter from '../../server/util/mockUseRouter'
+import useMockRouter from '../../server/util/useMockRouter'
 
 import { PersonDetailPage, gssp } from '../../pages/person/persondetailpage'
 import objectid from 'objectid'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import people from '../../server/api/person/__tests__/person.fixture'
 
-test.before('Setup Route', mockUseRouter('/person'))
+test.before('Setup Route', useMockRouter('/person'))
 
 test.before('Setup fixtures', (t) => {
   people.map(p => { p._id = objectid().toString() })

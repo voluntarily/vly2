@@ -4,15 +4,16 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { FormattedMessage } from 'react-intl'
-import reduxWrapper from '../../lib/redux/store'
 
 import Loading from '../../components/Loading'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import { IssueBadgeButton } from '../../components/IssueBadge/issueBadge'
 import { FullPage } from '../../components/VTheme/VTheme'
-import reduxApi, { withMembers, withPeople, withLocations } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
+
+import reduxApi, { withMembers, withPeople, withLocations } from '../../lib/redux/reduxApi.js'
+import reduxWrapper from '../../lib/redux/store'
 
 const blankPerson = {
   // for new people load the default template doc.
@@ -181,13 +182,13 @@ export const getServerSideProps = reduxWrapper.getServerSideProps(
 // factored out for easier testing.
 export const gssp = async ({ store, query }) => {
   // Get one Org
-  const isNew = query && query.new && query.new === 'new'
+  const isNew = !!(query && query.new && query.new === 'new')
   await store.dispatch(reduxApi.actions.locations.get({}))
   await store.dispatch(reduxApi.actions.tags.get({}))
   if (isNew) {
     return {
       props: {
-        isNew: true,
+        isNew,
         personid: null
       }
     }
@@ -203,7 +204,7 @@ export const gssp = async ({ store, query }) => {
 
     return {
       props: {
-        isNew: false,
+        isNew,
         personid: query.id
       }
     }

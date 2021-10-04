@@ -2,11 +2,11 @@ import React from 'react'
 import test from 'ava'
 import Header from '../Header'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
-import mockUseRouter from '../../../server/util/mockUseRouter'
+import useMockRouter from '../../../server/util/useMockRouter'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 
-test.before('Setup Route', mockUseRouter('/about'))
+test.before('Setup Route', useMockRouter('/about'))
 
 // TODO: as navigation is dynamically loaded need to work out how to test the different menus
 test('renders the Header and Navigation for anon user', t => {

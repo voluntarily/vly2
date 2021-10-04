@@ -1,8 +1,8 @@
+import { useState, useEffect, useCallback } from 'react'
 import { message } from 'antd'
-import { useRouter } from 'next/router'
-import PropTypes from 'prop-types'
-import { useState, useCallback } from 'react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+
 import ActBanner from '../../components/Act/ActBanner'
 import ActTabs from '../../components/Act/ActTabs'
 import ActUnknown from '../../components/Act/ActUnknown'
@@ -10,11 +10,12 @@ import ActTryBelow from '../../components/Act/ActTryBelow'
 import ActDetailForm from '../../components/Act/ActDetailForm'
 import Loading from '../../components/Loading'
 import { FullPage, PageBannerButtons } from '../../components/VTheme/VTheme'
-
-import reduxApi, { withActs, withMembers } from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import OpAdd from '../../components/Op/OpAdd'
 import { Role } from '../../server/services/authorize/role.js'
+
+import reduxApi, { withActs, withMembers } from '../../lib/redux/reduxApi.js'
+import reduxWrapper from '../../lib/redux/store'
 
 const blankAct = {
   name: '',
@@ -36,31 +37,32 @@ export const ActDetailPage = ({
   activities,
   tags
 }) => {
-  const router = useRouter()
+  const { asPath, query, pathname, replace, back } = useRouter()
+
   const [tab, setTab] = useState(
     isNew
       ? 'edit'
-      : (router.query && router.query.tab ? router.query.tab : 'about')
+      : (query && query.tab ? query.tab : 'about')
   )
+  useEffect(() => {
+    const qtab = asPath.match(/.*tab=(.*)/)
+    qtab && setTab(qtab[1])
+  }, [query])
+
   const updateTab = (key, top) => {
-    setTab(key)
     if (top) window.scrollTo(0, 0)
-    //  else { window.scrollTo(0, 400) }
     const newpath = `/acts/${act._id}?tab=${key}`
-    router.replace(router.pathname, newpath, { shallow: true })
+    replace(pathname, newpath, { shallow: true })
   }
   const handleTabChange = (key, e) => {
     updateTab(key, key === 'edit')
   }
-  const handleCancel = useCallback(
-    () => {
-      updateTab('about', true)
-      if (isNew) { // return to previous
-        router.back()
-      }
-    },
-    [isNew]
-  )
+  const handleCancel = () => {
+    updateTab('about', true)
+    if (isNew) { // return to previous
+      back()
+    }
+  }
 
   const handleSubmit = useCallback(
     async act => {
@@ -81,7 +83,7 @@ export const ActDetailPage = ({
             { body: JSON.stringify(act) })
         )
         act = res[0]
-        router.replace(`/acts/${act._id}`)
+        replace(`/acts/${act._id}`)
       }
       updateTab('about', true)
       message.success('Saved.')
@@ -157,30 +159,39 @@ export const ActDetailPage = ({
         </PageBannerButtons>
         <ActTryBelow counts={act.opCounts} role={me.role} />
       </ActBanner>
-      <ActTabs act={act} me={me} canManage={canManage} canEdit={canManage} defaultTab={tab} onChange={handleTabChange} owner={me._id} />
+      <ActTabs
+        act={act} me={me} canManage={canManage} canEdit={canManage}
+        tab={tab} onChange={handleTabChange} owner={me._id}
+      />
     </FullPage>)
 }
 
-ActDetailPage.getInitialProps = async ({ store, query }) => {
+export const getServerSideProps = reduxWrapper.getServerSideProps(
+  store => async (props) => gssp({ store, query: props.query })
+)
+
+export const gssp = async ({ store, query }) => {
   const isAuthenticated = store.getState().session.isAuthenticated
   const me = store.getState().session.me
-  const isNew = query && query.new && query.new === 'new'
+  const isNew = !!(query && query.new && query.new === 'new')
   const actExists = !!(query && query.id) // !! converts to a boolean value
 
   if (isNew) {
     await Promise.all([
       isAuthenticated ? store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })) : Promise.resolve(),
-      store.dispatch(reduxApi.actions.tags.get())
+      store.dispatch(reduxApi.actions.tags.get({}))
     ])
     return {
-      isNew
+      props: {
+        isNew
+      }
     }
   } else {
     if (actExists) {
       try {
         await Promise.all([
           isAuthenticated ? store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })) : Promise.resolve(),
-          store.dispatch(reduxApi.actions.tags.get()),
+          store.dispatch(reduxApi.actions.tags.get({})),
           store.dispatch(reduxApi.actions.activities.get(query)),
           store.dispatch(
             reduxApi.actions.opportunities.get(
@@ -193,24 +204,12 @@ ActDetailPage.getInitialProps = async ({ store, query }) => {
       }
     }
     return {
-      isNew,
-      actExists
+      props: {
+        isNew,
+        actExists
+      }
     }
   }
 }
 
-ActDetailPage.propTypes = {
-  act: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    subtitle: PropTypes.string,
-    imgUrl: PropTypes.any,
-    duration: PropTypes.string,
-    location: PropTypes.string,
-    _id: PropTypes.string.isRequired
-  }),
-  params: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  })
-}
-export const ActDetailPageWithActs = withMembers(withActs(ActDetailPage))
 export default withMembers(withActs(ActDetailPage))

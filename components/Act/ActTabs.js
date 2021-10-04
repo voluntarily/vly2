@@ -6,7 +6,6 @@ import { ActAboutPanel } from './ActAboutPanel'
 import { ActOpsPanel } from './ActOpsPanel'
 import { ActResourcesPanel } from './ActResourcesPanel'
 import { Role } from '../../server/services/authorize/role.js'
-import VTabs from '../VTheme/VTabs'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 import { OpTypeCount } from '../Op/OpType'
 const { ASK, OFFER } = OpportunityType
@@ -34,13 +33,25 @@ const actEditTab =
     description='Tab label for Act Editor panel on Opportunity'
   />
 
-export const ActTabs = ({ act, me, onChange, canManage, canEdit, defaultTab }) => {
+export const ActTabs = ({
+  act,
+  me,
+  onChange,
+  canManage,
+  canEdit,
+  tab
+}) => {
   const actRequestsTab = <OpTypeCount counts={act.opCounts} type={ASK} />
   const actOffersTab = <OpTypeCount counts={act.opCounts} type={OFFER} />
   const vp = me.role.includes(Role.VOLUNTEER)
   const bp = me.role.includes(Role.BASIC)
   return (
-    <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
+    <Tabs
+      activeKey={tab} onChange={onChange}
+      defaultActiveKey='about'
+      type='card' size='large'
+      tabBarGutter='5px'
+    >
       {act.description &&
         <TabPane tab={actAboutTab} key='about'>
           <ActAboutPanel act={act} />
@@ -59,7 +70,7 @@ export const ActTabs = ({ act, me, onChange, canManage, canEdit, defaultTab }) =
       {canEdit && (
         <TabPane tab={actEditTab} key='edit' />
       )}
-    </VTabs>
+    </Tabs>
   )
 }
 

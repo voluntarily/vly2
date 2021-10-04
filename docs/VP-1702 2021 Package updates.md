@@ -73,7 +73,7 @@ Fixed these using npx @next/codemod name-default-component. 12 files affected.
 
 ## react-helmet
 
-* all uses of <Helmet> replaced with <Head> provided by Next/head.
+* all uses of Helmet replaced with Head provided by Next/head.
 
 
 ## AntD Styles fix
@@ -133,7 +133,7 @@ Person/PersonDetailForm.js
 
 * PersonDetailPage
     * get server side props, factor out a version we can test using mock store.
-    * switch from withMockRouter to mockUseRouter
+    * switch from withMockRouter to useMockRouter
 
 * PersonListPage
     * people response not json serialisable. due to invalid json decoding on person.controller.  change to string decode for select and search.  This clearly has not been tested much. Ditto Organisation.controller.
@@ -142,3 +142,37 @@ Person/PersonDetailForm.js
     * page is now sorted by name instead of nickname
 
 ## Activity
+
+### Components
+* ActAboutPanel.js - passed
+* ActCard.js - passed
+* ActList.js - passed
+* ActOpsPanel.js - no test
+* ActSearchInput.js - no test
+* ActUnknown.js - correct spelling, change test for MemoizedFormattedMessage
+* ActAdd.js - passed
+* ActCardSuggest.js - passed
+* ActListSection.js
+    * warnings on warnKey and eventKey from antd
+    * test needs await for onClick response.
+* ActReadMore.js - passed
+* ActTabs.js
+    * use ActiveKey
+    * use Antd card style
+* ActBanner.js - passed
+* ActDetailForm.js - passed with some class name changes 
+    * TODO: convert to antd 4 form 
+* ActMenu.js - no test, covered by others
+* ActResourcesPanel.js - no test
+* ActTryBelow.js - update to memoized formatted message
+* all component tests - passing - 28 tests
+
+### Pages
+
+* ActDetailPage
+    * replace ActDetailPage.getInitialProps with GetServerSideProps
+    * fix the tab effect.
+    * bug - about only shows if there is a description. but edit defaults to about tab.
+
+* ActListPage - passed
+

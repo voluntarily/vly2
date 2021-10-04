@@ -125,7 +125,7 @@ test('render the detail with act', t => {
   name
     .simulate('change', { target: { value: '' } })
   wrapper.update()
-  t.is(wrapper.find('.ant-form-explain').first().text(), 'Title is required')
+  t.is(wrapper.find('.ant-legacy-form-explain').first().text(), 'Title is required')
 })
 
 test('toggle radio buttons', t => {

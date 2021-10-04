@@ -1,3 +1,1 @@
-import ActListPage from './actlistpage'
-
-export default ActListPage
+export { default } from './actlistpage.js'

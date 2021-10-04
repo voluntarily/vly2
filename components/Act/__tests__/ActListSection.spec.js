@@ -10,7 +10,7 @@ import * as nextRouter from 'next/router'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
-import mockUseRouter from '../../../server/util/mockUseRouter'
+import useMockRouter from '../../../server/util/useMockRouter'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
@@ -46,7 +46,7 @@ test.before('Setup fixtures', (t) => {
   t.context.mockStore = configureStore([thunk])(t.context.defaultstore)
 })
 
-test.before('Setup Route', mockUseRouter('/acts', { search: 'sun' }))
+test.before('Setup Route', useMockRouter('/acts', { search: 'sun' }))
 
 test.serial('render ActListSection', async t => {
   const router = nextRouter.useRouter()
@@ -74,7 +74,6 @@ test.serial('render ActListSection with selected Org', async t => {
   t.is(t.context.mockStore.getActions().length, 1)
   // handle selected Org
   const menu = wrapper.find('ActMenu').first()
-  menu.props().onClick({ key: 'orgOmgTech' })
-  wrapper.update()
+  await menu.invoke('onClick')({ key: 'orgOmgTech' })
   t.is(t.context.mockStore.getActions().length, 2)
 })

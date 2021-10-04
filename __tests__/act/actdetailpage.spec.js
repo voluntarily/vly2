@@ -1,16 +1,16 @@
 import React from 'react'
 import test from 'ava'
-import { ActDetailPage } from '../../pages/act/actdetailpage'
-import { shallowWithIntl } from '../../lib/react-intl-test-helper'
 import objectid from 'objectid'
-import withMockRoute from '../../server/util/mockRouter'
-import sinon from 'sinon'
+
+import { ActDetailPage, gssp } from '../../pages/act/actdetailpage'
+import { shallowWithIntl } from '../../lib/react-intl-test-helper'
 import acts from '../../server/api/activity/__tests__/activity.fixture'
 import people from '../../server/api/person/__tests__/person.fixture'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import tags from '../../server/api/tag/__tests__/tag.fixture'
+import useMockRouter from '../../server/util/useMockRouter'
+
 import { MemberStatus } from '../../server/api/member/member.constants'
-import * as nextRouter from 'next/router'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
@@ -87,43 +87,22 @@ test.before('Setup fixtures', (t) => {
   }
 })
 
-test.before('Setup Route', (t) => {
-  const router = () => {
-    return ({
-      pathname: '/test',
-      route: '/test',
-      query: { id: 12345 },
-      asPath: '/test/12345',
-      initialProps: {},
-      pageLoader: sinon.fake(),
-      App: sinon.fake(),
-      Component: sinon.fake(),
-      replace: sinon.fake(),
-      push: sinon.fake(),
-      back: sinon.fake()
-    })
-  }
-  sinon.replace(nextRouter, 'useRouter', router)
-})
+test.before('Setup Route', useMockRouter('/test'), { id: 12345 })
 
 test('render ActDetailPage', async t => {
-  const ps = await ActDetailPage.getInitialProps({ store: t.context.store, query: t.context.query })
+  const ps = await gssp({ store: t.context.store, query: t.context.query })
   const props = {
     ...t.context.props,
     ...ps
   }
-  const RoutedActDetailPage = withMockRoute(ActDetailPage)
 
-  const outer = shallowWithIntl(<RoutedActDetailPage {...props} />)
-  const router = outer.props().router
-  router.push = sinon.spy()
-  const wrapper = outer.dive()
+  const wrapper = shallowWithIntl(<ActDetailPage {...props} />)
   t.is(wrapper.find('title').first().text(), "1 What's my line - Careers panel game - Voluntarily")
   t.truthy(wrapper.find('ActDetail').first())
 })
 
 test('render ActDetailPage - empty acts', async t => {
-  const ps = await ActDetailPage.getInitialProps({ store: t.context.store, query: t.context.query })
+  const ps = await gssp({ store: t.context.store, query: t.context.query })
   const props = {
     ...t.context.props,
     ...ps,
@@ -135,17 +114,13 @@ test('render ActDetailPage - empty acts', async t => {
       request: null
     }
   }
-  const RoutedActDetailPage = withMockRoute(ActDetailPage)
 
-  const outer = shallowWithIntl(<RoutedActDetailPage {...props} />)
-  const router = outer.props().router
-  router.push = sinon.spy()
-  const wrapper = outer.dive()
-  t.true(wrapper.exists('ActUnkown'))
+  const wrapper = shallowWithIntl(<ActDetailPage {...props} />)
+  t.true(wrapper.exists('ActUnknown'))
 })
 
 test('render ActDetailPage - loading', async t => {
-  const ps = await ActDetailPage.getInitialProps({ store: t.context.store, query: t.context.query })
+  const ps = await gssp({ store: t.context.store, query: t.context.query })
   const props = {
     ...t.context.props,
     ...ps,
@@ -157,12 +132,8 @@ test('render ActDetailPage - loading', async t => {
       request: null
     }
   }
-  const RoutedActDetailPage = withMockRoute(ActDetailPage)
 
-  const outer = shallowWithIntl(<RoutedActDetailPage {...props} />)
-  const router = outer.props().router
-  router.push = sinon.spy()
-  const wrapper = outer.dive()
+  const wrapper = shallowWithIntl(<ActDetailPage {...props} />)
   t.is(wrapper.find('title').first().length, 0)
 })
 
@@ -172,18 +143,14 @@ test('Edit new ActDetailPage', async t => {
   const query = {
     new: 'new'
   }
-  const ps = await ActDetailPage.getInitialProps({ store: t.context.store, query })
+  const ps = await gssp({ store: t.context.store, query })
   const props = {
     ...t.context.props,
-    ...ps,
+    ...ps.props,
     dispatch: fn => { return [{ ...newAct, _id: 'newActId' }] }
   }
-  const RoutedActDetailPage = withMockRoute(ActDetailPage)
-
-  const outer = shallowWithIntl(<RoutedActDetailPage {...props} />)
-  const router = outer.props().router
-  router.push = sinon.spy()
-  const wrapper = outer.dive()
+  const wrapper = shallowWithIntl(<ActDetailPage {...props} />)
+  console.log(wrapper.debug())
   t.is(wrapper.find('title').first().text(), 'Edit Activity - Voluntarily')
 
   const form = wrapper.find('Form(ActDetailForm)').first()
