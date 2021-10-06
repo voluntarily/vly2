@@ -6,11 +6,12 @@ const { OpportunityStatus, OpportunityType } = require('./opportunity.constants'
 const { SchemaName } = require('./opportunity.constants')
 
 const opportunityAddressSchema = new Schema({
-  street: String,
-  suburb: String,
-  city: String,
-  postcode: String,
-  region: String
+  street: { type: 'String' },
+  suburb: { type: 'String' },
+  city: { type: 'String' },
+  postcode: { type: 'String' },
+  region: { type: 'String' },
+  addressSummary: { type: 'String' }
 })
 
 const opportunitySchema = new Schema({
