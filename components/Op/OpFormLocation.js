@@ -23,7 +23,6 @@ const opAddress = (
 )
 export const OpFormLocation = ({ form, type, orgMembership, scriptLoaded, addressFinderKey }) => {
   const handleNewAddress = (address) => {
-    console.log('got', form, address)
     form.setFieldsValue({
       address
     })

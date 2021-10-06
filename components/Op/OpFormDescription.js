@@ -1,12 +1,10 @@
-import { Form } from '@ant-design/compatible'
-import '@ant-design/compatible/assets/index.css'
-import { Input } from 'antd'
+import { Form, Input } from 'antd'
 import React from 'react'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, TitleContainer } from '../VTheme/FormStyles'
 import { OpTypeDescriptionTitle, OpTypeDescriptionPrompt } from './OpType'
 const { TextArea } = Input
 
-export const OpFormDescription = ({ getFieldDecorator, type }) => {
+export const OpFormDescription = ({ type }) => {
   const opDescriptionLabel = (
     <OpTypeDescriptionTitle type={type} />
   )
@@ -21,12 +19,12 @@ export const OpFormDescription = ({ getFieldDecorator, type }) => {
       </DescriptionContainer>
       <InputContainer>
         <MediumInputContainer>
-          <Form.Item label={opDescriptionLabel}>
-            {getFieldDecorator('description')(
-              <TextArea
-                rows={6}
-              />
-            )}
+          <Form.Item
+            name='description'
+            label={opDescriptionLabel}
+            required
+          >
+            <TextArea rows={6} />
           </Form.Item>
         </MediumInputContainer>
       </InputContainer>

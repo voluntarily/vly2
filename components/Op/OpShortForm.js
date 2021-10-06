@@ -16,8 +16,6 @@ export const OpShortForm = ({
   locations
 }) => {
   const [form] = Form.useForm()
-  const [address, setAddress] = useState(op.address)
-
   const [dateRange, setDateRange] = useState({
     startDateValue: null,
     endDateValue: null
@@ -41,10 +39,7 @@ export const OpShortForm = ({
     op = {
       ...op,
       ...values,
-      // offerOrg: values.offerOrg && values.offerOrg.key,
-
-      address: address
-
+      offerOrg: values.offerOrg && values.offerOrg.key
     }
 
     // op.status = draftOrPublish === 'publish'
@@ -79,13 +74,20 @@ export const OpShortForm = ({
         <Divider />
         <OpFormDescription type={op.type} />
         <Divider />
-        <OpFormLocation type={op.type} orgMembership={orgMembership} addressFinderKey={locations.addressFinderKey} />
+        <OpFormLocation form={form} type={op.type} orgMembership={orgMembership} addressFinderKey={locations.addressFinderKey} />
         <Divider />
-        {/* <OpFormDate type={op.type} onChange={handleStartDateChange} /> */}
+        {/* <OpFormDate type={op.type} onChange={handleStartDateChange} />
 
-        <Divider />
+        <Divider /> */}
 
-        <OpFormPublishBtns type={op.type} onCancel={onCancel} />
+        {/* <OpFormPublishBtns type={op.type} onCancel={onCancel} /> */}
+        <Button
+          type='primary'
+          htmlType='submit'
+          style={{ marginLeft: 8 }}
+        >
+          Save
+        </Button>
       </Form>
     </div>
   )

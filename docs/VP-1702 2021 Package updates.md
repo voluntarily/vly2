@@ -116,6 +116,7 @@ Person/PersonDetailForm.js
     * some match span changed to div in antd.
 * OrgOfferedActivities
 * OrgSelector
+    * this did not work properly before the current org would not be shown and the id would instead. Updated so that we correctly pass in and out an org structure as value but display in the selector the { value, label } required.
 
 ## Person
 
@@ -200,7 +201,9 @@ Person/PersonDetailForm.js
 * OpFormDoneBtns.js - subform
 * OpFormImg.js - subform
 * OpFormLocation.js - subform
+    * Factored out AddressLookup component
 * OpFormOrg.js - subform
+    * fixed OrgSelector. - did not show org name correctly.
 * OpFormTags.js - subform
 * OpFormTitle.js - subform
 * OpList.js - passed
