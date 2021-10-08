@@ -144,7 +144,8 @@ Person/PersonDetailForm.js
 
 ## Activity
 
-### Components
+### Act Components
+
 * ActAboutPanel.js - passed
 * ActCard.js - passed
 * ActList.js - passed
@@ -168,7 +169,7 @@ Person/PersonDetailForm.js
 * ActTryBelow.js - update to memoized formatted message
 * all component tests - passing - 28 tests
 
-### Pages
+### Act Pages
 
 * ActDetailPage
     * replace ActDetailPage.getInitialProps with GetServerSideProps
@@ -178,6 +179,8 @@ Person/PersonDetailForm.js
 * ActListPage - passed
 
 ## Ops
+
+### Op Components
 
 * ActiveOpsSection.js
 * ArchivedInterestedOpsSection.js
@@ -197,8 +200,12 @@ Person/PersonDetailForm.js
 * OpEvent.js - no test
 * OpFeedback.js - no test
 * OpFormDate.js - subform
+    * remove seconds from the display and the picker
+    * 
 * OpFormDescription.js - subform
 * OpFormDoneBtns.js - subform
+    * pass in all props so that the button can trigger submit
+    * fix save draft or publish options.
 * OpFormImg.js - subform
 * OpFormLocation.js - subform
     * Factored out AddressLookup component
@@ -220,12 +227,28 @@ Person/PersonDetailForm.js
 * OpQuestionPanel.js
 * OpRecommendations.js - passed
 * OpShareLinks.js - passed
-* OpShortForm.js
-* OpStatus.js
+* OpShortForm.js - passed
+    * full rewrite to AntD 4 style
+    * unpack some structures like duration and start/end date into fields for easier component usage, repack on finish.
+    * set publish and draft working - but short form hides the draft option.
+    * set correct rule and message for required description field
+    * scroll to first error on done. 
+    * updated to latest sinon so we can use promises in tests.
+    * completed tests
+* OpStatus.js - passed
 * OpTabs.js
     * update to use activeKey
-* OpType.js
-* OpUnknown.js
-* OpUpdatePanel.js
-* OpVolunteerInterestSection.js
-* RecommendedOpsSection.js
+* OpType.js - passed
+* OpUnknown.js - no test
+* OpUpdatePanel.js - no test
+* OpVolunteerInterestSection.js - no test
+* RecommendedOpsSection.js - no test
+
+### Op Components
+
+* OpListPage - passed
+    * roles does not seem to be used,  in fact this page is rarely used except to view all ops. 
+
+* OpDetailPage
+    * tests updated to new gssp object
+    * factor out useMockRoute

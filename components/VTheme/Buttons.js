@@ -15,14 +15,14 @@ export const BackButton = ({ onClick }) =>
     />
   </Button>
 
-export const DoneButton = ({ onClick }) =>
+export const DoneButton = (props) =>
   <Button
     id='doneBtn'
     name='done'
     shape='round'
     type='primary'
     size='large'
-    onClick={onClick}
+    {...props}
     // style={{ marginLeft: 8 }}
   >
     <FormattedMessage
@@ -31,12 +31,12 @@ export const DoneButton = ({ onClick }) =>
     />
   </Button>
 
-export const SaveDraftButton = ({ onClick }) =>
+export const SaveDraftButton = (props) =>
   <Button
     id='saveDraftBtn'
     name='save'
     shape='round'
-    onClick={onClick}
+    {...props}
   >
     <FormattedMessage
       id='Button.editSaveDraft'
@@ -44,13 +44,13 @@ export const SaveDraftButton = ({ onClick }) =>
     />
   </Button>
 
-export const AcceptAndContinueButton = ({ onClick }) =>
+export const AcceptAndContinueButton = (props) =>
   <Button
     id='acceptAndContinueBtn'
     name='accept'
     shape='round'
     type='primary'
-    onClick={onClick}
+    {...props}
   >
     <FormattedMessage
       id='Button.AcceptAndContinue'
@@ -103,12 +103,13 @@ export const SignInButton = ({ then }) => {
 /** Learn More button
  * - links to CMS pages
  * opens in separate tab */
-export const LearnMoreButton = () =>
+export const LearnMoreButton = (props) =>
   <Button
     type='secondary'
     shape='round'
     size='large'
     href='https://blog.voluntarily.nz'
+    {...props}
   >
     <FormattedMessage
       id='Button.LearnMore'

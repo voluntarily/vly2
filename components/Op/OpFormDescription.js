@@ -22,7 +22,7 @@ export const OpFormDescription = ({ type }) => {
           <Form.Item
             name='description'
             label={opDescriptionLabel}
-            required
+            rules={[{ required: true, message: 'Without some details no one will know what is needed' }]}
           >
             <TextArea rows={6} />
           </Form.Item>

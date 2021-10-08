@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import { OpListPage } from '../../pages/op/oplistpage'
+import { OpListPage, gssp } from '../../pages/op/oplistpage'
 import { shallowWithIntl } from '../../lib/react-intl-test-helper'
 import ops from '../../server/api/opportunity/__tests__/opportunity.fixture'
 import objectid from 'objectid'
@@ -20,15 +20,14 @@ test.before('Setup fixtures', (t) => {
 })
 
 test('render OpList', async t => {
-  // first test GetInitialProps
   const store = {
     dispatch: (ACTION) => {
       return Promise.resolve(t.context.props)
     }
   }
-  const props = await getServerSideProps({ store })
-  const wrapper = shallowWithIntl(<OpListPage {...props} />)
-  t.is(wrapper.find('h1 FormattedMessage').first().props().id, 'oplistpage.title')
+  await gssp({ store })
+  const wrapper = shallowWithIntl(<OpListPage opportunities={t.context.props.opportunities} />)
+  t.is(wrapper.find('h1 MemoizedFormattedMessage').first().props().id, 'oplistpage.title')
   t.truthy(wrapper.find('Button'))
   t.truthy(wrapper.find('OpList'))
 })
@@ -42,6 +41,6 @@ test('render OpList with dispatch error', async t => {
     }
   }
   await t.throwsAsync(async () => {
-    await getServerSideProps({ store })
+    await gssp({ store })
   }, { message: 'Catch This!' })
 })

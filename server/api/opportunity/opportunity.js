@@ -44,7 +44,7 @@ const opportunitySchema = new Schema({
   location: String, // region or city,  deprecated - use locations array
   locations: { type: [String], default: [] }, // list of places where Op is of interest region or city,
   address: opportunityAddressSchema,
-  venue: String, // actual address
+  venue: String, // deprecated - use actual address
   date: [Date], // start and optional end dates
   fromActivity: { type: Schema.Types.ObjectId, ref: 'Activity', required: false },
   offerOrg: { type: Schema.Types.ObjectId, ref: 'Organisation', required: false },

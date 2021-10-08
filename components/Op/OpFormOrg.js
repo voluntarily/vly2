@@ -18,10 +18,10 @@ const opOrganisation = (
 )
 
 export const OpFormOrg = ({ orgMembership }) =>
-  orgMembership && (
+  orgMembership ? (
     <Form.Item name='offerOrg' label={opOrganisation}>
       <OrgSelector className='organisation' orgs={orgMembership} />
     </Form.Item>
-  )
+  ) : null
 
 export default OpFormOrg

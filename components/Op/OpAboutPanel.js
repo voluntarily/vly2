@@ -33,7 +33,7 @@ export function OpAboutPanel ({ op }) {
               <Divider />
             </>}
           {subtitle}
-          {op.address.suburb},&nbsp;{op.address.region}
+          {op.address?.suburb},&nbsp;{op.address?.region}
           <TagContainer>
             <h5><FormattedMessage id='OpAboutPanel.categories' defaultMessage='Categories' /></h5>
             <TagDisplay tags={op.tags} />

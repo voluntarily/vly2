@@ -68,7 +68,7 @@ export const AddressInput = ({
   return (
     <Input
       ref={addressInputRef}
-      defaultValue={value.addressSummary}
+      defaultValue={value?.addressSummary}
       placeholder='start typing an address'
       allowClear
     />)

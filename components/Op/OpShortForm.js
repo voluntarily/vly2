@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Button, Form, Divider } from 'antd'
+import { Form, Divider } from 'antd'
 import moment from 'moment'
-import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import OpFormDate from './OpFormDate'
 import OpFormDescription from './OpFormDescription'
 import OpFormPublishBtns from './OpFormDoneBtns'
@@ -16,47 +14,49 @@ export const OpShortForm = ({
   locations
 }) => {
   const [form] = Form.useForm()
-  const [dateRange, setDateRange] = useState({
-    startDateValue: null,
-    endDateValue: null
-  })
+  // const [publish, setPublish] = useState(true)
+  const initialValues = op
 
-  // componentDidMount () {
-  //   // // Call validateFields here to disable the submit button when on a blank form.
-  //   // // empty callback supresses a default which prints to the console.
-  //   // form.validateFields(['title']);
-  //   this.setState({ startDateValue: op.date[0] })
-  //   this.setState({ endDateValue: op.date[1] })
-  // }
+  const isoDuration = moment.duration(op.duration)
+  initialValues.durationHours = Math.floor(isoDuration.asHours())
+  initialValues.durationMinutes = isoDuration.minutes()
+  initialValues.startDate = op.date[0] && moment(op.date[0])
+  initialValues.endDate = op.date[1] && moment(op.date[1])
+
   const onFinish = (values) => {
+    console.log('onFinish', values)
     values.locations = [...new Set(values.locations)]
 
+    // compose a correct op from the fields.
     const duration = moment.duration()
     duration.add(Number(values.durationHours), 'hours')
     duration.add(Number(values.durationMinutes), 'minutes')
-    op.duration = duration.toISOString()
-
     op = {
       ...op,
       ...values,
-      offerOrg: values.offerOrg && values.offerOrg.key
+      offerOrg: values.offerOrg && values.offerOrg.key,
+      duration: duration?.toISOString(),
+      // in this version of the form we only have start date
+      date: [values.startDate?.toISOString()]
+
     }
 
-    // op.status = draftOrPublish === 'publish'
+    // remove items we used for fields but don't want to send to database
+    delete op.durationHours
+    delete op.durationMinutes
+    delete op.startDate
+    delete op.endDate
+
+    // in the short form the are no draft versions - always active
+    // op.status = publish
     //   ? OpportunityStatus.ACTIVE
     //   : OpportunityStatus.DRAFT
 
     onSubmit(op)
-
-    // const op = op
-    // const { startDateValue, endDateValue } = this.state
-    // op.date = [] // Dirty work around to not change schema
-    // op.date.push(startDateValue, endDateValue)
-    // // op.name = values.name
   }
 
   const orgMembership =
-    me.orgMembership &&
+    me?.orgMembership &&
     me.orgMembership.map(member => member.organisation)
 
   return (
@@ -67,27 +67,22 @@ export const OpShortForm = ({
         form={form}
         name='op_short_form'
         layout='vertical'
-        initialValues={op}
+        initialValues={initialValues}
         onFinish={onFinish}
         size='large'
+        scrollToFirstError
       >
         <Divider />
         <OpFormDescription type={op.type} />
         <Divider />
         <OpFormLocation form={form} type={op.type} orgMembership={orgMembership} addressFinderKey={locations.addressFinderKey} />
         <Divider />
-        {/* <OpFormDate type={op.type} onChange={handleStartDateChange} />
+        <OpFormDate type={op.type} />
 
-        <Divider /> */}
+        <Divider />
 
-        {/* <OpFormPublishBtns type={op.type} onCancel={onCancel} /> */}
-        <Button
-          type='primary'
-          htmlType='submit'
-          style={{ marginLeft: 8 }}
-        >
-          Save
-        </Button>
+        <OpFormPublishBtns type={op.type} onCancel={onCancel} />
+        {/* <OpFormPublishBtns type={op.type} onCancel={onCancel} canSaveDraft onSaveDraft={() => setPublish(false)} /> */}
       </Form>
     </div>
   )

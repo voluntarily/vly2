@@ -7,7 +7,7 @@ const OrgSelector = ({ orgs, onChange, value, className }) => {
   )
 
   // we are passed an org but need to reshape it to a key value pair
-  if (value.name) value = ({ label: value.name, value: value._id })
+  if (value?.name) value = ({ label: value.name, value: value._id })
   return (
     <Select
       labelInValue

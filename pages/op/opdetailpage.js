@@ -55,7 +55,8 @@ export const OpDetailPage = ({
   tags,
   locations
 }) => {
-  const { asPath, query, pathname, replace, back } = useRouter()
+  const router = useRouter()
+  const { asPath, query, pathname, replace, back } = router
 
   const [tab, setTab] = useState(isNew ? 'edit' : query.tab)
   useEffect(() => {
@@ -249,12 +250,11 @@ export const gssp = async ({ store, query }) => {
     }
     return {
       props: {
-        isNew,
-        opExists
+        isNew
+        // opExists
       }
     }
   }
 }
 
-export const OpDetailPageWithOps = withMembers(withOps(OpDetailPage))
 export default withMembers(withOps(OpDetailPage))

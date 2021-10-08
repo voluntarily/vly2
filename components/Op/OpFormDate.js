@@ -1,7 +1,4 @@
-import { Form } from '@ant-design/compatible'
-import '@ant-design/compatible/assets/index.css'
-import { DatePicker, Input, Tooltip, Row, Col } from 'antd'
-import React from 'react'
+import { DatePicker, Form, Input, InputNumber, Tooltip, Row, Col } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { DescriptionContainer, FormGrid, ShortInputContainer, InputContainer, TitleContainer } from '../VTheme/FormStyles'
 import { OpTypeDateTitle, OpTypeDatePrompt } from './OpType'
@@ -52,16 +49,22 @@ const opStartDate = (
 // )
 
 const durationRules = [{
-  type: 'number',
-  message: 'duration values must be a non negative integer',
-  validator: (_rule, value) => value >= 0
+  type: 'string',
+  warningOnly: true,
+  validator: (_, value) => {
+    const v = parseInt(value)
+    if (!isNaN(v) && v >= 0 && v < 60) {
+      return Promise.resolve()
+    }
+    return Promise.reject(new Error('Enter a number between 0 and 60'))
+  }
 }]
 
 /**
  * Show Date and Commitment section of form
  * @param {} param0
  */
-export const OpFormDate = ({ getFieldDecorator, type, onChange }) =>
+export const OpFormDate = ({ type }) =>
   <FormGrid>
     <DescriptionContainer>
       <TitleContainer>
@@ -71,35 +74,34 @@ export const OpFormDate = ({ getFieldDecorator, type, onChange }) =>
     </DescriptionContainer>
     <InputContainer>
       <ShortInputContainer>
+        <Form.Item label={opStartDate} name='startDate'>
+          <DatePicker
+            showTime={{ format: 'HH:mm' }}
+            disabledDate={current => {
+              return (
+                moment().add(-1, 'days') >= current ||
+                          moment().add(1, 'year') <= current
+              )
+            }}
+            format='DD-MM-YYYY HH:mm'
+            style={{ width: '100%' }}
+          />
+        </Form.Item>
         <Row type='flex' justify='space-between'>
           <Col span={10}>
-            <Form.Item label={opCommitment} name='CommitmentHours'>
-              {getFieldDecorator('durationHours', { rules: durationRules })(<Input className='commitment' placeholder='1 hour' addonAfter='hours' />)}
+            <Form.Item name='durationHours' rules={durationRules}>
+              <Input className='commitment' placeholder='1' addonAfter='hours' />
             </Form.Item>
           </Col>
           <Col span={10}>
-            <Form.Item label=' ' name='CommitmentMinutes'>
-              {getFieldDecorator('durationMinutes', { rules: durationRules })(<Input className='commitment' placeholder='1 minute' addonAfter='minutes' />)}
+            <Form.Item name='durationMinutes' rules={durationRules}>
+              <Input className='commitment' placeholder='1' addonAfter='minutes' />
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item label={opStartDate} name='Start date'>
-          {getFieldDecorator('startDate')(
-            <DatePicker
-              showTime
-              disabledDate={current => {
-                return (
-                  moment().add(-1, 'days') >= current ||
-                          moment().add(1, 'year') <= current
-                )
-              }}
-              format='DD-MM-YYYY HH:mm:ss'
-              onChange={onChange}
-              style={{ width: '100%' }}
-            />
-          )}
-        </Form.Item>
+
       </ShortInputContainer>
     </InputContainer>
   </FormGrid>
+
 export default OpFormDate
