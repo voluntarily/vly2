@@ -1,9 +1,7 @@
-import React from 'react'
 import Head from 'next/head'
-import { injectIntl } from 'react-intl'
 import PrivacyEn from '../../assets/notices/privacy-full-en.md'
+import { injectIntl } from 'react-intl'
 import { A4 } from '../../components/VTheme/VTheme'
-
 
 const Privacy = () =>
   <A4>

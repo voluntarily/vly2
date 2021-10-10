@@ -1,6 +1,6 @@
 # Voluntarily Privacy Policy
 
-### Introduction
+## Introduction
 
 Voluntarily is an online platform that connects volunteers with people and organisations asking for help.
 

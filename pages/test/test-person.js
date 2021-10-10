@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl'
 import Loading from '../../components/Loading'
 import PersonDetail from '../../components/Person/PersonDetail'
 import { FullPage } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
 import reduxApi, { withPeople, withLocations } from '../../lib/redux/reduxApi.js'
 
 export class TestPerson extends Component {

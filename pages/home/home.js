@@ -77,7 +77,10 @@ export const getServerSideProps = reduxWrapper.getServerSideProps(
     // console.log('PersonHomePage.getServerSideProps')
     try {
       const me = store.getState().session.me
-      const meid = me._id.toString()
+      // TODO: bug when flow/postSignUp completes me is not set with _id and the GSSP fails. leaving the page mostly blank
+
+      const meid = me?._id?.toString()
+      if (!meid) return
       const myOpportunities = {
         q: JSON.stringify({ requestor: meid })
       }

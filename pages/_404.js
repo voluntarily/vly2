@@ -113,12 +113,15 @@ const ErrorPage = ({ url, locale, errorCode, initialNow }) => {
       )
   }
 }
-ErrorPage.getInitialProps = ({ res, xhr, req }) => {
+
+export const getServerSideProps = async ({ store, res, req, xhr }) => {
   const errorCode = res ? res.statusCode : xhr ? xhr.status : null
 
   return {
-    errorCode,
-    url: req.url
+    props: {
+      errorCode,
+      url: req.url
+    }
   }
 }
 export const ErrorPageTest = ErrorPage // for test

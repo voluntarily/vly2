@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl'
 import TeacherRegistrationRecord from '../../components/Person/Teacher/TeacherRegistrationRecord'
 import GetTeacherRegistration from '../../components/Person/Teacher/GetTeacherRegistration'
 import { FullPage, SpacerSmall } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
 import callApi from '../../lib/callApi'
 
 export function RegisterTeacher () {

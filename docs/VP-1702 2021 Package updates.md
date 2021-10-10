@@ -286,7 +286,6 @@ Person/PersonDetailForm.js
     * switch to use makeStoreTest for equivalent to old functionality.
 * RegisterInterestItem.spec.js - passed
     * mountWithIntl problem throwing exception when sendBtn clicked on invite due to popup not carrying over the intl provider. to fix in test formattedMessage react components need to be replaced with formatMessage function calls, this is more efficient as they can be statically compiled.
-    
 * InterestSection.spec.js - passed
 * InterestItem.spec.js - passed
 * Interest.fixture.spec.js - passed
@@ -298,10 +297,12 @@ Person/PersonDetailForm.js
 * InterestArchivedTable.spec.js
 
 ## NoResult Component
+
 * NoResult.spec.js
     * Formatted message here is not memoized
 
 ## Form Components
+
 * TypeOpSelector.spec.js - passed
 * LocationSelector.spec.js - passed
 * EducationSelector.spec.js - passed
@@ -309,15 +310,25 @@ Person/PersonDetailForm.js
 * TagInput.spec.js - passed
 * FileUpload.spec.js - passed
 
-* TeacherRegistrationRecord.spec.js
-* GetTeacherRegistration.spec.js
+## Teacher Components
 
-* AboutYou.spec.js
-* AllDone.spec.js
-* SignUpStyles.spec.js
+* TeacherRegistrationRecord.spec.js - passed
+* GetTeacherRegistration.spec.js - passed
+
+## SignUp Components
+
+* AboutYou.spec.js - passed
+* AllDone.spec.js - passed
+* SignUpStyles.spec.js - passed
 * AcceptPrivacy.spec.js
-* SelectTopicGroup.spec.js
-* ChooseParticipation.spec.js
+    * Need to enable import of .md files. check the MDX stuff. 
+    * had error in order of loading wrappers in next.config.js
+    * this works ok iRL failing in test as test doesn't have a md loader.
+* SelectTopicGroup.spec.js - passed
+* ChooseParticipation.spec.js - passed
+
+## Member Components
+
 * MemberItem.spec.js
 * MemberExport.spec.js
 * MemberSectionInfo.spec.js
@@ -328,17 +339,7 @@ Person/PersonDetailForm.js
 * InviteMembers.spec.js
 * RegisterMemberItem.spec.js
 * quiz.spec.js
-* ActCardSuggest.spec.js
-* ActList.spec.js
-* ActBanner.spec.js
-* ActCard.spec.js
-* ActUnknown.spec.js
-* ActAdd.spec.js
-* ActAboutPanel.spec.js
-* ActReadMore.spec.js
-* ActDetailForm.spec.js
-* ActListSection.spec.js
-* ActTryBelow.spec.js
+
 * MockReduxStoreTest.spec.js
 * LocalStateTest.spec.js
 * ReduxAsyncTest.spec.js
@@ -370,3 +371,9 @@ components/__tests__/Navigation.spec.js
 * GoalCard.spec.js
 * PersonalGoalSection.spec.js
 * GoalGroupHeading.spec.js
+
+
+## PostSignUp pages
+
+* flow/postSignUp - no test
+* 
