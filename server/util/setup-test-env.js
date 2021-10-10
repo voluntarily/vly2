@@ -5,7 +5,7 @@
 const addHook = require('pirates').addHook;
 addHook(
   (code, filename) => "", 
-  { exts: ['.css'], ignoreNodeModules: false }
+  { exts: ['.css', '.md'], ignoreNodeModules: false }
 );
 
 // require('@babel/polyfill')

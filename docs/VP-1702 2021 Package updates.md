@@ -320,10 +320,12 @@ Person/PersonDetailForm.js
 * AboutYou.spec.js - passed
 * AllDone.spec.js - passed
 * SignUpStyles.spec.js - passed
-* AcceptPrivacy.spec.js
+* AcceptPrivacy.spec.js - passed with warning
     * Need to enable import of .md files. check the MDX stuff. 
     * had error in order of loading wrappers in next.config.js
     * this works ok iRL failing in test as test doesn't have a md loader.
+    * This test passed previously but produced a warning. it was not really loading the test md file 
+    * workaround is to exclude md files in setup-test-env.js resulting in the warning. 
 * SelectTopicGroup.spec.js - passed
 * ChooseParticipation.spec.js - passed
 
