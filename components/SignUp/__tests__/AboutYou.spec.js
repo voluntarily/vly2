@@ -3,7 +3,7 @@ import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import AboutYou from '../AboutYou'
 import sinon from 'sinon'
 import { Provider } from 'react-redux'
-import { makeStore } from '../../../lib/redux/reduxApi'
+import { makeStoreTest } from '../../../lib/redux/reduxApi'
 
 const person = {
   nickname: 'testy',
@@ -20,7 +20,7 @@ const initStore = {
 }
 
 test('AboutYou renders properly', t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
   const handleAboutYou = sinon.fake()
   const wrapper = mountWithIntl(
     <Provider store={realStore}>

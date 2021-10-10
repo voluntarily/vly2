@@ -3,7 +3,7 @@ import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import RegisterMemberSection from '../RegisterMemberSection'
 import { Provider } from 'react-redux'
-import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
+import reduxApi, { makeStoreTest } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { API_URL } from '../../../lib/callApi'
 import fixture from './member.fixture.js'
@@ -38,7 +38,7 @@ test.before('Setup fixtures', t => {
 test.serial('RegisterMemberSection follow and unfollow', async t => {
   const orgid = t.context.orgs[1]._id
   const meid = t.context.me._id
-  const realStore = makeStore(initStore(t))
+  const realStore = makeStoreTest(initStore(t))
   const wrapper = mountWithIntl(
     <Provider store={realStore}>
       <RegisterMemberSection
@@ -82,7 +82,7 @@ test.serial('RegisterMemberSection join and validate', async t => {
   const members = t.context.members
   const orgid = t.context.orgs[1]._id
   const meid = t.context.me._id
-  const realStore = makeStore(initStore(t))
+  const realStore = makeStoreTest(initStore(t))
 
   const wrapper = mountWithIntl(
     <Provider store={realStore}>
@@ -130,7 +130,7 @@ test.serial('RegisterMemberSection as a Member', async t => {
   const members = t.context.members
   const orgid = t.context.orgs[1]._id
   const meid = t.context.me._id
-  const realStore = makeStore(initStore(t))
+  const realStore = makeStoreTest(initStore(t))
 
   const wrapper = mountWithIntl(
     <Provider store={realStore}>

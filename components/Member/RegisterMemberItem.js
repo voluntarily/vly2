@@ -36,14 +36,14 @@ class RegisterMemberItem extends Component {
       btns: [
         {
           type: 'primary',
-          msg: <FormattedMessage id='member.follow.message' defaultMessage='Follow this organisation to get information on opportunities and offerings' description='Message for volunteer to follow an organisation' />,
-          text: <FormattedMessage id='member.follow.button' defaultMessage='Follow' description='Button for volunteer to follow an organisation' />,
+          msg: formatMessage({id: 'member.follow.message', defaultMessage: 'Follow this organisation to get information on opportunities and offerings', description: 'Message for volunteer to follow an organisation'}),
+          text: formatMessage({id: 'member.follow.button', defaultMessage: 'Follow', description: 'Button for volunteer to follow an organisation'}),
           action: 'follow'
         },
         {
           type: 'secondary',
-          msg: <FormattedMessage id='member.join.message' defaultMessage='If you are part of this organisation let us know' description='Message for volunteer to join an organisation' />,
-          text: <FormattedMessage id='member.join.button' defaultMessage='Staff Signup' description='Button for volunteer to join an organisation' />,
+          msg: formatMessage({id: 'member.join.message', defaultMessage: 'If you are part of this organisation let us know', description: 'Message for volunteer to join an organisation'}),
+          text: formatMessage({id: 'member.join.button', defaultMessage: 'Staff Signup', description: 'Button for volunteer to join an organisation'}),
           action: 'join'
         }
       ]
@@ -53,8 +53,8 @@ class RegisterMemberItem extends Component {
       case MemberStatus.FOLLOWER:
         options.btns[0] = {
           type: 'primary',
-          msg: <FormattedMessage id='member.unfollow.message' defaultMessage='You follow this organisation.' description='Message for volunteer to unfollow an organisation' />,
-          text: <FormattedMessage id='member.unfollow.button' defaultMessage='Unfollow' description='Button for volunteer to stop following an organisation' />,
+          msg: formatMessage({id: 'member.unfollow.message', defaultMessage: 'You follow this organisation.', description: 'Message for volunteer to unfollow an organisation'}),
+          text: formatMessage({id: 'member.unfollow.button', defaultMessage: 'Unfollow', description: 'Button for volunteer to stop following an organisation'}),
           action: 'unfollow'
         }
         break
@@ -64,13 +64,13 @@ class RegisterMemberItem extends Component {
           {
             type: 'primary',
             msg: null,
-            text: <FormattedMessage id='member.validate.button' defaultMessage='Validate' description='Button to confirm validation of volunteer to join an organisation' />,
+            text: formatMessage({id: 'member.validate.button', defaultMessage: 'Validate', description: 'Button to confirm validation of volunteer to join an organisation'}),
             action: 'validate'
           },
           {
             type: 'secondary',
             msg: null,
-            text: <FormattedMessage id='member.unjoin.button' defaultMessage='Cancel' description='Button to cancel validation of volunteer to join an organisation' />,
+            text: formatMessage({id: 'member.unjoin.button', defaultMessage: 'Cancel', description: 'Button to cancel validation of volunteer to join an organisation'}),
             action: 'unjoin'
           }
         ]
@@ -78,16 +78,16 @@ class RegisterMemberItem extends Component {
       case MemberStatus.VALIDATOR:
         options.btns = [{
           type: 'secondary',
-          msg: <FormattedMessage id='member.validating.message' defaultMessage='Your confirmation as a member of this organisation is in progess' description='Message for volunteer being validated for an organisation' />,
-          text: <FormattedMessage id='member.cancelvalidate.button' defaultMessage='Cancel Join' description='Button to cancel validation of volunteer to join an organisation' />,
+          msg: formatMessage({id: 'member.validating.message', defaultMessage: 'Your confirmation as a member of this organisation is in progess', description: 'Message for volunteer being validated for an organisation'}),
+          text: formatMessage({id: 'member.cancelvalidate.button', defaultMessage: 'Cancel Join', description: 'Button to cancel validation of volunteer to join an organisation'}),
           action: 'unjoin'
         }]
         break
       case MemberStatus.MEMBER:
         options.btns = [{
           type: 'primary',
-          msg: <FormattedMessage id='member.member.message' defaultMessage='You are a member of this organisation' description='Message for volunteer being validated for an organisation' />,
-          text: <FormattedMessage id='member.leave.button' defaultMessage='Leave Organisation' description='Button for volunteer to cancel join an organisation' />,
+          msg: formatMessage({id: 'member.member.message', defaultMessage: 'You are a member of this organisation', description: 'Message for volunteer being validated for an organisation'}),
+          text: formatMessage({id: 'member.leave.button', defaultMessage: 'Leave Organisation', description: 'Button for volunteer to cancel join an organisation'}),
           action: 'leave'
         }]
         break

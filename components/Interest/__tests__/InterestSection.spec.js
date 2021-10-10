@@ -4,7 +4,7 @@ import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import InterestSection from '../InterestSection'
 import { Provider } from 'react-redux'
-import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
+import reduxApi, { makeStoreTest } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { API_URL } from '../../../lib/callApi'
 import fetchMock from 'fetch-mock'
@@ -60,7 +60,7 @@ const okMessagePopup = async (t, wrapper, rowindex, message) => {
 }
 
 test.serial('mount the InterestSection with a list of interests', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   myMock.getOnce(`${API_URL}/interests/?op=${opid}`, t.context.interests)

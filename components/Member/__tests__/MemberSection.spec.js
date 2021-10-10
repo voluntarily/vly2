@@ -3,7 +3,7 @@ import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import MemberSection from '../MemberSection'
 import { Provider } from 'react-redux'
-import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
+import reduxApi, { makeStoreTest } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { API_URL } from '../../../lib/callApi'
 import fixture from './member.fixture.js'
@@ -43,7 +43,7 @@ test.serial('followers can become members and then be removed', async t => {
       me: t.context.people[0]
     }
   }
-  const store = makeStore(initStore)
+  const store = makeStoreTest(initStore)
 
   const wrapper = mountWithIntl(
     <Provider store={store}>
@@ -130,7 +130,7 @@ test.serial('members can become admins ', async t => {
       me: t.context.people[0]
     }
   }
-  const store = makeStore(initStore)
+  const store = makeStoreTest(initStore)
 
   const wrapper = mountWithIntl(
     <Provider store={store}>
@@ -188,7 +188,7 @@ test.serial('admins can see exportMembers button', async t => {
       me: t.context.people[0]
     }
   }
-  const store = makeStore(initStore)
+  const store = makeStoreTest(initStore)
 
   const wrapper = mountWithIntl(
     <Provider store={store}>
@@ -221,7 +221,7 @@ test.serial('joiners can become members ', async t => {
       me: t.context.people[0]
     }
   }
-  const store = makeStore(initStore)
+  const store = makeStoreTest(initStore)
 
   const wrapper = mountWithIntl(
     <Provider store={store}>

@@ -80,27 +80,27 @@ const buttonStates = (member, meid) => {
   return [
     {
       buttonEnabled: [MemberStatus.FOLLOWER, MemberStatus.JOINER, MemberStatus.VALIDATOR, MemberStatus.EXMEMBER].includes(member.status),
-      label: <FormattedMessage id='member.add' defaultMessage='Add' description='Button allowing orgAdmin to Add a new org member' />,
+      label: formatMessage({id: 'member.add', defaultMessage: 'Add', description: 'Button allowing orgAdmin to Add a new org member'}),
       action: 'add'
     },
     {
       buttonEnabled: [MemberStatus.JOINER, MemberStatus.VALIDATOR].includes(member.status),
-      label: <FormattedMessage id='member.reject' defaultMessage='Reject' description='Button allowing orgAdmin to Reject a member application' />,
+      label: formatMessage({id: 'member.reject', defaultMessage: 'Reject', description: 'Button allowing orgAdmin to Reject a member application'}),
       action: 'reject'
     },
     {
       buttonEnabled: member.status === MemberStatus.MEMBER,
-      label: <FormattedMessage id='member.remove' defaultMessage='Remove' description='Button allowing orgAdmin to Remove an org member' />,
+      label: formatMessage({id: 'member.remove', defaultMessage: 'Remove', description: 'Button allowing orgAdmin to Remove an org member'}),
       action: 'remove'
     },
     {
       buttonEnabled: member.status === MemberStatus.MEMBER,
-      label: <FormattedMessage id='member.makeadmin' defaultMessage='Make Admin' description='Button allowing orgAdmin to add new orgadmin' />,
+      label: formatMessage({id: 'member.makeadmin', defaultMessage: 'Make Admin', description: 'Button allowing orgAdmin to add new orgadmin'}),
       action: 'makeadmin'
     },
     {
       buttonEnabled: (member.status === MemberStatus.ORGADMIN) && (member.person && member.person._id !== meid),
-      label: <FormattedMessage id='member.unadmin' defaultMessage='Cancel Admin' description='Button allowing orgAdmin to return an admin back to normal member' />,
+      label: formatMessage({id: 'member.unadmin', defaultMessage: 'Cancel Admin', description: 'Button allowing orgAdmin to return an admin back to normal member'}),
       action: 'add'
     }
   ]
