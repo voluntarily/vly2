@@ -244,7 +244,7 @@ Person/PersonDetailForm.js
 * OpVolunteerInterestSection.js - no test
 * RecommendedOpsSection.js - no test
 
-### Op Components
+### Op Pages
 
 * OpListPage - passed
     * roles does not seem to be used,  in fact this page is rarely used except to view all ops. 
@@ -252,3 +252,117 @@ Person/PersonDetailForm.js
 * OpDetailPage
     * tests updated to new gssp object
     * factor out useMockRoute
+
+## VTheme Components
+
+* Html.spec.js - passed
+* IdLine.spec.js - passed
+* ItemList.spec.js - test modified to deal with &nbsp; after icon.
+* NumericRange.spec.js - passed
+* VTabs.spec.js - passed
+
+## Statistics Components
+
+* StatisticsRatingsReport.spec.js - passed
+* StatisticsLocationsReport.spec.js - passed
+* StatisticsPanel.spec.js - passed
+* StatisticsSummaryReport.spec.js - passed
+* StatisticsActivityTagsReport.spec.js - passed
+* StatisticsTimeframeSelector.spec.js - passed
+* OrgStatisticsTabs.spec.js - passed
+
+## Home Components
+
+* HomeBanner.spec.js - passed
+* HomeTabs.spec.js - passed
+
+## Footer Components
+
+* WomensRefuge.spec.js - passed
+
+## Interest Components
+
+* RegisterInterestSection.spec.js - passed
+    * switch to use makeStoreTest for equivalent to old functionality.
+* RegisterInterestItem.spec.js - passed
+    * mountWithIntl problem throwing exception when sendBtn clicked on invite due to popup not carrying over the intl provider. to fix in test formattedMessage react components need to be replaced with formatMessage function calls, this is more efficient as they can be statically compiled.
+    
+* InterestSection.spec.js - passed
+* InterestItem.spec.js - passed
+* Interest.fixture.spec.js - passed
+* InterestConfirmation.spec.js - passed
+    * fix test for changed icon 
+* InterestTable.spec.js - passed
+* RegisterInterestMessageForm.spec.js - passed
+* InterestArchivedSection.spec.js - passed
+* InterestArchivedTable.spec.js
+
+* NoResult.spec.js
+* TypeOpSelector.spec.js
+* LocationSelector.spec.js
+* EducationSelector.spec.js
+* RichTextEditor.spec.js
+* TagInput.spec.js
+* FileUpload.spec.js
+
+* TeacherRegistrationRecord.spec.js
+* GetTeacherRegistration.spec.js
+
+* AboutYou.spec.js
+* AllDone.spec.js
+* SignUpStyles.spec.js
+* AcceptPrivacy.spec.js
+* SelectTopicGroup.spec.js
+* ChooseParticipation.spec.js
+* MemberItem.spec.js
+* MemberExport.spec.js
+* MemberSectionInfo.spec.js
+* MemberTable.spec.js
+* MemberUl.spec.js
+* MemberSection.spec.js
+* RegisterMemberSection.spec.js
+* InviteMembers.spec.js
+* RegisterMemberItem.spec.js
+* quiz.spec.js
+* ActCardSuggest.spec.js
+* ActList.spec.js
+* ActBanner.spec.js
+* ActCard.spec.js
+* ActUnknown.spec.js
+* ActAdd.spec.js
+* ActAboutPanel.spec.js
+* ActReadMore.spec.js
+* ActDetailForm.spec.js
+* ActListSection.spec.js
+* ActTryBelow.spec.js
+* MockReduxStoreTest.spec.js
+* LocalStateTest.spec.js
+* ReduxAsyncTest.spec.js
+* RealReduxStoreTest.spec.js
+* TagDisplay.spec.js
+* TypeFilter.spec.js
+components/__tests__/Footer.spec.js
+components/__tests__/Navigation.spec.js
+* ItemList.spec.js
+* IdLine.spec.js
+* Html.spec.js
+* NumericRange.spec.js
+* VTabs.spec.js
+* IntlDemo.spec.js
+* UseRouter.spec.js
+* AntdType.spec.js
+* Uploader.spec.js
+* LessStyled.spec.js
+* Hello.spec.js
+* DynamicFieldSet.spec.js
+* FeaturedTwoSection.spec.js
+* Hero2.spec.js
+* Partners.spec.js
+* Header.spec.js
+* AddStory.spec.js
+* Unverified.spec.js
+* GoalSection.spec.js
+* GoalList.spec.js
+* GoalCard.spec.js
+* PersonalGoalSection.spec.js
+* GoalGroupHeading.spec.js
