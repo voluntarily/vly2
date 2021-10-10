@@ -12,5 +12,5 @@ test('Card include name school/org imgUrl location duration and subtitle', t => 
     />
   )
   t.true(wrapper.exists('Result'))
-  t.is(wrapper.find('MemoizedFormattedMessage').first().text(), 'No activities found based on your search criteria')
+  t.is(wrapper.find('FormattedMessage').first().text(), 'No activities found based on your search criteria')
 })

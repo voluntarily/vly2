@@ -297,13 +297,17 @@ Person/PersonDetailForm.js
 * InterestArchivedSection.spec.js - passed
 * InterestArchivedTable.spec.js
 
+## NoResult Component
 * NoResult.spec.js
-* TypeOpSelector.spec.js
-* LocationSelector.spec.js
-* EducationSelector.spec.js
-* RichTextEditor.spec.js
-* TagInput.spec.js
-* FileUpload.spec.js
+    * Formatted message here is not memoized
+
+## Form Components
+* TypeOpSelector.spec.js - passed
+* LocationSelector.spec.js - passed
+* EducationSelector.spec.js - passed
+* RichTextEditor.spec.js - passed
+* TagInput.spec.js - passed
+* FileUpload.spec.js - passed
 
 * TeacherRegistrationRecord.spec.js
 * GetTeacherRegistration.spec.js
