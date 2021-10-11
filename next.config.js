@@ -24,7 +24,7 @@ const config = withBundleAnalyzer(withMDX(withLess({
 
 if (process.env.NODE_ENV === 'test') {
   // use a unique next distDir for each test
-  const uuid = require('uuid/v4')
+  const { v4: uuid } = require('uuid');
   config.distDir = path.join('.test', uuid())
 }
 const env = require('./config/importEncryptedEnv')() // this will import during build step

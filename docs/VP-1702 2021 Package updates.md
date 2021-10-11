@@ -308,7 +308,8 @@ Person/PersonDetailForm.js
 * EducationSelector - passed
 * RichTextEditor - passed
 * TagInput - passed
-* FileUpload - passed
+* FileUpload - returns hook error
+    * version of UUID has changed as v4 is now in main uuid package. adopt new way of loading
 
 ## Teacher Components
 

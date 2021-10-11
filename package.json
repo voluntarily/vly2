@@ -131,7 +131,7 @@
     "stopword": "^1.0.1",
     "string-similarity": "^4.0.1",
     "styled-components": "^5.3.1",
-    "uuidv4": "^6.0.6"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@ava/babel": "^2.0.0",
@@ -166,7 +166,6 @@
     "supertest": "^4.0.2",
     "testcafe": "^1.7.1",
     "testcafe-react-selectors": "^4.0.0",
-    "uuid": "^8.3.2",
     "wait-on": "^3.3.0",
     "webdriverio": "^5.15.0"
   },
