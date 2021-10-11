@@ -347,14 +347,27 @@ Person/PersonDetailForm.js
     * change from class to form
 * quiz.spec.js - passed
 
-* MockReduxStoreTest.spec.js
-* LocalStateTest.spec.js
-* ReduxAsyncTest.spec.js
-* RealReduxStoreTest.spec.js
-* TagDisplay.spec.js
-* TypeFilter.spec.js
-components/__tests__/Footer.spec.js
-components/__tests__/Navigation.spec.js
+## Redux example tests
+
+* MockReduxStoreTest.spec.js - passed
+* LocalStateTest.spec.js - passed
+* ReduxAsyncTest.spec.js - passed
+* RealReduxStoreTest.spec.js - passed
+
+## Search/ Tag Components
+
+* TagDisplay.spec.js - passed
+* TypeFilter.spec.js - passed
+    * uses local styles .less file.  replace css style file. 
+* FilterContainer - no test
+* HeaderSearch - no test
+* LocationFilter - no test
+
+## Navigation Components
+
+* Footer.spec.js
+* Navigation.spec.js
+
 * ItemList.spec.js
 * IdLine.spec.js
 * Html.spec.js

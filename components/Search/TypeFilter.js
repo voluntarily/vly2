@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import { PBold } from '../VTheme/VTheme'
 import OpTypeSelector from '../Form/Input/TypeOpSelector'
-import './locationFilterStyles.less'
+import './locationFilterStyles.css'
 
 function TypeFilter ({ onChange, value, opTypes }) {
   return (
