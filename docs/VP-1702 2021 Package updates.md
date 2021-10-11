@@ -367,14 +367,7 @@ Person/PersonDetailForm.js
 
 * Footer - passed
 * Navigation - passed
-
-## VTheme Components
-
-* ItemList - passed
-* IdLine - passed
-* Html - passed
-* NumericRange - passed
-* VTabs - passed
+* Header
 
 ## examples components
 
@@ -391,16 +384,32 @@ Person/PersonDetailForm.js
 
 * DynamicFieldSet - passed
 
-* FeaturedTwoSection
-* Hero2
-* Partners
-* Header
-* AddStory
-* Unverified
-* GoalSection
-* GoalList
-* GoalCard
-* PersonalGoalSection
+## Landing Page Components
+
+* rename Landing to Landing for consistency
+* FeaturedTwoSection - passed
+    * removed prop types - warnings don't keep up with usage
+* Hero2 - passed
+* Partners - passed
+
+## Story
+
+We have this whole posting and comment system called story that Farjana wrote that is partially completed
+it doesn't have an entry page but you can see the current status on /test/test-edit
+
+* AddStory - passed
+
+## Warnings
+
+* Unverified - passed
+
+## Goals
+
+* GoalSection - passed
+* GoalList - passed
+* GoalCard - passed
+    * fix changes to icon naming
+* PersonalGoalSection - passed
 * GoalGroupHeading
 
 

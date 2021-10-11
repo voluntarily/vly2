@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Head from 'next/head'
 import { Button, Divider } from 'antd'
-import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
-import PersonaSection from '../../components/LandingPageComponents/PersonaSection'
+import SectionTitle from '../../components/Landing/SectionTitle'
+import PersonaSection from '../../components/Landing/PersonaSection'
 import {
   FullPage,
   HalfGrid,
@@ -15,11 +15,11 @@ import {
 
 } from '../../components/VTheme/VTheme'
 
-import Hero2 from '../../components/LandingPageComponents/Hero2'
+import Hero2 from '../../components/Landing/Hero2'
 import {
   SponsorContainer,
   SponsorIcon
-} from '../../components/LandingPageComponents/Partners'
+} from '../../components/Landing/Partners'
 
 // annoying hack to make sure buttons dont inherit block width
 const ButtonContainer = styled.div`

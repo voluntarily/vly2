@@ -7,7 +7,7 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../Upload/ImageUpload'
-import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
+import PageTitle from '../../components/Landing/PageTitle.js'
 import { domainRegex } from '../../lib/fieldValidation'
 import {
   DescriptionContainer,

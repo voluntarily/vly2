@@ -49,13 +49,13 @@ test.before('Setup store', (t) => {
   )
 })
 
-test('shallow the list with goals', t => {
+test('mount the list with goals', t => {
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
       <PersonalGoalSection />
     </Provider>
   )
-  t.is(wrapper.find('MemoizedFormattedMessage').first().props().id, 'GoalSection.VP_NEW.title')
+  t.is(wrapper.find('FormattedMessage').first().props().id, 'GoalSection.VP_NEW.title')
   t.is(wrapper.find('GoalList').length, 1)
   t.is(wrapper.find('GoalCard').length, 2)
 })

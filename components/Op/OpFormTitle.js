@@ -1,4 +1,4 @@
-import PageTitle from '../LandingPageComponents/PageTitle.js'
+import PageTitle from '../Landing/PageTitle.js'
 import { OpTypeImperative } from './OpType'
 import { BackButton } from '../VTheme/Buttons'
 import styled from 'styled-components'

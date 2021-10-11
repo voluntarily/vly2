@@ -1,6 +1,5 @@
 import React from 'react'
 import { HalfGrid } from '../VTheme/VTheme'
-import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
 import SectionSubtitle from './SectionSubtitle'
@@ -25,18 +24,5 @@ const FeaturedTwoSection = ({ ops, title, subtitle, ...props }) => (
     </HalfGrid>
   </div>
 )
-
-FeaturedTwoSection.propTypes = {
-  title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
-  ops: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      subtitle: PropTypes.string,
-      imgUrl: PropTypes.any,
-      duration: PropTypes.string
-    })
-  ) // optional
-}
 
 export default FeaturedTwoSection

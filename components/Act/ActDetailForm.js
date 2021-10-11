@@ -22,7 +22,7 @@ import {
   ShortInputContainer,
   TitleContainer
 } from '../VTheme/FormStyles'
-import PageTitle from '../LandingPageComponents/PageTitle'
+import PageTitle from '../Landing/PageTitle'
 
 const { TextArea } = Input
 

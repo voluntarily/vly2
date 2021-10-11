@@ -24,7 +24,7 @@ const AddStory = ({ roles, onSubmit }) => {
         <Button type='primary' shape='round' size='large' onClick={() => setShowForm(!showForm)}>
           {showForm
             ? <FormattedMessage id='story.cancel' defaultMessage='Cancel' description='Button to hide the blog creation form' />
-            : formatMessage({id: 'story.new', defaultMessage: 'New Blog', description: 'Button to create a new blog post'})}
+            : <FormattedMessage id='story.new' defaultMessage='New Blog' description='Button to create a new blog post' />}
         </Button>
         {showForm && <StoryForm story={blankStory} onSubmit={handleSave} />}
       </>

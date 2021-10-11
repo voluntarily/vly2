@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { FormattedMessage } from 'react-intl'
-import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
+import SectionTitle from '../../components/Landing/SectionTitle'
 const PersonaBox = styled.section`
   margin-bottom: 4rem;
 

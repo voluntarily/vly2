@@ -2,7 +2,7 @@ import { Button, Divider } from 'antd'
 import React, { Component } from 'react'
 import Head from 'next/head'
 import styled from 'styled-components'
-import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
+import SectionTitle from '../../components/Landing/SectionTitle'
 import { BigQuote, BigQuoteAuthor, FullPage, H1, H3, H3Bold, H4, HalfGrid, P, PBold, Spacer, SpacerSmall, TripleGrid } from '../../components/VTheme/VTheme'
 
 
