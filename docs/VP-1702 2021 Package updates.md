@@ -103,7 +103,7 @@ Person/PersonDetailForm.js
     * updated hydration of the 'me' object in redux means this is not attached to a model. So we can't just modify and save it. instead we use the id to get a fresh object from the db which is saved. This is safer anyway. 
 ## Organisation
 
-* OrgListPage  OrgListPage.spec.js
+* OrgListPage  OrgListPage
 * OrgDetailPage
 * OrgDetailForm - passing but lots of warnings, Form needs to be modernised.
 *
@@ -255,109 +255,109 @@ Person/PersonDetailForm.js
 
 ## VTheme Components
 
-* Html.spec.js - passed
-* IdLine.spec.js - passed
-* ItemList.spec.js - test modified to deal with &nbsp; after icon.
-* NumericRange.spec.js - passed
-* VTabs.spec.js - passed
+* Html - passed
+* IdLine - passed
+* ItemList - test modified to deal with &nbsp; after icon.
+* NumericRange - passed
+* VTabs - passed
 
 ## Statistics Components
 
-* StatisticsRatingsReport.spec.js - passed
-* StatisticsLocationsReport.spec.js - passed
-* StatisticsPanel.spec.js - passed
-* StatisticsSummaryReport.spec.js - passed
-* StatisticsActivityTagsReport.spec.js - passed
-* StatisticsTimeframeSelector.spec.js - passed
-* OrgStatisticsTabs.spec.js - passed
+* StatisticsRatingsReport - passed
+* StatisticsLocationsReport - passed
+* StatisticsPanel - passed
+* StatisticsSummaryReport - passed
+* StatisticsActivityTagsReport - passed
+* StatisticsTimeframeSelector - passed
+* OrgStatisticsTabs - passed
 
 ## Home Components
 
-* HomeBanner.spec.js - passed
-* HomeTabs.spec.js - passed
+* HomeBanner - passed
+* HomeTabs - passed
 
 ## Footer Components
 
-* WomensRefuge.spec.js - passed
+* WomensRefuge - passed
 
 ## Interest Components
 
-* RegisterInterestSection.spec.js - passed
+* RegisterInterestSection - passed
     * switch to use makeStoreTest for equivalent to old functionality.
-* RegisterInterestItem.spec.js - passed
+* RegisterInterestItem - passed
     * mountWithIntl problem throwing exception when sendBtn clicked on invite due to popup not carrying over the intl provider. to fix in test formattedMessage react components need to be replaced with formatMessage function calls, this is more efficient as they can be statically compiled.
-* InterestSection.spec.js - passed
-* InterestItem.spec.js - passed
-* Interest.fixture.spec.js - passed
-* InterestConfirmation.spec.js - passed
+* InterestSection - passed
+* InterestItem - passed
+* Interest.fixture - passed
+* InterestConfirmation - passed
     * fix test for changed icon 
-* InterestTable.spec.js - passed
-* RegisterInterestMessageForm.spec.js - passed
-* InterestArchivedSection.spec.js - passed
-* InterestArchivedTable.spec.js
+* InterestTable - passed
+* RegisterInterestMessageForm - passed
+* InterestArchivedSection - passed
+* InterestArchivedTable
 
 ## NoResult Component
 
-* NoResult.spec.js
+* NoResult
     * Formatted message here is not memoized
 
 ## Form Components
 
-* TypeOpSelector.spec.js - passed
-* LocationSelector.spec.js - passed
-* EducationSelector.spec.js - passed
-* RichTextEditor.spec.js - passed
-* TagInput.spec.js - passed
-* FileUpload.spec.js - passed
+* TypeOpSelector - passed
+* LocationSelector - passed
+* EducationSelector - passed
+* RichTextEditor - passed
+* TagInput - passed
+* FileUpload - passed
 
 ## Teacher Components
 
-* TeacherRegistrationRecord.spec.js - passed
-* GetTeacherRegistration.spec.js - passed
+* TeacherRegistrationRecord - passed
+* GetTeacherRegistration - passed
 
 ## SignUp Components
 
-* AboutYou.spec.js - passed
-* AllDone.spec.js - passed
-* SignUpStyles.spec.js - passed
-* AcceptPrivacy.spec.js - passed with warning
+* AboutYou - passed
+* AllDone - passed
+* SignUpStyles - passed
+* AcceptPrivacy - passed with warning
     * Need to enable import of .md files. check the MDX stuff. 
     * had error in order of loading wrappers in next.config.js
     * this works ok iRL failing in test as test doesn't have a md loader.
     * This test passed previously but produced a warning. it was not really loading the test md file 
     * workaround is to exclude md files in setup-test-env.js resulting in the warning. 
-* SelectTopicGroup.spec.js - passed
-* ChooseParticipation.spec.js - passed
+* SelectTopicGroup - passed
+* ChooseParticipation - passed
 
 ## Member Components
 
-* MemberItem.spec.js - passed
-* MemberExport.spec.js - passed
-* MemberSectionInfo.spec.js - passed
-* MemberTable.spec.js
+* MemberItem - passed
+* MemberExport - passed
+* MemberSectionInfo - passed
+* MemberTable
     * table row has extra button so test changes to find inviteButton
     * replace withMockRoute with useMockRoute
-* MemberUl.spec.js - passed
-* MemberSection.spec.js
+* MemberUl - passed
+* MemberSection
     * table row has extra button so test changes to find 
-* RegisterMemberSection.spec.js - passed
-* InviteMembers.spec.js - passed 
+* RegisterMemberSection - passed
+* InviteMembers - passed 
     * but had to convert to mount from shallow as 
-* RegisterMemberItem.spec.js - passed
+* RegisterMemberItem - passed
     * change from class to form
-* quiz.spec.js - passed
+* quiz - passed
 
 ## Redux example tests
 
-* MockReduxStoreTest.spec.js - passed
-* LocalStateTest.spec.js - passed
-* ReduxAsyncTest.spec.js - passed
-* RealReduxStoreTest.spec.js - passed
+* MockReduxStoreTest - passed
+* LocalStateTest - passed
+* ReduxAsyncTest - passed
+* RealReduxStoreTest - passed
 
 ## Search/ Tag Components
 
-* TagDisplay.spec.js - passed
-* TypeFilter.spec.js - passed
+* TagDisplay - passed
+* TypeFilter - passed
     * uses local styles .less file.  replace css style file. 
 * FilterContainer - no test
 * HeaderSearch - no test
@@ -365,32 +365,43 @@ Person/PersonDetailForm.js
 
 ## Navigation Components
 
-* Footer.spec.js
-* Navigation.spec.js
+* Footer - passed
+* Navigation - passed
 
-* ItemList.spec.js
-* IdLine.spec.js
-* Html.spec.js
-* NumericRange.spec.js
-* VTabs.spec.js
-* IntlDemo.spec.js
-* UseRouter.spec.js
-* AntdType.spec.js
-* Uploader.spec.js
-* LessStyled.spec.js
-* Hello.spec.js
-* DynamicFieldSet.spec.js
-* FeaturedTwoSection.spec.js
-* Hero2.spec.js
-* Partners.spec.js
-* Header.spec.js
-* AddStory.spec.js
-* Unverified.spec.js
-* GoalSection.spec.js
-* GoalList.spec.js
-* GoalCard.spec.js
-* PersonalGoalSection.spec.js
-* GoalGroupHeading.spec.js
+## VTheme Components
+
+* ItemList - passed
+* IdLine - passed
+* Html - passed
+* NumericRange - passed
+* VTabs - passed
+
+## examples components
+
+* IntlDemo - passed
+* UseRouter - passed
+* AntdType - passed
+* Uploader - passed
+* LessStyled - failed
+    * removed - don't use less local styles
+    * removed styles.less theme.less
+* Hello - passed
+
+## DynamicFieldSet Components  (used in Act Detail Form)
+
+* DynamicFieldSet - passed
+
+* FeaturedTwoSection
+* Hero2
+* Partners
+* Header
+* AddStory
+* Unverified
+* GoalSection
+* GoalList
+* GoalCard
+* PersonalGoalSection
+* GoalGroupHeading
 
 
 ## PostSignUp pages
