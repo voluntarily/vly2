@@ -331,16 +331,21 @@ Person/PersonDetailForm.js
 
 ## Member Components
 
-* MemberItem.spec.js
-* MemberExport.spec.js
-* MemberSectionInfo.spec.js
+* MemberItem.spec.js - passed
+* MemberExport.spec.js - passed
+* MemberSectionInfo.spec.js - passed
 * MemberTable.spec.js
-* MemberUl.spec.js
+    * table row has extra button so test changes to find inviteButton
+    * replace withMockRoute with useMockRoute
+* MemberUl.spec.js - passed
 * MemberSection.spec.js
-* RegisterMemberSection.spec.js
-* InviteMembers.spec.js
-* RegisterMemberItem.spec.js
-* quiz.spec.js
+    * table row has extra button so test changes to find 
+* RegisterMemberSection.spec.js - passed
+* InviteMembers.spec.js - passed 
+    * but had to convert to mount from shallow as 
+* RegisterMemberItem.spec.js - passed
+    * change from class to form
+* quiz.spec.js - passed
 
 * MockReduxStoreTest.spec.js
 * LocalStateTest.spec.js

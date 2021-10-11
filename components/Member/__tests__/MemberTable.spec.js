@@ -2,11 +2,12 @@ import MemberTable from '../MemberTable'
 import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import sinon from 'sinon'
-import withMockRoute from '../../../server/util/mockRouter'
+import useMockRouter from '../../../server/util/useMockRouter'
 import fixture from './member.fixture.js'
 import { MemberStatus } from '../../../server/api/member/member.constants'
 
 test.before('Setup fixtures', fixture)
+test.before('Setup Route', useMockRouter('/org'), { id: 12345 })
 
 const MTF = {
   ID: 0,
@@ -33,8 +34,8 @@ test('MemberTable renders followers properly', t => {
   const row1 = wrapper.find('tbody tr').first()
   t.is(row1.find('td a span').at(MTF.NAME).text(), members[0].person.nickname)
   t.is(row1.find('td').at(MTF.STATUS).text(), MemberStatus.FOLLOWER)
+  const inviteBtn = row1.find('button').at(1)
 
-  const inviteBtn = row1.find('button').first()
   t.is(inviteBtn.text(), 'Add')
   inviteBtn.simulate('click')
   t.truthy(handleMembershipChange.called)
@@ -56,7 +57,7 @@ test('MemberTable renders members properly', t => {
   t.is(row1.find('td a span').at(MTF.NAME).text(), members[0].person.nickname)
   t.is(row1.find('td').at(MTF.STATUS).text(), MemberStatus.MEMBER)
 
-  const inviteBtn = row1.find('button').first()
+  const inviteBtn = row1.find('button').at(1)
   t.is(inviteBtn.text(), 'Remove')
   inviteBtn.simulate('click')
   t.truthy(handleMembershipChange.called)
@@ -67,12 +68,11 @@ test('row click handler pushes to profile page', t => {
   const members = t.context.members
 
   const handleMembershipChange = sinon.spy()
-  const RoutedTable = withMockRoute(MemberTable, '/about')
   const wrapper = mountWithIntl(
-    <RoutedTable
+    <MemberTable
       members={members}
       onMembershipChange={handleMembershipChange}
-    />, '/test')
+    />)
   const row1 = wrapper.find('tr').at(1)
   t.regex(row1.find('td').at(1).text(), /avowkind/)
   row1.find('a').first().simulate('click')

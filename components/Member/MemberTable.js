@@ -3,7 +3,7 @@
 import { Button, Table } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { FormattedMessage } from 'react-intl'
+import { useIntl } from 'react-intl'
 import { MemberStatus } from '../../server/api/member/member.constants'
 import { AvatarProfile } from '../VTheme/AvatarProfileLink'
 
@@ -77,30 +77,32 @@ MemberTable.propTypes = {
   ORGADMIN: OrgAdmin can make normal member again
 */
 const buttonStates = (member, meid) => {
+  const { formatMessage } = useIntl()
+  
   return [
     {
       buttonEnabled: [MemberStatus.FOLLOWER, MemberStatus.JOINER, MemberStatus.VALIDATOR, MemberStatus.EXMEMBER].includes(member.status),
-      label: formatMessage({id: 'member.add', defaultMessage: 'Add', description: 'Button allowing orgAdmin to Add a new org member'}),
+      label: formatMessage({ id: 'member.add', defaultMessage: 'Add', description: 'Button allowing orgAdmin to Add a new org member' }),
       action: 'add'
     },
     {
       buttonEnabled: [MemberStatus.JOINER, MemberStatus.VALIDATOR].includes(member.status),
-      label: formatMessage({id: 'member.reject', defaultMessage: 'Reject', description: 'Button allowing orgAdmin to Reject a member application'}),
+      label: formatMessage({ id: 'member.reject', defaultMessage: 'Reject', description: 'Button allowing orgAdmin to Reject a member application' }),
       action: 'reject'
     },
     {
       buttonEnabled: member.status === MemberStatus.MEMBER,
-      label: formatMessage({id: 'member.remove', defaultMessage: 'Remove', description: 'Button allowing orgAdmin to Remove an org member'}),
+      label: formatMessage({ id: 'member.remove', defaultMessage: 'Remove', description: 'Button allowing orgAdmin to Remove an org member' }),
       action: 'remove'
     },
     {
       buttonEnabled: member.status === MemberStatus.MEMBER,
-      label: formatMessage({id: 'member.makeadmin', defaultMessage: 'Make Admin', description: 'Button allowing orgAdmin to add new orgadmin'}),
+      label: formatMessage({ id: 'member.makeadmin', defaultMessage: 'Make Admin', description: 'Button allowing orgAdmin to add new orgadmin' }),
       action: 'makeadmin'
     },
     {
       buttonEnabled: (member.status === MemberStatus.ORGADMIN) && (member.person && member.person._id !== meid),
-      label: formatMessage({id: 'member.unadmin', defaultMessage: 'Cancel Admin', description: 'Button allowing orgAdmin to return an admin back to normal member'}),
+      label: formatMessage({ id: 'member.unadmin', defaultMessage: 'Cancel Admin', description: 'Button allowing orgAdmin to return an admin back to normal member' }),
       action: 'add'
     }
   ]

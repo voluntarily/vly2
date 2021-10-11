@@ -73,7 +73,7 @@ test.serial('followers can become members and then be removed', async t => {
   newfirstFollower.status = MemberStatus.MEMBER
   t.context.fetchMock.putOnce(`${API_URL}/members/${firstFollower._id}`, newfirstFollower)
 
-  const addButton = firstFollowerRow.find('button').first()
+  const addButton = firstFollowerRow.find('button').at(1)
   t.is(addButton.text(), 'Add')
   addButton.simulate('click')
   await sleep(1) // allow asynch fetch to complete
@@ -93,7 +93,7 @@ test.serial('followers can become members and then be removed', async t => {
   t.regex(member2.find('td').at(MTF.NAME).text().trim(), new RegExp(firstFollower.person.nickname))
 
   // test Remove button
-  const removeButton = member2.find('button').first()
+  const removeButton = member2.find('button').at(1)
   t.is(removeButton.text(), 'Remove')
   const newMember2 = Object.assign({}, firstFollower)
   newMember2.status = MemberStatus.EXMEMBER
@@ -149,7 +149,7 @@ test.serial('members can become admins ', async t => {
   // check orgAdmin can't change own state
   const memberRow1 = membersSection.find('tbody tr').at(0)
   t.is(memberRow1.find('td').at(MTF.STATUS).text(), MemberStatus.ORGADMIN)
-  t.is(memberRow1.find('button').length, 0)
+  t.is(memberRow1.find('button').length, 1)
 
   let memberRow2 = membersSection.find('tbody tr').at(1)
   t.is(memberRow2.find('td').at(MTF.STATUS).text(), MemberStatus.MEMBER)
@@ -253,7 +253,7 @@ test.serial('joiners can become members ', async t => {
   newfirstJoiner.status = MemberStatus.MEMBER
   t.context.fetchMock.putOnce(`${API_URL}/members/${firstJoiner._id}`, newfirstJoiner)
 
-  const addButton = firstJoinerRow.find('button').first()
+  const addButton = firstJoinerRow.find('button').at(1)
   t.is(addButton.text(), 'Add')
   addButton.simulate('click')
   await sleep(1) // allow asynch fetch to complete
@@ -288,7 +288,7 @@ test.serial('joiners can become members ', async t => {
 
   // check length of joiners table now
   joinersSection = wrapper.find('section').at(1)
-  t.is(joinersSection.find('tbody tr').length, 0)
+  t.is(joinersSection.find('tbody tr').length, 1)
   // check members table unchanged
   membersSection = wrapper.find('section').at(2)
   t.is(membersSection.find('tbody tr').length, memberCount + 1)
