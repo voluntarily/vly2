@@ -35,11 +35,14 @@ export const PersonListPage = ({
 }
 
 export const getServerSideProps = reduxWrapper.getServerSideProps(
+  store => async (props) => gssp({ store, query: props.query })
+)
 
-  store => async () => {
-    const select = { s: 'name', p: 'name imgUrl placeOfWork job' }
-    await store.dispatch(reduxApi.actions.people.get(select))
-    console.log('PersonListPage GSSP')
-  })
+// factored out for easier testing.
+export const gssp = async ({ store, query }) => {
+  const select = { s: 'name', p: 'name imgUrl placeOfWork job' }
+  await store.dispatch(reduxApi.actions.people.get(select))
+  console.log('PersonListPage GSSP')
+}
 
 export default withPeople(PersonListPage)

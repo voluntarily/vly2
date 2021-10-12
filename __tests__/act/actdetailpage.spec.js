@@ -3,6 +3,7 @@ import test from 'ava'
 import objectid from 'objectid'
 
 import { ActDetailPage, gssp } from '../../pages/acts/[actId]'
+import { gssp as newGssp } from '../../pages/acts/new'
 import { shallowWithIntl } from '../../lib/react-intl-test-helper'
 import acts from '../../server/api/activity/__tests__/activity.fixture'
 import people from '../../server/api/person/__tests__/person.fixture'
@@ -89,7 +90,7 @@ test.before('Setup fixtures', (t) => {
   }
 })
 
-test.before('Setup Route', useMockRouter('/test'), { id: 12345 })
+test.before('Setup Route', useMockRouter('/test', { id: 12345 }))
 
 test('render ActDetailPage', async t => {
   const ps = await gssp({ store: t.context.store, query: t.context.query })
@@ -145,7 +146,7 @@ test('Edit new ActDetailPage', async t => {
   const query = {
     new: 'new'
   }
-  const ps = await gssp({ store: t.context.store, query })
+  const ps = await newGssp({ store: t.context.store, query })
   const props = {
     ...t.context.props,
     ...ps.props,

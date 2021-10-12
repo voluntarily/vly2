@@ -91,6 +91,11 @@ Person/PersonDetailForm.js
 
 # Page checking
 
+## Page routes
+
+Move from using the routes.js file to the page tree dynamic routes preferred by NextJs.
+e.g rename personDetailPage.js to [personId].js 
+
 ## Home
 
 * fix tab update with useEffect
@@ -116,23 +121,28 @@ it is being set to a default session in the server middleware.
 
 looks like special path handling which is intended to bypass session loading for paths to _next is needed when we are getting the data/page.json file used to hydrate the redux object.  commenting this out fixes the linked page problem
 
-
-
 ## Organisation
 
-* OrgListPage  OrgListPage
+### Org Pages
+
+* OrgListPage - passed
+    * factor out gssp test as it no longer returns props
+    * feed the OrgDetailPage with organisation prop.
 * OrgDetailPage
-* OrgDetailForm - passing but lots of warnings, Form needs to be modernised.
-*
-* OrgBanner
-* OrgCard
-* OrgRole
-* OrgAboutPanel
-* OrgHistoryPanel
+* OrgDetailForm - passing but lots of warnings, 
+    * Form needs to be modernised.
+
+### Org Components
+
+* OrgBanner - passed
+* OrgCard - passed
+* OrgRole - passed
+* OrgAboutPanel - passed
+* OrgHistoryPanel - passed
     * get makeStore to use new store.js
     * some match span changed to div in antd.
-* OrgOfferedActivities
-* OrgSelector
+* OrgOfferedActivities - passed
+* OrgSelector - passed
     * this did not work properly before the current org would not be shown and the id would instead. Updated so that we correctly pass in and out an org structure as value but display in the selector the { value, label } required.
 
 ## Person
@@ -188,10 +198,11 @@ looks like special path handling which is intended to bypass session loading for
 
 ### Act Pages
 
-* ActDetailPage
+* ActDetailPage - passed
     * replace ActDetailPage.getInitialProps with GetServerSideProps
     * fix the tab effect.
     * bug - about only shows if there is a description. but edit defaults to about tab.
+    * adjust test to call gssp in acts/new
 
 * ActListPage - passed
 
@@ -265,6 +276,7 @@ looks like special path handling which is intended to bypass session loading for
 
 * OpListPage - passed
     * roles does not seem to be used,  in fact this page is rarely used except to view all ops. 
+    * test updated for new path
 
 * OpDetailPage
     * tests updated to new gssp object
@@ -437,7 +449,8 @@ it doesn't have an entry page but you can see the current status on /test/test-e
 
 
 
-# Page routes
-
-move from using the routes.js file to the page tree dynamic routes preferred by NextJs.
-e.g rename personDetailPage.js to [personId].js 
+2021-10-12
+  191 tests failed
+  9 tests skipped
+  1 unhandled rejection
+  11 uncaught exceptions

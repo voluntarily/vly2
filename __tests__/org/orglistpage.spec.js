@@ -1,6 +1,7 @@
-import React from 'react'
 import test from 'ava'
-import { OrgListPage } from '../../pages/orgs/orglistpage'
+import React from 'react'
+import sinon from 'sinon'
+import { OrgListPage, gssp } from '../../pages/orgs/orglistpage'
 import { shallowWithIntl } from '../../lib/react-intl-test-helper'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import objectid from 'objectid'
@@ -19,15 +20,22 @@ test.before('Setup fixtures', (t) => {
   }
 })
 
-test('render OrgList', async t => {
+test('run getServerSideProps', async t => {
   // first test GetInitialProps
+  const action = sinon.fake()
+
   const store = {
     dispatch: (ACTION) => {
+      action()
       return Promise.resolve(t.context.props)
     }
   }
-  const props = await getServerSideProps({ store })
-  const wrapper = shallowWithIntl(<OrgListPage {...props} />)
+  await gssp({ store })
+  t.true(action.calledOnce)
+})
+
+test('render OrgList', t => {
+  const wrapper = shallowWithIntl(<OrgListPage {...t.context.props} />)
   t.is(wrapper.find('Button').length, 0)
   t.truthy(wrapper.find('OpList'))
 })
@@ -39,14 +47,9 @@ test('render OrgList as admin', async t => {
     email: 'andrew@groat.nz',
     role: ['admin']
   }
-  const store = {
-    dispatch: (ACTION) => {
-      return Promise.resolve(t.context.props)
-    }
-  }
-  const props = await getServerSideProps({ store })
-  const wrapper = shallowWithIntl(<OrgListPage me={me} {...props} />)
-  t.is(wrapper.find('h1 FormattedMessage').first().props().id, 'org.list.heading')
+
+  const wrapper = shallowWithIntl(<OrgListPage me={me} {...t.context.props} />)
+  t.is(wrapper.find('h1 MemoizedFormattedMessage').first().props().id, 'org.list.heading')
   t.is(wrapper.find('Button').length, 1)
   t.truthy(wrapper.find('OpList'))
 })
@@ -60,6 +63,6 @@ test('render OpList with dispatch error', async t => {
     }
   }
   await t.throwsAsync(async () => {
-    await getServerSideProps({ store })
+    await gssp({ store })
   }, { message: 'Catch This!' })
 })

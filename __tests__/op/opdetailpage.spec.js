@@ -4,9 +4,9 @@ import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import fetchMock from 'fetch-mock'
-import { act } from 'react-dom/test-utils'
 
-import OpDetailPage, { gssp } from '../../pages/op/opdetailpage'
+import OpDetailPage, { gssp } from '../../pages/ops/[opId]'
+import { gssp as newTypeGssp } from '../../pages/ops/new/[type]'
 import { mountWithIntl } from '../../lib/react-intl-test-helper'
 import ops from '../../server/api/opportunity/__tests__/opportunity.fixture'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
@@ -144,7 +144,7 @@ test.serial('OpDetailPage GetServerSideProps non member', async t => {
   const ctx = {
     store: t.context.mockStore,
     query: {
-      id: t.context.op._id
+      opId: t.context.op._id
     }
   }
   const myMock = fetchMock.sandbox()
@@ -154,9 +154,8 @@ test.serial('OpDetailPage GetServerSideProps non member', async t => {
     .get('path:/api/locations', { body: t.context.locations })
     .get('path:/api/tags/', { body: t.context.tags })
     .get('path:/api/members/', { body: t.context.members })
-  const { props } = await gssp(ctx)
-  t.falsy(props.isNew)
-  // t.true(props.opExists)
+  await gssp(ctx)
+  t.true(fetchMock.done())
 })
 
 test.serial('OpDetailPage GetServerSideProps new ask', async t => {
@@ -164,7 +163,7 @@ test.serial('OpDetailPage GetServerSideProps new ask', async t => {
   const ctx = {
     store: t.context.mockStore,
     query: {
-      new: 'ask'
+      type: 'ask'
     }
   }
   const myMock = fetchMock.sandbox()
@@ -175,7 +174,7 @@ test.serial('OpDetailPage GetServerSideProps new ask', async t => {
     .get('path:/api/tags/', { body: t.context.tags })
     .get('path:/api/members/', { body: t.context.members })
 
-  const { props } = await gssp(ctx)
+  const { props } = await newTypeGssp(ctx)
   t.true(props.isNew)
   t.is(props.opType, 'ask')
 })
@@ -185,7 +184,7 @@ test.serial('OpDetailPage GetServerSideProps new offer', async t => {
   const ctx = {
     store: t.context.mockStore,
     query: {
-      new: 'offer'
+      type: 'offer'
     }
   }
   const myMock = fetchMock.sandbox()
@@ -196,7 +195,7 @@ test.serial('OpDetailPage GetServerSideProps new offer', async t => {
     .get('path:/api/tags/', { body: t.context.tags })
     .get('path:/api/members/', { body: t.context.members })
 
-  const { props } = await gssp(ctx)
+  const { props } = await newTypeGssp(ctx)
   t.true(props.isNew)
   t.is(props.opType, 'offer')
 })
@@ -246,7 +245,7 @@ test('send "PUT" request to redux-api when opportunity is completed on OpDetailP
   t.context.mockStore.clearActions()
   wrapper.find('Button').at(1).simulate('click')
   wrapper.find('Popup').find('Button').at(1).simulate('click')
- 
+
   t.is(t.context.mockStore.getActions()[0].type, '@@redux-api@opportunities')
   t.is(t.context.mockStore.getActions()[0].request.params.method, 'PUT')
   t.is(t.context.mockStore.getActions()[0].request.pathvars.id, t.context.op._id)
@@ -279,7 +278,7 @@ test.skip('can Edit the Op', async t => {
 
   // wrapper.find('OpTabs').first().invoke('onChange')('edit')
   // await act(async () => { }) // let the hooks complete
-  
+
   wrapper.update()
   console.log(wrapper.debug())
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import { OpListPage, gssp } from '../../pages/op/oplistpage'
+import { OpListPage, gssp } from '../../pages/ops/oplistpage'
 import { shallowWithIntl } from '../../lib/react-intl-test-helper'
 import ops from '../../server/api/opportunity/__tests__/opportunity.fixture'
 import objectid from 'objectid'

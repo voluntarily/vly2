@@ -218,7 +218,7 @@ export const getServerSideProps = reduxWrapper.getServerSideProps(
 )
 
 export const gssp = async ({ store, query }) => {
-  console.log('op/:id gssp', store, query)
+  console.log('op/:id gssp', query)
   const me = store.getState().session.me
   // Get one Org
   await Promise.all([

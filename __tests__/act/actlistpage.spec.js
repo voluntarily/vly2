@@ -38,7 +38,7 @@ test.afterEach(() => {
 })
 
 test.serial('render ActListPage for asks', async t => {
-  useMockRouter('/a', { type: 'ask' })(t)
+  useMockRouter('/acts/new', { actType: 'ask' })(t)
 
   const wrapper = shallowWithIntl(<ActListPage />)
   t.is(wrapper.find('h1 MemoizedFormattedMessage').first().props().id, 'ActListPage.Ask.Title')
@@ -46,7 +46,7 @@ test.serial('render ActListPage for asks', async t => {
 })
 
 test.serial('render ActListPage for offers', async t => {
-  useMockRouter('/a', { type: 'offer' })(t)
+  useMockRouter('/acts/new', { actType: 'offer' })(t)
 
   const wrapper = shallowWithIntl(<ActListPage />)
   t.is(wrapper.find('h1 MemoizedFormattedMessage').first().props().id, 'ActListPage.Offer.Title')
