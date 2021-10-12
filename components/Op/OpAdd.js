@@ -35,7 +35,7 @@ export const OpAddNewBtn = () => {
 }
 
 export const OpAddAskBtn = ({ actid }) => {
-  let href = `/op/${OpportunityType.ASK}`
+  let href = `/ops/new/${OpportunityType.ASK}`
   if (actid) {
     href = href.concat(`?act=${actid}`)
   }
@@ -51,7 +51,7 @@ export const OpAddAskBtn = ({ actid }) => {
 }
 
 export const OpAddOfferBtn = ({ actid }) => {
-  let href = `/op/${OpportunityType.OFFER}`
+  let href = `/ops/new/${OpportunityType.OFFER}`
   if (actid) {
     href = href.concat(`?act=${actid}`)
   }

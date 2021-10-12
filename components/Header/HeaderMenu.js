@@ -31,7 +31,7 @@ const menuItems = [
   {
     key: 'acts_ask',
     show: [BASIC, BOTH, ADMIN],
-    href: '/a/ask',
+    href: '/acts/type/ask',
     text:
   <FormattedMessage
     id='HeaderMenu.acts_ask'
@@ -41,7 +41,7 @@ const menuItems = [
   {
     key: 'acts_offer',
     show: [VOLUNTEER, BOTH, ADMIN],
-    href: '/a/offer',
+    href: '/acts/type/offer',
     text:
   <FormattedMessage
     id='HeaderMenu.acts_offer'

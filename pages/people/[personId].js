@@ -54,7 +54,7 @@ const PersonNotAvailable = ({ isAdmin }) =>
           </Link>
         </Button>
         <Button shape='round'>
-          <Link href='/person/new'>
+          <Link href='/people/new'>
             <a>
               <FormattedMessage id='person.altnew' defaultMessage='New Person' description='Button to create a new person' />
             </a>
@@ -74,7 +74,7 @@ export const PersonDetailPage = ({
 }) => {
   const [editing, setEditing] = useState(isNew)
   const { replace, back } = useRouter()
-
+console.log('persondetail', isNew)
   const handleCancelEdit = () => {
     if (isNew) { // return to previous
       return back()
@@ -106,9 +106,9 @@ export const PersonDetailPage = ({
 
   const handleCancelDelete = () => { message.error('Delete Cancelled') }
 
-  if (!people.sync) {
-    return <Loading label='person' entity={people} />
-  }
+  // if (!people.sync) {
+  //   return <Loading label='person' entity={people} />
+  // }
 
   let person = null
   if (isNew) {
@@ -182,20 +182,16 @@ export const getServerSideProps = reduxWrapper.getServerSideProps(
 // factored out for easier testing.
 export const gssp = async ({ store, query }) => {
   // Get one Org
-  const isNew = !!(query && query.new && query.new === 'new')
   await store.dispatch(reduxApi.actions.locations.get({}))
   await store.dispatch(reduxApi.actions.tags.get({}))
-  if (isNew) {
-    return {
-      props: {
-        isNew,
-        personid: null
-      }
-    }
-  } else if (query && query.id) {
-    const meid = query.id
+
+  if (  query && query.new && query.new === 'new')
+    return { props: { isNew: true } }
+
+  if (query && query.personId) {
+    const meid = query.personId
     try {
-      await store.dispatch(reduxApi.actions.people.get(query))
+      await store.dispatch(reduxApi.actions.people.get({ id: meid }))
       await store.dispatch(reduxApi.actions.members.get({ meid }))
     } catch (err) {
       // this can return a 403 forbidden if not signed in
@@ -205,10 +201,11 @@ export const gssp = async ({ store, query }) => {
     return {
       props: {
         isNew,
-        personid: query.id
+        personId: query.personId
       }
     }
   }
 }
 
 export default withMembers(withPeople(withLocations(PersonDetailPage)))
+

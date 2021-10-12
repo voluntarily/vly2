@@ -58,9 +58,10 @@ export const ActDetailPage = ({
     updateTab(key, key === 'edit')
   }
   const handleCancel = () => {
-    updateTab('about', true)
     if (isNew) { // return to previous
       back()
+    } else {
+      updateTab('about', true)
     }
   }
 
@@ -173,43 +174,25 @@ export const getServerSideProps = reduxWrapper.getServerSideProps(
 export const gssp = async ({ store, query }) => {
   const isAuthenticated = store.getState().session.isAuthenticated
   const me = store.getState().session.me
-  const isNew = !!(query && query.new && query.new === 'new')
-  const actExists = !!(query && query.id) // !! converts to a boolean value
+  const actExists = !!(query && query.actId) // !! converts to a boolean value
 
-  if (isNew) {
-    await Promise.all([
-      isAuthenticated ? store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })) : Promise.resolve(),
-      store.dispatch(reduxApi.actions.tags.get({}))
-    ])
-    return {
-      props: {
-        isNew
-      }
-    }
-  } else {
-    if (actExists) {
-      try {
-        await Promise.all([
-          isAuthenticated ? store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })) : Promise.resolve(),
-          store.dispatch(reduxApi.actions.tags.get({})),
-          store.dispatch(reduxApi.actions.activities.get(query)),
-          store.dispatch(
-            reduxApi.actions.opportunities.get(
-              { q: JSON.stringify({ fromActivity: query.id }) }
-            )
+  if (actExists) {
+    try {
+      await Promise.all([
+        isAuthenticated ? store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() })) : Promise.resolve(),
+        store.dispatch(reduxApi.actions.tags.get({})),
+        store.dispatch(reduxApi.actions.activities.get({ id: query.actId })),
+        store.dispatch(
+          reduxApi.actions.opportunities.get(
+            { q: JSON.stringify({ fromActivity: query.actId }) }
           )
-        ])
-      } catch (e) {
-        console.error('Error getting activity data:', e)
-      }
-    }
-    return {
-      props: {
-        isNew,
-        actExists
-      }
+        )
+      ])
+    } catch (e) {
+      console.error('Error getting activity data:', e)
     }
   }
+  return { props: { isNew: false } }
 }
 
 export default withMembers(withActs(ActDetailPage))

@@ -24,7 +24,7 @@ export const PersonListPage = ({
       </Head>
       <h1><FormattedMessage id='personListTitle' defaultMessage='People' description='H1 on Person list page' /></h1>
       <Button shape='round'>
-        <Link href='/person/new'>
+        <Link href='/people/new'>
           <a><FormattedMessage id='people.new' defaultMessage='New Person' description='Button to create a new person' /></a>
         </Link>
       </Button>
@@ -39,6 +39,7 @@ export const getServerSideProps = reduxWrapper.getServerSideProps(
   store => async () => {
     const select = { s: 'name', p: 'name imgUrl placeOfWork job' }
     await store.dispatch(reduxApi.actions.people.get(select))
+    console.log('PersonListPage GSSP')
   })
 
 export default withPeople(PersonListPage)

@@ -199,7 +199,7 @@ const Hero = ({ isAuthenticated }) => (
     </CTAGrid>
     <AwesomeHeroContainer>
 
-      <a href='/a/ask'>
+      <a href='/acts/type/ask'>
         <HeroItem>
           <HeroText>
             <h1>
@@ -233,7 +233,7 @@ const Hero = ({ isAuthenticated }) => (
 
         </HeroItem>
       </a>
-      <a href='/a/offer'>
+      <a href='/acts/type/offer'>
         <HeroItem>
 
           <HeroText>

@@ -168,7 +168,7 @@ export const OrgDetailPage = ({
       </Head>
 
       <OrgBanner org={org}>
-        {isAuthenticated && <RegisterMemberSection orgid={org._id} meid={me._id.toString()} />}
+        {isAuthenticated && <RegisterMemberSection orgId={org._id} meid={me._id.toString()} />}
         {saved && <HomeButton />}
       </OrgBanner>
       <OrgTabs
@@ -186,28 +186,18 @@ export const gssp = async ({ store, query }) => {
   // Get one Org
   console.log('OrgDetailPage GSSP', query)
   await store.dispatch(reduxApi.actions.tags.get({ name: GroupTagList }))
-  const isNew = query && query.new && query.new === 'new'
-  const props = {
-    props: {
-      isNew: !!isNew,
-      orgid: null
-    }
-  }
-  if (isNew) {
-    return props
-  } else if (query && query.id) {
-    props.props.orgid = query.id
-    await store.dispatch(reduxApi.actions.organisations.get(query))
+  
+  if (query && query.orgId) {
+    await store.dispatch(reduxApi.actions.organisations.get({id: query.orgId}))
     if (store.getState().session.isAuthenticated) {
       // get available membership of this org - either just me or all
       // const meid = store.getState().session.me._id.toString()
       await store.dispatch(
-        reduxApi.actions.members.get({ orgid: query.id })
+        reduxApi.actions.members.get({ orgId: query.orgId })
       )
     }
-    return props
+    return { props: { isNew: false, orgId: query.orgId }}
   }
 }
 
-export const OrgDetailPageWithOrgs = withOrgs(OrgDetailPage)
-export default OrgDetailPageWithOrgs
+export default withOrgs(OrgDetailPage)

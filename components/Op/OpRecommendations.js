@@ -45,7 +45,7 @@ export const NoRecommendations = ({ type }) =>
       </a>&nbsp;
       {/* invert the type to switch from listing to doing */}
       {type &&
-        <Link href={`/a/${type === ASK ? OFFER : ASK}`}>
+        <Link href={`/acts/type/${type === ASK ? OFFER : ASK}`}>
           <Button type='primary' shape='round'>
             <FormattedMessage
               id='NoRecommendations.button.browse'

@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import { OrgListPage } from '../../pages/org/orglistpage'
+import { OrgListPage } from '../../pages/orgs/orglistpage'
 import { shallowWithIntl } from '../../lib/react-intl-test-helper'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import objectid from 'objectid'

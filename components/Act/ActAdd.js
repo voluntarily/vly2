@@ -12,7 +12,7 @@ import { Role } from '../../server/services/authorize/role.js'
 const ActAdd = ({ roles }) => {
   if (roles && roles.includes(Role.ACTIVITY_PROVIDER)) {
     return (
-      <Link href='/act/new'>
+      <Link href='/acts/new'>
         <Button type='primary' block shape='round' size='large'>
           <FormattedMessage
             id='act.new'

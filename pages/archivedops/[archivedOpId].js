@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router'
-import PropTypes from 'prop-types'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
+
 import Loading from '../../components/Loading'
 import OpBanner from '../../components/Op/OpBanner'
 import OpTabs from '../../components/Op/OpTabs'
@@ -72,29 +72,15 @@ export const getServerSideProps = reduxWrapper.getServerSideProps(
 export const gssp = async ({ store, query }) => {
   // console('getInitialProps: ArchivedOpDetailPage', store, query)
   const me = store.getState().session.me
-  const opExists = !!(query && query.id) // !! converts to a boolean value
+  const opExists = !!(query && query.archivedOpId) // !! converts to a boolean value
 
   if (me._id) { // get viewers membership so we can tell if they are org Admin
     await store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() }))
   }
 
   if (opExists) { // get the archived op for this page
-    await store.dispatch(reduxApi.actions.archivedOpportunities.get(query))
+    await store.dispatch(reduxApi.actions.archivedOpportunities.get({id: query.archivedOpId}))
   }
-}
-
-ArchivedOpDetailPage.propTypes = {
-  op: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    subtitle: PropTypes.string,
-    imgUrl: PropTypes.any,
-    duration: PropTypes.string,
-    location: PropTypes.string,
-    _id: PropTypes.string.isRequired
-  }),
-  params: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  })
 }
 
 export const ArchivedOpDetailPageWithArchivedOps = withMembers(withArchivedOpportunities(ArchivedOpDetailPage))

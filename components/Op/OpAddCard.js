@@ -13,7 +13,7 @@ const ImageWrapper = styled.div`
 const OpAddCard = () => {
   return (
     <Card>
-      <Link href='/op/new'>
+      <Link href='/ops/new/ask'>
         <a>
           <ImageWrapper>
             <img src='/static/img/opportunity/actCreate.png' alt='create a new activity' />

@@ -24,7 +24,7 @@ const GiveSupportSection = () => (
           type='primary'
           shape='round'
           size='large'
-          href='/a/ask'
+          href='/acts/type/ask'
           style={{ margin: '1rem 1rem 0 0' }}
         >Ask for help
         </Button>

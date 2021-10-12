@@ -22,8 +22,9 @@ const getAbility = require('./middleware/ability/getAbility')
 server.use(cookieParser())
 server.use(setSession)
 server.use(getAbility({ searchPattern: '/server/api/**/*.ability.js' }))
-const routes = require('./routes')
-const routerHandler = routes.getRequestHandler(app)
+// const routes = require('next-routes-extended')()
+// const routerHandler = routes.getRequestHandler(app)
+const routerHandler = app.getRequestHandler()
 const { config } = require('../config/serverConfig')
 const { supportedLanguages } = require('../lang/lang')
 
@@ -110,6 +111,7 @@ const appReady = app.prepare().then(() => {
   }
 
   // REST API routes
+  // TODO: move this to pages/api
   const rootPath = require('path').join(__dirname, '/..')
   glob.sync(rootPath + '/server/api/**/*.routes.js').forEach(controllerPath => {
     if (!controllerPath.includes('.spec.js')) require(controllerPath)(server)

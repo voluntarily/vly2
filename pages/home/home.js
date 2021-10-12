@@ -74,9 +74,9 @@ const allSettled = (promises) => {
 */
 export const getServerSideProps = reduxWrapper.getServerSideProps(
   store => async () => {
-    // console.log('PersonHomePage.getServerSideProps')
     try {
       const me = store.getState().session.me
+      console.log(me.isAuthenticated)
       // TODO: bug when flow/postSignUp completes me is not set with _id and the GSSP fails. leaving the page mostly blank
 
       const meid = me?._id?.toString()
@@ -98,6 +98,8 @@ export const getServerSideProps = reduxWrapper.getServerSideProps(
     } catch (err) {
       console.error('error in getting home page data', err)
     }
+    console.log('Home GSSP')
+
     // return {}
   })
 

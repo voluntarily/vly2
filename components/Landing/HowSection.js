@@ -140,7 +140,7 @@ const HowSection = () => (
             <Text>Our matchmaking system finds you people who are looking for your skills and time</Text>
           </div>
         </article>
-        <a href='/a/ask'>
+        <a href='/acts/type/ask'>
           <Button size='large' shape='round' type='primary' block>See activities</Button>
         </a>
       </PersonaContainer>
@@ -160,7 +160,7 @@ const HowSection = () => (
             <Text>Our matchmaking system finds skilled volunteers who want to help you</Text>
           </div>
         </article>
-        <a href='/a/offer'>
+        <a href='/acts/type/offer'>
           <Button size='large' shape='round' type='primary' block>See all offers</Button>
         </a>
       </PersonaContainer>

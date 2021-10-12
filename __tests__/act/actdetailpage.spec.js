@@ -2,7 +2,7 @@ import React from 'react'
 import test from 'ava'
 import objectid from 'objectid'
 
-import { ActDetailPage, gssp } from '../../pages/act/actdetailpage'
+import { ActDetailPage, gssp } from '../../pages/acts/[actId]'
 import { shallowWithIntl } from '../../lib/react-intl-test-helper'
 import acts from '../../server/api/activity/__tests__/activity.fixture'
 import people from '../../server/api/person/__tests__/person.fixture'

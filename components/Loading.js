@@ -19,7 +19,7 @@ export const ReduxLoading = ({ entity, label }) => {
         type='error'
       />)
   }
-
+  console.log('loading', entity)
   return null
 }
 

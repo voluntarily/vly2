@@ -3,7 +3,7 @@ import sinon from 'sinon'
 import { shallowWithIntl } from '../../lib/react-intl-test-helper'
 import useMockRouter from '../../server/util/useMockRouter'
 
-import { PersonDetailPage, gssp } from '../../pages/person/persondetailpage'
+import { PersonDetailPage, gssp } from '../../pages/people/persondetailpage'
 import objectid from 'objectid'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import people from '../../server/api/person/__tests__/person.fixture'

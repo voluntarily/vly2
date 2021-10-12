@@ -26,7 +26,7 @@ export const OrgListPage = ({ organisations, me }) => {
         <PageBannerButtons>
           {isAdmin &&
             <Button type='primary' size='large' shape='round'>
-              <Link href='/org/new'>
+              <Link href='/orgs/new'>
                 <a>
                   <FormattedMessage id='org.new' defaultMessage='New Organisation' description='Button to create a new organisation' />
                 </a>
@@ -46,6 +46,7 @@ export const getServerSideProps = reduxWrapper.getServerSideProps(
   store => async () => {
     const select = { p: 'name imgUrl role' }
     await store.dispatch(reduxApi.actions.organisations.get(select))
+    console.log('OrgListPage GSSP')
   })
 
 export default withOrgs(OrgListPage)

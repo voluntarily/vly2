@@ -73,9 +73,10 @@ export const OpDetailPage = ({
     updateTab(key, key === 'edit')
   }
   const handleCancel = () => {
-    updateTab('about', true)
     if (isNew) { // return to previous
       back()
+    } else {
+      updateTab('about', true)
     }
   }
   const handleSubmit = useCallback(
@@ -217,11 +218,9 @@ export const getServerSideProps = reduxWrapper.getServerSideProps(
 )
 
 export const gssp = async ({ store, query }) => {
-  // console('getInitialProps: OpDetailPage', store, query)
+  console.log('op/:id gssp', store, query)
   const me = store.getState().session.me
   // Get one Org
-  const isNew = !!(query && query.new && [OpportunityType.ASK, OpportunityType.OFFER].includes(query.new))
-  const opExists = !!(query && query.id) // !! converts to a boolean value
   await Promise.all([
     store.dispatch(reduxApi.actions.locations.get({})),
     store.dispatch(reduxApi.actions.tags.get({}))
@@ -231,30 +230,8 @@ export const gssp = async ({ store, query }) => {
     await store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() }))
   }
 
-  if (isNew) {
-    // if there is an act parameter then get the activity and create initial op.
-    if (query.act) {
-      await store.dispatch(reduxApi.actions.activities.get({ id: query.act }))
-    }
-    return {
-      props: {
-        isNew,
-        opType: query.new,
-        actid: query.act
-      }
-    }
-  } else {
-    if (opExists) {
-      // query.session = store.getState().session //  Inject session with query that restricted api access
-      await store.dispatch(reduxApi.actions.opportunities.get(query))
-    }
-    return {
-      props: {
-        isNew
-        // opExists
-      }
-    }
-  }
+    // query.session = store.getState().session //  Inject session with query that restricted api access
+  await store.dispatch(reduxApi.actions.opportunities.get({id: query.opId}))
 }
 
 export default withMembers(withOps(OpDetailPage))

@@ -80,7 +80,9 @@ export const gssp = async ({ store, query }) => {
     const me = store.getState().session.me
     const meid = me._id.toString()
     await store.dispatch(reduxApi.actions.members.get({ meid: meid }))
-    await store.dispatch(reduxApi.actions.archivedOpportunities.get({ id: query.opportunity }))
+    if (query.opportunity) {
+      await store.dispatch(reduxApi.actions.archivedOpportunities.get({ id: query.opportunity }))
+    }
   } catch (err) {
     console.error('error in getting feedback submit page data', err)
   }

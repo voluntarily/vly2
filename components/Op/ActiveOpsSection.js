@@ -55,7 +55,7 @@ const OpEmpty = ({ type }) => (
           description='title for empty op section'
         />
       </p>
-      <Link href={`/a/${type === ASK ? OFFER : ASK}`}>
+      <Link href={`/acts/type/${type === ASK ? OFFER : ASK}`}>
         <a>
           <Button type='primary' shape='round' size='large'>
             <FormattedMessage

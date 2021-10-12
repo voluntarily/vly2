@@ -88,7 +88,7 @@ const TakeSupportSection = () => (
     <HeroSectionHeader>
       <h2>How people can support you</h2>
       <HeroSectionButtonContainer>
-        <Link href='/a/ask'>
+        <Link href='/acts/type/ask'>
           <Button shape='round' size='large'>
             <FormattedMessage
               id='TakeSupportSection.ask'

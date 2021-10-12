@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import { ActListPage } from '../../pages/act/actlistpage'
+import { ActListPage } from '../../pages/acts/actlistpage'
 import { shallowWithIntl } from '../../lib/react-intl-test-helper'
 import acts from '../../server/api/activity/__tests__/activity.fixture'
 import objectid from 'objectid'

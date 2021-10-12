@@ -34,7 +34,7 @@ export const NavigationH = ({ items }) => {
             ? ( // offsite links
               <a key={item.href} href={item.href}>{item.text}</a>
             ) : (
-              <Link key={item.href} href={item.href}>
+              <Link key={item.href} href={item.href} as={item.href}>
                 <a>{item.text}</a>
               </Link>
             )}

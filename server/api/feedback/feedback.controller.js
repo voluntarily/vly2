@@ -19,7 +19,7 @@ const createFeedback = async (req, res) => {
     // the person can only submit feedback once
     if (await Feedback.exists({ respondent: feedback.respondent, opportunity: feedback.opportunity })) {
       // HTTP STATUS CODE 409 CONFLICT
-      // https://stackoverflow.com/a/3826024
+      // https://stackoverflow.com/acts/type/3826024
       return res.status(409).send({ error: `User ${feedback.respondent.toString()} has already submitted feedback for opportunity ${feedback.opportunity.toString()} ` })
     }
 

@@ -101,6 +101,23 @@ Person/PersonDetailForm.js
 
 * SignUp preferences on profile tab
     * updated hydration of the 'me' object in redux means this is not attached to a model. So we can't just modify and save it. instead we use the id to get a fresh object from the db which is saved. This is safer anyway. 
+
+* redux hydration problems
+    * using link to switch between pages causes older data in redux to be discarded and GSSP is not re-run 
+
+Home page is created gssr runs and a session is included along with any data required for home page. Link to Orgs page causes new gssr page load. this sets the organisations data. 
+On link back to home page the hydration should restore the original home page state. or preserve the combined states.
+
+The two hydrations arise from the App.GIP which is setting the session and the page GSSP which is setting the local data.
+when we return to home we seem to miss out on the session - which results in no signed in user.
+
+We see AppGIP undefined on a link transition. so is get session failing?
+it is being set to a default session in the server middleware. 
+
+looks like special path handling which is intended to bypass session loading for paths to _next is needed when we are getting the data/page.json file used to hydrate the redux object.  commenting this out fixes the linked page problem
+
+
+
 ## Organisation
 
 * OrgListPage  OrgListPage
@@ -417,4 +434,10 @@ it doesn't have an entry page but you can see the current status on /test/test-e
 ## PostSignUp pages
 
 * flow/postSignUp - no test
-* 
+
+
+
+# Page routes
+
+move from using the routes.js file to the page tree dynamic routes preferred by NextJs.
+e.g rename personDetailPage.js to [personId].js 

@@ -95,7 +95,6 @@ const PersonListItem = ({ person }) => (
 PersonListItem.propTypes = {
   person: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    nickname: PropTypes.string.isRequired,
     imgUrl: PropTypes.string,
     job: PropTypes.string,
     placeOfWork: PropTypes.string,

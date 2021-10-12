@@ -22,7 +22,7 @@ const TakeSupportSection = () => (
           type='primary'
           shape='round'
           size='large'
-          href='/a/offer'
+          href='/acts/type/offer'
           style={{ marginRight: '1rem' }}
 
         >Offer to help
