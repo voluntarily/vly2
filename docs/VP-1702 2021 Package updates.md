@@ -128,7 +128,9 @@ looks like special path handling which is intended to bypass session loading for
 * OrgListPage - passed
     * factor out gssp test as it no longer returns props
     * feed the OrgDetailPage with organisation prop.
-* OrgDetailPage
+* OrgDetailPage - passed
+    * test rework to useMockRouter, set edit page etc. 
+    * should split edit and other tests into two files.
 * OrgDetailForm - passing but lots of warnings, 
     * Form needs to be modernised.
 
@@ -159,14 +161,13 @@ looks like special path handling which is intended to bypass session loading for
 * PersonListItem - passed
 * all person components - passed
 
-* PersonDetailPage
+* PersonDetailPage - passed
     * get server side props, factor out a version we can test using mock store.
     * switch from withMockRouter to useMockRouter
 
-* PersonListPage
+* PersonListPage - no test
     * people response not json serialisable. due to invalid json decoding on person.controller.  change to string decode for select and search.  This clearly has not been tested much. Ditto Organisation.controller.
     * only get data required for person list item - much shorter than fetching all people.
-
     * page is now sorted by name instead of nickname
 
 ## Activity

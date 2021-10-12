@@ -1,7 +1,6 @@
 import { SolutionOutlined, TeamOutlined } from '@ant-design/icons'
 import { Avatar } from 'antd'
 import Link from 'next/link'
-import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { MemberStatus } from '../../server/api/member/member.constants'
@@ -39,12 +38,5 @@ const MemberUl = ({ members }) =>
   <UnbulletedUl>
     {members.map((member, index) => <OrgLi key={index} org={member.organisation} status={member.status} />)}
   </UnbulletedUl>
-
-MemberUl.propTypes = {
-  members: PropTypes.arrayOf(PropTypes.shape({
-    organisation: PropTypes.object.isRequired,
-    _id: PropTypes.string.isRequired
-  })).isRequired
-}
 
 export default MemberUl

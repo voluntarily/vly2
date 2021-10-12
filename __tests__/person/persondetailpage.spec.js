@@ -3,7 +3,8 @@ import sinon from 'sinon'
 import { shallowWithIntl } from '../../lib/react-intl-test-helper'
 import useMockRouter from '../../server/util/useMockRouter'
 
-import { PersonDetailPage, gssp } from '../../pages/people/persondetailpage'
+import { PersonDetailPage, gssp } from '../../pages/people/[personId]'
+import { gssp as newGssp } from '../../pages/people/new'
 import objectid from 'objectid'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import people from '../../server/api/person/__tests__/person.fixture'
@@ -18,13 +19,13 @@ test.before('Setup fixtures', (t) => {
   // I am orgAdmin of the first org (voluntarily) and member of the second org (OMGTech)
   const orgMembership = [
     {
-      _id: objectid().toString(),
+      _personId: objectid().toString(),
       status: 'orgadmin',
       person: me._id,
       organisation: orgs[0]
     },
     {
-      _id: objectid().toString(),
+      _personId: objectid().toString(),
       status: 'member',
       person: me._id,
       organisation: orgs[1]
@@ -71,7 +72,7 @@ test.before('Setup fixtures', (t) => {
 test('PersonDetailPage getServerSideProps existing person', async t => {
   const me = people[0]
   const query = {
-    id: me._id
+    personId: me._id
   }
   const store = {
     dispatch: sinon.fake(),
@@ -82,15 +83,12 @@ test('PersonDetailPage getServerSideProps existing person', async t => {
 
   const { props } = await gssp({ store, query })
   t.false(props.isNew)
-  t.is(props.personid, me._id)
   t.is(store.dispatch.callCount, 4)
 })
 
 test('PersonDetailPage gssp new person', async t => {
   const me = people[0]
-  const query = {
-    new: 'new'
-  }
+
   const store = {
     dispatch: sinon.fake(),
     getState: () => {
@@ -98,37 +96,9 @@ test('PersonDetailPage gssp new person', async t => {
     }
   }
 
-  const { props } = await gssp({ store, query })
+  const { props } = await newGssp({ store })
   t.true(props.isNew)
-  t.is(props.personid, null)
   t.is(store.dispatch.callCount, 2)
-})
-
-test('render Loading PersonDetailPage ', async t => {
-  const dali = people[1]
-  const props = {
-    ...t.context.store,
-    me: dali,
-    isNew: false,
-    personid: dali._id,
-    people: {
-      sync: false,
-      syncing: false,
-      loading: true,
-      data: [],
-      request: null
-    },
-    members: {
-      sync: false,
-      syncing: false,
-      loading: false,
-      data: [],
-      request: null
-    }
-  }
-
-  const wrapper = shallowWithIntl(<PersonDetailPage {...props} />)
-  t.true(wrapper.exists('ReduxLoading'))
 })
 
 test('render unknown person PersonDetailPage ', async t => {
@@ -139,7 +109,7 @@ test('render unknown person PersonDetailPage ', async t => {
     ...t.context.store,
     me: dali,
     isNew: false,
-    personid: unknown,
+    personpersonId: unknown,
     people: {
       sync: true,
       syncing: false,
@@ -170,7 +140,7 @@ test('render Dalis PersonDetailPage as non admin random person alice', async t =
     ...t.context.store,
     me: alice,
     isNew: false,
-    personid: dali._id,
+    personpersonId: dali._id,
     people: {
       sync: true,
       syncing: false,
@@ -195,7 +165,7 @@ test('render Dalis PersonDetailPage as admin ', async t => {
     ...t.context.store,
     me: admin,
     isNew: false,
-    personid: dali._id,
+    personpersonId: dali._id,
     people: {
       sync: true,
       syncing: false,
@@ -226,7 +196,7 @@ test('render Dalis PersonDetailPage as self dali', async t => {
     ...t.context.store,
     me: dali,
     isNew: false,
-    personid: dali._id,
+    personpersonId: dali._id,
     people: {
       sync: true,
       syncing: false,
@@ -278,7 +248,7 @@ test('render new PersonDetailPage as admin ', async t => {
     ...t.context.store,
     me: admin,
     isNew: true,
-    personid: null,
+    personpersonId: null,
     people: {
       sync: true,
       syncing: false,

@@ -74,7 +74,6 @@ export const PersonDetailPage = ({
 }) => {
   const [editing, setEditing] = useState(isNew)
   const { replace, back } = useRouter()
-console.log('persondetail', isNew)
   const handleCancelEdit = () => {
     if (isNew) { // return to previous
       return back()
@@ -185,9 +184,6 @@ export const gssp = async ({ store, query }) => {
   await store.dispatch(reduxApi.actions.locations.get({}))
   await store.dispatch(reduxApi.actions.tags.get({}))
 
-  if (  query && query.new && query.new === 'new')
-    return { props: { isNew: true } }
-
   if (query && query.personId) {
     const meid = query.personId
     try {
@@ -200,7 +196,7 @@ export const gssp = async ({ store, query }) => {
 
     return {
       props: {
-        isNew,
+        isNew: false,
         personId: query.personId
       }
     }
