@@ -521,3 +521,7 @@ __tests__/admin/admin.spec.js
     * now we just need to test the page component as usual, passing in the correct props or redux store. 
     * still to do the school setup page - but low priority. 
 
+ 90 tests passed
+  2 tests skipped
+  1 uncaught exception
+   Uncaught exception in __tests__/reports/summary.spec.js
