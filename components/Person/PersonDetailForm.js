@@ -262,7 +262,7 @@ export const PersonDetailForm = ({ me, person, onCancel, onSubmit, locations, ex
   }
 
   const setImgUrl = (imgUrl, sizeVariants) => {
-    console.log('setImgUrl', imgUrl, sizeVariants)
+    // console.log('setImgUrl', imgUrl, sizeVariants)
     setAvatar(sizeVariants)
     person.imgUrl = imgUrl
     person.imgUrlSm = sizeVariants.sm

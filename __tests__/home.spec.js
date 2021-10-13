@@ -1,6 +1,7 @@
 import test from 'ava'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 import objectid from 'objectid'
 
 import { PersonHomePage, gssp } from '../pages/home/home'
@@ -17,7 +18,6 @@ import { InterestStatus } from '../server/api/interest/interest.constants'
 import { MemberStatus } from '../server/api/member/member.constants'
 import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
-import thunk from 'redux-thunk'
 import { MockWindowScrollTo } from '../server/util/mock-dom-helpers'
 import { useMockRouter, unuseMockRouter } from '../server/util/useMockRouter'
 

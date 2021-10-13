@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Head from 'next/head'
 import { FullPage } from '../../../components/VTheme/VTheme'
-import securePage from '../../../hocs/securePage'
 import styled from 'styled-components'
 import Conduct from '../../../assets/notices/conduct-short-en.md'
 import Link from 'next/link'

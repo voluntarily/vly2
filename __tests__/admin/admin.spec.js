@@ -1,125 +1,127 @@
 import test from 'ava'
-import request from 'supertest'
-import { server, appReady } from '../../server/server'
-import MemoryMongo from '../../server/util/test-memory-mongo'
+import sinon from 'sinon'
 import { loadInterestFixtures, clearInterestFixtures, sessions } from './invite-school.fixture'
 import fetchMock from 'fetch-mock'
 import SchoolLookUp from '../../server/api/school-lookup/school-lookup'
+import AdminPage from '../../pages/admin/index'
+import GoalListPage from '../../pages/admin/goals'
+import { mountWithIntl, shallowWithIntl } from '../../lib/react-intl-test-helper'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
+import goals from '../../server/api/goal/__tests__/goal.fixture'
+import configureStore from 'redux-mock-store'
+import adapterFetch from 'redux-api/lib/adapters/fetch'
+import reduxApi from '../../lib/redux/reduxApi'
 
-let originalConsole = null
-
-test.before('setup database and app', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-  await appReady
-
+test.before('Setup fixtures', (t) => {
   t.context.mockServer = fetchMock.sandbox()
   global.fetch = t.context.mockServer
+
+  t.context.mockStore = configureStore([thunk])(
+    {
+      session: {
+        isAuthenticated: true,
+        user: { nickname: 'testy' }
+      },
+      goals: {
+        sync: true,
+        syncing: false,
+        loading: false,
+        data: goals,
+        request: null
+      }
+    }
+  )
 })
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
-})
-
-test.beforeEach('populate database fixtures', async (t) => {
-  originalConsole = {
-    log: console.log,
-    warn: console.warn,
-    error: console.error
-  }
-
-  console.log = () => {}
-  console.warn = () => {}
-  console.error = () => {}
-
-  t.context.fixtures = await loadInterestFixtures()
-})
-
-test.afterEach.always(async (t) => {
-  console.log = originalConsole.log
-  console.warn = originalConsole.warn
-  console.error = originalConsole.error
-
+test.afterEach.always(t => {
   t.context.mockServer.reset()
-  await clearInterestFixtures()
+  sinon.restore()
 })
 
 // ADMIN Menu
 
-test.serial('Load admin  page as admin', async (t) => {
-  const response = await request(server)
-    .get('/admin')
-    .set('Cookie', [`idToken=${sessions[0].idToken}`])
-
-  t.is(response.status, 200, 'Should be allowed to view page')
+test('shallow /admin for anonymous', async t => {
+  const wrapper = shallowWithIntl(<AdminPage />)
+  t.true(wrapper.exists('AccessDenied'))
 })
 
-test.serial('Load admin page as anon', async (t) => {
-  const response = await request(server)
-    .get('/admin')
-  t.is(response.status, 302, 'Should be redirected to login')
+test('shallow /admin for an admin', async t => {
+  const wrapper = shallowWithIntl(<AdminPage isAdmin />)
+  t.false(wrapper.exists('AccessDenied'))
+  t.is(wrapper.find('h1').first().text(), 'Administration Tools')
 })
 
-test.serial('Load admin page as authenticated', async (t) => {
-  const response = await request(server)
-    .get('/admin')
-    .set('Cookie', [`idToken=${sessions[1].idToken}`])
-
-  t.truthy(response.text.includes('<h1>Access denied</h1><p>You do not have permission to view this page.</p>'))
-})
-
-// GOALS
-test.serial('Load admin/goals  page as admin', async (t) => {
-  const response = await request(server)
-    .get('/admin/goals')
-    .set('Cookie', [`idToken=${sessions[0].idToken}`])
-
-  t.is(response.status, 200, 'Should be allowed to view page')
-})
-
-// INVITE-SCHOOL
-test.serial('Load invite school page as admin', async (t) => {
-  t.context.mockServer.get(
-    'end:/api/schools?p=schoolId%20name',
-    { body: await SchoolLookUp.find() }
+test('shallow /admin/goals for anonymous', async t => {
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <GoalListPage />
+    </Provider>
   )
-
-  const response = await request(server)
-    .get('/admin/invite-school')
-    .set('Cookie', [`idToken=${sessions[0].idToken}`])
-
-  t.is(response.status, 200, 'Should be allowed to view page')
+  t.true(wrapper.exists('AccessDenied'))
 })
 
-test.serial('Load invite school page as anon', async (t) => {
-  t.context.mockServer.get(
-    'end:/api/schools?p=schoolId%20name',
-    { status: 403 }
+// // GOALS
+
+test('shallow /admin/goals for admin', async t => {
+
+  t.context.mockServer
+    .get('path:/api/goals/', { body: goals })
+  reduxApi.use('fetch', adapterFetch(t.context.mockServer))
+
+  const wrapper = mountWithIntl(
+    <Provider store={t.context.mockStore}>
+      <GoalListPage isAdmin />
+    </Provider>
   )
-
-  const response = await request(server)
-    .get('/admin/invite-school')
-  t.is(response.status, 302, 'Should be redirected to login')
+  t.false(wrapper.exists('AccessDenied'))
+  t.true(wrapper.exists('GoalListPage'))
+  t.is(wrapper.find('GoalCard').length, 6)
+  t.true(t.context.mockServer.done())
 })
 
-test.serial('Load invite school page as authenticated', async (t) => {
-  t.context.mockServer.get(
-    'end:/api/schools?p=schoolId%20name',
-    { status: 403 }
-  )
+// // INVITE-SCHOOL
+// test.serial('Load invite school page as admin', async (t) => {
+//   t.context.mockServer.get(
+//     'end:/api/schools?p=schoolId%20name',
+//     { body: await SchoolLookUp.find() }
+//   )
 
-  const response = await request(server)
-    .get('/admin/invite-school')
-    .set('Cookie', [`idToken=${sessions[1].idToken}`])
+//   const response = await request(server)
+//     .get('/admin/invite-school')
+//     .set('Cookie', [`idToken=${sessions[0].idToken}`])
 
-  t.truthy(response.text.includes('<h1>Access denied</h1><p>You do not have permission to view this page.</p>'))
-})
+//   t.is(response.status, 200, 'Should be allowed to view page')
+// })
 
-// TEST
-test.serial('Load admin/test page as admin', async (t) => {
-  const response = await request(server)
-    .get('/admin/test')
-    .set('Cookie', [`idToken=${sessions[0].idToken}`])
+// test.serial('Load invite school page as anon', async (t) => {
+//   t.context.mockServer.get(
+//     'end:/api/schools?p=schoolId%20name',
+//     { status: 403 }
+//   )
 
-  t.is(response.status, 200, 'Should be allowed to view page')
-})
+//   const response = await request(server)
+//     .get('/admin/invite-school')
+//   t.is(response.status, 302, 'Should be redirected to login')
+// })
+
+// test.serial('Load invite school page as authenticated', async (t) => {
+//   t.context.mockServer.get(
+//     'end:/api/schools?p=schoolId%20name',
+//     { status: 403 }
+//   )
+
+//   const response = await request(server)
+//     .get('/admin/invite-school')
+//     .set('Cookie', [`idToken=${sessions[1].idToken}`])
+
+//   t.truthy(response.text.includes('<h1>Access denied</h1><p>You do not have permission to view this page.</p>'))
+// })
+
+// // TEST
+// test.serial('Load admin/test page as admin', async (t) => {
+//   const response = await request(server)
+//     .get('/admin/test')
+//     .set('Cookie', [`idToken=${sessions[0].idToken}`])
+
+//   t.is(response.status, 200, 'Should be allowed to view page')
+// })

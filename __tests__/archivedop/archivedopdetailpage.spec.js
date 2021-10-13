@@ -1,11 +1,12 @@
 import test from 'ava'
+import objectid from 'objectid'
+import thunk from 'redux-thunk'
+import configureStore from 'redux-mock-store'
+
 import archivedOpportunities from '../../server/api/archivedOpportunity/__tests__/archivedOpportunity.fixture'
 import people from '../../server/api/person/__tests__/person.fixture'
 import tags from '../../server/api/tag/__tests__/tag.fixture.js'
-import objectid from 'objectid'
-import configureStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
-import { ArchivedOpDetailPageWithArchivedOps, ArchivedOpDetailPage } from '../../pages/archivedops/archivedopdetailpage'
+import ArchivedOpDetailPage, { gssp } from '../../pages/archivedops/[archivedOpId]'
 import { mountWithIntl } from '../../lib/react-intl-test-helper'
 import { Provider } from 'react-redux'
 import withMockRoute from '../../server/util/mockRouter'
@@ -13,8 +14,9 @@ import reduxApi from '../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { API_URL } from '../../lib/callApi'
 import fetchMock from 'fetch-mock'
-import sinon from 'sinon'
-import * as nextRouter from 'next/router'
+import useMockRouter from '../../server/util/useMockRouter'
+
+test.before('Setup Route', useMockRouter('/test', { archivedOpId: 12345 }))
 
 test.before('Setup fixtures', (t) => {
   // This gives all the people fake ids to better represent a fake mongo db
@@ -29,6 +31,7 @@ test.before('Setup fixtures', (t) => {
   })
 
   t.context = {
+    ...t.context,
     me,
     people,
     archivedOpportunities,
@@ -62,39 +65,20 @@ test.before('Setup fixtures', (t) => {
   )
 })
 
-test.before('Setup Route', (t) => {
-  const router = () => {
-    return ({
-      pathname: '/test',
-      route: '/test',
-      query: { id: 12345 },
-      asPath: '/test/12345',
-      initialProps: {},
-      pageLoader: sinon.fake(),
-      App: sinon.fake(),
-      Component: sinon.fake(),
-      replace: sinon.fake(),
-      push: sinon.fake(),
-      back: sinon.fake()
-    })
-  }
-  sinon.replace(nextRouter, 'useRouter', router)
-})
-
 test.serial('archivedOpDetailPage should have banner and tabs panels', t => {
   const props = {
     me: t.context.me,
     dispatch: t.context.mockStore.dispatch
   }
 
-  const RoutedArchivedOpDetailPage = withMockRoute(ArchivedOpDetailPageWithArchivedOps)
+  const RoutedArchivedOpDetailPage = withMockRoute(ArchivedOpDetailPage)
   const myMock = fetchMock.sandbox()
   myMock.get(API_URL + '/archivedOpportunities/' + archivedOpportunities[1]._id, { body: { status: 200 } })
   myMock.get(API_URL + '/interestArchives/?op=' + archivedOpportunities[1]._id, { body: { status: 200 } })
 
   reduxApi.use('fetch', adapterFetch(myMock))
   const wrapper = mountWithIntl(
-    <Provider store={t.context.mockStore} query={{ _id: archivedOpportunities[1]._id }}>
+    <Provider store={t.context.mockStore} query={{ _archivedOpId: archivedOpportunities[1]._id }}>
       <RoutedArchivedOpDetailPage {...props} />
     </Provider>
   )
@@ -113,7 +97,7 @@ test.serial('ArchivedOpDetailPage GetInitialProps non member', async t => {
   const ctx = {
     store: t.context.mockStore,
     query: {
-      id: t.context.op._id
+      archivedOpId: t.context.op._id
     }
   }
   const myMock = fetchMock.sandbox()
@@ -121,11 +105,11 @@ test.serial('ArchivedOpDetailPage GetInitialProps non member', async t => {
   myMock
     .get(`path:/api/archivedOpportunities/${t.context.op._id}`, { body: { status: 200 } })
     .get('path:/api/members/', { body: t.context.members })
-  const props = await getServerSideProps(ctx)
-  t.is(props, undefined)
+  await gssp(ctx)
+  t.true(myMock.done())
 })
 
-test('archivedOpDetailPage should display OpUnknown when no opportunity can be retrieved', t => {
+test.serial('archivedOpDetailPage should display OpUnknown when no opportunity can be retrieved', t => {
   const myStore = { ...t.context.mockStore }
   myStore.getState().archivedOpportunities.data = []
 
@@ -134,14 +118,13 @@ test('archivedOpDetailPage should display OpUnknown when no opportunity can be r
     dispatch: myStore.dispatch
   }
 
-  const RoutedArchivedOpDetailPage = withMockRoute(ArchivedOpDetailPageWithArchivedOps)
   const myMock = fetchMock.sandbox()
   myMock.get(API_URL + '/archivedOpportunities/' + archivedOpportunities[1]._id, { body: { status: 200 } })
-
   reduxApi.use('fetch', adapterFetch(myMock))
+
   const wrapper = mountWithIntl(
-    <Provider store={myStore} query={{ _id: archivedOpportunities[1]._id }}>
-      <RoutedArchivedOpDetailPage {...props} />
+    <Provider store={myStore} query={{ _archivedOpId: archivedOpportunities[1]._id }}>
+      <ArchivedOpDetailPage {...props} />
     </Provider>
   )
   t.is(wrapper.find('OpUnknown').length, 1)
@@ -157,14 +140,13 @@ test('archivedOpDetailPage should display Loading spinner when loading', t => {
     dispatch: myStore.dispatch
   }
 
-  const RoutedArchivedOpDetailPage = withMockRoute(ArchivedOpDetailPageWithArchivedOps)
   const myMock = fetchMock.sandbox()
   myMock.get(API_URL + '/archivedOpportunities/' + archivedOpportunities[1]._id, { body: { status: 200 } })
 
   reduxApi.use('fetch', adapterFetch(myMock))
   const wrapper = mountWithIntl(
-    <Provider store={myStore} query={{ _id: archivedOpportunities[1]._id }}>
-      <RoutedArchivedOpDetailPage {...props} />
+    <Provider store={myStore} query={{ _archivedOpId: archivedOpportunities[1]._id }}>
+      <ArchivedOpDetailPage {...props} />
     </Provider>
   )
   t.is(wrapper.find('img').prop('src'), '/static/loading.svg')

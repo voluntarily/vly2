@@ -4,7 +4,6 @@ import { injectIntl } from 'react-intl'
 import TermsEn from '../../assets/notices/terms-en.md'
 import { A4 } from '../../components/VTheme/VTheme'
 
-
 const Terms = () =>
   <A4>
     <Head>

@@ -163,7 +163,7 @@ const createActivity = async (req, res) => {
     const activity = await Activity.create(req.body)
     res.status(200).send(activity)
   } catch (error) {
-    console.log(error)
+    console.error(error)
     res.status(500).send()
   }
 }

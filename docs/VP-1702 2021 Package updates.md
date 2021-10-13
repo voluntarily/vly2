@@ -96,6 +96,23 @@ Person/PersonDetailForm.js
 Move from using the routes.js file to the page tree dynamic routes preferred by NextJs.
 e.g rename personDetailPage.js to [personId].js 
 
+## Higher Order Components PublicPage, AdminPage, SecurePage Removed
+
+All the page level HOCs have been removed. These were used to wrap pages in layers of
+
+* layout - publicpage
+* security - securepage
+* admin access - adminpage
+
+However these HOCs dont know whether to call GetServerSideProps or GetInitialProps etc. 
+
+So now we do the following:
+
+1. layout - all pages use the default layout injected by _App.  If you need a page without header/footer you can use the next js method override layout. 
+2. secure pages by default all pages are secured in _app using the RouteGuard Component. if not signed in you are redirected to the signthru steps. For specific public pages these are listed public paths now need to be explicitly added to the publicPaths array in routeguard.js
+3. Admin pages are no longer special - they just check the isAdmin prop on start and return the AccessDenied component if not an admin. 
+
+
 ## Home
 
 * fix tab update with useEffect
@@ -289,6 +306,9 @@ looks like special path handling which is intended to bypass session loading for
     * tests updated to new gssp object
     * factor out useMockRoute
 
+* ArchivedOpDetailPage - passed
+    * __tests__/archivedop/archivedopdetailpage.spec.js
+    * updated for gssp and dynamic pages
 ## VTheme Components
 
 * Html - passed
@@ -440,6 +460,9 @@ We have this whole posting and comment system called story that Farjana wrote th
 it doesn't have an entry page but you can see the current status on /test/test-edit
 
 * AddStory - passed
+  
+__tests__/story/storydetailpage.spec.js - passed
+__tests__/story/storylistpage.spec.js - passed
 
 ## Warnings
 
@@ -452,8 +475,10 @@ it doesn't have an entry page but you can see the current status on /test/test-e
 * GoalCard - passed
     * fix changes to icon naming
 * PersonalGoalSection - passed
-* GoalGroupHeading
+* GoalGroupHeading - passed
 
+* __tests__/goal/school/ready.spec.js - passed
+    * get server side props updated
 
 ## PostSignUp pages
 
@@ -469,23 +494,30 @@ it doesn't have an entry page but you can see the current status on /test/test-e
 
 
 
+### Miscellaneous Pages
 
-__tests__/404.spec.js
+* __tests__/404.spec.js - passed
+* __tests__/feedback/feedbacksubmitpage.spec.js - passed
+    * add useMockRouter
+* __tests__/landing.spec.js - passed
+* __tests__/action/registerTeacher/registerTeacher.spec.js - passed
+* __tests__/terms.spec.js - passed
+    * test passing but the .md file import is bypassed in test because the required babel loader is overridden
+    * this means we get back a null object which causes a warning in the test output
+    * TODO: fix loading md files in tests.
 
+### API pages
+* __tests__/api/notify/org/action.spec.js - passed
+* __tests__/api/notify/org/notifyOrg.spec.js
+* __tests__/api/registerRequestor/registerRequestor.spec.js - passed
+* __tests__/api/health/health.spec.js - passed
+    * renamed [param] to [healthQuery] to avoid difficult to identify filenames.
+* __tests__/api/reports/summary.spec.js - passed
+* __tests__/about.spec.js - passed
+* __tests__/reports/summary.spec.js  
+    * SKIPPED until isAdmin can be stubbed without Redux
 __tests__/admin/admin.spec.js
+    * lots to fix up here.  These were loading the full server and api handler in order to verify access control
+    * now we just need to test the page component as usual, passing in the correct props or redux store. 
+    * still to do the school setup page - but low priority. 
 
-__tests__/archivedop/archivedopdetailpage.spec.js
-__tests__/feedback/feedbacksubmitpage.spec.js
-__tests__/landing.spec.js
-__tests__/action/registerTeacher/registerTeacher.spec.js
-__tests__/terms.spec.js
-__tests__/api/notify/org/action.spec.js
-__tests__/api/notify/org/notifyOrg.spec.js
-__tests__/api/registerRequestor/registerRequestor.spec.js
-__tests__/api/health/health.spec.js
-__tests__/api/reports/summary.spec.js
-__tests__/about.spec.js
-__tests__/story/storydetailpage.spec.js
-__tests__/story/storylistpage.spec.js
-__tests__/goal/school/ready.spec.js
-__tests__/reports/summary.spec.js  

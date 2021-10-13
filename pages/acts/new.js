@@ -9,7 +9,7 @@ export const getServerSideProps = reduxWrapper.getServerSideProps(
 
 export const gssp = async ({ store, query }) => {
   // Get one Org
-  console.log('acts/new GSSP', query)
+  // console.log('acts/new GSSP', query)
   await store.dispatch(reduxApi.actions.tags.get({ name: GroupTagList }))
   return { props: { isNew: true } }
 }

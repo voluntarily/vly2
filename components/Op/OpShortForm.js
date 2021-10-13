@@ -24,7 +24,7 @@ export const OpShortForm = ({
   initialValues.endDate = op.date[1] && moment(op.date[1])
 
   const onFinish = (values) => {
-    console.log('onFinish', values)
+    // console.log('onFinish', values)
     values.locations = [...new Set(values.locations)]
 
     // compose a correct op from the fields.

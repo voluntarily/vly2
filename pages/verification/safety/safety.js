@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Head from 'next/head'
 import { FullPage } from '../../../components/VTheme/VTheme'
-import securePage from '../../../hocs/securePage'
 import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
 import safety from './safety-md-en.js'

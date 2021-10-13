@@ -4,6 +4,9 @@ import { Provider } from 'react-redux'
 import { FeedbackSubmitPage } from '../../pages/feedback/feedbacksubmitpage'
 import sinon from 'sinon'
 import * as nextRouter from 'next/router'
+import useMockRouter from '../../server/util/useMockRouter'
+
+test.before('Setup Route', useMockRouter('/feedback', { rating: 5, opportunity: 'opportunity_id' }))
 
 test.before('Setup store', t => {
   const members = {
@@ -62,13 +65,6 @@ test.before('Setup store', t => {
     dispatch: sinon.fake(),
     subscribe: sinon.fake()
   }
-})
-
-test.before('Setup mock router', t => {
-  const mockRouter = () => ({
-    query: { rating: 5, opportunity: 'opportunity_id' }
-  })
-  sinon.replace(nextRouter, 'useRouter', mockRouter)
 })
 
 test.afterEach.always('Reset mocks', () => {

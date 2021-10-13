@@ -1,5 +1,5 @@
 import test from 'ava'
-import { Ready as VolunteerReady, volunteerReadyQuiz } from '../../../pages/goal/volunteer/ready'
+import { Ready as VolunteerReady, volunteerReadyQuiz, gssp } from '../../../pages/goal/volunteer/ready'
 import { shallowWithIntl } from '../../../lib/react-intl-test-helper'
 import { hashObj } from '../../../components/quiz/quiz'
 import withMockRoute from '../../../server/util/mockRouter'
@@ -16,7 +16,7 @@ test('render OpList', async t => {
   const hash = hashObj(volunteerReadyQuiz[0].answers, email)
   const RoutedVolunteerReady = withMockRoute(VolunteerReady)
 
-  const props = await getServerSideProps({ store })
+  const { props } = await gssp({ store })
   t.is(props.vqa.name, volunteerReadyQuiz[0].name)
   t.is(props.vqa.hash, hash)
 

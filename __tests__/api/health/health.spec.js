@@ -2,7 +2,7 @@ import test from 'ava'
 import MockExpressRequest from 'mock-express-request'
 import MockExpressResponse from 'mock-express-response'
 import health from '../../../pages/api/health/health'
-import param from '../../../pages/api/health/[param]'
+import param from '../../../pages/api/health/[healthQuery]'
 import log from '../../../pages/api/health/log'
 import pub from '../../../pages/api/health/pub'
 import config from '../../../pages/api/health/config'
@@ -24,9 +24,9 @@ test('Should respond to parameter check', async t => {
   const req = new MockExpressRequest()
   const res = new MockExpressResponse()
 
-  req.query = { param: 'Test' }
+  req.query = { healthQuery: 'Test' }
   await param(req, res)
-  t.deepEqual(res._getJSON().query, { param: 'Test' })
+  t.deepEqual(res._getJSON().query, { healthQuery: 'Test' })
   t.is(200, res.statusCode, 'OK Response')
 })
 

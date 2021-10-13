@@ -83,5 +83,4 @@ export const gssp = async ({ store, query }) => {
   }
 }
 
-export const ArchivedOpDetailPageWithArchivedOps = withMembers(withArchivedOpportunities(ArchivedOpDetailPage))
 export default withMembers(withArchivedOpportunities(ArchivedOpDetailPage))

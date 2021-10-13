@@ -129,7 +129,7 @@ const setSession = async (req, res, next) => {
 
   let me = false
   try {
-    me = await Person.findOne({ email: user.email }).lean()
+    me = await Person.findOne({ email: user.email }).exec()
     if (!me) {
       me = await createPersonFromUser(user)
     } else {
@@ -145,7 +145,7 @@ const setSession = async (req, res, next) => {
   req.session = {
     isAuthenticated: true, // user.email_verified,
     user,
-    me,
+    me: me.toObject(),
     idToken
   }
   // console.log('setting session from IdToken', req.url, req.session.isAuthenticated, 'user', req.session.user.email, 'me', req.session.me.name, req.session.me.role)

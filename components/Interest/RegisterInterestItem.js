@@ -66,7 +66,7 @@ export const RegisterInterestItem = ({
     if (ok) {
       onReject(message)
       if (options.rejectNotifyHeading) {
-        console.log('options', options.rejectNotifyHeading)
+        // console.log('options', options.rejectNotifyHeading)
         notification.success({
           message: options.rejectNotifyHeading,
           description: options.rejectNotifyMessage

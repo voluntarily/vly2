@@ -79,7 +79,7 @@ test('token allows me to join org as a member ', async t => {
     // .expect('Content-Type', /json/)
 
   // if successful will redirect to the final destination
-  t.is(res.status, 302)
+  t.is(res.status, 307)
   t.is(res.header.location, `/orgs/${t.context.org._id}`)
 
   // and the members record will exist
@@ -98,7 +98,7 @@ test('token redirects non-signed in person to sign-thru ', async t => {
     // .expect('Content-Type', /json/)
 
   // if successful will redirect to the final destination
-  t.is(res.status, 302)
+  t.is(res.status, 307)
   t.is(res.header.location, `/auth/sign-thru?redirect=${url}`)
 })
 
@@ -121,7 +121,7 @@ test('token with existing follower should update to member', async t => {
     // .expect('Content-Type', /json/)
 
   // if successful will redirect to the final destination
-  t.is(res.status, 302)
+  t.is(res.status, 307)
   t.is(res.header.location, `/orgs/${t.context.org._id}`)
 
   // and the members record will exist
@@ -137,7 +137,7 @@ test('token with existing follower should update to member', async t => {
     // .expect('Content-Type', /json/)
 
   // if successful will redirect to the final destination
-  t.is(res.status, 302)
+  t.is(res.status, 307)
   t.is(res.header.location, `/orgs/${t.context.org._id}`)
   // and the members record has not changed
   membership = await Member.find(membershipQuery).exec()
