@@ -4,7 +4,6 @@ import Head from 'next/head'
 
 import { HomeBanner } from '../../components/Home/HomeBanner.js'
 import { HomeTabs } from '../../components/Home/HomeTabs.js'
-import Loading from '../../components/Loading'
 import { FullPage } from '../../components/VTheme/VTheme'
 import reduxApi from '../../lib/redux/reduxApi.js'
 import { MemberStatus } from '../../server/api/member/member.constants'

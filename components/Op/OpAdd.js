@@ -31,7 +31,8 @@ export const OpAddNewBtn = () => {
           description='Button to create a new Ask or Offer opportunity used on multiple pages'
         />
       </Button>
-    </Link>)
+    </Link>
+  )
 }
 
 export const OpAddAskBtn = ({ actid }) => {
@@ -62,7 +63,8 @@ export const OpAddOfferBtn = ({ actid }) => {
         defaultMessage='Offer to help'
         description='Button to create a new offer opportunity used on multiple pages'
       />
-    </SignUpInviteModal>)
+    </SignUpInviteModal>
+  )
 }
 
 export const OpAdd = ({ actid }) => {

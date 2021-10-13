@@ -18,7 +18,7 @@ test.before('before connect to database', async (t) => {
 
     // connect each oppo to a requestor.
     t.context.people = await Person.create(people).catch((err) => console.error(`Unable to create people: ${err}`))
-    archivedOps.map((op, index) => { op.requestor = t.context.people[index]._id })
+    archivedOps.forEach((op, index) => { op.requestor = t.context.people[index]._id })
     t.context.opportunities = await ArchiveOpportunity.create(archivedOps).catch((err) => console.error('Unable to create opportunities', err))
   } catch (e) {
     console.error('archivedOpportunity.controller.spec before connect error', e)

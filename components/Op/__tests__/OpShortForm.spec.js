@@ -88,7 +88,7 @@ test('shallow the form with op', t => {
 
 test('render the form with op', async t => {
   t.plan(7)
-  var done = sinon.promise()
+  const done = sinon.promise()
 
   const cancelOp = sinon.spy()
   const submitOp = sinon.spy(o => {

@@ -11,26 +11,29 @@ const { ASK, OFFER } = OpportunityType
 
 const { TabPane } = Tabs
 
-const actAboutTab =
+const actAboutTab = (
   <FormattedMessage
     id='actTabs.about'
     defaultMessage='About'
     description='Tab label on ActTabs'
   />
+)
 
-const actResourcesTab =
+const actResourcesTab = (
   <FormattedMessage
     id='actTabs.resources'
     defaultMessage='Resources'
     description='Tab label on ActTabs'
   />
+)
 
-const actEditTab =
+const actEditTab = (
   <FormattedMessage
     id='actTabs.edit'
     defaultMessage='Edit'
     description='Tab label for Act Editor panel on Opportunity'
   />
+)
 
 export const ActTabs = ({
   act,

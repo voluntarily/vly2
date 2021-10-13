@@ -17,4 +17,3 @@ Development has started as an open source project. Check out how you can get inv
 `
 
 export default AboutEnMd
-

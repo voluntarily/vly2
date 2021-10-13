@@ -383,14 +383,16 @@ class ActDetailForm extends Component {
                 {getFieldDecorator(ActivityFields.DESCRIPTION, {
                   rules: []
                 })(
-                  isTest ? (
-                    <TextArea
-                      rows={20}
-                      placeholder='All the details about the activity, you can use HTML here'
-                    />
-                  ) : (
-                    <RichTextEditor />
-                  )
+                  isTest
+                    ? (
+                      <TextArea
+                        rows={20}
+                        placeholder='All the details about the activity, you can use HTML here'
+                      />
+                      )
+                    : (
+                      <RichTextEditor />
+                      )
                 )}
               </Form.Item>
               {orgMembership && (

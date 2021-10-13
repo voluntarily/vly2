@@ -86,7 +86,8 @@ export function ActAboutPanel ({ act }) {
           <TagDisplay tags={act.tags} />
         </TagContainer>
       </OpSectionGrid>
-    </ProfilePanel>)
+    </ProfilePanel>
+  )
 }
 
 ActAboutPanel.propTypes = {

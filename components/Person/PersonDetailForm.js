@@ -22,12 +22,11 @@ import TagSelect from '../Form/Input/TagSelect'
 import { withAddressFinder } from '../Address/AddressFinder'
 
 const developerSettings = process.env.NODE_ENV !== 'production'
-const { TextArea } = Input
 
 // TODO - only the owner and admins should be able to edit the person record.
-function hasErrors (fieldsError) {
-  return Object.keys(fieldsError).some(field => fieldsError[field])
-}
+// function hasErrors (fieldsError) {
+//   return Object.keys(fieldsError).some(field => fieldsError[field])
+// }
 
 const personEmail = (
   <span>
@@ -43,13 +42,13 @@ const personEmail = (
   </span>
 )
 
-const requiredMsg = (
-  <FormattedMessage
-    id='required'
-    defaultMessage='Required'
-    description='For Field is required'
-  />
-)
+// const requiredMsg = (
+//   <FormattedMessage
+//     id='required'
+//     defaultMessage='Required'
+//     description='For Field is required'
+//   />
+// )
 
 const personPhone = (
   <FormattedMessage
@@ -78,13 +77,13 @@ const personSendEmailNotifications = (
     description='send email notifications label in personDetails form'
   />
 )
-const personAbout = (
-  <FormattedMessage
-    id='personAbout2'
-    defaultMessage='About'
-    description='person about label in personDetails Form'
-  />
-)
+// const personAbout = (
+//   <FormattedMessage
+//     id='personAbout2'
+//     defaultMessage='About'
+//     description='person about label in personDetails Form'
+//   />
+// )
 const personWebSite = (
   <FormattedMessage
     id='personWebsite'
@@ -413,13 +412,13 @@ export const PersonDetailForm = ({ me, person, onCancel, onSubmit, locations, ex
                   id='PersonDetailForm.SectionDescription.SkillsAndInterests'
                   defaultMessage='This section helps us find the right things for you to do. Tell us the region you in and your skills and interests. Use keywords like: accounting, video conferencing etc.'
                 />
-              )
+                )
               : (
                 <FormattedMessage
                   id='PersonDetailForm.SectionDescription.Location'
                   defaultMessage='This section helps us find the right things for you to do. Tell us the region you in.'
                 />
-              )}
+                )}
           </P>
         </DescriptionContainer>
         <InputContainer>

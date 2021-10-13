@@ -9,15 +9,17 @@ import ActCardSuggest from './ActCardSuggest'
 
 const ActList = ({ acts, ...props }) => (
   <Grid>
-    {acts ? (
-      acts.map((act, index) => <ActCard act={act} key={index} />)
-    ) : (
-      <FormattedMessage
-        id='act.list.empty'
-        defaultMessage='No matching activities'
-        description='no activities message in ActList'
-      />
-    )}<ActCardSuggest />
+    {acts
+      ? (
+          acts.map((act, index) => <ActCard act={act} key={index} />)
+        )
+      : (
+        <FormattedMessage
+          id='act.list.empty'
+          defaultMessage='No matching activities'
+          description='no activities message in ActList'
+        />
+        )}<ActCardSuggest />
   </Grid>
 )
 

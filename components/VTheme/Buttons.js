@@ -77,7 +77,8 @@ export const SignUpButton = ({ then }) => {
         id='Button.SignUp'
         defaultMessage='Get started'
       />
-    </Button>)
+    </Button>
+  )
 }
 
 /** Click sign up - flow through privacy accept,
@@ -98,7 +99,8 @@ export const SignInButton = ({ then }) => {
         id='Button.SignIn'
         defaultMessage='Sign In'
       />
-    </Button>)
+    </Button>
+  )
 }
 /** Learn More button
  * - links to CMS pages

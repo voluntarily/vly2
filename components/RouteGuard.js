@@ -38,8 +38,6 @@ function RouteGuard ({ children }) {
       router.events.off('routeChangeStart', hideContent)
       router.events.off('routeChangeComplete', authCheck)
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function authCheck (targeturl) {

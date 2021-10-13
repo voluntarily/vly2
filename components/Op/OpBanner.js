@@ -65,7 +65,8 @@ const OpBanner = ({ op, children }) => {
           </>
         </BannerDetail>
       </SideBarGrid>
-    </>)
+    </>
+  )
 }
 
 OpBanner.propTypes = {

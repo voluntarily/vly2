@@ -13,16 +13,18 @@ export const ExpandText = ({ storyBody, maxLength }) => {
     return (
       <P>
         {expand ? `${storyBody.substr(0, maxLength).trim()} ...` : storyBody}
-        {expand ? (
-          <a onClick={() => setExpand(false)}>
-            <FormattedMessage id='readMore' defaultMessage=' read more' description='hyperlink to expand a story' />
-          </a>
-        ) : (
-          <a onClick={() => setExpand(true)}>
-            <FormattedMessage id='readLess' defaultMessage=' read less' description='hyperlink to shrink a story' />
+        {expand
+          ? (
+            <a onClick={() => setExpand(false)}>
+              <FormattedMessage id='readMore' defaultMessage=' read more' description='hyperlink to expand a story' />
+            </a>
+            )
+          : (
+            <a onClick={() => setExpand(true)}>
+              <FormattedMessage id='readLess' defaultMessage=' read less' description='hyperlink to shrink a story' />
 
-          </a>
-        )}
+            </a>
+            )}
       </P>
     )
   }

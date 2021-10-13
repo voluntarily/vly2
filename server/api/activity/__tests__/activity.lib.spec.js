@@ -46,7 +46,7 @@ test.before('before connect to database', async (t) => {
   t.context.people = await Person.create(people)
   t.context.orgs = await Organisation.create(orgs)
   // connect each activity to an owner and org
-  acts.map((act, index) => {
+  acts.forEach((act, index) => {
     act.owner = t.context.people[index]._id
     act.offerOrg = t.context.orgs[index]._id
     // each act has two consecutive tags from the list

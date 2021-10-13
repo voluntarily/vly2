@@ -51,7 +51,8 @@ export const ActBanner = ({ act, children }) => {
         </BannerDetail>
       </OpSectionGrid>
 
-    </>)
+    </>
+  )
 }
 
 ActBanner.propTypes = {

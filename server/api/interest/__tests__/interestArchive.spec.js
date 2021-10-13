@@ -22,7 +22,7 @@ test.before('before connect to database', async (t) => {
   t.context.orgs = await Organisation.create(orgs)
 
   // setup opportunities 5 items
-  ops.map((op, index) => {
+  ops.forEach((op, index) => {
     // each op has a different person as requestor, but not me
     op.requestor = t.context.people[index + 1]._id
     // all the ops belong to the OMGTech org
@@ -32,7 +32,7 @@ test.before('before connect to database', async (t) => {
 
   // setup interests
   // each op has person + 2 interested.
-  const interests = t.context.ops.map((op, index) => {
+  const interests = t.context.ops.forEach((op, index) => {
     const enquirer = t.context.people[index + 2]
     return {
       person: enquirer._id,

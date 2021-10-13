@@ -94,7 +94,7 @@ test('render ItemListing', t => {
 
 test('render duration if the value is 3 hours', t => {
   const wrapper = renderWithIntl(<ItemDuration duration='3 hours' />)
-  t.true(wrapper.text().includes('Duration: 3 hours') )
+  t.true(wrapper.text().includes('Duration: 3 hours'))
 })
 
 test('render Volunteers per student properly if the value is < 1', t => {

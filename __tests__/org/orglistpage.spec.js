@@ -8,7 +8,7 @@ import objectid from 'objectid'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
-  orgs.map(p => { p._id = objectid().toString() })
+  orgs.forEach(p => { p._id = objectid().toString() })
   t.context.props = {
     organisations: {
       sync: true,

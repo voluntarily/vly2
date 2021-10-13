@@ -11,21 +11,22 @@ var messageSchema = new mongoose.Schema({
 })
  */
 export const InterestMessageItem = ({ message }) => (
-  message ? (
-    <Comment
-    // actions={actions}
-      author={message.author.nickname}
-      content={
-        <p>
-          {message.body}
-        </p>
-      }
-      datetime={
-        <Tooltip title={moment(message.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
-          <span>{moment(message.createdAt).fromNow()}</span>
-        </Tooltip>
-      }
-    />)
+  message
+    ? (
+      <Comment
+        // actions={actions}
+        author={message.author.nickname}
+        content={
+          <p>
+            {message.body}
+          </p>
+        }
+        datetime={
+          <Tooltip title={moment(message.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
+            <span>{moment(message.createdAt).fromNow()}</span>
+          </Tooltip>
+        }
+      />)
     : null
 )
 InterestMessageItem.propTypes = {

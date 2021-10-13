@@ -134,7 +134,7 @@ export const RegisterInterestItem = ({
               <RegisterButtons />
             </PageAlert>
           </AffixTopBar>
-        )
+          )
         : <RegisterButtons />}
 
       <RegisterInterestMessageForm
@@ -161,7 +161,8 @@ export const RegisterInterestItem = ({
         onSubmit={handleMessageSubmit}
         visible={showMessageForm}
       />
-    </>)
+    </>
+  )
 }
 
 const messages = {

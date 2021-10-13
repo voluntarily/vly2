@@ -43,7 +43,7 @@ export const ActListSection = () => {
   const dispatch = useDispatch()
 
   // here we use client side dispatch to get the activities list so that we can search dynamically
-  // this replaces getting all activities in one go in GSSP. which would not scale. 
+  // this replaces getting all activities in one go in GSSP. which would not scale.
   useEffect(() => {
     const getActivities = async () => {
       const q = { status: 'active' }
@@ -114,7 +114,7 @@ export const ActListSection = () => {
               rel='noopener noreferrer'
               href='https://voluntarily.atlassian.net/servicedesk/customer/portal/2/group/3/create/17'
             >&nbsp;
-            Suggest an activity here
+              Suggest an activity here
             </a>
           </Card>
         </div>

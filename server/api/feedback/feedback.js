@@ -26,7 +26,7 @@ feedbackSchema.plugin(idvalidator)
 feedbackSchema.plugin(accessibleRecordsPlugin)
 
 // protect multiple imports
-var Feedback
+let Feedback
 
 if (mongoose.models.Feedback) {
   Feedback = mongoose.model('Feedback')

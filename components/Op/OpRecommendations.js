@@ -85,7 +85,8 @@ export const OpRecommendations = ({ type, recommendedOps }) => {
         </>}
       {locs.length === 0 && skills.length === 0 &&
         <NoRecommendations type={type} />}
-    </>)
+    </>
+  )
 }
 
 OpRecommendations.propTypes = {

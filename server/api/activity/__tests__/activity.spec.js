@@ -29,7 +29,7 @@ test.after.always(async (t) => {
 
 test.beforeEach('connect and add two activity entries', async (t) => {
   // connect each activity to an owner and org
-  acts.map((act, index) => {
+  acts.forEach((act, index) => {
     act.owner = t.context.people[index]._id
     act.offerOrg = t.context.orgs[index]._id
     // each act has two consecutive tags from the list

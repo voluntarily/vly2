@@ -17,10 +17,10 @@ MockWindowScrollTo.replaceForTest(test, global)
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
-  acts.map(p => { p._id = objectid().toString() })
-  people.map(p => { p._id = objectid().toString() })
+  acts.forEach(p => { p._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
   const me = people[0]
-  orgs.map(p => { p._id = objectid().toString() })
+  orgs.forEach(p => { p._id = objectid().toString() })
   t.context = {
     acts,
     people,

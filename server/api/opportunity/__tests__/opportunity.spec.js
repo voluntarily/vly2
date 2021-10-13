@@ -33,7 +33,7 @@ test.after.always(async (t) => {
 
 test.beforeEach('connect and add two oppo entries', async (t) => {
   // connect each oppo to a requestor.
-  ops.map((op, index) => {
+  ops.forEach((op, index) => {
     op.requestor = t.context.people[index]._id
     op.offerOrg = t.context.orgs[1]._id
     op.tags = [tags[index]]

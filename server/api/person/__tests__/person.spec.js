@@ -136,5 +136,5 @@ test.serial('Email notifications flag set correctly', async (t) => {
   t.is(people[1].sendEmailNotifications, true)
   t.is(people[2].sendEmailNotifications, false)
 
-  await Person.remove({ _id: { $in: people.map(person => person._id) } })
+  await Person.remove({ _id: { $in: people.forEach(person => person._id) } })
 })

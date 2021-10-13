@@ -12,15 +12,17 @@ const FeaturedTwoSection = ({ ops, title, subtitle, ...props }) => (
       subtitle={subtitle}
     />
     <HalfGrid>
-      {ops ? (
-        ops.map((op, index) => <OpCard size='Big' op={op} key={index} />)
-      ) : (
-        <FormattedMessage
-          id='op.list.empty2'
-          defaultMessage='No matching activities'
-          description='no opportunities message in OpList'
-        />
-      )}
+      {ops
+        ? (
+            ops.map((op, index) => <OpCard size='Big' op={op} key={index} />)
+          )
+        : (
+          <FormattedMessage
+            id='op.list.empty2'
+            defaultMessage='No matching activities'
+            description='no opportunities message in OpList'
+          />
+          )}
     </HalfGrid>
   </div>
 )

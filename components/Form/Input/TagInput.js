@@ -28,15 +28,18 @@ class TagInput extends React.Component {
           >
             {children}
           </AutoComplete>
-          {this.props.value ? this.props.value.map(tag =>
-            <TagStyle
-              closable
-              onClose={() => this.removeTag(tag)}
-              key={tag}
-            >{tag}
-            </TagStyle>
-          ) : null}
-        </>)
+          {this.props.value
+            ? this.props.value.map(tag =>
+              <TagStyle
+                closable
+                onClose={() => this.removeTag(tag)}
+                key={tag}
+              >{tag}
+              </TagStyle>
+              )
+            : null}
+        </>
+      )
     }
 
     handleSelect = value => {
@@ -55,7 +58,7 @@ class TagInput extends React.Component {
       } else {
         const matchingTags = (val && this.props.existingTags)
           ? this.props.existingTags
-            .filter(tag => tag.toLowerCase().indexOf(val.toLowerCase()) !== -1 && !this.props.value.includes(tag.toLowerCase()))
+              .filter(tag => tag.toLowerCase().indexOf(val.toLowerCase()) !== -1 && !this.props.value.includes(tag.toLowerCase()))
           : []
         this.setState({
           inputvalue: value,

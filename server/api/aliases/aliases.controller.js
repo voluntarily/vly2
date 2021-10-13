@@ -76,7 +76,7 @@ const deleteTag = async (req, res) => {
   }
 
   try {
-    var tagToDelete = req.params.tag
+    const tagToDelete = req.params.tag
 
     if (!(await AliasSet.exists({ tag: tagToDelete }))) {
       return res.status(404).send({ error: 'Tag not found' })
@@ -143,10 +143,10 @@ const deleteTagAlias = async (req, res) => {
     // var tag = [req.params.tagA, req.params.tagB]
     // var aliastoDelete = [req.params.tagB, req.params.tagA]
 
-    var tag = [req.params.tag, req.body.aliasToDelete]
-    var aliastoDelete = [req.body.aliasToDelete, req.params.tag]
+    const tag = [req.params.tag, req.body.aliasToDelete]
+    const aliastoDelete = [req.body.aliasToDelete, req.params.tag]
 
-    var i
+    let i
     for (i = 0; i < tag.length; i++) {
       if (!(await AliasSet.exists({ tag: tag[i] }))) {
         return res.status(404).send({ error: 'Tag not found' })
@@ -189,8 +189,8 @@ const editTag = async (req, res) => {
   }
 
   try {
-    var originalTag = req.params.tag
-    var newTag = req.body.edittedTag
+    const originalTag = req.params.tag
+    const newTag = req.body.edittedTag
 
     if (!(await AliasSet.exists({ tag: originalTag }))) {
       return res.status(404).send({ error: 'Tag not found' })
@@ -246,7 +246,7 @@ const addTag = async (req, res) => {
   }
 
   try {
-    var newTag = req.params.tag
+    const newTag = req.params.tag
     if (await AliasSet.exists({ tag: newTag })) {
       return res.status(404).send({ error: 'Tag is already in database' })
     }
@@ -281,10 +281,10 @@ const addAliasToTag = async (req, res) => {
   }
 
   try {
-    var tag = [req.params.tag, req.body.aliasToAdd]
-    var aliastoAdd = [req.body.aliasToAdd, req.params.tag]
+    const tag = [req.params.tag, req.body.aliasToAdd]
+    const aliastoAdd = [req.body.aliasToAdd, req.params.tag]
 
-    var i
+    let i
     for (i = 0; i < tag.length; i++) {
       if (!(await AliasSet.exists({ tag: tag[i] }))) {
         return res.status(404).send({ error: 'Tag not found' })

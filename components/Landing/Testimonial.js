@@ -118,7 +118,7 @@ const Testimonial = () => (
 
       <PeopleCard>
         <h3>
-            I had a great time helping out, and doing good in my community
+          I had a great time helping out, and doing good in my community
         </h3>
         <figcaption>
           <img src='https://picsum.photos/56/56' />
@@ -130,7 +130,7 @@ const Testimonial = () => (
 
       <PeopleCard>
         <h3>
-            I had a great time helping out, and doing good in my community
+          I had a great time helping out, and doing good in my community
         </h3>
         <figcaption>
           <img src='https://picsum.photos/56/56' />
@@ -142,7 +142,7 @@ const Testimonial = () => (
 
       <PeopleCard>
         <h3>
-            I had a great time helping out, and doing good in my community
+          I had a great time helping out, and doing good in my community
         </h3>
         <figcaption>
           <img src='https://picsum.photos/56/56' />

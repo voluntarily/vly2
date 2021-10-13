@@ -71,5 +71,6 @@ export const AddressInput = ({
       defaultValue={value?.addressSummary}
       placeholder='start typing an address'
       allowClear
-    />)
+    />
+  )
 }

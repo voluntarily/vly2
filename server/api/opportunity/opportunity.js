@@ -59,7 +59,7 @@ opportunitySchema.plugin(accessibleFieldsPlugin)
 opportunitySchema.index({ tags: 1 })
 
 // protect multiple imports
-var Opportunity
+let Opportunity
 
 if (mongoose.models.Opportunity) {
   Opportunity = mongoose.model(SchemaName)

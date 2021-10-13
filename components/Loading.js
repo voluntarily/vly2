@@ -17,7 +17,8 @@ export const ReduxLoading = ({ entity, label }) => {
         style={{ margin: '2rem' }}
         message={`Error loading ${label}: ${entity.error.status} ${entity.error.statusText}`}
         type='error'
-      />)
+      />
+    )
   }
   console.error('ReduxLoading unexpected', entity)
   return null

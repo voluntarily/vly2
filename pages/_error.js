@@ -74,8 +74,8 @@ const ErrorPage = ({ url, locale, errorCode, initialNow }) => {
           <BugImage src='/static/img/bug.png' />
           <BugContainer>
             <p>
-                     An <strong>HTTP {errorCode}</strong> error occurred
-                     while trying to access{' '}
+              An <strong>HTTP {errorCode}</strong> error occurred
+              while trying to access{' '}
               <strong>{url}</strong>
             </p>
           </BugContainer>
@@ -103,8 +103,8 @@ const ErrorPage = ({ url, locale, errorCode, initialNow }) => {
             />
             <h4 className='display-4'>HTTP {errorCode} Error</h4>
             <p>
-                     An <strong>HTTP {errorCode}</strong> error occurred
-                     while trying to access{' '}
+              An <strong>HTTP {errorCode}</strong> error occurred
+              while trying to access{' '}
               <strong>{url}</strong>
             </p>
                  &nbsp;

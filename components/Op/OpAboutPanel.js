@@ -57,8 +57,8 @@ export function OpAboutPanel ({ op }) {
         </ProfileSection>
       </OpSectionGrid>
       <Spacer />
-    </ProfilePanel>)
+    </ProfilePanel>
+  )
 }
-
 
 export default OpAboutPanel

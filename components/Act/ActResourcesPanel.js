@@ -46,8 +46,8 @@ export function ActResourcesPanel ({ act }) {
             </div>
             <ItemDescription>
               <ul id='documents'>
-                {act.documents.map(document => (
-                  <>
+                {act.documents.map((document, index) => (
+                  <div key={index}>
                     <a target='_blank' download={document.filename} rel='noopener noreferrer' href={document.location}>
                       <DocumentList key={document.location}>
                         <img src='/static/img/icons/download.svg' alt='an image that shows files being downloaded' />
@@ -58,7 +58,7 @@ export function ActResourcesPanel ({ act }) {
                       </DocumentList>
                     </a>
 
-                  </>
+                  </div>
 
                 ))}
               </ul>
@@ -66,7 +66,8 @@ export function ActResourcesPanel ({ act }) {
           </OpSectionGrid>
           <Divider />
         </>)}
-    </ProfilePanel>)
+    </ProfilePanel>
+  )
 }
 
 ActResourcesPanel.propTypes = {

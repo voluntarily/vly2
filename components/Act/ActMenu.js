@@ -66,7 +66,7 @@ const ActMenu = ({ acts, onClick }) => {
 
           <Menu.Item key='back'>
             <Link href={`/acts/type/${router.query.type}`}>
-           See all
+              See all
             </Link>
           </Menu.Item>
 

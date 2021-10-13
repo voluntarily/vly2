@@ -19,8 +19,8 @@ MockWindowScrollTo.replaceForTest(test, global)
 
 test.before('Setup fixtures', (t) => {
   // This gives all the people fake ids to better represent a fake mongo db
-  people.map(p => { p._id = objectid().toString() })
-  orgs.map(org => { org._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
+  orgs.forEach(org => { org._id = objectid().toString() })
 
   const me = people[1]
 
@@ -96,7 +96,6 @@ test.serial('OrgDetailPage GetInitialProps non member', async t => {
   t.is(props.orgId, t.context.org._id)
   t.true(myMock.done())
   myMock.reset()
-
 })
 
 test.serial('OrgDetailPage GetInitialProps anon', async t => {
@@ -142,7 +141,6 @@ test.serial('OrgDetailPage GetInitialProps new', async t => {
   t.true(props.isNew)
   t.true(myMock.done())
   myMock.reset()
-
 })
 
 test('render OrgDetailPage loading ', async t => {
@@ -287,7 +285,6 @@ test.serial('edit and save existing org', async t => {
   wrapper.find('Form').first().simulate('submit')
   wrapper.update()
   t.context.router.query = { tab: 'about' }
-
 })
 
 test.skip('edit and save new org', async t => {

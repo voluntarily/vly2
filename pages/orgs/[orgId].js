@@ -158,7 +158,8 @@ export const OrgDetailPage = ({
           onCancel={handleCancel}
           existingGroups={tags.data}
         />
-      </FullPage>)
+      </FullPage>
+    )
   }
 
   return (
@@ -175,7 +176,8 @@ export const OrgDetailPage = ({
         org={org} canManage={canManage} isAuthenticated={isAuthenticated}
         tab={activeTab} onChange={handleTabChange}
       />
-    </FullPage>)
+    </FullPage>
+  )
 }
 
 export const getServerSideProps = reduxWrapper.getServerSideProps(
@@ -186,9 +188,9 @@ export const gssp = async ({ store, query }) => {
   // Get one Org
   console.log('OrgDetailPage GSSP', query)
   await store.dispatch(reduxApi.actions.tags.get({ name: GroupTagList }))
-  
+
   if (query && query.orgId) {
-    await store.dispatch(reduxApi.actions.organisations.get({id: query.orgId}))
+    await store.dispatch(reduxApi.actions.organisations.get({ id: query.orgId }))
     if (store.getState().session.isAuthenticated) {
       // get available membership of this org - either just me or all
       // const meid = store.getState().session.me._id.toString()
@@ -196,7 +198,7 @@ export const gssp = async ({ store, query }) => {
         reduxApi.actions.members.get({ orgId: query.orgId })
       )
     }
-    return { props: { isNew: false, orgId: query.orgId }}
+    return { props: { isNew: false, orgId: query.orgId } }
   }
 }
 

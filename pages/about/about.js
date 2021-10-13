@@ -76,13 +76,13 @@ class About extends Component {
         <Spacer />
         <AboutSection>
           <Markdown
-            children={about}
             options={{
               overrides: {
                 Button: { component: Button }
               }
             }}
-          />
+          >{about}
+          </Markdown>
         </AboutSection>
         <AboutCTA />
 

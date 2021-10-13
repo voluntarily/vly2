@@ -84,7 +84,8 @@ export const QuestionGroup = ({ questions, answers, me, onSubmit }) => {
           description='Button Submit QuestionGroup answers'
         />
       </Button>
-    </div>)
+    </div>
+  )
 }
 
 const issueBadge = async ({ _id, email }, badgeclass) => {
@@ -113,5 +114,6 @@ export const VideoQuiz = ({ vqa, me, onCompleted }) => {
       <p>{vqa.description}</p>
       <iframe style={{ margin: '2em' }} width='560' height='315' src={vqa.src} frameBorder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowFullScreen />
       <QuestionGroup questions={vqa.questions} answers={vqa.hash} me={me} onSubmit={handleSubmit} />
-    </>)
+    </>
+  )
 }

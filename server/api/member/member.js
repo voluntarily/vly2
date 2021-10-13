@@ -47,7 +47,7 @@ memberSchema.plugin(idvalidator)
 memberSchema.plugin(accessibleRecordsPlugin)
 
 // protect multiple imports
-var Member
+let Member
 
 if (mongoose.models.Member) {
   Member = mongoose.model('Member')

@@ -7,7 +7,7 @@
   if you have more than one on a page they will cancel each other out. In this case the parent
   should obtain all the necessary data and use OpList to display the array.
 */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import OpList from '../../components/Op/OpList'
 import reduxApi, { withOps } from '../../lib/redux/reduxApi'
 import moment from 'moment'
@@ -148,12 +148,14 @@ const OpListSection = ({
     return (
       <section>
         <Loading label='Opportunities' entity={opportunities} />
-      </section>)
+      </section>
+    )
   } else {
     return (
       <section>
         <OpList ops={opData} orderby={sortOrder(orderby)} />
-      </section>)
+      </section>
+    )
   }
 }
 

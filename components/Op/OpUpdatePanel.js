@@ -38,17 +38,19 @@ const OpUpdatePanel = ({ albumId, dispatch, stories, author }) => {
 
       <ContentCard>
         {
-          stories.data.length === 0 ? (
-            <P>
-              <FormattedMessage
-                id='storyUpdate'
-                defaultMessage='Check here for updates about this activity'
-                description='Description shown if no updates have been created'
-              />
-            </P>
-          ) : (
-            <StoryStack stories={stories.data} />
-          )
+          stories.data.length === 0
+            ? (
+              <P>
+                <FormattedMessage
+                  id='storyUpdate'
+                  defaultMessage='Check here for updates about this activity'
+                  description='Description shown if no updates have been created'
+                />
+              </P>
+              )
+            : (
+              <StoryStack stories={stories.data} />
+              )
         }
 
       </ContentCard>

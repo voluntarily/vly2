@@ -49,10 +49,10 @@ export const ToggleTick = ({ on }) => {
   return on
     ? (
       <CheckSquareOutlined />
-    )
+      )
     : (
       <Icon component={uncheckSquare} />
-    )
+      )
 }
 
 export const ToggleLi = ({ checked, icon, children, onChange }) => {

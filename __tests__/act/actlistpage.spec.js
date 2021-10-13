@@ -9,7 +9,7 @@ import useMockRouter from '../../server/util/useMockRouter'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
-  acts.map(p => { p._id = objectid().toString() })
+  acts.forEach(p => { p._id = objectid().toString() })
   t.context.props = {
     activities: {
       sync: true,
@@ -52,4 +52,3 @@ test.serial('render ActListPage for offers', async t => {
   t.is(wrapper.find('h1 MemoizedFormattedMessage').first().props().id, 'ActListPage.Offer.Title')
   t.true(wrapper.exists('ActListSection'))
 })
-

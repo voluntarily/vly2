@@ -5,7 +5,6 @@ import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import acts from '../../../server/api/activity/__tests__/activity.fixture'
 import objectid from 'objectid'
 // import withMockRoute from '../../../server/util/mockRouter'
-import sinon from 'sinon'
 import * as nextRouter from 'next/router'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
@@ -14,7 +13,7 @@ import useMockRouter from '../../../server/util/useMockRouter'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
-  acts.map(p => { p._id = objectid().toString() })
+  acts.forEach(p => { p._id = objectid().toString() })
   t.context.props = {
     activities: {
       sync: true,

@@ -116,7 +116,7 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
           <div>
             {person.about &&
               <div>
-                <Html children={person.about} />
+                <Html>{person.about}</Html>
                 <Divider />
               </div>}
             {person.tags &&

@@ -165,7 +165,8 @@ export const OpTypeStamp = ({ type }) => {
   return (
     <Stamp>
       {intl.formatMessage(OpTypeMessages[type])}
-    </Stamp>)
+    </Stamp>
+  )
 }
 
 export const OpCommitment = ({ duration }) => {
@@ -178,7 +179,8 @@ export const OpCommitment = ({ duration }) => {
         defaultMessage='commitment'
         description='e.g 10 hours commitment'
       />
-    </>)
+    </>
+  )
 }
 
 const OpTypeLocationMsg = defineMessages({

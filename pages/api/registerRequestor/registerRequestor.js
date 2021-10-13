@@ -19,7 +19,7 @@ import moment from 'moment'
     - found but didn't match name - 400 Bad Request
 */
 function intersect (a, b) {
-  var t
+  let t
   if (b.length > a.length) {
     t = b
     b = a

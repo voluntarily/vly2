@@ -1,22 +1,22 @@
-import { DatePicker, Form, Input, InputNumber, Tooltip, Row, Col } from 'antd'
+import { DatePicker, Form, Input, Tooltip, Row, Col } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { DescriptionContainer, FormGrid, ShortInputContainer, InputContainer, TitleContainer } from '../VTheme/FormStyles'
 import { OpTypeDateTitle, OpTypeDatePrompt } from './OpType'
 import moment from 'moment'
 import { QuestionCircleOutlined } from '@ant-design/icons'
-const opCommitment = (
-  <span>
-    <FormattedMessage
-      id='OpOfferForm.label.Commitment'
-      defaultMessage='How much time is needed.'
-      description='activity Commitment label in OpOfferForm Form'
-    />
-    &nbsp;
-    <Tooltip title='How much time overall is likely to be required for the activity?'>
-      <QuestionCircleOutlined />
-    </Tooltip>
-  </span>
-)
+// const opCommitment = (
+//   <span>
+//     <FormattedMessage
+//       id='OpOfferForm.label.Commitment'
+//       defaultMessage='How much time is needed.'
+//       description='activity Commitment label in OpOfferForm Form'
+//     />
+//     &nbsp;
+//     <Tooltip title='How much time overall is likely to be required for the activity?'>
+//       <QuestionCircleOutlined />
+//     </Tooltip>
+//   </span>
+// )
 
 const opStartDate = (
   <span>

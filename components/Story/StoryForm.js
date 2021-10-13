@@ -43,5 +43,6 @@ export const StoryForm = ({ story, onSubmit }) => {
           </Button>
         </InputContainer>
       </FormGrid>
-    </Form>)
+    </Form>
+  )
 }

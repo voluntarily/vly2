@@ -626,7 +626,8 @@ class OrgDetailForm extends Component {
             </InputContainer>
           </FormGrid>
           {
-            isTest ? saveAndCancelBtns
+            isTest
+              ? saveAndCancelBtns
               : (
                 <Affix offsetBottom={0}>
                   <FormGrid style={{ backgroundColor: 'white', paddingTop: 15 }}>
@@ -639,7 +640,7 @@ class OrgDetailForm extends Component {
                     {saveAndCancelBtns}
                   </FormGrid>
                 </Affix>
-              )
+                )
           }
         </Form>
       </div>

@@ -9,7 +9,8 @@ const RootPage = (props) => {
       {props.isAuthenticated
         ? <Home {...props} />
         : <Landing {...props} />}
-    </>)
+    </>
+  )
 }
 
 // RootPage.getInitialProps = async (ctx) => {

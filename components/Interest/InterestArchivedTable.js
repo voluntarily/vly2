@@ -7,17 +7,19 @@ import { AvatarProfile } from '../VTheme/AvatarProfileLink'
 import { ExpandedInterest, MessagesColumn, MessageText } from './InterestTable'
 import { RegisterInterestMessageForm } from './RegisterInterestMessageForm'
 
-const AttendedText =
+const AttendedText = (
   <FormattedMessage
     id='markPresent' defaultMessage='Attended'
     description='Button allowing event organizer to mark the volunteer as attended'
   />
+)
 
-const NotAttendedText =
+const NotAttendedText = (
   <FormattedMessage
     id='markAbsent' defaultMessage='Not Attended'
     description='Button allowing event organizer to mark the volunteer as not attended'
   />
+)
 
 const formOptions = {
   [InterestAction.ACCEPT]: {

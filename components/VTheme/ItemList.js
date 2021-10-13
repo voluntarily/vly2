@@ -151,7 +151,7 @@ export const LocationsList = ({ locations }) =>
   (locations && locations.length
     ? (
       <ItemListing>
-   📍&nbsp;
+        📍&nbsp;
         <strong>
           <FormattedMessage
             id='itemlist.locations'
@@ -165,7 +165,7 @@ export const LocationsList = ({ locations }) =>
           )}
         </LocationUl>
       </ItemListing>
-    )
+      )
     : '')
 
 export const ItemVenue = ({ venue }) =>
@@ -252,5 +252,5 @@ export const ItemSpace = ({ space }) =>
           />
         </strong>&nbsp;&nbsp;&nbsp;{space}
       </ItemListing>
-    )
+      )
     : ''

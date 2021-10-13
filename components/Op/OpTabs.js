@@ -10,39 +10,44 @@ import { useSelector } from 'react-redux'
 
 const { TabPane } = Tabs
 
-const opAboutTab =
+const opAboutTab = (
   <FormattedMessage
     id='opTabs.about'
     defaultMessage='About'
     description='Tab label on OpDetailsPage'
   />
-const opChatTab =
+)
+const opChatTab = (
   <FormattedMessage
     id='opTabs.chat'
     defaultMessage='Messages'
     description='Tab label on OpDetailsPage'
   />
+)
 
-const opForumTab =
+const opForumTab = (
   <FormattedMessage
     id='opTabs.questions'
     defaultMessage='Questions'
     description='Tab label for Question panel on Opportunity'
   />
+)
 
-const opManageTab =
+const opManageTab = (
   <FormattedMessage
     id='opTabs.manage'
     defaultMessage='Manage'
     description='Tab label for Op Manager panel on Opportunity'
   />
+)
 
-const opEditTab =
+const opEditTab = (
   <FormattedMessage
     id='opTabs.edit'
     defaultMessage='Edit'
     description='Tab label for Op Editor panel on Opportunity'
   />
+)
 
 const isNotProd = process.env.NODE_ENV !== 'production'
 

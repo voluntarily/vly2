@@ -46,7 +46,7 @@ const organisationSchema = new Schema({
 organisationSchema.plugin(accessibleRecordsPlugin)
 
 // protect multiple imports
-var Organisation
+let Organisation
 
 if (mongoose.models.Organisation) {
   Organisation = mongoose.model('Organisation')

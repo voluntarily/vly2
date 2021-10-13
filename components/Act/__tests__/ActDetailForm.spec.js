@@ -36,11 +36,11 @@ test.before('before test silence async-validator', () => {
 
 test.before('Setup Organisations fixtures', (t) => {
   // not using mongo or server here so faking ids
-  people.map(p => { p._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
   const me = people[0]
 
   // two orgs are aps
-  orgs.map(p => { p._id = objectid().toString() })
+  orgs.forEach(p => { p._id = objectid().toString() })
   const org = orgs[0]
 
   // fake my membership

@@ -24,30 +24,32 @@ const InterestConfirmationCard = ({ organizer, ...props }) => {
   // TODO: [VP-1339] InterestConfirmationCard organizer is an id and needs to be populated.
   const emailHref = 'mailto:' + organizer.email
 
-  return <>
-    <div style={{ color: 'black' }}>
-      <Paragraph>
-        <FormattedMessage {...interestConfirmation} />
-      </Paragraph>
-    </div>
-    <div>
-      <Card style={{ width: 450, marginTop: 16, borderRadius: 8 }}>
-        <Meta
-          style={cardHeading}
-          imgUrl={
-            <Avatar src={organizer.imgUrl} />
+  return (
+    <>
+      <div style={{ color: 'black' }}>
+        <Paragraph>
+          <FormattedMessage {...interestConfirmation} />
+        </Paragraph>
+      </div>
+      <div>
+        <Card style={{ width: 450, marginTop: 16, borderRadius: 8 }}>
+          <Meta
+            style={cardHeading}
+            imgUrl={
+              <Avatar src={organizer.imgUrl} />
           }
-          name={organizer.name}
-          description={organizer.name}
-        />
-        <div style={{ color: '#6549AA', marginTop: '20px' }}>
-          <MailOutlined /><span> <a href={emailHref}>{organizer.email}</a></span><br />
-          {organizer.phone && organizer.phone !== 'undefined' &&
-            <span><MobileOutlined /> {organizer.phone}</span>}
-        </div>
-      </Card>
-    </div>
-         </>
+            name={organizer.name}
+            description={organizer.name}
+          />
+          <div style={{ color: '#6549AA', marginTop: '20px' }}>
+            <MailOutlined /><span> <a href={emailHref}>{organizer.email}</a></span><br />
+            {organizer.phone && organizer.phone !== 'undefined' &&
+              <span><MobileOutlined /> {organizer.phone}</span>}
+          </div>
+        </Card>
+      </div>
+    </>
+  )
 }
 
 InterestConfirmationCard.propTypes = {

@@ -30,14 +30,14 @@ export const NavigationH = ({ items }) => {
     >
       {items.map(item => (
         <Menu.Item key={item.key}>
-          {item.href.startsWith('http')
-            ? ( // offsite links
-              <a key={item.href} href={item.href}>{item.text}</a>
-            ) : (
-              <Link key={item.href} href={item.href} as={item.href}>
-                <a>{item.text}</a>
-              </Link>
-            )}
+          {
+            item.href.startsWith('http')
+              ? <a key={item.href} href={item.href}>{item.text}</a>
+              : (
+                <Link key={item.href} href={item.href} as={item.href}>
+                  <a>{item.text}</a>
+                </Link>)
+          }
         </Menu.Item>
       ))}
 
@@ -61,14 +61,15 @@ export const NavigationV = ({ items }) => {
       >
         {items.map(item => (
           <Item key={item.key}>
-            {item.href.startsWith('http')
-              ? ( // offsite links
-                <a key={item.href} href={item.href}>{item.text}</a>
-              ) : (
-                <Link key={item.href} href={item.href}>
-                  <a>{item.text}</a>
-                </Link>
-              )}
+            {
+              item.href.startsWith('http')
+                ? <a key={item.href} href={item.href}>{item.text}</a>
+                : (
+                  <Link key={item.href} href={item.href}>
+                    <a>{item.text}</a>
+                  </Link>
+                  )
+            }
           </Item>
         ))}
       </SubMenu>

@@ -22,7 +22,7 @@ export function OpManagePanel ({ op }) {
                 defaultMessage='People asking for help'
                 description='label for interest table on op detail page'
               />
-            )
+              )
             : (
               <FormattedMessage
                 id='interestSection.ask.name'

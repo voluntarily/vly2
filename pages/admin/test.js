@@ -5,7 +5,7 @@ import { FullPage, Section } from '../../components/VTheme/VTheme'
 import fetch from 'isomorphic-fetch'
 import AccessDenied from '../../components/Navigation/AccessDenied'
 
-const TestPage = ({isAdmin}) => {
+const TestPage = ({ isAdmin }) => {
   if (!isAdmin) return <AccessDenied />
 
   const handleRunTest = async () => {

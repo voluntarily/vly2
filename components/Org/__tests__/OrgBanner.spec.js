@@ -20,7 +20,7 @@ const org = {
 
 test('OrgBanner has image, and title', t => {
   const children = <p>Test</p>
-  const wrapper = shallow(<OrgBanner org={org} children={children} />)
+  const wrapper = shallow(<OrgBanner org={org}>{children}</OrgBanner>)
   t.is(wrapper.find('h1').first().text(), `${org.name}`)
   t.is(wrapper.find(VBannerImg).first().prop('src'), org.imgUrl)
   // t.is(wrapper.find('a').first().text(), org.website)

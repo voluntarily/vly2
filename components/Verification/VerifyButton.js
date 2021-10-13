@@ -9,7 +9,8 @@ const VerifyButton = (props) => {
         id='VerifyButton.label'
         defaultMessage='Verify Identity'
       />
-    </Button>)
+    </Button>
+  )
 }
 
 VerifyButton.propTypes = {

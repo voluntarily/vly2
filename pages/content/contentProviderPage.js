@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import SectionTitle from '../../components/Landing/SectionTitle'
 import { BigQuote, BigQuoteAuthor, FullPage, H1, H3, H3Bold, H4, HalfGrid, P, PBold, Spacer, SpacerSmall, TripleGrid } from '../../components/VTheme/VTheme'
 
-
 const GridContainer = styled.div`
   position: relative;
   height: auto;
@@ -411,7 +410,7 @@ export class ContentProvider extends Component {
               <H3>Contact us</H3>
               <SpacerSmall />
               <P>
-              Want to get more involved in the project? Get in touch below.
+                Want to get more involved in the project? Get in touch below.
               </P>
               <br />
               <a>business@voluntarily.nz</a>

@@ -80,7 +80,7 @@ async function uploadToS3 (buffer, filename) {
  * @returns {string}
  */
 function getBucketName () {
-  return config.appUrl.replace(/^(https?|ftp|http):\/\//g, '');
+  return config.appUrl.replace(/^(https?|ftp|http):\/\//g, '')
 }
 
 /**
@@ -104,7 +104,7 @@ function isValidS3Url (str, bucketName = getBucketName()) {
   try {
     const url = new URL(str)
 
-    return !!(url.hostname.match(/amazonaws.com$/) && url.pathname.startsWith(`/${bucketName}`));
+    return !!(url.hostname.match(/amazonaws.com$/) && url.pathname.startsWith(`/${bucketName}`))
   } catch {
     return false
   }

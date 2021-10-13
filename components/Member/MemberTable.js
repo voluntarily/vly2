@@ -78,7 +78,7 @@ MemberTable.propTypes = {
 */
 const buttonStates = (member, meid) => {
   const { formatMessage } = useIntl()
-  
+
   return [
     {
       buttonEnabled: [MemberStatus.FOLLOWER, MemberStatus.JOINER, MemberStatus.VALIDATOR, MemberStatus.EXMEMBER].includes(member.status),

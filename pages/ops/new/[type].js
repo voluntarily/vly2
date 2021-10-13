@@ -22,11 +22,12 @@ export const gssp = async ({ store, query }) => {
   if (me._id) {
     await store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() }))
   }
-  const res  = { 
+  const res = {
     props: {
-    isNew: true,
-    opType: query.type,
-  }}
+      isNew: true,
+      opType: query.type
+    }
+  }
   // if there is an act parameter then get the activity and create initial op.
   if (query.act) {
     await store.dispatch(reduxApi.actions.activities.get({ id: query.act }))

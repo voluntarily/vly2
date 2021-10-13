@@ -62,7 +62,8 @@ export const ArchivedOpDetailPage = ({
         {/* <OpStatusStamp status={op.status} /> */}
       </OpBanner>
       <OpTabs op={op} canManage={canManage} defaultTab={tab} onChange={handleTabChange} author={me._id} />
-    </FullPage>)
+    </FullPage>
+  )
 }
 
 export const getServerSideProps = reduxWrapper.getServerSideProps(
@@ -79,7 +80,7 @@ export const gssp = async ({ store, query }) => {
   }
 
   if (opExists) { // get the archived op for this page
-    await store.dispatch(reduxApi.actions.archivedOpportunities.get({id: query.archivedOpId}))
+    await store.dispatch(reduxApi.actions.archivedOpportunities.get({ id: query.archivedOpId }))
   }
 }
 

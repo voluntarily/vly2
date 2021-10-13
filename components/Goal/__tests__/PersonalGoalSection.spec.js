@@ -9,7 +9,7 @@ import { PersonalGoalSection } from '../PersonalGoalSection'
 import { PersonalGoalStatus } from '../../../server/api/personalGoal/personalGoal.constants'
 
 test.before('Setup store', (t) => {
-  people.map(p => { p._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
 
   const alice = people[2]
   const personalGoals = [

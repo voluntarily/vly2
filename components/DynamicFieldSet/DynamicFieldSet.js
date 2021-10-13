@@ -89,18 +89,20 @@ export class DynamicFieldSet extends React.Component {
       </Form.Item>
     ))
 
-    return <>
-      {formItems}
-      <Form.Item>
-        <Button
-          className='ant-btn-primary ant-btn-round ant-btn-lg'
-          block
-          onClick={() => this.add()}
-        >
-          <PlusOutlined /> {this.props.addItemText || 'Add item'}
-        </Button>
-      </Form.Item>
-           </>
+    return (
+      <>
+        {formItems}
+        <Form.Item>
+          <Button
+            className='ant-btn-primary ant-btn-round ant-btn-lg'
+            block
+            onClick={() => this.add()}
+          >
+            <PlusOutlined /> {this.props.addItemText || 'Add item'}
+          </Button>
+        </Form.Item>
+      </>
+    )
   }
 }
 

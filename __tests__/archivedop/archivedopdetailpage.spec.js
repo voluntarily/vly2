@@ -20,11 +20,11 @@ test.before('Setup Route', useMockRouter('/test', { archivedOpId: 12345 }))
 
 test.before('Setup fixtures', (t) => {
   // This gives all the people fake ids to better represent a fake mongo db
-  people.map(p => { p._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
   const me = people[0]
 
   // Set myself as the requestor for all of the opportunities, and fake ids
-  archivedOpportunities.map((op, index) => {
+  archivedOpportunities.forEach((op, index) => {
     op._id = objectid().toString()
     op.requestor = me
     op.tags = [tags[index], tags[index + 1]]

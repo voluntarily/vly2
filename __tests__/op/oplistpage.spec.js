@@ -7,7 +7,7 @@ import objectid from 'objectid'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
-  ops.map(p => { p._id = objectid().toString() })
+  ops.forEach(p => { p._id = objectid().toString() })
   t.context.props = {
     opportunities: {
       sync: true,

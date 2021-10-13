@@ -5,10 +5,10 @@ import MemoryMongo from '../../../util/test-memory-mongo'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import { jwtData, jwtDataAlice, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
-import archivedOps from './archivedOpportunity.fixture'
 import ArchivedOpportunity from '../archivedOpportunity'
 import { OpportunityStatus, OpportunityFields, OpportunityListFields } from '../../opportunity/opportunity.constants'
 import { OrganisationRole } from '../../organisation/organisation.constants'
+import archivedOps from './archivedOpportunity.fixture'
 
 test.before('before connect to database', async (t) => {
   t.context.memMongo = new MemoryMongo()
@@ -23,7 +23,7 @@ test.after.always(async (t) => {
 test.beforeEach('connect and add two activity entries', async (t) => {
   t.context.people = await Person.create(people)
 
-  const linkedArchivedOps = archivedOps.map((op, index) => {
+  const linkedArchivedOps = archivedOps.forEach((op, index) => {
     return {
       ...op,
       requestor: t.context.people[2]._id // alice is op for all ops

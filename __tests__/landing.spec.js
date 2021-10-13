@@ -11,10 +11,10 @@ import moment from 'moment'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
-  people.map(p => { p._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
   const me = people[0]
   // setup list of opportunities, I am owner for the first one
-  ops.map((op, index) => {
+  ops.forEach((op, index) => {
     op._id = objectid().toString()
     op.requestor = people[index]
   })

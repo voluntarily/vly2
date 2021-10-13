@@ -40,14 +40,14 @@ test.after.always(() => {
 
 test.before('Setup fixtures', (t) => {
   // This gives all the people fake ids to better represent a fake mongo db
-  people.map(p => { p._id = objectid().toString() })
-  orgs.map(org => { org._id = objectid().toString() })
-  acts.map(act => { act._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
+  orgs.forEach(org => { org._id = objectid().toString() })
+  acts.forEach(act => { act._id = objectid().toString() })
 
   const me = people[0]
   const offerOrg = orgs[0]
   // Set myself as the requestor for all of the opportunities, and fake ids
-  ops.map((op, index) => {
+  ops.forEach((op, index) => {
     op._id = objectid().toString()
     op.requestor = me
     op.offerOrg = offerOrg
@@ -282,7 +282,7 @@ test.skip('can Edit the Op', async t => {
   wrapper.update()
   console.log(wrapper.debug())
 
-  const form = wrapper.find('OpShortForm').first()
+  // const form = wrapper.find('OpShortForm').first()
   // should switch into edit mode
   const cancelButton = wrapper.find('#backBtn').first()
   t.is(cancelButton.text(), 'Back')

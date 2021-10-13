@@ -1,6 +1,5 @@
 import { FullPage } from '../../components/VTheme/VTheme'
 import styled from 'styled-components'
-import { reduxWrapper } from '../../lib/redux/store'
 import { useSelector } from 'react-redux'
 
 // Define our button, but with the use of props.theme this time
@@ -21,15 +20,16 @@ const TestPublicPage = ({ locale, gssp, isAuthenticated }) => {
   return (
     <FullPage>
       <h1>Simple Public Page</h1>
-      {/* <p>This page only has plain text on it and is wrapped by publicPage so has a header and footer</p>
+      <p>This page only has plain text on it and is wrapped by publicPage so has a header and footer</p>
       <p>Locale is: {locale}</p>
       <p>Me is: {me.nickname} </p>
       <Button>Themed</Button>
       <p>Session: {isAuthenticated ? 'Authenticated' : 'Not Authenticated'}</p>
-      <p>Static Props: {gsp}</p> 
-      <p>ServerSide Props: {gssp}</p> */}
+      {/* <p>Static Props: {gsp}</p> */}
+      <p>ServerSide Props: {gssp}</p>
 
-    </FullPage>)
+    </FullPage>
+  )
 }
 
 // export async function getStaticProps (context) {

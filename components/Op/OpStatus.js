@@ -31,8 +31,9 @@ export const OpStatus = ({ status }) => {
   return (
     <>
       <FormattedMessage {...OpportunityStatusMessages[status]} />
-    :{' '}
-    </>)
+      :{' '}
+    </>
+  )
 }
 
 /** Converts an opportunity status to a Stamp - except for Active */

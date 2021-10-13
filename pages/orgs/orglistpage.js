@@ -39,7 +39,8 @@ export const OrgListPage = ({ organisations, me }) => {
         />
       </PageBannerNoTabs>
       <OrgList orgs={orgs} />
-    </FullPage>)
+    </FullPage>
+  )
 }
 
 export const getServerSideProps = reduxWrapper.getServerSideProps(

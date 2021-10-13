@@ -38,7 +38,7 @@ const securePageHoc = Page => {
         user: session.user
       }
     }
-    console.log('secure page hoc', Page.getInitialProps )
+    console.log('secure page hoc', Page.getInitialProps)
     // return ({ isAuthenticated: true })
     return (Page.getInitialProps ? Page.getInitialProps(ctx) : { isAuthenticated: true })
   }

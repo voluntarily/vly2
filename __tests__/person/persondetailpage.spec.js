@@ -12,8 +12,8 @@ import people from '../../server/api/person/__tests__/person.fixture'
 test.before('Setup Route', useMockRouter('/person'))
 
 test.before('Setup fixtures', (t) => {
-  people.map(p => { p._id = objectid().toString() })
-  orgs.map(p => { p._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
+  orgs.forEach(p => { p._id = objectid().toString() })
   const me = people[0]
 
   // I am orgAdmin of the first org (voluntarily) and member of the second org (OMGTech)

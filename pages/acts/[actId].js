@@ -147,7 +147,8 @@ export const ActDetailPage = ({
           onCancel={handleCancel}
           existingTags={tags.data}
         />
-      </FullPage>)
+      </FullPage>
+    )
   }
   return (
     <FullPage>
@@ -164,7 +165,8 @@ export const ActDetailPage = ({
         act={act} me={me} canManage={canManage} canEdit={canManage}
         tab={tab} onChange={handleTabChange} owner={me._id}
       />
-    </FullPage>)
+    </FullPage>
+  )
 }
 
 export const getServerSideProps = reduxWrapper.getServerSideProps(

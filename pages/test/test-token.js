@@ -48,6 +48,7 @@ export const TestToken = () => {
     <FullPage>
       <Payload payload={link}>{link}</Payload>
       <button onClick={handleClick}>Refresh Token URL</button>
-    </FullPage>)
+    </FullPage>
+  )
 }
 export default TestToken

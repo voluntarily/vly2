@@ -25,7 +25,8 @@ export const AdminPage = ({ isAdmin }) => {
         </li>
       </ul>
 
-    </FullPage>)
+    </FullPage>
+  )
 }
 
 export default AdminPage

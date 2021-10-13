@@ -240,25 +240,29 @@ class OpAskFormLong extends Component {
       <div className='OpAskForm'>
         <PageTitle>
           <h1>
-            {isNewOp ? (
-              <FormattedMessage
-                id='OpAskFormLong.Edit'
-                description='Title for editing Ops'
-                defaultMessage='Edit your activity'
-              />
-            ) : opType === OpportunityType.ASK ? (
-              <FormattedMessage
-                id='OpAskFormLong.AskForm.title.opCreateAsk'
-                description='Title for creating request Ops'
-                defaultMessage='Create an new request'
-              />)
-              : opType === OpportunityType.OFFER ? (
+            {isNewOp
+              ? (
                 <FormattedMessage
-                  id='OpAskFormLong.AskForm.title.opCreateOffer'
-                  description='Title for creating offering Ops'
-                  defaultMessage='Create an new offering'
-                />)
-                : null}
+                  id='OpAskFormLong.Edit'
+                  description='Title for editing Ops'
+                  defaultMessage='Edit your activity'
+                />
+                )
+              : opType === OpportunityType.ASK
+                ? (
+                  <FormattedMessage
+                    id='OpAskFormLong.AskForm.title.opCreateAsk'
+                    description='Title for creating request Ops'
+                    defaultMessage='Create an new request'
+                  />)
+                : opType === OpportunityType.OFFER
+                  ? (
+                    <FormattedMessage
+                      id='OpAskFormLong.AskForm.title.opCreateOffer'
+                      description='Title for creating offering Ops'
+                      defaultMessage='Create an new offering'
+                    />)
+                  : null}
           </h1>
           <h5>
             <FormattedMessage
@@ -332,15 +336,17 @@ class OpAskFormLong extends Component {
                 {getFieldDecorator('description', {
                   rules: []
                 })(
-                  isTest ? (
-                    <TextArea
-                      rows={20}
-                      placeholder='All the details about the request.'
-                      disabled={lockedField('description')}
-                    />
-                  ) : (
-                    <RichTextEditor />
-                  )
+                  isTest
+                    ? (
+                      <TextArea
+                        rows={20}
+                        placeholder='All the details about the request.'
+                        disabled={lockedField('description')}
+                      />
+                      )
+                    : (
+                      <RichTextEditor />
+                      )
                 )}
               </Form.Item>
               {orgMembership && (

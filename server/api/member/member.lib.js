@@ -86,7 +86,7 @@ const sortRoles = roles => {
     Role.ADMIN
   ]
   const sortedRoles = []
-  desiredOrder.map(r => {
+  desiredOrder.forEach(r => {
     if (roles.includes(r)) sortedRoles.push(r)
   })
   return sortedRoles
@@ -101,13 +101,13 @@ const getPersonRoles = async person => {
     .exec()
   const role = person.role // role is required and has a defult
   const orgAdminFor = []
-  membership.map(m => {
+  membership.forEach(m => {
     if (m.status === MemberStatus.ORGADMIN) {
       role.push(Role.ORG_ADMIN)
       orgAdminFor.push(m.organisation._id)
     }
     if ([MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status)) {
-      m.organisation.role.map(orgrole => {
+      m.organisation.role.forEach(orgrole => {
         const r = orgToRoleTable[orgrole]
         r && role.push(r)
       })

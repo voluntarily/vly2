@@ -32,7 +32,7 @@ class VerificationSafetyPage extends Component {
           <title>Voluntarily - Trust and Safety</title>
         </Head>
         <TermsSection>
-          <Markdown children={safety()} />
+          <Markdown>{safety()}</Markdown>
           <Button shape='round' type='primary' onClick={() => Router.push('/api/verify')}>{safetyConfirmationLabel}</Button>
         </TermsSection>
       </FullPage>

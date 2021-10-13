@@ -1,5 +1,4 @@
-import React, { useState, useRef } from 'react'
-import { Form, Tooltip, Input } from 'antd'
+import { Form, Tooltip } from 'antd'
 import { FormattedMessage } from 'react-intl'
 
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, TitleContainer } from '../VTheme/FormStyles'

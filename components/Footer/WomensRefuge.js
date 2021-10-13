@@ -49,7 +49,8 @@ export const WomensRefuge = () => {
           src='https://shielded.co.nz/img/custom-logo.png'
           onClick={open}
         />}
-    </>)
+    </>
+  )
 }
 
 export default WomensRefuge

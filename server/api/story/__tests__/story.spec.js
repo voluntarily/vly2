@@ -14,7 +14,7 @@ test.before('before connecting to database', async (t) => {
   await t.context.memMongo.start()
   await appReady
   t.context.people = await Person.create(people)
-  stories.map((story, index) => {
+  stories.forEach((story, index) => {
     story.author = t.context.people[index]._id
   })
   t.context.stories = await Story.create(stories)

@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { FormattedMessage } from 'react-intl'
 
-import Loading from '../../components/Loading'
 import PersonDetail from '../../components/Person/PersonDetail'
 import PersonDetailForm from '../../components/Person/PersonDetailForm'
 import { IssueBadgeButton } from '../../components/IssueBadge/issueBadge'
@@ -204,4 +203,3 @@ export const gssp = async ({ store, query }) => {
 }
 
 export default withMembers(withPeople(withLocations(PersonDetailPage)))
-

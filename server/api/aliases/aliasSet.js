@@ -8,7 +8,7 @@ const aliasSetSchema = {
   ]
 }
 
-var AliasSet
+let AliasSet
 
 if (mongoose.models.AliasSet) {
   AliasSet = mongoose.model('AliasSet')

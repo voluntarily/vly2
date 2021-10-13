@@ -4,7 +4,6 @@ import { injectIntl } from 'react-intl'
 import ConductEn from '../../assets/notices/conduct-en.md'
 import { A4 } from '../../components/VTheme/VTheme'
 
-
 const Conduct = () =>
   <A4>
     <Head>

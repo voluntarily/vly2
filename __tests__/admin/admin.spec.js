@@ -1,17 +1,18 @@
 import test from 'ava'
 import sinon from 'sinon'
-import { loadInterestFixtures, clearInterestFixtures, sessions } from './invite-school.fixture'
 import fetchMock from 'fetch-mock'
-import SchoolLookUp from '../../server/api/school-lookup/school-lookup'
+import configureStore from 'redux-mock-store'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
+
 import AdminPage from '../../pages/admin/index'
 import GoalListPage from '../../pages/admin/goals'
 import { mountWithIntl, shallowWithIntl } from '../../lib/react-intl-test-helper'
-import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
 import goals from '../../server/api/goal/__tests__/goal.fixture'
-import configureStore from 'redux-mock-store'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import reduxApi from '../../lib/redux/reduxApi'
+// import { loadInterestFixtures, clearInterestFixtures, sessions } from './invite-school.fixture'
+// import SchoolLookUp from '../../server/api/school-lookup/school-lookup'
 
 test.before('Setup fixtures', (t) => {
   t.context.mockServer = fetchMock.sandbox()
@@ -63,7 +64,6 @@ test('shallow /admin/goals for anonymous', async t => {
 // // GOALS
 
 test('shallow /admin/goals for admin', async t => {
-
   t.context.mockServer
     .get('path:/api/goals/', { body: goals })
   reduxApi.use('fetch', adapterFetch(t.context.mockServer))

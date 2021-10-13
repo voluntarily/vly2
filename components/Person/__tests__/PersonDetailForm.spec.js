@@ -32,7 +32,7 @@ test.afterEach(t => {
 
 test.before('Setup People fixtures', (t) => {
   // not using mongo or server here so faking ids
-  people.map(p => { p._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
   const me = people[0]
 
   t.context.me = me

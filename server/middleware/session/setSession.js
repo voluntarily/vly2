@@ -23,7 +23,7 @@ const DEFAULT_SESSION = {
  */
 const OPEN_URL = [
   '/static/'
-  // '/_next/'   // AVW removed as these pages need sessions 
+  // '/_next/'   // AVW removed as these pages need sessions
 ]
 // TODO: make this more specific so that we can get sessions for data.json but not images etc.
 

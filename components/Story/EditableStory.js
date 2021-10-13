@@ -24,14 +24,14 @@ export const EditableStory = ({ story }) => {
     editing
       ? (
         <StoryForm story={story} onSubmit={handleSave} />
-      )
+        )
       : (
         <StoryDetail story={story}>
           <Button shape='round' type='primary' onClick={() => setEditing(true)}>
             <FormattedMessage id='story.edit' defaultMessage='Edit' description='Button to edit a story on updates tab' />
           </Button>
         </StoryDetail>
-      )
+        )
 
   )
 }

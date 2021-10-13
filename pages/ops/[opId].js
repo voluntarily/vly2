@@ -183,7 +183,8 @@ export const OpDetailPage = ({
           existingTags={tags.data}
           locations={locations.data[0]}
         />
-      </FullPage>)
+      </FullPage>
+    )
   }
   return (
     <FullPage>
@@ -210,7 +211,8 @@ export const OpDetailPage = ({
         onChange={handleTabChange}
         author={me._id}
       />
-    </FullPage>)
+    </FullPage>
+  )
 }
 
 export const getServerSideProps = reduxWrapper.getServerSideProps(
@@ -230,8 +232,8 @@ export const gssp = async ({ store, query }) => {
     await store.dispatch(reduxApi.actions.members.get({ meid: me._id.toString() }))
   }
 
-    // query.session = store.getState().session //  Inject session with query that restricted api access
-  await store.dispatch(reduxApi.actions.opportunities.get({id: query.opId}))
+  // query.session = store.getState().session //  Inject session with query that restricted api access
+  await store.dispatch(reduxApi.actions.opportunities.get({ id: query.opId }))
 }
 
 export default withMembers(withOps(OpDetailPage))

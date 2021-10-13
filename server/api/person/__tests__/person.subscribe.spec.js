@@ -22,7 +22,7 @@ test.before('before connect to database', async (t) => {
   t.context.people = await Person.create(people)
   t.context.orgs = await Organisation.create(orgs)
   // setup opportunities 5 items
-  ops.map((op, index) => {
+  ops.forEach((op, index) => {
     // each op has a different person as requestor, but not me
     op.requestor = t.context.people[index + 1]
     // all the ops belong to the OMGTech org

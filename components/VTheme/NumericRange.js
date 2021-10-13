@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { InputNumber } from 'antd'
 import styled from 'styled-components'
@@ -54,7 +54,8 @@ class NumericRange extends React.Component {
           onChange={to => onChange({ to })}
           className='numeric-range-to'
         />
-      </Container>)
+      </Container>
+    )
   }
 }
 

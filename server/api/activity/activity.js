@@ -76,7 +76,7 @@ ActivitySchema.plugin(accessibleFieldsPlugin)
 ActivitySchema.index({ tags: 1 })
 
 // protect multiple imports
-var Activity
+let Activity
 
 if (mongoose.models.Activity) {
   Activity = mongoose.model('Activity')
