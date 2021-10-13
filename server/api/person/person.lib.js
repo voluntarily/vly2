@@ -45,7 +45,7 @@ const personProfileCompleteness = (person) => {
 }
 
 const personHasBadge = async (person, badgeclass) => {
-  const count = await Badge.count({ person: person._id, badgeclass }).exec()
+  const count = await Badge.countDocuments({ person: person._id, badgeclass }).exec()
   return count > 0
 }
 

@@ -3,7 +3,7 @@ import { authorizeActions, defaultConvertRequestToAction } from '../authorizeReq
 import { SchemaName, Routes, ConvertRequestToAction } from './authorizeRequest.fixture'
 import MockExpressRequest from 'mock-express-request'
 import MockExpressResponse from 'mock-express-response'
-import { AbilityBuilder } from '@casl/ability'
+import { defineAbility } from '@casl/ability'
 import { Action } from '../../../services/abilities/ability.constants'
 import sinon from 'sinon'
 
@@ -14,7 +14,7 @@ test.serial('Request rejected if unauthorized', async t => {
       path: Routes[Action.DELETE]
     }
   })
-  const abilityForUnauthorizedRequest = AbilityBuilder.define((can, cannot) => {
+  const abilityForUnauthorizedRequest = defineAbility((can, cannot) => {
     can(Action.READ, SchemaName)
     cannot(Action.DELETE, SchemaName)
   })
@@ -33,7 +33,7 @@ test.serial('Request accepted if authorized', async t => {
       path: Routes[Action.LIST]
     }
   })
-  const abilityForAuthorizedRequest = AbilityBuilder.define(can => {
+  const abilityForAuthorizedRequest = defineAbility(can => {
     can(Action.READ, SchemaName)
     can(Action.LIST, SchemaName)
   })
@@ -51,7 +51,7 @@ test.serial('can provide custom action mapper', async t => {
       path: Routes[Action.LIST]
     }
   })
-  const abilityForAuthorizedRequest = AbilityBuilder.define((can, cannot) => {
+  const abilityForAuthorizedRequest = defineAbility((can, cannot) => {
     can(Action.LIST, SchemaName)
     cannot(Action.READ, SchemaName)
   })

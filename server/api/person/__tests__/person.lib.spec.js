@@ -25,7 +25,7 @@ test.serial('Should correctly score each person', async t => {
 test.serial('Should get and score from db id', async t => {
   await t.throwsAsync(async () => {
     await personProfileCompletenessById('fakeid')
-  }, { message: 'Cast to ObjectId failed for value "fakeid" at path "_id" for model "Person"' })
+  }, { message: 'Cast to ObjectId failed for value "fakeid" (type string) at path "_id" for model "Person"' })
   t.is(await personProfileCompletenessById(objectid()), false)
 
   const res = await personProfileCompletenessById(t.context.people[0]._id)

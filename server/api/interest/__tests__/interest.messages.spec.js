@@ -30,7 +30,7 @@ test.before('before connect to database', async (t) => {
 
   // setup interests
   // each op has person + 2 interested.
-  const interests = t.context.ops.forEach((op, index) => {
+  const interests = t.context.ops.map((op, index) => {
     const enquirer = t.context.people[index + 2]
     return {
       person: enquirer._id,

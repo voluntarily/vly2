@@ -4,7 +4,7 @@ import { server, appReady } from '../../../server'
 import Organisation from '../organisation'
 import MemoryMongo from '../../../util/test-memory-mongo'
 import orgs from './organisation.fixture.js'
-import uuid from 'uuid'
+import { v4 as uuid } from 'uuid'
 import Person from '../../../../server/api/person/person'
 import { jwtData } from '../../../../server/middleware/session/__tests__/setSession.fixture'
 import jsonwebtoken from 'jsonwebtoken'
@@ -142,15 +142,16 @@ test.serial('Should find no matches', async t => {
 
 test.serial('Should fail to find - invalid query', async t => {
   const res = await request(server)
-    .get('/api/organisations?s={"invalid":"nomatches"}')
+    .get('/api/organisations?q={"invalid":"nomatches"}')
     .set('Accept', 'application/json')
-    .expect(404)
-  t.is(res.status, 404)
+    .expect(200)
+  const got = res.body
+  t.is(got.length, 0)
 })
 
 test.serial('Should fail to find - Bad request ', async t => {
   const res = await request(server)
-    .get('/api/organisations?s={this is not json}')
+    .get('/api/organisations?q={this is not json}')
     .set('Accept', 'application/json')
     .expect(400)
   t.is(res.status, 400)
@@ -167,7 +168,7 @@ test.serial('Should correctly give subset of orgs of role', async t => {
 
 test.serial('Should correctly give reverse sorted orgs of role', async t => {
   const res = await request(server)
-    .get('/api/organisations?q={"role":"vp"}&s="-name"')
+    .get('/api/organisations?q={"role":"vp"}&s=-name')
     .set('Accept', 'application/json')
     .expect(200)
     .expect('Content-Type', /json/)

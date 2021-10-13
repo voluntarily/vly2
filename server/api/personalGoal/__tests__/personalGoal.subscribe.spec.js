@@ -63,9 +63,9 @@ test.serial('Trigger TOPIC_MEMBER__UPDATE', async t => {
   const len = pgs.length
   const done = new Promise((resolve, reject) => {
     PubSub.subscribe(TOPIC_GOALGROUP__ADD, async (msg, gg) => {
-      t.is(gg.length, 2)
+      t.is(gg.length, 3)
       const pgs = await PersonalGoal.find().exec()
-      t.is(pgs.length, len + 2)
+      t.is(pgs.length, len + 3)
       resolve(true)
     })
   })

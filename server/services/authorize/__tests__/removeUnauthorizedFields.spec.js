@@ -3,7 +3,7 @@ import sinon from 'sinon'
 import removeUnauthorizedFields from '../removeUnauthorizedFields'
 import objectid from 'objectid'
 import { FakeSchema, SchemaName, Fields } from './removeUnauthorizedFields.fixture'
-import { AbilityBuilder } from '@casl/ability'
+import { defineAbility } from '@casl/ability'
 import { Action } from '../../../services/abilities/ability.constants'
 
 test.serial('Only authorized fields returned for single get', async t => {
@@ -14,7 +14,7 @@ test.serial('Only authorized fields returned for single get', async t => {
     name: expectedTitle,
     subtitle: 'This should be filtered out'
   }
-  const ability = AbilityBuilder.define(can => can(Action.READ, SchemaName, [Fields.NAME]))
+  const ability = defineAbility(can => can(Action.READ, SchemaName, [Fields.NAME]))
 
   const mockRequestObject = {
     session: {
@@ -48,7 +48,7 @@ test.serial('Only authorized fields returned for list get', async t => {
     name: expectedTitleB,
     subtitle: 'This subtitle will be filtered out'
   }]
-  const ability = AbilityBuilder.define(can => can(Action.READ, SchemaName, [Fields.NAME]))
+  const ability = defineAbility(can => can(Action.READ, SchemaName, [Fields.NAME]))
   const mockRequestObject = {
     method: 'GET',
     session: {

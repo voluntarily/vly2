@@ -2,7 +2,7 @@
 /* eslint-disable func-names */
 import mongoose from 'mongoose'
 import { Mockgoose } from 'mockgoose'
-import uuid from 'uuid'
+import { v4 as uuid } from 'uuid'
 // fix parallel tests
 // eslint-disable-next-line space-before-function-paren
 Mockgoose.prototype.prepareStorage = function() {

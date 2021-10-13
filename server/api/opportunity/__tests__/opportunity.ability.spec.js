@@ -15,7 +15,7 @@ import tags from '../../tag/__tests__/tag.fixture'
 import { ObjectId } from 'mongodb'
 import jsonwebtoken from 'jsonwebtoken'
 import { jwtData } from '../../../../server/middleware/session/__tests__/setSession.fixture'
-import uuid from 'uuid'
+import { v4 as uuid } from 'uuid'
 import { Role } from '../../../services/authorize/role'
 import Member from '../../member/member'
 const { MemberStatus } = require('../../member/member.constants')

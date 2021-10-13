@@ -540,3 +540,130 @@ __tests__/admin/admin.spec.js
 * lib/__tests__/callApi.spec.js - passed
     * 3 failed t.throwsAsync call format
 * lib/__tests__/durationUtil.spec.js - passed
+
+# Server 
+
+## Middleware
+
+* server/middleware/authorize/__tests__/authorizeRequest.spec.js
+    * change to @casl/ability AbilityBuilder  casl moved from 3.4 to 5.4 
+    * defineAbility replaces AbilityBuilder.define but see new docs here https://casl.js.org/v5/en/guide/define-rules
+* server/middleware/ability/__tests__/getAbility.spec.js - passed
+* server/middleware/session/__tests__/jwtVerify.spec.js - passed
+* server/middleware/session/__tests__/setSession.spec.js - passed
+
+
+* server/util/__tests__/initTags.spec.js - passed
+* server/api/statistics/__tests__/statistics.spec.js - passed
+
+## Opportunity API
+
+Note these tests start the full server and mongo db so are slow to run.
+
+* server/api/opportunity/__tests__/recommendedOps.spec.js - passed
+* server/api/opportunity/__tests__/opportunity.util.spec.js - passed
+* server/api/opportunity/__tests__/opportunity.spec.js - passed
+* server/api/opportunity/__tests__/econreset.spec.js - passed
+* server/api/opportunity/__tests__/opportunity.ability.spec.js
+    generally replace import uuid from 'uuid' with import { v4 as uuid } from 'uuid'
+
+## Interest API
+
+* server/api/interest/__tests__/interest.messages.spec.js - passed
+* server/api/interest/__tests__/interest.ability.spec.js - passed
+* server/api/interest/__tests__/interest.lib.spec.js - passed
+* server/api/interest/__tests__/interestArchive.spec.js - passed
+* server/api/interest/__tests__/interestArchive.ability.spec.js - passed
+* server/api/interest/__tests__/interest.spec.js - passed
+
+## ArchivedOpportunity API
+
+* server/api/archivedOpportunity/__tests__/archivedOpportunity.ability.spec.js - passed
+* server/api/archivedOpportunity/__tests__/archivedOpportunity.controller.spec.js - passed
+
+## Person API
+
+* server/api/person/__tests__/personController.spec.js - passed
+* server/api/person/__tests__/person.spec.js - passed
+* server/api/person/__tests__/person.email.spec.js - passed
+* server/api/person/__tests__/person.subscribe.spec.js - passed
+* server/api/person/__tests__/person.lib.spec.js - passed
+* server/api/person/__tests__/person.ability.spec.js - passed
+
+## Activity API
+
+* server/api/activity/__tests__/activity.lib.spec.js - passed
+* server/api/activity/__tests__/activity.ability.spec.js - passed
+* server/api/activity/__tests__/activity.spec.js - passed
+
+## Location API
+
+* server/api/location/__tests__/location.spec.js - passed
+
+## Sign Up API
+
+* server/api/signUp/__tests__/signUp.controller.spec.js - passed
+
+## PersonalGoal API
+
+* server/api/personalGoal/__tests__/personalGoal.spec.js - passed
+* server/api/personalGoal/__tests__/personalGoal.subscribe.spec.js - passed
+* server/api/personalGoal/__tests__/personalGoal.ability.spec.js - passed
+* server/api/personalGoal/__tests__/GoalTests.spec.js - passed
+* server/api/personalGoal/__tests__/personalGoal.lib.spec.js - passed
+
+## Member API
+
+* server/api/member/__tests__/member.controller.spec.js - passed
+* server/api/member/__tests__/member.spec.js - passed
+* server/api/member/__tests__/member.lib.spec.js - passed
+* server/api/member/__tests__/findMy.spec.js - passed
+* server/api/member/__tests__/member.ability.spec.js - passed
+
+## Personal Verification API
+
+* server/api/personalVerification/__tests__/personalVerification.controller.spec.js - passed
+* server/api/personalVerification/__tests__/verified.spec.js - passed
+* server/api/personalVerification/__tests__/personalVerification.helpers.spec.js - passed
+
+## Organisation API
+
+* server/api/organisation/__tests__/organisation.ability.spec.js 
+    * ability for org admin to update their own org is failing
+    * this is due to orgAdminFor containing object ids and being compared with request _id strings. perhaps this used to work. to fix replace include with some and cast in the comparison.
+* server/api/organisation/__tests__/organisation.spec.js - passed
+    * s and p now expects strings unquoted rather than json. 
+    * bad request errors can now only be returned for q={not json}
+* server/api/organisation/__tests__/organisation.lib.spec.js - passed
+    * change to error message from mongodb exception
+
+server/api/school-lookup/__tests__/school-lookup.spec.js
+server/api/school-lookup/__tests__/school-lookup.ability.spec.js
+server/api/tag/__tests__/tag.spec.js
+server/api/tag/__tests__/tag.controller.spec.js
+server/api/story/__tests__/story.ability.spec.js
+server/api/story/__tests__/story.spec.js
+server/api/goal/__tests__/loadGoals.spec.js
+server/api/goal/__tests__/goal.ability.spec.js
+server/api/goal/__tests__/goal.spec.js
+server/api/badge/__tests__/badge.spec.js
+server/api/badge/__tests__/badge.ability.spec.js
+
+## Misc API
+server/api/aliases/__tests__/aliases.controller.spec.js
+
+server/api/education/__tests__/education.spec.js
+server/api/image/__tests__/image.spec.js
+server/api/feedback/__tests__/feedback.ability.spec.js
+server/api/feedback/__tests__/feedback.spec.js
+
+server/api/file/__tests__/file.controller.spec.js
+server/api/school-invite/__tests__/school-invite.controller.spec.js
+
+## Services
+
+server/services/image/__tests__/imageResize.spec.js
+* server/services/authorize/__tests__/removeUnauthorizedFields.spec.js - passed
+    * replace AbilityBuilder.define with defineAbility for casl 5.
+server/services/pubsub/__tests__/publishTopic.spec.js
+server/services/email/__tests__/email.spec.js

@@ -1,5 +1,5 @@
 require('isomorphic-fetch') /* global fetch */
-const { uuid } = require('uuid')
+const { v4: uuid } = require('uuid')
 const crypto = require('crypto')
 const moment = require('moment')
 const { config } = require('../../../config/serverConfig')

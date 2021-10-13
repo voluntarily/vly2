@@ -87,7 +87,7 @@ const setSession = async (req, res, next) => {
   try {
     user = await jwtVerify(idToken)
   } catch (e) {
-    console.error('Jwt Verify failed', e)
+    // console.error('Jwt Verify failed', e)
 
     if (e instanceof TokenExpiredError) {
       // If this is an API request then return 401 unauthorized

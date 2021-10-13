@@ -19,7 +19,7 @@ test.after.always(async (t) => {
   await t.context.memMongo.stop()
 })
 
-test('verify fixture database has people', async t => {
+test.serial('verify fixture database has people', async t => {
   const count = await Person.countDocuments()
   t.is(count, people.length)
   // can find by email with then
@@ -46,7 +46,7 @@ test('list everyone - bad filter', async t => {
 test('list everyone - filtered, sorted, produced', async t => {
   // filtered & sorted request
   const resFilter = await request(server)
-    .get('/api/people?q={"about":"SUPPORT"}&s="phone"&p="nickname, phone"')
+    .get('/api/people?q={"about":"SUPPORT"}&s=phone&p=nickname phone')
     .set('Accept', 'application/json')
     .set('Cookie', [`idToken=${jwtData.idToken}`])
     .expect(200)
@@ -136,5 +136,5 @@ test.serial('Email notifications flag set correctly', async (t) => {
   t.is(people[1].sendEmailNotifications, true)
   t.is(people[2].sendEmailNotifications, false)
 
-  await Person.remove({ _id: { $in: people.forEach(person => person._id) } })
+  await Person.deleteMany({ _id: { $in: people.forEach(person => person._id) } })
 })

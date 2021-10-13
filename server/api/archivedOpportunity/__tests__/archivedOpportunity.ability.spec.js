@@ -23,7 +23,7 @@ test.after.always(async (t) => {
 test.beforeEach('connect and add two activity entries', async (t) => {
   t.context.people = await Person.create(people)
 
-  const linkedArchivedOps = archivedOps.forEach((op, index) => {
+  const linkedArchivedOps = archivedOps.map((op, index) => {
     return {
       ...op,
       requestor: t.context.people[2]._id // alice is op for all ops
