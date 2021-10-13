@@ -319,7 +319,7 @@ test.serial('Test sort by date', async t => {
     reduxApi.use('fetch', adapterFetch(myMock))
     const api = `${API_URL}/opportunities/?search=Growing`
 
-    const opsModified = ops.forEach((op, index) => {
+    const opsModified = ops.map((op, index) => {
       if (index === 0) {
         op.date = ['2019-11-22T10:15:38.972Z', '2019-11-23T10:15:59.110Z']
       } else if (index === 1) {
