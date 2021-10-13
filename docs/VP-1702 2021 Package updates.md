@@ -521,7 +521,22 @@ __tests__/admin/admin.spec.js
     * now we just need to test the page component as usual, passing in the correct props or redux store. 
     * still to do the school setup page - but low priority. 
 
- 90 tests passed
-  2 tests skipped
-  1 uncaught exception
-   Uncaught exception in __tests__/reports/summary.spec.js
+## Library files
+
+* lib/redux/__tests__/redux.spec.js - passed
+    * SetSession has to convert the me to a form that can be serialised by the redux hydration. 
+        this doesn't handle null, undefined, dates and object id types. which all need to become strings.
+        so we convert to json and back again. this is not ideal but ok.
+
+* lib/auth/__tests__/auth.spec.js - passed
+* lib/sec/__tests__/keys.spec.js - passed
+* lib/sec/__tests__/actiontoken.spec.js - passed
+    * t.throws changed signature - now needs an expectation value
+* lib/school-import/__tests__/import.spec.js - passed
+* lib/school-import/__tests__/filter-valid-school-records.spec.js - passed
+* lib/school-import/__tests__/map-import-data-to-schema.spec.js - passed
+* lib/school-import/__tests__/get-domain-from-email.spec.js - passed
+* lib/__tests__/urlUtil.spec.js - passed
+* lib/__tests__/callApi.spec.js - passed
+    * 3 failed t.throwsAsync call format
+* lib/__tests__/durationUtil.spec.js - passed
