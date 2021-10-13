@@ -1,6 +1,7 @@
 import Landing from './landing/landing'
-import Home from './home/home'
-import { getSession } from '../lib/auth/auth'
+import Home, { getServerSideProps as gssp } from './home/home'
+
+export const getServerSideProps = gssp
 
 const RootPage = (props) => {
   return (

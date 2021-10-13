@@ -81,7 +81,6 @@ const setSession = async (req, res, next) => {
 
   const idToken = getIdToken(req)
   if (!idToken) { // no token, use default session
-    console.error('No idToken')
     return next()
   }
   let user

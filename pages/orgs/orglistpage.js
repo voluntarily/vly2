@@ -43,10 +43,14 @@ export const OrgListPage = ({ organisations, me }) => {
 }
 
 export const getServerSideProps = reduxWrapper.getServerSideProps(
-  store => async () => {
-    const select = { p: 'name imgUrl role' }
-    await store.dispatch(reduxApi.actions.organisations.get(select))
-    console.log('OrgListPage GSSP')
-  })
+  store => async (props) => gssp({ store, query: props.query })
+)
+
+// factored out for easier testing.
+export const gssp = async ({ store, query }) => {
+  const select = { p: 'name imgUrl role' }
+  await store.dispatch(reduxApi.actions.organisations.get(select))
+  console.log('OrgListPage GSSP')
+}
 
 export default withOrgs(OrgListPage)

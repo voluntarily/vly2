@@ -25,7 +25,8 @@ export const useMockRouter = (path, query = {}) => (t) => {
 }
 
 export const unuseMockRouter = (t) => {
-  sinon.replace(nextRouter, 'useRouter', t.context.nextRouter)
+  // sinon.replace(nextRouter, 'useRouter', t.context.nextRouter)
+  sinon.restore()
 }
 // test.afterEach.always(t => t.context.mockServer.reset())
 export default useMockRouter

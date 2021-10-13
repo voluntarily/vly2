@@ -22,7 +22,7 @@ const getBadgeData = async ({ _id }, setUserBadge) => {
 function PersonBadge ({ person }) {
   const [userBadge, setUserBadge] = useState(null)
   useEffect(() => {
-    getBadgeData(person, setUserBadge)
+    if (userBadge) { getBadgeData(person, setUserBadge) }
   }, [person])
   // TODO: Replace badge._id with badge.name in <Badge title> and <img alt>
   return userBadge ? (

@@ -121,6 +121,11 @@ it is being set to a default session in the server middleware.
 
 looks like special path handling which is intended to bypass session loading for paths to _next is needed when we are getting the data/page.json file used to hydrate the redux object.  commenting this out fixes the linked page problem
 
+* __tests__/home.spec.js
+    * handling tabs is tricky in tests they don't easily respond to clicks and the panel updates are async
+    * so we instead set the query parameter for tab and load the page separately for each panel.
+    * for some time only one test in the suite was being run so others had got out of date.
+    * not testing the saving of the edited profile - but this is covered elsewhere
 ## Organisation
 
 ### Org Pages
@@ -161,9 +166,10 @@ looks like special path handling which is intended to bypass session loading for
 * PersonListItem - passed
 * all person components - passed
 
-* PersonDetailPage - passed
+* PersonDetailPage 
     * get server side props, factor out a version we can test using mock store.
     * switch from withMockRouter to useMockRouter
+* __tests__/person/persondetailpage.spec.js - passed
 
 * PersonListPage - no test
     * people response not json serialisable. due to invalid json decoding on person.controller.  change to string decode for select and search.  This clearly has not been tested much. Ditto Organisation.controller.
@@ -279,7 +285,7 @@ looks like special path handling which is intended to bypass session loading for
     * roles does not seem to be used,  in fact this page is rarely used except to view all ops. 
     * test updated for new path
 
-* OpDetailPage
+* OpDetailPage - passed
     * tests updated to new gssp object
     * factor out useMockRoute
 
@@ -291,7 +297,8 @@ looks like special path handling which is intended to bypass session loading for
 * NumericRange - passed
 * VTabs - passed
 
-## Statistics Components
+## Statistics 
+### Statistics Components
 
 * StatisticsRatingsReport - passed
 * StatisticsLocationsReport - passed
@@ -300,6 +307,10 @@ looks like special path handling which is intended to bypass session loading for
 * StatisticsActivityTagsReport - passed
 * StatisticsTimeframeSelector - passed
 * OrgStatisticsTabs - passed
+
+### Statistics Pages
+__tests__/statistics/orgstatisticspage.spec.js - passed
+
 
 ## Home Components
 
@@ -455,3 +466,26 @@ it doesn't have an entry page but you can see the current status on /test/test-e
   9 tests skipped
   1 unhandled rejection
   11 uncaught exceptions
+
+
+
+
+__tests__/404.spec.js
+
+__tests__/admin/admin.spec.js
+
+__tests__/archivedop/archivedopdetailpage.spec.js
+__tests__/feedback/feedbacksubmitpage.spec.js
+__tests__/landing.spec.js
+__tests__/action/registerTeacher/registerTeacher.spec.js
+__tests__/terms.spec.js
+__tests__/api/notify/org/action.spec.js
+__tests__/api/notify/org/notifyOrg.spec.js
+__tests__/api/registerRequestor/registerRequestor.spec.js
+__tests__/api/health/health.spec.js
+__tests__/api/reports/summary.spec.js
+__tests__/about.spec.js
+__tests__/story/storydetailpage.spec.js
+__tests__/story/storylistpage.spec.js
+__tests__/goal/school/ready.spec.js
+__tests__/reports/summary.spec.js  

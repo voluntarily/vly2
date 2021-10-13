@@ -2,7 +2,7 @@ import React from 'react'
 
 import { FullPage } from '../components/VTheme/VTheme'
 import { FormattedMessage } from 'react-intl'
-import { doSignThru } from './securePage'
+// import { doSignThru } from './securePage'
 
 export const AccessDenied = () =>
   <FullPage>
@@ -22,7 +22,7 @@ export const AccessDenied = () =>
     </p>
   </FullPage>
 
-const AccessDeniedPage = publicPage(AccessDenied)
+const AccessDeniedPage = AccessDenied
 
 const adminPageHoc = Page => {
   const AdminPage = props =>
@@ -42,4 +42,4 @@ const adminPageHoc = Page => {
   return AdminPage
 }
 
-export default Page => adminPageHoc(publicPage(Page))
+export default Page => adminPageHoc(Page)

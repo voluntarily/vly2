@@ -72,36 +72,42 @@ const allSettled = (promises) => {
 /** TODO: [VP-1890] when edit completes the person is updated but the session me is not.
   This leaves the page out of date until fully refreshed
 */
+
 export const getServerSideProps = reduxWrapper.getServerSideProps(
-  store => async () => {
-    try {
-      const me = store.getState().session.me
-      console.log(me.isAuthenticated)
-      // TODO: bug when flow/postSignUp completes me is not set with _id and the GSSP fails. leaving the page mostly blank
+  store => async (props) => gssp({ store, query: props.query })
+)
 
-      const meid = me?._id?.toString()
-      if (!meid) return
-      const myOpportunities = {
-        q: JSON.stringify({ requestor: meid })
-      }
+// factored out for easier testing.
+export const gssp = async ({ store, query }) => {
+  console.log('Home GSSP')
 
-      await allSettled([
-        // store.dispatch(reduxApi.actions.people.get({ id: meid })),
-        store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
-        store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),
-        store.dispatch(reduxApi.actions.interests.get({ me: meid })),
-        store.dispatch(reduxApi.actions.personalGoals.get({ meid: meid })),
-        store.dispatch(reduxApi.actions.members.get({ meid: meid })),
-        store.dispatch(reduxApi.actions.interestArchives.get({ me: meid })),
-        store.dispatch(reduxApi.actions.recommendedOps.get({ me: meid }))
-      ])
-    } catch (err) {
-      console.error('error in getting home page data', err)
+  try {
+    const me = store.getState().session.me
+    console.log(me.isAuthenticated)
+    // TODO: bug when flow/postSignUp completes me is not set with _id and the GSSP fails. leaving the page mostly blank
+
+    const meid = me?._id?.toString()
+    if (!meid) return
+    const myOpportunities = {
+      q: JSON.stringify({ requestor: meid })
     }
-    console.log('Home GSSP')
 
-    // return {}
-  })
+    await allSettled([
+      // store.dispatch(reduxApi.actions.people.get({ id: meid })),
+      store.dispatch(reduxApi.actions.opportunities.get(myOpportunities)),
+      store.dispatch(reduxApi.actions.archivedOpportunities.get(myOpportunities)),
+      store.dispatch(reduxApi.actions.interests.get({ me: meid })),
+      store.dispatch(reduxApi.actions.personalGoals.get({ meid: meid })),
+      store.dispatch(reduxApi.actions.members.get({ meid: meid })),
+      store.dispatch(reduxApi.actions.interestArchives.get({ me: meid })),
+      store.dispatch(reduxApi.actions.recommendedOps.get({ me: meid }))
+    ])
+  } catch (err) {
+    console.error('error in getting home page data', err)
+  }
+
+  // return {}
+}
 
 export default PersonHomePage
 // export default PersonHomePage
