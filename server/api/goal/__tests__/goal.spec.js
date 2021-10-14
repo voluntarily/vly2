@@ -109,8 +109,8 @@ test.serial('Should correctly give reverse sorted goals of group', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(got.length, 2)
-  t.is(got[0].slug, 'goal-complete-school-profile')
+  t.is(got.length, 3)
+  t.is(got[0].slug, 'test-003')
 })
 
 const queryString = params => Object.keys(params).map((key) => {

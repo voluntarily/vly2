@@ -637,33 +637,31 @@ Note these tests start the full server and mongo db so are slow to run.
 * server/api/organisation/__tests__/organisation.lib.spec.js - passed
     * change to error message from mongodb exception
 
-server/api/school-lookup/__tests__/school-lookup.spec.js
-server/api/school-lookup/__tests__/school-lookup.ability.spec.js
-server/api/tag/__tests__/tag.spec.js
-server/api/tag/__tests__/tag.controller.spec.js
-server/api/story/__tests__/story.ability.spec.js
-server/api/story/__tests__/story.spec.js
-server/api/goal/__tests__/loadGoals.spec.js
-server/api/goal/__tests__/goal.ability.spec.js
-server/api/goal/__tests__/goal.spec.js
-server/api/badge/__tests__/badge.spec.js
-server/api/badge/__tests__/badge.ability.spec.js
-
 ## Misc API
-server/api/aliases/__tests__/aliases.controller.spec.js
 
-server/api/education/__tests__/education.spec.js
-server/api/image/__tests__/image.spec.js
-server/api/feedback/__tests__/feedback.ability.spec.js
-server/api/feedback/__tests__/feedback.spec.js
-
-server/api/file/__tests__/file.controller.spec.js
-server/api/school-invite/__tests__/school-invite.controller.spec.js
+* server/api/school-lookup/__tests__/school-lookup.spec.js - passed
+* server/api/school-lookup/__tests__/school-lookup.ability.spec.js - passed
+* server/api/tag/__tests__/tag.spec.js - passed
+* server/api/tag/__tests__/tag.controller.spec.js - passed
+* server/api/story/__tests__/story.ability.spec.js - passed
+* server/api/story/__tests__/story.spec.js - passed
+* server/api/goal/__tests__/loadGoals.spec.js - passed
+* server/api/goal/__tests__/goal.ability.spec.js - passed
+* server/api/goal/__tests__/goal.spec.js - passed
+* server/api/badge/__tests__/badge.spec.js - passed
+* server/api/badge/__tests__/badge.ability.spec.js - passed
+* server/api/aliases/__tests__/aliases.controller.spec.js - passed
+* server/api/education/__tests__/education.spec.js - passed
+* server/api/image/__tests__/image.spec.js - passed
+* server/api/feedback/__tests__/feedback.ability.spec.js - passed
+* server/api/feedback/__tests__/feedback.spec.js - passed
+* server/api/file/__tests__/file.controller.spec.js - passed
+* server/api/school-invite/__tests__/school-invite.controller.spec.js - passed
 
 ## Services
 
-server/services/image/__tests__/imageResize.spec.js
+* server/services/image/__tests__/imageResize.spec.js - passed
 * server/services/authorize/__tests__/removeUnauthorizedFields.spec.js - passed
     * replace AbilityBuilder.define with defineAbility for casl 5.
-server/services/pubsub/__tests__/publishTopic.spec.js
-server/services/email/__tests__/email.spec.js
+* server/services/pubsub/__tests__/publishTopic.spec.js - passed
+* server/services/email/__tests__/email.spec.js - passed
