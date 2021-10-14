@@ -9,12 +9,14 @@ import Person from '../../../../server/api/person/person'
 import people from '../../../../server/api/person/__tests__/person.fixture'
 import { jwtData, jwtDataAlice, jwtDataDali } from '../../../../server/middleware/session/__tests__/setSession.fixture'
 import { appReady, server } from '../../../../server/server'
-import { startMongo, stopMongo } from '../../../../util/mockMongo'
+import { startMongo, stopMongo } from '../../../../server/util/mockMongo'
 
 test.before('before connect to database', startMongo)
 test.after.always(stopMongo)
 test.before('before init db', async (t) => {
   process.env.mockEmails = true
+  await appReady
+
   try {
     t.context.orgs = await Organisation.create(orgs)
     t.context.org = t.context.orgs[0]
@@ -41,7 +43,6 @@ test.before('before init db', async (t) => {
     t.context.members = await Member.create(members).catch((err) => `Unable to create members: ${err}`)
     const orgid = t.context.org._id
     t.context.url = `/api/notify/org/${orgid}?memberStatus=member&memberValidation=%27test%20invitation%27`
-    await appReady
   } catch (e) { console.error('notify.spec.js before error:', e) }
 })
 

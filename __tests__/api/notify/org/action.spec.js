@@ -8,13 +8,18 @@ import Person from '../../../../server/api/person/person'
 import people from '../../../../server/api/person/__tests__/person.fixture'
 import { jwtDataAlice, jwtDataDali } from '../../../../server/middleware/session/__tests__/setSession.fixture'
 import { appReady, server } from '../../../../server/server'
-import { startMongo, stopMongo } from '../../../../util/mockMongo'
+import { startMongo, stopMongo } from '../../../../server/util/mockMongo'
+import { TOPIC_MEMBER__UPDATE } from '../../../../server/services/pubsub/topic.constants'
+import PubSub from 'pubsub-js'
+
 import { makeURLToken } from '../../../../lib/sec/actiontoken'
 
 test.before('before connect to database', startMongo)
 test.after.always(stopMongo)
 test.before('before init db', async (t) => {
   try {
+    await appReady
+
     t.context.orgs = await Organisation.create(orgs).catch(() => 'Unable to create orgs')
     t.context.org = t.context.orgs[0]
 
@@ -57,12 +62,16 @@ test.before('before init db', async (t) => {
     }
     // t.context.token = makeURLToken(payload)
     t.context.token = new URL(makeURLToken(payload)).searchParams.get('token')
-
-    await appReady
   } catch (e) { console.error('notify.spec.js before error:', e) }
 })
 
-test('token allows me to join org as a member ', async t => {
+test.serial('token allows me to join org as a member ', async t => {
+  const done = new Promise((resolve, reject) => {
+    PubSub.subscribe(TOPIC_MEMBER__UPDATE, async (msg, member) => {
+      t.is(member.status, MemberStatus.MEMBER)
+      resolve(true)
+    })
+  })
   // confirm Alices is not a member
   const membershipQuery = {
     person: t.context.alice._id,
@@ -86,6 +95,7 @@ test('token allows me to join org as a member ', async t => {
   membership = await Member.findOne(membershipQuery).exec()
   t.truthy(membership)
   t.is(membership.status, MemberStatus.MEMBER)
+  await done
 })
 
 // link with non signed in person - should redirect

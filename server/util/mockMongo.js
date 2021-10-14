@@ -12,7 +12,7 @@ const mongooseOpts = {
   useFindAndModify: false,
   keepAlive: true,
   keepAliveInitialDelay: 300000,
-  poolSize: 30,
+  poolSize: 40,
   // autoReconnect: true,
   socketTimeoutMS: 360000,
   connectTimeoutMS: 360000
@@ -40,7 +40,7 @@ export const startMongo = async (t) => {
 
 export const stopMongo = async (t) => {
   try {
-    await mongoose.disconnect()
+    // await mongoose.disconnect()
     delete t.context.connection
     await t.context.mongod.stop()
     delete t.context.mongod
