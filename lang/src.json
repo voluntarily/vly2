@@ -251,7 +251,7 @@
     "description": "label for number of volunteers required per student"
   },
   "ItemNeeds.items": {
-    "defaultMessage": ", {count, number} {count, plural, one {item} other {items} }",
+    "defaultMessage": "{count,plural,one{, {count, number} item} other{, {count, number} items}}",
     "description": "label for number of volunteers required"
   },
   "ItemNeeds.required": {
@@ -259,7 +259,7 @@
     "description": "label for number of people required"
   },
   "ItemNeeds.volunteers": {
-    "defaultMessage": "{volunteers, number} {volunteers, plural, one {person} other {people}}",
+    "defaultMessage": "{volunteers,plural,one{{volunteers, number} person} other{{volunteers, number} people}}",
     "description": "label for number of people required"
   },
   "LearnMore": {
@@ -732,11 +732,11 @@
     "defaultMessage": "is offering to help with"
   },
   "OpportunityType.verb.ASK": {
-    "defaultMessage": "{count, plural, =0{No people} one {person} other {people}} asking you for help",
+    "defaultMessage": "{count,plural,=0{No people asking you for help} one{person asking you for help} other{people asking you for help}}",
     "description": "Asking for help"
   },
   "OpportunityType.verb.OFFER": {
-    "defaultMessage": "{count, plural, =0{No people} one {person} other {people}} offering to help you",
+    "defaultMessage": "{count,plural,=0{No people offering to help you} one{person offering to help you} other{people offering to help you}}",
     "description": "Offering help"
   },
   "PersonDetail.About": {
