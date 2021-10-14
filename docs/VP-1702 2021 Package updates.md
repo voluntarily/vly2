@@ -522,8 +522,8 @@ it doesn't have an entry page but you can see the current status on /test/test-e
 
 * AddStory - passed
   
-/story/storydetailpage.spec.js - passed
-/story/storylistpage.spec.js - passed
+* /story/storydetailpage.spec.js - passed
+* /story/storylistpage.spec.js - passed
 
 ## Warnings
 
@@ -719,61 +719,39 @@ Note these tests start the full server and mongo db so are slow to run.
 
 ## Remaining package updates
 
- @babel/core                      ^7.15.5  →    ^7.15.8 - removed
- @codeceptjs/configure             ^0.5.2  →     ^0.7.0 - updated
- @formatjs/cli                    ^1.1.18  →     ^4.3.1 - updated
- @testing-library/dom             ^6.11.0  →     ^8.9.0 - updated
- axios                            ^0.21.4  →    ^0.23.0 - updated
- babel-loader                      ^8.0.6  →     ^8.2.2 - updated
- codeceptjs                        ^3.1.2  →     ^3.1.3
- codecov                           ^3.6.1  →     ^3.8.3
- fetch-mock                         8.3.1  →     9.11.0
- mongodb-memory-server             ^6.2.1  →     ^7.4.3
- nodemon                           ^2.0.2  →    ^2.0.13
- nyc                              ^15.0.0  →    ^15.1.0
- puppeteer                         ^3.1.0  →    ^10.4.0
- supertest                         ^4.0.2  →     ^6.1.6
- testcafe                          ^1.7.1  →    ^1.16.1
- testcafe-react-selectors          ^4.0.0  →     ^4.1.5
- wait-on                           ^3.3.0  →     ^6.0.0
- webdriverio                      ^5.15.0  →    ^7.14.1
- @ant-design/icons                 ^4.6.4  →     ^4.7.0
- @next/bundle-analyzer             ^9.1.4  →    ^11.1.2
- @uppy/core                        ^1.7.0  →     ^2.1.0
- @uppy/react                       ^1.4.1  →     ^2.1.0
- @uppy/webcam                      ^1.6.2  →     ^2.0.3
- acorn                             ^7.1.1  →     ^8.5.0
- atom                              ^1.1.0  →     ^1.4.1
- auth0-js                         ^9.12.2  →    ^9.16.4
- aws-sdk                         ^2.603.0  →  ^2.1007.0
- babel-plugin-import              ^1.13.0  →    ^1.13.3
- babel-plugin-styled-components   ^1.10.6  →    ^1.13.2
- cookie-parser                     ^1.4.4  →     ^1.4.5
- dotenv                            ^8.2.0  →    ^10.0.0
- eslint-plugin-html                ^6.0.0  →     ^6.2.0
- find-cache-dir                    ^3.3.1  →     ^3.3.2
- fs-extra                          ^8.1.0  →    ^10.0.0
- full-icu                          ^1.3.0  →     ^1.4.0
- glob                              ^7.1.6  →     ^7.2.0
- hoist-non-react-statics           ^3.3.1  →     ^3.3.2
- ical-generator                    ^1.9.2  →     ^3.0.1
- jsdom                            ^16.2.1  →    ^18.0.0
- less                             ^3.10.3  →     ^4.1.2
- limax                             ^2.0.0  →     ^3.0.0
- markdown-to-jsx                  ^6.11.4  →     ^7.1.3
- mock-css-modules                  ^1.0.0  →     ^2.0.0
- mock-express-response             ^0.2.2  →     ^0.3.0
- moment                           ^2.24.0  →    ^2.29.1
  mongoose                         ^5.13.9  →    ^6.0.10 - Not updated due to compatability with @casl/mongoose.
- natural                           ^2.1.5  →     ^5.1.1
- node-cipher                       ^5.0.1  →     ^6.3.3
- nodemailer                        ^6.4.2  →     ^6.7.0
- nodemailer-mock                   ^1.4.4  →    ^1.5.11
- pubsub-js                         ^1.7.0  →     ^1.9.3
- raygun4js                        ^2.18.2  →    ^2.22.5
- react-intl                      ^5.20.10  →   ^5.20.12
- rimraf                            ^3.0.0  →     ^3.0.2
- sanitize-html                    >=2.3.2  →    >=2.5.2
- slug                              ^2.1.0  →     ^5.1.0
- stopword                          ^1.0.1  →    ^1.0.11
- string-similarity                 ^4.0.1  →     ^4.0.4
+
+ @ant-design/icons                 ^4.6.4  →     ^4.7.0     
+ @next/bundle-analyzer             ^9.1.4  →    ^11.1.2     
+ @uppy/core                        ^1.7.0  →     ^2.1.0     
+ @uppy/react                       ^1.4.1  →     ^2.1.0     
+ @uppy/webcam                      ^1.6.2  →     ^2.0.3     
+ acorn                             ^7.1.1  →     ^8.5.0     
+ atom                              ^1.1.0  →     ^1.4.1     
+ auth0-js                         ^9.12.2  →    ^9.16.4     
+ aws-sdk                         ^2.603.0  →  ^2.1007.0     
+ babel-plugin-import              ^1.13.0  →    ^1.13.3     
+ babel-plugin-styled-components   ^1.10.6  →    ^1.13.2     
+ cookie-parser                     ^1.4.4  →     ^1.4.5     
+ dotenv                            ^8.2.0  →    ^10.0.0     
+ eslint-plugin-html                ^6.0.0  →     ^6.2.0     
+ find-cache-dir                    ^3.3.1  →     ^3.3.2     
+ fs-extra                          ^8.1.0  →    ^10.0.0     
+ full-icu                          ^1.3.0  →     ^1.4.0     
+ glob                              ^7.1.6  →     ^7.2.0     
+ hoist-non-react-statics           ^3.3.1  →     ^3.3.2     
+ ical-generator                    ^1.9.2  →     ^3.0.1     
+ jsdom                            ^16.2.1  →    ^18.0.0     
+ less                             ^3.10.3  →     ^4.1.2     
+ markdown-to-jsx                  ^6.11.4  →     ^7.1.3     
+ mock-css-modules                  ^1.0.0  →     ^2.0.0     
+ mock-express-response             ^0.2.2  →     ^0.3.0     
+ moment                           ^2.24.0  →    ^2.29.1     
+ mongoose                         ^5.13.9  →    ^6.0.10     
+ natural                           ^2.1.5  →     ^5.1.1     
+ node-cipher                       ^5.0.1  →     ^6.3.3     
+ nodemailer                        ^6.4.2  →     ^6.7.0     
+ nodemailer-mock                   ^1.4.4  →    ^1.5.11     
+ pubsub-js                         ^1.7.0  →     ^1.9.3     
+ raygun4js                        ^2.18.2  →    ^2.22.5     
+ react-intl                      ^5.20.10  →   ^5.20.12     

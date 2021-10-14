@@ -111,7 +111,7 @@ const deleteTag = async (req, res) => {
     }
 
     // Delete tag from alias collection
-    await AliasSet.findOne({ tag: tagToDelete }).then(item => item.remove()
+    await AliasSet.findOne({ tag: tagToDelete }).then(item => item.deleteOne()
       .catch(err => res.status(404).json({ success: false }).send({ error: err })))
 
     // Delete the tag in the taglist collection

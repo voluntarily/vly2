@@ -21,11 +21,6 @@ test.before('before init db', async (t) => {
   t.context.tags = await Tag.create(tagCollection).catch((err) => console.error('Unable to create tags', err))
 })
 
-test.after.always(async (t) => {
-  await Tag.deleteMany()
-  await t.context.memMongo.stop()
-})
-
 /* -- Anon person */
 test('Tag API - anon - create', async t => {
   const response = await request(server)
