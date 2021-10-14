@@ -2,7 +2,7 @@ import test from 'ava'
 import Activity from '../activity'
 import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import people from '../../person/__tests__/person.fixture'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 import tagList from '../../tag/__tests__/tag.fixture'
@@ -40,9 +40,9 @@ const makeOp = (opStatus) => (fromActivity, index) => {
 const makeActiveOp = makeOp(OpportunityStatus.ACTIVE)
 const makeDraftOp = makeOp(OpportunityStatus.DRAFT)
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   t.context.people = await Person.create(people)
   t.context.orgs = await Organisation.create(orgs)
   // connect each activity to an owner and org
@@ -60,10 +60,6 @@ test.before('before connect to database', async (t) => {
     const draftOps = Array(draftCount).fill({}).map(i => makeDraftOp(act, i))
     return Opportunity.create([...activeOps, ...draftOps])
   }))
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.serial('verify fixture database has acts and ops', async t => {

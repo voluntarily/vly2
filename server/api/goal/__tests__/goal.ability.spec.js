@@ -5,17 +5,13 @@ import Goal from '../goal'
 import goals from './goal.fixture'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import { jwtData, jwtDataAlice, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   await appReady
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.beforeEach('populate fixtures', async (t) => {

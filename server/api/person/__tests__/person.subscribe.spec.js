@@ -2,7 +2,7 @@ import test from 'ava'
 import express from 'express'
 import PubSub from 'pubsub-js'
 import { TOPIC_PERSON__CREATE, TOPIC_MEMBER__UPDATE, TOPIC_INTEREST__UPDATE, TOPIC_PERSON__EMAIL_SENT } from '../../../services/pubsub/topic.constants'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import Person from '../person'
 import people from './person.fixture'
 import Organisation from '../../organisation/organisation'
@@ -14,11 +14,12 @@ import { MemberStatus } from '../../member/member.constants'
 import { InterestStatus } from '../../interest/interest.constants'
 import sinon from 'sinon'
 
-test.before('before connect to database', async (t) => {
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   t.context.server = express()
   Subscribe(t.context.server)
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+
   t.context.people = await Person.create(people)
   t.context.orgs = await Organisation.create(orgs)
   // setup opportunities 5 items
@@ -30,10 +31,6 @@ test.before('before connect to database', async (t) => {
   })
   t.context.ops = await Opportunity.create(ops)
   t.context.andrew = t.context.people[0]
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test('Trigger TOPIC_PERSON__CREATE', async t => {

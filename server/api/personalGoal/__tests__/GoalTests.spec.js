@@ -4,7 +4,7 @@ import {
   GoalTests
 } from '../personalGoal.lib'
 
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import Goal from '../../goal/goal'
 import goals from '../../goal/__tests__/goal.fixture'
 import Activity from '../../activity/activity'
@@ -17,14 +17,9 @@ import { addMember } from '../../member/member.lib'
 import { MemberStatus } from '../../member/member.constants'
 import { OpportunityStatus } from '../../opportunity/opportunity.constants'
 
-test.before('before connect to database', async (t) => {
-  try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
-  } catch (e) {
-    console.error('personalGoal.spec.js - error in test setup', e)
-  }
-
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create organisations: ${err}`)
   t.context.org = t.context.orgs[0]
@@ -33,11 +28,6 @@ test.before('before connect to database', async (t) => {
   t.context.andrew = t.context.people[0]
   t.context.dali = t.context.people[1]
   t.context.alice = t.context.people[2]
-})
-
-test.after.always(async (t) => {
-  // await Person.deleteMany()
-  await t.context.memMongo.stop()
 })
 
 test.serial('GoalTests - orgCompleteness', async t => {
@@ -54,7 +44,7 @@ test.serial('GoalTests - orgCompleteness', async t => {
     status: PersonalGoalStatus.ACTIVE
   }
   t.deepEqual(await GoalTests.orgCompleteness(personalGoalAlice, 'op'), { count: 10, score: 7 })
-  await aliceMember.remove()
+  await aliceMember.deleteOne()
 })
 
 test.serial('GoalTests - activityStarted', async t => {
@@ -99,5 +89,5 @@ test.serial('GoalTests - activityStarted', async t => {
   }
   t.is(await GoalTests.activityStarted(personalGoalAlice, 'null-activity'), false)
   t.is(await GoalTests.activityStarted(personalGoalAlice, 'fake-activity'), true)
-  await aliceMember.remove()
+  await aliceMember.deleteOne()
 })

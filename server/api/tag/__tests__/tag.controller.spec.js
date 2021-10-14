@@ -1,19 +1,17 @@
 import test from 'ava'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import { listTags } from '../tag.controller'
 import sinon from 'sinon'
 import Response from 'mock-express-response'
 import Tag from '../tag'
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   t.context.sandbox = sinon.createSandbox()
 })
 
 test.after.always(async (t) => {
-  await t.context.memMongo.stop()
   t.context.sandbox.restore()
 })
 

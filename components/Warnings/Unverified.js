@@ -3,7 +3,6 @@ import { Button } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { FullPage } from '../VTheme/VTheme'
 
-
 export const Unverified = ({ user }) =>
   <FullPage>
     <FormattedMessage

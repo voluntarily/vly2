@@ -3,20 +3,19 @@ import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Person from '../person'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
-import MemoryMongo from '../../../util/test-memory-mongo'
+// import { startMongo, stopMongo } from '../../../util/mockMongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import people from '../__tests__/person.fixture'
 import objectid from 'objectid'
-test.before('before connect to database', async (t) => {
+
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+
+test.before('before start app', async (t) => {
   try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
     await appReady
     t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   } catch (e) { console.error('person.spec.js error before', e) }
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.serial('verify fixture database has people', async t => {

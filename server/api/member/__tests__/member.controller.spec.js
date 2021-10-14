@@ -3,30 +3,20 @@ import Member from '../member'
 import { MemberStatus } from '../member.constants'
 import Organisation from '../../organisation/organisation'
 import Person from '../../person/person'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import people from '../../person/__tests__/person.fixture'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 import { addMember, findOrgByPersonIdAndRole } from '../member.lib'
 
-test.before('before connect to database', async (t) => {
-  try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
-  } catch (e) {
-    console.error('member.spec.js - error in test setup', e)
-  }
-
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create organisations: ${err}`)
   t.context.org = t.context.orgs[0]
   t.context.andrew = t.context.people[0]
   t.context.dali = t.context.people[1]
   t.context.alice = t.context.people[2]
-})
-
-test.after.always(async (t) => {
-  // await Person.deleteMany()
-  await t.context.memMongo.stop()
 })
 
 test.serial('Should add a member when they are not there already', async t => {

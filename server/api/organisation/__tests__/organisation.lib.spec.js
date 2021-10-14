@@ -1,19 +1,16 @@
 import test from 'ava'
 import Organisation from '../organisation'
 import orgs from './organisation.fixture.js'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import { orgProfileCompleteness, orgProfileCompletenessById } from '../organisation.lib'
 import objectid from 'objectid'
 
-test.before('before connect to database', async (t) => {
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
     t.context.orgs = await Organisation.create(orgs).catch(() => 'Unable to create orgs')
   } catch (e) { console.error('organisation.spec.js before error:', e) }
-})
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.serial('Should correctly score each org', async t => {

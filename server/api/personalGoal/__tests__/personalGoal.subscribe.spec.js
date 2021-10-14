@@ -2,7 +2,7 @@ import test from 'ava'
 import express from 'express'
 import PubSub from 'pubsub-js'
 import { TOPIC_GOALGROUP__ADD, TOPIC_MEMBER__UPDATE, TOPIC_PERSON__CREATE } from '../../../services/pubsub/topic.constants'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import Goal from '../../goal/goal'
 import goals from '../../goal/__tests__/goal.fixture'
 import { MemberStatus } from '../../member/member.constants'
@@ -13,12 +13,13 @@ import people from '../../person/__tests__/person.fixture'
 import PersonalGoal from '../personalGoal'
 import Subscribe from '../personalGoal.subscribe'
 
-test.before('before connect to database', async (t) => {
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   try {
     t.context.server = express()
     Subscribe(t.context.server)
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
+
     t.context.people = await Person.create(people).catch((err) => console.error('Unable to create people:', err))
     t.context.goals = await Goal.create(goals).catch((e) => console.error('Unable to create goals', e))
     t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create organisations: ${err}`)
@@ -27,10 +28,6 @@ test.before('before connect to database', async (t) => {
   } catch (e) {
     console.error('personController.spec.js, before connect to database', e)
   }
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.serial('Trigger TOPIC_PERSON__CREATE', async t => {

@@ -4,7 +4,7 @@ import {
   getSkillsRecommendations
 } from '../opportunity.util'
 import mongoose from 'mongoose'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import Opportunity from '../opportunity'
 import fixtures from './opportunity.util.fixture'
 import Person from '../../person/person'
@@ -13,9 +13,10 @@ import { OpportunityStatus, OpportunityType } from '../opportunity.constants'
 import { Role } from '../../../services/authorize/role'
 import AliasSet from '../../aliases/aliasSet'
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
+
 })
 
 test.beforeEach('Load fixtures', async (t) => {
@@ -36,10 +37,6 @@ test.afterEach.always('Clear fixtures', async (t) => {
   await Opportunity.deleteMany()
   await Organisation.deleteMany()
   await AliasSet.deleteMany()
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 /**

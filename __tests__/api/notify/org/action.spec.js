@@ -8,13 +8,13 @@ import Person from '../../../../server/api/person/person'
 import people from '../../../../server/api/person/__tests__/person.fixture'
 import { jwtDataAlice, jwtDataDali } from '../../../../server/middleware/session/__tests__/setSession.fixture'
 import { appReady, server } from '../../../../server/server'
-import MemoryMongo from '../../../../server/util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../../util/mockMongo'
 import { makeURLToken } from '../../../../lib/sec/actiontoken'
 
-test.before('before connect to database', async (t) => {
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
     t.context.orgs = await Organisation.create(orgs).catch(() => 'Unable to create orgs')
     t.context.org = t.context.orgs[0]
 

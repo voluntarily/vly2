@@ -1,7 +1,8 @@
 import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server/server'
-import MemoryMongo from '../../../server/util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../server/util/mockMongo'
+
 import fs from 'fs-extra'
 import path from 'path'
 import { jwtData } from '../../../server/middleware/session/__tests__/setSession.fixture'
@@ -9,9 +10,10 @@ import { config } from '../../../config/serverConfig'
 import glob from 'glob'
 import { v4 as uuid } from 'uuid'
 
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+
 test.before(async t => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
   await appReady
 })
 

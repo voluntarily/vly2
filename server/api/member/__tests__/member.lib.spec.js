@@ -1,5 +1,5 @@
 import test from 'ava'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import fixtures from './member.lib.fixtures'
 import Member from '../member'
 import Person from '../../person/person'
@@ -16,10 +16,8 @@ import {
   sortRoles
 } from '../member.lib'
 
-test.before('Database start', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-})
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
 
 test.beforeEach('Load fixtures', async (t) => {
   const [organisations, people] = await Promise.all([
@@ -85,10 +83,6 @@ test.afterEach.always('Clear fixtures', async (t) => {
   ])
 })
 
-test.after.always('Database stop', async (t) => {
-  await t.context.memMongo.stop()
-})
-
 test('get member by id fills in some org and person details', async (t) => {
   const member = t.context.members[0]
   const m = await getMemberbyId(member._id)
@@ -118,7 +112,7 @@ test.serial('add member creates a new member', async (t) => {
   t.is(updatedMember.status, MemberStatus.VALIDATOR)
 
   // remove the newMember
-  await updatedMember.remove()
+  await updatedMember.deleteOne()
 })
 
 test.serial('Find org by person and role', async (t) => {

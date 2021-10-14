@@ -1,14 +1,14 @@
 import test from 'ava'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import { isEmailVerified, setEmailVerified } from '../verified'
 import { PersonalVerificationStatus } from '../personalVerification.constants'
 const { PersonFields } = require('../../person/person.constants')
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   await Person.create(people)
 })
 

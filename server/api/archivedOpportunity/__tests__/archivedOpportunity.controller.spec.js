@@ -1,7 +1,7 @@
 
 import test from 'ava'
 import { server, appReady } from '../../../server'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import archivedOps from './archivedOpportunity.fixture.js'
@@ -10,10 +10,10 @@ import ArchiveOpportunity from '../archivedOpportunity'
 import request from 'supertest'
 import objectid from 'objectid'
 
-test.before('before connect to database', async (t) => {
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
     await appReady
 
     // connect each oppo to a requestor.
@@ -23,10 +23,6 @@ test.before('before connect to database', async (t) => {
   } catch (e) {
     console.error('archivedOpportunity.controller.spec before connect error', e)
   }
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.serial('Should send correct data when queried against an _id', async t => {

@@ -1,7 +1,7 @@
 import test from 'ava'
 import { appReady } from '../../../server'
 import { Interest } from '../interest'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import Opportunity from '../../opportunity/opportunity'
 import ops from '../../opportunity/__tests__/opportunity.fixture'
 import Person from '../../person/person'
@@ -10,9 +10,9 @@ import Organisation from '../../organisation/organisation'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 import { getInterestDetail } from '../interest.lib'
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   await appReady
 
   t.context.people = await Person.create(people)

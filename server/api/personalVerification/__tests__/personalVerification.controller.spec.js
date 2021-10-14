@@ -8,7 +8,7 @@ import MockResponse from 'mock-res'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import MockExpressRequest from 'mock-express-request'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import { liveInitResponseError, liveInitResponseSuccess, liveResponseSuccess, verifyResponseData } from './personalVerification.cloudcheck.fixture'
 const { PersonFields } = require('../../person/person.constants')
 const { PersonalVerificationStatus, VerificationResultUrlQueryParam } = require('./../personalVerification.constants')
@@ -16,21 +16,17 @@ const { PersonalVerification } = require('./../personalVerification')
 
 const verificationErrorRedirectUrl = `${config.appUrl}/home?tab=profile&${VerificationResultUrlQueryParam}=false`
 
-test.before('before connect to database', async (t) => {
-  try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
-  } catch (e) {
-    console.error('personalVerification.controller.spec.js, before connect to database', e)
-  }
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   t.context.mockServer = fetchMock.sandbox()
   global.fetch = t.context.mockServer
 })
 
 test.afterEach.always(async t => {
   t.context.mockServer.reset()
-  await Person.remove()
-  await PersonalVerification.remove()
+  await Person.deleteMany()
+  await PersonalVerification.deleteMany()
 })
 
 test.serial('initVerify should redirect with verification error if person has no session', async t => {

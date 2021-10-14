@@ -1,17 +1,14 @@
 import test from 'ava'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import { updateRole, registerPerson } from '../signUp.controller'
 import Person from '../../person/person'
 import Response from 'mock-express-response'
 import Request from 'mock-express-request'
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-})
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
 
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test('updateRole', async (t) => {
