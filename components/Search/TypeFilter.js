@@ -1,13 +1,20 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import { PBold } from '../VTheme/VTheme'
 import OpTypeSelector from '../Form/Input/TypeOpSelector'
-import './locationFilterStyles.css'
+import styled from 'styled-components'
 
+const TypeFilterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  > * {
+      padding: 10px;
+  }
+`
 function TypeFilter ({ onChange, value, opTypes }) {
   return (
-    <div className='location-filter-container'>
+    <TypeFilterContainer>
       <PBold>
         <FormattedMessage
           id='op.TypeFilterDescription'
@@ -16,14 +23,9 @@ function TypeFilter ({ onChange, value, opTypes }) {
         />
       </PBold>
       <OpTypeSelector onChange={onChange} value={value} width='100%' opTypes={opTypes} />
-    </div>
+    </TypeFilterContainer>
   )
 }
 
-TypeFilter.propTypes = {
-  value: PropTypes.string,
-  opTypes: PropTypes.array.isRequired,
-  onChange: PropTypes.func
-}
 
 export default TypeFilter

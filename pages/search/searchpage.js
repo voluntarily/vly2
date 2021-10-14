@@ -1,6 +1,5 @@
 import { Button, Dropdown, Menu, Modal } from 'antd'
 import Router from 'next/router'
-import PropTypes from 'prop-types'
 import { Component } from 'react'
 import Head from 'next/head'
 import { FormattedMessage } from 'react-intl'
@@ -15,6 +14,8 @@ import TypeFilter from '../../components/Search/TypeFilter'
 import { FullPage, Spacer } from '../../components/VTheme/VTheme'
 
 import reduxApi, { withLocations } from '../../lib/redux/reduxApi'
+import reduxWrapper from '../../lib/redux/store'
+
 import DatePickerComponent, { formatDateBaseOn } from './DatePickerComponent'
 import OpOrderby from '../../components/Op/OpOrderby'
 // const TitleString = {NumberResults} + "results for " + {SearchQuery}
@@ -69,12 +70,12 @@ export class SearchPage extends Component {
     }
   }
 
-  static async getInitialProps ({ store, query: { search } }) {
-    await store.dispatch(reduxApi.actions.locations.get({}))
-    return {
-      search
-    }
-  }
+  // static async getInitialProps ({ store, query: { search } }) {
+  //   await store.dispatch(reduxApi.actions.locations.get({}))
+  //   return {
+  //     search
+  //   }
+  // }
 
   handleFilterOpened = (filterName) => {
     this.setState({ [filterVisibilityName(filterName)]: true })
@@ -249,19 +250,14 @@ export class SearchPage extends Component {
   }
 }
 
-SearchPage.propTypes = {
-  search: PropTypes.string,
-  ops: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string,
-      subtitle: PropTypes.string,
-      imgUrl: PropTypes.any,
-      description: PropTypes.string,
-      duration: PropTypes.string,
-      status: PropTypes.string,
-      _id: PropTypes.string
-    })
-  )
+export const getServerSideProps = reduxWrapper.getServerSideProps(
+  store => async (props) => gssp({ store, query: props.query })
+)
+
+// factored out for easier testing.
+export const gssp = async ({ store, query }) => {
+  await store.dispatch(reduxApi.actions.locations.get())
+  console.log('Search page GSSP')
 }
 
 export default withLocations(SearchPage)
