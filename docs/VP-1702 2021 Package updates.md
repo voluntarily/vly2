@@ -9,53 +9,70 @@ This major set of changes has the goal of bringing the Voluntarily code base up 
 * Remove any package warnings and use of deprecated features.
 * Remove any redundant packages.
 
-## Major version changes
-### Node - 14 -> 16
+## Node - 14 -> 16
 
 * Updated Dockerfile
 * docker compose - 3.4 -> 3.9
-### React -16.12.0 -> 17. 
+## React -16.12.0 -> 17. 
 
 * https://reactjs.org/blog/2020/08/10/react-v17-rc.html#other-breaking-changes
-### NextJS 9 -> 11
+## NextJS 9 -> 11
 
 * https://nextjs.org/docs/upgrading
 
+### GetServerSideProps replacing GetInitialProps
+
 The most noticable change is from general use of GetInitialProps to GetServerSideProps. GIP runs on both client and server side and triggers on page load and page transition. GSSP only runs server side. Using GSSP for all our pages ensures that the data required to populate the page has been obtained server side and sent along with the HTML and JS so that the page renders very quickly.  
 
-There was some work required to get the use of GSSP to integrate with our use of Redux.  
-# Changes
+There was some work required to get the use of GSSP to integrate with our use of Redux. To do this we add the `next-redux-wrapper` library and move the creation of the redux store from ReduxAPI to its own store.js file. This adds a HYDRATE action which merges the initialStore sent from the server into the client side store.  
 
-## remove next-less, next-css etc
+Example:
 
-These are deprecated and replaced with internal next css capability.  However we still need less in order to create our custom Antd theme. - perhaps we can build our own antd css independently.
+        export const getServerSideProps = reduxWrapper.getServerSideProps(
+            store => async (props) => gssp({ store, query: props.query })
+        )
 
-## AntD -> 4
+        // factored out for easier testing.
+        export const gssp = async ({ store, query }) => {
+            const select = { p: 'name imgUrl role' }
+            await store.dispatch(reduxApi.actions.organisations.get(select))
+            console.log('OrgListPage GSSP')
+        }
 
-### Icons
+Here we factor out the underying gssp function which does what the old GIP used to do and then export getServerSideProps from the page.  Note that if the page is included in another file e.g. index.js we must export both the page component and getServerSideProps for it to work.  Also note the returned props are now nested in an object `{ props: etc }`
 
-Icons used to have a single <Icon> component with a type selector - this brings all the icons into the build.
-Antd has a separate component for each Icon so <Icon type='home' > -> <HomeFilled />  each one used must be imported.
-Icons were used in a large number of places. ## Next-routes -> next-routes-extended
-This library has been abandoned and does not work with Next 11/ react 17.  However someone forked it into
-next-routes-extended so we will use that for now.
-In future we should be able to replace all these routes with NextJS dynamic routing.
+For testing we can use gssp directly.
 
-## React-intl -> 5.20.10
+The one place we don't use GSSP is in _App which still has a GIP.
 
-this may involve some changes to how we do internationalisation
+### remove next-less, next-css etc
 
-## React-quill "react-quill": "2.0.0-beta.4"
+These are deprecated and replaced with internal next css capability.  However we still need less in order to create our custom Antd theme.
 
-This is the rich text editor used for forms.
-This major update is still in beta but is the only version working with React 17. Go along with it for now and update when its officially released.
+### Dynamic Routes,  Next-routes removed
 
-## "recharts": "^2.1.4"
+Move from using the routes.js file to the page tree dynamic routes preferred by NextJs.
+e.g rename personDetailPage.js to [personId].js 
 
-Recharts is a Redefined chart library built with React and D3.
-used for charts in the ratings and statistics pages.
+We used this library to allow dynamic routes such as /orgs/:id when next did not allow them. Next 11 now has dynamic routes so this library is removed. Files like /orgs/orgdetailpage.js are now named /orgs/[orgId].js with the orgId being passed as a prop into the component. 
 
-## anon default components
+### Remove Higher Order Components: PublicPage, AdminPage, SecurePage 
+
+All the page level HOCs have been removed. These were used to wrap pages in layers of:
+
+* layout - publicpage
+* security - securepage
+* admin access - adminpage
+
+However these HOCs don't know whether to call GetServerSideProps or GetInitialProps etc. 
+
+So now we do the following:
+
+1. layout - all pages use the default layout injected by _App.  If you need a page without header/footer you can use the next js method override layout. 
+2. secure pages by default all pages are secured in _app using the RouteGuard Component. if not signed in you are redirected to the signthru steps. For specific public pages these are listed public paths now need to be explicitly added to the publicPaths array in routeguard.js
+3. Admin pages are no longer special - they just check the isAdmin prop on start and return the AccessDenied component if not an admin. 
+
+### Remove Anonymous arrow functions
 
 Anonymous arrow functions cause Fast Refresh to not preserve local component state.
 we need to name the functions
@@ -69,53 +86,72 @@ we need to name the functions
 
 Fixed these using npx @next/codemod name-default-component. 12 files affected.
 
-## react-helmet
 
-* all uses of Helmet replaced with Head provided by Next/head.
+### react-helmet no longer required
 
+All uses of Helmet replaced with Head provided by Next/head.
 
-## AntD Styles fix
+## AntD Updated to Version 4
 
-changes to how css is imported and less is out by default. fix by including a new package
+### Forms
 
-## AntD Form updates
+Ant Design components have had a major version update with a significant change to the way forms are handled. - essentially moving from class to functional components.  The result is much much simpler to use.
 
-Person/PersonDetailForm.js
+At this time we have only updated a few of the forms as examples.  A compatability library allows the old style forms to continue working but they should be updated whenever they are changed.
 
-## Slug / Limax
+* Updated Forms
+
+    * components/Person/PersonDetailForm.js:
+    * components/Member/RegisterMemberItem.js:
+    * components/Op/OpFormDate.js:
+    * components/Op/OpFormDescription.js:
+    * components/Op/OpFormLocation.js:
+    * components/Op/OpFormOrg.js:
+    * components/Op/OpShortForm.js:
+
+* Forms using @ant-design/compatible - still to do.
+
+    * components/Act/ActDetailForm.js:
+    * components/DynamicFieldSet/DynamicFieldSet.js:
+    * components/Op/OpAskFormLong.js:
+    * components/Op/OpFormImg.js:
+    * components/Op/OpFormTags.js:
+    * components/Op/OpOfferFormLong.js:
+    * components/Org/OrgDetailForm.js:
+    * components/Org/SchoolInviteForm.js:
+    * components/Story/StoryForm.js:
+
+### Icons
+
+Icons used to have a single `<Icon>` component with a type selector - this brings all the icons into the build.
+Antd has a separate component for each Icon so `<Icon type='home' > -> <HomeFilled />`  each one used must be imported.
+Icons were used in a large number of places so there are a lot of replacements. 
+
+## Language Processing - formatjs, React-intl -> 5.20.10
+
+Some changes to how we do internationalisation
+
+We use react-intl along with formatjs to generate the language strings and formatted messages. Recent updates have removed some components of the libraries as these are now supported in browsers.
+
+The command line to create the language file has changed to formatjs extract and formatjs compile.  Replace the use of `x/default-lang` with formatjs compile.
+
+## React-quill "react-quill": "2.0.0-beta.4"
+
+This is the rich text editor used for forms.
+
+This major update is still in beta but is the only version working with React 17. Go along with it for now and update when its officially released.
+
+## "recharts": "^2.1.4"
+
+Recharts is a Redefined chart library built with React and D3.
+used for charts in the ratings and statistics pages.
+
+## Slug replaces Limax
 
 We were using two slug libraries. update and only use slug.
 
-# Test failures
 
-- server › api › interest › interest.ability › Interest API - anon - list
-    * not repeatable.
-
-# Page checking
-
-## Page routes
-
-Move from using the routes.js file to the page tree dynamic routes preferred by NextJs.
-e.g rename personDetailPage.js to [personId].js 
-
-## Higher Order Components PublicPage, AdminPage, SecurePage Removed
-
-All the page level HOCs have been removed. These were used to wrap pages in layers of
-
-* layout - publicpage
-* security - securepage
-* admin access - adminpage
-
-However these HOCs dont know whether to call GetServerSideProps or GetInitialProps etc. 
-
-So now we do the following:
-
-1. layout - all pages use the default layout injected by _App.  If you need a page without header/footer you can use the next js method override layout. 
-2. secure pages by default all pages are secured in _app using the RouteGuard Component. if not signed in you are redirected to the signthru steps. For specific public pages these are listed public paths now need to be explicitly added to the publicPaths array in routeguard.js
-3. Admin pages are no longer special - they just check the isAdmin prop on start and return the AccessDenied component if not an admin. 
-
-
-## Home
+## Home Page
 
 * fix tab update with useEffect
 
@@ -140,11 +176,17 @@ it is being set to a default session in the server middleware.
 
 looks like special path handling which is intended to bypass session loading for paths to _next is needed when we are getting the data/page.json file used to hydrate the redux object.  commenting this out fixes the linked page problem
 
-* __tests__/home.spec.js
+* /home.spec.js
     * handling tabs is tricky in tests they don't easily respond to clicks and the panel updates are async
     * so we instead set the query parameter for tab and load the page separately for each panel.
     * for some time only one test in the suite was being run so others had got out of date.
     * not testing the saving of the edited profile - but this is covered elsewhere
+
+## Home Components
+
+* HomeBanner - passed
+* HomeTabs - passed
+
 ## Organisation
 
 ### Org Pages
@@ -188,7 +230,7 @@ looks like special path handling which is intended to bypass session loading for
 * PersonDetailPage 
     * get server side props, factor out a version we can test using mock store.
     * switch from withMockRouter to useMockRouter
-* __tests__/person/persondetailpage.spec.js - passed
+* /person/persondetailpage.spec.js - passed
 
 * PersonListPage - no test
     * people response not json serialisable. due to invalid json decoding on person.controller.  change to string decode for select and search.  This clearly has not been tested much. Ditto Organisation.controller.
@@ -309,7 +351,7 @@ looks like special path handling which is intended to bypass session loading for
     * factor out useMockRoute
 
 * ArchivedOpDetailPage - passed
-    * __tests__/archivedop/archivedopdetailpage.spec.js
+    * /archivedop/archivedopdetailpage.spec.js
     * updated for gssp and dynamic pages
 ## VTheme Components
 
@@ -320,6 +362,7 @@ looks like special path handling which is intended to bypass session loading for
 * VTabs - passed
 
 ## Statistics 
+
 ### Statistics Components
 
 * StatisticsRatingsReport - passed
@@ -331,13 +374,8 @@ looks like special path handling which is intended to bypass session loading for
 * OrgStatisticsTabs - passed
 
 ### Statistics Pages
-__tests__/statistics/orgstatisticspage.spec.js - passed
+/statistics/orgstatisticspage.spec.js - passed
 
-
-## Home Components
-
-* HomeBanner - passed
-* HomeTabs - passed
 
 ## Footer Components
 
@@ -411,12 +449,6 @@ __tests__/statistics/orgstatisticspage.spec.js - passed
     * change from class to form
 * quiz - passed
 
-## Redux example tests
-
-* MockReduxStoreTest - passed
-* LocalStateTest - passed
-* ReduxAsyncTest - passed
-* RealReduxStoreTest - passed
 
 ## Search/ Tag Components
 
@@ -444,6 +476,13 @@ __tests__/statistics/orgstatisticspage.spec.js - passed
     * removed styles.less theme.less
 * Hello - passed
 
+## Redux example tests
+
+* MockReduxStoreTest - passed
+* LocalStateTest - passed
+* ReduxAsyncTest - passed
+* RealReduxStoreTest - passed
+
 ## DynamicFieldSet Components  (used in Act Detail Form)
 
 * DynamicFieldSet - passed
@@ -463,8 +502,8 @@ it doesn't have an entry page but you can see the current status on /test/test-e
 
 * AddStory - passed
   
-__tests__/story/storydetailpage.spec.js - passed
-__tests__/story/storylistpage.spec.js - passed
+/story/storydetailpage.spec.js - passed
+/story/storylistpage.spec.js - passed
 
 ## Warnings
 
@@ -479,200 +518,191 @@ __tests__/story/storylistpage.spec.js - passed
 * PersonalGoalSection - passed
 * GoalGroupHeading - passed
 
-* __tests__/goal/school/ready.spec.js - passed
+* /goal/school/ready.spec.js - passed
     * get server side props updated
 
 ## PostSignUp pages
 
 * flow/postSignUp - no test
 
-
-
-2021-10-12
-  191 tests failed
-  9 tests skipped
-  1 unhandled rejection
-  11 uncaught exceptions
-
-
-
 ### Miscellaneous Pages
 
-* __tests__/404.spec.js - passed
-* __tests__/feedback/feedbacksubmitpage.spec.js - passed
+* /404.spec.js - passed
+* /feedback/feedbacksubmitpage.spec.js - passed
     * add useMockRouter
-* __tests__/landing.spec.js - passed
-* __tests__/action/registerTeacher/registerTeacher.spec.js - passed
-* __tests__/terms.spec.js - passed
+* /landing.spec.js - passed
+* /action/registerTeacher/registerTeacher.spec.js - passed
+* /terms.spec.js - passed
     * test passing but the .md file import is bypassed in test because the required babel loader is overridden
     * this means we get back a null object which causes a warning in the test output
     * TODO: fix loading md files in tests.
 
 ### API pages
-* __tests__/api/notify/org/action.spec.js - passed
-* __tests__/api/notify/org/notifyOrg.spec.js
-* __tests__/api/registerRequestor/registerRequestor.spec.js - passed
-* __tests__/api/health/health.spec.js - passed
+
+* /api/notify/org/action.spec.js - passed
+* /api/notify/org/notifyOrg.spec.js
+* /api/registerRequestor/registerRequestor.spec.js - passed
+* /api/health/health.spec.js - passed
     * renamed [param] to [healthQuery] to avoid difficult to identify filenames.
-* __tests__/api/reports/summary.spec.js - passed
-* __tests__/about.spec.js - passed
-* __tests__/reports/summary.spec.js  
+* /api/reports/summary.spec.js - passed
+* /about.spec.js - passed
+* /reports/summary.spec.js  
     * SKIPPED until isAdmin can be stubbed without Redux
-__tests__/admin/admin.spec.js
+* /admin/admin.spec.js
     * lots to fix up here.  These were loading the full server and api handler in order to verify access control
     * now we just need to test the page component as usual, passing in the correct props or redux store. 
     * still to do the school setup page - but low priority. 
 
 ## Library files
 
-* lib/redux/__tests__/redux.spec.js - passed
+* lib/redux//redux.spec.js - passed
     * SetSession has to convert the me to a form that can be serialised by the redux hydration. 
         this doesn't handle null, undefined, dates and object id types. which all need to become strings.
         so we convert to json and back again. this is not ideal but ok.
 
-* lib/auth/__tests__/auth.spec.js - passed
-* lib/sec/__tests__/keys.spec.js - passed
-* lib/sec/__tests__/actiontoken.spec.js - passed
+* lib/auth//auth.spec.js - passed
+* lib/sec//keys.spec.js - passed
+* lib/sec//actiontoken.spec.js - passed
     * t.throws changed signature - now needs an expectation value
-* lib/school-import/__tests__/import.spec.js - passed
-* lib/school-import/__tests__/filter-valid-school-records.spec.js - passed
-* lib/school-import/__tests__/map-import-data-to-schema.spec.js - passed
-* lib/school-import/__tests__/get-domain-from-email.spec.js - passed
-* lib/__tests__/urlUtil.spec.js - passed
-* lib/__tests__/callApi.spec.js - passed
+* lib/school-import//import.spec.js - passed
+* lib/school-import//filter-valid-school-records.spec.js - passed
+* lib/school-import//map-import-data-to-schema.spec.js - passed
+* lib/school-import//get-domain-from-email.spec.js - passed
+* lib//urlUtil.spec.js - passed
+* lib//callApi.spec.js - passed
     * 3 failed t.throwsAsync call format
-* lib/__tests__/durationUtil.spec.js - passed
+* lib//durationUtil.spec.js - passed
 
-# Server 
+## Server 
 
-## Middleware
+### Middleware
 
-* server/middleware/authorize/__tests__/authorizeRequest.spec.js
+* server/middleware/authorize//authorizeRequest.spec.js
     * change to @casl/ability AbilityBuilder  casl moved from 3.4 to 5.4 
     * defineAbility replaces AbilityBuilder.define but see new docs here https://casl.js.org/v5/en/guide/define-rules
-* server/middleware/ability/__tests__/getAbility.spec.js - passed
-* server/middleware/session/__tests__/jwtVerify.spec.js - passed
-* server/middleware/session/__tests__/setSession.spec.js - passed
+* server/middleware/ability//getAbility.spec.js - passed
+* server/middleware/session//jwtVerify.spec.js - passed
+* server/middleware/session//setSession.spec.js - passed
 
 
-* server/util/__tests__/initTags.spec.js - passed
-* server/api/statistics/__tests__/statistics.spec.js - passed
+* server/util//initTags.spec.js - passed
+* server/api/statistics//statistics.spec.js - passed
 
-## Opportunity API
+### Opportunity API
 
 Note these tests start the full server and mongo db so are slow to run.
 
-* server/api/opportunity/__tests__/recommendedOps.spec.js - passed
-* server/api/opportunity/__tests__/opportunity.util.spec.js - passed
-* server/api/opportunity/__tests__/opportunity.spec.js - passed
-* server/api/opportunity/__tests__/econreset.spec.js - passed
-* server/api/opportunity/__tests__/opportunity.ability.spec.js
+* server/api/opportunity//recommendedOps.spec.js - passed
+* server/api/opportunity//opportunity.util.spec.js - passed
+* server/api/opportunity//opportunity.spec.js - passed
+* server/api/opportunity//econreset.spec.js - passed
+* server/api/opportunity//opportunity.ability.spec.js
     generally replace import uuid from 'uuid' with import { v4 as uuid } from 'uuid'
 
-## Interest API
+### Interest API
 
-* server/api/interest/__tests__/interest.messages.spec.js - passed
-* server/api/interest/__tests__/interest.ability.spec.js - passed
-* server/api/interest/__tests__/interest.lib.spec.js - passed
-* server/api/interest/__tests__/interestArchive.spec.js - passed
-* server/api/interest/__tests__/interestArchive.ability.spec.js - passed
-* server/api/interest/__tests__/interest.spec.js - passed
+* server/api/interest//interest.messages.spec.js - passed
+* server/api/interest//interest.ability.spec.js - passed
+* server/api/interest//interest.lib.spec.js - passed
+* server/api/interest//interestArchive.spec.js - passed
+* server/api/interest//interestArchive.ability.spec.js - passed
+* server/api/interest//interest.spec.js - passed
 
-## ArchivedOpportunity API
+### ArchivedOpportunity API
 
-* server/api/archivedOpportunity/__tests__/archivedOpportunity.ability.spec.js - passed
-* server/api/archivedOpportunity/__tests__/archivedOpportunity.controller.spec.js - passed
+* server/api/archivedOpportunity//archivedOpportunity.ability.spec.js - passed
+* server/api/archivedOpportunity//archivedOpportunity.controller.spec.js - passed
 
-## Person API
+### Person API
 
-* server/api/person/__tests__/personController.spec.js - passed
-* server/api/person/__tests__/person.spec.js - passed
-* server/api/person/__tests__/person.email.spec.js - passed
-* server/api/person/__tests__/person.subscribe.spec.js - passed
-* server/api/person/__tests__/person.lib.spec.js - passed
-* server/api/person/__tests__/person.ability.spec.js - passed
+* server/api/person//personController.spec.js - passed
+* server/api/person//person.spec.js - passed
+* server/api/person//person.email.spec.js - passed
+* server/api/person//person.subscribe.spec.js - passed
+* server/api/person//person.lib.spec.js - passed
+* server/api/person//person.ability.spec.js - passed
 
-## Activity API
+### Activity API
 
-* server/api/activity/__tests__/activity.lib.spec.js - passed
-* server/api/activity/__tests__/activity.ability.spec.js - passed
-* server/api/activity/__tests__/activity.spec.js - passed
+* server/api/activity//activity.lib.spec.js - passed
+* server/api/activity//activity.ability.spec.js - passed
+* server/api/activity//activity.spec.js - passed
 
-## Location API
+### Location API
 
-* server/api/location/__tests__/location.spec.js - passed
+* server/api/location//location.spec.js - passed
 
-## Sign Up API
+### Sign Up API
 
-* server/api/signUp/__tests__/signUp.controller.spec.js - passed
+* server/api/signUp//signUp.controller.spec.js - passed
 
-## PersonalGoal API
+### PersonalGoal API
 
-* server/api/personalGoal/__tests__/personalGoal.spec.js - passed
-* server/api/personalGoal/__tests__/personalGoal.subscribe.spec.js - passed
-* server/api/personalGoal/__tests__/personalGoal.ability.spec.js - passed
-* server/api/personalGoal/__tests__/GoalTests.spec.js - passed
-* server/api/personalGoal/__tests__/personalGoal.lib.spec.js - passed
+* server/api/personalGoal//personalGoal.spec.js - passed
+* server/api/personalGoal//personalGoal.subscribe.spec.js - passed
+* server/api/personalGoal//personalGoal.ability.spec.js - passed
+* server/api/personalGoal//GoalTests.spec.js - passed
+* server/api/personalGoal//personalGoal.lib.spec.js - passed
 
-## Member API
+### Member API
 
-* server/api/member/__tests__/member.controller.spec.js - passed
-* server/api/member/__tests__/member.spec.js - passed
-* server/api/member/__tests__/member.lib.spec.js - passed
-* server/api/member/__tests__/findMy.spec.js - passed
-* server/api/member/__tests__/member.ability.spec.js - passed
+* server/api/member//member.controller.spec.js - passed
+* server/api/member//member.spec.js - passed
+* server/api/member//member.lib.spec.js - passed
+* server/api/member//findMy.spec.js - passed
+* server/api/member//member.ability.spec.js - passed
 
-## Personal Verification API
+### Personal Verification API
 
-* server/api/personalVerification/__tests__/personalVerification.controller.spec.js - passed
-* server/api/personalVerification/__tests__/verified.spec.js - passed
-* server/api/personalVerification/__tests__/personalVerification.helpers.spec.js - passed
+* server/api/personalVerification//personalVerification.controller.spec.js - passed
+* server/api/personalVerification//verified.spec.js - passed
+* server/api/personalVerification//personalVerification.helpers.spec.js - passed
 
-## Organisation API
+### Organisation API
 
-* server/api/organisation/__tests__/organisation.ability.spec.js 
+* server/api/organisation//organisation.ability.spec.js 
     * ability for org admin to update their own org is failing
     * this is due to orgAdminFor containing object ids and being compared with request _id strings. perhaps this used to work. to fix replace include with some and cast in the comparison.
-* server/api/organisation/__tests__/organisation.spec.js - passed
+* server/api/organisation//organisation.spec.js - passed
     * s and p now expects strings unquoted rather than json. 
     * bad request errors can now only be returned for q={not json}
-* server/api/organisation/__tests__/organisation.lib.spec.js - passed
+* server/api/organisation//organisation.lib.spec.js - passed
     * change to error message from mongodb exception
 
-## Misc API
+### Misc API
 
-* server/api/school-lookup/__tests__/school-lookup.spec.js - passed
-* server/api/school-lookup/__tests__/school-lookup.ability.spec.js - passed
-* server/api/tag/__tests__/tag.spec.js - passed
-* server/api/tag/__tests__/tag.controller.spec.js - passed
-* server/api/story/__tests__/story.ability.spec.js - passed
-* server/api/story/__tests__/story.spec.js - passed
-* server/api/goal/__tests__/loadGoals.spec.js - passed
-* server/api/goal/__tests__/goal.ability.spec.js - passed
-* server/api/goal/__tests__/goal.spec.js - passed
-* server/api/badge/__tests__/badge.spec.js - passed
-* server/api/badge/__tests__/badge.ability.spec.js - passed
-* server/api/aliases/__tests__/aliases.controller.spec.js - passed
-* server/api/education/__tests__/education.spec.js - passed
-* server/api/image/__tests__/image.spec.js - passed
-* server/api/feedback/__tests__/feedback.ability.spec.js - passed
-* server/api/feedback/__tests__/feedback.spec.js - passed
-* server/api/file/__tests__/file.controller.spec.js - passed
-* server/api/school-invite/__tests__/school-invite.controller.spec.js - passed
+* server/api/school-lookup//school-lookup.spec.js - passed
+* server/api/school-lookup//school-lookup.ability.spec.js - passed
+* server/api/tag//tag.spec.js - passed
+* server/api/tag//tag.controller.spec.js - passed
+* server/api/story//story.ability.spec.js - passed
+* server/api/story//story.spec.js - passed
+* server/api/goal//loadGoals.spec.js - passed
+* server/api/goal//goal.ability.spec.js - passed
+* server/api/goal//goal.spec.js - passed
+* server/api/badge//badge.spec.js - passed
+* server/api/badge//badge.ability.spec.js - passed
+* server/api/aliases//aliases.controller.spec.js - passed
+* server/api/education//education.spec.js - passed
+* server/api/image//image.spec.js - passed
+* server/api/feedback//feedback.ability.spec.js - passed
+* server/api/feedback//feedback.spec.js - passed
+* server/api/file//file.controller.spec.js - passed
+* server/api/school-invite//school-invite.controller.spec.js - passed
 
-## Services
+### Services
 
-* server/services/image/__tests__/imageResize.spec.js - passed
-* server/services/authorize/__tests__/removeUnauthorizedFields.spec.js - passed
+* server/services/image//imageResize.spec.js - passed
+* server/services/authorize//removeUnauthorizedFields.spec.js - passed
     * replace AbilityBuilder.define with defineAbility for casl 5.
-* server/services/pubsub/__tests__/publishTopic.spec.js - passed
-* server/services/email/__tests__/email.spec.js - passed
+* server/services/pubsub//publishTopic.spec.js - passed
+* server/services/email//email.spec.js - passed
 
-# Remaining package updates
+## Remaining package updates
 
- @babel/core                      ^7.15.5  →    ^7.15.8     
- @codeceptjs/configure             ^0.5.2  →     ^0.7.0     
- @formatjs/cli                    ^1.1.18  →     ^4.3.1     
+ @babel/core                      ^7.15.5  →    ^7.15.8 - removed
+ @codeceptjs/configure             ^0.5.2  →     ^0.7.0 - updated
+ @formatjs/cli                    ^1.1.18  →     ^4.3.1 - updated   
  @testing-library/dom             ^6.11.0  →     ^8.9.0     
  axios                            ^0.21.4  →    ^0.23.0     
  babel-loader                      ^8.0.6  →     ^8.2.2     
@@ -715,7 +745,7 @@ Note these tests start the full server and mongo db so are slow to run.
  mock-css-modules                  ^1.0.0  →     ^2.0.0     
  mock-express-response             ^0.2.2  →     ^0.3.0     
  moment                           ^2.24.0  →    ^2.29.1     
- mongoose                         ^5.13.9  →    ^6.0.10     
+ mongoose                         ^5.13.9  →    ^6.0.10 - Not updated due to compatability with @casl/mongoose.
  natural                           ^2.1.5  →     ^5.1.1     
  node-cipher                       ^5.0.1  →     ^6.3.3     
  nodemailer                        ^6.4.2  →     ^6.7.0     
