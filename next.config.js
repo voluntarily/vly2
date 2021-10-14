@@ -7,8 +7,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true'
 })
 
-// const lessToJS = require('less-vars-to-js')
-// const fs = require('fs-extra')
 const path = require('path')
 const pathToLessFileWithVariables = path.resolve(__dirname, './assets/antd-custom.less')
 

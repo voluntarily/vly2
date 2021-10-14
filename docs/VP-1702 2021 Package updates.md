@@ -721,24 +721,3 @@ Note these tests start the full server and mongo db so are slow to run.
 
  mongoose                         ^5.13.9  →    ^6.0.10 - Not updated due to compatability with @casl/mongoose.
 
- eslint-plugin-html                ^6.0.0  →     ^6.2.0     
- find-cache-dir                    ^3.3.1  →     ^3.3.2     
- fs-extra                          ^8.1.0  →    ^10.0.0     
- full-icu                          ^1.3.0  →     ^1.4.0     
- glob                              ^7.1.6  →     ^7.2.0     
- hoist-non-react-statics           ^3.3.1  →     ^3.3.2     
- ical-generator                    ^1.9.2  →     ^3.0.1     
- jsdom                            ^16.2.1  →    ^18.0.0     
- less                             ^3.10.3  →     ^4.1.2     
- markdown-to-jsx                  ^6.11.4  →     ^7.1.3     
- mock-css-modules                  ^1.0.0  →     ^2.0.0     
- mock-express-response             ^0.2.2  →     ^0.3.0     
- moment                           ^2.24.0  →    ^2.29.1     
- mongoose                         ^5.13.9  →    ^6.0.10     
- natural                           ^2.1.5  →     ^5.1.1     
- node-cipher                       ^5.0.1  →     ^6.3.3     
- nodemailer                        ^6.4.2  →     ^6.7.0     
- nodemailer-mock                   ^1.4.4  →    ^1.5.11     
- pubsub-js                         ^1.7.0  →     ^1.9.3     
- raygun4js                        ^2.18.2  →    ^2.22.5     
- react-intl                      ^5.20.10  →   ^5.20.12     
