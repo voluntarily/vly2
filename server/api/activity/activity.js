@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const idvalidator = require('mongoose-id-validator')
 const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
-const slug = require('limax')
+const slug = require('slug')
 const { ActivityStatus, ActivityFields } = require('./activity.constants')
 const ActivitySchema = new Schema({
   name: { type: String, required: true }, // "Growing in the garden",

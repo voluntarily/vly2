@@ -1,31 +1,29 @@
 # VP-1702 Package updates Sept 2021
 
-Goal - bring the Voluntarily code base up to latest versions of the major packages in use.
-Ensure we have all necessary security patches, and remain on Long term support (LTS) versions of the framework and tools.
+This major set of changes has the goal of bringing the Voluntarily code base up to latest versions for the major packages in use.
 
-Remove any package warnings and use of deprecated features.
-Remove any redundant packages.
+* Ensure we have all necessary security patche
+* remain on Long term support (LTS) versions of the framework and tools.
+* migrate from class to functional react
+* migrate from older to new AntD forms and icons.
+* Remove any package warnings and use of deprecated features.
+* Remove any redundant packages.
 
-## Major updates
-
+## Major version changes
 ### Node - 14 -> 16
 
-Updated Dockerfile
+* Updated Dockerfile
+* docker compose - 3.4 -> 3.9
+### React -16.12.0 -> 17. 
 
-docker compose - 3.4 -> 3.9
-React -16.12.0 -> 17. #
-NextJS 9 -> 11
+* https://reactjs.org/blog/2020/08/10/react-v17-rc.html#other-breaking-changes
+### NextJS 9 -> 11
 
-# Actions
+* https://nextjs.org/docs/upgrading
 
-* checkout and build, run tests - 1 failure, not reproducible
-* build and run up the local docker compose files.
-* commit and check build runs on github.
+The most noticable change is from general use of GetInitialProps to GetServerSideProps. GIP runs on both client and server side and triggers on page load and page transition. GSSP only runs server side. Using GSSP for all our pages ensures that the data required to populate the page has been obtained server side and sent along with the HTML and JS so that the page renders very quickly.  
 
-* bunch of time spent getting mongoose-crudify to work, code base on git keeps switching to ssh access which doesn't work.  Forked to @voluntarily/mongoose-crudify
-
-*
-
+There was some work required to get the use of GSSP to integrate with our use of Redux.  
 # Changes
 
 ## remove next-less, next-css etc
@@ -83,6 +81,10 @@ changes to how css is imported and less is out by default. fix by including a ne
 ## AntD Form updates
 
 Person/PersonDetailForm.js
+
+## Slug / Limax
+
+We were using two slug libraries. update and only use slug.
 
 # Test failures
 
@@ -665,3 +667,64 @@ Note these tests start the full server and mongo db so are slow to run.
     * replace AbilityBuilder.define with defineAbility for casl 5.
 * server/services/pubsub/__tests__/publishTopic.spec.js - passed
 * server/services/email/__tests__/email.spec.js - passed
+
+# Remaining package updates
+
+ @babel/core                      ^7.15.5  →    ^7.15.8     
+ @codeceptjs/configure             ^0.5.2  →     ^0.7.0     
+ @formatjs/cli                    ^1.1.18  →     ^4.3.1     
+ @testing-library/dom             ^6.11.0  →     ^8.9.0     
+ axios                            ^0.21.4  →    ^0.23.0     
+ babel-loader                      ^8.0.6  →     ^8.2.2     
+ codeceptjs                        ^3.1.2  →     ^3.1.3     
+ codecov                           ^3.6.1  →     ^3.8.3     
+ fetch-mock                         8.3.1  →     9.11.0     
+ mongodb-memory-server             ^6.2.1  →     ^7.4.3     
+ nodemon                           ^2.0.2  →    ^2.0.13     
+ nyc                              ^15.0.0  →    ^15.1.0     
+ puppeteer                         ^3.1.0  →    ^10.4.0     
+ supertest                         ^4.0.2  →     ^6.1.6     
+ testcafe                          ^1.7.1  →    ^1.16.1     
+ testcafe-react-selectors          ^4.0.0  →     ^4.1.5     
+ wait-on                           ^3.3.0  →     ^6.0.0     
+ webdriverio                      ^5.15.0  →    ^7.14.1     
+ @ant-design/icons                 ^4.6.4  →     ^4.7.0     
+ @next/bundle-analyzer             ^9.1.4  →    ^11.1.2     
+ @uppy/core                        ^1.7.0  →     ^2.1.0     
+ @uppy/react                       ^1.4.1  →     ^2.1.0     
+ @uppy/webcam                      ^1.6.2  →     ^2.0.3     
+ acorn                             ^7.1.1  →     ^8.5.0     
+ atom                              ^1.1.0  →     ^1.4.1     
+ auth0-js                         ^9.12.2  →    ^9.16.4     
+ aws-sdk                         ^2.603.0  →  ^2.1007.0     
+ babel-plugin-import              ^1.13.0  →    ^1.13.3     
+ babel-plugin-styled-components   ^1.10.6  →    ^1.13.2     
+ cookie-parser                     ^1.4.4  →     ^1.4.5     
+ dotenv                            ^8.2.0  →    ^10.0.0     
+ eslint-plugin-html                ^6.0.0  →     ^6.2.0     
+ find-cache-dir                    ^3.3.1  →     ^3.3.2     
+ fs-extra                          ^8.1.0  →    ^10.0.0     
+ full-icu                          ^1.3.0  →     ^1.4.0     
+ glob                              ^7.1.6  →     ^7.2.0     
+ hoist-non-react-statics           ^3.3.1  →     ^3.3.2     
+ ical-generator                    ^1.9.2  →     ^3.0.1     
+ jsdom                            ^16.2.1  →    ^18.0.0     
+ less                             ^3.10.3  →     ^4.1.2     
+ limax                             ^2.0.0  →     ^3.0.0     
+ markdown-to-jsx                  ^6.11.4  →     ^7.1.3     
+ mock-css-modules                  ^1.0.0  →     ^2.0.0     
+ mock-express-response             ^0.2.2  →     ^0.3.0     
+ moment                           ^2.24.0  →    ^2.29.1     
+ mongoose                         ^5.13.9  →    ^6.0.10     
+ natural                           ^2.1.5  →     ^5.1.1     
+ node-cipher                       ^5.0.1  →     ^6.3.3     
+ nodemailer                        ^6.4.2  →     ^6.7.0     
+ nodemailer-mock                   ^1.4.4  →    ^1.5.11     
+ pubsub-js                         ^1.7.0  →     ^1.9.3     
+ raygun4js                        ^2.18.2  →    ^2.22.5     
+ react-intl                      ^5.20.10  →   ^5.20.12     
+ rimraf                            ^3.0.0  →     ^3.0.2     
+ sanitize-html                    >=2.3.2  →    >=2.5.2     
+ slug                              ^2.1.0  →     ^5.1.0     
+ stopword                          ^1.0.1  →    ^1.0.11     
+ string-similarity                 ^4.0.1  →     ^4.0.4     

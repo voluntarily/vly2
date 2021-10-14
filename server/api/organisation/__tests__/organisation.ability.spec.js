@@ -12,7 +12,7 @@ import { jwtData } from '../../../middleware/session/__tests__/setSession.fixtur
 import { MemberStatus } from '../../member/member.constants'
 import Member from '../../member/member'
 import cuid from 'cuid'
-import slug from 'limax'
+import slug from 'slug'
 import { OrganisationRole } from '../organisation.constants'
 
 test.before('before connect to database', async (t) => {

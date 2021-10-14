@@ -2,7 +2,7 @@ const Goal = require('./goal')
 // const Tag = require('../tag/tag')
 // const escapeRegex = require('../../util/regexUtil')
 
-// import slug from 'limax'
+// import slug from 'slug'
 // import sanitizeHtml from 'sanitize-html'
 
 /**
