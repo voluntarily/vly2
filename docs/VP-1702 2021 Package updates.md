@@ -127,6 +127,30 @@ Icons used to have a single `<Icon>` component with a type selector - this bring
 Antd has a separate component for each Icon so `<Icon type='home' > -> <HomeFilled />`  each one used must be imported.
 Icons were used in a large number of places so there are a lot of replacements. 
 
+### Tabs
+
+We use tabs on the main home, org, op, act and person pages. AntD has changed the way tabs work which two sets of changes:
+
+1. When a tab is selected we update the URL with a shallow browser url replace. similarly if a URL with a tab= present is loaded we switch initially to the correct tabs.  This allows tabs to be bookmarkable and directly linkable. To do this we now need useState and useEffect to set the tab and update url on change. 
+
+        const [activeTab, setActiveTab] = useState(initTab)
+        // when path changes set the active tab. as this doesn't work in updateTab
+        useEffect(() => {
+            const qtab = asPath.match(/.*tab=(.*)/)
+            qtab && setActiveTab(qtab[1])
+        }, [query])
+
+        // when the tab changes set the active path.
+        const updateTab = (key, top) => {
+            if (top) window.scrollTo(0, 0)
+            else { window.scrollTo(0, 400) }
+
+            const newpath = `/orgs/${org._id}?tab=${key}`
+            replace(pathname, newpath, { shallow: true })
+        }
+
+2. Testing tabs is now tricky due to the delayed effect of a tab click and because tab panels are not loaded into the DOM until needed. Rather than load the page and click on a tab it is much easier to load the page with the correct query parameter e.g. tab=edit.  To do this we use useMockRouter to give control over the apparent page. 
+
 ## Language Processing - formatjs, React-intl -> 5.20.10
 
 Some changes to how we do internationalisation
@@ -150,7 +174,20 @@ used for charts in the ratings and statistics pages.
 
 We were using two slug libraries. update and only use slug.
 
+## Testing
 
+### mongodb-memory-server
+
+In many of the server side tests we want to create, populate and work with a mongodb. The mongodb-memory-server allows us to run many parallel copies of the database each on a new port and isolated memory. Previously we wrapped this in a class that had to be created and used in each test. 
+
+This has been updated and is now simpler to use. 
+include mockMongo in the test file. and add test.before and after calls to the exported functions. 
+
+        import { startMongo, stopMongo } from '../../../util/useMongo'
+        test.before('before connect to database', startMongo)
+        test.after.always(stopMongo)
+
+This ensures that all tests using the database are starting and stopping in the same way. Also a cleaner init removes some mongo db warnings and makes the tests quieter.
 ## Home Page
 
 * fix tab update with useEffect
@@ -702,10 +739,10 @@ Note these tests start the full server and mongo db so are slow to run.
 
  @babel/core                      ^7.15.5  →    ^7.15.8 - removed
  @codeceptjs/configure             ^0.5.2  →     ^0.7.0 - updated
- @formatjs/cli                    ^1.1.18  →     ^4.3.1 - updated   
- @testing-library/dom             ^6.11.0  →     ^8.9.0     
- axios                            ^0.21.4  →    ^0.23.0     
- babel-loader                      ^8.0.6  →     ^8.2.2     
+ @formatjs/cli                    ^1.1.18  →     ^4.3.1 - updated
+ @testing-library/dom             ^6.11.0  →     ^8.9.0 - updated
+ axios                            ^0.21.4  →    ^0.23.0 - updated
+ babel-loader                      ^8.0.6  →     ^8.2.2 - updated
  codeceptjs                        ^3.1.2  →     ^3.1.3     
  codecov                           ^3.6.1  →     ^3.8.3     
  fetch-mock                         8.3.1  →     9.11.0     
