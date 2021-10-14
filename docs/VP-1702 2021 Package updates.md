@@ -721,19 +721,6 @@ Note these tests start the full server and mongo db so are slow to run.
 
  mongoose                         ^5.13.9  →    ^6.0.10 - Not updated due to compatability with @casl/mongoose.
 
- @ant-design/icons                 ^4.6.4  →     ^4.7.0     
- @next/bundle-analyzer             ^9.1.4  →    ^11.1.2     
- @uppy/core                        ^1.7.0  →     ^2.1.0     
- @uppy/react                       ^1.4.1  →     ^2.1.0     
- @uppy/webcam                      ^1.6.2  →     ^2.0.3     
- acorn                             ^7.1.1  →     ^8.5.0     
- atom                              ^1.1.0  →     ^1.4.1     
- auth0-js                         ^9.12.2  →    ^9.16.4     
- aws-sdk                         ^2.603.0  →  ^2.1007.0     
- babel-plugin-import              ^1.13.0  →    ^1.13.3     
- babel-plugin-styled-components   ^1.10.6  →    ^1.13.2     
- cookie-parser                     ^1.4.4  →     ^1.4.5     
- dotenv                            ^8.2.0  →    ^10.0.0     
  eslint-plugin-html                ^6.0.0  →     ^6.2.0     
  find-cache-dir                    ^3.3.1  →     ^3.3.2     
  fs-extra                          ^8.1.0  →    ^10.0.0     
