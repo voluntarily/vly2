@@ -749,3 +749,134 @@ Note these tests start the full server and mongo db so are slow to run.
 ## Remaining package updates
 
  mongoose   ^5.13.9  →    ^6.0.10 - Not updated due to compatability with @casl/mongoose.
+
+## Build Information
+
+    Page                                          Size     First Load JS
+    ┌ λ /                                         628 B           418 kB
+    ├ λ /_404                                     1.65 kB         271 kB
+    ├   /_app                                     0 B             269 kB
+    ├ λ /404                                      1.63 kB         271 kB
+    ├ λ /about                                    245 B           284 kB
+    ├ λ /about/about                              205 B           284 kB
+    ├ λ /about/about-en-dev-md                    333 B           269 kB
+    ├ λ /about/about-en-md                        1.02 kB         270 kB
+    ├ λ /about/about-en-sponsor-md                363 B           269 kB
+    ├ λ /about/about-en-volunteer-md              345 B           269 kB
+    ├ λ /about/about-mi-dev-md                    1.01 kB         270 kB
+    ├ λ /about/about-mi-md                        1.52 kB         271 kB
+    ├ λ /about/about-mi-sponsor-md                1.02 kB         270 kB
+    ├ λ /about/about-mi-volunteer-md              1.01 kB         270 kB
+    ├ λ /action/registerTeacher                   6.66 kB         284 kB
+    ├ λ /acts                                     272 B           345 kB
+    ├ λ /acts/[actId]                             270 B           542 kB
+    ├ λ /acts/actlistpage                         237 B           345 kB
+    ├ λ /acts/new                                 611 B           543 kB
+    ├ λ /acts/type/[actType]                      271 B           345 kB
+    ├ λ /admin                                    572 B           270 kB
+    ├ λ /admin/goals                              8.44 kB         297 kB
+    ├ λ /admin/invite-school                      6.26 kB         358 kB
+    ├ λ /admin/test                               3.94 kB         292 kB
+    ├ λ /api/health                               0 B             269 kB
+    ├ λ /api/health/[healthQuery]                 0 B             269 kB
+    ├ λ /api/health/config                        0 B             269 kB
+    ├ λ /api/health/health                        0 B             269 kB
+    ├ λ /api/health/log                           0 B             269 kB
+    ├ λ /api/health/pub                           0 B             269 kB
+    ├ λ /api/notify                               0 B             269 kB
+    ├ λ /api/notify/notify                        0 B             269 kB
+    ├ λ /api/notify/org                           0 B             269 kB
+    ├ λ /api/notify/org/[notifyOrgId]             0 B             269 kB
+    ├ λ /api/notify/org/action                    0 B             269 kB
+    ├ λ /api/notify/org/notifyOrg                 0 B             269 kB
+    ├ λ /api/registerRequestor                    0 B             269 kB
+    ├ λ /api/registerRequestor/[cmd]              0 B             269 kB
+    ├ λ /api/registerRequestor/registerRequestor  0 B             269 kB
+    ├ λ /api/reports/summary                      0 B             269 kB
+    ├ λ /api/token                                0 B             269 kB
+    ├ λ /api/token/[cmd]                          0 B             269 kB
+    ├ λ /api/token/token                          0 B             269 kB
+    ├ λ /api/xadmin                               0 B             269 kB
+    ├ λ /api/xadmin/assignPersonalGoals           0 B             269 kB
+    ├ λ /api/xadmin/loadGoals                     0 B             269 kB
+    ├ λ /api/xadmin/runTest                       0 B             269 kB
+    ├ λ /api/xadmin/xadmin                        0 B             269 kB
+    ├ λ /archivedops/[archivedOpId]               7.31 kB         506 kB
+    ├ λ /auth/sign-off                            743 B           270 kB
+    ├ λ /auth/sign-thru                           365 B           269 kB
+    ├ λ /auth/signed-in                           552 B           270 kB
+    ├ λ /business                                 247 B           277 kB
+    ├ λ /business/businessPage                    210 B           277 kB
+    ├ λ /content                                  242 B           275 kB
+    ├ λ /content/contentProviderPage              215 B           275 kB
+    ├ λ /feedback                                 1.9 kB          321 kB
+    ├ λ /feedback/feedbacksubmitpage              1.88 kB         321 kB
+    ├ λ /flow/postSignUp                          17.4 kB         324 kB
+    ├ λ /goal/school/ready                        2.09 kB         299 kB
+    ├ λ /goal/school/safe                         1.28 kB         270 kB
+    ├ λ /goal/volunteer/ready                     2.25 kB         300 kB
+    ├ λ /home                                     318 B           414 kB
+    ├ λ /home/home                                262 B           414 kB
+    ├ λ /landing                                  3.49 kB         292 kB
+    ├ λ /landing/landing                          3.47 kB         292 kB
+    ├ λ /ops                                      2.11 kB         309 kB
+    ├ λ /ops/[opId]                               273 B           540 kB
+    ├ λ /ops/new/[type]                           715 B           541 kB
+    ├ λ /ops/oplistpage                           2.08 kB         309 kB
+    ├ λ /orgs                                     1.75 kB         275 kB
+    ├ λ /orgs/[orgId]                             277 B           502 kB
+    ├ λ /orgs/new                                 633 B           502 kB
+    ├ λ /orgs/orglistpage                         1.73 kB         275 kB
+    ├ λ /people                                   260 B           273 kB
+    ├ λ /people/[personId]                        3.04 kB         375 kB
+    ├ λ /people/new                               3.12 kB         375 kB
+    ├ λ /people/personlistpage                    215 B           273 kB
+    ├ λ /reports/summary                          11.6 kB         352 kB
+    ├ λ /search                                   270 B           377 kB
+    ├ λ /search/DatePickerComponent               3.48 kB         293 kB
+    ├ λ /search/searchpage                        241 B           377 kB
+    ├ λ /statistics                               2.58 kB         438 kB
+    ├ λ /statistics/orgstatisticspage             2.57 kB         438 kB
+    ├ λ /story                                    319 B           269 kB
+    ├ λ /story/storydetailpage                    312 B           269 kB
+    ├ λ /story/storylistpage                      310 B           269 kB
+    ├ λ /teachers                                 245 B           277 kB
+    ├ λ /teachers/teacherPage                     211 B           277 kB
+    ├ λ /terms                                    240 B           277 kB
+    ├ λ /terms/conduct                            2.91 kB         272 kB
+    ├ λ /terms/privacy                            8.01 kB         277 kB
+    ├ λ /terms/terms                              202 B           277 kB
+    ├ λ /test/test-config                         647 B           270 kB
+    ├ λ /test/test-edits                          1.83 kB         271 kB
+    ├ λ /test/test-educationSelector              696 B           295 kB
+    ├ λ /test/test-hooks                          1.25 kB         270 kB
+    ├ λ /test/test-member                         286 B           418 kB
+    ├ λ /test/test-member/test-member             250 B           418 kB
+    ├ λ /test/test-nakedpage                      349 B           269 kB
+    ├ λ /test/test-opinterest                     12.5 kB         419 kB
+    ├ λ /test/test-person                         7.29 kB         328 kB
+    ├ λ /test/test-publicpage                     672 B           270 kB
+    ├ λ /test/test-redirect                       3.91 kB         285 kB
+    ├ λ /test/test-router                         474 B           270 kB
+    ├ λ /test/test-stamp                          2.23 kB         271 kB
+    ├ λ /test/test-state                          1.12 kB         270 kB
+    ├ λ /test/test-token                          859 B           270 kB
+    ├ λ /todo                                     1.31 kB         270 kB
+    ├ λ /unverified                               3.36 kB         272 kB
+    ├ λ /verification/conduct                     1.42 kB         274 kB
+    ├ λ /verification/conduct/conduct             1.4 kB          274 kB
+    ├ λ /verification/safety                      1.19 kB         279 kB
+    ├ λ /verification/safety/safety               1.18 kB         279 kB
+    └ λ /verification/safety/safety-md-en         472 B           270 kB
+    + First Load JS shared by all                 269 kB
+    ├ chunks/framework.336caa.js                42.6 kB
+    ├ chunks/main.e78a99.js                     23.7 kB
+    ├ chunks/pages/_app.ef788d.js               200 kB
+    ├ chunks/webpack.3a36ae.js                  2.44 kB
+    └ css/e9238284d3fd7b84bed1.css              68.5 kB
+
+    λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+    ○  (Static)  automatically rendered as static HTML (uses no initial props)
+    ●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+    (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
+
