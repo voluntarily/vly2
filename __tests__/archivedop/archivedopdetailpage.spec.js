@@ -9,14 +9,13 @@ import tags from '../../server/api/tag/__tests__/tag.fixture.js'
 import ArchivedOpDetailPage, { gssp } from '../../pages/archivedops/[archivedOpId]'
 import { mountWithIntl } from '../../lib/react-intl-test-helper'
 import { Provider } from 'react-redux'
-import withMockRoute from '../../server/util/mockRouter'
 import reduxApi from '../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { API_URL } from '../../lib/callApi'
 import fetchMock from 'fetch-mock'
-import useMockRouter from '../../server/util/useMockRouter'
+import mockRouter from '../../server/util/mockRouter'
 
-test.before('Setup Route', useMockRouter('/test', { archivedOpId: 12345 }))
+test.before('Setup Route', mockRouter('/test', { archivedOpId: 12345 }))
 
 test.before('Setup fixtures', (t) => {
   // This gives all the people fake ids to better represent a fake mongo db
@@ -71,7 +70,6 @@ test.serial('archivedOpDetailPage should have banner and tabs panels', t => {
     dispatch: t.context.mockStore.dispatch
   }
 
-  const RoutedArchivedOpDetailPage = withMockRoute(ArchivedOpDetailPage)
   const myMock = fetchMock.sandbox()
   myMock.get(API_URL + '/archivedOpportunities/' + archivedOpportunities[1]._id, { body: { status: 200 } })
   myMock.get(API_URL + '/interestArchives/?op=' + archivedOpportunities[1]._id, { body: { status: 200 } })
@@ -79,7 +77,7 @@ test.serial('archivedOpDetailPage should have banner and tabs panels', t => {
   reduxApi.use('fetch', adapterFetch(myMock))
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore} query={{ _archivedOpId: archivedOpportunities[1]._id }}>
-      <RoutedArchivedOpDetailPage {...props} />
+      <ArchivedOpDetailPage {...props} />
     </Provider>
   )
   t.true(wrapper.exists('OpBanner'))

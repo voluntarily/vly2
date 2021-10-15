@@ -6,7 +6,7 @@
 import React, { useState } from 'react'
 import { Button, notification } from 'antd'
 import { HistoryOutlined } from '@ant-design/icons'
-import { useIntl, defineMessages, FormattedMessage, formatMessage } from 'react-intl'
+import { useIntl, defineMessages, FormattedMessage } from 'react-intl'
 import { useSelector } from 'react-redux'
 
 import RegisterInterestMessageForm from './RegisterInterestMessageForm'
@@ -35,13 +35,14 @@ export const RegisterInterestItem = ({
   onReject,
   onMessage
 }) => {
+  const { formatMessage } = useIntl()
   const [showAcceptForm, setShowAcceptForm] = useState(false)
   const [showRejectForm, setShowRejectForm] = useState(false)
   const [showMessageForm, setShowMessageForm] = useState(false)
   // Options to configure the controls on this page based on the state of the interest.
   // get current op from the store - should be only one.
   const op = useSelector(state => state.opportunities.data[0])
-  const options = getOptions(interest.status, op.type, op.requestor)
+  const options = getOptions(interest.status, op.type, op.requestor, formatMessage)
 
   const handleAcceptSubmit = (ok, message) => {
     setShowAcceptForm(false)
@@ -255,8 +256,7 @@ const messages = {
   })
 }
 // Returns some config options for this component, depending on the state of the interest we're viewing.
-const getOptions = (status, type, requestor) => {
-  const { formatMessage } = useIntl()
+const getOptions = (status, type, requestor, formatMessage) => {
   switch (status) {
     case null:
       return {

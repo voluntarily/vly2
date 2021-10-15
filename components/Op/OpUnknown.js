@@ -11,7 +11,7 @@ export const OpUnknown = () =>
         description='Op not found message'
       />
     </h2>
-    <Link href='/search'>
+    <Link href='/search' passHref>
       <Button shape='round'>
         <FormattedMessage
           id='opDetailPage.showOps'

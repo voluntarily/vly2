@@ -11,7 +11,7 @@ import { ProfilePanel } from '../VTheme/Profile'
 import { OpSectionGrid, DocumentList } from '../VTheme/VTheme'
 import { Divider } from 'antd'
 import { FormattedMessage } from 'react-intl'
-
+import Image from 'next/image'
 export function ActResourcesPanel ({ act }) {
   return (
     <ProfilePanel>
@@ -50,7 +50,7 @@ export function ActResourcesPanel ({ act }) {
                   <div key={index}>
                     <a target='_blank' download={document.filename} rel='noopener noreferrer' href={document.location}>
                       <DocumentList key={document.location}>
-                        <img src='/static/img/icons/download.svg' alt='an image that shows files being downloaded' />
+                        <Image width='24' height='24' src='/static/img/icons/download.svg' alt='an image that shows files being downloaded' />
                         <div>
                           <p><strong>{document.filename}</strong></p>
                           <p><FormattedMessage id='ActResourcesPanel.actFileDescription' defaultMessage='Click to download' description='Instructions for user telling them to download the file' /></p>

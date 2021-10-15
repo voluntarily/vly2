@@ -27,5 +27,4 @@ function TypeFilter ({ onChange, value, opTypes }) {
   )
 }
 
-
 export default TypeFilter

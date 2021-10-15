@@ -13,7 +13,7 @@ test('render the opportunity type selector modal', t => {
   )
 
   t.true(wrapper.html().includes('All'))
-  t.true(wrapper.exists('.location-filter-container'))
+  t.true(wrapper.exists('TypeFilter__TypeFilterContainer'))
 })
 
 test('render the search input on change in opportunty type', t => {

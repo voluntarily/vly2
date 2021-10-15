@@ -111,7 +111,7 @@ export const GoalStartButton = ({ status, href, onClick }) => {
     }
   }
   return (
-    <Link href={href}>
+    <Link href={href} passHref>
       <BottomRightButton shape='round' type='primary' onClick={onClick}>
         <FormattedMessage {...statusDesc[status]} />
       </BottomRightButton>

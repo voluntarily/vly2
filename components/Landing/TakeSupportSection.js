@@ -1,6 +1,6 @@
 
 import React from 'react'
-
+import Image from 'next/image'
 import { Button } from 'antd'
 import { HalfGrid, H2, P, StatContainer, ImageContainer, FeatureContainer } from '../VTheme/VTheme'
 
@@ -11,11 +11,11 @@ const TakeSupportSection = () => (
         <H2>Offer to help people</H2>
 
         <StatContainer>
-          <img src='./static/img/icons/check.svg' />
+          <Image alt='' width='64' height='64' src='/static/img/icons/check.svg' />
           <P>Safe — everyone gets ID checked to keep you safe - for groups</P>
-          <img src='./static/img/icons/check.svg' />
+          <Image alt='' width='64' height='64' src='/static/img/icons/check.svg' />
           <P>Personalised — we connect you with local people, for an activity at a time that suits</P>
-          <img src='./static/img/icons/check.svg' />
+          <Image alt='' width='64' height='64' src='/static/img/icons/check.svg' />
           <P>Recognition and support — we help you through the process, and celebrate success</P>
         </StatContainer>
         <Button
@@ -43,21 +43,21 @@ const TakeSupportSection = () => (
     <TripleGrid>
       <a>
         <PromoCard>
-          <img src='https://picsum.photos/400/240' />
+          <Image alt='' width='64' height='64'  src='https://picsum.photos/400/240' />
           <H5><strong>Get help with Remote Work</strong></H5>
           <H5>45 people offering to help you</H5>
         </PromoCard>
       </a>
       <a>
         <PromoCard>
-          <img src='https://picsum.photos/400/240' />
+          <Image alt='' width='64' height='64'  src='https://picsum.photos/400/240' />
           <H5><strong>Get help with Remote Work</strong></H5>
           <H5>45 people offering to help you</H5>
         </PromoCard>
       </a>
       <a>
         <PromoCard>
-          <img src='https://picsum.photos/400/240' />
+          <Image alt='' width='64' height='64'  src='https://picsum.photos/400/240' />
           <H5><strong>Get help with Remote Work</strong></H5>
           <H5>45 people offering to help you</H5>
         </PromoCard>

@@ -2,12 +2,12 @@ import MemberTable from '../MemberTable'
 import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import sinon from 'sinon'
-import useMockRouter from '../../../server/util/useMockRouter'
+import mockRouter from '../../../server/util/mockRouter'
 import fixture from './member.fixture.js'
 import { MemberStatus } from '../../../server/api/member/member.constants'
 
 test.before('Setup fixtures', fixture)
-test.before('Setup Route', useMockRouter('/org'), { id: 12345 })
+test.before('Setup Route', mockRouter('/org'), { id: 12345 })
 
 const MTF = {
   ID: 0,

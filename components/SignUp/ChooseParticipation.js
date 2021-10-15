@@ -2,6 +2,7 @@
 import { FormattedMessage } from 'react-intl'
 import { HalfGrid } from '../VTheme/VTheme'
 import { ToggleUl, ToggleLi } from './SignUpStyles'
+import Image from 'next/image'
 
 export const ChooseParticipationButtons = ({ roleAsk, onChangeAsk, roleOffer, onChangeOffer }) =>
   <>
@@ -49,7 +50,7 @@ export const ChooseParticipationButtons = ({ roleAsk, onChangeAsk, roleOffer, on
 export const ChooseParticipation = (props) =>
   <HalfGrid style={{ paddingTop: 0 }}>
     <div id='leftCol'>
-      <img style={{ width: '100%' }} src='/static/img/sign-up/chooseparticipation.svg' />
+      <Image width='64' height='64' alt='participation icon' style={{ width: '100%' }} src='/static/img/sign-up/chooseparticipation.svg' />
     </div>
     <div id='rightCol'>
       <ChooseParticipationButtons {...props} />

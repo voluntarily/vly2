@@ -1,7 +1,7 @@
 import test from 'ava'
 import sinon from 'sinon'
 import { shallowWithIntl } from '../../lib/react-intl-test-helper'
-import useMockRouter from '../../server/util/useMockRouter'
+import mockRouter from '../../server/util/mockRouter'
 
 import { PersonDetailPage, gssp } from '../../pages/people/[personId]'
 import { gssp as newGssp } from '../../pages/people/new'
@@ -9,7 +9,7 @@ import objectid from 'objectid'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import people from '../../server/api/person/__tests__/person.fixture'
 
-test.before('Setup Route', useMockRouter('/person'))
+test.before('Setup Route', mockRouter('/person'))
 
 test.before('Setup fixtures', (t) => {
   people.forEach(p => { p._id = objectid().toString() })

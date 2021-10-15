@@ -24,7 +24,7 @@ export const PersonHomePage = () => {
   useEffect(() => {
     const qtab = asPath.match(/.*tab=(.*)/)
     qtab && setTab(qtab[1])
-  }, [query])
+  }, [query, asPath])
 
   const updateTab = (key, top) => {
     if (top) window.scrollTo(0, 0)

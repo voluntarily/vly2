@@ -9,7 +9,7 @@ import acts from '../../server/api/activity/__tests__/activity.fixture'
 import people from '../../server/api/person/__tests__/person.fixture'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import tags from '../../server/api/tag/__tests__/tag.fixture'
-import useMockRouter from '../../server/util/useMockRouter'
+import mockRouter from '../../server/util/mockRouter'
 import { MockWindowScrollTo } from '../../server/util/mock-dom-helpers'
 
 import { MemberStatus } from '../../server/api/member/member.constants'
@@ -90,7 +90,7 @@ test.before('Setup fixtures', (t) => {
   }
 })
 
-test.before('Setup Route', useMockRouter('/test', { id: 12345 }))
+test.before('Setup Route', mockRouter('/test', { id: 12345 }))
 
 test('render ActDetailPage', async t => {
   const ps = await gssp({ store: t.context.store, query: t.context.query })

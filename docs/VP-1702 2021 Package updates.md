@@ -8,7 +8,7 @@ This major set of changes has the goal of bringing the Voluntarily code base up 
 * migrate from older to new AntD forms and icons.
 * Remove any package warnings and use of deprecated features.
 * Remove any redundant packages.
-
+* increase version n in package.json to 1.1.0
 ## Node - 14 -> 16
 
 * Updated Dockerfile
@@ -46,6 +46,8 @@ Here we factor out the underying gssp function which does what the old GIP used 
 For testing we can use gssp directly.
 
 The one place we don't use GSSP is in _App which still has a GIP.
+
+For pages that need to update the data after the page has loaded e.g. in response to search parameters we should now use useEffect to refresh redux or local state.
 
 ### remove next-less, next-css etc
 
@@ -150,8 +152,35 @@ We use tabs on the main home, org, op, act and person pages. AntD has changed th
             replace(pathname, newpath, { shallow: true })
         }
 
-2. Testing tabs is now tricky due to the delayed effect of a tab click and because tab panels are not loaded into the DOM until needed. Rather than load the page and click on a tab it is much easier to load the page with the correct query parameter e.g. tab=edit.  To do this we use useMockRouter to give control over the apparent page.
+2. Testing tabs is now tricky due to the delayed effect of a tab click and because tab panels are not loaded into the DOM until needed. Rather than load the page and click on a tab it is much easier to load the page with the correct query parameter e.g. tab=edit.  To do this we use mockRouter to give control over the apparent page.
 3. Because we can now set nice AntD tab styles with borders we can remove the VTab styles. This is good because tab panels must be immediate children on the tab.
+
+## Location of static resources
+
+Many files had links to small images in the path ./static/...  as the static folder is now in the /public folder this is automatically made available as an endpoint so the references hrefs should be /static/etc.
+
+## Next Lint
+
+Next linting is now turned on.  This is in addition to the standard lint which focuses on syntax checking. The next lint `npm lint:next` will check for react and next issues. e.g when hooks are not the first thing in the function and others. These should remove some more classes of errors from the system.
+
+rules can be enabled or disabled in `.eslint.json`
+
+TODO: - merge resolve the standard and eslint options.
+
+### common corrections
+
+    * Hooks in functions must not change their run order this means they must be before any code that can have a path change. 
+    * '<a> anchors that href to a local page should use Link.
+    * Links that don't wrap an <a> should include passHref property
+
+## next/image Image , antd Image and img
+
+Next recommends replacing all uses of img with next/Image and this is enforced in the next lint rules (currently turned off.  The next Image )provides checks on the image source, resizing for the client and other functions. static images including SVG images are converted to data:image which reduces the network traffic but we have to ensure that the size displayed is correct. - also breaks tests.
+
+next/image also enforces a source domain list to protect the website.  However we allow users to upload images for display or enter urls for display. This means that we cannot allow all websites. So for those places where images are likely to be uploaded we continue to use `<img>`
+
+AntD Image has a similar set of functions to next/image but is less strict e.g. doesn't use domain checking.
+we should prefer the next/Image in future but this can be translated as we go.
 
 ## Language Processing - formatjs, React-intl -> 5.20.10
 
@@ -215,7 +244,7 @@ This ensures that all tests using the database are starting and stopping in the 
     * factor out gssp test as it no longer returns props
     * feed the OrgDetailPage with organisation prop.
 * OrgDetailPage - passed
-    * test rework to useMockRouter, set edit page etc.
+    * test rework to mockRouter, set edit page etc.
     * should split edit and other tests into two files.
 * OrgDetailForm - passing but lots of warnings,
     * Form needs to be modernised.
@@ -237,7 +266,7 @@ This ensures that all tests using the database are starting and stopping in the 
 
 * PersonBadge - passed
 * PersonCard - useLayoutEffect warning
-* PersonDetail - using useMockRouter - mock not passed down to verification so leave as is.
+* PersonDetail - using mockRouter - mock not passed down to verification so leave as is.
 * PersonDetailForm
     * added back the address location widget - using useEffect
     * when person is updated the session.me is not so the detail page is out of sync.
@@ -249,7 +278,7 @@ This ensures that all tests using the database are starting and stopping in the 
 
 * PersonDetailPage
     * get server side props, factor out a version we can test using mock store.
-    * switch from withMockRouter to useMockRouter
+    * switch from withMockRouter to mockRouter
 * /person/persondetailpage.spec.js - passed
 
 * PersonListPage - no test
@@ -549,7 +578,7 @@ it doesn't have an entry page but you can see the current status on /test/test-e
 
 * /404.spec.js - passed
 * /feedback/feedbacksubmitpage.spec.js - passed
-    * add useMockRouter
+    * add mockRouter
 * /landing.spec.js - passed
 * /action/registerTeacher/registerTeacher.spec.js - passed
 * /terms.spec.js - passed
@@ -719,5 +748,4 @@ Note these tests start the full server and mongo db so are slow to run.
 
 ## Remaining package updates
 
- mongoose                         ^5.13.9  →    ^6.0.10 - Not updated due to compatability with @casl/mongoose.
-
+ mongoose   ^5.13.9  →    ^6.0.10 - Not updated due to compatability with @casl/mongoose.

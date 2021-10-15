@@ -62,13 +62,13 @@ export const OpDetailPage = ({
   useEffect(() => {
     const qtab = asPath.match(/.*tab=(.*)/)
     qtab && setTab(qtab[1])
-  }, [query])
-
-  const updateTab = (key, top) => {
+  }, [query, asPath])
+  let op
+  const updateTab = useCallback((key, top) => {
     if (top) window.scrollTo(0, 0)
     const newpath = `/ops/${op._id}?tab=${key}`
     replace(pathname, newpath, { shallow: true })
-  }
+  }, [pathname, op, replace])
   const handleTabChange = (key, e) => {
     updateTab(key, key === 'edit')
   }
@@ -98,12 +98,11 @@ export const OpDetailPage = ({
             {},
             { body: JSON.stringify(op) })
         )
-        op = res[0] // get new id
         setTab('about')
-        replace(pathname, `/ops/${op._id}`) // reload to the new id page
+        replace(pathname, `/ops/${res[0]._id}`) // reload to the new id page
       }
       message.success('Saved.')
-    }, [])
+    }, [dispatch, op, pathname, replace, updateTab])
 
   // bail early if no data
   if (!opportunities.sync && !isNew) {
@@ -115,7 +114,7 @@ export const OpDetailPage = ({
   }
 
   // setup the opportunity data
-  let op
+
   if (isNew) {
     // new op
     op = blankOp

@@ -25,9 +25,7 @@ export const Landing = ({ isAuthenticated }) => (
       <title>Voluntarily</title>
     </Head>
 
-    <Hero
-      isAuthenticated={isAuthenticated}
-    />
+    <Hero isAuthenticated={isAuthenticated} />
 
     <FullPage>
       <Divider />

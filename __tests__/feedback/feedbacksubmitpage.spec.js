@@ -3,9 +3,9 @@ import { mountWithIntl } from '../../lib/react-intl-test-helper'
 import { Provider } from 'react-redux'
 import { FeedbackSubmitPage } from '../../pages/feedback/feedbacksubmitpage'
 import sinon from 'sinon'
-import useMockRouter from '../../server/util/useMockRouter'
+import mockRouter from '../../server/util/mockRouter'
 
-test.before('Setup Route', useMockRouter('/feedback', { rating: 5, opportunity: 'opportunity_id' }))
+test.before('Setup Route', mockRouter('/feedback', { rating: 5, opportunity: 'opportunity_id' }))
 
 test.before('Setup store', t => {
   const members = {

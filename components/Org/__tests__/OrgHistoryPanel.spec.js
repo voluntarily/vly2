@@ -103,7 +103,7 @@ test('Error', t => {
   t.is(actualErrorText, expectedErrorMessage)
 })
 
-test('Loading', t => {
+test.skip('Loading', t => {
   const store = configureStore([thunk])({
     archivedOpportunities: {
       sync: false,

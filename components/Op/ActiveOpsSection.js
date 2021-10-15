@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { ProfileSection, ProfileSectionTitle } from '../VTheme/Profile'
 import Loading from '../Loading'
 import OpList from './OpList'
-import { Divider, Button } from 'antd'
+import { Divider, Button, Image } from 'antd'
 import Link from 'next/link'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 
@@ -40,7 +40,7 @@ const selectInterestedOps = createSelector(
 const OpEmpty = ({ type }) => (
   <EmptyContainer>
     <div>
-      <img src='/static/img/about/askforhelp.png' />
+      <Image alt='ask for help icon' src='/static/img/about/askforhelp.png' />
       <h3>
         <FormattedMessage
           id='ActiveOpsSection.empty.title'
@@ -74,10 +74,10 @@ export const ActiveOpsSection = () => {
   const opportunities = useSelector(
     state => state.opportunities // list of ops I own
   )
+  const InterestOps = useSelector(selectInterestedOps)
 
   if (!opportunities.sync) return <Loading label='opportunities' entity={opportunities} />
   const ops = opportunities.data
-  const InterestOps = useSelector(selectInterestedOps)
   if (!ops.length && !InterestOps.length) {
     return (
       <OpEmpty />

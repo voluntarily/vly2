@@ -24,6 +24,22 @@ function RouteGuard ({ children }) {
   const [session] = useSelector(state => [state.session])
   useEffect(() => {
     // on initial load - run auth check
+    function authCheck (targeturl) {
+      // redirect to login page if accessing a private page and not logged in
+      const path = targeturl.split('?')[0]
+      if (!session.isAuthenticated && !publicPaths.includes(path)) {
+        setPermitted(false)
+        unsetToken()
+        authorize({ redirectUrl: router.asPath })
+        // router.push({
+        //   pathname: '/auth/sign-thru',
+        //   query: { redirect: router.asPath }
+        // })
+      } else {
+        setPermitted(true)
+      }
+    }
+
     authCheck(router.asPath)
 
     // on route change start - hide page content by setting permitted to false
@@ -38,22 +54,7 @@ function RouteGuard ({ children }) {
       router.events.off('routeChangeStart', hideContent)
       router.events.off('routeChangeComplete', authCheck)
     }
-  }, [])
+  }, [session.isAuthenticated, router])
 
-  function authCheck (targeturl) {
-    // redirect to login page if accessing a private page and not logged in
-    const path = targeturl.split('?')[0]
-    if (!session.isAuthenticated && !publicPaths.includes(path)) {
-      setPermitted(false)
-      unsetToken()
-      authorize({ redirectUrl: router.asPath })
-      // router.push({
-      //   pathname: '/auth/sign-thru',
-      //   query: { redirect: router.asPath }
-      // })
-    } else {
-      setPermitted(true)
-    }
-  }
   return (permitted && children)
 }

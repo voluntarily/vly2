@@ -38,8 +38,8 @@ export const OpStatus = ({ status }) => {
 
 /** Converts an opportunity status to a Stamp - except for Active */
 export const OpStatusStamp = ({ status }) => {
-  if (!status) return null
   const intl = useIntl()
+  if (!status) return null
   return status !== ACTIVE
     ? (
       <Stamp>

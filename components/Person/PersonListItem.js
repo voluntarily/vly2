@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Link from 'next/link'
 import styled from 'styled-components'
 
@@ -76,9 +75,7 @@ const PersonListItem = ({ person }) => (
   <PersonContainer>
     <Link href={`/people/${person._id}`}>
       <a target='_blank'>
-
         <figcaption>
-
           <img src={person.imgUrl} alt='an image of a person' />
           <div>
             <h2><strong>{person.name}</strong></h2>
@@ -91,17 +88,5 @@ const PersonListItem = ({ person }) => (
     </Link>
   </PersonContainer>
 )
-
-PersonListItem.propTypes = {
-  person: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    imgUrl: PropTypes.string,
-    job: PropTypes.string,
-    placeOfWork: PropTypes.string,
-    email: PropTypes.string,
-    phone: PropTypes.string,
-    _id: PropTypes.string.isRequired
-  }).isRequired
-}
 
 export default PersonListItem

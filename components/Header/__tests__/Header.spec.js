@@ -2,11 +2,11 @@ import React from 'react'
 import test from 'ava'
 import Header from '../Header'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
-import useMockRouter from '../../../server/util/useMockRouter'
+import mockRouter from '../../../server/util/mockRouter'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 
-test.before('Setup Route', useMockRouter('/about'))
+test.before('Setup Route', mockRouter('/about'))
 
 // TODO: as navigation is dynamically loaded need to work out how to test the different menus
 test('renders the Header and Navigation for anon user', t => {
@@ -25,7 +25,6 @@ test('renders the Header and Navigation for anon user', t => {
     </Provider>
   )
 
-  t.truthy(wrapper.find('Link').first().containsMatchingElement(<img />))
   t.is(wrapper.find('a').length, 1)
   t.snapshot()
 
@@ -50,7 +49,6 @@ test.skip('renders the Header and Navigation for basic auth user', t => {
       <Header />
     </Provider>
   )
-  t.truthy(wrapper.find('Link').first().containsMatchingElement(<img />))
   t.is(wrapper.find('a').length, 5)
   t.is(wrapper.find('a').last().text(), 'Sign out')
   t.snapshot()
@@ -71,7 +69,6 @@ test.skip('renders the Header and Navigation for auth volunteer user', t => {
       <Header />
     </Provider>
   )
-  t.truthy(wrapper.find('Link').first().containsMatchingElement(<img />))
   t.is(wrapper.find('a').length, 6)
   t.is(wrapper.find('a').last().text(), 'Sign out')
   t.snapshot()
@@ -92,7 +89,6 @@ test.skip('renders the Header and Navigation for auth admin/support user', t => 
       <Header />
     </Provider>
   )
-  t.truthy(wrapper.find('Link').first().containsMatchingElement(<img />))
   t.is(wrapper.find('a').length, 9)
   t.is(wrapper.find('a').last().text(), 'Sign out')
   t.snapshot()

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { P, Spacer } from '../VTheme/VTheme'
@@ -153,25 +154,25 @@ const Footer = () => (
               </a>
             </MenuItem>
             <MenuItem>
-              <a
+              <Link
                 href='/terms'
                 rel='noopener noreferrer'
               >Terms of Use
-              </a>
+              </Link>
             </MenuItem>
             <MenuItem>
-              <a
+              <Link
                 href='/terms/privacy'
                 rel='noopener noreferrer'
               >Privacy Policy
-              </a>
+              </Link>
             </MenuItem>
             <MenuItem>
-              <a
+              <Link
                 href='/terms/conduct'
                 rel='noopener noreferrer'
               >Code of Conduct
-              </a>
+              </Link>
             </MenuItem>
             <MenuItem>
               <a

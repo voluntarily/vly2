@@ -1,4 +1,5 @@
-
+import Link from 'next/link'
+import Image from 'next/image'
 import React from 'react'
 import styled from 'styled-components'
 import { HalfGrid, H2, H3 } from '../VTheme/VTheme'
@@ -127,42 +128,42 @@ const HowSection = () => (
 
         <h3>Want to volunteer?</h3>
         <article>
-          <img src='./static/img/icons/offer2.svg' alt='' />
+          <Image width='56' height='56' src='/static/img/icons/offer2.svg' alt='' />
           <div>
             <Title>List how you want to help
             </Title>
             <Text>Let people know how you can help out in your community</Text>
           </div>
 
-          <img src='./static/img/icons/offer3.svg' alt='' />
+          <Image width='56' height='56' src='/static/img/icons/offer3.svg' alt='' />
           <div>
             <Title>Voluntarily finds you people who want help</Title>
             <Text>Our matchmaking system finds you people who are looking for your skills and time</Text>
           </div>
         </article>
-        <a href='/acts/type/ask'>
+        <Link passHref href='/acts/type/ask'>
           <Button size='large' shape='round' type='primary' block>See activities</Button>
-        </a>
+        </Link>
       </PersonaContainer>
       <PersonaContainer>
         <h3>Want help with something?</h3>
         <article>
-          <img src='./static/img/icons/ask3.svg' alt='' />
+          <Image width='56' height='56' src='/static/img/icons/ask3.svg' alt='' />
           <div>
             <Title>List what you need help with
             </Title>
             <Text>Let volunteers what you need help with, when you need help, and volunteers will get involved</Text>
           </div>
 
-          <img src='./static/img/icons/ask2.svg' alt='' />
+          <Image width='56' height='56' src='/static/img/icons/ask2.svg' alt='' />
           <div>
             <Title>Voluntarily finds you volunteers that are keen</Title>
             <Text>Our matchmaking system finds skilled volunteers who want to help you</Text>
           </div>
         </article>
-        <a href='/acts/type/offer'>
+        <Link passHref href='/acts/type/offer'>
           <Button size='large' shape='round' type='primary' block>See all offers</Button>
-        </a>
+        </Link>
       </PersonaContainer>
 
     </HalfGrid>

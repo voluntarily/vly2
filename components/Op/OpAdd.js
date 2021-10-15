@@ -20,10 +20,8 @@ const OppAddButtons = styled.div`
 `
 
 export const OpAddNewBtn = () => {
-  const href = '/acts'
-
   return (
-    <Link href={href}>
+    <Link href='/acts' passHref>
       <Button type='primary' shape='round' size='large'>
         <FormattedMessage
           id='OpAdd.newAskOffer'

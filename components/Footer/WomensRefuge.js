@@ -38,7 +38,7 @@ export const WomensRefuge = () => {
             {content}
           </Html>
           <a href='#' id='wfclose' onClick={close}>
-            <img style={{ topMargin: '-4px' }} src={closeIcon} alt='close modal' />
+            <img src={closeIcon} alt='close modal' />
           </a>
         </div>}
       {!visible &&

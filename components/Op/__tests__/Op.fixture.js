@@ -30,7 +30,7 @@ const date = [
   '2019-06-12T04:55:10.014Z' // Wed, 12 Jun 2019 16:55:10 NZST
 ]
 
-export default [
+export const opFixture = [
   {
     _id: objectid().toString(),
     type: 'ask',
@@ -109,3 +109,4 @@ export default [
     date
   }
 ]
+export default opFixture

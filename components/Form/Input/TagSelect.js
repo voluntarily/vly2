@@ -9,12 +9,14 @@ const { Option } = Select
  */
 export const TagSelect = ({ options, onChange, value = {}, placeholder }) => {
   const [unselectedTags, setUnselectedTags] = useState([])
+  useEffect(() => {
+    setUnselectedTags(options?.filter(val => value !== val))
+  }, [value, options])
+
   if (!options) { console.log('TagSelect:', options, value); return ('No tag options supplied') }
   const addTag = tag => onChange(value.concat(tag))
   const removeTag = removedTag => onChange(value.filter(tag => tag !== removedTag))
-  useEffect(() => {
-    setUnselectedTags(options.filter(val => value !== val))
-  }, [value, options])
+
   return (
     <>
       <Select style={{ width: '100%' }} showSearch value={undefined} placeholder={placeholder} onChange={addTag}>

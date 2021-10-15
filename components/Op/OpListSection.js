@@ -28,7 +28,7 @@ const OpListSection = ({
   dispatch
 }) => {
   // update search as filters change
-  useEffect(async () => {
+  useEffect(() => {
     try {
       const filters = {}
 
@@ -45,7 +45,7 @@ const OpListSection = ({
     } catch (err) {
       console.error('error in getting ops', err)
     }
-  }, [search, location, query])
+  }, [dispatch, search, location, query])
 
   const hasValue = (value) => { return value != null }
 

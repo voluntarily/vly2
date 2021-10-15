@@ -5,7 +5,7 @@ import { emailPerson } from '../../../../server/api/person/person.email'
 import { makeURLToken } from '../../../../lib/sec/actiontoken'
 import { config } from '../../../../config/clientConfig'
 import Role from '../../../../server/services/authorize/role'
-export default async (req, res) => {
+export const notifyOrg = async (req, res) => {
   // verify signed in
   if (!req.session || !req.session.isAuthenticated) { return res.status(403).end() }
 
@@ -73,3 +73,4 @@ export default async (req, res) => {
     res.status(404).end()
   }
 }
+export default notifyOrg

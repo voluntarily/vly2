@@ -1,4 +1,4 @@
-
+import Link from 'next/link'
 import { WarningTwoTone } from '@ant-design/icons'
 import { Button, Modal } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
@@ -66,16 +66,17 @@ export const RegisterInterestMessageForm = ({
             id='RegisterInterestMessageForm.accepttcs'
             defaultMessage='By clicking Send you agree to the '
           />
-          <a
+          <Link
             href='/terms'
             target='_blank'
             rel='noopener noreferrer'
+            passHref
           >
             <FormattedMessage
               id='RegisterInterestMessageForm.termsandconditions'
               defaultMessage='Terms and Conditions'
             />
-          </a>
+          </Link>
         </p>)}
       {showStaySafe && (
         <p style={{ float: 'right' }}>

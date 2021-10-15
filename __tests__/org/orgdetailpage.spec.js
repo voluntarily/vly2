@@ -13,7 +13,7 @@ import { gssp as newGssp } from '../../pages/orgs/new'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import people from '../../server/api/person/__tests__/person.fixture'
 import { MockWindowScrollTo } from '../../server/util/mock-dom-helpers'
-import useMockRouter from '../../server/util/useMockRouter'
+import mockRouter from '../../server/util/mockRouter'
 
 MockWindowScrollTo.replaceForTest(test, global)
 
@@ -76,7 +76,7 @@ test.before('Setup fixtures', (t) => {
   }
   t.context.mockStore = configureStore([thunk])(t.context.defaultstore)
 })
-test.before('Setup Route', useMockRouter('/orgs', { id: 12345 }))
+test.before('Setup Route', mockRouter('/orgs', { id: 12345 }))
 
 test.serial('OrgDetailPage GetInitialProps non member', async t => {
   const ctx = {

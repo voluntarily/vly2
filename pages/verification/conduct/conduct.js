@@ -31,7 +31,7 @@ class VerificationConductPage extends Component {
         </Head>
         <TermsSection>
           <Conduct />
-          <Link href='./safety'>
+          <Link href='./safety' passHref>
             <Button shape='round' type='primary'>{conductConfirmationLabel}</Button>
           </Link>
         </TermsSection>

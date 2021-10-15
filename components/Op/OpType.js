@@ -160,8 +160,8 @@ export const OpTypeCount = ({ counts, type }) => {
 
 /** Converts an opportunity type to a Stamp - except for Active */
 export const OpTypeStamp = ({ type }) => {
-  if (!type || ![ASK, OFFER].includes(type)) return null
   const intl = useIntl()
+  if (!type || ![ASK, OFFER].includes(type)) return null
   return (
     <Stamp>
       {intl.formatMessage(OpTypeMessages[type])}

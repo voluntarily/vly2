@@ -20,7 +20,7 @@ export const Unverified = ({ user }) =>
       }}
     />
 
-    <Link href='/auth/sign-off'>
+    <Link href='/auth/sign-off' passHref>
       <Button size='large' shape='round' type='primary' style={{ marginTop: '2rem' }}>
         <FormattedMessage
           id='unverified.button'

@@ -17,15 +17,6 @@ export const FeedbackSubmitPage = ({ feedbackActions }) => {
   const { query: { rating, opportunity } } = useRouter()
   const [me, members, opportunities, feedback] = useSelector(state => [state.session.me, state.members, state.archivedOpportunities, state.feedback])
   const dispatch = useDispatch()
-
-  if (!members.sync) { return <FullPage><Loading label='members' entity={members} /></FullPage> }
-  if (!opportunities.sync) { return <FullPage><Loading label='opportunities' entity={opportunities} /></FullPage> }
-
-  // collect the orgs the person follows and is member of.
-  if (members.sync && members.data.length > 0) {
-    me.orgMembership = members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
-  }
-
   useEffect(() => {
     const feedback = {
       respondent: me._id,
@@ -35,7 +26,15 @@ export const FeedbackSubmitPage = ({ feedbackActions }) => {
       rating
     }
     dispatch(feedbackActions.post({}, { body: JSON.stringify(feedback) }))
-  }, [])
+  }, [dispatch, feedbackActions, me._id, me.orgMembership, opportunities.data, opportunity, rating])
+
+  if (!members.sync) { return <FullPage><Loading label='members' entity={members} /></FullPage> }
+  if (!opportunities.sync) { return <FullPage><Loading label='opportunities' entity={opportunities} /></FullPage> }
+
+  // collect the orgs the person follows and is member of.
+  if (members.sync && members.data.length > 0) {
+    me.orgMembership = members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
+  }
 
   const op = opportunities.data[0]
 
@@ -58,7 +57,7 @@ export const FeedbackSubmitPage = ({ feedbackActions }) => {
         />
 
       </p>
-      <Link href='/home'>
+      <Link href='/home' passHref>
         <Button shape='round' size='large' type='primary'>
           <FormattedMessage
             id='feedbacksubmitpage.button.recommended'

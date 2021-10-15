@@ -2,7 +2,6 @@
   Display an activity record in card format with a picture, name, and commitment.
 */
 // import React from 'react'
-import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
 import { Card, DescriptionWrapper, TagState } from '../VTheme/VTheme'
@@ -94,18 +93,6 @@ const OpCard = ({ op }) => {
       </Link>
     </Card>
   )
-}
-
-OpCard.propTypes = {
-  op: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    subtitle: PropTypes.string,
-    imgUrl: PropTypes.any,
-    date: PropTypes.arrayOf.string,
-    location: PropTypes.string,
-    duration: PropTypes.string,
-    _id: PropTypes.string.isRequired
-  })
 }
 
 export default OpCard

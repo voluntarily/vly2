@@ -19,7 +19,7 @@ import { MemberStatus } from '../server/api/member/member.constants'
 import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { MockWindowScrollTo } from '../server/util/mock-dom-helpers'
-import { useMockRouter, unuseMockRouter } from '../server/util/useMockRouter'
+import { mockRouter, unmockRouter } from '../server/util/mockRouter'
 
 MockWindowScrollTo.replaceForTest(test, global)
 
@@ -258,7 +258,7 @@ test.before('Setup fixtures', (t) => {
 
 test.afterEach.always(t => {
   t.context.mockServer.reset()
-  unuseMockRouter(t)
+  unmockRouter(t)
 })
 
 test.after.always(() => {
@@ -289,7 +289,7 @@ test.serial('run GetInitialProps', async t => {
 })
 
 test.serial('render volunteer home page - Active tab', t => {
-  useMockRouter('/home', { tab: 'active' })(t)
+  mockRouter('/home', { tab: 'active' })(t)
 
   const props = {
     me: t.context.me
@@ -318,7 +318,7 @@ test.serial('render volunteer home page - Active tab', t => {
 })
 
 test.serial('render volunteer home page - Discover tab', t => {
-  useMockRouter('/home', { tab: 'discover' })(t)
+  mockRouter('/home', { tab: 'discover' })(t)
 
   const props = {
     me: t.context.me
@@ -333,7 +333,7 @@ test.serial('render volunteer home page - Discover tab', t => {
 })
 
 test.serial('render volunteer home page - History tab', t => {
-  useMockRouter('/home', { tab: 'history' })(t)
+  mockRouter('/home', { tab: 'history' })(t)
   const props = {
     me: t.context.me
   }
@@ -373,7 +373,7 @@ test.serial('render volunteer home page - History tab', t => {
 })
 
 test.serial('render volunteer home page - Profile tab', t => {
-  useMockRouter('/home', { tab: 'profile' })(t)
+  mockRouter('/home', { tab: 'profile' })(t)
 
   t.context.mockServer
     .get(`path:/api/badge/${t.context.me._id}`, { body: [] })
@@ -394,7 +394,7 @@ test.serial('render volunteer home page - Profile tab', t => {
 })
 
 test.serial('render Edit Profile ', async t => {
-  useMockRouter('/home', { tab: 'profile' })(t)
+  mockRouter('/home', { tab: 'profile' })(t)
 
   t.context.mockServer
     .get(`path:/api/badge/${t.context.me._id}`, { body: [] })

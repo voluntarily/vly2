@@ -1,4 +1,5 @@
-
+import Link from 'next/link'
+import Image from 'next/image'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
@@ -199,7 +200,7 @@ const Hero = ({ isAuthenticated }) => (
     </CTAGrid>
     <AwesomeHeroContainer>
 
-      <a href='/acts/type/ask'>
+      <Link passHref href='/acts/type/ask'>
         <HeroItem>
           <HeroText>
             <h1>
@@ -218,7 +219,7 @@ const Hero = ({ isAuthenticated }) => (
 
           </HeroText>
 
-          <img src='/static/img/landing-pages/ask-bg.png' />
+          <Image alt='' layout='fill' width={400} height={480} src='/static/img/landing-pages/ask-bg.png' />
           {/* <SearchBox>
           <Search
             placeholder="Try 'remote learning'"
@@ -232,8 +233,8 @@ const Hero = ({ isAuthenticated }) => (
         </SearchBox> */}
 
         </HeroItem>
-      </a>
-      <a href='/acts/type/offer'>
+      </Link>
+      <Link passHref href='/acts/type/offer'>
         <HeroItem>
 
           <HeroText>
@@ -251,11 +252,11 @@ const Hero = ({ isAuthenticated }) => (
             </p>
 
           </HeroText>
-          <img src='/static/img/landing-pages/offer-bg.png' />
+          <Image layout='fill' width='400' height='480' alt='' src='/static/img/landing-pages/offer-bg.png' />
         </HeroItem>
-      </a>
+      </Link>
 
-      <a href='https://blog.voluntarily.nz/contact-us'>
+      <Link passHref href='https://blog.voluntarily.nz/contact-us'>
         <HeroItem>
 
           <HeroText>
@@ -274,12 +275,12 @@ const Hero = ({ isAuthenticated }) => (
             </p>
 
           </HeroText>
-          <img src='/static/img/landing-pages/partner-bg.png' />
+          <Image layout='fill' alt='' width='400' height='480' src='/static/img/landing-pages/partner-bg.png' />
         </HeroItem>
-      </a>
+      </Link>
     </AwesomeHeroContainer>
 
   </>
 )
-// LAUNCH IT. WOOOSH!
+
 export default Hero

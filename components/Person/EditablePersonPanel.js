@@ -19,7 +19,7 @@ export const EditablePersonPanel = ({ person, me }) => {
       ])
     }
     getEditorOptions()
-  }, [])
+  }, [dispatch])
 
   const doneEditing = () => {
     window.scrollTo(0, 0)

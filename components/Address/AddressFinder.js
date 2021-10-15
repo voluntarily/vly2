@@ -63,7 +63,7 @@ export const AddressInput = ({
       onChange(newAddress)
       addressInputRef.current.input.value = metaData.a
     })
-  }, [scriptLoaded])
+  }, [scriptLoaded, addressFinderKey, onChange])
 
   return (
     <Input

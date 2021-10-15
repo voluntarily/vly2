@@ -3,7 +3,7 @@ import styled from 'styled-components'
 // import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import SectionTitle from './SectionTitle'
-
+import { Image } from 'antd'
 const OfferContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -88,7 +88,7 @@ const CommunitySection = () => (
       <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz'>
         <OfferCard>
 
-          <img src='./static/img/icons/code-party.svg' />
+          <Image alt='' src='/static/img/icons/code-party.svg' />
           <figcaption>
             <h3>Build the movement</h3>
             <p>The entire project is open-source, and everyone is welcome to join. Click for more info.
@@ -100,7 +100,7 @@ const CommunitySection = () => (
       <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/get-involved'>
         <OfferCard>
 
-          <img src='./static/img/icons/chat.svg' />
+          <Image alt='' src='/static/img/icons/chat.svg' />
           <figcaption>
             <h3>Join the conversation</h3>
             <p>Join the community chat on Slack and help shape the future of the platform
@@ -114,7 +114,7 @@ const CommunitySection = () => (
       <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/pre-register'>
 
         <OfferCard>
-          <img src='./static/img/icons/ask.svg' />
+          <Image alt='' src='/static/img/icons/ask.svg' />
           <figcaption>
             <h3>Can you help out? (coming soon)</h3>
             <p>
@@ -128,7 +128,7 @@ const CommunitySection = () => (
       <a rel='noopener noreferrer' target='_blank' href='https://blog.voluntarily.nz/pre-register'>
         <OfferCard>
 
-          <img src='./static/img/icons/offer.svg' />
+          <Image alt='' src='/static/img/icons/offer.svg' />
           <figcaption>
             <h3>Offer to Help (coming soon)</h3>
             <p>Keen to volunteer time, or resources during the crisis? Great! Click through to see where you can help the most people.

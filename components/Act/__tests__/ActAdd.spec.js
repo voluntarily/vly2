@@ -34,5 +34,5 @@ test('render the opadd correctly if  activityProvider role', t => {
     </Provider>
   )
 
-  t.truthy(wrapper.find('button').exists())
+  t.truthy(wrapper.find('Button').exists())
 })

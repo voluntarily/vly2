@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import { Role } from '../../../server/services/authorize/role.js'
 
-export default async (req, res) => {
+export const runTest = async (req, res) => {
   // person must be authenticated administrator
   if (!req.session ||
     !req.session.isAuthenticated ||
@@ -18,3 +18,4 @@ export default async (req, res) => {
     return res.status(400).json(e)
   }
 }
+export default runTest

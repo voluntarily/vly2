@@ -30,7 +30,7 @@ function intersect (a, b) {
   })
 }
 
-export default async (req, res) => {
+export const registerRequestor = async (req, res) => {
   // res.setHeader('Content-Type', 'application/json')
   if (!req.session.isAuthenticated) res.status(403).end()
   // check parameters
@@ -81,3 +81,4 @@ export default async (req, res) => {
     res.status(500).end()
   }
 }
+export default registerRequestor

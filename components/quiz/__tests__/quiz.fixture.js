@@ -1,4 +1,4 @@
-export default [
+export const quizFixture = [
   {
     name: 'Are you Volunteer Ready?',
     description: 'Watch this video to learn what you need to know when working in a school',
@@ -54,3 +54,4 @@ export default [
     }
   }
 ]
+export default quizFixture

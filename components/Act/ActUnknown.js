@@ -11,7 +11,7 @@ export const ActUnknown = () =>
         description='Act not found message'
       />
     </h2>
-    <Link href='/acts'>
+    <Link href='/acts' passHref>
       <Button shape='round'>
         <FormattedMessage
           id='ActUnknown.showOps'

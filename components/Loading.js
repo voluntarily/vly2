@@ -3,10 +3,9 @@
 //  loading - display spinner
 //  synced - display children
 //  error - show error message.
-import { Alert } from 'antd'
-
+import { Alert, Image } from 'antd'
 /* use for generic loading spinner not attached to ReduxAPI */
-export const LoadSpinner = ({ className }) => <img src='/static/loading.svg' className={className} />
+export const LoadSpinner = ({ className }) => <Image alt='' src='/static/loading.svg' className={className} />
 
 export const ReduxLoading = ({ entity, label }) => {
   if (!entity) { return <LoadSpinner /> }

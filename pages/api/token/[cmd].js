@@ -5,7 +5,7 @@ import { makeURLToken } from '../../../lib/sec/actiontoken'
 e.g https://localhost:3122/api/token/cmd?
 */
 
-export default async (req, res) => {
+export const command = async (req, res) => {
   if (!req.session.isAuthenticated) res.status(403).end()
 
   try {
@@ -17,3 +17,4 @@ export default async (req, res) => {
     res.status(500).end()
   }
 }
+export default command

@@ -6,29 +6,29 @@ import ReduxLoading from '../Loading'
 import StatisticsPanel from './StatisticsPanel'
 import { useSelector, useDispatch } from 'react-redux'
 
-const OrgStatisticsTabs = (props) => {
+const OrgStatisticsTabs = ({ organisationsActions, organisations, timeframe }) => {
   const orgAdminFor = useSelector((state) => state.session.me.orgAdminFor)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(
-      props.organisationsActions.get({
+      organisationsActions.get({
         q: JSON.stringify({ _id: { $in: orgAdminFor } })
       })
     )
-  }, [orgAdminFor])
+  }, [orgAdminFor, dispatch, organisationsActions])
 
-  if (!props.organisations || !props.organisations.sync) {
-    return <ReduxLoading entity={props.organisations} label='organisations' />
+  if (!organisations || !organisations.sync) {
+    return <ReduxLoading entity={organisations} label='organisations' />
   }
 
-  const orgs = props.organisations.data || []
+  const orgs = organisations.data || []
 
   return (
     <VTabs size='large'>
       {orgs.map((org) => (
         <Tabs.TabPane tab={org.name} key={org._id}>
-          <StatisticsPanel orgId={org._id} timeframe={props.timeframe} />
+          <StatisticsPanel orgId={org._id} timeframe={timeframe} />
         </Tabs.TabPane>
       ))}
     </VTabs>

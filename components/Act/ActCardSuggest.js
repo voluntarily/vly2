@@ -3,14 +3,14 @@
 */
 import React from 'react'
 import { Card } from '../VTheme/VTheme'
-
+import Image from 'next/image'
 // todo if image is not present then use a fallback.
 const ActCardSuggest = () => {
   return (
     <Card>
       <a href='https://support.voluntarily.nz/hc/en-nz/requests/new?ticket_form_id=360003338774' target='_blank' rel='noreferrer noopener'>
         <div>
-          <img src='/static/img/activity/addActivity.png' />
+          <Image alt='add activity' width='296' height='160' src='/static/img/activity/addActivity.png' />
         </div>
         <figcaption>
           <h1>

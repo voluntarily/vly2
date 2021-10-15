@@ -45,7 +45,7 @@ const PersonSummary = ({ person }) =>
 const TopicSummary = ({ type, topicGroups }) =>
   <Panel>
     <div>
-      <img style={{ width: '100%' }} src='/static/img/sign-up/ask.svg' />
+      <img layout='intrinsic' alt='ask for help icon' style={{ width: '100%' }} src='/static/img/sign-up/ask.svg' />
     </div>
     <div>
       <p><strong><OpTypeTopicVerb type={type} /></strong></p>
@@ -56,7 +56,7 @@ const TopicSummary = ({ type, topicGroups }) =>
 export const AllDone = ({ children, type, topicGroups, person }) =>
   <HalfGrid>
     <div>
-      <img src='/static/img/sign-up/alldone.svg' />
+      <img alt='all done icon' src='/static/img/sign-up/alldone.svg' />
     </div>
     <div>
       <h1>

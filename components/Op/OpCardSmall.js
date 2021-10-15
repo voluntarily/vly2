@@ -2,11 +2,10 @@
   Display an activity record in card format with a picture, name, and commitment.
 */
 // import React from 'react'
-import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
 import { SmallCard, SmallOpGrid, TagState } from '../VTheme/VTheme'
-import { Divider } from 'antd'
+import { Image, Divider } from 'antd'
 import {
   CheckCircleTwoTone,
   MailTwoTone,
@@ -58,7 +57,7 @@ const OpCardSmall = ({ op }) => {
 
           <Divider />
           <SmallOpGrid>
-            <img src={op.requestor.imgUrl} />
+            <Image alt='requestor icon' src={op.requestor.imgUrl} />
             <figcaption>
               {/* <p>  {op.subtitle}</p> */}
               <ul>
@@ -76,20 +75,6 @@ const OpCardSmall = ({ op }) => {
       </Link>
     </SmallCard>
   )
-}
-
-OpCardSmall.propTypes = {
-  op: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    subtitle: PropTypes.string,
-    description: PropTypes.string,
-    imgUrl: PropTypes.any,
-    date: PropTypes.arrayOf.string,
-    location: PropTypes.string,
-    duration: PropTypes.string,
-    requestor: PropTypes.object,
-    _id: PropTypes.string.isRequired
-  })
 }
 
 export default OpCardSmall

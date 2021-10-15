@@ -216,32 +216,33 @@ export const PersonDetailForm = ({ me, person, onCancel, onSubmit, locations, ex
   // To save various fields of address
   // TODO: [VP-1891] address finder adds duplicate locations to the locations field in the person.
   const [address, setAddress] = useState(person.address)
-  const addressListener = () => {
-    const widget = new window.AddressFinder.Widget(
-      document.getElementById('person_detail_form_address_addressSummary'),
-      locations.addressFinderKey, // ADDRESSFINDER_KEY
-      'NZ', {
-        show_locations: true,
-        empty_content: 'No addresses were found. This could be a new address, or you may need to check the spelling.'
-      }
-    )
-    widget.on && widget.on('result:select', (_, metaData) => {
-      setAddress({
-        street: metaData.address_line_1,
-        suburb: metaData.suburb,
-        city: metaData.city,
-        postcode: metaData.postcode,
-        region: metaData.region.replace(/\sRegion/, ''),
-        addressSummary: metaData.a
-      })
-      form.setFieldsValue({
-        address: { addressSummary: metaData.a }
-      })
-    })
-  }
+
   useEffect(() => {
+    const addressListener = () => {
+      const widget = new window.AddressFinder.Widget(
+        document.getElementById('person_detail_form_address_addressSummary'),
+        locations.addressFinderKey, // ADDRESSFINDER_KEY
+        'NZ', {
+          show_locations: true,
+          empty_content: 'No addresses were found. This could be a new address, or you may need to check the spelling.'
+        }
+      )
+      widget.on && widget.on('result:select', (_, metaData) => {
+        setAddress({
+          street: metaData.address_line_1,
+          suburb: metaData.suburb,
+          city: metaData.city,
+          postcode: metaData.postcode,
+          region: metaData.region.replace(/\sRegion/, ''),
+          addressSummary: metaData.a
+        })
+        form.setFieldsValue({
+          address: { addressSummary: metaData.a }
+        })
+      })
+    }
     scriptLoaded && addressListener()
-  }, [scriptLoaded])
+  }, [scriptLoaded, form, locations])
 
   // const isTest = process.env.NODE_ENV === 'test'
   const isVolunteer = person.role.some(r => r === Role.VOLUNTEER)

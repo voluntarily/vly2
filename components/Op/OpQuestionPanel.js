@@ -1,7 +1,7 @@
 /* Dumb React component Shows contents of an opportunity
  */
 
-import { Button, Input } from 'antd'
+import { Image, Button, Input } from 'antd'
 
 import styled from 'styled-components'
 
@@ -171,7 +171,7 @@ export function OpQuestionPanel ({ op }) {
           <ContentCard>
             <h3>Can I get free parking at the school? </h3>
             <QuestionDetail>
-              <img />
+              <Image alt='' />
               <p>Legitimate Name</p>
 
               <Button shape='round' size='large' type='secondary' block>
@@ -193,7 +193,7 @@ export function OpQuestionPanel ({ op }) {
               Yeah, text me at 027 123 4567 when you get close to the school
             </h4>
             <QuestionDetail>
-              <img />
+              <Image alt='' />
               <p>Legitimate teacher</p>
               <Button shape='round' size='large' type='secondary' block>
                 Reply
@@ -212,7 +212,7 @@ export function OpQuestionPanel ({ op }) {
           <ContentCard>
             <h3>Can I get free parking at the school? </h3>
             <QuestionDetail>
-              <img />
+              <Image alt='' />
               <p>Legitimate Name</p>
 
               <Button shape='round' size='large' type='secondary' block>
@@ -234,7 +234,7 @@ export function OpQuestionPanel ({ op }) {
               Yeah, text me at 027 123 4567 when you get close to the school
             </h4>
             <QuestionDetail>
-              <img />
+              <Image alt='' />
               <p>Legitimate teacher</p>
               <Button shape='round' size='large' type='secondary' block>
                 Reply
@@ -253,7 +253,7 @@ export function OpQuestionPanel ({ op }) {
           <ContentCard>
             <h3>Can I get free parking at the school? </h3>
             <QuestionDetail>
-              <img />
+              <Image alt='' />
               <p>Legitimate Name</p>
 
               <Button shape='round' size='large' type='secondary' block>
@@ -275,7 +275,7 @@ export function OpQuestionPanel ({ op }) {
               Yeah, text me at 027 123 4567 when you get close to the school
             </h4>
             <QuestionDetail>
-              <img />
+              <Image alt='' />
               <p>Legitimate teacher</p>
               <Button shape='round' size='large' type='secondary' block>
                 Reply

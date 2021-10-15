@@ -42,7 +42,7 @@ const GoalListPage = ({ isAdmin }) => {
     if (isAdmin) {
       getGoals()
     }
-  }, [updatedGoals])
+  }, [updatedGoals, dispatch, isAdmin])
 
   const handleLoadGoals = async () => {
     try {

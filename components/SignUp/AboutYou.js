@@ -29,12 +29,12 @@ export const AboutYou = ({ children, person, onChange }) => {
 
   useEffect(() => {
     dispatch(reduxApi.actions.locations.get())
-  }, [])
+  }, [dispatch])
 
   return (
     <HalfGrid>
       <div>
-        <img src='/static/img/sign-up/aboutyou.svg' />
+        <img alt='about you icon' src='/static/img/sign-up/aboutyou.svg' />
       </div>
       <div>
         <h1>

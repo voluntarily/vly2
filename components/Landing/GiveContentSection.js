@@ -1,7 +1,7 @@
 
 import React from 'react'
 
-import { Button } from 'antd'
+import { Button, Image } from 'antd'
 import { HalfGrid, H2, H3, P, StatContainer, ImageContainer } from '../VTheme/VTheme'
 
 const GiveContentSection = () => (
@@ -13,11 +13,11 @@ const GiveContentSection = () => (
         <H3>Skilled volunteers are offering to help you out. We get all the admin and annoying stuff out of the way to give you more time</H3>
 
         <StatContainer>
-          <img src='./static/img/icons/check.svg' />
+          <Image alt='' src='/static/img/icons/check.svg' />
           <P>Safe — everyone gets ID checked to keep you safe - for groups</P>
-          <img src='./static/img/icons/check.svg' />
+          <Image alt='' src='/static/img/icons/check.svg' />
           <P>Personalised — we connect you with local people, for an activity at a time that suits</P>
-          <img src='./static/img/icons/check.svg' />
+          <Image alt='' src='/static/img/icons/check.svg' />
           <P>Recognition and support — we help you through the process, and celebrate success</P>
         </StatContainer>
         <Button

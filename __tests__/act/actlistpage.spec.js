@@ -5,7 +5,7 @@ import { shallowWithIntl } from '../../lib/react-intl-test-helper'
 import acts from '../../server/api/activity/__tests__/activity.fixture'
 import objectid from 'objectid'
 import sinon from 'sinon'
-import useMockRouter from '../../server/util/useMockRouter'
+import mockRouter from '../../server/util/mockRouter'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
@@ -38,7 +38,7 @@ test.afterEach(() => {
 })
 
 test.serial('render ActListPage for asks', async t => {
-  useMockRouter('/acts/new', { actType: 'ask' })(t)
+  mockRouter('/acts/new', { actType: 'ask' })(t)
 
   const wrapper = shallowWithIntl(<ActListPage />)
   t.is(wrapper.find('h1 MemoizedFormattedMessage').first().props().id, 'ActListPage.Ask.Title')
@@ -46,7 +46,7 @@ test.serial('render ActListPage for asks', async t => {
 })
 
 test.serial('render ActListPage for offers', async t => {
-  useMockRouter('/acts/new', { actType: 'offer' })(t)
+  mockRouter('/acts/new', { actType: 'offer' })(t)
 
   const wrapper = shallowWithIntl(<ActListPage />)
   t.is(wrapper.find('h1 MemoizedFormattedMessage').first().props().id, 'ActListPage.Offer.Title')

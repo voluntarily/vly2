@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { H2, TitleContainerMid } from '../VTheme/VTheme'
-
+import Image from 'next/image'
 const OfferContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -121,7 +121,7 @@ const Testimonial = () => (
           I had a great time helping out, and doing good in my community
         </h3>
         <figcaption>
-          <img src='https://picsum.photos/56/56' />
+          <Image alt='' width='56' height='56' src='https://picsum.photos/56/56' />
           <div><p><strong>Zoe Timbrell</strong></p>
             <p>Napier, New Zealand</p>
           </div>
@@ -133,7 +133,7 @@ const Testimonial = () => (
           I had a great time helping out, and doing good in my community
         </h3>
         <figcaption>
-          <img src='https://picsum.photos/56/56' />
+          <Image alt='' width='56' height='56' src='https://picsum.photos/56/56' />
           <div><p><strong>Zoe Timbrell</strong></p>
             <p>Napier, New Zealand</p>
           </div>
@@ -145,7 +145,7 @@ const Testimonial = () => (
           I had a great time helping out, and doing good in my community
         </h3>
         <figcaption>
-          <img src='https://picsum.photos/56/56' />
+          <Image alt='' width='56' height='56' src='https://picsum.photos/56/56' />
           <div><p><strong>Zoe Timbrell</strong></p>
             <p>Napier, New Zealand</p>
           </div>

@@ -47,13 +47,14 @@ export const ActDetailPage = ({
   useEffect(() => {
     const qtab = asPath.match(/.*tab=(.*)/)
     qtab && setTab(qtab[1])
-  }, [query])
+  }, [query, asPath])
+  let act
 
-  const updateTab = (key, top) => {
+  const updateTab = useCallback((key, top) => {
     if (top) window.scrollTo(0, 0)
     const newpath = `/acts/${act._id}?tab=${key}`
     replace(pathname, newpath, { shallow: true })
-  }
+  }, [act, pathname, replace])
   const handleTabChange = (key, e) => {
     updateTab(key, key === 'edit')
   }
@@ -88,7 +89,7 @@ export const ActDetailPage = ({
       }
       updateTab('about', true)
       message.success('Saved.')
-    }, [])
+    }, [dispatch, replace, updateTab])
 
   // bail early if no data
   if (!activities.sync && !isNew) {
@@ -100,7 +101,6 @@ export const ActDetailPage = ({
   }
 
   // setup the activity data
-  let act
   if (isNew) {
     // new op
     act = blankAct

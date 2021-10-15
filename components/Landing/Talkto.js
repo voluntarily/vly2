@@ -88,7 +88,7 @@ const TakeSupportSection = () => (
     <HeroSectionHeader>
       <h2>How people can support you</h2>
       <HeroSectionButtonContainer>
-        <Link href='/acts/type/ask'>
+        <Link href='/acts/type/ask' passHref>
           <Button shape='round' size='large'>
             <FormattedMessage
               id='TakeSupportSection.ask'
@@ -103,25 +103,25 @@ const TakeSupportSection = () => (
     <Grid>
 
       <PersonaContainer>
-        <Image src='./static/img/landingcards/RemoteWorking.png' alt='' />
+        <Image src='/static/img/landingcards/RemoteWorking.png' alt='' />
         <Title>Suddenly working remotely?</Title>
         <Text>Find someone to tell you all about remote working apps, and tips for working from home efficiently.</Text>
       </PersonaContainer>
 
       <PersonaContainer>
-        <Image src='./static/img/landingcards/SchoolClosed.png' alt='' />
+        <Image src='/static/img/landingcards/SchoolClosed.png' alt='' />
         <Title>School closed?</Title>
         <Text>Talk to educators who can guide you to platforms and resources to help you keep teaching or learning online.</Text>
       </PersonaContainer>
 
       <PersonaContainer>
-        <Image src='./static/img/landingcards/Isolation.png' alt='' />
+        <Image src='/static/img/landingcards/Isolation.png' alt='' />
         <Title>Self isolating and struggling?</Title>
         <Text>Meet someone who can help you run errands, check in on you, or just someone to talk to. </Text>
       </PersonaContainer>
 
       <PersonaContainer>
-        <Image src='./static/img/landingcards/ElderlyRisk.png' alt='' />
+        <Image src='/static/img/landingcards/ElderlyRisk.png' alt='' />
         <Title>Over seventy?</Title>
         <Text>Or worried about an over seventy? Find someone to check in to make isolation a little less lonely.</Text>
       </PersonaContainer>

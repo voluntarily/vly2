@@ -1,6 +1,6 @@
 import { Form } from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import { Button, Divider, Input, Tooltip, Radio, Switch, Row, Col } from 'antd'
+import { Image, Button, Divider, Input, Tooltip, Radio, Switch, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -617,7 +617,7 @@ class ActDetailForm extends Component {
                   description='instructions for add image section in actdetail form'
                 />
               </p>
-              <img
+              <Image
                 style={{ width: '50%', float: 'right' }}
                 src={this.props.form.getFieldValue(ActivityFields.IMG_URL)}
                 alt=''

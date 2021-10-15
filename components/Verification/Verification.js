@@ -22,7 +22,7 @@ const Verification = () => {
       const newUrl = router.asPath.replace(`&${VerificationResultUrlQueryParam}=true`, '')
       router.replace(router.asPath, newUrl, { shallow: true })
     }
-  })
+  }, [router])
 
   return (
     <>

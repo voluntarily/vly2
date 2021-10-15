@@ -1,4 +1,4 @@
-import { Form } from '@ant-design/compatible'
+import { Image, Form } from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import { Button, DatePicker, Divider, Input, Tooltip } from 'antd'
 import moment from 'moment'
@@ -478,7 +478,7 @@ class OpOfferForm extends Component {
                 />
 
               </p>
-              <img
+              <Image
                 style={{ width: '50%', float: 'right' }}
                 src={op.imgUrl}
                 alt='current image'

@@ -19,7 +19,7 @@ export const InterestArchivedSection = ({ opid }) => {
       await dispatch(reduxApi.actions.interestArchives.get({ op: opid }))
     }
     getOpInterests()
-  }, [opid])
+  }, [opid, dispatch])
   // If we haven't finished making the API request to the server yet...
   if (!interests.sync) {
     return (<Loading label='interestArchives' entity={interests} />)

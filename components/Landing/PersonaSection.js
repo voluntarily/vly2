@@ -1,7 +1,7 @@
 import { Button, Row, Col } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
-
+import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import SectionTitle from '../../components/Landing/SectionTitle'
 const PersonaBox = styled.section`
@@ -95,7 +95,7 @@ const AboutSection = () => (
     </SectionTitle>
     <Row gutter={[32, 32]}>
       <Col sm={12} lg={6}>
-        <a href='/about' target='_blank' rel='noopener noreferrer'>
+        <Link href='/about' target='_blank' rel='noopener noreferrer' passHref>
           <PersonaContainer>
             <Image src='/static/img/volunteerCard.png' alt={<FormattedMessage id='PersonaVolunteers' defaultMessage='Volunteers' description='volunteers' />} />
             <Title><FormattedMessage id='PersonaVolunteers' defaultMessage='Volunteers' description='volunteers' /></Title>
@@ -104,10 +104,10 @@ const AboutSection = () => (
             </Text>
             <Button><FormattedMessage id='LearnMore' defaultMessage='Learn More' description='Learn more button' /></Button>
           </PersonaContainer>
-        </a>
+        </Link>
       </Col>
       <Col sm={12} lg={6}>
-        <a href='/teachers' target='_blank' rel='noopener noreferrer'>
+        <Link href='/teachers' target='_blank' rel='noopener noreferrer' passHref>
           <PersonaContainer>
             <Image src='/static/img/teacherCard.png' alt={<FormattedMessage id='PersonaTeachers' defaultMessage='Teachers' description='teachers' />} />
             <Title><FormattedMessage id='PersonaTeachers' defaultMessage='Teachers' description='teachers' /></Title>
@@ -117,20 +117,20 @@ const AboutSection = () => (
             </Text>
             <Button><FormattedMessage id='LearnMore' defaultMessage='Learn More' description='Learn more button' /></Button>
           </PersonaContainer>
-        </a>
+        </Link>
       </Col>
       <Col sm={12} lg={6}>
-        <a href='/content' target='_blank' rel='noopener noreferrer'>
+        <Link href='/content' target='_blank' rel='noopener noreferrer' passHref>
           <PersonaContainer>
             <Image src='/static/img/contentCard.png' alt={<FormattedMessage id='PersonaContent' defaultMessage='Content Creators' description='Content Creators' />} />
             <Title><FormattedMessage id='PersonaContent' defaultMessage='Content Creators' description='Content Creators' /></Title>
             <Text><FormattedMessage id='PersonaContentDescription' defaultMessage='We help you get more people involved with your content.' description='description content for Content Creators' /></Text>
             <Button><FormattedMessage id='LearnMore' defaultMessage='Learn More' description='Learn more button' /></Button>
           </PersonaContainer>
-        </a>
+        </Link>
       </Col>
       <Col sm={12} lg={6}>
-        <a href='/business' target='_blank' rel='noopener noreferrer'>
+        <Link href='/business' target='_blank' rel='noopener noreferrer' passHref>
           <PersonaContainer>
             <Image src='/static/img/businessCard.png' alt={<FormattedMessage id='PersonaBusiness' defaultMessage='Businesses' description='Businesses' />} />
             <Title><FormattedMessage id='PersonaBusiness' defaultMessage='Businesses' description='Businesses' /></Title>
@@ -139,7 +139,7 @@ const AboutSection = () => (
             </Text>
             <Button><FormattedMessage id='LearnMore' defaultMessage='Learn More' description='Learn more button' /></Button>
           </PersonaContainer>
-        </a>
+        </Link>
       </Col>
     </Row>
   </PersonaBox>

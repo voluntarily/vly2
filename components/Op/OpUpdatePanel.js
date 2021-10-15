@@ -12,7 +12,7 @@ const OpUpdatePanel = ({ albumId, dispatch, stories, author }) => {
   useEffect(() => {
     const getStories = async () => { await dispatch(reduxApi.actions.stories.get({ parentId: albumId })) }
     getStories()
-  }, [])
+  }, [dispatch, albumId])
 
   const setStory = async (story) => {
     // save back to redux and mongo

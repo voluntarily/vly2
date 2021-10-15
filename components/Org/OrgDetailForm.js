@@ -1,6 +1,6 @@
 import { Form } from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import { Button, Checkbox, Divider, Input, Tooltip, Affix } from 'antd'
+import { Image, Button, Checkbox, Divider, Input, Tooltip, Affix } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import slug from 'slug'
 import React, { Component } from 'react'
@@ -365,7 +365,7 @@ class OrgDetailForm extends Component {
                   description='Title for about section of organisation edit form'
                 />
               </p>
-              <img
+              <Image
                 style={{ width: '50%', float: 'right' }}
                 src={this.props.form.getFieldValue('imgUrl')}
                 alt=''

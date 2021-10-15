@@ -61,7 +61,7 @@ export const ActListSection = () => {
       await dispatch(reduxApi.actions.activities.get(query))
     }
     getActivities()
-  }, [search, selectedOrg])
+  }, [search, selectedOrg, dispatch, me])
 
   const handleSearch = e => {
     setSearch(e)
@@ -108,7 +108,7 @@ export const ActListSection = () => {
               </List.Item>
             )}
           />
-          <Card>Can't find what you want?
+          <Card>Can&apos;t find what you want?
             <a
               target='_blank'
               rel='noopener noreferrer'

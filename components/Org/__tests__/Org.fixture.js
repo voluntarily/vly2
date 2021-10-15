@@ -1,7 +1,6 @@
 import objectid from 'objectid'
 import { OrganisationRole } from '../../../server/api/organisation/organisation.constants'
-
-export default [
+export const orgFixture = [
   {
     _id: objectid().toString(),
     createdAt: '2019-04-28T19:03:39.908Z',
@@ -72,3 +71,4 @@ export default [
     info: { }
   }
 ]
+export default orgFixture

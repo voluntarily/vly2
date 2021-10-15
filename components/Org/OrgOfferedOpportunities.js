@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import { noOpportunitiesFound } from './OrgOfferedOpportunities.messages'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
@@ -11,7 +10,7 @@ export const OrgOfferedOpportunities = ({ organisationId }) => {
 
   useEffect(() => {
     dispatch(reduxApi.actions.opportunities.get({ q: JSON.stringify({ offerOrg: organisationId }) }))
-  }, [organisationId])
+  }, [organisationId, dispatch])
 
   let content = ''
 
@@ -27,8 +26,4 @@ export const OrgOfferedOpportunities = ({ organisationId }) => {
       {content}
     </section>
   )
-}
-
-OrgOfferedOpportunities.propTypes = {
-  organisationId: PropTypes.string.isRequired
 }

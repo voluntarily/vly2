@@ -54,7 +54,7 @@ export const OrgUnknown = () =>
         description='Org not found message'
       />
     </h2>
-    <Link href='/orgs'>
+    <Link href='/orgs' passHref>
       <Button shape='round'>
         <FormattedMessage
           id='orgDetailPage.showOrgs'
@@ -78,19 +78,20 @@ export const OrgDetailPage = ({
   const initTab = () => isNew ? 'edit' : query.tab || 'about'
   const [activeTab, setActiveTab] = useState(initTab)
   const [saved, setSaved] = useState(false)
+  const org = isNew ? blankOrg : organisations.data[0]
+
   // when path changes set the active tab. as this doesn't work in updateTab
   useEffect(() => {
     const qtab = asPath.match(/.*tab=(.*)/)
     qtab && setActiveTab(qtab[1])
-  }, [query])
-
-  const updateTab = (key, top) => {
+  }, [query, asPath])
+  const updateTab = useCallback((key, top) => {
     if (top) window.scrollTo(0, 0)
     else { window.scrollTo(0, 400) }
 
     const newpath = `/orgs/${org._id}?tab=${key}`
     replace(pathname, newpath, { shallow: true })
-  }
+  }, [org, pathname, replace])
   const handleTabChange = (key) => {
     updateTab(key, key === 'edit')
   }
@@ -101,7 +102,7 @@ export const OrgDetailPage = ({
         back()
       }
     },
-    [isNew]
+    [isNew, back, updateTab]
   )
 
   const handleSubmit = useCallback(
@@ -126,7 +127,7 @@ export const OrgDetailPage = ({
       setSaved(true)
       updateTab('about', true)
       message.success('Saved.')
-    }, [])
+    }, [dispatch, replace, updateTab])
 
   if (!organisations.sync && !isNew) {
     return <Loading label='organisation' entity={organisations} />
@@ -136,7 +137,6 @@ export const OrgDetailPage = ({
   if (orgs.length === 0 && !isNew) {
     return <OrgUnknown />
   }
-  const org = isNew ? blankOrg : orgs[0]
 
   // Who can edit?
   const isAdmin = me && me.role.includes('admin')

@@ -4,12 +4,11 @@ import { ActListSection } from '../ActListSection'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import acts from '../../../server/api/activity/__tests__/activity.fixture'
 import objectid from 'objectid'
-// import withMockRoute from '../../../server/util/mockRouter'
 import * as nextRouter from 'next/router'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
-import useMockRouter from '../../../server/util/useMockRouter'
+import mockRouter from '../../../server/util/mockRouter'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
@@ -45,7 +44,7 @@ test.before('Setup fixtures', (t) => {
   t.context.mockStore = configureStore([thunk])(t.context.defaultstore)
 })
 
-test.before('Setup Route', useMockRouter('/acts', { search: 'sun' }))
+test.before('Setup Route', mockRouter('/acts', { search: 'sun' }))
 
 test.serial('render ActListSection', async t => {
   const router = nextRouter.useRouter()

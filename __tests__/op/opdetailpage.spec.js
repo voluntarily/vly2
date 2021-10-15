@@ -18,7 +18,7 @@ import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { API_URL } from '../../lib/callApi'
 import { MockWindowScrollTo } from '../../server/util/mock-dom-helpers'
 import { OpportunityType } from '../../server/api/opportunity/opportunity.constants'
-import useMockRouter from '../../server/util/useMockRouter'
+import mockRouter from '../../server/util/mockRouter'
 
 MockWindowScrollTo.replaceForTest(test, global)
 
@@ -131,7 +131,7 @@ test.before('Setup fixtures', (t) => {
   t.context.mockStore = configureStore([thunk])(t.context.defaultstore)
 })
 
-test.before('Setup Route', useMockRouter('/op', { id: '5e75be4fcb032d0011d13e24' }))
+test.before('Setup Route', mockRouter('/op', { id: '5e75be4fcb032d0011d13e24' }))
 
 function makeFetchMock (opportunityId) {
   const myMock = fetchMock.sandbox()

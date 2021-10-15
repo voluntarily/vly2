@@ -3,7 +3,7 @@ import { addPersonalGoalGroup } from '../../../server/api/personalGoal/personalG
 /* The /api/xadmin/ endpoint provides some utility calls that
   /api/xadmin/assignPersonalGoals?group="name" - loads the given group into the signed in user
 */
-export default async (req, res) => {
+export const assignPersonalGoals = async (req, res) => {
   res.setHeader('Content-Type', 'application/json')
   // person must be authenticated administrator
   if (!req.session || !req.session.isAuthenticated) {
@@ -21,3 +21,4 @@ export default async (req, res) => {
     return res.status(400).json(e)
   }
 }
+export default assignPersonalGoals

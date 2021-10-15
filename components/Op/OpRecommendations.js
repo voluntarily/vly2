@@ -34,7 +34,7 @@ export const NoRecommendations = ({ type }) =>
     }
   >
     <>
-      <a href='/home?tab=profile'>
+      <Link href='/home?tab=profile' passHref>
         <Button type='primary' shape='round'>
           <FormattedMessage
             id='NoRecommendations.button.profile'
@@ -42,10 +42,10 @@ export const NoRecommendations = ({ type }) =>
             decription='button to update profile on empty recommendations box'
           />
         </Button>
-      </a>&nbsp;
+      </Link>&nbsp;
       {/* invert the type to switch from listing to doing */}
       {type &&
-        <Link href={`/acts/type/${type === ASK ? OFFER : ASK}`}>
+        <Link href={`/acts/type/${type === ASK ? OFFER : ASK}`} passHref>
           <Button type='primary' shape='round'>
             <FormattedMessage
               id='NoRecommendations.button.browse'

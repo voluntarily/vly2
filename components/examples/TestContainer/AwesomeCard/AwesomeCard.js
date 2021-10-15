@@ -4,14 +4,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
+import Image from 'next/image'
 // import { FormattedMessage } from 'react-intl'
 
 // todo if image is not present then use a fallback.
 const AwesomeCard = ({ op, onPress, ...props }) => (
   <div>
-    <Link href='#'>
+    <Link href='#' passHref>
       <div className='requestContainer'>
-        <img className='requestImg' />
+        <Image alt='example image' layout='intrinsic' className='requestImg' />
         <p className='requestTitle'>We want to build robot doggos</p>
         <p className='requestDateTime'>24 April / Albany Senior High School</p>
         <p className='requestDescription'>We need a dogineer</p>

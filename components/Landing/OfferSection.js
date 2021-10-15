@@ -1,6 +1,8 @@
 import React from 'react'
+import Link from 'next/link'
 import styled from 'styled-components'
 import { Card, Grid, TitleContainerMid, H2 } from '../VTheme/VTheme'
+import Image from 'next/image'
 const ImageWrapper = styled.div`
   position: relative;
 
@@ -17,10 +19,10 @@ const OfferSection = () => (
     <TitleContainerMid><H2>Featured activities </H2></TitleContainerMid>
     <Grid>
       <Card>
-        <a href='https://live.voluntarily.nz/acts/5e7abf953d0c1400117903c0'>
+        <Link href='https://live.voluntarily.nz/acts/5e7abf953d0c1400117903c0' passHref>
           <ImageWrapper>
 
-            <img src='/static/img/landing-pages/featuredacts/cyber.png' />
+            <Image alt='cybersecurity icon' src='/static/img/landing-pages/featuredacts/cyber.png' />
 
             {/* <OpTypeStamp type={op.type} /> */}
           </ImageWrapper>
@@ -30,13 +32,13 @@ const OfferSection = () => (
               Cybersecurity
             </CardTitle>
           </figcaption>
-        </a>
+        </Link>
       </Card>
       <Card>
-        <a href='https://live.voluntarily.nz/acts/5e86804c9f1b8e0011d262ea'>
+        <Link href='https://live.voluntarily.nz/acts/5e86804c9f1b8e0011d262ea' passHref>
           <ImageWrapper>
 
-            <img src='/static/img/landing-pages/featuredacts/homeoffice.png' />
+            <Image alt='home office' src='/static/img/landing-pages/featuredacts/homeoffice.png' />
 
             {/* <OpTypeStamp type={op.type} /> */}
           </ImageWrapper>
@@ -46,13 +48,13 @@ const OfferSection = () => (
               Setting up a home office
             </CardTitle>
           </figcaption>
-        </a>
+        </Link>
       </Card>
       <Card>
-        <a href='https://live.voluntarily.nz/acts/5e7ad512bce4460011276ed1'>
+        <Link href='https://live.voluntarily.nz/acts/5e7ad512bce4460011276ed1' passHref>
           <ImageWrapper>
 
-            <img src='/static/img/landing-pages/featuredacts/cashflow.png' />
+            <Image alt='cashflow' src='/static/img/landing-pages/featuredacts/cashflow.png' />
 
             {/* <OpTypeStamp type={op.type} /> */}
           </ImageWrapper>
@@ -62,13 +64,13 @@ const OfferSection = () => (
               Cashflow &amp; Budgeting Advice
             </CardTitle>
           </figcaption>
-        </a>
+        </Link>
       </Card>
       <Card>
-        <a href='https://live.voluntarily.nz/acts/5e7ac24baefa5a0011056daf'>
+        <Link href='https://live.voluntarily.nz/acts/5e7ac24baefa5a0011056daf' passHref>
           <ImageWrapper>
 
-            <img src='/static/img/landing-pages/featuredacts/health.png' />
+            <Image alt='health' src='/static/img/landing-pages/featuredacts/health.png' />
 
             {/* <OpTypeStamp type={op.type} /> */}
           </ImageWrapper>
@@ -78,13 +80,13 @@ const OfferSection = () => (
               Health &amp; Safety
             </CardTitle>
           </figcaption>
-        </a>
+        </Link>
       </Card>
       <Card>
-        <a href='https://live.voluntarily.nz/acts/5eaa53c799524f0013d82c04'>
+        <Link href='https://live.voluntarily.nz/acts/5eaa53c799524f0013d82c04' passHref>
           <ImageWrapper>
 
-            <img src='/static/img/landing-pages/featuredacts/remote.png' />
+            <Image alt='remote' src='/static/img/landing-pages/featuredacts/remote.png' />
 
             {/* <OpTypeStamp type={op.type} /> */}
           </ImageWrapper>
@@ -94,13 +96,13 @@ const OfferSection = () => (
               Remote Learning Support
             </CardTitle>
           </figcaption>
-        </a>
+        </Link>
       </Card>
       <Card>
-        <a href='https://live.voluntarily.nz/acts/5e7ac2a43d0c1400117903cf'>
+        <Link href='https://live.voluntarily.nz/acts/5e7ac2a43d0c1400117903cf' passHref>
           <ImageWrapper>
 
-            <img src='/static/img/landing-pages/featuredacts/legal.png' />
+            <Image alt='legal' src='/static/img/landing-pages/featuredacts/legal.png' />
 
             {/* <OpTypeStamp type={op.type} /> */}
           </ImageWrapper>
@@ -110,13 +112,13 @@ const OfferSection = () => (
               Legal Help
             </CardTitle>
           </figcaption>
-        </a>
+        </Link>
       </Card>
       <Card>
-        <a href='https://live.voluntarily.nz/acts/5e7ac165aefa5a0011056da6'>
+        <Link href='https://live.voluntarily.nz/acts/5e7ac165aefa5a0011056da6' passHref>
           <ImageWrapper>
 
-            <img src='/static/img/landing-pages/featuredacts/tax.png' />
+            <Image alt='tax' src='/static/img/landing-pages/featuredacts/tax.png' />
 
             {/* <OpTypeStamp type={op.type} /> */}
           </ImageWrapper>
@@ -126,14 +128,14 @@ const OfferSection = () => (
               Tax
             </CardTitle>
           </figcaption>
-        </a>
+        </Link>
       </Card>
 
       <Card>
-        <a href='https://live.voluntarily.nz/acts/5e7ab8fc229dbd0011aae2aa'>
+        <Link href='https://live.voluntarily.nz/acts/5e7ab8fc229dbd0011aae2aa' passHref>
           <ImageWrapper>
 
-            <img src='/static/img/landing-pages/featuredacts/video.png' />
+            <Image alt='video' src='/static/img/landing-pages/featuredacts/video.png' />
 
             {/* <OpTypeStamp type={op.type} /> */}
           </ImageWrapper>
@@ -143,7 +145,7 @@ const OfferSection = () => (
               Video Conferencing
             </CardTitle>
           </figcaption>
-        </a>
+        </Link>
       </Card>
 
     </Grid>

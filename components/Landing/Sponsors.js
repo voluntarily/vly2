@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import styled from 'styled-components'
 import { H2 } from '../VTheme/VTheme'
 
@@ -39,11 +40,11 @@ const Sponsors = () => (
     </div>
     <article>
 
-      <img src='/static/img/partner/spark.png' />
-      <img src='/static/img/partner/innovationfund.png' />
-      <img src='/static/img/partner/moe.png' />
-      <img src='/static/img/partner/datacom.png' />
-      <img src='/static/img/partner/ateed.png' />
+      <Image alt='' width='400' height='400' src='/static/img/partner/spark.png' />
+      <Image alt='' width='400' height='400' src='/static/img/partner/innovationfund.png' />
+      <Image alt='' width='400' height='400' src='/static/img/partner/moe.png' />
+      <Image alt='' width='400' height='400' src='/static/img/partner/datacom.png' />
+      <Image alt='' width='400' height='400' src='/static/img/partner/ateed.png' />
     </article>
   </SponsorContainer>
 

@@ -2,7 +2,6 @@
   Display an activity record in card format with a picture, name, and commitment.
 */
 import React from 'react'
-import PropTypes from 'prop-types'
 import Link from 'next/link'
 import { Card } from '../VTheme/VTheme'
 import { OpTypeCount, OpCommitment } from '../Op/OpType'
@@ -19,7 +18,7 @@ const ActCard = ({ act, onPress, ...props }) => {
         <a>
           <div>
             <OpStatusStamp status={act.status} />
-            <img src={cardImage} />
+            <img alt='activity illustration' src={cardImage} />
           </div>
           <figcaption>
             <h1>
@@ -37,18 +36,6 @@ const ActCard = ({ act, onPress, ...props }) => {
       </Link>
     </Card>
   )
-}
-
-ActCard.propTypes = {
-  act: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    subtitle: PropTypes.string,
-    imgUrl: PropTypes.any,
-    duration: PropTypes.string,
-    opCounts: PropTypes.object,
-    _id: PropTypes.string.isRequired
-  }),
-  onPress: PropTypes.func
 }
 
 export default ActCard

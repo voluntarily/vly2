@@ -1,6 +1,6 @@
 import { FullPage } from '../../../components/VTheme/VTheme'
 import { VideoQuiz, hashObj } from '../../../components/quiz/quiz'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import reduxWrapper from '../../../lib/redux/store'
 
@@ -62,8 +62,9 @@ export const volunteerReadyQuiz = [
 ]
 
 export const Ready = ({ vqa, me }) => {
+  const router = useRouter()
   const handleCompleted = () => {
-    Router.push('/')
+    router.push('/')
   }
   return (
     <FullPage>

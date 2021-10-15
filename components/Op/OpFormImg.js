@@ -1,4 +1,4 @@
-import { Form } from '@ant-design/compatible'
+import { Image, Form } from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import { Input, Tooltip } from 'antd'
 import React from 'react'
@@ -40,7 +40,7 @@ export const OpFormImg = ({ getFieldDecorator, imgUrl }) =>
         />
 
       </p>
-      <img
+      <Image
         style={{ width: '50%', float: 'right' }}
         src={imgUrl}
         alt='current image'

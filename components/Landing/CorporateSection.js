@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { TitleContainerMid, H2, OfferCard } from '../VTheme/VTheme'
-
+import { Image } from 'antd'
 const OfferContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -29,7 +29,7 @@ const CorporateSection = () => (
       <a href='#orgs'>
         <OfferCard>
           <figcaption>
-            <img src='/static/img/about/org-1.svg' />
+            <Image alt='' src='/static/img/about/org-1.svg' />
             <div>
               <h3>Businesses</h3>
               <p>Connect with people who want to help you, and organise how they can volunteer to help
@@ -44,7 +44,7 @@ const CorporateSection = () => (
 
           <figcaption>
 
-            <img src='/static/img/about/org-2.svg' />
+            <Image alt='' src='/static/img/about/org-2.svg' />
             <div>
               <h3>Community groups</h3>
               <p>Connect with people who want to help you, and organise how they can volunteer to help</p>
@@ -57,7 +57,7 @@ const CorporateSection = () => (
         <OfferCard>
 
           <figcaption>
-            <img src='/static/img/about/org-3.svg' />
+            <Image alt='' src='/static/img/about/org-3.svg' />
             <div>
               <h3>Industry groups</h3>
               <p>Manage your business CSR programme and supercharge your community movement

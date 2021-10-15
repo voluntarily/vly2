@@ -14,15 +14,14 @@ const Badge = styled.div`
     margin: 10px;
   `
 
-const getBadgeData = async ({ _id }, setUserBadge) => {
-  const data = await callApi(`badge/${_id}`)
-  setUserBadge(data)
-}
-
 function PersonBadge ({ person }) {
   const [userBadge, setUserBadge] = useState(null)
   useEffect(() => {
-    if (userBadge) { getBadgeData(person, setUserBadge) }
+    const getBadgeData = async ({ _id }) => {
+      const data = await callApi(`badge/${_id}`)
+      setUserBadge(data)
+    }
+    getBadgeData(person)
   }, [person])
   // TODO: Replace badge._id with badge.name in <Badge title> and <img alt>
   return userBadge
@@ -33,7 +32,7 @@ function PersonBadge ({ person }) {
           return (
             <Badge key={badge._id} title={badge._id}>
               <a href={`${config.BADGR_API}/public/assertions/${badge.entityId}`} rel='noopener noreferrer' target='_blank'>
-                <img width='60px' height='60px' alt={`${badge._id} badge`} src={`${badge.badgeclassOpenBadgeId}/image?type=png`} />
+                <img alt={`${badge._id} badge`} src={`${badge.badgeclassOpenBadgeId}/image?type=png`} />
               </a>
             </Badge>
           )

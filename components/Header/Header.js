@@ -95,7 +95,7 @@ const Header = () => {
       {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><WarningOutlined /> {notice}</Notice>}
       <MenuGrid>
         <div>
-          <Link href='/landing'>
+          <Link href='/landing' passHref>
             <LogoContainer>
               <Logo
                 src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
@@ -119,7 +119,7 @@ const Header = () => {
         </div>
         {isAuthenticated &&
           <StyledAvatar>
-            <Link href='/home'>
+            <Link href='/home' passHref>
               <Avatar
                 size='small'
                 src={me.imgUrlSm}

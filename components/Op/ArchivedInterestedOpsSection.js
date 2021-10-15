@@ -31,9 +31,9 @@ const selectArchivedInterestedOps = createSelector(
 
 export const ArchivedInterestedOpsSection = () => {
   const interestArchives = useSelector(state => state.interestArchives)
+  const ops = useSelector(selectArchivedInterestedOps)
   if (!interestArchives.sync) return <Loading label='interestArchives' entity={interestArchives} />
 
-  const ops = useSelector(selectArchivedInterestedOps)
   if (!ops.length) return null
   return (
     <ProfileSection>

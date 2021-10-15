@@ -4,7 +4,7 @@
 import Link from 'next/link'
 import { Card, DescriptionWrapper } from '../VTheme/VTheme'
 import styled from 'styled-components'
-
+import { Image } from 'antd'
 const ImageWrapper = styled.div`
   position: relative;
 
@@ -16,7 +16,7 @@ const OpAddCard = () => {
       <Link href='/ops/new/ask'>
         <a>
           <ImageWrapper>
-            <img src='/static/img/opportunity/actCreate.png' alt='create a new activity' />
+            <Image src='/static/img/opportunity/actCreate.png' alt='create a new activity' />
           </ImageWrapper>
 
           <figcaption>

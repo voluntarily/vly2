@@ -362,8 +362,8 @@ export class ContentProvider extends Component {
               <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>HR system integration</PBold>
               <P>
-                V supports single sign on, so you don't have to remember extra
-                credentials if you're a large corp
+                V supports single sign on, so you don&apos;t have to remember extra
+                credentials if you&apos;re a large corp
               </P>
             </ItemContainer>
             <ItemContainer>
@@ -386,8 +386,8 @@ export class ContentProvider extends Component {
               <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>Integration</PBold>
               <P>
-                V supports single sign on, so you don't have to remember extra
-                credentials if you're a large corp
+                Voluntarily.nz supports single sign on, so you don&apos;t have to remember extra
+                credentials if you&apos;re a large corp
               </P>
             </ItemContainer>
           </TripleGrid>

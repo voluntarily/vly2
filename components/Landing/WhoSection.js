@@ -3,12 +3,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { H2, TripleGrid, HeroText, HeroItemStatic } from '../VTheme/VTheme'
 import { FormattedMessage } from 'react-intl'
-
+import Image from 'next/image'
 const PersonaBox = styled.section`
 @media screen and (max-width: 1300px) {
   margin: 0 1rem;
 }
- 
 `
 
 const PersonaHeader = styled.div`
@@ -60,7 +59,7 @@ const WhoSection = () => (
           </p>
 
         </HeroText>
-        <img src='/static/img/landing-pages/school.png' />
+        <Image layout='fill' alt='school' width='400' height='450' src='/static/img/landing-pages/school.png' />
       </HeroItemStatic>
       <HeroItemStatic>
         <ComingSoonTag>Coming Soon</ComingSoonTag>
@@ -79,7 +78,7 @@ const WhoSection = () => (
           </p>
 
         </HeroText>
-        <img src='/static/img/landing-pages/community.png' />
+        <Image layout='fill' alt='community' width='400' height='450' src='/static/img/landing-pages/community.png' />
       </HeroItemStatic>
       <HeroItemStatic>
         <ComingSoonTag>Coming Soon</ComingSoonTag>
@@ -98,7 +97,7 @@ const WhoSection = () => (
           </p>
 
         </HeroText>
-        <img src='/static/img/landing-pages/business.png' />
+        <Image layout='fill' alt='business' width='400' height='450' src='/static/img/landing-pages/business.png' />
       </HeroItemStatic>
     </TripleGrid>
 

@@ -19,19 +19,20 @@ const Payload = ({ payload }) =>
 export const TestToken = () => {
   const [link, setLink] = useState('')
   const [refresh, setRefresh] = useState(0)
-  const payload = {
-    landingUrl: '/api/token',
-    redirectUrl: '/test/test-token',
-    data: JSON.stringify({
-      msg: 'came here to do this',
-      count: refresh
-    }),
-    action: 'log',
-    expiresIn: '2h'
-  }
+
   useEffect(() => {
     async function fetchData () {
       try {
+        const payload = {
+          landingUrl: '/api/token',
+          redirectUrl: '/test/test-token',
+          data: JSON.stringify({
+            msg: 'came here to do this',
+            count: refresh
+          }),
+          action: 'log',
+          expiresIn: '2h'
+        }
         const data = await callApi(`token/log?${queryString.stringify(payload)}`)
         setLink(data)
       } catch (e) {

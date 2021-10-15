@@ -10,10 +10,9 @@ import { Divider } from 'antd'
 const { ASK, OFFER } = OpportunityType
 
 export const RecommendedOpsSection = () => {
-  const recommendedOps = useSelector(state => state.recommendedOps)
+  const [me, recommendedOps] = useSelector(state => [state.session.me, state.recommendedOps])
   if (!recommendedOps.sync) return <Loading label='recommended activities' entity={recommendedOps} />
 
-  const me = useSelector(state => state.session.me)
   const vp = me.role.includes(Role.VOLUNTEER)
   const bp = me.role.includes(Role.BASIC)
   const ops = recommendedOps.data[0]
