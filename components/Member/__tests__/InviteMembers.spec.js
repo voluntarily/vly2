@@ -8,7 +8,8 @@ import orgs from '../../../server/api/organisation/__tests__/organisation.fixtur
 import { MemberStatus } from '../../../server/api/member/member.constants'
 
 test.before('Setup fixtures', (t) => {
-  t.context.orgs = orgs.forEach(p => { p._id = objectid().toString() })
+  orgs.forEach(p => { p._id = objectid().toString() })
+  t.context.orgs = orgs
 })
 test.beforeEach(t => {
   t.context.mockServer = fetchMock.sandbox()

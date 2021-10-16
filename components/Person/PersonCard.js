@@ -61,8 +61,7 @@ const PersonCard = ({ person }) => (
   <PersonContainer>
 
     <figcaption>
-      {/* eslint-disable-next-line */}
-      <img alt='persons avatar' src={person.imgUrl} /> 
+      <img alt='persons avatar' src={person.imgUrl} />
       <Link href={`/people/${person._id}`}>
         <a target='_blank'>
           <h4>{person.name}</h4>

@@ -45,7 +45,7 @@ const PersonSummary = ({ person }) =>
 const TopicSummary = ({ type, topicGroups }) =>
   <Panel>
     <div>
-      <img layout='intrinsic' alt='ask for help icon' style={{ width: '100%' }} src='/static/img/sign-up/ask.svg' />
+      <img alt='ask for help icon' style={{ width: '100%' }} src='/static/img/sign-up/ask.svg' />
     </div>
     <div>
       <p><strong><OpTypeTopicVerb type={type} /></strong></p>

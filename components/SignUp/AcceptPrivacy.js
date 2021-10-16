@@ -1,4 +1,3 @@
-/* eslint-disable import/no-webpack-loader-syntax */
 import Privacy from '../../assets/notices/privacy-en.md'
 import { HalfGrid } from '../VTheme/VTheme'
 import Image from 'next/image'

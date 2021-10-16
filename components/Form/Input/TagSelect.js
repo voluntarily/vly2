@@ -13,7 +13,7 @@ export const TagSelect = ({ options, onChange, value = {}, placeholder }) => {
     setUnselectedTags(options?.filter(val => value !== val))
   }, [value, options])
 
-  if (!options) { console.log('TagSelect:', options, value); return ('No tag options supplied') }
+  if (!options) { return ('No tag options supplied') }
   const addTag = tag => onChange(value.concat(tag))
   const removeTag = removedTag => onChange(value.filter(tag => tag !== removedTag))
 

@@ -8,7 +8,8 @@ import people from '../../../server/api/person/__tests__/person.fixture'
 import { RegisterTeacher } from '../../../pages/action/registerTeacher'
 
 test.before('Setup fixtures', (t) => {
-  t.context.people = people.forEach(p => { p._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
+  t.context.people = people
   t.context.teacher = people.find(p => p.nickname === 'niceteacheralice')
   t.context.unteacher = people[1]
 })

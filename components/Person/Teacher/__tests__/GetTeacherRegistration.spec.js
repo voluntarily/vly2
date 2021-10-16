@@ -8,7 +8,8 @@ import GetTeacherRegistration, { RegError } from '../GetTeacherRegistration'
 
 test.before('Setup fixtures', (t) => {
   // This gives all the people fake ids to better represent a fake mongo db
-  t.context.people = people.forEach(p => { p._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
+  t.context.people = people
   t.context.teacher = people.find(p => p.nickname === 'niceteacheralice')
 })
 
