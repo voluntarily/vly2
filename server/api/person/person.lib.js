@@ -54,7 +54,7 @@ const getUnsubscribeLink = (person) => {
     throw new Error('Expected a person object with an _id field')
   }
 
-  return new URL(`people/${person._id}`, config.appUrl).toString()
+  return new URL(`/people/${person._id}`, config.appUrl).toString()
 }
 
 module.exports = {
